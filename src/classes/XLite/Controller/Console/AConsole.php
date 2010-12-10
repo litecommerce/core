@@ -38,14 +38,34 @@ namespace XLite\Controller\Console;
 abstract class AConsole extends \XLite\Controller\AController
 {
     /**
-     * Operation error 
+     * Handles the request.
+     * Parses the request variables if necessary. Attempts to call the specified action function 
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
+     * @return void
+     * @access public
      * @since  3.0.0
      */
-    protected $operationError;
+    public function handleRequest()
+    {
+        if ($this->checkAccess() && \XLite\Core\Request::getInstance()->help) {
+            print $this->getHelp();
+
+        } else {
+            parent::handleRequest();
+        }
+    }
+
+    /**
+     * isRedirectNeeded
+     *
+     * @return boolean 
+     * @access public
+     * @since  3.0.0
+     */
+    public function isRedirectNeeded()
+    {
+        return false;
+    }
 
     /**
      * Check if current page is accessible
@@ -75,19 +95,6 @@ abstract class AConsole extends \XLite\Controller\AController
     }
 
     /**
-     * Get operation error 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getOperationError()
-    {
-        return $this->operationError;
-    }
-
-    /**
      * Return Viewer object
      * 
      * @return \XLite\View\Controller
@@ -96,15 +103,6 @@ abstract class AConsole extends \XLite\Controller\AController
      */
     public function getViewer()
     {
-        if ($this->operationError) {
-            \XLite\Core\Request::getInstance()->target = 'error';
-            \XLite\Logger::getInstance()->log('Console error: ' . $this->operationError, LOG_ERR);
-
-            if (!defined('CLI_RESULT_CODE')) {
-                define('CLI_RESULT_CODE', 1);
-            }
-        }
-
         return new \XLite\View\Console(array(), $this->getViewerTemplate());
     }
 
@@ -134,25 +132,27 @@ abstract class AConsole extends \XLite\Controller\AController
     /**
      * Get help 
      * 
-     * @return void
-     * @access public
+     * @return string
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getHelp()
+    protected function getHelp()
     {
-        $method = null;
+        $help = null;
 
         $action = \XLite\Core\Request::getInstance()->action;
         if ($action) {
             $method = 'getHelp' . \XLite\Core\Converter::convertToCamelCase($action);
+            $help = method_exists($this, $method)
+                ? $this->$method()
+                : 'Action \'' . $action . '\' has not help note';
+
+        } else {
+            $help = $this->getControllerHelp();
         }
 
-        if (!$method || !method_exists($this, $method)) {
-            $method = 'getControllerHelp';
-        }
-
-        return method_exists($this, $method) ? $this->$method() : null;
+        return $help;
     }
 
     /**
@@ -170,6 +170,40 @@ abstract class AConsole extends \XLite\Controller\AController
     }
 
     /**
+     * Print content 
+     * 
+     * @param string $str Content
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function printContent($str)
+    {
+        print $str;
+    }
+
+    /**
+     * Print error 
+     * 
+     * @param string $error Error message
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function printError($error)
+    {
+        $this->printContent('[ERROR] ' . $error . PHP_EOL);
+
+        if (!defined('CLI_RESULT_CODE')) {
+            define('CLI_RESULT_CODE', 1);
+        }
+    }
+
+    /**
      * Perform redirect 
      * 
      * @param string $url Redirect URL OPTIONAL
@@ -181,5 +215,18 @@ abstract class AConsole extends \XLite\Controller\AController
      */
     protected function redirect($url = null)
     {
+    }
+
+   /**
+     * Mark controller run thread as access denied
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function markAsAccessDenied()
+    {
+        $this->printError('Access denied');
     }
 }

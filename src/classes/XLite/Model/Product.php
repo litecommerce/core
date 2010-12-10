@@ -60,7 +60,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer", length="11", nullable=false)
+     * @Column         (type="uinteger")
      */
     protected $product_id;
 

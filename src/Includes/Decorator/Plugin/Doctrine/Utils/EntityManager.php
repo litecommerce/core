@@ -159,6 +159,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
     {
         if (!isset(static::$handler)) {
             static::$handler = \Doctrine\ORM\EntityManager::create(static::getDSN(), static::getConfig());
+            \XLite\Core\Database::registerCustomTypes(static::$handler);
         }
 
         return static::$handler;

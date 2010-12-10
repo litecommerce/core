@@ -1318,4 +1318,20 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         return $this->entityProperties;
     }
 
+    /**
+     * Process DB schema 
+     * 
+     * @param array  $schema Schema
+     * @param string $type   Schema type
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function processSchema(array $schema, $type)
+    {
+        return $schema;
+    }
+
 }

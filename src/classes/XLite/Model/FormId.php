@@ -36,7 +36,12 @@ namespace XLite\Model;
  * @since   3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\FormId")
- * @Table  (name="form_ids")
+ * @Table  (name="form_ids",
+ *      indexes={
+ *          @UniqueConstraint (name="fs", columns={"form_id","session_id"}),
+ *          @Index (name="session_id", columns={"session_id"})
+ *      }
+ * )
  * @HasLifecycleCallbacks
  */
 class FormId extends \XLite\Model\AEntity

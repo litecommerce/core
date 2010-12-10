@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage Core
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,37 +26,29 @@
  * @since      3.0.0
  */
 
-namespace XLite\View;
+namespace XLite\Core;
 
 /**
- * Console mode main widget
+ * MySql DBAL platform 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Console extends \XLite\View\AView
+class MySqlPlatform extends \Doctrine\DBAL\Platforms\MySqlPlatform
 {
     /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return null;
-    }
-
-    /**
-     * Attempts to display widget using its template 
+     * Get boolean-type declaration SQL 
      * 
-     * @return void
+     * @param array $field Field
+     *  
+     * @return string
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function display()
+    public function getBooleanTypeDeclarationSQL(array $field)
     {
+        return 'TINYINT(1) UNSIGNED';
     }
 }

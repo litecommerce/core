@@ -35,7 +35,12 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity
- * @Table (name="profile_addresses")
+ * @Table (name="profile_addresses",
+ *      indexes={
+ *          @Index (name="is_billing", columns={"is_billing"}),
+ *          @Index (name="is_shipping", columns={"is_shipping"})
+ *      }
+ * )
  */
 class Address extends \XLite\Model\AEntity
 {
@@ -89,7 +94,7 @@ class Address extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="1")
+     * @Column (type="fixedstring", length="1")
      */
     protected $address_type = 'R';
 
@@ -188,7 +193,7 @@ class Address extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="2")
+     * @Column (type="fixedstring", length="2")
      */
     protected $country_code = '';
 

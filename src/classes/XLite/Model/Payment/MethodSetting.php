@@ -36,7 +36,11 @@ namespace XLite\Model\Payment;
  * @since   3.0.0
  *
  * @Entity
- * @Table (name="payment_method_settings")
+ * @Table (name="payment_method_settings",
+ *      indexes={
+ *          @Index (name="mn", columns={"method_id","name"})
+ *      }
+ * )
  */
 class MethodSetting extends \XLite\Model\AEntity
 {

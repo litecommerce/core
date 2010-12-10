@@ -35,7 +35,12 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity
- * @Table (name="language_label_translations")
+ * @Table (name="language_label_translations",
+ *      indexes={
+ *          @Index (name="ci", columns={"code","id"}),
+ *          @Index (name="id", columns={"id"})
+ *      }
+ * )
  */
 class LanguageLabelTranslation extends \XLite\Model\Base\Translation
 {

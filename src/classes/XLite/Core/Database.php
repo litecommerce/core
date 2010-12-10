@@ -101,6 +101,25 @@ class Database extends \XLite\Base\Singleton
     protected $connected;
 
     /**
+     * Doctrine unmanaged table names list
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $unmanagedTables = array(
+        'extra_field_values',
+        'extra_fields',
+        'htaccess',
+        'landing_links',
+        'log',
+        'search_stat',
+        'upgrades',
+        'waitingips',
+    );
+
+    /**
      * Get entity manager 
      * 
      * @return \Doctrine\ORM\EntityManager
@@ -298,18 +317,13 @@ class Database extends \XLite\Base\Singleton
     public function startEntityManager()
     {
         // Initialize DB connection and entity manager
-        /*
-        $connection = \Doctrine\DBAL\DriverManager::getConnection(
-            $this->getDSN(),
-            $this->config,
-            new \Doctrine\Common\EventManager()
-        );
-        */
         self::$em = \Doctrine\ORM\EntityManager::create($this->getDSN(), $this->config);
 
         if (\XLite\Core\Profiler::getInstance()->enabled) {
             self::$em->getConnection()->getConfiguration()->setSQLLogger(\XLite\Core\Profiler::getInstance());
         }
+
+        static::registerCustomTypes(self::$em);
 
         // Bind events
         $events = array(\Doctrine\ORM\Events::loadClassMetadata);
@@ -322,6 +336,34 @@ class Database extends \XLite\Base\Singleton
         }
 
         self::$em->getEventManager()->addEventListener($events, $this);
+    }
+
+    /**
+     * Register custom types 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function registerCustomTypes(\Doctrine\ORM\EntityManager $em)
+    {
+        // Fixed string
+        if (!\Doctrine\DBAL\Types\Type::hasType('fixedstring')) {
+            \Doctrine\DBAL\Types\Type::addType('fixedstring', 'XLite\Core\ColumnType\FixedString');
+        }
+        $em->getConnection()
+            ->getDatabasePlatform()
+            ->registerDoctrineTypeMapping('char', 'fixedstring');
+
+        // Unsigned integer
+        if (!\Doctrine\DBAL\Types\Type::hasType('uinteger')) {
+            \Doctrine\DBAL\Types\Type::addType('uinteger', 'XLite\Core\ColumnType\Uinteger');
+        }
+        $em->getConnection()
+            ->getDatabasePlatform()
+            ->registerDoctrineTypeMapping('int', 'uinteger');
+
     }
 
     /**
@@ -472,8 +514,14 @@ class Database extends \XLite\Base\Singleton
                 if (is_array($schema)) {
                     $schemas = array_merge($schemas, $schema);
 
-                } else {
+                } elseif (isset($schema)) {
                     $schemas[] = $schema;
+                }
+            }
+
+            foreach (self::$em->getMetadataFactory()->getAllMetadata() as $cmd) {
+                if (!$cmd->isMappedSuperclass) {
+                    $schemas = static::getRepo($cmd->name)->processSchema($schemas, $mode);
                 }
             }
         }
@@ -519,7 +567,7 @@ class Database extends \XLite\Base\Singleton
         $tableName = $m[1];
 
         $schema = preg_replace(
-            '/CREATE TABLE (\S+) \((.+)(\) ENGINE = InnoDB)/USse',
+            '/CREATE TABLE (\S+) \((.+)(\) ENGINE = \w+)/Sse',
             '\'CREATE TABLE `$1` (\' . PHP_EOL'
             . ' . \'$2\' . PHP_EOL'
             . ' . \'$3 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin\'',
@@ -552,8 +600,8 @@ class Database extends \XLite\Base\Singleton
             $v = preg_replace('/^(INDEX \S+ \()([^,)]+)/Ss', '$1`$2`', $v);
             $v = preg_replace('/^(INDEX \S+ \(.+,)([^`,)]+)/Ss', '$1`$2`', $v);
 
-            $v = preg_replace('/^(PRIMARY KEY \()([^,)]+)/Ss', '$1`$2`', $v);
-            $v = preg_replace('/^(PRIMARY KEY \(.+,)([^`,)]+)/Ss', '$1`$2`', $v);
+            $v = preg_replace('/^(PRIMARY KEY \()([^,\)]+)/Ss', '$1`$2`', $v);
+            $v = preg_replace('/^(PRIMARY KEY \(.+,)([^`,\)]+)/Ss', '$1`$2`', $v);
 
             $v = self::SCHEMA_FILE_IDENT . preg_replace('/^([a-z][\w\d_]+) ([A-Z]+)/Ss', '`$1` $2', $v);
 
@@ -588,6 +636,10 @@ class Database extends \XLite\Base\Singleton
         $schema = preg_replace('/ REFERENCES (\S+) *\(([^,)]+)/Ss', ' REFERENCES `$1` (`$2`', $schema);
         $schema = preg_replace('/( REFERENCES \S+ \(.+,)([^`,)]+)/Ss', '$1`$2`', $schema);
 
+        $schema = preg_replace('/ (DROP(?: FOREIGN KEY)?) ([a-z][^\s,`]+)(,)? /Ss', ' $1 `$2`$3 ', $schema);
+        $schema = preg_replace('/ CHANGE ([a-z]\S+) (\S+) /Ss', ' CHANGE `$1` `$2` ', $schema);
+        $schema = preg_replace('/ ADD ([a-z]\S+) /Ss', ' ADD `$1` ', $schema);
+
         return $schema;
     }
 
@@ -603,21 +655,23 @@ class Database extends \XLite\Base\Singleton
      */
     protected function postprocessUpdateSchema($schema)
     {
-        if (preg_match('/^ALTER TABLE /Ss', $schema)) {
-            $schema = preg_replace('/^ALTER TABLE (\S+) /Ss', 'ALTER TABLE `$1` ', $schema);
-            $schema = preg_replace('/ DROP ([a-z][^\s,`]+)(,)? /Ss', ' DROP `$1`$2 ', $schema);
-            $schema = preg_replace('/ CHANGE ([a-z]\S+) (\S+) /Ss', ' CHANGE `$1` `$2` ', $schema);
-            $schema = preg_replace('/ ADD ([a-z]\S+) /Ss', ' ADD `$1` ', $schema);
+        if (preg_match('/^CREATE TABLE /Ss', $schema)) {
+            $schema = $this->postprocessCreateSchemaTable($schema);
 
-            $schema = preg_replace('/( FOREIGN KEY \()([^,)]+)/Ss', '$1`$2`', $schema);
-            $schema = preg_replace('/( FOREIGN KEY \(.+,)([^`,)]+)/Ss', '$1`$2`', $schema);
+        } elseif (preg_match('/^ALTER TABLE /Ss', $schema)) {
+            $schema = $this->postprocessAlterSchemaTable($schema);
 
-            $schema = preg_replace('/ REFERENCES (\S+) *\(([^,)]+)/Ss', ' REFERENCES `$1` (`$2`', $schema);
-            $schema = preg_replace('/( REFERENCES \S+ \(.+,)([^`,)]+)/Ss', '$1`$2`', $schema);
+        } elseif (preg_match('/DROP TABLE /Ss', $schema)) {
+
+            $prefix = \XLite::getInstance()->getOptions(array('database_details', 'table_prefix'));
+            if (preg_match('/^DROP TABLE ' . $prefix . '(?:' .implode('|', $this->unmanagedTables) . ')$/Ss', $schema)) {
+                $schema = null;
+
+            } else {
+                $schema = preg_replace('/^DROP TABLE (\S+)/Ss', 'DROP TABLE IF EXISTS `$1`', $schema);
+            }
 
         } else {
-
-            $schema = preg_replace('/^DROP TABLE (\S+)/Ss', 'DROP TABLE IF EXISTS `$1`', $schema);
 
             $schema = preg_replace('/^(CREATE (?:UNIQUE )?INDEX) (\S+) ON ([^\s(]+)/Ss', '$1 `$2` ON `$3`', $schema);
             $schema = preg_replace('/^(CREATE (?:UNIQUE )?INDEX [^(]+ \()([^,)]+)/Ss', '$1`$2`', $schema);

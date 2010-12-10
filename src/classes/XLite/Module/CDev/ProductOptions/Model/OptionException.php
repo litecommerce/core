@@ -35,7 +35,11 @@ namespace XLite\Module\CDev\ProductOptions\Model;
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity (repositoryClass="\XLite\Module\CDev\ProductOptions\Model\Repo\OptionException")
- * @Table (name="option_exceptions")
+ * @Table (name="option_exceptions",
+ *      indexes={
+ *          @UniqueConstraint (name="exc", columns={"option_id","exception_id"})
+ *      }
+ * )
  */
 class OptionException extends \XLite\Model\AEntity
 {

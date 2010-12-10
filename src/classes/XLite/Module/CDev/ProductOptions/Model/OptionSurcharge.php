@@ -35,7 +35,11 @@ namespace XLite\Module\CDev\ProductOptions\Model;
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity (repositoryClass="\XLite\Module\CDev\ProductOptions\Model\Repo\OptionSurcharge")
- * @Table (name="option_surcharges")
+ * @Table (name="option_surcharges",
+ *      indexes={
+ *          @UniqueConstraint (name="ot", columns={"option_id","type"})
+ *      }
+ * )
  */
 class OptionSurcharge extends \XLite\Model\AEntity
 {

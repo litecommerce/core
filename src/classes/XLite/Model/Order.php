@@ -36,7 +36,19 @@ namespace XLite\Model;
  * @since   3.0.0
  *
  * @Entity                (repositoryClass="\XLite\Model\Repo\Order")
- * @Table                 (name="orders")
+ * @Table                 (name="orders",
+ *      indexes={
+ *          @Index (name="date", columns={"date"}),
+ *          @Index (name="total", columns={"total"}),
+ *          @Index (name="subtotal", columns={"subtotal"}),
+ *          @Index (name="tracking", columns={"tracking"}),
+ *          @Index (name="status", columns={"status"}),
+ *          @Index (name="notes", columns={"notes"}),
+ *          @Index (name="profile_id", columns={"profile_id"}),
+ *          @Index (name="orig_profile_id", columns={"orig_profile_id"}),
+ *          @Index (name="shipping_id", columns={"shipping_id"})
+ *      }
+ * )
  * @HasLifecycleCallbacks
  * @InheritanceType       ("SINGLE_TABLE")
  * @DiscriminatorColumn   (name="is_order", type="integer", length="1")
@@ -147,7 +159,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="1")
+     * @Column (type="fixedstring", length="1")
      */
     protected $status = self::STATUS_INPROGRESS;
 

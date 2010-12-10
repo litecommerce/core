@@ -51,6 +51,18 @@ class Module extends \XLite\Model\Repo\ARepo
     );
 
     /**
+     * Alternative record identifiers
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $alternativeIdentifier = array(
+        array('author', 'name'),
+    );
+
+    /**
      * Modules enabeld list (cache)
      * 
      * @var    array

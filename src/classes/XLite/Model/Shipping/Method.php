@@ -37,7 +37,14 @@ namespace XLite\Model\Shipping;
  * @since      3.0.0
  *
  * @Entity (repositoryClass="XLite\Model\Repo\Shipping\Method")
- * @Table  (name="shipping_methods")
+ * @Table  (name="shipping_methods",
+ *      indexes={
+ *          @Index (name="processor", columns={"processor"}),
+ *          @Index (name="carrier", columns={"carrier"}),
+ *          @Index (name="enabled", columns={"enabled"}),
+ *          @Index (name="position", columns={"position"})
+ *      }
+ * )
  */
 class Method extends \XLite\Model\Base\I18n
 {

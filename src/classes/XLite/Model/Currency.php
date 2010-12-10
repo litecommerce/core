@@ -48,7 +48,7 @@ class Currency extends \XLite\Model\Base\I18n
      * @since  3.0.0
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer")
+     * @Column         (type="uinteger")
      */
     protected $currency_id;
 
@@ -59,7 +59,7 @@ class Currency extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="3")
+     * @Column (type="fixedstring", length="3", unique=true)
      */
     protected $code;
 

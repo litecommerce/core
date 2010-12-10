@@ -1,17 +1,17 @@
-DROP TABLE IF EXISTS xlite_aupost_cache;
-CREATE TABLE xlite_aupost_cache (
-    weight decimal(12,2) not null,
-    origin_zipcode varchar(12) not null,
-    dest_zipcode varchar(12) not null,
-    dest_country varchar(40) not null,
-    height decimal(12,2) not null,
-    width decimal(12,2) not null,
-    length decimal(12,2) not null,
-    rates varchar(255) not null,
-    shipping_dates varchar(255) not null,
-    date int not null,
-    PRIMARY KEY (weight, origin_zipcode, dest_zipcode, dest_country, height, width, length)
-) TYPE=MyISAM;
+-- DROP TABLE IF EXISTS xlite_aupost_cache;
+-- CREATE TABLE xlite_aupost_cache (
+--    weight decimal(12,2) not null,
+--    origin_zipcode varchar(12) not null,
+--    dest_zipcode varchar(12) not null,
+--    dest_country varchar(40) not null,
+--    height decimal(12,2) not null,
+--    width decimal(12,2) not null,
+--    length decimal(12,2) not null,
+--    rates varchar(255) not null,
+--    shipping_dates varchar(255) not null,
+--    date int not null,
+--    PRIMARY KEY (weight, origin_zipcode, dest_zipcode, dest_country, height, width, length)
+-- ) TYPE=MyISAM;
 
 
 INSERT INTO `xlite_config` VALUES (61,'currency_rate','AustraliaPost','',0,'1');

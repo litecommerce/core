@@ -36,7 +36,12 @@ namespace XLite\Model;
  * @since   3.0.0
  *
  * @Entity (repositoryClass="XLite\Model\Repo\Zone")
- * @Table  (name="zones")
+ * @Table  (name="zones",
+ *      indexes={
+ *          @Index (name="zone_name", columns={"zone_name"}),
+ *          @Index (name="zone_default", columns={"is_default"})
+ *      }
+ * )
  */
 class Zone extends \XLite\Model\AEntity
 {

@@ -35,7 +35,12 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity (repositoryClass="\XLite\Model\Repo\State")
- * @Table (name="states")
+ * @Table (name="states",
+ *      indexes={
+ *          @Index (name="code", columns={"code","country_code"}),
+ *          @Index (name="state", columns={"state"})
+ *      }
+ * )
  */
 class State extends \XLite\Model\AEntity
 {
@@ -81,7 +86,7 @@ class State extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="2", nullable=false)
+     * @Column (type="fixedstring", length="2", nullable=false)
      */
     protected $country_code;
 

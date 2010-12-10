@@ -36,7 +36,20 @@ namespace XLite\Model;
  * @since   3.0.0
  * 
  * @Entity (repositoryClass="\XLite\Model\Repo\Profile")
- * @Table  (name="profiles")
+ * @Table  (name="profiles",
+ *      indexes={
+ *          @Index (name="cms_profile", columns={"cms_name","cms_profile_id"}),
+ *          @Index (name="login", columns={"login"}),
+ *          @Index (name="order_id", columns={"order_id"}),
+ *          @Index (name="password", columns={"password"}),
+ *          @Index (name="access_level", columns={"access_level"}),
+ *          @Index (name="first_login", columns={"first_login"}),
+ *          @Index (name="last_login", columns={"last_login"}),
+ *          @Index (name="status", columns={"status"}),
+ *          @Index (name="pending_membership_id", columns={"pending_membership_id"}),
+ *          @Index (name="membership_id", columns={"membership_id"})
+ *      }
+ * )
  */
 class Profile extends \XLite\Model\AEntity
 {
@@ -182,9 +195,9 @@ class Profile extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="1")
+     * @Column (type="fixedstring", length="1")
      */
-    protected $status = '';
+    protected $status = 'E';
 
     /**
      * Referer

@@ -36,7 +36,11 @@ namespace XLite\Model;
  * @since   3.0.0
  *  
  * @Entity
- * @Table (name="order_details")
+ * @Table (name="order_details",
+ *      indexes={
+ *          @Index (name="oname", columns={"order_id","name"})
+ *      }
+ * )
  */
 class OrderDetail extends \XLite\Model\AEntity
 {

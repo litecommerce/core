@@ -168,7 +168,7 @@ class Request extends \XLite\Base\Singleton
             if ($this->isCLI()) {
                 for ($i = 1; $i < count($_SERVER['argv']); $i++) {
                     $pair = explode('=', $_SERVER['argv'][$i], 2);
-                    $data[preg_replace('/^-+/Ss', '', $pair[0])] = isset($pair[1]) ? $pair[1] : false;
+                    $data[preg_replace('/^-+/Ss', '', $pair[0])] = isset($pair[1]) ? trim($pair[1]) : true;
                 }
 
             } else {

@@ -247,4 +247,26 @@ class FormId extends \XLite\Model\Repo\ARepo
             ->setParameter('sid', $sessionId);
     }
 
+    /**
+     * Process DB schema 
+     * 
+     * @param array  $schema Schema
+     * @param string $type   Schema type
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function processSchema(array $schema, $type)
+    {
+        $schema = parent::processSchema($schema, $type);
+
+        if (\XLite\Core\Database::SCHEMA_UPDATE == $type) {
+            $schema = preg_grep('/DROP FOREIGN KEY `?xlite_session_to_forms`?/Ss', $schema, PREG_GREP_INVERT);
+        }
+
+        return $schema;
+    }
+
 }
