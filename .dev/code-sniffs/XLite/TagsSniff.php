@@ -977,7 +977,7 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
                 "\n"
             );
             $this->currentFile->addError(
-                $this->getReqPrefix('REQ.PHP.4.1.25') . 'Значение тэга @access не совпадает с дкларацией (екларированно как ' . $tokens[$type]['content']. ', а @access равен ' . $access->getValue() . ')',
+                $this->getReqPrefix('REQ.PHP.4.1.25') . 'Значение тэга @access не совпадает с декларацией (декларированно как ' . $tokens[$type]['content']. ', а @access равен ' . $access->getValue() . ')',
                 $commentStart + $cnt
             );
         }
