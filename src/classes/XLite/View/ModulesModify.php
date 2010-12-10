@@ -162,19 +162,22 @@ class ModulesModify extends \XLite\View\Dialog
         return implode('', $statuses);
     }
 
-
     /**
      * Get modules list
      * 
      * @return array
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected static function getModules()
     {
         if (is_null(static::$modules)) {
-            $method = 'find' . ucwords(static::getFilter()) . 'Modules';
+
+            $method = 'find' . \XLite\Core\Converter::convertToCamelCase(static::getFilter()) . 'Modules';
+
+            // Call corresponding method depending on filter:
+            // find{All|Active|Upgradable}Modules()
             static::$modules = \XLite\Core\Database::getRepo('\XLite\Model\Module')->$method();
         }
 
@@ -185,7 +188,7 @@ class ModulesModify extends \XLite\View\Dialog
      * Get modules count for different filters
      * 
      * @return array
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -196,7 +199,10 @@ class ModulesModify extends \XLite\View\Dialog
             $mCount = array();
 
             foreach (array_keys(static::getFilters()) as $f) {
-                $method = 'find' . ucwords($f) . 'Modules';
+
+                $method = 'find' . \XLite\Core\Converter::convertToCamelCase($f) . 'Modules';
+
+                // Call corresponding method depending on filter: find{All|Active|Upgradable}Modules()
                 $mCount[$f] = count(\XLite\Core\Database::getRepo('\XLite\Model\Module')->$method());
             }
             static::$modulesCount = $mCount;
@@ -255,13 +261,14 @@ class ModulesModify extends \XLite\View\Dialog
         return static::$filter;
     }
 
+
     /**
      * Check if the module can be enabled
      * 
      * @param \XLite\Model\Module $module Module
      *  
      * @return boolean
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -295,4 +302,6 @@ class ModulesModify extends \XLite\View\Dialog
         return 'modules_modify';
     }
 
+
+    
 }

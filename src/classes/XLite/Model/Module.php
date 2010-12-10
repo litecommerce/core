@@ -56,6 +56,14 @@ class Module extends \XLite\Model\AEntity
     const INSTALLED_WO_PHP  = 3;
     const INSTALLED_WO_CTRL = 4;
 
+    /**
+     * Remote status
+     */
+    const NOT_EXIST = 0;
+    const EXISTS    = 1;
+    const OBSOLETE  = 2;
+
+    const UPLOAD_CODE_LENGTH = 32;
 
     /**
      * Module id 
@@ -69,7 +77,7 @@ class Module extends \XLite\Model\AEntity
      * @GeneratedValue (strategy="AUTO")
      * @Column (type="integer")
      */
-    protected $module_id;
+    protected $moduleId;
 
     /**
      * Name 
@@ -120,30 +128,145 @@ class Module extends \XLite\Model\AEntity
     protected $installed = self::NOT_INSTALLED;
 
     /**
-     * Last version
-     * TODO: to remove, checking will be implemented in a remote model
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * Status
      *
-     * @Column (type="string", length="32")
-     */
-    protected $last_version = '';
-
-    /**
-     * Last update
-     * TODO: to remove, checking will be implemented in a remote model
-     * 
      * @var    integer
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     *
-     * @Column (type="integer", length="11")
+     * @Column (type="integer")
      */
-    protected $last_update = 0;
+    protected $status = self::NOT_EXIST;
+
+    /**
+     * Description
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="text")
+     */
+    protected $description = '';
+
+    /**
+     * Module name
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length=255)
+     */
+    protected $moduleName = '';
+
+    /**
+     * Author name
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length=255)
+     */
+    protected $authorName = '';
+
+    /**
+     * Version
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length=32)
+     */
+    protected $version = '';
+
+    /**
+     * Changelog
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="text")
+     */
+    protected $changelog = array();
+
+    /**
+     * Hash
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length=32)
+     */
+    protected $hash = '';
+
+    /**
+     * Install pack hash
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length=32)
+     */
+    protected $packHash = '';
+
+    /**
+     * Price
+     *
+     * @var    float
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="decimal", precision=14, scale=2)
+     */
+    protected $price = 0;
+
+    /**
+     * Currency code
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length=3)
+     */
+    protected $currency = 'USD';
+
+    /**
+     * Upload code
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length=255)
+     */
+    protected $uploadCode = '';
+
+    /**
+     * Upload URL
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $uploadURL = 'https://litecommerce.com/module/%1$s/upload?code=%2$s';
+
+    /**
+     * Model (cache)
+     *
+     * @var    \XLite\Model\Module
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $model = null;
 
     /**
      * Main class 
@@ -244,7 +367,7 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * Get dependencies modules 
+     * Get dependencies modules
      * 
      * @return array
      * @access public
@@ -253,9 +376,17 @@ class Module extends \XLite\Model\AEntity
      */
     public function getDependenciesModules()
     {
-        return $this->getDependencies()
-            ? $this->getRepository()->findAllByNames($this->getDependencies())
-            : array();
+        $qb    = $this->getRepository()->createQueryBuilder();
+        $names = \XLite\Core\Database::buildInCondition($qb, $this->getDependencies(), 'classNames');
+        $expr  = $qb->expr()->concat('m.author', $qb->expr()->concat(':delimiter', 'm.name'));
+
+        $qb->setParameter('delimiter', '\\');
+
+        foreach ($names as $k => $dp) {
+            $qb->orWhere($qb->expr()->eq($expr, ':classNames' . $k));
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -276,7 +407,7 @@ class Module extends \XLite\Model\AEntity
         }
 
         // Check dependencies
-        if ($status) {
+        if ($status && $this->__call('getDependencies')) {
 
             foreach ($this->getDependenciesModules() as $module) {
 
@@ -505,7 +636,6 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Check if newer version exists
-     * TODO: to be revised, last version will be stored in the remote model
      * 
      * @return boolean
      * @access public
@@ -514,7 +644,203 @@ class Module extends \XLite\Model\AEntity
      */
     public function isUpdateAvailable()
     {
-        return -1 === version_compare($this->getVersion(), $this->last_version);
+        return -1 === version_compare($this->getCurrentVersion(), $this->getLastVersion());
+    }
+
+    /**
+     * Get last version (from the database)
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLastVersion()
+    {
+        return $this->getVersion();
+    }
+
+    /**
+     * Get installed version (from the Main class)
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCurrentVersion()
+    {
+        return $this->__call('getVersion');
+    }
+
+    /**
+     * Compose module actual name
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getActualName()
+    {
+        return \Includes\Decorator\Utils\ModulesManager::getActualName($this->getAuthor(), $this->getName());
+    }
+
+    /**
+     * Return relative module path
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPath()
+    {
+        return str_replace('\\', LC_DS, $this->getActualName());
+    }
+
+    /**
+     * Get model 
+     * 
+     * @param boolean $overrideCache Ovveride internal cache OPTIONAL
+     *  
+     * @return \XLite\Model\Module
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModel($overrideCache = false)
+    {
+        if (!isset($this->model) || $overrideCache) {
+            $this->model = \Xlite\Core\Database::getRepo('\XLite\Model\Module')->findByName($this->getName());
+            if (!$this->model) {
+                $this->model = false;
+            }
+        }
+
+        return $this->model;
+    }
+
+    /**
+     * Check - can upload module or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function canUpload()
+    {
+        return self::UPLOAD_CODE_LENGTH == strlen($this->uploadCode);
+    }
+
+    /**
+     * Upload module
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function upload()
+    {
+        $result = false;
+
+        if ($this->canUpload()) {
+            $request = new \XLite\Model\HTTPS();
+            $request->url = sprintf($this->uploadURL(), $this->getName(), $this->uploadCode);
+            $request->method = 'get';
+            if (
+                $request::HTTPS_SUCCESS == $request->request()
+                && $request->response
+                && $this->packHash == hash('sha512', $request->response)
+            ) {
+                $result = tempnam(LC_TMP_DIR, 'module');
+                file_put_contents($result, $request->response);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Install (with upload) module
+     * 
+     * @param boolean $overrideExists Ovverride exist module OPTIONAL
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function install($overrideExists = false)
+    {
+        $result = false;
+
+        if (!$this->getModel() || $overrideExists) {
+            $path = $this->upload();
+            if ($path) {
+                $newPath = LC_CLASSES_DIR . $this->getName() . '.phar';
+                rename($path, $newPath);
+                $this->getModel()->disableDepended();
+                \XLite\Core\Database::getEM()->remove($this->getModel());
+                \XLite\Core\Database::getEM()->flush();
+
+                if ($this->depack($newPath)) {
+                    $module = new \XLite\Model\Module();
+                    $module->create($this->getName());
+                    $this->getModel(true);
+                    $result = true;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * Depack install pack
+     * 
+     * @param string $path Install pack path
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function depack($path)
+    {
+        $result = false;
+
+        if (file_exists($path) && is_readable($path) && preg_match('/\.phar/Ss', $path)) {
+            $p = new \Phar($path, 0, basename($path));
+            $result = $p->decompressFiles();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Include module Main class
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function includeMainClass()
+    {
+        $class = $this->getMainClassName();
+
+        if (
+            !\XLite\Core\Operator::isClassExists($class)
+            && file_exists(LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php')
+        ) {
+            include_once LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php';
+        }
+
+        return \XLite\Core\Operator::isClassExists($class);
     }
 
     /**
@@ -533,6 +859,18 @@ class Module extends \XLite\Model\AEntity
         );
     }
 
+    /**
+     * Get module Main class name 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMainClassName()
+    {
+        return '\XLite\Module\\' . $this->getActualName() . '\Main';
+    }
 
     /**
      * Get inverted dependencies
@@ -561,64 +899,4 @@ class Module extends \XLite\Model\AEntity
         return array_unique($dependencies);
     }
 
-    /**
-     * Get module Main class name 
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getMainClassName()
-    {
-        return '\XLite\Module\\' . $this->getActualName() . '\Main';
-    }
-
-    /**
-     * Include module Main class 
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function includeMainClass()
-    {
-        $class = $this->getMainClassName();
-
-        if (
-            !\XLite\Core\Operator::isClassExists($class)
-            && file_exists(LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php')
-        ) {
-            include_once LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php';
-        }
-
-        return \XLite\Core\Operator::isClassExists($class);
-    }
-
-    /**
-     * Compose module actual name
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getActualName()
-    {
-        return \Includes\Decorator\Utils\ModulesManager::getActualName($this->getAuthor(), $this->getName());
-    }
-
-    /**
-     * Return relative module path
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPath()
-    {
-        return str_replace('\\', LC_DS, $this->getActualName());
-    }
 }

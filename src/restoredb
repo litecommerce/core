@@ -114,10 +114,13 @@ foreach (glob('classes/XLite/Module/CDev/*/Main.php') as $f) {
 	$class = str_replace('/', '\\', substr($f, 7, -4));
 
 	mysql_query('REPLACE INTO xlite_modules SET
-author=\'CDev\',
-name = \'' . basename(dirname($f)) . '\',
-installed = 1,
-last_version = \'' . $class::getVersion() . '\'', 
+        author      = \'CDev\',
+        name        = \'' . basename(dirname($f)) . '\',
+        installed   = 1,
+        version     = \'' . call_user_func(array($class, 'getVersion')) . '\',
+        moduleName  = \'' . call_user_func(array($class, 'getModuleName')) . '\',
+        authorName  = \'' . call_user_func(array($class, 'getAuthorName')) . '\',
+        description = \'' . call_user_func(array($class, 'getDescription')) . '\'', 
 		$__connection
 	);
 

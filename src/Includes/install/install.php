@@ -1029,11 +1029,19 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
 
                 include_once $lcModuleDir . LC_DS . $dir . LC_DS . 'Main.php';
 
-                list($author, $moduleName) = explode(LC_DS, $dir);
+                list($author, $name) = explode(LC_DS, $dir);
 
-                $class = '\\XLite\\Module\\' . $author . '\\' . $moduleName . '\\Main';
+                $class = '\\XLite\\Module\\' . $author . '\\' . $name . '\\Main';
 
-                $_queries[] = 'REPLACE INTO xlite_modules SET author = \'' . $author . '\', name = \'' . $moduleName . '\', enabled = \'' . intval(in_array($author . '\\' . $moduleName, $lcSettings['enable_modules'])). '.\', installed = 1, last_version = \'' . call_user_func(array($class, 'getVersion')) . '\'';
+                $_queries[] = 'REPLACE INTO xlite_modules SET
+                    author      = \'' . $author . '\',
+                    name        = \'' . $name . '\',
+                    enabled     = \'' . intval(in_array($author . '\\' . $name, $lcSettings['enable_modules'])). '.\',
+                    installed   = 1,
+                    version     = \'' . call_user_func(array($class, 'getVersion')) . '\',
+                    moduleName  = \'' . call_user_func(array($class, 'getModuleName')) . '\',
+                    authorName  = \'' . call_user_func(array($class, 'getAuthorName')) . '\',
+                    description = \'' . call_user_func(array($class, 'getDescription')) . '\'';
 
                 $_moduleSqlFile = 'classes' . LC_DS . 'XLite' . LC_DS . 'Module' . LC_DS . $dir . LC_DS . 'install.sql';
 

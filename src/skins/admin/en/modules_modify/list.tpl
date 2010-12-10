@@ -24,7 +24,7 @@
 
           {if:!module.getEnabled()}
             <div class="addon-disabled">
-              <img src="images/spacer.gif" width="48" height="48" alt ="" />
+              <img src="images/spacer.gif" width="48" height="48" alt="" />
             </div>
           {end:}
  
@@ -39,9 +39,9 @@
        </div>
       </td>
       <td width="40%">
-        <div class="name">{module.getModuleName()}</div>
-        <div class="author">{t(#Author#)}: {module.getAuthorName()}</div>
-        <div class="version">{t(#Version#)}: {module.getVersion()}</div>
+        <div class="name">{getInstalledProperty(module,#moduleName#)}</div>
+        <div class="author">{t(#Author#)}: {getInstalledProperty(module,#authorName#)}</div>
+        <div class="version">{t(#Version#)}: {getInstalledProperty(module,#version#)}</div>
         <div class="actions">
           {if:module.getEnabled()}
             <a href="{buildUrl(#modules#,#disable#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmNote('disable', '{module.getModuleId()}');">{t(#Disable#)}</a>
@@ -56,9 +56,7 @@
             <a href="{module.getSettingsFormLink()}">{t(#Settings#)}</a>
           {end:}
           {if:!module.getEnabled()}
-          <!--
             <a class="uninstall" href="{buildUrl(#modules#,#uninstall#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmNote('uninstall', '{module.getModuleId()}');">{t(#Uninstall#)}</a>
-          -->
           {end:}
 
         </div>
@@ -66,12 +64,12 @@
         {if:!module.canEnable()}
         <div class="dependencies">
           {t(#Add-on cannot be enabled.#)}
-          {if:module.getDependencies()}
+          {if:getInstalledProperty(module,#dependencies#)}
             <br />
             {t(#The following add-on(s) must be enabled:#)}
             <ul>
               <li FOREACH="module.getDependenciesModules(),depend">
-                <a href="#{depend.getName()}">{depend.getModuleName()}</a>
+                <a href="#{depend.getName()}">{getInstalledProperty(depend,#moduleName#)} ({t(#by#)} {getInstalledProperty(m,#author#)})</a>
                 [ {if:depend.getEnabled()}<span class="good">{t(#enabled#)}</span>{else:}<span class="none">{t(#disabled#)}</span>{end:} ]
               </li>
             </ul>
@@ -82,7 +80,9 @@
 <script type="text/javascript">
 depends[{module.getModuleId()}] = [];
 {foreach:module.getDependedModules(),k,m}
-depends[{module.getModuleId()}][{k}] = '{m.getModuleName()}';
+{if:m.getEnabled()}
+depends[{module.getModuleId()}][{k}] = '{getInstalledProperty(m,#moduleName#)} ({t(#by#)} {getInstalledProperty(m,#author#)})';
+{end:}
 {end:}
 </script>
 
@@ -90,14 +90,14 @@ depends[{module.getModuleId()}][{k}] = '{m.getModuleName()}';
           <div class="upgrade-note">
             {t(#A new version is available#)}
             <br /><br />
-            <widget class="\XLite\View\Button\Submit" label="{t(#Upgrade#)}" /> {t(#to v.#)}{module.last_version}
+            <widget class="\XLite\View\Button\Submit" label="{t(#Upgrade#)}" /> {t(#to v.#)}{module.getLastVersion()}
           </div>
         {end:}
 
       </td>
       <td width="60%">
         <div class="description">
-          {module.getDescription()}
+          {getInstalledProperty(module,#description#)}
         </div>
         {if:module.hasExternalPage()}
           <div class="module-url">

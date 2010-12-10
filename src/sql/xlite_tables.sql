@@ -157,14 +157,23 @@ CREATE TABLE xlite_log (
 
 DROP TABLE IF EXISTS xlite_modules;
 CREATE TABLE xlite_modules (
-  module_id int(6) NOT NULL auto_increment,
+  moduleId int(6) NOT NULL auto_increment,
   name varchar(64) NOT NULL default '',
   author varchar(64) NOT NULL default '',
   enabled tinyint(1) unsigned NOT NULL default '0',
-  installed tinyint(1) unsigned NOT NULL default 0,
-  last_update int default NULL,
-  last_version varchar(32) NOT NULL default '',
-  PRIMARY KEY (module_id),
+  installed tinyint(1) unsigned NOT NULL default '0',
+  version varchar(32) NOT NULL default '',
+  status int(1) unsigned NOT NULL default '0',
+  moduleName varchar(255) NOT NULL default '',
+  authorName varchar(255) NOT NULL default '',
+  description text,
+  changelog text,
+  hash varchar(32),
+  packHash varchar(32),
+  price decimal(16,4) NOT NULL default '0.0000',
+  currency varchar(3) NOT NULL default '',
+  uploadCode varchar(255) NOT NULL default '',
+  PRIMARY KEY (moduleId),
   UNIQUE KEY an (author,name),
   KEY enabled (enabled)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
