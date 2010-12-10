@@ -1142,6 +1142,18 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
 }
 
 /**
+ * Prepare to remove a cache of classes
+ * 
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function doRemoveCache()
+{
+    \Includes\Decorator\Utils\CacheManager::cleanupCacheIndicators();
+}
+/**
  * Generate a cache of classes
  * 
  * @return bool
