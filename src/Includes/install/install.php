@@ -2882,7 +2882,7 @@ OUT;
 
                         foreach ($res as $row) {
                             if (in_array('xlite_products', $row)) {
-                                warning_error('Installation Wizard has detected that the specified database has existing LiteCommerce tables. If you continue with the instalaltion, the tables will be purged.');
+                                warning_error('Installation Wizard has detected that the specified database has existing LiteCommerce tables. If you continue with the installation, the tables will be purged.');
                                 break;
                             }
                         }
