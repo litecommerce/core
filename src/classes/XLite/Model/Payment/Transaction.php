@@ -36,7 +36,13 @@ namespace XLite\Model\Payment;
  * @since   3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Payment\Transaction")
- * @Table  (name="payment_transactions")
+ * @Table  (name="payment_transactions",
+ *      indexes={
+ *          @Index (name="status", columns={"status"}),
+ *          @Index (name="o", columns={"order_id","status"}),
+ *          @Index (name="pm", columns={"method_id","status"})
+ *      }
+ * )
  */
 class Transaction extends \XLite\Model\AEntity
 {
@@ -105,7 +111,7 @@ class Transaction extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      * 
-     * @Column (type="string", length="1")
+     * @Column (type="fixedstring", length="1")
      */
     protected $status = self::STATUS_INITIALIZED;
 

@@ -36,7 +36,11 @@ namespace XLite\Model\Payment;
  * @since   3.0.0
  *
  * @Entity
- * @Table (name="payment_transaction_data")
+ * @Table (name="payment_transaction_data",
+ *      indexes={
+ *          @Index (name="tn", columns={"transaction_id","name"})
+ *      }
+ * )
  */
 class TransactionData extends \XLite\Model\AEntity
 {
@@ -93,7 +97,7 @@ class TransactionData extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      * 
-     * @Column (type="string", length="1")
+     * @Column (type="fixedstring", length="1")
      */
     protected $access_level = self::ACCESS_ADMIN;
 

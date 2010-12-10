@@ -36,7 +36,16 @@ namespace XLite\Model;
  * @since   3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Category")
- * @Table  (name="categories")
+ * @Table  (name="categories",
+ *      indexes={
+ *          @Index (name="parent_id", columns={"parent_id"}),
+ *          @Index (name="lpos", columns={"lpos"}),
+ *          @Index (name="rpos", columns={"rpos"}),
+ *          @Index (name="membership_id", columns={"membership_id"}),
+ *          @Index (name="enabled", columns={"enabled"}),
+ *          @Index (name="cleanUrl", columns={"cleanUrl"})
+ *      }
+ * )
  */
 class Category extends \XLite\Model\Base\I18n
 {
@@ -50,7 +59,7 @@ class Category extends \XLite\Model\Base\I18n
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer", length="11", nullable=false)
+     * @Column         (type="uinteger", nullable=false)
      */
     protected $category_id;
 

@@ -37,6 +37,11 @@ namespace XLite\Model\Shipping;
  * @since      3.0.0
  * @Entity
  * @Table (name="shipping_method_translations")
+ *      indexes={
+ *          @Index (name="ci", columns={"code","id"}),
+ *          @Index (name="id", columns={"id"})
+ *      }
+ * )
  */
 class MethodTranslation extends \XLite\Model\Base\Translation
 {

@@ -2,14 +2,14 @@
 
 DROP TABLE IF EXISTS xlite_categories;
 CREATE TABLE xlite_categories (
-  category_id int(11) unsigned NOT NULL AUTO_INCREMENT,
-  parent_id int(11) NOT NULL DEFAULT '0',
-  lpos int(11) NOT NULL DEFAULT '0',
-  rpos int(11) NOT NULL DEFAULT '0',
-  membership_id int(11) DEFAULT '0',
-  enabled int(1) NOT NULL DEFAULT '1',
+  category_id int unsigned NOT NULL AUTO_INCREMENT,
+  parent_id int NOT NULL DEFAULT '0',
+  lpos int NOT NULL DEFAULT '0',
+  rpos int NOT NULL DEFAULT '0',
+  membership_id int DEFAULT '0',
+  enabled tinyint(1) NOT NULL DEFAULT '1',
   cleanUrl varchar(255) NOT NULL DEFAULT '',
-  show_title int(1) NOT NULL DEFAULT '1',
+  show_title tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (category_id),
   KEY parent_id (parent_id),
   KEY lpos (lpos),
@@ -21,14 +21,14 @@ CREATE TABLE xlite_categories (
 
 DROP TABLE IF EXISTS xlite_category_images;
 CREATE TABLE xlite_category_images (
-  image_id int(11) unsigned NOT NULL AUTO_INCREMENT,
-  id int(11) unsigned NOT NULL DEFAULT '0',
+  image_id int unsigned NOT NULL AUTO_INCREMENT,
+  id int unsigned NOT NULL DEFAULT '0',
   path varchar(512) NOT NULL DEFAULT '',
   mime varchar(64) NOT NULL DEFAULT 'image/jpeg',
-  width int(11) NOT NULL DEFAULT '0',
-  height int(11) NOT NULL DEFAULT '0',
-  size int(11) NOT NULL DEFAULT '0',
-  date int(11) NOT NULL DEFAULT '0',
+  width int NOT NULL DEFAULT '0',
+  height int NOT NULL DEFAULT '0',
+  size int NOT NULL DEFAULT '0',
+  date int NOT NULL DEFAULT '0',
   hash varchar(32) NOT NULL DEFAULT '',
   PRIMARY KEY (image_id),
   KEY id (id),
@@ -37,10 +37,10 @@ CREATE TABLE xlite_category_images (
 
 DROP TABLE IF EXISTS xlite_category_quick_flags;
 CREATE TABLE xlite_category_quick_flags (
-  id int(11) unsigned NOT NULL AUTO_INCREMENT,
-  category_id int(11) unsigned NOT NULL DEFAULT '0',
-  subcategories_count_all int(11) NOT NULL DEFAULT '0',
-  subcategories_count_enabled int(11) NOT NULL DEFAULT '0',
+  id int unsigned NOT NULL AUTO_INCREMENT,
+  category_id int unsigned NOT NULL DEFAULT '0',
+  subcategories_count_all int NOT NULL DEFAULT '0',
+  subcategories_count_enabled int NOT NULL DEFAULT '0',
   PRIMARY KEY (id),
   UNIQUE KEY (category_id),
   CONSTRAINT `xlite_ck_flags_to_categories` FOREIGN KEY (`category_id`) REFERENCES `xlite_categories` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -48,10 +48,10 @@ CREATE TABLE xlite_category_quick_flags (
 
 DROP TABLE IF EXISTS xlite_category_translations;
 CREATE TABLE xlite_category_translations (
-  label_id int(11) NOT NULL AUTO_INCREMENT,
+  label_id int NOT NULL AUTO_INCREMENT,
   code char(2) NOT NULL,
-  id int(11) NOT NULL DEFAULT '0',
-  name char(255),
+  id int NOT NULL DEFAULT '0',
+  name varchar(255),
   description text,
   meta_tags varchar(255) DEFAULT '',
   meta_desc text,
@@ -67,7 +67,7 @@ CREATE TABLE xlite_config (
   name varchar(32) NOT NULL default '',
   category varchar(32) NOT NULL default '',
   type varchar(16) default NULL,
-  orderby int(11) NOT NULL default '0',
+  orderby int NOT NULL default '0',
   value text NOT NULL,
   PRIMARY KEY  (config_id),
   UNIQUE KEY nc (category, name),
@@ -78,11 +78,11 @@ CREATE TABLE xlite_config (
 
 DROP TABLE IF EXISTS xlite_config_translations;
 CREATE TABLE xlite_config_translations (
-  label_id int(11) NOT NULL auto_increment,
+  label_id int NOT NULL auto_increment,
   code char(2) NOT NULL,
-  id int(11) NOT NULL default 0,
-  option_name char(255) NOT NULL,
-  option_comment char(255) NOT NULL,
+  id int NOT NULL default 0,
+  option_name varchar(255) NOT NULL,
+  option_comment varchar(255) NOT NULL,
   PRIMARY KEY (label_id),
   KEY ci (code, id),
   KEY i (id)
@@ -99,10 +99,10 @@ CREATE TABLE xlite_currencies (
 
 DROP TABLE IF EXISTS xlite_currency_translations;
 CREATE TABLE xlite_currency_translations (
-  label_id int(11) NOT NULL AUTO_INCREMENT,
+  label_id int NOT NULL AUTO_INCREMENT,
   code char(2) NOT NULL,
-  id int(11) NOT NULL DEFAULT '0',
-  name char(255) NOT NULL,
+  id int NOT NULL DEFAULT '0',
+  name varchar(255) NOT NULL,
   PRIMARY KEY (label_id),
   KEY ci (code,id),
   KEY i (id)
@@ -114,8 +114,8 @@ CREATE TABLE xlite_waitingips (
   id int NOT NULL auto_increment,
   ip varchar(32) NOT NULL DEFAULT '',
   unique_key varchar(50) NOT NULL DEFAULT '',
-  first_date int(11) NOT NULL DEFAULT '0',
-  last_date int(11) NOT NULL DEFAULT '0',
+  first_date int NOT NULL DEFAULT '0',
+  last_date int NOT NULL DEFAULT '0',
   count int NOT NULL DEFAULT '0',
   PRIMARY KEY  (id),
   UNIQUE (ip)
@@ -136,23 +136,19 @@ DROP TABLE IF EXISTS xlite_countries;
 CREATE TABLE xlite_countries (
   country varchar(50) NOT NULL default '',
   code char(2) NOT NULL default '',
-  language varchar(32) NOT NULL default '',
-  charset varchar(32) NOT NULL default 'iso-8859-1',
-  enabled int(1) NOT NULL default '1',
+  enabled tinyint(1) NOT NULL default '1',
   eu_member char(1) NOT NULL default 'N',
   PRIMARY KEY  (code),
   KEY country (country),
-  KEY language (language),
-  KEY charset (charset),
   KEY enabled (enabled),
   KEY eu_member (eu_member)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_log;
 CREATE TABLE xlite_log (
-  unixtime int(11) NOT NULL default '0',
+  unixtime int NOT NULL default '0',
   ident varchar(16) NOT NULL default '',
-  priority int(11) default NULL,
+  priority int default NULL,
   message varchar(200) default NULL,
   KEY unixtime (unixtime,ident),
   KEY priority (priority),
@@ -164,27 +160,27 @@ CREATE TABLE xlite_modules (
   module_id int(6) NOT NULL auto_increment,
   name varchar(64) NOT NULL default '',
   author varchar(64) NOT NULL default '',
-  enabled int(1) unsigned NOT NULL default '0',
-  installed int(1) unsigned NOT NULL default 0,
-  last_update int(11) default NULL,
+  enabled tinyint(1) unsigned NOT NULL default '0',
+  installed tinyint(1) unsigned NOT NULL default 0,
+  last_update int default NULL,
   last_version varchar(32) NOT NULL default '',
   PRIMARY KEY (module_id),
-  UNIQUE KEY (name),
+  UNIQUE KEY an (author,name),
   KEY enabled (enabled)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_order_items;
 CREATE TABLE xlite_order_items (
-  item_id int(11) NOT NULL auto_increment PRIMARY KEY,
-  order_id int(11) NOT NULL default '0',
-  object_id int(11) unsigned NOT NULL default '0',
+  item_id int NOT NULL auto_increment PRIMARY KEY,
+  order_id int NOT NULL default '0',
+  object_id int unsigned NOT NULL default '0',
   object_type varchar(16) NOT NULL default 'product',
   name varchar(255) NOT NULL,
   sku varchar(255) NOT NULL default '',
-  price decimal(16,4) NOT NULL default '0.0000',
-  amount int(11) NOT NULL default '1',
-  subtotal decimal(16,4) NOT NULL default '0.0000',
-  total decimal(16,4) NOT NULL default '0.0000',
+  price numeric(16,4) NOT NULL default '0.0000',
+  amount int NOT NULL default '1',
+  subtotal numeric(16,4) NOT NULL default '0.0000',
+  total numeric(16,4) NOT NULL default '0.0000',
   KEY ooo (order_id, object_id, object_type),
   KEY price (price),
   KEY amount (amount)
@@ -192,20 +188,20 @@ CREATE TABLE xlite_order_items (
 
 DROP TABLE IF EXISTS xlite_orders;
 CREATE TABLE xlite_orders (
-  order_id int(11) NOT NULL auto_increment PRIMARY KEY,
-  profile_id int(11) default '0',
-  orig_profile_id int(11) default '0',
-  total decimal(16,4) NOT NULL default '0.00',
-  subtotal decimal(16,4) NOT NULL default '0.00',
+  order_id int NOT NULL auto_increment PRIMARY KEY,
+  profile_id int default '0',
+  orig_profile_id int default '0',
+  total numeric(16,4) NOT NULL default '0.00',
+  subtotal numeric(16,4) NOT NULL default '0.00',
   tracking varchar(32) default NULL,
-  date int(11) default NULL,
+  date int default NULL,
   status char(1) default 'I',
   notes text,
   taxes text,
-  shipping_id int(11) default NULL,
-  is_order int(1) NOT NULL default 1,
+  shipping_id int default NULL,
+  is_order tinyint(1) NOT NULL default 1,
   currency_id int(3) NOT NULL default 840,
-  KEY xlite_order_date (date),
+  KEY `date` (`date`),
   KEY profile_id (profile_id),
   KEY orig_profile_id (orig_profile_id),
   KEY total (total),
@@ -218,8 +214,8 @@ CREATE TABLE xlite_orders (
 
 DROP TABLE IF EXISTS xlite_order_details;
 CREATE TABLE xlite_order_details (
-  detail_id int(11) NOT NULL auto_increment PRIMARY KEY,
-  order_id int(11) NOT NULL default '0',
+  detail_id int NOT NULL auto_increment PRIMARY KEY,
+  order_id int NOT NULL default '0',
   name varchar(255) NOT NULL default '',
   label varchar(255) default NULL,
   value text NOT NULL,
@@ -228,36 +224,36 @@ CREATE TABLE xlite_order_details (
 
 DROP TABLE IF EXISTS xlite_order_modifiers;
 CREATE TABLE xlite_order_modifiers (
-  id int(11) NOT NULL auto_increment PRIMARY KEY,
-  order_id int(11) NOT NULL default '0',
+  id int NOT NULL auto_increment PRIMARY KEY,
+  order_id int NOT NULL default '0',
   code varchar(32) NOT NULL default '',
   name varchar(255) NOT NULL default '',
   is_visible tinyint(1) NOT NULL default 0,
   is_summable tinyint(1) NOT NULL default 1,
   subcode varchar(32) NOT NULL default '',
-  surcharge decimal(16,4) NOT NULL default '0.0000',
+  surcharge numeric(16,4) NOT NULL default '0.0000',
   KEY ocs (order_id, code, subcode)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_order_item_modifiers;
 CREATE TABLE xlite_order_item_modifiers (
-  id int(11) NOT NULL auto_increment PRIMARY KEY,
-  item_id int(11) NOT NULL default '0',
+  id int NOT NULL auto_increment PRIMARY KEY,
+  item_id int NOT NULL default '0',
   code varchar(32) NOT NULL default '',
   name varchar(255) NOT NULL default '',
   is_visible tinyint(1) NOT NULL default 0,
   is_summable tinyint(1) NOT NULL default 1,
   subcode varchar(32) NOT NULL default '',
-  surcharge decimal(16,4) NOT NULL default '0.0000',
+  surcharge numeric(16,4) NOT NULL default '0.0000',
   KEY ics (item_id, code, subcode)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_payment_methods;
 CREATE TABLE xlite_payment_methods (
-  method_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  method_id int NOT NULL auto_increment PRIMARY KEY,
   service_name varchar(128) NOT NULL default '',
   class varchar(64) NOT NULL default '',
-  orderby int(11) NOT NULL default '0',
+  orderby int NOT NULL default '0',
   enabled tinyint(1) NOT NULL default '1',
   KEY orderby (orderby),
   KEY class (class, enabled),
@@ -266,10 +262,10 @@ CREATE TABLE xlite_payment_methods (
 
 DROP TABLE IF EXISTS xlite_payment_method_translations;
 CREATE TABLE xlite_payment_method_translations (
-  label_id int(11) NOT NULL AUTO_INCREMENT,
+  label_id int NOT NULL AUTO_INCREMENT,
   code char(2) NOT NULL,
-  id int(11) NOT NULL DEFAULT '0',
-  name char(255) NOT NULL,
+  id int NOT NULL DEFAULT '0',
+  name varchar(255) NOT NULL,
   description text NOT NULL default '',
   PRIMARY KEY (label_id),
   KEY ci (code,id),
@@ -278,8 +274,8 @@ CREATE TABLE xlite_payment_method_translations (
 
 DROP TABLE IF EXISTS xlite_payment_method_settings;
 CREATE TABLE xlite_payment_method_settings (
-  setting_id int(11) NOT NULL auto_increment PRIMARY KEY,
-  method_id int(11) NOT NULL default 0,
+  setting_id int NOT NULL auto_increment PRIMARY KEY,
+  method_id int NOT NULL default 0,
   name varchar(128) NOT NULL,
   value text NOT NULL,
   KEY mn (method_id, name)
@@ -287,14 +283,14 @@ CREATE TABLE xlite_payment_method_settings (
 
 DROP TABLE IF EXISTS xlite_payment_transactions;
 CREATE TABLE xlite_payment_transactions (
-  `transaction_id` int(11) NOT NULL auto_increment PRIMARY KEY,
-  `order_id` int(11) NOT NULL default 0,
-  `method_id` int(11) NOT NULL default 0,
+  `transaction_id` int NOT NULL auto_increment PRIMARY KEY,
+  `order_id` int NOT NULL default 0,
+  `method_id` int NOT NULL default 0,
   `method_name` varchar(128) NOT NULL,
   `method_local_name` varchar(255) NOT NULL,
   `status` char(1) NOT NULL default 'I',
-  `value` decimal(16,4) NOT NULL default '0.0000',
-  `type` char(8) NOT NULL default 'sale',
+  `value` numeric(16,4) NOT NULL default '0.0000',
+  `type` varchar(8) NOT NULL default 'sale',
   `note` varchar(255) NOT NULL default '',
   KEY o (order_id, status),
   KEY pm (method_id, status),
@@ -303,8 +299,8 @@ CREATE TABLE xlite_payment_transactions (
 
 DROP TABLE IF EXISTS xlite_payment_transaction_data;
 CREATE TABLE xlite_payment_transaction_data (
-  data_id int(11) NOT NULL auto_increment PRIMARY KEY,
-  transaction_id int(11) NOT NULL default 0,
+  data_id int NOT NULL auto_increment PRIMARY KEY,
+  transaction_id int NOT NULL default 0,
   name varchar(128) NOT NULL,
   label varchar(255) NOT NULL default '',
   access_level char(1) NOT NULL default 'A',
@@ -314,19 +310,17 @@ CREATE TABLE xlite_payment_transaction_data (
 
 DROP TABLE IF EXISTS xlite_products;
 CREATE TABLE xlite_products (
-  product_id int(11) unsigned NOT NULL auto_increment,
-  price decimal(12,2) NOT NULL default '0.00',
-  sale_price decimal(12,2) NOT NULL default '0.00',
+  product_id int unsigned NOT NULL auto_increment,
+  price numeric(12,2) NOT NULL default '0.00',
+  sale_price numeric(12,2) NOT NULL default '0.00',
   sku varchar(32) NOT NULL default '' COLLATE utf8_general_ci,
-  order_by int(11) NOT NULL default '0',
-  enabled int(11) NOT NULL default '1',
-  weight decimal(12,2) NOT NULL default '0.00',
+  enabled int NOT NULL default '1',
+  weight numeric(12,2) NOT NULL default '0.00',
   tax_class varchar(32) NOT NULL default '',
-  free_shipping int(11) NOT NULL default '0',
+  free_shipping int NOT NULL default '0',
   clean_url varchar(255) NOT NULL default '',
   javascript text NOT NULL,
   PRIMARY KEY (product_id),
-  KEY order_by (order_by),
   KEY price (price),
   KEY sku (sku),
   KEY enabled (enabled),
@@ -338,10 +332,10 @@ CREATE TABLE xlite_products (
 
 DROP TABLE IF EXISTS xlite_category_products;
 CREATE TABLE xlite_category_products (
-  id int(11) unsigned NOT NULL AUTO_INCREMENT,
-  product_id int(11) unsigned NOT NULL DEFAULT '0',
-  category_id int(11) unsigned NOT NULL DEFAULT '0',
-  orderby int(11) NOT NULL DEFAULT '0',
+  id int unsigned NOT NULL AUTO_INCREMENT,
+  product_id int unsigned NOT NULL DEFAULT '0',
+  category_id int unsigned NOT NULL DEFAULT '0',
+  orderby int NOT NULL DEFAULT '0',
   PRIMARY KEY (id),
   UNIQUE KEY pair (category_id,product_id),
   KEY orderby (orderby),
@@ -351,27 +345,27 @@ CREATE TABLE xlite_category_products (
 
 DROP TABLE IF EXISTS xlite_product_images;
 CREATE TABLE xlite_product_images (
-  `image_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `id` int(11) NOT NULL DEFAULT '0',
+  `image_id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL DEFAULT '0',
   `path` varchar(512) NOT NULL DEFAULT '',
   `mime` varchar(64) NOT NULL DEFAULT 'image/jpeg',
-  `width` int(11) NOT NULL DEFAULT '0',
-  `height` int(11) NOT NULL DEFAULT '0',
-  `size` int(11) NOT NULL DEFAULT '0',
-  `date` int(11) NOT NULL DEFAULT '0',
+  `width` int NOT NULL DEFAULT '0',
+  `height` int NOT NULL DEFAULT '0',
+  `size` int NOT NULL DEFAULT '0',
+  `date` int NOT NULL DEFAULT '0',
   `hash` varchar(32) NOT NULL DEFAULT '',
   `alt` varchar(255) NOT NULL default '',
-  `orderby` int(11) NOT NULL DEFAULT 0,
+  `orderby` int NOT NULL DEFAULT 0,
   PRIMARY KEY (image_id),
   KEY id (id)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_product_translations;
 CREATE TABLE xlite_product_translations (
-  label_id int(11) NOT NULL AUTO_INCREMENT,
+  label_id int NOT NULL AUTO_INCREMENT,
   code char(2) NOT NULL,
-  id int(11) NOT NULL DEFAULT '0',
-  name char(255) NOT NULL COLLATE utf8_general_ci,
+  id int NOT NULL DEFAULT '0',
+  name varchar(255) NOT NULL COLLATE utf8_general_ci,
   description text NOT NULL COLLATE utf8_general_ci,
   brief_description text NOT NULL COLLATE utf8_general_ci,
   meta_tags varchar(255) NOT NULL DEFAULT '',
@@ -384,13 +378,13 @@ CREATE TABLE xlite_product_translations (
 
 DROP TABLE IF EXISTS xlite_extra_fields;
 CREATE TABLE xlite_extra_fields (
-  field_id int(11) NOT NULL auto_increment,
-  product_id int(11) NOT NULL default '0',
+  field_id int NOT NULL auto_increment,
+  product_id int NOT NULL default '0',
   name varchar(255) NOT NULL default '',
   default_value varchar(255) NOT NULL default '',
-  enabled int(1) NOT NULL default '1',
-  order_by int(11) NOT NULL default '0',
-  parent_field_id int(11) NOT NULL default '0',
+  enabled tinyint(1) NOT NULL default '1',
+  order_by int NOT NULL default '0',
+  parent_field_id int NOT NULL default '0',
   categories text NOT NULL,
   PRIMARY KEY  (field_id),
   KEY product_id (product_id),
@@ -404,8 +398,8 @@ CREATE TABLE xlite_extra_fields (
 
 DROP TABLE IF EXISTS xlite_extra_field_values;
 CREATE TABLE xlite_extra_field_values (
-  product_id int(11) NOT NULL default '0',
-  field_id int(11) NOT NULL default '0',
+  product_id int NOT NULL default '0',
+  field_id int NOT NULL default '0',
   value text(65536) NOT NULL default '',
   KEY field_key (product_id, field_id),
   KEY value (value (65536))
@@ -413,25 +407,25 @@ CREATE TABLE xlite_extra_field_values (
 
 DROP TABLE IF EXISTS xlite_profiles;
 CREATE TABLE xlite_profiles (
-  profile_id int(11) NOT NULL auto_increment,
+  profile_id int NOT NULL auto_increment,
   login varchar(128) NOT NULL default '',
   password varchar(32) NOT NULL default '',
   password_hint varchar(128) NOT NULL default '',
   password_hint_answer varchar(128) NOT NULL default '',
-  access_level int(11) NOT NULL default '0',
-  cms_profile_id int(11) NOT NULL default '0',
+  access_level int NOT NULL default '0',
+  cms_profile_id int NOT NULL default '0',
   cms_name varchar(32) NOT NULL default '',
-  added int(11) NOT NULL default '0',
-  first_login int(11) NOT NULL default '0',
-  last_login int(11) NOT NULL default '0',
+  added int NOT NULL default '0',
+  first_login int NOT NULL default '0',
+  last_login int NOT NULL default '0',
   status char(1) NOT NULL default 'E',
   referer varchar(255) NOT NULL default '',
-  membership_id int(11) default NULL,
-  pending_membership_id int(11) default NULL,
-  order_id int(11) default NULL,
+  membership_id int default NULL,
+  pending_membership_id int default NULL,
+  order_id int default NULL,
   language varchar(2) NOT NUll default 'en',
-  last_shipping_id int(11) default NULL,
-  last_payment_id int(11) default NULL,
+  last_shipping_id int default NULL,
+  last_payment_id int default NULL,
   PRIMARY KEY (profile_id),
   KEY (cms_profile_id),
   KEY login (login),
@@ -447,8 +441,8 @@ CREATE TABLE xlite_profiles (
 
 DROP TABLE IF EXISTS xlite_profile_addresses;
 CREATE TABLE xlite_profile_addresses (
-  address_id int(11) NOT NULL auto_increment,
-  profile_id int(11) NOT NULL default 0,
+  address_id int NOT NULL auto_increment,
+  profile_id int NOT NULL default 0,
   is_billing tinyint(1) NOT NULL default 0,
   is_shipping tinyint(1) NOT NULL default 0,
   address_type char(1) NOT NULL default 'R',
@@ -458,7 +452,7 @@ CREATE TABLE xlite_profile_addresses (
   phone varchar(32) NOT NULL default '',
   street varchar(64) NOT NULL default '',
   city varchar(64) NOT NULL default '',
-  state_id int(11) NOT NULL default '0',
+  state_id int NOT NULL default '0',
   custom_state varchar(64) NOT NULL default '',
   country_code char(2) NOT NULL default '',
   zipcode varchar(32) NOT NULL default '',
@@ -471,8 +465,8 @@ CREATE TABLE xlite_profile_addresses (
 DROP TABLE IF EXISTS xlite_search_stat;
 CREATE TABLE xlite_search_stat (
   query varchar(64) NOT NULL default '',
-  product_count int(11) NOT NULL default '0',
-  count int(11) NOT NULL default '0',
+  product_count int NOT NULL default '0',
+  count int NOT NULL default '0',
   PRIMARY KEY  (query),
   KEY product_count (product_count),
   KEY count (count)
@@ -480,9 +474,9 @@ CREATE TABLE xlite_search_stat (
 
 DROP TABLE IF EXISTS xlite_sessions;
 CREATE TABLE xlite_sessions (
-  id int(11) NOT NULL auto_increment,
+  id int NOT NULL auto_increment,
   sid char(32) NOT NULL,
-  expiry int(11) unsigned NOT NULL default 0,
+  expiry int unsigned NOT NULL default 0,
   PRIMARY KEY id (id),
   UNIQUE KEY sid (sid),
   KEY expiry (expiry)
@@ -490,8 +484,8 @@ CREATE TABLE xlite_sessions (
 
 DROP TABLE IF EXISTS xlite_session_cells;
 CREATE TABLE xlite_session_cells (
-  `cell_id` int(11) NOT NULL auto_increment,
-  `id` int(11) NOT NULL default 0,
+  `cell_id` int NOT NULL auto_increment,
+  `id` int NOT NULL default 0,
   `name` varchar(255) NOT NULL,
   `value` text,
   `type` varchar(16),
@@ -504,12 +498,12 @@ CREATE TABLE xlite_session_cells (
 
 DROP TABLE IF EXISTS xlite_shipping_methods;
 CREATE TABLE xlite_shipping_methods (
-  method_id int(11) NOT NULL auto_increment,
+  method_id int NOT NULL auto_increment,
   processor varchar(255) NOT NULL default '',
   carrier varchar(255) NOT NULL default '',
   code varchar(32) NOT NULL default '',
-  enabled int(1) NOT NULL default '1',
-  position int(11) NOT NULL default '0',
+  enabled tinyint(1) NOT NULL default '1',
+  position int NOT NULL default '0',
   PRIMARY KEY  (method_id),
   KEY processor (processor),
   KEY carrier (carrier),
@@ -519,10 +513,10 @@ CREATE TABLE xlite_shipping_methods (
 
 DROP TABLE IF EXISTS xlite_shipping_method_translations;
 CREATE TABLE xlite_shipping_method_translations (
-  label_id int(11) NOT NULL AUTO_INCREMENT,
+  label_id int NOT NULL AUTO_INCREMENT,
   code char(2) NOT NULL,
-  id int(11) NOT NULL DEFAULT '0',
-  name char(255) NOT NULL,
+  id int NOT NULL DEFAULT '0',
+  name varchar(255) NOT NULL,
   PRIMARY KEY (label_id),
   KEY ci (code,id),
   KEY i (id)
@@ -530,19 +524,19 @@ CREATE TABLE xlite_shipping_method_translations (
 
 DROP TABLE IF EXISTS xlite_shipping_markups;
 CREATE TABLE xlite_shipping_markups (
-  markup_id int(11) NOT NULL auto_increment,
-  method_id int(11) NOT NULL default '0',
-  zone_id int(11) NOT NULL default '0',
-  min_weight decimal(12,2) NOT NULL default '0.00',
-  max_weight decimal(12,2) NOT NULL default '999999.00',
-  min_total decimal(12,2) NOT NULL default '0.00',
-  max_total decimal(12,2) NOT NULL default '999999.00',
-  min_items int(11) NOT NULL default '0',
-  max_items int(11) NOT NULL default '999999',
-  markup_flat decimal(12,2) NOT NULL default '0.00',
-  markup_percent decimal(12,2) NOT NULL default '0.00',
-  markup_per_item decimal(12,2) NOT NULL default '0.00',
-  markup_per_weight decimal(12,2) NOT NULL default '0.00',
+  markup_id int NOT NULL auto_increment,
+  method_id int NOT NULL default '0',
+  zone_id int NOT NULL default '0',
+  min_weight numeric(12,2) NOT NULL default '0.00',
+  max_weight numeric(12,2) NOT NULL default '999999.00',
+  min_total numeric(12,2) NOT NULL default '0.00',
+  max_total numeric(12,2) NOT NULL default '999999.00',
+  min_items int NOT NULL default '0',
+  max_items int NOT NULL default '999999',
+  markup_flat numeric(12,2) NOT NULL default '0.00',
+  markup_percent numeric(12,2) NOT NULL default '0.00',
+  markup_per_item numeric(12,2) NOT NULL default '0.00',
+  markup_per_weight numeric(12,2) NOT NULL default '0.00',
   PRIMARY KEY  (markup_id),
   KEY rate (method_id,zone_id,min_weight,min_total,min_items),
   KEY max_weight (max_weight),
@@ -556,7 +550,7 @@ CREATE TABLE xlite_shipping_markups (
 
 DROP TABLE IF EXISTS xlite_states;
 CREATE TABLE xlite_states (
-  state_id int(11) NOT NULL auto_increment,
+  state_id int NOT NULL auto_increment,
   state varchar(32) NOT NULL default '',
   code varchar(32) NOT NULL default '',
   country_code char(2) NOT NULL default '',
@@ -569,17 +563,17 @@ DROP TABLE IF EXISTS xlite_upgrades;
 CREATE TABLE xlite_upgrades (
   from_ver varchar(10) NOT NULL default '',
   to_ver varchar(10) NOT NULL default '',
-  date int(11) NOT NULL default '0',
+  date int NOT NULL default '0',
   PRIMARY KEY  (from_ver,to_ver),
   KEY date (date)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_form_ids;
 CREATE TABLE xlite_form_ids (
-  id int(11) NOT NULL auto_increment PRIMARY KEY,
-  session_id int(11) NOT NULL,
+  id int NOT NULL auto_increment PRIMARY KEY,
+  session_id int NOT NULL,
   form_id varchar(32) NOT NULL,
-  date int(11) NOT NULL,
+  date int NOT NULL,
   KEY session_id (session_id),
   UNIQUE KEY fs(form_id, session_id),
   CONSTRAINT `xlite_session_to_forms` FOREIGN KEY session_id (`session_id`) REFERENCES `xlite_sessions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -587,19 +581,19 @@ CREATE TABLE xlite_form_ids (
 
 DROP TABLE IF EXISTS xlite_view_lists;
 CREATE TABLE xlite_view_lists (
-  list_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  list_id int NOT NULL auto_increment PRIMARY KEY,
   class varchar(512) NOT NULL default '',
   list varchar(255) NOT NULL default '',
   zone varchar(16) NOT NULL default 'customer',
   child varchar(512) default '',
-  weight mediumint unsigned NOT NULL default 0,
+  weight mediumint NOT NULL default 0,
   tpl varchar(1024) NOT NULL default '',
   KEY clzw (class, list, zone, weight)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_template_patches;
 CREATE TABLE xlite_template_patches (
-  patch_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  patch_id int NOT NULL auto_increment PRIMARY KEY,
   zone varchar(16) NOT NULL default 'customer',
   lang varchar(2) NOT NULL default '',
   tpl varchar(64) NOT NULL default '',
@@ -618,11 +612,11 @@ CREATE TABLE xlite_template_patches (
 
 DROP TABLE IF EXISTS xlite_languages;
 CREATE TABLE xlite_languages (
-  lng_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  lng_id int NOT NULL auto_increment PRIMARY KEY,
   code char(2) NOT NULL,
   code3 char(3) NOT NULL default '',
-  r2l int(1) NOT NULL default 0,
-  status int(1) NOT NULL default 0,
+  r2l tinyint(1) NOT NULL default 0,
+  status tinyint(1) NOT NULL default 0,
   UNIQUE KEY code3 (code3),
   UNIQUE KEY code2 (code),
   KEY status(status)
@@ -630,26 +624,26 @@ CREATE TABLE xlite_languages (
 
 DROP TABLE IF EXISTS xlite_language_translations;
 CREATE TABLE xlite_language_translations (
-  label_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  label_id int NOT NULL auto_increment PRIMARY KEY,
   code char(2) NOT NULL,
-  id int(11) NOT NULL default 0,
-  name char(64) NOT NULL,
+  id int NOT NULL default 0,
+  name varchar(64) NOT NULL,
   KEY ci (code, id),
   KEY i (id)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_language_labels;
 CREATE TABLE xlite_language_labels (
-  label_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  label_id int NOT NULL auto_increment PRIMARY KEY,
   name varchar(255) NOT NULL default '',
   UNIQUE KEY name (name)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_language_label_translations;
 CREATE TABLE xlite_language_label_translations (
-  label_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  label_id int NOT NULL auto_increment PRIMARY KEY,
   code char(2) NOT NULL,
-  id int(11) NOT NULL default 0,
+  id int NOT NULL default 0,
   label text NOT NULL,
   KEY ci (code, id),
   KEY i (id)
@@ -657,26 +651,26 @@ CREATE TABLE xlite_language_label_translations (
 
 DROP TABLE IF EXISTS xlite_memberships;
 CREATE TABLE xlite_memberships (
-  membership_id int(11) NOT NULL auto_increment PRIMARY KEY,
-  orderby int(11) NOT NULL default 0,
-  active int(1) NOT NULL default 1
+  membership_id int NOT NULL auto_increment PRIMARY KEY,
+  orderby int NOT NULL default 0,
+  active tinyint(1) NOT NULL default 1
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_membership_translations;
 CREATE TABLE xlite_membership_translations (
-  label_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  label_id int NOT NULL auto_increment PRIMARY KEY,
   code char(2) NOT NULL,
-  id int(11) NOT NULL default 0,
-  name char(128) NOT NULL,
+  id int NOT NULL default 0,
+  name varchar(128) NOT NULL,
   KEY ci (code, id),
   KEY i (id)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_zones;
 CREATE TABLE xlite_zones (
-  zone_id int(11) NOT NULL auto_increment,
+  zone_id int NOT NULL auto_increment,
   zone_name varchar(64) NOT NULL default '',
-  is_default int(1) NOT NULL default '0',
+  is_default tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (zone_id),
   KEY zone_name (zone_name),
   KEY zone_default (is_default)
@@ -684,8 +678,8 @@ CREATE TABLE xlite_zones (
 
 DROP TABLE IF EXISTS xlite_zone_elements;
 CREATE TABLE xlite_zone_elements (
-  element_id int(11) NOT NULL auto_increment,
-  zone_id int(11) NOT NULL default '0',
+  element_id int NOT NULL auto_increment,
+  zone_id int NOT NULL default '0',
   element_value varchar(255) NOT NULL default '',
   element_type char(1) NOT NULL default '',
   PRIMARY KEY  (element_id),

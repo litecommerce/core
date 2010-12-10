@@ -35,7 +35,13 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity
- * @Table (name="languages")
+ * @Table (name="languages",
+ *      indexes={
+ *          @UniqueConstraint (name="code3", columns={"code3"}),
+ *          @UniqueConstraint (name="code2", columns={"code"}),
+ *          @Index (name="status", columns={"status"})
+ *      }
+ * )
  */
 class Language extends \XLite\Model\Base\I18n
 {
@@ -67,7 +73,7 @@ class Language extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="2", unique=true)
+     * @Column (type="fixedstring", length="2", unique=true)
      */
     protected $code;
 
@@ -78,7 +84,7 @@ class Language extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="3", unique=true)
+     * @Column (type="fixedstring", length="3", unique=true)
      */
     protected $code3 = '';
 

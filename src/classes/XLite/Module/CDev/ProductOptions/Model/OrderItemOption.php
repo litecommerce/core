@@ -36,7 +36,11 @@ namespace XLite\Module\CDev\ProductOptions\Model;
  * @since   3.0.0
  *
  * @Entity (repositoryClass="XLite\Module\CDev\ProductOptions\Model\Repo\OrderItemOption")
- * @Table  (name="order_item_options")
+ * @Table  (name="order_item_options",
+ *      indexes={
+ *          @Index (name="item", columns={"item_id","orderby"})
+ *      }
+ * )
  */
 class OrderItemOption extends \XLite\Model\AEntity
 {

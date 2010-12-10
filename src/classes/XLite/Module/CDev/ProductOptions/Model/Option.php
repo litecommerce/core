@@ -36,7 +36,11 @@ namespace XLite\Module\CDev\ProductOptions\Model;
  * @since   3.0.0
  *
  * @Entity (repositoryClass="\XLite\Module\CDev\ProductOptions\Model\Repo\Option")
- * @Table  (name="options")
+ * @Table  (name="options",
+ *      indexes={
+ *          @Index (name="grp", columns={"group_id","enabled","orderby"})
+ *      }
+ * )
  */
 class Option extends \XLite\Model\Base\I18n
 {

@@ -36,7 +36,12 @@ namespace XLite\Model;
  * @since   3.0.0
  *
  * @Entity
- * @Table  (name="category_translations")
+ * @Table  (name="category_translations",
+ *      indexes={
+ *          @Index (name="ci", columns={"code","id"}),
+ *          @Index (name="id", columns={"id"})
+ *      }
+ * )
  */
 class CategoryTranslation extends \XLite\Model\Base\Translation
 {

@@ -49,7 +49,7 @@ abstract class Translation extends \XLite\Model\AEntity
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer", length="11", nullable=false)
+     * @Column         (type="integer")
      */
     protected $label_id;
 
@@ -61,7 +61,7 @@ abstract class Translation extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="2", nullable=false)
+     * @Column (type="fixedstring", length="2")
      */
     protected $code = 'en';
 

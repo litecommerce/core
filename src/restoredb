@@ -98,6 +98,15 @@ require_once 'classes/XLite/Module/AModule.php';
 require_once 'classes/XLite/Base/IPatcher.php';
 
 // modules
+$enabledModules = array(
+    'AustraliaPost',
+    'AuthorizeNet',
+    'Bestsellers',
+    'DrupalConnector',
+    'Quantum',
+    'FeaturedProducts',
+    'ProductOptions',
+);
 
 foreach (glob('classes/XLite/Module/CDev/*/Main.php') as $f) {
 
@@ -112,10 +121,14 @@ last_version = \'' . $class::getVersion() . '\'',
 		$__connection
 	);
 
-	$sqlFile = dirname($f) . '/install.sql';
-	if (file_exists($sqlFile)) {
-		_do_query_upload($sqlFile, $__connection, true);
-	}
+    // Load install.sql only for enabled modules
+    if (preg_match('/.CDev.(?:' . implode('|', $enabledModules) . ')./Ss', $f)) {
+
+    	$sqlFile = dirname($f) . '/install.sql';
+	    if (file_exists($sqlFile)) {
+		    _do_query_upload($sqlFile, $__connection, true);
+    	}
+    }
 }
 
 _do_query_upload('sql/demo/xlite_demo_user.sql', $__connection, true);

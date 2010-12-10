@@ -36,7 +36,12 @@ namespace XLite\Model;
  * @since   3.0.0
  *
  * @Entity
- * @Table  (name="config_translations")
+ * @Table  (name="config_translations",
+ *      indexes={
+ *          @Index (name="ci", columns={"code","id"}),
+ *          @Index (name="id", columns={"id"})
+ *      }
+ * )
  */
 class ConfigTranslation extends \XLite\Model\Base\Translation
 {

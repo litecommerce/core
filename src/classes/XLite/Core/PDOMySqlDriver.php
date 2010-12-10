@@ -51,5 +51,19 @@ class PDOMySqlDriver extends \Doctrine\DBAL\Driver\PDOMySql\Driver
     {
         return new \XLite\Core\MySqlSchemaManager($conn);
     }
+
+    /**
+     * Get database platform 
+     * 
+     * @return \Doctrine\DBAL\Platforms\AbstractPlatform
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDatabasePlatform()
+    {
+        return new \XLite\Core\MySqlPlatform();
+    }
+
 }
 

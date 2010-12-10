@@ -35,7 +35,12 @@ namespace XLite\Module\CDev\ProductOptions\Model;
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity
- * @Table (name="option_translations")
+ * @Table (name="option_translations",
+ *      indexes={
+ *          @Index (name="ci", columns={"code","id"}),
+ *          @Index (name="id", columns={"id"})
+ *      }
+ * )
  */
 class OptionTranslation extends \XLite\Model\Base\Translation
 {

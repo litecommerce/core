@@ -35,7 +35,12 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity
- * @Table (name="zone_elements")
+ * @Table (name="zone_elements",
+ *      indexes={
+ *          @Index (name="type_value", columns={"element_type","element_value"}),
+ *          @Index (name="id_type", columns={"zone_id","element_type"})
+ *      }
+ * )
  */
 class ZoneElement extends \XLite\Model\AEntity
 {
@@ -90,7 +95,7 @@ class ZoneElement extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="1", nullable=false)
+     * @Column (type="fixedstring", length="1", nullable=false)
      */
     protected $element_type;
 

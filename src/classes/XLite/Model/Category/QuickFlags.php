@@ -50,7 +50,7 @@ class QuickFlags extends \XLite\Model\AEntity
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer", length="11", nullable=false)
+     * @Column         (type="uinteger", nullable=false)
      */
     protected $id;
 
@@ -62,7 +62,7 @@ class QuickFlags extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="uinteger", nullable=false)
      */
     protected $category_id;
 

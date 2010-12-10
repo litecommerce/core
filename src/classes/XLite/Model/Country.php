@@ -36,7 +36,13 @@ namespace XLite\Model;
  * @since   3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Country")
- * @Table  (name="countries")
+ * @Table  (name="countries",
+ *      indexes={
+ *          @Index (name="country", columns={"country"}),
+ *          @Index (name="enabled", columns={"enabled"}),
+ *          @Index (name="eu_member", columns={"eu_member"})
+ *      }
+ * )
  */
 class Country extends \XLite\Model\AEntity
 {
@@ -61,7 +67,7 @@ class Country extends \XLite\Model\AEntity
      * @since  3.0.0
      *
      * @Id
-     * @Column (type="string", length="2", nullable=false, unique=true)
+     * @Column (type="fixedstring", length="2", nullable=false, unique=true)
      */
     protected $code;
 

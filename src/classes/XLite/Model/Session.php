@@ -36,7 +36,12 @@ namespace XLite\Model;
  * @since   3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Session")
- * @Table  (name="sessions")
+ * @Table  (name="sessions",
+ *      indexes={
+ *          @UniqueConstraint (name="sid", columns={"sid"}),
+ *          @Index (name="expiry", columns={"expiry"})
+ *      }
+ * )
  * @HasLifecycleCallbacks
  */
 class Session extends \XLite\Model\AEntity
@@ -69,7 +74,7 @@ class Session extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="32")
+     * @Column (type="fixedstring", length="32")
      */
     protected $sid;
 
@@ -81,7 +86,7 @@ class Session extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer")
+     * @Column (type="uinteger")
      */
     protected $expiry;
 
@@ -94,6 +99,21 @@ class Session extends \XLite\Model\AEntity
      * @since  3.0.0
      */
     protected $cache = array();
+
+    /**
+     * Set session id 
+     * 
+     * @param string $value Session id
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setSid($value)
+    {
+        $this->sid = $value;
+    }
 
     /**
      * Return instance of the session cell repository

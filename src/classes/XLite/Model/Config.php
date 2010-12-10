@@ -37,10 +37,12 @@ namespace XLite\Model;
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Config")
  * @Table  (name="config",
- *         indexes={
- *              @Index (name="orderby", columns={"orderby"}),
- *              @Index (name="type", columns={"type"})
- *         }
+ *      indexes={
+ *          @UniqueConstraint (name="nc", columns={"name", "category"}),
+ *          @Index (name="orderby", columns={"orderby"}),
+ *          @Index (name="type", columns={"type"}),
+ *          @Index (name="value", columns={"value"})
+ *      }
  * )
  */
 class Config extends \XLite\Model\Base\I18n

@@ -36,7 +36,11 @@ namespace XLite\Model\Image\Product;
  * @since   3.0.0
  *
  * @Entity 
- * @Table  (name="product_images")
+ * @Table  (name="product_images",
+ *      indexes={
+ *          @Index (name="id", columns={"id"})
+ *      }
+ * )
  */
 class Image extends \XLite\Model\Base\Image
 {

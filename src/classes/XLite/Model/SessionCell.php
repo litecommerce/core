@@ -36,7 +36,12 @@ namespace XLite\Model;
  * @since   3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\SessionCell")
- * @Table  (name="session_cells")
+ * @Table  (name="session_cells",
+ *      indexes={
+ *          @UniqueConstraint (name="iname", columns={"id", "name"}),
+ *          @Index (name="id", columns={"id"})
+ *      }
+ * )
  */
 class SessionCell extends \XLite\Model\AEntity
 {

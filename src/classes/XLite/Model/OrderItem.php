@@ -38,6 +38,7 @@ namespace XLite\Model;
  * @Entity (repositoryClass="XLite\Model\Repo\OrderItem")
  * @Table  (name="order_items",
  *          indexes={
+ *               @Index (name="ooo", columns={"order_id","object_type","object_id"}),
  *               @Index (name="object_id", columns={"object_id"}),
  *               @Index (name="price", columns={"price"}),
  *               @Index (name="amount", columns={"amount"})
@@ -70,7 +71,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * @see    ____var_see____
      * @since  3.0.0
      * 
-     * @Column (type="integer")
+     * @Column (type="uinteger")
      */
     protected $object_id;
 

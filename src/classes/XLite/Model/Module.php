@@ -36,7 +36,12 @@ namespace XLite\Model;
  * @since   3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Module")
- * @Table  (name="modules")
+ * @Table  (name="modules",
+ *      indexes={
+ *          @UniqueConstraint (name="an", columns={"author", "name"}),
+ *          @Index (name="enabled", columns={"enabled"})
+ *      }
+ * )
  */
 class Module extends \XLite\Model\AEntity
 {
@@ -86,7 +91,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length="64")
      */
     protected $author = '';
 
@@ -110,7 +115,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer")
+     * @Column (type="boolean")
      */
     protected $installed = self::NOT_INSTALLED;
 

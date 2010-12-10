@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage Core
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,37 +26,50 @@
  * @since      3.0.0
  */
 
-namespace XLite\View;
+namespace XLite\Core\ColumnType;
 
 /**
- * Console mode main widget
+ * Fixed string type
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Console extends \XLite\View\AView
+class FixedString extends \Doctrine\DBAL\Types\StringType
 {
+	/**
+	 * Type name
+	 */
+	const FIXED_STRING = 'fixedstring';
+
     /**
-     * Return widget default template
-     *
+     * Get SQL declaration 
+     * 
+     * @param array                                     $fieldDeclaration Field declaration
+     * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform         Platform
+     *  
      * @return string
-     * @access protected
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultTemplate()
+    public function getSQLDeclaration(array $fieldDeclaration, \Doctrine\DBAL\Platforms\AbstractPlatform $platform)
     {
-        return null;
+		$fieldDeclaration['fixed'] = true;
+
+        return parent::getSQLDeclaration($fieldDeclaration, $platform);
     }
 
     /**
-     * Attempts to display widget using its template 
+     * Get type name 
      * 
-     * @return void
+     * @return string
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function display()
+    public function getName()
     {
+        return self::FIXED_STRING;
     }
 }
