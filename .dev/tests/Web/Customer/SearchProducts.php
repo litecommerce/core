@@ -93,7 +93,7 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
 
     public function testSearchSubstring()
     {
-        $this->configurePager($this->getAllTestProducts());
+        $this->configurePager($this->countAllTestProducts());
 
         $this->openTestPage();
 
@@ -186,7 +186,7 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
 
     protected function getAllTestProducts()
     {
-        return array();
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')->search(new \XLite\Core\CommonCell(), false);
     }
 
     protected function setDisplayMode($mode = 'list', $columns = null)
