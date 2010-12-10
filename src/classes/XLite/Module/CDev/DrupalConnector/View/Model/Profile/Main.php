@@ -47,7 +47,7 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      */
     public static function getAuthorName()
     {
-        return 'Creative Development LLC <info@cdev.ru>';
+        return 'Creative Development LLC';
     }
 
     /**

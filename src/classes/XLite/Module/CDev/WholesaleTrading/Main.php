@@ -47,7 +47,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getAuthorName()
     {
-        return 'Creative Development LLC <info@cdev.ru>';
+        return 'Creative Development LLC';
     }
 
     /**
