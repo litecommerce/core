@@ -80,7 +80,10 @@ $config['hostspec'] .= empty($config['socket'])
 	? (empty($config['port']) ? '' : ':' . $config['port'])
 	: ':' . $config['socket'];
 $__connection = mysql_connect($config['hostspec'], $config['username'], $config['password']);
-mysql_select_db($config['database'], $__connection);
+
+if (!$__connection || !mysql_select_db($config['database'], $__connection)) {
+    die('Error of MySQL connection. Check etc/config.php file');
+}
 
 _do_query_upload('sql/xlite_tables.sql', $__connection, true);
 _do_query_upload('sql/xlite_data.sql', $__connection, true);
