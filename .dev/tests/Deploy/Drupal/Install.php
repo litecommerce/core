@@ -622,12 +622,11 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
                 $res = @mysql_query('SHOW TABLES');
                 if ($res) {
                     $row = @mysql_result($res, 0);
-                    $dbSelected = empty($row);
+                    $this->assertTrue(empty($row), sprintf('Cannot empty database %s', $options['database_details']['database']));
                 }
-            }
 
-            if (!$dbSelected) {
-                $this->assertTrue(false, sprintf('Cannot empty database %s', $options['database_details']['database']));
+            } else {
+                $this->assertTrue(false, sprintf('Cannot select database %s', $options['database_details']['database']));
             }
         
         } else {
