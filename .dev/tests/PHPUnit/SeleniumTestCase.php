@@ -651,8 +651,11 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
                         'Timeout failed for ' . $command . ' command with pattern ' . $arguments[0]
                     );
 
-                } else {
+                } elseif (!defined('DEPLOYMENT_TEST')) {
                     $this->markTestSkipped($e->getMessage());
+                
+                } else {
+                    $this->fail($e->getMessage());
                 }
 
             } else {
