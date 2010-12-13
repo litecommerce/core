@@ -493,6 +493,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	rm -rf ${OUTPUT_DIR}/tmp
 	rm -rf ${OUTPUT_DIR}/drupal_dev
 	rm -rf ${OUTPUT_DIR}/xlite_dev
+	rm -rf ${OUTPUT_DIR}/modules2remove
 
 	echo -e "  + Drupal+LiteCommerce v.$VERSION distributive is completed\n"
 
