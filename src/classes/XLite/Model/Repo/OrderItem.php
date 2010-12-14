@@ -37,4 +37,29 @@ namespace XLite\Model\Repo;
  */
 class OrderItem extends \XLite\Model\Repo\ARepo
 {
+    /**
+     * Process DB schema 
+     * 
+     * @param array  $schema Schema
+     * @param string $type   Schema type
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function processSchema(array $schema, $type)
+    {
+        $schema = parent::processSchema($schema, $type);
+
+        if (\XLite\Core\Database::SCHEMA_UPDATE == $type || \XLite\Core\Database::SCHEMA_CREATE == $type) {
+            $schema = preg_replace(
+                '/(\w+order_items` ADD FOREIGN KEY \(`object_id`\) REFERENCES `\w+products` \(`product_id`\)$)/Ss',
+                '$1 ON DELETE SET NULL',
+                $schema
+            );
+        }
+
+        return $schema;
+    }
 }

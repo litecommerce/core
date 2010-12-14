@@ -99,7 +99,6 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
         $order->setStatus(\XLite\Model\Order::STATUS_TEMPORARY);
         $order->setDate(time() - \XLite\Model\Repo\Order::ORDER_TTL - 1);
 
-        \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
         $list = \XLite\Core\Database::getRepo('XLite\Model\Order')->findAllExipredTemporaryOrders();
@@ -107,7 +106,6 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
         $this->assertTrue(0 < count($list), 'not empty list');
 
         \XLite\Core\Database::getRepo('XLite\Model\Order')->collectGarbage();
-        \XLite\Core\Database::getEM()->flush();
 
         $list = \XLite\Core\Database::getRepo('XLite\Model\Order')->findAllExipredTemporaryOrders();
 
@@ -116,11 +114,11 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
 
     public function testSearch()
     {
-        \XLite\Core\Database::getEM()
-            ->createQueryBuilder()
-            ->delete('XLite\Model\Order', 'o')
-            ->getQuery()
-            ->execute();
+        $list = \XLite\Core\Database::getRepo('XLite\Model\Order')->findAll();
+        foreach ($list as $o) {
+            \XLite\Core\Database::getEM()->remove($o);
+        }
+        \XLite\Core\Database::getEM()->flush();
 
         $o1 = $this->getTestOrder();
         $o1->setStatus($o1::STATUS_QUEUED);
@@ -257,7 +255,6 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
 
         \XLite\Core\Database::getEM()->persist($order);
-        \XLite\Core\Database::getEM()->flush();
 
         $order->setPaymentMethod(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(3));
 
@@ -265,17 +262,12 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
 
         $item->setProduct($this->getProduct());
         $item->setAmount(1);
-        $item->setPrice($this->getProduct()->getPrice());
 
         $order->addItem($item);
-
-        \XLite\Core\Database::getEM()->persist($order);
-        \XLite\Core\Database::getEM()->flush();
 
         $order->setProfileCopy($profile);
         $order->calculate();
 
-        \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
         return $order;

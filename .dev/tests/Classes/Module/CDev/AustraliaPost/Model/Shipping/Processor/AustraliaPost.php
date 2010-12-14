@@ -31,7 +31,6 @@ class XLite_Tests_Module_CDev_AustraliaPost_Model_Shipping_Processor_AustraliaPo
         parent::setUp();
 
         $this->query(file_get_contents(__DIR__ . '/sql/shipping/setup.sql'));
-        \XLite\Core\Database::getEM()->flush();
     }
 
     /**
@@ -47,7 +46,6 @@ class XLite_Tests_Module_CDev_AustraliaPost_Model_Shipping_Processor_AustraliaPo
         parent::tearDown();
 
         $this->query(file_get_contents(__DIR__ . '/sql/shipping/restore.sql'));
-        \XLite\Core\Database::getEM()->flush();
     }
 
     /**
@@ -257,6 +255,7 @@ class XLite_Tests_Module_CDev_AustraliaPost_Model_Shipping_Processor_AustraliaPo
     protected function getTestOrder($realProfile = true)
     {
         $order = new \XLite\Model\Order();
+        \XLite\Core\Database::getEM()->persist($order);
 
         $profile = null;
         if ($realProfile) {
@@ -265,7 +264,9 @@ class XLite_Tests_Module_CDev_AustraliaPost_Model_Shipping_Processor_AustraliaPo
             unset($list);
         }
 
-        $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
+        $c = \XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840);
+        $order->setCurrency($c);
+//        $c->addOrders($order);
         if ($profile) {
             $order->setProfile($profile);
         }
@@ -287,20 +288,15 @@ class XLite_Tests_Module_CDev_AustraliaPost_Model_Shipping_Processor_AustraliaPo
 
             $item->setProduct($product);
             $item->setAmount(4);
-            $item->setPrice($product->getPrice());
 
             $order->addItem($item);
         }
 
-        \XLite\Core\Database::getEM()->persist($order);
-        \XLite\Core\Database::getEM()->flush();
-
         if (isset($profile)) {
             $order->setProfileCopy($profile);
-
-            \XLite\Core\Database::getEM()->persist($order);
-            \XLite\Core\Database::getEM()->flush();
         }
+
+        \XLite\Core\Database::getEM()->flush();
 
         return $order;
     }

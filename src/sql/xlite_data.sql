@@ -878,5 +878,5 @@ INSERT INTO xlite_currencies VALUES ('ZWD',716,'',2);
 
 --  Insert root category
 
-INSERT INTO xlite_categories VALUES (1,0,1,2,0,1,'',1);
+INSERT INTO xlite_categories VALUES (1,null,1,2,null,1,'',1);
 

@@ -36,9 +36,11 @@ namespace XLite\Model;
  * @since   3.0.0
  * @Entity
  * @Table (name="languages",
- *      indexes={
+ *      uniqueConstraints={
  *          @UniqueConstraint (name="code3", columns={"code3"}),
- *          @UniqueConstraint (name="code2", columns={"code"}),
+ *          @UniqueConstraint (name="code2", columns={"code"})
+ *      },
+ *      indexes={
  *          @Index (name="status", columns={"status"})
  *      }
  * )

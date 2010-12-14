@@ -33,7 +33,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
             'password'      => 'testpassword',
             'access_level'  => 100,
             'referer'       => 'some referer',
-            'membership_id' => 0,
         ),
         // Customer profile
         1 => array(
@@ -41,8 +40,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
             'password'      => 'testpassword',
             'access_level'  => 0,
             'referer'       => 'some referer',
-            'membership_id' => 1,
-            'pending_membership_id' => 1,
         ),
         // Customer profile related to some order
         2 => array(
@@ -50,7 +47,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
             'password'      => 'testpassword',
             'access_level'  => 0,
             'referer'       => 'some referer',
-            'membership_id' => 0,
         ),
     );
 
@@ -140,8 +136,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         'last_login'            => 99999,
         'status'                => 'T',
         'referer'               => 'referer test',
-        'membership_id'         => 44,
-        'pending_membership_id' => 33,
         'language'              => 'ru',
     );
 
@@ -158,7 +152,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         parent::tearDown();
 
         $this->query(file_get_contents(__DIR__ . '/Repo/sql/profile/restore.sql'));
-        \XLite\Core\Database::getEM()->flush();
     }
 
     /**
@@ -335,6 +328,8 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         $profile1 = $this->getTestProfile(1, 0);
 
         $profile1->map($this->testProfileData[2]);
+        $profile1->setMembership(null);
+        $profile1->setPendingMembership(null);
 
         $result = $profile1->update();
         
@@ -356,7 +351,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
             }
         }
 
-        $this->assertNull($profile2->getMembership(), 'Membership is expected to be null');
+        $this->assertTrue(is_null($profile2->getMembership()), 'Membership is expected to be null');
 
         // Test #2: update user with login that is used by other user, check for duplicate login
         
@@ -426,8 +421,8 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         $this->assertEquals($profile->getLastLogin(), $clonedProfile->getLastLogin(), 'last_login comparison');
         $this->assertEquals($profile->getStatus(), $clonedProfile->getStatus(), 'status comparison');
         $this->assertEquals($profile->getReferer(), $clonedProfile->getReferer(), 'referer comparison');
-        $this->assertEquals($profile->getMembershipId(), $clonedProfile->getMembershipId(), 'membership_id comparison');
-        $this->assertEquals($profile->getPendingMembershipId(), $clonedProfile->getPendingMembershipId(), 'pending_membership_id comparison');
+        $this->assertEquals($profile->getMembership()->getMembershipId(), $clonedProfile->getMembership()->getMembershipId(), 'membership_id comparison');
+        $this->assertEquals($profile->getPendingMembership()->getMembershipId(), $clonedProfile->getPendingMembership()->getMembershipId(), 'pending_membership_id comparison');
         $this->assertEquals($profile->getOrder(), $clonedProfile->getOrder(), 'order_id comparison');
         $this->assertEquals($profile->getLanguage(), $clonedProfile->getLanguage(), 'language comparison');
 
@@ -466,6 +461,12 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         $profile = new \XLite\Model\Profile();
 
         $profile->map($this->testProfileData[$selectedProfileId]);
+
+        if (1 == $selectedProfileId) {
+            $m = \XLite\Core\Database::getRepo('XLite\Model\Membership')->find(1);
+            $profile->setMembership($m);
+            $profile->setPendingMembership($m);
+        }
 
         foreach ($this->testAddresses[$selectedAddressesId] as $data) {
             $address = new \XLite\Model\Address();

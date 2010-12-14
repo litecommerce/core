@@ -35,9 +35,9 @@ INSERT INTO `xlite_product_images` (`id`, `path`, `mime`, `width`, `height`, `si
 
 -- Categories [2]
 
-REPLACE INTO xlite_categories VALUES (1,0,1,6,0,1,'',0);
-INSERT INTO xlite_categories VALUES (14015,1,2,3,0,1,'fruit',0);
-INSERT INTO xlite_categories VALUES (14009,1,4,5,0,1,'vegetables',0);
+REPLACE INTO xlite_categories VALUES (1,null,1,6,null,1,'',0);
+INSERT INTO xlite_categories VALUES (14015,1,2,3,null,1,'fruit',0);
+INSERT INTO xlite_categories VALUES (14009,1,4,5,null,1,'vegetables',0);
 
 INSERT INTO xlite_category_quick_flags VALUES (1,1,2,2);
 INSERT INTO xlite_category_quick_flags VALUES (2,14015,0,0);

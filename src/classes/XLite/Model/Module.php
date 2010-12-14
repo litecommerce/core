@@ -37,8 +37,10 @@ namespace XLite\Model;
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Module")
  * @Table  (name="modules",
+ *      uniqueConstraints={
+ *          @UniqueConstraint (name="an", columns={"author","name"})
+ *      },
  *      indexes={
- *          @UniqueConstraint (name="an", columns={"author", "name"}),
  *          @Index (name="enabled", columns={"enabled"})
  *      }
  * )

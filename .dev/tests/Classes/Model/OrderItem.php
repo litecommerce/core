@@ -52,11 +52,9 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_TestCase
 
         $this->assertTrue(0 < $item->getItemId(), 'check items id');
 
-        $this->assertEquals('product', $item->getObjectType(), 'check object type');
-
         $this->assertEquals(
             $this->getProduct()->getProductId(),
-            $item->getObjectId(),
+            $item->getObject()->getId(),
             'check product id'
         );
 
@@ -116,7 +114,7 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_TestCase
 
         $item = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->find($id);
 
-        $this->assertEquals($p->getProductId(), $item->getObjectId(), 'check object id');
+        $this->assertEquals($p->getProductId(), $item->getObject()->getId(), 'check object id');
     }
 
     public function testDelete()
@@ -138,23 +136,6 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_TestCase
         $this->assertNull($item, 'check removed item');
     }
 
-    public function testGetObject()
-    {
-        $order = $this->getTestOrder();
-
-        $item = $order->getItems()->get(0);
-
-        $this->assertEquals($this->getProduct(), $item->getObject(), 'check object');
-
-        $item->setObjectType('xxx');
-
-        $this->assertNull($item->getObject(), 'check empty object');
-
-        $item = new \XLite\Model\OrderItem();
-
-        $this->assertNull($item->getObject(), 'check empty object');
-    }
-
     public function testGetProduct()
     {
         $order = $this->getTestOrder();
@@ -165,24 +146,9 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_TestCase
 
         $this->assertEquals($this->getProduct(), $item->getProduct(), 'check object');
 
-        $item->setObjectType('xxx');
-
-        $this->assertNull($item->getProduct(), 'check empty object');
-
         $item = new \XLite\Model\OrderItem();
 
         $this->assertNull($item->getProduct(), 'check empty object #2');
-
-        $item->setObjectType('product');
-
-        $p = new \XLite\Model\Product(
-            array(
-                'name' => null,
-                'sku'  => '',
-            )
-        );
-
-        $this->assertEquals($p, $item->getProduct(), 'check dump object');
 
         \XLite\Core\Database::getEM()->clear();
 
@@ -198,54 +164,7 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_TestCase
         \XLite\Core\Database::getEM()->clear();
 
         $item = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->find($id);
-        $p = new \XLite\Model\Product(
-            array(
-                'name' => $item->getName(),
-                'sku'  => $item->getSKU(),
-            )
-        );
-        $this->assertEquals($p, $item->getProduct(), 'check dump object #2');
-    }
-
-    public function testSetProduct()
-    {
-        $order = $this->getTestOrder();
-
-        $item = $order->getItems()->get(0);
-
-        $list = \XLite\Core\Database::getRepo('XLite\Model\Product')->findByEnabled(true);
-        $p = $list[1];
-
-        $item->setObjectType('xxx');
-
-        $item->setProduct($p);
-
-        $this->assertEquals($p, $item->getProduct(), 'check object');
-        $this->assertEquals($p, $item->getObject(), 'check object #2');
-
-        $this->assertEquals('product', $item->getObjectType(), 'check object type');
-    }
-
-    public function testSetObject()
-    {
-        $order = $this->getTestOrder();
-
-        $item = $order->getItems()->get(0);
-
-        $list = \XLite\Core\Database::getRepo('XLite\Model\Product')->findByEnabled(true);
-        $p = $list[1];
-
-        $item->setObjectType('xxx');
-
-        $item->setObject($p);
-
-        $this->assertNull($item->getProduct(), 'check object');
-        $this->assertNull($item->getObject(), 'check object #2');
-
-        $item->setObjectType('product');
-
-        $this->assertEquals($p->getProductId(), $item->getProduct()->getProductId(), 'check object #3');
-        $this->assertEquals($p->getProductId(), $item->getObject()->getProductId(), 'check object #4');
+        $this->assertNull($item->getProduct(), 'check dump object #2');
     }
 
     public function testSetAmount()

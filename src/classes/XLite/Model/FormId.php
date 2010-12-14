@@ -37,8 +37,10 @@ namespace XLite\Model;
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\FormId")
  * @Table  (name="form_ids",
+ *      uniqueConstraints={
+ *          @UniqueConstraint (name="fs", columns={"form_id","session_id"})
+ *      },
  *      indexes={
- *          @UniqueConstraint (name="fs", columns={"form_id","session_id"}),
  *          @Index (name="session_id", columns={"session_id"})
  *      }
  * )

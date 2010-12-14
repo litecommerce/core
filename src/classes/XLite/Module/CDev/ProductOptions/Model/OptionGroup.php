@@ -322,4 +322,19 @@ class OptionGroup extends \XLite\Model\Base\I18n
 
         parent::__construct($data);
     }
+
+    /**
+     * Set product 
+     * 
+     * @param \XLite\Model\Product $product Product
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setProduct(\XLite\Model\Product $product = null)
+    {
+        $this->product = $product;
+    }
 }

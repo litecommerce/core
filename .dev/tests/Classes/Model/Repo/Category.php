@@ -330,12 +330,12 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
     public function testInsert()
     {
         $data = array(
-            'parent_id' => 14016,
             'enabled'   => false,
             'name'      => 'Test category',
             'cleanUrl'  => 'test_cat',
         );
         $entity = $this->getRepo()->insert($data);
+        $entity->setParent($this->getRepo()->find(14016));
 
         $this->assertType(
             '\XLite\Model\Category',

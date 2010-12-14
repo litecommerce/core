@@ -67,14 +67,12 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
     protected function defineBestsellersQuery($count, $cat)
     {
         $qb = $this->createQueryBuilder()
-            ->leftJoin('p.order_item', 'o')
+            ->innerJoin('p.order_items', 'o')
             ->innerJoin('o.order', 'ord')
-            ->leftJoin('p.categoryProducts', 'cp')
-            ->leftJoin('cp.category', 'c')
             ->addSelect('sum(o.amount) as product_amount')
             ->andWhere('p.enabled = :enabled')
             ->andWhere('ord.status IN (:complete_status, :processed_status)')
-            ->groupBy('o.product')
+            ->groupBy('o.object')
             ->orderBy('product_amount', 'DESC')
             ->setParameter('enabled', true)
             ->setParameter('complete_status', \XLite\Model\Order::STATUS_COMPLETED)
@@ -85,6 +83,8 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
         }
 
         if (0 < $cat) {
+            $qb->leftJoin('p.categoryProducts', 'cp')
+                ->leftJoin('cp.category', 'c');
             \XLite\Core\Database::getRepo('XLite\Model\Category')->addSubTreeCondition($qb, $cat);
         }
 

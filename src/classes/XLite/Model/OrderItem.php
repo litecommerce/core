@@ -44,6 +44,9 @@ namespace XLite\Model;
  *               @Index (name="amount", columns={"amount"})
  *          }
  * )
+ * @InheritanceType       ("SINGLE_TABLE")
+ * @DiscriminatorColumn   (name="object_type", type="string", length="16")
+ * @DiscriminatorMap      ({"product" = "XLite\Model\OrderItem"})
  */
 class OrderItem extends \XLite\Model\Base\ModifierOwner
 {
@@ -64,28 +67,17 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
     protected $item_id;
 
     /**
-     * Object id
+     * Objct (product)
      * 
-     * @var    integer
+     * @var    \XLite\Model\Product
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * 
-     * @Column (type="uinteger")
+     *
+     * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="order_items", cascade={"merge","detach"})
+     * @JoinColumn (name="object_id", referencedColumnName="product_id")
      */
-    protected $object_id;
-
-    /**
-     * Object type
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * 
-     * @Column (type="string", length="16")
-     */
-    protected $object_type;
+    protected $object;
 
     /**
      * Item name
@@ -149,19 +141,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
     protected $order;
 
     /**
-     * Item product 
-     * 
-     * @var    \XLite\Model\Product
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * 
-     * @OneToOne   (targetEntity="XLite\Model\Product")
-     * @JoinColumn (name="object_id", referencedColumnName="product_id")
-     */
-    protected $product;
-
-    /**
      * Order item saved modifiers
      *
      * @var    \XLite\Model\OrderItemModifier
@@ -172,92 +151,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * @OneToMany (targetEntity="XLite\Model\OrderItemModifier", mappedBy="owner", cascade={"all"})
      */
     protected $saved_modifiers;
-
-    /**
-     * Object exist flag
-     * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $objectExist = true;
-
-    /**
-     * Get object 
-     * 
-     * @return \XLite\Model\Base\IOrderItem|void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getObject()
-    {
-        $method = $this->getObjectGetterName();
-
-        // $method calculated in getObjectGetterName()
-        return ($method && method_exists($this, $method)) ? $this->$method() : null;
-    }
-
-    /**
-     * Get object method-getter name 
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getObjectGetterName()
-    {
-        return $this->getObjectType()
-            ? 'get' . ucfirst($this->getObjectType()) . 'Object'
-            : false;
-    }
-
-    /**
-     * Get product object 
-     * 
-     * @return \XLite\Model\Product
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getProductObject()
-    {
-        // Product loaded in LAZY mode - check proxy
-        if (
-            isset($this->product)
-            && $this->product instanceof \Doctrine\ORM\Proxy\Proxy
-            && !$this->product->getId()
-        ) {
-            $this->product = null;
-            $this->objectExist = false;
-        }
-
-        // Product not loaded - load product model and check
-        if (
-            !isset($this->product)
-            && $this->objectExist
-            && $this->getObjectId()
-        ) {
-            $this->product = \XLite\Core\Database::getRepo('XLite\Model\Product')->find($this->getObjectId());
-            if (!$this->product) {
-                $this->objectExist = false;
-            }
-        }
-
-        // Product is not exists (may be removed) - display dump product
-        if (!isset($this->product)) {
-            $this->product = new \XLite\Model\Product(
-                array(
-                    'name' => $this->getName(),
-                    'sku'  => $this->getSku(),
-                )
-            );
-        }
-
-        return $this->product;
-    }
 
     /**
      * Wrapper. If the product was deleted,
@@ -271,26 +164,24 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      */
     public function getProduct()
     {
-        return self::PRODUCT_TYPE == $this->getObjectType()
-            ? $this->getProductObject()
+        return 'XLite\Model\OrderItem' == get_called_class()
+            ? $this->getObject()
             : null;
     }
 
     /**
      * Save some fields from product
      * 
-     * @param \XLite\Model\Product $product Product to set
+     * @param \XLite\Model\Product $product Product to set OPTIONAL
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setProduct(\XLite\Model\Product $product)
+    public function setProduct(\XLite\Model\Product $product = null)
     {
         $this->setObject($product);
-        $this->setObjectType(self::PRODUCT_TYPE);
-        $this->product = $product;
     }
 
     /**
@@ -303,18 +194,54 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setObject(\XLite\Model\Base\IOrderItem $item)
+    public function setObject(\XLite\Model\Base\IOrderItem $item = null)
+    {
+        $old = $this->object;
+
+        $this->object = $item;
+
+        if ($item) {
+            $this->saveItemState($item);
+
+        } else {
+            $this->resetItemState();
+        }
+    }
+
+    /**
+     * Save item state 
+     * 
+     * @param \XLite\Model\Base\IOrderItem $item Item object
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function saveItemState(\XLite\Model\Base\IOrderItem $item)
     {
         $price = \XLite\Core\Config::getInstance()->Taxes->prices_include_tax
             ? $item->getTaxedPrice()
             : $item->getPrice();
 
         $this->setPrice(\Includes\Utils\Converter::formatPrice($price));
-        $this->setObjectId($item->getId());
         $this->setName($item->getName());
         $this->setSku($item->getSku());
+    }
 
-        $this->product = null;
+    /**
+     * Reset item state 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function resetItemState()
+    {
+        $this->price = 0;
+        $this->name = '';
+        $this->sku = '';
     }
 
     /**
@@ -329,8 +256,10 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      */
     public function setAmount($amount)
     {
-        $amount = max($amount, $this->getObject()->getMinPurchaseLimit());
-        $amount = min($amount, $this->getObject()->getMaxPurchaseLimit());
+        if ($this->getObject()) {
+            $amount = max($amount, $this->getObject()->getMinPurchaseLimit());
+            $amount = min($amount, $this->getObject()->getMaxPurchaseLimit());
+        }
 
         $this->amount = $amount;
     }
@@ -440,7 +369,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      */
     public function getKey()
     {
-        return $this->getObjectType() . '.' . $this->getObjectId();
+        return self::PRODUCT_TYPE . '.' . $this->getObject()->getId();
     }
 
     /**
@@ -511,8 +440,8 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
         return array(
             'item_id'     => $this->getItemId(),
             'key'         => $this->getKey(),
-            'object_type' => $this->getObjectType(),
-            'object_id'   => $this->getObjectId(),
+            'object_type' => self::PRODUCT_TYPE,
+            'object_id'   => $this->getObject()->getId(),
         );
     }
 

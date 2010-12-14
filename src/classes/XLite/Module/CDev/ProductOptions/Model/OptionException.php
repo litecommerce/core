@@ -36,7 +36,7 @@ namespace XLite\Module\CDev\ProductOptions\Model;
  * @since   3.0.0
  * @Entity (repositoryClass="\XLite\Module\CDev\ProductOptions\Model\Repo\OptionException")
  * @Table (name="option_exceptions",
- *      indexes={
+ *      uniqueConstraints={
  *          @UniqueConstraint (name="exc", columns={"option_id","exception_id"})
  *      }
  * )
