@@ -77,7 +77,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
     {
         $this->set('returnUrl', $this->buildUrl('modules'));
 
-        $id = \XLite\Core\Request::getInstance()->module_id;
+        $id = \XLite\Core\Request::getInstance()->moduleId;
         $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id);
 
         if ($module) {
@@ -100,7 +100,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
     {
         $this->set('returnUrl', $this->buildUrl('modules'));
 
-        $id = \XLite\Core\Request::getInstance()->module_id;
+        $id = \XLite\Core\Request::getInstance()->moduleId;
         $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id);
 
         if ($module) {
@@ -120,7 +120,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
     protected function doActionUninstall()
     {
         $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find(
-            \XLite\Core\Request::getInstance()->module_id
+            \XLite\Core\Request::getInstance()->moduleId
         );
 
         if (!$module) {
