@@ -17,7 +17,7 @@
 
   <table cellspacing="0" cellpadding="0" class="data-table modules-list">
 
-		<tr FOREACH="getModules(),module_idx,module" class="{if:!module.getEnabled()} disabled{end:}">
+		<tr FOREACH="getModules(),moduleIdx,module" class="{if:!module.getEnabled()} disabled{end:}">
       <td class="icon" width="90">
         <a name="{module.getName()}"></a>
         <div class="icon-container">
@@ -44,19 +44,19 @@
         <div class="version">{t(#Version#)}: {getInstalledProperty(module,#version#)}</div>
         <div class="actions">
           {if:module.getEnabled()}
-            <a href="{buildUrl(#modules#,#disable#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmNote('disable', '{module.getModuleId()}');">{t(#Disable#)}</a>
+            <a href="{buildUrl(#modules#,#disable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('disable', '{module.getModuleId()}');">{t(#Disable#)}</a>
           {else:}
             {if:!module.canEnable()}
               <span class="disabled">{t(#Enable#)}</span>
             {else:}
-              <a href="{buildUrl(#modules#,#enable#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmNote('enable', '{module.getModuleId()}');">{t(#Enable#)}</a>
+              <a href="{buildUrl(#modules#,#enable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('enable', '{module.getModuleId()}');">{t(#Enable#)}</a>
             {end:}
           {end:}
           {if:module.showSettingsForm()}
             <a href="{module.getSettingsFormLink()}">{t(#Settings#)}</a>
           {end:}
           {if:!module.getEnabled()}
-            <a class="uninstall" href="{buildUrl(#modules#,#uninstall#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmNote('uninstall', '{module.getModuleId()}');">{t(#Uninstall#)}</a>
+            <a class="uninstall" href="{buildUrl(#modules#,#uninstall#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('uninstall', '{module.getModuleId()}');">{t(#Uninstall#)}</a>
           {end:}
 
         </div>
