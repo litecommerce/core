@@ -1,5 +1,7 @@
-DELETE FROM xlite_profiles;
 DELETE FROM xlite_profile_addresses;
+UPDATE xlite_orders SET profile_id = NULL, orig_profile_id = NULL;
+UPDATE xlite_profiles SET order_id = NULL;
+DELETE FROM xlite_profiles;
 
 -- Create the admin account (password: master)
 INSERT INTO xlite_profiles SET profile_id = 1, login = 'rnd_tester@cdev.ru', password = 'eb0a191797624dd3a48fa681d3061212', access_level = 100, added = UNIX_TIMESTAMP(NOW())-60*60*24*369, first_login = UNIX_TIMESTAMP(NOW()), last_login = UNIX_TIMESTAMP(NOW()), status = 'E', cms_profile_id = 1, cms_name = '____DRUPAL____';
@@ -57,6 +59,7 @@ INSERT INTO xlite_profile_addresses SET address_id = 13, profile_id = 7, is_bill
 
 -- Create the customer account #7 (guest) - related to the order
 INSERT INTO xlite_profiles SET profile_id = 8, login = 'rnd_tester02@rrf.ru', password = '084e0343a0486ff05530df6c705c8bb4', access_level = 0, order_id = 1, added = UNIX_TIMESTAMP(NOW()), first_login = UNIX_TIMESTAMP(NOW()), last_login = UNIX_TIMESTAMP(NOW()), status = 'E', cms_profile_id = 1, cms_name = '____DRUPAL____';
+UPDATE xlite_orders SET profile_id = 8 WHERE order_id = 1;
 
 INSERT INTO xlite_profile_addresses SET address_id = 14, profile_id = 8, is_billing = 1, is_shipping = 1, title = 'Mr.', firstname = 'Guest', lastname = 'Guest', phone = '0123456789', street = '51 apt, 87 street', city = 'Edmond', state_id = 38, country_code = 'US', zipcode = '73003';
 

@@ -1,18 +1,29 @@
+UPDATE xlite_categories SET parent_id = null;
+UPDATE xlite_category_quick_flags SET category_id = null;
+UPDATE xlite_category_translations SET id = null;
+UPDATE xlite_featured_products SET category_id = null;
+UPDATE xlite_category_images SET id = null;
+UPDATE xlite_category_products SET category_id = null;
 DELETE FROM xlite_categories;
 DELETE FROM xlite_category_quick_flags;
 DELETE FROM xlite_category_images;
 DELETE FROM xlite_category_translations;
 DELETE FROM xlite_category_products;
+UPDATE xlite_product_images SET id = null;
+UPDATE xlite_product_translations SET id = null;
+UPDATE xlite_order_items SET object_id = null where object_type = 'product';
+UPDATE xlite_featured_products SET product_id = null;
+UPDATE xlite_option_groups SET product_id = null;
 DELETE FROM xlite_products;
 DELETE FROM xlite_product_translations;
 
-INSERT INTO xlite_categories VALUES (1,0,1,14,0,1,'',1);
-INSERT INTO xlite_categories VALUES (14015,1,2,9,0,1,'fruit',1);
-INSERT INTO xlite_categories VALUES (14009,1,10,13,0,0,'vegetables',1);
-INSERT INTO xlite_categories VALUES (14016,14015,3,4,0,1,'fruit_1',1);
-INSERT INTO xlite_categories VALUES (14017,14015,5,6,0,0,'fruit_2',1);
-INSERT INTO xlite_categories VALUES (14018,14015,7,8,0,1,'fruit_3',1);
-INSERT INTO xlite_categories VALUES (14019,14009,11,12,0,1,'vegetables_1',1);
+INSERT INTO xlite_categories VALUES (1,null,1,14,null,1,'',1);
+INSERT INTO xlite_categories VALUES (14015,1,2,9,null,1,'fruit',1);
+INSERT INTO xlite_categories VALUES (14009,1,10,13,null,0,'vegetables',1);
+INSERT INTO xlite_categories VALUES (14016,14015,3,4,null,1,'fruit_1',1);
+INSERT INTO xlite_categories VALUES (14017,14015,5,6,null,0,'fruit_2',1);
+INSERT INTO xlite_categories VALUES (14018,14015,7,8,null,1,'fruit_3',1);
+INSERT INTO xlite_categories VALUES (14019,14009,11,12,null,1,'vegetables_1',1);
 
 INSERT INTO xlite_category_quick_flags VALUES (1,1,2,2);
 INSERT INTO xlite_category_quick_flags VALUES (2,14015,3,2);

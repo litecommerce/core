@@ -93,9 +93,17 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function defineSubcategoriesQuery($categoryId)
     {
-        return $this->createQueryBuilder()
-            ->andWhere('c.parent_id = :parentId')
-            ->setParameter('parentId', $categoryId);
+        $qb = $this->createQueryBuilder();
+
+        if ($categoryId) {
+            $qb->innerJoin('c.parent', 'cparent')
+                ->andWhere('cparent.category_id = :parentId')
+                ->setParameter('parentId', $categoryId);
+        } else {
+            $qb->andWhere('c.parent IS NULL');
+        }
+
+        return $qb;
     }
 
     /**
@@ -198,7 +206,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         return $this->createQueryBuilder()
             ->innerJoin('c.categoryProducts', 'cp')
-            ->andWhere('cp.product_id = :productId')
+            ->innerJoin('cp.product', 'product')
+            ->andWhere('product.product_id = :productId')
             ->setParameter('productId', $productId)
             ->addOrderBy('cp.orderby', 'ASC');
     }
@@ -330,7 +339,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
             $data['lpos'] = 1;
             $data['rpos'] = 2;
             $data['parent'] = null;
-            $data['parent_id'] = 0;
         }
         
 
@@ -410,6 +418,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function performInsert(array $data = array())
     {
         $entity = null;
+        $parent = null;
 
         if (!isset($data['parent_id']) || 0 == $data['parent_id']) {
 
@@ -434,7 +443,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
             }
         }
 
-        if ($entity) {
+        if ($entity && $parent) {
             // Update quick flags
             $this->updateQuickFlags($parent, $this->prepareQuickFlags(1, $entity->getEnabled() ? 1 : -1));
         }

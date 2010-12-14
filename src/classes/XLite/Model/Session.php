@@ -37,8 +37,10 @@ namespace XLite\Model;
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Session")
  * @Table  (name="sessions",
+ *      uniqueConstraints={
+ *          @UniqueConstraint (name="sid", columns={"sid"})
+ *      },
  *      indexes={
- *          @UniqueConstraint (name="sid", columns={"sid"}),
  *          @Index (name="expiry", columns={"expiry"})
  *      }
  * )

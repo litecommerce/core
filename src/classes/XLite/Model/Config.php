@@ -37,8 +37,10 @@ namespace XLite\Model;
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Config")
  * @Table  (name="config",
+ *      uniqueConstraints={
+ *          @UniqueConstraint (name="nc", columns={"name", "category"})
+ *      },
  *      indexes={
- *          @UniqueConstraint (name="nc", columns={"name", "category"}),
  *          @Index (name="orderby", columns={"orderby"}),
  *          @Index (name="type", columns={"type"}),
  *          @Index (name="value", columns={"value"})

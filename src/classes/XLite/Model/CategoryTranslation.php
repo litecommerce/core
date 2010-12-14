@@ -67,7 +67,7 @@ class CategoryTranslation extends \XLite\Model\Base\Translation
      *
      * @Column (type="text")
      */
-    protected $description;
+    protected $description = '';
 
     /**
      * Category meta keywords
@@ -79,7 +79,7 @@ class CategoryTranslation extends \XLite\Model\Base\Translation
      *
      * @Column (type="string", length="255")
      */
-    protected $meta_tags;
+    protected $meta_tags = '';
 
     /**
      * Category meta description
@@ -91,7 +91,7 @@ class CategoryTranslation extends \XLite\Model\Base\Translation
      *
      * @Column (type="text")
      */
-    protected $meta_desc;
+    protected $meta_desc = '';
 
     /**
      * Value of the title HTML-tag for category page
@@ -103,5 +103,5 @@ class CategoryTranslation extends \XLite\Model\Base\Translation
      *
      * @Column (type="string", length="255")
      */   
-    protected $meta_title;
+    protected $meta_title = '';
 }

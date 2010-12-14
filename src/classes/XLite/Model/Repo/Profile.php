@@ -280,13 +280,14 @@ class Profile extends \XLite\Model\Repo\ARepo
             $value = trim($value);
 
             if ('pending_membership' == $value) {
-                    $queryBuilder->andWhere('p.pending_membership_id > 0');
+                $queryBuilder->andWhere('p.pending_membership IS NOT NULL');
             
             } elseif ('' == $value) {
-                    $queryBuilder->andWhere('p.membership_id = 0');
+                $queryBuilder->andWhere('p.membership IS NULL');
             
             } elseif (0 < intval($value)) {
-                $queryBuilder->andWhere('p.membership_id = :membershipId')
+                $queryBuilder->innerJoin('p.membership', 'membership')
+                    ->andWhere('membership.membership_id = :membershipId')
                     ->setParameter('membershipId', intval($value));
             }
         }
@@ -884,6 +885,31 @@ class Profile extends \XLite\Model\Repo\ARepo
         parent::linkLoadedEntity($entity, $parentAddCallback, $mappedCallback);
     }
 
+    /**
+     * Process DB schema 
+     * 
+     * @param array  $schema Schema
+     * @param string $type   Schema type
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function processSchema(array $schema, $type)
+    {
+        $schema = parent::processSchema($schema, $type);
+
+        if (\XLite\Core\Database::SCHEMA_UPDATE == $type || \XLite\Core\Database::SCHEMA_CREATE == $type) {
+            $schema = preg_replace(
+                '/(\w+profiles` ADD FOREIGN KEY \(`order_id`\) REFERENCES `\w+orders` \(`order_id`\)$)/Ss',
+                '$1 ON DELETE SET NULL',
+                $schema
+            );
+        }
+
+        return $schema;
+    }
 
 
 }

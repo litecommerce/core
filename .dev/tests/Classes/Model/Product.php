@@ -79,19 +79,20 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 	 */
 	public function testAddCategoryProducts()
 	{
-		$entity = new \XLite\Model\Product();
+        $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->find(14015);
+		$p = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(15090);
 
-		$entity->addCategoryProducts(
-			new \XLite\Model\CategoryProducts(
-				array('category_id' => 14015, 'product_id' => 15090)
-			)
-		);
+        $cp = new \XLite\Model\CategoryProducts();
+        $cp->setCategory($c);
+        $cp->setProduct($p);
 
-		$result = array_pop($entity->getCategoryProducts()->toArray());
+		$result = $cp;
 
 		// Check keys
-		$this->assertEquals(14015, $result->getCategoryId(), 'Invalid category ID');
-		$this->assertEquals(15090, $result->getProductId(), 'Invalid product ID');
+        $this->assertNotNull($result->getCategory(), 'Invalid category');
+        $this->assertNotNull($result->getProduct(), 'Invalid product');
+		$this->assertEquals(14015, $result->getCategory()->getCategoryId(), 'Invalid category ID');
+		$this->assertEquals(15090, $result->getProduct()->getProductId(), 'Invalid product ID');
 	}
 
 	/**

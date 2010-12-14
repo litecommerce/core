@@ -197,6 +197,18 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     protected $image;
 
     /**
+     * Product order items
+     * 
+     * @var    \XLite\Model\OrderItem
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * 
+     * @OneToMany (targetEntity="XLite\Model\OrderItem", mappedBy="object")
+     */
+    protected $order_items;
+
+    /**
      * Product images
      *
      * @var    \Doctrine\Common\Collections\Collection

@@ -131,7 +131,6 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
             foreach ($this->images as $path) {
                 $i = new \XLite\Model\Image\Product\Image();
 
-                $i->setId($this->product->getProductId());
                 $i->setProduct($this->product);
                 $this->product->getImages()->add($i);
 

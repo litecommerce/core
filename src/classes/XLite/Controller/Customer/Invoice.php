@@ -92,7 +92,7 @@ class Invoice extends \XLite\Controller\Customer\ACustomer
      */
     protected function checkOrderAccess()
     {
-        return \XLite\Core\Sesion::getInstance()->getInstance()->last_order_id == \XLite\Core\Request::getInstance()->order_id
+        return \XLite\Core\Session::getInstance()->getInstance()->last_order_id == \XLite\Core\Request::getInstance()->order_id
             || (
                 $this->auth->isLogged()
                 && $this->auth->getProfile()->getProfileId() == $this->getOrder()->getOrigProfile()->getProfileId()

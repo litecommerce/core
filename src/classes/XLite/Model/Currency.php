@@ -86,6 +86,18 @@ class Currency extends \XLite\Model\Base\I18n
     protected $e = 0;
 
     /**
+     * Orders
+     *
+     * @var    \Doctrine\Common\Collections\Collection
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\Order", mappedBy="currency")
+     */
+    protected $orders;
+
+    /**
      * Round value 
      * 
      * @param float $value Value

@@ -161,8 +161,7 @@ class XLite_Tests_Model_Currency extends XLite_Tests_TestCase
 
     /**
      * PHPUnit default function.
-     * Redefine this method only if you really need to do so.
-     * In any other cases redefine the getRequest() one
+     * It's not recommended to redefine this method
      * 
      * @return void
      * @access protected
@@ -173,35 +172,19 @@ class XLite_Tests_Model_Currency extends XLite_Tests_TestCase
     {
         parent::setUp();
 
-        \XLite\Core\Database::getEM()->createQueryBuilder()
-            ->delete('XLite\Model\Currency', 'c')
+        $list = \XLite\Core\Database::getEM()->createQueryBuilder()
+            ->select('c')
+            ->from('XLite\Model\Currency', 'c')
             ->andWhere('c.code IN(:code1, :code2)')
             ->setParameter('code1', 'XXX')
             ->setParameter('code2', 'ZZZ')
             ->getQuery()
-            ->execute();
-    }
+            ->getResult();
 
-    /**
-     * PHPUnit default function.
-     * It's not recommended to redefine this method
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-        \XLite\Core\Database::getEM()->createQueryBuilder()
-            ->delete('XLite\Model\Currency', 'c')
-            ->andWhere('c.code IN(:code1, :code2)')
-            ->setParameter('code1', 'XXX')
-            ->setParameter('code2', 'ZZZ')
-            ->getQuery()
-            ->execute();
+        foreach ($list as $c) {
+            \XLite\Core\Database::getEM()->remove($c);
+        }
+        \XLite\Core\Database::getEM()->flush();
     }
 
     protected function getTestCurrency()

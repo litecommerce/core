@@ -35,13 +35,6 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
         'notes'          => 'Test note',
     );
 
-    protected function setUp()
-    {
-        parent::setUp();
-
-        \XLite\Core\Database::getEM()->clear();
-    }
-
     public function testCreate()
     {
         $order = $this->getTestOrder();

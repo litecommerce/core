@@ -73,5 +73,36 @@ class OrderItemOption extends \XLite\Model\Repo\ARepo
             ->setParameter('itemId', $itemId)
             ->setParameter('orderId', $orderId);
     }
+
+    /**
+     * Process DB schema 
+     * 
+     * @param array  $schema Schema
+     * @param string $type   Schema type
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function processSchema(array $schema, $type)
+    {
+        $schema = parent::processSchema($schema, $type);
+
+        if (\XLite\Core\Database::SCHEMA_UPDATE == $type || \XLite\Core\Database::SCHEMA_CREATE == $type) {
+            $schema = preg_replace(
+                '/(\w+order_item_options` ADD FOREIGN KEY \(`group_id`\) REFERENCES `\w+option_groups` \(`group_id`\)$)/Ss',
+                '$1 ON DELETE SET NULL',
+                $schema
+            );
+            $schema = preg_replace(
+                '/(\w+order_item_options` ADD FOREIGN KEY \(`option_id`\) REFERENCES `\w+options` \(`option_id`\)$)/Ss',
+                '$1 ON DELETE SET NULL',
+                $schema
+            );
+        }
+
+        return $schema;
+    }
 }
 

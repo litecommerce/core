@@ -675,7 +675,7 @@ class Database extends \XLite\Base\Singleton
 
             $schema = preg_replace('/^(CREATE (?:UNIQUE )?INDEX) (\S+) ON ([^\s(]+)/Ss', '$1 `$2` ON `$3`', $schema);
             $schema = preg_replace('/^(CREATE (?:UNIQUE )?INDEX [^(]+ \()([^,)]+)/Ss', '$1`$2`', $schema);
-            $schema = preg_replace('/^(CREATE (?:UNIQUE )?INDEX [^(]+ \(.+,)([^`,)]+)/Ss', '$1`$2`', $schema);
+            $schema = preg_replace('/^(CREATE (?:UNIQUE )?INDEX [^(]+ \(.+, *)([^`,)]+)/Ss', '$1`$2`', $schema);
 
             $schema = preg_replace('/^DROP INDEX (\S+) ON (\S+)/Ss', 'DROP INDEX `$1` ON `$2`', $schema);
         }

@@ -536,7 +536,7 @@ array("condition" => "state=District of Columbia", "action" => array(
         }
         */
 
-        $this->_conditionValues['membership'] = $profile->getMembershipId();
+        $this->_conditionValues['membership'] = $profile->getMembership() ? $profile->getMembership()->getMembershipId() : 0;
     }
 
     /**

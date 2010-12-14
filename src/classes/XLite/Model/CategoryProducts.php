@@ -36,8 +36,10 @@ namespace XLite\Model;
  * @since   3.0.0
  * @Entity
  * @Table (name="category_products",
+ *      uniqueConstraints={
+ *          @UniqueConstraint (name="pair", columns={"category_id","product_id"})
+ *      },
  *      indexes={
- *          @UniqueConstraint (name="pair", columns={"category_id","product_id"}),
  *          @Index (name="orderby", columns={"orderby"})
  *      }
  * )
@@ -57,30 +59,6 @@ class CategoryProducts extends \XLite\Model\AEntity
      * @Column         (type="uinteger", nullable=false)
      */
     protected $id;
-
-    /**
-     * Category Id 
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * 
-     * @Column (type="uinteger", nullable=false)
-     */
-    protected $category_id;
-
-    /**
-     * Product Id
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="uinteger", nullable=false)
-     */
-    protected $product_id;
 
     /**
      * Product position in the category

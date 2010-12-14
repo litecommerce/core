@@ -36,7 +36,7 @@ namespace XLite\Module\CDev\ProductOptions\Model;
  * @since   3.0.0
  * @Entity (repositoryClass="\XLite\Module\CDev\ProductOptions\Model\Repo\OptionSurcharge")
  * @Table (name="option_surcharges",
- *      indexes={
+ *      uniqueConstraints={
  *          @UniqueConstraint (name="ot", columns={"option_id","type"})
  *      }
  * )

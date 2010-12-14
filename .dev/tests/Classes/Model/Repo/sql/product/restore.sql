@@ -1,20 +1,31 @@
+UPDATE xlite_categories SET parent_id = null;
+UPDATE xlite_category_quick_flags SET category_id = null;
+UPDATE xlite_category_translations SET id = null;
+UPDATE xlite_featured_products SET category_id = null;
+UPDATE xlite_category_images SET id = null;
+UPDATE xlite_category_products SET category_id = null;
 DELETE FROM xlite_categories;
 DELETE FROM xlite_category_images;
 DELETE FROM xlite_category_translations;
 DELETE FROM xlite_category_products;
 DELETE FROM xlite_category_quick_flags;
+UPDATE xlite_product_images SET id = null;
+UPDATE xlite_product_translations SET id = null;
+UPDATE xlite_order_items SET object_id = null where object_type = 'product';
+UPDATE xlite_featured_products SET product_id = null;
+UPDATE xlite_option_groups SET product_id = null;
 DELETE FROM xlite_products;
 DELETE FROM xlite_product_translations;
 DELETE FROM xlite_product_images;
 
-INSERT INTO `xlite_categories` VALUES (1,0,1,16,0,1,'',1);
-INSERT INTO `xlite_categories` VALUES (1002,1,2,3,0,1,'apparel',1);
-INSERT INTO `xlite_categories` VALUES (3002,1,4,5,0,1,'downloadables',1);
-INSERT INTO `xlite_categories` VALUES (1004,1,6,15,0,1,'toys',1);
-INSERT INTO `xlite_categories` VALUES (1003,1004,7,8,0,1,'cube-goodies',1);
-INSERT INTO `xlite_categories` VALUES (4003,1004,9,10,0,1,'science-toys',1);
-INSERT INTO `xlite_categories` VALUES (4004,1004,11,12,0,1,'puzzles',1);
-INSERT INTO `xlite_categories` VALUES (4002,1004,13,14,0,1,'rc-toys',1);
+INSERT INTO `xlite_categories` VALUES (1,null,1,16,null,1,'',1);
+INSERT INTO `xlite_categories` VALUES (1002,1,2,3,null,1,'apparel',1);
+INSERT INTO `xlite_categories` VALUES (3002,1,4,5,null,1,'downloadables',1);
+INSERT INTO `xlite_categories` VALUES (1004,1,6,15,null,1,'toys',1);
+INSERT INTO `xlite_categories` VALUES (1003,1004,7,8,null,1,'cube-goodies',1);
+INSERT INTO `xlite_categories` VALUES (4003,1004,9,10,null,1,'science-toys',1);
+INSERT INTO `xlite_categories` VALUES (4004,1004,11,12,null,1,'puzzles',1);
+INSERT INTO `xlite_categories` VALUES (4002,1004,13,14,null,1,'rc-toys',1);
 
 INSERT INTO xlite_category_quick_flags VALUES (1,1,3,3);
 INSERT INTO xlite_category_quick_flags VALUES (2,1002,0,0);
@@ -33,7 +44,7 @@ INSERT INTO `xlite_category_images` VALUES (105,4003,'demo_store_c4003.jpeg','im
 INSERT INTO `xlite_category_images` VALUES (106,4002,'demo_store_c4002.jpeg','image/jpeg',160,156,13711,1278412215,'');
 INSERT INTO `xlite_category_images` VALUES (107,1002,'demo_store_c1002.jpeg','image/jpeg',156,160,11592,1278412215,'');
 
-INSERT INTO xlite_category_translations VALUES (1,'en',0,'','','','','');
+INSERT INTO xlite_category_translations VALUES (1,'en',1,'','','','','');
 INSERT INTO `xlite_category_translations` VALUES (101,'en',3002,'Downloadables','','','','');
 INSERT INTO `xlite_category_translations` VALUES (102,'en',1004,'Toys','','','','');
 INSERT INTO `xlite_category_translations` VALUES (103,'en',4004,'Puzzles','','','','');

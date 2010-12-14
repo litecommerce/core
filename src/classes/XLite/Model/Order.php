@@ -97,7 +97,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToOne  (targetEntity="XLite\Model\Profile", cascade={"all"})
+     * @ManyToOne  (targetEntity="XLite\Model\Profile", cascade={"persist"})
      * @JoinColumn (name="profile_id", referencedColumnName="profile_id")
      */
     protected $profile;
@@ -110,7 +110,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToOne  (targetEntity="XLite\Model\Profile")
+     * @ManyToOne  (targetEntity="XLite\Model\Profile")
      * @JoinColumn (name="orig_profile_id", referencedColumnName="profile_id")
      */
     protected $orig_profile;
@@ -245,7 +245,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Currency")
+     * @ManyToOne  (targetEntity="XLite\Model\Currency", inversedBy="orders", cascade={"merge","detach"})
      * @JoinColumn (name="currency_id", referencedColumnName="currency_id")
      */
     protected $currency;

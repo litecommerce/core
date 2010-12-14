@@ -37,9 +37,9 @@ namespace XLite\Module\CDev\FeaturedProducts\Model;
  *
  * @Entity
  * @Table (name="featured_products",
- *         indexes={
+ *      uniqueConstraints={
  *             @UniqueConstraint (name="pair", columns={"category_id","product_id"})
- *         }
+ *      }
  * )
  */
 

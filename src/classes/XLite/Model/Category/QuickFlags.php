@@ -55,18 +55,6 @@ class QuickFlags extends \XLite\Model\AEntity
     protected $id;
 
     /**
-     * Category ID 
-     * 
-     * @var    int
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="uinteger", nullable=false)
-     */
-    protected $category_id;
-
-    /**
      * Total number of subcategories
      * 
      * @var    int
@@ -74,7 +62,7 @@ class QuickFlags extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="integer", nullable=false)
      */
     protected $subcategories_count_all = 0;
 
@@ -86,7 +74,7 @@ class QuickFlags extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="integer", nullable=false)
      */
     protected $subcategories_count_enabled = 0;
 

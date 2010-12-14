@@ -305,26 +305,14 @@ class Order extends \XLite\Model\Repo\ARepo
      */
     public function collectGarbage()
     {
-        $this->defineCollectGarbageQuery()->getQuery()->execute();
-    }
+        $list = $this->findAllExipredTemporaryOrders();
+        if (count($list)) {
+            foreach ($list as $order) {
+                \XLite\Core\Database::getEM()->remove($order);
+            }
 
-    /**
-     * Define query for collectGarbage() method
-     * 
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineCollectGarbageQuery()
-    {
-        // Use pure createQueryBuilder(), without local changes
-        return $this->_em
-            ->createQueryBuilder()
-            ->delete($this->_entityName, 'o')
-            ->andWhere('o.status = :tempStatus AND o.date < :time')
-            ->setParameter('tempStatus', \XLite\Model\Order::STATUS_TEMPORARY)
-            ->setParameter('time', time() - $this->getOrderTTL());
+            \XLite\Core\Database::getEM()->flush();
+        }
     }
 
     /**

@@ -503,8 +503,9 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
     {
         $res = \XLite\Core\Database::getRepo('XLite\Model\Image\Product\Image')
             ->createQueryBuilder()
-            ->select(array('COUNT(i.image_id)', 'i.id'))
-            ->groupBy('i.id')
+            ->select(array('COUNT(i.image_id)', 'product.product_id'))
+            ->innerJoin('i.product', 'product')
+            ->groupBy('i.product')
             ->getQuery()
             ->getScalarResult();
 

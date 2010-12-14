@@ -66,7 +66,7 @@ class OrderItemOption extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="integer", nullable=true)
      */
     protected $option_id = 0;
 
@@ -77,7 +77,7 @@ class OrderItemOption extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="integer")
+     * @Column (type="integer", nullable=true)
      */
     protected $group_id;
 
@@ -124,7 +124,7 @@ class OrderItemOption extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToOne   (targetEntity="XLite\Module\CDev\ProductOptions\Model\OptionGroup")
+     * @ManyToOne  (targetEntity="XLite\Module\CDev\ProductOptions\Model\OptionGroup")
      * @JoinColumn (name="group_id", referencedColumnName="group_id")
      */
     protected $group;
@@ -137,7 +137,7 @@ class OrderItemOption extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToOne   (targetEntity="XLite\Module\CDev\ProductOptions\Model\Option")
+     * @ManyToOne  (targetEntity="XLite\Module\CDev\ProductOptions\Model\Option")
      * @JoinColumn (name="option_id", referencedColumnName="option_id")
      */
     protected $option;

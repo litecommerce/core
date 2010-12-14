@@ -254,19 +254,16 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     protected function prepareCndCategoryId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $queryBuilder->leftJoin('p.categoryProducts', 'cp')
+        $queryBuilder->innerJoin('p.categoryProducts', 'cp')
+            ->innerJoin('cp.category', 'c')
             ->addOrderBy('cp.orderby');
 
         if (empty($this->currentSearchCnd->{self::P_SEARCH_IN_SUBCATS})) {
-            $queryBuilder->andWhere('cp.category_id = :categoryId')
+            $queryBuilder->andWhere('c.category_id = :categoryId')
                 ->setParameter('categoryId', $value);
 
-        } else {
-            $queryBuilder->leftJoin('cp.category', 'c');
-
-            if (!\XLite\Core\Database::getRepo('XLite\Model\Category')->addSubTreeCondition($queryBuilder, $value)) {
-                // TODO - add throw exception
-            }
+        } elseif (!\XLite\Core\Database::getRepo('XLite\Model\Category')->addSubTreeCondition($queryBuilder, $value)) {
+            // TODO - add throw exception
         }
     }
 

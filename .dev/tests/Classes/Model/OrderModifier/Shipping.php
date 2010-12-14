@@ -445,6 +445,9 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
         foreach ($productIds as $index => $productId) {
 
             $product = $this->getProduct($productId);
+            if (!$product) {
+                continue;
+            }
 
             if ($index % 2) {
                 $product->setFreeShipping(true);
@@ -454,7 +457,6 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
 
             $item->setProduct($product);
             $item->setAmount(4);
-            $item->setPrice($product->getPrice());
 
             $order->addItem($item);
         }

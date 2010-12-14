@@ -45,9 +45,7 @@ namespace XLite\Model;
  *          @Index (name="access_level", columns={"access_level"}),
  *          @Index (name="first_login", columns={"first_login"}),
  *          @Index (name="last_login", columns={"last_login"}),
- *          @Index (name="status", columns={"status"}),
- *          @Index (name="pending_membership_id", columns={"pending_membership_id"}),
- *          @Index (name="membership_id", columns={"membership_id"})
+ *          @Index (name="status", columns={"status"})
  *      }
  * )
  */
@@ -212,30 +210,6 @@ class Profile extends \XLite\Model\AEntity
     protected $referer = '';
 
     /**
-     * Membership Id
-     *
-     * @var    int
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="integer", nullable=false)
-     */
-    protected $membership_id = null;
-
-    /**
-     * Pending membership Id
-     *
-     * @var    int
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="integer", nullable=false)
-     */
-    protected $pending_membership_id = null;
-
-    /**
      * Relation to a order
      *
      * @var    \XLite\Model\Order
@@ -268,7 +242,7 @@ class Profile extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer")
+     * @Column (type="integer", nullable=true)
      */
     protected $last_shipping_id;
 
@@ -280,7 +254,7 @@ class Profile extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer")
+     * @Column (type="integer", nullable=true)
      */
     protected $last_payment_id;
 
@@ -331,6 +305,36 @@ class Profile extends \XLite\Model\AEntity
      * @since  3.0.0
      */
     protected $orders_count = null;
+
+    /**
+     * Set membership 
+     * 
+     * @param \XLite\Model\Membership $membership membership
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setMembership(\XLite\Model\Membership $membership = null)
+    {
+        $this->membership = $membership;
+    }
+
+    /**
+     * Set pending membership 
+     * 
+     * @param \XLite\Model\Membership $pendingMembership Pending membership
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setPendingMembership(\XLite\Model\Membership $pendingMembership = null)
+    {
+        $this->pending_membership = $pendingMembership;
+    }
 
     /**
      * Prepare object for its creation in the database
@@ -548,36 +552,6 @@ class Profile extends \XLite\Model\AEntity
 
         } else {
 
-            // Assign membership if passed membership_id
-            if (0 < intval($this->membership_id)) {
-
-                $membership = \XLite\Core\Database::getRepo('XLite\Model\Membership')
-                    ->find(intval($this->membership_id));
-            }
-        
-            if (isset($membership)) {
-                $this->setMembership($membership);
-            
-            } else {
-                $this->membership = null;
-                $this->setMembershipId(null);
-            }
-
-            // Assign pending_membership if passed pending_membership_id
-            if (0 < intval($this->pending_membership_id)) {
-
-                $pendingMembership = \XLite\Core\Database::getRepo('XLite\Model\Membership')
-                    ->find(intval($this->pending_membership_id));
-            }
-        
-            if (isset($pendingMembership)) {
-                $this->setPendingMembership($pendingMembership);
-            
-            } else {
-                $this->pending_membership = null;
-                $this->setPendingMembershipId(null);
-            }
-
             // Do an entity update
             $result = parent::update();
         }
@@ -687,24 +661,25 @@ class Profile extends \XLite\Model\AEntity
             \XLite::getInstance()->doGlobalDie('Can not clone profile');
         }
 
+        $newProfile->setMembership($this->getMembership());
+        $newProfile->setPendingMembership($this->getPendingMembership());
+
         $billingAddress = $this->getBillingAddress();
 
         if (isset($billingAddress)) {
             
             $newBillingAddress = $billingAddress->cloneEntity();
             $newBillingAddress->setProfile($newProfile);
-            $newBillingAddress->update();
-
             $newProfile->addAddresses($newBillingAddress);
+            $newBillingAddress->update();
         }
 
         if (!$this->isSameAddress() && $this->getShippingAddress()) {
             
             $newShippingAddress = $this->getShippingAddress()->cloneEntity();
             $newShippingAddress->setProfile($newProfile);
-            $newShippingAddress->update();
-
             $newProfile->addAddresses($newShippingAddress);
+            $newShippingAddress->update();
         }
 
         $newProfile->update(true);

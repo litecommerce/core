@@ -38,10 +38,8 @@ namespace XLite\Model;
  * @Entity (repositoryClass="\XLite\Model\Repo\Category")
  * @Table  (name="categories",
  *      indexes={
- *          @Index (name="parent_id", columns={"parent_id"}),
  *          @Index (name="lpos", columns={"lpos"}),
  *          @Index (name="rpos", columns={"rpos"}),
- *          @Index (name="membership_id", columns={"membership_id"}),
  *          @Index (name="enabled", columns={"enabled"}),
  *          @Index (name="cleanUrl", columns={"cleanUrl"})
  *      }
@@ -62,18 +60,6 @@ class Category extends \XLite\Model\Base\I18n
      * @Column         (type="uinteger", nullable=false)
      */
     protected $category_id;
-
-    /**
-     * Node parent ID
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="integer", length="11", nullable=false)
-     */
-    protected $parent_id;
 
     /**
      * Node left value 
@@ -110,18 +96,6 @@ class Category extends \XLite\Model\Base\I18n
      * @Column (type="boolean", nullable=false)
      */
     protected $enabled = true;
-
-    /**
-     * Node membership level
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="integer", nullable=false)
-     */
-    protected $membership_id = 0;
 
     /**
      * Node clean (SEO-friendly) URL
@@ -210,6 +184,20 @@ class Category extends \XLite\Model\Base\I18n
      */
     protected $parent;
 
+    /**
+     * Set parent 
+     * 
+     * @param \XLite\Model\Category $parent Parent category
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setParent(\XLite\Model\Category $parent = null)
+    {
+        $this->parent = $parent;
+    }
 
     /**
      * Check if category has image 
