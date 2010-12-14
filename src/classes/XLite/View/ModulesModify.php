@@ -302,6 +302,19 @@ class ModulesModify extends \XLite\View\Dialog
         return 'modules_modify';
     }
 
-
+    /**
+     * Return installed module property
+     *
+     * @param \XLite\Model\Module $module Module
+     * @param string $property Module property
+     *
+     * @return string|array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getInstalledProperty(\XLite\Model\Module $module, $property = '')
+    {
+        return $module->__call('get' . \XLite\Core\Converter::convertToCamelCase($property));
+    }
     
 }
