@@ -63,6 +63,7 @@
   <br /><br />
 </div>
 
+<widget class="\XLite\View\QuickLinks" />
 <widget class="\XLite\View\Location" />
 <widget class="\XLite\View\AdvBlock" />
 <widget class="\XLite\View\ModulesModify" />

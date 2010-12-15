@@ -11,6 +11,11 @@
  * @since     3.0.0
  */
 
+#location {
+  background: url(images/location_bg.gif) repeat-x top left;
+  padding: 15px 0;
+}
+
 li.location-node {
   display: inline;
 }

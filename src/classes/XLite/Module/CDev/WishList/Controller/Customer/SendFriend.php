@@ -38,6 +38,11 @@ namespace XLite\Module\CDev\WishList\Controller\Customer;
 class SendFriend extends \XLite\Controller\Customer\Catalog
 {
     /**
+     * Email validation regular expression
+     */ 
+    const EMAIL_REGEXP = '(?:[a-z0-9!#$%&\'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])';
+
+    /**
      * Controller parameters
      * 
      * @var    string
@@ -89,7 +94,7 @@ class SendFriend extends \XLite\Controller\Customer\Catalog
             );
             $this->set('valid', false);
 
-        } elseif (!preg_match('/^' . EMAIL_REGEXP . '$/Ss', \XLite\Core\Request::getInstance()->sender_email)) {
+        } elseif (!preg_match('/^' . self::EMAIL_REGEXP . '$/Ss', \XLite\Core\Request::getInstance()->sender_email)) {
 
             \XLite\Core\TopMessage::getInstance()->add(
                 '\'Your e-mail\' has wrong format',
@@ -105,7 +110,7 @@ class SendFriend extends \XLite\Controller\Customer\Catalog
             );
             $this->set('valid', false);
 
-        } elseif (!preg_match('/^' . EMAIL_REGEXP . '$/Ss', \XLite\Core\Request::getInstance()->recipient_email)) {
+        } elseif (!preg_match('/^' . self::EMAIL_REGEXP . '$/Ss', \XLite\Core\Request::getInstance()->recipient_email)) {
 
             \XLite\Core\TopMessage::getInstance()->add(
                 '\'Friend\'s e-mail\' has wrong format',
