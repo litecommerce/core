@@ -31,8 +31,7 @@ CREATE TABLE xlite_category_images (
   date INT NOT NULL DEFAULT '0',
   hash VARCHAR(32) NOT NULL DEFAULT '',
   PRIMARY KEY (image_id),
-  KEY id (id),
-  CONSTRAINT FOREIGN KEY (`id`) REFERENCES `xlite_categories` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY id (id)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_category_quick_flags;
@@ -42,8 +41,7 @@ CREATE TABLE xlite_category_quick_flags (
   subcategories_count_all INT NOT NULL DEFAULT '0',
   subcategories_count_enabled INT NOT NULL DEFAULT '0',
   PRIMARY KEY (id),
-  UNIQUE KEY (category_id),
-  CONSTRAINT `xlite_ck_flags_to_categories` FOREIGN KEY (`category_id`) REFERENCES `xlite_categories` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  UNIQUE KEY (category_id)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_category_translations;
@@ -198,8 +196,8 @@ CREATE TABLE xlite_order_items (
 DROP TABLE IF EXISTS xlite_orders;
 CREATE TABLE xlite_orders (
   order_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  profile_id INT NOT NULL DEFAULT 0,
-  orig_profile_id INT NOT NULL DEFAULT 0,
+  profile_id INT DEFAULT NULL,
+  orig_profile_id INT DEFAULT NULL,
   total numeric(16,4) NOT NULL DEFAULT '0.00',
   subtotal numeric(16,4) NOT NULL DEFAULT '0.00',
   tracking VARCHAR(32) DEFAULT NULL,
@@ -347,9 +345,7 @@ CREATE TABLE xlite_category_products (
   orderby INT NOT NULL DEFAULT '0',
   PRIMARY KEY (id),
   UNIQUE KEY pair (category_id,product_id),
-  KEY orderby (orderby),
-  CONSTRAINT FOREIGN KEY (`product_id`) REFERENCES `xlite_products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT FOREIGN KEY (`category_id`) REFERENCES `xlite_categories` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY orderby (orderby)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_product_images;
@@ -462,7 +458,7 @@ CREATE TABLE xlite_profile_addresses (
   city VARCHAR(64) NOT NULL DEFAULT '',
   state_id INT NOT NULL DEFAULT '0',
   custom_state VARCHAR(64) NOT NULL DEFAULT '',
-  country_code CHAR(2) NOT NULL DEFAULT '',
+  country_code CHAR(2) DEFAULT NULL,
   zipcode VARCHAR(32) NOT NULL DEFAULT '',
   PRIMARY KEY (address_id),
   KEY profile_id (profile_id),
@@ -561,9 +557,9 @@ CREATE TABLE xlite_states (
   state_id INT NOT NULL AUTO_INCREMENT,
   state VARCHAR(32) NOT NULL DEFAULT '',
   code VARCHAR(32) NOT NULL DEFAULT '',
-  country_code CHAR(2) NOT NULL DEFAULT '',
+  country_code CHAR(2) DEFAULT NULL,
   PRIMARY KEY  (state_id),
-  KEY code (code,country_code),
+  UNIQUE KEY code (code, country_code),
   KEY state (state)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
