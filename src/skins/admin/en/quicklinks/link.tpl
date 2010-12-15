@@ -2,8 +2,8 @@
 
 {**
  * ____file_title____
- *
- * @author    Creative Development LLC <info@cdev.ru>
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   SVN: $Id$
@@ -11,8 +11,6 @@
  * @since     3.0.0
  *}
 
-<div id="location">
-  <ul class="location-popup">
-    <li FOREACH="getNodes(),index,node" class="location-node">{if:!#0#=index}&nbsp;::&nbsp;{end:}{node.display()}</li>
-  </ul>
-</div>
+<li{if:getParam(%static::PARAM_HIGHLIGHT%)} class="hl"{end:}>
+  <a href="{getParam(%static::PARAM_LINK%)}">{getParam(%static::PARAM_NAME%):h}</a>
+</li>

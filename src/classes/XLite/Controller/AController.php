@@ -28,8 +28,6 @@
 
 namespace XLite\Controller;
 
-define('EMAIL_REGEXP', '(?:[a-z0-9!#$%&\'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])');
-
 /**
  * Abstract controller
  * 
@@ -73,6 +71,16 @@ abstract class AController extends \XLite\Core\Handler
      * @since  3.0.0
      */
     protected $locationPath;
+
+    /**
+     * Quick links 
+     * 
+     * @var    \XLite\View\QuickLinks
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $quickLinks;
 
     /**
      * returnUrl 
@@ -253,6 +261,36 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
+     * Method to create quick links
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineQuickLinks()
+    {
+        $this->quickLinks = array();
+    }
+
+    /**
+     * Add node to the quick links line
+     *
+     * @param string  $name Link title
+     * @param string  $link Link URL
+     * @param boolean $hl   Highlight flag
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addQuickLink($name, $link, $hl = false)
+    {
+        $this->quickLinks[] = \XLite\View\QuickLinks\Link::create($name, $link, $hl);
+    }
+
+    /**
      * Select template to use
      * 
      * @return string
@@ -380,8 +418,8 @@ abstract class AController extends \XLite\Core\Handler
      * Get the full URL of the page
      * Example: getShopUrl('cart.php') = "http://domain/dir/cart.php 
      * 
-     * @param string $url    Relative URL  
-     * @param boolean   $secure Flag to use HTTPS OPTIONAL
+     * @param string  $url    Relative URL  
+     * @param boolean $secure Flag to use HTTPS OPTIONAL
      *  
      * @return string
      * @access public
@@ -407,6 +445,23 @@ abstract class AController extends \XLite\Core\Handler
         }
 
         return $this->locationPath;
+    }
+
+    /**
+     * Return quick links
+     *
+     * @return \XLite\View\QuickLinks
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getQuickLinks()
+    {
+        if (!isset($this->quickLinks)) {
+            $this->defineQuickLinks();
+        }
+
+        return $this->quickLinks;
     }
 
     /**
@@ -480,9 +535,11 @@ abstract class AController extends \XLite\Core\Handler
             $newMethodName = 'doAction' . \XLite\Core\Converter::convertToCamelCase($action);
 
             if (method_exists($this, $oldMethodName)) {
+                // action_{action}()
                 $this->$oldMethodName();
 
             } elseif (method_exists($this, $newMethodName)) {
+                // doAction{Action}()
                 $this->$newMethodName();
             }
 
@@ -723,9 +780,9 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * setActionStatus 
      * 
-     * @param integer    $status  Error/success
-     * @param string $message Status info OPTIONAL
-     * @param integer    $code    Status code OPTIONAL
+     * @param integer $status  Error/success
+     * @param string  $message Status info OPTIONAL
+     * @param integer $code    Status code OPTIONAL
      *  
      * @return void
      * @access public
@@ -739,8 +796,8 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * setActionError 
      * 
-     * @param string $message Status info  OPTIONAL
-     * @param integer    $code    Status code OPTIONAL
+     * @param string  $message Status info  OPTIONAL
+     * @param integer $code    Status code OPTIONAL
      *  
      * @return void
      * @access public
@@ -754,8 +811,8 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * setActionSuccess
      *
-     * @param string $message Status info OPTIONAL
-     * @param integer    $code    Status code OPTIONAL
+     * @param string  $message Status info OPTIONAL
+     * @param integer $code    Status code OPTIONAL
      *
      * @return void
      * @access public

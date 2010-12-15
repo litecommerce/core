@@ -1,0 +1,52 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * ____file_title____
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id: location.css 4398 2010-11-18 02:25:19Z vvs $
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+
+#quicklinks {
+  margin: 10px 0 0 0;
+  padding: 0;
+  border-bottom: solid 1px #dfe5e8;
+}
+
+#quicklinks ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  padding-bottom: 20px;
+}
+
+
+#quicklinks ul li {
+  display: inline;
+  font-size: 14px;
+  margin-right: 20px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+
+#quicklinks ul li a {
+  text-decoration: none;
+  color: #3e77b8;
+}
+
+#quicklinks ul li.hl {
+  background: #3e77b8;
+  padding: 6px 12px;
+}
+
+#quicklinks ul li.hl a {
+  color: #fff;
+}
+
+

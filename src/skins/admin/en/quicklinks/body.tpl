@@ -11,8 +11,10 @@
  * @since     3.0.0
  *}
 
-<div id="location">
-  <ul class="location-popup">
-    <li FOREACH="getNodes(),index,node" class="location-node">{if:!#0#=index}&nbsp;::&nbsp;{end:}{node.display()}</li>
+<div id="quicklinks">
+  <ul>
+    {foreach:getQuickLinks(),link}
+      {link.display()}
+    {end:}
   </ul>
 </div>
