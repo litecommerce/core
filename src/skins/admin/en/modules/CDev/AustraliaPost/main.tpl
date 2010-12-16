@@ -17,7 +17,7 @@ Please note that rates are calculated for shipping from Australian locations onl
 
 <br /><br />
 
-<widget template="modules/CDev/CDev/AustraliaPost/config.tpl" />
+<widget template="modules/CDev/AustraliaPost/config.tpl" />
 
-<widget template="modules/CDev/CDev/AustraliaPost/test.tpl" />
+<widget template="modules/CDev/AustraliaPost/test.tpl" />
 

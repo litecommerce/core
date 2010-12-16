@@ -14,6 +14,7 @@
   <input type="hidden" name="target" value="{target}">
   <input type="hidden" name="action" value="update">
   <input type="hidden" name="page" value="{page}">
+  <input type="hidden" name="moduleId" value="{moduleId}" IF="moduleId">
 
   <table cellSpacing="2" cellpadding="2" width="100%">
     {foreach:getOptions(),option}
@@ -185,7 +186,7 @@ function setUnitSymbol(symbol) {
               {end:}
             {end:}
 
-            <widget class="\XLite\View\ModuleSettings" section="{page}" option="{option}" />
+            <widget class="\XLite\View\ModulesManager\Settings" section="{page}" option="{option}" />
 
           </td>
         {else:}
@@ -337,4 +338,4 @@ if (!httpsEnabled) {
   <widget page="AdminIP" template="waiting_ips.tpl" />
 {end:}
 
-<widget class="\XLite\View\ModuleSettingsFooter" section="{page}" />
+<widget class="\XLite\View\ModulesManager\SettingsFooter" section="{page}" />

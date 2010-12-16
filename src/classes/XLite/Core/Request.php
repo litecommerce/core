@@ -58,38 +58,8 @@ class Request extends \XLite\Base\Singleton
      */
     protected $data = array();
 
-
     /**
-     * Strip possible SQL injections
-     * TODO - improve or remove (if the PDO will be used) this function
-     * 
-     * @param string $value Value to check
-     *  
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function stripSQLInjection($value)
-    {
-        // (UNION SELECT) case
-        if (false !== strpos(strtolower($value), 'union')) {
-            $value = preg_replace(
-                '/union([\s\(\)]|((?:\/\*).*(?:\*\/))|(?:union|select|all|distinct))+select/i',
-                ' ',
-                $value
-            );
-        }
-
-        // (BENCHMARK) case
-        if (false !== strpos(strtolower($value), 'benchmark(')) {
-            $value = preg_replace('/benchmark\(/i', ' ', $value);
-        }
-
-        return $value;
-    }
-
-    /**
-     * Sanitize single value
+     * Unescape single value
      * 
      * @param string $value Value to sanitize
      *  
@@ -97,13 +67,13 @@ class Request extends \XLite\Base\Singleton
      * @access protected
      * @since  3.0.0
      */
-    protected function sanitizeSingle($value)
+    protected function doUnescapeSingle($value)
     {
-        return strip_tags($this->stripSQLInjection($value));
+        return stripslashes($value);
     }
 
     /**
-     * Sanitize passed data 
+     * Remove automatically added escaping
      * 
      * @param mixed $data Data to sanitize
      *  
@@ -111,9 +81,11 @@ class Request extends \XLite\Base\Singleton
      * @access protected
      * @since  3.0.0
      */
-    protected function sanitize($data)
+    protected function doUnescape($data)
     {
-        return is_array($data) ? array_map(array($this, __FUNCTION__), $data) : $this->sanitizeSingle($data);
+        return is_array($data)
+            ? array_map(array($this, __FUNCTION__), $data)
+            : $this->doUnescapeSingle($data);
     }
 
     /**
@@ -135,7 +107,11 @@ class Request extends \XLite\Base\Singleton
             $this->checkControlArgument($data['action'], 'Action');
         }
 
-        return \XLite::isAdminZone() ? $data : $this->sanitize($data);
+        if (1 === get_magic_quotes_gpc()) {
+            $data = $this->doUnescape($data);
+        }
+
+        return $data;
     }
 
     /**

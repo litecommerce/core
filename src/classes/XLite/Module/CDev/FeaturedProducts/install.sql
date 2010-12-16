@@ -10,6 +10,6 @@ CREATE TABLE xlite_featured_products (
   CONSTRAINT FOREIGN KEY (`category_id`) REFERENCES `xlite_categories` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
-INSERT INTO `xlite_config` VALUES (118,'featured_products_look','FeaturedProducts','select',10,'grid');
+INSERT INTO `xlite_config` VALUES (118,'featured_products_look','CDev\\FeaturedProducts','select',10,'grid');
 INSERT INTO `xlite_config_translations` VALUES (92,'en',118,'Featured products look&feel','');
 

@@ -10,26 +10,26 @@
 # @since     3.0.0
 XLite\Model\Config:
   - name: currency_rate
-    category: AustraliaPost
+    category: CDev\AustraliaPost
     value: 1
     translations:
       - code: en
         option_name: Currency rate
         option_comment: (specify rate X, where 1 AUD = X in shop currency)
   - name: height
-    category: AustraliaPost
+    category: CDev\AustraliaPost
     value: 10
     translations:
       - code: en
         option_name: Package height (mm)
   - name: length
-    category: AustraliaPost
+    category: CDev\AustraliaPost
     value: 100
     translations:
       - code: en
         option_name: Package length (mm)
   - name: width
-    category: AustraliaPost
+    category: CDev\AustraliaPost
     value: 100
     translations:
       - code: en

@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace XLite\View;
+namespace XLite\View\ModulesManager;
 
 /**
  * Modules modify widget
@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0
  */
-class ModulesModify extends \XLite\View\Dialog
+class Manage extends \XLite\View\Dialog
 {
     /**
      * Filter name definitions
@@ -299,14 +299,14 @@ class ModulesModify extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'modules_modify';
+        return 'modules_manager' . LC_DS . 'manage';
     }
 
     /**
      * Return installed module property
      *
-     * @param \XLite\Model\Module $module Module
-     * @param string $property Module property
+     * @param \XLite\Model\Module $module   Module
+     * @param string              $property Module property
      *
      * @return string|array
      * @access protected

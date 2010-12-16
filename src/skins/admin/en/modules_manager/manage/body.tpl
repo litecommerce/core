@@ -58,4 +58,4 @@ function confirmNote(action, id)
 </div>
 
 {* Display add-ons list *}
-<widget template="modules_modify/list.tpl" />
+<widget template="modules_manager/manage/list.tpl" />

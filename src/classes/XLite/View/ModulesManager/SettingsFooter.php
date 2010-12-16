@@ -26,16 +26,16 @@
  * @since      3.0.0
  */
 
-namespace XLite\View;
+namespace XLite\View\ModulesManager;
 
 /**
- * Module settings 
+ * Module settings page footer 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ModuleSettings extends \XLite\View\AView
+class SettingsFooter extends \XLite\View\AView
 {
     /**
      * Widget param names 
@@ -77,7 +77,7 @@ class ModuleSettings extends \XLite\View\AView
      */
     protected function getModuleTemplate()
     {
-        return 'modules/' . $this->getModule() . '/settings.tpl';
+        return 'modules/' . $this->getModule() . '/settings_footer.tpl';
     }
 
     /**
