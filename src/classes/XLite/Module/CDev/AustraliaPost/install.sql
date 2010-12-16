@@ -14,10 +14,10 @@
 -- ) TYPE=MyISAM;
 
 
-INSERT INTO `xlite_config` VALUES (61,'currency_rate','AustraliaPost','',0,'1');
-INSERT INTO `xlite_config` VALUES (134,'height','AustraliaPost','',0,'10');
-INSERT INTO `xlite_config` VALUES (146,'length','AustraliaPost','',0,'100');
-INSERT INTO `xlite_config` VALUES (281,'width','AustraliaPost','',0,'100');
+INSERT INTO `xlite_config` VALUES (61,'currency_rate','CDev\\AustraliaPost','',0,'1');
+INSERT INTO `xlite_config` VALUES (134,'height','CDev\\AustraliaPost','',0,'10');
+INSERT INTO `xlite_config` VALUES (146,'length','CDev\\AustraliaPost','',0,'100');
+INSERT INTO `xlite_config` VALUES (281,'width','CDev\\AustraliaPost','',0,'100');
 
 
 INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1001,'aupost','aupost','AIR',0,0);

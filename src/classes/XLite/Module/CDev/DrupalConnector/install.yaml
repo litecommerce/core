@@ -11,7 +11,7 @@
 # @since     3.0.0
 XLite\Model\Config:
   - name: drupal_root_url
-    category: DrupalConnector
+    category: CDev\DrupalConnector
     type: text
     orderby: 10
     value:

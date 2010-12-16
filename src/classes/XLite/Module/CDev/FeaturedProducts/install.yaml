@@ -10,7 +10,7 @@
 # @since     3.0.0
 XLite\Model\Config:
   - name: featured_products_look
-    category: FeaturedProducts
+    category: CDev\FeaturedProducts
     type: select
     orderby: 10
     value: grid

@@ -342,7 +342,7 @@ class Module extends \XLite\Model\AEntity
         $link = $this->__call('getSettingsForm');
 
         return is_null($link)
-            ? \XLite\Core\Converter::buildURL('module', '', array('page' => $this->getActualName()), 'admin.php')
+            ? \XLite\Core\Converter::buildURL('module', '', array('moduleId' => $this->getModuleId()), 'admin.php')
             : $link;
     }
 

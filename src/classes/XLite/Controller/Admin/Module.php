@@ -44,9 +44,26 @@ class Module extends \XLite\Controller\Admin\AAdmin
      * @access protected
      * @since  3.0.0
      */
+    public function init()
+    {
+        $this->module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find(\XLite\Core\Request::getInstance()->moduleId);
+
+        if (!$this->module) {
+            throw new \Exception('Add-on does not exist (ID#' . \XLite\Core\Request::getInstance()->moduleId . ')');
+        }
+    }
+
+    /**
+     * Return current module options
+     * 
+     * @return array 
+     * @access protected
+     * @since  3.0.0
+     */
     public function getOptions()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Config')->getByCategory($this->page, true, true);
+        return \XLite\Core\Database::getRepo('\XLite\Model\Config')
+            ->getByCategory($this->module->getActualName(), true, true);
     }
  
     /**
@@ -57,9 +74,9 @@ class Module extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getLocation()
+    public function getLocation()
     {
-        return \XLite\Core\Request::getInstance()->page;
+        return $this->module->getName() . ' (' . $this->module->getAuthor() . ')';
     }
 
     /**
@@ -87,7 +104,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
     protected function doActionUpdate()
     {
         foreach ($this->getOptions() as $option) {
-
             $name  = $option->name;
             $value = \XLite\Core\Request::getInstance()->$name;
 
@@ -107,12 +123,15 @@ class Module extends \XLite\Controller\Admin\AAdmin
 
             \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
-                    'category' => $this->page,
+                    'category' => $this->module->getActualName(),
                     'name'     => $name,
                     'value'    => $value,
                     'type'     => $type
                 )
             );
         }
+
+        $this->set('returnUrl', $this->buildUrl('modules'));
     }
+
 }

@@ -10,7 +10,7 @@
 # @since     3.0.0
 XLite\Model\Config:
   - name: bestsellers_menu
-    category: Bestsellers
+    category: CDev\Bestsellers
     type: select
     orderby: 115
     value: 1
@@ -18,7 +18,7 @@ XLite\Model\Config:
       - code: en
         option_name: Display the list of bestsellers in
   - name: bestsellers_thumbnails
-    category: Bestsellers
+    category: CDev\Bestsellers
     type: checkbox
     orderby: 115
     value: Y
@@ -26,7 +26,7 @@ XLite\Model\Config:
       - code: en
         option_name: Show thumbnails in the list
   - name: number_of_bestsellers
-    category: Bestsellers
+    category: CDev\Bestsellers
     type: text
     orderby: 115
     value: 5

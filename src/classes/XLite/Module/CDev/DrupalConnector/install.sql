@@ -7,6 +7,6 @@ CREATE TABLE xlite_landing_links (
   KEY expiry(expiry)
 );
 
-INSERT INTO `xlite_config` VALUES (93,'drupal_root_url','DrupalConnector','text',10,'');
+INSERT INTO `xlite_config` VALUES (93,'drupal_root_url','CDev\\DrupalConnector','text',10,'');
 INSERT INTO `xlite_config_translations` VALUES (70,'en',93,'Root URL of the Drupal installation','');
 

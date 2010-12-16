@@ -66,14 +66,14 @@
 <widget class="\XLite\View\QuickLinks" />
 <widget class="\XLite\View\Location" />
 <widget class="\XLite\View\AdvBlock" />
-<widget class="\XLite\View\ModulesModify" />
+<widget class="\XLite\View\ModulesManager\Manage" />
 <widget class="\XLite\View\Payment\Methods" />
 <widget class="\XLite\View\Payment\Method" />
 
 <widget target="access_denied" template="access_denied.tpl" />
 <widget template="common/dialog.tpl" head="Customer zone warning" body="customer_zone_warning.tpl" IF="{getCustomerZoneWarning()}" />
 <widget target="main" template="common/dialog.tpl" head="Welcome to the Administrator Zone" body="menu.tpl" />
-<widget target="module" template="common/dialog.tpl" head="&quot;{page}&quot; add-on settings" body="general_settings.tpl" />
+<widget target="module" template="common/dialog.tpl" head="{getLocation()}" body="general_settings.tpl" />
 
 <widget name="categoriesWidget" target="categories" template="common/dialog.tpl" head="Manage categories" body="categories/body.tpl" IF="!mode=#delete#" />
 <widget module="CDev\FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/CDev/FeaturedProducts/featuredProducts.tpl" IF="{namedWidgets.categoriesWidget.visible}" />
