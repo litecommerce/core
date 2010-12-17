@@ -223,4 +223,39 @@ class State extends \XLite\Model\Repo\ARepo
             ->leftJoin('s.country', 'c');
     }
 
+    /**
+     * Find states by country code
+     * 
+     * @param string $countryCode Country code
+     *  
+     * @return \XLite\Model\State|void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findByCountryCode($countryCode)
+    {
+        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($countryCode);
+
+        return $country
+            ? $this->defineByCountryQuery($country)->getQuery()->getResult()
+            : array();
+    }
+
+    /**
+     * Define query for findByCountryCode() method
+     * 
+     * @param \XLite\Model\Country $country Country
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineByCountryQuery(\XLite\Model\Country $country)
+    {
+        return $this->createQueryBuilder()
+            ->andWhere('s.country = :country')
+            ->setParameter('country', $country);
+    }
 }

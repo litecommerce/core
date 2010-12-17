@@ -124,35 +124,19 @@ class ExpressCheckout extends \XLite\Controller\Customer\ACustomer
 
                 $details = $pm->xpath->query('base:GetExpressCheckoutDetailsResponseDetails/base:PayerInfo', $response)->item(0);
 
-                $qb = \XLite\Core\Database::getQB()
-                    ->select('s')
-                    ->from('\XLite\Model\State', 's');
-
                 $countryCode = $pm->getXMLResponseValue('base:Address/base:Country', $details);
                 $stateCode = addslashes($pm->getXMLResponseValue('base:Address/base:StateOrProvince', $details));
-                $stateCondition = $qb->expr()->eq('s.code', ':stateCode');
-                if ('US' != $countryCode) {
-                    $stateCondition = $qb->expr()->orx(
-                        $stateCondition,
-                        $qb->expr()->eq('s.state', ':stateCode')
-                    );
-                }
 
-                $qb->where(
-                    $qb->expr()->andx(
-                        $qb->expr()->eq('s.country_code', ':countryCode'),
-                        $stateCondition
-                    )
-                );
+                $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($countryCode);
+                $state = null;
 
-                try {
-                    $state = $qb->setParameters(array('countryCode' => $countryCode, 'stateCode' => $stateCode))
-                        ->getQuery()
-                        ->setMaxResults(1)
-                        ->getSingleResult();
-
-                } catch (\Doctrine\ORM\NoResultException $exception) {
-                    $state = false;
+                if ($country) {
+                    foreach ($country->getStates() as $s) {
+                        if ($s->getCode() == $stateCode || ('US' != $countryCode && $s->getState() == $stateCode)) {
+                            $state = $s;
+                            break;
+                        }
+                    }
                 }
 
                 $payer = $pm->getXMLResponseValue('base:Payer', $details);

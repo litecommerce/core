@@ -60,27 +60,18 @@ class Countries extends \XLite\Controller\Admin\AAdmin
 
     function action_update()
     {
-        // parse POST'ed data, modify country properties
-        list($keys, $parameters) = \XLite\Core\Database::prepareArray(
-            array_keys(\XLite\Core\Request::getInstance()->countries)
-        );
-        $list = \XLite\Core\Database::getQB()
-            ->select('c')
-            ->from('XLite\Model\Country', 'c')
-            ->where('c.code IN (' . implode(', ', $keys) . ')')
-            ->setParameters($parameters)
-            ->getQuery()
-            ->getResult();
+        $update = false;
 
-        if ($list) {
-            foreach ($list as $country) {
-                $data = \XLite\Core\Request::getInstance()->countries[$country->code];
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\Country')->findAll() as $country) {
+            if (isset(\XLite\Core\Request::getInstance()->countries[$country->getCode()])) {
                 $data['eu_member'] = isset($data['eu_member']);
                 $data['enabled'] = isset($data['enabled']);
                 $country->map($data);
-                \XLite\Core\Database::getEM()->persist($country);
+                $update = true;
             }
+        }
 
+        if ($update) {
             \XLite\Core\Database::getEM()->flush();
         }
 

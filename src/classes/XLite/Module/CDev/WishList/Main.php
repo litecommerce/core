@@ -121,23 +121,15 @@ abstract class Main extends \XLite\Module\AModule
 
         foreach ($tpls as $tpl) {
 
-            try {
-                $list = \XLite\Core\Database::getQB()
-                    ->select('v')
-                    ->from('\XLite\Model\ViewList', 'v')
-                    ->where('v.tpl LIKE :tpl AND v.list = :list')
-                    ->setParameters(array('tpl' => '%' . $tpl, 'list' => 'cart.item.info'))
-                    ->getQuery()
-                    ->getSingleResult();
+            $list = \XLite\Core\Database::getRepo('XLite\Model\ViewList')->findOneByTplAndList('%' . $tpl, 'cart.item.info');
 
+            if ($list) {
                 $newList = new \XLite\Model\ViewList();
-                $newList->list = 'wishlist.item.info';
-                $newList->tpl = $list->tpl;
-                $newList->weight = $list->weight;
+                $newList->setList('wishlist.item.info');
+                $newList->setTpl($list->getTpl());
+                $newList->setWeight($list->getWeight());
 
                 \XLite\Core\Database::getEM()->persist($newList);
-
-            } catch (\Doctrine\ORM\NoResultException $exception) {
             }
         }
 

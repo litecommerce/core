@@ -94,6 +94,48 @@ class ViewList extends \XLite\Model\Repo\ARepo
     }
 
     /**
+     * Find view list by tempalte pattern and list name
+     * 
+     * @param string $tpl  Tempalte pattern
+     * @param string $list List name
+     *  
+     * @return \XLite\Model\ViewList|void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findOneByTplAndList($tpl, $list)
+    {
+        try {
+            $list = $this->defineOneByTplAndListQuery($tpl, $list)->getQuery()->getSingleResult();
+
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            $list = null;
+        }
+
+        return $list;
+    }
+
+    /**
+     * Define query for findOneByTplAndList() method
+     * 
+     * @param string $tpl  Tempalte pattern
+     * @param string $list List name
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineOneByTplAndListQuery($tpl, $list)
+    {
+        return $this->createQueryBuilder()
+            ->andWhere('v.tpl LIKE :tpl AND v.list = :list')
+            ->setParameter('tpl', $tpl)
+            ->setParameter('list', $tpl);
+    }
+
+    /**
      * Define query builder for findClassList()
      *
      * @param string $class Class name

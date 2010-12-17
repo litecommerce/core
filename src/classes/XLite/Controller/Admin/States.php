@@ -79,13 +79,7 @@ class States extends \XLite\Controller\Admin\AAdmin
     function getStates()
     {
         if (is_null($this->states)) {
-            $this->states = \XLite\Core\Database::getQB()
-                ->select('s')
-                ->from('XLite\Model\State', 's')
-                ->where('s.country_code = :code')
-                ->setParameter('code', $this->get('country_code'))
-                ->getQuery()
-                ->getResult();
+            $this->states = \XLite\Core\Database::getRepo('XLite\Model\State')->findByCountryCode($this->get('country_code'));
         }
 
         return $this->states;
@@ -123,15 +117,15 @@ class States extends \XLite\Controller\Admin\AAdmin
             return;
         }
 
-        $state = \XLite\Core\Database::getQB()
-            ->select('COUNT(s.state_id)')
-            ->from('XLite\Model\State', 's')
-            ->where('s.state = :state AND s.code = :code')
-            ->setParameters(array('state' => $postData['state'], 'code' => $postData['code']))
-            ->getQuery()
-            ->getSingleScalarResult();
+        $found = false;
+        foreach ($country->getState() as $s) {
+            if ($s->getCode() == $postData['code'] || $s->getState() == $postData['state']) {
+                $found = true;
+                break;
+            }
+        }
 
-        if ($state) {
+        if ($found) {
             $this->set('valid', false);
             $this->obligatorySetStatus('exists');
             return;
