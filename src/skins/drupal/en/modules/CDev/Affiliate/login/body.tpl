@@ -30,7 +30,7 @@
 </tr>
 <tr>
     <td>
-        <a IF="config.Affiliate.registration_enabled" href="cart.php?target=partner_profile&amp;mode=register" class="SidebarItems"><img src="images/go.gif" width="13" height="13" border="0" alt="" align="left">Join now!</a>
+        <a IF="config.CDev.Affiliate.registration_enabled" href="cart.php?target=partner_profile&amp;mode=register" class="SidebarItems"><img src="images/go.gif" width="13" height="13" border="0" alt="" align="left">Join now!</a>
     </td>
 </tr>
 </table>

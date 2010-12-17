@@ -88,7 +88,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
     
     function isShowDCForm()
     {
-        return is_null($this->cart->get('DC')) && !$this->cart->is('empty') && $this->config->Promotion->allowDC;
+        return is_null($this->cart->get('DC')) && !$this->cart->is('empty') && $this->config->CDev->Promotion->allowDC;
     }
 
 }

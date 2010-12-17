@@ -54,7 +54,7 @@ class Auth extends \XLite\Core\Auth implements \XLite\Base\IDecorator
             $profile->set('password', null);
         }
         $this->loginProfile($profile);
-        if (!$this->config->Affiliate->moderated) {
+        if (!$this->config->CDev->Affiliate->moderated) {
             // approve partner for non-moderated registration
             $this->approvePartner($profile);
         } else {
@@ -67,7 +67,7 @@ class Auth extends \XLite\Core\Auth implements \XLite\Base\IDecorator
         // mailto customer with a new signup notification
         $mailer->compose($this->config->Company->site_administrator,
                 $profile->get('login'),
-                $this->config->Affiliate->moderated ? "modules/Affiliate/partner_signin_notification" : "modules/Affiliate/partner_signin_confirmation"
+                $this->config->CDev->Affiliate->moderated ? "modules/Affiliate/partner_signin_notification" : "modules/Affiliate/partner_signin_confirmation"
                 );
         $mailer->send();
         // mailto admin with a new partner signup notification

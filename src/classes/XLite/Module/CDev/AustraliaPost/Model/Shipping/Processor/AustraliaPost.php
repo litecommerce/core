@@ -120,7 +120,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
 
         $availableMethods = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findMethodsByProcessor($this->getProcessorId());
 
-        $currencyRate = doubleval(\XLite\Base::getInstance()->config->AustraliaPost->currency_rate);
+        $currencyRate = doubleval(\XLite\Base::getInstance()->config->CDev->AustraliaPost->currency_rate);
         $currencyRate = $currencyRate > 0 ?: 1;
 
         $errorMsg = null;
@@ -135,9 +135,9 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
                 'Destination_Postcode' => $data['dstAddress']['zipcode'],
                 'Country'              => $data['dstAddress']['country'],
                 'Weight'               => $data['weight'],
-                'Length'               => \XLite\Base::getInstance()->config->AustraliaPost->length,
-                'Width'                => \XLite\Base::getInstance()->config->AustraliaPost->width,
-                'Height'               => \XLite\Base::getInstance()->config->AustraliaPost->height,
+                'Length'               => \XLite\Base::getInstance()->config->CDev->AustraliaPost->length,
+                'Width'                => \XLite\Base::getInstance()->config->CDev->AustraliaPost->width,
+                'Height'               => \XLite\Base::getInstance()->config->CDev->AustraliaPost->height,
                 'Quantity'             => 1,
             );
 

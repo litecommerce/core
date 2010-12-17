@@ -118,7 +118,7 @@ implements \XLite\Base\IDecorator
 
         if (
             $this->xlite->get('PA_InventorySupport')
-            && $this->config->ProductAdviser->customer_notifications_enabled
+            && $this->config->CDev->ProductAdviser->customer_notifications_enabled
             && $item->get('outOfStock')
         ) {
 

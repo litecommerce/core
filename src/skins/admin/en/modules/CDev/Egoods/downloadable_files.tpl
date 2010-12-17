@@ -169,12 +169,12 @@
 		<tr>
 			<td><input name="new_acc" size="32" value="{newLinkAccessKey}"></td>
 			<td nowrap><widget class="\XLite\View\Date" field="new_exp_date"></td>
-			<td><input name="new_downloads" size="10" value="{config.Egoods.exp_downloads}"></td>
+			<td><input name="new_downloads" size="10" value="{config.CDev.Egoods.exp_downloads}"></td>
 			<td>
 				<select name="new_expires">
-				<option value="T" selected="{config.Egoods.link_expires=#T#}">Date</option>
-				<option value="D" selected="{config.Egoods.link_expires=#D#}">Downloads</option>
-				<option value="B" selected="{config.Egoods.link_expires=#B#}">Date and downloads</option>
+				<option value="T" selected="{config.CDev.Egoods.link_expires=#T#}">Date</option>
+				<option value="D" selected="{config.CDev.Egoods.link_expires=#D#}">Downloads</option>
+				<option value="B" selected="{config.CDev.Egoods.link_expires=#B#}">Date and downloads</option>
 			</td>	
 		</tr>
 		</table>
@@ -196,7 +196,7 @@
 <font class="AdminTitle">Add new file</font>
 
 <p IF="!isValidEgoodsStoreDir()" align="justify">
-<font color="red">WARNING!</font> Remote files cannot be uploaded to the specified egoods directory  ("{xlite.config.Egoods.egoods_store_dir}"), because the directory does not exist or you do not have write permissions for it.<br>To enable file uploads, specify a different egoods directory in the <a href="admin.php?target=module&page=Egoods"><u>Egoods settings page</u></a>.
+<font color="red">WARNING!</font> Remote files cannot be uploaded to the specified egoods directory  ("{xlite.config.CDev.Egoods.egoods_store_dir}"), because the directory does not exist or you do not have write permissions for it.<br>To enable file uploads, specify a different egoods directory in the <a href="admin.php?target=module&page=Egoods"><u>Egoods settings page</u></a>.
 </p>
 
 <form action="admin.php" name="add_egood_form" enctype="multipart/form-data" method="POST">

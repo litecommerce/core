@@ -634,7 +634,7 @@ class Order extends \XLite\Controller\Admin\Order implements \XLite\Base\IDecora
         $this->cloneUpdated(true);
 
         // Send notifications to specifiend email addresses when update order
-        $emails = $this->config->AOM->order_update_notification;
+        $emails = $this->config->CDev->AOM->order_update_notification;
         if (is_array($emails) && count($emails) > 0) {
             foreach ($emails as $email) {
                 $mail = new \XLite\View\Mailer();
@@ -663,7 +663,7 @@ class Order extends \XLite\Controller\Admin\Order implements \XLite\Base\IDecora
             $clone = $order->clone();
         }
 
-        if ($this->config->AOM->clone_silent) {
+        if ($this->config->CDev->AOM->clone_silent) {
             $clone->_disable_all_notifications = true;
         }
 

@@ -154,7 +154,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     function getFroogleLabel()
     {
         $label = "";
-        switch ($this->config->Froogle->export_label) {
+        switch ($this->config->CDev->Froogle->export_label) {
             case "meta_tags":
                 $label = $this->_stripSpecials($this->get('meta_tags'));
             break;
@@ -165,7 +165,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
                 $label = $this->_stripSpecials($this->get('meta_desc'));
             break;
             case "custom":
-                $label = $this->config->Froogle->export_custom_label;
+                $label = $this->config->CDev->Froogle->export_custom_label;
             break;
             default:
                 // category
@@ -197,7 +197,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 
     function getFroogleBrand()
     {
-        return $this->config->Froogle->froogle_brand;
+        return $this->config->CDev->Froogle->froogle_brand;
     }
 
     function getFroogleCondition()
@@ -207,13 +207,13 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 
     function getFroogleExpirationDate()
     {
-        $exp_date = time() + ($this->config->Froogle->froogle_expiration * 86400);
+        $exp_date = time() + ($this->config->CDev->Froogle->froogle_expiration * 86400);
         return date("Y-m-d", $exp_date);
     }
 
     function getFroogleId()
     {
-        $out = $this->config->Froogle->froogle_id_format;
+        $out = $this->config->CDev->Froogle->froogle_id_format;
 
         if (strpos($out, "%psku") !== false) {
             $out = str_replace("%psku", $this->get('sku'), $out);

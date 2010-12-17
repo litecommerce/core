@@ -97,7 +97,7 @@ class CustomerNotifications extends \XLite\Controller\Admin\AAdmin
             || isset(\XLite\Core\Request::getInstance()->prodname)
             || isset(\XLite\Core\Request::getInstance()->period))) {
 
-            $preferences = $this->config->ProductAdviser->filters_preferences;
+            $preferences = $this->config->CDev->ProductAdviser->filters_preferences;
 
    			if (is_array($preferences)) {
    				$this->_setParameter('email', $preferences, true);
@@ -133,7 +133,7 @@ class CustomerNotifications extends \XLite\Controller\Admin\AAdmin
 
         parent::init();
 
-        if (!$this->config->ProductAdviser->customer_notifications_enabled) {
+        if (!$this->config->CDev->ProductAdviser->customer_notifications_enabled) {
             $this->set('returnUrl', $this->buildUrl('module', '', array('page' => 'ProductAdviser')));
             $this->redirect();
         }

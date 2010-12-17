@@ -47,7 +47,7 @@ function onViewGC() {
 		<td>{date_format(cert.expiration_date)}</td>
 	</tr>
 	</table>
-	<font class="Star">&nbsp;*&nbsp;</font><i>- these certificates will expire sooner than in {config.GiftCertificates.expiration_warning_days} day(s).</i>
+	<font class="Star">&nbsp;*&nbsp;</font><i>- these certificates will expire sooner than in {config.CDev.GiftCertificates.expiration_warning_days} day(s).</i>
     </td>
 </tr>
 </tbody>

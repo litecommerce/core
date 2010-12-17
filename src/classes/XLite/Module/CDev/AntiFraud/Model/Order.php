@@ -65,7 +65,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 
     function isAntiFraudForceQueued()
     {
-        if ($this->getComplex('details.af_result.total_trust_score') >= $this->config->AntiFraud->antifraud_risk_factor && $this->config->AntiFraud->antifraud_force_queued == 'Y') {
+        if ($this->getComplex('details.af_result.total_trust_score') >= $this->config->CDev->AntiFraud->antifraud_risk_factor && $this->config->CDev->AntiFraud->antifraud_force_queued == 'Y') {
             $this->xlite->logger->log("->AntiFraud_Order::isAntiFraudForceQueued(1)");
             return true;
         } else {
@@ -126,11 +126,11 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
         $post['city'] 		= $profile->get('billing_city');
         $post['zipcode'] 	= $profile->get('billing_zipcode');
         $post['phone'] 		= $profile->get('billing_phone');
-        $post['service_key'] = $this->config->AntiFraud->antifraud_license;
-        $post['safe_distance'] = $this->config->AntiFraud->antifraud_safe_distance;
+        $post['service_key'] = $this->config->CDev->AntiFraud->antifraud_license;
+        $post['safe_distance'] = $this->config->CDev->AntiFraud->antifraud_safe_distance;
 
         $request = new \XLite\Model\HTTPS();
-        $request->url = $this->config->AntiFraud->antifraud_url."/antifraud_service.php";
+        $request->url = $this->config->CDev->AntiFraud->antifraud_url."/antifraud_service.php";
         $request->data = $post;
         $request->request();
         
@@ -147,33 +147,33 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
     		$risk_factor_multiplier = 1;
     		$found = new \XLite\Model\Order($this->get('order_id'));
 
-    		if ($this->config->AntiFraud->antifraud_order_total > 0 && $this->get('total') > 0 &&  $this->get('total') > $this->config->AntiFraud->antifraud_order_total)	{
-    			$risk_factor_multiplier *= $this->config->AntiFraud->order_total_multiplier;
+    		if ($this->config->CDev->AntiFraud->antifraud_order_total > 0 && $this->get('total') > 0 &&  $this->get('total') > $this->config->CDev->AntiFraud->antifraud_order_total)	{
+    			$risk_factor_multiplier *= $this->config->CDev->AntiFraud->order_total_multiplier;
     		}
     		$processed_orders = $found->count("(status='P' OR status='C') AND orig_profile_id='" . $this->getComplex('origProfile.profile_id') . "' AND order_id<>'" . $this->get('order_id') . "'");
 
     		if ($processed_orders > 0) {
     			$this->setComplex('details.processed_orders', $processed_orders);
-    			$risk_factor_multiplier /= $this->config->AntiFraud->processed_orders_multiplier;
+    			$risk_factor_multiplier /= $this->config->CDev->AntiFraud->processed_orders_multiplier;
     		}
     		
     		$declined_orders = $found->count("(status='D' OR status='F') AND orig_profile_id='" . $this->getComplex('origProfile.profile_id') . "' AND order_id<>'" . $this->get('order_id') . "'");
 
     		if ($declined_orders > 0) {
     			$this->setComplex('details.declined_orders', $declined_orders);
-    			$risk_factor_multiplier *= $this->config->AntiFraud->declined_orders_multiplier;
+    			$risk_factor_multiplier *= $this->config->CDev->AntiFraud->declined_orders_multiplier;
     		}
     		$duplicate_ip = $found->count("orig_profile_id <> ".$this->getComplex('origProfile.profile_id')." AND details LIKE '%".$this->getComplex('details.customer_ip')."%'");
 
     		if ($duplicate_ip) {
-    			$risk_factor_multiplier *= $this->config->AntiFraud->duplicate_ip_multiplier;
+    			$risk_factor_multiplier *= $this->config->CDev->AntiFraud->duplicate_ip_multiplier;
     		}
     		
     		$result['total_trust_score'] = $result['total_trust_score'] * $risk_factor_multiplier;
 
             $country = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $profile->get('billing_country'));
             if ($country->isRiskCountry()) {
-                $result['total_trust_score'] +=  $this->config->AntiFraud->risk_country_multiplier;
+                $result['total_trust_score'] +=  $this->config->CDev->AntiFraud->risk_country_multiplier;
             }
     		
             if ($result['available_request'] == $result['used_request']) {
@@ -249,7 +249,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 
     function update()
     {
-        if ($this->xlite->is('adminZone') && $this->config->AntiFraud->always_keep_info) {
+        if ($this->xlite->is('adminZone') && $this->config->CDev->AntiFraud->always_keep_info) {
         	$afFields = array('customer_ip', "proxy_ip", "af_result", "processed_orders", "declined_orders", "af_data");
 
             $oldOrder = new \XLite\Model\Order($this->get('order_id'));

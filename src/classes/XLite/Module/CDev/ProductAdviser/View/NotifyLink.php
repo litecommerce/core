@@ -64,7 +64,7 @@ class NotifyLink extends \XLite\View\AView
     {
         return parent::isVisible()
             && $this->xlite->get('PA_InventorySupport')
-            && ($this->config->ProductAdviser->customer_notifications_mode & 2) != 0
+            && ($this->config->CDev->ProductAdviser->customer_notifications_mode & 2) != 0
             && $this->getRejectedItem();
     }
 

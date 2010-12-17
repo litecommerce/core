@@ -13,7 +13,7 @@
  *}
 <h3>Delivery method</h3>
 
-{if:config.GiftCertificates.enablePostGC}
+{if:config.CDev.GiftCertificates.enablePostGC}
 
 <ul class="delivery">
   <li FOREACH="getViewList(#giftcert.selectors#),w">

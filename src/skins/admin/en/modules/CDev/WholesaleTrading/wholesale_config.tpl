@@ -17,43 +17,43 @@
 <table border=0 cellpadding=3 cellspacing=1>
 <tr>
 	<td>Price message when price is denied</td>
-	<td><input name="price_denied_message" size="50" value="{config.WholesaleTrading.price_denied_message}"></td>
+	<td><input name="price_denied_message" size="50" value="{config.CDev.WholesaleTrading.price_denied_message}"></td>
 </tr>
 <tr>
 	<td>Clone purchase limit settings when a product is cloned</td>
-	<td><input type="checkbox" name="clone_wholesale_purchaselimit" checked="{config.WholesaleTrading.clone_wholesale_purchaselimit}" onClick="this.blur()"></td>
+	<td><input type="checkbox" name="clone_wholesale_purchaselimit" checked="{config.CDev.WholesaleTrading.clone_wholesale_purchaselimit}" onClick="this.blur()"></td>
 </tr>
 <tr>
 	<td>Clone wholesale pricing settings when a product is cloned</td>
-	<td><input type="checkbox" name="clone_wholesale_pricing" checked="{config.WholesaleTrading.clone_wholesale_pricing}" onClick="this.blur()"></td>
+	<td><input type="checkbox" name="clone_wholesale_pricing" checked="{config.CDev.WholesaleTrading.clone_wholesale_pricing}" onClick="this.blur()"></td>
 </tr>
 <tr>
 	<td>Clone product access settings when a product is cloned</td>
-	<td><input type="checkbox" name="clone_wholesale_productaccess" checked="{config.WholesaleTrading.clone_wholesale_productaccess}" onClick="this.blur()"></td>
+	<td><input type="checkbox" name="clone_wholesale_productaccess" checked="{config.CDev.WholesaleTrading.clone_wholesale_productaccess}" onClick="this.blur()"></td>
 </tr>
 <tr>
 	<td>Add Sales Permit/Tax ID field to the registration form</td>
-	<td><input type="checkbox" name="WholesalerFieldsTaxId" checked="{config.WholesaleTrading.WholesalerFieldsTaxId}" onClick="this.blur()"></td>
+	<td><input type="checkbox" name="WholesalerFieldsTaxId" checked="{config.CDev.WholesaleTrading.WholesalerFieldsTaxId}" onClick="this.blur()"></td>
 </tr>
 <tr>
 	<td>Add VAT Registration number field to the registration form</td>
-	<td><input type="checkbox" name="WholesalerFieldsVat" checked="{config.WholesaleTrading.WholesalerFieldsVat}" onClick="this.blur()"></td>
+	<td><input type="checkbox" name="WholesalerFieldsVat" checked="{config.CDev.WholesaleTrading.WholesalerFieldsVat}" onClick="this.blur()"></td>
 </tr>
 <tr>
 	<td>Add GST Registration number field to the registration form</td>
-	<td><input type="checkbox" name="WholesalerFieldsGst" checked="{config.WholesaleTrading.WholesalerFieldsGst}" onClick="this.blur()"></td>
+	<td><input type="checkbox" name="WholesalerFieldsGst" checked="{config.CDev.WholesaleTrading.WholesalerFieldsGst}" onClick="this.blur()"></td>
 </tr>
 <tr>
 	<td>Add PST Registration number field to the registration form</td>
-	<td><input type="checkbox" name="WholesalerFieldsPst" checked="{config.WholesaleTrading.WholesalerFieldsPst}" onClick="this.blur()"></td>
+	<td><input type="checkbox" name="WholesalerFieldsPst" checked="{config.CDev.WholesaleTrading.WholesalerFieldsPst}" onClick="this.blur()"></td>
 </tr>
 <tr>
     <td>Membership granted through product purchase overrides current membership</td>
-    <td><input type="checkbox" name="override_membership" checked="{config.WholesaleTrading.override_membership}" onClick="this.blur()"></td>
+    <td><input type="checkbox" name="override_membership" checked="{config.CDev.WholesaleTrading.override_membership}" onClick="this.blur()"></td>
 </tr>
 <tr>
     <td>Enable direct addition to the cart for products with disabled catalog visibility</td>
-    <td><input type="checkbox" name="direct_addition" checked="{config.WholesaleTrading.direct_addition}" onClick="this.blur()"></td>
+    <td><input type="checkbox" name="direct_addition" checked="{config.CDev.WholesaleTrading.direct_addition}" onClick="this.blur()"></td>
 </tr>
 <tr>
 	<td valign="top">Categories for bulk shopping<br><i>To (un)select more than one category, Ctrl-click it</i></td>

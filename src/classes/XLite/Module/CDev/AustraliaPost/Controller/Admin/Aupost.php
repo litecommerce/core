@@ -60,7 +60,7 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
      */
     protected function getOptionsCategory()
     {
-        return 'AustraliaPost';
+        return 'CDev\AustraliaPost';
     }
 
     /**

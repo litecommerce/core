@@ -52,9 +52,9 @@ class UpsOnlineTool extends \XLite\Controller\Admin\AAdmin
 
     function getHaveAccount()
     {
-        return $this->config->UPSOnlineTools->UPS_username
-            && $this->config->UPSOnlineTools->UPS_password
-            && $this->config->UPSOnlineTools->UPS_accesskey;
+        return $this->config->CDev->UPSOnlineTools->UPS_username
+            && $this->config->CDev->UPSOnlineTools->UPS_password
+            && $this->config->CDev->UPSOnlineTools->UPS_accesskey;
     }
 
     protected function processStep2()

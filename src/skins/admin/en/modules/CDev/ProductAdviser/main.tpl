@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 {if:mode=#process#}
-<widget target="CustomerNotifications" template="common/dialog.tpl" body="modules/CDev/ProductAdviser/customer_notifications.tpl" head="Send Customer Notifications" IF="xlite.config.ProductAdviser.customer_notifications_enabled">
+<widget target="CustomerNotifications" template="common/dialog.tpl" body="modules/CDev/ProductAdviser/customer_notifications.tpl" head="Send Customer Notifications" IF="xlite.config.CDev.ProductAdviser.customer_notifications_enabled">
 {else:}
-<widget target="CustomerNotifications" template="common/dialog.tpl" body="modules/CDev/ProductAdviser/customer_notifications.tpl" head="Customer Notifications" IF="xlite.config.ProductAdviser.customer_notifications_enabled">
+<widget target="CustomerNotifications" template="common/dialog.tpl" body="modules/CDev/ProductAdviser/customer_notifications.tpl" head="Customer Notifications" IF="xlite.config.CDev.ProductAdviser.customer_notifications_enabled">
 {end:}

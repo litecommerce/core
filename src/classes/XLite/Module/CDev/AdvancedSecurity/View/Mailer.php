@@ -43,7 +43,7 @@ class Mailer extends \XLite\View\Mailer implements \XLite\Base\IDecorator
         // encrypt message with a public key if necessary
         if ($this->get('adminMail') && $this->get('order') && $this->getComplex('order.details')) {
             $gpg = new \XLite\Module\CDev\AdvancedSecurity\Model\GPG();
-            if ($this->config->AdvancedSecurity->gpg_crypt_mail) {
+            if ($this->config->CDev->AdvancedSecurity->gpg_crypt_mail) {
                 $this->logger->log("Module_AdvancedSecurity_Mailer::getBody() encrypt message");
     	        // send as a plain mail
         	    $this->mail->IsHTML(false);

@@ -38,9 +38,9 @@
     <td class="required">*</td>
     <td>
       <input type="text" id="amount" name="amount" value="{gc.amount}" class="field-required field-float field-range" />
-      <span class="field-comment">{price_format(config.GiftCertificates.minAmount):h} - {price_format(config.GiftCertificates.maxAmount):h}</span>
+      <span class="field-comment">{price_format(config.CDev.GiftCertificates.minAmount):h} - {price_format(config.CDev.GiftCertificates.maxAmount):h}</span>
     </td>
-    <td><widget class="\XLite\Validator\RangeValidator" field="amount" min="{config.GiftCertificates.minAmount}" max="{config.GiftCertificates.maxAmount}" /></td>
+    <td><widget class="\XLite\Validator\RangeValidator" field="amount" min="{config.CDev.GiftCertificates.minAmount}" max="{config.CDev.GiftCertificates.maxAmount}" /></td>
   </tr>
 
   <tr>

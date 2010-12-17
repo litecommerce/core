@@ -94,7 +94,7 @@ class OrderHistory extends \XLite\Model\AModel
 
         $secureChanges = "";
 
-        if (!$this->xlite->config->AOM->cc_info_history) {
+        if (!$this->xlite->config->CDev->AOM->cc_info_history) {
             foreach ($value as $key=>$val) {
                 if ( is_array($val) ) {
                     foreach ($val as $k=>$v) {
@@ -107,7 +107,7 @@ class OrderHistory extends \XLite\Model\AModel
         }
 
         if (
-            $this->config->AOM->cc_info_history
+            $this->config->CDev->AOM->cc_info_history
             && \XLite\Core\Database::getRepo('\XLite\Model\Module')->isModuleActive('CDev\AdvancedSecurity')
             && \XLite::isAdminZone()
             && $this->config->AdvancedSecurity->gpg_crypt_db

@@ -28,8 +28,8 @@
     {end:}
 
     {if:option.isName(#tier_commission_rates#)}
-    <span IF="!config.Affiliate.tier_commission_rates">- no tiers -</span>
+    <span IF="!config.CDev.Affiliate.tier_commission_rates">- no tiers -</span>
     <table border=0>
-    <tr FOREACH="config.Affiliate.tier_commission_rates,tidx,tr"><td>Tier {tidx} Rate&nbsp;</td><td><input type=text name="tier_commission_rates[{tidx}]" value="{tr}" size=6></td><td>%</td></tr>
+    <tr FOREACH="config.CDev.Affiliate.tier_commission_rates,tidx,tr"><td>Tier {tidx} Rate&nbsp;</td><td><input type=text name="tier_commission_rates[{tidx}]" value="{tr}" size=6></td><td>%</td></tr>
     </table>
     {end:}

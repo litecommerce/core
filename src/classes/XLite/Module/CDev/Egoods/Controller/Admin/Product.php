@@ -49,7 +49,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
 
     function fillForm() 
     {
-        $nowPlusExp = time()+24*3600*$this->config->Egoods->exp_days;
+        $nowPlusExp = time()+24*3600*$this->config->CDev->Egoods->exp_days;
         $this->set('new_exp_date', $nowPlusExp);
         parent::fillForm();
     }
@@ -72,7 +72,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
     		$df->create();
     		
     		if ($_POST['new_remote'] == "Y") {
-    			$path = $this->config->Egoods->egoods_store_dir . '/' . $df->get('file_id');
+    			$path = $this->config->CDev->Egoods->egoods_store_dir . '/' . $df->get('file_id');
     			\Includes\Utils\FileManager::mkdirRecursive($path);
     			$file_name = $path . '/' . $_FILES['new_remote_file']['name'];
     			if (is_uploaded_file($_FILES['new_remote_file']['tmp_name'])) {
@@ -99,7 +99,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
         ) {
     		
     		if ($_POST['remote'] == 'Y') {
-    			$path = $this->config->Egoods->egoods_store_dir . '/' . $df->get('file_id');
+    			$path = $this->config->CDev->Egoods->egoods_store_dir . '/' . $df->get('file_id');
     			\Includes\Utils\FileManager::mkdirRecursive($path);
     			$file_name = $path . '/' . $_FILES['remote_file']['name'];
     			if (is_uploaded_file($_FILES['remote_file']['tmp_name'])) {
@@ -274,7 +274,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
 
     function isValidEgoodsStoreDir() 
     {
-        $store_dir = $this->config->Egoods->egoods_store_dir;
+        $store_dir = $this->config->CDev->Egoods->egoods_store_dir;
         if (!is_dir($store_dir) || !is_writable($store_dir)) {
             return false;
         }

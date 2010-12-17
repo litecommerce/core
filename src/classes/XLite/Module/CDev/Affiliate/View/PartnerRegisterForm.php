@@ -40,7 +40,7 @@ class PartnerRegisterForm extends \XLite\View\RegisterForm implements \XLite\Bas
     function fillForm()
     {
         parent::fillForm();
-        $this->pending_plan = $this->config->Affiliate->default_plan;
+        $this->pending_plan = $this->config->CDev->Affiliate->default_plan;
         if (!$this->xlite->is('adminZone') && $this->auth->is('logged')) {
             $this->_savedParent = (isset($this->parent)) ? $this->parent : null;
             $this->set('properties', $this->auth->getComplex('profile.properties'));
@@ -67,7 +67,7 @@ class PartnerRegisterForm extends \XLite\View\RegisterForm implements \XLite\Bas
                 $this->set('invalidPassword', true);
             } else {
                 $this->set('valid', true);
-                $this->set('mode', $this->config->Affiliate->moderated ? "sent" : "success"); // go to success page
+                $this->set('mode', $this->config->CDev->Affiliate->moderated ? "sent" : "success"); // go to success page
             }
         }
     }

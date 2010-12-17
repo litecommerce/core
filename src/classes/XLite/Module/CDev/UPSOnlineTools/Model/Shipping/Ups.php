@@ -115,7 +115,7 @@ class Ups extends \XLite\Model\Shipping\Online
      */
     public function setAccount(array $userinfo, &$error)
     {
-        $devlicense = $this->config->UPSOnlineTools->devlicense;
+        $devlicense = $this->config->CDev->UPSOnlineTools->devlicense;
         $upsLicenseText = '';
         if ($this->getLicense($upsLicenseText)) {
             return 2;
@@ -925,7 +925,7 @@ EOT;
         static $options = null;
 
         if (!isset($options)) {
-            $options = $this->config->UPSOnlineTools;
+            $options = $this->config->CDev->UPSOnlineTools;
             foreach (array('UPS_username', 'UPS_password', 'UPS_accesskey') as $name) {
                 $val = $options->$name;
                 $val = $this->decode($val);
@@ -1555,9 +1555,9 @@ EOT;
             case '30':  // Pallet
                 $dims = array(
                     'name'         => 'Pallet',
-                    'width'        => $this->config->UPSOnlineTools->width,
-                    'length'       => $this->config->UPSOnlineTools->length,
-                    'height'       => $this->config->UPSOnlineTools->height,
+                    'width'        => $this->config->CDev->UPSOnlineTools->width,
+                    'length'       => $this->config->CDev->UPSOnlineTools->length,
+                    'height'       => $this->config->CDev->UPSOnlineTools->height,
                     'weight_limit' => 150,
                 );
                 break;
@@ -1566,9 +1566,9 @@ EOT;
             default:
                 $dims = array(
                     'name'         => 'Your package',
-                    'width'        => $this->config->UPSOnlineTools->width,
-                    'length'       => $this->config->UPSOnlineTools->length,
-                    'height'       => $this->config->UPSOnlineTools->height,
+                    'width'        => $this->config->CDev->UPSOnlineTools->width,
+                    'length'       => $this->config->CDev->UPSOnlineTools->length,
+                    'height'       => $this->config->CDev->UPSOnlineTools->height,
                     'weight_limit' => 0,
                 );
                 break;
@@ -1615,7 +1615,7 @@ EOT;
             return 0;
         }
 
-        $devlicense = $this->config->UPSOnlineTools->devlicense;
+        $devlicense = $this->config->CDev->UPSOnlineTools->devlicense;
 
         $request = <<<EOT
 <?xml version="1.0" encoding="ISO-8859-1"?>
@@ -1698,7 +1698,7 @@ EOT;
      */
     public function getShippingCacheExpiration()
     {
-        return $this->config->UPSOnlineTools->cache_autoclean * 86400;
+        return $this->config->CDev->UPSOnlineTools->cache_autoclean * 86400;
     }
 
     /**

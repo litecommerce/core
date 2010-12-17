@@ -104,7 +104,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
             return;
         }
         if (!isset($_REQUEST['action']) && !isset($_REQUEST['mode'])) {
-            if (!$this->session->isRegistered('bonusListDisplayed') && $this->config->Promotion->showBonusList) {
+            if (!$this->session->isRegistered('bonusListDisplayed') && $this->config->CDev->Promotion->showBonusList) {
                 if ($this->cart->getBonusList()) {
                 	$needRedirect = false;
                     $bonusList = $this->cart->get('bonusList');

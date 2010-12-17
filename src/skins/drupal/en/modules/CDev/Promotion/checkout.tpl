@@ -51,7 +51,7 @@
 </form>
 
 <script>
-var bonusPointsCost = {config.Promotion.bonusPointsCost};
+var bonusPointsCost = {config.CDev.Promotion.bonusPointsCost};
 var maxValue = {cart.getTotalBonusPoints()};
 var maxAvailable = {cart.origProfile.bonusPoints};
 // <!--

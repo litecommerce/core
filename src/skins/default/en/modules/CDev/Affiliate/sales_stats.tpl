@@ -75,7 +75,7 @@
 <table IF="search&salesStats&!show_top_products" border=0 cellpadding=5 cellspacing=1>
 <tr class=TableHead valign=middle>
     <td align=center colspan=4><b>Order</b></td>
-    <td IF="config.Affiliate.enable_order_totals" align=center rowspan=2><b>Total</b></td>
+    <td IF="config.CDev.Affiliate.enable_order_totals" align=center rowspan=2><b>Total</b></td>
     <td align=center rowspan=2><b>Commissions</b></td>
     <td align=center rowspan=2><b>Status</b></td>
 </tr>
@@ -102,7 +102,7 @@
             {end:}
         {end:}
     </td>
-    <td IF="config.Affiliate.enable_order_totals" align=right nowrap>{price_format(stat.order,#subtotal#):h}</td>
+    <td IF="config.CDev.Affiliate.enable_order_totals" align=right nowrap>{price_format(stat.order,#subtotal#):h}</td>
     <td align=right nowrap>{price_format(stat,#commissions#):h}</td>
     <td align=center>
         <font IF="stat.paid=0" color=blue>Pending</font>
@@ -111,20 +111,20 @@
 </tr>
 <tr class=TableRow>
     <td colspan=4>Affiliate pending commissions</td>
-    <td IF="config.Affiliate.enable_order_totals">&nbsp;</td>
+    <td IF="config.CDev.Affiliate.enable_order_totals">&nbsp;</td>
     <td align=right>{price_format(affiliatePending):h}</td>
     <td>&nbsp;</td>
 </tr>
 <tr class=TableRow>
     <td colspan=4>Affiliate paid commissions</td>
-    <td IF="config.Affiliate.enable_order_totals">&nbsp;</td>
+    <td IF="config.CDev.Affiliate.enable_order_totals">&nbsp;</td>
     <td align=right>{price_format(affiliatePaid):h}</td>
     <td>&nbsp;</td>
 </tr>
 <tr class=TableHead>
     <td colspan=3><b>Total:</b></td>
     <td align=center>{qty}</td>
-    <td IF="config.Affiliate.enable_order_totals" align=right nowrap>{price_format(salesTotal):h}</td>
+    <td IF="config.CDev.Affiliate.enable_order_totals" align=right nowrap>{price_format(salesTotal):h}</td>
     <td align=right nowrap>{price_format(commissionsTotal):h}</td>
     <td>&nbsp;</td>
 </tr>

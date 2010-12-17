@@ -108,7 +108,7 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
     function getParents() 
     {
         $parents = array();
-        $tiers = intval($this->config->Affiliate->tiers_number);
+        $tiers = intval($this->config->CDev->Affiliate->tiers_number);
         if ($tiers > 1) {
             $parent = $this->get('parent');
             $level = 2; // start from level 2 affiliate
@@ -137,7 +137,7 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
 
     function buildAffiliatesTree(&$affiliates, $level) 
     {
-        $tiers = intval($this->config->Affiliate->tiers_number);
+        $tiers = intval($this->config->CDev->Affiliate->tiers_number);
         $pp = new \XLite\Module\CDev\Affiliate\Model\PartnerPayment();
         foreach ($this->findAll("parent=".$this->get('profile_id')) as $cid => $child) {
             $child->set('level', $level);

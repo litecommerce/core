@@ -36,13 +36,13 @@ function checkEmailAddress(field) {
 		alert ("Recipient is invalid! Please correct.");
 		return;
 	 }
-	if (goodAmount==-1 || document.gccreate.amount.value<{config.GiftCertificates.minAmount} || document.gccreate.amount.value>{config.GiftCertificates.maxAmount})
+	if (goodAmount==-1 || document.gccreate.amount.value<{config.CDev.GiftCertificates.minAmount} || document.gccreate.amount.value>{config.CDev.GiftCertificates.maxAmount})
 	 {
 		document.gccreate.amount.focus();
 	    alert ("Amount is invalid! Please correct.");
 		return;
 	 }
-{if:config.GiftCertificates.enablePostGC}
+{if:config.CDev.GiftCertificates.enablePostGC}
      if ((document.gccreate.send_via[0].checked) && (!checkEmailAddress(document.gccreate.recipient_email)))
      {
         document.gccreate.recipient_email.focus();
@@ -122,9 +122,9 @@ Specify the amount in currency.<br><br>
 <td align="right">Amount</td>
 <td><font class="Star">*</font></td>
 <td align="left"><input type="text" name="amount" size="6" value="{amount}">
-{price_format(config.GiftCertificates.minAmount):h} - {price_format(config.GiftCertificates.maxAmount):h}
+{price_format(config.CDev.GiftCertificates.minAmount):h} - {price_format(config.CDev.GiftCertificates.maxAmount):h}
 </td>
-<td>&nbsp;<widget class="\XLite\Validator\RangeValidator" field="amount" min="{config.GiftCertificates.minAmount}" max="{config.GiftCertificates.maxAmount}"></td>
+<td>&nbsp;<widget class="\XLite\Validator\RangeValidator" field="amount" min="{config.CDev.GiftCertificates.minAmount}" max="{config.CDev.GiftCertificates.maxAmount}"></td>
 </tr>
 
 <tr valign="middle" IF="!gc.gcid">
@@ -140,8 +140,8 @@ Specify the amount in currency.<br><br>
 
 <tr><td colspan="4">
 <table border="0" cellspacing="0" cellpadding="0"><tr>
-<td align="right" IF="config.GiftCertificates.enablePostGC"><INPUT type="radio" name="send_via" value="E" checked="{send_via=#E#}"></td>
-<span IF="!config.GiftCertificates.enablePostGC"><INPUT type="hidden" name="send_via" value="E"></span>
+<td align="right" IF="config.CDev.GiftCertificates.enablePostGC"><INPUT type="radio" name="send_via" value="E" checked="{send_via=#E#}"></td>
+<span IF="!config.CDev.GiftCertificates.enablePostGC"><INPUT type="hidden" name="send_via" value="E"></span>
 <td><b>Send via E-mail</b></td>
 </tr></table></td>
 </tr>
@@ -218,7 +218,7 @@ Specify the amount in currency.<br><br>
 </tr>
 </tbody>
 
-<tbody IF="config.GiftCertificates.enablePostGC">
+<tbody IF="config.CDev.GiftCertificates.enablePostGC">
 
 <tr><td colspan=4>&nbsp;</td></tr>
 

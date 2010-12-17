@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="giftcert.methods")
  *}
-{if:config.GiftCertificates.enablePostGC}
+{if:config.CDev.GiftCertificates.enablePostGC}
 <table cellspacing="0" class="form-table delivery-post"{if:!gc.send_via=#P#} style="display: none;"{end:}>
 
   <tr>

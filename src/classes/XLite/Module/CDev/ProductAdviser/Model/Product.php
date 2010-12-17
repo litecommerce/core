@@ -206,7 +206,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     {
         parent::create();
 
-    	if ($this->config->ProductAdviser->period_new_arrivals > 0) {
+    	if ($this->config->CDev->ProductAdviser->period_new_arrivals > 0) {
     		$added = time();
             //$added = mktime(date('H', $added), 0, 0, date('m', $added), date('d', $added), date('Y', $added));
             $product_id = $this->get('product_id');
@@ -268,7 +268,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 
         if ($stats->find("product_id = '" . $this->get('product_id') . "'")) {
 
-            $timeCondition = $this->config->ProductAdviser->period_new_arrivals * 3600;
+            $timeCondition = $this->config->CDev->ProductAdviser->period_new_arrivals * 3600;
     	    $timeLimit = time();
 
             if ($stats->get('new') == "Y") {
@@ -301,7 +301,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 
         parent::set($property, $value);
 
-        if (!$this->config->ProductAdviser->customer_notifications_enabled) {
+        if (!$this->config->CDev->ProductAdviser->customer_notifications_enabled) {
         	return;
         }
     	if ($property == "price") {
@@ -327,7 +327,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     {
         parent::update();
 
-        if ($this->config->ProductAdviser->customer_notifications_enabled) {
+        if ($this->config->CDev->ProductAdviser->customer_notifications_enabled) {
 
             $price = $this->xlite->get('productChangedPrice');
 
@@ -467,7 +467,7 @@ There <?php echo ($pricingCAI == 1) ? "is" : "are"; ?> <b><font color=blue><?php
     public function isPriceNotificationAllowed()
     {
         return 0 < intval($this->get('price'))
-            && ($this->config->ProductAdviser->customer_notifications_mode & 1) != 0;
+            && ($this->config->CDev->ProductAdviser->customer_notifications_mode & 1) != 0;
     }
 
 }

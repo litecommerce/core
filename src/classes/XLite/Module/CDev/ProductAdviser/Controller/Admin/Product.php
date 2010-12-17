@@ -257,6 +257,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
 
     function isRelatedProductsEnabled()
     {
-        return (($this->config->ProductAdviser->admin_related_products_enabled == "Y") ? true : false);
+        return (($this->config->CDev->ProductAdviser->admin_related_products_enabled == "Y") ? true : false);
     }
 }

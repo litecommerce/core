@@ -40,10 +40,10 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
     function isShowWholesalerFields()
     {
         if (
-            $this->xlite->config->WholesaleTrading->WholesalerFieldsTaxId   == "Y" ||
-            $this->xlite->config->WholesaleTrading->WholesalerFieldsVat     == "Y" ||
-            $this->xlite->config->WholesaleTrading->WholesalerFieldsGst     == "Y" ||
-            $this->xlite->config->WholesaleTrading->WholesalerFieldsPst     == "Y"
+            $this->xlite->config->CDev->WholesaleTrading->WholesalerFieldsTaxId   == "Y" ||
+            $this->xlite->config->CDev->WholesaleTrading->WholesalerFieldsVat     == "Y" ||
+            $this->xlite->config->CDev->WholesaleTrading->WholesalerFieldsGst     == "Y" ||
+            $this->xlite->config->CDev->WholesaleTrading->WholesalerFieldsPst     == "Y"
             ) {
                 return true;
             }

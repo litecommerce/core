@@ -294,7 +294,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
         $inventory->update();
 
         // check low_avail_limit
-        if ($this->config->InventoryTracking->send_notification) {
+        if ($this->config->CDev->InventoryTracking->send_notification) {
             $inventory->checkLowLimit($item);
         }
     }
@@ -310,7 +310,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
     protected function checkedOut()
     {
         // decrease product(s) inventory  with placed order
-        if ($this->config->InventoryTracking->track_placed_order) {
+        if ($this->config->CDev->InventoryTracking->track_placed_order) {
             $this->changeInventory(true);
         }
 
@@ -327,7 +327,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     protected function uncheckedOut()
     {
-        if ($this->config->InventoryTracking->track_placed_order) {
+        if ($this->config->CDev->InventoryTracking->track_placed_order) {
             $this->changeInventory(false);
         }
 
@@ -345,7 +345,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
     protected function processed()
     {
         // decrease product(s) inventory  with processed order
-        if (!$this->config->InventoryTracking->track_placed_order) {
+        if (!$this->config->CDev->InventoryTracking->track_placed_order) {
             $this->changeInventory(true);
         }
 
@@ -363,7 +363,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
     protected function declined()
     {
         // increase inventory if order was processed
-        if ($this->_oldStatus == 'P' && !$this->config->InventoryTracking->track_placed_order) {
+        if ($this->_oldStatus == 'P' && !$this->config->CDev->InventoryTracking->track_placed_order) {
             $this->changeInventory(false);
         }
 

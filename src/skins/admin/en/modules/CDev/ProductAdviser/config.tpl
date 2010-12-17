@@ -76,7 +76,7 @@ function UpdateBuyNow(elm)
 -->
 </script>
 
-{if:!config.ProductAdviser.rp_template=#grid#}
+{if:!config.CDev.ProductAdviser.rp_template=#grid#}
 <script language="Javascript">
 <!--
 visibleBox("option_rp_columns", false);
@@ -84,7 +84,7 @@ visibleBox("option_rp_columns", false);
 </script>
 {end:}
 
-{if:!config.ProductAdviser.rp_template=#list#}
+{if:!config.CDev.ProductAdviser.rp_template=#list#}
 <script language="Javascript">
 <!--
 visibleBox("option_rp_show_descr", false);
@@ -92,7 +92,7 @@ visibleBox("option_rp_show_descr", false);
 </script>
 {end:}
 
-{if:!config.ProductAdviser.pab_template=#grid#}
+{if:!config.CDev.ProductAdviser.pab_template=#grid#}
 <script language="Javascript">
 <!--
 visibleBox("option_pab_columns", false);
@@ -100,7 +100,7 @@ visibleBox("option_pab_columns", false);
 </script>
 {end:}
 
-{if:!config.ProductAdviser.pab_template=#list#}
+{if:!config.CDev.ProductAdviser.pab_template=#list#}
 <script language="Javascript">
 <!--
 visibleBox("option_pab_show_descr", false);
@@ -108,7 +108,7 @@ visibleBox("option_pab_show_descr", false);
 </script>
 {end:}
 
-{if:!config.ProductAdviser.rp_show_buynow=#N#}
+{if:!config.CDev.ProductAdviser.rp_show_buynow=#N#}
 <script language="Javascript">
 <!--
 visibleBox("option_rp_bulk_shopping", false);
@@ -122,7 +122,7 @@ visibleBox("option_rp_bulk_shopping", true);
 </script>
 {end:}
 
-{if:!config.ProductAdviser.related_products_enabled=#N#}
+{if:!config.CDev.ProductAdviser.related_products_enabled=#N#}
 <script language="Javascript">
 <!--
 visibleBox("option_rp_template", false);
@@ -135,7 +135,7 @@ visibleBox("option_rp_bulk_shopping", false);
 </script>
 {end:}
 
-{if:!config.ProductAdviser.products_also_buy_enabled=#N#}
+{if:!config.CDev.ProductAdviser.products_also_buy_enabled=#N#}
 <script language="Javascript">
 <!--
 visibleBox("option_pab_template", false);

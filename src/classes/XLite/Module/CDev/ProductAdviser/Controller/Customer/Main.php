@@ -54,7 +54,7 @@ class Main extends \XLite\Controller\Customer\Main implements \XLite\Base\IDecor
 
     function getPriceNotificationSaved($product_id = 0)
     {
-        if (!$this->config->ProductAdviser->customer_notifications_enabled) {
+        if (!$this->config->CDev->ProductAdviser->customer_notifications_enabled) {
             return true;
         }
 
@@ -90,13 +90,13 @@ class Main extends \XLite\Controller\Customer\Main implements \XLite\Base\IDecor
 
     function isPriceNotificationEnabled()
     {
-        $mode = $this->config->ProductAdviser->customer_notifications_mode;
+        $mode = $this->config->CDev->ProductAdviser->customer_notifications_mode;
         return (($mode & 1) != 0) ? true : false;
     }
 
     function isProductNotificationEnabled()
     {
-        $mode = $this->config->ProductAdviser->customer_notifications_mode;
+        $mode = $this->config->CDev->ProductAdviser->customer_notifications_mode;
         return (($mode & 2) != 0) ? true : false;
     }
 }

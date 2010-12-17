@@ -74,7 +74,7 @@ class Module extends \XLite\Controller\Admin\Module implements \XLite\Base\IDeco
 
     function isEmailCheckedAOM($email)
     {
-        $value = $this->xlite->config->AOM->order_update_notification;
+        $value = $this->xlite->config->CDev->AOM->order_update_notification;
         if (!is_array($value))
             return false;
 

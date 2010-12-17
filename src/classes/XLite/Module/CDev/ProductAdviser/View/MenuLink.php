@@ -60,6 +60,6 @@ class MenuLink extends \XLite\View\AView
     protected function isVisible()
     {
         return parent::isVisible()
-            && $this->config->ProductAdviser->customer_notifications_enabled;
+            && $this->config->CDev->ProductAdviser->customer_notifications_enabled;
     }
 }

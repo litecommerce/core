@@ -134,7 +134,7 @@ class UpsConfig extends \XLite\Controller\Admin\AAdmin
     {
         $this->ups = new \XLite\Module\CDev\UPSOnLineTools\Model\Shipping\Ups();
 
-        $ptype = $this->config->UPSOnlineTools->packing_algorithm;
+        $ptype = $this->config->CDev->UPSOnlineTools->packing_algorithm;
         $total_weight = $this->get('pounds');
         $ups_containers = array();
         $container = new \XLite\Module\CDev\UPSOnlineTools\Model\Container();
@@ -150,7 +150,7 @@ class UpsConfig extends \XLite\Controller\Admin\AAdmin
 
             case \XLite\Model\Order::BINPACKING_NORMAL_ALGORITHM:    // pack all items in one package
             case \XLite\Model\Order::BINPACKING_OVERSIZE_ALGORITHM:    // pack items in similar containers
-                $packaging_type = $this->config->UPSOnlineTools->packaging_type;
+                $packaging_type = $this->config->CDev->UPSOnlineTools->packaging_type;
                 $packData = $this->ups->getUPSContainerDims($packaging_type);
                 $container->setDimensions($packData['width'], $packData['length'], $packData['height']);
                 $container->setWeightLimit($packData['weight_limit']);
@@ -161,9 +161,9 @@ class UpsConfig extends \XLite\Controller\Admin\AAdmin
 
                 // fixed-size container
                 $container->setDimensions(
-                    $this->config->UPSOnlineTools->width,
-                    $this->config->UPSOnlineTools->length,
-                    $this->config->UPSOnlineTools->height
+                    $this->config->CDev->UPSOnlineTools->width,
+                    $this->config->CDev->UPSOnlineTools->length,
+                    $this->config->CDev->UPSOnlineTools->height
                 );
                 $container->setWeightLimit(0);
                 break;
@@ -253,7 +253,7 @@ class UpsConfig extends \XLite\Controller\Admin\AAdmin
 
     function isUseDGlibDisplay()
     {
-        return $this->isGDlibEnabled() && $this->config->UPSOnlineTools->display_gdlib;
+        return $this->isGDlibEnabled() && $this->config->CDev->UPSOnlineTools->display_gdlib;
     }
 
 }

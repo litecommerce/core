@@ -97,7 +97,7 @@ class PartnerProfile extends \XLite\Module\CDev\Affiliate\Controller\Partner
 
     function action_register()
     {
-        if (!$this->config->Affiliate->registration_enabled) {
+        if (!$this->config->CDev->Affiliate->registration_enabled) {
             $this->set('returnUrl', "cart.php?target=partner_profile&mode=register");
         } else {
             $this->registerForm->action_register();

@@ -408,7 +408,7 @@ class GiftCertificate extends \XLite\Model\AModel
      */
     public function getDefaultExpirationPeriod()
     {
-        return $this->config->GiftCertificates->expiration;
+        return $this->config->CDev->GiftCertificates->expiration;
     }
 
     /**
@@ -459,14 +459,14 @@ class GiftCertificate extends \XLite\Model\AModel
         $result = false;
 
         $expDate = $this->getExpirationDate();
-        $warnDate = $expDate - $this->config->GiftCertificates->expiration_warning_days * 24 * 3600;
+        $warnDate = $expDate - $this->config->CDev->GiftCertificates->expiration_warning_days * 24 * 3600;
 
         if (
             time() >= $warnDate
             && time() <= $expDate
         ) {
             if (
-                $this->config->GiftCertificates->expiration_email
+                $this->config->CDev->GiftCertificates->expiration_email
                 && !$this->get('exp_email_sent')
                 && 0 < $this->get('debit')
                 && 'A' == $this->get('status')
@@ -502,7 +502,7 @@ class GiftCertificate extends \XLite\Model\AModel
     public function getExpirationConditions()
     {
         $now = time();
-        $expTime = $now + $this->config->GiftCertificates->expiration_warning_days * 24 * 3600;
+        $expTime = $now + $this->config->CDev->GiftCertificates->expiration_warning_days * 24 * 3600;
 
         return array(
             'expiration_date > ' . $now . ' AND expiration_date < ' . $expTime,

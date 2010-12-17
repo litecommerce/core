@@ -25,7 +25,7 @@
 <tr>
     <td valign=top>
     <textarea cols=50 rows=4><script language="javascript" src="{getShopUrl(#cart.php#)}?target=product_banner&product_id={product.product_id}&partner={auth.profile.profile_id}"></script></textarea>
-    <span IF="config.Affiliate.enable_advanced_banner">
+    <span IF="config.CDev.Affiliate.enable_advanced_banner">
     <br><br><br><br>
     <input type=button name=update value="Customize the banner" onclick="document.location='cart.php?target=partner_product&product_id={product.product_id}&backUrl={url:u}'">
     </span>

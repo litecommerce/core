@@ -12,8 +12,8 @@
  *}
 
 <script type="text/javascript">
-var gcMinAmount = {config.GiftCertificates.minAmount};
-var gcMaxAmount = {config.GiftCertificates.maxAmount};
+var gcMinAmount = {config.CDev.GiftCertificates.minAmount};
+var gcMaxAmount = {config.CDev.GiftCertificates.maxAmount};
 var bordersDir = '{gc.bordersDir}';
 </script>
 

@@ -227,7 +227,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
                 if (
                     !empty($membership)
                     && $membership != $product->get('selling_membership')
-                    && !$this->config->WholesaleTrading->override_membership
+                    && !$this->config->CDev->WholesaleTrading->override_membership
                 ) {
                     break;
                 }

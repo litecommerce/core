@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<tbody IF="{config.UPSOnlineTools.av_status=#Y#}">
+<tbody IF="{config.CDev.UPSOnlineTools.av_status=#Y#}">
 
 <tr><td colspan="4">
 <TABLE border="0">

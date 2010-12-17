@@ -56,15 +56,15 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
     */
     function getPayByPoints()
     {
-        if ($this->config->Promotion->bonusPointsCost <= 0) {
+        if ($this->config->CDev->Promotion->bonusPointsCost <= 0) {
             return 0;
         }
 
         $payedByPoints = $this->get('payedByPoints');
         if ($payedByPoints != 0.00) {
-            return ceil($payedByPoints / $this->config->Promotion->bonusPointsCost);
+            return ceil($payedByPoints / $this->config->CDev->Promotion->bonusPointsCost);
         }
-        $payByPoints = min($this->getComplex('origProfile.bonusPoints'), ceil($this->getMaxPayByPoints() / $this->config->Promotion->bonusPointsCost));
+        $payByPoints = min($this->getComplex('origProfile.bonusPoints'), ceil($this->getMaxPayByPoints() / $this->config->CDev->Promotion->bonusPointsCost));
         return (int)$payByPoints;
     }
 
@@ -86,11 +86,11 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
     */
     function getTotalBonusPoints()
     {
-        if ($this->config->Promotion->bonusPointsCost <= 0) {
+        if ($this->config->CDev->Promotion->bonusPointsCost <= 0) {
             return 0;
         }
         
-        return ceil($this->getMaxPayByPoints() / $this->config->Promotion->bonusPointsCost);
+        return ceil($this->getMaxPayByPoints() / $this->config->CDev->Promotion->bonusPointsCost);
     }
     
     function getOrderAppliedBonuses()
@@ -186,12 +186,12 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 
     function promotionStatusChanged($sign=-1)
     {
-        if ($this->config->Promotion->bonusPointsCost <= 0) {
+        if ($this->config->CDev->Promotion->bonusPointsCost <= 0) {
             return;
         }
 
         // decrease bonus points
-        $this->addBonusPoints($sign * ceil($this->get('payedByPoints') / $this->config->Promotion->bonusPointsCost));
+        $this->addBonusPoints($sign * ceil($this->get('payedByPoints') / $this->config->CDev->Promotion->bonusPointsCost));
         $dc = $this->getComplex('DC.peer');
         if (!is_null($dc)) {
             if ($dc->get('status') != "D") {
@@ -209,8 +209,8 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 
     protected function processed()
     {
-        if ($this->config->Promotion->earnBonusPointsRate) {
-            $this->addBonusPoints((int)($this->get('subtotal') * $this->config->Promotion->earnBonusPointsRate));
+        if ($this->config->CDev->Promotion->earnBonusPointsRate) {
+            $this->addBonusPoints((int)($this->get('subtotal') * $this->config->CDev->Promotion->earnBonusPointsRate));
         }
         $this->addBonusPointsSpecialOffer(1);
 
@@ -219,8 +219,8 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 
     function declined()
     {
-        if ($this->config->Promotion->earnBonusPointsRate) {
-            $this->addBonusPoints(-(int)($this->get('subtotal') * $this->config->Promotion->earnBonusPointsRate));
+        if ($this->config->CDev->Promotion->earnBonusPointsRate) {
+            $this->addBonusPoints(-(int)($this->get('subtotal') * $this->config->CDev->Promotion->earnBonusPointsRate));
         }
         $this->addBonusPointsSpecialOffer(-1);
         parent::declined();
