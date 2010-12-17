@@ -106,10 +106,13 @@ class Request extends \XLite\Base\Singleton
         if (isset($data['action'])) {
             $this->checkControlArgument($data['action'], 'Action');
         }
-
+/*
+        // FIXME: this code is needed, but brakes down the current ajax functionality
+        //        Fix ajax and tests to work with this
         if (1 === get_magic_quotes_gpc()) {
             $data = $this->doUnescape($data);
         }
+*/
 
         return $data;
     }
