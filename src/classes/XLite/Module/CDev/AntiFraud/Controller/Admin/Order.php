@@ -53,10 +53,10 @@ class Order extends \XLite\Controller\Admin\Order implements \XLite\Base\IDecora
         $post['ip']	= $this->getComplex('order.address');
         $post['shop_host'] = func_parse_host(\XLite::getInstance()->getOptions(array('host_details', 'http_host')));
         $post['reason'] = strip_tags($this->get('fraud_comment'));
-        $post['service_key'] = $this->config->AntiFraud->antifraud_license;
+        $post['service_key'] = $this->config->CDev->AntiFraud->antifraud_license;
         $request = new \XLite\Model\HTTPS();
         $request->data = $post;
-        $request->url = $this->config->AntiFraud->antifraud_url."/add_fraudulent_ip.php";
+        $request->url = $this->config->CDev->AntiFraud->antifraud_url."/add_fraudulent_ip.php";
         $request->request();
 
         $request->response ? $this->set('mode',"sent") : $this->set('mode',"failed");

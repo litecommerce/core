@@ -126,7 +126,7 @@ class RecentlyViewed extends \XLite\View\ItemsList\Product\Customer\ACustomer
         $this->widgetParams[self::PARAM_SHOW_PRICE]->setValue(true);
         $this->widgetParams[self::PARAM_SHOW_ADD2CART]->setValue(true);
         $this->widgetParams[self::PARAM_SIDEBAR_MAX_ITEMS]->setValue(
-            $this->config->ProductAdviser->number_recently_viewed
+            $this->config->CDev->ProductAdviser->number_recently_viewed
         );
 
         $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(true);

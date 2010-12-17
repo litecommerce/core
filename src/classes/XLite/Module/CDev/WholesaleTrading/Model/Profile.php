@@ -197,10 +197,10 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
     function isShowWholesalerFields()
     {
         if (
-            $this->config->WholesaleTrading->WholesalerFieldsTaxId == "Y" ||
-            $this->config->WholesaleTrading->WholesalerFieldsVat == "Y" ||
-            $this->config->WholesaleTrading->WholesalerFieldsGst == "Y" ||
-            $this->config->WholesaleTrading->WholesalerFieldsPst == "Y"
+            $this->config->CDev->WholesaleTrading->WholesalerFieldsTaxId == "Y" ||
+            $this->config->CDev->WholesaleTrading->WholesalerFieldsVat == "Y" ||
+            $this->config->CDev->WholesaleTrading->WholesalerFieldsGst == "Y" ||
+            $this->config->CDev->WholesaleTrading->WholesalerFieldsPst == "Y"
             ) {
                 return true;
             }

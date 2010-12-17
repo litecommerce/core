@@ -88,11 +88,11 @@ class RelatedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
             self::PARAM_PRODUCT_ID => new \XLite\Model\WidgetParam\ObjectId\Product('Product ID', 0, false),
         );
 
-        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->config->ProductAdviser->rp_template);
-        $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue($this->config->ProductAdviser->rp_columns);
-        $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue($this->config->ProductAdviser->rp_show_descr);
-        $this->widgetParams[self::PARAM_SHOW_PRICE]->setValue($this->config->ProductAdviser->rp_show_price);
-        $this->widgetParams[self::PARAM_SHOW_ADD2CART]->setValue($this->config->ProductAdviser->rp_show_buynow);
+        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->config->CDev->ProductAdviser->rp_template);
+        $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue($this->config->CDev->ProductAdviser->rp_columns);
+        $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue($this->config->CDev->ProductAdviser->rp_show_descr);
+        $this->widgetParams[self::PARAM_SHOW_PRICE]->setValue($this->config->CDev->ProductAdviser->rp_show_price);
+        $this->widgetParams[self::PARAM_SHOW_ADD2CART]->setValue($this->config->CDev->ProductAdviser->rp_show_buynow);
 
         $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
         $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(false);
@@ -146,7 +146,7 @@ class RelatedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function isVisible()
     {
-        return parent::isVisible() && $this->config->ProductAdviser->related_products_enabled;
+        return parent::isVisible() && $this->config->CDev->ProductAdviser->related_products_enabled;
     }
 
 

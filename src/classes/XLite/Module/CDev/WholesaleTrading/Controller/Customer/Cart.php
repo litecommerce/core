@@ -142,7 +142,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
  
         parent::action_add();
 
-        if ($this->config->WholesaleTrading->direct_addition) {
+        if ($this->config->CDev->WholesaleTrading->direct_addition) {
             $this->getProduct()->assignDirectSaleAvailable(false);
         }
     }

@@ -539,7 +539,7 @@ class SpecialOffer extends \XLite\Model\AModel
 
     function compareOffers(&$offer1, &$offer2, $order)
     {
-        $offerScheme = $this->xlite->config->Promotion->offerScheme;
+        $offerScheme = $this->xlite->config->CDev->Promotion->offerScheme;
         if (!$offerScheme) {
             return 0;
         }

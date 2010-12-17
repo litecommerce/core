@@ -48,7 +48,7 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
     {
         if ($name == "bonusPointsDollar") {
             
-            return $this->config->Promotion->bonusPointsCost * $this->get('bonusPoints');
+            return $this->config->CDev->Promotion->bonusPointsCost * $this->get('bonusPoints');
         } else {
             return parent::get($name);
         }

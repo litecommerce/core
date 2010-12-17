@@ -109,20 +109,20 @@ class NewArrivals extends \XLite\View\ItemsList\Product\Customer\ACustomer
                 'Widget is displayed as page content', false, false
             ),
             self::PARAM_USE_NODE     => new \XLite\Model\WidgetParam\Checkbox(
-                'Show category-specific new arrivals', ('Y' == $this->config->ProductAdviser->category_new_arrivals), true
+                'Show category-specific new arrivals', ('Y' == $this->config->CDev->ProductAdviser->category_new_arrivals), true
             ),
             self::PARAM_PRODUCT_ID  => new \XLite\Model\WidgetParam\ObjectId\Product('Product ID', 0, false),
             self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category('Category ID', 0, false),
         );
 
-        $this->widgetParams[self::PARAM_WIDGET_TYPE]->setValue($this->config->ProductAdviser->new_arrivals_type);
+        $this->widgetParams[self::PARAM_WIDGET_TYPE]->setValue($this->config->CDev->ProductAdviser->new_arrivals_type);
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(self::DISPLAY_MODE_LIST);
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
         $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue(true);
         $this->widgetParams[self::PARAM_SHOW_PRICE]->setValue(true);
         $this->widgetParams[self::PARAM_SHOW_ADD2CART]->setValue(true);
         $this->widgetParams[self::PARAM_SIDEBAR_MAX_ITEMS]->setValue(
-            $this->config->ProductAdviser->number_new_arrivals
+            $this->config->CDev->ProductAdviser->number_new_arrivals
         );
 
         $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
@@ -184,7 +184,7 @@ class NewArrivals extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
             } elseif (
                 !$this->getParam(self::PARAM_IS_EXPORTED)
-                && $this->getParam(self::PARAM_WIDGET_TYPE) != $this->config->ProductAdviser->new_arrivals_type
+                && $this->getParam(self::PARAM_WIDGET_TYPE) != $this->config->CDev->ProductAdviser->new_arrivals_type
             ) {
                 /**
                  * Do not display widget in standalone mode if it is passed
@@ -371,7 +371,7 @@ class NewArrivals extends \XLite\View\ItemsList\Product\Customer\ACustomer
         }
 
         $timeLimit = time();
-        $timeCondition = $this->config->ProductAdviser->period_new_arrivals * 3600;
+        $timeCondition = $this->config->CDev->ProductAdviser->period_new_arrivals * 3600;
         $category_id = $_category->get('category_id');
 
         $obj = new \XLite\Module\CDev\ProductAdviser\Model\ProductNewArrivals();
@@ -519,7 +519,7 @@ class NewArrivals extends \XLite\View\ItemsList\Product\Customer\ACustomer
         $productsStats = array();
         $statsOffset = 0;
         $stats = new \XLite\Module\CDev\ProductAdviser\Model\ProductNewArrivals();
-        $timeCondition = $this->config->ProductAdviser->period_new_arrivals * 3600;
+        $timeCondition = $this->config->CDev->ProductAdviser->period_new_arrivals * 3600;
         $timeLimit = time();
         $maxSteps = ($this->isContentDialog() || $infinityRange)
             ? 1

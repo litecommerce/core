@@ -220,7 +220,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     function getFullPrice($amount, $optionIndex = null, $use_wholesale_price = true)
     {
         if (!$this->is('priceAvailable') && !$this->xlite->is('adminZone')) {
-            return $this->config->WholesaleTrading->price_denied_message;
+            return $this->config->CDev->WholesaleTrading->price_denied_message;
         }
 
         $wholesale_price = false;
@@ -351,7 +351,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 
     function isDirectSaleAvailable()
     {
-        if ($this->config->WholesaleTrading->direct_addition) {
+        if ($this->config->CDev->WholesaleTrading->direct_addition) {
             $this->assignDirectSaleAvailable($this->_available_action('sell'));
 
             return $this->_available_action('sell');
@@ -385,7 +385,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     function get($name)
     {
         if ($name == "price" && !$this->is('priceAvailable') && !$this->xlite->is('adminZone')) {
-            return $this->config->WholesaleTrading->price_denied_message;
+            return $this->config->CDev->WholesaleTrading->price_denied_message;
         }
         return parent::get($name);
     }
@@ -393,7 +393,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     function getListPrice()
     {
         return (!$this->is('priceAvailable') && !$this->xlite->is('adminZone'))
-            ? $this->config->WholesaleTrading->price_denied_message
+            ? $this->config->CDev->WholesaleTrading->price_denied_message
             : parent::getListPrice();
     }
 
@@ -508,7 +508,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
         $originalId = $this->get('product_id');
         $newId = $p->get('product_id');
         
-        if ($this->config->WholesaleTrading->clone_wholesale_productaccess) {
+        if ($this->config->CDev->WholesaleTrading->clone_wholesale_productaccess) {
             $productAccess = new \XLite\Module\CDev\WholesaleTrading\Model\ProductAccess();
             foreach ($productAccess->findAll("product_id=$originalId") as $access) {
                 $foo = new \XLite\Module\CDev\WholesaleTrading\Model\ProductAccess();
@@ -520,7 +520,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
             }
         }
         
-        if ($this->config->WholesaleTrading->clone_wholesale_purchaselimit) {
+        if ($this->config->CDev->WholesaleTrading->clone_wholesale_purchaselimit) {
             $purchaseLimit = new \XLite\Module\CDev\WholesaleTrading\Model\PurchaseLimit();
             foreach ($purchaseLimit->findAll("product_id=$originalId") as $limit) {
                 $foo = new \XLite\Module\CDev\WholesaleTrading\Model\PurchaseLimit();
@@ -531,7 +531,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
             }
         }
             
-        if ($this->config->WholesaleTrading->clone_wholesale_pricing) {
+        if ($this->config->CDev->WholesaleTrading->clone_wholesale_pricing) {
             $wholesalePricing = new \XLite\Module\CDev\WholesaleTrading\Model\WholesalePricing();
             foreach ($wholesalePricing->findAll("product_id=$originalId") as $pricing) {
                 $foo = new \XLite\Module\CDev\WholesaleTrading\Model\WholesalePricing();

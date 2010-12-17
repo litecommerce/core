@@ -90,7 +90,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
         $result = parent::filter();
 
         // check for active inventory card amount
-        if (!$this->xlite->is('adminZone') && $this->config->InventoryTracking->exclude_product) {
+        if (!$this->xlite->is('adminZone') && $this->config->CDev->InventoryTracking->exclude_product) {
             $result &= $this->isInStock();
         }
 
@@ -298,7 +298,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 
         $p->set('tracking', 0);
         $p->update();
-        if ($this->config->InventoryTracking->clone_inventory) {
+        if ($this->config->CDev->InventoryTracking->clone_inventory) {
             $p  = $this->cloneInventory($p);
         }
         $this->xlite->set('ITisCloneProduct', false);
@@ -308,11 +308,11 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     function createDefaultInventory()
     {
         
-        if (!$this->xlite->get('ITisCloneProduct') && $this->config->InventoryTracking->create_inventory) {
+        if (!$this->xlite->get('ITisCloneProduct') && $this->config->CDev->InventoryTracking->create_inventory) {
             $inventory = new \XLite\Module\CDev\InventoryTracking\Model\Inventory();
             $inventory->set('inventory_id',$this->get('product_id'));
-            $inventory->set('amount',$this->config->InventoryTracking->inventory_amount);
-            $inventory->set('low_avail_limit',$this->config->InventoryTracking->low_amount);
+            $inventory->set('amount',$this->config->CDev->InventoryTracking->inventory_amount);
+            $inventory->set('low_avail_limit',$this->config->CDev->InventoryTracking->low_amount);
             $inventory->set('enabled',1);
             $inventory->create();
         }

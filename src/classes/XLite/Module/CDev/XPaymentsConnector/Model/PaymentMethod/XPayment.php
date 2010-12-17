@@ -173,7 +173,7 @@ class XPayment extends \XLite\Model\PaymentMethod\CreditCardWebBased
      */
     public function getFormURL()
     {
-        return preg_replace('/\/+$/Ss', '', $this->config->XPaymentsConnector->xpc_xpayments_url)
+        return preg_replace('/\/+$/Ss', '', $this->config->CDev->XPaymentsConnector->xpc_xpayments_url)
             . '/payment.php';
     }
 
@@ -537,12 +537,12 @@ class XPayment extends \XLite\Model\PaymentMethod\CreditCardWebBased
 
         // HTTPS request
         $post = array(
-            'cart_id' => $this->config->XPaymentsConnector->xpc_shopping_cart_id,
+            'cart_id' => $this->config->CDev->XPaymentsConnector->xpc_shopping_cart_id,
             'request' => $xml
         );
 
         $https = new \XLite\Model\HTTPS('libcurl');
-        $https->url = $this->config->XPaymentsConnector->xpc_xpayments_url . '/api.php';
+        $https->url = $this->config->CDev->XPaymentsConnector->xpc_xpayments_url . '/api.php';
         $https->timeout = 15000;
         $https->use_ssl3 = true;
         $https->method = 'POST';
@@ -727,7 +727,7 @@ class XPayment extends \XLite\Model\PaymentMethod\CreditCardWebBased
                 break;
         }
 
-        return ($cell && isset($this->config->XPaymentsConnector->$cell) && $this->config->XPaymentsConnector->$cell)
+        return ($cell && isset($this->config->CDev->XPaymentsConnector->$cell) && $this->config->CDev->XPaymentsConnector->$cell)
             ? $this->config->XPayments_Connector->$cell
             : false;
     }
@@ -857,7 +857,7 @@ class XPayment extends \XLite\Model\PaymentMethod\CreditCardWebBased
             . str_repeat('0', 12 - strlen((string)$lenData)) . $lenData . $data;
 
         // Encrypt
-        $key = openssl_pkey_get_public($this->config->XPaymentsConnector->xpc_public_key);
+        $key = openssl_pkey_get_public($this->config->CDev->XPaymentsConnector->xpc_public_key);
         if (!$key) {
             return false;
         }
@@ -883,8 +883,8 @@ class XPayment extends \XLite\Model\PaymentMethod\CreditCardWebBased
 
         // Decrypt
         $res = openssl_get_privatekey(
-            $this->config->XPaymentsConnector->xpc_private_key,
-            $this->config->XPaymentsConnector->xpc_private_key_password
+            $this->config->CDev->XPaymentsConnector->xpc_private_key,
+            $this->config->CDev->XPaymentsConnector->xpc_private_key_password
         );
         if (!$res) {
             return array(false, 'Private key is not initialized');

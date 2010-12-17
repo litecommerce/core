@@ -399,7 +399,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
             $count = $this->countShippedCertificates();
             if ($count) {
                 $this->shippingCost = $this->hasShippedItems() ? parent::getShippingCost() : 0;
-                $this->shippingCost += $count * $this->config->GiftCertificates->shippingCost;
+                $this->shippingCost += $count * $this->config->CDev->GiftCertificates->shippingCost;
 
             } else {
                 $this->shippingCost = parent::getShippingCost();
@@ -607,7 +607,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     public function canApplyGiftCertificate()
     {
-        $option = $this->config->GiftCertificates->prohibit_pay_gc;
+        $option = $this->config->CDev->GiftCertificates->prohibit_pay_gc;
 
         return 'N' == $option
             || ('O' == $option && ($this->hasRegularProducts() || !$this->hasGiftCertificates()))

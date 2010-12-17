@@ -51,7 +51,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
     {
         parent::action_add();
 
-        if ($this->xlite->get('PA_InventorySupport') && $this->config->ProductAdviser->customer_notifications_enabled) {
+        if ($this->xlite->get('PA_InventorySupport') && $this->config->CDev->ProductAdviser->customer_notifications_enabled) {
 
             if (!is_null($this->cart->get('outOfStock'))) {
 
@@ -84,7 +84,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      */
     public function getRejectedItem()
     {
-        if (!($this->xlite->get('PA_InventorySupport') && $this->config->ProductAdviser->customer_notifications_enabled)) {
+        if (!($this->xlite->get('PA_InventorySupport') && $this->config->CDev->ProductAdviser->customer_notifications_enabled)) {
             return null;
         }
 
@@ -189,7 +189,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      */
     public function isPriceNotificationEnabled()
     {
-        $mode = $this->config->ProductAdviser->customer_notifications_mode;
+        $mode = $this->config->CDev->ProductAdviser->customer_notifications_mode;
         return (($mode & 1) != 0) ? true : false;
     }
 
@@ -203,7 +203,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      */
     public function isProductNotificationEnabled()
     {
-        $mode = $this->config->ProductAdviser->customer_notifications_mode;
+        $mode = $this->config->CDev->ProductAdviser->customer_notifications_mode;
         return (($mode & 2) != 0) ? true : false;
     }
 }

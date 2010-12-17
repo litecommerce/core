@@ -89,8 +89,8 @@ class Cart extends \XLite\Model\Cart implements \XLite\Base\IDecorator
         $op = $this->get('origProfile');
         $status = $this->get('status');
         if ($status == "P" || $status == "Q" || $status == "C") {
-            if ($this->get('payedByPoints') > $op->get('bonusPoints')*$this->config->Promotion->bonusPointsCost) {
-                $this->set('payedByPoints', $op->get('bonusPoints')*$this->config->Promotion->bonusPointsCost);
+            if ($this->get('payedByPoints') > $op->get('bonusPoints')*$this->config->CDev->Promotion->bonusPointsCost) {
+                $this->set('payedByPoints', $op->get('bonusPoints')*$this->config->CDev->Promotion->bonusPointsCost);
             }
         }
         $this->calcTotals();

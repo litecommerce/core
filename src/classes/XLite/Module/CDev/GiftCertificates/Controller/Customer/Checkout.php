@@ -77,7 +77,7 @@ implements \XLite\Base\IDecorator
      */
     protected function checkCertificatesExpiration()
     {
-        if ($this->config->GiftCertificates->expiration_email) {
+        if ($this->config->CDev->GiftCertificates->expiration_email) {
 
             $gc = new \XLite\Module\CDev\GiftCertificates\Model\GiftCertificate();
 

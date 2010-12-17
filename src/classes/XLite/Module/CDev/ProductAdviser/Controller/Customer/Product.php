@@ -47,7 +47,7 @@ class Product extends \XLite\Controller\Customer\Product implements \XLite\Base\
         $product_id = intval($request->product_id);
         if (
             $product_id > 0
-            && $this->config->ProductAdviser->number_recently_viewed > 0
+            && $this->config->CDev->ProductAdviser->number_recently_viewed > 0
         ) {
     		$referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : "NO_HTTP_REFERER";
             $referer = md5($referer);
@@ -83,7 +83,7 @@ class Product extends \XLite\Controller\Customer\Product implements \XLite\Base\
 
         parent::init();
 
-        if ($this->xlite->PA_InventorySupport && $this->config->ProductAdviser->customer_notifications_enabled) {
+        if ($this->xlite->PA_InventorySupport && $this->config->CDev->ProductAdviser->customer_notifications_enabled) {
 
             if ($this->getProduct()->getComplex('inventory.amount') == 0 && $this->getProduct()->get('tracking') == 0) {
 
@@ -133,7 +133,7 @@ class Product extends \XLite\Controller\Customer\Product implements \XLite\Base\
 
     function getRejectedItem()
     {
-        return ($this->xlite->get('PA_InventorySupport') && $this->config->ProductAdviser->customer_notifications_enabled)
+        return ($this->xlite->get('PA_InventorySupport') && $this->config->CDev->ProductAdviser->customer_notifications_enabled)
             ? $this->rejectedItemInfo
             : null;
     }
@@ -142,7 +142,7 @@ class Product extends \XLite\Controller\Customer\Product implements \XLite\Base\
     {
         $result = true;
 
-        if ($this->config->ProductAdviser->customer_notifications_enabled) {
+        if ($this->config->CDev->ProductAdviser->customer_notifications_enabled) {
 
         	$check = array(
     	    	"type = '" . CUSTOMER_NOTIFICATION_PRODUCT . "'"
@@ -194,7 +194,7 @@ class Product extends \XLite\Controller\Customer\Product implements \XLite\Base\
 
     function getPriceNotificationSaved()
     {
-        if (!$this->config->ProductAdviser->customer_notifications_enabled) {
+        if (!$this->config->CDev->ProductAdviser->customer_notifications_enabled) {
             return true;
         }
 
@@ -232,12 +232,12 @@ class Product extends \XLite\Controller\Customer\Product implements \XLite\Base\
 
     function isPriceNotificationEnabled()
     {
-        return ($this->config->ProductAdviser->customer_notifications_mode & 1) != 0;
+        return ($this->config->CDev->ProductAdviser->customer_notifications_mode & 1) != 0;
     }
 
     function isProductNotificationEnabled()
     {
-        return ($this->config->ProductAdviser->customer_notifications_mode & 2) != 0;
+        return ($this->config->CDev->ProductAdviser->customer_notifications_mode & 2) != 0;
     }
 
     function action_rp_bulk()
@@ -264,8 +264,8 @@ class Product extends \XLite\Controller\Customer\Product implements \XLite\Base\
         $result = false;
 
         if (
-            $this->config->ProductAdviser->rp_show_buynow
-            & $this->config->ProductAdviser->rp_bulk_shopping
+            $this->config->CDev->ProductAdviser->rp_show_buynow
+            & $this->config->CDev->ProductAdviser->rp_bulk_shopping
         ) {
             $products = (array) $this->getComplex('pager.pageData');
     	    foreach ($products as $p) {

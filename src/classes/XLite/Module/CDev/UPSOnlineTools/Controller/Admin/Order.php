@@ -176,7 +176,7 @@ class Order extends \XLite\Controller\Admin\Order implements \XLite\Base\IDecora
 
         if (
             \XLite\Module\CDev\UPSOnlineTools\Main::isGDlibEnabled()
-            && $this->config->UPSOnlineTools->display_gdlib
+            && $this->config->CDev->UPSOnlineTools->display_gdlib
         ) {
             // GDlib
             return '<img src="cart.php?target=image&mode=ups_container_level_details&order_id='.$order->get('order_id').'&container='.$container_id.'&level='.$level_id.'&id='.$this->xlite->session->getID().'" border=2 alt="Container #'.($container_id + 1).', Layer #'.($level_id + 1).'">';
@@ -218,7 +218,7 @@ class Order extends \XLite\Controller\Admin\Order implements \XLite\Base\IDecora
         }
 
         // display container details based on <div>...</div>
-        $result = UPSOnlineTools_displayLevel_div($container['width'], $container['length'], $level['items'], $level['dirt_spaces'], $this->config->UPSOnlineTools->visual_container_width, $level_id);
+        $result = UPSOnlineTools_displayLevel_div($container['width'], $container['length'], $level['items'], $level['dirt_spaces'], $this->config->CDev->UPSOnlineTools->visual_container_width, $level_id);
 
         return $result;
     }

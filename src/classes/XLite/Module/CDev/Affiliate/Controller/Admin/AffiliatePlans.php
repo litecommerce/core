@@ -40,7 +40,7 @@ class AffiliatePlans extends \XLite\Controller\Admin\AAdmin
     function action_delete()
     {
         $ap = $this->get('affiliatePlan');
-        if ($ap->get('plan_id') == $this->config->Affiliate->default_plan) {
+        if ($ap->get('plan_id') == $this->config->CDev->Affiliate->default_plan) {
             \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => 'Affiliate',
@@ -56,7 +56,7 @@ class AffiliatePlans extends \XLite\Controller\Admin\AAdmin
     {
         $ap = $this->get('affiliatePlan');
         $ap->update();
-        if ($ap->get('plan_id') == $this->config->Affiliate->default_plan && !$ap->get('enabled')) {
+        if ($ap->get('plan_id') == $this->config->CDev->Affiliate->default_plan && !$ap->get('enabled')) {
             \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => 'Affiliate',

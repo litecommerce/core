@@ -265,7 +265,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
         $orderStatus = $this->get('orderStatus');
         $status = $orderStatus->get('status');
         $oldStatus = ($this->_oldSubstatus == '') ? $this->_oldStatus : $this->_oldSubstatus;
-        if ($this->xlite->config->AOM->status_inheritance) {
+        if ($this->xlite->config->CDev->AOM->status_inheritance) {
             if ($orderStatus->get('parent') !== '') {
                 $status = $orderStatus->get('parent');
             }
@@ -579,7 +579,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
         if ($substatus->get('parent') == '') {
             $_POST['status'] = $value;
             $this->set('status',$value);
-            if (!$this->xlite->config->AOM->status_inheritance) {
+            if (!$this->xlite->config->CDev->AOM->status_inheritance) {
                 $_POST['substatus'] = "";
                 $this->set('substatus',"");
             }

@@ -129,7 +129,7 @@ class PriceNotifyLink extends \XLite\View\AView
      */
     protected function isPriceNotificationSaved()
     {
-        if (!$this->config->ProductAdviser->customer_notifications_enabled) {
+        if (!$this->config->CDev->ProductAdviser->customer_notifications_enabled) {
             $this->priceNotified = true;
 
         } elseif (is_null($this->priceNotified)) {

@@ -41,7 +41,7 @@ class OrderList extends \XLite\Controller\Admin\OrderList implements \XLite\Base
         {
             $this->params[] = "show_factor";
             $this->params[] = "risk_factor";
-            if (!isset($this->risk_factor)) $this->risk_factor = $this->config->AntiFraud->antifraud_risk_factor;
+            if (!isset($this->risk_factor)) $this->risk_factor = $this->config->CDev->AntiFraud->antifraud_risk_factor;
 
             parent::init();
         }

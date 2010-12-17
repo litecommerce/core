@@ -40,10 +40,10 @@ class Order extends \XLite\Controller\Admin\Order implements \XLite\Base\IDecora
     function isShowWholesalerFields()
     {
         if (
-            $this->xlite->config->WholesaleTrading->WholesalerFieldsTaxId   == "Y" ||
-            $this->xlite->config->WholesaleTrading->WholesalerFieldsVat     == "Y" ||
-            $this->xlite->config->WholesaleTrading->WholesalerFieldsGst     == "Y" ||
-            $this->xlite->config->WholesaleTrading->WholesalerFieldsPst     == "Y"
+            $this->xlite->config->CDev->WholesaleTrading->WholesalerFieldsTaxId   == "Y" ||
+            $this->xlite->config->CDev->WholesaleTrading->WholesalerFieldsVat     == "Y" ||
+            $this->xlite->config->CDev->WholesaleTrading->WholesalerFieldsGst     == "Y" ||
+            $this->xlite->config->CDev->WholesaleTrading->WholesalerFieldsPst     == "Y"
             ) {
                 return true;
             }

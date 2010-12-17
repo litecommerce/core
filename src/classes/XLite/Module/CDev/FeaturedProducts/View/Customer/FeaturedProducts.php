@@ -94,7 +94,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
             self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category('Category ID', 0, false),
         );
 
-        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->config->FeaturedProducts->featured_products_look);
+        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->config->CDev->FeaturedProducts->featured_products_look);
 
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
         $this->widgetParams[self::PARAM_SHOW_THUMBNAIL]->setValue(true);

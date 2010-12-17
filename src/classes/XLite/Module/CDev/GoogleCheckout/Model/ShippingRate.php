@@ -65,7 +65,7 @@ class ShippingRate extends \XLite\Model\ShippingRate implements \XLite\Base\IDec
         }
         $shippingName = htmlspecialchars($newValue);
 
-        $shippingPrice = sprintf("%.02f", doubleval($this->xlite->config->GoogleCheckout->default_shipping_cost));
+        $shippingPrice = sprintf("%.02f", doubleval($this->xlite->config->CDev->GoogleCheckout->default_shipping_cost));
         $currency = $this->getGoogleCheckoutCurrency();
 
         return <<<EOT

@@ -91,7 +91,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
             }
         }
 
-        if ($this->config->Promotion->only_positive_price) {
+        if ($this->config->CDev->Promotion->only_positive_price) {
             if ($price < 0) {
             	$price = 0;
             }

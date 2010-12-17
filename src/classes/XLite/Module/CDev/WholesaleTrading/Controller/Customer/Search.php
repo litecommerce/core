@@ -39,7 +39,7 @@ class Search extends \XLite\Controller\Customer\Search implements \XLite\Base\ID
 {
     function init() 
     {
-        if ($this->config->WholesaleTrading->direct_addition) {
+        if ($this->config->CDev->WholesaleTrading->direct_addition) {
             $this->session->set('DirectSaleAvailable', null);
         }
         parent::init();

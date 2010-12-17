@@ -54,7 +54,7 @@ class GPG extends \XLite\Base
         //
 
         // use config value
-        $exe = $this->config->AdvancedSecurity->gpg_binary_path;
+        $exe = $this->config->CDev->AdvancedSecurity->gpg_binary_path;
         if (!is_null($exe) && @file_exists($exe)) {
             $this->exe = $exe;
         }
@@ -75,7 +75,7 @@ class GPG extends \XLite\Base
         //
 
     // use config value
-    $cfg_home = $this->config->AdvancedSecurity->gpg_home;
+    $cfg_home = $this->config->CDev->AdvancedSecurity->gpg_home;
     $home = realpath($cfg_home);
     if (!is_null($cfg_home) && $cfg_home != "" && @is_dir($home)) {
         $home = $this->validatePath($home, true);
@@ -90,7 +90,7 @@ class GPG extends \XLite\Base
         //
         // GnuPG user ID
         //
-        $this->recipient = $this->config->AdvancedSecurity->gpg_user_id;
+        $this->recipient = $this->config->CDev->AdvancedSecurity->gpg_user_id;
 
         //
         // Temporary directory
@@ -123,8 +123,8 @@ class GPG extends \XLite\Base
     {
         // lookup cache for adjusted name
         $valid_names = array();
-        if (!is_null($this->config->AdvancedSecurity->executable_cache)) {
-            $valid_names = @unserialize($this->config->AdvancedSecurity->executable_cache);
+        if (!is_null($this->config->CDev->AdvancedSecurity->executable_cache)) {
+            $valid_names = @unserialize($this->config->CDev->AdvancedSecurity->executable_cache);
         }
         if (!is_array($valid_names)) $valid_names = array();
 
@@ -311,7 +311,7 @@ class GPG extends \XLite\Base
         } else {
             return "";
         }
-        $cmd = $this->exe . " --armor --yes --no-tty --disable-mdc --no-random-seed-file --no-verbose --no-greeting --no-secmem-warning --no-permission-warning --no-options --no-random-seed-file --homedir " . $this->homedir . $target . "\"" . $this->config->AdvancedSecurity->gpg_user_id . "\"";
+        $cmd = $this->exe . " --armor --yes --no-tty --disable-mdc --no-random-seed-file --no-verbose --no-greeting --no-secmem-warning --no-permission-warning --no-options --no-random-seed-file --homedir " . $this->homedir . $target . "\"" . $this->config->CDev->AdvancedSecurity->gpg_user_id . "\"";
         $data = $this->execGPG($cmd);
         return $data;
     }

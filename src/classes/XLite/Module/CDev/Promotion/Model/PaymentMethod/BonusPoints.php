@@ -58,7 +58,7 @@ class BonusPoints extends \XLite\Model\PaymentMethod
             return self::PAYMENT_FAILURE;
         }
 
-        $cart->set('payedByPoints', min($payedByPoints * $this->config->Promotion->bonusPointsCost, $cart->getMaxPayByPoints()));
+        $cart->set('payedByPoints', min($payedByPoints * $this->config->CDev->Promotion->bonusPointsCost, $cart->getMaxPayByPoints()));
         $cart->calcTotals();
         if ($cart->get('total') > 0) {
             $cart->set('payment_method', ""); // choose payment method once again

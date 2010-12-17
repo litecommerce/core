@@ -46,11 +46,11 @@ class Category extends \XLite\Controller\Customer\Category implements \XLite\Bas
     // FIXME - correct the "bulk categories" functionality and this code too
     /*function init() 
     {
-        if (in_array($_REQUEST['category_id'], explode(";", $this->config->WholesaleTrading->bulk_categories))) {
+        if (in_array($_REQUEST['category_id'], explode(";", $this->config->CDev->WholesaleTrading->bulk_categories))) {
             $layout = \XLite\Model\Layout::getInstance();
             $layout->addLayout('category_products.tpl', "modules/CDev/WholesaleTrading/bulk_category_products.tpl");
         }
-        if ($this->config->WholesaleTrading->direct_addition) {
+        if ($this->config->CDev->WholesaleTrading->direct_addition) {
             $this->session->set('DirectSaleAvailable', null);
         }
         parent::init();

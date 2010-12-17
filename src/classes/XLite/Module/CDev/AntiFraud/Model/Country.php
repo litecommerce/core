@@ -83,7 +83,7 @@ class Country extends \XLite\Model\Country implements \XLite\Base\IDecorator
                         $result += ($af_data['CHECK_IP_COUNTRY'] != $this->get('code')) ? 2 : 0;
                     }
                     if (isset($af_data['CHECK_IP_DISTANCE'])) {
-                        $result += ($af_data['CHECK_IP_DISTANCE'] > $this->config->AntiFraud->antifraud_safe_distance) ? 4 : 0;
+                        $result += ($af_data['CHECK_IP_DISTANCE'] > $this->config->CDev->AntiFraud->antifraud_safe_distance) ? 4 : 0;
                     }
                 }
             }

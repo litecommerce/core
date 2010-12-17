@@ -14,19 +14,19 @@
 <tr>
 	<td  colspan="2" nowrap bgcolor="#DDDDDD"><b>Wholesaler details</b></td>
 </tr>
-<tr IF="xlite.config.WholesaleTrading.WholesalerFieldsTaxId">
+<tr IF="xlite.config.CDev.WholesaleTrading.WholesalerFieldsTaxId">
 	<td nowrap>Sales Permit/Tax ID#</td>
 	<td>{profile.tax_id}</td>
 </tr>
-<tr IF="xlite.config.WholesaleTrading.WholesalerFieldsVat">
+<tr IF="xlite.config.CDev.WholesaleTrading.WholesalerFieldsVat">
     <td nowrap>VAT Registration number</td>
     <td>{profile.vat_number}</td>
 </tr>
-<tr IF="xlite.config.WholesaleTrading.WholesalerFieldsGst">
+<tr IF="xlite.config.CDev.WholesaleTrading.WholesalerFieldsGst">
     <td nowrap>GST Registration number</td>
     <td>{profile.gst_number}</td>
 </tr>
-<tr IF="xlite.config.WholesaleTrading.WholesalerFieldsPst">
+<tr IF="xlite.config.CDev.WholesaleTrading.WholesalerFieldsPst">
     <td nowrap>PST Registration number</td>
     <td>{profile.pst_number}</td>
 </tr>

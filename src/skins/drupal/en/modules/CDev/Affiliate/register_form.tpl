@@ -240,10 +240,10 @@ The form below allows you to create a partner profile. Do not forget that this i
         <select class="FixedSelect" name="pending_plan">
             <option value="" selected="{pending_plan=##}">Select one..</option>
             <span FOREACH="xlite.factory.\XLite\Module\CDev\Affiliate\Model\AffiliatePlan.findAll(),ap">
-            <span IF="ap.plan_id=config.Affiliate.default_plan">
+            <span IF="ap.plan_id=config.CDev.Affiliate.default_plan">
             <option value="{ap.plan_id}" selected="{ap.plan_id=pending_plan}">{ap.title:h} (default)</option>
             </span>
-            <span IF="!ap.plan_id=config.Affiliate.default_plan">
+            <span IF="!ap.plan_id=config.CDev.Affiliate.default_plan">
             <option value="{ap.plan_id}" selected="{ap.plan_id=pending_plan}">{ap.title:h}</option>
             </span>
             </span>

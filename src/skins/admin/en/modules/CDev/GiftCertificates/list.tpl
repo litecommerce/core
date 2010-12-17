@@ -58,7 +58,7 @@
     </tr>
 
     <tr>
-      <td colspan="7">&nbsp;<font class="Star">&nbsp;*&nbsp;</font><i>- these certificates will expire sooner than in {config.GiftCertificates.expiration_warning_days} day(s).</i></td>
+      <td colspan="7">&nbsp;<font class="Star">&nbsp;*&nbsp;</font><i>- these certificates will expire sooner than in {config.CDev.GiftCertificates.expiration_warning_days} day(s).</i></td>
     </tr>
 
     <tr>

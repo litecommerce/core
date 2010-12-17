@@ -34,7 +34,7 @@
 <table IF="order.details.af_result" cellspacing="0" cellpadding="5" border="0">
 <tr>
     <td>Fraud Risk Factor: </td>
-	<td align="right"><b>{if:compare(order.totalTrustScore,config.AntiFraud.antifraud_risk_factor)}<font class="Star">{else:}<font class="SuccessMessage">{end:}{order.totalTrustScore}</font></b></td>
+	<td align="right"><b>{if:compare(order.totalTrustScore,config.CDev.AntiFraud.antifraud_risk_factor)}<font class="Star">{else:}<font class="SuccessMessage">{end:}{order.totalTrustScore}</font></b></td>
 </tr>
 </table>
 <table IF="order.details.af_result" cellspacing="5" cellpadding="0" border="0">
@@ -49,8 +49,8 @@
 </tr>
 <tr class="TableRow">
 	<td> Order total: </td>
-    <td align="right"><b>{if:compare(order.total,config.AntiFraud.antifraud_order_total)}<font class="Star">{else:}<font class="SuccessMessage">{end:}{price_format(order.total)}</font></b></td>
-	<td>{if:compare(order.total,config.AntiFraud.antifraud_order_total)} * Order total exceeded order total threshold{else:}&nbsp;{end:}</td>
+    <td align="right"><b>{if:compare(order.total,config.CDev.AntiFraud.antifraud_order_total)}<font class="Star">{else:}<font class="SuccessMessage">{end:}{price_format(order.total)}</font></b></td>
+	<td>{if:compare(order.total,config.CDev.AntiFraud.antifraud_order_total)} * Order total exceeded order total threshold{else:}&nbsp;{end:}</td>
 </tr>
 <tr>
 	<td> Billing country: </td>

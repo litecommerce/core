@@ -56,8 +56,8 @@
 <widget target="partner_login" template="modules/CDev/Affiliate/welcome.tpl" IF="{action=##&mode=##}">
 <widget target="partner_login" template="modules/CDev/Affiliate/dialog.tpl" body="modules/Affiliate/authentication_error.tpl" head="Authentication" IF="{action=#login#}">
 <widget target="partner_profile" template="modules/CDev/Affiliate/location.tpl" name="partnerLocationWidget">
-<widget IF="config.Affiliate.registration_enabled" target="partner_profile" mode="register" class="\XLite\View\RegisterForm" template="modules/CDev/Affiliate/dialog.tpl" body="modules/Affiliate/register_form.tpl" head="A new partner" name="registerForm"/>
-<widget IF="!config.Affiliate.registration_enabled" target="partner_profile" mode="register" template="modules/CDev/Affiliate/dialog.tpl" body="modules/Affiliate/register_closed.tpl" head="Registration closed"/>
+<widget IF="config.CDev.Affiliate.registration_enabled" target="partner_profile" mode="register" class="\XLite\View\RegisterForm" template="modules/CDev/Affiliate/dialog.tpl" body="modules/Affiliate/register_form.tpl" head="A new partner" name="registerForm"/>
+<widget IF="!config.CDev.Affiliate.registration_enabled" target="partner_profile" mode="register" template="modules/CDev/Affiliate/dialog.tpl" body="modules/Affiliate/register_closed.tpl" head="Registration closed"/>
 <widget target="partner_profile" mode="sent" template="modules/CDev/Affiliate/dialog.tpl" body="modules/Affiliate/request_sent.tpl" head="A new partner">
 <!-- [/center] -->
     </td>

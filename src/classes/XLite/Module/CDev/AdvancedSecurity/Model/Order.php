@@ -132,7 +132,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
     function update()
     {
         $details = $this->get('details');
-        if (!empty($details) && $this->get('payment_method') == "CreditCard" && $this->config->AdvancedSecurity->gpg_crypt_db) {
+        if (!empty($details) && $this->get('payment_method') == "CreditCard" && $this->config->CDev->AdvancedSecurity->gpg_crypt_db) {
             if (!$this->xlite->is('adminZone')) { // customer is placing order
                 $this->setSecureDetails($details);
                 // check if GnuPG failed to encrypt data (invalid pubkey?)

@@ -65,6 +65,6 @@ class CategorySelect extends \XLite\View\CategorySelect
      */
     protected function isCategorySelected(\XLite\Model\Category $category)
     {
-        return in_array($category->get('category_id'), explode(";", $this->config->WholesaleTrading->bulk_categories));
+        return in_array($category->get('category_id'), explode(";", $this->config->CDev->WholesaleTrading->bulk_categories));
     }
 }

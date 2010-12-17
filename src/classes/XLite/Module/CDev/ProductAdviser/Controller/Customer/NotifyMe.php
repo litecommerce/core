@@ -311,7 +311,7 @@ class NotifyMe extends \XLite\Controller\Customer\ACustomer
      */
     public function isPriceNotificationEnabled()
     {
-        return ($this->config->ProductAdviser->customer_notifications_mode & 1) != 0;
+        return ($this->config->CDev->ProductAdviser->customer_notifications_mode & 1) != 0;
     }
 
     /**
@@ -324,6 +324,6 @@ class NotifyMe extends \XLite\Controller\Customer\ACustomer
      */
     public function isProductNotificationEnabled()
     {
-        return ($this->config->ProductAdviser->customer_notifications_mode & 2) != 0;
+        return ($this->config->CDev->ProductAdviser->customer_notifications_mode & 2) != 0;
     }
 }

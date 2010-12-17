@@ -42,8 +42,8 @@ class XcartImport extends \XLite\Controller\Admin\AAdmin
     function fillForm()
     {
         parent::fillForm();
-        if ($this->config->XCartImport->params) {
-            $this->set('properties', $this->config->XCartImport->params);
+        if ($this->config->CDev->XCartImport->params) {
+            $this->set('properties', $this->config->CDev->XCartImport->params);
         } else {
             // default params
             foreach (array('hostspec',"database","username","password") as $param) {

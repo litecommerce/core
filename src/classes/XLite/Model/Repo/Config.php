@@ -346,7 +346,23 @@ class Config extends \XLite\Model\Repo\Base\I18n
             $type     = $option->getType();
             $value    = $option->getValue();
 
-            if (!isset($config->$category)) {
+            $isModuleConfig = false !== strpos($category, '\\');
+
+            if ($isModuleConfig) {
+
+                // Process module config
+
+                list($author, $module) = explode('\\', $category);
+
+                if (!isset($config->$author)) {
+                    $config->$author = new \XLite\Core\CommonCell();
+                }
+
+                if (!isset($config->$author->$module)) {
+                    $config->$author->$module = new \XLite\Core\CommonCell();
+                }
+
+            } elseif (!isset($config->$category)) {
                 $config->$category = new \XLite\Core\CommonCell();
             }
 
@@ -358,7 +374,12 @@ class Config extends \XLite\Model\Repo\Base\I18n
             }
 
             if ($this->checkNameAndValue($category, $name, $value)) {
-                $config->$category->$name = $value;
+
+                if ($isModuleConfig) {
+                    $config->$author->$module->$name = $value;
+                } else {
+                    $config->$category->$name = $value;
+                }
             }
         }
 

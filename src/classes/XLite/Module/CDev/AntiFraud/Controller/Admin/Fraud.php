@@ -91,7 +91,7 @@ class Fraud extends \XLite\Controller\Admin\AAdmin
     function check_ip($check_distance)
     {
         $post = array();
-        $post['service_key'] = $this->config->AntiFraud->antifraud_license;
+        $post['service_key'] = $this->config->CDev->AntiFraud->antifraud_license;
         $post['ip'] = $this->get('ip');
     
         $properties = $this->get('properties');
@@ -106,7 +106,7 @@ class Fraud extends \XLite\Controller\Admin\AAdmin
         
         $request = new \XLite\Model\HTTPS();
         $request->data = $post;
-        $request->url = $this->config->AntiFraud->antifraud_url."/check_ip.php";
+        $request->url = $this->config->CDev->AntiFraud->antifraud_url."/check_ip.php";
         $request->request();
         if ($request->error) {
             return array

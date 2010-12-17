@@ -74,7 +74,7 @@ class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
                 $this->config->General->price_format = $currency->get('price_format');
                 $currency_price = $price * $currency->get('exchange_rate');
                 $currency_price = parent::price_format($currency_price, $field, $thousand_delim, $decimal_delim);
-                if ($this->auth->is('logged')&&$this->config->MultiCurrency->country_currency) {
+                if ($this->auth->is('logged')&&$this->config->CDev->MultiCurrency->country_currency) {
                     if ($currency->inCurrencyCountries($this->auth->getComplex('profile.billing_country')))
                         $additional .= $currency_price . ", ";
                 } else {

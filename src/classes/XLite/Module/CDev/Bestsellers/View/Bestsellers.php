@@ -115,7 +115,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
             ),
         );
 
-        $widgetType = $this->config->Bestsellers->bestsellers_menu
+        $widgetType = $this->config->CDev->Bestsellers->bestsellers_menu
             ? self::WIDGET_TYPE_SIDEBAR
             : self::WIDGET_TYPE_CENTER;
 
@@ -124,12 +124,12 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(self::DISPLAY_MODE_LIST);
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
         $this->widgetParams[self::PARAM_SHOW_THUMBNAIL]->setValue(
-            'Y' == $this->config->Bestsellers->bestsellers_thumbnails
+            'Y' == $this->config->CDev->Bestsellers->bestsellers_thumbnails
         );
         $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue(true);
         $this->widgetParams[self::PARAM_SHOW_PRICE]->setValue(true);
         $this->widgetParams[self::PARAM_SHOW_ADD2CART]->setValue(true);
-        $this->widgetParams[self::PARAM_SIDEBAR_MAX_ITEMS]->setValue($this->config->Bestsellers->number_of_bestsellers);
+        $this->widgetParams[self::PARAM_SIDEBAR_MAX_ITEMS]->setValue($this->config->CDev->Bestsellers->number_of_bestsellers);
 
         $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
         $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(true);
@@ -167,7 +167,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
             $limit = self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
                 ? $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS)
-                : $this->config->Bestsellers->number_of_bestsellers;
+                : $this->config->CDev->Bestsellers->number_of_bestsellers;
 
             $this->bestsellProducts = \XLite\Core\Database::getRepo('XLite\Model\Product')
                 ->findBestsellers(

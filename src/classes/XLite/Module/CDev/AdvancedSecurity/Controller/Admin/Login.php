@@ -39,7 +39,7 @@ class Login extends \XLite\Controller\Admin\Login implements \XLite\Base\IDecora
 {
     function action_clear_password()
     {
-        if ($this->xlite->config->AdvancedSecurity->clr_mp_logoff) {
+        if ($this->xlite->config->CDev->AdvancedSecurity->clr_mp_logoff) {
             $orderDialog = new \XLite\Controller\Admin\Order();
             $orderDialog->action_clear_password();
         }
