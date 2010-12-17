@@ -60,8 +60,9 @@ class Markup extends \XLite\Model\Repo\ARepo
         );
 
         return $qb->addSelect(implode(' + ', $prepareSum) . ' as markup_value')
+            ->innerJoin('m.zone', 'zone')
             ->andWhere('m.min_weight <= :weight')
-            ->andWhere('m.zone_id = :zoneId')
+            ->andWhere('zone.zone_id = :zoneId')
             ->andWhere('m.max_weight >= :weight')
             ->andWhere('m.min_total <= :total')
             ->andWhere('m.max_total >= :total')
@@ -75,7 +76,7 @@ class Markup extends \XLite\Model\Repo\ARepo
                         'weight' => $order->getWeight(),
                         'total'  => $order->getShippedSubtotal(),
                         'items'  => $order->countShippedItems(),
-                        'value'  => $order->getShippedSubtotal()
+                        'value'  => $order->getShippedSubtotal(),
                     )
                 )
             );
@@ -106,9 +107,7 @@ class Markup extends \XLite\Model\Repo\ARepo
                 )
             );
 
-        $qb = $this->addMarkupCondition($qb, $order, $zoneId);
-
-        return $qb;
+        return $this->addMarkupCondition($qb, $order, $zoneId);
     }
 
     /**
@@ -124,19 +123,20 @@ class Markup extends \XLite\Model\Repo\ARepo
      */
     protected function defineFindMarkupsByZoneAndMethodQuery($zoneId, $methodId)
     {
-        $qb = $this->createQueryBuilder('m');
-
-        $qb = $qb->addSelect('sm')
+        $qb = $this->createQueryBuilder('m')
+            ->addSelect('sm')
             ->innerJoin('m.shipping_method', 'sm')
             ->andWhere('sm.enabled = 1');
 
         if (isset($zoneId)) {
-            $qb = $qb->andWhere('m.zone_id = :zoneId')
+            $qb->innerJoin('m.zone', 'zone')
+                ->andWhere('zone.zone_id = :zoneId')
                 ->setParameter('zoneId', $zoneId);
         }
 
         if (isset($methodId)) {
-            $qb = $qb->andWhere('m.method_id = :methodId')
+            $qb->innerJoin('m.shipping_method', 'shipping_method')
+                ->andWhere('shipping_method.method_id = :methodId')
                 ->setParameter('methodId', $methodId);
         }
 
@@ -181,7 +181,7 @@ class Markup extends \XLite\Model\Repo\ARepo
 
         if (isset($address)) {
             // Get customer zone sorted out by weight
-            $customerZones = \XLite\Core\Database::getRepo('\XLite\Model\Zone')
+            $customerZones = \XLite\Core\Database::getRepo('XLite\Model\Zone')
                 ->findApplicableZones($address);
         }
 
@@ -196,11 +196,9 @@ class Markup extends \XLite\Model\Repo\ARepo
 
                 $markup = $markupData[0];
 
-                $methodId = $markup->getMethodId();
-
-                if (!isset($result[$methodId])) {
+                if ($markup->getShippingMethod() && !isset($result[$markup->getShippingMethod()->getMethodId()])) {
                     $markup->setMarkupValue($markupData['markup_value']);
-                    $result[$methodId] = $markup;
+                    $result[$markup->getShippingMethod()->getMethodId()] = $markup;
                 }
             }
         }

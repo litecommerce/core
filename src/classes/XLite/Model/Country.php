@@ -67,7 +67,7 @@ class Country extends \XLite\Model\AEntity
      * @since  3.0.0
      *
      * @Id
-     * @Column (type="fixedstring", length="2", nullable=false, unique=true)
+     * @Column (type="fixedstring", length="2", unique=true)
      */
     protected $code;
 
@@ -79,7 +79,7 @@ class Country extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="boolean", nullable=false)
+     * @Column (type="boolean")
      */
     protected $enabled = false;
 
@@ -91,7 +91,7 @@ class Country extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="boolean", nullable=false)
+     * @Column (type="boolean")
      */
     protected $eu_member = false;
 

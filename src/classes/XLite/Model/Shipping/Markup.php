@@ -60,31 +60,9 @@ class Markup extends \XLite\Model\AEntity
      * @since  3.0.0
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="integer")
      */
     protected $markup_id;
-
-    /**
-     * Shipping method Id
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="integer", length="11", nullable=false)
-     */
-    protected $method_id;
-
-    /**
-     * Zone Id
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="integer", length="11", nullable=false)
-     */
-    protected $zone_id = 0;
 
     /**
      * Markup condition: min weight of products in the order

@@ -204,16 +204,17 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
     /**
      * Find one by record 
      * 
-     * @param array $data Record
+     * @param array                $data   Record
+     * @param \XLite\Model\AEntity $parent Parent model
      *  
      * @return \XLite\Model\AEntity|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function findOneByRecord(array $data)
+    public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
     {
-        $entity = parent::findOneByRecord($data);
+        $entity = parent::findOneByRecord($data, $parent);
         if (
             !$entity
             && isset($data['name'])

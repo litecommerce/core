@@ -741,12 +741,21 @@ class Database extends \XLite\Base\Singleton
             $result = 0;
             foreach ($data as $entityName => $rows) {
                 $repo = static::getRepo($entityName);
+
                 if ($repo) {
-                    $result += $repo->loadFixtures($rows);
+                    $isLoad = true;
+
+                    if (isset($rows['directives'])) {
+                        $isLoad = !isset($rows['directives']['insert']) || !$rows['directives']['insert'];
+                        unset($rows['directives']);
+                    }
+
+                    $result += $isLoad ? $repo->loadFixtures($rows) : $repo->insertFixtures($rows);
+
+                    static::getEntityManager()->flush();
+                    static::getEntityManager()->clear();
                 }
             }
-
-            static::getEntityManager()->flush();
         }
 
         return $result;
@@ -930,14 +939,36 @@ class Database extends \XLite\Base\Singleton
 
         // Set repository
         if (!$classMetadata->customRepositoryClassName) {
-            $class = str_replace('\Model\\', '\Model\Repo\\', $classMetadata->getReflectionClass()->getName());
-            if (\XLite\Core\Operator::isClassExists($class)) {
-                $classMetadata->setCustomRepositoryClass($class);
+            $classMetadata->setCustomRepositoryClass(
+                $this->detectCustomRepositoryClassName($classMetadata->getReflectionClass()->getName())
+            );
+        }
+    }
+
+    /**
+     * Detect custom repository class name by entity class name
+     * 
+     * @param string $entityClass Entity class name
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function detectCustomRepositoryClassName($entityClass)
+    {
+        $class = str_replace('\Model\\', '\Model\Repo\\', $entityClass);
+
+        if (!\XLite\Core\Operator::isClassExists($class)) {
+            if (preg_match('/\wTranslation$/Ss', $entityClass)) {
+                $class = '\XLite\Model\Repo\Base\Translation';
 
             } else {
-                $classMetadata->setCustomRepositoryClass('\XLite\Model\Repo\Base\Common');
+                $class = '\XLite\Model\Repo\Base\Common';
             }
         }
+
+        return $class;
     }
 
     /**
@@ -1063,5 +1094,66 @@ class Database extends \XLite\Base\Singleton
         }
 
         return $this->importSQL(file_get_contents($path));
+    }
+
+    /**
+     * Truncate all data
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function truncate()
+    {
+        $calc = new \Doctrine\ORM\Internal\CommitOrderCalculator;
+        foreach ($this->getAllMetadata() as $class) {
+            $calc->addClass($class);
+
+            foreach ($class->associationMappings as $assoc) {
+                if ($assoc['isOwningSide']) {
+                    $targetClass = \XLite\Core\Database::getEM()->getClassMetadata($assoc['targetEntity']);
+
+                    if (!$calc->hasClass($targetClass->name)) {
+                        $calc->addClass($targetClass);
+                    }
+
+                    // add dependency ($targetClass before $class)
+                    $calc->addDependency($targetClass, $class);
+                }
+            }
+        }
+
+        $commitOrder = $calc->getCommitOrder();
+
+        $associationTables = array();
+
+        foreach ($commitOrder as $class) {
+            foreach ($class->associationMappings as $assoc) {
+                if ($assoc['isOwningSide'] && $assoc['type'] == \Doctrine\ORM\Mapping\ClassMetadata::MANY_TO_MANY) {
+                    $associationTables[] = $assoc['joinTable']['name'];
+                }
+            }
+        }
+
+        $orderedTables = array_unique($associationTables);
+
+        // Truncate tables in reverse commit order
+        foreach (array_reverse($commitOrder) as $class) {
+            if (
+                (!$class->isInheritanceTypeSingleTable() || $class->name == $class->rootEntityName)
+                && !$class->isMappedSuperclass
+                && !in_array($class->getTableName(), $orderedTables)
+            ) {
+                $orderedTables[] = $class->getTableName();
+            }
+        }
+
+        $sql = array();
+        foreach ($orderedTables as $tableName) {
+            $sql[] = self::$em->getConnection()->getDatabasePlatform()->getTruncateTableSQL($tableName);
+        }
+
+        return $this->executeQueries($sql);
     }
 }

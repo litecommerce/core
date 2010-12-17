@@ -55,7 +55,7 @@ class Zone extends \XLite\Model\AEntity
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer", length="11", nullable=false)
+     * @Column         (type="integer")
      */
     protected $zone_id;
 
@@ -67,7 +67,7 @@ class Zone extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="64", nullable=false)
+     * @Column (type="string", length="64")
      */
     protected $zone_name = '';
 
@@ -79,7 +79,7 @@ class Zone extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="boolean", nullable=false)
+     * @Column (type="boolean")
      */
     protected $is_default = false;
 
@@ -164,7 +164,7 @@ class Zone extends \XLite\Model\AEntity
         
             foreach ($allStates as $key=>$state) {
 
-                $condition = in_array($state->getCountryCode() . '_' . $state->getCode(), $stateCodes);
+                $condition = in_array($state->getCountry()->getCode() . '_' . $state->getCode(), $stateCodes);
 
                 if ($condition && !$excluded || !$condition && $excluded) {
                     $zoneStates[] = $state;

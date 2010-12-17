@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Model
+ * @subpackage Core
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,68 +26,72 @@
  * @since      3.0.0
  */
 
-namespace XLite\Model\Category;
+namespace XLite\Core;
 
 /**
- * Category quick flags
+ * Statement 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- *
- * @Entity (repositoryClass="\XLite\Model\Repo\Category\QuickFlags")
- * @Table  (name="category_quick_flags")
  */
-class QuickFlags extends \XLite\Model\AEntity
+class Statement extends \Doctrine\DBAL\Statement
 {
     /**
-     * Doctrine ID 
+     * SQL query 
      * 
-     * @var    int
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     *
-     * @Id
-     * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="uinteger")
      */
-    protected $id;
+    protected $_sql;
 
     /**
-     * Total number of subcategories
+     * The bound parameters
      * 
-     * @var    int
+     * @var    array
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     *
-     * @Column (type="integer")
      */
-    protected $subcategories_count_all = 0;
+    protected $_params = array();
 
     /**
-     * Number of enabled subcategories
-     *
-     * @var    int
+     * The underlying driver statement
+     * 
+     * @var    \Doctrine\DBAL\Driver\Statement
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     *
-     * @Column (type="integer")
      */
-    protected $subcategories_count_enabled = 0;
+    protected $_stmt;
 
     /**
-     * Relation to a category entity
-     *
-     * @var    \XLite\Model\Category
-     * @access protected
-     * @see    ____var_see____
+     * Executes the statement with the currently bound parameters 
+     * 
+     * @param array $params Parameters
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
-     *
-     * @OneToOne  (targetEntity="XLite\Model\Category", inversedBy="quickFlags")
-     * @JoinColumn (name="category_id", referencedColumnName="category_id")
      */
-    protected $category;
+    public function execute($params = null)
+    {
+        try {
+            $result = parent::execute($params);
+
+        } catch (\PDOException $e) {
+            $sql = $this->_sql;
+            if (!$sql && is_object($this->_stmt) && $this->_stmt->queryString) {
+                $sql = $this->_stmt->queryString;
+            }
+
+            throw new \XLite\Core\PDOException($e, $sql, $this->_params);
+        }
+
+        return $result;
+    }
+
 }

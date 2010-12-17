@@ -149,10 +149,15 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
 
         $categoryId = 14015;
 
+        $this->assertNotNull(
+            $this->getRepo()->getCategory($categoryId),
+            'The "Fruit" category (ID ' . $categoryId . ') was not found'
+        );
+
         $this->assertEquals(
             $categoryId,
             $this->getRepo()->getCategory($categoryId)->getCategoryId(),
-            'The "Fruit" category (ID ' . $categoryId . ') was not found'
+            'The "Fruit" category (ID ' . $categoryId . ') was not found (id)'
         );
     }
 

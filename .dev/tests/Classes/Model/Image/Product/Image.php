@@ -75,14 +75,6 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
         $i->setAlt('test2');
         $i->setOrderby(99);
 
-        $this->assertFalse($i->setMime('image/jpg'), 'check setter fail (mime)');
-        $this->assertFalse($i->setWidth(1), 'check setter fail (width)');
-        $this->assertFalse($i->setHeight(1), 'check setter fail (height)');
-        $this->assertFalse($i->setSize(1), 'check setter fail (size)');
-        $this->assertFalse($i->setDate(1), 'check setter fail (date)');
-        $this->assertFalse($i->setHash('123'), 'check setter fail (hash)');
-        $this->assertFalse($i->setPath($i->getPath()), 'check setter fail (path)');
-
         \XLite\Core\Database::getEM()->persist($i);
         \XLite\Core\Database::getEM()->flush();
 

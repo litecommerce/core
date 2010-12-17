@@ -262,7 +262,14 @@ class FormId extends \XLite\Model\Repo\ARepo
     {
         $schema = parent::processSchema($schema, $type);
 
-        if (\XLite\Core\Database::SCHEMA_UPDATE == $type) {
+        if (\XLite\Core\Database::SCHEMA_CREATE == $type) {
+            $table = $this->getClassMetadata()->getTableName();
+            $schema[] = 'ALTER TABLE `' . $table . '`'
+                . ' ADD FOREIGN KEY `session_id` (`session_id`)'
+                . ' REFERENCES `xlite_sessions` (`id`)'
+                . ' ON DELETE CASCADE ON UPDATE CASCADE';
+
+        } elseif (\XLite\Core\Database::SCHEMA_UPDATE == $type) {
             $schema = preg_grep('/DROP FOREIGN KEY `?xlite_session_to_forms`?/Ss', $schema, PREG_GREP_INVERT);
         }
 

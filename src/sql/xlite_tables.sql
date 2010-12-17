@@ -22,7 +22,7 @@ CREATE TABLE xlite_categories (
 DROP TABLE IF EXISTS xlite_category_images;
 CREATE TABLE xlite_category_images (
   image_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  id INT UNSIGNED NOT NULL DEFAULT '0',
+  id INT UNSIGNED DEFAULT '0',
   path VARCHAR(512) NOT NULL DEFAULT '',
   mime VARCHAR(64) NOT NULL DEFAULT 'image/jpeg',
   width INT NOT NULL DEFAULT '0',
@@ -48,7 +48,7 @@ DROP TABLE IF EXISTS xlite_category_translations;
 CREATE TABLE xlite_category_translations (
   label_id INT NOT NULL AUTO_INCREMENT,
   code CHAR(2) NOT NULL,
-  id INT NOT NULL DEFAULT '0',
+  id INT DEFAULT '0',
   name VARCHAR(255),
   description text,
   meta_tags VARCHAR(255) DEFAULT '',
@@ -78,7 +78,7 @@ DROP TABLE IF EXISTS xlite_config_translations;
 CREATE TABLE xlite_config_translations (
   label_id INT NOT NULL AUTO_INCREMENT,
   code CHAR(2) NOT NULL,
-  id INT NOT NULL DEFAULT 0,
+  id INT DEFAULT 0,
   option_name VARCHAR(255) NOT NULL,
   option_comment VARCHAR(255) NOT NULL,
   PRIMARY KEY (label_id),
@@ -89,7 +89,7 @@ CREATE TABLE xlite_config_translations (
 DROP TABLE IF EXISTS xlite_currencies;
 CREATE TABLE xlite_currencies (
   code CHAR(3) NOT NULL,
-  currency_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  currency_id INT UNSIGNED NOT NULL PRIMARY KEY,
   symbol VARCHAR(16) NOT NULL,
   e TINYINT(1) NOT NULL,
   UNIQUE KEY code(code)
@@ -99,7 +99,7 @@ DROP TABLE IF EXISTS xlite_currency_translations;
 CREATE TABLE xlite_currency_translations (
   label_id INT NOT NULL AUTO_INCREMENT,
   code CHAR(2) NOT NULL,
-  id INT UNSIGNED NOT NULL DEFAULT '0',
+  id INT UNSIGNED DEFAULT '0',
   name VARCHAR(255) NOT NULL,
   PRIMARY KEY (label_id),
   KEY ci (code,id),
@@ -179,8 +179,8 @@ CREATE TABLE xlite_modules (
 DROP TABLE IF EXISTS xlite_order_items;
 CREATE TABLE xlite_order_items (
   item_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  order_id INT NOT NULL DEFAULT '0',
-  object_id INT UNSIGNED NOT NULL DEFAULT '0',
+  order_id INT DEFAULT '0',
+  object_id INT UNSIGNED DEFAULT '0',
   object_type VARCHAR(16) NOT NULL DEFAULT 'product',
   name VARCHAR(255) NOT NULL,
   sku VARCHAR(255) NOT NULL DEFAULT '',
@@ -271,7 +271,7 @@ DROP TABLE IF EXISTS xlite_payment_method_translations;
 CREATE TABLE xlite_payment_method_translations (
   label_id INT NOT NULL AUTO_INCREMENT,
   code CHAR(2) NOT NULL,
-  id INT NOT NULL DEFAULT '0',
+  id INT DEFAULT '0',
   name VARCHAR(255) NOT NULL,
   description text NOT NULL DEFAULT '',
   PRIMARY KEY (label_id),
@@ -340,8 +340,8 @@ CREATE TABLE xlite_products (
 DROP TABLE IF EXISTS xlite_category_products;
 CREATE TABLE xlite_category_products (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  product_id INT UNSIGNED NOT NULL DEFAULT '0',
-  category_id INT UNSIGNED NOT NULL DEFAULT '0',
+  product_id INT UNSIGNED DEFAULT '0',
+  category_id INT UNSIGNED DEFAULT '0',
   orderby INT NOT NULL DEFAULT '0',
   PRIMARY KEY (id),
   UNIQUE KEY pair (category_id,product_id),
@@ -351,7 +351,7 @@ CREATE TABLE xlite_category_products (
 DROP TABLE IF EXISTS xlite_product_images;
 CREATE TABLE xlite_product_images (
   `image_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `id` INT NOT NULL DEFAULT '0',
+  `id` INT DEFAULT '0',
   `path` VARCHAR(512) NOT NULL DEFAULT '',
   `mime` VARCHAR(64) NOT NULL DEFAULT 'image/jpeg',
   `width` INT NOT NULL DEFAULT '0',
@@ -369,7 +369,7 @@ DROP TABLE IF EXISTS xlite_product_translations;
 CREATE TABLE xlite_product_translations (
   label_id INT NOT NULL AUTO_INCREMENT,
   code CHAR(2) NOT NULL,
-  id INT NOT NULL DEFAULT '0',
+  id INT DEFAULT '0',
   name VARCHAR(255) NOT NULL COLLATE utf8_general_ci,
   description text NOT NULL COLLATE utf8_general_ci,
   brief_description text NOT NULL COLLATE utf8_general_ci,
@@ -519,7 +519,7 @@ DROP TABLE IF EXISTS xlite_shipping_method_translations;
 CREATE TABLE xlite_shipping_method_translations (
   label_id INT NOT NULL AUTO_INCREMENT,
   code CHAR(2) NOT NULL,
-  id INT NOT NULL DEFAULT '0',
+  id INT DEFAULT '0',
   name VARCHAR(255) NOT NULL,
   PRIMARY KEY (label_id),
   KEY ci (code,id),
@@ -630,7 +630,7 @@ DROP TABLE IF EXISTS xlite_language_translations;
 CREATE TABLE xlite_language_translations (
   label_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   code CHAR(2) NOT NULL,
-  id INT NOT NULL DEFAULT 0,
+  id INT DEFAULT 0,
   name VARCHAR(64) NOT NULL,
   KEY ci (code, id),
   KEY i (id)
@@ -647,7 +647,7 @@ DROP TABLE IF EXISTS xlite_language_label_translations;
 CREATE TABLE xlite_language_label_translations (
   label_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   code CHAR(2) NOT NULL,
-  id INT NOT NULL DEFAULT 0,
+  id INT DEFAULT 0,
   label text NOT NULL,
   KEY ci (code, id),
   KEY i (id)
@@ -664,7 +664,7 @@ DROP TABLE IF EXISTS xlite_membership_translations;
 CREATE TABLE xlite_membership_translations (
   label_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   code CHAR(2) NOT NULL,
-  id INT NOT NULL DEFAULT 0,
+  id INT DEFAULT 0,
   name VARCHAR(128) NOT NULL,
   KEY ci (code, id),
   KEY i (id)

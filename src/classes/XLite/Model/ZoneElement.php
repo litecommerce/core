@@ -67,24 +67,13 @@ class ZoneElement extends \XLite\Model\AEntity
     protected $element_id;
 
     /**
-     * Zone Id 
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="integer", length="11", nullable=false)
-     */
-    protected $zone_id;
-
-    /**
      * Zone element value, e.g. 'US', 'US_NY', 'New Y%' etc
      * 
      * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length="255")
      */
     protected $element_value;
 
@@ -95,7 +84,7 @@ class ZoneElement extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="fixedstring", length="1", nullable=false)
+     * @Column (type="fixedstring", length="1")
      */
     protected $element_type;
 

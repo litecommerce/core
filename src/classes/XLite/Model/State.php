@@ -36,8 +36,10 @@ namespace XLite\Model;
  * @since   3.0.0
  * @Entity (repositoryClass="\XLite\Model\Repo\State")
  * @Table (name="states",
+ *      uniqueConstraints={
+ *          @UniqueConstraint (name="code", columns={"code","country_code"})
+ *      },
  *      indexes={
- *          @Index (name="code", columns={"code","country_code"}),
  *          @Index (name="state", columns={"state"})
  *      }
  * )
@@ -53,7 +55,7 @@ class State extends \XLite\Model\AEntity
      * @since  3.0.0
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="integer")
      */
     protected $state_id;
 
@@ -64,7 +66,7 @@ class State extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="32", nullable=false)
+     * @Column (type="string", length="32")
      */
     protected $state;
 
@@ -75,20 +77,9 @@ class State extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="32", nullable=false)
+     * @Column (type="string", length="32")
      */
     protected $code;
-
-    /**
-     * Country code
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="fixedstring", length="2", nullable=false)
-     */
-    protected $country_code;
 
     /**
      * Country (relation)

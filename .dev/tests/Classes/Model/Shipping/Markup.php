@@ -30,8 +30,14 @@ class XLite_Tests_Model_Shipping_Markup extends XLite_Tests_TestCase
     {
         $newMarkup = new \XLite\Model\Shipping\Markup();
 
-        $newMarkup->setMethodId(100);
-        $newMarkup->setZoneId(1);
+        $method = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->find(100);
+        $newMarkup->setShippingMethod($method);
+        $method->addShippingMarkups($newMarkup);
+
+        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->find(1);
+        $newMarkup->setZone($zone);
+        $zone->addShippingMarkups($newMarkup);
+
         $newMarkup->setMinWeight(20);
         $newMarkup->setMaxWeight(500);
         $newMarkup->setMinTotal(10);
@@ -43,10 +49,6 @@ class XLite_Tests_Model_Shipping_Markup extends XLite_Tests_TestCase
         $newMarkup->setMarkupPerItem(1.45);
         $newMarkup->setMarkupPerWeight(0.45);
 
-        $newMarkup->setShippingMethod(\XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->find(100));
-
-        $newMarkup->setZone(\XLite\Core\Database::getRepo('XLite\Model\Zone')->find(1));
-
         \XLite\Core\Database::getEM()->persist($newMarkup);
         \XLite\Core\Database::getEM()->flush();
 
@@ -57,8 +59,8 @@ class XLite_Tests_Model_Shipping_Markup extends XLite_Tests_TestCase
         if (isset($markupId)) {
             $markup = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->find($markupId);
 
-            $this->assertEquals(100, $markup->getMethodId(), 'Wrong method_id');
-            $this->assertEquals(1, $markup->getZoneId(), 'Wrong zone_id');
+            $this->assertEquals(100, $markup->getShippingMethod()->getMethodId(), 'Wrong method_id');
+            $this->assertEquals(1, $markup->getZone()->getZoneId(), 'Wrong zone_id');
             $this->assertEquals(20, $markup->getMinWeight(), 'Wrong min_weight');
             $this->assertEquals(500, $markup->getMaxWeight(), 'Wrong max_weight');
             $this->assertEquals(10, $markup->getMinTotal(), 'Wrong min_total');

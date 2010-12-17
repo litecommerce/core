@@ -57,7 +57,7 @@ class Category extends \XLite\Model\Base\I18n
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="uinteger", nullable=false)
+     * @Column         (type="uinteger")
      */
     protected $category_id;
 
@@ -69,7 +69,7 @@ class Category extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="integer")
      */
     protected $lpos;
 
@@ -81,7 +81,7 @@ class Category extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="integer")
      */
     protected $rpos;
 
@@ -93,7 +93,7 @@ class Category extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="boolean", nullable=false)
+     * @Column (type="boolean")
      */
     protected $enabled = true;
 
@@ -105,7 +105,7 @@ class Category extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length="255")
      */
     protected $cleanUrl = '';
 
@@ -116,10 +116,9 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @since  3.0.0
      *
-     * @Column (type="boolean", nullable=false)
+     * @Column (type="boolean")
      */
     protected $show_title = true;
-
 
     /**
      * Some cached flags
@@ -172,14 +171,26 @@ class Category extends \XLite\Model\Base\I18n
     protected $categoryProducts;
 
     /**
+     * Child categories
+     * 
+     * @var    \Doctrine\Common\Collections\ArrayCollection
+     * @access private
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @OneToMany(targetEntity="XLite\Model\Category", mappedBy="parent")
+     */
+    private $childs;
+
+    /**
      * Parent category
      * 
-     * @var    self
+     * @var    \XLite\Model\Category
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Category")
+     * @ManyToOne  (targetEntity="XLite\Model\Category", inversedBy="children")
      * @JoinColumn (name="parent_id", referencedColumnName="category_id")
      */
     protected $parent;

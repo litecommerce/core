@@ -133,7 +133,7 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_TestCase
         $item = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')
             ->find($id);
 
-        $this->assertNull($item, 'check removed item');
+        $this->assertTrue(is_null($item), 'check removed item');
     }
 
     public function testGetProduct()
@@ -148,7 +148,7 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_TestCase
 
         $item = new \XLite\Model\OrderItem();
 
-        $this->assertNull($item->getProduct(), 'check empty object #2');
+        $this->assertTrue(is_null($item->getProduct()), 'check empty object #2');
 
         \XLite\Core\Database::getEM()->clear();
 
@@ -164,7 +164,7 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_TestCase
         \XLite\Core\Database::getEM()->clear();
 
         $item = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->find($id);
-        $this->assertNull($item->getProduct(), 'check dump object #2');
+        $this->assertFalse(is_null($item->getProduct()), 'check dump object #2');
     }
 
     public function testSetAmount()

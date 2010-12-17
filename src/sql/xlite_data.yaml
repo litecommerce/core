@@ -9,6 +9,7 @@
 # @link      http://www.litecommerce.com/
 # @since     3.0.0
 XLite\Model\Config:
+  directives: { insert: true }
   - { name: active_captcha_pages, category: Captcha, type: serialized, orderby: 30, translations: [{ code: en, option_name: active_captcha_pages, option_comment: '' }] }
   - { name: add_on_mode, category: General, type: checkbox, orderby: 120, value: N, translations: [{ code: en, option_name: 'Checkout desk operation mode', option_comment: '' }] }
   - { name: add_on_mode_page, category: General, type: select, orderby: 125, value: 'cart.php?target=cart', translations: [{ code: en, option_name: 'Checkout desk operation mode main page', option_comment: '' }] }
@@ -128,8 +129,9 @@ XLite\Model\Config:
   - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime', option_comment: '' }] }
   - { name: cli_key, category: Security, orderby: 110, translations: [{ code: en, option_name: 'CLI mode key', option_comment: '' }] }
 XLite\Model\Category:
-  - { parent_id: 0 }
+  - { }
 XLite\Model\Currency:
+  directives: { insert: true }
   - { currency_id: 20, code: ADP, e: 2, translations: [{ code: en, name: 'Andorran Pesseta' }] }
   - { currency_id: 784, code: AED, e: 2, translations: [{ code: en, name: 'UAE Dirtham' }] }
   - { currency_id: 4, code: AFA, e: 2, translations: [{ code: en, name: Afghani }] }
@@ -306,6 +308,7 @@ XLite\Model\Currency:
   - { currency_id: 894, code: ZMK, translations: [{ code: en, name: 'Zambian kwacha' }] }
   - { currency_id: 716, code: ZWD, e: 2, translations: [{ code: en, name: 'Zimbabwe Dollar' }] }
 XLite\Model\LanguageLabel:
+  directives: { insert: true }
   - { name: Weight, translations: [{ code: en, label: Weight }, { code: de, label: Gewicht }] }
   - { name: 'Add to cart', translations: [{ code: en, label: 'Add to Cart' }] }
   - { name: Description, translations: [{ code: en, label: Description }] }
@@ -346,13 +349,13 @@ XLite\Model\LanguageLabel:
   - { name: 'Text labels have not been deleted: no text labels have been found or specified', translations: [{ code: en, label: 'Text labels have not been deleted: no text labels have been found or specified' }] }
   - { name: 'The text label has been deleted', translations: [{ code: en, label: 'The text label has been deleted' }] }
   - { name: 'The text label has not been deleted: it has been either not found or not specified', translations: [{ code: en, label: 'The text label has not been deleted: it has been either not found or not specified' }] }
-  - { name: 'The text label has not been adde', translations: [{ code: en, label: 'The text label has not been adde' }] }
-  - { name: 'The text label has not been adde', translations: [{ code: en, label: 'The text label has not been adde' }] }
-  - { name: 'The text label has not been adde', translations: [{ code: en, label: 'The text label has not been adde' }] }
-  - { name: 'The text label has not been adde', translations: [{ code: en, label: 'The text label has not been adde' }] }
+  - { name: 'The text label has not been added, because its name has not been specified', translations: [{ code: en, label: 'The text label has not been added, because its name has not been specified' }] }
+  - { name: 'The text label has not been added, because such a text label already exists', translations: [{ code: en, label: 'The text label has not been added, because such a text label already exists' }] }
+  - { name: 'The text label has not been added, because its translation for the default application language has not been specified', translations: [{ code: en, label: 'The text label has not been added, because its translation for the default application language has not been specified' }] }
+  - { name: 'The text label has not been added, because its translation for the default interface language has not been specified', translations: [{ code: en, label: 'The text label has not been added, because its translation for the default interface language has not been specified' }] }
   - { name: 'The text label has been added successfully', translations: [{ code: en, label: 'The text label has been added successfully' }] }
-  - { name: 'The text label has not been modifie', translations: [{ code: en, label: 'The text label has not been modifie' }] }
-  - { name: 'The text label has not been modifie', translations: [{ code: en, label: 'The text label has not been modifie' }] }
+  - { name: 'The text label has not been modified, because its translation for the default application language has not been specified', translations: [{ code: en, label: 'The text label has not been modified, because its translation for the default application language has not been specified' }] }
+  - { name: 'The text label has not been modified, because its translation for the default interface language has not been specified', translations: [{ code: en, label: 'The text label has not been modified, because its translation for the default interface language has not been specified' }] }
   - { name: 'The text label has been modified successfully', translations: [{ code: en, label: 'The text label has been modified successfully' }] }
   - { name: 'The edited language has not been found', translations: [{ code: en, label: 'The edited language has not been found' }] }
   - { name: 'The name of the edited language in the default application language has not been specified', translations: [{ code: en, label: 'The name of the edited language in the default application language has not been specified' }] }
@@ -397,7 +400,7 @@ XLite\Model\LanguageLabel:
   - { name: 'The X module has been installed successfully', translations: [{ code: en, label: 'The {{module}} module has been installed successfully' }] }
   - { name: 'The X module has been installed with errors: the DB has not been modified correctly', translations: [{ code: en, label: 'The {{module}} module has been installed with errors: the DB has not been modified correctly' }] }
   - { name: 'The X module has been installed incorrectly. Please see the logs for more information', translations: [{ code: en, label: 'The {{module}} module has been installed incorrectly. Please see the logs for more information' }] }
-  - { name: 'The X module has been installe', translations: [{ code: en, label: 'The {{module}} module has been installe' }] }
+  - { name: 'The X module has been installed, but the module has a wrong module control class', translations: [{ code: en, label: 'The {{module}} module has been installed, but the module has a wrong module control class' }] }
   - { name: 'The X module has been uninstalled in an abnormal way', translations: [{ code: en, label: 'The {{module}} module has been uninstalled in an abnormal way' }] }
   - { name: 'The modules have been updated', translations: [{ code: en, label: 'The modules have been updated' }] }
   - { name: 'The X module has been disabled in an abnormal way', translations: [{ code: en, label: 'The {{module}} module has been disabled in an abnormal way' }] }
@@ -412,7 +415,7 @@ XLite\Model\LanguageLabel:
   - { name: 'New zone has been created successfully', translations: [{ code: en, label: 'New zone has been created successfully' }] }
   - { name: 'This product has been added to your bag', translations: [{ code: en, label: 'This product has been added to <a href="{{href}}">your bag</a>' }] }
   - { name: 'Your shopping bag - X items', translations: [{ code: en, label: 'Your shopping bag &mdash; {{count}} items' }] }
-  - { name: Greeting, translations: [{ code: en, label: Greeting }] }
+  - { name: 'Greetings, X', translations: [{ code: en, label: 'Greetings, {{name}}' }] }
   - { name: 'X items', translations: [{ code: en, label: '{{count}} items' }] }
   - { name: 'This email address is used for an existing account. Enter another email address or sign in', translations: [{ code: en, label: 'This email address is used for an existing account. Enter another email address or <a href="{{URL}}" class="log-in">sign in</a>' }] }
   - { name: 'This user name is used for an existing account. Enter another user name or sign in', translations: [{ code: en, label: 'This user names is used for an existing account. Enter another user name or <a href="{{URL}}" class="log-in">sign in</a>' }] }
@@ -426,10 +429,12 @@ XLite\Model\LanguageLabel:
   - { name: 'Enter a negative number', translations: [{ code: en, label: 'Enter a negative number' }] }
   - { name: 'This field is required', translations: [{ code: en, label: 'This field is required' }] }
 XLite\Model\Membership:
+  directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }
   - { orderby: 20, translations: [{ code: en, name: Platinum }] }
   - { orderby: 30, translations: [{ code: en, name: Wholesaler }] }
 XLite\Model\Language:
+  directives: { insert: true }
   - { code: aa, code3: aar, translations: [{ code: en, name: Afar }] }
   - { code: ab, code3: abk, translations: [{ code: en, name: Abkhazian }] }
   - { code: af, code3: afr, translations: [{ code: en, name: Afrikaans }] }
@@ -613,6 +618,7 @@ XLite\Model\Language:
   - { code: za, code3: zha, translations: [{ code: en, name: Zhuang }] }
   - { code: zu, code3: zul, translations: [{ code: en, name: Zulu }] }
 XLite\Model\Payment\Method:
+  directives: { insert: true }
   - { service_name: CreditCard, class: Model\Payment\Processor\CreditCard, orderby: 10, translations: [{ code: en, name: 'Credit Card', description: Vis }] }
   - { service_name: PurchaseOrder, class: Model\Payment\Processor\PurchaseOrder, orderby: 20, translations: [{ code: en, name: 'Purchase Order', description: '' }] }
   - { service_name: PhoneOrdering, class: Model\Payment\Processor\Offline, orderby: 30, translations: [{ code: en, name: 'Phone Ordering', description: 'Phone: (555) 555-5555' }] }
@@ -621,6 +627,7 @@ XLite\Model\Payment\Method:
   - { service_name: Echeck, class: Model\Payment\Processor\Check, orderby: 60, translations: [{ code: en, name: Check, description: 'Check payment' }] }
   - { service_name: COD, class: Model\Payment\Processor\Offline, orderby: 70, translations: [{ code: en, name: COD, description: 'Cash On Delivery' }] }
 XLite\Model\Country:
+  directives: { insert: true }
   - { country: Afghanistan, code: AF, enabled: false }
   - { country: Albania, code: AL }
   - { country: Algeria, code: DZ }
@@ -659,7 +666,22 @@ XLite\Model\Country:
   - { country: Burundi, code: BI }
   - { country: Cambodia, code: KH }
   - { country: Cameroon, code: CM }
-  - { country: Canada, code: CA }
+  - country: Canada
+    code: CA
+    states:
+      - { state: Alberta, code: AB }
+      - { state: 'British Columbia', code: BC }
+      - { state: Manitoba, code: MB }
+      - { state: 'New Brunswick', code: NB }
+      - { state: 'Newfoundland and Labrador', code: NF }
+      - { state: 'Nova Scotia', code: NS }
+      - { state: 'Northwest Territories', code: NT }
+      - { state: Nunavut, code: NU }
+      - { state: Ontario, code: ON }
+      - { state: 'Prince Edward Island', code: PE }
+      - { state: Quebec, code: QC }
+      - { state: Saskatchewan, code: SK }
+      - { state: Yukon, code: YT }
   - { country: 'Cape Verde', code: CV }
   - { country: 'Cayman Islands', code: KY }
   - { country: 'Central African Republic', code: CF }
@@ -670,7 +692,7 @@ XLite\Model\Country:
   - { country: 'Cocos (Keeling) Islands', code: CC }
   - { country: Colombia, code: CO }
   - { country: Comoros, code: KM }
-  - { country: Cong, code: 'emocratic Republic of', enabled: false }
+  - { country: 'Congo, Democratic Republic of', code: CD }
   - { country: 'Cook Islands', code: CK }
   - { country: 'Costa Rica', code: CR }
   - { country: 'Cote D''ivoire', code: CI }
@@ -735,7 +757,7 @@ XLite\Model\Country:
   - { country: Kenya, code: KE }
   - { country: Kiribati, code: KI }
   - { country: Korea, code: KP }
-  - { country: Kore, code: 'epublic of', enabled: false }
+  - { country: 'Korea, Republic of', code: KR }
   - { country: Kuwait, code: KW }
   - { country: Kyrgyzstan, code: KG }
   - { country: Laos, code: LA }
@@ -762,7 +784,7 @@ XLite\Model\Country:
   - { country: Mayotte, code: YT }
   - { country: Mexico, code: MX }
   - { country: Micronesia, code: FM }
-  - { country: Moldov, code: 'epublic of', enabled: false }
+  - { country: 'Moldova, Republic of', code: MD }
   - { country: Monaco, code: MC, eu_member: true }
   - { country: Mongolia, code: MN }
   - { country: Montserrat, code: MS }
@@ -829,7 +851,7 @@ XLite\Model\Country:
   - { country: 'Syrian Arab Republic', code: SY }
   - { country: Taiwan, code: TW }
   - { country: Tajikistan, code: TJ }
-  - { country: Tanzani, code: 'nited Republic of', enabled: false }
+  - { country: 'Tanzania, United Republic of', code: TZ }
   - { country: Thailand, code: TH }
   - { country: Togo, code: TG }
   - { country: Tokelau, code: TK }
@@ -843,8 +865,201 @@ XLite\Model\Country:
   - { country: Uganda, code: UG }
   - { country: Ukraine, code: UA }
   - { country: 'United Arab Emirates', code: AE }
-  - { country: 'United Kingdom (Great Britain)', code: GB, eu_member: true }
-  - { country: 'United States', code: US }
+  - country: 'United Kingdom (Great Britain)'
+    code: GB
+    eu_member: true
+    states:
+      - { state: Aberdeenshire, code: ABd }
+      - { state: Angus, code: AG }
+      - { state: Argyll, code: ARg }
+      - { state: Avon, code: AV }
+      - { state: Ayrshire, code: AY }
+      - { state: Banffshire, code: BF }
+      - { state: Bedfordshire, code: BE }
+      - { state: Berkshire, code: BK }
+      - { state: Buckinhamshire, code: BU }
+      - { state: Caithness, code: CN }
+      - { state: Cambridgeshire, code: CB }
+      - { state: Cheshire, code: CH }
+      - { state: Clackmannanshire, code: CL }
+      - { state: Cleveland, code: CV }
+      - { state: Clwyd, code: CW }
+      - { state: 'County Antrim', code: CAn }
+      - { state: 'County Armagh', code: CAr }
+      - { state: 'County Down', code: CDo }
+      - { state: 'County Durham', code: CDu }
+      - { state: 'County Fermanagh', code: CFm }
+      - { state: 'County Londonderry', code: CLd }
+      - { state: 'County Tyrone', code: CTy }
+      - { state: Cornwall, code: COr }
+      - { state: Cumbria, code: CU }
+      - { state: Derbyshire, code: DB }
+      - { state: Devon, code: DV }
+      - { state: Dorset, code: DO }
+      - { state: Dumfriesshire, code: DF }
+      - { state: Dunbartonshire, code: DU }
+      - { state: Dyfed, code: DY }
+      - { state: 'East Lothian', code: EL }
+      - { state: 'East Sussex', code: ES }
+      - { state: Essex, code: EX }
+      - { state: Fife, code: FI }
+      - { state: Gloucestershire, code: GL }
+      - { state: Gwent, code: GW }
+      - { state: Gwyedd, code: GY }
+      - { state: Hampshire, code: HA }
+      - { state: Herefordshire, code: HE }
+      - { state: Hertfordshire, code: HF }
+      - { state: Inverness-shire, code: IS }
+      - { state: 'Isle of Arran', code: IsAr }
+      - { state: 'Isle of Barra', code: IsBa }
+      - { state: 'Isle of Benbecula', code: IsBe }
+      - { state: 'Isle of Bute', code: IsBu }
+      - { state: 'Isle of Canna', code: IsCa }
+      - { state: 'Isle of Coll', code: IsCo }
+      - { state: 'Isle of Colonsay', code: IsCl }
+      - { state: 'Isle of Cumbrae', code: IsCu }
+      - { state: 'Isle of Eigg', code: IsEg }
+      - { state: 'Isle of Gigha', code: IsGi }
+      - { state: 'Isle of Harris', code: IsHa }
+      - { state: 'Isle of Iona', code: IsIo }
+      - { state: 'Isle of Jura', code: IsJu }
+      - { state: 'Isle of Lewis', code: IsLw }
+      - { state: 'Isle of Mull', code: IsMu }
+      - { state: 'Isle of North Uist', code: IsNu }
+      - { state: Buckinghamshire, code: BKM }
+      - { state: Cumberland, code: CUL }
+      - { state: Huntingdonshire, code: HUN }
+      - { state: Kent, code: KEN }
+      - { state: Lancashire, code: LAN }
+      - { state: Leicestershire, code: LEI }
+      - { state: Lincolnshire, code: LIN }
+      - { state: Middlesex, code: MX }
+      - { state: Norfolk, code: NO }
+      - { state: Northamptonshire, code: NTH }
+      - { state: Northumberland, code: NU }
+      - { state: Nottinghamshire, code: NTT }
+      - { state: Oxfordshire, code: OX }
+      - { state: Rutland, code: RUT }
+      - { state: Shropshire, code: SR }
+      - { state: Somerset, code: SO }
+      - { state: Staffordshire, code: ST }
+      - { state: Suffolk, code: SF }
+      - { state: Surrey, code: SY }
+      - { state: Sussex, code: SU }
+      - { state: Warwickshire, code: WAR }
+      - { state: Westmorland, code: WES }
+      - { state: Wiltshire, code: WIt }
+      - { state: Worcestershire, code: WO }
+      - { state: Yorkshire, code: YKS }
+      - { state: Anglesey, code: AGY }
+      - { state: Carmarthenshire, code: CMN }
+      - { state: Cardiganshire, code: CGN }
+      - { state: Denbighshire, code: DEN }
+      - { state: Flintshire, code: FLN }
+      - { state: Glamorgan, code: GLA }
+      - { state: Monmouthshire, code: MON }
+      - { state: Montgomeryshire, code: MGY }
+      - { state: Pembrokeshire, code: PEM }
+      - { state: Radnorshire, code: RAD }
+      - { state: Berwickshire, code: BEW }
+      - { state: Kincardineshire, code: KCD }
+      - { state: Kinross-shire, code: KRS }
+      - { state: Kirkcudbrightshire, code: KKD }
+      - { state: Lanarkshire, code: LKS }
+      - { state: Midlothian, code: Mdl }
+      - { state: Morayshire, code: MOR }
+      - { state: Orkney, code: OKI }
+      - { state: Peebles-shire, code: PEE }
+      - { state: Perth, code: PER }
+      - { state: Renfrewshire, code: Rn }
+      - { state: 'Ross and Cromarty', code: ROC }
+      - { state: Roxburghshire, code: ROX }
+      - { state: Selkirkshire, code: SEL }
+      - { state: Shetland, code: SHI }
+      - { state: Stirlingshire, code: STI }
+      - { state: Sutherland, code: SUT }
+      - { state: 'West Lothian', code: WLN }
+      - { state: Wigtownshire, code: WIG }
+      - { state: 'Isle of Rhum', code: IsRu }
+      - { state: 'Isle of Scalpay', code: IsSc }
+      - { state: 'Isle of Shetland', code: IsSh }
+      - { state: 'Isle of Skye', code: IsSk }
+      - { state: 'Isle of South Uist', code: IsSu }
+      - { state: 'Isle of Tiree', code: IsTi }
+      - { state: 'Isle of Wight', code: IsWi }
+      - { state: 'Isles of Scilly', code: IsScl }
+      - { state: London, code: LO }
+      - { state: Merseyside, code: MER }
+      - { state: 'Mid Glamorgan', code: MG }
+      - { state: Nairnshire, code: NA }
+      - { state: 'North Humberside', code: NHB }
+      - { state: 'North Yorkshire', code: NYK }
+      - { state: Powys, code: PO }
+      - { state: 'South Glamorgan', code: SG }
+      - { state: 'South Humberside', code: SH }
+      - { state: 'South Yorkshire', code: SYK }
+      - { state: 'Tyne & Wear', code: TW }
+      - { state: 'West Glamorgan', code: WG }
+      - { state: 'West Midlands', code: WM }
+      - { state: 'West Sussex', code: WS }
+      - { state: 'West Yorkshire', code: WYK }
+  - country: 'United States'
+    code: US
+    states:
+      - { state: Alabama, code: AL }
+      - { state: Alaska, code: AK }
+      - { state: Arizona, code: AZ }
+      - { state: Arkansas, code: AR }
+      - { state: California, code: CA }
+      - { state: Colorado, code: CO }
+      - { state: Connecticut, code: CT }
+      - { state: Delaware, code: DE }
+      - { state: 'District of Columbia', code: DC }
+      - { state: Florida, code: FL }
+      - { state: Georgia, code: GA }
+      - { state: Guam, code: GU }
+      - { state: Hawaii, code: HI }
+      - { state: Idaho, code: ID }
+      - { state: Illinois, code: IL }
+      - { state: Indiana, code: IN }
+      - { state: Iowa, code: IA }
+      - { state: Kansas, code: KS }
+      - { state: Kentucky, code: KY }
+      - { state: Louisiana, code: LA }
+      - { state: Maine, code: ME }
+      - { state: Maryland, code: MD }
+      - { state: Massachusetts, code: MA }
+      - { state: Michigan, code: MI }
+      - { state: Minnesota, code: MN }
+      - { state: Mississippi, code: MS }
+      - { state: Missouri, code: MO }
+      - { state: Montana, code: MT }
+      - { state: Nebraska, code: NE }
+      - { state: Nevada, code: NV }
+      - { state: 'New Hampshire', code: NH }
+      - { state: 'New Jersey', code: NJ }
+      - { state: 'New Mexico', code: NM }
+      - { state: 'New York', code: NY }
+      - { state: 'North Carolina', code: NC }
+      - { state: 'North Dakota', code: ND }
+      - { state: Ohio, code: OH }
+      - { state: Oklahoma, code: OK }
+      - { state: Oregon, code: OR }
+      - { state: Pennsylvania, code: PA }
+      - { state: 'Puerto Rico', code: PR }
+      - { state: 'Rhode Island', code: RI }
+      - { state: 'South Carolina', code: SC }
+      - { state: 'South Dakota', code: SD }
+      - { state: Tennessee, code: TN }
+      - { state: Texas, code: TX }
+      - { state: Utah, code: UT }
+      - { state: Vermont, code: VT }
+      - { state: 'Virgin Islands', code: VI }
+      - { state: Virginia, code: VA }
+      - { state: Washington, code: WA }
+      - { state: 'West Virginia', code: WV }
+      - { state: Wisconsin, code: WI }
+      - { state: Wyoming, code: WY }
   - { country: 'United States Virgin Islands', code: VI }
   - { country: Uruguay, code: UY }
   - { country: Uzbekistan, code: UZ }
@@ -859,4 +1074,5 @@ XLite\Model\Country:
   - { country: Zambia, code: ZM }
   - { country: Zimbabwe, code: ZW }
 XLite\Model\Zone:
+  directives: { insert: true }
   - { zone_name: 'Default zone (all addresses)', is_default: true }
