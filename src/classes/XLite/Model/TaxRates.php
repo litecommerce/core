@@ -636,8 +636,8 @@ array("condition" => "state=District of Columbia", "action" => array(
             }
 
             foreach ($sortedValues as $name => $value) {
-                $pattern = '/\b'.stripslashes($name).'\b/';
-                if (preg_match($pattern, stripslashes($expression))) {
+                $pattern = '/\b' . $name . '\b/';
+                if (preg_match($pattern, $expression)) {
 
                     // eternal recursion protection: 
                     // if the tax value depends on itself, then don't continue recursive calculation
@@ -1024,7 +1024,7 @@ array("condition" => "state=District of Columbia", "action" => array(
             return false;
         }
 
-        $exp   = ' ' . stripslashes($exp) . ' ';
+        $exp   = ' ' . $exp . ' ';
         $taxes = $this->getTaxNames();
         if (in_array($tax_name, $taxes)) {
             $index = array_search($tax_name, $taxes);
@@ -1035,7 +1035,7 @@ array("condition" => "state=District of Columbia", "action" => array(
 
         // remove all tax names
         foreach ($taxes as $t) {
-            $exp = preg_replace('/\b' . stripslashes($t) . '\b/', '@', $exp);
+            $exp = preg_replace('/\b' . $t . '\b/', '@', $exp);
         }
 
         $tmp = preg_split('/[^ \w]+/', $exp, -1, PREG_SPLIT_NO_EMPTY);
