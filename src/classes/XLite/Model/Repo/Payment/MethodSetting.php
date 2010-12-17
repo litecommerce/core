@@ -26,16 +26,16 @@
  * @since      3.0.0
  */
 
-namespace XLite\Model\Repo;
+namespace XLite\Model\Repo\Payment;
 
 /**
- * Currency repository
+ * Payment method setting repository
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Currency extends \XLite\Model\Repo\ARepo
+class MethodSetting extends \XLite\Model\Repo\ARepo
 {
     /**
      * Repository type 
@@ -45,18 +45,5 @@ class Currency extends \XLite\Model\Repo\ARepo
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $type = self::TYPE_SERVICE;
-
-    /**
-     * Alternative record identifiers
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $alternativeIdentifier = array(
-        array('code'),
-    );
-
+    protected $type = self::TYPE_SECONDARY;
 }

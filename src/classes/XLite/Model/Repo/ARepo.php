@@ -67,6 +67,15 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     const EMPTY_CACHE_CELL = 'all';
 
     /**
+     * Repository type codes
+     */
+    const TYPE_STORE     = 'store';
+    const TYPE_SECONDARY = 'secondary';
+    const TYPE_SERVICE   = 'service';
+    const TYPE_INTERNAL  = 'internal';
+
+
+    /**
      * Cache cells (local cache)
      * 
      * @var    array
@@ -125,6 +134,29 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @since  3.0.0
      */
     protected $flushAfterLoading = false;
+
+    /**
+     * Repository type 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $type = self::TYPE_STORE;
+
+    /**
+     * Get repository type 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRepoType()
+    {
+        return $this->type;
+    }
 
     /**
      * Define cache cells 

@@ -39,6 +39,16 @@ namespace XLite\Model\Repo\Shipping;
 class Method extends \XLite\Model\Repo\ARepo
 {
     /**
+     * Repository type 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $type = self::TYPE_SECONDARY;
+
+    /**
      * Adds additional condition to the query for checking if method is enabled
      * 
      * @param \Doctrine\ORM\QueryBuilder $qb    Query builder object

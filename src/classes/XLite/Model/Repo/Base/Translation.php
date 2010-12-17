@@ -56,4 +56,19 @@ class Translation extends \XLite\Model\Repo\ARepo
             ? $parent->getTranslation($data['code'])
             : parent::findOneByRecord($data, $parent);
     }
+
+    /**
+     * Get repository type 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRepoType()
+    {
+        return isset($this->_class->associationMappings['owner'])
+            ? \XLite\Core\Database::getRepo($this->_class->associationMappings['owner']['targetEntity'])->getRepoType()
+            : parent::getRepoType();
+    }
 }

@@ -29,7 +29,7 @@ class XLite_Tests_Model_Shipping_Rate extends XLite_Tests_TestCase
     public function testCreate()
     {
         // Prepare data for rate
-        $method = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->find(100);
+        $method = $this->getMethodByName('Courier');
         $methodName = $method->getName();
 
         $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->findAll();
@@ -50,15 +50,27 @@ class XLite_Tests_Model_Shipping_Rate extends XLite_Tests_TestCase
         $newRate->setExtraData($extraData);
 
         // Check all parameters
-        $this->assertEquals(100, $newRate->getMethod()->getMethodId(), 'Method wrong');
         $this->assertEquals($markupId, $newRate->getMarkup()->getMarkupId(), 'Markup wrong');
         $this->assertEquals(100, $newRate->getBaseRate(), 'Base rate wrong');
         $this->assertEquals(200, $newRate->getMarkupRate(), 'Markup rate wrong');
         $this->assertEquals(300, $newRate->getTotalRate(), 'Total rate wrong');
         $this->assertEquals('test value 1', $newRate->getExtraData()->testparam1, 'Extra data #1 wrong');
         $this->assertEquals('test value 2', $newRate->getExtraData()->testparam2, 'Extra data #2 wrong');
-        $this->assertEquals(100, $newRate->getMethodId(), 'getMethod() returned wrong value');
         $this->assertEquals($methodName, $newRate->getMethodName(), 'getMethodName() returned wrong value');
+    }
+
+    protected function getMethodByName($name)
+    {
+        $method = null;
+
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findAll() as $m) {
+            if ($m->getName() == $name) {
+                $method = $m;
+                break;
+            }
+        }
+
+        return $method;
     }
 
 }

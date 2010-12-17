@@ -38,6 +38,16 @@ namespace XLite\Model\Repo;
 class SessionCell extends \XLite\Model\Repo\ARepo
 {
     /**
+     * Repository type 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $type = self::TYPE_SERVICE;
+
+    /**
      * Return data to indentify cell in SQL queries
      *
      * @param \XLite\Model\SessionCell $cell Cell to use

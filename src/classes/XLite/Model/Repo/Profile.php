@@ -60,6 +60,16 @@ class Profile extends \XLite\Model\Repo\ARepo
     const SEARCH_LIMIT           = 'limit';
 
     /**
+     * Repository type 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $type = self::TYPE_SERVICE;
+
+    /**
      * currentSearchCnd 
      * 
      * @var    \XLite\Core\CommonCell
@@ -909,6 +919,4 @@ class Profile extends \XLite\Model\Repo\ARepo
 
         return $schema;
     }
-
-
 }

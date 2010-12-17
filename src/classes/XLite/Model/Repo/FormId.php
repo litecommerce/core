@@ -38,6 +38,16 @@ namespace XLite\Model\Repo;
 class FormId extends \XLite\Model\Repo\ARepo
 {
     /**
+     * Repository type 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $type = self::TYPE_SERVICE;
+
+    /**
      * Form id length
      */
     const FORM_ID_LENGTH = 32;

@@ -59,22 +59,13 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
 
         \XLite\Base::getInstance()->config->Shipping->shipping_enabled = 'Y';
 
-        $list = $order->getShippingRates();
-        $m = null;
-        foreach ($list as $r) {
-            if ($r->getMethod()->getmethodId() == 100) {
-                $m = $r;
-                break;
-            }
-        }
-
+        $m = $this->getMethodByName('Courier');
         $this->assertNotNull($m, 'check selected rate');
 
         $order->setSelectedRate($m);
 
         $order->calculate();
 
-        $this->assertEquals(100, $order->getShippingId(), 'Wrong shipping_id');
         $this->assertEquals(6.9458, $order->getTotalByModifier(\XLite\Model\OrderModifier\Shipping::MODIFIER_SHIPPING), 'Wrong shipping cost calculated');
     }
 
@@ -483,7 +474,7 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
     protected function getTestRate()
     {
         // Prepare data for rate
-        $method = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->find(101);
+        $method = $this->getMethodByName('Local shipping');
         $methodName = $method->getName();
 
         $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->findAll();
@@ -507,4 +498,17 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
         return $newRate;
     }
 
+    protected function getMethodByName($name)
+    {
+        $method = null;
+
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findAll() as $m) {
+            if ($m->getName() == $name) {
+                $method = $m;
+                break;
+            }
+        }
+
+        return $method;
+    }
 }

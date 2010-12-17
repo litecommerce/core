@@ -52,7 +52,7 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length="255")
      */
     protected $name;
 
@@ -64,9 +64,9 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="text", nullable=false)
+     * @Column (type="text")
      */
-    protected $description;
+    protected $description = '';
 
     /**
      * Product brief description
@@ -76,9 +76,9 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="text", nullable=false)
+     * @Column (type="text")
      */
-    protected $brief_description;
+    protected $brief_description = '';
 
     /**
      * Meta tags
@@ -88,9 +88,9 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length="255")
      */
-    protected $meta_tags;
+    protected $meta_tags = '';
 
     /**
      * Product meta description
@@ -100,9 +100,9 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="text", nullable=false)
+     * @Column (type="text")
      */
-    protected $meta_desc;
+    protected $meta_desc = '';
 
     /**
      * Meta title
@@ -112,7 +112,7 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length="255")
      */
-    protected $meta_title;
+    protected $meta_title = '';
 }
