@@ -47,7 +47,6 @@ class Currency extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      * @Id
-     * @GeneratedValue (strategy="AUTO")
      * @Column         (type="uinteger")
      */
     protected $currency_id;
@@ -96,6 +95,22 @@ class Currency extends \XLite\Model\Base\I18n
      * @OneToMany (targetEntity="XLite\Model\Order", mappedBy="currency")
      */
     protected $orders;
+
+    /**
+     * Set currency Id 
+     * 
+     * @param integer $value Currency id
+     * TODO - Doctrine is not generate setter for identifier. We must reworkt it
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setCurrencyId($value)
+    {
+        $this->currency_id = $value;
+    }
 
     /**
      * Round value 

@@ -26,35 +26,34 @@
  * @since      3.0.0
  */
 
-namespace XLite\Model\Image\Category;
+namespace XLite\Model\Repo\Base;
 
 /**
- * Category
+ * Common translation repository
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- *
- * @Entity
- * @Table  (name="category_images",
- *      indexes={
- *          @Index (name="id", columns={"id"})
- *      }
- * )
  */
-class Image extends \XLite\Model\Base\Image
+class Translation extends \XLite\Model\Repo\ARepo
 {
     /**
-     * Relation to a category entity
-     *
-     * @var    \XLite\Model\Category
-     * @access protected
-     * @see    ____var_see____
+     * Find one by record 
+     * 
+     * @param array                $data   Record
+     * @param \XLite\Model\AEntity $parent Parent model
+     *  
+     * @return \XLite\Model\AEntity|void
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
-     *
-     * @OneToOne  (targetEntity="XLite\Model\Category", inversedBy="image")
-     * @JoinColumn (name="id", referencedColumnName="category_id")
      */
-    protected $category;
+    public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
+    {
+        $data['code'] = isset($data['code']) && $data['code'] ? $data['code'] : \XLite\Model\Base\Translation::DEFAULT_LANGUAGE;
 
+        return $parent
+            ? $parent->getTranslation($data['code'])
+            : parent::findOneByRecord($data, $parent);
+    }
 }

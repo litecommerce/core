@@ -38,6 +38,26 @@ namespace XLite\Controller\Console;
 abstract class AConsole extends \XLite\Controller\AController
 {
     /**
+     * Action time 
+     * 
+     * @var    float
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $actionTime;
+
+    /**
+     * Pure output flag
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $pureOutput = false;
+
+    /**
      * Handles the request.
      * Parses the request variables if necessary. Attempts to call the specified action function 
      * 
@@ -51,7 +71,20 @@ abstract class AConsole extends \XLite\Controller\AController
             print $this->getHelp();
 
         } else {
+            $this->actionTime = microtime(true);
             parent::handleRequest();
+
+            if (!$this->pureOutput) {
+                $duration = microtime(true) - $this->actionTime;
+                $micro = $duration - floor($duration);
+
+                $this->printContent(
+                    PHP_EOL . 'Execution time: '
+                    . date('H:i:s', floor($duration) - intval(date('Z')))
+                    . '.' . sprintf('%04d', $micro * 10000) . ' sec.'
+                    . PHP_EOL
+                );
+            }
         }
     }
 
@@ -76,7 +109,7 @@ abstract class AConsole extends \XLite\Controller\AController
      */
     public function checkAccess()
     {
-        return parent::checkAccess() && $this->checkCLIKey();
+        return $this->checkCLIKey();
     }
 
     /**
@@ -91,7 +124,7 @@ abstract class AConsole extends \XLite\Controller\AController
     {
         $cliKey = \XLite\Core\Config::getInstance()->Security->cli_key;
 
-        return $cliKey && \XLite\Core\Request::getInstance()->key == $cliKey;
+        return !$cliKey || \XLite\Core\Request::getInstance()->key == $cliKey;
     }
 
     /**
@@ -228,5 +261,87 @@ abstract class AConsole extends \XLite\Controller\AController
     protected function markAsAccessDenied()
     {
         $this->printError('Access denied');
+    }
+
+    /**
+     * Check - script run with input stream or not
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isInputStream()
+    {
+        $result = false;
+
+        $stdin = @fopen('php://stdin', 'r');
+        if ($stdin) {
+            $stat = fstat($stdin);
+            $result = 0 < $stat['size'];
+            fclose($stdin);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Open input stream 
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function openInputStream()
+    {
+        if (!isset($this->stdin)) {
+            $this->stdin = @fopen($path, 'r');
+            if (!$this->stdin) {
+                $this->stdin = null;
+            }
+        }
+
+        return isset($this->stdin);
+    }
+
+    /**
+     * Read line form input stream 
+     * 
+     * @return string|boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function readInputStream()
+    {
+        $this->openInputStream(); 
+
+        if ($this->openInputStream() && feof($this->stdin)) {
+            fclose($this->stdin);
+            $this->stdin = false;
+        }
+
+        return $this->stdin ? fgets($this->stdin) : false;
+    }
+
+    /**
+     * Save input stream to temporary file
+     * 
+     * @return string|void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function saveInputStream()
+    {
+        $dir = function_exists('sys_get_temp_dir')
+            ? sys_get_temp_dir() . LC_DS
+            : LC_VAR_DIR;
+
+        $path = tempnam($dir, 'input');
+        file_put_contents($path, file_get_contents('php://stdin'));
+
+        return $path;
     }
 }

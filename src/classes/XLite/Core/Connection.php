@@ -38,13 +38,31 @@ namespace XLite\Core;
 class Connection extends \Doctrine\DBAL\Connection
 {
     /**
+     * Prepares an SQL statement 
+     * 
+     * @param string $statement The SQL statement to prepare
+     *  
+     * @return \Doctrine\DBAL\Driver\Statement
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function prepare($statement)
+    {
+        $this->connect();
+
+        return new \XLite\Core\Statement($statement, $this);
+    }
+
+    /**
      * Executes an, optionally parameterized, SQL query.
+     *
      * If the query is parameterized, a prepared statement is used.
      * If an SQLLogger is configured, the execution is logged.
      * 
      * @param string $query  The SQL query to execute
      * @param array  $params The parameters to bind to the query, if any
-     * @param array  $types  The parameters's types OPTIONAL
+     * @param array  $types  The parameters types to bind to the query, if any
      *  
      * @return \Doctrine\DBAL\Driver\Statement
      * @access public
@@ -53,10 +71,11 @@ class Connection extends \Doctrine\DBAL\Connection
      */
     public function executeQuery($query, array $params = array(), $types = array())
     {
-        $result = parent::executeQuery($query, $params, $types);
+        try {
+            $result = parent::executeQuery($query, $params, $types);
 
-        if ($this->_config->getSQLLogger() !== null) {
-            $this->_config->getSQLLogger()->setQueryTime($query, $params);
+        } catch (\PDOException $e) {
+            throw new \XLite\Core\PDOException($e, $query, $params);
         }
 
         return $result;
@@ -65,12 +84,13 @@ class Connection extends \Doctrine\DBAL\Connection
     /**
      * Executes an SQL INSERT/UPDATE/DELETE query with the given parameters
      * and returns the number of affected rows.
+     * 
      * This method supports PDO binding types as well as DBAL mapping types.
      * 
      * @param string $query  The SQL query
      * @param array  $params The query parameters
      * @param array  $types  The parameter types
-     *  
+     *
      * @return integer The number of affected rows
      * @access public
      * @see    ____func_see____
@@ -78,10 +98,11 @@ class Connection extends \Doctrine\DBAL\Connection
      */
     public function executeUpdate($query, array $params = array(), array $types = array())
     {
-        $result = parent::executeUpdate($query, $params, $types);
+        try {
+            $result = parent::executeUpdate($query, $params, $types);
 
-        if ($this->_config->getSQLLogger() !== null) {
-            $this->_config->getSQLLogger()->setQueryTime($query, $params);
+        } catch (\PDOException $e) {
+            throw new \XLite\Core\PDOException($e, $query, $params);
         }
 
         return $result;

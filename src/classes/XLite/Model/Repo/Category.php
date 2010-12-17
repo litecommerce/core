@@ -44,6 +44,16 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
 
     /**
+     * Flush unit-of-work changes after every record loading 
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $flushAfterLoading = true;
+
+    /**
      * Define the Doctrine query
      * 
      * @return \Doctrine\ORM\QueryBuilder
@@ -765,5 +775,116 @@ class Category extends \XLite\Model\Repo\Base\I18n
         }
 
         return isset($category);
+    }
+
+    /**
+     * Process DB schema 
+     * 
+     * @param array  $schema Schema
+     * @param string $type   Schema type
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function processSchema(array $schema, $type)
+    {
+        $schema = parent::processSchema($schema, $type);
+
+        if (\XLite\Core\Database::SCHEMA_UPDATE == $type || \XLite\Core\Database::SCHEMA_CREATE == $type) {
+            $schema = preg_replace(
+                '/(\w+categories` ADD FOREIGN KEY \(`parent_id`\) REFERENCES `\w+categories` \(`category_id`\)$)/Ss',
+                '$1 ON DELETE SET NULL',
+                $schema
+            );
+        }
+
+        return $schema;
+    }
+
+    /**
+     * Assemble regular fields from record 
+     * 
+     * @param array $record  Record
+     * @param array $regular Regular fields info OPTIONAL
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function assembleRegularFieldsFromRecord(array $record, array $regular = array())
+    {
+        if (!isset($record['lpos'])) {
+            $record['lpos'] = 1;
+        }
+
+        if (!isset($record['rpos'])) {
+            $record['rpos'] = 2;
+        }
+
+        return parent::assembleRegularFieldsFromRecord($record, $regular);
+    }
+
+    /**
+     * Link loaded entity to parent object
+     * 
+     * @param \XLite\Model\AEntity $entity      Loaded entity
+     * @param \XLite\Model\AEntity $parent      Entity parent callback
+     * @param array                $parentAssoc Entity mapped propery method
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function linkLoadedEntity(\XLite\Model\AEntity $entity, \XLite\Model\AEntity $parent, array $parentAssoc)
+    {
+        $isNew = is_null($entity->getParent());
+
+        parent::linkLoadedEntity($entity, $parent, $parentAssoc);
+
+        if ($isNew && $parent instanceof \XLite\Model\Category) {
+
+            $qf = new \XLite\Model\Category\QuickFlags;
+            $entity->setQuickFlags($qf);
+            $qf->setCategory($entity);
+
+            // Update indexes in the nested set
+            $this->defineUpdateIndexQuery('lpos', $parent->getLpos())->getQuery()->execute();
+            $this->defineUpdateIndexQuery('rpos', $parent->getLpos())->getQuery()->execute();
+
+            if (isset($parent)) {
+                $entity->setLpos($parent->getLpos() + 1);
+                $entity->setRpos($parent->getLpos() + 2);
+
+                $this->updateQuickFlags($parent, $this->prepareQuickFlags(1, $entity->getEnabled() ? 1 : -1));
+
+            } else {
+                $entity->setLpos(1);
+                $entity->setRpos(2);
+            }
+        }
+    }
+
+    /**
+     * Assemble associations from record 
+     * 
+     * @param array $record Record
+     * @param array $assocs Associations info OPTIONAL
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function assembleAssociationsFromRecord(array $record, array $assocs = array())
+    {
+        if (!isset($record['quickFlags'])) {
+            $record['quickFlags'] = array();
+        }
+
+        return parent::assembleAssociationsFromRecord($record, $assocs);
     }
 }

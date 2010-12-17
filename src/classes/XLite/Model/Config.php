@@ -42,8 +42,7 @@ namespace XLite\Model;
  *      },
  *      indexes={
  *          @Index (name="orderby", columns={"orderby"}),
- *          @Index (name="type", columns={"type"}),
- *          @Index (name="value", columns={"value"})
+ *          @Index (name="type", columns={"type"})
  *      }
  * )
  */

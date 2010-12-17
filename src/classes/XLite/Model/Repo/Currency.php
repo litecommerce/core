@@ -26,35 +26,27 @@
  * @since      3.0.0
  */
 
-namespace XLite\Model\Image\Category;
+namespace XLite\Model\Repo;
 
 /**
- * Category
+ * Currency repository
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- *
- * @Entity
- * @Table  (name="category_images",
- *      indexes={
- *          @Index (name="id", columns={"id"})
- *      }
- * )
  */
-class Image extends \XLite\Model\Base\Image
+class Currency extends \XLite\Model\Repo\ARepo
 {
     /**
-     * Relation to a category entity
-     *
-     * @var    \XLite\Model\Category
+     * Alternative record identifiers
+     * 
+     * @var    array
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     *
-     * @OneToOne  (targetEntity="XLite\Model\Category", inversedBy="image")
-     * @JoinColumn (name="id", referencedColumnName="category_id")
      */
-    protected $category;
+    protected $alternativeIdentifier = array(
+        array('code'),
+    );
 
 }

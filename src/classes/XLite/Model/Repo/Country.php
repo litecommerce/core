@@ -48,6 +48,18 @@ class Country extends \XLite\Model\Repo\ARepo
     protected $defaultOrderBy = 'country';
 
     /**
+     * Alternative record identifiers
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $alternativeIdentifier = array(
+        array('code'),
+    );
+
+    /**
      * Define cache cells 
      * 
      * @return array

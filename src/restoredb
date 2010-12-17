@@ -41,6 +41,18 @@ function _do_query_upload($sqlfile, $__connection, $ignoreErrors = false) {
 	}
 }
 
+function _do_recreate_schema()
+{
+    return;
+    exec('php console.php --target=db --action=recreate_schema');
+}
+
+function _do_yaml_upload($yamlfile)
+{
+    return;
+    exec('php console.php --target=db --action=load_fixtures --path=' . $yamlfile);
+}
+
 if (isset($argv[1]) && $argv[1] == 'help') {
 	echo <<<OUT
 Usage: $argv[0] [option1] [option2]
@@ -93,8 +105,12 @@ _do_query_upload('sql/states_US.sql', $__connection, true);
 _do_query_upload('sql/states_GB.sql', $__connection, true);
 _do_query_upload('sql/states_CA.sql', $__connection, true);
 
+_do_recreate_schema();
+_do_yaml_upload('sql/xlite_data.yaml');
+
 if (!isset($argv[1]) || $argv[1] != 'demo') {
 	_do_query_upload('sql/xlite_demo.sql', $__connection, true);
+    _do_yaml_upload('sql/xlite_demo.yaml');
 }
 
 require_once 'classes/XLite/Module/AModule.php';
@@ -134,10 +150,16 @@ foreach (glob('classes/XLite/Module/CDev/*/Main.php') as $f) {
 	    if (file_exists($sqlFile)) {
 		    _do_query_upload($sqlFile, $__connection, true);
     	}
+
+        $yamlFile = dirname($f) . '/install.yaml';
+        if (file_exists($yamlFile)) {
+            _do_yaml_upload($yamlFile);
+        }
     }
 }
 
 _do_query_upload('sql/demo/xlite_demo_user.sql', $__connection, true);
+_do_yaml_upload('sql/demo/xlite_demo_user.yaml');
 
 if (isset($argv[1]) && $argv[1] == 'demo') {
 
@@ -146,19 +168,28 @@ if (isset($argv[1]) && $argv[1] == 'demo') {
 	_do_query_upload('sql/demo/xlite_demo_orders.sql', $__connection, true);
 	_do_query_upload('sql/local/xlite_test_accounts.sql', $__connection, true);
 
+    _do_yaml_upload('sql/demo/xlite_demo_data.yaml');
+    _do_yaml_upload('sql/demo/xlite_demo_store.yaml');
+    _do_yaml_upload('sql/demo/xlite_demo_orders.yaml');
+    _do_yaml_upload('sql/local/xlite_test_accounts.yaml');
+
 	if (isset($argv[2]) && $argv[2] == 'all') {
 		_do_query_upload('sql/local/xlite_all_modules.sql', $__connection, true);
+        _do_yaml_upload('sql/local/xlite_all_modules.yaml');
 	}
 
 } elseif (isset($argv[1]) && in_array($argv[1], array('standalone', 'st', 's', 'stand'))) {
 	_do_query_upload('sql/local/xlite_modules_standalone.sql', $__connection, true);
+    _do_yaml_upload('sql/local/xlite_modules_standalone.yaml');
 
 } else {
 	_do_query_upload('sql/local/xlite_modules_drupal.sql', $__connection, true);
+    _do_yaml_upload('sql/local/xlite_modules_drupal.yaml');
 }
 
 if (file_exists('sql/local/xlite_local_demo.sql')) {
 	_do_query_upload('sql/local/xlite_local_demo.sql', $__connection, true);
+    _do_yaml_upload('sql/local/xlite_local_demo.yaml');
 }
 
 echo 'Setting cache rebuild flag...' . PHP_EOL . PHP_EOL;

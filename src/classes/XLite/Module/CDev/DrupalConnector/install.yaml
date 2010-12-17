@@ -14,7 +14,7 @@ XLite\Model\Config:
     category: CDev\DrupalConnector
     type: text
     orderby: 10
-    value:
+    value: ''
     translations:
       - code: en
         option_name: Root URL of the Drupal installation

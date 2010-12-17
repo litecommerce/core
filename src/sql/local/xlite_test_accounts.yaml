@@ -33,7 +33,7 @@ XLite\Model\Payment\Method:
 #
 # Quantum test account
 #
-  - service_name: Quantum
+  - service_name: QuantumGateway
     enabled: 1
     settings:
       - name: login

@@ -107,7 +107,6 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
             
             if (20 == $zone->getZoneId()) {
                 $zoneElement = new \XLite\Model\ZoneElement();
-                $zoneElement->setZoneId(20);
                 $zoneElement->setElementValue('%Lexington%');
                 $zoneElement->setElementType('A');
                 $zoneElement->setZone($zone);
@@ -184,7 +183,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
 
             $this->assertTrue($state instanceof \XLite\Model\State, 'states must be objects');
 
-            if ('US' == $state->getCountryCode() && 'NY' == $state->getCode()) {
+            if ('US' == $state->getCountry()->getCode() && 'NY' == $state->getCode()) {
                 $found = true;
                 break;
             }
@@ -199,7 +198,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
 
             $this->assertTrue($state instanceof \XLite\Model\State, 'states must be objects');
 
-            if ('US' == $state->getCountryCode() && 'NY' == $state->getCode()) {
+            if ('US' == $state->getCountry()->getCode() && 'NY' == $state->getCode()) {
                 $found = true;
                 break;
             }
@@ -254,7 +253,6 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
          $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(20);
 
          $zoneElement = new \XLite\Model\ZoneElement();
-         $zoneElement->setZoneId(20);
          $zoneElement->setElementValue('addr');
          $zoneElement->setElementType('A');
          $zoneElement->setZone($zone);
@@ -321,9 +319,6 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
 
         $this->assertNotNull($zone, 'Zone not found');
         $this->assertEquals(20, $zone->getZoneId(), 'Zone Id does not match');
-
-        $zone->setZoneId(200);
-        $this->assertEquals(200, $zone->getZoneId(), 'Zone Id does not match');
     }
 
     /**

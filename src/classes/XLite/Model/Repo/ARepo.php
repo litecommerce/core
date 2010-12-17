@@ -117,6 +117,16 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     protected $entityProperties;
 
     /**
+     * Flush unit-of-work changes after every record loading 
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $flushAfterLoading = false;
+
+    /**
      * Define cache cells 
      * 
      * @return array
@@ -1017,14 +1027,15 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Find one by record 
      * 
-     * @param array $data Record
+     * @param array                $data   Record
+     * @param \XLite\Model\AEntity $parent Parent model
      *  
      * @return \XLite\Model\AEntity|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function findOneByRecord(array $data)
+    public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
     {
         $identifiers = $this->collectIdentifiersByRecord($data);
 
@@ -1046,14 +1057,17 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         $identifiers = array();
         $found = false;
 
-        foreach ($this->getClassMetadata()->identifier as $ident) {
+        list($regular, $assocs, $classIdentifiers) = $this->getEntityProperties();
+        if ($classIdentifiers) {
             $found = true;
-            if (!isset($data[$ident])) {
-                $found = false;
-                break;
-            }
+            foreach ($classIdentifiers as $ident) {
+                if (!isset($data[$ident])) {
+                    $found = false;
+                    break;
+                }
 
-            $identifiers[$ident] = $data[$ident];
+                $identifiers[$ident] = $data[$ident];
+            }
         }   
 
         if (!$found) {
@@ -1079,11 +1093,11 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     protected function collectAlternativeIdentifiersByRecord(array $data)
     {
         $found = false;
+        $identifiers = array();
 
         if ($this->alternativeIdentifier) {
 
             // Collect identifiers by alternative unqiue keys
-            $identifiers = array();
             foreach ($this->alternativeIdentifier as $keys) {
                 foreach ($keys as $key) {
                     $found = true;
@@ -1107,28 +1121,21 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Load fixtures 
      * 
-     * @param array  $data              Data
-     * @param array  $parentAddCallback Entity parent callback OPTIONAL
-     * @param string $mappedCallback    Entity mapped propery method OPTIONAL
+     * @param array                $data        Data
+     * @param \XLite\Model\AEntity $parent      Entity parent callback OPTIONAL
+     * @param array                $parentAssoc Entity mapped propery method OPTIONAL
      *  
      * @return boolean|integer
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function loadFixtures(array $data, $parentAddCallback = null, $mappedCallback = null)
+    public function loadFixtures(array $data, \XLite\Model\AEntity $parent = null, array $parentAssoc = array())
     {
-        $result = false;
-
-        if (!is_array($parentAddCallback) || 2 < count($parentAddCallback)) {
-            $parentAddCallback = null;
-        }
-
         $result = 0;  
         list($regular, $assocs) = $this->getEntityProperties();
         foreach ($data as $record) {
-            $this->loadFixture($record, $regular, $assocs, $parentAddCallback, $mappedCallback);
-            $result++;
+            $result += $this->loadFixture($record, $regular, $assocs, $parent, $parentAssoc);
         }
 
         return $result;
@@ -1137,48 +1144,151 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Load fixture 
      * 
-     * @param array  $record            Record
-     * @param array  $regular           Regular fields info OPTIONAL
-     * @param array  $assocs            Associations info OPTIONAL
-     * @param array  $parentAddCallback Entity parent callback OPTIONAL
-     * @param string $mappedCallback    Entity mapped propery method OPTIONAL
+     * @param array                $record      Record
+     * @param array                $regular     Regular fields info OPTIONAL
+     * @param array                $assocs      Associations info OPTIONAL
+     * @param \XLite\Model\AEntity $parent      Entity parent callback OPTIONAL
+     * @param array                $parentAssoc Entity mapped propery method OPTIONAL
      *  
-     * @return void
-     * @access protected
+     * @return integer
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function loadFixture(
+    public function loadFixture(
         array $record,
         array $regular = array(),
         array $assocs = array(),
-        $parentAddCallback = null,
-        $mappedCallback = null
+        \XLite\Model\AEntity $parent = null,
+        array $parentAssoc = array()
     ) {
+
+        $result = 0;
 
         if (!$regular || !$assocs) {
             list($regular, $assocs) = $this->getEntityProperties();
         }
 
-        $entity = $this->findOneByRecord($record);
+        $entity = $this->findOneByRecord($record, $parent);
+        if (!$entity && $parent && $parentAssoc && $parentAssoc['getter'] && !$parentAssoc['many']) {
+            $entity = $parent->$parentAssoc['getter']();
+        }
+
         if ($entity) {
-            $this->update($entity, $this->assembleRegularFieldsFromRecord($record, $regular));
+            $entity->map($this->assembleRegularFieldsFromRecord($record, $regular));
 
         } else {
-            $entity = $this->insert($this->assembleRegularFieldsFromRecord($record, $regular));
+            $class = $this->_class->name;
+            $entity = new $class;
+            $entity->map($this->assembleRegularFieldsFromRecord($record, $regular));
+            \XLite\Core\Database::getEM()->persist($entity);
         }
 
-        foreach ($this->assembleAssociationsFromRecord($record) as $name => $value) {
-            $result += $assocs[$name]['repo']->loadFixtures(
-                $assocs[$name]['many'] ? $value : array($value),
-                array($entity, $assocs[$name]['setter']),
-                $assocs[$name]['mappedSetter']
-            );
+        if ($this->flushAfterLoading) {
+            \XLite\Core\Database::getEM()->flush();
         }
 
-        if ($parentAddCallback) {
-            $this->linkLoadedEntity($entity, $parentAddCallback, $mappedCallback);
+        if ($parent) {
+            $this->linkLoadedEntity($entity, $parent, $parentAssoc);
         }
+
+        $result++;
+
+        foreach ($this->assembleAssociationsFromRecord($record, $assocs) as $name => $value) {
+            if ($assocs[$name]['many']) {
+                $result += $assocs[$name]['repo']->loadFixtures($value, $entity, $assocs[$name]);
+
+            } else {
+                $result += $assocs[$name]['repo']->loadFixture(
+                    $value,
+                    array(),
+                    array(),
+                    $entity,
+                    $assocs[$name]
+                );
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Insert fixtures 
+     * 
+     * @param array                $data        Data
+     * @param \XLite\Model\AEntity $parent      Entity parent callback OPTIONAL
+     * @param array                $parentAssoc Entity mapped propery method OPTIONAL
+     *  
+     * @return boolean|integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function insertFixtures(array $data, \XLite\Model\AEntity $parent = null, array $parentAssoc = array())
+    {
+        $result = 0;  
+        list($regular, $assocs) = $this->getEntityProperties();
+        foreach ($data as $record) {
+            $result += $this->insertFixture($record, $regular, $assocs, $parent, $parentAssoc);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Insert fixture 
+     * 
+     * @param array                $record      Record
+     * @param array                $regular     Regular fields info OPTIONAL
+     * @param array                $assocs      Associations info OPTIONAL
+     * @param \XLite\Model\AEntity $parent      Entity parent callback OPTIONAL
+     * @param array                $parentAssoc Entity mapped propery method OPTIONAL
+     *  
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function insertFixture(
+        array $record,
+        array $regular = array(),
+        array $assocs = array(),
+        \XLite\Model\AEntity $parent = null,
+        array $parentAssoc = array()
+    ) {
+
+        $result = 0;
+
+        if (!$regular || !$assocs) {
+            list($regular, $assocs) = $this->getEntityProperties();
+        }
+
+        $class = $this->_class->name;
+        $entity = new $class;
+        $entity->map($this->assembleRegularFieldsFromRecord($record, $regular));
+
+        \XLite\Core\Database::getEM()->persist($entity);
+
+        if ($this->flushAfterLoading) {
+            \XLite\Core\Database::getEM()->flush();
+        }
+
+        if ($parent) {
+            $this->linkLoadedEntity($entity, $parent, $parentAssoc);
+        }
+
+        $result++;
+
+        foreach ($this->assembleAssociationsFromRecord($record, $assocs) as $name => $value) {
+            if ($assocs[$name]['many']) {
+                $result += $assocs[$name]['repo']->insertFixtures($value, $entity, $assocs[$name]);
+
+            } else {
+                $result += $assocs[$name]['repo']->insertFixture($value, array(), array(), $entity, $assocs[$name]);
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -1232,25 +1342,23 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Link loaded entity to parent object
      * 
-     * @param \XLite\Model\AEntity $entity            Loaded entity
-     * @param array                $parentAddCallback Entity parent callback OPTIONAL
-     * @param string               $mappedCallback    Entity mapped propery method OPTIONAL
+     * @param \XLite\Model\AEntity $entity      Loaded entity
+     * @param \XLite\Model\AEntity $parent      Entity parent callback
+     * @param array                $parentAssoc Entity mapped propery method
      *  
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function linkLoadedEntity(\XLite\Model\AEntity $entity, array $parentAddCallback, $mappedCallback)
+    protected function linkLoadedEntity(\XLite\Model\AEntity $entity, \XLite\Model\AEntity $parent, array $parentAssoc)
     {
         // Add entity to parent
-        if (2 == count($parentAddCallback)) {
-            call_user_func($parentAddCallback, $entity);
-        }
+        $parent->$parentAssoc['setter']($entity);
 
         // Add parent to entity
-        if ($mappedCallback && 0 < count($parentAddCallback)) {
-            $entity->$mappedCallback($parentAddCallback[0]);
+        if ($parentAssoc['mappedSetter']) {
+            $entity->$parentAssoc['mappedSetter']($parent);
         }
     }
 
@@ -1276,6 +1384,8 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
                     'setter' => 'set' . $fCamelCase,
                 );
             }
+
+            $identifiers = $cmd->identifier;
 
             $assocs = array();
             foreach ($cmd->associationMappings as $f => $fData) {
@@ -1312,7 +1422,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
                 $assocs[$f] = $assoc;
             }
 
-            $this->entityProperties = array($regular, $assocs);    
+            $this->entityProperties = array($regular, $assocs, $identifiers);
         }
 
         return $this->entityProperties;
@@ -1334,4 +1444,23 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         return $schema;
     }
 
+    /**
+     * Truncate data
+     * 
+     * @return \Doctrine\DBAL\Driver\Statement The executed statement
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function truncate()
+    {
+        $sql = $this->_em
+            ->getConnection()
+            ->getDatabasePlatform()
+            ->getTruncateTableSQL($this->getClassMetadata()->getTableName(), true);
+
+        return $this->_em
+            ->getConnection()
+            ->executeQuery($sql);
+    }
 }

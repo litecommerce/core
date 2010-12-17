@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS xlite_option_groups;
 CREATE TABLE xlite_option_groups (
   `group_id` int(11) NOT NULL auto_increment PRIMARY KEY,
-  `product_id` int(11) NOT NULL default 0,
+  `product_id` int(11) default 0,
   `orderby` int(11) NOT NULL default 0,
   `type` char(1) NOT NULL default 'g',
   `view_type` char(1) NOT NULL default 's',

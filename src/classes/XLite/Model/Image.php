@@ -1072,12 +1072,9 @@ class Image extends \XLite\Model\AModel
             return false;
         }
 
-        if (function_exists('sys_get_temp_dir')) {
-            $dir = sys_get_temp_dir();
-
-        } else {
-            $dir = LC_VAR_DIR;
-        }
+        $dir = function_exists('sys_get_temp_dir')
+            ? sys_get_temp_dir()
+            : LC_VAR_DIR;
 
         $fn = tempnam($dir, 'image');
 

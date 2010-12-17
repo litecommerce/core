@@ -47,8 +47,18 @@ class Db extends \XLite\Controller\Console\AConsole
      */
     protected function doActionLoadFixtures()
     {
+        $isTemporary = false;
         $path = \XLite\Core\Request::getInstance()->path;
-        if (!$path || !file_exists($path) || !is_readable($path)) {
+
+        if (!$path && $this->isInputStream()) {
+            $path = $this->saveInputStream();
+            $isTemporary = true;
+        }
+
+        if (!$path) {
+            $this->printError('Path is not specified');
+
+        } elseif (!file_exists($path) || !is_readable($path)) {
             $this->printError('Path is invalid');
 
         } else {
@@ -57,8 +67,13 @@ class Db extends \XLite\Controller\Console\AConsole
                 $this->printContent('Loaded lines: ' . $loadedLines);
 
             } catch (\PDOException $e) {
-                $this->printError($e->getMessage());
+                $this->printError(strip_tags($e->getMessage()));
+                throw $e;
             }
+        }
+
+        if ($isTemporary && $path) {
+            unlink($path);
         }
     }
 
@@ -110,6 +125,7 @@ class Db extends \XLite\Controller\Console\AConsole
             }
 
         } else {
+            $this->pureOutput = true;
             $this->printContent($contents);
         }
     }
@@ -140,5 +156,34 @@ class Db extends \XLite\Controller\Console\AConsole
     {
         $lines = \XLite\Core\Database::getInstance()->updateDBSchema();
         $this->printContent('Executed lines: ' . $lines);
+    }
+
+    /**
+     * Recreate schema
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionRecreateSchema()
+    {
+        $lines = \XLite\Core\Database::getInstance()->dropDBSchema();
+        $lines += \XLite\Core\Database::getInstance()->updateDBSchema();
+        $this->printContent('Executed lines: ' . $lines);
+    }
+
+    /**
+     * Truncate all data
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionTruncate()
+    {
+        $lines = \XLite\Core\Database::getInstance()->truncate();
+        $this->printContent('Truncated tables: ' . $lines);
     }
 }

@@ -58,7 +58,7 @@ class Method extends \XLite\Model\Base\I18n
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer", length="11", nullable=false)
+     * @Column         (type="integer")
      */
     protected $method_id;
 
@@ -70,7 +70,7 @@ class Method extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length="255")
      */
     protected $processor = '';
     
@@ -82,7 +82,7 @@ class Method extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length="255")
      */
     protected $carrier = '';
 
@@ -94,7 +94,7 @@ class Method extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length="255")
      */
     protected $code = '';
 
@@ -106,7 +106,7 @@ class Method extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="boolean", nullable=false)
+     * @Column (type="boolean")
      */
     protected $enabled = false;
 
@@ -118,7 +118,7 @@ class Method extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="integer")
      */
     protected $position = 0;
 
@@ -130,7 +130,7 @@ class Method extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToMany (targetEntity="XLite\Model\Shipping\Markup", mappedBy="shipping_method", cascade={"persist","remove"})
+     * @OneToMany (targetEntity="XLite\Model\Shipping\Markup", mappedBy="shipping_method", cascade={"all"})
      */
     protected $shipping_markups;
 

@@ -29,10 +29,11 @@
 class XLite_Tests_Model_Currency extends XLite_Tests_TestCase
 {
     protected $testData = array(
-        'code'   => 'XXX',
-        'symbol' => 'x',
-        'e'      => 3,
-        'name'   => 'Test',
+        'currency_id' => 999,
+        'code'        => 'XXX',
+        'symbol'      => 'x',
+        'e'           => 3,
+        'name'        => 'Test',
     );
 
     public function testCreate()
@@ -61,6 +62,8 @@ class XLite_Tests_Model_Currency extends XLite_Tests_TestCase
 
     public function testUpdate()
     {
+        \XLite\Core\Database::getEM()->clear();
+
         $c = $this->getTestCurrency();
 
         $c->setName('Test 2');
@@ -175,7 +178,7 @@ class XLite_Tests_Model_Currency extends XLite_Tests_TestCase
         $list = \XLite\Core\Database::getEM()->createQueryBuilder()
             ->select('c')
             ->from('XLite\Model\Currency', 'c')
-            ->andWhere('c.code IN(:code1, :code2)')
+            ->andWhere('c.code IN (:code1, :code2)')
             ->setParameter('code1', 'XXX')
             ->setParameter('code2', 'ZZZ')
             ->getQuery()
