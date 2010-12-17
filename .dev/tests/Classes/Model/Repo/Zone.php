@@ -202,8 +202,15 @@ class XLite_Tests_Model_Repo_Zone extends XLite_Tests_TestCase
      */
     public function testFindZone()
     {
-        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(20);
+        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findOneBy(array('zone_name' => 'New York area'));
+        $this->assertTrue($zone instanceof \XLite\Model\Zone, 'check zone');
+
+        $id = $zone->getZoneId();
+
+        \XLite\Core\Database::getEM()->clear();
+        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone($id);
         $this->assertTrue($zone instanceof \XLite\Model\Zone, 'findZone(20) must return an instance of \XLite\Model\Zone');
+
 
         $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(20000);
         $this->assertNull($zone, 'findZone(20000) must return null');

@@ -159,6 +159,20 @@ class Db extends \XLite\Controller\Console\AConsole
     }
 
     /**
+     * Drop DB schema
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDropSchema()
+    {
+        $lines = \XLite\Core\Database::getInstance()->dropDBSchema();
+        $this->printContent('Executed lines: ' . $lines);
+    }
+
+    /**
      * Recreate schema
      * 
      * @return void
@@ -183,7 +197,25 @@ class Db extends \XLite\Controller\Console\AConsole
      */
     protected function doActionTruncate()
     {
-        $lines = \XLite\Core\Database::getInstance()->truncate();
+        $type = \XLite\Core\Request::getInstance()->type;
+        $type = $type ? strtolower($type) : 'all';
+
+        $lines = 0;
+        $types = array_map('trim', explode(',', $type));
+
+        foreach ($types as $type) {
+            switch ($type) {
+                case \XLite\Model\Repo\ARepo::TYPE_STORE:
+                case \XLite\Model\Repo\ARepo::TYPE_SECONDARY:
+                case \XLite\Model\Repo\ARepo::TYPE_SERVICE:
+                    $lines += \XLite\Core\Database::getInstance()->truncateByType($type);
+                    break;
+
+                default:
+                    $lines += \XLite\Core\Database::getInstance()->truncate($list);
+            }
+        }
+
         $this->printContent('Truncated tables: ' . $lines);
     }
 }

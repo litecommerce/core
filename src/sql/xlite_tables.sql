@@ -358,7 +358,7 @@ CREATE TABLE xlite_product_images (
   `height` INT NOT NULL DEFAULT '0',
   `size` INT NOT NULL DEFAULT '0',
   `date` INT NOT NULL DEFAULT '0',
-  `hash` VARCHAR(32) NOT NULL DEFAULT '',
+  `hash` CHAR(32) NOT NULL DEFAULT '',
   `alt` VARCHAR(255) NOT NULL DEFAULT '',
   `orderby` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (image_id),

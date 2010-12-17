@@ -30,7 +30,7 @@ class XLite_Tests_Model_Shipping_Markup extends XLite_Tests_TestCase
     {
         $newMarkup = new \XLite\Model\Shipping\Markup();
 
-        $method = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->find(100);
+        $method = $this->getMethodByName('Courier');
         $newMarkup->setShippingMethod($method);
         $method->addShippingMarkups($newMarkup);
 
@@ -59,7 +59,6 @@ class XLite_Tests_Model_Shipping_Markup extends XLite_Tests_TestCase
         if (isset($markupId)) {
             $markup = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->find($markupId);
 
-            $this->assertEquals(100, $markup->getShippingMethod()->getMethodId(), 'Wrong method_id');
             $this->assertEquals(1, $markup->getZone()->getZoneId(), 'Wrong zone_id');
             $this->assertEquals(20, $markup->getMinWeight(), 'Wrong min_weight');
             $this->assertEquals(500, $markup->getMaxWeight(), 'Wrong max_weight');
@@ -80,6 +79,20 @@ class XLite_Tests_Model_Shipping_Markup extends XLite_Tests_TestCase
             $markup->setMarkupValue(23.45);
             $this->assertEquals(23.45, $markup->getMarkupValue(), 'Markup value setup does not work');
         }
+    }
+
+    protected function getMethodByName($name)
+    {
+        $method = null;
+
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findAll() as $m) {
+            if ($m->getName() == $name) {
+                $method = $m;
+                break;
+            }
+        }
+
+        return $method;
     }
 
 }

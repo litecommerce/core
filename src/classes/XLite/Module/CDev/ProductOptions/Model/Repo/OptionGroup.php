@@ -241,7 +241,7 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
      */
     protected function defineOneBySkuAndNameQuery($sku, $name)
     {
-        return $this->createQueryBuilder()
+        return $this->createQueryBuilder('p')
             ->innerJoin('p.product', 'product')
             ->andWhere('product.sku = :sku AND translations.name = :name')
             ->setParameter('sku', $sku)

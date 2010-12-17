@@ -36,6 +36,7 @@ namespace XLite\Model\Base;
  * @since   3.0.0
  *
  * @MappedSuperclass
+ * @HasLifecycleCallbacks
  */
 abstract class Image extends \XLite\Model\AEntity
 {
@@ -133,7 +134,7 @@ abstract class Image extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="32")
+     * @Column (type="fixedstring", length="32")
      */
     protected $hash = '';
 
@@ -501,4 +502,22 @@ abstract class Image extends \XLite\Model\AEntity
     {
         return isset($this->image_id);
     }
+
+    /**
+     * Prepare order before save data operation
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     * @PrePersist
+     * @PreUpdate
+     */
+    public function prepareBeforeSave()
+    {
+        if (!$this->getDate()) {
+            $this->setDate(time());
+        }
+    }
+
 }

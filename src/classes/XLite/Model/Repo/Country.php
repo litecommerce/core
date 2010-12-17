@@ -38,6 +38,16 @@ namespace XLite\Model\Repo;
 class Country extends \XLite\Model\Repo\ARepo
 {
     /**
+     * Repository type 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $type = self::TYPE_SERVICE;
+
+    /**
      * Default 'order by' field name
      * 
      * @var    string

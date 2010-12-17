@@ -44,6 +44,16 @@ class Session extends \XLite\Model\Repo\ARepo
 
 
     /**
+     * Repository type 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $type = self::TYPE_SERVICE;
+
+    /**
      * Public session id characters list 
      * 
      * @var    array

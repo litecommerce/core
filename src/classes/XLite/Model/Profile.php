@@ -61,7 +61,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer", length="11", nullable=false)
+     * @Column         (type="integer")
      */
     protected $profile_id;
 
@@ -121,7 +121,7 @@ class Profile extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="11")
+     * @Column (type="integer")
      */
     protected $access_level = 0;
 
@@ -133,7 +133,7 @@ class Profile extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="11")
+     * @Column (type="integer")
      */
     protected $cms_profile_id = 0;
 
@@ -157,7 +157,7 @@ class Profile extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="11")
+     * @Column (type="integer")
      */
     protected $added = 0;
 
@@ -169,7 +169,7 @@ class Profile extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="11")
+     * @Column (type="integer")
      */
     protected $first_login = 0;
 
@@ -181,7 +181,7 @@ class Profile extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="11")
+     * @Column (type="integer")
      */
     protected $last_login = 0;
 

@@ -95,6 +95,16 @@ class Database extends \XLite\Base\Singleton
     protected $configuration;
 
     /**
+     * Table prefix 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $tablePrefix = '';
+
+    /**
      * connected 
      * 
      * @var    bool
@@ -121,6 +131,22 @@ class Database extends \XLite\Base\Singleton
         'search_stat',
         'upgrades',
         'waitingips',
+    );
+
+    /**
+     * Forbid truncate tables if will truncate store-based tables
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $forbidTruncateTablesStore = array(
+        'profiles',
+        'currencies',
+        'payment_methods',
+        'shipping_methods',
+        'memberships',
     );
 
     /**
@@ -279,6 +305,8 @@ class Database extends \XLite\Base\Singleton
         $this->configuration->setProxyDir(LC_PROXY_CACHE_DIR);
         $this->configuration->setProxyNamespace(LC_MODEL_PROXY_NS);
         $this->configuration->setAutoGenerateProxyClasses(false);
+
+        $this->tablePrefix = \XLite::getInstance()->getOptions(array('database_details', 'table_prefix'));
 
         // Initialize DB connection and entity manager
         $this->startEntityManager();
@@ -641,8 +669,7 @@ class Database extends \XLite\Base\Singleton
 
         } elseif (preg_match('/DROP TABLE /Ss', $schema)) {
 
-            $prefix = \XLite::getInstance()->getOptions(array('database_details', 'table_prefix'));
-            if (preg_match('/^DROP TABLE ' . $prefix . '(?:' .implode('|', $this->unmanagedTables) . ')$/Ss', $schema)) {
+            if (preg_match('/^DROP TABLE ' . $this->tablePrefix . '(?:' .implode('|', $this->unmanagedTables) . ')$/Ss', $schema)) {
                 $schema = null;
 
             } else {
@@ -910,9 +937,8 @@ class Database extends \XLite\Base\Singleton
         $classMetadata = $eventArgs->getClassMetadata();
 
         // Set table name prefix
-        $prefix = \XLite::getInstance()->getOptions(array('database_details', 'table_prefix'));
-        if ($prefix && strpos($classMetadata->getTableName(), $prefix) !== 0) {
-            $classMetadata->setTableName($prefix . $classMetadata->getTableName());
+        if ($this->tablePrefix && strpos($classMetadata->getTableName(), $this->tablePrefix) !== 0) {
+            $classMetadata->setTableName($this->tablePrefix . $classMetadata->getTableName());
         }
 
         // Set repository
@@ -1075,17 +1101,109 @@ class Database extends \XLite\Base\Singleton
     }
 
     /**
-     * Truncate all data
+     * Truncate data by repository type
+     * 
+     * @param string $type Repository type
      * 
      * @return integer
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function truncate()
+    public function truncateByType($type)
+    {
+        return $this->truncate($this->getTruncateTableNames($type));
+    }
+
+    /**
+     * Get table names by type for truncate
+     * 
+     * @param string $type Repository type
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getTruncateTableNames($type)
+    {
+        $list = $this->detectTruncateTables($this->getTruncateMetadatas($type));
+
+        if (\XLite\Model\Repo\ARepo::TYPE_STORE == $type) {
+
+            $forbid = array();
+            foreach ($this->forbidTruncateTablesStore as $n) {
+                $forbid[] = $this->tablePrefix . $n;
+            }
+
+            $list = array_diff($list, $forbid);
+        }
+
+        return $list;
+    }
+
+    /**
+     * Get class metadata by type for truncate
+     * 
+     * @param string $type Repository type
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getTruncateMetadatas($type)
+    {
+        $list = array();
+
+        foreach ($this->getAllMetadata() as $cmd) {
+            if ($type == static::getRepo($cmd->name)->getRepoType()) {
+                $list[] = $cmd;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Truncate all data
+     *
+     * @param array $tableNames Table names OPTIONAL
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function truncate(array $tableNames = array())
+    {
+        if (!$tableNames) {
+            $tableNames = $this->detectTruncateTables($metadatas);
+        }
+
+        $sql = array();
+        foreach ($tableNames as $tableName) {
+            $sql[] = self::$em->getConnection()->getDatabasePlatform()->getTruncateTableSQL($tableName);
+        }
+
+        return $this->executeQueries($sql);
+    }
+
+    /**
+     * Detect truncate table names by class metadatas
+     * 
+     * @param array $metadatas Class metadata list
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function detectTruncateTables(array $metadatas)
     {
         $calc = new \Doctrine\ORM\Internal\CommitOrderCalculator;
-        foreach ($this->getAllMetadata() as $class) {
+
+        foreach ($metadatas as $class) {
             $calc->addClass($class);
 
             foreach ($class->associationMappings as $assoc) {
@@ -1127,11 +1245,6 @@ class Database extends \XLite\Base\Singleton
             }
         }
 
-        $sql = array();
-        foreach ($orderedTables as $tableName) {
-            $sql[] = self::$em->getConnection()->getDatabasePlatform()->getTruncateTableSQL($tableName);
-        }
-
-        return $this->executeQueries($sql);
+        return $orderedTables;
     }
 }

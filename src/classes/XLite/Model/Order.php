@@ -643,7 +643,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function setSubtotal($value)
     {
-        $this->subtotal = $this->getCurrency()->roundValue($value);
+        $this->subtotal = $this->getCurrency()
+            ? $this->getCurrency()->roundValue($value)
+            : $value;
     }
 
     /**
@@ -658,7 +660,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function setTotal($value)
     {
-        $this->total = $this->getCurrency()->roundValue($value);
+        $this->total = $this->getCurrency()
+            ? $this->getCurrency()->roundValue($value)
+            : $value;
     }
 
     /**

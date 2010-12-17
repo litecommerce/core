@@ -74,7 +74,7 @@ class Address extends \XLite\Model\AEntity
      * @since  3.0.0
      * @Column (type="boolean")
      */
-    protected $is_billing = 0;
+    protected $is_billing = false;
 
     /**
      * Flag: is it a shipping address
@@ -85,7 +85,7 @@ class Address extends \XLite\Model\AEntity
      * @since  3.0.0
      * @Column (type="boolean")
      */
-    protected $is_shipping = 0;
+    protected $is_shipping = false;
 
     /**
      * Address type: residential/commercial
@@ -171,7 +171,7 @@ class Address extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="integer", length="11")
+     * @Column (type="integer")
      */
     protected $state_id = 0;
 
