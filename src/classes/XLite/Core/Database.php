@@ -78,7 +78,11 @@ class Database extends \XLite\Base\Singleton
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $cacheDriversQuery = array('apc', 'xcache', 'memcache');
+    protected static $cacheDriversQuery = array(
+        'apc',
+        'xcache',
+        'memcache',
+    );
 
     /**
      * Doctrine config object
@@ -88,7 +92,7 @@ class Database extends \XLite\Base\Singleton
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $doctrineConfig = null;
+    protected $configuration;
 
     /**
      * connected 
@@ -127,27 +131,14 @@ class Database extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getEntityManager()
+    public static function getEM()
     {
         // FIXME
-        if (!isset(self::$em)) {
+        if (!isset(static::$em)) {
             \XLite\Core\Database::getInstance();
         }
 
-        return self::$em;
-    }
-
-    /**
-     * Get entity manager (short method)
-     * 
-     * @return \Doctrine\ORM\EntityManager
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getEM()
-    {
-        return self::getEntityManager();
+        return static::$em;
     }
 
     /**
@@ -162,20 +153,7 @@ class Database extends \XLite\Base\Singleton
      */
     public static function getRepo($repository)
     {
-        return self::getEntityManager()->getRepository(ltrim($repository, '\\'));
-    }
-
-    /**
-     * Get repository (short method)
-     * 
-     * @return \Doctrine\ORM\EntityRepository
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getQB()
-    {
-        return self::getEntityManager()->createQueryBuilder();
+        return static::getEM()->getRepository(ltrim($repository, '\\'));
     }
 
     /**
@@ -280,7 +258,7 @@ class Database extends \XLite\Base\Singleton
      */
     public function connect()
     {
-        $this->config = new \Doctrine\ORM\Configuration;
+        $this->configuration = new \Doctrine\ORM\Configuration;
 
         // Setup cache
         $this->setDoctrineCache();
@@ -288,19 +266,19 @@ class Database extends \XLite\Base\Singleton
         // Set metadata driver
         $chain = new \Doctrine\ORM\Mapping\Driver\DriverChain();
         $chain->addDriver(
-            $this->config->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR),
+            $this->configuration->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR),
             'XLite\Model'
         );
         $chain->addDriver(
-            $this->config->newDefaultAnnotationDriver(LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module'),
+            $this->configuration->newDefaultAnnotationDriver(LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module'),
             'XLite\Module'
         );
-        $this->config->setMetadataDriverImpl($chain);
+        $this->configuration->setMetadataDriverImpl($chain);
 
         // Set proxy settings
-        $this->config->setProxyDir(LC_PROXY_CACHE_DIR);
-        $this->config->setProxyNamespace(LC_MODEL_PROXY_NS);
-        $this->config->setAutoGenerateProxyClasses(false);
+        $this->configuration->setProxyDir(LC_PROXY_CACHE_DIR);
+        $this->configuration->setProxyNamespace(LC_MODEL_PROXY_NS);
+        $this->configuration->setAutoGenerateProxyClasses(false);
 
         // Initialize DB connection and entity manager
         $this->startEntityManager();
@@ -317,7 +295,7 @@ class Database extends \XLite\Base\Singleton
     public function startEntityManager()
     {
         // Initialize DB connection and entity manager
-        self::$em = \Doctrine\ORM\EntityManager::create($this->getDSN(), $this->config);
+        self::$em = \Doctrine\ORM\EntityManager::create($this->getDSN(), $this->configuration);
 
         if (\XLite\Core\Profiler::getInstance()->enabled) {
             self::$em->getConnection()->getConfiguration()->setSQLLogger(\XLite\Core\Profiler::getInstance());
@@ -752,8 +730,8 @@ class Database extends \XLite\Base\Singleton
 
                     $result += $isLoad ? $repo->loadFixtures($rows) : $repo->insertFixtures($rows);
 
-                    static::getEntityManager()->flush();
-                    static::getEntityManager()->clear();
+                    static::$em->flush();
+                    static::$em->clear();
                 }
             }
         }
@@ -773,9 +751,9 @@ class Database extends \XLite\Base\Singleton
     {
         self::$cacheDriver = self::getCacheDriverByOptions(\XLite::getInstance()->getOptions('cache'));
 
-        $this->config->setMetadataCacheImpl(self::$cacheDriver);
-        $this->config->setQueryCacheImpl(self::$cacheDriver);
-        $this->config->setResultCacheImpl(self::$cacheDriver);
+        $this->configuration->setMetadataCacheImpl(self::$cacheDriver);
+        $this->configuration->setQueryCacheImpl(self::$cacheDriver);
+        $this->configuration->setResultCacheImpl(self::$cacheDriver);
     }
 
     /**
@@ -981,7 +959,7 @@ class Database extends \XLite\Base\Singleton
      */
     public static function getLastQueryLength()
     {
-        $length = self::getEntityManager()
+        $length = static::getEM()
             ->getConnection()
             ->executeQuery('SELECT FOUND_ROWS()', array())
             ->fetchColumn();
@@ -1112,7 +1090,7 @@ class Database extends \XLite\Base\Singleton
 
             foreach ($class->associationMappings as $assoc) {
                 if ($assoc['isOwningSide']) {
-                    $targetClass = \XLite\Core\Database::getEM()->getClassMetadata($assoc['targetEntity']);
+                    $targetClass = static::$em->getClassMetadata($assoc['targetEntity']);
 
                     if (!$calc->hasClass($targetClass->name)) {
                         $calc->addClass($targetClass);

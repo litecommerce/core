@@ -77,7 +77,7 @@ class QuickAccess
      */
     public function __construct()
     {
-        $this->em = \XLite\Core\Database::getEntityManager();
+        $this->em = \XLite\Core\Database::getEM();
         $this->translation = \XLite\Core\Translation::getInstance();
 
         $entities = \XLite\Core\Database::getCacheDriver()->fetch('quickEntities');

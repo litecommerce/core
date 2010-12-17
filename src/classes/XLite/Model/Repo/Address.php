@@ -47,14 +47,11 @@ class Address extends \XLite\Model\Repo\ARepo
      */
     protected function defineFindAllCities()
     {
-        $qb = \XLite\Core\Database::getQB();
-    
-        $qb->select('a.city')
+        return $this->_em->createQueryBuilder()
+            ->select('a.city')
             ->from($this->_entityName, 'a')
             ->addGroupBy('a.city')
             ->addOrderBy('a.city');
-
-        return $qb;
     }
 
     /**

@@ -76,22 +76,16 @@ class RegisterForm extends \XLite\View\RegisterForm implements \XLite\Base\IDeco
 
             \XLite\Core\Request::getInstance()->shipping_country = 'US';
 
-            try {
-                $state = \XLite\Core\Database::getQB()
-                    ->select('s')
-                    ->from('\XLite\Model\State', 's')
-                    ->where('s.country_code = :country_code AND s.code = :code')
-                    ->setParameters(array('country_code' => 'US', 'code' => $value['state']))
-                    ->setMaxResults(1)
-                    ->getQuery()
-                    ->getSingleResult();
+            \XLite\Core\Request::getInstance()->shipping_state = -1;
+            \XLite\Core\Request::getInstance()->shipping_custom_state = $value['state'];
 
-                \XLite\Core\Request::getInstance()->shipping_state = $state->state_id;
-                \XLite\Core\Request::getInstance()->shipping_custom_state = '';
-
-            } catch (\Doctrine\ORM\NoResultException $exception) {
-                \XLite\Core\Request::getInstance()->shipping_state = -1;
-                \XLite\Core\Request::getInstance()->shipping_custom_state = $value['state'];
+            $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find('US');
+            foreach ($country->getStates() as $s) {
+                if ($s->getCode() == $value['state']) {
+                    \XLite\Core\Request::getInstance()->shipping_state = $s->getStateId();
+                    \XLite\Core\Request::getInstance()->shipping_custom_state = '';
+                    break;
+                }
             }
 
             \XLite\Core\Request::getInstance()->shipping_city = $value['city'];
