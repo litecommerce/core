@@ -116,7 +116,7 @@ class TopCategories extends \XLite\View\SideBarBox
     protected function getCategories($categoryId = null)
     {
         $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategory(
-            $categoryId ?: $this->getWidgetParams(self::PARAM_ROOT_ID)
+            $categoryId ?: $this->getParam(self::PARAM_ROOT_ID)
         );
 
         return $category ? $category->getSubcategories() : array();
@@ -147,12 +147,14 @@ class TopCategories extends \XLite\View\SideBarBox
     {
         parent::defineWidgetParams();
 
+        $rootId = $this->getDefaultCategoryId();
+
         $this->widgetParams += array(
             self::PARAM_DISPLAY_MODE => new \XLite\Model\WidgetParam\Set(
                 'Display mode', 'list', true, $this->displayModes
             ),
             self::PARAM_ROOT_ID => new \XLite\Model\WidgetParam\ObjectId\Category(
-                'Parent category ID (leave 0 for root categories list)', $this->getDefaultCategoryId(), true, true
+                'Parent category ID (leave "' . $rootId . '" for root categories list)', $rootId, true, true
             ),
             self::PARAM_IS_SUBTREE => new \XLite\Model\WidgetParam\Bool(
                 'Is subtree', false, false
