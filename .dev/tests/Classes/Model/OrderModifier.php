@@ -26,21 +26,9 @@
  * @since      3.0.0
  */
 
-require_once PATH_TESTS . '/FakeClass/Model/OrderItem.php';
-
-class XLite_Tests_Model_OrderModifier extends XLite_Tests_TestCase
+class XLite_Tests_Model_OrderModifier extends XLite_Tests_Model_OrderAbstract
 {
-    protected $testOrder = array(
-        'tracking'       => 'test t',
-        'notes'          => 'Test note',
-    );
-
-    protected function setUp()
-    {
-        parent::setUp();
-
-        \XLite\Core\Database::getEM()->clear();
-    }
+    protected $orderProducts = array('00057', '00002', '00003', '00004', '00005', '00006');
 
     public function testCreate()
     {
@@ -144,19 +132,6 @@ class XLite_Tests_Model_OrderModifier extends XLite_Tests_TestCase
     }
 
     /**
-     * getProducts 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getProduct($productId)
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->find($productId);
-    }
-
-    /**
      * getTestOrder 
      * 
      * @return void
@@ -166,46 +141,17 @@ class XLite_Tests_Model_OrderModifier extends XLite_Tests_TestCase
      */
     protected function getTestOrder()
     {
-        $order = new \XLite\Model\Order();
+        $order = parent::getTestOrder();
 
-        $list = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
-        $profile = array_shift($list);
-        unset($list);
-
-        $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-        $order->setProfile($profile);
-
-        $productIds = array(4059, 4004, 4005, 4006, 4007, 4008);
-
-        foreach ($productIds as $index => $productId) {
-
-            $product = $this->getProduct($productId);
-
-            if (!$product) {
-                $this->fail('Product #' . $productId . ' can not found!');
-            }
+        foreach ($order->getItems() as $index => $item) {
 
             if ($index % 2) {
-                $product->setFreeShipping(true);
+                $item->getProduct()->setFreeShipping(true);
             }
 
-            $item = new \XLite\Model\OrderItem();
-
-            $item->setProduct($product);
             $item->setAmount(4);
-            $item->setPrice($product->getPrice());
-
-            $order->addItem($item);
         }
 
-        \XLite\Core\Database::getEM()->persist($order);
-        \XLite\Core\Database::getEM()->flush();
-
-        $order->setProfileCopy($profile);
-
-        $order->calculate();
-
-        \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
         return $order;

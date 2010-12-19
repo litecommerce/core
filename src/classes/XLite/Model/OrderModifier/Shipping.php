@@ -234,26 +234,17 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setSelectedRate($rate) 
+    public function setSelectedRate(\XLite\Model\Shipping\Rate $rate = null)
     {
         $newShippingId = $this->getShippingId();
 
-        if ($rate instanceof \XLite\Model\Shipping\Rate) {
-            // Set up selected rate and shipping_id
-            $this->selectedRate = $rate;
-            $newShippingId = $rate->getMethodId();
-
-        } else {
-            // Reset selected rate and shipping_id
-            $this->selectedRate = null;
-            $newShippingId = 0;
-        }
+        $this->selectedRate = $rate;
+        $newShippingId = $rate ? $rate->getMethodId() : 0;
 
         if ($this->getShippingId() != $newShippingId) {
 
             $this->setShippingId($newShippingId);
 
-            \XLite\Core\Database::getEM()->persist($this);
             \XLite\Core\Database::getEM()->flush();
         }
     }

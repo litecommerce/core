@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-class XLite_Tests_Model_Payment_TransactionData extends XLite_Tests_TestCase
+class XLite_Tests_Model_Payment_TransactionData extends XLite_Tests_Model_OrderAbstract
 {
     protected $testMethod = array(
         'service_name' => 'test',
@@ -156,37 +156,9 @@ class XLite_Tests_Model_Payment_TransactionData extends XLite_Tests_TestCase
         return $method;
     }
 
-    protected function getProduct()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByEnabled(true);
-    }
-
     protected function getTestOrder()
     {
-        $order = new \XLite\Model\Order();
-
-        $list = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
-        $profile = array_shift($list);
-        unset($list);
-
-        $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-
-        \XLite\Core\Database::getEM()->persist($order);
-        \XLite\Core\Database::getEM()->flush();
-
-        $item = new \XLite\Model\OrderItem();
-
-        $item->setProduct($this->getProduct());
-        $item->setAmount(1);
-        $item->setPrice($this->getProduct()->getPrice());
-
-        $order->addItem($item);
-
-        \XLite\Core\Database::getEM()->persist($order);
-        \XLite\Core\Database::getEM()->flush();
-
-        $order->setProfileCopy($profile);
-        $order->calculate();
+        $order = parent::getTestOrder();
 
         $order->setPaymentMethod($this->getTestMethod());
 
@@ -210,7 +182,6 @@ class XLite_Tests_Model_Payment_TransactionData extends XLite_Tests_TestCase
         $t->addData($r);
         $r->setTransaction($t);
 
-        \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
         return $order;

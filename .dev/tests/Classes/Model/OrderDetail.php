@@ -26,22 +26,8 @@
  * @since      3.0.0
  */
 
-require_once PATH_TESTS . '/FakeClass/Model/OrderItem.php';
-
-class XLite_Tests_Model_OrderDetail extends XLite_Tests_TestCase
+class XLite_Tests_Model_OrderDetail extends XLite_Tests_Model_OrderAbstract
 {
-    protected $testOrder = array(
-        'tracking'       => 'test t',
-        'notes'          => 'Test note',
-    );
-
-    protected function setUp()
-    {
-        parent::setUp();
-
-        \XLite\Core\Database::getEM()->clear();
-    }
-
     public function testCreate()
     {
         $order = $this->getTestOrder();
@@ -101,40 +87,13 @@ class XLite_Tests_Model_OrderDetail extends XLite_Tests_TestCase
         $this->assertEquals('test', $order->getDetails()->get(1)->getDisplayName(), 'check name #2');
     }
 
-    protected function getProduct()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByEnabled(true);
-    }
-
     protected function getTestOrder()
     {
-        $order = new \XLite\Model\Order();
-
-        $list = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
-        $profile = array_shift($list);
-        unset($list);
-
-        $order->map($this->testOrder);
-        $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
+        $order = parent::getTestOrder();
 
         $order->setDetail('t1', '123');
         $order->setDetail('t2', '456', 'test');
 
-        $item = new \XLite\Model\OrderItem();
-
-        $item->setProduct($this->getProduct());
-        $item->setAmount(1);
-        $item->setPrice($this->getProduct()->getPrice());
-
-        $order->addItem($item);
-
-        \XLite\Core\Database::getEM()->persist($order);
-        \XLite\Core\Database::getEM()->flush();
-
-        $order->setProfileCopy($profile);
-        $order->calculate();
-
-        \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
         return $order;

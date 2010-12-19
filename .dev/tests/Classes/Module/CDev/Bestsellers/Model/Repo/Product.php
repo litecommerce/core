@@ -26,35 +26,22 @@
  * @since      3.0.0
  */
 
-class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_TestCase
+class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests_Model_OrderAbstract
 {
 
     /**
      *  Product id constants
      */
-    const PR1 = 4004;
-    const PR2 = 4043;
-    const PR3 = 4045;
-    const PR4 = 4049;
+    const PR1 = '00002';
+    const PR2 = '00041';
+    const PR3 = '00043';
+    const PR4 = '00047';
 
     /**
      *  Category id for the PR1 product
      */
-    const CATEGORY = 1002;
+    const CATEGORY = 'apparel';
 
-
-    /**
-     * Some information for the test order
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
-     */
-    protected $testOrder = array(
-        'tracking'       => 'test t',
-        'notes'          => 'Test note',
-    );
 
     /**
      * First test sequence of the bestsellers
@@ -97,7 +84,7 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_OrderItem extends XLite_Tes
         /**
          * First order goes with processed status 
          */
-        $order = $this->getTestOrder(
+        $order = $this->getLocalTestOrder(
             \XLite\Model\Order::STATUS_PROCESSED,
             array(
                 self::PR1 => 500,
@@ -117,14 +104,14 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_OrderItem extends XLite_Tes
 
             $this->assertTrue(isset($best[$index]), 'Not set #' . $index . ' product in bestsellers (1)');
 
-            $this->assertEquals($best[$index]->getProductId(), $id, 'Wrong #' . $index . ' product in bestsellers (1)');
+            $this->assertEquals($best[$index]->getSku(), $id, 'Wrong #' . $index . ' product in bestsellers (1)');
 
         }
 
         /**
          * Second order goes with completed status 
          */
-        $order = $this->getTestOrder(
+        $order = $this->getLocalTestOrder(
             \XLite\Model\Order::STATUS_COMPLETED,
             array(
                 self::PR3 => 45,
@@ -142,7 +129,7 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_OrderItem extends XLite_Tes
 
             $this->assertTrue(isset($best[$index]), 'Not set #' . $index . ' product in bestsellers (2)');
 
-            $this->assertEquals($best[$index]->getProductId(), $id, 'Wrong #' . $index . ' product in bestsellers (2)');
+            $this->assertEquals($best[$index]->getSku(), $id, 'Wrong #' . $index . ' product in bestsellers (2)');
 
         }
 
@@ -158,7 +145,7 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_OrderItem extends XLite_Tes
      */
     public function testFindBestsellersCategory()
     {
-        $order = $this->getTestOrder(
+        $order = $this->getLocalTestOrder(
             \XLite\Model\Order::STATUS_COMPLETED,
             array(
                 self::PR1 => 500,
@@ -167,19 +154,20 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_OrderItem extends XLite_Tes
             )   
         );  
 
-        $best = $this->findBestsellers(1, self::CATEGORY);
+        $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => self::CATEGORY));
+        $best = $this->findBestsellers(1, $c->getCategoryId());
 
         $this->assertEquals(1, count($best), 'Wrong number of bestsellers was returned (1)');
 
         $one = $best[0];
 
-        $this->assertEquals(self::PR1, $one->getProductId(), 'Wrong root category bestsellers list');
+        $this->assertEquals(self::PR1, $one->getSku(), 'Wrong root category bestsellers list');
     }
 
 
-/**
- *  FOR INNER USE ONLY
- */
+    /**
+     *  FOR INNER USE ONLY
+     */
 
     /**
      * Prepare order
@@ -192,51 +180,27 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_OrderItem extends XLite_Tes
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getTestOrder($status, array $items)
+    protected function getLocalTestOrder($status, array $items)
     {
-        $order = new \XLite\Model\Order();
+        $this->orderProducts = array_keys($items);
 
-        $list = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
-        $profile = array_shift($list);
-        unset($list);
-
-        $order->map($this->testOrder);
-        $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
+        $order = $this->getTestOrder();
 
         if (!is_null($status)) {
-
             $order->setStatus($status);
-
         }   
-
-        \XLite\Core\Database::getEM()->persist($order);
-        \XLite\Core\Database::getEM()->flush();
 
         $order->setPaymentMethod(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(3));
 
-        foreach ($items as $index => $amount) {
+        foreach ($order->getItems() as $index => $item) {
 
-            $item = new \XLite\Model\OrderItem();
-
-            $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->find($index);
-
-            if (!isset($p)) {
-                $this->assertFalse(true, 'Product #' . $index . ' not found in DB!');
+            if (isset($items[$item->getSku()])) {
+                $item->setAmount($items[$item->getSku()]);
             }
-            $item->setProduct($p);
-            $item->setAmount($amount);
-            $item->setPrice($p->getPrice());
-
-            $order->addItem($item);
         }
 
-        \XLite\Core\Database::getEM()->persist($order);
-        \XLite\Core\Database::getEM()->flush();
-
-        $order->setProfileCopy($profile);
         $order->calculate();
 
-        \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
         \XLite\Core\Database::getEM()->clear();

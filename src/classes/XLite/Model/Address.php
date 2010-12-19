@@ -165,15 +165,17 @@ class Address extends \XLite\Model\AEntity
     protected $city = '';
 
     /**
-     * State Id
-     * 
-     * @var    int
+     * State
+     *
+     * @var    \XLite\Model\State
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="integer")
+     *
+     * @ManyToOne  (targetEntity="XLite\Model\State", cascade={"merge","detach"})
+     * @JoinColumn (name="state_id", referencedColumnName="state_id")
      */
-    protected $state_id = 0;
+    protected $state;
 
     /**
      * Custom state
@@ -187,15 +189,17 @@ class Address extends \XLite\Model\AEntity
     protected $custom_state = '';
 
     /**
-     * Country code
-     * 
-     * @var    string
+     * Country
+     *
+     * @var    \XLite\Model\Country
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="fixedstring", length="2")
+     *
+     * @ManyToOne  (targetEntity="XLite\Model\Country", cascade={"merge","detach"})
+     * @JoinColumn (name="country_code", referencedColumnName="code")
      */
-    protected $country_code = '';
+    protected $country;
 
     /**
      * Zip/postal code
@@ -231,15 +235,12 @@ class Address extends \XLite\Model\AEntity
      */
     public function getState()
     {
-        $state = null;
-
-        if ($this->getStateId()) {
+        if ($this->state) {
 
             // Real state object
-            $state = \XLite\Core\Database::getRepo('XLite\Model\State')
-                ->findOneByStateId($this->getStateId());
+            $state = $this->state;
 
-        } elseif ($this->getCustomState()) {
+        } else {
 
             // Custom state
             $state = new \XLite\Model\State;
@@ -264,59 +265,21 @@ class Address extends \XLite\Model\AEntity
         if (is_object($state) && $state instanceof \XLite\Model\State) {
 
             // Set by state object
-            $this->setStateId($state->getStateId());
-            $this->setCustomState('');
+            if ($state->getStateId()) {
+                $this->state = $state;
+                $this->setCustomState($state->getState());
 
-        } elseif (is_integer($state)) {
-
-            // Set by state id
-            $this->setStateId($state);
-            $this->setCustomState('');
+            } else {
+                $this->state = null;
+                $this->setCustomState($state->getState());
+            }
 
         } elseif (is_string($state)) {
 
             // Set custom state
-            $this->setStateId(0);
+            $this->state = null;
             $this->setCustomState($state);
 
-        }
-    }
-
-    /**
-     * Get country 
-     * 
-     * @return \XLite\Model\Country
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCountry()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Country')
-            ->find($this->getCountryCode());
-    }
-
-    /**
-     * Set country 
-     *
-     * @param mixed $country Country object or code
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setCountry($country)
-    {
-        if (is_object($country) && $country instanceof \XLite\Model\Country) {
-
-            // Set by object
-            $this->setCountryCode($country->getCode());
-
-        } elseif (is_string($country)) {
-
-            // Set by code
-            $this->setCountryCode($country);
         }
     }
 
@@ -482,4 +445,26 @@ class Address extends \XLite\Model\AEntity
         );
     }
 
+    /**
+     * Clone
+     *
+     * @return \XLite\Model\AEntity
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function cloneEntity()
+    {
+        $entity = parent::cloneEntity();
+
+        if ($this->getCountry()) {
+            $entity->setCountry($this->getCountry());
+        }
+
+        if ($this->getState()) {
+            $entity->setState($this->getState());
+        }
+
+        return $entity;
+    }
 }

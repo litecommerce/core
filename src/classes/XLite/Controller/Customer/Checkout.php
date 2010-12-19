@@ -326,28 +326,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function prepareAddressData(array $data)
     {
-        // State preprocess
-        if (isset($data['state'])) {
-            if ($data['state']->getStateId()) {
-                $data['custom_state'] = '';
-                $data['state_id'] = $data['state']->getStateId();
-
-            } else {
-                $data['custom_state'] = $data['state']->getState();
-                $data['state_id'] = 0;
-            }
-
-            $data['state']->detach();
-            unset($data['state']);
-        }
-
-        // Country preprocess
-        if (isset($data['country'])) {
-            $data['country_code'] = $data['country']->getCode();
-            $data['country']->detach();
-            unset($data['country']);
-        }
-
         unset($data['save_as_new']);
 
         return $data;

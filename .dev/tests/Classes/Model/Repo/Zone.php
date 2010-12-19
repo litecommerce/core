@@ -38,9 +38,9 @@ class XLite_Tests_Model_Repo_Zone extends XLite_Tests_TestCase
                 'address' => 'Some address',
             ),
             'result' => array(
-                0x01 + 0x02 + 0x08 + 0x10 => 20,
-                0x01 => 10,
-                0 => 1
+                0x01 + 0x02 + 0x08 + 0x10 => 'New York area',
+                0x01                      => 'United States area',
+                0                         => 'Default zone (all addresses)',
             )
         );
 
@@ -53,9 +53,9 @@ class XLite_Tests_Model_Repo_Zone extends XLite_Tests_TestCase
                 'address' => '92nd Street Y 1395 Lexington Avenue',
             ),
             'result' => array(
-                0x01 + 0x02 + 0x08 => 20,
-                0x01 => 10,
-                0 => 1
+                0x01 + 0x02 + 0x08 => 'New York area',
+                0x01               => 'United States area',
+                0                  => 'Default zone (all addresses)',
             )
         );
 
@@ -68,9 +68,9 @@ class XLite_Tests_Model_Repo_Zone extends XLite_Tests_TestCase
                 'address' => 'Some address',
             ),
             'result' => array(
-                0x01 + 0x02 => 30,
-                0x01 => 10,
-                0 => 1
+                0x01 + 0x02 => 'California area',
+                0x01        => 'United States area',
+                0           => 'Default zone (all addresses)'
             )
         );
 
@@ -83,8 +83,8 @@ class XLite_Tests_Model_Repo_Zone extends XLite_Tests_TestCase
                 'address' => 'Some address',
             ),
             'result' => array(
-                0x01 => 40,
-                0 => 1
+                0x01 => 'Europe',
+                0    => 'Default zone (all addresses)',
             )
         );
 
@@ -97,8 +97,8 @@ class XLite_Tests_Model_Repo_Zone extends XLite_Tests_TestCase
                 'address' => 'Some address',
             ),
             'result' => array(
-                0x01 => 40,
-                0 => 1
+                0x01 => 'Europe',
+                0    => 'Default zone (all addresses)',
             )
         );
 
@@ -111,8 +111,8 @@ class XLite_Tests_Model_Repo_Zone extends XLite_Tests_TestCase
                 'address' => 'Some address',
             ),
             'result' => array(
-                0x01 => 40,
-                0 => 1
+                0x01 => 'Europe',
+                0    => 'Default zone (all addresses)',
             )
         );
 
@@ -127,7 +127,7 @@ class XLite_Tests_Model_Repo_Zone extends XLite_Tests_TestCase
 
             foreach ($applicableZones as $weight => $zone) {
                 $this->assertTrue($zone instanceof \XLite\Model\Zone, 'getApplicableZones() must return an array of \XLite\Model\Zone instances');
-                $result[$weight] = $zone->getZoneId();
+                $result[$weight] = $zone->getZoneName();
             }
             
             $this->assertEquals($dt['result'], $result, 'check ' . $i . ' iteration');
