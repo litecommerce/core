@@ -28,12 +28,8 @@
 
 require_once PATH_TESTS . '/FakeClass/Model/OrderItem.php';
 
-class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
+class XLite_Tests_Model_Repo_Order extends XLite_Tests_Model_OrderAbstract
 {
-    protected $testOrder = array(
-        'tracking'       => 'test t',
-        'notes'          => 'Test note',
-    );
 
     public function testFindAllExipredTemporaryOrders()
     {
@@ -236,40 +232,5 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
         $cnd->{$repo::P_ORDER_ID} = -1;
         $cnt = $repo->search($cnd, true);
         $this->assertEquals(0, $cnt, 'check length #11');
-    }
-
-    protected function getProduct()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByEnabled(true);
-    }
-
-    protected function getTestOrder()
-    {
-        $order = new \XLite\Model\Order();
-
-        $profiles = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
-        $profile = array_shift($profiles);
-        unset($profiles);
-
-        $order->map($this->testOrder);
-        $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-
-        \XLite\Core\Database::getEM()->persist($order);
-
-        $order->setPaymentMethod(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(3));
-
-        $item = new \XLite\Model\OrderItem();
-
-        $item->setProduct($this->getProduct());
-        $item->setAmount(1);
-
-        $order->addItem($item);
-
-        $order->setProfileCopy($profile);
-        $order->calculate();
-
-        \XLite\Core\Database::getEM()->flush();
-
-        return $order;
     }
 }

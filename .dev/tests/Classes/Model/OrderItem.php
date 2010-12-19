@@ -26,22 +26,8 @@
  * @since      3.0.0
  */
 
-require_once PATH_TESTS . '/FakeClass/Model/OrderItem.php';
-
-class XLite_Tests_Model_OrderItem extends XLite_Tests_TestCase
+class XLite_Tests_Model_OrderItem extends XLite_Tests_Model_OrderAbstract
 {
-    protected $testOrder = array(
-        'tracking'       => 'test t',
-        'notes'          => 'Test note',
-    );
-
-    protected function setUp()
-    {
-        parent::setUp();
-
-        \XLite\Core\Database::getEM()->clear();
-    }
-
     public function testCreate()
     {
         $order = $this->getTestOrder();
@@ -164,6 +150,7 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_TestCase
         \XLite\Core\Database::getEM()->clear();
 
         $item = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->find($id);
+
         $this->assertFalse(is_null($item->getProduct()), 'check dump object #2');
     }
 
@@ -364,41 +351,5 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_TestCase
             'check event item info'
         );
 
-    }
-
-    protected function getProduct()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByEnabled(true);
-    }
-
-    protected function getTestOrder()
-    {
-        $order = new \XLite\Model\Order();
-
-        $profiles = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
-        $profile = array_shift($profiles);
-        unset($profiles);
-
-        $order->map($this->testOrder);
-        $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-
-        $item = new \XLite\Model\OrderItem();
-
-        $item->setProduct($this->getProduct());
-        $item->setAmount(1);
-        $item->setPrice($this->getProduct()->getPrice());
-
-        $order->addItem($item);
-
-        \XLite\Core\Database::getEM()->persist($order);
-        \XLite\Core\Database::getEM()->flush();
-
-        $order->setProfileCopy($profile);
-        $order->calculate();
-
-        \XLite\Core\Database::getEM()->persist($order);
-        \XLite\Core\Database::getEM()->flush();
-
-        return $order;
     }
 }

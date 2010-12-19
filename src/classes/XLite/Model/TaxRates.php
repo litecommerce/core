@@ -523,8 +523,10 @@ array("condition" => "state=District of Columbia", "action" => array(
         $address = $this->config->Taxes->use_billing_info ? $profile->getBillingAddress() : $profile->getShippingAddress();
 
         if (isset($address)) {
-            $this->_conditionValues['state'] = $address->getStateId();
-            $this->_conditionValues['country'] = $address->getCountryCode();
+            $this->_conditionValues['state'] = $address->getState()->getStateId();
+            $this->_conditionValues['country'] = $address->getCountry()
+                ? $address->getCountry()->getCode()
+                : '';
             $this->_conditionValues['city'] = $address->getCity();
             $this->_conditionValues['zip'] = $address->getZipcode();
         }

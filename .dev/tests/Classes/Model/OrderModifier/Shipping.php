@@ -26,8 +26,10 @@
  * @since      3.0.0
  */
 
-class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
+class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_Model_OrderAbstract
 {
+    protected $orderProducts = array('00057', '00002', '00003', '00004', '00005', '00006');
+
     /**
      * testCalculate 
      * 
@@ -40,7 +42,7 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
     {
         $order = $this->getTestOrder();
 
-        \XLite\Base::getInstance()->config->Shipping->shipping_enabled = 'N';
+        \XLite\Core\Config::getInstance()->Shipping->shipping_enabled = 'N';
 
         $order->calculate();
 
@@ -57,16 +59,26 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
 
         $this->assertFalse($found, 'Order modifier "Shipping" must be unsetted in the modifiers list');
 
-        \XLite\Base::getInstance()->config->Shipping->shipping_enabled = 'Y';
+        \XLite\Core\Config::getInstance()->Shipping->shipping_enabled = 'Y';
 
-        $m = $this->getMethodByName('Courier');
+        $m = null; 
+        foreach ($order->getShippingRates() as $r) { 
+            if ($r->getMethod()->getName() == 'Courier') { 
+                $m = $r; 
+                break; 
+            } 
+        } 
         $this->assertNotNull($m, 'check selected rate');
 
         $order->setSelectedRate($m);
 
         $order->calculate();
 
-        $this->assertEquals(6.9458, $order->getTotalByModifier(\XLite\Model\OrderModifier\Shipping::MODIFIER_SHIPPING), 'Wrong shipping cost calculated');
+        $this->assertEquals(
+            6.9458,
+            $order->getTotalByModifier(\XLite\Model\OrderModifier\Shipping::MODIFIER_SHIPPING),
+            'Wrong shipping cost calculated'
+        );
     }
 
     /**
@@ -102,16 +114,16 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
     {
         $order = $this->getTestOrder();
 
-        $order->setShippingId(101);
+        $m = $this->getMethodByName('Local shipping');
+        $order->setShippingId($m->getMethodId());
         $rate = $order->getSelectedRate();
 
         $this->assertTrue($rate instanceof \XLite\Model\Shipping\Rate, 'getSelectedRate() must return an instance of \XLite\Model\Shipping\Rate');
-        $this->assertEquals(101, $rate->getMethodId(), 'getSelectedRate() returned wrong rate');
 
         $order->setSelectedRate(null);
         $rate = $order->getSelectedRate();
 
-        $this->assertFalse($rate instanceof \XLite\Model\Shipping\Rate, 'getSelectedRate() must return an instance of \XLite\Model\Shipping\Rate');
+        $this->assertFalse($rate instanceof \XLite\Model\Shipping\Rate, 'getSelectedRate() must NOT return an instance of \XLite\Model\Shipping\Rate');
     }
 
     /**
@@ -140,10 +152,6 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
 
         // Test setSelectedRate(null) without any rates available
         $order->setSelectedRate(null);
-
-        $order->setSelectedRate('ascd');
-
-        $order->setSelectedRate(123456);
 
         $rate = $order->getSelectedRate();
 
@@ -183,7 +191,8 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
     {
         $order = $this->getTestOrder();
 
-        $order->setShippingId(101);
+        $m = $this->getMethodByName('Local shipping');
+        $order->setShippingId($m->getMethodId());
         $this->assertEquals($order->isShippingSelected(), $order->isShippingAvailable(), 'isShippingAvailable() must return value equal to isShippingSelected() if shipping method is selected');
 
         $order->setSelectedRate(null);
@@ -264,7 +273,8 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
 
         $this->assertFalse($order->isShippingSelected(), 'isShippingSelected() must return false if shipping method not selected');
 
-        $order->setShippingId(101);
+        $m = $this->getMethodByName('Local shipping');
+        $order->setShippingId($m->getMethodId());
         $this->assertTrue($order->isShippingSelected(), 'isShippingSelected() must return true if shipping method selected');
     }
 
@@ -306,7 +316,10 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
         $this->assertTrue(is_array($items), 'getShippedItems() must return an array');
 
         foreach ($items as $item) {
-            $this->assertTrue($item instanceof \XLite\Model\OrderItem, 'getShippedItems() must return an array of \XLite\Model\OrderItem instances');
+            $this->assertTrue(
+                $item instanceof \XLite\Model\OrderItem,
+                'getShippedItems() must return an array of \XLite\Model\OrderItem instances'
+            );
         }
 
         $this->assertEquals(3, count($items), 'Order must contain 3 shipped items');
@@ -363,7 +376,6 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
         $method = $order->getShippingMethod();
 
         $this->assertTrue($method instanceof \XLite\Model\Shipping\Method, 'getShippingMethod() returned not an object');
-        $this->assertEquals(101, $method->getMethodId(), 'getShippingMethod() returned wrong method');
     }
 
     /**
@@ -400,19 +412,6 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
     }
 
     /**
-     * getProducts 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getProduct($productId)
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->find($productId);
-    }
-
-    /**
      * getTestOrder 
      * 
      * @return void
@@ -422,42 +421,17 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
      */
     protected function getTestOrder()
     {
-        $order = new \XLite\Model\Order();
+        $order = parent::getTestOrder();
 
-        $profiles = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
-        $profile = array_shift($profiles);
-        unset($profiles);
+        $i = 0;
+        foreach ($order->getItems() as $item) {
 
-        $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-        $order->setProfile($profile);
+            $item->getProduct()->setFreeShipping(0 != $i % 2);
 
-        $productIds = array(4059, 4004, 4005, 4006, 4007, 4008);
-
-        foreach ($productIds as $index => $productId) {
-
-            $product = $this->getProduct($productId);
-            if (!$product) {
-                continue;
-            }
-
-            if ($index % 2) {
-                $product->setFreeShipping(true);
-            }
-
-            $item = new \XLite\Model\OrderItem();
-
-            $item->setProduct($product);
             $item->setAmount(4);
-
-            $order->addItem($item);
+            $i++;
         }
 
-        \XLite\Core\Database::getEM()->persist($order);
-        \XLite\Core\Database::getEM()->flush();
-
-        $order->setProfileCopy($profile);
-
-        \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
         return $order;
@@ -480,7 +454,6 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
         $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->findAll();
         $markup = array_shift($markups);
         $markupId = $markup->getMarkupId();
-        unset($markups);
 
         $extraData = new \XLite\Core\CommonCell();
         $extraData->testparam1 = 'test value 1';

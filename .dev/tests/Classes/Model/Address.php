@@ -36,9 +36,7 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
         'lastname'     => 'lastname test',
         'street'       => 'street test',
         'city'         => 'city test',
-        'state_id'     => 34,
         'custom_state' => 'custom_state test',
-        'country_code' => 'US',
         'zipcode'      => 'zipcode test',
         'phone'        => 'phone test',
     );
@@ -86,8 +84,10 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
 
         $address->map($this->addressFields);
 
+        $address->setCountry(\XLite\Core\Database::getRepo('XLite\Model\Country')->find('US'));
+        $address->setState(\XLite\Core\Database::getRepo('XLite\Model\State')->findOneByCountryAndCode('US', 'NY'));
+
         $this->assertTrue($address->getState() instanceof \XLite\Model\State, 'State checking');
-        $this->assertEquals($address->getStateId(), $address->getState()->getStateId(), 'state id checking');
     }
 
     /**
@@ -104,8 +104,9 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
 
         $address->map($this->addressFields);
 
+        $address->setCountry(\XLite\Core\Database::getRepo('XLite\Model\Country')->find('US'));
+
         $this->assertTrue($address->getCountry() instanceof \XLite\Model\Country, 'Country checking');
-        $this->assertEquals($address->getCountryCode(), $address->getCountry()->getCode(), 'country code checking');
     }
 
     /**

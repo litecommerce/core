@@ -149,7 +149,7 @@ class States extends \XLite\Controller\Admin\AAdmin
 
         // use POST'ed data to modify state properties
         foreach ($stateData as $state_id => $state_data) {
-            $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $state_id);
+            $state = \XLite\Core\Database::getRepo'XLite\Model\State')->find($state_id);
             $state->map($state_data);
             \XLite\Core\Database::getEM()->persist($state);
         }

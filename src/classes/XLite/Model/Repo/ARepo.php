@@ -1475,24 +1475,4 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     {
         return $schema;
     }
-
-    /**
-     * Truncate data
-     * 
-     * @return \Doctrine\DBAL\Driver\Statement The executed statement
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function truncate()
-    {
-        $sql = $this->_em
-            ->getConnection()
-            ->getDatabasePlatform()
-            ->getTruncateTableSQL($this->getClassMetadata()->getTableName(), true);
-
-        return $this->_em
-            ->getConnection()
-            ->executeQuery($sql);
-    }
 }

@@ -44,8 +44,6 @@ namespace XLite\Model;
  *          @Index (name="tracking", columns={"tracking"}),
  *          @Index (name="status", columns={"status"}),
  *          @Index (name="notes", columns={"notes"}),
- *          @Index (name="profile_id", columns={"profile_id"}),
- *          @Index (name="orig_profile_id", columns={"orig_profile_id"}),
  *          @Index (name="shipping_id", columns={"shipping_id"})
  *      }
  * )

@@ -103,7 +103,7 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
                 \XLite\Core\Database::getEM()->persist($address);
             }
 
-            $address->setCountryCode($country->getCode());
+            $address->setCountry($country);
             $address->setState($state->getStateId() ? $state : $state->getState());
             $address->setZipcode(\XLite\Core\Request::getInstance()->zipcode);
             $address->update();

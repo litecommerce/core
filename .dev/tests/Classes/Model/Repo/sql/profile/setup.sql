@@ -29,7 +29,7 @@ INSERT INTO xlite_profiles SET profile_id = 4, login = 'rnd_tester02@rrf.ru', pa
 
 INSERT INTO xlite_profile_addresses SET address_id = 6, profile_id = 4, is_billing = 1, is_shipping = 0, title = 'Mr.', firstname = 'Patrick', lastname = 'Smith', phone = '0123456789', street = '51 apt, 87 street', city = 'Edmond', state_id = 38, country_code = 'US', zipcode = '73003';
 
-INSERT INTO xlite_profile_addresses SET address_id = 7, profile_id = 4, is_billing = 0, is_shipping = 1, title = 'Mr.', firstname = 'Patrick', lastname = 'Smith', phone = '9876543210', street = '12 apt, 34 street', city = 'Paris', custom_state = 'custom state test', state_id = 0, country_code = 'FR', zipcode = '74359';
+INSERT INTO xlite_profile_addresses SET address_id = 7, profile_id = 4, is_billing = 0, is_shipping = 1, title = 'Mr.', firstname = 'Patrick', lastname = 'Smith', phone = '9876543210', street = '12 apt, 34 street', city = 'Paris', custom_state = 'custom state test', state_id = null, country_code = 'FR', zipcode = '74359';
 
 
 -- Create the customer account #4 (guest)

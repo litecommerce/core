@@ -67,7 +67,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
     protected $item_id;
 
     /**
-     * Objct (product)
+     * Object (product)
      * 
      * @var    \XLite\Model\Product
      * @access protected
@@ -153,6 +153,16 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
     protected $saved_modifiers;
 
     /**
+     * Dump product (deleted)
+     * 
+     * @var    \XLite\Model\Product
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $dumpProduct;
+
+    /**
      * Wrapper. If the product was deleted,
      * item will use save product name and SKU
      * TODO - switch to getObject() and remove 
@@ -164,9 +174,32 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      */
     public function getProduct()
     {
-        return 'XLite\Model\OrderItem' == get_called_class()
-            ? $this->getObject()
-            : null;
+        $product = null;
+        if ('XLite\Model\OrderItem' == get_called_class()) {
+            $product = $this->getObject() ?: $this->getDeletedProduct();
+        }
+    
+        return $product;
+    }
+
+    /**
+     * Get deleted product 
+     * 
+     * @return \XLite\Model\Product|void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDeletedProduct()
+    {
+        if (!isset($this->dumpProduct) && $this->getPrice() && $this->getName()) {
+            $this->dumpProduct = new \XLite\Model\Product();
+            $this->dumpProduct->setPrice($this->getPrice());
+            $this->dumpProduct->setName($this->getName());
+            $this->dumpProduct->setSku($this->getSku());
+        }
+
+        return $this->dumpProduct;
     }
 
     /**

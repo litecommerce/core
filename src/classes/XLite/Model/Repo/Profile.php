@@ -372,7 +372,7 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     protected function prepareCndCountry(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $this->prepareCndCommon($queryBuilder, $value, 'country_code', true, 'addresses');
+        $this->prepareCndCommon($queryBuilder, $value, 'code', true, 'country');
     }
 
     /**
@@ -388,7 +388,7 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     protected function prepareCndState(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $this->prepareCndCommon($queryBuilder, $value, 'state_id', true, 'addresses');
+        $this->prepareCndCommon($queryBuilder, $value, 'state_id', true, 'state');
     }
 
     /**
@@ -697,7 +697,9 @@ class Profile extends \XLite\Model\Repo\ARepo
     {
         $queryBuilder = $this->createQueryBuilder('p')
             ->addSelect('addresses')
-            ->leftJoin('p.addresses', 'addresses');
+            ->leftJoin('p.addresses', 'addresses')
+            ->leftJoin('addresses.country', 'country')
+            ->leftJoin('addresses.state', 'state');
 
         $this->currentSearchCnd = $cnd;
 
@@ -887,7 +889,12 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     protected function linkLoadedEntity(\XLite\Model\AEntity $entity, \XLite\Model\AEntity $parent, array $parentAssoc)
     {
-        if ($parent instanceof \XLite\Model\Order && !$parentAssoc['mappedSetter']) {
+        if (
+            $parent instanceof \XLite\Model\Order
+            && !$parentAssoc['mappedSetter']
+            && 'setProfile' == $parentAssoc['setter']
+        ) {
+            // Add order to profile if this profile - copy of original profile
             $parentAssoc['mappedSetter'] = 'setOrder';
         }
 
@@ -918,5 +925,55 @@ class Profile extends \XLite\Model\Repo\ARepo
         }
 
         return $schema;
+    }
+
+    /**
+     * Find one by record
+     *
+     * @param array                $data   Record
+     * @param \XLite\Model\AEntity $parent Parent model
+     *
+     * @return \XLite\Model\AEntity|void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
+    {
+        if (
+            isset($data['login'])
+            && (isset($data['order_id']) && 0 == $data['order_id'] || 1 == count($data))
+        ) {
+            try {
+                $entity = $this->defineOneByRecord($data['login'])->getQuery()->getSingleResult();
+
+            } catch (\Doctrine\ORM\NoResultException $e) {
+                $entity = null;
+            }
+            
+        } else {
+            $entity = parent::findOneByRecord($data, $parent);
+        }
+
+        return $entity;
+    }
+
+    /**
+     * Define query for findOneByRecord () method
+     * 
+     * @param string $login Login
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineOneByRecord($login)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.order IS NULL AND p.login = :login AND p.access_level = :zero')
+            ->setParameter('login', $login)
+            ->setParameter('zero', 0)
+            ->setMaxResults(1);
     }
 }

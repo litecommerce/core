@@ -86,7 +86,9 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
             'LNAME'       => $this->getProfile()->getBillingAddress()->getLastname(),
             'BCITY'       => $this->getProfile()->getBillingAddress()->getCity(),
             'BSTATE'      => $this->getProfile()->getBillingAddress()->getState()->getState(),
-            'BCOUNTRY'    => $this->getProfile()->getBillingAddress()->getCountryCode(),
+            'BCOUNTRY'    => $this->getProfile()->getBillingAddress()->getCountry()
+                ? $this->getProfile()->getBillingAddress()->getCountry()->getCode()
+                : '',
             'BCUST_EMAIL' => $this->getProfile()->getLogin(),
 
             'SFNAME'   => $this->getProfile()->getShippingAddress()->getFirstname(),
@@ -95,7 +97,9 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
             'SCITY'    => $this->getProfile()->getShippingAddress()->getCity(),
             'SSTATE'   => $this->getProfile()->getShippingAddress()->getState()->getState(),
             'SZIP1'    => $this->getProfile()->getShippingAddress()->getZipcode(),
-            'SCOUNTRY' => $this->getProfile()->getShippingAddress()->getCountryCode(),
+            'SCOUNTRY' => $this->getProfile()->getShippingAddress()->getCountry()
+                ? $this->getProfile()->getShippingAddress()->getCountry()->getCode()
+                : '',
 
             'PHONE'               => $this->getProfile()->getBillingAddress()->getPhone(),
             'trans_method'        => 'CC',

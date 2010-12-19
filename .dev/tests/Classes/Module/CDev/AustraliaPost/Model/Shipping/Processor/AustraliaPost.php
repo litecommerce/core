@@ -16,8 +16,11 @@
  * @since      3.0.0
  */
 
-class XLite_Tests_Module_CDev_AustraliaPost_Model_Shipping_Processor_AustraliaPost extends XLite_Tests_TestCase
+class XLite_Tests_Module_CDev_AustraliaPost_Model_Shipping_Processor_AustraliaPost
+extends XLite_Tests_Model_OrderAbstract
 {
+    protected $orderProducts = array('00000', '00002', '00003', '00004', '00005', '00006');
+
     /**
      * setUp
      *
@@ -232,19 +235,6 @@ class XLite_Tests_Module_CDev_AustraliaPost_Model_Shipping_Processor_AustraliaPo
     }
 
     /**
-     * getProducts 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getProduct($productId)
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->find($productId);
-    }
-
-    /**
      * getTestOrder 
      * 
      * @return void
@@ -254,46 +244,23 @@ class XLite_Tests_Module_CDev_AustraliaPost_Model_Shipping_Processor_AustraliaPo
      */
     protected function getTestOrder($realProfile = true)
     {
-        $order = new \XLite\Model\Order();
-        \XLite\Core\Database::getEM()->persist($order);
+        $order = parent::getTestOrder();
+
+        $args = func_get_args();
 
         $profile = null;
-        if ($realProfile) {
-            $list = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
-            $profile = array_shift($list);
-            unset($list);
+        if (isset($args[0]) && !$args[0]) {
+            $order->setProfile(null);
+            $order->setOrigProfile(null);
         }
 
-        $c = \XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840);
-        $order->setCurrency($c);
-//        $c->addOrders($order);
-        if ($profile) {
-            $order->setProfile($profile);
-        }
+        foreach ($order->getItems() as $index => $item) {
 
-        $productIds = array(3002, 4004, 4005, 4006, 4007, 4008);
-
-        foreach ($productIds as $index => $productId) {
-
-            $product = $this->getProduct($productId);
-
-            if (!$product) {
-                continue;
-            }
             if ($index % 2) {
-                $product->setFreeShipping(true);
+                $item->getProduct()->setFreeShipping(true);
             }
 
-            $item = new \XLite\Model\OrderItem();
-
-            $item->setProduct($product);
             $item->setAmount(4);
-
-            $order->addItem($item);
-        }
-
-        if (isset($profile)) {
-            $order->setProfileCopy($profile);
         }
 
         \XLite\Core\Database::getEM()->flush();

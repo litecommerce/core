@@ -26,15 +26,8 @@
  * @since      3.0.0
  */
 
-require_once PATH_TESTS . '/FakeClass/Model/OrderItem.php';
-
-class XLite_Tests_Model_Order extends XLite_Tests_TestCase
+class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 {
-    protected $testOrder = array(
-        'tracking'       => 'test t',
-        'notes'          => 'Test note',
-    );
-
     public function testCreate()
     {
         $order = $this->getTestOrder();
@@ -879,14 +872,12 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
         $old = $c->getValue();
 
         $c->setValue(true);
-        \XLite\Core\Database::getEM()->persist($c);
         \XLite\Core\Database::getEM()->flush();
 
         $c = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneByName('enable_init_order_notif_customer');
         $old2 = $c->getValue();
 
         $c->setValue(true);
-        \XLite\Core\Database::getEM()->persist($c);
         \XLite\Core\Database::getEM()->flush();
 
         \XLite\Core\Database::getRepo('XLite\Model\Config')->getAllOptions(true);
@@ -897,7 +888,6 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $c = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneByName('enable_init_order_notif');
         $c->setValue($old);
-        \XLite\Core\Database::getEM()->persist($c);
         \XLite\Core\Database::getEM()->flush();
 
         $c = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneByName('enable_init_order_notif_customer');
@@ -946,41 +936,16 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
         // TODO - rework test after rework tax subsystem
     }
 
-    protected function getProduct()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByEnabled(true);
-    }
-
     protected function getTestOrder()
     {
-        $order = new \XLite\Model\Order();
+        $order = parent::getTestOrder();
 
-        $order->map($this->testOrder);
-        $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-
-        \XLite\Core\Database::getEM()->persist($order);
-        \XLite\Core\Database::getEM()->flush();
-
-        $profiles = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
-        $order->setProfileCopy(array_shift($profiles));
-        unset($profiles);
-
-        $order->setPaymentMethod(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(2));
-
-        $item = new \XLite\Model\OrderItem();
-
-        $item->setProduct($this->getProduct());
-        $item->setAmount(1);
-        $item->setPrice($this->getProduct()->getPrice());
-
-        $order->addItem($item);
-
-        \XLite\Core\Database::getEM()->flush();
-
-        $order->calculate();
+        $method = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(array('service_name' => 'PurchaseOrder'));
+        $order->setPaymentMethod($method);
 
         \XLite\Core\Database::getEM()->flush();
 
         return $order;
     }
+
 }

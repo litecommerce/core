@@ -243,9 +243,9 @@ class Shipping extends \XLite\Base\Singleton
             $address = array(
                 'address' => $addressObj->getStreet(),
                 'city'    => $addressObj->getCity(),
-                'state'   => $addressObj->getStateId(),
+                'state'   => $addressObj->getState()->getStateId(),
                 'zipcode' => $addressObj->getZipcode(),
-                'country' => $addressObj->getCountryCode(),
+                'country' => $addressObj->getCountry() ? $addressObj->getCountry()->getCode() : '',
             );
         }
 

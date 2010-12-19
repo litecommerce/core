@@ -548,5 +548,15 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
             parent::runTest();
         }
     }
+
+    protected function getProduct()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByEnabled(true);
+    }
+
+    protected function getProductBySku($sku)
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => $sku));
+    }
 }
 

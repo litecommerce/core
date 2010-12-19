@@ -268,4 +268,68 @@ class State extends \XLite\Model\Repo\ARepo
             ->andWhere('s.country = :country')
             ->setParameter('country', $country);
     }
+
+    /**
+     * Find states by country code adn state code
+     * 
+     * @param string $countryCode Country code
+     * @param string $code        State code
+     *  
+     * @return \XLite\Model\State|void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findOneByCountryAndCode($countryCode, $code)
+    {
+        try {
+            $state = $this->defineOneByCountryAndCodeQuery($countryCode, $code)
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            $state = null;
+        }
+
+        return $state;
+    }
+
+    /**
+     * Define query for findOneByCountryAndCode() method
+     * 
+     * @param string $countryCode Country code
+     * @param string $code        State code
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineOneByCountryAndCodeQuery($countryCode, $code)
+    {
+        return $this->createQueryBuilder()
+            ->innerJoin('s.country', 'country')
+            ->andWhere('country.code = :country AND s.code = :code')
+            ->setParameter('country', $countryCode)
+            ->setParameter('code', $code);
+    }
+
+    /**
+     * Find one by record
+     *
+     * @param array                $data   Record
+     * @param \XLite\Model\AEntity $parent Parent model
+     *
+     * @return \XLite\Model\AEntity|void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
+    {
+        return isset($data['country_code']) && isset($data['code'])
+            ? $this->findOneByCountryAndCode($data['country_code'], $data['code'])
+            : parent::findOneByRecord($data, $parent);
+    }
+
 }

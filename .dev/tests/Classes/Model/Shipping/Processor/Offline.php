@@ -16,7 +16,7 @@
  * @since      3.0.0
  */
 
-class XLite_Tests_Model_Shipping_Processor_Offline extends XLite_Tests_TestCase
+class XLite_Tests_Model_Shipping_Processor_Offline extends XLite_Tests_Model_OrderAbstract
 {
     /**
      * testGetProcessorName 
@@ -118,17 +118,17 @@ class XLite_Tests_Model_Shipping_Processor_Offline extends XLite_Tests_TestCase
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getTestOrder($profile = true)
+    protected function getTestOrder()
     {
-        $order = new \XLite\Model\Order();
+        $order = parent::getTestOrder();
 
-        if ($profile) {
-            $list = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
-            $order->setProfile(array_shift($list));
-            unset($list);
+        $args = func_get_args();
+
+        if (isset($args[0]) && !$args[0]) {
+            $order->setProfile(null);
+            $order->setOrigProfile(null);
         }
 
-        $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
         $order->setSubTotal(17.99);
 
         return $order;

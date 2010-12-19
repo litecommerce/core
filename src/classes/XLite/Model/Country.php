@@ -81,7 +81,7 @@ class Country extends \XLite\Model\AEntity
      *
      * @Column (type="boolean")
      */
-    protected $enabled = false;
+    protected $enabled = true;
 
     /**
      * Country is EU memeber or not

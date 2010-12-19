@@ -16,9 +16,9 @@
  * @since      3.0.0
  */
 
-require_once PATH_TESTS . '/FakeClass/Model/Shipping.php';
+require_once (__DIR__ . '/../../FakeClass/Model/Shipping.php');
 
-class XLite_Tests_Model_Shipping extends XLite_Tests_TestCase
+class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
 {
     /**
      * testRegisterProcessor 
@@ -49,22 +49,19 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_TestCase
 
         $this->assertTrue($found, 'Test processor was not registered');
 
-        if ($found) {
+        \XLite\Model\Shipping::getInstance()->unregisterProcessor('\XLite\Model\FakeShippingProcessor');
 
-            \XLite\Model\Shipping::getInstance()->unregisterProcessor('\XLite\Model\FakeShippingProcessor');
+        $processors = \XLite\Model\Shipping::getInstance()->getProcessors();
 
-            $processors = \XLite\Model\Shipping::getInstance()->getProcessors();
-
-            $found = false;
-            foreach ($processors as $processor) {
-                if ('test' == $processor->getProcessorId()) {
-                    $found = true;
-                    break;
-                }
+        $found = false;
+        foreach ($processors as $processor) {
+            if ('test' == $processor->getProcessorId()) {
+                $found = true;
+                break;
             }
-
-            $this->assertFalse($found, 'Test processor was not unregistered');
         }
+
+        $this->assertFalse($found, 'Test processor was not unregistered');
     }
 
     /**
@@ -177,15 +174,15 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_TestCase
      */
     protected function getTestOrder($profile = true)
     {
-        $order = new \XLite\Model\Order();
+        $order = parent::getTestOrder();
 
-        if ($profile) {
-            $list = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
-            $order->setProfile(array_shift($list));
-            unset($list);
+        $args = func_get_args();
+
+        if (isset($args[0]) && !$args[0]) {
+            $order->setProfile(null);
+            $order->setOrigProfile(null);
         }
 
-        $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
         $order->setSubTotal(17.99);
 
         return $order;
