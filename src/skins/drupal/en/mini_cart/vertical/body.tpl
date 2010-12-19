@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div id="lc-minicart-{displayMode}" class="lc-minicart-{displayMode} {collapsed}">
+<div id="lc-minicart-{getParam(%static::PARAM_DISPLAY_MODE%)}" class="lc-minicart-{getParam(%static::PARAM_DISPLAY_MODE%)} {collapsed}">
 
   <div class="cart-link">
     <h3><a href="{buildURL(#cart#)}">Your cart</a></h3>
