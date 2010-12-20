@@ -27,30 +27,34 @@
  * @since      3.0.0
  */
 
-function _do_query_upload($sqlfile, $__connection, $ignoreErrors = false) {
-	echo '+++ ' . $sqlfile . PHP_EOL;
-	ob_start();
-	mysql_query('START TRANSACTION', $__connection);
-	query_upload($sqlfile, $__connection, $ignoreErrors);
-	mysql_query('COMMIT', $__connection);
-	$output = ob_get_contents();
-	ob_end_clean();
-	$output = strip_tags($output);
-	if (!empty($output) && preg_match('/\[NOTE:/', $output)) {
-		echo PHP_EOL . $output . PHP_EOL;
-	}
-}
+function _do_query_upload($sqlfile) {
+    global $__connection;
 
-function _do_recreate_schema()
-{
-    return;
-    exec('php console.php --target=db --action=recreate_schema');
+    echo '+++ ' . $sqlfile . PHP_EOL;
+
+    ob_start();
+    mysql_query('START TRANSACTION', $__connection);
+    query_upload($sqlfile, $__connection, false);
+    mysql_query('COMMIT', $__connection);
+    $output = ob_get_contents();
+    ob_end_clean();
+    $output = strip_tags($output);
+
+    if (!empty($output) && preg_match('/\[NOTE:/', $output)) {
+        echo PHP_EOL . $output . PHP_EOL;
+    }
 }
 
 function _do_yaml_upload($yamlfile)
 {
-    return;
-    exec('php console.php --target=db --action=load_fixtures --path=' . $yamlfile);
+    global $fp;
+    static $i = 0;
+
+    $i++;
+
+    echo '+++ ' . $yamlfile . PHP_EOL;
+
+    fwrite($fp, $i . ' = "' . $yamlfile . '"' . PHP_EOL);
 }
 
 if (isset($argv[1]) && $argv[1] == 'help') {
@@ -83,114 +87,116 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 if (file_exists('etc/config.local.php')) {
     $config = parse_ini_file('etc/config.local.php');
-
+ 
 } else {
     $config = parse_ini_file('etc/config.php');
 }
-
+ 
 $config['hostspec'] .= empty($config['socket'])
-	? (empty($config['port']) ? '' : ':' . $config['port'])
-	: ':' . $config['socket'];
+   ? (empty($config['port']) ? '' : ':' . $config['port'])
+   : ':' . $config['socket'];
 $__connection = mysql_connect($config['hostspec'], $config['username'], $config['password']);
 
 if (!$__connection || !mysql_select_db($config['database'], $__connection)) {
     die('Error of MySQL connection. Check etc/config.php file');
 }
 
-_do_query_upload('sql/xlite_tables.sql', $__connection, true);
-_do_query_upload('sql/xlite_data.sql', $__connection, true);
-_do_query_upload('sql/xlite_lng_en.sql', $__connection, true);
-_do_query_upload('sql/xlite_lng_de.sql', $__connection, true);
-_do_query_upload('sql/states_US.sql', $__connection, true);
-_do_query_upload('sql/states_GB.sql', $__connection, true);
-_do_query_upload('sql/states_CA.sql', $__connection, true);
+// Drop all tables
+echo '+++ Drop all tables';
+mysql_query('SET foreign_key_checks=0');
 
-_do_recreate_schema();
+$res = mysql_query('SHOW TABLES LIKE \'xlite_%\'');
+
+$i = 0;
+while ($row = mysql_fetch_assoc($res)) {
+    $tbl = array_shift($row);
+    mysql_query('DROP TABLE ' . $tbl);
+    $i++;
+}
+mysql_free_result($res);
+
+echo ' [' . $i . ']' . PHP_EOL;
+
+_do_query_upload('sql/xlite_unmanaged_tables.sql');
+
+$fp = fopen(LC_VAR_DIR . '.decorator.fixtures.ini.php', 'w');
+fwrite($fp, '; <' . '?php /*' . PHP_EOL);
+
+$modules = array();
+
 _do_yaml_upload('sql/xlite_data.yaml');
 
 if (!isset($argv[1]) || $argv[1] != 'demo') {
-	_do_query_upload('sql/xlite_demo.sql', $__connection, true);
     _do_yaml_upload('sql/xlite_demo.yaml');
 }
-
-require_once 'classes/XLite/Module/AModule.php';
-require_once 'classes/XLite/Base/IPatcher.php';
 
 // modules
 $enabledModules = array(
     'AustraliaPost',
     'AuthorizeNet',
     'Bestsellers',
-    'DrupalConnector',
     'Quantum',
     'FeaturedProducts',
     'ProductOptions',
 );
 
+if (
+    (isset($argv[2]) && $argv[2] == 'all')
+    || (isset($argv[1]) && 'drupal' == $argv[1])
+) {
+    $enabledModules[] = 'DrupalConnector';
+}
+
 foreach (glob('classes/XLite/Module/CDev/*/Main.php') as $f) {
 
-	require_once $f;
-	$class = str_replace('/', '\\', substr($f, 7, -4));
-
-	mysql_query('REPLACE INTO xlite_modules SET
-        author      = \'CDev\',
-        name        = \'' . basename(dirname($f)) . '\',
-        installed   = 1,
-        version     = \'' . call_user_func(array($class, 'getVersion')) . '\',
-        moduleName  = \'' . call_user_func(array($class, 'getModuleName')) . '\',
-        authorName  = \'' . call_user_func(array($class, 'getAuthorName')) . '\',
-        description = \'' . call_user_func(array($class, 'getDescription')) . '\'', 
-		$__connection
-	);
+    $author = basename(dirname(dirname($f)));
+    $name = basename(dirname($f));
 
     // Load install.sql only for enabled modules
     if (preg_match('/.CDev.(?:' . implode('|', $enabledModules) . ')./Ss', $f)) {
-
-    	$sqlFile = dirname($f) . '/install.sql';
-	    if (file_exists($sqlFile)) {
-		    _do_query_upload($sqlFile, $__connection, true);
-    	}
 
         $yamlFile = dirname($f) . '/install.yaml';
         if (file_exists($yamlFile)) {
             _do_yaml_upload($yamlFile);
         }
+
+        if (!isset($modules[$author])) {
+            $modules[$author] = array();
+        }
+        $modules[$author][$name] = 1;
     }
 }
 
-_do_query_upload('sql/demo/xlite_demo_user.sql', $__connection, true);
 _do_yaml_upload('sql/demo/xlite_demo_user.yaml');
 
 if (isset($argv[1]) && $argv[1] == 'demo') {
-
-    _do_query_upload('sql/demo/xlite_demo_data.sql', $__connection, true);
-	_do_query_upload('sql/demo/xlite_demo_store.sql', $__connection, true);
-	_do_query_upload('sql/demo/xlite_demo_orders.sql', $__connection, true);
-	_do_query_upload('sql/local/xlite_test_accounts.sql', $__connection, true);
 
     _do_yaml_upload('sql/demo/xlite_demo_data.yaml');
     _do_yaml_upload('sql/demo/xlite_demo_store.yaml');
     _do_yaml_upload('sql/demo/xlite_demo_orders.yaml');
     _do_yaml_upload('sql/local/xlite_test_accounts.yaml');
-
-	if (isset($argv[2]) && $argv[2] == 'all') {
-		_do_query_upload('sql/local/xlite_all_modules.sql', $__connection, true);
-        _do_yaml_upload('sql/local/xlite_all_modules.yaml');
-	}
-
-} elseif (isset($argv[1]) && in_array($argv[1], array('standalone', 'st', 's', 'stand'))) {
-	_do_query_upload('sql/local/xlite_modules_standalone.sql', $__connection, true);
-    _do_yaml_upload('sql/local/xlite_modules_standalone.yaml');
-
-} else {
-	_do_query_upload('sql/local/xlite_modules_drupal.sql', $__connection, true);
-    _do_yaml_upload('sql/local/xlite_modules_drupal.yaml');
 }
 
 if (file_exists('sql/local/xlite_local_demo.sql')) {
-	_do_query_upload('sql/local/xlite_local_demo.sql', $__connection, true);
     _do_yaml_upload('sql/local/xlite_local_demo.yaml');
 }
+
+fwrite($fp, '; */ ?' . '>');
+fclose($fp);
+
+// Create modules list
+$string = '; <' . '?php /*' . PHP_EOL;
+
+foreach ($modules as $author => $names) {
+    $string .= '[' . $author. ']' . PHP_EOL;
+    foreach ($names as $name => $enabled) {
+        $string .= $name . ' = ' . $enabled . PHP_EOL;
+    }
+}
+
+$string .= '; */ ?' . '>';
+
+file_put_contents(LC_VAR_DIR . '.decorator.modules.ini.php', $string);
 
 echo 'Setting cache rebuild flag...' . PHP_EOL . PHP_EOL;
 
@@ -202,8 +208,4 @@ echo 'Setting cache rebuild flag...' . PHP_EOL . PHP_EOL;
 if (function_exists('apc_clear_cache')) {
     echo 'Clear APC cache' . PHP_EOL . PHP_EOL;
     apc_clear_cache();
-}
-
-if (is_resource($__connection)) {
-	mysql_close($__connection);
 }
