@@ -44,6 +44,7 @@ namespace XLite\Model;
  *          @Index (name="enabled", columns={"enabled"})
  *      }
  * )
+ * @HasLifecycleCallbacks
  */
 class Module extends \XLite\Model\AEntity
 {
@@ -251,6 +252,16 @@ class Module extends \XLite\Model\AEntity
     protected $uploadCode = '';
 
     /**
+     * Old-state of enabled column
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $oldEnabled;
+
+    /**
      * Upload URL
      *
      * @var    string
@@ -296,11 +307,105 @@ class Module extends \XLite\Model\AEntity
         $result = false;
 
         if (!$enabled || $this->canEnable()) {
+            $this->oldEnabled = $this->enabled;
             $this->enabled = $enabled;
             $result = true;
         }
 
         return $result;
+    }
+
+    /**
+     * Prepare entity before update 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     * @PreUpdate
+     */
+    public function prepareUpdate()
+    {
+        if (isset($this->oldEnabled) && $this->oldEnabled != $this->enabled) {
+            if ($this->enabled) {
+                $this->prepareEnable();
+            }
+        }
+    }
+
+    /**
+     * Prepare entity before enable 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareEnable()
+    {
+        $name = $this->getAuthor() . LC_DS . $this->getName();
+
+        // Install YAML fixtures
+        $installYAMLPath = LC_MODULES_DIR . $name . LC_DS . 'install.yaml';
+        if (file_exists($installYAMLPath)) {
+            \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::addFixtureToList($installYAMLPath);
+        }
+
+        // Install SQL dump
+        $installSQLPath = LC_MODULES_DIR . $name . LC_DS . 'install.sql';
+
+        if (file_exists($installSQLPath)) {
+            try {
+                \XLite\Core\Database::getInstance()->importSQLFromFile($installSQLPath);
+
+            } catch (\InvalidArgumentException $exception) {
+
+                \XLite\Logger::getInstance()->log($exception->getMessage(), PEAR_LOG_ERR);
+                $status = self::INSTALLED_WO_SQL;
+
+            } catch (\PDOException $exception) {
+
+                \XLite\Logger::getInstance()->log($exception->getMessage(), PEAR_LOG_ERR);
+                $status = self::INSTALLED_WO_SQL;
+            }
+        }
+    }
+
+    /**
+     * Prepare entity before disable 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function prepareDisable()
+    {
+        $name = $this->getAuthor() . LC_DS . $this->getName();
+
+        $installYAMLPath = LC_MODULES_DIR . $name . LC_DS . 'install.yaml';
+        if (file_exists($installYAMLPath)) {
+            \XLite\Core\Database::getInstance()->unloadFixturesFromYaml($installYAMLPath);
+        }
+
+        // Uninstall SQL dump
+        $installSQLPath = LC_MODULES_DIR . $name . LC_DS . 'uninstall.sql';
+
+        if (file_exists($installSQLPath)) {
+            try {
+                \XLite\Core\Database::getInstance()->importSQLFromFile($installSQLPath);
+
+            } catch (\InvalidArgumentException $exception) {
+
+                \XLite\Logger::getInstance()->log($exception->getMessage(), PEAR_LOG_ERR);
+                $status = self::INSTALLED_WO_SQL;
+
+            } catch (\PDOException $exception) {
+
+                \XLite\Logger::getInstance()->log($exception->getMessage(), PEAR_LOG_ERR);
+                $status = self::INSTALLED_WO_SQL;
+            }
+        }
     }
 
     /**
@@ -328,6 +433,17 @@ class Module extends \XLite\Model\AEntity
     {
         $disableIds = array_merge(array($this->getModuleId()), $this->getDependedModuleIds());
         $this->getRepository()->updateInBatchById(array_fill_keys($disableIds, array('enabled' => false)));
+
+        // Uninstall YAML
+        foreach ($disableIds as $id) {
+            $module = \XLite\Core\Database::getRepo('XLite\Model\Module')->find($id);
+            if ($module) {
+                $module->prepareDisable();
+            }
+        }
+
+        // Rebuild Decorator-based modules list
+        \Includes\Decorator\Utils\ModulesManager::removeFile();
     }
 
     /**
@@ -486,6 +602,7 @@ class Module extends \XLite\Model\AEntity
 
         if ($mainClass) {
 
+            /*
             // Install YAML fixtures
             $installYAMLPath = LC_MODULES_DIR . $name . LC_DS . 'install.yaml';
             if (file_exists($installYAMLPath)) {
@@ -521,6 +638,7 @@ class Module extends \XLite\Model\AEntity
                     $status = self::INSTALLED_WO_SQL;
                 }
             }
+            */
 
             // Run custom install code
             /* FIXME - obsolete code 

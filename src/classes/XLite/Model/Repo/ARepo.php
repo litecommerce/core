@@ -1157,7 +1157,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param \XLite\Model\AEntity $parent      Entity parent callback OPTIONAL
      * @param array                $parentAssoc Entity mapped propery method OPTIONAL
      *  
-     * @return boolean|integer
+     * @return integer
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -1458,6 +1458,69 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         }
 
         return $this->entityProperties;
+    }
+
+    /**
+     * Unload fixtures 
+     * 
+     * @param array                $data        Data
+     * @param \XLite\Model\AEntity $parent      Entity parent callback OPTIONAL
+     * @param array                $parentAssoc Entity mapped propery method OPTIONAL
+     *  
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function unloadFixtures(array $data, \XLite\Model\AEntity $parent = null, array $parentAssoc = array())
+    {
+        $result = 0;
+
+        list($regular, $assocs) = $this->getEntityProperties();
+        foreach ($data as $record) {
+            if ($this->unloadFixture($record, $regular, $assocs, $parent, $parentAssoc)) {
+                $result++;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Unload fixture 
+     * 
+     * @param array                $record      Record
+     * @param array                $regular     Regular fields info OPTIONAL
+     * @param array                $assocs      Associations info OPTIONAL
+     * @param \XLite\Model\AEntity $parent      Entity parent callback OPTIONAL
+     * @param array                $parentAssoc Entity mapped propery method OPTIONAL
+     *  
+     * @return \XLite\Model\AEntity
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function unloadFixture(
+        array $record,
+        array $regular = array(),
+        array $assocs = array(),
+        \XLite\Model\AEntity $parent = null,
+        array $parentAssoc = array()
+    ) {
+
+        $result = 0;
+
+        if (!$regular || !$assocs) {
+            list($regular, $assocs) = $this->getEntityProperties();
+        }
+
+        $entity = $this->findOneByRecord($record, $parent);
+
+        if ($entity) {
+            \XLite\Core\Database::getEM()->remove($entity);
+        }
+
+        return $entity;
     }
 
     /**

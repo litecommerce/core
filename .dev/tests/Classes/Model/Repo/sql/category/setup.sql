@@ -17,13 +17,13 @@ UPDATE xlite_option_groups SET product_id = null;
 DELETE FROM xlite_products;
 DELETE FROM xlite_product_translations;
 
-INSERT INTO xlite_categories VALUES (1,null,1,14,null,1,'',1);
-INSERT INTO xlite_categories VALUES (14015,1,2,9,null,1,'fruit',1);
-INSERT INTO xlite_categories VALUES (14009,1,10,13,null,0,'vegetables',1);
-INSERT INTO xlite_categories VALUES (14016,14015,3,4,null,1,'fruit_1',1);
-INSERT INTO xlite_categories VALUES (14017,14015,5,6,null,0,'fruit_2',1);
-INSERT INTO xlite_categories VALUES (14018,14015,7,8,null,1,'fruit_3',1);
-INSERT INTO xlite_categories VALUES (14019,14009,11,12,null,1,'vegetables_1',1);
+INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, membership_id, enabled, cleanUrl, show_title) VALUES (1,null,1,14,null,1,'',1);
+INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, membership_id, enabled, cleanUrl, show_title) VALUES (14015,1,2,9,null,1,'fruit',1);
+INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, membership_id, enabled, cleanUrl, show_title) VALUES (14009,1,10,13,null,0,'vegetables',1);
+INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, membership_id, enabled, cleanUrl, show_title) VALUES (14016,14015,3,4,null,1,'fruit_1',1);
+INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, membership_id, enabled, cleanUrl, show_title) VALUES (14017,14015,5,6,null,0,'fruit_2',1);
+INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, membership_id, enabled, cleanUrl, show_title) VALUES (14018,14015,7,8,null,1,'fruit_3',1);
+INSERT INTO xlite_categories (category_id, parent_id, lpos, rpos, membership_id, enabled, cleanUrl, show_title) VALUES (14019,14009,11,12,null,1,'vegetables_1',1);
 
 INSERT INTO xlite_category_quick_flags VALUES (1,1,2,2);
 INSERT INTO xlite_category_quick_flags VALUES (2,14015,3,2);
@@ -36,13 +36,13 @@ INSERT INTO xlite_category_quick_flags VALUES (7,14019,0,0);
 INSERT INTO xlite_category_images VALUES (1,14015,'demo_c14015.jpeg','image/jpeg',160,92,9201,1278408407,'');
 INSERT INTO xlite_category_images VALUES (2,14009,'demo_c14009.jpeg','image/jpeg',160,127,10863,1278408407,'');
 
-INSERT INTO xlite_category_translations VALUES (1,'en',1,'','','','','');
-INSERT INTO xlite_category_translations VALUES (2,'en',14015,'Fruit','<p>In botany, a fruit is the ripened ovary, together with its seeds, of a flowering plant. In cuisine, when discussing fruit as food, the term usually refers to just those plant fruits that are sweet and fleshy, examples of which would be plum, apple, and orange. However, a great many common vegetables, as well as nuts and grains, are the fruit of the plants they come from. Fruits that might not be considered such in a culinary context include gourds (e.g. squash and pumpkin), maize, tomatoes, and green peppers. These are fruits to a botanist, but are generally treated as vegetables in cooking. Some spices, such as allspice and nutmeg, are fruits. Rarely, culinary \"fruits\" are not fruits in the botanical sense, such as rhubarb in which only the sweet leaf petiole is edible.</p>\n<p>The term false fruit is sometimes applied to a fruit, like the fig (a multiple-accessory fruit) or to a plant structure that resembles a fruit but is not derived from a flower or flowers. Some gymnosperms, such as yew, have fleshy arils that resemble fruits and some junipers have berry-like, fleshy cones.</p>\n<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">From <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"\" href=\"http://www.knowledgerush.com\">www.knowledgerush.com</a></div>','','','');
-INSERT INTO xlite_category_translations VALUES (3,'en',14009,'Vegetables','<p>Vegetable is a nutritional and culinary term denoting any part of a plant that is commonly consumed by humans as food, but is not regarded as a culinary fruit, nut, herb, spice, or grain. In common usage, vegetables include the leaves (e.g. lettuce), stems (asparagus), and roots (carrot) of various plants. But the term can also encompass non-sweet fruits such as seed-pods (beans), cucumbers, squashes, pumpkins, tomatoes, avocadoes, green peppers, etc.; even some seeds (peas and beans) that are easily softened by soaking.</p>\n<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">From <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"\" href=\"http://www.knowledgerush.com\">www.knowledgerush.com</a></div>','','','');
-INSERT INTO xlite_category_translations VALUES (4,'en',14016,'','','','','');
-INSERT INTO xlite_category_translations VALUES (5,'en',14017,'','','','','');
-INSERT INTO xlite_category_translations VALUES (6,'en',14018,'','','','','');
-INSERT INTO xlite_category_translations VALUES (7,'en',14019,'','','','','');
+INSERT INTO xlite_category_translations (label_id, code, id, name, description, meta_tags, meta_desc, meta_title) VALUES (1,'en',1,'','','','','');
+INSERT INTO xlite_category_translations (label_id, code, id, name, description, meta_tags, meta_desc, meta_title) VALUES (2,'en',14015,'Fruit','<p>In botany, a fruit is the ripened ovary, together with its seeds, of a flowering plant. In cuisine, when discussing fruit as food, the term usually refers to just those plant fruits that are sweet and fleshy, examples of which would be plum, apple, and orange. However, a great many common vegetables, as well as nuts and grains, are the fruit of the plants they come from. Fruits that might not be considered such in a culinary context include gourds (e.g. squash and pumpkin), maize, tomatoes, and green peppers. These are fruits to a botanist, but are generally treated as vegetables in cooking. Some spices, such as allspice and nutmeg, are fruits. Rarely, culinary \"fruits\" are not fruits in the botanical sense, such as rhubarb in which only the sweet leaf petiole is edible.</p>\n<p>The term false fruit is sometimes applied to a fruit, like the fig (a multiple-accessory fruit) or to a plant structure that resembles a fruit but is not derived from a flower or flowers. Some gymnosperms, such as yew, have fleshy arils that resemble fruits and some junipers have berry-like, fleshy cones.</p>\n<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">From <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"\" href=\"http://www.knowledgerush.com\">www.knowledgerush.com</a></div>','','','');
+INSERT INTO xlite_category_translations (label_id, code, id, name, description, meta_tags, meta_desc, meta_title) VALUES (3,'en',14009,'Vegetables','<p>Vegetable is a nutritional and culinary term denoting any part of a plant that is commonly consumed by humans as food, but is not regarded as a culinary fruit, nut, herb, spice, or grain. In common usage, vegetables include the leaves (e.g. lettuce), stems (asparagus), and roots (carrot) of various plants. But the term can also encompass non-sweet fruits such as seed-pods (beans), cucumbers, squashes, pumpkins, tomatoes, avocadoes, green peppers, etc.; even some seeds (peas and beans) that are easily softened by soaking.</p>\n<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">From <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"\" href=\"http://www.knowledgerush.com\">www.knowledgerush.com</a></div>','','','');
+INSERT INTO xlite_category_translations (label_id, code, id, name, description, meta_tags, meta_desc, meta_title) VALUES (4,'en',14016,'','','','','');
+INSERT INTO xlite_category_translations (label_id, code, id, name, description, meta_tags, meta_desc, meta_title) VALUES (5,'en',14017,'','','','','');
+INSERT INTO xlite_category_translations (label_id, code, id, name, description, meta_tags, meta_desc, meta_title) VALUES (6,'en',14018,'','','','','');
+INSERT INTO xlite_category_translations (label_id, code, id, name, description, meta_tags, meta_desc, meta_title) VALUES (7,'en',14019,'','','','','');
 
 
 INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (15090,'1.99','1.99','00000',1,'0.32','',0,'');

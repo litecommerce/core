@@ -91,6 +91,59 @@ class Db extends \XLite\Controller\Console\AConsole
     }
 
     /**
+     * Unload fixtures based on YAML file
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUnloadFixtures()
+    {
+        $isTemporary = false;
+        $path = \XLite\Core\Request::getInstance()->path;
+
+        if (!$path && $this->isInputStream()) {
+            $path = $this->saveInputStream();
+            $isTemporary = true;
+        }
+
+        if (!$path) {
+            $this->printError('Path is not specified');
+
+        } elseif (!file_exists($path) || !is_readable($path)) {
+            $this->printError('Path is invalid');
+
+        } else {
+            try {
+                $unloadedLines = \XLite\Core\Database::getInstance()->unloadFixturesFromYaml($path);
+                $this->printContent('Unloaded lines: ' . $unloadedLines);
+
+            } catch (\PDOException $e) {
+                $this->printError(strip_tags($e->getMessage()));
+                throw $e;
+            }
+        }
+
+        if ($isTemporary && $path) {
+            unlink($path);
+        }
+    }
+
+    /**
+     * Get help for unloadFixtures action
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHelpUnloadFixtures()
+    {
+        return '--path="<path>"   Option with path to YAML file';
+    }
+
+    /**
      * Export DB schema 
      * 
      * @return void
