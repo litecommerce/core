@@ -16,12 +16,12 @@
 <div class="products">
 
   <ul class="products-grid grid-list" IF="getPageData()">
-    <li FOREACH="getPageData(),product" class="product-cell">
+    <li FOREACH="getPageData(),product" class="product-cell hproduct">
       <div class="{getProductCellClass(product)}">
         {displayListPart(#info#,_ARRAY_(#product#^product))}
       </div>
     </li>
-    <li FOREACH="getNestedViewList(#items#),item" class="product-cell">{item.display()}</li>
+    <li FOREACH="getNestedViewList(#items#),item" class="product-cell hproduct">{item.display()}</li>
   </ul>
 
 </div>
