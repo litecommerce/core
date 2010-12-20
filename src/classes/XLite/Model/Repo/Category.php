@@ -119,20 +119,22 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Define the Doctrine query
      *
-     * @param integer $categoryId Category Id
+     * @param \XLite\Model\Category $category Category
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineSiblingsQuery($categoryId)
+    protected function defineSiblingsQuery(\XLite\Model\Category $category)
     {
-        $parentId = $this->find($categoryId)->getParent()->getCategoryId();
+        $parentId = $category->getParent()
+            ? $category->getParent()->getCategoryId()
+            : 0;
 
         return $this->defineSubcategoriesQuery($parentId)
             ->andWhere('c.category_id <> :category_id')
-            ->setParameter('category_id', $categoryId);
+            ->setParameter('category_id', $category->getCategoryId());
             
     }
 
@@ -614,9 +616,11 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getSiblings($categoryId)
     {
-        return $this->defineSiblingsQuery($categoryId)
-            ->getQuery()
-            ->getResult();
+        $category = $this->find($categoryId);
+
+        return $category
+            ? $this->defineSiblingsQuery($category)->getQuery()->getResult()
+            : array();
     }
 
     /**

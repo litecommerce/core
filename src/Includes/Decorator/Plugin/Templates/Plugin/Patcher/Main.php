@@ -193,7 +193,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function executeHookHandlerRun()
+    public function executeHookHandlerPostprocess()
     {
         // Truncate old
         $this->clearAll();

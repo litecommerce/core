@@ -104,7 +104,6 @@ class Modules extends \XLite\Controller\Admin\AAdmin
 
         if ($module) {
             $module->setEnabled(true);
-            \XLite\Core\Database::getEM()->persist($module);
             \XLite\Core\Database::getEM()->flush();
             \XLite::setCleanUpCacheFlag(true);
         }

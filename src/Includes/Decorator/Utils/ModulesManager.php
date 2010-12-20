@@ -50,6 +50,12 @@ abstract class ModulesManager extends AUtils
 
 
     /**
+     * Modules list file name
+     */
+    const MODULES_FILE_NAME = '.decorator.modules.ini.php';
+
+
+    /**
      * List of active modules
      * 
      * @var    array
@@ -87,6 +93,21 @@ abstract class ModulesManager extends AUtils
     }
 
     /**
+     * Get modules list file path 
+     * 
+     * @return string|void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getModulesFilePath()
+    {
+        $path = LC_VAR_DIR . static::MODULES_FILE_NAME;
+
+        return (file_exists($path) && is_readable($path)) ? $path : null;
+    }
+
+    /**
      * Fetch list of active modules from DB
      * 
      * @return array
@@ -96,11 +117,38 @@ abstract class ModulesManager extends AUtils
      */
     protected static function getModulesList(array $fields = array(), array $conditions = array())
     {
-        return \Includes\Utils\Database::fetchAll(
-            'SELECT ' . static::getModuleNameField() . static::getModuleNameField()
-            . static::getTableName() . '.* FROM ' . static::getTableName() . ' WHERE enabled = \'1\'',
-            \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE
-        );
+        $path = static::getModulesFilePath();
+
+        if ($path) {
+
+            $list = array();
+            foreach (parse_ini_file($path, true) as $author => $authors) {
+                foreach ($authors as $name => $enabled) {
+                    if ($enabled) {
+                        $list[$author . '\\' . $name] = array(
+                            'actualName' => $author . '\\' . $name,
+                            'moduleId'   => null,
+                            'name'       => $name,
+                            'author'     => $author,
+                            'enabled'    => 1,
+                            'status'     => 0,
+                            'moduleName' => $name,
+                            'authorName' => $author,
+                        );
+                    }
+                }
+            };
+
+        } else {
+
+            $list = \Includes\Utils\Database::fetchAll(
+                'SELECT ' . static::getModuleNameField() . static::getModuleNameField()
+                . static::getTableName() . '.* FROM ' . static::getTableName() . ' WHERE enabled = \'1\'',
+                \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE
+            );
+        }
+
+        return $list;
     }
 
     /**
@@ -206,11 +254,27 @@ abstract class ModulesManager extends AUtils
     }
 
     /**
+     * Remove file with active modules list
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function removeFile()
+    {
+        $path = static::getModulesFilePath();
+        if ($path) {
+            @unlink($path);
+        }
+    }
+
+    /**
      * Set module enabled fleg fo "false"
      *
      * @param string $key module actual name (key)
      * 
-     * @return null
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -218,17 +282,70 @@ abstract class ModulesManager extends AUtils
     public static function disableModule($key)
     {
         // Check if module exists and enabled
-        if ($module = static::getActiveModules($key)) {
+        $module = static::getActiveModules($key);
+        if ($module) {
 
-            // Set flag in DB
-            \Includes\Utils\Database::execute(
-                'UPDATE ' . static::getTableName() . ' SET enabled = ? WHERE module_id = ?',
-                array(0, $module['module_id'])
-            );
+            $path = static::getModulesFilePath();
+
+            if ($path) {
+
+                // Set flag in .ini-file
+                $data = file_get_contents($path);
+
+                $data = preg_replace(
+                    '/(\[' . preg_quote($module['author'], '/') . '\][^\[]+\s' . preg_quote($module['name'], '/') . '\s*=)\s*\S+/Ss',
+                    '$1 0',
+                    $data
+                );
+
+                file_put_contents($path, $data);
+
+            } else {
+
+                // Set flag in DB
+                \Includes\Utils\Database::execute(
+                    'UPDATE ' . static::getTableName() . ' SET enabled = ? WHERE module_id = ?',
+                    array(0, $module['module_id'])
+                );
+            }
 
             // Remove from local cache
-            static::$activeModules[$key];
+            unset(static::$activeModules[$key]);
         }
+
+        return (bool)$module;
+    }
+
+    /**
+     * Switch on all active modules 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function switchModules()
+    {
+        $i = 0;
+
+        foreach (static::getActiveModules() as $data) {
+            $row = \Includes\Utils\Database::fetchAll('SELECT COUNT(*) as cnt FROM ' . static::getTableName() . ' WHERE author = "' . addslashes($data['author']) . '" AND name = "' . addslashes($data['name']) . '"');
+            if (0 < intval($row[0]['cnt'])) {
+                \Includes\Utils\Database::execute(
+                    'UPDATE ' . static::getTableName() . ' SET enabled = ? WHERE author = ? AND name = ?',
+                    array(1, $data['author'], $data['name'])
+                );
+
+            } else {
+                \Includes\Utils\Database::execute(
+                    'REPLACE INTO ' . static::getTableName() . ' SET enabled = ?, installed = ?, author = ?, name = ?, changelog = ?',
+                    array(1, 1, $data['author'], $data['name'], serialize(array()))
+                );
+            }
+            $i++;
+        }
+
+        return $i;
     }
 
     /**

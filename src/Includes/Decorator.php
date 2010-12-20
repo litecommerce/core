@@ -455,7 +455,8 @@ abstract class Decorator extends Decorator\ADecorator
             $result = $class;
 
         } elseif (
-            static::$classesInfo[$class][self::INFO_EXTENDS_ORIG] != static::$classesInfo[$class][self::INFO_EXTENDS]
+            isset(static::$classesInfo[$class])
+            && static::$classesInfo[$class][self::INFO_EXTENDS_ORIG] != static::$classesInfo[$class][self::INFO_EXTENDS]
             && isset(static::$classDecorators[static::$classesInfo[$class][self::INFO_EXTENDS_ORIG]])
         ) {
 

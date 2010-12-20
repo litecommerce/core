@@ -174,13 +174,13 @@ class Category extends \XLite\Model\Base\I18n
      * Child categories
      * 
      * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @access private
+     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
      * @OneToMany(targetEntity="XLite\Model\Category", mappedBy="parent")
      */
-    private $childs;
+    protected $childs;
 
     /**
      * Parent category

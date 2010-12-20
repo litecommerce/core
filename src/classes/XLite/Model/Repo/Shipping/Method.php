@@ -49,6 +49,18 @@ class Method extends \XLite\Model\Repo\ARepo
     protected $type = self::TYPE_SECONDARY;
 
     /**
+     * Alternative record identifiers
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $alternativeIdentifier = array(
+        array('processor', 'code'),
+    );
+
+    /**
      * Adds additional condition to the query for checking if method is enabled
      * 
      * @param \Doctrine\ORM\QueryBuilder $qb    Query builder object

@@ -767,6 +767,40 @@ class Database extends \XLite\Base\Singleton
     }
 
     /**
+     * Unload fixtures from YAML file 
+     * 
+     * @param string $path YAML file path
+     *  
+     * @return boolean|integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function unloadFixturesFromYaml($path)
+    {
+        $data = \Symfony\Component\Yaml\Yaml::load($path);
+
+        $result = false;
+
+        if (is_array($data)) {
+            $result = 0;
+            foreach ($data as $entityName => $rows) {
+                $repo = static::getRepo($entityName);
+
+                if ($repo) {
+                    $result += $repo->unloadFixtures($rows);
+
+                    static::$em->flush();
+                    static::$em->clear();
+                }
+            }
+        }
+
+        return $result;
+    }
+
+
+    /**
      * Setup doctrine cache 
      * 
      * @return void
@@ -1055,6 +1089,8 @@ class Database extends \XLite\Base\Singleton
     {
         $lines = 0;
 
+        $conn = static::$em->getConnection();
+
         $stmt = $conn->prepare($sql);
         $stmt->execute();
 
@@ -1081,8 +1117,6 @@ class Database extends \XLite\Base\Singleton
      */
     public function importSQLFromFile($path)
     {
-        $conn = static::$em->getConnection();
-
         if (!file_exists($path)) {
 
             throw new \InvalidArgumentException(
