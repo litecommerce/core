@@ -10,33 +10,33 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
-$(document).ready(
+jQuery(document).ready(
   function() {
 
     // Add gift certificate verify popup controller
-    $('.gc-verify').click(
+    jQuery('.gc-verify').click(
       function() {
         return !popup.load(this);  
       }
     );
 
     // Assign min/max for amount field
-    var e = $('.gift-certificate input[name="amount"]').get(0);
+    var e = jQuery('.gift-certificate input[name="amount"]').get(0);
     if (e) {
       e.min = gcMinAmount;
       e.max = gcMaxAmount;
     }
 
     // Change delivery boxes visibility
-    $('.gift-certificate ul.delivery input').click(
+    jQuery('.gift-certificate ul.delivery input').click(
       function() {
         if (this.value == 'E') {
-          $('.gift-certificate .delivery-email').show();
-          $('.gift-certificate .delivery-post').hide();
+          jQuery('.gift-certificate .delivery-email').show();
+          jQuery('.gift-certificate .delivery-post').hide();
 
         } else {
-          $('.gift-certificate .delivery-post').show();
-          $('.gift-certificate .delivery-email').hide();
+          jQuery('.gift-certificate .delivery-post').show();
+          jQuery('.gift-certificate .delivery-email').hide();
         }
 
         return true;
@@ -44,7 +44,7 @@ $(document).ready(
     );
 
     // Change border icon
-    $('.gift-certificate select[name="border"]').change(
+    jQuery('.gift-certificate select[name="border"]').change(
       function() {
         var border_img = document.getElementById('border_img');
         if (border_img) {

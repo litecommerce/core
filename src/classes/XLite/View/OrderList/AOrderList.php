@@ -176,25 +176,6 @@ abstract class AOrderList extends \XLite\View\Dialog
     abstract protected function getWidgetKeys();
 
     /**
-     * Register JS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        // TODO JS search 
-        // $list[] = 'js/jquery.blockUI.js';
-        // $list[] = 'order/list/list.js';
-
-        return $list;
-    }
-
-    /**
      * Register CSS files
      *
      * @return array

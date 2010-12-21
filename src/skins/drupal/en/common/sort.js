@@ -16,7 +16,7 @@ function SortBoxController(container)
     return false;
   }
 
-  container = $(container);
+  container = jQuery(container);
 
   if (!container.length) {
     return false;
@@ -29,13 +29,13 @@ function SortBoxController(container)
   // Add listeners
   var o = this;
 
-  $('select', this.container).change(
+  jQuery('select', this.container).change(
     function() {
       return o.changeSortCriterion(this);
     }
   );
 
-  $('a', this.container).click(
+  jQuery('a', this.container).click(
     function() {
       return !o.changeSortOrder(this);
     }
@@ -60,15 +60,15 @@ SortBoxController.prototype.changeSortCriterion = function(select)
 // Change sort order
 SortBoxController.prototype.changeSortOrder = function(link)
 {
-  var e = $('input[name="sortOrder"]', this.form).eq(0);
+  var e = jQuery('input[name="sortOrder"]', this.form).eq(0);
   if (!e.length)  {
     e = document.createElement('INPUT')
     e.type = 'hidden';
     e.name = 'sortOrder';
-    e = $(this.form.get(0).appendChild(e));
+    e = jQuery(this.form.get(0).appendChild(e));
   }
 
-  e.attr('value', $(link).hasClass('asc') ? 'desc' : 'asc');
+  e.attr('value', jQuery(link).hasClass('asc') ? 'desc' : 'asc');
 
   this.form.submit();
 

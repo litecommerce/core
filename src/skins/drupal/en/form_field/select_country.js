@@ -16,9 +16,9 @@ var stateSelectors = [];
 
 function StateSelector(countrySelectorId, stateSelectorId, stateInputId)
 {
-    this.countrySelectBox = $('#' + countrySelectorId);
-    this.stateSelectBox = $('#' + stateSelectorId);
-    this.stateInputBox = $('#' + stateInputId);
+    this.countrySelectBox = jQuery('#' + countrySelectorId);
+    this.stateSelectBox = jQuery('#' + stateSelectorId);
+    this.stateInputBox = jQuery('#' + stateInputId);
 
     this.stateSelectBoxValue = this.stateSelectBox.val();
     this.stateInputBoxValue = this.stateInputBox.val();

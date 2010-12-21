@@ -14,7 +14,7 @@
 // Get product option element by name
 function product_option(name_of_option)
 {
-  var e = $('form[name="add_to_cart"] :input').filter(
+  var e = jQuery('form[name="add_to_cart"] :input').filter(
     function() {
       return this.name && this.name.search(name_of_option) != -1;
     }

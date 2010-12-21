@@ -13,8 +13,8 @@
 core.trigger(
   'load',
   function() {
-    var form = $('form.select-address').eq(0);
-    $('.select-address li').click(
+    var form = jQuery('form.select-address').eq(0);
+    jQuery('.select-address li').click(
       function() {
         form.get(0).elements.namedItem('addressId').value = core.getValueFromClass(this, 'address')
         form.submit();

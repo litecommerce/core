@@ -77,16 +77,16 @@ ListView.prototype.postprocess = function(isSuccess, initial)
     var o = this;
 
     // Register page click handler
-    $('.pager a', this.base).click(
+    jQuery('.pager a', this.base).click(
       function() {
         return !o.load({'pageId': core.getValueFromClass(this, 'page')});
       }
     );
 
     // Register page count change handler
-    $('input.page-length', this.base).change(
+    jQuery('input.page-length', this.base).change(
       function() {
-        count = parseInt($(this).val());
+        count = parseInt(jQuery(this).val());
 
         if (isNaN(count)) {
           //TODO We must take it from the previous widget parameters ... 
@@ -95,8 +95,8 @@ ListView.prototype.postprocess = function(isSuccess, initial)
           count = 1;
         }
 
-        if (count != $(this).val()) {
-          $(this).val(count);
+        if (count != jQuery(this).val()) {
+          jQuery(this).val(count);
         }
 
         return !o.load({'itemsPerPage': count});
@@ -104,11 +104,11 @@ ListView.prototype.postprocess = function(isSuccess, initial)
     );
 
     // Fix for Opera. Opera does not interpret onChange event if client presses Enter key.
-    if ($.browser.opera) {
-      $('input.page-length', this.base).bind('keypress',
+    if (jQuery.browser.opera) {
+      jQuery('input.page-length', this.base).bind('keypress',
         function (e) {
           if (e.keyCode == '13') {
-            $(this).change();
+            jQuery(this).change();
           }
         }
       );

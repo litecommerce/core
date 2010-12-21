@@ -167,5 +167,37 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 
         return $result;
     }
+
+    /**  
+     * Register files from common repository
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCommonFiles()
+    {
+        $list = parent::getCommonFiles();
+
+        $key = array_search('js/jquery.min.js', $list['js']);
+        if (false !== $key) {
+            unset($list['js'][$key]);
+        }
+
+        /*
+        $key = array_search('js/jquery-ui.min.js', $list['js']);
+        if (false !== $key) {
+            unset($list['js'][$key]);
+        }
+
+        $key = array_search('css/jquery-ui.css', $list['css']);
+        if (false !== $key) {
+            unset($list['css'][$key]);
+        }
+        */
+
+        return $list;
+    }
 }
 

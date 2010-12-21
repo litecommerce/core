@@ -169,18 +169,19 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
         return min($this->getProduct()->getImage()->getWidth(), $this->getParam(self::PARAM_ZOOM_MAX_WIDTH));
     }
 
-    /**
-     * Register JS files
+    /**  
+     * Register files from common repository
      *
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getJSFiles()
+    public function getCommonFiles()
     {
-        $list = parent::getJSFiles();
-        $list[] = 'js/cloud-zoom.min.js';
+        $list = parent::getCommonFiles();
+
+        $list['js'][] = 'js/cloud-zoom.min.js';
 
         return $list;
     }

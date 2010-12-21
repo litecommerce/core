@@ -10,11 +10,11 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
-$(document).ready(
+jQuery(document).ready(
   function() {
-    $('.notify-me.product-notify a').click(
+    jQuery('.notify-me.product-notify a').click(
       function() {
-        return notifyMe(this, $('form.product-details'));
+        return notifyMe(this, jQuery('form.product-details'));
       }
     );
   }

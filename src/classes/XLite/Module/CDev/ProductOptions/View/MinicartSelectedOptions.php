@@ -125,7 +125,23 @@ class MinicartSelectedOptions extends \XLite\View\AView
         $list = parent::getJSFiles();
 
         $list[] = 'modules/CDev/ProductOptions/minicart.js';
-        $list[] = 'js/jquery.cluetip.js';
+
+        return $list;
+    }
+
+    /**  
+     * Register files from common repository
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCommonFiles()
+    {
+        $list = parent::getCommonFiles();
+
+        $list['js'][] = 'js/jquery.cluetip.js';
 
         return $list;
     }

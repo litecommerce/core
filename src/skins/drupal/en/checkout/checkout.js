@@ -40,17 +40,17 @@ function continueCheckout()
   return true;
 }
 
-$(document).ready(
+jQuery(document).ready(
   function() {
-    $('form.payment-methods').submit(continueCheckout);
+    jQuery('form.payment-methods').submit(continueCheckout);
 
     var clickHandler = function () {
       if (!this._liList) {
-        this._liList = $('li', $(this).parents('ul').eq(0));
+        this._liList = jQuery('li', jQuery(this).parents('ul').eq(0));
       }
 
       if (!this._li) {
-        this._li = $(this).parents('li').eq(0);
+        this._li = jQuery(this).parents('li').eq(0);
       }
 
       this._liList.removeClass('selected');
@@ -60,8 +60,8 @@ $(document).ready(
       }
     }
 
-    $('form.payment-methods li input').click(clickHandler);
-    $('ul.deliveries li input').click(clickHandler);
+    jQuery('form.payment-methods li input').click(clickHandler);
+    jQuery('ul.deliveries li input').click(clickHandler);
   }
 );
 
@@ -91,24 +91,24 @@ function showStar(name)
 
   return true;
 }
-$(document).ready(
+jQuery(document).ready(
   function() {
-    $('.checkout-details :submit')
+    jQuery('.checkout-details :submit')
       .attr('disabled', 'disabled')
       .submit(
         function() {
-          $(':submit', this).hide();
-          $('.submit-progress', this).show();
+          jQuery(':submit', this).hide();
+          jQuery('.submit-progress', this).show();
         }
       );
 
-    $('.checkout-details #agree').click(
+    jQuery('.checkout-details #agree').click(
       function() {
         if (this.checked) {
-          $('.checkout-details :submit').removeAttr('disabled');
+          jQuery('.checkout-details :submit').removeAttr('disabled');
 
         } else {
-          $('.checkout-details :submit').attr('disabled', 'disabled');
+          jQuery('.checkout-details :submit').attr('disabled', 'disabled');
         }
       }
     );

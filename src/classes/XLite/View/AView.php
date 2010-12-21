@@ -427,12 +427,17 @@ abstract class AView extends \XLite\Core\Handler
      */
     public function getResources()
     {
+        $common = $this->getCommonFiles();
+
         return self::getResourcesSchema(
             array_merge(
-                static::prepareResources($this->getCommonFiles(), true), // prepare common JS files
+                static::prepareResources($common['js'], true), // prepare common JS files
                 static::prepareResources($this->getJSFiles()) // prepare JS files specific for the skin + widget
             ),
-            static::prepareResources($this->getCSSFiles())
+            array_merge(
+                static::prepareResources($common['css'], true),
+                static::prepareResources($this->getCSSFiles())
+            )
         );
     }
 
@@ -550,16 +555,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     public function getJSFiles()
     {
-        $list = array(
-            'js/php.js',
-            'js/jquery.mousewheel.js',
-        );
-
-        if (\XLite\Logger::isMarkTemplates()) {
-            $list[] = 'js/template_debuger.js';
-        }
-
-        return $list;
+        return array();
     }
 
     /**  
@@ -573,13 +569,26 @@ abstract class AView extends \XLite\Core\Handler
     public function getCommonFiles()
     {    
         $list = array(
-            'js/common.js',
-            'js/core.js',
-            'js/core.controller.js',
-            'js/core.loadable.js',
-            'js/core.popup.js',
-            'js/core.form.js',
+            'js' => array(
+                'js/jquery.min.js',
+                'js/jquery-ui.min.js',
+                'js/common.js',
+                'js/core.js',
+                'js/core.controller.js',
+                'js/core.loadable.js',
+                'js/core.popup.js',
+                'js/core.form.js',
+                'js/php.js',
+                'js/jquery.mousewheel.js',
+            ),
+            'css' => array(
+                'css/jquery-ui.css',
+            ),
         );
+
+        if (\XLite\Logger::isMarkTemplates()) {
+            $list['js'][] = 'js/template_debuger.js';
+        }
 
         return $list;
     }    

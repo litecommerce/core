@@ -11,9 +11,9 @@
  * @since     3.0.0
  */
 
-$(document).ready(
+jQuery(document).ready(
   function () {
-    $('ul.deliveries li input').not(':checked').click(
+    jQuery('ul.deliveries li input').not(':checked').click(
       function() {
         this.form.submit();
       }

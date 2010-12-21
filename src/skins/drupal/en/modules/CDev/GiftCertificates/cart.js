@@ -10,9 +10,9 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
-$(document).ready(
+jQuery(document).ready(
   function() {
-    $('#shopping-cart form.verify-gc').submit(
+    jQuery('#shopping-cart form.verify-gc').submit(
       function() {
         return !popup.load(this);
       }
