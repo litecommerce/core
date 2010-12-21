@@ -112,7 +112,7 @@ XLite\Model\Config:
   - { name: use_smtp, category: Email, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Use SMTP server', option_comment: '' }] }
   - { name: use_smtp_auth, category: Email, type: checkbox, orderby: 140, value: N, translations: [{ code: en, option_name: 'Use authentication', option_comment: '' }] }
   - { name: valid_email_domains, category: Email, type: text, orderby: 30, value: com;net;edu;mil;gov;org;biz, translations: [{ code: en, option_name: 'Valid domain names for email', option_comment: '' }] }
-  - { name: version, category: Version, value: 3.0.0-alpha2 }
+  - { name: version, category: Version, value: xlite_3_0_x }
   - { name: weight_symbol, category: General, type: text, orderby: 620, value: lbs, translations: [{ code: en, option_name: 'Weight symbol', option_comment: '' }] }
   - { name: weight_unit, category: General, type: select, orderby: 610, value: lbs, translations: [{ code: en, option_name: 'Weight unit', option_comment: '' }] }
   - { name: you_save, category: General, type: select, orderby: 296, value: Y, translations: [{ code: en, option_name: 'Enable "save" label (for Market Price)', option_comment: '' }] }
