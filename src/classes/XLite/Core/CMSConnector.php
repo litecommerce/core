@@ -286,13 +286,15 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Return list of widgets which can be exported
      *
-     * @return array
+     * @param string $name Widget name OPTIONAL
+     *
+     * @return array|string|null
      * @access public
      * @since  3.0.0
      */
-    public function getWidgetsList()
+    public function getWidgetsList($name = null)
     {
-        return $this->widgetsList;
+        return isset($name) ? @$this->widgetsList[$name] : $this->widgetsList;
     }
 
     /**
