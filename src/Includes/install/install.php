@@ -816,12 +816,17 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
     if (defined('DB_URL')) {
         // Connect via PDO and get DB version
 
-        $data = parseDbUrl(constant('DB_URL'));
+        $data = unserialize(constant('DB_URL'));
+
+        // Support of Drupal 6 $db_url
+        if (!is_array($data)) {
+            $data = parseDbUrl(constant('DB_URL'));
+        }
         
         $isConnected = dbConnect($data, $pdoErrorMsg);
 
         if (!$isConnected) {
-            $errorMsg = 'Can\'t conenct to MySQL server' . (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : '');
+            $errorMsg = 'Can\'t connect to MySQL server' . (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : '');
             $result = false;
         }
     }
@@ -960,9 +965,8 @@ function checkXmlSupport(&$errorMsg, &$value)
 
 
 /**
- * Installing the database
+ * Prepare the fixtures: the list of yaml files for uploading to the database
  * 
- * @param string $trigger    Flag: 'base', 'demo' or 'all'
  * @param array  $params     Database access data and other parameters
  * @param bool   $silentMode Do not display any output during installing
  *  
@@ -971,182 +975,74 @@ function checkXmlSupport(&$errorMsg, &$value)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function doInstallDatabase($trigger, &$params, $silentMode = false)
+function doPrepareFixtures(&$params, $silentMode = false)
 {
     global $lcSettings;
 
-    $result = false;
+    // Generate fixtures list
+    $yamlFiles = $lcSettings['yaml_files']['base'];
 
-    $pdoErrorMsg = '';
+    $moduleYamlFiles = array();
 
-    if (!in_array($trigger, array('base', 'demo', 'all'))) {
-        $errMsg = (!$silentMode ? 'Internal error: wrong trigger parameter. Stopped' : '');
-        die($errMsg);
+    foreach ($lcSettings['enable_modules'] as $author => $modules) {
+
+        foreach ($modules as $moduleName) {
+
+            $moduleFile = constant('LC_ROOT_DIR') . str_replace('/', LC_DS, sprintf('classes/XLite/Module/%s/%s/install.yaml', $author, $moduleName));
+
+            if (file_exists($moduleFile)) {
+                $moduleYamlFiles[] = $moduleFile;
+            }
+        }
     }
 
+    sort($moduleYamlFiles, SORT_STRING);
+
+    $yamlFiles = $yamlFiles + $moduleYamlFiles;
+
+    if ($params['demo']) {
+        $yamlFiles = $yamlFiles + $lcSettings['yaml_files']['demo'];
+    }
+
+    // Remove fixtures file (if exists)    
+    \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::removeFixtures();
+
+    // Add fixtures list
+    foreach ($yamlFiles as $file) {
+        \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::addFixtureToList();
+    }
+
+    // Update etc/config.php file
     $configUpdated = true;
 
     $isConnected = dbConnect($params, $pdoErrorMsg);
 
     if ($isConnected) {
 
-        $_sql = array();
-        $_queries = array();
-
-        if (in_array($trigger, array('base', 'all'))) {
-
-            $_sql = $lcSettings['sql_files']['base'];
-
-            $modulesFound = array();
-
-            $lcModuleDir = constant('LC_ROOT_DIR') . 'classes' . LC_DS . 'XLite' . LC_DS . 'Module';
-
-            $authorsDir = scandir($lcModuleDir);
-
-            if (!empty($authorsDir) ) {
-
-                foreach ($authorsDir as $authorDir) {
-
-                    if ($authorDir{0} != '.' && is_dir($lcModuleDir . LC_DS . $authorDir)) {
-
-                        $modulesDir = opendir($lcModuleDir . LC_DS . $authorDir);
-
-                        while (($dir = readdir($modulesDir)) !== false) {
-
-                            if ($dir{0} != '.' && is_dir($lcModuleDir . LC_DS . $authorDir . LC_DS . $dir)) {
-                                $modulesFound[] = $authorDir . LC_DS . $dir;
-                            }
-                        }
-
-                        closedir($modulesDir);
-                    }
-                }
-            }
-
-            sort($modulesFound, SORT_STRING);
-
-            foreach ($modulesFound as $dir) {
-
-                include_once $lcModuleDir . LC_DS . $dir . LC_DS . 'Main.php';
-
-                list($author, $name) = explode(LC_DS, $dir);
-
-                $class = '\\XLite\\Module\\' . $author . '\\' . $name . '\\Main';
-
-                $_queries[] = 'REPLACE INTO xlite_modules SET
-                    author      = \'' . $author . '\',
-                    name        = \'' . $name . '\',
-                    enabled     = \'' . intval(in_array($author . '\\' . $name, $lcSettings['enable_modules'])). '.\',
-                    installed   = 1,
-                    version     = \'' . call_user_func(array($class, 'getVersion')) . '\',
-                    moduleName  = \'' . call_user_func(array($class, 'getModuleName')) . '\',
-                    authorName  = \'' . call_user_func(array($class, 'getAuthorName')) . '\',
-                    description = \'' . call_user_func(array($class, 'getDescription')) . '\'';
-
-                $_moduleSqlFile = 'classes' . LC_DS . 'XLite' . LC_DS . 'Module' . LC_DS . $dir . LC_DS . 'install.sql';
-
-                if (file_exists(constant('LC_ROOT_DIR') . $_moduleSqlFile)) {
-                    $_sql[] = $_moduleSqlFile;
-                }
-            }
-
-            // Write parameters into the config file
-            if (@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
-
-                if (!$silentMode) {
-                    echo "<br /><b>Updating " . constant('LC_CONFIG_FILE') . " file... </b><br />\n"; flush();
-                }
-
-                $configUpdated = change_config($params);
-
-            } else {
-                $configUpdated = false;
-            }
-
-            \Includes\Utils\FileManager::unlinkRecursive(LC_COMPILE_DIR);
-
-            if ($configUpdated !== true && !$silentMode) {
-                fatal_error('Cannot open configuration file "' . constant('LC_CONFIG_FILE') . '" for writing. This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.');
-            }
-
-        }
-        
-        if (in_array($trigger, array('demo', 'all'))) {
-
-            if (isset($params['states']) && !empty($params['states'])) {
-                $countryCodes = explode('-', $params['states']);
-        
-                foreach($countryCodes as $countryCode) {
-                    $_sql[] = $lcSettings['sql_files']['states'][$countryCode];
-                }
-            }
-
-            if ($params['demo']) {
-                $_sql = array_merge($_sql, $lcSettings['sql_files']['demo']);
-            }
-        }
-
-        if (true === $configUpdated) {
+        // Write parameters into the config file
+        if (@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
 
             if (!$silentMode) {
-               echo "<br /><b>Updating database... </b><br />\n"; flush();
+                echo "<br /><b>Updating " . constant('LC_CONFIG_FILE') . " file... </b><br />\n"; flush();
             }
 
-            foreach ($_sql as $_sqlFile) {
+            $configUpdated = change_config($params);
 
-                $output = 'Uploading ' . $_sqlFile . '...';
-                ob_start();
-                $result = uploadQuery(constant('LC_ROOT_DIR') . $_sqlFile, false);
-                $output .= (!$result ? ob_get_contents() : '<br />');
-                ob_end_clean();
+        } else {
+            $configUpdated = false;
+        }
 
-                if (!$silentMode) {
-                    echo $output;
-                    flush();
-                }
+        \Includes\Utils\FileManager::unlinkRecursive(LC_COMPILE_DIR);
 
-                if (!$result) {
-                    break;
-                }
-            }
-
-            if ($result && !empty($_queries)) {
-
-                if (!$silentMode) {
-                   echo "<br /><b>Enabling modules... </b><br />\n"; flush();
-                }
-
-                foreach ($_queries as $_query) {
-
-                    ob_start();
-
-                    dbExecute($_query, $pdoErrorMsg);
-
-                    if (!empty($pdoErrorMsg)) {
-                        $result = false;
-                        showQueryStatus($pdoErrorMsg, false);
-                    }
-
-                    $output = ob_get_contents();
-                    ob_end_clean();
-
-                    if (!$silentMode) {
-                        echo $output;
-                        flush();
-                    }
-
-                    if (!$result) {
-                        break;
-                    }
-                }
-            }
+        if ($configUpdated !== true && !$silentMode) {
+            fatal_error('Cannot open configuration file "' . constant('LC_CONFIG_FILE') . '" for writing. This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.');
         }
 
     } elseif (!$silentMode) {
         fatal_error('Cannot connect to MySQL server' . (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : '') . '.<br />This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.');
     }
 
-    return $result;
+    return $configUpdated;
 }
 
 /**
@@ -1218,6 +1114,12 @@ function doInstallDirs($params, $silentMode = false)
     if ($result) {
         echo "<BR><B>Copying templates...</B><BR>\n";
         $result = copy_files(constant('LC_TEMPLATES_REPOSITORY'), "", constant('LC_TEMPLATES_DIRECTORY'));
+    }
+
+    if ($result) {
+        \Includes\Decorator\Utils\ModulesManager::saveModulesToFile($lcSettings['enable_modules']);
+
+        $result = doPrepareFixtures($params, $silentMode);
     }
 
     if ($silentMode) {
@@ -2760,15 +2662,6 @@ function module_cfg_install_db(&$params)
             'description' => 'Password for the above MySQL username.',
             'def_value'   => '',
             'required'    => false
-        ),
-        'states'           => array(
-            'title'       => 'Geographic areas',
-            'description' => 'Specify which geographic areas you want to be listed in the database.',
-            'def_value'   => 'US',
-            'required'    => false,
-            'step'        => 2,
-            'type'        => 'select',
-            'select_data' => $lcSettings['states_list'],
         ),
         'demo'             => array(
             'title'       => 'Install sample catalog',
