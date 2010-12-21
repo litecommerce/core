@@ -10,18 +10,18 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
-$(document).ready(
+jQuery(document).ready(
   function() {
 
     // Add onchange amount-based form submit
-    $('#wish-list .item-actions input[name="wishlist_amount"]').change(
+    jQuery('#wish-list .item-actions input[name="wishlist_amount"]').change(
       function() {
         var result = true;
         var amount = parseInt(this.value);
         result = !isNaN(amount) && 0 < amount;
 
         if (result) {
-          $(this.form).submit();
+          jQuery(this.form).submit();
 
         } else {
           this.value = this.initialValue;
@@ -37,10 +37,10 @@ $(document).ready(
     );
 
     // Add hover listener for Move to cart button
-    $('#wish-list .add-to-cart')
+    jQuery('#wish-list .add-to-cart')
       .each(
         function() {
-          this.moveQuantityWidget = $('.move-quantity', $(this).parents('.item-buttons'));
+          this.moveQuantityWidget = jQuery('.move-quantity', jQuery(this).parents('.item-buttons'));
         }
       )
       .hover(
@@ -63,20 +63,20 @@ $(document).ready(
         }
       );
 
-      $('#wish-list .move-quantity').hover(
+      jQuery('#wish-list .move-quantity').hover(
         function() {
           if (this.hideTo) {
             clearTimeout(this.hideTo);
             this.hideTo = false;
           }
 
-          $(this).show();
+          jQuery(this).show();
         },
         function() {
           var o = this;
           this.hideTo = setTimeout(
             function() {
-              $(o).hide();
+              jQuery(o).hide();
             },
             500
           );

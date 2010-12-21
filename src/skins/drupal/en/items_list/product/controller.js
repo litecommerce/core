@@ -30,9 +30,9 @@ function ProductsListController(base)
         if (data.items[i].object_type == 'product') {
           productPattern = '.product.productid-' + data.items[i].object_id;
           if (data.items[i].quantity > 0) {
-            $(productPattern, base).addClass('product-added');
+            jQuery(productPattern, base).addClass('product-added');
           } else {
-            $(productPattern, base).removeClass('product-added');
+            jQuery(productPattern, base).removeClass('product-added');
           }
         }
       }
@@ -59,32 +59,32 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
   if (isSuccess) {
 
     // Column switcher for 'table' display mode
-    $('.products-table .column-switcher', this.base).commonController('markAsColumnSwitcher');
+    jQuery('.products-table .column-switcher', this.base).commonController('markAsColumnSwitcher');
 
     // Register "Changing display mode" handler
-    $('.display-modes a', this.base).click(
+    jQuery('.display-modes a', this.base).click(
       function() {
-        return !o.load({'displayMode': $(this).attr('class')});
+        return !o.load({'displayMode': jQuery(this).attr('class')});
       }
     );
 
     // Register "Sort by" selector handler
-    $('select.sort-crit', this.base).change(
+    jQuery('select.sort-crit', this.base).change(
       function () {
-        return !o.load({'sortBy': $(this).val()});
+        return !o.load({'sortBy': jQuery(this).val()});
       }
     );
 
     // Register "ASC/DESC" selector handler
-    $('a.sort-order', this.base).click(
+    jQuery('a.sort-order', this.base).click(
       function () {
         // TODO sort order value should be not defined from the content of a.sort-order
-        return !o.load({'sortOrder': $(this).html().charCodeAt(0) == 8595 ? 'desc' : 'asc'});
+        return !o.load({'sortOrder': jQuery(this).html().charCodeAt(0) == 8595 ? 'desc' : 'asc'});
       }
     );
 
     // Register "Quick look" button handler
-    $('.quicklook a.quicklook-link', this.base).click(
+    jQuery('.quicklook a.quicklook-link', this.base).click(
       function () {
         return !popup.load(
           URLHandler.buildURL({
@@ -100,13 +100,13 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
     var cartTrayFadeOutDuration = 400;
     var draggablePattern = '.products-grid .product, .products-list .product';
-    var cartTray = $('.cart-tray', this.base).eq(0);
+    var cartTray = jQuery('.cart-tray', this.base).eq(0);
     var countRequests = 0;
 
     cartTray.data('isProductDrag', false);
 
-    if ($.browser.msie) {
-      $(draggablePattern, this.base).find('a')
+    if (jQuery.browser.msie) {
+      jQuery(draggablePattern, this.base).find('a')
         .each(
           function() {
             this.defferHref = this.href;
@@ -122,7 +122,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
         );
     }
 
-    $(draggablePattern, this.base).draggable(
+    jQuery(draggablePattern, this.base).draggable(
     {
       revert: 'invalid',
       revertDuration: 300,
@@ -130,7 +130,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
       helper: function()
       {
-        var base = $(this);
+        var base = jQuery(this);
         var clone = base
           .clone()
           .css(
@@ -141,7 +141,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
           );
 
         base.addClass('drag-owner')
-        if ($.browser.msie) {
+        if (jQuery.browser.msie) {
           base.addClass('ie-link-blocker');
         }
 
@@ -171,10 +171,10 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
             cartTrayFadeOutDuration,
             function() {
               if (cartTray.data('isProductDrag')) {
-                $(this).show();
+                jQuery(this).show();
 
               } else {
-                $(this)
+                jQuery(this)
                   .removeClass('cart-tray-active')
                   .removeClass('cart-tray-moving')
                   .removeClass('cart-tray-added');
@@ -182,10 +182,10 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
             }
           );
 
-        $('.drag-owner').removeClass('drag-owner');
+        jQuery('.drag-owner').removeClass('drag-owner');
 
-        if ($.browser.msie) {
-          var downer = $('.drag-owner');
+        if (jQuery.browser.msie) {
+          var downer = jQuery('.drag-owner');
           setTimeout(
             function() {
               downer.removeClass('ie-link-blocker');
@@ -196,7 +196,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
       }, // stop()
     }
-    ); // $(draggablePattern, this.base).draggable
+    ); // jQuery(draggablePattern, this.base).draggable
 
     cartTray.droppable(
     {
@@ -264,13 +264,13 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
                             cartTrayFadeOutDuration,
                             function() {
                               if (cartTray.data('isProductDrag')) {
-                                $(this)
+                                jQuery(this)
                                   .removeClass('cart-tray-added')
                                   .addClass('cart-tray-moving')
                                   .show();
   
                               } else {
-                                $(this)
+                                jQuery(this)
                                 .removeClass('cart-tray-active')
                                 .removeClass('cart-tray-added');
                               }

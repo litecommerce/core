@@ -10,16 +10,16 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
-$(document).ready(
+jQuery(document).ready(
   function() {
-    $('.selected-products form input[name="amount"]').change(
+    jQuery('.selected-products form input[name="amount"]').change(
       function() {
         var result = true;
         var amount = parseInt(this.value);
         result = !isNaN(amount) && 0 < amount;
 
         if (result) {
-          var btn = $('.update-icon', $(this).parents('.item-sums').eq(0));
+          var btn = jQuery('.update-icon', jQuery(this).parents('.item-sums').eq(0));
           if (amount == this.initialValue) {
             btn.addClass('update-icon-disabled').attr('disabled', 'disabled');
 

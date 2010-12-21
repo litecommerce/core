@@ -14,7 +14,7 @@
 // FIXME - must be improved and synchronized with the "default" skin
 
 // Drupal-specific URLs
-$(document).ready(
+jQuery(document).ready(
   function() {
     URLHandler.baseURLPart = '?q=store/';
     URLHandler.argSeparator = '/';
@@ -71,11 +71,11 @@ $(document).ready(
       {
         postprocess.apply(this, arguments);
 
-        if (isSuccess && $('form.create .selector #create_profile_chk', this.commonBase).length) {
+        if (isSuccess && jQuery('form.create .selector #create_profile_chk', this.commonBase).length) {
 
           var o = this;
 
-          $('form.create .selector #create_profile_chk', this.commonBase).unbind('change');
+          jQuery('form.create .selector #create_profile_chk', this.commonBase).unbind('change');
 
           var refreshStateCallback = function() {
             o.refreshState();
@@ -83,78 +83,78 @@ $(document).ready(
 
           var toggle = function()
           {
-            var isVisible = 1 == $('.username:visible', this.form).length;
+            var isVisible = 1 == jQuery('.username:visible', this.form).length;
 
             if (this.checked) {
-              $('.username-verified', this.form).hide();
-              $('.username', this.form).show();
+              jQuery('.username-verified', this.form).hide();
+              jQuery('.username', this.form).show();
 
               if (!isVisible && this.form.validate(true)) {
-                $(this.form).submit();
+                jQuery(this.form).submit();
               }
 
             } else {
-              $('.username', this.form).hide();
+              jQuery('.username', this.form).hide();
 
-              if (isVisible && $('#create_profile_email', this.form).val()) {
-                $(this.form).submit();
+              if (isVisible && jQuery('#create_profile_email', this.form).val()) {
+                jQuery(this.form).submit();
               }
             }
 
             o.refreshState();
           }
 
-          toggle.call($('form.create .selector #create_profile_chk', this.commonBase).get(0));
-          $('form.create .selector #create_profile_chk', this.commonBase).change(
+          toggle.call(jQuery('form.create .selector #create_profile_chk', this.commonBase).get(0));
+          jQuery('form.create .selector #create_profile_chk', this.commonBase).change(
             function() {
               toggle.call(this);
               if (this.form.validate(true)) {
-                $(this.form).submit();
+                jQuery(this.form).submit();
               }
             }
           );
 
-          $('.profile form.create .username input', this.commonBase).bind(
+          jQuery('.profile form.create .username input', this.commonBase).bind(
             'invalid',
             function() {
-              $('.username-verified', this.form).hide();
+              jQuery('.username-verified', this.form).hide();
               o.refreshState();
             }
           );
 
-          $('.profile form.create', this.commonBase)
+          jQuery('.profile form.create', this.commonBase)
             .bind(
               'beforeSubmit',
               function() {
-                $('.username-verified', this).hide();
+                jQuery('.username-verified', this).hide();
               }
             )
             .bind(
               'afterSubmit',
               function() {
-                var showUsernameVerifiedNote = 1 == $('#create_profile_chk:checked', this).length;
+                var showUsernameVerifiedNote = 1 == jQuery('#create_profile_chk:checked', this).length;
                 if (showUsernameVerifiedNote) {
-                  var input = $('.username input', this).get(0);
+                  var input = jQuery('.username input', this).get(0);
                   showUsernameVerifiedNote = input.value && input.validate(true);
                 }
 
                 if (showUsernameVerifiedNote) {
-                  $('.username-verified', this).show();
+                  jQuery('.username-verified', this).show();
 
                 } else {
-                  $('.username-verified', this).hide();
+                  jQuery('.username-verified', this).hide();
                 }
               }
             );
 
-          if ($('.profile form.create #create_profile_chk:checked', this.commonBase).length) {
-            var input = $('.profile form.create .username input', this.commonBase).get(0);
+          if (jQuery('.profile form.create #create_profile_chk:checked', this.commonBase).length) {
+            var input = jQuery('.profile form.create .username input', this.commonBase).get(0);
             if (input.value && input.validate(true) && !input.isChanged()) {
-              $('.profile form.create .username-verified', this.commonBase).show();
+              jQuery('.profile form.create .username-verified', this.commonBase).show();
             }
           }
 
-          $('.profile form.create #create_profile_username', this.commonBase)
+          jQuery('.profile form.create #create_profile_username', this.commonBase)
             .bind('invalid', refreshStateCallback)
             .bind('valid', refreshStateCallback);
         }
@@ -167,21 +167,21 @@ $(document).ready(
       {
         refreshState.apply(this, arguments);
 
-        var shippingMethodsIsExists = 0 < $('ul.shipping-rates input', this.base).length;
-        var username = $('#create_profile_username', this.commonBase).get(0);
-        var isCreate = $('#create_profile_chk', this.commonBase).get(0) && $('#create_profile_chk', this.commonBase).get(0).checked;
+        var shippingMethodsIsExists = 0 < jQuery('ul.shipping-rates input', this.base).length;
+        var username = jQuery('#create_profile_username', this.commonBase).get(0);
+        var isCreate = jQuery('#create_profile_chk', this.commonBase).get(0) && jQuery('#create_profile_chk', this.commonBase).get(0).checked;
         if (
           shippingMethodsIsExists
           && username
           && isCreate
-          && !$('.shipping-step .address-not-completed:visible', this.base).length
-          && !$('.shipping-step .email-not-defined:visible', this.base).length
-          && (!username.validate(true) || !$('#create_profile_username', this.commonBase).val())
+          && !jQuery('.shipping-step .address-not-completed:visible', this.base).length
+          && !jQuery('.shipping-step .email-not-defined:visible', this.base).length
+          && (!username.validate(true) || !jQuery('#create_profile_username', this.commonBase).val())
         ) {
-          $('.shipping-step .username-not-defined', this.base).show();
+          jQuery('.shipping-step .username-not-defined', this.base).show();
 
         } else if (username) {
-          $('.shipping-step .username-not-defined', this.base).hide();
+          jQuery('.shipping-step .username-not-defined', this.base).hide();
         }
       }
 

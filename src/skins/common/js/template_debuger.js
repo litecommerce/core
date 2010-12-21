@@ -21,7 +21,7 @@ function displayTemplateInfo(event)
     && (!window.templateDebugSwitcher.current || !window.templateDebugSwitcher.current.isSameNode(event.target))
   ) {
 
-    $('.tpl-debug-canvas').remove();
+    jQuery('.tpl-debug-canvas').remove();
     window.templateDebugSwitcher.infoContent.children().remove();
 
     var s = 36;
@@ -33,7 +33,7 @@ function displayTemplateInfo(event)
         ? 'tpl-debug-canvas tpl-debug-current'
         : ('tpl-debug-canvas tpl-debug-' + (t.list ? 'list' : 'tpl') + '-canvas');
 
-      c = $(c);
+      c = jQuery(c);
 
       var beginPos = t.begin.offset();
       var endPos = t.end.offset();
@@ -91,7 +91,7 @@ function checkTemplateRegion(event)
 
     } else {
 
-      $('.tpl-debug-canvas').remove();
+      jQuery('.tpl-debug-canvas').remove();
       window.templateDebugSwitcher.infoBox.hide();
       window.templateDebugSwitcher.current = null;
       window.templateDebugSwitcher.region = null;
@@ -127,7 +127,7 @@ function findPreviousVisibleElement(elm)
 }
 
 
-$(document).ready(
+jQuery(document).ready(
   function() {
 
     // Create switcher panel
@@ -139,7 +139,7 @@ $(document).ready(
     switcher.link = box.appendChild(document.createElement('a'))
     switcher.link.className = 'switcher';
     switcher.link.appendChild(document.createElement('span')).innerHTML = 'Disable';
-    $(switcher.link).click(
+    jQuery(switcher.link).click(
       function(event) {
         event.stopPropagation();
         switcher.switchDebugging();
@@ -162,22 +162,22 @@ $(document).ready(
 
     switcher.switchDebugging = function() {
       this.enabled = !this.enabled;
-      $('span', switcher.link).html(this.enabled ? 'Disable' : 'Enable');
+      jQuery('span', switcher.link).html(this.enabled ? 'Disable' : 'Enable');
       if (!this.enabled) {
-        $('.tpl-debug-canvas').remove();
+        jQuery('.tpl-debug-canvas').remove();
         this.infoContent.children().remove();
         this.current = null;
         this.region = null;
-        $(switcher.link).addClass('disabled');
+        jQuery(switcher.link).addClass('disabled');
 
       } else {
-        $(switcher.link).removeClass('disabled');
+        jQuery(switcher.link).removeClass('disabled');
       }
     }
 
     switcher.infoBox = document.body.appendChild(document.createElement('div'));
-    switcher.infoContent = $(switcher.infoBox.appendChild(document.createElement('ul')));
-    switcher.infoBox = $(switcher.infoBox);
+    switcher.infoContent = jQuery(switcher.infoBox.appendChild(document.createElement('ul')));
+    switcher.infoBox = jQuery(switcher.infoBox);
     switcher.infoBox.addClass('tpl-debug-info').hide();
 
     switcher.current = null;
@@ -186,10 +186,10 @@ $(document).ready(
     window.templateDebugSwitcher = switcher;
 
     // Assign global event listener
-    $(document.body).mousemove(checkTemplateRegion);
+    jQuery(document.body).mousemove(checkTemplateRegion);
 
     // Assign event listeners
-    $('*').filter(
+    jQuery('*').filter(
       function() {
         return this.nodeType == 1 && this.innerHTML.search(/<[a-z]/) == -1;
       }
@@ -228,8 +228,8 @@ $(document).ready(
                   if (m) {
                     this.templates.push(
                       {
-                        begin: $(findNextVisibleElement(begin)),
-                        end:   $(findPreviousVisibleElement(end)),
+                        begin: jQuery(findNextVisibleElement(begin)),
+                        end:   jQuery(findPreviousVisibleElement(end)),
                         class: m[1],
                         tpl:   m[2],
                         id:    m[3],
@@ -263,8 +263,8 @@ $(document).ready(
                         // List borders found
                         this.templates.push(
                           {
-                            begin: $(findNextVisibleElement(listFirst)),
-                            end:   $(findPreviousVisibleElement(listEnd)),
+                            begin: jQuery(findNextVisibleElement(listFirst)),
+                            end:   jQuery(findPreviousVisibleElement(listEnd)),
                             list:  m[4]
                           }
                         );

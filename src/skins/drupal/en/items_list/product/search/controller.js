@@ -26,8 +26,8 @@ core.bind(
           var o = this;
 
           // handle "Search" button in the search products form
-          if ($(this.base).hasClass('products-search-result')) {
-            $('.search-product-form form').unbind('submit').submit(
+          if (jQuery(this.base).hasClass('products-search-result')) {
+            jQuery('.search-product-form form').unbind('submit').submit(
               function (event)
               {
                 if (

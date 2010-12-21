@@ -23,7 +23,7 @@ function setFormAction(form, action)
 
 function submitForm(form, attrs)
 {
-  $.each(
+  jQuery.each(
     attrs,
     function (name, value) {
       var e = form.elements.namedItem(name);
@@ -33,7 +33,7 @@ function submitForm(form, attrs)
     }
   );
 
-	$(form).submit();
+	jQuery(form).submit();
 }
 
 function submitFormDefault(form, action)

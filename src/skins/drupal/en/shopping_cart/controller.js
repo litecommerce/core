@@ -37,7 +37,7 @@ extend(CartView, ALoadable);
 
 CartView.autoload = function()
 {
-  $('#cart').each(
+  jQuery('#cart').each(
     function() {
       new CartView(this);
     }
@@ -72,7 +72,7 @@ CartView.prototype.postprocess = function(isSuccess, initial)
     var o = this;
 
     // Remove item
-    $('.selected-product form input.remove', this.base).parents('form')
+    jQuery('.selected-product form input.remove', this.base).parents('form')
       .commonController(
         'enableBackgroundSubmit', 
         function() {
@@ -84,7 +84,7 @@ CartView.prototype.postprocess = function(isSuccess, initial)
       );
 
     // Update item
-    $('.selected-product form.update-quantity', this.base)
+    jQuery('.selected-product form.update-quantity', this.base)
       .commonController(
         'enableBackgroundSubmit',
         function() {
@@ -97,7 +97,7 @@ CartView.prototype.postprocess = function(isSuccess, initial)
       .commonController('submitOnlyChanged', true);
 
     // Clear cart
-    $('form .clear-bag', this.base).parents('form').eq(0)
+    jQuery('form .clear-bag', this.base).parents('form').eq(0)
       .commonController(
         'enableBackgroundSubmit',
         function() {
@@ -109,12 +109,12 @@ CartView.prototype.postprocess = function(isSuccess, initial)
       );
 
     // Shipping estimator
-    $('.estimator button.estimate', this.base).parents('form').eq(0).submit(
+    jQuery('.estimator button.estimate', this.base).parents('form').eq(0).submit(
       function(event) {
         return o.openShippingEstimator(event, this);
       }
     );
-    $('.estimator a.estimate', this.base).click(
+    jQuery('.estimator a.estimate', this.base).click(
       function(event) {
         return o.openShippingEstimator(event, this);
       }

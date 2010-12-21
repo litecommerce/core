@@ -101,7 +101,7 @@ MinicartView.prototype.postprocess = function(isSuccess)
     );
 
     if (!this.bodyHandlerBinded) {
-      $('body').click(
+      jQuery('body').click(
         function (event) {
           o.toggleViewMode(false);
         }
@@ -110,7 +110,7 @@ MinicartView.prototype.postprocess = function(isSuccess)
       this.bodyHandlerBinded = true;
     }
 
-    $('.items-list', this.base).click(
+    jQuery('.items-list', this.base).click(
       function(event) {
         event.stopPropagation();
       }

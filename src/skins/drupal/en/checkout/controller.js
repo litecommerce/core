@@ -26,11 +26,11 @@ function CheckoutView(base)
   core.bind(
     'afterPopupPlace',
     function() {
-      $('form.select-address li').click(
+      jQuery('form.select-address li').click(
         function() {
           var addressId = core.getValueFromClass(this, 'address');
           if (addressId) {
-            var form = $(this).parents('form').eq(0);
+            var form = jQuery(this).parents('form').eq(0);
             if (form) {
               form.get(0).elements.namedItem('addressId').value = addressId;
               form.submit();
@@ -44,23 +44,23 @@ function CheckoutView(base)
   core.bind(
     'updateCart',
     function(event, data) {
-      if (data.billingAddress && $('.payment-step .same-address #same_address').length && !o.isLoadingStart) {
+      if (data.billingAddress && jQuery('.payment-step .same-address #same_address').length && !o.isLoadingStart) {
 
         // Change same-address checkbox and reload billing address after change address into address book popup
         if (
-          (data.billingAddress.same && 0 == $('.payment-step .same-address #same_address:checked').length)
-          || (!data.billingAddress.same && 1 == $('.payment-step .same-address #same_address:checked').length)
+          (data.billingAddress.same && 0 == jQuery('.payment-step .same-address #same_address:checked').length)
+          || (!data.billingAddress.same && 1 == jQuery('.payment-step .same-address #same_address:checked').length)
         ) {
 
           // Change from not-same-address to same-address or revert
-          var chk = $('.payment-step .same-address #same_address').get(0);
+          var chk = jQuery('.payment-step .same-address #same_address').get(0);
           if (chk) {
             chk.checked = !chk.checked;
           }
         }
 
         // Reload form
-        var form = $('.payment-step.current .secondary form', this.base).get(0);
+        var form = jQuery('.payment-step.current .secondary form', this.base).get(0);
         if (form) {
           form.loadable.load();
         }
@@ -68,7 +68,7 @@ function CheckoutView(base)
       } else if (data.shippingAddress && !o.shippingAddressSubmitting) {
 
         // Reload shipping address after change in address book
-        var box = $('form.shipping-address ul.form', this.base).get(0);
+        var box = jQuery('form.shipping-address ul.form', this.base).get(0);
         if (box) {
           box.loadable.load();
         }
@@ -82,7 +82,7 @@ extend(CheckoutView, ALoadable);
 
 CheckoutView.autoload = function()
 {
-  $('.checkout-block .steps').each(
+  jQuery('.checkout-block .steps').each(
     function() {
       new CheckoutView(this);
     }
@@ -136,15 +136,15 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
     // Profile block
 
     // Check and save email
-    $('.profile .create #create_profile_email', this.commonBase)
+    jQuery('.profile .create #create_profile_email', this.commonBase)
       .parents('form')
       .eq(0)
       .commonController(
         'enableBackgroundSubmit',
         null,
         function(event) {
-          if ($('#account-links a.log-in').length) {
-            $('.error a.log-in', this)
+          if (jQuery('#account-links a.log-in').length) {
+            jQuery('.error a.log-in', this)
               .click(
                 function(event) {
                   event.stopPropagation();
@@ -162,17 +162,17 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       .bind('invalid', refreshStateCallback)
       .bind('valid', refreshStateCallback);
 
-    $('.profile .create #create_profile_chk', this.commonBase).change(
+    jQuery('.profile .create #create_profile_chk', this.commonBase).change(
       function() {
         if (this.form.validate(true)) {
-          $(this.form).submit();
+          jQuery(this.form).submit();
         }
       }
     );
 
     // Built-in login popup
-    if ($('#account-links a.log-in').length) {
-      $('.login button', this.commonBase)
+    if (jQuery('#account-links a.log-in').length) {
+      jQuery('.login button', this.commonBase)
         .commonController('processLocation')
         .click(
           function(event) {
@@ -184,15 +184,15 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
     // Common elements
 
     // Address book
-    $('button.address-book', this.base).commonController('processLocation');
+    jQuery('button.address-book', this.base).commonController('processLocation');
 
     // Main button(s)
-    $('.button-row button', this.base).commonController('processLocation');
+    jQuery('.button-row button', this.base).commonController('processLocation');
 
     // Shipping step block
 
     // Open address book
-    $('button.address-book', this.base)
+    jQuery('button.address-book', this.base)
       .click(
         function(event) {
           return o.openAddressBook(event, this);
@@ -200,7 +200,7 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       );
 
     // Save shipping address
-    var form = $('form.shipping-address', this.base).eq(0);
+    var form = jQuery('form.shipping-address', this.base).eq(0);
     if (form.length) {
       form
         .commonController(
@@ -225,7 +225,7 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       // Set watchers for shipping address
       form.get(0).getElements().each(
         function() {
-          var t = $(this);
+          var t = jQuery(this);
           if (t.hasClass('field-zipcode') || t.hasClass('field-country') || t.hasClass('field-state')) {
             this.markAsWatcher(
               function(element) {
@@ -236,16 +236,16 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
         }
       );
 
-      $('.shipping-step.current .button-row button', this.base)
+      jQuery('.shipping-step.current .button-row button', this.base)
         .click(
           function(event) {
-            if ($(this).hasClass('disabled')) {
+            if (jQuery(this).hasClass('disabled')) {
               return false;
             }
 
             o.stepChanges = true;
 
-            return !($('form.shipping-address', o.base).eq(0).submit() && o.shade());
+            return !(jQuery('form.shipping-address', o.base).eq(0).submit() && o.shade());
           }
         );
 
@@ -253,7 +253,7 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
 
     // Assign ShippingMethodsView widget
     this.shippingMethodsBlock = [];
-    $('form.shipping-methods', this.base).each(
+    jQuery('form.shipping-methods', this.base).each(
       function() {
         var s = new ShippingMethodsView(this);
         s.parentWidget = o;
@@ -261,10 +261,10 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       }
     );
 
-    $('.shipping-step.previous .button-row button', this.base)
+    jQuery('.shipping-step.previous .button-row button', this.base)
       .click(
         function(event) {
-          if ($(this).hasClass('disabled')) {
+          if (jQuery(this).hasClass('disabled')) {
             return false;
           }
 
@@ -275,18 +275,18 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
     // Payment step block
 
     // Payment methods list
-    $('.payment-step form.methods', this.base)
+    jQuery('.payment-step form.methods', this.base)
       .commonController('enableBackgroundSubmit')
       .find('ul input')
       .change(
         function(event) {
           o.refreshState();
-          return $(this.form).submit();
+          return jQuery(this.form).submit();
         }
       );
 
     // Billing address
-    $('.payment-step.current .secondary form', this.base).each(
+    jQuery('.payment-step.current .secondary form', this.base).each(
       function() {
         var b = new BillingAddressView(this);
         b.parentWidget = o;
@@ -294,25 +294,25 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
     );
 
     // Main button
-    $('.payment-step.current .button-row button', this.base)
+    jQuery('.payment-step.current .button-row button', this.base)
       .click(
       function(event) {
-        if ($(this).hasClass('disabled')) {
+        if (jQuery(this).hasClass('disabled')) {
           return false;
         }
 
         o.isLoadingStart = true;
 
-        return $('.payment-step .same-address #same_address:checked', o.base).length
+        return jQuery('.payment-step .same-address #same_address:checked', o.base).length
           ? !o.load()
-          : !($('.payment-step.current .secondary form', o.base).submit() && o.shade());
+          : !(jQuery('.payment-step.current .secondary form', o.base).submit() && o.shade());
       }
     );
 
-    $('.payment-step.previous .button-row button', this.base)
+    jQuery('.payment-step.previous .button-row button', this.base)
       .click(
         function(event) {
-          if ($(this).hasClass('disabled')) {
+          if (jQuery(this).hasClass('disabled')) {
             return false;
           }
 
@@ -324,35 +324,35 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
     // Order review step block
 
     // Items list switcher
-    $('.review-step .items-row a', this.base).click(
+    jQuery('.review-step .items-row a', this.base).click(
       function() {
-        if ($('.review-step .list:visible', o.base).length) {
-          $('.review-step .list', o.base).hide();
+        if (jQuery('.review-step .list:visible', o.base).length) {
+          jQuery('.review-step .list', o.base).hide();
 
         } else {
-          $('.review-step .list', o.base).show();
+          jQuery('.review-step .list', o.base).show();
         }
 
         return false;
       }
     );
 
-    $('form.place .terms a', this.base).click(
+    jQuery('form.place .terms a', this.base).click(
       function(event) {
         event.stopPropagation();
-        self.location = $(this).attr('href');
+        self.location = jQuery(this).attr('href');
         return false;
       }
     );
 
-    $('.review-step.current .button-row button', this.base)
+    jQuery('.review-step.current .button-row button', this.base)
       .click(
         function(event) {
-          if (1 == $('form.place .terms input:checked', o.base).length) {
+          if (1 == jQuery('form.place .terms input:checked', o.base).length) {
             return true;
           }
 
-          $('form.place .terms', this.base).addClass('non-agree');
+          jQuery('form.place .terms', this.base).addClass('non-agree');
 
           return false;
         }
@@ -386,7 +386,7 @@ CheckoutView.prototype.postprocessShippingAddressSubmit = function(event, XMLHtt
   this.refreshState();
 
   if (isValid && this.stepChanges) {
-    $(this.shippingMethodsBlock).each(
+    jQuery(this.shippingMethodsBlock).each(
       function() {
         this.parentWidget = null;
       }
@@ -439,7 +439,7 @@ CheckoutView.prototype.refreshSignificantShippingFields = function(element)
 
   var ready = true;
   for (var i = 0; i < this.shippingCalculationFields.length && ready; i++) {
-    var field = $('.' + this.shippingCalculationFields[i], form);
+    var field = jQuery('.' + this.shippingCalculationFields[i], form);
     if (field.length && (!field.get(0).validate(true) || !field.val())) {
       ready = false;
     }
@@ -463,7 +463,7 @@ CheckoutView.prototype.refreshSignificantShippingFields = function(element)
 
   inp.value = '1';
 
-  $(this.shippingMethodsBlock).each(
+  jQuery(this.shippingMethodsBlock).each(
     function() {
       this.shade();
     }
@@ -485,14 +485,14 @@ CheckoutView.prototype.refreshSignificantShippingFields = function(element)
 
 CheckoutView.prototype.refreshState = function()
 {
-  var box = $('.step.current', this.base).eq(0);
+  var box = jQuery('.step.current', this.base).eq(0);
 
   // Create profile form is valid
   var isSameAddress = true;
-  var form = $('.profile form.create', this.commonBase).eq(0);
+  var form = jQuery('.profile form.create', this.commonBase).eq(0);
   var userIsRegistered = 0 == form.length
   var profileIsCreate = userIsRegistered
-    || (form.get(0).validate(true) && !form.get(0).isChanged() && $('#create_profile_email', form).val())
+    || (form.get(0).validate(true) && !form.get(0).isChanged() && jQuery('#create_profile_email', form).val())
 
   var result = !!profileIsCreate;
 
@@ -501,28 +501,28 @@ CheckoutView.prototype.refreshState = function()
     // Shipping step
 
     // Shipping address form is completed and valid
-    var shippingAddressForm = $('.shipping-step form.shipping-address', this.base).eq(0);
+    var shippingAddressForm = jQuery('.shipping-step form.shipping-address', this.base).eq(0);
     var shippingAddressIsValid = !shippingAddressForm.length || shippingAddressForm.get(0).validate(true);
 
     // Shipping is selected
-    var shippingMethodsIsExists = 0 < $('ul.shipping-rates input', this.base).length;
-    var shippingMethodIsSelected = 1 == $('ul.shipping-rates input:checked', this.base).length;
+    var shippingMethodsIsExists = 0 < jQuery('ul.shipping-rates input', this.base).length;
+    var shippingMethodIsSelected = 1 == jQuery('ul.shipping-rates input:checked', this.base).length;
 
     // Show or hide address-not-completed note
     if (shippingMethodsIsExists && shippingAddressForm.length) {
       if (shippingAddressForm.get(0).validate(true)) {
-        $('.shipping-step .address-not-completed', this.base).hide();
+        jQuery('.shipping-step .address-not-completed', this.base).hide();
 
         if (profileIsCreate) {
-          $('.shipping-step .email-not-defined', this.base).hide();
+          jQuery('.shipping-step .email-not-defined', this.base).hide();
 
-        } else if (!$('#create_profile_email', form).get(0).validate(true) || !$('#create_profile_email', form).val()) {
-          $('.shipping-step .email-not-defined', this.base).show();
+        } else if (!jQuery('#create_profile_email', form).get(0).validate(true) || !jQuery('#create_profile_email', form).val()) {
+          jQuery('.shipping-step .email-not-defined', this.base).show();
         }
 
       } else {
-        $('.shipping-step .email-not-defined', this.base).hide();
-        $('.shipping-step .address-not-completed', this.base).show();
+        jQuery('.shipping-step .email-not-defined', this.base).hide();
+        jQuery('.shipping-step .address-not-completed', this.base).show();
       }
     }
 
@@ -533,12 +533,12 @@ CheckoutView.prototype.refreshState = function()
     // Payment step
 
     // Payment methods is selected
-    var paymentMethodIsSelected = 1 == $('ul.payments input:checked', this.base).length;
+    var paymentMethodIsSelected = 1 == jQuery('ul.payments input:checked', this.base).length;
 
     // Billing address is completed
-    isSameAddress = 1 == $('.same-address #same_address:checked', this.base).length;
+    isSameAddress = 1 == jQuery('.same-address #same_address:checked', this.base).length;
     var billingAddressIsCompleted = isSameAddress
-      || (0 < $('form.billing-address ul.form :input', this.base).length && $('form.billing-address', this.base).get(0).validate(true));
+      || (0 < jQuery('form.billing-address ul.form :input', this.base).length && jQuery('form.billing-address', this.base).get(0).validate(true));
 
     result = result && paymentMethodIsSelected && billingAddressIsCompleted;
 
@@ -549,12 +549,12 @@ CheckoutView.prototype.refreshState = function()
   }
 
   // Refresh main button
-  $('.current .button-row button', this.base).commonController('toggleActivity', result);
+  jQuery('.current .button-row button', this.base).commonController('toggleActivity', result);
 }
 
 CheckoutView.prototype.openLoginPopup = function()
 {
-  var click = $('#account-links a.log-in').attr('onclick');
+  var click = jQuery('#account-links a.log-in').attr('onclick');
   var result = true;
 
   if (click) {
@@ -566,11 +566,11 @@ CheckoutView.prototype.openLoginPopup = function()
   }
 
   if (!result) {
-    if ($('#account-links a.log-in').attr('href')) {
-      self.location = $('#account-links a.log-in').attr('href');
+    if (jQuery('#account-links a.log-in').attr('href')) {
+      self.location = jQuery('#account-links a.log-in').attr('href');
 
-    } else if ($(this).data('location')) {
-      self.location = $(this).data('location');
+    } else if (jQuery(this).data('location')) {
+      self.location = jQuery(this).data('location');
     }
   }
 }
@@ -719,7 +719,7 @@ BillingAddressView.prototype.postprocess = function(isSuccess, initial)
         }
       );
 
-    $('.same-address #same_address', this.base).change(
+    jQuery('.same-address #same_address', this.base).change(
       function(event) {
         o.changeSameAddress = true;
         o.parentWidget.refreshState();
@@ -729,7 +729,7 @@ BillingAddressView.prototype.postprocess = function(isSuccess, initial)
       }
     );
 
-    $('ul :input', this.base).change(
+    jQuery('ul :input', this.base).change(
       function() {
         o.parentWidget.refreshState();
       }

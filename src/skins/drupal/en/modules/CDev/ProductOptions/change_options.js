@@ -25,7 +25,7 @@ core.bind(
 
           var o = this;
 
-          $('.item-change-options a', this.base).click(
+          jQuery('.item-change-options a', this.base).click(
             function(event) {
               return !popup.load(
                 this,

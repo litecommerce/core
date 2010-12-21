@@ -11,9 +11,9 @@
  * @since     3.0.0
  */
 // Document onready event handler
-$(document).ready(
+jQuery(document).ready(
   function() {
-    $('a.send-to-friend').click(
+    jQuery('a.send-to-friend').click(
       function() {
         return !popup.load(this);
       }

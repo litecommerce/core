@@ -18,7 +18,7 @@ function extendedOptionsController(container, names, options)
     return false;
   }
 
-  this.container = $(container).eq(0);
+  this.container = jQuery(container).eq(0);
   if (!this.container.length) {
     return false;
   }
@@ -32,13 +32,13 @@ function extendedOptionsController(container, names, options)
   // Add event handlers
   var o = this;
 
-  $('.product-options input[type="radio"]', this.container).click(
+  jQuery('.product-options input[type="radio"]', this.container).click(
     function() {
       o.changeOption();
     }
   );
 
-  $('.product-options select', this.container).change(
+  jQuery('.product-options select', this.container).change(
     function() {
       o.changeOption();
     }
@@ -63,13 +63,13 @@ extendedOptionsController.prototype.changeOption = function()
   if (cell) {
 
     // Update quantity
-    var elm = $('.product-quantity span', this.container);
+    var elm = jQuery('.product-quantity span', this.container);
     if (elm.length) {
       elm.html('(' + cell.quantity[0] + String.fromCharCode(8211) + cell.quantity[1] + ')');
     }
 
     // Update quantity controller
-    var elm = $('.product-quantity', this.container).get(0);
+    var elm = jQuery('.product-quantity', this.container).get(0);
     if (elm && typeof(elm.quantityController) != 'undefined') {
       elm.quantityController.min = cell.quantity[0];
       elm.quantityController.max = cell.quantity[1];
@@ -84,7 +84,7 @@ extendedOptionsController.prototype.getCurrentState = function()
   this.currentState = [];
 
   var o = this;
-  $('.product-options input[type="radio"]:checked', this.container).each(
+  jQuery('.product-options input[type="radio"]:checked', this.container).each(
     function() {
       var m = this.id.match(/^product_option_(.+)_([0-9]+)$/);
       if (m) {
@@ -94,7 +94,7 @@ extendedOptionsController.prototype.getCurrentState = function()
     }
   );
 
-  $('.product-options select', this.container).each(
+  jQuery('.product-options select', this.container).each(
     function() {
       var m = this.name.match(/^product_option\[(.+)\]$/);
       if (m) {

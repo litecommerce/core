@@ -19,8 +19,8 @@ function ProductDetailsController(base)
 {
   this.callSupermethod('constructor', arguments);
 
-  if (this.base.get(0) && $('form.product-details', this.base).get(0).elements.namedItem('product_id')) {
-    this.productId = $('form.product-details', this.base).get(0).elements.namedItem('product_id').value;
+  if (this.base.get(0) && jQuery('form.product-details', this.base).get(0).elements.namedItem('product_id')) {
+    this.productId = jQuery('form.product-details', this.base).get(0).elements.namedItem('product_id').value;
 
     this.block = new ProductDetailsView(this.base, this.productId);
 
@@ -90,7 +90,7 @@ function ProductDetailsView(base, productId)
     event.stopPropagation();
 
     o.showLightbox();
-    $('.product-image-gallery li.selected a', o.base).eq(0).trigger('click');
+    jQuery('.product-image-gallery li.selected a', o.base).eq(0).trigger('click');
 
     return false;
   }
@@ -130,25 +130,25 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
   if (isSuccess) {
 
     // Save gallery list items
-    this.gallery = $('.image .product-image-gallery li', this.base);
+    this.gallery = jQuery('.image .product-image-gallery li', this.base);
 
     var o = this;
 
     // Arrow-based image navigation
-    $('.image .left-arrow', this.base).click(
+    jQuery('.image .left-arrow', this.base).click(
       function (event) {
         o.switchImage(-1);
       }
     );
 
-    $('.image .right-arrow', this.base).click(
+    jQuery('.image .right-arrow', this.base).click(
       function (event) {
         o.switchImage(1);
       }
     );
 
     // Form AJAX-based submit
-    $('form.product-details', this.base).eq(0).bind(
+    jQuery('form.product-details', this.base).eq(0).bind(
       'submit',
       function(event)
       {
@@ -157,7 +157,7 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
     )
 
     // Cloud zoom
-    var cloud = $('.cloud-zoom', this.base);
+    var cloud = jQuery('.cloud-zoom', this.base);
 
     if (cloud.length) {
       this.zoomWidget = true;
@@ -166,11 +166,11 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
         this.kZoom = core.getCommentedData(cloud, 'kZoom');
       }
 
-      var imageWrapper = $(document.createElement('div')).addClass('wrapper');
+      var imageWrapper = jQuery(document.createElement('div')).addClass('wrapper');
       cloud.wrap(imageWrapper);
     }
 
-    if ($('.product-image-gallery li a').length) {
+    if (jQuery('.product-image-gallery li a').length) {
       // TODO: improve to skip additional JS manipulations
       // like resizing etc when it is not needed
       this.selectImage(0);
@@ -180,10 +180,10 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
 
     // Change Conntinue shopping button for QuickLook mode
     if (this.base.hasClass('product-quicklook') && 0 < this.base.parents('.blockUI').length) {
-      $('button.continue', this.base)
+      jQuery('button.continue', this.base)
         .unbind('click')
         .removeAttr('onclick');
-      $('button.continue', this.base).click(
+      jQuery('button.continue', this.base).click(
         function() {
           popup.close();
           return false;
@@ -193,12 +193,12 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
 
     // Gallery
     if (typeof(window.lightBoxImagesDir) != 'undefined') {
-      $('.loupe', this.base).click(
+      jQuery('.loupe', this.base).click(
         function(event) {
           o.showLightbox();
           setTimeout(
             function() {
-              $('.product-image-gallery li.selected a').eq(0).trigger('click');
+              jQuery('.product-image-gallery li.selected a').eq(0).trigger('click');
             },
             500
           );
@@ -216,12 +216,12 @@ ProductDetailsView.prototype.showLightbox = function()
 {
   var o = this;
 
-  $('.product-image-gallery a', this.base)
+  jQuery('.product-image-gallery a', this.base)
     .unbind('click')
     .colorbox(
       {
         onComplete: function() {
-          $('#cboxCurrent').css('display', 'none');
+          jQuery('#cboxCurrent').css('display', 'none');
         },
         onClosed: function() {
           o.hideLightbox();
@@ -234,15 +234,15 @@ ProductDetailsView.prototype.hideLightbox = function()
 {
   var o = this;
 
-  $('.product-image-gallery a', this.base)
+  jQuery('.product-image-gallery a', this.base)
     .unbind('click')
     .bind(
       'click',
       function(event) {
         event.stopPropagation();
 
-        if (!$(this).parents('li').eq(0).hasClass('selected')) {
-          var i = $.inArray(this, $(this).parents('ul').eq(0).find('a').get());
+        if (!jQuery(this).parents('li').eq(0).hasClass('selected')) {
+          var i = jQuery.inArray(this, jQuery(this).parents('ul').eq(0).find('a').get());
           o.selectImage(i);
         }
 
@@ -265,7 +265,7 @@ ProductDetailsView.prototype.switchImage = function(diff)
   // Detect current index
   this.gallery.each(
       function() {
-        if (selected == -1 && $(this).hasClass('selected')) {
+        if (selected == -1 && jQuery(this).hasClass('selected')) {
           selected = i;
         }
         i++;
@@ -300,7 +300,7 @@ ProductDetailsView.prototype.selectImage = function(pos)
 
   if (this.zoomWidget) {
     
-    var cloud = $('.cloud-zoom', this.base);
+    var cloud = jQuery('.cloud-zoom', this.base);
 
     if (cloud.data('zoom')) {
       cloud.data('zoom').destroy();
@@ -309,14 +309,14 @@ ProductDetailsView.prototype.selectImage = function(pos)
       cloud.unbind('click', this.linkClickHandler);
     }
 
-    cloud.attr('href', $('a', next).attr('href'));
+    cloud.attr('href', jQuery('a', next).attr('href'));
   }
 
-  var middle = $('img.middle', next).eq(0)
+  var middle = jQuery('img.middle', next).eq(0)
 
   if (middle) {
 
-    $('.image .product-photo img', this.base)
+    jQuery('.image .product-photo img', this.base)
       .hide()
       .attr('src',    middle.attr('src'))
       .attr('width',  middle.attr('width'))
@@ -324,18 +324,18 @@ ProductDetailsView.prototype.selectImage = function(pos)
       .show();
 
     // Center align images
-    var shiftX = Math.max(0, parseInt($('.image .product-photo', this.base).css('width')) - middle.attr('width'));
-    var shiftY = Math.max(0, parseInt($('.image .product-photo', this.base).css('height')) - middle.attr('height'));
+    var shiftX = Math.max(0, parseInt(jQuery('.image .product-photo', this.base).css('width')) - middle.attr('width'));
+    var shiftY = Math.max(0, parseInt(jQuery('.image .product-photo', this.base).css('height')) - middle.attr('height'));
 
     if (this.zoomWidget) {
-      $('.image .product-photo .wrapper').css('padding', shiftY/2 + 'px ' + shiftX/2 + 'px');
-      $('img', cloud).css('padding', 0);
+      jQuery('.image .product-photo .wrapper').css('padding', shiftY/2 + 'px ' + shiftX/2 + 'px');
+      jQuery('img', cloud).css('padding', 0);
     } else {
-      $('.image .product-photo img').css('padding', shiftY/2 + 'px ' + shiftX/2 + 'px');
+      jQuery('.image .product-photo img').css('padding', shiftY/2 + 'px ' + shiftX/2 + 'px');
     }
   }
 
-  eval('var tmp = {' + $('a', next).attr('rev') + '}');
+  eval('var tmp = {' + jQuery('a', next).attr('rev') + '}');
 
   if (this.zoomWidget) {
     if (tmp.width > middle.attr('width') * this.kZoom || tmp.height > middle.attr('height') * this.kZoom) {

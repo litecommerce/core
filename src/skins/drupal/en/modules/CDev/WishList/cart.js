@@ -10,14 +10,14 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
-$(document).ready(
+jQuery(document).ready(
   function() {
 
     // Add hover listener for Move to cart button
-    $('#shopping-cart .move-to-wishlist')
+    jQuery('#shopping-cart .move-to-wishlist')
       .each(
         function() {
-          this.moveQuantityWidget = $('.move-quantity', $(this).parents('.item-buttons'));
+          this.moveQuantityWidget = jQuery('.move-quantity', jQuery(this).parents('.item-buttons'));
         }
       )
       .hover(
@@ -40,20 +40,20 @@ $(document).ready(
         }
       );
 
-      $('#shopping-cart .move-quantity').hover(
+      jQuery('#shopping-cart .move-quantity').hover(
         function() {
           if (this.hideTo) {
             clearTimeout(this.hideTo);
             this.hideTo = false;
           }
 
-          $(this).show();
+          jQuery(this).show();
         },
         function() {
           var o = this;
           this.hideTo = setTimeout(
             function() {
-              $(o).hide();
+              jQuery(o).hide();
             },
             500
           );

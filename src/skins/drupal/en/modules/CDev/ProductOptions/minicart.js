@@ -16,10 +16,10 @@ MinicartView.prototype.postprocess = function(isSuccess)
   oldPostprocess.apply(this, arguments);
 
   if (isSuccess) {
-    $('a.item-options', this.base).map(
+    jQuery('a.item-options', this.base).map(
       function()
       {
-        $(this).cluetip(
+        jQuery(this).cluetip(
           {
             local: true,
             dropShadow: false,

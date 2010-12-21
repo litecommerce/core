@@ -66,7 +66,7 @@ function getProductIdFromClassName(obj)
 {
   var result = false;
 
-  var c = $(obj).attr('class');
+  var c = jQuery(obj).attr('class');
 
   if (c) {
     var m = c.match(/product-([0-9]+)/);
@@ -258,7 +258,7 @@ LoadableWidgetAbstract.prototype.loadWidget = function()
   this.showModalScreen();
 
   var o = this;
-  $.ajax(
+  jQuery.ajax(
     {
       type: 'get',
       url: this.buildWidgetRequestURL(),
@@ -291,7 +291,7 @@ LoadableWidgetAbstract.prototype.buildWidgetRequestURL = function()
 // Add widget arguments to parameters list
 LoadableWidgetAbstract.prototype.addWidgetParams = function(params)
 {
-  $.each(
+  jQuery.each(
     this.widgetParams,
     function(key, value) {
       params[key] = value;
@@ -309,8 +309,8 @@ LoadableWidgetAbstract.prototype.loadHandler = function(xhr, s)
   if (xhr.status == 200 && xhr.responseText) {
     var div = document.createElement('DIV');
     div.style.display = 'none';
-    $('body').get(0).appendChild(div);
-    div = $(div);
+    jQuery('body').get(0).appendChild(div);
+    div = jQuery(div);
     div.html(xhr.responseText);
 
     processed = this.placeRequestData(this.extractRequestData(div));
@@ -337,7 +337,7 @@ LoadableWidgetAbstract.prototype.placeRequestData = function(box)
   var id = 'temporary-ajax-id-' + (new Date()).getTime();
   box.addClass(id);
   this.modalTarget.replaceWith(box);
-  this.modalTarget = $('.' + id);
+  this.modalTarget = jQuery('.' + id);
   this.modalTarget.removeClass(id);
 
   return true;
@@ -373,11 +373,11 @@ LoadableWidgetAbstract.prototype.showModalScreen = function()
     }
   );
 
-  $('.blockElement')
+  jQuery('.blockElement')
     .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null})
     .addClass('wait-block');
 
-  $('.blockOverlay')
+  jQuery('.blockOverlay')
     .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null})
     .addClass('wait-block-overlay');
 
@@ -409,14 +409,14 @@ function InputValidator(container)
     return false;
   }
 
-  container = $(container);
+  container = jQuery(container);
   if (!container.length) {
     return false;
   }
 
   var o = this;
 
-  $(':input', container).each(
+  jQuery(':input', container).each(
     function() {
       o.assignValidator(this);
     }
@@ -451,16 +451,16 @@ InputValidator.prototype.assignValidator = function(elm)
 
       elm.labelName = null;
       if (elm.id) {
-        var lbl = $('label[for="' + elm.id + '"]').eq(0);
+        var lbl = jQuery('label[for="' + elm.id + '"]').eq(0);
         if (lbl.length) {
-          elm.labelName = $.trim(lbl.html()).replace(/:$/, '');
+          elm.labelName = jQuery.trim(lbl.html()).replace(/:$/, '');
         }
       }
       elm.validate = function(silent) {
         return o.checkElement.call(this, null, silent);
       }
 
-      $(elm).change(
+      jQuery(elm).change(
         function(event) {
           return this.validate();
         }
@@ -471,7 +471,7 @@ InputValidator.prototype.assignValidator = function(elm)
           return o.checkForm.call(this);
         }
 
-        $(elm.form).submit(
+        jQuery(elm.form).submit(
           function(event) {
             return this.validate();
           }
@@ -493,7 +493,7 @@ InputValidator.prototype.checkElement = function(event, silent)
 
   // Check visibility
   if (0 < this.validators.length) {
-    var hidden = $(this).parents().filter(
+    var hidden = jQuery(this).parents().filter(
       function() {
         return this.style.display == 'none';
       }
@@ -507,13 +507,13 @@ InputValidator.prototype.checkElement = function(event, silent)
   for (var i = 0; i < this.validators.length && result.status; i++) {
     result = this.validators[i].call(this, event);
     if (!result.status) {
-      $(this).addClass('validation-error');
+      jQuery(this).addClass('validation-error');
       if (!silent) {
         if (this.labelName) {
           result.message = result.message.replace(/Field/, '\'' + this.labelName + '\' field');
         }
         alert(result.message);
-        var o = $(this);
+        var o = jQuery(this);
         setTimeout(
           function() {
             o.focus();
@@ -523,7 +523,7 @@ InputValidator.prototype.checkElement = function(event, silent)
       }
 
     } else {
-      $(this).removeClass('validation-error');
+      jQuery(this).removeClass('validation-error');
     }
   }
 
@@ -534,7 +534,7 @@ InputValidator.prototype.checkForm = function()
 {
   var result = true;
 
-  $(':input', this).each(
+  jQuery(':input', this).each(
     function() {
       if (this.validate && result) {
         result = this.validate();
@@ -640,7 +640,7 @@ InputValidator.prototype.validateRequired = function()
   };
 }
 
-$(document).ready(
+jQuery(document).ready(
   function() {
     new InputValidator(document);
   }
@@ -671,8 +671,8 @@ function updateByMouseWheel(event, delta) {
   }
 
   if (value !== false) {
-    var min = $(this).data('min');
-    var max = $(this).data('max');
+    var min = jQuery(this).data('min');
+    var max = jQuery(this).data('max');
 
     value = value + delta * -1;
 
@@ -703,8 +703,8 @@ function updateByMouseWheel(event, delta) {
   return false;
 }
 
-$(document).ready(
+jQuery(document).ready(
   function() {
-    $('input.wheel-ctrl:text').mousewheel(updateByMouseWheel);
+    jQuery('input.wheel-ctrl:text').mousewheel(updateByMouseWheel);
   }
 );

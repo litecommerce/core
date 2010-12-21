@@ -109,9 +109,26 @@ class AdvBlock extends \XLite\View\AView
     {
         $list = parent::getJSFiles();
 
-        $list[] = 'js/jquery.blockUI.js';
         $list[] = 'advertise/helpdesk.js';
 
         return $list;
     }
+
+    /**  
+     * Register files from common repository
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCommonFiles()
+    {
+        $list = parent::getCommonFiles();
+
+        $list['js'][] = 'js/jquery.blockUI.js';
+
+        return $list;
+    }
+
 }
