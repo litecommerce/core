@@ -205,63 +205,6 @@ abstract class AModule
     }
 
     /**
-     * Get module icon 
-     * TODO: will be taken from remote model
-     * 
-     * @return \XLite\Model\Image
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getIcon()
-    {
-        return null;
-    }
-
-    /**
-     * Check if module has icon
-     * TODO: will be taken from remote model
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function hasIcon()
-    {
-        return !is_null(static::getIcon());
-    }
-
-    /**
-     * Get external page URL
-     * TODO: rework this when modules management is implemented
-     *       on LiteCommerce site
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getExternalPageURL()
-    {
-        return '#' . static::getModuleCode();
-    }
-
-    /**
-     * Page on LiteCommerce site checker
-     * TODO: implement this when modules management is implemented
-     *       on LiteCommerce site
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function hasExternalPage()
-    {
-        return false;
-    }
-
-    /**
      * Return module name by class name
      * 
      * @return string

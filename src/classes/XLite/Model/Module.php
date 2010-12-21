@@ -252,6 +252,50 @@ class Module extends \XLite\Model\AEntity
     protected $uploadCode = '';
 
     /**
+     * Rating
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer")
+     */
+    protected $rating = 0;
+
+    /**
+     * Downloads
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer")
+     */
+    protected $downloads = 0;
+
+    /**
+     * Icon URL
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length=255)
+     */
+    protected $iconURL = '';
+
+    /**
+     * Downloads
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="array", nullable=true)
+     */
+    protected $dependencies = array();
+
+    /**
      * Old-state of enabled column
      * 
      * @var    boolean
@@ -270,6 +314,16 @@ class Module extends \XLite\Model\AEntity
      * @since  3.0.0
      */
     protected $uploadURL = 'https://litecommerce.com/module/%1$s/upload?code=%2$s';
+
+    /**
+     * Page URL
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $pageURL = 'https://litecommerce.com/module/%1$s/';
 
     /**
      * Model (cache)
@@ -291,6 +345,32 @@ class Module extends \XLite\Model\AEntity
      */
     protected $mainClass = null; 
 
+
+    /**
+     * Check if module has icon
+     *
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasIcon()
+    {
+        return '' !== $this->getIconURL();
+    }
+
+    /**
+     * Get external page URL
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageURL()
+    {
+        return sprintf($this->pageURL, $this->getPath());
+    }
 
     /**
      * Set enabled status
@@ -868,7 +948,7 @@ class Module extends \XLite\Model\AEntity
 
         if ($this->canUpload()) {
             $request = new \XLite\Model\HTTPS();
-            $request->url = sprintf($this->uploadURL(), $this->getName(), $this->uploadCode);
+            $request->url = sprintf($this->uploadURL, $this->getActualName(), $this->uploadCode);
             $request->method = 'get';
             if (
                 $request::HTTPS_SUCCESS == $request->request()

@@ -140,7 +140,7 @@ table.modules-list div.icon-container div.addon-disabled {
   position: absolute;
   top: 0;
   left: 0;
-  background: url(../images/addon_disabled.png) left top no-repeat;
+  background: url(../../images/addon_disabled.png) left top no-repeat;
 }
 
 div.modules-filters {
@@ -165,7 +165,7 @@ div.modules-filters div.activity a:active
 div.modules-filters div.activity span {
   font-size: 14px;
   margin-right: 7px;
-  color: #2c5fa6;
+  color: #5080a2;
 }
 
 div.modules-filters div.activity a.current {
