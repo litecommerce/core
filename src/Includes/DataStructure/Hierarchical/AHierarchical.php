@@ -99,9 +99,9 @@ abstract class AHierarchical
      */
     protected function collectGarbage()
     {
-        /* foreach ($this->getIndex() as $node) {
+        foreach ($this->getIndex() as $node) {
             $this->performCleanupAction($node);
-        } */
+        }
     }
 
     /**
@@ -342,10 +342,23 @@ abstract class AHierarchical
     }
 
     /**
+     * Return name of the node clas
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getNodeClass()
+    {
+        return $this->nodeClass;
+    }
+
+    /**
      * Visualize tree
      *
      * @param \Includes\DataStructure\Node\ANode $root   root node of current level
-     * @param int                               $offset level offset
+     * @param int                                $offset level offset
      *
      * @return null
      * @access public
