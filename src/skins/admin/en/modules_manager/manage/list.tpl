@@ -30,7 +30,7 @@
  
           <div class="module-icon">
             {if:module.hasIcon()}
-              <img src="{module.icon.getURL()}" border="0" />
+              <img src="{module.getIconURL()}" width="48" height="48" border="0" />
             {else:}
               <img src="images/addon_default.png" width="48" height="48" border="0" />
             {end:}
@@ -99,11 +99,9 @@ depends[{module.getModuleId()}][{k}] = '{getInstalledProperty(m,#moduleName#)} (
         <div class="description">
           {getInstalledProperty(module,#description#)}
         </div>
-        {if:module.hasExternalPage()}
-          <div class="module-url">
-            <a href="{module.getExternalPageURL()}" target="_blank">{t(#Visit add-on\'s page#)}</a>
-          </div>
-        {end:}
+        <div class="module-url">
+          <a href="{module.getPageURL()}" target="_blank">{t(#Visit add-on\'s page#)}</a>
+        </div>
       </td>
 		</tr>    
 
