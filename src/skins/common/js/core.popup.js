@@ -85,7 +85,7 @@ popup.loadByURL = function(url, timeout)
 // Load by form element
 popup.loadByForm = function(form)
 {
-  form = $(form).get(0);
+  form = jQuery(form).get(0);
 
   return form ? form.submitBackground(this.postprocessRequestCallback) : false;
 }
@@ -93,7 +93,7 @@ popup.loadByForm = function(form)
 // Load by link element 
 popup.loadByLink = function(link)
 {
-  link = $(link).eq(0);
+  link = jQuery(link).eq(0);
 
   return (1 == link.length && link.attr('href'))
     ? core.get(link.attr('href'), this.postprocessRequestCallback)
@@ -105,7 +105,7 @@ popup.loadByButton = function(button)
 {
   var result = false;
 
-  button = $(button);
+  button = jQuery(button);
 
   if (button.attr('onclick') && -1 !== button.attr('onclick').toString().search(/\.location[ ]*=[ ]*['"].+['"]/)) {
 
@@ -121,7 +121,7 @@ popup.loadByButton = function(button)
   } else if (0 < button.parents('form').length) {
 
     // By button's form
-    result = this.loadByForm($(button).parents('form').eq(0));
+    result = this.loadByForm(jQuery(button).parents('form').eq(0));
   
   }
 
@@ -210,11 +210,11 @@ popup.extractRequestData = function(data)
 // Popup post processing 
 popup.postprocess = function()
 {
-  $('.blockMsg h1#page-title.title').remove();
+  jQuery('.blockMsg h1#page-title.title').remove();
 
   var o = this;
 
-  $('.blockMsg form').commonController(
+  jQuery('.blockMsg form').commonController(
     'enableBackgroundSubmit',
     function() {
       o.freezePopup();
@@ -228,9 +228,9 @@ popup.postprocess = function()
 // Freeze popup content
 popup.freezePopup = function()
 {
-  $('.blockMsg form').each(
+  jQuery('.blockMsg form').each(
     function() {
-      $('button,input:image,input:submit', this).each(
+      jQuery('button,input:image,input:submit', this).each(
         function() {
           if (!this.disabled) {
             this.temporaryDisabled = true;
@@ -245,9 +245,9 @@ popup.freezePopup = function()
 // Unfreeze popup content
 popup.unfreezePopup = function()
 {
-  $('.blockMsg form').each(
+  jQuery('.blockMsg form').each(
     function() {
-      $('button,input:image,input:submit', this).each(
+      jQuery('button,input:image,input:submit', this).each(
         function() {
           if (this.temporaryDisabled) {
             this.disabled = false;
@@ -272,13 +272,13 @@ popup.open = function(box)
     box = box.html();
   }
 
-  $.blockUI(
+  jQuery.blockUI(
     {
       message: '<a href="#" class="close-link"></a><div class="block-container"><div class="block-subcontainer">' + box + '</div></div>'
     }
   );
 
-  $('.blockMsg').css(
+  jQuery('.blockMsg').css(
     {
       'z-index':  '1200000',
       'position': 'absolute'
@@ -286,14 +286,14 @@ popup.open = function(box)
   );
 
   if (this.elementId) {
-    $('.blockMsg').addClass('BlockMsg-' + this.elementId);
+    jQuery('.blockMsg').addClass('BlockMsg-' + this.elementId);
   }
 
   this.reposition();
 
   // Add close handler
   var o = this;
-  $('.blockMsg a.close-link').click(
+  jQuery('.blockMsg a.close-link').click(
     function(event) {
       o.close();
       return false;
@@ -301,7 +301,7 @@ popup.open = function(box)
   );
 
   // Modify overlay
-  $('.blockOverlay')
+  jQuery('.blockOverlay')
     .attr('title', 'Click to unblock')
     .css(
       {
@@ -322,14 +322,14 @@ popup.open = function(box)
 // Reposition (center) popup
 popup.reposition = function()
 {
-  var w = $(window);
-  var d = $(document);
-  var b = $('.blockMsg');
+  var w = jQuery(window);
+  var d = jQuery(document);
+  var b = jQuery('.blockMsg');
 
   var l = Math.max(0, Math.round((w.width() - b.width()) / 2)) + d.scrollLeft();
   var t = Math.max(0, Math.round((w.height() - b.height()) / 2)) + d.scrollTop();
 
-  $('.blockMsg').css(
+  jQuery('.blockMsg').css(
     {
       'left': l + 'px',
       'top':  t + 'px'
@@ -340,7 +340,7 @@ popup.reposition = function()
 // Close popup
 popup.close = function()
 {
-  $.unblockUI();
+  jQuery.unblockUI();
 
   if (this.currentUnblockCallback && this.currentUnblockCallback.constructor == Function) {
     this.currentUnblockCallback();
@@ -350,23 +350,23 @@ popup.close = function()
   this.currentUnblockCallback = null;
 }
 
-$(document).ready(
+jQuery(document).ready(
   function() {
-    if ($.blockUI) {
-      $.blockUI.defaults.css =             {};
-      $.blockUI.defaults.centerX =         true;
-      $.blockUI.defaults.centerY =         true;
-      $.blockUI.defaults.bindEvents =      true;
-      $.blockUI.defaults.constrainTabKey = true;
-      $.blockUI.defaults.showOverlay =     true;
-      $.blockUI.defaults.focusInput =      true;
-      $.blockUI.defaults.fadeIn =          0;
-      $.blockUI.defaults.fadeOut =         0;
+    if (jQuery.blockUI) {
+      jQuery.blockUI.defaults.css =             {};
+      jQuery.blockUI.defaults.centerX =         true;
+      jQuery.blockUI.defaults.centerY =         true;
+      jQuery.blockUI.defaults.bindEvents =      true;
+      jQuery.blockUI.defaults.constrainTabKey = true;
+      jQuery.blockUI.defaults.showOverlay =     true;
+      jQuery.blockUI.defaults.focusInput =      true;
+      jQuery.blockUI.defaults.fadeIn =          0;
+      jQuery.blockUI.defaults.fadeOut =         0;
     }
   }
 );
 
-$(window).resize(
+jQuery(window).resize(
   function(event) {
     popup.reposition();
   }

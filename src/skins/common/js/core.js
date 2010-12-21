@@ -82,7 +82,7 @@ window.core = {
 
   savedEvents: [],
 
-  messages: $({}),
+  messages: jQuery({}),
 
   // Trigger common message
   trigger: function(name, params)
@@ -133,7 +133,7 @@ window.core = {
   {
     options = options || {};
 
-    options = $.extend(
+    options = jQuery.extend(
       {
         async:       true,
         cache:       false,
@@ -154,7 +154,7 @@ window.core = {
       options
     );
 
-    return $.ajax(options);
+    return jQuery.ajax(options);
   },
 
   // Post form data to server
@@ -162,7 +162,7 @@ window.core = {
   {
     options = options || {};
 
-    options = $.extend(
+    options = jQuery.extend(
       {
         async:       true,
         cache:       false,
@@ -184,7 +184,7 @@ window.core = {
       options
     );
 
-    return $.ajax(options);
+    return jQuery.ajax(options);
   },
 
   // Response preprocess (run callback or not)
@@ -292,7 +292,7 @@ window.core = {
 
       this.lastResponse = null;
 
-      var xhr = $.ajax(
+      var xhr = jQuery.ajax(
         {
           async: false !== callback,
           cache: false,
@@ -340,7 +340,7 @@ window.core = {
     callback: function(xhr, status, callback)
     {
       try {
-        var data = $.parseJSON(xhr.responseText);
+        var data = jQuery.parseJSON(xhr.responseText);
 
       } catch(e) {
         var data = null;
@@ -362,7 +362,7 @@ window.core = {
       className = m[1];
     }
 
-    $(document).ready(
+    jQuery(document).ready(
       function() {
         if ('undefined' != typeof(window[className])) {
           if ('function' == typeof(window[className].autoload)) {
@@ -379,7 +379,7 @@ window.core = {
   // Return value of variable that is given in class attribute: e.g. class="superclass productid-100001 test"
   getValueFromClass: function(obj, prefix)
   {
-    var m = $(obj)
+    var m = jQuery(obj)
       .attr('class')
       .match(new RegExp(prefix + '-([^ ]+)( |$)'));
 
@@ -389,7 +389,7 @@ window.core = {
   // Return value of variable that is given in comment block: e.g. <!-- 'productid': '100001', 'var': 'value', -->"
   getCommentedData: function(obj, name)
   {
-    var children = $(obj).get(0).childNodes;
+    var children = jQuery(obj).get(0).childNodes;
     var re = /DATACELL/;
     var m = false;
     
@@ -416,10 +416,10 @@ window.core = {
   toggleText : function (link, text, obj)
   {
     if (undefined === link.prevValue) {
-      link.prevValue = $(link).html();
+      link.prevValue = jQuery(link).html();
     }
-    $(link).html($(link).html() === text ? link.prevValue : text);
-    $(obj).toggle();
+    jQuery(link).html(jQuery(link).html() === text ? link.prevValue : text);
+    jQuery(obj).toggle();
   }
 
 };
@@ -433,7 +433,7 @@ try {
 } catch(e) { }
 
 // Common onready event handler
-$(document).ready(
+jQuery(document).ready(
   function() {
     core.isReady = true;
     core.trigger('load');

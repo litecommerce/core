@@ -654,8 +654,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     {
         $list = parent::getJSFiles();
 
-        $list[] = 'js/jquery-ui.1.7.2.js';
-
         // FIXME
         foreach (array('Page\QuickLook', 'Image', 'Gallery') as $class) {
             $list = array_merge(
