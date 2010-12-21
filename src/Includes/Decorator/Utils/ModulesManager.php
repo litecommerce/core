@@ -338,8 +338,8 @@ abstract class ModulesManager extends AUtils
 
             } else {
                 \Includes\Utils\Database::execute(
-                    'REPLACE INTO ' . static::getTableName() . ' SET enabled = ?, installed = ?, author = ?, name = ?, changelog = ?',
-                    array(1, 1, $data['author'], $data['name'], serialize(array()))
+                    'REPLACE INTO ' . static::getTableName() . ' SET enabled = ?, installed = ?, author = ?, name = ?',
+                    array(1, 1, $data['author'], $data['name'])
                 );
             }
             $i++;

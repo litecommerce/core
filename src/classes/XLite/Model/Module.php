@@ -192,7 +192,7 @@ class Module extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="array")
+     * @Column (type="array", nullable=true)
      */
     protected $changelog = array();
 
