@@ -22,7 +22,7 @@ function CommonForm(form)
     return false;
   }
 
-  form = $(form).filter('form').eq(0);
+  form = jQuery(form).filter('form').eq(0);
   if (!form.length || form.get(0).commonController) {
     return false;
   }
@@ -61,7 +61,7 @@ function CommonForm(form)
       }
 
       if (result && o.backgroundSubmit) {
-        var e = $.Event('beforeSubmit');
+        var e = jQuery.Event('beforeSubmit');
         o.$form.trigger(e);
 
         if (false !== e.result && o.submitBackground(null, true)) {
@@ -92,7 +92,7 @@ extend(CommonForm, Base);
 // Autoload class method
 CommonForm.autoload = function()
 {
-  $('form').each(
+  jQuery('form').each(
     function() {
       new CommonForm(this);
     }
@@ -269,7 +269,7 @@ CommonElement.prototype.watchTTL = 2000;
 CommonElement.prototype.bind = function(elm)
 {
   this.element = elm;
-  this.$element = $(elm);
+  this.$element = jQuery(elm);
 
   var o = this;
 
@@ -343,9 +343,9 @@ CommonElement.prototype.getLabel = function()
   var label = null;
 
   if (this.element.id) {
-    var lbl = $('label[for="' + this.element.id + '"]');
+    var lbl = jQuery('label[for="' + this.element.id + '"]');
     if (lbl.length) {
-      label = $.trim(lbl.eq(0).html()).replace(/:$/, '').replace(/<.+$/, '');
+      label = jQuery.trim(lbl.eq(0).html()).replace(/:$/, '').replace(/<.+$/, '');
     }
   }
 
@@ -472,7 +472,7 @@ CommonElement.prototype.unmarkAsInvalid = function()
 // Show element inline error message 
 CommonElement.prototype.showInlineError = function(message)
 {
-  return $(document.createElement('p'))
+  return jQuery(document.createElement('p'))
     .insertAfter(this.$element)
     .addClass('error')
     .addClass('inline-error')
@@ -482,13 +482,13 @@ CommonElement.prototype.showInlineError = function(message)
 // Hide element inline error message 
 CommonElement.prototype.hideInlineError = function()
 {
-  return $('p.inline-error', this.element.parentNode).remove();
+  return jQuery('p.inline-error', this.element.parentNode).remove();
 }
 
 // Mark element as in-progress element
 CommonElement.prototype.markAsProgress = function()
 {
-  var mark = $('<div></div>')
+  var mark = jQuery('<div></div>')
     .insertAfter(this.$element)
     .addClass('single-progress-mark');
 
@@ -506,7 +506,7 @@ CommonElement.prototype.markAsProgress = function()
 // Unmark element as in-progress element
 CommonElement.prototype.unmarkAsProgress = function()
 {
-  return $('.single-progress-mark', this.element.parentNode).remove();
+  return jQuery('.single-progress-mark', this.element.parentNode).remove();
 }
 
 // Mark element as change watcher
@@ -528,7 +528,7 @@ CommonElement.prototype.markAsWatcher = function(beforeCallback)
       (o.isChanged() || (o.$element.hasClass('validation-error') && !o.$element.hasClass('server-validation-error')))
       && (!beforeCallback || beforeCallback(o.element))
     ) {
-      $(o.element.form).submit();
+      jQuery(o.element.form).submit();
     }
   }
 
@@ -550,7 +550,7 @@ CommonElement.prototype.markAsWatcher = function(beforeCallback)
     .blur(submitElement)
     .keyup(delayedUpdate);
 
-  if ('undefined' != typeof($.fn.mousewheel)) {
+  if ('undefined' != typeof(jQuery.fn.mousewheel)) {
     o.$element.mousewheel(delayedUpdate);
   }
 }
@@ -560,12 +560,12 @@ CommonElement.prototype.markAsColumnSwitcher = function()
 {
   this.$element.click(
     function() {
-      var idx = $(this).parents('th').get(0).cellIndex;
+      var idx = jQuery(this).parents('th').get(0).cellIndex;
       var newState = this.checked;
 
-      $(this).parents('table').find('tr').each(
+      jQuery(this).parents('table').find('tr').each(
         function() {
-          $(this.cells[idx]).find(':checkbox').get(0).checked = newState;
+          jQuery(this.cells[idx]).find(':checkbox').get(0).checked = newState;
         }
       );
     }
@@ -592,14 +592,14 @@ CommonElement.prototype.isChanged = function(onlyVisible)
   }
 
   if (
-    (isElement(this.element, 'input') && -1 != $.inArray(this.element.type, ['text', 'password', 'hidden']))
+    (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['text', 'password', 'hidden']))
     || isElement(this.element, 'select')
     || isElement(this.element, 'textarea')
   ) {
     return this.element.initialValue != this.element.value;
   }
 
-  if (isElement(this.element, 'input') && -1 != $.inArray(this.element.type, ['checkbox', 'radio'])) {
+  if (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['checkbox', 'radio'])) {
     return this.element.initialValue != this.element.checked;
   }
 
@@ -610,13 +610,13 @@ CommonElement.prototype.isChanged = function(onlyVisible)
 CommonElement.prototype.saveValue = function()
 {
   if (
-    (isElement(this.element, 'input') && -1 != $.inArray(this.element.type, ['text', 'password', 'hidden']))
+    (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['text', 'password', 'hidden']))
     || isElement(this.element, 'select')
     || isElement(this.element, 'textarea')
   ) {
     this.element.initialValue = this.element.value;
 
-  } else if (isElement(this.element, 'input') && -1 != $.inArray(this.element.type, ['checkbox', 'radio'])) {
+  } else if (isElement(this.element, 'input') && -1 != jQuery.inArray(this.element.type, ['checkbox', 'radio'])) {
     this.element.initialValue = this.element.checked;
   }
 }
@@ -658,7 +658,7 @@ CommonElement.prototype.linkWithCountry = function()
 
     this.element.isFocused = false;
 
-    $(this.$element)
+    jQuery(this.$element)
       .focus(
         function() {
           this.isFocused = true;
@@ -697,14 +697,14 @@ CommonElement.prototype.linkWithCountry = function()
 
       var isFocused = this.stateInput.isFocused;
 
-      $(this.stateInput).replaceWith(inp);
+      jQuery(this.stateInput).replaceWith(inp);
       this.stateInput = inp;
 
       if (isFocused) {
         this.stateInput.focus();
       }
 
-      $(this.stateInput)
+      jQuery(this.stateInput)
         .focus(
           function() {
             this.isFocused = true;
@@ -745,7 +745,7 @@ CommonElement.prototype.linkWithCountry = function()
 
           if (this.stateInput.selectedIndex > 1) {
             previousSelected = this.stateInput.options[this.stateInput.selectedIndex].value;
-            $('option', this.stateInput).remove();
+            jQuery('option', this.stateInput).remove();
           }
 
         } else {
@@ -768,7 +768,7 @@ CommonElement.prototype.linkWithCountry = function()
       }
     }
 
-    $(country).change(change);
+    jQuery(country).change(change);
 
     change.call(country);
   }
@@ -960,7 +960,7 @@ core.autoload(CommonForm);
 
 // Common controller as jQuery plugin
 (function ($) {
-  $.fn.commonController = function(property) {
+  jQuery.fn.commonController = function(property) {
     var args = Array.prototype.slice.call(arguments, 1);
 
     this.each(

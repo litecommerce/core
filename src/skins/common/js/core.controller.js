@@ -26,13 +26,13 @@ function AController(base)
 
       // Multiple binding
       for (var i = 0; i < base.length; i++) {
-        eval('new ' + this.name + '($(base[i]))');
+        eval('new ' + this.name + '(jQuery(base[i]))');
       }
 
     } else {
 
       // Simple binding
-      this.bind($(base));
+      this.bind(jQuery(base));
     }
   }
 }
@@ -62,7 +62,7 @@ AController.prototype.bind = function(base)
 
   if (this.name && !this.isBaseCatched(base) && this.detectBase(base)) {
     var o = this;
-    base = $(base);
+    base = jQuery(base);
     base.map(
       function() {
         this.controller = o;
@@ -113,5 +113,5 @@ AController.prototype.initialize = function()
 // Find base if controller create without base DOM element specification
 AController.prototype.findBase = function()
 {
-  return this.findPattern ? $(this.findPattern) : false;
+  return this.findPattern ? jQuery(this.findPattern) : false;
 }

@@ -13,8 +13,8 @@
 
 // Constructor
 function ALoadable(base) {
-  if (base && this.checkBase($(base))) {
-    this.base = $(base);
+  if (base && this.checkBase(jQuery(base))) {
+    this.base = jQuery(base);
 
     var o = this;
 
@@ -184,9 +184,9 @@ ALoadable.prototype.getTemporaryContainer = function()
 {
   var div = document.createElement('DIV');
   div.style.display = 'none';
-  $('body').get(0).appendChild(div);
+  jQuery('body').get(0).appendChild(div);
   
-  return $(div);
+  return jQuery(div);
 
 }
 
@@ -201,11 +201,11 @@ ALoadable.prototype.placeRequestData = function(box)
 {
   // Update page title
   if (this.updatePageTitle) {
-    var title = $(this.titleRequestPattern, box).eq(0);
-    $(this.titlePattern).eq(0).html(title.html());
+    var title = jQuery(this.titleRequestPattern, box).eq(0);
+    jQuery(this.titlePattern).eq(0).html(title.html());
   }
 
-  box = $(this.containerRequestPattern, box).children();
+  box = jQuery(this.containerRequestPattern, box).children();
 
   var id = 'temporary-ajax-id-' + (new Date()).getTime();
 
@@ -215,7 +215,7 @@ ALoadable.prototype.placeRequestData = function(box)
 
   if (0 < box.length) {
     this.base.replaceWith(box);
-    this.base = $('.' + id);
+    this.base = jQuery('.' + id);
   } else {
     this.base.empty();
   }
@@ -244,7 +244,7 @@ ALoadable.prototype.postprocess = function(isSuccess, initial)
         }
       );
 
-      $('form', this.base).each(
+      jQuery('form', this.base).each(
         function() {
           new CommonForm(this);
         }
@@ -256,7 +256,7 @@ ALoadable.prototype.postprocess = function(isSuccess, initial)
         }
       );
 
-      $('*:input', this.base).each(
+      jQuery('*:input', this.base).each(
         function() {
           new CommonElement(this);
         }
@@ -300,25 +300,25 @@ ALoadable.prototype.shade = function()
       }
     );
 
-    $('.blockElement')
+    jQuery('.blockElement')
       .css({padding: '', border: '', margin: '', textAlign: '', color: '', backgroundColor: '', cursor: ''})
       .addClass('block-wait');
 
-    $('.blockOverlay')
+    jQuery('.blockOverlay')
       .css({padding: '', border: '', margin: '', textAlign: '', color: '', backgroundColor: '', cursor: ''});
 
-    if (this.getShadeBase().height() < $('.blockMsg').outerHeight() + 5) {
-      $('.blockMsg').addClass('mini-block-wait');
+    if (this.getShadeBase().height() < jQuery('.blockMsg').outerHeight() + 5) {
+      jQuery('.blockMsg').addClass('mini-block-wait');
     }
 
-    if (this.getShadeBase().height() < $('.blockMsg').outerHeight()) {
-      $('.blockMsg div').remove();
+    if (this.getShadeBase().height() < jQuery('.blockMsg').outerHeight()) {
+      jQuery('.blockMsg div').remove();
     }
 
-    $('.blockMsg').css(
+    jQuery('.blockMsg').css(
       {
-        'top':  Math.round((this.getShadeBase().height() - $('.blockMsg').outerHeight()) / 2) + 'px',
-        'left': Math.round((this.getShadeBase().width() - $('.blockMsg').outerWidth()) / 2) + 'px'
+        'top':  Math.round((this.getShadeBase().height() - jQuery('.blockMsg').outerHeight()) / 2) + 'px',
+        'left': Math.round((this.getShadeBase().width() - jQuery('.blockMsg').outerWidth()) / 2) + 'px'
       }
     );
 
@@ -371,7 +371,7 @@ ALoadable.prototype.submitForm = function(form, callback)
     callback,
     false,
     {
-      rpc: 'POST' == $(form).attr('method').toUpperCase()
+      rpc: 'POST' == jQuery(form).attr('method').toUpperCase()
     }
   );
 }
