@@ -48,5 +48,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
     public function executeHookHandlerPostprocess()
     {
         \Includes\Decorator\Utils\ModulesManager::switchModules();
+        \Includes\Decorator\Utils\ModulesManager::removeFile();
     }
 }

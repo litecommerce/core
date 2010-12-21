@@ -270,6 +270,36 @@ abstract class ModulesManager extends AUtils
     }
 
     /**
+     * Save modules to file 
+     * 
+     * @param array $modules Modules array
+     *  
+     * @return integer|boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function saveModulesToFile(array $modules)
+    {
+        $path = LC_VAR_DIR . static::MODULES_FILE_NAME;
+
+        $string = '; <' . '?php /*' . PHP_EOL;
+
+        $i = 0;
+        foreach ($modules as $author => $names) {
+            $string .= '[' . $author. ']' . PHP_EOL;
+            foreach ($names as $name => $enabled) {
+                $string .= $name . ' = ' . $enabled . PHP_EOL;
+                $i++;
+            }
+        }
+
+        $string .= '; */ ?' . '>';
+
+        return $i ? file_put_contents($path, $string) : false;
+    }
+
+    /**
      * Set module enabled fleg fo "false"
      *
      * @param string $key module actual name (key)

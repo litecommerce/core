@@ -105,7 +105,9 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
     {
         $list = static::getFixtures();
 
-        $list[] = substr($path, strlen(LC_DIR) + 1);
+        $list[] = preg_match('/^(?:sql|classes)/Ss', $path)
+            ? $path
+            : substr($path, strlen(LC_DIR) + 1);
 
         static::saveFile($list);
     }

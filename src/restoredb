@@ -47,14 +47,8 @@ function _do_query_upload($sqlfile) {
 
 function _do_yaml_upload($yamlfile)
 {
-    global $fp;
-    static $i = 0;
-
-    $i++;
-
     echo '+++ ' . $yamlfile . PHP_EOL;
-
-    fwrite($fp, $i . ' = "' . $yamlfile . '"' . PHP_EOL);
+    \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::addFixtureToList($yamlfile);
 }
 
 if (isset($argv[1]) && $argv[1] == 'help') {
@@ -119,10 +113,8 @@ echo ' [' . $i . ']' . PHP_EOL;
 
 _do_query_upload('sql/xlite_unmanaged_tables.sql');
 
-$fp = fopen(LC_VAR_DIR . '.decorator.fixtures.ini.php', 'w');
-fwrite($fp, '; <' . '?php /*' . PHP_EOL);
-
 $modules = array();
+\Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::removeFixtures();
 
 _do_yaml_upload('sql/xlite_data.yaml');
 
@@ -181,22 +173,8 @@ if (file_exists('sql/local/xlite_local_demo.sql')) {
     _do_yaml_upload('sql/local/xlite_local_demo.yaml');
 }
 
-fwrite($fp, '; */ ?' . '>');
-fclose($fp);
-
 // Create modules list
-$string = '; <' . '?php /*' . PHP_EOL;
-
-foreach ($modules as $author => $names) {
-    $string .= '[' . $author. ']' . PHP_EOL;
-    foreach ($names as $name => $enabled) {
-        $string .= $name . ' = ' . $enabled . PHP_EOL;
-    }
-}
-
-$string .= '; */ ?' . '>';
-
-file_put_contents(LC_VAR_DIR . '.decorator.modules.ini.php', $string);
+\Includes\Decorator\Utils\ModulesManager::saveModulesToFile($modules);
 
 echo 'Setting cache rebuild flag...' . PHP_EOL . PHP_EOL;
 

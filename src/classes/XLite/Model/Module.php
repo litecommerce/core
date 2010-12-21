@@ -426,17 +426,17 @@ class Module extends \XLite\Model\AEntity
         $name = $this->getAuthor() . LC_DS . $this->getName();
 
         // Install YAML fixtures
-        $installYAMLPath = LC_MODULES_DIR . $name . LC_DS . 'install.yaml';
-        if (file_exists($installYAMLPath)) {
-            \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::addFixtureToList($installYAMLPath);
+        $path = LC_MODULES_DIR . $name . LC_DS . 'install.yaml';
+        if (file_exists($path)) {
+            \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::addFixtureToList($path);
         }
 
         // Install SQL dump
-        $installSQLPath = LC_MODULES_DIR . $name . LC_DS . 'install.sql';
+        $path = LC_MODULES_DIR . $name . LC_DS . 'install.sql';
 
-        if (file_exists($installSQLPath)) {
+        if (file_exists($path)) {
             try {
-                \XLite\Core\Database::getInstance()->importSQLFromFile($installSQLPath);
+                \XLite\Core\Database::getInstance()->importSQLFromFile($path);
 
             } catch (\InvalidArgumentException $exception) {
 
@@ -449,6 +449,9 @@ class Module extends \XLite\Model\AEntity
                 $status = self::INSTALLED_WO_SQL;
             }
         }
+
+        $class = $this->getMainClass();
+        $class::installModule($this);
     }
 
     /**
@@ -463,27 +466,37 @@ class Module extends \XLite\Model\AEntity
     {
         $name = $this->getAuthor() . LC_DS . $this->getName();
 
-        $installYAMLPath = LC_MODULES_DIR . $name . LC_DS . 'install.yaml';
-        if (file_exists($installYAMLPath)) {
-            \XLite\Core\Database::getInstance()->unloadFixturesFromYaml($installYAMLPath);
+        $class = $this->getMainClass();
+
+        // Try run custom uninstall method
+        if ($class::uninstallModule($this)) { 
+
+            $upath = LC_MODULES_DIR . $name . LC_DS . 'uninstall.yaml';
+            $ipath = LC_MODULES_DIR . $name . LC_DS . 'install.yaml';
+
+            if (file_exists($upath)) {
+
+                // Uninstall special YAML fixtures
+                \XLite\Core\Database::getInstance()->unloadFixturesFromYaml($upath);
+
+            } elseif (file_exists($ipath)) {
+
+                // Uninstall standart YAML fixtures
+                \XLite\Core\Database::getInstance()->unloadFixturesFromYaml($ipath);
+            }
         }
 
         // Uninstall SQL dump
-        $installSQLPath = LC_MODULES_DIR . $name . LC_DS . 'uninstall.sql';
+        $path = LC_MODULES_DIR . $name . LC_DS . 'uninstall.sql';
 
-        if (file_exists($installSQLPath)) {
+        if (file_exists($path)) {
             try {
-                \XLite\Core\Database::getInstance()->importSQLFromFile($installSQLPath);
+                \XLite\Core\Database::getInstance()->importSQLFromFile($path);
 
             } catch (\InvalidArgumentException $exception) {
 
-                \XLite\Logger::getInstance()->log($exception->getMessage(), PEAR_LOG_ERR);
-                $status = self::INSTALLED_WO_SQL;
-
             } catch (\PDOException $exception) {
 
-                \XLite\Logger::getInstance()->log($exception->getMessage(), PEAR_LOG_ERR);
-                $status = self::INSTALLED_WO_SQL;
             }
         }
     }
@@ -682,55 +695,6 @@ class Module extends \XLite\Model\AEntity
 
         if ($mainClass) {
 
-            /*
-            // Install YAML fixtures
-            $installYAMLPath = LC_MODULES_DIR . $name . LC_DS . 'install.yaml';
-            if (file_exists($installYAMLPath)) {
-                try {
-                    $loadedLines = \XLite\Core\Database::getInstance()
-                        ->loadFixturesFromYaml($installYAMLPath);
-                    if (false === $loadedLines) {
-                        $status = self::INSTALLED_WO_SQL;
-                    }
-    
-                } catch (\Exception $e) {
-                    \XLite\Logger::getInstance()->log($e->getMessage(), LOG_ERR);
-                    $status = self::INSTALLED_WO_SQL;
-                }
-
-            }
-
-            // Install SQL dump
-            $installSQLPath = LC_MODULES_DIR . $name . LC_DS . 'install.sql';
-
-            if (file_exists($installSQLPath)) {
-                try {
-                    \XLite\Core\Database::getInstance()->importSQLFromFile($installSQLPath);
-
-                } catch (\InvalidArgumentException $exception) {
-
-                    \XLite\Logger::getInstance()->log($exception->getMessage(), PEAR_LOG_ERR);
-                    $status = self::INSTALLED_WO_SQL;
-
-                } catch (\PDOException $exception) {
-
-                    \XLite\Logger::getInstance()->log($exception->getMessage(), PEAR_LOG_ERR);
-                    $status = self::INSTALLED_WO_SQL;
-                }
-            }
-            */
-
-            // Run custom install code
-            /* FIXME - obsolete code 
-            if (false === $mainClass->installModule($this)) {
-                \XLite\Logger::getInstance()->log(
-                    sprintf('\'%s\' module custom installation error', $name),
-                    PEAR_LOG_ERR
-                );
-                $status = self::INSTALLED_WO_PHP;
-            }
-            */
-
         } else {
             $status = self::INSTALLED_WO_CTRL;
         }
@@ -781,33 +745,6 @@ class Module extends \XLite\Model\AEntity
     public function uninstall()
     {
         $status = true;
-
-        // Uninstall SQL
-        $installSQLPath = LC_MODULES_DIR . $this->getPath() . LC_DS . 'uninstall.sql';
-        if (file_exists($installSQLPath)) {
-            try {
-                \XLite\Core\Database::getInstance()->importSQLFromFile($installSQLPath);
-
-            } catch (\InvalidArgumentException $exception) {
-
-                \XLite\Logger::getInstance()->log($exception->getMessage(), PEAR_LOG_ERR);
-                $status = false;
-
-            } catch (\PDOException $exception) {
-
-                \XLite\Logger::getInstance()->log($exception->getMessage(), PEAR_LOG_ERR);
-                $status = false;
-            }
-        }
-
-        // Run custom uninstall code
-        if (false === $this->getMainClass()->uninstallModule($this)) {
-            \XLite\Logger::getInstance()->log(
-                sprintf('\'%s\' module custom deinstallation error', $this->getActualName()),
-                PEAR_LOG_ERR
-            );
-            $status = false;
-        }
 
         // Remove repository (if needed)
         \Includes\Utils\FileManager::unlinkRecursive(LC_MODULES_DIR . $this->getPath());
