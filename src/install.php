@@ -142,7 +142,6 @@ $modules = array (
 			"js_back"       => 1,
 			"js_next"       => 1,
 		    "remove_params" => array(
-                'states',
                 'demo',
                 'install_data',
                 'images_to_fs'

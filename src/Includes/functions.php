@@ -869,7 +869,10 @@ function isLiteCommerceInstalled($dbUrl = null)
 
                 if (isset($dbUrl)) {
 
-                    $data = parseDbUrl($dbUrl);
+                    // Support of Drupal 6 installation
+                    if (!is_array($dbUrl)) {
+                        $data = parseDbUrl($dbUrl);
+                    }
 
                     if (!empty($data)) {
 

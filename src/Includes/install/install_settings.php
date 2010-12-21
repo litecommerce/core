@@ -100,50 +100,29 @@ $lcSettings = array(
     // The list of files that should be created by installation script
     'files_to_create' => array(),
 
-    // SQL files list
-    'sql_files' => array(
+    // YAML files list
+    'yaml_files' => array(
         'base' => array(
-            'sql/xlite_tables.sql',
-            'sql/xlite_data.sql',
-            'sql/xlite_lng_en.sql',
+            'sql/xlite_tables.yaml',
+            'sql/xlite_data.yaml',
         ),
         'demo' => array(
-            'sql/xlite_demo.sql'
+            'sql/xlite_demo.yaml'
         ),
-        'states' => array(
-            'CA' => 'sql/states_CA.sql',
-            'GB' => 'sql/states_GB.sql',
-            'US' => 'sql/states_US.sql',
-        )
-    ),
-
-    // Data for states dropdown box
-    'states_list' => array(
-        'US'       => 'USA states',
-        'CA'       => 'Canadian provinces',
-        'GB'       => 'United Kingdom counties',
-        'US-CA'    => 'USA states & Canadian provinces',
-        'US-CA-GB' => 'USA states, Canadian provinces & UK counties',
-        ''         => 'No states'
     ),
 
     // The list of modules that must be enabled by installation script
     'enable_modules' => array(
-        'CDev\\DrupalConnector', // Allows to use Drupal CMS as a storefront
-//        'AdvancedSearch',
-        'CDev\\AustraliaPost',
-        'CDev\\AuthorizeNet',
-        'CDev\\Bestsellers',
-//        'DetailedImages',
-        'CDev\\FeaturedProducts',
-//        'GiftCertificates',
-//        'InventoryTracking',
-//        'ProductAdviser',
-        'CDev\\ProductOptions',
-        'CDev\\Quantum',
-//        'WholesaleTrading',
-//        'WishList'
-    )
+        'CDev' => array(
+            'DrupalConnector', // Allows to use Drupal CMS as a storefront
+            'AustraliaPost',
+            'AuthorizeNet',
+            'Bestsellers',
+            'FeaturedProducts',
+            'ProductOptions',
+            'Quantum',
+        ),
+    ),
 );
 
 // Switch classes autoloader to the orig classes dir instead of compiled classes storage if cache isn't built yet
