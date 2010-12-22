@@ -11,15 +11,15 @@
  * @since     3.0.0
  */
 
-$(document).ready(
+jQuery(document).ready(
   function () {
-    var savePanel = $('.save-panel').eq(0);
+    var savePanel = jQuery('.save-panel').eq(0);
 
     savePanel.show();
 
     // Reposition panel
-    var p = $(savePanel.get(0).parentNode);
-    var title = $('h1').eq(0);
+    var p = jQuery(savePanel.get(0).parentNode);
+    var title = jQuery('h1').eq(0);
 
     var t = title.offset().top + Math.round(title.outerHeight() / 2) - Math.round(savePanel.outerHeight() / 2);
     var l = p.offset().left + p.outerWidth() - savePanel.outerWidth();
@@ -35,10 +35,10 @@ $(document).ready(
     savePanel.draggable();
 
     // Bind Save button
-    $('button', savePanel).click(
+    jQuery('button', savePanel).click(
       function (event) {
         if (typeof(document[savePanelFormName]) != 'undefined') {
-          $(document[savePanelFormName]).submit();
+          jQuery(document[savePanelFormName]).submit();
         }
 
         return false;
@@ -46,7 +46,7 @@ $(document).ready(
     );
 
     // Bind Delete selected link
-    $('a', savePanel).eq(0).click(
+    jQuery('a', savePanel).eq(0).click(
       function (event) {
         if (typeof(document[savePanelFormName]) != 'undefined') {
           var action = typeof(window.savePanelDeleteAction) == 'undefined'

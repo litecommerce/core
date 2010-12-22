@@ -14,7 +14,7 @@
 // Main class
 function ItemsList(cell, URLParams, URLAJAXParams)
 {
-  this.container = $('.items-list.' + cell).eq(0);
+  this.container = jQuery('.items-list.' + cell).eq(0);
 
   if (!this.container.length) {
     return;
@@ -36,7 +36,7 @@ ItemsList.prototype.listeners = {};
 
 ItemsList.prototype.listeners.pager = function(handler)
 {
-  $('.pager a', handler.container).click(
+  jQuery('.pager a', handler.container).click(
     function() {
       return !handler.showPage(this);
     }
@@ -45,7 +45,7 @@ ItemsList.prototype.listeners.pager = function(handler)
 
 ItemsList.prototype.listeners.pagesCount = function(handler)
 {
-  $('input.page-length', handler.container).change(
+  jQuery('input.page-length', handler.container).change(
     function() {
       return !handler.changePageLength(this);
     } 
@@ -56,7 +56,7 @@ ItemsList.prototype.listeners.pagesCount = function(handler)
 // Change current page
 ItemsList.prototype.showPage = function(handler)
 {
-  return this.process('pageId', $(handler).attr('class'));
+  return this.process('pageId', jQuery(handler).attr('class'));
 }
 
 // Change items per page number
@@ -118,7 +118,7 @@ ItemsList.prototype.loadWidget = function()
 
     this.showModalScreen();
     var o = this;
-    $.ajax(
+    jQuery.ajax(
       {
         type: 'get',
         url: this.buildURL(true),
@@ -152,10 +152,10 @@ ItemsList.prototype.showModalScreen = function()
   );
 
   // FIXME - check if there is more convinient way
-  $('.blockElement')
+  jQuery('.blockElement')
     .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null})
     .addClass('wait-block');
-  $('.blockOverlay')
+  jQuery('.blockOverlay')
     .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null})
     .addClass('wait-block-overlay');
 }
@@ -179,12 +179,12 @@ ItemsList.prototype.loadHandler = function(xhr, s)
 
   if (xhr.status == 200 && xhr.responseText) {
     var div = document.createElement('DIV');
-    $(div).html(xhr.responseText);
+    jQuery(div).html(xhr.responseText);
 
-    div = $('.items-list.' + this.cell, div).eq(0);
+    div = jQuery('.items-list.' + this.cell, div).eq(0);
     if (div.length) {
       this.container.replaceWith(div);
-      this.container = $('.items-list.' + this.cell);
+      this.container = jQuery('.items-list.' + this.cell);
 
       this.addListeners();
 

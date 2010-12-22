@@ -24,7 +24,7 @@ function TopMessages(container) {
     return false;
   }
 
-  this.container = $(container).eq(0);
+  this.container = jQuery(container).eq(0);
   if (!this.container.length) {
     return false;
   }
@@ -33,7 +33,7 @@ function TopMessages(container) {
   var o = this;
 
   // Close button
-  $('a.close', this.container).click(
+  jQuery('a.close', this.container).click(
     function(event) {
       event.stopPropagation();
       o.clearRecords();
@@ -42,15 +42,15 @@ function TopMessages(container) {
     }
   ).hover(
     function() {
-      $(this).addClass('close-hover');
+      jQuery(this).addClass('close-hover');
     },
     function() {
-      $(this).removeClass('close-hover');
+      jQuery(this).removeClass('close-hover');
     }
   );
 
   // Global event
-  $(document).bind(
+  jQuery(document).bind(
     'message',
     function(event, text, type) {
       o.messageHandler(text, type);
@@ -58,7 +58,7 @@ function TopMessages(container) {
   );
 
   // AJAX global event
-  $(document).bind(
+  jQuery(document).bind(
     'ajaxComplete',
     function(event, xhr, options) {
       o.ajaxCompleteHandler(xhr, options);
@@ -66,24 +66,24 @@ function TopMessages(container) {
   );
 
   // Remove dump items (W3C compatibility)
-  $('li.dump', this.container).remove();
+  jQuery('li.dump', this.container).remove();
 
   // Fix position: fixed
-  this.msie6 = $.browser.msie && parseInt($.browser.version) < 7;
+  this.msie6 = jQuery.browser.msie && parseInt(jQuery.browser.version) < 7;
   if (this.msie6) {
     this.container.css('position', 'absolute');
     this.container.css('border-style', 'solid');
-    $('ul', this.container).css('border-style', 'solid');
+    jQuery('ul', this.container).css('border-style', 'solid');
   }
 
   // Initial show
-  if (!this.isVisible() && $('li', this.container).length) {
+  if (!this.isVisible() && jQuery('li', this.container).length) {
     setTimeout(
       function() {
         o.show();
 
         // Set initial timers
-        $('li.' + MESSAGE_INFO, o.container).each(
+        jQuery('li.' + MESSAGE_INFO, o.container).each(
           function() {
             o.setTimer(this);
           }
@@ -95,7 +95,7 @@ function TopMessages(container) {
   } else {
 
     // Set initial timers
-    $('li.' + MESSAGE_INFO, this.container).each(
+    jQuery('li.' + MESSAGE_INFO, this.container).each(
       function() {
         o.setTimer(this);
       }
@@ -148,16 +148,16 @@ TopMessages.prototype.addRecord = function(text, type)
   li.className = type;
   li.style.display = 'none';
 
-  $('ul', this.container).append(li);
+  jQuery('ul', this.container).append(li);
 
   if (
-    $('li', this.container).length
+    jQuery('li', this.container).length
     && !this.isVisible()
   ) {
     this.show();
   }
 
-  $(li).slideDown('fast');
+  jQuery(li).slideDown('fast');
 
   if (type == MESSAGE_INFO) {
     this.setTimer(li);
@@ -167,14 +167,14 @@ TopMessages.prototype.addRecord = function(text, type)
 // Clear record
 TopMessages.prototype.hideRecord = function(li)
 {
-  if ($('li:not(.remove)', this.container).length == 1) {
+  if (jQuery('li:not(.remove)', this.container).length == 1) {
     this.clearRecords();
 
   } else {
-    $(li).addClass('remove').slideUp(
+    jQuery(li).addClass('remove').slideUp(
       'fast',
       function() {
-        $(this).remove();
+        jQuery(this).remove();
       }
     );
   }
@@ -184,13 +184,13 @@ TopMessages.prototype.hideRecord = function(li)
 TopMessages.prototype.clearRecords = function()
 {
   this.hide();
-  $('li', this.container).remove();
+  jQuery('li', this.container).remove();
 }
 
 // Set record timer
 TopMessages.prototype.setTimer = function(li)
 {
-  li = $(li).get(0);
+  li = jQuery(li).get(0);
 
   if (li.timer) {
     clearTimeout(li.timer);
@@ -219,7 +219,7 @@ TopMessages.prototype.ajaxCompleteHandler = function(xhr)
   if (messages) {
     messages = messages.split(/\|/);
     for (var i = 0; i < messages.length; i++) {
-      var message = $.trim(messages[i]);
+      var message = jQuery.trim(messages[i]);
       var m = message.match(/\[([a-z]+)\]$/);
       var type = MESSAGE_INFO;
       if (m) {
@@ -235,8 +235,8 @@ TopMessages.prototype.ajaxCompleteHandler = function(xhr)
 }
 
 // Initialize
-$(document).ready(
+jQuery(document).ready(
   function () {
-    new TopMessages($('#top_messages').eq(0));
+    new TopMessages(jQuery('#top_messages').eq(0));
   }
 );

@@ -17,12 +17,12 @@ function OrderItemsShortListController(container)
     return false;
   }
 
-  this.container = $(container).eq(0);
+  this.container = jQuery(container).eq(0);
   if (!this.container.length) {
     return false;
   }
 
-  this.shortList = $('table', this.container).eq(0);
+  this.shortList = jQuery('table', this.container).eq(0);
   if (!this.shortList.length) {
     return false;
   }
@@ -43,13 +43,13 @@ function OrderItemsShortListController(container)
   // Add event listeners
   var o = this;
 
-  $('a', this.container).click(
+  jQuery('a', this.container).click(
     function (event) {
       event.stopPropagation();
     }
   );
 
-  $('.more a', this.container).click(
+  jQuery('.more a', this.container).click(
     function(event) {
       return !o.loadList(event);
     }
@@ -97,7 +97,7 @@ OrderItemsShortListController.prototype.placeRequestData = function(box)
     this.fullList.insertAfter(this.shortList);
 
     var o = this;
-    $('.more a', this.fullList).click(
+    jQuery('.more a', this.fullList).click(
       function(event) {
         event.stopPropagation();
         return !o.loadList(event);

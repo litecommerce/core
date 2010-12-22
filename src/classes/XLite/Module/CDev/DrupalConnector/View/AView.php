@@ -180,22 +180,24 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
     {
         $list = parent::getCommonFiles();
 
-        $key = array_search('js/jquery.min.js', $list['js']);
-        if (false !== $key) {
-            unset($list['js'][$key]);
-        }
+        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+            $key = array_search('js/jquery.min.js', $list['js']);
+            if (false !== $key) {
+                unset($list['js'][$key]);
+            }
 
-        /*
-        $key = array_search('js/jquery-ui.min.js', $list['js']);
-        if (false !== $key) {
-            unset($list['js'][$key]);
-        }
+            /*
+            $key = array_search('js/jquery-ui.min.js', $list['js']);
+            if (false !== $key) {
+                unset($list['js'][$key]);
+            }
 
-        $key = array_search('css/jquery-ui.css', $list['css']);
-        if (false !== $key) {
-            unset($list['css'][$key]);
+            $key = array_search('css/jquery-ui.css', $list['css']);
+            if (false !== $key) {
+                unset($list['css'][$key]);
+            }
+            */
         }
-        */
 
         return $list;
     }

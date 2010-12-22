@@ -18,10 +18,10 @@
 */
 
 ;(function($) { 
-  $.cluetip = {version: '1.0.6'};
+  jQuery.cluetip = {version: '1.0.6'};
   var $cluetip, $cluetipInner, $cluetipOuter, $cluetipTitle, $cluetipArrows, $cluetipWait, $dropShadow, imgCount;
   
-  $.fn.cluetip = function(js, options) {
+  jQuery.fn.cluetip = function(js, options) {
     if (typeof js == 'object') {
       options = js;
       js = null;
@@ -30,10 +30,10 @@
       return this.removeData('thisInfo').unbind('.cluetip');
     }
     return this.each(function(index) {
-      var link = this, $this = $(this);
+      var link = this, $this = jQuery(this);
       
       // support metadata plugin (v1.0 and 2.0)
-      var opts = $.extend(true, {}, $.fn.cluetip.defaults, options || {}, $.metadata ? $this.metadata() : $.meta ? $this.data() : {});
+      var opts = jQuery.extend(true, {}, jQuery.fn.cluetip.defaults, options || {}, jQuery.metadata ? $this.metadata() : jQuery.meta ? $this.data() : {});
 
       // start out with no contents (for ajax activation)
       var cluetipContents = false;
@@ -42,8 +42,8 @@
       var isActive = false, closeOnDelay = 0;
 
       // create the cluetip divs
-      if (!$('#cluetip').length) {
-        $(['<div id="cluetip">',
+      if (!jQuery('#cluetip').length) {
+        jQuery(['<div id="cluetip">',
           '<div id="cluetip-outer">',
             '<h3 id="cluetip-title"></h3>',
             '<div id="cluetip-inner"></div>',
@@ -53,19 +53,19 @@
         '</div>'].join(''))
         [insertionType](insertionElement).hide();
         
-        $cluetip = $('#cluetip').css({position: 'absolute'});
-        $cluetipOuter = $('#cluetip-outer').css({position: 'relative', zIndex: cluezIndex});
-        $cluetipInner = $('#cluetip-inner');
-        $cluetipTitle = $('#cluetip-title');        
-        $cluetipArrows = $('#cluetip-arrows');
-        $cluetipWait = $('<div id="cluetip-waitimage"></div>')
+        $cluetip = jQuery('#cluetip').css({position: 'absolute'});
+        $cluetipOuter = jQuery('#cluetip-outer').css({position: 'relative', zIndex: cluezIndex});
+        $cluetipInner = jQuery('#cluetip-inner');
+        $cluetipTitle = jQuery('#cluetip-title');        
+        $cluetipArrows = jQuery('#cluetip-arrows');
+        $cluetipWait = jQuery('<div id="cluetip-waitimage"></div>')
           .css({position: 'absolute'}).insertBefore($cluetip).hide();
       }
       var dropShadowSteps = (opts.dropShadow) ? +opts.dropShadowSteps : 0;
       if (!$dropShadow) {
-        $dropShadow = $([]);
+        $dropShadow = jQuery([]);
         for (var i=0; i < dropShadowSteps; i++) {
-          $dropShadow = $dropShadow.add($('<div></div>').css({zIndex: cluezIndex-1, opacity:.1, top: 1+i, left: 1+i}));
+          $dropShadow = $dropShadow.add(jQuery('<div></div>').css({zIndex: cluezIndex-1, opacity:.1, top: 1+i, left: 1+i}));
         }
         $dropShadow.css({position: 'absolute', backgroundColor: '#000'})
         .prependTo($cluetip);
@@ -76,7 +76,7 @@
       }
       // if hideLocal is set to true, on DOM ready hide the local content that will be displayed in the clueTip
       if (opts.local && opts.localPrefix) {tipAttribute = opts.localPrefix + tipAttribute;}
-      if (opts.local && opts.hideLocal) { $(tipAttribute + ':first').hide(); }
+      if (opts.local && opts.hideLocal) { jQuery(tipAttribute + ':first').hide(); }
       var tOffset = parseInt(opts.topOffset, 10), lOffset = parseInt(opts.leftOffset, 10);
       // vertical measurement variables
       var tipHeight, wHeight,
@@ -125,8 +125,8 @@
       mouseX = event.pageX;
       mouseY = event.pageY;
       if (link.tagName.toLowerCase() != 'area') {
-        sTop = $(document).scrollTop();
-        winWidth = $(window).width();
+        sTop = jQuery(document).scrollTop();
+        winWidth = jQuery(window).width();
       }
 // position clueTip horizontally
       if (opts.positionBy == 'fixed') {
@@ -152,7 +152,7 @@
         });
         $cluetipArrows.css({zIndex: $this.data('thisInfo').zIndex+1});
       }
-        wHeight = $(window).height();
+        wHeight = jQuery(window).height();
 
 /***************************************
 * load a string from cluetip method's first argument
@@ -233,8 +233,8 @@
                   imgCount--;
                 }
               }
-              if (imgCount && !$.browser.opera) {
-                $(imgs).bind('load error', function() {
+              if (imgCount && !jQuery.browser.opera) {
+                jQuery(imgs).bind('load error', function() {
                   imgCount--;
                   if (imgCount<1) {
                     $cluetipWait.hide();
@@ -247,9 +247,9 @@
               } 
             }
           };
-          var ajaxMergedSettings = $.extend(true, {}, opts.ajaxSettings, ajaxSettings);
+          var ajaxMergedSettings = jQuery.extend(true, {}, opts.ajaxSettings, ajaxSettings);
           
-          $.ajax(ajaxMergedSettings);
+          jQuery.ajax(ajaxMergedSettings);
         }
 
 /***************************************
@@ -257,7 +257,7 @@
 ***************************************/
       } else if (opts.local) {
         
-        var $localContent = $(tipAttribute + (/#\S+$/.test(tipAttribute) ? '' : ':eq(' + index + ')')).clone(true).show();
+        var $localContent = jQuery(tipAttribute + (/#\S+$/.test(tipAttribute) ? '' : ':eq(' + index + ')')).clone(true).show();
         $cluetipInner.html($localContent);
         cluetipShow(pY);
       }
@@ -273,7 +273,7 @@
       function doNothing() {}; //empty function
       tipTitle ? $cluetipTitle.show().html(tipTitle) : (opts.showTitle) ? $cluetipTitle.show().html('&nbsp;') : $cluetipTitle.hide();
       if (opts.sticky) {
-        var $closeLink = $('<div id="cluetip-close"><a href="#">' + opts.closeText + '</a></div>');
+        var $closeLink = jQuery('<div id="cluetip-close"><a href="#">' + opts.closeText + '</a></div>');
         (opts.closePosition == 'bottom') ? $closeLink.appendTo($cluetipInner) : (opts.closePosition == 'title') ? $closeLink.prependTo($cluetipTitle) : $closeLink.prependTo($cluetipInner);
         $closeLink.bind('click.cluetip', function() {
           cluetipClose();
@@ -325,7 +325,7 @@
       $dropShadow.hide();
       $cluetip.hide()[opts.fx.open](opts.fx.openSpeed || 0);
       if (opts.dropShadow) { $dropShadow.css({height: tipHeight, width: tipInnerWidth, zIndex: $this.data('thisInfo').zIndex-1}).show(); }
-      if ($.fn.bgiframe) { $cluetip.bgiframe(); }
+      if (jQuery.fn.bgiframe) { $cluetip.bgiframe(); }
       // delayed close (not fully tested)
       if (opts.delayedClose > 0) {
         closeOnDelay = setTimeout(cluetipClose, opts.delayedClose);
@@ -363,7 +363,7 @@
       }
     };
 
-    $(document).bind('hideCluetip', function(e) {
+    jQuery(document).bind('hideCluetip', function(e) {
       cluetipClose();
     });
 /***************************************
@@ -374,7 +374,7 @@
         $this.bind('click.cluetip', function(event) {
           if ($cluetip.is(':hidden') || !$this.is('.cluetip-clicked')) {
             activate(event);
-            $('.cluetip-clicked').removeClass('cluetip-clicked');
+            jQuery('.cluetip-clicked').removeClass('cluetip-clicked');
             $this.addClass('cluetip-clicked');
           } else {
             inactivate(event);
@@ -404,7 +404,7 @@
             });
           }
         };
-        if ($.fn.hoverIntent && opts.hoverIntent) {
+        if (jQuery.fn.hoverIntent && opts.hoverIntent) {
           $this.hoverIntent({
             sensitivity: opts.hoverIntent.sensitivity,
             interval: opts.hoverIntent.interval,  
@@ -438,16 +438,16 @@
  * options for clueTip
  *
  * each one can be explicitly overridden by changing its value. 
- * for example: $.fn.cluetip.defaults.width = 200; 
+ * for example: jQuery.fn.cluetip.defaults.width = 200; 
  * would change the default width for all clueTips to 200. 
  *
  * each one can also be overridden by passing an options map to the cluetip method.
- * for example: $('a.example').cluetip({width: 200}); 
+ * for example: jQuery('a.example').cluetip({width: 200}); 
  * would change the default width to 200 for clueTips invoked by a link with class of "example"
  *
  */
   
-  $.fn.cluetip.defaults = {  // set up default options
+  jQuery.fn.cluetip.defaults = {  // set up default options
     width:            275,      // The width of the clueTip
     height:           'auto',   // The height of the clueTip
     cluezIndex:       97,       // Sets the z-index style property of the clueTip
@@ -511,7 +511,7 @@
                         return data;
     },                
 
-    // can pass in standard $.ajax() parameters. Callback functions, such as beforeSend, 
+    // can pass in standard jQuery.ajax() parameters. Callback functions, such as beforeSend, 
     // will be queued first within the default callbacks. 
     // The only exception is error, which overrides the default
     ajaxSettings: {
@@ -526,13 +526,13 @@
 /*
  * Global defaults for clueTips. Apply to all calls to the clueTip plugin.
  *
- * @example $.cluetip.setup({
+ * @example jQuery.cluetip.setup({
  *   insertionType: 'prependTo',
  *   insertionElement: '#container'
  * });
  * 
  * @property
- * @name $.cluetip.setup
+ * @name jQuery.cluetip.setup
  * @type Map
  * @cat Plugins/tooltip
  * @option String insertionType: Default is 'appendTo'. Determines the method to be used for inserting the clueTip into the DOM. Permitted values are 'appendTo', 'prependTo', 'insertBefore', and 'insertAfter'
@@ -542,7 +542,7 @@
    
   var insertionType = 'appendTo', insertionElement = 'body';
 
-  $.cluetip.setup = function(options) {
+  jQuery.cluetip.setup = function(options) {
     if (options && options.insertionType && (options.insertionType).match(/appendTo|prependTo|insertBefore|insertAfter/)) {
       insertionType = options.insertionType;
     }

@@ -10,9 +10,9 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
-$(document).ready(
+jQuery(document).ready(
   function() {
-    $('a.helpdesk').click(
+    jQuery('a.helpdesk').click(
       function (event) {
         event.stopPropagation();
         return !displayHelpdeskForm();
@@ -23,21 +23,21 @@ $(document).ready(
 
 function displayHelpdeskForm(subject, message)
 {
-  var form = $('form.helpdesk').eq(0);
+  var form = jQuery('form.helpdesk').eq(0);
   if (!form.length) {
     return false;
   }
 
   form = form.clone(true);
-  var div = $(document.createElement('div'));
+  var div = jQuery(document.createElement('div'));
   form.show();
 
   if (subject) {
-    $('input[name="subject"]', form).val(subject);
+    jQuery('input[name="subject"]', form).val(subject);
   }
 
   if (message) {
-    $('textarea[name="message"]', form).val(message);
+    jQuery('textarea[name="message"]', form).val(message);
   }
 
   div.append(form);
