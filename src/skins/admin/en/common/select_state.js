@@ -16,7 +16,7 @@ function StateSelectorController(obj)
     return;
   }
 
-  obj = $(obj).eq(0);
+  obj = jQuery(obj).eq(0);
   if (!obj.length) {
     return;
   }
@@ -34,8 +34,8 @@ function StateSelectorController(obj)
   this.pattern = name.replace(/state/, '%placeholder%');
 
   this.stateSelector = obj;
-  this.countrySelector = $('select[name="' + this.pattern.replace(/%placeholder%/, 'country') + '"]', obj.get(0).form).eq(0);
-  this.otherStateInput = $('input[name="' + this.pattern.replace(/%placeholder%/, 'custom_state') + '"]', obj.get(0).form).eq(0);
+  this.countrySelector = jQuery('select[name="' + this.pattern.replace(/%placeholder%/, 'country') + '"]', obj.get(0).form).eq(0);
+  this.otherStateInput = jQuery('input[name="' + this.pattern.replace(/%placeholder%/, 'custom_state') + '"]', obj.get(0).form).eq(0);
 
   if (!this.countrySelector.length) {
     return;

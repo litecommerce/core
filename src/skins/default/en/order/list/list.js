@@ -17,7 +17,7 @@ function OrdersListController(container, params)
     return false;
   }
 
-  this.container = $(container).eq(0);
+  this.container = jQuery(container).eq(0);
   if (!this.container.length) {
     return false;
   }
@@ -55,7 +55,7 @@ OrdersListController.prototype.changeSortCriterion = function(event, form)
 {
   var result = true;
 
-  form = $(form);
+  form = jQuery(form);
 
   if (form.length) {
 
@@ -63,7 +63,7 @@ OrdersListController.prototype.changeSortCriterion = function(event, form)
     this.showModalScreen();
 
     var o = this;
-    $.ajax(
+    jQuery.ajax(
       {
         type:     form.attr('method'),
         url:      form.attr('action'),
@@ -86,7 +86,7 @@ OrdersListController.prototype.changePage = function(event, link)
 {
   var result = true;
 
-  link = $(link);
+  link = jQuery(link);
 
   var li = link.parents('li').eq(0);
   if (
@@ -112,7 +112,7 @@ OrdersListController.prototype.changePage = function(event, link)
     this.showModalScreen();
 
     var o = this;
-    $.ajax(
+    jQuery.ajax(
       {
         type:     'get',
         url:      link.attr('href'),
@@ -148,7 +148,7 @@ OrdersListController.prototype.listChanged = function(xhr, s)
 // Extract widget data
 OrdersListController.prototype.extractRequestData = function(div)
 {
-  return $('.orders-list', div).eq(0);
+  return jQuery('.orders-list', div).eq(0);
 }
 
 // Widget post processing (after new widge data placing)
@@ -163,7 +163,7 @@ OrdersListController.prototype.postprocess = function(isSuccess)
 // Go to order page
 OrdersListController.prototype.goToOrder = function(li)
 {
-  var m = $(li).attr('class').match(/order-([0-9]+)/);
+  var m = jQuery(li).attr('class').match(/order-([0-9]+)/);
   var orderId = false;
   if (m) {
     orderId = parseInt(m[1]);
@@ -191,38 +191,38 @@ OrdersListController.prototype.addListeners = function()
 {
   var o = this;
 
-  $('ul li', this.container).click(
+  jQuery('ul li', this.container).click(
     function() {
       o.goToOrder(this);
     }
   );
 
-  if ($.browser.msie && $.browser.version < 8) {
+  if (jQuery.browser.msie && jQuery.browser.version < 8) {
 
     // Hover emulation
-    $('ul li', this.container).hover(
+    jQuery('ul li', this.container).hover(
       function() {
-        $(this).addClass('hover');
+        jQuery(this).addClass('hover');
       },
       function() {
-        $(this).removeClass('hover');
+        jQuery(this).removeClass('hover');
       }
     );
   }
 
-  $('ul li a', this.container).click(
+  jQuery('ul li a', this.container).click(
     function (event) {
       event.stopPropagation();
     }
   );
 
-  $('form.sort-box', this.container).submit(
+  jQuery('form.sort-box', this.container).submit(
     function (event) {
       return o.changeSortCriterion(event, this);
     }
   );
 
-  $('.pager a', this.container).click(
+  jQuery('.pager a', this.container).click(
     function (event) {
       return o.changePage(event, this);
     }

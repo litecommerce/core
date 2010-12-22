@@ -13,8 +13,8 @@
 
 function ShipAsBillHandler()
 {
-  this.flag = $('#ship-as-bill');
-  this.block = $('.shipping-section');
+  this.flag = jQuery('#ship-as-bill');
+  this.block = jQuery('.shipping-section');
 
   // Event handlers
   var o = this;
@@ -37,7 +37,7 @@ ShipAsBillHandler.prototype.changeFieldsAccessability = function()
   this.flag.attr('disabled', '');
 }
 
-$(document).ready(
+jQuery(document).ready(
   function(event) {
     var shipAsBillHandler = new ShipAsBillHandler();
   }

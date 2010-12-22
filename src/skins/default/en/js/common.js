@@ -75,7 +75,7 @@ function formModify(obj, url)
 function eventBind(obj, e, func)
 {
 	if ($) {
-		$(obj).bind(e, func);
+		jQuery(obj).bind(e, func);
 
 	} else if (window.addEventListener) {
 		obj.addEventListener(e, func, false);
@@ -228,7 +228,7 @@ LoadableWidgetAbstract.prototype.loadWidget = function()
   this.showModalScreen();
 
   var o = this;
-  $.ajax(
+  jQuery.ajax(
     {
       type: 'get',
       url: this.buildWidgetRequestURL(),
@@ -261,7 +261,7 @@ LoadableWidgetAbstract.prototype.buildWidgetRequestURL = function()
 // Add widget arguments to parameters list
 LoadableWidgetAbstract.prototype.addWidgetParams = function(params)
 {
-  $.each(
+  jQuery.each(
     this.widgetParams,
     function(key, value) {
       params[key] = value;
@@ -279,8 +279,8 @@ LoadableWidgetAbstract.prototype.loadHandler = function(xhr, s)
   if (xhr.status == 200 && xhr.responseText) {
     var div = document.createElement('DIV');
     div.style.display = 'none';
-    $('body').get(0).appendChild(div);
-    div = $(div);
+    jQuery('body').get(0).appendChild(div);
+    div = jQuery(div);
     div.html(xhr.responseText);
 
     processed = this.placeRequestData(this.extractRequestData(div));
@@ -307,7 +307,7 @@ LoadableWidgetAbstract.prototype.placeRequestData = function(box)
   var id = 'temporary-ajax-id-' + (new Date()).getTime();
   box.addClass(id);
   this.modalTarget.replaceWith(box);
-  this.modalTarget = $('.' + id);
+  this.modalTarget = jQuery('.' + id);
   this.modalTarget.removeClass(id);
 
   return true;
@@ -343,11 +343,11 @@ LoadableWidgetAbstract.prototype.showModalScreen = function()
     }
   );
 
-  $('.blockElement')
+  jQuery('.blockElement')
     .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null})
     .addClass('wait-block');
 
-  $('.blockOverlay')
+  jQuery('.blockOverlay')
     .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null})
     .addClass('wait-block-overlay');
 

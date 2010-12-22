@@ -11,19 +11,19 @@
  * @since     3.0.0
  */
 
-$(document).ready(
+jQuery(document).ready(
   function() {
 
     // Add search form visibility switcher
-    $('a.search-orders').click(
+    jQuery('a.search-orders').click(
       function() {
-        var elm = $('form.search-orders');
+        var elm = jQuery('form.search-orders');
         if (elm.css('display') == 'none') {
-          $(this).addClass('dynamic-open').removeClass('dynamic-close');
+          jQuery(this).addClass('dynamic-open').removeClass('dynamic-close');
           elm.show();
 
         } else {
-          $(this).addClass('dynamic-close').removeClass('dynamic-open');
+          jQuery(this).addClass('dynamic-close').removeClass('dynamic-open');
           elm.hide();
         }
 
@@ -32,12 +32,12 @@ $(document).ready(
     );
 
     // Reset form
-    $('form.search-orders .reset a').click(
+    jQuery('form.search-orders .reset a').click(
       function() {
 
-        var form = $(this).parents('form').eq(0);
-        $('input:text', form).val('');
-        $('select[name="status"]', form).val('');
+        var form = jQuery(this).parents('form').eq(0);
+        jQuery('input:text', form).val('');
+        jQuery('select[name="status"]', form).val('');
 
         form.trigger('customReset');
 

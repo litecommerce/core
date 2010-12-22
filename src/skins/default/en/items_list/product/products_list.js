@@ -24,7 +24,7 @@ function ProductsList(cell, URLParams, URLAJAXParams)
 // Set new display mode
 ItemsList.prototype.changeDisplayMode = function(handler)
 {
-  return this.constructor.prototype.process('displayMode', $(handler).attr('class'));
+  return this.constructor.prototype.process('displayMode', jQuery(handler).attr('class'));
 }
 
 // Change sort criterion
@@ -41,7 +41,7 @@ ItemsList.prototype.changeSortOrder = function()
 
 ItemsList.prototype.listeners.displayModes = function(handler)
 {
-  $('.display-modes a', handler.container).click(
+  jQuery('.display-modes a', handler.container).click(
     function() {
       return !handler.changeDisplayMode(this);
     }
@@ -50,7 +50,7 @@ ItemsList.prototype.listeners.displayModes = function(handler)
 
 ItemsList.prototype.listeners.sortByModes = function(handler)
 {
-  $('select.sort-crit', handler.container).change(
+  jQuery('select.sort-crit', handler.container).change(
     function() {
       return !handler.changeSortByMode(this);
     }
@@ -59,7 +59,7 @@ ItemsList.prototype.listeners.sortByModes = function(handler)
 
 ItemsList.prototype.listeners.sortOrderModes = function(handler)
 {
-  $('a.sort-order', handler.container).click(
+  jQuery('a.sort-order', handler.container).click(
     function() {
       return !handler.changeSortOrder();
     }

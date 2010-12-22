@@ -23,9 +23,9 @@ function productQuantityController(container, min, max)
   this.container = container.eq(0);
 
   // Check widget structure
-  this.lowerLink = $('a.quantity-lower', this.container).eq(0);
-  this.upperLink = $('a.quantity-upper', this.container).eq(0);
-  this.input = $('input', this.container).eq(0);
+  this.lowerLink = jQuery('a.quantity-lower', this.container).eq(0);
+  this.upperLink = jQuery('a.quantity-upper', this.container).eq(0);
+  this.input = jQuery('input', this.container).eq(0);
 
   if (!this.lowerLink.length || !this.upperLink.length || !this.input.length) {
     // Widget structure is corrupted
