@@ -295,10 +295,37 @@ class Database extends \XLite\Base\Singleton
             $this->configuration->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR),
             'XLite\Model'
         );
-        $chain->addDriver(
-            $this->configuration->newDefaultAnnotationDriver(LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module'),
-            'XLite\Module'
+
+        $iterator = new \RecursiveDirectoryIterator(
+            LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module',
+            \FilesystemIterator::SKIP_DOTS
         );
+
+        foreach ($iterator as $dir) {
+
+            if (
+                \Includes\Utils\FileManager::isDir($dir->getPathName())
+            ) {
+                $iterator2 = new \RecursiveDirectoryIterator(
+                    $dir->getPathName(),
+                    \FilesystemIterator::SKIP_DOTS
+                );
+     
+                foreach ($iterator2 as $dir2) {
+                    if (
+                        \Includes\Utils\FileManager::isDir($dir2->getPathName())
+                        && \Includes\Utils\FileManager::isDir($dir2->getPathName() . LC_DS . 'Model')
+                    ) {
+                        $chain->addDriver(
+                            $this->configuration->newDefaultAnnotationDriver($dir2->getPathName() . LC_DS . 'Model'),
+                            'XLite\Module\\' . $dir->getBaseName() . '\\' . $dir2->getBaseName() . '\Model'
+                        );
+                    }
+                }
+            }
+        }
+
+
         $this->configuration->setMetadataDriverImpl($chain);
 
         // Set proxy settings
