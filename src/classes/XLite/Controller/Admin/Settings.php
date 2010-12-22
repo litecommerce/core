@@ -50,7 +50,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
         'Company'     => 'Company',
         'Email'       => 'Email',
         'Security'    => 'Security',
-        'AdminIP'     => 'Admin IP protection',
         'Captcha'     => 'Captcha protection',
         'Environment' => 'Environment',
         'Performance'  => 'Performance',
@@ -727,24 +726,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * getWaitingList 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getWaitingList()
-    {
-        if (is_null($this->_waiting_list)){
-            $waiting_ip = new \XLite\Model\WaitingIP();
-            $this->_waiting_list = (array) $waiting_ip->findAll("", "first_date");
-        }
-
-        return $this->_waiting_list;
-    }
-
-    /**
      * getCurrentIP 
      * 
      * @return void
@@ -769,42 +750,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     public function isCurrentIpValid()
     {
         return true;
-    }
-
-    /**
-     * action_approve_ip 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function action_approve_ip()
-    {
-        $ids = (array) $this->get('waiting_ips');
-        foreach ($ids as $id){
-            $waiting_ip = new \XLite\Model\WaitingIP($id);
-            $waiting_ip->approveIP();
-            $waiting_ip->delete();
-        }
-        
-    }
-
-    /**
-     * action_delete_ip 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function action_delete_ip()
-    {
-        $ids = (array) $this->get('waiting_ips');
-        foreach ($ids as $id){
-            $waiting_ip = new \XLite\Model\WaitingIP($id);
-            $waiting_ip->delete();
-        }
     }
 
     /**

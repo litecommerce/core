@@ -223,7 +223,6 @@ function setUnitSymbol(symbol) {
     {end:}
 
     {if:!page=#Environment#}
-      {if:!page=#AdminIP#}
         <tr>
           <td colspan="2">&nbsp;</td>
         </tr>
@@ -231,7 +230,6 @@ function setUnitSymbol(symbol) {
           <td align="right"><input type="submit" value="Submit" /></td>
           <td>&nbsp;</td>
         </tr>
-      {end:}
     {end:}
   </table>
 
@@ -332,10 +330,6 @@ if (!httpsEnabled) {
 
 {if:page=#Environment#}
   <widget page="Environment" template="summary.tpl" />
-{end:}
-
-{if:page=#AdminIP#}
-  <widget page="AdminIP" template="waiting_ips.tpl" />
 {end:}
 
 <widget class="\XLite\View\ModulesManager\SettingsFooter" section="{page}" />

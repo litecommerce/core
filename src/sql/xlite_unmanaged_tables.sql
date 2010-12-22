@@ -40,15 +40,3 @@ CREATE TABLE xlite_upgrades (
   PRIMARY KEY  (from_ver,to_ver),
   KEY date (date)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-
-DROP TABLE IF EXISTS xlite_waitingips;
-CREATE TABLE xlite_waitingips (
-  id INT NOT NULL AUTO_INCREMENT,
-  ip VARCHAR(32) NOT NULL DEFAULT '',
-  unique_key VARCHAR(50) NOT NULL DEFAULT '',
-  first_date INT NOT NULL DEFAULT '0',
-  last_date INT NOT NULL DEFAULT '0',
-  count INT NOT NULL DEFAULT '0',
-  PRIMARY KEY  (id),
-  UNIQUE (ip)
-) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
