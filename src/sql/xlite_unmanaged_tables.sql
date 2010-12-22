@@ -32,17 +32,6 @@ CREATE TABLE xlite_extra_fields (
   KEY categories (categories (65536))
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
-DROP TABLE IF EXISTS xlite_log;
-CREATE TABLE xlite_log (
-  unixtime INT NOT NULL DEFAULT '0',
-  ident VARCHAR(16) NOT NULL DEFAULT '',
-  priority INT DEFAULT NULL,
-  message VARCHAR(200) DEFAULT NULL,
-  KEY unixtime (unixtime,ident),
-  KEY priority (priority),
-  KEY message (message)
-) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-
 DROP TABLE IF EXISTS xlite_search_stat;
 CREATE TABLE xlite_search_stat (
   query VARCHAR(64) NOT NULL DEFAULT '',
