@@ -131,7 +131,6 @@ class Cart extends \XLite\View\Dialog
     {
         $list = parent::getJSFiles();
 
-        $list[] = 'js/core.popup.js';
         $list[] = $this->getDir() . '/controller.js';
 
         return $list;

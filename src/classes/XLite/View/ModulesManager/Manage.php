@@ -34,6 +34,8 @@ namespace XLite\View\ModulesManager;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0
+ *
+ * @ListChild (list="admin.center", zone="admin")
  */
 class Manage extends \XLite\View\Dialog
 {
