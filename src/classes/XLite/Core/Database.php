@@ -126,8 +126,6 @@ class Database extends \XLite\Base\Singleton
         'extra_field_values',
         'extra_fields',
         'landing_links',
-        'upgrades',
-        'waitingips',
     );
 
     /**
