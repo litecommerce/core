@@ -1166,15 +1166,6 @@ abstract class AController extends \XLite\Core\Handler
         return $url;
     }
 
-    function checkHtaccess()
-    {
-        if ('Y' == $this->config->Security->htaccess_protection) {
-            $htaccess = new \XLite\Model\Htaccess();
-            $htaccess->checkFiles();
-        }
-    }
-
-
     /**
      * Common prefix for editable elements in lists
      *

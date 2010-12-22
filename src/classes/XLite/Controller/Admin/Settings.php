@@ -537,60 +537,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * getCheckFiles 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCheckFiles()
-    {
-        $htaccess = new \XLite\Model\Htaccess();
-        return $htaccess->checkEnvironment();
-    }
-
-    /**
-     * action_update_htaccess 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function action_update_htaccess()
-    {
-        $ids = \XLite\Core\Request::getInstance()->ind;
-
-        if (is_array($ids)) {
-            foreach ($ids as $id => $v){
-                $htaccess = new \XLite\Model\Htaccess($id);
-                $htaccess->reImage();
-            }
-        }
-    }
-
-    /**
-     * action_restore_htaccess 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function action_restore_htaccess()
-    {
-        $ids = \XLite\Core\Request::getInstance()->ind;
-
-        if (is_array($ids)) {
-           foreach ($ids as $id => $v){
-               $htaccess = new \XLite\Model\Htaccess($id);
-               $htaccess->restoreFile();
-           }
-        }
-    }
-
-    /**
      * ext_curl_version 
      * 
      * @return void

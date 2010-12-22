@@ -178,49 +178,4 @@ function setVisible(element_id)
 </tr>
 {end:}
 {end:}
-{if:config.Security.htaccess_protection=#Y#}
-<tr>
-    <td colspan="4">&nbsp;</td>
-</tr>
-<tr>
-    <td class="TableHead" nowrap>&nbsp;<b>Security files verification</b>&nbsp;</td>
-    <td colspan="3"></td>
-</tr>
-<tr class="TableHead">
-    <td colspan="4" height=2></td>
-</tr>
-<form action="admin.php" name="update_htaccess_form">
-<input FOREACH="allparams,key,val" type="hidden" name="{key}" value="{val:r}" />
-<input type="hidden" name="action" value="update_htaccess" />
-<tr FOREACH="checkFiles,k,v" class="{getRowClass(k,#DialogBox#,#TableRow#)}">
-    <td align=left><input type="checkbox" name="ind[{v.id}]"{if:v.status=#ok#}disabled="1" {end:} />&nbsp;{v.filename}</td>
-    <td>&nbsp;&nbsp;&nbsp;</td>
-    <td align=left>
-        {if:v.status=#ok#}<font class="SuccessMessage"><b>OK</b></font>{end:}
-        {if:v.status=#not_exists#}<font class="ErrorMessage"><b>MISSING</b></font>{end:}
-        {if:v.status=#wrong#}<font class="ErrorMessage"><b>FAILED</b></font>{end:}
-    </td>
-    <td>&nbsp;&nbsp;&nbsp;</td>
-</tr>
-<tr>
-    <td colspan="4" height=2>&nbsp;</td>
-</tr>
-<tr>
-    <td colspan="4" height=2>
-        <b>Note:</b> If you have modified any of .htaccess files and want to save the modified version to the database, select a check box next to the necessary file and click 'Update selected'.<br /><br/>
-        <input type="button" value=" Update selected " onClick="javascript: if(confirm('Are you sure you want to save the modified file(s) to the database? The operation cannot be reversed.')) htaccess_action(this.form, 'update_htaccess'); " />&nbsp;&nbsp;
-        <input type="button" value=" Restore selected " onClick="javascript: if(confirm('Are you sure you want to restore the file(s) from the database? The operation cannot be reversed.')) htaccess_action(this.form, 'restore_htaccess'); " />
-    </td>
-</tr>
-</form>
-<script type="text/javascript">
-<!--
-    function htaccess_action(form, action)
-    {
-        form.action.value = action;
-        form.submit();
-    }
-// -->
-</script>
-{end:}
 </table>

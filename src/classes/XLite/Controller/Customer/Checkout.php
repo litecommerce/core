@@ -341,8 +341,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function doActionPayment()
     {
-        $this->checkHtaccess();
-
         $pm = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
             ->find(\XLite\Core\Request::getInstance()->methodId);
         if (!$pm) {
@@ -376,9 +374,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function doActionShipping()
     {
-        // FIXME - is it really needed?
-        $this->checkHtaccess();
-
         if (isset(\XLite\Core\Request::getInstance()->methodId)) {
 
             $this->getCart()->getProfile()->setLastShippingId(\XLite\Core\Request::getInstance()->methodId);

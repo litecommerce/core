@@ -489,30 +489,9 @@ class Auth extends \XLite\Base
 
             $profile = self::RESULT_ACCESS_DENIED;
             \XLite\Core\Mailer::sendFailedAdminLoginNotification(\XLite\Core\Request::getInstance()->login);
-
-        } else {
-
-            $this->initHtaccessFiles();
         }
 
         return $profile;
-    }
-
-    /**
-     * initHtaccessFiles 
-     * TODO: need to do either remove this method or refactoring of Htaccess model
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function initHtaccessFiles()
-    {
-        $htaccess = new \XLite\Model\Htaccess();
-        if (!$htaccess->hasImage()) {
-            $htaccess->makeImage();
-        }
     }
 
     /**
