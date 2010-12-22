@@ -40,10 +40,8 @@ class ImportCatalog extends \XLite\Controller\Admin\AAdmin
     public $params = array('target', "page", "import_error");
     public $page = "products"; // the default import page	
     public $pages = array('products' => 'Import products',
-                       'extra_fields' => 'Import extra fields'
                        );
     public $pageTemplates = array("products" => "product/import.tpl",
-                               "extra_fields" => "product/import_fields.tpl"
                                );
     public $category_id = null;
 
@@ -83,12 +81,6 @@ class ImportCatalog extends \XLite\Controller\Admin\AAdmin
             }
         }
 
-        if ( ($this->action == "import_fields" || $this->action == "fields_layout") && !\Includes\Utils\ArrayManager::isArrayUnique((array) $this->fields_layout, $name, array("NULL")) ) {
-            $this->set('valid', false);
-            $this->set('invalid_field_order', true);
-            $this->set('invalid_field_name', $name);
-        }
-        
         parent::handleRequest();
     }
 
@@ -125,21 +117,6 @@ class ImportCatalog extends \XLite\Controller\Admin\AAdmin
         );
     }
 
-    function action_import_fields()
-    {
-        $this->startDump();
-        $options = array(
-            "file"              => $this->getUploadedFile(),
-            "layout"            => $this->fields_layout,
-            "delimiter"         => $this->delimiter,
-            "text_qualifier"    => $this->text_qualifier,
-            "return_error"		=> true,
-            );
-         
-        $field = new \XLite\Model\ExtraField();
-        $field->import($options);
-        $this->importError = $field->importError;
-    }
 
     function action_fields_layout()
     {
@@ -163,10 +140,6 @@ class ImportCatalog extends \XLite\Controller\Admin\AAdmin
                 if (!$this->importError) $text = "Products imported successfully.";
                 $url = array($this->importError.'<br>'.$text.' <a href="admin.php?target=import_catalog"><u>Click here to return to admin interface</u></a>');
             break;
-            case "import_fields":
-                if (!$this->importError) $text = "Product extra fields imported successfully.";
-                $url = array($this->importError.'<br>'.$text.' <a href="admin.php?target=import_catalog&page=extra_fields"><u>Click here to return to admin interface</u></a>');
-            break;
             default:
                 $url = parent::getPageReturnUrl();
         }
@@ -183,9 +156,6 @@ class ImportCatalog extends \XLite\Controller\Admin\AAdmin
     {
         if (($this->action == "import_products" || $this->action == "layout") && $id < count($this->product_layout)) {
             return ($this->product_layout[$id] === $value);
-        }
-        if (($this->action == "import_fields" || $this->action == "fields_layout") && $id < count($this->fields_layout)) {
-            return ($this->fields_layout[$id] === $value);
         }
 
         return $default;

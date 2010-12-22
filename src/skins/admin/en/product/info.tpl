@@ -178,9 +178,7 @@
   <td valign="middle"><input type="text" name="{getNamePostedData(#order_by#)}" size="5" value="{product.order_by}"></td>
 </tr>*}
 
-{*extraFields*}
 <widget module="CDev\GoogleCheckout" template="modules/CDev/GoogleCheckout/product/info.tpl">
-<widget class="\XLite\View\ExtraFields" template="product/extra_fields.tpl" product="{product}">
 
 <widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/memberships/membership_product.tpl">
 <widget module="CDev\ProductAdviser" template="modules/CDev/ProductAdviser/product.tpl">

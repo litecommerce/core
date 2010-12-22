@@ -77,6 +77,15 @@ class Handler extends \XLite\Core\CMSConnector
      */
     protected $portalParams = array();
 
+    /**
+     * Landing link 
+     * 
+     * @var    \XLite\Module\CDev\DrupalConnector\Model\LandingLink
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $landingLink;
 
     /**
      * Set hooks availability status
@@ -151,10 +160,17 @@ class Handler extends \XLite\Core\CMSConnector
      */
     public function getLandingLink()
     {
-        $link = new \XLite\Module\CDev\DrupalConnector\Model\LandingLink();
-        $link->create();
+        if (!isset($this->landingLink)) {
+            \XLite\Core\Database::getRepo('XLite\Module\CDev\DrupalConnector\Model\LandingLink')->removeExpired();
 
-        return $link->getLink();
+            $this->landingLink = new \XLite\Module\CDev\DrupalConnector\Model\LandingLink();
+            $this->landingLink->setSessionId(\XLite\Core\Session::getInstance()->getID());
+
+            \XLite\Core\Database::getEM()->persist($this->landingLink);
+            \XLite\Core\Database::getEM()->flush();
+        }
+
+        return $this->landingLink->getLink();
     }
 
     /**

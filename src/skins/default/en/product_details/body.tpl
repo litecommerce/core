@@ -58,14 +58,12 @@ function isValid()
 
         <h3>Description</h3>
 
-        <table IF="{product.getExtraFields(true)|product.weight}" class="product-extra-fields">
+        <table IF="{product.weight}" class="product-extra-fields">
 
           <tr IF="{!product.weight=0}">
             <th>Weight:</th>
             <td>{product.weight} {config.General.weight_symbol}</td>
           </tr>
-
-          <widget class="\XLite\View\ExtraFields" product="{product}" />
 
         </table>
 
