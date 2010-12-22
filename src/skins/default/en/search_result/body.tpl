@@ -11,11 +11,9 @@
  * @since     3.0.0
  *}
 <div IF="!getCount()">
-  No products found on your query. Please try to {if:xlite.AdvancedSearchEnabled}<a href ="{buildURL(#advanced_search#)}" class="FormButton"><u>re-formulate</u></a>{else:}re-formulate{end:} the query.
+  No products found on your query. Please try to re-formulate the query.
 </div>
 
 <div IF="getCount()">
-  {if:xlite.AdvancedSearchEnabled&count}{getCount()} {if:getCount()=#1#}product{else:} products {end:} found. <a class="FormButton" href="{buildURL(#advanced_search#)}"><u>Refine your search</u></a>{end:}
-
   <widget template="products_list/body.tpl" />
 </div>
