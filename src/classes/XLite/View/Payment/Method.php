@@ -34,6 +34,8 @@ namespace XLite\View\Payment;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="admin.center", zone="admin")
  */
 class Method extends \XLite\View\Dialog
 {

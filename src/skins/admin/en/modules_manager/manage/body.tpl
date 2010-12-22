@@ -39,7 +39,8 @@ function confirmNote(action, id)
 -->
 </script>
 
-<widget class="\XLite\View\Button\Submit" label="{t(#Add new add-ons#)}" />
+{displayViewListContent(#modules.manage.buttons#)}
+
 <br /><br />
 
 <div class="modules-filters">

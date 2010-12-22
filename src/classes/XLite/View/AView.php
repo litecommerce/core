@@ -535,7 +535,6 @@ abstract class AView extends \XLite\Core\Handler
     {
         $list = array(
             'ajax.css',
-            'css/popup.css',
         );
 
         if (\XLite\Logger::isMarkTemplates()) {

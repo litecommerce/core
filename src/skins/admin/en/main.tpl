@@ -66,9 +66,6 @@
 <widget class="\XLite\View\QuickLinks" />
 <widget class="\XLite\View\Location" />
 <widget class="\XLite\View\AdvBlock" />
-<widget class="\XLite\View\ModulesManager\Manage" />
-<widget class="\XLite\View\Payment\Methods" />
-<widget class="\XLite\View\Payment\Method" />
 
 <widget target="access_denied" template="access_denied.tpl" />
 <widget template="common/dialog.tpl" head="Customer zone warning" body="customer_zone_warning.tpl" IF="{getCustomerZoneWarning()}" />
@@ -131,9 +128,11 @@
 
 <widget target="css_edit" template="common/dialog.tpl" body="css_editor/css_edit.tpl" head="CSS Editor">
 <widget target="image_edit" template="common/dialog.tpl" body="image_editor/edit.tpl" head="Image Editor">
+
 {*
 <widget target="change_skin" template="common/dialog.tpl" body="change_skin.tpl" head="Change Current Skin">
 *}
+
 <widget target="countries" template="common/dialog.tpl" body="countries.tpl" head="Countries">
 <widget target="states" template="common/dialog.tpl" body="states.tpl" head="States">
 <widget class="\XLite\View\Tabber" target="taxes" body="{pageTemplate}" switch="page" head="Taxes" />
@@ -152,6 +151,7 @@
 <widget module="CDev\GiftCertificates" target="gift_certificates" template="common/dialog.tpl" body="modules/CDev/GiftCertificates/list.tpl" head="Gift certificates" />
 <widget module="CDev\GiftCertificates" target="add_gift_certificate" template="common/dialog.tpl" body="modules/CDev/GiftCertificates/add_gift_certificate.tpl" head="Add gift certificate" />
 <widget module="CDev\GiftCertificates" target="gift_certificate" template="common/dialog.tpl" body="modules/CDev/GiftCertificates/gift_certificate.tpl" head="Gift certificate" />
+
 {*
 <widget module="CDev\GiftCertificates" target="gift_certificate_ecards" template="common/dialog.tpl" body="modules/CDev/GiftCertificates/ecards.tpl" head="Gift certificate e-Cards" />
 <widget module="CDev\GiftCertificates" target="gift_certificate_ecard" template="common/dialog.tpl" body="modules/CDev/GiftCertificates/ecard.tpl" head="Gift certificate e-Card" />
@@ -177,7 +177,10 @@
 <widget module="CDev\WishList" target="wishlists" template="modules/CDev/WishList/wishlists.tpl" head="Wish Lists">
 <widget module="CDev\WishList" target="wishlist" template="common/dialog.tpl" body="modules/CDev/WishList/wishlist.tpl" head="Wish List">
 <widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/main.tpl"> 
+
+{*TODO: move as much as possible into this list*}
 {displayViewListContent(#admin.center#)}
+
 <!-- [/center] -->
     </td>
     <td width="10">&nbsp;</td>
@@ -186,17 +189,6 @@
 
 </td>
 </tr>
-
-<!-- align code -->
-<script type="text/javascript">
-<!--
-if (navigator.appName.indexOf('Microsoft') >= 0) {
-  document.write('<TR><TD height="100%"><img src="images/spacer.gif" width=1 height=1></TD></TR>');
-} else {
-  document.write('<TR><TD><img src="images/spacer.gif" width=1 height=1></TD></TR>');
-} 
---> 
-</script>
 
 <tr>
 <td align="center">
