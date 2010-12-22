@@ -626,6 +626,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      */
     public function getAnsweredVersion()
     {
+        /* TODO - reworkt
         if (isset($this->_answeredVersion)) {
             return $this->_answeredVersion;
         }
@@ -639,6 +640,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
         $this->_answeredVersion = $response;
 
         return $this->_answeredVersion;
+        */
     }
 
     /**

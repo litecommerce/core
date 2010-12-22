@@ -31,12 +31,3 @@ CREATE TABLE xlite_extra_fields (
   KEY parent_field_id (parent_field_id),
   KEY categories (categories (65536))
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-
-DROP TABLE IF EXISTS xlite_upgrades;
-CREATE TABLE xlite_upgrades (
-  from_ver VARCHAR(10) NOT NULL DEFAULT '',
-  to_ver VARCHAR(10) NOT NULL DEFAULT '',
-  date INT NOT NULL DEFAULT '0',
-  PRIMARY KEY  (from_ver,to_ver),
-  KEY date (date)
-) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
