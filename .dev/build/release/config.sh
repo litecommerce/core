@@ -38,7 +38,6 @@ CDev/Quantum
 
 # LiteCommerce files that must be removed from all distributives
 XLITE_FILES_TODELETE="
-sql/xlite_lng_de.sql
 "
 
 # LiteCommerce files that are required for night builds
