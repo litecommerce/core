@@ -63,9 +63,7 @@
   <br /><br />
 </div>
 
-<widget class="\XLite\View\QuickLinks" />
 <widget class="\XLite\View\Location" />
-<widget class="\XLite\View\AdvBlock" />
 
 <widget target="access_denied" template="access_denied.tpl" />
 <widget template="common/dialog.tpl" head="Customer zone warning" body="customer_zone_warning.tpl" IF="{getCustomerZoneWarning()}" />
@@ -79,7 +77,6 @@
 <widget target="category" class="\XLite\View\Tabber" body="{getPageTemplate()}" switch="page" head="{category.getName()}" IF="getCategory()" />
 <widget target="category" class="\XLite\View\Tabber" body="{getPageTemplate()}" switch="page" head="Add new category" IF="!getCategory()" />
 
-
 <widget target="categories" template="common/dialog.tpl" body="categories/delete_confirmation.tpl" head="Confirmation" mode="delete" IF="mode=#delete#" />
 
 <widget target="settings" class="\XLite\View\Tabber" body="general_settings.tpl" switch="page" head="General settings" />
@@ -92,15 +89,11 @@
 
 <widget target="profile" template="common/dialog.tpl" head="Delete profile - Confirmation" body="profile/confirm_delete.tpl" IF="mode=#delete#" />
 
-<widget class="\XLite\View\Tabs\AdminProfile" />
-
 <widget target="order_list,order,advanced_security" module="CDev\AdvancedSecurity" template="modules/CDev/AdvancedSecurity/advanced_security.tpl">
 <widget module="CDev\AntiFraud" target='order' IF="{mode}" mode="{mode}" template="common/dialog.tpl" body="modules/CDev/AntiFraud/tracking/message.tpl" head="AntiFraud Service Notification">
 <widget module="CDev\AntiFraud" target='order' template="common/dialog.tpl" body="modules/CDev/AntiFraud/order.tpl" head="AntiFraud Service" IF="{order.details.af_result}">
 <widget target="currencies" module="MultiCurrency" template="common/dialog.tpl" body="modules/CDev/MultiCurrency/currencies.tpl">
 <widget target="order_list" template="order/search.tpl">
-
-<widget class="\XLite\View\LanguagesModify\Dialog" />
 
 {* Order details page *}
 <widget class="\XLite\View\Order\Details\Admin\Model" template="order/order.tpl" />
@@ -115,9 +108,6 @@
 <span IF="xlite.AOMEnabled">
 <widget module="CDev\AOM" template="modules/CDev/AOM/main.tpl">
 </span>
-
-<widget class="\XLite\View\Tabs\ShippingSettings">
-
 
 <widget module="CDev\GoogleCheckout" template="modules/CDev/GoogleCheckout/main.tpl">
 
@@ -141,7 +131,6 @@
 <widget target="export_catalog" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">
 <widget target="update_inventory" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">
 
-<widget class="\XLite\View\Memberships" />
 <widget target="template_editor" class="\XLite\View\Tabber" body="{pageTemplate}" switch="editor">
 <widget target="image_files" template="common/dialog.tpl" body="image_files.tpl" head="Image files">
 
