@@ -107,15 +107,6 @@ class Request extends \XLite\Base\Singleton
             $this->checkControlArgument($data['action'], 'Action');
         }
 
-        // Fix double-escaping problems caused by "magic quotes" for a stand-alone mode
-        // and admin side
-        if (
-            !\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
-            && 1 === get_magic_quotes_gpc() 
-        ) {
-            $data = $this->doUnescape($data);
-        }
-
         return $data;
     }
 
