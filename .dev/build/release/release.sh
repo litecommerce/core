@@ -79,7 +79,7 @@ die ()
 
 #############################################################################
 
-PHP='/usr/local/bin/php'
+PHP='/usr/local/bin/php -d date.timezone=Europe/Moscow'
 START_TIME=`$PHP -qr 'echo mktime();'`
 
 echo -e "LiteCommerce distributives generator\n"
@@ -359,7 +359,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 #	fi
 
 	# Modify version of release
-	sed -i "" "s/'version','','[^']*'/'version','','${XLITE_VERSION}'/" sql/xlite_data.sql
+	sed -i "" "s/Version, value: xlite_3_0_x/Version, value: '${XLITE_VERSION}'/" sql/xlite_data.yaml
 	sed -i "" "s/define('LC_VERSION', '[^']*'/define('LC_VERSION', '${XLITE_VERSION}'/" Includes/install/install_settings.php
 
 

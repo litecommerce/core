@@ -979,6 +979,8 @@ function doPrepareFixtures(&$params, $silentMode = false)
 {
     global $lcSettings;
 
+    $result = true;
+
     // Generate fixtures list
     $yamlFiles = $lcSettings['yaml_files']['base'];
 
@@ -988,9 +990,9 @@ function doPrepareFixtures(&$params, $silentMode = false)
 
         foreach ($modules as $moduleName) {
 
-            $moduleFile = constant('LC_ROOT_DIR') . str_replace('/', LC_DS, sprintf('classes/XLite/Module/%s/%s/install.yaml', $author, $moduleName));
+            $moduleFile = sprintf('classes/XLite/Module/%s/%s/install.yaml', $author, $moduleName);
 
-            if (file_exists($moduleFile)) {
+            if (file_exists(constant('LC_ROOT_DIR') . $moduleFile)) {
                 $moduleYamlFiles[] = $moduleFile;
             }
         }
@@ -998,10 +1000,16 @@ function doPrepareFixtures(&$params, $silentMode = false)
 
     sort($moduleYamlFiles, SORT_STRING);
 
-    $yamlFiles = $yamlFiles + $moduleYamlFiles;
+    foreach ($moduleYamlFiles as $f) {
+        // Add module fixtures
+        $yamlFiles[] = $f;
+    }
 
     if ($params['demo']) {
-        $yamlFiles = $yamlFiles + $lcSettings['yaml_files']['demo'];
+        // Add demo dump to the fixtures
+        foreach ($lcSettings['yaml_files']['demo'] as $f) {
+            $yamlFiles[] = $f;
+        }
     }
 
     // Remove fixtures file (if exists)    
@@ -1009,9 +1017,14 @@ function doPrepareFixtures(&$params, $silentMode = false)
 
     // Add fixtures list
     foreach ($yamlFiles as $file) {
-        \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::addFixtureToList();
+        \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::addFixtureToList($file);
     }
+    
+    return $result;
+}
 
+function doUpdateConfig(&$params, $silentMode = false)
+{
     // Update etc/config.php file
     $configUpdated = true;
 
@@ -1073,11 +1086,7 @@ function doBuildCache()
 
     $url_request = $url . '/cart.php';
 
-    // Pass 1
-    inst_http_request($url_request);
-
-    // Pass 2
-    inst_http_request($url_request);
+    $response = inst_http_request($url_request);
 }
 
 /**
@@ -1117,8 +1126,12 @@ function doInstallDirs($params, $silentMode = false)
     }
 
     if ($result) {
-        \Includes\Decorator\Utils\ModulesManager::saveModulesToFile($lcSettings['enable_modules']);
+        echo "<BR><B>Updating config file...</B><BR>\n";
+        $result = doUpdateConfig($params, $silentMode);
+    }
 
+    if ($result) {
+        \Includes\Decorator\Utils\ModulesManager::saveModulesToFile($lcSettings['enable_modules']);
         $result = doPrepareFixtures($params, $silentMode);
     }
 

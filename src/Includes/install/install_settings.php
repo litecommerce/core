@@ -103,7 +103,7 @@ $lcSettings = array(
     // YAML files list
     'yaml_files' => array(
         'base' => array(
-            'sql/xlite_tables.yaml',
+//            'sql/xlite_tables.yaml',
             'sql/xlite_data.yaml',
         ),
         'demo' => array(
