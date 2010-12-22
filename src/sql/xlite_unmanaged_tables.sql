@@ -32,16 +32,6 @@ CREATE TABLE xlite_extra_fields (
   KEY categories (categories (65536))
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
-DROP TABLE IF EXISTS xlite_search_stat;
-CREATE TABLE xlite_search_stat (
-  query VARCHAR(64) NOT NULL DEFAULT '',
-  product_count INT NOT NULL DEFAULT '0',
-  count INT NOT NULL DEFAULT '0',
-  PRIMARY KEY  (query),
-  KEY product_count (product_count),
-  KEY count (count)
-) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-
 DROP TABLE IF EXISTS xlite_upgrades;
 CREATE TABLE xlite_upgrades (
   from_ver VARCHAR(10) NOT NULL DEFAULT '',

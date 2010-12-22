@@ -125,10 +125,7 @@ class Database extends \XLite\Base\Singleton
     protected $unmanagedTables = array(
         'extra_field_values',
         'extra_fields',
-        'htaccess',
         'landing_links',
-        'log',
-        'search_stat',
         'upgrades',
         'waitingips',
     );

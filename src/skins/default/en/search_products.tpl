@@ -26,11 +26,6 @@
 			</TD>
 		    <TD><widget class="\XLite\View\Button\Submit" label="Go" /></TD>
 		</TR>
-		<TR IF="xlite.AdvancedSearchEnabled">
-			<TD>
-			    &nbsp;<A href="cart.php?target=advanced_search" title="Advanced Search" class="AdvancedSearchLink">Advanced search</A>
-		    </TD>
-		</TR>
 		</TABLE>
 	</TD>
 	<TD><IMG src="images/searchbox_right.gif" width="9" height="78" alt=""></TD>

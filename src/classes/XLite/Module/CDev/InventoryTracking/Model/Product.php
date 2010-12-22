@@ -354,11 +354,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 
     function advancedSearchWithSku($substring, $sku = null, $category_id = null, $subcategory_search = false, $fulltext = false, $onlyindexes = false) 
     {
-        // compatibility check:
-        if (method_exists($this, "_beforeAdvancedSearch")) {
-            $this->_beforeAdvancedSearch($substring, $sku, $category_id, $subcategory_search, $fulltext, $onlyindexes);
-        }
-
         if (empty($category_id)) { // is an empty string
             $category_id = null;
         }
@@ -471,11 +466,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 
     function _constructSearchArray($start_price, $end_price, $start_weight, $end_weight, $sku) 
     {
-        // check for AdvancedSearch module version compatibility:
-        $parent_class = get_parent_class($this);
-        $classMethods = array_map('strtolower', get_class_methods($parent_class));
-        if (!in_array(strtolower('_constructSearchArray'), $classMethods)) return array();
-
         $result = parent::_constructSearchArray($start_price, $end_price, $start_weight, $end_weight, $sku);
         if (empty($sku)) return $result;
         if (!$this->xlite->get('ProductOptionsEnabled')) return $result;

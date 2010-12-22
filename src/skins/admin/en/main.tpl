@@ -103,7 +103,6 @@
 <widget module="CDev\AntiFraud" target='order' IF="{mode}" mode="{mode}" template="common/dialog.tpl" body="modules/CDev/AntiFraud/tracking/message.tpl" head="AntiFraud Service Notification">
 <widget module="CDev\AntiFraud" target='order' template="common/dialog.tpl" body="modules/CDev/AntiFraud/order.tpl" head="AntiFraud Service" IF="{order.details.af_result}">
 <widget target="currencies" module="MultiCurrency" template="common/dialog.tpl" body="modules/CDev/MultiCurrency/currencies.tpl">
-<widget target="advanced_search" module="AdvancedSearch" template="common/dialog.tpl" body="modules/CDev/AdvancedSearch/config.tpl">
 <widget target="order_list" template="order/search.tpl">
 
 <widget class="\XLite\View\LanguagesModify\Dialog" />
