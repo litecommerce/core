@@ -39,10 +39,8 @@ class ExportCatalog extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', 'page');
     public $pages = array('products' => 'Export products',
-                       'extra_fields' => 'Export extra fields'
                        );
     public $pageTemplates = array('products' => 'product/export.tpl',
-                               'extra_fields' => 'product/export_fields.tpl'
                                );
     public $page = "products";
 
@@ -56,12 +54,6 @@ class ExportCatalog extends \XLite\Controller\Admin\AAdmin
                 && 
                 !\Includes\Utils\ArrayManager::isArrayUnique($this->product_layout, $name, array("NULL"))
             ) 
-            || 
-            ( 
-                ($this->action == "export_fields" || $this->action == "fields_layout")
-                && 
-                !\Includes\Utils\ArrayManager::isArrayUnique($this->fields_layout, $name, array("NULL"))
-            )
         ) {
             $this->set('valid', false);
             $this->set('invalid_field_order', true);
@@ -89,35 +81,6 @@ class ExportCatalog extends \XLite\Controller\Admin\AAdmin
         $dlg->action_layout();
     }
 
-    function action_export_fields()
-    {
-        $this->set('silent', true);
-
-        global $DATA_DELIMITERS;
-
-        $this->startDownload('extra_fields.csv');
-
-     	$p = new \XLite\Model\Product();
-     	$products = $p->findAll();
-        foreach ($products as $product_idx => $product) {
-            $products[$product_idx]->populateExtraFields();
-        }
-
-        $global_extra_field = new \XLite\Model\ExtraField();
-        foreach ($global_extra_field->findAll("product_id = 0") as $gef) {
-             print func_construct_csv($gef->_export($this->fields_layout, $DATA_DELIMITERS[$this->delimiter]), $DATA_DELIMITERS[$this->delimiter], '"');
-             print "\n";
-        }
-
-        foreach ($products as $product_idx => $product) {
-            foreach ($products[$product_idx]->getExtraFields(false) as $ef) {
-                print func_construct_csv($ef->_export($this->fields_layout, $DATA_DELIMITERS[$this->delimiter]), $DATA_DELIMITERS[$this->delimiter], '"');
-                print "\n";
-            }
-        }
-        exit();
-    }
-
     function action_fields_layout()
     {
         $layout_name = "fields_layout";
@@ -140,9 +103,6 @@ class ExportCatalog extends \XLite\Controller\Admin\AAdmin
     {
         if (($this->action == "export_products" || $this->action == "layout") && $id < count($this->product_layout)) {
             return ($this->product_layout[$id] === $value);
-        }
-        if (($this->action == "export_fields" || $this->action == "fields_layout") && $id < count($this->fields_layout)) {
-            return ($this->fields_layout[$id] === $value);
         }
 
         return $default;

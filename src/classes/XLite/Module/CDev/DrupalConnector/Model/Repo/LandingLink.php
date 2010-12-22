@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,61 +26,47 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
+namespace XLite\Module\CDev\DrupalConnector\Model\Repo;
 
 /**
- * ____description____
+ * Landing link repository
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Cmsconnector extends \XLite\Controller\Customer\ACustomer
+class LandingLink extends \XLite\Model\Repo\ARepo
 {
     /**
-     * Controller parameters 
+     * Remove expired links
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
+     * @return void
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected $params = array('target', 'id');
-
-    /**
-     * Must be accessible
-     * 
-     * @return boolean 
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function checkStorefrontAccessability()
+    public function removeExpired()
     {
-        return true;
+        return $this->defineRemoveExpiredQuery()
+            ->getQuery()
+            ->execute();
     }
 
     /**
-     * Landing from another system action
+     * Define query for removeExpired() method
      * 
-     * @return void
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionLanding()
+    protected function defineRemoveExpiredQuery()
     {
-        $link = \XLite\Core\Database::getRepo('XLite\Module\CDev\DrupalConnector\Model\LandingLink')
-            ->find(\XLite\Core\Request::getInstance()->id);
-
-        if ($link) {
-            \XLite\Core\Session::getInstance()->loadBySid($link->getSessionId());
-
-            \XLite\Core\Database::getEM()->remove($link);
-            \XLite\Core\Database::getEM()->flush();
-        }
-
-        $this->set('returnUrl', 'admin.php');
-        $this->redirect();
+        return $this->_em
+            ->createQueryBuilder()
+            ->delete($this->_entityName, 'l')
+            ->andWhere('l.expiry < :time')
+            ->setParameter('time', time());
     }
 
 }

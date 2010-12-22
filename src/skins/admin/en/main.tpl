@@ -90,8 +90,6 @@
 <widget target="product_list" template="product/product_list_form.tpl">
 <widget target="product" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" head="{product.getName()}" />
 
-<widget target="extra_fields" template="common/dialog.tpl" body="product/extra_fields_form.tpl" head="Global extra fields">
-
 <widget target="profile" template="common/dialog.tpl" head="Delete profile - Confirmation" body="profile/confirm_delete.tpl" IF="mode=#delete#" />
 
 <widget class="\XLite\View\Tabs\AdminProfile" />

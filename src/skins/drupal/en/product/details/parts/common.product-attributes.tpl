@@ -12,14 +12,12 @@
  *
  * @ListChild (list="product.details.page.tabs", weight="10")
  *}
-<ul IF="product.getExtraFields(true)|product.weight|isViewListVisible(#product.details.common.product-attributes#)" class="extra-fields">
+<ul IF="product.weight|isViewListVisible(#product.details.common.product-attributes#)" class="extra-fields">
 
   <li IF="!product.weight=0">
     <strong>{t(#Weight#)}:</strong>
     <span>{product.weight} {config.General.weight_symbol}</span>
   </li>
-
-  <widget class="\XLite\View\ExtraFields" product="{product}" />
 
   {displayViewListContent(#product.details.common.product-attributes#)}
 

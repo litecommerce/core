@@ -152,7 +152,6 @@ class Category extends \XLite\Controller\Admin\Catalog
 
     public $pageTemplates = array(
         "category_modify" => "categories/add_modify_body.tpl",
-        "extra_fields"    => "categories/category_extra_fields.tpl",
     );
 
     public $params = array('target', 'category_id', 'mode', 'message', 'page');
@@ -164,31 +163,9 @@ class Category extends \XLite\Controller\Admin\Catalog
 
         if ($this->mode != "add" && $this->mode == "modify") {
             $this->pages['category_modify'] = "Modify category";
-            if ($this->config->General->enable_categories_extra_fields) {
-                $this->pages['extra_fields'] = "Extra fields";
-            }
         } else {
             $this->pages['category_modify'] = "Add new category";
         }
-    }
-
-    function getExtraFields()
-    {
-        if (is_null($this->extraFields)) 
-        {
-            $ef = new \XLite\Model\ExtraField();
-            $extraFields = $ef->findAll("product_id=0");  // global fields
-            foreach ($extraFields as $extraField_key => $extraField)
-            {
-                if (!$extraField->isCategorySelected($this->category_id))
-                {
-                    unset($extraFields[$extraField_key]);
-                }
-            }
-
-            $this->extraFields = (count($extraFields) > 0) ? $extraFields : null;
-        }
-        return $this->extraFields;
     }
 
     /**
@@ -301,89 +278,6 @@ class Category extends \XLite\Controller\Admin\Catalog
             {
                 $_postData[substr($post_key, 7)] = $post_value;
                 unset($_postData[$post_key]);
-            }
-        }
-        // ADD field
-        if (!is_null($this->get('add_field'))) 
-        {
-            $categories = (array)$this->get('add_categories');
-            if (!empty($categories)) 
-            {
-                $ef = new \XLite\Model\ExtraField();
-                $ef->set('properties', $_postData);
-                $ef->setCategoriesList($categories);
-                $ef->create();
-            }
-            else
-            {
-                // buld add
-                $categories = (array)$this->get('add_categories');
-                if (!empty($categories)) {
-                    foreach ($categories as $categoryID) {
-                        $category = new \XLite\Model\Category($categoryID);
-                        foreach ((array)$category->get('products') as $product) {
-                            $ef = new \XLite\Model\ExtraField();
-                            $ef->set('properties', $_postData);
-                            $ef->set('product_id', $product->get('product_id'));
-                            $ef->create();
-                        }
-                    }
-                } else {
-                    $ef = new \XLite\Model\ExtraField();
-                    $ef->set('properties', $_postData);
-                    $ef->create();
-                }
-            }
-        }
-        // DELETE field
-        elseif (!is_null($this->get('delete_field'))) {
-            foreach ((array)$this->get('add_categories') as $categoryID) {
-                $category = new \XLite\Model\Category($categoryID);
-                foreach ((array)$category->get('products') as $product) {
-                    $ef = new \XLite\Model\ExtraField();
-                    if ($ef->find("name='".addslashes($this->get('name'))."' AND product_id=".$product->get('product_id'))) {
-                        $ef->delete();
-                    }
-                }
-            }
-        }
-    }
-
-    function action_update_fields()
-    {
-        if (!is_null($this->get('delete')) && !is_null($this->get('delete_fields'))) 
-        {
-            $category_id = $this->get('category_id');
-            foreach ((array)$this->get('delete_fields') as $id) {
-                $data = array();
-                $ef = new \XLite\Model\ExtraField($id);
-                $categories = $ef->getCategories();
-                if ( !is_array($categories) || count($categories) == 0 ) {
-                    $cat = new \XLite\Model\Category();
-                    $cats = $cat->findAll();
-                    $categories = array();
-                    foreach ($cats as $v)
-                        $categories[] = $v->get('category_id');
-                }
-
-                $data = array_diff($categories, array($category_id));
-                if ( !is_array($data) || count($data) == 0 ) {
-                    $ef->delete();
-                    return;
-                }
-
-                $ef->set('categories', $data);
-                $ef->update();
-            }
-        }
-        elseif (!is_null($this->get('update'))) 
-        {
-            foreach ((array)$this->get('extra_fields') as $id => $data) 
-            {
-                $ef = new \XLite\Model\ExtraField($id);
-                $ef->set('categories_old', $ef->get('categories'));
-                $ef->set('properties', $data);
-                $ef->update();
             }
         }
     }

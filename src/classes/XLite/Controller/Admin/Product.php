@@ -404,7 +404,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     public $pages = array(
     	'info'            => 'Product info',
-        'extra_fields'    => 'Extra fields',
         'images'          => 'Product images',
     );
 
@@ -418,7 +417,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     public $pageTemplates = array(
     	'info'            => 'product/info.tpl',
-        'extra_fields'    => 'product/extra_fields_form.tpl',
         'default'         => 'product/info.tpl',
         'images'          => 'product/product_images.tpl',
     );
@@ -435,48 +433,9 @@ class Product extends \XLite\Controller\Admin\AAdmin
             $this->product = new \XLite\Model\Product($this->product_id);
         }
 
-        if (is_null($this->extraFields)) {
-        	$this->getExtraFields();
-        }
-
         return $this->product;
     }
     
-    function getExtraFields()
-    {
-        $this->product->populateExtraFields();
-
-        if (is_null($this->extraFields)) {
-            $ef = new \XLite\Model\ExtraField();
-            $this->extraFields = $ef->findAll("product_id=".$this->get('product_id'));
-        }
-        return $this->extraFields;
-    }*/
-
-    /*function action_add_field()
-    {
-        $ef = new \XLite\Model\ExtraField();
-        $ef->set('properties', \XLite\Core\Request::getInstance()->getData());
-        $ef->create();
-    }
-
-
-    function action_update_fields()
-    {
-        if (!is_null($this->get('delete')) && !is_null($this->get('delete_fields'))) {
-            foreach ((array)$this->get('delete_fields') as $id) {
-                $ef = new \XLite\Model\ExtraField($id);
-                $ef->delete();
-            }
-        } elseif (!is_null($this->get('update'))) {
-            foreach ((array)$this->get('extra_fields') as $id => $data) {
-                $ef = new \XLite\Model\ExtraField($id);
-                $ef->set('properties', $data);
-                $ef->update();
-            }
-        }
-    }
- 
     function action_info()
     {
         // update product properties
@@ -510,23 +469,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
         if (isset($this->category_id)) {
             $category = new \XLite\Model\Category($this->category_id);
             $product->set('category', $category);
-        }
-
-        // update/create extra fields
-        $extraFields = (array)$this->get('extra_fields');
-        if (!empty($extraFields)) {
-            foreach ($extraFields as $id => $value) {
-                $fv = new \XLite\Model\FieldValue();
-                $found = $fv->find("field_id=$id AND product_id=$this->product_id");
-                $fv->set('value', $value);
-                if ($found) {
-                    $fv->update();
-                } else {
-                    $fv->set('field_id', $id);
-                    $fv->set('product_id', $this->product_id);
-                    $fv->create();
-                }
-            }
         }
     }
 

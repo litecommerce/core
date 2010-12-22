@@ -122,11 +122,7 @@ class Database extends \XLite\Base\Singleton
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $unmanagedTables = array(
-        'extra_field_values',
-        'extra_fields',
-        'landing_links',
-    );
+    protected $unmanagedTables = array();
 
     /**
      * Forbid truncate tables if will truncate store-based tables

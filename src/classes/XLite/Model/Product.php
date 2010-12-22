@@ -222,18 +222,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     protected $images;
 
     /**
-     * Product extra fields 
-     * 
-     * @var    \Doctrine\ORM\PersistentCollection
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * TODO[DOCTRINE] - add tags
-     */
-    protected $extra_fields = array();
-
-    /**
      * Get object unique id 
      * 
      * @return integer
