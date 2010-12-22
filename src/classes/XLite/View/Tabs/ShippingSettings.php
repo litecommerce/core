@@ -35,6 +35,8 @@ namespace XLite\View\Tabs;
  * @subpackage View
  * @see        ____class_see____
  * @since      3.0.0
+ *
+ * @ListChild (list="admin.center", zone="admin")
  */
 class ShippingSettings extends \XLite\View\Tabs\ATabs
 {
