@@ -32,17 +32,6 @@ CREATE TABLE xlite_extra_fields (
   KEY categories (categories (65536))
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
-DROP TABLE IF EXISTS xlite_htaccess;
-CREATE TABLE xlite_htaccess (
-  id INT NOT NULL AUTO_INCREMENT,
-  filename VARCHAR(64) NOT NULL DEFAULT '',
-  content text NOT NULL DEFAULT '',
-  hash VARCHAR(32) NOT NULL DEFAULT '',
-  PRIMARY KEY  (id),
-  KEY hash (hash),
-  UNIQUE (filename)
-) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-
 DROP TABLE IF EXISTS xlite_log;
 CREATE TABLE xlite_log (
   unixtime INT NOT NULL DEFAULT '0',

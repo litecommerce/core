@@ -155,8 +155,6 @@ abstract class AAdmin extends \XLite\Controller\AController
 
     function handleRequest()
     {
-        $this->checkHtaccess();
-
         // auto-login request
 /*
         if (!$this->auth->is('logged') && isset(\XLite\Core\Request::getInstance()->login) && isset(\XLite\Core\Request::getInstance()->password)) {
