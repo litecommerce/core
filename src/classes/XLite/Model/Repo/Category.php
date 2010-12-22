@@ -845,29 +845,32 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function linkLoadedEntity(\XLite\Model\AEntity $entity, \XLite\Model\AEntity $parent, array $parentAssoc)
     {
-        $isNew = is_null($entity->getParent());
-
         parent::linkLoadedEntity($entity, $parent, $parentAssoc);
 
-        if ($isNew && $parent instanceof \XLite\Model\Category) {
+        if ($parent instanceof \XLite\Model\Category) {
 
             $qf = new \XLite\Model\Category\QuickFlags;
             $entity->setQuickFlags($qf);
             $qf->setCategory($entity);
 
             // Update indexes in the nested set
-            $this->defineUpdateIndexQuery('lpos', $parent->getRpos())->getQuery()->execute();
-            $this->defineUpdateIndexQuery('rpos', $parent->getRpos())->getQuery()->execute();
-
             if (isset($parent)) {
-                $entity->setLpos($parent->getLpos() + 1);
-                $entity->setRpos($parent->getLpos() + 2);
+
+                $this->defineUpdateIndexQuery('lpos', $parent->getRpos() - 1)->getQuery()->execute();
+                $this->defineUpdateIndexQuery('rpos', $parent->getRpos() - 1)->getQuery()->execute();
+
+                $entity->setLpos($parent->getRpos());
+                $entity->setRpos($parent->getRpos() + 1);
+
+                $parent->setRpos($parent->getRpos() + 2);
 
                 $this->updateQuickFlags($parent, $this->prepareQuickFlags(1, $entity->getEnabled() ? 1 : -1));
 
             } else {
-                $entity->setLpos(1);
-                $entity->setRpos(2);
+
+                $rpos =$this->getMaxRightPos();
+                $entity->setLpos($rpos + 1);
+                $entity->setRpos($rpos + 2);
             }
         }
     }
