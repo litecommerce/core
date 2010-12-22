@@ -856,8 +856,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
             $qf->setCategory($entity);
 
             // Update indexes in the nested set
-            $this->defineUpdateIndexQuery('lpos', $parent->getLpos())->getQuery()->execute();
-            $this->defineUpdateIndexQuery('rpos', $parent->getLpos())->getQuery()->execute();
+            $this->defineUpdateIndexQuery('lpos', $parent->getRpos())->getQuery()->execute();
+            $this->defineUpdateIndexQuery('rpos', $parent->getRpos())->getQuery()->execute();
 
             if (isset($parent)) {
                 $entity->setLpos($parent->getLpos() + 1);
