@@ -111,8 +111,6 @@ mysql_free_result($res);
 
 echo ' [' . $i . ']' . PHP_EOL;
 
-_do_query_upload('sql/xlite_unmanaged_tables.sql');
-
 $modules = array();
 \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::removeFixtures();
 
