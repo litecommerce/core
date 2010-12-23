@@ -138,7 +138,7 @@ abstract class AButton extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-        $list[] = 'button/button.css';
+        $list[] = 'button/css/button.css';
 
         return $list;
     }
@@ -153,7 +153,7 @@ abstract class AButton extends \XLite\View\AView
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-        $list[] = 'button/button.js';
+        $list[] = 'button/js/button.js';
 
         return $list;
     }
