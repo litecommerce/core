@@ -26,63 +26,63 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Button;
+namespace XLite\View\ModulesManager;
 
 /**
- * Upload addons button 
- * 
+ * Modules modify widget
+ *
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   3.0
+ *
  */
-class UploadAddons extends \XLite\View\Button\PopupButton
+class UploadAddons extends \XLite\View\Dialog
 {
     /**
-     *  Several specific constants
+     * Target that is allowed for Upload Addons widget 
      */
-    const UPLOAD_ADDONS_LABEL       = 'Upload add-ons';
-    const UPLOAD_ADDON_CSS_CLASS    = 'upload-addons';
-    const UPLOAD_ADDONS_WIDGET      = 'XLite\View\ModulesManager\UploadAddons';
+    const UPLOAD_ADDONS_TARGET = 'upload_addons';
 
-    /** 
-     * Return content for popup button
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getButtonContent() 
-    {
-        return $this->t(self::UPLOAD_ADDONS_LABEL);
-    }
 
-    /** 
-     * Return URL parameters to use in AJAX popup
-     * 
+    /**
+     * Return list of targets allowed for this widget
+     *
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  3.0.0
      */
-    public function prepareURLParams() 
+    public static function getAllowedTargets()
     {
-        return array(
-            'target' => \XLite\View\ModulesManager\UploadAddons::UPLOAD_ADDONS_TARGET,
-            'action' => 'view',
-            'widget' => self::UPLOAD_ADDONS_WIDGET,
-        );
+        $result = parent::getAllowedTargets();
+
+        $result[] = self::UPLOAD_ADDONS_TARGET;
+    
+        return $result;
     }
 
-    /** 
-     * getClass 
-     * 
+    /**
+     * Return title
+     *
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getClass()
+    protected function getHead()
     {
-        return parent::getClass() . ' ' . self::UPLOAD_ADDON_CSS_CLASS;
+        return 'Upload add-ons';
     }
+
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return 'modules_manager' . LC_DS . 'upload_addons';
+    }
+
 }

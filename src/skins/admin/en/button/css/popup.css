@@ -1,0 +1,68 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * ____file_title____
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+
+.blockOverlay {
+  background: url("../images/popup_overlay.png") left top;
+}
+
+.blockMsg .close-link, .blockMsg .block-container {
+    background-color: #000000;
+}
+
+.blockMsg .block-container {
+    padding: 10px;
+}
+
+.blockMsg .block-container {
+    -moz-border-radius: 11px 11px 11px 11px;
+}
+
+.blockMsg .block-container {
+    border-style: none;
+    margin-right: 31px;
+}
+
+.blockMsg .close-link, .blockMsg .block-container {
+    background-color: #000000;
+}
+
+.blockMsg .block-container {
+    padding: 10px;
+}
+
+.blockMsg .block-container {
+    -moz-border-radius: 11px 11px 11px 11px;
+}
+
+.blockMsg .block-container {
+    border-style: none;
+    margin-right: 31px;
+}
+
+div.blockMsg div.block-subcontainer {
+    overflow: hidden;
+    padding: 2em;
+}
+
+.blockMsg .block-subcontainer {
+    -moz-border-radius: 4px 4px 4px 4px;
+}
+
+.blockMsg .block-subcontainer {
+    background: none repeat scroll 0 0 white;
+    overflow: auto;
+    padding: 30px 40px 40px;
+}
+
+
+
