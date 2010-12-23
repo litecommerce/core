@@ -42,7 +42,7 @@ if (!defined('XLITE_INSTALL_MODE')) {
 define('LC_VERSION', '3.x-dev');
 
 // Minimum PHP version supported
-define('LC_PHP_VERSION_MIN', '5.2.0');
+define('LC_PHP_VERSION_MIN', '5.3.0');
 
 // Maximum PHP version supported (none if empty)
 define('LC_PHP_VERSION_MAX', '');
@@ -103,7 +103,6 @@ $lcSettings = array(
     // YAML files list
     'yaml_files' => array(
         'base' => array(
-//            'sql/xlite_tables.yaml',
             'sql/xlite_data.yaml',
         ),
         'demo' => array(
