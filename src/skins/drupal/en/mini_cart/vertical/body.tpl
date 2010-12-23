@@ -13,7 +13,7 @@
 <div id="lc-minicart-{getParam(%static::PARAM_DISPLAY_MODE%)}" class="lc-minicart-{getParam(%static::PARAM_DISPLAY_MODE%)} {collapsed}">
 
   <div class="cart-link">
-    <h3><a href="{buildURL(#cart#)}">Your cart</a></h3>
+    <h2><a href="{buildURL(#cart#)}">Your cart</a></h2>
   </div>
 
   {displayViewListContent(#minicart.vertical.childs#)}
