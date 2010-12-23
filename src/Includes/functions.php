@@ -845,10 +845,8 @@ function func_htmlspecialchars($str) {
  * @see    ____func_see____
  * @since  3.0.0
  */
-function isLiteCommerceInstalled($dbUrl = null)
+function isLiteCommerceInstalled($dbUrl = null, &$message)
 {
-    $errorMsg = null;
-
     // Check by template and config.php file
     $checkResult = file_exists(LC_SKINS_DIR . 'admin/en/welcome.tpl')
         && file_exists(LC_CONFIG_DIR . 'config.php');
@@ -886,6 +884,14 @@ function isLiteCommerceInstalled($dbUrl = null)
                             && $configData['database'] == $data['mysqlbase']
                             && (!isset($data['mysqlport']) || $configData['port'] == $data['mysqlport'])
                             && (!isset($data['mysqlsock']) || $configData['socket'] == $data['mysqlsock']);
+
+                        if (!$checkResult) {
+                            $message = 'Database parameters comparison failed (config file and $dbUrl was compared)';
+                        }
+
+                    } else {
+                        $message = '$dbUrl passed but hasn\'t any data or corrupted';
+                        $checkResult = false;
                     }
 
                 } else {
@@ -898,11 +904,28 @@ function isLiteCommerceInstalled($dbUrl = null)
 
                     if ($checkResult) {
                         $res = dbFetchColumn('SELECT login from xlite_profiles LIMIT 1', $errorMsg);
-                        $checkResult = !empty($res);
+
+                        if (empty($res)) {
+                            $message = 'There are no profiles found in the database';
+                            $checkResult = false;
+                        }
+
+                    } else {
+                        $message = 'Cannot connect to the database';
                     }
                 }
+            
+            } else {
+                $message = 'Host, username or database name are empty';
             }
+        
+        } else {
+            $message = 'Corrupted config file';
+            $checkResult = false;
         }
+    
+    } else {
+        $message = 'config.php or admin/en/welcome.tpl files not found';
     }
 
     return $checkResult;
