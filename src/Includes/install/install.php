@@ -1080,6 +1080,8 @@ function doRemoveCache()
  */
 function doBuildCache()
 {
+    $result = true;
+
     $data = parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'));
 
     $url = 'http://' . $data['http_host'] . $data['web_dir'];
@@ -1087,6 +1089,13 @@ function doBuildCache()
     $url_request = $url . '/cart.php';
 
     $response = inst_http_request($url_request);
+
+    if (preg_match('/(?:error|warning|notice)/Ssi', $responce)) {
+        fatal_error(sprintf("Cache building procedure failed:<br />\n\nRequest URL: %s<br />\n\nResponce: %s", $url_request, $response));
+        $result = false;
+    }
+
+    return $result;
 }
 
 /**
@@ -1131,7 +1140,16 @@ function doInstallDirs($params, $silentMode = false)
     }
 
     if ($result) {
-        \Includes\Decorator\Utils\ModulesManager::saveModulesToFile($lcSettings['enable_modules']);
+
+        $enabledModules = array();
+        foreach ($lcSettings['enable_modules'] as $moduleAuthor => $modules) {
+            $enabledModules[$moduleAuthor] = array();
+            foreach ($modules as $moduleName) {
+                $enabledModules[$moduleAuthor][$moduleName] = 1;
+            }
+        }
+
+        \Includes\Decorator\Utils\ModulesManager::saveModulesToFile($enabledModules);
         $result = doPrepareFixtures($params, $silentMode);
     }
 
