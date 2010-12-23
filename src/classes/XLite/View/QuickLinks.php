@@ -36,7 +36,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  *
- * @ListChild (list="admin.center", zone="admin")
+ * @ListChild (list="admin.center", zone="admin", weight="100")
  */
 class QuickLinks extends \XLite\View\AView
 {
