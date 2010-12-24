@@ -1216,7 +1216,7 @@ function doCreateAdminAccount(&$params, $silentMode = false)
             if ($profileId) {
                 // Account already exists
 
-                $query = "UPDATE xlite_profiles SET password='$password', access_level='100', order_id='0', status='E' WHERE profile_id='$profile_id'";
+                $query = "UPDATE xlite_profiles SET password='$password', access_level='100', status='E' WHERE profile_id='$profileId'";
 
                 echo "<BR><B>Updating primary administrator profile...</B><BR>\n";
 

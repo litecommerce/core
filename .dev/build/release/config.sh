@@ -4,8 +4,7 @@
 #
 
 # LiteCommerce version (no spaces allowed as it's used as part of distributive name)
-#XLITE_VERSION="3.x-dev"
-XLITE_VERSION="3.0.0-alpha2"
+XLITE_VERSION="3.x-dev"
 
 # LiteCommerce SVN repository
 XLITE_SVN="svn://svn.crtdev.local/repo/xlite/main/src"
