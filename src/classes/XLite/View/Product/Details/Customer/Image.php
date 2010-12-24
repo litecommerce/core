@@ -66,7 +66,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $isZoom = null;
+    protected $isZoom;
 
     /**
      * Return widget default template
@@ -124,7 +124,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function hasZoomImage()
     {
-        if (is_null($this->isZoom)) {
+        if (!isset($this->isZoom)) {
             
             $this->isZoom = false;
 
@@ -197,6 +197,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
+
         $list[] = 'css/cloud-zoom.css';
 
         return $list;

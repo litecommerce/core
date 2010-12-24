@@ -630,6 +630,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         $list = parent::getCSSFiles();
 
         $list[] = $this->getDir() . '/quick_look.css';
+        $list[] = 'css/cloud-zoom.css';
 
         // FIXME
         foreach (array('Page\QuickLook', 'Image', 'Gallery') as $class) {
@@ -696,6 +697,23 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
             . $product->getProductId() 
             . ($this->isProductAdded($product) ? ' product-added' : '');
     }   
+
+    /**
+     * Register files from common repository
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCommonFiles()
+    {
+        $list = parent::getCommonFiles();
+
+        $list['js'][] = 'js/cloud-zoom.min.js';
+
+        return $list;
+    }
 
     /** 
      * Return list of targets allowed for this widget

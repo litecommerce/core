@@ -74,7 +74,7 @@ class ViewList extends \XLite\Model\Repo\ARepo
         $list = parent::defineCacheCells();
 
         $list['class_list'] = array(
-            self::ATTRS_CACHE_CELL => array('class', 'list', 'zone'),
+            self::ATTRS_CACHE_CELL => array('list', 'zone'),
         );
 
         return $list;
@@ -83,7 +83,6 @@ class ViewList extends \XLite\Model\Repo\ARepo
     /**
      * Find class list 
      *
-     * @param string $class List class-owner name
      * @param string $list  List name
      * @param string $zone  Current interface name OPTIONAL
      * 
@@ -92,12 +91,12 @@ class ViewList extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function findClassList($class, $list, $zone = \XLite\Model\ViewList::INTERFACE_CUSTOMER)
+    public function findClassList($list, $zone = \XLite\Model\ViewList::INTERFACE_CUSTOMER)
     {
-        $data = $this->getFromCache('class_list', array('class' => $class, 'list' => $list, 'zone' => $zone));
+        $data = $this->getFromCache('class_list', array('list' => $list, 'zone' => $zone));
         if (!isset($data)) {
-            $data = $this->defineClassListQuery($class, $list, $zone)->getQuery()->getResult();
-            $this->saveToCache($data, 'class_list', array('class' => $class, 'list' => $list, 'zone' => $zone));
+            $data = $this->defineClassListQuery($list, $zone)->getQuery()->getResult();
+            $this->saveToCache($data, 'class_list', array('list' => $list, 'zone' => $zone));
         }
 
         return $data;
@@ -148,7 +147,6 @@ class ViewList extends \XLite\Model\Repo\ARepo
     /**
      * Define query builder for findClassList()
      *
-     * @param string $class Class name
      * @param string $list  Class list name
      * @param string $zone  Current interface name
      * 
@@ -157,11 +155,10 @@ class ViewList extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineClassListQuery($class, $list, $zone)
+    protected function defineClassListQuery($list, $zone)
     {
         return $this->createQueryBuilder()
-            ->where('v.class IN (:class, :empty) AND v.list = :list AND v.zone IN (:zone, :empty)')
-            ->setParameter('class', $class)
+            ->where('v.list = :list AND v.zone IN (:zone, :empty)')
             ->setParameter('empty', '')
             ->setParameter('list', $list)
             ->setParameter('zone', $zone);

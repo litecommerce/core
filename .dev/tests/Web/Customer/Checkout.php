@@ -164,7 +164,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->select(
             '//select[@id="shipping_address_state"]',
-            'value=34'
+            'label=New York'
         );
 
         $this->typeKeys(
@@ -279,7 +279,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->select(
             '//select[@id="billing_address_state"]',
-            'value=34'
+            'label=New York'
         );
 
         $this->typeKeys(
@@ -622,7 +622,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->select(
             '//select[@id="shipping_address_state"]',
-            'value=34'
+            'label=New York'
         );
 
         $this->typeKeys(

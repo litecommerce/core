@@ -39,7 +39,8 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
 {
     public function testPay()
     {
-        $pmethod = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(30);
+        $pmethod = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(array('service_name' => 'QuantumGateway'));
+        $pid = $pmethod->getmethodId();
         if (!$pmethod) {
             $this->fail('Quantum payment method is not found');
         }
@@ -90,7 +91,7 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
         }
 
         if (0 < intval($this->getJSExpression('$(".current.payment-step").length'))) {
-            $this->toggleByJquery('#pmethod30', true);
+            $this->toggleByJquery('#pmethod' . $pid, true);
             $this->click('css=.current .button-row button');
             $this->waitForCondition(
                 'selenium.browserbot.getCurrentWindow().$(".review-step").hasClass("current") == true',
@@ -106,7 +107,7 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
                 10000,
                 'check return to payment step'
             );
-            $this->toggleByJquery('#pmethod30', true);
+            $this->toggleByJquery('#pmethod' . $pid, true);
             $this->click('css=.current .button-row button');
             $this->waitForCondition(
                 'selenium.browserbot.getCurrentWindow().$(".review-step").hasClass("current") == true',
