@@ -65,9 +65,9 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
  
             // Test several products
             $products = array(
-                4047, // Zoom, No gallery, no options
-                4024, // Zoom, Gallery, no options
-                4035, // Zoom, Galler, Options
+                $this->getProductBySku('00045')->getProductId(), // Zoom, No gallery, no options
+                $this->getProductBySku('00022')->getProductId(), // Zoom, Gallery, no options
+                $this->getProductBySku('00033')->getProductId(), // Zoom, Galler, Options
             );
 
             foreach($products as $id) {
@@ -97,7 +97,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      */
     public function testProductOptions()
     {
-        list($product, $selector) = $this->popupTestProduct('apparel', 3002);
+        list($product, $selector) = $this->popupTestProduct('apparel', '00000');
         $id = $product->getProductId();
 
         $this->assertTrue(method_exists($product, 'hasOptions'), "ProductOptions module is not enabled");
@@ -210,8 +210,8 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
     {
 
         $products = array(
-            array('url'=>'apparel', 'id'=>4004),
-            array('url'=>'toys', 'id'=>4024),
+            array('url' => 'apparel', 'id' => '00002'),
+            array('url' => 'toys',    'id' => '00022'),
         );
 
         foreach ($products as $p) {
@@ -298,7 +298,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      */
     public function testAdd2Cart()
     {
-        list($product, $selector) = $this->popupTestProduct('toys', 4024);
+        list($product, $selector) = $this->popupTestProduct('toys', '00022');
         $id = $product->getProductId();
 
         // This assertion requires the minicart widget to be visible on the page
@@ -378,10 +378,10 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
         $id = $productId;
 
-        $product = \XLite\Core\Database::getRepo('XLite\Model\Product')->find($id);
+        $product = $this->getProductBySku($productId);
         $this->assertNotNull($product, "Product $id is not found in the DB");
 
-        $this->popupQuicklook($id);
+        $this->popupQuicklook($product->getProductId());
 
         $selector = ".BlockMsg-product-quicklook .product-quicklook";
         $this->assertElementPresent("css=$selector", "Quicklook popup for the $id product is missing on the page");

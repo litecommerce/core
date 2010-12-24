@@ -119,7 +119,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
 
         $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd, true);
 
-        $this->assertEquals(2, $result, 'There should be 2 "Apple or Radish" products');
+        $this->assertEquals(3, $result, 'There should be 3 "Apple or Radish" products');
 
 
         $cnd->{\XLite\Model\Repo\Product::P_INCLUDING} = \XLite\Model\Repo\Product::INCLUDING_ALL;

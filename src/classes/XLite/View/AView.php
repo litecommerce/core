@@ -1114,7 +1114,6 @@ abstract class AView extends \XLite\Core\Handler
     protected function getViewListChildren($list)
     {
         return \XLite\Core\Database::getRepo('\XLite\Model\ViewList')->findClassList(
-            $this->getViewListClass(),
             $list,
             $this->detectCurrentViewZone()
         );

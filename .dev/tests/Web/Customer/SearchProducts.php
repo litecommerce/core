@@ -98,7 +98,7 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
         $this->openTestPage();
 
         $this->assertElementPresent(self::SUBSTRING, 'No substring field');
-        $this->type(self::SUBSTRING,'mom');
+        $this->type(self::SUBSTRING, 'mom');
 
         $this->assertElementPresent(self::SUBMIT_BUTTON, 'No search products button');
         $this->click(self::SUBMIT_BUTTON);
@@ -160,6 +160,7 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
 
     protected function checkCounter($count)
     {
+        var_dump($this->getJSExpression('$(".items-list.products-search-result h2.items-list-title").html()'));
         $this->assertElementPresent(
             "//div[@class='items-list products-search-result']/h2[@class='items-list-title' and text()='$count products found']",
             '"Search found" string is wrong. must be ' . $count

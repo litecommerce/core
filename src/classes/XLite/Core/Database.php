@@ -594,7 +594,7 @@ class Database extends \XLite\Base\Singleton
             '/CREATE TABLE (\S+) \((.+)(\) ENGINE = \w+)/Sse',
             '\'CREATE TABLE `$1` (\' . PHP_EOL'
             . ' . \'$2\' . PHP_EOL'
-            . ' . \'$3 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin\'',
+            . ' . \'$3 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci\'',
             $schema
         );
 

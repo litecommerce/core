@@ -54,7 +54,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
             if ($cloudZoom) {
 
-                $listSelector = "css=div.product-details form.product-details.hproduct .image .product-photo-box"; 
+                $listSelector = "css=div.product-details form.product-details .image .product-photo-box"; 
 
                 $this->assertElementPresent(
                     $listSelector,
@@ -73,14 +73,16 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
                     "check image rel attribute"
                 );
 
-                $this->assertElementPresent(
-                    "$listSelector a.arrow.left-arrow img",
-                    'check left arrow'
-                );
-                $this->assertElementPresent(
-                    "$listSelector a.arrow.right-arrow img",
-                    'check right arrow'
-                );
+                if (1 < count($product->getImages())) {
+                    $this->assertElementPresent(
+                        "$listSelector a.arrow.left-arrow img",
+                        'check left arrow'
+                    );
+                    $this->assertElementPresent(
+                        "$listSelector a.arrow.right-arrow img",
+                        'check right arrow'
+                    );
+                }
 
             }
         }
@@ -88,14 +90,14 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         // Gallery
         if ($product->countImages() > 1) {
             $this->assertElementPresent(
-                "//form[@class='product-details hproduct']"
+                "//form[@class='product-details']"
                 . "/div[@class='image']"
                 . "/a[@class='loupe']"
                 . "/img",
                 'check loupe'
             );
             $this->assertElementPresent(
-                "//form[@class='product-details hproduct']"
+                "//form[@class='product-details']"
                 . "/div[@class='image']"
                 . "/div[@class='product-image-gallery']"
                 . "/ul"
@@ -118,18 +120,18 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         // Main block
         $this->assertElementPresent(
-            "//form[@class='product-details hproduct']"
+            "//form[@class='product-details']"
             . "/div[@class='product-details-info']"
             . "/div[@class='price product-price' and text()='$ " . $product->getPrice() . "']",
             'check price'
         );
         $this->assertElementPresent(
-            "css=form.product-details.hproduct .product-details-info .product-buttons input.quantity.field-requred.field-integer.field-positive.field-non-zero[type=text][value=1]",
+            "css=form.product-details .product-details-info .product-buttons input.quantity.field-requred.field-integer.field-positive.field-non-zero[type=text][value=1]",
             'check quantity input box'
         );
 
         $this->assertElementPresent(
-            "//form[@class='product-details hproduct']"
+            "//form[@class='product-details']"
             . "/div[@class='product-details-info']"
             . "/div[@class='product-buttons']"
             . "/div[@class='buttons-row']"
@@ -138,7 +140,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             'check Add to bag button'
         );
 
-        $facebookSelector = "css=form.product-details.hproduct .product-details-info .facebook iframe";
+        $facebookSelector = "css=form.product-details .product-details-info .facebook iframe";
         $this->assertElementPresent(
             $facebookSelector,
             "check Facebook widget"
@@ -156,7 +158,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         // Tabs
         $this->assertElementPresent(
-            "//form[@class='product-details hproduct']"
+            "//form[@class='product-details']"
             . "/div[@class='tabs']"
             . "/ul[@class='tabs primary']"
             . "/li[@class='active']"
@@ -171,14 +173,14 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         // Extra fields
         $this->assertElementPresent(
-            "//form[@class='product-details hproduct']"
+            "//form[@class='product-details']"
             . "/ul[@class='extra-fields']"
             . "/li"
             . "/strong[text()='Weight:']",
             'check weight (label)'
         );
         $this->assertElementPresent(
-            "//form[@class='product-details hproduct']"
+            "//form[@class='product-details']"
             . "/ul[@class='extra-fields']"
             . "/li"
             . "/span[text()='" . $product->getWeight(). " lbs']",
@@ -186,14 +188,14 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         );
 
         $this->assertElementPresent(
-            "//form[@class='product-details hproduct']"
+            "//form[@class='product-details']"
             . "/ul[@class='extra-fields']"
             . "/li[@class='identifier product-sku']"
             . "/strong[@class='type' and text()='SKU:']",
             'check SKU (label)'
         );
         $this->assertElementPresent(
-            "//form[@class='product-details hproduct']"
+            "//form[@class='product-details']"
             . "/ul[@class='extra-fields']"
             . "/li"
             . "/span[@class='value' and text()='" . $product->getSKU(). "']",
@@ -201,7 +203,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         );
 
         $this->assertElementPresent(
-            "//form[@class='product-details hproduct']"
+            "//form[@class='product-details']"
             . "/div[@class='description product-description']",
             'check description'
         );
@@ -253,7 +255,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             );
 
             $this->assertElementPresent(
-                "//form[@class='product-details hproduct']"
+                "//form[@class='product-details']"
                 . "/div[@class='image']"
                 . "/div[@class='product-photo-box']"
                 . "/div[@class='product-photo' and @style='width: " . $w . "px;']",
@@ -261,7 +263,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             );
 
             $this->assertElementPresent(
-                "//form[@class='product-details hproduct']"
+                "//form[@class='product-details']"
                 . "/div[@class='image']"
                 . "/div[@class='product-photo-box']"
                 . "/div[@class='product-photo']"
@@ -412,7 +414,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $qty = 0;
 
-        $formSelector = "css=form.product-details.hproduct";
+        $formSelector = "css=form.product-details";
         $cartButtonSelector = "$formSelector .product-details-info .product-buttons button.bright.add2cart";
         $buyButtonSelector = "$formSelector .product-details-info .product-buttons-added button.action.buy-more";
         $continueButtonSelector = "$formSelector .product-details-info .product-buttons-added button.bright.continue";
@@ -458,7 +460,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         $this->getJSExpression("$('.product-details input.quantity').attr('value', 3)");
 
         $this->click(
-            "//form[@class='product-details hproduct']"
+            "//form[@class='product-details']"
             . "/div[@class='body']"
             . "/div[@class='buttons-row added']"
             . "/button[@class='action buy-more']"

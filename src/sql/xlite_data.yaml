@@ -718,7 +718,7 @@ XLite\Model\Country:
   - { country: Fiji, code: FJ }
   - { country: Finland, code: FI, enabled: false }
   - { country: France, code: FR, eu_member: true }
-  - { country: Franc, code: etropolitan, enabled: false }
+  - { country: 'France, Metropolitan', code: FX, enabled: false }
   - { country: 'French Guiana', code: GF }
   - { country: 'French Polynesia', code: PF }
   - { country: 'French Southern Territories', code: TF }

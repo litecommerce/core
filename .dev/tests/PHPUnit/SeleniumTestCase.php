@@ -960,5 +960,16 @@ JS;
 
         return $this->getEval($js);
    }
+
+    protected function getProduct()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByEnabled(true);
+    }
+
+    protected function getProductBySku($sku)
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => $sku));
+    }
+
 }
 

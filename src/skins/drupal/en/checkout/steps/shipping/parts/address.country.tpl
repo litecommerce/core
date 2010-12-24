@@ -13,5 +13,5 @@
  *}
 <li class="country">
   <label for="shipping_address_country">{t(#Country#)}:</label>
-  <widget class="\XLite\View\CountrySelect" field="shippingAddress[country]" fieldId="shipping_address_country" country="{address.countryCode}" />
+  <widget class="\XLite\View\CountrySelect" field="shippingAddress[country]" fieldId="shipping_address_country" country="{address.country.code}" />
 </li>
