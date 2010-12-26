@@ -274,6 +274,10 @@ abstract class Image extends \XLite\Model\AEntity
             $result[2] = (!$result[2] || !file_put_contents($path . $fn, $result[2]))
                 ? $this->getURL()
                 : $this->getRepository()->getWebCacheRoot($sizeName) . '/' . $fn;
+
+            if (file_exists($path . $fn)) {
+                chmod($path . $fn, 0644);
+            }
         }
 
         return $result;

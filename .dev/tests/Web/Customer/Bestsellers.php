@@ -59,7 +59,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
             . "/following-sibling::div[@class='content']"
             . "/div[@class='items-list']"
             . "/div[@class='products']"
-            . "/table[@class='products-grid grid-3-columns']",
+            . "/table[@class='products-grid grid-4-columns']",
             'Check table'
         );
 
@@ -93,7 +93,8 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
             'check bestsellers block'
         );  
 
-        foreach ($this->findBestsellers(0, 1002) as $product) {
+        $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'apparel'));
+        foreach ($this->findBestsellers(0, $c->getCategoryId()) as $product) {
 
             $id = $product->getProductId();
 

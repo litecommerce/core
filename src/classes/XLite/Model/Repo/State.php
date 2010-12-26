@@ -270,7 +270,7 @@ class State extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Find states by country code adn state code
+     * Find states by country code and state code
      * 
      * @param string $countryCode Country code
      * @param string $code        State code
