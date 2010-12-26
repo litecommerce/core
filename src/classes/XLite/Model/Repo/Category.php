@@ -607,20 +607,16 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Return list of categories on the same level
      *
-     * @param integer $categoryId Category Id
+     * @param \XLite\Model\Category $category Category
      *
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getSiblings($categoryId)
+    public function getSiblings(\XLite\Model\Category $category)
     {
-        $category = $this->find($categoryId);
-
-        return $category
-            ? $this->defineSiblingsQuery($category)->getQuery()->getResult()
-            : array();
+        return $this->defineSiblingsQuery($category)->getQuery()->getResult();
     }
 
     /**

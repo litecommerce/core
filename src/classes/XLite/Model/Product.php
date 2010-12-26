@@ -72,9 +72,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="decimal", precision=14, scale=2)
+     * @Column (type="decimal", precision=14, scale=4)
      */
-    protected $price;
+    protected $price = 0.0000;
 
     /**
      * Product sale price
@@ -84,9 +84,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="decimal", precision=14, scale=2)
+     * @Column (type="decimal", precision=14, scale=4)
      */
-    protected $sale_price;
+    protected $sale_price = 0.0000;
 
     /**
      * Product SKU

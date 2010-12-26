@@ -178,7 +178,7 @@ class Category extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToMany(targetEntity="XLite\Model\Category", mappedBy="parent")
+     * @OneToMany (targetEntity="XLite\Model\Category", mappedBy="parent", cascade={"all"})
      */
     protected $childs;
 
@@ -190,7 +190,7 @@ class Category extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Category", inversedBy="children")
+     * @ManyToOne  (targetEntity="XLite\Model\Category", inversedBy="childs")
      * @JoinColumn (name="parent_id", referencedColumnName="category_id")
      */
     protected $parent;
@@ -211,6 +211,21 @@ class Category extends \XLite\Model\Base\I18n
     }
 
     /**
+     * Set image 
+     * 
+     * @param \XLite\Model\Image\Category\Image $image Image
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setImage(\XLite\Model\Image\Category\Image $image = null)
+    {
+        $this->image = $image;
+    }
+
+    /**
      * Check if category has image 
      * 
      * @return boolean 
@@ -226,15 +241,18 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Get the number of subcategories 
      * 
-     * @return integer
+     * @return integer|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getSubCategoriesCount()
     {
-        return $this->getQuickFlags()
-            ->{'getSubcategoriesCount' . ($this->getRepository()->getEnabledCondition() ? 'Enabled' : 'All')}();
+        $method = 'getSubcategoriesCount'
+            . ($this->getRepository()->getEnabledCondition() ? 'Enabled' : 'All');
+
+        // $method assembled from 'getSubcategoriesCount' + 'Enabled' or 'All'
+        return $this->getQuickFlags() ? $this->getQuickFlags()->$method() : null;
     }
 
     /**
@@ -253,14 +271,14 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Return subcategories list
      * 
-     * @return array
+     * @return \Doctrine\Common\Collections\ArrayCollection
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getSubcategories()
     {
-        return $this->getRepository()->getSubcategories($this->getCategoryId());
+        return $this->getChilds();
     }
 
     /**
@@ -273,7 +291,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getSiblings()
     {
-        return $this->getRepository()->getSiblings($this->getCategoryId());
+        return $this->getRepository()->getSiblings($this);
     }
 
     /**
@@ -286,15 +304,13 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getStringPath()
     {
-        return implode(
-            '/',
-            array_map(
-                function (\XLite\Model\Category $category) {
-                    return $category->getName();
-                },
-                $this->getRepository()->getCategoryPath($this->getCategoryId())
-            )
-        );
+        $path = array();
+
+        foreach ($this->getRepository()->getCategoryPath($this->getCategoryId()) as $category) {
+            $path[] = $category->getName();
+        }
+
+        return implode('/', $path);
     }
 
     /**
@@ -348,6 +364,7 @@ class Category extends \XLite\Model\Base\I18n
     public function __construct(array $data = array())
     {
         $this->categoryProducts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->childs = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }

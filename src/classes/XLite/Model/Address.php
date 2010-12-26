@@ -308,10 +308,10 @@ class Address extends \XLite\Model\AEntity
      */
     public function setName($value)
     {
-        list($first, $last) = explode(' ', trim($value), 2);
+        $parts = array_map('trim', explode(' ', trim($value), 2));
 
-        $this->setFirstname(trim($first));
-        $this->setLastname(trim($last));
+        $this->setFirstname($parts[0]);
+        $this->setLastname(isset($parts[1]) ? $parts[1] : '');
     }
 
     /**
@@ -376,6 +376,7 @@ class Address extends \XLite\Model\AEntity
                 break;
 
             default:
+                $list = null;
                 // TODO - add throw exception
         }
 
