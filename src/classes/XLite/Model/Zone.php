@@ -256,7 +256,7 @@ class Zone extends \XLite\Model\AEntity
      */
     public function hasZoneElements()
     {
-        return $this->getZoneElements()->count() > 0;
+        return 0 < count($this->getZoneElements());
     }
 
     /**

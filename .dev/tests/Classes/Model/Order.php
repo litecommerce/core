@@ -81,6 +81,17 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
             $order->getTotal(),
             'check total'
         );
+
+        // Payment method
+        $pm = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(array('service_name' => 'PurchaseOrder'));
+        $order->setPaymentMethod($pm);
+        $this->assertEquals($pm, $order->getPaymentMethod(), 'check payment method');
+
+        // Saved modifiers
+        $sm = new \XLite\Model\OrderModifier;
+        $order->addSavedModifiers($sm);
+        $count = count($order->getSavedModifiers());
+        $this->assertEquals($sm, $order->getSavedModifiers()->get($count - 1), 'check save modifier');
     }
 
     public function testUpdate()
@@ -609,6 +620,54 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
     }
 
+    public function testGetPaymentMethods()
+    {
+        $order = $this->getTestOrder();
+
+        $list = array();
+        foreach ($order->getPaymentMethods() as $p) {
+            $list[] = $p->getMethodId();
+        }
+
+        $etalon = array(8, 9, 1, 2, 3, 4, 5, 6, 7);
+        $this->assertEquals($etalon, $list, 'check method id\'s list');
+    }
+
+    public function testRenewPaymentMethod()
+    {
+        $order = $this->getTestOrder();
+
+        $order->setPaymentMethod(null);
+        $this->assertNull($order->getPaymentMethod(), 'empty payment method');
+
+        $order->renewPaymentMethod();
+        $this->assertNull($order->getPaymentMethod(), 'empty payment method #2');
+
+        $order->getProfile()->setLastPaymentId(1);
+
+        $order->renewPaymentMethod();
+        $this->assertFalse(is_null($order->getPaymentMethod()), 'reassign payment method');
+    }
+
+    public function testgetActivePaymentTransactions()
+    {
+        $order = $this->getTestOrder();
+
+        $list = $order->getActivePaymentTransactions();
+
+        $this->assertEquals(1, count($list), 'check length');
+        $this->assertEquals(
+            'Purchase Order',
+            $list[0]->getPaymentMethod()->getName(),
+            'check payment method'
+        );
+        $this->assertEquals(
+            $order->getTotal(),
+            $list[0]->getValue(),
+            'check total'
+        );
+    }
+
     public function testSetPaymentMethod()
     {
         $order = $this->getTestOrder();
@@ -898,33 +957,12 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
     public function testIsShowCCInfo()
     {
-        if (!\XLite\Model\PaymentMethod::isRegisteredMethod('CreditCard')) {
-            $this->markTestSkipped('CreditCard payment method is not registered');
-        }
-
-        $order = $this->getTestOrder();
-
-        $this->assertFalse($order->isShowCCInfo(), 'not show cc info');
-
-        $order->setPaymentMethod(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(1));
-
-        $this->assertFalse($order->isShowCCInfo(), 'not show cc info');
+        $this->markTestSkipped('CreditCard payment method is not registered');
     }
 
     public function testIsShowEcheckInfo()
     {
-        if (!\XLite\Model\PaymentMethod::isRegisteredMethod('Echeck')) {
-            $this->markTestSkipped('Echeck payment method is not registered');
-        }
-
-        $order = $this->getTestOrder();
-
-        $this->assertFalse($order->isShowEcheckInfo(), 'not show echeck info');
-
-        $order->setPaymentMethod(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(6));
-
-        $this->assertFalse($order->isShowEcheckInfo(), 'not show echeck info');
-
+        $this->markTestSkipped('Echeck payment method is not registered');
     }
 
     public function testRefreshItems()

@@ -18,6 +18,29 @@
 
 class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
 {
+    protected $entityData = array(
+        'zone_name'  => 'test name',
+        'is_default' => true,
+    );
+
+    public function testCreate()
+    {
+        $c = new \XLite\Model\Zone();
+
+        foreach ($this->entityData as $field => $testValue) {
+            $setterMethod = 'set' . \XLite\Core\Converter::getInstance()->convertToCamelCase($field);
+            $getterMethod = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($field);
+            $c->$setterMethod($testValue);
+            $value = $c->$getterMethod();
+            $this->assertEquals($testValue, $value, 'Creation checking (' . $field . ')');
+        }
+
+        \XLite\Core\Database::getEM()->persist($c);
+        \XLite\Core\Database::getEM()->flush();
+
+        $this->assertTrue(0 < $c->getZoneId(), 'check zone id');
+    }
+
     /**
      * testGetZoneWeight
      * 
@@ -297,7 +320,16 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
 
         $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(1);
         $this->assertFalse($zone->hasZoneElements(), 'zone #1 (Default zone) is not empty');
+    }
 
+    public function testgetZoneElements()
+    {
+        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findOneBy(array('zone_name' => 'New York area'));
+
+        foreach ($zone->getZoneElements() as $e) {
+            $this->assertTrue(0 < $e->getElementId(), 'check element id');
+            $this->assertEquals($zone, $e->getZone(), 'check zone owner');
+        }
     }
 
     /**

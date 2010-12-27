@@ -71,7 +71,7 @@ class ViewList extends \XLite\Model\AEntity
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer", length="11", nullable=false)
+     * @Column         (type="integer", length="11")
      */
     protected $list_id;
 
@@ -83,7 +83,7 @@ class ViewList extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="512", nullable=false)
+     * @Column (type="string", length="512")
      */
     protected $class = '';
 
@@ -95,7 +95,7 @@ class ViewList extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length="255")
      */
     protected $list;
 
@@ -107,7 +107,7 @@ class ViewList extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="16", nullable=false)
+     * @Column (type="string", length="16")
      */
     protected $zone = self::INTERFACE_CUSTOMER;
 
@@ -131,7 +131,7 @@ class ViewList extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="integer", length="11")
      */
     protected $weight = 0;
 
@@ -143,7 +143,7 @@ class ViewList extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="1024", nullable=false)
+     * @Column (type="string", length="1024")
      */
     protected $tpl = '';
 }

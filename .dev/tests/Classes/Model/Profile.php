@@ -395,6 +395,24 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         $this->assertTrue($profile->isSameAddress(), 'isSameAddress() expected to be true');
     }
 
+    public function testIsEqualAddress()
+    {
+        $profile = $this->getTestProfile(1, 1);
+
+        $this->assertFalse($profile->isEqualAddress(), 'isEqualAddress() expected to be false');
+
+        $this->deleteTestProfile($profile->getProfileId());
+
+        $profile = $this->getTestProfile(1, 4);
+
+        $this->assertFalse($profile->isEqualAddress(), 'isEqualAddress() expected to be false too');
+
+        $profile->getAddresses()->get(0)->setIsShipping(true);
+        $profile->getAddresses()->removeElement($profile->getAddresses()->get(1));
+
+        $this->assertTrue($profile->isEqualAddress(), 'isEqualAddress() expected to be true');
+    }
+
     /**
      * testCloneObject 
      * 
