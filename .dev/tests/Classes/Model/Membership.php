@@ -16,16 +16,12 @@
  * @since      3.0.0
  */
 
-class XLite_Tests_Model_Config extends XLite_Tests_TestCase
+class XLite_Tests_Model_Membership extends XLite_Tests_TestCase
 {
     protected $entityData = array(
-        'name'           => 'test name',
-        'category'       => 'test category',
-        'type'           => 'test type',
-        'orderby'        => 100,
-        'value'          => 'test value',
-        'option_name'    => 'test option name',
-        'option_comment' => 'test option comment',
+        'orderby' => 100,
+        'active'  => false,
+        'name'    => 'test name',
     );
 
     /**
@@ -38,7 +34,7 @@ class XLite_Tests_Model_Config extends XLite_Tests_TestCase
      */
     public function testCreate()
     {
-        $c = new \XLite\Model\Config();
+        $c = new \XLite\Model\Membership();
 
         foreach ($this->entityData as $field => $testValue) {
             $setterMethod = 'set' . \XLite\Core\Converter::getInstance()->convertToCamelCase($field);
@@ -47,10 +43,5 @@ class XLite_Tests_Model_Config extends XLite_Tests_TestCase
             $value = $c->$getterMethod();
             $this->assertEquals($testValue, $value, 'Creation checking (' . $field . ')');
         }
-
-        \XLite\Core\Database::getEM()->persist($c);
-        \XLite\Core\Database::getEM()->flush();
-
-        $this->assertTrue(0 < $c->getConfigId(), 'check config id');
     }
 }

@@ -16,16 +16,15 @@
  * @since      3.0.0
  */
 
-class XLite_Tests_Model_Config extends XLite_Tests_TestCase
+class XLite_Tests_Model_ViewList extends XLite_Tests_TestCase
 {
     protected $entityData = array(
-        'name'           => 'test name',
-        'category'       => 'test category',
-        'type'           => 'test type',
-        'orderby'        => 100,
-        'value'          => 'test value',
-        'option_name'    => 'test option name',
-        'option_comment' => 'test option comment',
+        'class'  => '\XLite\Model\Product',
+        'list'   => 'test.test.test',
+        'zone'   => 'admin',
+        'child'  => '\XLite\Model\Category',
+        'weight' => 100,
+        'tpl'    => 'test.tpl',
     );
 
     /**
@@ -38,7 +37,7 @@ class XLite_Tests_Model_Config extends XLite_Tests_TestCase
      */
     public function testCreate()
     {
-        $c = new \XLite\Model\Config();
+        $c = new \XLite\Model\ViewList();
 
         foreach ($this->entityData as $field => $testValue) {
             $setterMethod = 'set' . \XLite\Core\Converter::getInstance()->convertToCamelCase($field);
@@ -51,6 +50,6 @@ class XLite_Tests_Model_Config extends XLite_Tests_TestCase
         \XLite\Core\Database::getEM()->persist($c);
         \XLite\Core\Database::getEM()->flush();
 
-        $this->assertTrue(0 < $c->getConfigId(), 'check config id');
+        $this->assertTrue(0 < $c->getListId(), 'check list id');
     }
 }

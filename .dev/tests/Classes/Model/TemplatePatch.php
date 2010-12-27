@@ -16,16 +16,19 @@
  * @since      3.0.0
  */
 
-class XLite_Tests_Model_Config extends XLite_Tests_TestCase
+class XLite_Tests_Model_TemplatePatch extends XLite_Tests_TestCase
 {
     protected $entityData = array(
-        'name'           => 'test name',
-        'category'       => 'test category',
-        'type'           => 'test type',
-        'orderby'        => 100,
-        'value'          => 'test value',
-        'option_name'    => 'test option name',
-        'option_comment' => 'test option comment',
+        'zone'              => 'admin',
+        'lang'              => 'zz',
+        'tpl'               => 'test.tpl',
+        'patch_type'        => 'test',
+        'xpath_query'       => '//*',
+        'xpath_insert_type' => 'after',
+        'xpath_block'       => 'test block',
+        'regexp_pattern'    => '/.+/Ss',
+        'regexp_replace'    => '$0',
+        'custom_callback'   => 'callback',
     );
 
     /**
@@ -38,7 +41,7 @@ class XLite_Tests_Model_Config extends XLite_Tests_TestCase
      */
     public function testCreate()
     {
-        $c = new \XLite\Model\Config();
+        $c = new \XLite\Model\TemplatePatch();
 
         foreach ($this->entityData as $field => $testValue) {
             $setterMethod = 'set' . \XLite\Core\Converter::getInstance()->convertToCamelCase($field);
@@ -51,6 +54,6 @@ class XLite_Tests_Model_Config extends XLite_Tests_TestCase
         \XLite\Core\Database::getEM()->persist($c);
         \XLite\Core\Database::getEM()->flush();
 
-        $this->assertTrue(0 < $c->getConfigId(), 'check config id');
+        $this->assertTrue(0 < $c->getPatchId(), 'check patch id');
     }
 }

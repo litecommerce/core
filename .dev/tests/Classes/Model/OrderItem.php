@@ -67,6 +67,13 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_Model_OrderAbstract
             $item->getAmount(),
             'check amount'
         );
+
+        // Saved modifiers
+        $sm = new \XLite\Model\OrderItemModifier;
+        $item->addSavedModifiers($sm);
+        $count = count($item->getSavedModifiers());
+        $this->assertEquals($sm, $item->getSavedModifiers()->get($count - 1), 'check saved modifier');
+
     }
 
     public function testUpdate()
@@ -152,6 +159,22 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_Model_OrderAbstract
         $item = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->find($id);
 
         $this->assertFalse(is_null($item->getProduct()), 'check dump object #2');
+    }
+
+    public function testsetObject()
+    {
+        $order = $this->getTestOrder();
+        $item = $order->getItems()->get(0);
+
+        $this->assertNotEquals(0, $item->getPrice(), 'check non-empty price');
+        $this->assertNotEquals('', $item->getName(), 'check non-empty name');
+        $this->assertNotEquals('', $item->getSku(), 'check non-empty sku');
+
+        $item->setProduct(null);
+
+        $this->assertEquals(0, $item->getPrice(), 'check empty price');
+        $this->assertEquals('', $item->getName(), 'check empty name');
+        $this->assertEquals('', $item->getSku(), 'check empty sku');
     }
 
     public function testSetAmount()

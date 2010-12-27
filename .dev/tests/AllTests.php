@@ -263,7 +263,7 @@ class XLite_Tests_AllTests
                 if (
                     preg_match($pattern, $filePath, $matches)
                     && !empty($matches[1])
-                    && !preg_match('/\/\w+Abstract.php/Ss', $filePath)
+                    && !preg_match('/\/(\w+Abstract|A[A-Z]\d+)\.php$/Ss', $filePath)
                     && (!$includes || in_array($matches[1], $includes))
                     && (!$excludes || !in_array($matches[1], $excludes))
                 ) {
@@ -298,8 +298,7 @@ class XLite_Tests_AllTests
                 if (
                     preg_match($pattern, $filePath, $matches)
                     && !empty($matches[1])
-                    && !preg_match('/\/Abstract.php/Ss', $filePath)
-                    && !preg_match('/\/A[A-Z]/Ss', $filePath)
+                    && !preg_match('/\/(\w+Abstract|A[A-Z]\d+)\.php/Ss', $filePath)
                     && (!$includes || in_array($matches[1], $includes))
                     && (!$excludes || !in_array($matches[1], $excludes))
                 ) {

@@ -61,7 +61,7 @@ INSERT INTO `xlite_product_images` (`image_id`, `id`, `path`, `mime`, `width`, `
 INSERT INTO `xlite_product_images` (`image_id`, `id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (9,15067,'demo_p15067.jpeg','image/jpeg',319,480,99541,1280314462,'');
 
 INSERT INTO `xlite_category_products` SET product_id = '15090', category_id = '14015', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '16281', category_id = '14009', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '16281', category_id = '14009', orderby = '10';
 INSERT INTO `xlite_category_products` SET product_id = '16280', category_id = '14009', orderby = '0';
 INSERT INTO `xlite_category_products` SET product_id = '16282', category_id = '14009', orderby = '0';
 INSERT INTO `xlite_category_products` SET product_id = '15121', category_id = '14015', orderby = '0';

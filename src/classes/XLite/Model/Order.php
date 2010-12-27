@@ -688,7 +688,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     {
         $method = $this->getPaymentMethod();
         if ($method) {
-            $this->setPaymentMethod();
+            $this->setPaymentMethod($method);
         }
     }
 

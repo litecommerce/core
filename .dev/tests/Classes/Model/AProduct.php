@@ -16,7 +16,7 @@
  * @since      3.0.0
  */
 
-class XLite_Tests_Model_AProduct extends XLite_Tests_TestCase
+abstract class XLite_Tests_Model_AProduct extends XLite_Tests_TestCase
 {
     /**
      * setUp
@@ -50,17 +50,5 @@ class XLite_Tests_Model_AProduct extends XLite_Tests_TestCase
 
         $this->query(file_get_contents(__DIR__ . '/Repo/sql/product/restore.sql'));
         \XLite\Core\Database::getEM()->flush();
-    }
-
-    /**
-     * testTest 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function testTest()
-    {
     }
 }

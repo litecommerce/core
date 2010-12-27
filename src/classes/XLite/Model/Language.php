@@ -185,7 +185,7 @@ class Language extends \XLite\Model\Base\I18n
      */
     public function getFlagURL()
     {
-        $path = \XLite\Model\Layout::getInstance()->getSkinURL('images/flags/' . $this->code . '.png');
+        $path = \XLite\Model\Layout::getInstance()->getSkinURL('images/flags/' . $this->getCode() . '.png');
 
         if (!file_exists(LC_ROOT_DIR . $path)) {
             $path = \XLite\Model\Layout::getInstance()->getSkinURL('images/flags/__.png');

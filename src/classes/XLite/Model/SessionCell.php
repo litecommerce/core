@@ -57,7 +57,7 @@ class SessionCell extends \XLite\Model\AEntity
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer", nullable=false)
+     * @Column         (type="integer")
      */
     protected $cell_id;
 
@@ -69,7 +69,7 @@ class SessionCell extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", nullable=false)
+     * @Column (type="integer")
      */
     protected $id;
 
@@ -81,7 +81,7 @@ class SessionCell extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length="255")
      */
     protected $name;
 

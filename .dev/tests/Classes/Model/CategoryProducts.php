@@ -57,5 +57,7 @@ class XLite_Tests_Model_CategoryProducts extends XLite_Tests_TestCase
         $this->assertEquals(14015, $cp->getCategory()->getCategoryId(), 'check category id');
         $this->assertEquals(16281, $cp->getProduct()->getProductId(), 'check product id');
         $this->assertEquals(100, $cp->getOrderby(), 'check order');
+
+        $this->assertTrue(0 < $cp->getId(), 'check id');
     }
 }

@@ -187,16 +187,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     protected $categoryProducts;
 
     /**
-     * Product image
-     *
-     * @var    \XLite\Model\Image\Product\Image
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $image;
-
-    /**
      * Product order items
      * 
      * @var    \XLite\Model\OrderItem
@@ -296,11 +286,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     public function getImage()
     {
-        if (!isset($this->image) && $this->getImages()) {
-            $this->image = $this->getImages()->get(0);
-        }
-
-        return $this->image;
+        return $this->getImages()->get(0);
     }
 
     /**
@@ -321,18 +307,22 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * 
      * @param integer|null $categoryId Category ID
      *  
-     * @return \XLite\Model\CategoryProducts
+     * @return \XLite\Model\CategoryProducts|void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function findLinkByCategoryId($categoryId)
     {
-        return \Includes\Utils\Doctrine\Entity::searchInArray(
-            $this->getCategoryProducts()->toArray(),
-            'category_id',
-            $categoryId
-        );
+        $result = null;
+
+        foreach ($this->getCategoryProducts() as $cp) {
+            if ($cp->getCategory() && $cp->getCategory()->getCategoryId() == $categoryId) {
+                $result = $cp;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -414,14 +404,14 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Return image URL 
      * 
-     * @return string
+     * @return string|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getImageURL()
     {
-        return $this->getImage()->getURL();
+        return $this->getImage() ? $this->getImage()->getURL() : null;
     }
 
     /**
@@ -519,14 +509,16 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      *
      * @param integer|null $categoryId Category ID OPTIONAL
      * 
-     * @return integer 
+     * @return integer|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getOrderBy($categoryId = null)
     {
-        return $this->getLink($categoryId)->getOrderBy();
+        $link = $this->getLink($categoryId);
+
+        return $link ? $link->getOrderBy() : null;
     }
 
     /**
@@ -569,6 +561,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     {
         $this->categoryProducts = new \Doctrine\Common\Collections\ArrayCollection();
         $this->images           = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->order_items      = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }
