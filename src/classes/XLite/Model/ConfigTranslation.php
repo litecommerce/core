@@ -53,7 +53,7 @@ class ConfigTranslation extends \XLite\Model\Base\Translation
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length="255")
      */
     protected $option_name;
 
@@ -65,7 +65,7 @@ class ConfigTranslation extends \XLite\Model\Base\Translation
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length="255")
      */
     protected $option_comment = '';
 }

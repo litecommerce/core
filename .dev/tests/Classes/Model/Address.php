@@ -219,6 +219,20 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
         $address->setState(\XLite\Core\Database::getRepo('XLite\Model\State')->findOneByCountryAndCode('US', 'NY'));
 
         $this->assertTrue($address->getState() instanceof \XLite\Model\State, 'State checking');
+
+        $address->setState('Test state');
+
+        $this->assertEquals($address->getState() instanceof \XLite\Model\State, 'State checking #2');
+        $this->assertEquals('Test state', $address->getState()->getState(), 'State name checking');
+        $this->assertNull($address->getState()->getStateId(), 'State id checking');
+
+        $s = new \XLite\Model\State;
+        $s->setState('Test state 2');
+        $address->setState($s);
+
+        $this->assertEquals($address->getState() instanceof \XLite\Model\State, 'State checking #3');
+        $this->assertEquals('Test state 2', $address->getState()->getState(), 'State name checking #3');
+        $this->assertNull($address->getState()->getStateId(), 'State id checking #3');
     }
 
     /**
