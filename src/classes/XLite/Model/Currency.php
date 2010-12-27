@@ -176,4 +176,22 @@ class Currency extends \XLite\Model\Base\I18n
             \XLite\Core\Config::getInstance()->General->thousand_delim
         );
     }
+
+    /**
+     * Constructor
+     *
+     * @param array $data Entity properties
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $data = array())
+    {
+        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
+    }
+
 }

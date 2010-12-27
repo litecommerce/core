@@ -58,7 +58,7 @@ class Config extends \XLite\Model\Base\I18n
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer", unique=true)
+     * @Column (type="integer")
      */
     protected $config_id;
 
@@ -70,7 +70,7 @@ class Config extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="32", nullable=false)
+     * @Column (type="string", length="32")
      */
     protected $name;
 
@@ -82,7 +82,7 @@ class Config extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="32", nullable=false)
+     * @Column (type="string", length="32")
      */
     protected $category;
 
@@ -95,7 +95,7 @@ class Config extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="32", nullable=false)
+     * @Column (type="string", length="32")
      */
     protected $type = '';
 
@@ -107,7 +107,7 @@ class Config extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="integer")
      */
     protected $orderby = 0;
 
@@ -119,7 +119,7 @@ class Config extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="text", nullable=false)
+     * @Column (type="text")
      */
     protected $value = '';
 }

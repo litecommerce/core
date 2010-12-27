@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-class XLite_Tests_Model_Currency extends XLite_Tests_TestCase
+class XLite_Tests_Model_Currency extends XLite_Tests_Model_OrderAbstract
 {
     protected $testData = array(
         'currency_id' => 999,
@@ -46,6 +46,12 @@ class XLite_Tests_Model_Currency extends XLite_Tests_TestCase
             $m = 'get' . \XLite\Core\Converter::convertToCamelCase($k);
             $this->assertEquals($v, $c->$m(), 'Check ' . $k);
         }
+
+        $o = $this->getTestOrder();
+        $o->setCurrency($c);
+        $c->addOrders($o);
+
+        $this->assertEquals($o, $c->getOrders()->get(0), 'check order');
 
         try {
             $this->getTestCurrency();

@@ -54,7 +54,7 @@ class Country extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="50", nullable=false)
+     * @Column (type="string", length="50")
      */
     protected $country;
 
