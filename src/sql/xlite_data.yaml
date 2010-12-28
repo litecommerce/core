@@ -414,12 +414,12 @@ XLite\Model\LanguageLabel:
   - { name: 'Zone details have been updated successfully', translations: [{ code: en, label: 'Zone details have been updated successfully' }] }
   - { name: 'New zone has been created successfully', translations: [{ code: en, label: 'New zone has been created successfully' }] }
   - { name: 'This product has been added to your bag', translations: [{ code: en, label: 'This product has been added to <a href="{{href}}">your bag</a>' }] }
-  - { name: 'Your shopping bag - X items', translations: [{ code: en, label: 'Your shopping bag &mdash; {{count}} items' }] }
+  - { name: 'Your shopping bag - X items', translations: [{ code: en, label: 'Your shopping bag â€” {{count}} items' }] }
   - { name: 'Greetings, X', translations: [{ code: en, label: 'Greetings, {{name}}' }] }
   - { name: 'X items', translations: [{ code: en, label: '{{count}} items' }] }
   - { name: 'This email address is used for an existing account. Enter another email address or sign in', translations: [{ code: en, label: 'This email address is used for an existing account. Enter another email address or <a href="{{URL}}" class="log-in">sign in</a>' }] }
   - { name: 'This user name is used for an existing account. Enter another user name or sign in', translations: [{ code: en, label: 'This user names is used for an existing account. Enter another user name or <a href="{{URL}}" class="log-in">sign in</a>' }] }
-  - { name: 'I accept Terms and Conditions', translations: [{ code: en, label: 'I accept <a href="{{URL}}">Terms &amp; Conditions</a>' }] }
+  - { name: 'I accept Terms and Conditions', translations: [{ code: en, label: 'I accept <a href="{{URL}}">Terms & Conditions</a>' }] }
   - { name: 'Place order X', translations: [{ code: en, label: 'Place order: {{total}}' }] }
   - { name: 'Enter a correct email', translations: [{ code: en, label: 'Enter a correct email' }] }
   - { name: 'Enter an integer', translations: [{ code: en, label: 'Enter an integer' }] }
@@ -608,7 +608,7 @@ XLite\Model\Language:
   - { code: uz, code3: uzb, translations: [{ code: en, name: Uzbek }] }
   - { code: ve, code3: ven, translations: [{ code: en, name: Venda }] }
   - { code: vi, code3: vie, translations: [{ code: en, name: Vietnamese }] }
-  - { code: vo, code3: vol, translations: [{ code: en, name: 'Volap&uuml;k' }] }
+  - { code: vo, code3: vol, translations: [{ code: en, name: 'Volap ük' }] }
   - { code: cy, code3: wel, translations: [{ code: en, name: Welsh }] }
   - { code: wa, code3: wln, translations: [{ code: en, name: Walloon }] }
   - { code: wo, code3: wol, translations: [{ code: en, name: Wolof }] }
