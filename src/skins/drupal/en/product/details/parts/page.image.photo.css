@@ -1,6 +1,7 @@
 table.product-photo-box,
 table.product-photo-box tr,
-table.product-photo-box td
+table.product-photo-box td,
+table.product-photo-box tbody
 {
   border-style: none;
 }
