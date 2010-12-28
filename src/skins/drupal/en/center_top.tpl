@@ -10,9 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-
-<h1 class="title{if:!isTitleVisible()} hidden-title{end:}" id="page-title" IF="getTitle()">{getTitle():h}</h1>
-
 <!-- [catalog] {{{ -->
 <widget class="\XLite\View\Category" />
 <widget class="\XLite\View\Product\Details\Customer\Page\Main" />
