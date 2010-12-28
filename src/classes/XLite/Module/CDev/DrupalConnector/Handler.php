@@ -393,9 +393,7 @@ class Handler extends \XLite\Core\CMSConnector
      */
     public function getAddressesURLPrefix()
     {
-        $uid = lc_connector_get_display_user_id()
-            ? lc_connector_get_display_user_id()
-            : user_uid_optional_to_arg('%');
+        $uid = user_uid_optional_to_arg('%');
         
         return array(
             'user',
@@ -414,9 +412,7 @@ class Handler extends \XLite\Core\CMSConnector
      */
     public function getOrdersURLPrefix()
     {
-        $uid = lc_connector_get_display_user_id()
-            ? lc_connector_get_display_user_id()
-            : user_uid_optional_to_arg('%');
+        $uid = user_uid_optional_to_arg('%');
 
         return array(
             'user',
