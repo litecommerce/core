@@ -13,7 +13,7 @@
 
 {*<h3 IF="!disable_head" align="center" class="WelcomeHeader">Welcome to LiteCommerce</h3>*}
 
-<div style="margin: 0 0 1em;"><img src="images/fruits_vegetables.png" /></div>
+<div style="margin: 0 0 1em;"><img src="images/fruits_vegetables.png" alt="" /></div>
 
 <p style="text-align: justify;">This demo online store is powered by LiteCommerce v3 shopping cart software. With LiteCommerce you can setup a web store having all of the features this demo has.</p>
 
