@@ -41,7 +41,7 @@ jQuery(document).ready(
         this.base.parents('.block').map(
           function() {
             if (!delta && this.id) {
-              var m = this.id.match(/^block-lc.connector-(.+)$/i);
+              var m = this.id.match(/^block-block-(.+)$/i);
               if (m) {
                 delta = m[1];
               }

@@ -50,17 +50,11 @@ class AController extends \XLite\Controller\AController implements \XLite\Base\I
         $viewer = parent::getAJAXViewer();
 
         if (\XLite\Core\Request::getInstance()->widgetConfId) {
-            $data = lc_connector_get_block_data(\XLite\Core\Request::getInstance()->widgetConfId);
+            $data = \LCConnector_Model::getBlock(\XLite\Core\Request::getInstance()->widgetConfId);
 
-            $args = array();
-
-            if ($data && isset($data->options)) {
-                foreach ($data->options as $k => $v) {
-                    $args[$k] = $v;
-                }
+            if ($data) {
+                $viewer->setWidgetParams($data['options']);
             }
-
-            $viewer->setWidgetParams($args);
         }
 
         return $viewer;
