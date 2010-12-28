@@ -24,6 +24,7 @@
 <!-- [/breadcrumbs] }}} -->
 
 <!-- [page top] {{{ -->
+<h1 class="title" id="page-title" IF="isTitleVisible()&getTitle()">{getTitle():h}</h1>
 <widget template="center_top.tpl" />
 <!-- [/page top] }}} -->
 
