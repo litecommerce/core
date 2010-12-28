@@ -210,6 +210,24 @@ class TopCategories extends \XLite\View\SideBarBox
     }
 
     /**
+     * Display item CSS class name as HTML attribute
+     *
+     * @param integer               $index    Item number
+     * @param integer               $count    Items count
+     * @param \XLite\Model\Category $category Current category
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    public function displayItemClass($index, $count, \XLite\Model\Category $category)
+    {
+        $className = $this->assembleItemClassName($index, $count, $category);
+
+        return $className ? ' class="' . $className . '"' : '';
+    }
+
+    /**
      * Assemble item CSS class name 
      * 
      * @param integer               $index    Item number
@@ -256,6 +274,24 @@ class TopCategories extends \XLite\View\SideBarBox
     }
 
     /**
+     * Display item link class name as HTML attribute
+     *
+     * @param integer               $i        Item number
+     * @param integer               $count    Items count
+     * @param \XLite\Model\Category $category Current category
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    public function displayLinkClass($i, $count, \XLite\Model\Category $category)
+    {
+        $className = $this->assembleLinkClassName($i, $count, $category);
+
+        return $className ? ' class="' . $className . '"' : '';
+    }
+
+    /**
      * Assemble list item link class name
      *
      * @param integer               $i        Item number
@@ -274,7 +310,25 @@ class TopCategories extends \XLite\View\SideBarBox
     }
 
     /**
-     * Assemble list item link class name
+     * Display item childs container class as HTML attribute
+     *
+     * @param integer           $i      Item number
+     * @param integer           $count  Items count
+     * @param \XLite\View\AView $widget Current category
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    public function displayListItemClass($i, $count, \XLite\View\AView $widget)
+    {
+        $className = $this->assembleListItemClassName($i, $count, $widget);
+
+        return $className ? ' class="' . $className . '"' : '';
+    }
+
+    /**
+     * Assemble item childs container class name
      *
      * @param integer           $i      Item number
      * @param integer           $count  Items count
