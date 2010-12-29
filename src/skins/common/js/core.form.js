@@ -305,6 +305,9 @@ CommonElement.prototype.bind = function(elm)
     this.markAsColumnSwitcher();
   }
 
+  if (this.$element.hasClass('wheel-ctrl')) {
+    this.markAsWheelControlled();
+  }
 }
 
 // Get validators by form element
@@ -555,7 +558,7 @@ CommonElement.prototype.markAsWatcher = function(beforeCallback)
   }
 }
 
-// Elemen is column checkboxes switcher
+// Element is column checkboxes switcher
 CommonElement.prototype.markAsColumnSwitcher = function()
 {
   this.$element.click(
@@ -571,6 +574,70 @@ CommonElement.prototype.markAsColumnSwitcher = function()
     }
   );
 }
+
+// Element is mouse wheel controlled
+CommonElement.prototype.markAsWheelControlled = function()
+{
+  var o = this;
+  this.$element.mousewheel(
+    function(event, delta) {
+      return o.updateByMouseWheel(event, delta);
+    }
+  );
+}
+
+// Update element by mosue wheel
+CommonElement.prototype.updateByMouseWheel = function(event, delta)
+{
+  event.stopPropagation();
+
+  var value = false;
+  var mantis = 0;
+
+  if (this.element.value.length == 0) {
+    value = 0;
+
+  } else if (this.element.value.search(/^ *[+-]?[0-9]+\.?[0-9]* *$/) != -1) {
+    var m = this.element.value.match(/^ *[+-]?[0-9]+\.([0-9]+) *$/);
+    if (m && m[1]) {
+      mantis = m[1].length;
+    }
+
+    value = parseFloat(this.element.value);
+    if (isNaN(value)) {
+      value = false;
+    }
+  }
+
+  if (value !== false) {
+    var min = jQuery(this).data('min');
+    var max = jQuery(this).data('max');
+
+    value = value + delta * -1;
+
+    if (typeof(min) != 'undefined' && min > value) {
+      value = min;
+    }
+
+    if (typeof(max) != 'undefined' && max < value) {
+      value = max;
+    }
+
+    value = mantis
+      ? Math.round(value * Math.pow(10, mantis)) / Math.pow(10, mantis)
+      : Math.round(value);
+
+    var oldValue = this.element.value;
+    this.element.value = value;
+
+    if (!this.validate(true)) {
+      this.element.value = oldValue;
+    }
+  }
+
+  return false;
+}
+
 
 // Element is state watcher
 CommonElement.prototype.isWatcher = function()
