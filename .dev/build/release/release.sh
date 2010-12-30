@@ -414,7 +414,8 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		echo "Warning! Logo image file $LOGO_IMAGE not found"
 	fi
 
-	sed -i '' -E 's/lc_path = .*/lc_path = .\/litecommerce/' modules/lc_connector/lc_connector.info
+	#sed -i '' -E 's/lc_path = .*/lc_path = .\/litecommerce/' modules/lc_connector/lc_connector.info
+	sed -i "" "s/..\/..\/xlite\/src/modules\/lc_connector\/litecommerce/" modules/lc_connector/Handler/Abstract.php
 
 	# Restore orininal file PoweredBy.php from temporary directory
 	cp ${OUTPUT_DIR}/tmp/PoweredBy.php ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/classes/XLite/View/
@@ -437,14 +438,14 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		echo "  + LC Connector v.$VERSION module for Drupal is completed"
 
 		# Pack Bettercrumbs module distributive
-		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/modules
-		tar -czf ${OUTPUT_DIR}/bettercrumbs-${VERSION}.tgz bettercrumbs
+		#cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/modules
+		#tar -czf ${OUTPUT_DIR}/bettercrumbs-${VERSION}.tgz bettercrumbs
 
-		echo "  + Bettercrumbs v.$VERSION module for Drupal is completed"
+		#echo "  + Bettercrumbs v.$VERSION module for Drupal is completed"
 
 		# Pack LCCMS theme
 		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes
-		tar -czf ${OUTPUT_DIR}/lc3_theme-${VERSION}.tgz lc3
+		tar -czf ${OUTPUT_DIR}/lc3_clean_theme-${VERSION}.tgz lc3_clean
 
 		echo "  + LC3 v.$VERSION theme for Drupal is completed"
 

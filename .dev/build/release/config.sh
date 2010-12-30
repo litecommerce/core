@@ -51,6 +51,9 @@ sql/modules
 DRUPAL_FILES_TODELETE="
 profiles/default
 profiles/litecommerce_site
+profiles/standard
+profiles/minimal
+profiles/testing
 includes/install.pgsql.inc
 sites/all/modules/litecommerce_com
 sites/all/modules/private_download
