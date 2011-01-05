@@ -20,6 +20,6 @@
 
 <script type="text/javascript">
 //<![CDATA[
-new ProductDetailsController($('div.product-quicklook')); 
+new ProductDetailsController(jQuery('div.product-quicklook')); 
 //]]>
 </script>

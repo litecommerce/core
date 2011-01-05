@@ -69,23 +69,23 @@ class XLite_Web_Customer_DragNDrop extends XLite_Web_Customer_ACustomer
             'css=.cart-tray'
         );
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.cart-tray.cart-tray-adding').length == 1",
+        $this->waitForLocalCondition(
+            "jQuery('.cart-tray.cart-tray-adding').length == 1",
             3000
         );
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.cart-tray.cart-tray-added').length == 1",
+        $this->waitForLocalCondition(
+            "jQuery('.cart-tray.cart-tray-added').length == 1",
             20000
         );
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.cart-tray.cart-tray-added').length == 0",
+        $this->waitForLocalCondition(
+            "jQuery('.cart-tray.cart-tray-added').length == 0",
             6000
         );
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.minicart-items-number').html() == '1'",
+        $this->waitForLocalCondition(
+            "jQuery('.minicart-items-number').html() == '1'",
             20000
         );
     }
@@ -112,23 +112,23 @@ class XLite_Web_Customer_DragNDrop extends XLite_Web_Customer_ACustomer
             'css=.cart-tray'
         );
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.cart-tray.cart-tray-adding').length == 1",
+        $this->waitForLocalCondition(
+            "jQuery('.cart-tray.cart-tray-adding').length == 1",
             3000
         );
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.cart-tray.cart-tray-added').length == 1",
+        $this->waitForLocalCondition(
+            "jQuery('.cart-tray.cart-tray-added').length == 1",
             20000
         );
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.cart-tray.cart-tray-added').length == 0",
+        $this->waitForLocalCondition(
+            "jQuery('.cart-tray.cart-tray-added').length == 0",
             6000
         );
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.minicart-items-number').html() == '2'",
+        $this->waitForLocalCondition(
+            "jQuery('.minicart-items-number').html() == '2'",
             20000
         );
     }
@@ -150,13 +150,13 @@ class XLite_Web_Customer_DragNDrop extends XLite_Web_Customer_ACustomer
             'css=.cart-tray'
         );
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.cart-tray.cart-tray-adding').length == 1",
+        $this->waitForLocalCondition(
+            "jQuery('.cart-tray.cart-tray-adding').length == 1",
             3000
         );
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.cart-tray.cart-tray-added').length == 1",
+        $this->waitForLocalCondition(
+            "jQuery('.cart-tray.cart-tray-added').length == 1",
             20000
         );
         $this->dragAndDropDelay(
@@ -165,23 +165,23 @@ class XLite_Web_Customer_DragNDrop extends XLite_Web_Customer_ACustomer
             'css=.cart-tray'
         );
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.cart-tray.cart-tray-adding').length == 1",
+        $this->waitForLocalCondition(
+            "jQuery('.cart-tray.cart-tray-adding').length == 1",
             3000
         );
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.cart-tray.cart-tray-added').length == 1",
+        $this->waitForLocalCondition(
+            "jQuery('.cart-tray.cart-tray-added').length == 1",
             20000
         );
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.cart-tray.cart-tray-added').length == 0",
+        $this->waitForLocalCondition(
+            "jQuery('.cart-tray.cart-tray-added').length == 0",
             6000
         );
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.minicart-items-number').html() == '2'",
+        $this->waitForLocalCondition(
+            "jQuery('.minicart-items-number').html() == '2'",
             20000
         );
     }

@@ -109,23 +109,23 @@ class XLite_Web_Customer_AddedMark extends XLite_Web_Customer_ACustomer
 
         $this->dragAndDropDelay("css=.productid-$id1", "css=.productid-$id2", "css=.cart-tray");
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.cart-tray.cart-tray-adding').length == 1",
+        $this->waitForLocalCondition(
+            "jQuery('.cart-tray.cart-tray-adding').length == 1",
             3000
         );
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.cart-tray.cart-tray-added').length == 1",
+        $this->waitForLocalCondition(
+            "jQuery('.cart-tray.cart-tray-added').length == 1",
             20000
         );
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.cart-tray.cart-tray-added').length == 0",
+        $this->waitForLocalCondition(
+            "jQuery('.cart-tray.cart-tray-added').length == 0",
             6000
         );
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.minicart-items-number').html() == '1'",
+        $this->waitForLocalCondition(
+            "jQuery('.minicart-items-number').html() == '1'",
             20000
         );
     }
@@ -162,7 +162,7 @@ class XLite_Web_Customer_AddedMark extends XLite_Web_Customer_ACustomer
      */
     protected function getProductId($n)
     {
-        $class = $this->getJSExpression("$('.category-products .product').eq($n).attr('class')");
+        $class = $this->getJSExpression("jQuery('.category-products .product').eq($n).attr('class')");
         $id = intval(preg_replace('/^.*productid-([\d]+).*$/', '\\1', $class));
 
         $this->assertTrue($id>0, "Wrong ID for the product number $n");

@@ -59,7 +59,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
             . "/following-sibling::div[@class='content']"
             . "/div[@class='items-list']"
             . "/div[@class='products']"
-            . "/table[@class='products-grid grid-4-columns']",
+            . "/table[@class='products-grid grid-3-columns']",
             'Check table'
         );
 
@@ -78,8 +78,10 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
     }
 
     public function testCatPage()
-    {   
-        $this->open('apparel/');
+    {
+        $cat = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'apparel'));
+ 
+        $this->open('store/category/0/category_id-' . $cat->getCategoryId());
 
         $this->assertElementPresent(
             "//h2[text()='Bestsellers']",

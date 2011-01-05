@@ -411,15 +411,15 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     public function toggleByJquery($jqueryExpression, $checked = null)
     {
-        if (0 == intval($this->getJSExpression('$("' . $jqueryExpression . '").length'))) {
+        if (0 == intval($this->getJSExpression('jQuery("' . $jqueryExpression . '").length'))) {
             $this->fail($jqueryExpression . ' jQuery expression not found');
         }
 
-        $checked = isset($checked) ? $checked : !$this->getJSExpression('$("' . $jqueryExpression . '").get(0).checked');
-        $this->getJSExpression('$("' . $jqueryExpression . '").get(0).checked = ' . ($checked ? 'true' : 'false'));
-        $this->getJSExpression('$("' . $jqueryExpression . '").change()');
+        $checked = isset($checked) ? $checked : !$this->getJSExpression('jQuery("' . $jqueryExpression . '").get(0).checked');
+        $this->getJSExpression('jQuery("' . $jqueryExpression . '").get(0).checked = ' . ($checked ? 'true' : 'false'));
+        $this->getJSExpression('jQuery("' . $jqueryExpression . '").change()');
 
-        return (bool)$this->getJSExpression('$("' . $jqueryExpression . '").get(0).checked');
+        return (bool)$this->getJSExpression('jQuery("' . $jqueryExpression . '").get(0).checked');
     }
 
     /**
@@ -451,7 +451,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     public function assertJqueryPresent($pattern, $message = null)
     {
         $this->assertTrue(
-            0 < intval($this->getJSExpression("$('" . $pattern . "').length")),
+            0 < intval($this->getJSExpression('jQuery("' . $pattern . '").length')),
             $message ?: 'jQuery pattern \'' . $pattern . '\' is NOT present'
         );
     }
@@ -471,7 +471,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     {
         $this->assertEquals(
             0,
-            intval($this->getJSExpression("$('" . $pattern . "').length")),
+            intval($this->getJSExpression('jQuery("' . $pattern . '").length')),
             $message ?: 'jQuery pattern \'' . $pattern . '\' is PRESENT'
         );
     }
@@ -490,12 +490,12 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     public function waitInlineProgress($jqueryExpression, $message = null)
     {
         $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length > 0',
+            'selenium.browserbot.getCurrentWindow().jQuery("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length > 0',
             10000,
             'check inline progress mark for ' . $jqueryExpression . ' (' . $message . ')'
         );
         $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length == 0',
+            'selenium.browserbot.getCurrentWindow().jQuery("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length == 0',
             20000,
             'check GONE inline progress mark for ' . $jqueryExpression . ' (' . $message . ')'
         );
@@ -514,7 +514,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     public function assertInputErrorPresent($jqueryExpression, $message = null)
     {
-        $cnt = intval($this->getJSExpression('$("' . $jqueryExpression . '").parents().eq(0).find(".error").length'));
+        $cnt = intval($this->getJSExpression('jQuery("' . $jqueryExpression . '").parents().eq(0).find(".error").length'));
         $this->assertTrue(
             1 == $cnt,
             ($message ?: 'check error for ' . $jqueryExpression)
@@ -534,7 +534,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     public function assertInputErrorNotPresent($jqueryExpression, $message = null)
     {
-        $cnt = intval($this->getJSExpression('$("' . $jqueryExpression . '").parents().eq(0).find(".error").length'));
+        $cnt = intval($this->getJSExpression('jQuery("' . $jqueryExpression . '").parents().eq(0).find(".error").length'));
         $this->assertTrue(
             0 == $cnt,
             ($message ?: 'check no-error for ' . $jqueryExpression)
@@ -594,11 +594,21 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     protected function waitForLocalCondition($condition, $ttl = 10000, $message = null)
     {
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().' . $condition,
-            isset($ttl) ? $ttl : 10000,
-            $message
-        );
+        if (preg_match('/^jQuery/Ss', $condition)) {
+            $this->waitForCondition(
+                '"undefined" != typeof(selenium.browserbot.getCurrentWindow().jQuery)'
+                . ' && selenium.browserbot.getCurrentWindow().' . $condition,
+                isset($ttl) ? $ttl : 10000,
+                $message
+            );
+            
+        } else {
+            $this->waitForCondition(
+                'selenium.browserbot.getCurrentWindow().' . $condition,
+                isset($ttl) ? $ttl : 10000,
+                $message
+            );
+        }
     }
 
     /**

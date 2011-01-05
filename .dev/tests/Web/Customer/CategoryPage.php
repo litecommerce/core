@@ -62,27 +62,36 @@ class XLite_Web_Customer_CategoryPage extends XLite_Web_Customer_ACustomer
      * @access protected
      * @since  3.0.0
      */
-    protected function doCategoryPageTesting($category)
+    protected function doCategoryPageTesting(\XLite\Model\Category $category)
     {
-
         // Title
         $titleSelector = "h1#page-title.title";
-        $this->assertElementPresent(
-            "css=$titleSelector",
-            "A category title is missing (" . $category->getCategoryId() . ")"
-        );
-        $title = $this->getJSExpression("$('$titleSelector').html()");
-        $this->assertEquals(
-            $category->getName(),
-            $title,
-            "A category displays a wrong title (" . $category->getCategoryId() . ")"
-        );
+        if ($category->getShowTitle()) {
+            $this->assertElementPresent(
+                "css=$titleSelector",
+                "A category title is missing (" . $category->getCategoryId() . ")"
+            );
+
+            $title = $this->getJSExpression("jQuery('$titleSelector').html()");
+            $this->assertEquals(
+                $category->getName(),
+                $title,
+                "A category displays a wrong title (" . $category->getCategoryId() . ")"
+            );
+
+        } else {
+            $this->assertElementNotPresent(
+                "css=$titleSelector",
+                "A category title is exists (" . $category->getCategoryId() . ")"
+            );
+            
+        }
 
         // Description
         $method = $category->getDescription() ? "assertElementPresent" : "assertElementNotPresent";
         $this->$method(
             "css=.category-description",
-            "Wrong category description ($method, $title) (" . $category->getCategoryId() . ")"
+            "Wrong category description ($method, " . $category->getCategoryId() . ")"
         );
 
     }

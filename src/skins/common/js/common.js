@@ -276,179 +276,148 @@ function hasAJAXSupport()
 }
 
 function normalizeSelect(name) {
-	var tmp = document.getElementById(name);
-	if (tmp)
-		tmp.options[tmp.options.length-1] = null;
+  var tmp = document.getElementById(name);
+  if (tmp)
+    tmp.options[tmp.options.length-1] = null;
 }
-				
+        
 
 function moveSelect(left, right, type) {
-	if (type != 'R') {
-		var tmp = left;
-		left = right;
-		right = tmp;
-	}
-	if (!left || !right)
-		return false;
+  if (type != 'R') {
+    var tmp = left;
+    left = right;
+    right = tmp;
+  }
+  if (!left || !right)
+    return false;
 
-	while (right.selectedIndex != -1) {
-		left.options[left.options.length] = new Option(right.options[right.selectedIndex].text, right.options[right.selectedIndex].value);
-		right.options[right.selectedIndex] = null;
-	}
+  while (right.selectedIndex != -1) {
+    left.options[left.options.length] = new Option(right.options[right.selectedIndex].text, right.options[right.selectedIndex].value);
+    right.options[right.selectedIndex] = null;
+  }
 
-	return true;
+  return true;
 }
 
 function saveSelects(objects) {
-	if (!objects)
-		return false;
+  if (!objects)
+    return false;
 
-	for (var sel = 0; sel < objects.length; sel++) {
-		if (document.getElementById(objects[sel]))
-			if (document.getElementById(objects[sel]+"_store").value == '')
-				for (var x = 0; x < document.getElementById(objects[sel]).options.length; x++)
-					document.getElementById(objects[sel]+"_store").value += document.getElementById(objects[sel]).options[x].value+";";
-	}
-	return true;
+  for (var sel = 0; sel < objects.length; sel++) {
+    if (document.getElementById(objects[sel]))
+      if (document.getElementById(objects[sel]+"_store").value == '')
+        for (var x = 0; x < document.getElementById(objects[sel]).options.length; x++)
+          document.getElementById(objects[sel]+"_store").value += document.getElementById(objects[sel]).options[x].value+";";
+  }
+  return true;
 }
 
 // Check list of checkboxes
 function checkMarks(form, reg, lbl) {
-	var is_exist = false;
+  var is_exist = false;
 
-	if (!form || form.elements.length == 0)
-		return true;
+  if (!form || form.elements.length == 0)
+    return true;
 
-	for (var x = 0; x < form.elements.length; x++) {
-		if (form.elements[x].name.search(reg) == 0 && form.elements[x].type == 'checkbox' && !form.elements[x].disabled) {
-			is_exist = true;
+  for (var x = 0; x < form.elements.length; x++) {
+    if (form.elements[x].name.search(reg) == 0 && form.elements[x].type == 'checkbox' && !form.elements[x].disabled) {
+      is_exist = true;
 
-			if (form.elements[x].checked)
-				return true;
-		}
-	}
+      if (form.elements[x].checked)
+        return true;
+    }
+  }
 
-	if (!is_exist)
-		return true;
+  if (!is_exist)
+    return true;
 
-	if (lbl) {
-		alert(lbl);
+  if (lbl) {
+    alert(lbl);
 
-	} else if (lbl_no_items_have_been_selected) {
-		alert(lbl_no_items_have_been_selected);
+  } else if (lbl_no_items_have_been_selected) {
+    alert(lbl_no_items_have_been_selected);
 
-	}
+  }
 
-	return false;
+  return false;
 }
 
 /*
-	Parameters: 
-	checkboxes 			- array of tag names
-	checkboxes_form		- form name with these checkboxes
+  Parameters: 
+  checkboxes       - array of tag names
+  checkboxes_form    - form name with these checkboxes
 */
 function change_all(flag, formname, arr) {
-	if (!formname)
-		formname = checkboxes_form;
-	if (!arr)
-		arr = checkboxes;
-	if (!document.forms[formname] || arr.length == 0)
-		return false;
-	for (var x = 0; x < arr.length; x++) {
-		if (arr[x] != '' && document.forms[formname].elements[arr[x]] && !document.forms[formname].elements[arr[x]].disabled) {
-   			document.forms[formname].elements[arr[x]].checked = flag;
-			if (document.forms[formname].elements[arr[x]].onclick)
-				document.forms[formname].elements[arr[x]].onclick();
-		}
-	}
+  if (!formname)
+    formname = checkboxes_form;
+  if (!arr)
+    arr = checkboxes;
+  if (!document.forms[formname] || arr.length == 0)
+    return false;
+  for (var x = 0; x < arr.length; x++) {
+    if (arr[x] != '' && document.forms[formname].elements[arr[x]] && !document.forms[formname].elements[arr[x]].disabled) {
+         document.forms[formname].elements[arr[x]].checked = flag;
+      if (document.forms[formname].elements[arr[x]].onclick)
+        document.forms[formname].elements[arr[x]].onclick();
+    }
+  }
 }
 
 function checkAll(flag, form, prefix) {
-	if (!form)
-		return;
+  if (!form) {
+    return;
+  }
 
-	if (prefix)
-		var reg = new RegExp("^"+prefix, "");
-	for (var i = 0; i < form.elements.length; i++) {
-		if (form.elements[i].type == "checkbox" && (!prefix || form.elements[i].name.search(reg) == 0) && !form.elements[i].disabled)
-			form.elements[i].checked = flag;
-	}
-}
-
-/*
-	Find element by classname
-*/
-function getElementsByClassName(clsName) {
-  var elem, cls;
-	var arr = []; 
-	var elems = document.getElementsByTagName("*");
-	
-	for (var i = 0; (elem = elems[i]); i++) {
-		if (elem.className == clsName)
-			arr[arr.length] = elem;
-	}
-
-	return arr;
+  if (prefix) {
+    var reg = new RegExp('^' + prefix, '');
+  }
+  for (var i = 0; i < form.elements.length; i++) {
+    if (
+      form.elements[i].type == "checkbox"
+      && (!prefix || form.elements[i].name.search(reg) == 0)
+      && !form.elements[i].disabled
+    ) {
+      form.elements[i].checked = flag;
+    }
+  }
 }
 
 /*
   Opener/Closer HTML block
 */
-function visibleBox(id,skipOpenClose) {
-	elm1 = document.getElementById("open" + id);
-	elm2 = document.getElementById("close" + id);
-	elm3 = document.getElementById("box" + id);
+function visibleBox(id, skipOpenClose)
+{
+  var elm1 = document.getElementById('open' + id);
+  var elm2 = document.getElementById('close' + id);
+  var elm3 = document.getElementById('box' + id);
 
-	if(!elm3)
-		return false;
+  if(!elm3) {
+    return false;
+  }
 
-	if (skipOpenClose) {
-		elm3.style.display = (elm3.style.display == "") ? "none" : "";
+  if (skipOpenClose) {
+    elm3.style.display = (elm3.style.display == '') ? 'none' : '';
 
-	} else if(elm1) {
-		if (elm1.style.display == "") {
-			elm1.style.display = "none";
+  } else if (elm1) {
+    if (elm1.style.display == '') {
+      elm1.style.display = 'none';
 
-			if (elm2)
-				elm2.style.display = "";
+      if (elm2) {
+        elm2.style.display = '';
+      }
 
-			elm3.style.display = "none";
-			var class_objs = getElementsByClassName('DialogBox');
-			for (var i = 0; i < class_objs.length; i++) {
-				class_objs[i].style.height = "1%";
-			}
+      elm3.style.display = 'none';
+      jQuery('.DialogBox').css('height', '1%');
 
-		} else {
-			elm1.style.display = "";
-			if (elm2)
-				elm2.style.display = "none";
+    } else {
+      elm1.style.display = '';
+      if (elm2) {
+        elm2.style.display = 'none';
+      }
 
-			elm3.style.display = "";
-		}
-	}
+      elm3.style.display = '';
+    }
+  }
 
   return true;
 }
-
-function switchVisibleBox(id) {
-	var box = document.getElementById(id);
-	var plus = document.getElementById(id + '_plus');
-	var minus = document.getElementById(id + '_minus');
-	if (!box || !plus || !minus)
-		return false;
-
-	if (box.style.display == 'none') {
-		box.style.display = '';
-		plus.style.display = 'none';
-		minus.style.display = '';
-
-	} else {
-        box.style.display = 'none';
-        minus.style.display = 'none';
-		plus.style.display = '';
-	}
-
-	return true;
-}
-
-

@@ -149,7 +149,7 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
 
     protected function checkIncluding($type, $count)
     {
-        $this->click("//label[@for='including-$type']/input[@id='including-$type' and @type='radio' and @name='including' and @value='$type']");
+        $this->click("//input[@id='including-$type' and @type='radio' and @name='including' and @value='$type']");
 
         $this->click(self::SUBMIT_BUTTON);
 

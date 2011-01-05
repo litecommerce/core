@@ -99,7 +99,7 @@ class XLite_Web_Customer_Subcategories extends XLite_Web_Customer_ACustomer
                 "css=$titleSelector",
                 "A subcategory doesn't link to a category page ($mode mode)"
             );
-            $title = $this->getJSExpression("$('$titleSelector').html()");
+            $title = $this->getJSExpression("jQuery('$titleSelector').html()");
             $this->assertEquals(
                 $name,
                 $title,
@@ -114,13 +114,13 @@ class XLite_Web_Customer_Subcategories extends XLite_Web_Customer_ACustomer
         $selector = "$listSelector li";
         $items = array();
 
-        $count = $this->getJSExpression("$('$selector').size()");
+        $count = $this->getJSExpression("jQuery('$selector').size()");
 
         for($i=0; $i<$count; $i++) {
 
-            $item['link'] = $this->getJSExpression("$('$selector a').eq($i)");
-            $item['imgAlt'] = $this->getJSExpression("$('$selector .subcategory-icon img').eq($i).attr('alt')");
-            $name = $item['name'] = $this->getJSExpression("$('$selector .subcategory-name').eq($i).html()");
+            $item['link'] = $this->getJSExpression("jQuery('$selector a').eq($i)");
+            $item['imgAlt'] = $this->getJSExpression("jQuery('$selector .subcategory-icon img').eq($i).attr('alt')");
+            $name = $item['name'] = $this->getJSExpression("jQuery('$selector .subcategory-name').eq($i).html()");
 
             $items[$name] = $item;
         }

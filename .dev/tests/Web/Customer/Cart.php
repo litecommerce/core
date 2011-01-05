@@ -55,8 +55,8 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
 
         $this->click("//button[@class='bright add2cart']");
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$(".product-details .product-buttons-added .buy-more").length > 0',
+        $this->waitForLocalCondition(
+            'jQuery(".product-details .product-buttons-added .buy-more").length > 0',
             10000,
             'check content reloading'
         );
@@ -341,8 +341,8 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             'check remove item'
         );
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$("h1#page-title").html() == "Your shopping bag is empty"',
+        $this->waitForLocalCondition(
+            'jQuery("h1#page-title").html() == "Your shopping bag is empty"',
             30000,
             'check remove'
         );
@@ -360,8 +360,8 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             '3'
         );
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$("h1#page-title").html().search(/ 3 items/) != -1',
+        $this->waitForLocalCondition(
+            'jQuery("h1#page-title").html().search(/ 3 items/) != -1',
             30000,
             'check quantity update'
         );
@@ -375,7 +375,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
         );
 
         $this->waitForLocalCondition(
-            '$(".item-qty .quantity").parents().eq(0).find(".error").length == 1',
+            'jQuery(".item-qty .quantity").parents().eq(0).find(".error").length == 1',
             30000,
             'check quantity update #2'
         );
@@ -396,8 +396,8 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             'check open estimator'
         );
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$("h2").html() == "Estimate shipping cost"',
+        $this->waitForLocalCondition(
+            'jQuery("h2.ajax-title-loadable").html() == "Estimate shipping cost"',
             60000,
             'check open estimator (popup)'
         );
@@ -429,8 +429,8 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             'set destination'
         );
     
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$(".estimate-methods h3").html() == "Choose shipping method"',
+        $this->waitForLocalCondition(
+            'jQuery(".estimate-methods h3").html() == "Choose shipping method"',
             60000,
             'check reload estimator (popup)'
         );
@@ -439,7 +439,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             "//h3[text()='Choose shipping method']"
         );
 
-        $name = $this->getJSExpression('$(".estimate-methods form ul li:eq(1) label ").html()');
+        $name = $this->getJSExpression('jQuery(".estimate-methods form ul li:eq(1) label ").html()');
 
         $this->check(
             "//div[@class='estimate-methods']"
@@ -459,13 +459,13 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
         );
 
         $this->waitForLocalCondition(
-            '$(".box .estimator ul li").html()',
+            'jQuery(".box .estimator ul li").html()',
             60000,
             'check close estimator'
         );
 
         $this->waitForLocalCondition(
-            '$(".box .estimator ul li").html().search(/' . $name . '/) != -1',
+            'jQuery(".box .estimator ul li").html().search(/' . $name . '/) != -1',
             3000,
             'check close estimator and set shipping method'
         );
@@ -518,8 +518,8 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             'check clear bag'
         );
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$("h1#page-title").html() == "Your shopping bag is empty"',
+        $this->waitForLocalCondition(
+            'jQuery("h1#page-title").html() == "Your shopping bag is empty"',
             30000,
             'check remove'
         );

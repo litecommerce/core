@@ -45,7 +45,7 @@ class XLite_Web_Customer_Breadcrumbs extends XLite_Web_Customer_ACustomer
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $mainBlockLocator = '//div[@id="breadcrumbs" and @class="clear-block"]';
+    protected $mainBlockLocator = '//div[@id="breadcrumb"]/div[@class="breadcrumb"]';
 
 
     /**
@@ -92,7 +92,7 @@ class XLite_Web_Customer_Breadcrumbs extends XLite_Web_Customer_ACustomer
 
         // Forth node: "Pyramid Brain Twist" (text)
         $this->assertElementPresent(
-            $this->mainBlockLocator . '/span[contains(text(),"Pyramid Brain Twist")]',
+            $this->mainBlockLocator . '/div[contains(text(),"Pyramid Brain Twist")]',
             'check forth breadcrumb (must be "Pyramid Brain Twist", text)'
         );
 
@@ -121,7 +121,8 @@ class XLite_Web_Customer_Breadcrumbs extends XLite_Web_Customer_ACustomer
         );
 
         $this->assertNotVisible(
-            $this->mainBlockLocator . '/div[@class="location-node expandable"]'
+            $this->mainBlockLocator
+            . '/div[@class="location-node expandable"]'
             . '/ul[@class="location-subnodes"]',
             'subnodes popup must not be visible when mouse is out of the "Toys" title'
         );

@@ -43,7 +43,8 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
     {
         $list = $this->getListSelector();
 
-        $this->open('toys');
+        $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'toys'));
+        $this->open('store/category/0/category_id-' . $c2->getCategoryId());
 
         // Make sure there are no QuickLook buttons in the table mode
         $this->switchDisplayMode('table');
@@ -59,8 +60,8 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
             $this->switchDisplayMode($mode);
 
-            $productsCount = $this->getJSExpression("$('$list .product').size()");
-            $buttonsCount = $this->getJSExpression("$('$list .product a.quicklook-link').size()");
+            $productsCount = $this->getJSExpression("jQuery('$list .product').size()");
+            $buttonsCount = $this->getJSExpression("jQuery('$list .product a.quicklook-link').size()");
             $this->assertEquals($buttonsCount, $productsCount, "Wrong number of Quicklook buttons");
  
             // Test several products
@@ -97,7 +98,8 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      */
     public function testProductOptions()
     {
-        list($product, $selector) = $this->popupTestProduct('apparel', '00000');
+        $cat = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'apparel'));
+        list($product, $selector) = $this->popupTestProduct('store/category/0/category_id-' . $cat->getCategoryId(), '00000');
         $id = $product->getProductId();
 
         $this->assertTrue(method_exists($product, 'hasOptions'), "ProductOptions module is not enabled");
@@ -106,34 +108,34 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         // Collect data on displayed options
 
         $fieldInput = array();
-        $field = "$selector ul.product-options li.product-option input";
-        $count = (int)$this->getJSExpression("$('$field').length");
-        for($i=0; $i<$count; $i++) {
-            $name = $this->getJSExpression("$('$field').eq($i).attr('name')");
-            $type = $this->getJSExpression("$('$field').eq($i).attr('type')");
-            $value = $this->getJSExpression("$('$field').eq($i).attr('value')");
+        $field = $selector . ' ul.product-options li.product-option input';
+        $count = (int)$this->getJSExpression("jQuery('$field').length");
+        for ($i = 0; $i < $count; $i++) {
+            $name = $this->getJSExpression("jQuery('$field').eq($i).attr('name')");
+            $type = $this->getJSExpression("jQuery('$field').eq($i).attr('type')");
+            $value = $this->getJSExpression("jQuery('$field').eq($i).attr('value')");
             $fieldInput[$type][$name][$value] = $value;
         }
 
         $fieldArea = array();
         $field = "$selector ul.product-options li.product-option textarea";
-        $count = $this->getJSExpression("$('$field').size()");
+        $count = $this->getJSExpression("jQuery('$field').size()");
         for($i=0; $i<$count; $i++) {
-            $name = $this->getJSExpression("$('$field').eq($i).attr('name')");
+            $name = $this->getJSExpression("jQuery('$field').eq($i).attr('name')");
             $fieldArea[$name] = $name;
         }
 
         $fieldSelect = array();
         $field = "$selector ul.product-options li.product-option select";
-        $count = $this->getJSExpression("$('$field').size()");
+        $count = $this->getJSExpression("jQuery('$field').size()");
         for($i=0; $i<$count; $i++) {
-            $name = $this->getJSExpression("$('$field').eq($i).attr('name')");
+            $name = $this->getJSExpression("jQuery('$field').eq($i).attr('name')");
             $fieldSelect[$name] = null;
             $values = array();
             $field2 = "$field.eq($i) option";
-            $count2 = $this->getJSExpression("$('$field2').size()");
+            $count2 = $this->getJSExpression("jQuery('$field2').size()");
             for($j=0; $j++; $j<$count2) {
-                $value = $this->getJSExpression("$('$field2').eq($i).attr('value')");
+                $value = $this->getJSExpression("jQuery('$field2').eq($i).attr('value')");
                 $fieldSelect[$name][$value] = $value;
             }
         }
@@ -208,10 +210,12 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      */
     public function testGalleryAndZoomer()
     {
+        $c1 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'apparel'));
+        $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'toys'));
 
         $products = array(
-            array('url' => 'apparel', 'id' => '00002'),
-            array('url' => 'toys',    'id' => '00022'),
+            array('url' => 'store/category/0/category_id-' . $c1->getCategoryId(), 'id' => '00002'),
+            array('url' => 'store/category/0/category_id-' . $c2->getCategoryId(), 'id' => '00022'),
         );
 
         foreach ($products as $p) {
@@ -226,8 +230,8 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
             $this->mouseOut("css=div.mousetrap");
 
-            $this->waitForCondition(
-                'selenium.browserbot.getCurrentWindow().$("#cloud-zoom-big:visible").length == 0',
+            $this->waitForLocalCondition(
+                'jQuery("#cloud-zoom-big:visible").length == 0',
                 2000,
                 "Zoomer is shown when the mouse cursors is out of the bounds ($_id)"
             );
@@ -238,38 +242,38 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
             $this->assertElementPresent("css=$selector .product-image-gallery ul li a", "Gallery links are missing ($_id)");
 
             // Gallery based use cases
-            $length = intval($this->getJSExpression("$('$selector .product-image-gallery ul li a').length"));
+            $length = intval($this->getJSExpression("jQuery('$selector .product-image-gallery ul li a').length"));
 
             for ($idx = 2; $idx < $length + 1; $idx++) {
                 $i = $idx - 1;
 
                 $this->click("//div[@class='product-image-gallery']/ul/li[position()=$idx]/a");
 
-                $src = $this->getJSExpression("$('$selector .product-image-gallery ul li:eq($i) img.middle').attr('src')");
-                $w = $this->getJSExpression("$('$selector .product-image-gallery ul li:eq($i) img.middle').attr('width')");
-                $h = $this->getJSExpression("$('$selector .product-image-gallery ul li:eq($i) img.middle').attr('height')");
+                $src = $this->getJSExpression("jQuery('$selector .product-image-gallery ul li:eq($i) img.middle').attr('src')");
+                $w = $this->getJSExpression("jQuery('$selector .product-image-gallery ul li:eq($i) img.middle').attr('width')");
+                $h = $this->getJSExpression("jQuery('$selector .product-image-gallery ul li:eq($i) img.middle').attr('height')");
 
-                $this->waitForCondition(
-                    'selenium.browserbot.getCurrentWindow().$("'.$selector.' .cloud-zoom img").attr("src") == "' . $src . '"',
+                $this->waitForLocalCondition(
+                    'jQuery("'.$selector.' .cloud-zoom img").attr("src") == "' . $src . '"',
                     2000,
                     "Image change is failed [$idx image] ($_id)"
                 );
 
 
-                $rev = $this->getJSExpression("$('$selector .product-image-gallery ul li:eq($i) a').attr('rev')");
+                $rev = $this->getJSExpression("jQuery('$selector .product-image-gallery ul li:eq($i) a').attr('rev')");
                 if (!preg_match('/width: (\d+), height: (\d+)/', $rev, $m)) {
                     $this->fail("Rev attribute has a wrong format [$idx image] ($_id)");
                 }
 
                 if ($this->isZoomEnabled($m[1])) {
 
-                    $style = $this->getJSExpression("$('$selector .product-photo').attr('style')");
+                    $style = $this->getJSExpression("jQuery('$selector .product-photo').attr('style')");
                     $this->assertTrue(
                         strpos(" $style", 'width: '.$w.'px;') > 0,
                         "Style check is failed [$idx image] ($_id)"
                     );
 
-                    $imgSrc = $this->getJSExpression("$('$selector .product-photo #wrap a.cloud-zoom img').attr('src')");
+                    $imgSrc = $this->getJSExpression("jQuery('$selector .product-photo #wrap a.cloud-zoom img').attr('src')");
                     $this->assertEquals($imgSrc, $src, "URL check failed [$idx image] ($_id)");
 
 
@@ -298,11 +302,12 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      */
     public function testAdd2Cart()
     {
-        list($product, $selector) = $this->popupTestProduct('toys', '00022');
+        $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'toys'));
+        list($product, $selector) = $this->popupTestProduct('store/category/0/category_id-' . $c2->getCategoryId(), '00022');
         $id = $product->getProductId();
 
         // This assertion requires the minicart widget to be visible on the page
-        $qty = intval($this->getJSExpression("$('.minicart-items-number').html()"));
+        $qty = intval($this->getJSExpression("jQuery('.minicart-items-number').html()"));
 
         $formSelector = "css=$selector form.product-details.hproduct";
         $cartButtonSelector = "$formSelector .product-details-info .product-buttons button.bright.add2cart";
@@ -317,14 +322,14 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
         $qty++;
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.BlockMsg-product-quicklook:visible').length <= 0",
+        $this->waitForLocalCondition(
+            "jQuery('.BlockMsg-product-quicklook:visible').length <= 0",
             10000,
             "Add-to-cart button doesn't close Quicklook popups"
         );
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$(".minicart-items-number").html() == ' . $qty,
+        $this->waitForLocalCondition(
+            'jQuery(".minicart-items-number").html() == ' . $qty,
             10000,
             "Minicart widget displays a wrong qty (#1)"
         );
@@ -339,14 +344,14 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
         $qty++;
 
-        $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.BlockMsg-product-quicklook:visible').length <= 0",
+        $this->waitForLocalCondition(
+            "jQuery('.BlockMsg-product-quicklook:visible').length <= 0",
             10000,
             "Buy-now button doesn't close Quicklook popups"
         );
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$(".minicart-items-number").html() == ' . $qty,
+        $this->waitForLocalCondition(
+            'jQuery(".minicart-items-number").html() == ' . $qty,
             10000,
             "Minicart widget displays a wrong qty (#1)"
         );
@@ -409,16 +414,16 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         $this->assertNotNull($product, "Product $id is not found in the DB");
 
         // Name
-        $name = $this->getJSExpression("$('$selector h1.fn.title').html()");
+        $name = $this->getJSExpression("jQuery('$selector h1.fn.title').html()");
         $this->assertEquals($name, $product->getName(), "Wrong product name ($id)");
         
         // Price
-        $price = $this->getJSExpression("$('$selector .product-price').html()");
+        $price = $this->getJSExpression("jQuery('$selector .product-price').html()");
         $parsedPrice = preg_replace("/^\D*(\d+\.\d+)\D*$/", "\\1", $price);
         $this->assertEquals($parsedPrice, $product->getPrice(), "Wrong price ($id)");
 
         // TODO: In-stock quantity
-        // $qty = $this->getJSExpression("$('$selector .product-stock-level span').html()");
+        // $qty = $this->getJSExpression("jQuery('$selector .product-stock-level span').html()");
         // $parsedQty = preg_replace("/^\((\D+) .*/", "\\1", $qty);
 
         // Add-to-cart form
@@ -426,7 +431,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         $this->assertElementPresent("css=$selector button.add2cart", "Add to cart button is missing (product $id)");
 
         // Product page link (is returned by the method)
-        $link = $this->getJSExpression("$('$selector a.product-more-link')");
+        $link = $this->getJSExpression("jQuery('$selector a.product-more-link')");
 
        // Gallery
         if ($product->countImages() > 1) {
@@ -434,12 +439,12 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
             $this->assertElementPresent("css=$selector .product-image-gallery ul li a[rel='gallery'] img", "Image links are missing in the image gallery (product $id)");
             $this->assertEquals(
                 count($product->getImages()),
-                $this->getJSExpression("$('$selector .product-image-gallery li a').length"),
+                $this->getJSExpression("jQuery('$selector .product-image-gallery li a').length"),
                 "Image gallery displays a wrong number of images (product $id)"
             );
             $this->assertEquals(
                 'true',
-                $this->getJSExpression("$('$selector .product-image-gallery li').eq(0).hasClass('selected')"),
+                $this->getJSExpression("jQuery('$selector .product-image-gallery li').eq(0).hasClass('selected')"),
                 "The first image in the gallery is not selected (product $id)"
             );
         }
@@ -457,7 +462,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
                     "Cloud Zoom image is missing (product $id)"
                 );
 
-                $imageRel = $this->getJSExpression("$('$selector a.cloud-zoom#pimage_$id').attr('rel')");
+                $imageRel = $this->getJSExpression("jQuery('$selector a.cloud-zoom#pimage_$id').attr('rel')");
                 $this->assertEquals(
                     $imageRel,
                     "adjustX: 32, showTitle: false, tintOpacity: 0.5, tint: '#fff', lensOpacity: 0",
@@ -507,7 +512,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
             "Close button is missing"
         );
         $this->click($selector);
-        $this->waitForCondition("selenium.browserbot.getCurrentWindow().$('.BlockMsg-product-quicklook:visible:visible').length <= 0", 300000);
+        $this->waitForLocalCondition("jQuery('.BlockMsg-product-quicklook:visible:visible').length <= 0", 300000);
 
         $this->assertJqueryNotPresent(
             ".BlockMsg-product-quicklook:visible",
@@ -535,7 +540,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         $selector = $this->getListSelector() . " .productid-$productId a.quicklook-link-$productId";
         
         $this->click("css=$selector");
-        $this->waitForCondition("selenium.browserbot.getCurrentWindow().$('.BlockMsg-product-quicklook:visible').length > 0", 300000);
+        $this->waitForLocalCondition("jQuery('.BlockMsg-product-quicklook:visible').length > 0", 300000);
 
     }
 
@@ -551,9 +556,10 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      */
     protected function switchDisplayMode($mode)
     {
+        $selector = 'css=' . $this->getModeSelector($mode);
         $this->assertElementPresent(
-            $selector = "css=".$this->getModeSelector($mode),
-            "A selector for '$mode' display mode is missing!"
+            $selector,
+            'A selector for \'' . $mode . '\' display mode is missing (' . $selector . ') on ' . $this->getLocation() . '!'
         );
         $this->click($selector);
         $this->waitForAjaxProgress();
@@ -568,7 +574,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      */
     protected function waitForAjaxProgress()
     {
-        $this->waitForCondition("selenium.browserbot.getCurrentWindow().$('.blockUI.block-wait:visible').length <= 0", 300000);
+        $this->waitForLocalCondition("jQuery('.blockUI.block-wait:visible').length <= 0", 300000);
     }
  
     /**
@@ -606,7 +612,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         $url = $this->getCategoryURL($category->getCategoryId());
         $this->open($url);
 
-        $title = $this->getJSExpression("$('h1#page-title.title').attr('title')");
+        $title = $this->getJSExpression("jQuery('h1#page-title.title').attr('title')");
         $this->assertEquals(
             $category->getName(),
             $title,

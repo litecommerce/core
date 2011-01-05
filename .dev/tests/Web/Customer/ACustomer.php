@@ -93,7 +93,7 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
      */
     protected function findWidgetID($widgetClass)
     {
-        $pdo = $this->query('SELECT delta FROM drupal_lc_connector_blocks WHERE code="'.addslashes($widgetClass).'" LIMIT 1');
+        $pdo = $this->query('SELECT bid FROM drupal_block_custom WHERE lc_class = "'.addslashes($widgetClass).'" LIMIT 1');
         $r = $pdo->fetch();
         $pdo->closeCursor();
 
@@ -130,7 +130,7 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
      */
     protected function setWidgetParam($widgetId, $param, $value)
     {
-        $this->query("UPDATE drupal_lc_connector_block_settings SET value='".addslashes($value)."' WHERE delta='".addslashes($widgetId)."' AND name='".addslashes($param)."'");
+        $this->query("UPDATE drupal_block_lc_widget_settings SET value = '" . addslashes($value) . "' WHERE bid = '" . addslashes($widgetId) . "' AND name = '" . addslashes($param) . "'");
     }
 
     /**

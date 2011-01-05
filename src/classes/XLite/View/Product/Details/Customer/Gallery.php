@@ -115,19 +115,20 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
         return $result[2];
     }
 
-
     /**
-     * Register JS files
+     * Register files from common repository
      *
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getJSFiles()
+    public function getCommonFiles()
     {
-        $list = parent::getJSFiles();
-        $list[] = 'js/jquery.colorbox-min.js';
+        $list = parent::getCommonFiles();
+
+        $list['js'][] = 'js/jquery.colorbox-min.js';
+        $list['css'][] = 'css/colorbox.css';
 
         return $list;
     }
@@ -143,7 +144,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-        $list[] = 'css/colorbox.css';
+
         $list[] = $this->getDir() . '/parts/gallery.css';
 
         return $list;
