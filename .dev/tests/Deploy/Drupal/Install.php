@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    Tests
- * @subpackage Web
+ * @subpackage Deploy
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -73,8 +73,6 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
         // Start installation process
         $this->open('install.php');
-
-//        $this->deleteCookie('lc', 'domain=.crtdev.local');
 
         // First step page: License agreement
         $this->stepOne();
@@ -371,34 +369,11 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             sprintf('Check that page header equals to text "Installing LiteCommerce" (pass %d)', $pass)
         );
 
-        /*
         $this->waitForLocalCondition(
             'jQuery(".percentage").html() == "100%"',
             350000,
             'Waiting for LiteCommerce installing'
         );
-         */
-
-        /*
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().document.getElementsByClassName("percentage").length > 0 && selenium.browserbot.getCurrentWindow().document.getElementsByClassName("percentage")[0].innerHTML == "100%"',
-            190000
-        );
-
-        if ($this->isElementPresent('//div[@class="percentage"]')) {
-            $percentage = $this->getText('//div[@class="percentage"]');
-        }
-
-        if ('100%' != $percentage) {
-            
-            if ($pass < self::MAX_ITERATIONS_COUNT) {
-                $this->stepFive($pass + 1);
-            
-            } else {
-                $this->assertTrue(false, sprintf('Maximum iterations count value was exceeded (%d), percentage = %s', $pass, $percentage));
-            }
-        }
-         */
 
         $nextPageTitle = 'Installing ' . self::PRODUCT_NAME;
 
@@ -520,18 +495,6 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             sprintf('Check that "Default timezone" field is presented (pass %d)', $pass)
         );
 
-        // Check that "Clean URLs: disabled" field is presented
-//        $this->assertElementPresent(
-//            '//form[@id="install-configure-form"]/descendant::input[@id="edit-clean-url-0" and @type="radio" and @name="clean_url"]',
-//            sprintf('Check that "Clean URLs: disabled" field is presented (pass %d)', $pass)
-//        );
-
-        // Check that "Clean URLs: enabled" field is presented
-//        $this->assertElementPresent(
-//            '//form[@id="install-configure-form"]/descendant::input[@id="edit-clean-url-1" and @type="radio" and @name="clean_url"]',
-//            sprintf('Check that "Clean URLs: enabled" field is presented (pass %d)', $pass)
-//        );
-
         // Check that "Check for updates automatically" field is presented
         $this->assertElementPresent(
             '//form[@id="install-configure-form"]/descendant::input[@id="edit-update-status-module-1" and @name="update_status_module[1]"]',
@@ -565,17 +528,10 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         $this->uncheck('css=#edit-update-status-module-2');
         $this->uncheck('css=#edit-update-status-module-1');
 
-        /*
         $this->waitForLocalCondition(
-            'jQuery("#edit-clean-url").value == "1"',
+            'jQuery("#edit-clean-url").attr("value") == "1"',
             30000,
             'Waiting for clean URLs testing'
-        );
-         */
- 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().document.getElementById("edit-clean-url").length > 0 && selenium.browserbot.getCurrentWindow().document.getElementById("edit-clean-url").value == "1"',
-            10000
         );
 
         // Submit
@@ -593,7 +549,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepEight()
     {
          // Check page title
-        $this->assertTitleEquals(self::PRODUCT_NAME . ' installation complete | Drupal', 'Checking the page title');
+        $this->assertTitleEquals(self::PRODUCT_NAME . ' installation complete | Test ' . self::PRODUCT_NAME, 'Checking the page title');
 
         // Check page header
         $this->assertElementPresent(
