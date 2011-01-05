@@ -66,6 +66,7 @@ abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecor
      */
     protected function getCookieURL($secure = false)
     {
+        // FIXME
         if (defined('LC_CONNECTOR_INITIALIZED')) {
             $url = ($secure ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
             $url = parse_url($url);
@@ -79,6 +80,7 @@ abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecor
 
     /**
      * Get current language
+     * FIXME
      *
      * @return string Language code
      * @access protected

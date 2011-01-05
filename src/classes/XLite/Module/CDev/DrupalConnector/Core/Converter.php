@@ -28,8 +28,6 @@
 
 namespace XLite\Module\CDev\DrupalConnector\Core;
 
-// FIXME - must be refactored
-
 /**
  * Miscelaneous convertion routines
  * 
@@ -48,6 +46,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      * Special symbol for empty action 
      */
     const EMPTY_ACTION = '0';
+
 
     /**
      * Compose URL from target, action and additional params
@@ -72,7 +71,8 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
             // Standalone URL
             $result = parent::buildURL($target, $action, $params, $interface);
 
-        } elseif (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->isPortal($target)) {
+        // FIXME - to remove
+        /*} elseif (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->isPortal($target)) {
 
             // Drupal URL (portal)
             $result = \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getPortalPrefix($target, $action, $params);
@@ -81,7 +81,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
                 $result .= '/' . \Includes\Utils\Converter::buildQuery($params, '-', '/');
             }
 
-            $result = self::normalizeDrupalURL($result);
+            $result = self::normalizeDrupalURL($result);*/
 
         } else {
 
@@ -111,14 +111,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
             $action = self::EMPTY_ACTION;
         }
 
-        $parts = array(self::DRUPAL_ROOT_NODE, $target, $action);
-
-        if (isset($params['printable']) && $params['printable']) {
-            array_unshift($parts, 'print');
-            unset($params['printable']);
-        }
-
-        $url = implode('/', $parts);
+        $url = implode('/', $parts = array(self::DRUPAL_ROOT_NODE, $target, $action));
 
         if ($params) {
             $url .= '/' . \Includes\Utils\Converter::buildQuery($params, '-', '/');
@@ -155,10 +148,6 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      */
     protected static function normalizeDrupalURL($url)
     {
-        return preg_replace(
-            '/(\/)\%252F([^\/])/iSs',
-            '\1/\2',
-            url($url)
-        );
+        return preg_replace('/(\/)\%252F([^\/])/iSs', '\1/\2', url($url));
     }
 }

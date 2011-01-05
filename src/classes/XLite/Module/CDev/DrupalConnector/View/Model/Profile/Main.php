@@ -30,6 +30,7 @@ namespace XLite\Module\CDev\DrupalConnector\View\Model\Profile;
 
 /**
  * \XLite\Module\CDev\DrupalConnector\View\Model\Profile\Main
+ * TODO: check if this class needed
  *
  * @package XLite
  * @see     ____class_see____
@@ -37,19 +38,6 @@ namespace XLite\Module\CDev\DrupalConnector\View\Model\Profile;
  */
 class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecorator
 {
-    /**
-     * Author name
-     *
-     * @var    string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAuthorName()
-    {
-        return 'Creative Development LLC';
-    }
-
     /**
      * Process the errors occured during the "validateInput" action
      *

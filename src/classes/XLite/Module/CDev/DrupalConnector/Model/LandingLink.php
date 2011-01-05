@@ -30,10 +30,12 @@ namespace XLite\Module\CDev\DrupalConnector\Model;
 
 /**
  * Landing link
+ * FIXME: to revize
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @Entity
  * @Table  (name="langing_links")
  * @HasLifecycleCallbacks

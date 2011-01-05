@@ -41,7 +41,7 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
     /**
      * prepareCreate 
      * 
-     * @return void
+     * @return null
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -65,21 +65,9 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
      */
     public function getCMSProfile()
     {
-        $profile = null;
-
-        if (
-            \XLite\Core\CMSConnector::isCMSStarted()
-            && $this->getCMSProfileId()
-            && $this->getCMSName() == \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getCMSName()
-            && function_exists('user_load')
-        ) {
-            $profile = user_load($this->getCMSProfileId());
-            if (!$profile) {
-                $profile = null;
-            }
-        }
-
-        return $profile;
+        return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS() && $this->getCMSProfileId()
+            ? user_load($this->getCMSProfileId())
+            : null;
     }
 
 }

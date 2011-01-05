@@ -47,14 +47,8 @@ class PoweredBy extends \XLite\View\PoweredBy implements \XLite\Base\IDecorator
      */
     public function isLink()
     {
-        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
-            $result = drupal_is_front_page();
-
-        } else {
-            $result = parent::isLink();
-        }
-
-        return $result;
+        return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
+            ? drupal_is_front_page()
+            : parent::isLink();
     }
 }
-

@@ -68,5 +68,4 @@ class LandingLink extends \XLite\Model\Repo\ARepo
             ->andWhere('l.expiry < :time')
             ->setParameter('time', time());
     }
-
 }

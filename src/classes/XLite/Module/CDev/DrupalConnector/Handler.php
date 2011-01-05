@@ -38,26 +38,6 @@ namespace XLite\Module\CDev\DrupalConnector;
 class Handler extends \XLite\Core\CMSConnector
 {
     /**
-     * areHooksEnabled 
-     * 
-     * @var    bool
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $areHooksEnabled = true;
-
-    /**
-     * Forbid URL rewrite routine
-     * 
-     * @var    boolean
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public static $forbidURLRewrite = false;
-
-    /**
      * Portals (cache)
      * 
      * @var    array
@@ -87,44 +67,6 @@ class Handler extends \XLite\Core\CMSConnector
      */
     protected $landingLink;
 
-    /**
-     * Set hooks availability status
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function enableHooks()
-    {
-        self::$areHooksEnabled = true;
-    }
-
-    /**
-     * Set hooks availability status
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function disableHooks()
-    {
-        self::$areHooksEnabled = false;
-    }
-
-    /**
-     * areHooksEnabled 
-     * 
-     * @return boolean 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function areHooksEnabled()
-    {
-        return self::$areHooksEnabled;
-    }
 
     /**
      * Return name of current CMS 
@@ -152,6 +94,7 @@ class Handler extends \XLite\Core\CMSConnector
 
     /**
      * Get landing link 
+     * FIXME
      * 
      * @return string
      * @access public
@@ -172,6 +115,8 @@ class Handler extends \XLite\Core\CMSConnector
 
         return $this->landingLink->getLink();
     }
+
+    // FIXME: to revise
 
     /**
      * Get portals 
@@ -519,26 +464,4 @@ class Handler extends \XLite\Core\CMSConnector
             'wishlist',
         );
     }
-
-    /**
-     * Get canonical URL by clean URL 
-     * 
-     * @param string $path Clean url
-     *  
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getURLByCleanURL($path)
-    {
-        self::$forbidURLRewrite = true;
-
-        $result = parent::getURLByCleanURL($path);
-
-        self::$forbidURLRewrite = false;
-
-        return $result;
-    }
 }
-

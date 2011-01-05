@@ -38,7 +38,22 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Base\IDecorator
 {
     /**
+     * isCreateProfile 
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isCreateProfile()
+    {
+        return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
+            && !empty(\XLite\Core\Request::getInstance()->create_profile);
+    }
+
+    /**
      * Update profile 
+     * FIXME
      * 
      * @return void
      * @access protected
@@ -47,7 +62,8 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      */
     protected function updateProfile()
     {
-        if (\XLite\Core\Request::getInstance()->create_profile && \XLite\Core\CMSConnector::isCMSStarted()) {
+        if ($this->isCreateProfile()) {
+
             if (!\XLite\Core\Request::getInstance()->username) {
 
                 // Username is empty
@@ -82,11 +98,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
 
         parent::updateProfile();
 
-        if (
-            $this->valid
-            && \XLite\Core\CMSConnector::isCMSStarted()
-            && isset(\XLite\Core\Request::getInstance()->create_profile)
-        ) {
+        if ($this->isCreateProfile() && $this->valid) {
 
             // Save username is session (temporary, wait place order procedure)
             \XLite\Core\Session::getInstance()->order_username = \XLite\Core\Request::getInstance()->create_profile
@@ -105,11 +117,14 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      */
     public function getLoginURL()
     {
-        return \XLite\Core\CMSConnector::isCMSStarted() ? url('user') : parent::getLoginURL();
+        return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
+            ? url('user') 
+            : parent::getLoginURL();
     }
 
     /**
      * Save anonymous profile 
+     * FIXME
      * 
      * @return void
      * @access protected
