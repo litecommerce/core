@@ -59,8 +59,7 @@ abstract class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDeco
      */
     protected function getJSOnSubmitCode()
     {
-        return ($this->isDrupalGetForm() ? 'drupalOnSubmitGetForm(this); ' : '')
-            . parent::getJSOnSubmitCode();
+        return ($this->isDrupalGetForm() ? 'drupalOnSubmitGetForm(this); ' : '') . parent::getJSOnSubmitCode();
     }
 
     /**

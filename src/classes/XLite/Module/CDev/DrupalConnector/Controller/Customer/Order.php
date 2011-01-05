@@ -38,22 +38,9 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 class Order extends \XLite\Controller\Customer\Order implements \XLite\Base\IDecorator
 {
     /**
-     * Get additional bread crumbs list
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getAdditionalBreadcrumbs()
-    {
-        return array(
-            array('Orders history', $this->buildUrl('order_list')),
-        );
-    }
-
-    /**
      * Check order access 
+     * TODO: check the logic
+     * TODO: merge with "invoice" controller
      * 
      * @return boolean
      * @access protected

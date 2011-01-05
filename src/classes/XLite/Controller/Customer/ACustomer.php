@@ -263,22 +263,6 @@ abstract class ACustomer extends \XLite\Controller\AController
     }
 
     /**
-     * Get external link 
-     * 
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getExternalLink()
-    {
-        return $this->buildURL(
-            $this->getTarget(),
-            '',
-            $this->getParamsHash(array_keys($this->getWidgetSettings()))
-        );
-    }
-
-    /**
      * Handles the request 
      * 
      * @return void

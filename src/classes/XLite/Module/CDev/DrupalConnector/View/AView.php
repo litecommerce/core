@@ -76,7 +76,6 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
     {
         if (!isset(self::$drupalRelativePath)) {
 
-            // FIXME - "base_path()" is a Drupal function declared in global scope
             $basePath  = self::prepareBasePath(base_path());
             $xlitePath = self::prepareBasePath(\XLite::getInstance()->getOptions(array('host_details', 'web_dir')));
 
@@ -181,25 +180,13 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
         $list = parent::getCommonFiles();
 
         if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
-            $key = array_search('js/jquery.min.js', $list['js']);
-            if (false !== $key) {
+
+            // TODO: check if it's really needed
+            if (false !== ($key = array_search('js/jquery.min.js', $list['js']))) {
                 unset($list['js'][$key]);
             }
-
-            /*
-            $key = array_search('js/jquery-ui.min.js', $list['js']);
-            if (false !== $key) {
-                unset($list['js'][$key]);
-            }
-
-            $key = array_search('css/jquery-ui.css', $list['css']);
-            if (false !== $key) {
-                unset($list['css'][$key]);
-            }
-            */
         }
 
         return $list;
     }
 }
-

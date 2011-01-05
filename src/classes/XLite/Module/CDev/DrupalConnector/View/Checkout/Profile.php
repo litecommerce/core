@@ -75,7 +75,9 @@ class Profile extends \XLite\View\Checkout\Profile implements \XLite\Base\IDecor
      */
     public function getProfileURL()
     {
-        return \XLite\Core\CMSConnector::isCMSStarted() ? url('user') : parent::getProfileURL();
+        return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS() 
+            ? url('user') 
+            : parent::getProfileURL();
     }
 
     /**
@@ -88,7 +90,8 @@ class Profile extends \XLite\View\Checkout\Profile implements \XLite\Base\IDecor
      */
     public function getLogoffURL()
     {
-        return \XLite\Core\CMSConnector::isCMSStarted() ? url('logout') : parent::getLogoffURL();
+        return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS() 
+            ? url('logout') 
+            : parent::getLogoffURL();
     }
-
 }

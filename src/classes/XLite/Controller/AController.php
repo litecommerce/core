@@ -668,6 +668,32 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
+     * Check if current viewer is for an AJAX request
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isAJAXViewer()
+    {
+        return \XLite\Core\Request::getInstance()->isAJAX() && \XLite\Core\Request::getInstance()->widget;
+    }
+
+    /**
+     * Return class of current viewer
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getViewerClass()
+    {
+        return $this->isAJAXViewer() ? \XLite\Core\Request::getInstance()->widget : '\XLite\View\Controller';
+    }
+
+    /**
      * Return Viewer object
      * 
      * @return \XLite\View\Controller
@@ -678,22 +704,14 @@ abstract class AController extends \XLite\Core\Handler
     {
         $params = array();
 
+        // FIXME: is it really needed?
         foreach (array(self::PARAM_SILENT, self::PARAM_DUMP_STARTED) as $name) {
             $params[$name] = $this->get($name);
         }
 
-        if (
-            \XLite\Core\Request::getInstance()->isAJAX()
-            && \XLite\Core\Request::getInstance()->widget
-        ) {
+        $class = $this->getViewerClass();
 
-            $viewer = $this->getAJAXViewer();
-
-        } else {        
-            $viewer = new \XLite\View\Controller($params, $this->getViewerTemplate());
-        }
-
-        return $viewer;
+        return new $class($params, $this->getViewerTemplate());
     }
 
     /**

@@ -29,7 +29,7 @@
 namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 
 /**
- * ____description____
+ * FIXME - change name
  * 
  * @package XLite
  * @see     ____class_see____
@@ -38,17 +38,8 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 class Cmsconnector extends \XLite\Controller\Customer\ACustomer
 {
     /**
-     * Controller parameters 
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $params = array('target', 'id');
-
-    /**
      * Must be accessible
+     * TODO: check if it's needed
      * 
      * @return boolean 
      * @access protected
@@ -61,6 +52,7 @@ class Cmsconnector extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Landing from another system action
+     * FIXME - to revize
      * 
      * @return void
      * @access protected
@@ -80,6 +72,8 @@ class Cmsconnector extends \XLite\Controller\Customer\ACustomer
         }
 
         $this->set('returnUrl', 'admin.php');
+
+        // FIXME - to remove
         $this->redirect();
     }
 

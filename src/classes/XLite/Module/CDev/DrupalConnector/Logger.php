@@ -39,6 +39,7 @@ class Logger extends \XLite\Logger implements \XLite\Base\IDecorator
 {
     /**
      * Constructor
+     * FIXME: is it really needed?
      * 
      * @return void
      * @access public
@@ -50,6 +51,8 @@ class Logger extends \XLite\Logger implements \XLite\Base\IDecorator
         parent::__construct();
 
         if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+
+            // FIXME
             if (defined('LC_CONNECTOR_ROOT')) {
                 $path = realpath(LC_CONNECTOR_ROOT . '/../..') . LC_DS;
                 $this->filesRepositories[$path] = 'drupal root';

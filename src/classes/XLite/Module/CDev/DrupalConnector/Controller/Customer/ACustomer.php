@@ -73,28 +73,4 @@ class ACustomer extends \XLite\Controller\Customer\ACustomer implements \XLite\B
     {
         $this->getDrupalLink() ? \XLite\Core\Operator::redirect($this->getDrupalLink()) : parent::closeStorefront();
     }
-
-    /**
-     * Get external link 
-     * 
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getExternalLink()
-    {
-        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
-            $result = \XLite\Core\Converter::buildDrupalURL(
-                $this->getTarget(),
-                '',
-                $this->getParamsHash(array_keys($this->getWidgetSettings()))
-            );
-
-        } else {
-            $result = parent::getExternalLink();
-        }
-
-        return $result;
-    }
 }
-
