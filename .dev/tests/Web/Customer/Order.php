@@ -63,8 +63,8 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
 
         $this->click("//button[@class='bright add2cart']");
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$(".product-details .product-buttons-added .buy-more").length > 0',
+        $this->waitForLocalCondition(
+            'jQuery(".product-details .product-buttons-added .buy-more").length > 0',
             10000,
             'check content reloading'
         );
@@ -72,37 +72,37 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         // Checkout
         $this->openAndWait('store/checkout');
 
-        if (0 < intval($this->getJSExpression('$(".current.shipping-step").length'))) {
+        if (0 < intval($this->getJSExpression('jQuery(".current.shipping-step").length'))) {
             $this->toggleByJquery('ul.shipping-rates li input:eq(0)', true);
             $this->click('css=.current .button-row button');
-            $this->waitForCondition(
-                'selenium.browserbot.getCurrentWindow().$(".payment-step").hasClass("current") == true',
+            $this->waitForLocalCondition(
+                'jQuery(".payment-step").hasClass("current") == true',
                 10000,
                 'check swicth to review step'
             );
         }
 
-        if (0 < intval($this->getJSExpression('$(".current.payment-step").length'))) {
+        if (0 < intval($this->getJSExpression('jQuery(".current.payment-step").length'))) {
             $this->toggleByJquery('#pmethod6', true);
             $this->click('css=.current .button-row button');
-            $this->waitForCondition(
-                'selenium.browserbot.getCurrentWindow().$(".review-step").hasClass("current") == true',
+            $this->waitForLocalCondition(
+                'jQuery(".review-step").hasClass("current") == true',
                 10000,
                 'check swicth to review step'
             );
         }
 
-        if (0 < intval($this->getJSExpression('$(".current.review-step").length'))) {
+        if (0 < intval($this->getJSExpression('jQuery(".current.review-step").length'))) {
             $this->click('css=.payment-step .button-row button');
-            $this->waitForCondition(
-                'selenium.browserbot.getCurrentWindow().$(".payment-step").hasClass("current") == true',
+            $this->waitForLocalCondition(
+                'jQuery(".payment-step").hasClass("current") == true',
                 10000,
                 'check return to payment step'
             );
             $this->toggleByJquery('#pmethod6', true);
             $this->click('css=.current .button-row button');
-            $this->waitForCondition(
-                'selenium.browserbot.getCurrentWindow().$(".review-step").hasClass("current") == true',
+            $this->waitForLocalCondition(
+                'jQuery(".review-step").hasClass("current") == true',
                 10000,
                 'check swicth to next step #3'
             );
@@ -110,7 +110,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
 
         $this->click('//input[@id="place_order_agree"]');
         $this->click('css=.current .button-row button');
-        $this->waitForCondition('selenium.browserbot.getCurrentWindow().location.href.search(/checkoutSuccess/) != -1');
+        $this->waitForLocalCondition('selenium.browserbot.getCurrentWindow().location.href.search(/checkoutSuccess/) != -1');
 
         // Check order
         $ordeid = null;
@@ -212,10 +212,10 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         );
 
         // Items
-        $countTR = intval($this->getJSExpression('$(".invoice-box .items tr").length'));
+        $countTR = intval($this->getJSExpression('jQuery(".invoice-box .items tr").length'));
         $this->assertEquals(count($order->getItems()) + 1, $countTR, 'TR count checking');
 
-        $countTH = intval($this->getJSExpression('$(".invoice-box .items th").length'));
+        $countTH = intval($this->getJSExpression('jQuery(".invoice-box .items th").length'));
         $this->assertEquals(5, $countTH, 'TH count checking');
 
         $this->assertElementPresent(
@@ -302,7 +302,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         );
 
         // Totals
-        $countTR = intval($this->getJSExpression('$(".invoice-box .totals tr").length'));
+        $countTR = intval($this->getJSExpression('jQuery(".invoice-box .totals tr").length'));
         $this->assertEquals(count($order->getVisibleSavedModifiers()) + 2, $countTR, 'Totals TR count checking');
 
         $this->assertElementPresent(
@@ -386,7 +386,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             . "/td[position()=2 and @class='payment']"
         );
 
-        $txt = $this->getJSExpression('$(".invoice-box .addresses .payment").html()');
+        $txt = $this->getJSExpression('jQuery(".invoice-box .addresses .payment").html()');
         $txt = str_replace("\n", "", trim($txt));
         $this->assertRegExp('/' . $order->getPaymentmethod()->getName() . '/S', $txt, 'check payment method');
     }
@@ -398,8 +398,8 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             '//select[@id="shipping_address_country"]',
             'value=US'
         );
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$("select#shipping_address_state").length == 1',
+        $this->waitForLocalCondition(
+            'jQuery("select#shipping_address_state").length == 1',
             3000,
             'check state selector'
         );
@@ -430,8 +430,8 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             'new York'
         );
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$("ul.shipping-rates li input").length > 0',
+        $this->waitForLocalCondition(
+            'jQuery("ul.shipping-rates li input").length > 0',
             10000,
             'check address-not-completed note hide'
         );
@@ -439,8 +439,8 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         // Select shipping method
         $this->toggleByJquery('ul.shipping-rates li input:eq(0)', true);
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$(".current .button-row button.disabled").length == 0',
+        $this->waitForLocalCondition(
+            'jQuery(".current .button-row button.disabled").length == 0',
             3000,
             'check enabled main button'
         );
@@ -448,8 +448,8 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         // Submit
         $this->click('css=.current .button-row button');
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$(".payment-step.current").length == 1',
+        $this->waitForLocalCondition(
+            'jQuery(".payment-step.current").length == 1',
             10000,
             'check swicth to next step'
         );
@@ -460,8 +460,8 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
     {
         $this->toggleByJquery('#pmethod6', true);
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$(".current .button-row button.disabled").length == 0',
+        $this->waitForLocalCondition(
+            'jQuery(".current .button-row button.disabled").length == 0',
             3000,
             'check enabled main button'
         );
@@ -469,8 +469,8 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         // Submit
         $this->click('css=.current .button-row button');
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$(".review-step.current").length == 1',
+        $this->waitForLocalCondition(
+            'jQuery(".review-step.current").length == 1',
             10000,
             'check swicth to next step'
         );

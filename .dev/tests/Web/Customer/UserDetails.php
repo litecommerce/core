@@ -60,7 +60,7 @@ class XLite_Web_Customer_userDetails extends XLite_Web_Customer_ACustomer
 
         $this->assertEquals(
             $email,
-            $this->getJSExpression('$("#edit-mail").val()'),
+            $this->getJSExpression('jQuery("#edit-mail").val()'),
             'check changed email'
         );
         $this->assertJqueryNotPresent('#status-messages ul li.error', 'check errors');
@@ -86,7 +86,7 @@ class XLite_Web_Customer_userDetails extends XLite_Web_Customer_ACustomer
             '123'
         );
         $this->waitForLocalCondition(
-            '$("#edit-pass-pass1-wrapper .password-strength .error").html() == "Low"',
+            'jQuery("#edit-pass-pass1-wrapper .password-strength .error").html() == "Low"',
             3000,
             'check Low label'
         );
@@ -96,7 +96,7 @@ class XLite_Web_Customer_userDetails extends XLite_Web_Customer_ACustomer
             '123lakjsdhf'
         );
         $this->waitForLocalCondition(
-            '$("#edit-pass-pass1-wrapper .password-strength .warning").html() == "Medium"',
+            'jQuery("#edit-pass-pass1-wrapper .password-strength .warning").html() == "Medium"',
             3000,
             'check Medium label'
         );
@@ -106,7 +106,7 @@ class XLite_Web_Customer_userDetails extends XLite_Web_Customer_ACustomer
             '123lakjsdhf(*&%A'
         );
         $this->waitForLocalCondition(
-            '$("#edit-pass-pass1-wrapper .password-strength .ok").html() == "High"',
+            'jQuery("#edit-pass-pass1-wrapper .password-strength .ok").html() == "High"',
             3000,
             'check High label'
         );
@@ -121,7 +121,7 @@ class XLite_Web_Customer_userDetails extends XLite_Web_Customer_ACustomer
             '456'
         );
         $this->waitForLocalCondition(
-            '$("#edit-pass-pass2-wrapper .password-confirm .error").html() == "No"',
+            'jQuery("#edit-pass-pass2-wrapper .password-confirm .error").html() == "No"',
             3000,
             'check No label'
         );
@@ -131,7 +131,7 @@ class XLite_Web_Customer_userDetails extends XLite_Web_Customer_ACustomer
             '123'
         );
         $this->waitForLocalCondition(
-            '$("#edit-pass-pass2-wrapper .password-confirm .ok").html() == "Yes"',
+            'jQuery("#edit-pass-pass2-wrapper .password-confirm .ok").html() == "Yes"',
             3000,
             'check Yes label'
         );

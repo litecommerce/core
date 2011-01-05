@@ -222,11 +222,11 @@ return;
         $selector = $this->getListSelector();
 
         $elements = array(
-            "$selector" => "Widget is missing ($mode mode)",
-            "$selector .products-$mode" => "Mode container element is missing ($mode mode)",
-//            "$selector .list-header" => "List header is missing",
-//            "$selector .list-header .display-modes" => "Display Mode box is missing",
-//            "$selector .list-header .sort-box" => "Sort Box is missing",
+            $selector                         => "Widget is missing ($mode mode)",
+            $selector . ' .products-' . $mode => "Mode container element is missing ($mode mode)",
+//            $selector . ' .list-header' => "List header is missing",
+//            $selector . ' .list-header .display-modes' => "Display Mode box is missing",
+//            $selector . ' .list-header .sort-box' => "Sort Box is missing",
         );
 
         if ($mode != 'table') {
@@ -235,7 +235,7 @@ return;
 
         }
 
-        foreach ($elements as $s=>$message) {
+        foreach ($elements as $s => $message) {
 
             $this->assertJqueryPresent($s, "$message ($mode mode)");
         }
@@ -353,7 +353,7 @@ return;
                     "css=h1.fn.title",
                     "Product $id doesn't link to a product page ($mode mode)"
                 );
-                $title = $this->getJSExpression("$('h1.fn.title').html()");
+                $title = $this->getJSExpression("jQuery('h1.fn.title').html()");
                 $this->assertEquals(
                     $name,
                     $title,
@@ -481,7 +481,7 @@ return;
 
             $this->assertEquals(
                 $perPage,
-                $this->getJSExpression("$('$productsSelector').size()"),
+                $this->getJSExpression("jQuery('$productsSelector').size()"),
                 "Number of products doesn't match the number to be displayed per page ($perPage per page, $mode mode)"
             );
 
@@ -821,7 +821,7 @@ return;
             "$selector product misses a quantity field (table mode)"
         );
 
-        $qtyFieldName = $this->getJSExpression("$('$inputSelector').attr('name')");
+        $qtyFieldName = $this->getJSExpression("jQuery('$inputSelector').attr('name')");
         $this->assertEquals(
             "qty[$id]",
             $qtyFieldName,
@@ -876,7 +876,7 @@ return;
 //            "$info .records-count" => $total,
         );
         foreach ($infoFields as $selector=>$value) {
-            $html = $this->getJSExpression("$('$pager1 $selector').html()");
+            $html = $this->getJSExpression("jQuery('$pager1 $selector').html()");
             $this->assertEquals(
                 $value,
                 $html,
@@ -906,7 +906,7 @@ return;
 
 /*
             foreach ($infoFields as $selector=>$value) {
-                $html = $this->getJSExpression("$('$pager2 $selector').html()");
+                $html = $this->getJSExpression("jQuery('$pager2 $selector').html()");
                 $this->assertEquals(
                     $html,
                     $value,
@@ -967,8 +967,8 @@ return;
 
         $products = array();
 
-        $count = $this->getJSExpression("$('$selector').size()");
-        $cells = $this->getJSExpression("$('$cellSelector').size()");
+        $count = $this->getJSExpression("jQuery('$selector').size()");
+        $cells = $this->getJSExpression("jQuery('$cellSelector').size()");
 
         $this->assertEquals(
             $count,
@@ -978,7 +978,7 @@ return;
 
         for ($i = 0; $i < $count; $i++) {
 
-            $class = $this->getJSExpression("$('$selector').eq($i).attr('class')");
+            $class = $this->getJSExpression("jQuery('$selector').eq($i).attr('class')");
 
             $id = preg_replace('/^.*productid-([0-9]+).*$/', '\\1', $class);
 
@@ -988,15 +988,15 @@ return;
 
             $nameSelector               = ($mode=='table') ? "$productSelector a.product-link" : "$productSelector h3.product-name a";
 
-            $product['name']            = $this->getJSExpression("$('$nameSelector').html()");
-//            $product['nameUrl']         = $this->getJSExpression("$('$nameSelector')");
-            $product['sku']             = $this->getJSExpression("$('$productSelector .product-sku').html()");
-            $product['price']           = $this->getJSExpression("$('$productSelector .product-price').html()");
+            $product['name']            = $this->getJSExpression("jQuery('$nameSelector').html()");
+//            $product['nameUrl']         = $this->getJSExpression("jQuery('$nameSelector')");
+            $product['sku']             = $this->getJSExpression("jQuery('$productSelector .product-sku').html()");
+            $product['price']           = $this->getJSExpression("jQuery('$productSelector .product-price').html()");
             $product['parsedPrice']     = preg_replace("/^\D*(\d+\.\d+)\D*$/", "\\1", $product['price']);
-//            $product['imgUrl']          = $this->getJSExpression("$('$productSelector a.product-thumbnail')");
-//            $product['imgSrc']          = $this->getJSExpression("$('$productSelector a.product-thumbnail img').attr('src')");
-//            $product['imgAlt']          = $this->getJSExpression("$('$productSelector a.product-thumbnail img').attr('alt')");
-//            $product['description']     = $this->getJSExpression("$('$productSelector .product-description').html()");
+//            $product['imgUrl']          = $this->getJSExpression("jQuery('$productSelector a.product-thumbnail')");
+//            $product['imgSrc']          = $this->getJSExpression("jQuery('$productSelector a.product-thumbnail img').attr('src')");
+//            $product['imgAlt']          = $this->getJSExpression("jQuery('$productSelector a.product-thumbnail img').attr('alt')");
+//            $product['description']     = $this->getJSExpression("jQuery('$productSelector .product-description').html()");
             
             foreach ($product as $k => $v) {
                 $product[$k] = ($v === 'null') ? null : $v;
@@ -1092,10 +1092,13 @@ return;
 
         // wait until the progress bar appears
         // it is commented due to the fact that sometimes the progress bar disappers faster than selenium checks whether it is visible
-        // $this->waitForCondition("selenium.browserbot.getCurrentWindow().$('$listSelector .blockUI.wait-block:visible').length > 0");
+        // $this->waitForLocalCondition("jQuery('$listSelector .blockUI.wait-block:visible').length > 0");
 
         // wait until the progress bar is hidden
-        $this->waitForCondition("selenium.browserbot.getCurrentWindow().$('$listSelector .blockUI.block-wait:visible').length <= 0", 300000);
+        $this->waitForLocalCondition(
+            'jQuery("' . $listSelector . ' .blockUI.block-wait:visible").length <= 0',
+            300000
+        );
  
     }
 

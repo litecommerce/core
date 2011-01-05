@@ -54,7 +54,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $this->assertElementPresent("//button[@type='submit']/span[text()='Add to Bag']", 'check Add to Bag button');
         $this->click("//button[@type='submit' and @class='bright add2cart']");
         $this->waitForLocalCondition(
-            '$(".lc-minicart-horizontal .minicart-items-number").html() == "1"',
+            'jQuery(".lc-minicart-horizontal .minicart-items-number").html() == "1"',
             10000,
             'wait minicart'
         );
@@ -106,7 +106,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $this->open('store/product//product_id-' . $product->getProductId());
         $this->click("//button[@type='submit' and @class='bright add2cart']");
         $this->waitForLocalCondition(
-            '$(".lc-minicart-horizontal .minicart-items-number").html() == "1"',
+            'jQuery(".lc-minicart-horizontal .minicart-items-number").html() == "1"',
             10000,
             'wait minicart'
         );
@@ -114,7 +114,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $this->open('store/product//product_id-' . $product->getProductId());
         $this->click("//button[@type='submit' and @class='action buy-more']");
         $this->waitForLocalCondition(
-            '$(".lc-minicart-horizontal .minicart-items-number").html() == "2"',
+            'jQuery(".lc-minicart-horizontal .minicart-items-number").html() == "2"',
             10000,
             'wait minicart'
         );
@@ -158,7 +158,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $this->open('store/product//product_id-' . $product->getProductId());
         $this->click("//button[@type='submit' and @class='bright add2cart']");
         $this->waitForLocalCondition(
-            '$(".lc-minicart-horizontal .minicart-items-number").html() == "1"',
+            'jQuery(".lc-minicart-horizontal .minicart-items-number").html() == "1"',
             10000,
             'wait minicart'
         );
@@ -166,7 +166,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $this->open('store/product//product_id-' . $product->getProductId());
         $this->click("//button[@type='submit' and @class='action buy-more']");
         $this->waitForLocalCondition(
-            '$(".lc-minicart-horizontal .minicart-items-number").html() == "2"',
+            'jQuery(".lc-minicart-horizontal .minicart-items-number").html() == "2"',
             10000,
             'wait minicart'
         );
@@ -181,7 +181,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $this->open('store/product//product_id-' . $product->getProductId());
         $this->click("//button[@type='submit' and @class='bright add2cart']");
         $this->waitForLocalCondition(
-            '$(".lc-minicart-horizontal .minicart-items-number").html() == "3"',
+            'jQuery(".lc-minicart-horizontal .minicart-items-number").html() == "3"',
             10000,
             'wait minicart'
         );
@@ -225,7 +225,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $this->open('store/product//product_id-' . $product->getProductId());
         $this->click("//button[@type='submit' and @class='bright add2cart']");
         $this->waitForLocalCondition(
-            '$(".lc-minicart-horizontal .minicart-items-number").html() == "1"',
+            'jQuery(".lc-minicart-horizontal .minicart-items-number").html() == "1"',
             10000,
             'wait minicart'
         );
@@ -250,7 +250,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         );
 
         $this->click("//div[@id='lc-minicart-horizontal']");
-        $this->click("//div[@id='container']");
+        $this->click("//div[@id='page']");
 
         $this->assertJqueryNotPresent(
             '#lc-minicart-horizontal .items-list:visible',

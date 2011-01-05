@@ -93,7 +93,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
         $this->assertTrue(
             is_object($root),
-            "Can't find a root category for TopCategories testing ('$mode' mode)"
+            'Can\'t find a root category for TopCategories testing (\'' . $mode . '\' mode)'
         );
 
         $rootName = $root->getName();
@@ -103,7 +103,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
         // Check whether the random root category is not in the active trail
         $this->assertCategoryNotActiveTrail(
             $rootId,
-            "'$rootName' category is in the active trail on the store home page"
+            '\'' . $rootName . '\' category is in the active trail on the store home page'
         );
 
         $childId = false;
@@ -116,20 +116,20 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
                // Make sure the child category is not visible on the home page
                 $this->assertCategoryNotVisible(
                     $childId,
-                    "'$childName' subcategory is visible on the store home page"
+                    '\'' . $childName . '\' subcategory is visible on the store home page'
                 );
             }
         }
 
         // Open the root category page
-        $rootURL = $this->getJSExpression('$("'.$this->getLinkSelector($rootName, $rootDepth).'")');
+        $rootURL = $this->getJSExpression('jQuery("'.$this->getLinkSelector($rootName, $rootDepth).'")');
         $this->openAndWait($rootURL);
         $this->testRootCategories($mode);
 
         // Check whether the opened root category is in the active trail
         $this->assertCategoryActiveTrail(
             $rootId,
-            "Selected '$rootName' category is not in the active trail"
+            'Selected \'' . $rootName . '\' category is not in the active trail'
         );
 
         // If it is not "list" mode test subcategories ('list' mode doesn't list subcategories at all)
@@ -142,24 +142,24 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
                 // Make sure the child category is not in the active trail on the root category page
                 $this->assertCategoryNotActiveTrail(
                     $childId,
-                    "'$childName' category is in the active trail on the page of its parent category ('$rootName')"
+                    '\'' . $childName . '\' category is in the active trail on the page of its parent category (\'' . $rootName . '\')'
                 );
 
                 // Open the child category page
-                $childURL = $this->getJSExpression('$("'.$this->getLinkSelector($childName, $childDepth).'")');
+                $childURL = $this->getJSExpression('jQuery("'.$this->getLinkSelector($childName, $childDepth).'")');
                 $this->openAndWait($childURL);
                 $this->testRootCategories($mode);
 
                 // Check whether the parent root category is still in the active trail
                 $this->assertCategoryActiveTrail(
                     $rootId,
-                    "Parent '$rootName' category is not in the active trail"
+                    'Parent \'' . $rootName . '\' category is not in the active trail'
                 );
 
                 // Check whether the selected child category is in the active trail
                 $this->assertCategoryActiveTrail(
                     $childId,
-                    "Child '$childName' category is not in the active trail"
+                    'Child \'' . $childName . '\' category is not in the active trail'
                 );
 
                 // Check whether all subcategories of the selected child category are shown on the page
@@ -186,25 +186,25 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
         $widgetSelector = $this->getWidgetSelector();
         $this->assertJqueryPresent(
             $widgetSelector,
-            "TopCategories widget is missing ('$mode' display mode)"
+            'TopCategories widget is missing (\'' . $mode . '\' display mode)'
         );
 
         // Make sure the widget lists all root categories
         $this->testSubcategories(0);
 
-         if ($mode=='list') {
+         if ($mode == 'list') {
             // There should be no links to subcategories
             $this->assertJqueryNotPresent(
-                "$widgetSelector ul",
-                "TopCategories widget displays subcategories ('$mode' display mode)"
+                $widgetSelector . ' ul',
+                'TopCategories widget displays subcategories (\'' . $mode . '\' display mode)'
             );
         }
 
         if ($mode=='path') {
             // There should be no links to subcategories beyond the active trail
             $this->assertJqueryNotPresent(
-                "$widgetSelector li:not(.active-trail) ul",
-                "TopCategories widget displays subcategories beyond the active trail ('$mode' display mode)"
+                $widgetSelector . ' li:not(.active-trail) ul',
+                'TopCategories widget displays subcategories beyond the active trail (\'' . $mode . '\' display mode)'
             );
         }
     }
@@ -233,7 +233,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
             $this->assertJqueryPresent(
                 $selector,
-                "Link to '$name' category is missing in TopCategories widget"
+                'Link to \'' . $name . '\' category is missing in TopCategories widget'
             );
         }
     }
@@ -450,7 +450,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
         $id = $this->findWidgetID('\\XLite\\View\\TopCategories');
         $this->assertFalse(is_null($id), "Can't find the widget in the database");
 
-        $r = $this->query("UPDATE drupal_lc_connector_block_settings SET value='$mode' WHERE delta='$id' AND name='displayMode'");
+        $r = $this->query("UPDATE drupal_block_lc_widget_settings SET value='$mode' WHERE bid='$id' AND name='displayMode'");
 
     }
 

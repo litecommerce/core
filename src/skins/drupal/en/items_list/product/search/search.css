@@ -71,6 +71,7 @@ ul.search-by-options li
   background: none;
   padding: 1px 26px 6px 3px;
   float: left;
+  margin: 0px;
 }
 
 ul.search-by-options li {

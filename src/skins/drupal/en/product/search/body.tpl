@@ -21,7 +21,7 @@
 
       <tr>
         <td class="substring-cell">
-          <input type="text" class="form-text" size="30" name="substring" value="{getCondition(#substring#)}">
+          <input type="text" class="form-text" size="30" name="substring" value="{getCondition(#substring#)}" />
         </td>
         <td>
           <widget class="\XLite\View\Button\Submit" label="Search products" style="search-form-submit" />
@@ -32,18 +32,18 @@
         <td>
 
           <ul class="search-including-options">
-            <li><label for="including-all">
-            <input type="radio" name="including" id="including-all" value="all" checked="{getChecked(#including#,#all#)}" />
-            All words
-            <label/></li>
-            <li><label for="including-any">
-            <input type="radio" name="including" id="including-any" value="any" checked="{getChecked(#including#,#any#)}" />
-            Any word
-            </label></li>
-            <li><label for="including-phrase">
-            <input type="radio" name="including" id="including-phrase" value="phrase" checked="{getChecked(#including#,#phrase#)}" /> 
-            Exact phrase
-            </label></li>
+            <li>
+              <input type="radio" name="including" id="including-all" value="all" checked="{getChecked(#including#,#all#)}" />
+              <label for="including-all">All words<label/>
+            </li>
+            <li>
+              <input type="radio" name="including" id="including-any" value="any" checked="{getChecked(#including#,#any#)}" />
+              <label for="including-any">Any word</label>
+            </li>
+            <li>
+              <input type="radio" name="including" id="including-phrase" value="phrase" checked="{getChecked(#including#,#phrase#)}" /> 
+              <label for="including-phrase">Exact phrase</label>
+            </li>
           </ul>
 
         </td>

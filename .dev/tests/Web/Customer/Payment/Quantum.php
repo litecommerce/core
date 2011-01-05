@@ -53,13 +53,6 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
         // Set no-xdebug-coverage flag
         $this->skipCoverage();
 
-        // Log-in
-        $this->open('user');
-
-        $this->type("//input[@id='edit-name']", "master");
-        $this->type("//input[@id='edit-pass']", "master");
-        $this->submitAndWait('css=#user-login');
-
         // Add-to-cart
         $product = \XLite\Core\Database::getRepo('XLite\Model\Product')
             ->createQueryBuilder()
@@ -71,8 +64,8 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
 
         $this->click("//button[@class='bright add2cart']");
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$(".product-details .product-buttons-added .buy-more").length > 0',
+        $this->waitForLocalCondition(
+            'jQuery(".product-details .product-buttons-added .buy-more").length > 0',
             10000,
             'check content reloading'
         );
@@ -80,43 +73,104 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
         // Checkout
         $this->openAndWait('store/checkout');
 
-        if (0 < intval($this->getJSExpression('$(".current.shipping-step").length'))) {
-            $this->toggleByJquery('ul.shipping-rates li input:eq(0)', true);
-            $this->click('css=.current .button-row button');
-            $this->waitForCondition(
-                'selenium.browserbot.getCurrentWindow().$(".payment-step").hasClass("current") == true',
+        if (0 < intval($this->getJSExpression('jQuery(".current.shipping-step").length'))) {
+
+            $username = 'tester' . time();
+
+            $this->typeKeys('//input[@id="create_profile_email"]', $username . '@cdev.ru');
+
+            $this->waitInlineProgress('#create_profile_email', 'email inline progress');
+            $this->assertInputErrorNotPresent('#create_profile_email', 'email has not inline error');
+
+            // Fill minimum address fields
+            $this->select(
+                '//select[@id="shipping_address_country"]',
+                'value=US'
+            );
+            $this->waitForLocalCondition(
+                'jQuery("select#shipping_address_state").length == 1',
+                3000,
+                'check state selector'
+            );
+
+            $this->select(
+                '//select[@id="shipping_address_state"]',
+                'label=New York'
+            );
+
+            $this->typeKeys(
+                '//input[@id="shipping_address_zipcode"]',
+                '10001'
+            );
+
+            // Complete shipping address
+            $this->typeKeys(
+                '//input[@id="shipping_address_name"]',
+                'John Smith'
+            );
+
+            $this->typeKeys(
+                '//input[@id="shipping_address_street"]',
+                'test address'
+            );
+
+            $this->typeKeys(
+                '//input[@id="shipping_address_city"]',
+                'New York'
+            );
+
+            $this->waitForLocalCondition(
+                'jQuery("ul.shipping-rates li input").length > 0',
                 10000,
+                'check shipping rates'
+            );
+
+            $this->toggleByJquery('ul.shipping-rates li input:eq(0)', true);
+            $this->waitForLocalCondition(
+                'jQuery(".current .button-row button.disabled").length == 0',
+                3000,
+                'check enabled main button'
+            );
+
+            $this->click('css=.current .button-row button');
+            $this->waitForLocalCondition(
+                'jQuery(".shipping-step").hasClass("current") == false',
+                20000,
                 'check swicth to next step'
             );
         }
 
-        if (0 < intval($this->getJSExpression('$(".current.payment-step").length'))) {
+        if (0 == intval($this->getJSExpression('jQuery(".current.payment-step").length'))) {
+            $this->click('css=.payment-step .button-row button');
+            $this->waitForLocalCondition(
+                'jQuery(".payment-step").hasClass("current") == true',
+                10000,
+                'check swicth to prev step'
+            );
+        }
+
+        if (0 < intval($this->getJSExpression('jQuery(".current.payment-step").length'))) {
             $this->toggleByJquery('#pmethod' . $pid, true);
+            $this->waitForLocalCondition(
+                'jQuery(".current .button-row button.disabled").length == 0',
+                3000,
+                'check enabled main button #2'
+            );
             $this->click('css=.current .button-row button');
-            $this->waitForCondition(
-                'selenium.browserbot.getCurrentWindow().$(".review-step").hasClass("current") == true',
+            $this->waitForLocalCondition(
+                'jQuery(".review-step").hasClass("current") == true',
                 10000,
                 'check swicth to next step #2'
             );
         }
 
-        if (0 < intval($this->getJSExpression('$(".current.review-step").length'))) {
-            $this->click('css=.payment-step .button-row button');
-            $this->waitForCondition(
-                'selenium.browserbot.getCurrentWindow().$(".payment-step").hasClass("current") == true',
-                10000,
-                'check return to payment step'
-            );
-            $this->toggleByJquery('#pmethod' . $pid, true);
-            $this->click('css=.current .button-row button');
-            $this->waitForCondition(
-                'selenium.browserbot.getCurrentWindow().$(".review-step").hasClass("current") == true',
-                10000,
-                'check swicth to next step #3'
-            );
-        }
-
         $this->click('//input[@id="place_order_agree"]');
+        $this->waitForLocalCondition(
+            'jQuery(".current .button-row button.disabled").length == 0',
+            3000,
+            'check enabled main button #3'
+        );
+
         $this->clickAndWait('css=.current .button-row button');
 
         // Go to payment gateway
@@ -134,15 +188,15 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
         $this->setTimeout(120000);
         $this->clickAndWait('//input[@type="submit"]');
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("form")[0].ccnum.value == "1111"',
+        $this->waitForLocalCondition(
+            'document.getElementsByTagName("form")[0].ccnum.value == "1111"',
             10000
         );
         $this->setTimeout(self::SELENIUM_TTL);
         $this->clickAndWait('//input[@type="SUBMIT"]');
 
         // Go to shop
-        $this->waitForCondition('selenium.browserbot.getCurrentWindow().location.href.search(/checkoutSuccess/) != -1');
+        $this->waitForLocalCondition('location.href.search(/checkoutSuccess/) != -1');
 
         $ordeid = null;
 

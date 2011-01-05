@@ -62,11 +62,11 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
                 );
 
                 $this->assertElementPresent(
-                    "$listSelector .product-photo div#wrap a.cloud-zoom#pimage_".$productId." img.photo.product-thumbnail",
+                    $listSelector . " .product-photo div#wrap a.cloud-zoom#pimage_" . $productId . " img.photo.product-thumbnail",
                     'check image'
                 );
 
-                $imageRel = $this->getJSExpression("$('a.cloud-zoom#pimage_$productId').attr('rel')");
+                $imageRel = $this->getJSExpression('jQuery("a.cloud-zoom#pimage_' . $productId . '").attr("rel")');
                 $this->assertEquals(
                     $imageRel,
                     "adjustX: 97, showTitle: false, tintOpacity: 0.5, tint: '#fff', lensOpacity: 0",
@@ -75,11 +75,11 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
                 if (1 < count($product->getImages())) {
                     $this->assertElementPresent(
-                        "$listSelector a.arrow.left-arrow img",
+                        $listSelector . " a.arrow.left-arrow img",
                         'check left arrow'
                     );
                     $this->assertElementPresent(
-                        "$listSelector a.arrow.right-arrow img",
+                        $listSelector . " a.arrow.right-arrow img",
                         'check right arrow'
                     );
                 }
@@ -108,12 +108,12 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             );
             $this->assertEquals(
                 count($product->getImages()),
-                $this->getJSExpression("$('div.product-details .image .product-image-gallery li a').length"),
+                $this->getJSExpression('jQuery("div.product-details .image .product-image-gallery li a").length'),
                 'check gallery length'
             );
             $this->assertEquals(
                 'true',
-                $this->getJSExpression("$('div.product-details .image .product-image-gallery li').eq(0).hasClass('selected')"),
+                $this->getJSExpression('jQuery("div.product-details .image .product-image-gallery li").eq(0).hasClass("selected")'),
                 'check default selected item'
             );
         }
@@ -148,7 +148,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $url = urlencode($this->getLocation());
         $facebookLink = "http://www.facebook.com/plugins/like.php?href=$url&layout=standard&show_faces=true&width=450&action=like&colorscheme=light&height=24";
-        $iframeLink = $this->getJSExpression("$('.facebook iframe').attr('src')");
+        $iframeLink = $this->getJSExpression('jQuery(".facebook iframe").attr("src")');
         $this->assertEquals(
             $iframeLink,
             $facebookLink,
@@ -167,7 +167,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         );
         $this->assertEquals(
             1,
-            $this->getJSExpression("$('.product-details .tabs ul li a').length"),
+            $this->getJSExpression('jQuery(".product-details .tabs ul li a").length'),
             'check tabs length'
         );
 
@@ -227,8 +227,8 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $this->mouseOut("//div[@class='mousetrap']");
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$("#cloud-zoom-big:visible").length == 0',
+        $this->waitForLocalCondition(
+            'jQuery("#cloud-zoom-big:visible").length == 0',
             2000,
             'check zoomer gone'
         );
@@ -237,19 +237,19 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         $this->assertJqueryNotPresent('#cloud-zoom-lens:visible', 'check zoomer lens #2');
 
         // Gallery based use cases
-        $length = intval($this->getJSExpression("$('ul.gallery li a').length"));
+        $length = intval($this->getJSExpression('jQuery("ul.gallery li a").length'));
 
         for ($idx = 2; $idx < $length + 1; $idx++) {
             $i = $idx - 1;
 
             $this->click("//ul[@class='gallery']/li[position()=$idx]/a");
 
-            $src = $this->getJSExpression("$('ul.gallery li:eq($i) img.middle').attr('src')");
-            $w = $this->getJSExpression("$('ul.gallery li:eq($i) img.middle').attr('width')");
-            $h = $this->getJSExpression("$('ul.gallery li:eq($i) img.middle').attr('height')");
+            $src = $this->getJSExpression('jQuery("ul.gallery li:eq(' . $i . ') img.middle").attr("src")');
+            $w = $this->getJSExpression('jQuery("ul.gallery li:eq(' . $i . ') img.middle").attr("width")');
+            $h = $this->getJSExpression('jQuery("ul.gallery li:eq(' . $i . ') img.middle").attr("height")');
 
-            $this->waitForCondition(
-                'selenium.browserbot.getCurrentWindow().$(".product-details .image .cloud-zoom img").attr("src") == "' . $src . '"',
+            $this->waitForLocalCondition(
+                'jQuery(".product-details .image .cloud-zoom img").attr("src") == "' . $src . '"',
                 2000,
                 'check zoomer image change [' . $idx. ' image]'
             );
@@ -273,7 +273,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
                 'check new image src [' . $idx. ' image]'
             );
 
-            $rev = $this->getJSExpression("$('ul.gallery li:eq($i) a').attr('rev')");
+            $rev = $this->getJSExpression('jQuery("ul.gallery li:eq(' . $i . ') a").attr("rev")');
 
             if (!preg_match('/width: (\d+), height: (\d+)/', $rev, $m)) {
                 $this->fail('link rev attribute has wrong format [' . $idx. ' image]');
@@ -304,12 +304,12 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $this->openAndWait('store/product//product_id-' . $product->getProductId());
 
-        $this->getJSExpression('$("a.loupe").trigger("click")');
+        $this->getJSExpression('jQuery("a.loupe").trigger("click")');
 
-        $src = $this->getJSExpression("$('.product-image-gallery ul li:eq(0) a').attr('href')");
+        $src = $this->getJSExpression('jQuery(".product-image-gallery ul li:eq(0) a").attr("href")');
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$("#cboxPhoto").attr("src") == "' . $src . '"',
+        $this->waitForLocalCondition(
+            'jQuery("#cboxPhoto").attr("src") == "' . $src . '"',
             6000,
             'check colorbox start'
         );
@@ -361,7 +361,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         );
 
         // Check 'next' navigation
-        $length = intval($this->getJSExpression("$('.product-image-gallery ul li a').length"));
+        $length = intval($this->getJSExpression('jQuery(".product-image-gallery ul li a").length'));
 
         for ($i = 1; $i < $length; $i++) {
 
@@ -374,7 +374,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
                 . "/div[@id='cboxNext' and text()='next']"
             );
 
-            $src = $this->getJSExpression("$('.product-image-gallery ul li:eq($i) a').attr('href')");
+            $src = $this->getJSExpression('jQuery(".product-image-gallery ul li:eq(' . $i . ') a").attr("href")');
 
             $this->assertElementPresent(
                 "//body"
@@ -415,9 +415,9 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         $qty = 0;
 
         $formSelector = "css=form.product-details";
-        $cartButtonSelector = "$formSelector .product-details-info .product-buttons button.bright.add2cart";
-        $buyButtonSelector = "$formSelector .product-details-info .product-buttons-added button.action.buy-more";
-        $continueButtonSelector = "$formSelector .product-details-info .product-buttons-added button.bright.continue";
+        $cartButtonSelector = $formSelector . " .product-details-info .product-buttons button.bright.add2cart";
+        $buyButtonSelector = $formSelector . " .product-details-info .product-buttons-added button.action.buy-more";
+        $continueButtonSelector = $formSelector . " .product-details-info .product-buttons-added button.bright.continue";
     
         $this->assertElementPresent(
             $cartButtonSelector,
@@ -427,8 +427,8 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         
         $qty++;
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$(".product-details .product-buttons-added .buy-more").length > 0',
+        $this->waitForLocalCondition(
+            'jQuery(".product-details .product-buttons-added .buy-more").length > 0',
             10000,
             'check content reloading'
         );
@@ -438,7 +438,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         );
 
         // This assertion requires the minicart widget to be visible on the page
-        $q = intval($this->getJSExpression("$('.minicart-items-number').html()"));
+        $q = intval($this->getJSExpression('jQuery(".minicart-items-number").html()'));
         $this->assertEquals($qty, $q, 'check quantity');
 
         $this->assertElementPresent(
@@ -449,15 +449,15 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $qty++;
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$(".minicart-items-number").html() == ' . $qty,
+        $this->waitForLocalCondition(
+            'jQuery(".minicart-items-number").html() == ' . $qty,
             10000,
             'check content reloading #2'
         );
  
         /* TODO - rework after Inventory tracking module is changed
 
-        $this->getJSExpression("$('.product-details input.quantity').attr('value', 3)");
+        $this->getJSExpression('jQuery(".product-details input.quantity").attr("value", 3)');
 
         $this->click(
             "//form[@class='product-details']"
@@ -468,13 +468,13 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $qty += 3;
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$(".product-details input.quantity").attr("value") == 1',
+        $this->waitForLocalCondition(
+            'jQuery(".product-details input.quantity").attr("value") == 1',
             10000,
             'check content reloading #3'
         );
 
-        $q = intval($this->getJSExpression("$('.minicart-items-number').html()"));
+        $q = intval($this->getJSExpression('jQuery(".minicart-items-number").html()'));
 
         $this->assertEquals($qty, $q, 'check quantity #3');
         */

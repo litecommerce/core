@@ -218,7 +218,6 @@ class Handler extends \XLite\Core\CMSConnector
             'user/%/orders' => array(
                 'menu'   => array(
                     'title'            => 'Orders history',
-                    'description'      => 'Orders history',
                     'access callback'  => 'lc_connector_user_access',
                     'access arguments' => array(1),
                     'weight'           => 100,
