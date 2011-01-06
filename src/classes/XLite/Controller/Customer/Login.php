@@ -44,6 +44,26 @@ class Login extends \XLite\Controller\Customer\ACustomer
 
 
     /**
+     * Controlelr parameters 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $params = array('target', 'mode');
+
+    /**
+     * Profile 
+     * 
+     * @var    \XLite\Model\Profile|integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $profile;
+
+    /**
      * Common method to determine current location 
      * 
      * @return string
@@ -98,12 +118,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
         }
     }
 
-
-
-    public $params = array('target', "mode");
-
-    protected $profile = null;
-
     /**
      * Log in using the login and password from request
      * 
@@ -120,43 +134,53 @@ class Login extends \XLite\Controller\Customer\ACustomer
         return \XLite\Core\Auth::getInstance()->login($data['login'], $data['password'], $token);
     }
 
-    function action_login()
+    /**
+     * Login 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionLogin()
     {
         $this->profile = $this->performLogin();
 
         if ($this->profile === \XLite\Core\Auth::RESULT_ACCESS_DENIED) {
             $this->set('valid', false);
-            return;
-        }
 
-        $this->set('returnUrl', \XLite\Core\Request::getInstance()->returnUrl);
+        } else {
 
-        if (!$this->get('returnUrl')) {
-            $url = $this->getComplex('xlite.script');
-            if (!$this->getCart()->isEmpty()) {
-                $url .= "?target=cart";
+            $this->set('returnUrl', \XLite\Core\Request::getInstance()->returnUrl);
+
+            if (!$this->get('returnUrl')) {
+                $this->set(
+                    'returnUrl',
+                    $this->getCart()->isEmpty() ? \XLite\Core\Converter::buildURL() : \XLite\Core\Converter::buildURL('cart')
+                );
             }
 
-            $this->set('returnUrl', $url);
+            $this->getCart()->setProfile($this->profile);
+
+            $this->updateCart();
         }
-
-        $this->getCart()->setProfile($this->profile);
-
-        $this->updateCart();
     }
 
-    function getShopUrl($url, $secure = false, $pure_url = false)
+    /**
+     * Log out 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionLogoff()
     {
-        $add = (strpos($url, '?') ? '&' : '?') . 'feed='.$this->get('action');
-        return parent::getShopUrl($url . $add, $secure);
-    }
+        \XLite\Core\Auth::getInstance()->logoff();
 
-    function action_logoff()
-    {
-        $this->auth->logoff();
-        $this->returnUrl = $this->getComplex('xlite.script');
+        $this->returnUrl = \XLite\Core\Converter::buildURL();
         if (!$this->getCart()->isEmpty()) {
-        	if ($this->config->Security->logoff_clear_cart == 'Y') {
+        	if ('Y' == \XLite\Core\Config::getInstance()->Security->logoff_clear_cart) {
 
                 \XLite\Core\Database::getEM()->remove($this->getCart());
                 \XLite\Core\Database::getEM()->flush();
@@ -167,11 +191,35 @@ class Login extends \XLite\Controller\Customer\ACustomer
         }
     }
 
-    function getSecure()
+    /**
+     * Get the full URL of the page
+     * 
+     * @param string  $url    Relative URL  
+     * @param boolean $secure Flag to use HTTPS OPTIONAL
+     *  
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getShopUrl($url, $secure = false)
     {
-        if ($this->get('action') == "login") {
-            return $this->config->Security->customer_security;
-        }
-        return false;
+        $add = (strpos($url, '?') ? '&' : '?') . 'feed=' . \XLite\Core\Request::getInstance()->action;
+
+        return parent::getShopUrl($url . $add, $secure);
+    }
+
+    /**
+     * Get secure controller status
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSecure()
+    {
+        return 'login' == \XLite\Core\Request::getInstance()->action
+            ? \XLite\Core\Config::getInstance()->Security->customer_security
+            : parent::getSecure();
     }
 }
