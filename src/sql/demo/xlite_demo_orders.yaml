@@ -9,5 +9,70 @@
 # @link      http://www.litecommerce.com/
 # @since     3.0.0
 XLite\Model\Order:
-  - { profile: { login: rnd_tester@rrf.ru, password: 084e0343a0486ff05530df6c705c8bb4, access_level: 0, status: E, cms_profile_id: 2, cms_name: ____DRUPAL____, addresses: [{ is_billing: true, is_shipping: true, title: Mr., firstname: Admin, lastname: Admin, phone: '0123456789', street: '51 apt, 87 street', city: Edmond, state: { country_code: US, code: OK }, country: { code: US }, zipcode: '73003' }] }, orig_profile: { login: rnd_tester@rrf.ru }, total: 20.7599, subtotal: 17.99, date: 1283939344, status: P, taxes: 'a:1:{s:3:"Tax";s:4:"0.00";}', payment_transactions: [{ payment_method: { service_name: MoneyOrdering }, method_name: MoneyOrdering, method_local_name: 'Money Ordering', status: S, value: 20.7599, type: sale, note: '' }], items: [{ object_id: 3002, object_type: product, name: 'Binary Mom', sku: '00000', price: 17.99, amount: 1, subtotal: 17.99, total: 17.99, options: [{ group: { name: Color, sku: '00000' }, option: { name: Bimini, group: Color, sku: '00000' }, name: Color, value: Bimini, orderby: 0 }, { group: { name: Size, sku: '00000' }, option: { name: S, group: Size, sku: '00000' }, name: Size, value: S, orderby: 0 }] }], saved_modifiers: [{ code: tax, name: Tax, is_visible: true, is_summable: true, subcode: Tax, surcharge: 0 }, { code: tax, name: shipping_tax, is_visible: false, is_summable: false, subcode: shipping_tax, surcharge: 0 }, { code: shipping, name: 'Shipping cost', is_visible: true, is_summable: true, subcode: shipping, surcharge: 2.7699 }] }
-  - { profile: { login: rnd_tester@rrf.ru, password: 084e0343a0486ff05530df6c705c8bb4, access_level: 0, status: E, cms_profile_id: 2, cms_name: ____DRUPAL____, addresses: [{ is_billing: true, is_shipping: true, title: Mr., firstname: Admin, lastname: Admin, phone: '0123456789', street: '51 apt, 87 street', city: Edmond, state: { country_code: US, code: OK }, country: { code: US }, zipcode: '73003' }] }, orig_profile: { login: rnd_tester@rrf.ru }, total: 121.1137, subtotal: 116.91, date: 1283867845, status: C, taxes: 'a:1:{s:3:"Tax";s:4:"0.00";}', payment_transactions: [{ payment_method: { service_name: MoneyOrdering }, method_name: MoneyOrdering, method_local_name: 'Money Ordering', status: S, value: 121.1137, type: sale, note: '' }], items: [{ object_id: 4059, object_type: product, name: 'Paint Shop Pro Web Graphics [PDF]', sku: '00057', price: 39.95, amount: 1, subtotal: 39.95, total: 39.95 }, { object_id: 4003, object_type: product, name: 'Planet Express Babydoll', sku: '00001', price: 19.99, amount: 1, subtotal: 19.99, total: 19.99, options: [{ group: { name: Size, sku: '00001' }, option: { name: S, group: Size, sku: '00001' }, name: Size, value: S, orderby: 0 }] }, { object_id: 4008, object_type: product, name: 'Planet Express', sku: '00006', price: 18.99, amount: 1, subtotal: 18.99, total: 18.99, options: [{ group: { name: Size, sku: '00006' }, option: { name: S, group: Size, sku: '00006' }, name: Size, value: S, orderby: 0 }] }, { object_id: 4010, object_type: product, name: 'Wi-Fi Detector Shirt', sku: '00008', price: 19.99, amount: 1, subtotal: 19.99, total: 19.99, options: [{ group: { name: Size, sku: '00008' }, option: { name: S, group: Size, sku: '00008' }, name: Size, value: S, orderby: 0 }] }, { object_id: 3002, object_type: product, name: 'Binary Mom', sku: '00000', price: 17.99, amount: 1, subtotal: 17.99, total: 17.99, options: [{ group: { name: Color, sku: '00000' }, option: { name: Bimini, group: Color, sku: '00000' }, name: Color, value: Bimini, orderby: 0 }, { group: { name: Size, sku: '00000' }, option: { name: S, group: Size, sku: '00000' }, name: Size, value: S, orderby: 0 }] }], saved_modifiers: [{ code: tax, name: Tax, is_visible: true, is_summable: true, subcode: Tax, surcharge: 0 }, { code: tax, name: shipping_tax, is_visible: false, is_summable: false, subcode: shipping_tax, surcharge: 0 }, { code: shipping, name: 'Shipping cost', is_visible: true, is_summable: true, subcode: shipping, surcharge: 4.2037 }] }
+  - profile: { login: rnd_tester@rrf.ru, password: 084e0343a0486ff05530df6c705c8bb4, access_level: 0, status: E, cms_profile_id: 2, cms_name: ____DRUPAL____, addresses: [{ is_billing: true, is_shipping: true, title: Mr., firstname: Admin, lastname: Admin, phone: '0123456789', street: '51 apt, 87 street', city: Edmond, state: { country_code: US, code: OK }, country: { code: US }, zipcode: '73003' }] }
+    orig_profile: { login: rnd_tester@rrf.ru }
+    total: 20.7599
+    subtotal: 17.99
+    date: 1283939344
+    status: P
+    taxes: 'a:1:{s:3:"Tax";s:4:"0.00";}'
+    payment_transactions: [{ payment_method: { service_name: MoneyOrdering }, method_name: MoneyOrdering, method_local_name: 'Money Ordering', status: S, value: 20.7599, type: sale, note: '' }]
+    items:
+      - object: { sku: '00000' }
+        name: 'Binary Mom'
+        sku: '00000'
+        price: 17.99
+        amount: 1
+        subtotal: 17.99
+        total: 17.99
+        options: [{ group: { name: Color, sku: '00000' }, option: { name: Bimini, group: Color, sku: '00000' }, name: Color, value: Bimini, orderby: 0 }, { group: { name: Size, sku: '00000' }, option: { name: S, group: Size, sku: '00000' }, name: Size, value: S, orderby: 0 }]
+    saved_modifiers: [{ code: tax, name: Tax, is_visible: true, is_summable: true, subcode: Tax, surcharge: 0 }, { code: tax, name: shipping_tax, is_visible: false, is_summable: false, subcode: shipping_tax, surcharge: 0 }, { code: shipping, name: 'Shipping cost', is_visible: true, is_summable: true, subcode: shipping, surcharge: 2.7699 }]
+  - profile: { login: rnd_tester@rrf.ru, password: 084e0343a0486ff05530df6c705c8bb4, access_level: 0, status: E, cms_profile_id: 2, cms_name: ____DRUPAL____, addresses: [{ is_billing: true, is_shipping: true, title: Mr., firstname: Admin, lastname: Admin, phone: '0123456789', street: '51 apt, 87 street', city: Edmond, state: { country_code: US, code: OK }, country: { code: US }, zipcode: '73003' }] }
+    orig_profile: { login: rnd_tester@rrf.ru }
+    total: 121.1137
+    subtotal: 116.91
+    date: 1283867845
+    status: C
+    taxes: 'a:1:{s:3:"Tax";s:4:"0.00";}'
+    payment_transactions: [{ payment_method: { service_name: MoneyOrdering }, method_name: MoneyOrdering, method_local_name: 'Money Ordering', status: S, value: 121.1137, type: sale, note: '' }]
+    items: 
+      - object: { sku: '00057' }
+        name: 'Paint Shop Pro Web Graphics [PDF]'
+        sku: '00057'
+        price: 39.95
+        amount: 1
+        subtotal: 39.95
+        total: 39.95
+      - object: { sku: '00001' }
+        name: 'Planet Express Babydoll'
+        sku: '00001'
+        price: 19.99
+        amount: 1
+        subtotal: 19.99
+        total: 19.99
+        options: [{ group: { name: Size, sku: '00001' }, option: { name: S, group: Size, sku: '00001' }, name: Size, value: S, orderby: 0 }]
+      - object: { sku: '00006' }
+        name: 'Planet Express'
+        sku: '00006'
+        price: 18.99
+        amount: 1
+        subtotal: 18.99
+        total: 18.99
+        options: [{ group: { name: Size, sku: '00006' }, option: { name: S, group: Size, sku: '00006' }, name: Size, value: S, orderby: 0 }]
+      - object: { sku: '00008' }
+        name: 'Wi-Fi Detector Shirt'
+        sku: '00008'
+        price: 19.99
+        amount: 1
+        subtotal: 19.99
+        total: 19.99
+        options: [{ group: { name: Size, sku: '00008' }, option: { name: S, group: Size, sku: '00008' }, name: Size, value: S, orderby: 0 }]
+      - object: { sku: '00000' }
+        name: 'Binary Mom'
+        sku: '00000'
+        price: 17.99
+        amount: 1
+        subtotal: 17.99
+        total: 17.99
+        options: [{ group: { name: Color, sku: '00000' }, option: { name: Bimini, group: Color, sku: '00000' }, name: Color, value: Bimini, orderby: 0 }, { group: { name: Size, sku: '00000' }, option: { name: S, group: Size, sku: '00000' }, name: Size, value: S, orderby: 0 }]
+    saved_modifiers: [{ code: tax, name: Tax, is_visible: true, is_summable: true, subcode: Tax, surcharge: 0 }, { code: tax, name: shipping_tax, is_visible: false, is_summable: false, subcode: shipping_tax, surcharge: 0 }, { code: shipping, name: 'Shipping cost', is_visible: true, is_summable: true, subcode: shipping, surcharge: 4.2037 }]
