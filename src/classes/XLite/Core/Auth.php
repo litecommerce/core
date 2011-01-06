@@ -238,8 +238,11 @@ class Auth extends \XLite\Base
                 : 0;
 
             // Try to get user profile
-            $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
-                ->findByLoginPassword($login, $password, $orderId);
+            $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findByLoginPassword(
+                $login,
+                isset($secureHash) ? null : $password,
+                $orderId
+            );
 
             // Return profile object if it's ok
             if (isset($profile) && $this->loginProfile($profile)) {
