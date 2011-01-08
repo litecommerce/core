@@ -42,7 +42,7 @@ if (class_exists('PHP_CodeSniffer_CommentParser_FunctionCommentParser', true) ==
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.2.0RC1
+ * @version   Release: 1.2.2
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sniff
@@ -393,10 +393,15 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                         $realName = '&'.$realName;
                     }
 
-                    if ($realName !== $param->getVarName()) {
-                        $error  = 'Doc comment var "'.$paramName;
-                        $error .= '" does not match actual variable name "'.$realName;
-                        $error .= '" at position '.$pos;
+                    if ($realName !== $paramName) {
+                        $error  = 'Doc comment for var '.$paramName;
+                        $error .= ' does not match ';
+                        if (strtolower($paramName) === strtolower($realName)) {
+                            $error .= 'case of ';
+                        }
+
+                        $error .= 'actual variable name '.$realName;
+                        $error .= ' at position '.$pos;
 
                         $this->currentFile->addError($error, $errorPos);
                     }

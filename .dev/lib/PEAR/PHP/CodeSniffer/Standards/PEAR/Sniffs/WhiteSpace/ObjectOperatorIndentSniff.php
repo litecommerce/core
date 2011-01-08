@@ -24,7 +24,7 @@
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.2.0RC1
+ * @version   Release: 1.2.2
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffer_Sniff
@@ -57,8 +57,8 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
         $tokens = $phpcsFile->getTokens();
 
         // Make sure this is the first object operator in a chain of them.
-        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        if ($prev === false || $tokens[$prev]['code'] !== T_VARIABLE) {
+        $varToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+        if ($varToken === false || $tokens[$varToken]['code'] !== T_VARIABLE) {
             return;
         }
 
@@ -78,15 +78,15 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
         }
 
         // Determine correct indent.
-        for ($i = ($stackPtr - 1); $i >= 0; $i--) {
-            if ($tokens[$i]['line'] !== $tokens[$stackPtr]['line']) {
+        for ($i = ($varToken - 1); $i >= 0; $i--) {
+            if ($tokens[$i]['line'] !== $tokens[$varToken]['line']) {
                 $i++;
                 break;
             }
         }
 
         $requiredIndent = 0;
-        if ($tokens[$i]['code'] === T_WHITESPACE) {
+        if ($i >= 0 && $tokens[$i]['code'] === T_WHITESPACE) {
             $requiredIndent = strlen($tokens[$i]['content']);
         }
 
@@ -104,6 +104,12 @@ class PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff implements PHP_CodeSniffe
         }
 
         // Check indentation of each object operator in the chain.
+        // If the first object operator is on a different line than
+        // the variable, make sure we check its indentation too.
+        if ($tokens[$stackPtr]['line'] > $tokens[$varToken]['line']) {
+            $next = $stackPtr;
+        }
+
         while ($next !== false) {
             // Make sure it is in the same scope, otherwise dont check indent.
             $brackets = null;

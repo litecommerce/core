@@ -112,7 +112,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.2.0RC1
+ * @version   Release: 1.2.2
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PHP_CodeSniffer_File
@@ -182,6 +182,13 @@ class PHP_CodeSniffer_File
      * @see getWarnings()
      */
     private $_warnings = array();
+
+    /**
+     * And array of lines being ignored by PHP_CodeSniffer.
+     *
+     * @var array()
+     */
+    private $_ignoredLines = array();
 
     /**
      * The total number of errors raised.
@@ -358,9 +365,35 @@ class PHP_CodeSniffer_File
             echo "\t*** START TOKEN PROCESSING ***".PHP_EOL;
         }
 
+        $foundCode = false;
+        $ignoring  = false;
+
         // Foreach of the listeners that have registed to listen for this
         // token, get them to process it.
         foreach ($this->_tokens as $stackPtr => $token) {
+            // Check for ignored lines.
+            if ($token['code'] === T_COMMENT) {
+                if (strpos($token['content'], '@codingStandardsIgnoreStart') !== false) {
+                    $ignoring = true;
+                } else if (strpos($token['content'], '@codingStandardsIgnoreEnd') !== false) {
+                    $ignoring = false;
+                    // Ignore this comment too.
+                    $this->_ignoredLines[$token['line']] = true;
+                } else if (strpos($token['content'], '@codingStandardsIgnoreFile') !== false) {
+                    // Ignoring the whole file, just a little late.
+                    $this->_errors       = array();
+                    $this->_warnings     = array();
+                    $this->_errorCount   = 0;
+                    $this->_warningCount = 0;
+                    return;
+                }
+            }
+
+            if ($ignoring === true) {
+                $this->_ignoredLines[$token['line']] = true;
+                continue;
+            }
+
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 $type    = $token['type'];
                 $content = str_replace($this->eolChar, '\n', $token['content']);
@@ -368,6 +401,10 @@ class PHP_CodeSniffer_File
             }
 
             $tokenType = $token['code'];
+            if ($tokenType !== T_INLINE_HTML) {
+                $foundCode = true;
+            }
+
             if (isset($this->_listeners[$tokenType]) === true) {
                 foreach ($this->_listeners[$tokenType] as $listener) {
                     // Make sure this sniff supports the tokenizer
@@ -401,6 +438,36 @@ class PHP_CodeSniffer_File
                 }//end foreach
             }//end if
         }//end foreach
+
+        // Remove errors and warnings for ignored lines.
+        foreach ($this->_ignoredLines as $line => $ignore) {
+            if (isset($this->_errors[$line]) === true) {
+                foreach ($this->_errors[$line] as $col => $errors) {
+                    $this->_errorCount -= count($errors);
+                }
+
+                unset($this->_errors[$line]);
+            }
+
+            if (isset($this->_warnings[$line]) === true) {
+                foreach ($this->_warnings[$line] as $col => $warnings) {
+                    $this->_warningCount -= count($warnings);
+                }
+
+                unset($this->_warnings[$line]);
+            }
+        }
+
+        // If short open tags are off but the file being checked uses
+        // short open tags, the whole content will be inline HTML
+        // and nothing will be checked. So try and handle this case.
+        if ($foundCode === false) {
+            $shortTags = (bool) ini_get('short_open_tag');
+            if ($shortTags === false) {
+                $error = 'No PHP code was found in this file and short open tags are not allowed by this install of PHP. This file may be using short open tags but PHP does not allow them.';
+                $this->addWarning($error, null);
+            }
+        }
 
         if (PHP_CODESNIFFER_VERBOSITY > 2) {
             echo "\t*** END TOKEN PROCESSING ***".PHP_EOL;
@@ -501,14 +568,19 @@ class PHP_CodeSniffer_File
                 if ($secondLastChar === "\r") {
                     $eolChar = "\r\n";
                 }
+            } else if ($eolChar !== "\r") {
+                // Must not be an EOL char at the end of the line.
+                // Probably a one-line file, so assume \n as it really
+                // doesn't matter considering there are no newlines.
+                $eolChar = "\n";
             }
         } else {
             if (preg_match("/\r\n?|\n/", $contents, $matches) !== 1) {
-                $error = 'Could not auto-detect line endings from content';
-                throw new PHP_CodeSniffer_Exception($error);
+                // Assuming there are no newlines.
+                $eolChar = "\n";
+            } else {
+                $eolChar = $matches[0];
             }
-
-            $eolChar = $matches[0];
         }//end if
 
         return $eolChar;
@@ -521,17 +593,26 @@ class PHP_CodeSniffer_File
      *
      * @param string $error    The error message.
      * @param int    $stackPtr The stack position where the error occured.
+     * @param string $code     A violation code unique to the sniff message.
      *
      * @return void
      */
-    public function addError($error, $stackPtr)
+    public function addError($error, $stackPtr, $code='')
     {
         // Work out which sniff generated the error.
         $parts = explode('_', $this->_activeListener);
-		if (3 > count($parts)) {
-			return;
-		}
-        $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
+        if (isset($parts[3]) === true) {
+            $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
+
+            // Remove "Sniff" from the end.
+            $sniff = substr($sniff, 0, -5);
+        } else {
+            $sniff = 'unknownSniff';
+        }
+
+        if ($code !== '') {
+            $sniff .= '.'.$code;
+        }
 
         if ($stackPtr === null) {
             $lineNum = 1;
@@ -542,11 +623,11 @@ class PHP_CodeSniffer_File
         }
 
         if (isset($this->_errors[$lineNum]) === false) {
-            $this->errors[$lineNum] = array();
+            $this->_errors[$lineNum] = array();
         }
 
         if (isset($this->_errors[$lineNum][$column]) === false) {
-            $this->errors[$lineNum][$column] = array();
+            $this->_errors[$lineNum][$column] = array();
         }
 
         $this->_errors[$lineNum][$column][] = array(
@@ -563,14 +644,26 @@ class PHP_CodeSniffer_File
      *
      * @param string $warning  The error message.
      * @param int    $stackPtr The stack position where the error occured.
+     * @param string $code     A violation code unique to the sniff message.
      *
      * @return void
      */
-    public function addWarning($warning, $stackPtr)
+    public function addWarning($warning, $stackPtr, $code='')
     {
         // Work out which sniff generated the warning.
         $parts = explode('_', $this->_activeListener);
-        $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
+        if (isset($parts[3]) === true) {
+            $sniff = $parts[0].'.'.$parts[2].'.'.$parts[3];
+
+            // Remove "Sniff" from the end.
+            $sniff = substr($sniff, 0, -5);
+        } else {
+            $sniff = 'unknownSniff';
+        }
+
+        if ($code !== '') {
+            $sniff .= '.'.$code;
+        }
 
         if ($stackPtr === null) {
             $lineNum = 1;
@@ -619,6 +712,18 @@ class PHP_CodeSniffer_File
         return $this->_warningCount;
 
     }//end getWarningCount()
+
+
+    /**
+     * Returns the list of ignored lines.
+     *
+     * @return array
+     */
+    public function getIgnoredLines()
+    {
+        return $this->_ignoredLines;
+
+    }//end getIgnoredLines()
 
 
     /**
@@ -1103,9 +1208,14 @@ class PHP_CodeSniffer_File
         $currType  = $tokens[$stackPtr]['code'];
         $startLine = $tokens[$stackPtr]['line'];
 
+        // We will need this to restore the value if we end up
+        // returning a token ID that causes our calling function to go back
+        // over already ignored braces.
+        $originalIgnore = $ignore;
+
         // If the start token for this scope opener is the same as
         // the scope token, we have already found our opener.
-        if ($currType === $tokenizer->scopeOpeners[$currType]['start']) {
+        if (in_array($currType, $tokenizer->scopeOpeners[$currType]['start']) === true) {
             $opener = $stackPtr;
         }
 
@@ -1183,7 +1293,7 @@ class PHP_CodeSniffer_File
                         echo '* searching for opener *'.PHP_EOL;
                     }
 
-                    if ($tokenizer->scopeOpeners[$tokenType]['end'] === T_CLOSE_CURLY_BRACKET) {
+                    if (in_array(T_CLOSE_CURLY_BRACKET, $tokenizer->scopeOpeners[$tokenType]['end']) === true) {
                         $oldIgnore = $ignore;
                         $ignore = 0;
                     }
@@ -1198,13 +1308,13 @@ class PHP_CodeSniffer_File
                         $ignore
                     );
 
-                    if ($tokenizer->scopeOpeners[$tokenType]['end'] === T_CLOSE_CURLY_BRACKET) {
+                    if (in_array(T_CLOSE_CURLY_BRACKET, $tokenizer->scopeOpeners[$tokenType]['end']) === true) {
                         $ignore = $oldIgnore;
                     }
                 }//end if
             }//end if start scope
 
-            if ($tokenType === $tokenizer->scopeOpeners[$currType]['start']
+            if (in_array($tokenType, $tokenizer->scopeOpeners[$currType]['start']) == true
                 && $opener === null
             ) {
                 if ($tokenType === T_OPEN_CURLY_BRACKET) {
@@ -1243,7 +1353,7 @@ class PHP_CodeSniffer_File
 
                     $opener = $i;
                 }
-            } else if ($tokenType === $tokenizer->scopeOpeners[$currType]['end']
+            } else if (in_array($tokenType, $tokenizer->scopeOpeners[$currType]['end']) === true
                 && $opener !== null
             ) {
                 if ($ignore > 0 && $tokenType === T_CLOSE_CURLY_BRACKET) {
@@ -1269,6 +1379,9 @@ class PHP_CodeSniffer_File
                     }
 
                     if ($tokenizer->scopeOpeners[$tokens[$stackPtr]['code']]['shared'] === true) {
+                        // As we are going back to where we started originally, restore
+                        // the ignore value back to its original value.
+                        $ignore = $originalIgnore;
                         return $opener;
                     } else {
                         return $i;
@@ -1452,7 +1565,7 @@ class PHP_CodeSniffer_File
                             $tokenizer->scopeOpeners[$thisType]['with']
                         );
 
-                        $sameEnd = ($tokenizer->scopeOpeners[$thisType]['end'] === $tokenizer->scopeOpeners[$tokens[$opener]['code']]['end']);
+                        $sameEnd = ($tokenizer->scopeOpeners[$thisType]['end'][0] === $tokenizer->scopeOpeners[$tokens[$opener]['code']]['end'][0]);
                         if ($isShared === true && $sameEnd === true) {
                             $badToken = $opener;
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -1624,7 +1737,8 @@ class PHP_CodeSniffer_File
      * @param int $stackPtr The position of the declaration token which
      *                      declared the class, interface or function.
      *
-     * @return string The name of the class, interface or function.
+     * @return string|null The name of the class, interface or function.
+     *                     or NULL if the function is a closure.
      * @throws PHP_CodeSniffer_Exception If the specified token is not of type
      *                                   T_FUNCTION, T_CLASS or T_INTERFACE.
      */
@@ -1638,10 +1752,54 @@ class PHP_CodeSniffer_File
             throw new PHP_CodeSniffer_Exception('Token type is not T_FUNCTION, T_CLASS OR T_INTERFACE');
         }
 
+        if ($tokenCode === T_FUNCTION
+            && $this->isAnonymousFunction($stackPtr) === true
+        ) {
+            return null;
+        }
+
         $token = $this->findNext(T_STRING, $stackPtr);
         return $this->_tokens[$token]['content'];
 
     }//end getDeclarationName()
+
+
+    /**
+     * Check if the token at the specified position is a anonymus function.
+     *
+     * @param int $stackPtr The position of the declaration token which
+     *                      declared the class, interface or function.
+     *
+     * @return boolean
+     * @throws PHP_CodeSniffer_Exception If the specified token is not of type
+     *                                   T_FUNCTION
+     */
+    public function isAnonymousFunction($stackPtr)
+    {
+        $tokenCode = $this->_tokens[$stackPtr]['code'];
+        if ($tokenCode !== T_FUNCTION) {
+            throw new PHP_CodeSniffer_Exception('Token type is not T_FUNCTION');
+        }
+
+        if (isset($this->_tokens[$stackPtr]['parenthesis_opener']) === false) {
+            // Something is not right with this function.
+            return false;
+        }
+
+        $name = $this->findNext(T_STRING, ($stackPtr + 1));
+        if ($name === false) {
+            // No name found.
+            return true;
+        }
+
+        $open = $this->_tokens[$stackPtr]['parenthesis_opener'];
+        if ($name > $open) {
+            return true;
+        }
+
+        return false;
+
+    }//end isAnonymousFunction()
 
 
     /**
@@ -1769,6 +1927,7 @@ class PHP_CodeSniffer_File
      *    'is_abstract'     => false,    // true if the abstract keyword was found.
      *    'is_final'        => false,    // true if the final keyword was found.
      *    'is_static'       => false,    // true if the static keyword was found.
+     *    'is_closure'      => false,    // true if no name is found.
      *   );
      * </code>
      *
@@ -1802,6 +1961,7 @@ class PHP_CodeSniffer_File
         $isAbstract     = false;
         $isFinal        = false;
         $isStatic       = false;
+        $isClosure      = $this->isAnonymousFunction($stackPtr);
 
         for ($i = ($stackPtr - 1); $i > 0; $i--) {
             if (in_array($this->_tokens[$i]['code'], $valid) === false) {
@@ -1839,6 +1999,7 @@ class PHP_CodeSniffer_File
                 'is_abstract'     => $isAbstract,
                 'is_final'        => $isFinal,
                 'is_static'       => $isStatic,
+                'is_closure'      => $isClosure,
                );
 
     }//end getMethodProperties()

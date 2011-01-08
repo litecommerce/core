@@ -28,7 +28,7 @@
  * @author    Manuel Pichler <mapi@manuel-pichler.de>
  * @copyright 2007-2008 Manuel Pichler. All rights reserved.
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @version   Release: 1.2.0RC1
+ * @version   Release: 1.2.2
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_CodeSniffer_Sniff
@@ -110,8 +110,8 @@ class Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff implements PHP_Co
 
             if ($code === T_VARIABLE && isset($params[$token['content']]) === true) {
                 unset($params[$token['content']]);
-            } else if ($code === T_DOUBLE_QUOTED_STRING) {
-                // Tokenize double quote string.
+            } else if ($code === T_DOUBLE_QUOTED_STRING || $code === T_HEREDOC) {
+                // Tokenize strings that can contain variables.
                 $strTokens = token_get_all(sprintf('<?php %s;?>', $token['content']));
 
                 foreach ($strTokens as $tok) {

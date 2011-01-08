@@ -27,7 +27,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.2.0RC1
+ * @version   Release: 1.2.2
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
@@ -119,10 +119,10 @@ class Generic_Sniffs_Files_LineLengthSniff implements PHP_CodeSniffer_Sniff
             $lineLength = strlen($lineContent);
             if ($this->absoluteLineLimit > 0 && $lineLength > $this->absoluteLineLimit) {
                 $error = 'Line exceeds maximum limit of '.$this->absoluteLineLimit." characters; contains $lineLength characters";
-                $phpcsFile->addError($error, $stackPtr);
+                $phpcsFile->addError($error, $stackPtr, 'MaxLengthExceeded');
             } else if ($lineLength > $this->lineLimit) {
                 $warning = 'Line exceeds '.$this->lineLimit." characters; contains $lineLength characters";
-                $phpcsFile->addWarning($warning, $stackPtr);
+                $phpcsFile->addWarning($warning, $stackPtr, 'LineTooLong');
             }
         }
 

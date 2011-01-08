@@ -25,7 +25,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.2.0RC1
+ * @version   Release: 1.2.2
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
@@ -88,7 +88,7 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
             $found    = str_replace("\n", '\n', $found);
             $found    = str_replace("\r", '\r', $found);
             $error    = "End of line character is invalid; expected \"$expected\" but found \"$found\"";
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'InvalidEOLChar');
         }
 
     }//end process()

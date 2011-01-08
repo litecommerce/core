@@ -25,7 +25,7 @@ if (class_exists('PHP_CodeSniffer_Tokenizers_PHP', true) === false) {
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.2.0RC1
+ * @version   Release: 1.2.2
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
@@ -47,8 +47,9 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
         $tokens      = parent::tokenizeString('<?php '.$string.' ?>', $eolChar);
         $finalTokens = array();
 
-        $newStackPtr = 0;
-        $numTokens   = count($tokens);
+        $newStackPtr      = 0;
+        $numTokens        = count($tokens);
+        $multiLineComment = false;
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             $token = $tokens[$stackPtr];
 
@@ -60,6 +61,15 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             }
 
             if ($token['code'] === T_COMMENT
+                && substr($token['content'], 0, 2) === '/*'
+            ) {
+                // Multi-line comment. Record it so we can ignore other
+                // comment tags until we get out of this one.
+                $multiLineComment = true;
+            }
+
+            if ($token['code'] === T_COMMENT
+                && $multiLineComment === false
                 && (substr($token['content'], 0, 2) === '//'
                 || $token['content']{0} === '#')
             ) {
@@ -72,13 +82,14 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 array_pop($commentTokens);
 
                 if ($token['content']{0} === '#') {
-                    // The # character is not a comment in CSS files, so determine
-                    // what it means in this context.
+                    // The # character is not a comment in CSS files, so
+                    // determine what it means in this context.
                     $firstContent = $commentTokens[0]['content'];
 
                     // If the first content is just a number, it is probably a
                     // colour like 8FB7DB, which PHP splits into 8 and FB7DB.
-                    if ($commentTokens[0]['code'] === T_LNUMBER
+                    if (($commentTokens[0]['code'] === T_LNUMBER
+                        || $commentTokens[0]['code'] === T_DNUMBER)
                         && $commentTokens[1]['code'] === T_STRING
                     ) {
                         $firstContent .= $commentTokens[1]['content'];
@@ -112,6 +123,17 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 $newStackPtr++;
 
                 foreach ($commentTokens as $tokenData) {
+                    if ($tokenData['code'] === T_COMMENT
+                        && (substr($tokenData['content'], 0, 2) === '//'
+                        || $tokenData['content']{0} === '#')
+                    ) {
+                        // This is a comment in a comment, so it needs
+                        // to go through the whole process again.
+                        $tokens[$stackPtr]['content'] = $tokenData['content'];
+                        $stackPtr--;
+                        break;
+                    }
+
                     $finalTokens[$newStackPtr] = $tokenData;
                     $newStackPtr++;
                 }
@@ -119,15 +141,33 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 continue;
             }//end if
 
+            if ($token['code'] === T_COMMENT 
+                && substr($token['content'], -2) === '*/'
+            ) {
+                // Multi-line comment is done.
+                $multiLineComment = false;
+            }
+
             $finalTokens[$newStackPtr] = $token;
             $newStackPtr++;
         }//end for
+
+        // A flag to indicate if we are inside a style definition,
+        // which is defined using curly braces. I'm assuming you can't
+        // have nested curly brackets.
+        $inStyleDef = false;
 
         $numTokens = count($finalTokens);
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             $token = $finalTokens[$stackPtr];
 
             switch ($token['code']) {
+            case T_OPEN_CURLY_BRACKET:
+                $inStyleDef = true;
+                break;
+            case T_CLOSE_CURLY_BRACKET:
+                $inStyleDef = false;
+                break;
             case T_MINUS:
                 // Minus signs are often used instead of spaces inside
                 // class names, IDs and styles.
@@ -161,7 +201,11 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
                 break;
             case T_COLON:
-                // Find the previous content.
+                // Only interested in colons that are defining styles.
+                if ($inStyleDef === false) {
+                    break;
+                }
+
                 for ($x = ($stackPtr - 1); $x >= 0; $x--) {
                     if (in_array($finalTokens[$x]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
                         break;
@@ -185,6 +229,17 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                         continue;
                     }
 
+                    // Make sure the content isn't empty.
+                    for ($y = ($x + 1); $y < $numTokens; $y++) {
+                        if (in_array($finalTokens[$y]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+                            break;
+                        }
+                    }
+
+                    if ($finalTokens[$y]['code'] === T_CLOSE_PARENTHESIS) {
+                        continue;
+                    }
+
                     // Join all the content together inside the url() statement.
                     $newContent = '';
                     for ($i = ($x + 2); $i < $numTokens; $i++) {
@@ -196,12 +251,14 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                         unset($finalTokens[$i]);
                     }
 
-                    $finalTokens[($x + 1)]['type']     = 'T_URL';
-                    $finalTokens[($x + 1)]['code']     = T_URL;
-                    $finalTokens[($x + 1)]['content'] .= $newContent;
+                    if ($newContent !== '') {
+                        $finalTokens[($x + 1)]['type']     = 'T_URL';
+                        $finalTokens[($x + 1)]['code']     = T_URL;
+                        $finalTokens[($x + 1)]['content'] .= $newContent;
 
-                    $finalTokens = array_values($finalTokens);
-                    $numTokens   = count($finalTokens);
+                        $finalTokens = array_values($finalTokens);
+                        $numTokens   = count($finalTokens);
+                    }
                 }//end if
 
                 break;
@@ -214,6 +271,23 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
         return $finalTokens;
 
     }//end tokenizeString()
+
+
+    /**
+     * Performs additional processing after main tokenizing.
+     *
+     * This method is blank because we don't want the extra
+     * processing that the PHP tokenizer performs.
+     *
+     * @param array  &$tokens The array of tokens to process.
+     * @param string $eolChar The EOL character to use for splitting strings.
+     *
+     * @return void
+     */
+    public function processAdditional(&$tokens, $eolChar)
+    {
+
+    }//end processAdditional()
 
 
 }//end class

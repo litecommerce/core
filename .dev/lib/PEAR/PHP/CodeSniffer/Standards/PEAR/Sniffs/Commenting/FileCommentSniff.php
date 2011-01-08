@@ -39,7 +39,7 @@ if (class_exists('PHP_CodeSniffer_CommentParser_ClassCommentParser', true) === f
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.2.0RC1
+ * @version   Release: 1.2.2
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -328,7 +328,7 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
      *
      * @param int    $commentStart Position in the stack where the comment started.
      * @param int    $commentEnd   Position in the stack where the comment ended.
-     * @param string $comment      The text of the function comment.
+     * @param string $commentText  The text of the function comment.
      *
      * @return void
      */
