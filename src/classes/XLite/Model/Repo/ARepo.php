@@ -1524,6 +1524,19 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * Get detailed foreign keys 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDetailedForeignKeys()
+    {
+        return array();
+    }
+
+    /**
      * Process DB schema 
      * 
      * @param array  $schema Schema
@@ -1536,6 +1549,40 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function processSchema(array $schema, $type)
     {
+        if (\XLite\Core\Database::SCHEMA_UPDATE == $type || \XLite\Core\Database::SCHEMA_CREATE == $type) {
+
+            foreach ($this->getDetailedForeignKeys() as $cell) {
+                if (
+                    is_array($cell)
+                    && isset($cell['fields'])
+                    && is_array($cell['fields'])
+                    && $cell['fields']
+                    && isset($cell['referenceRepo'])
+                    && $cell['referenceRepo']
+                ) {
+                    if (!isset($cell['referenceFields']) || !is_array($cell['referenceFields'])) {
+                        $cell['referenceFields'] = $cell['fields'];
+                    }
+
+                    $pattern = '/(' . $this->_class->getTableName() .'`'
+                    . ' ADD FOREIGN KEY \(`' . implode('`,`', $cell['fields']) . '`\)'
+                    . ' REFERENCES `' . $this->_em->getClassMetadata($cell['referenceRepo'])->getTableName() . '`'
+                    . ' \(`' . implode('`,`', $cell['referenceFields']) . '`\)$)/Ss';
+
+                    $replace = '$1 ON DELETE ' . (isset($cell['delete']) ? strtoupper($cell['delete']) : 'CASCADE');
+
+                    if (isset($cell['update'])) {
+                        $replace .= ' ON UPDATE ' . strtoupper($cell['update']);
+
+                    } elseif (!isset($cell['delete']) || 'CASCADE' == strtoupper($cell['delete'])) {
+                        $replace .= ' ON UPDATE CASCADE';
+                    }
+
+                    $schema = preg_replace($pattern, $replace, $schema);
+                }
+            }
+        }
+
         return $schema;
     }
 }

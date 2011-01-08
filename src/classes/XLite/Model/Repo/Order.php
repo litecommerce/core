@@ -382,7 +382,7 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param \XLite\Core\CommonCell $cnd       Search condition
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *  
-     * @return \Doctrine\ORM\PersistentCollection|int
+     * @return \Doctrine\ORM\PersistentCollection|integer
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

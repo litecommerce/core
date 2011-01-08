@@ -83,8 +83,8 @@ class ViewList extends \XLite\Model\Repo\ARepo
     /**
      * Find class list 
      *
-     * @param string $list  List name
-     * @param string $zone  Current interface name OPTIONAL
+     * @param string $list List name
+     * @param string $zone Current interface name OPTIONAL
      * 
      * @return array
      * @access public
@@ -147,8 +147,8 @@ class ViewList extends \XLite\Model\Repo\ARepo
     /**
      * Define query builder for findClassList()
      *
-     * @param string $list  Class list name
-     * @param string $zone  Current interface name
+     * @param string $list Class list name
+     * @param string $zone Current interface name
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
