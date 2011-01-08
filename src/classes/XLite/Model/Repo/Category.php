@@ -778,32 +778,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Process DB schema 
-     * 
-     * @param array  $schema Schema
-     * @param string $type   Schema type
-     *  
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function processSchema(array $schema, $type)
-    {
-        $schema = parent::processSchema($schema, $type);
-
-        if (\XLite\Core\Database::SCHEMA_UPDATE == $type || \XLite\Core\Database::SCHEMA_CREATE == $type) {
-            $schema = preg_replace(
-                '/(\w+categories` ADD FOREIGN KEY \(`parent_id`\) REFERENCES `\w+categories` \(`category_id`\)$)/Ss',
-                '$1 ON DELETE SET NULL',
-                $schema
-            );
-        }
-
-        return $schema;
-    }
-
-    /**
      * Assemble regular fields from record 
      * 
      * @param array $record  Record
@@ -864,7 +838,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
             } else {
 
-                $rpos =$this->getMaxRightPos();
+                $rpos = $this->getMaxRightPos();
                 $entity->setLpos($rpos + 1);
                 $entity->setRpos($rpos + 2);
             }
@@ -890,4 +864,27 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         return parent::assembleAssociationsFromRecord($record, $assocs);
     }
+
+    /**
+     * Get detailed foreign keys
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDetailedForeignKeys()
+    {
+        $list = parent::getDetailedForeignKeys();
+
+        $list[] = array(
+            'fields'          => array('parent_id'),
+            'referenceRepo'   => 'XLite\Model\Category',
+            'referenceFields' => array('category_id'),
+            'delete'          => 'SET NULL',
+        );
+
+        return $list;
+    }
+
 }

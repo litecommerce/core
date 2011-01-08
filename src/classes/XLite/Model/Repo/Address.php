@@ -86,29 +86,23 @@ class Address extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Process DB schema 
-     * 
-     * @param array  $schema Schema
-     * @param string $type   Schema type
-     *  
+     * Get detailed foreign keys
+     *
      * @return array
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function processSchema(array $schema, $type)
+    protected function getDetailedForeignKeys()
     {
-        $schema = parent::processSchema($schema, $type);
+        $list = parent::getDetailedForeignKeys();
 
-        if (\XLite\Core\Database::SCHEMA_UPDATE == $type || \XLite\Core\Database::SCHEMA_CREATE == $type) {
-            $schema = preg_replace(
-                '/(\w+profile_addresses` ADD FOREIGN KEY \(`profile_id`\) REFERENCES `\w+profiles` \(`profile_id`\)$)/Ss',
-                '$1 ON DELETE CASCADE',
-                $schema
-            );
-        }
+        $list[] = array(
+            'fields'        => array('profile_id'),
+            'referenceRepo' => 'XLite\Model\Profile',
+        );
 
-        return $schema;
+        return $list;
     }
 
 }

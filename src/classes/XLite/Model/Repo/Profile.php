@@ -902,29 +902,24 @@ class Profile extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Process DB schema 
-     * 
-     * @param array  $schema Schema
-     * @param string $type   Schema type
-     *  
+     * Get detailed foreign keys
+     *
      * @return array
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function processSchema(array $schema, $type)
+    protected function getDetailedForeignKeys()
     {
-        $schema = parent::processSchema($schema, $type);
+        $list = parent::getDetailedForeignKeys();
 
-        if (\XLite\Core\Database::SCHEMA_UPDATE == $type || \XLite\Core\Database::SCHEMA_CREATE == $type) {
-            $schema = preg_replace(
-                '/(\w+profiles` ADD FOREIGN KEY \(`order_id`\) REFERENCES `\w+orders` \(`order_id`\)$)/Ss',
-                '$1 ON DELETE SET NULL',
-                $schema
-            );
-        }
+        $list[] = array(
+            'fields'        => array('order_id'),
+            'referenceRepo' => 'XLite\Model\Order',
+            'delete'        => 'SET NULL',
+        );
 
-        return $schema;
+        return $list;
     }
 
     /**
