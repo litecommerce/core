@@ -64,7 +64,7 @@ if (class_exists('PHP_CodeSniffer_CommentParser_ParserException', true) === fals
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.2.0RC1
+ * @version   Release: 1.2.2
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 abstract class PHP_CodeSniffer_CommentParser_AbstractParser
@@ -240,7 +240,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                 );
 
                 $this->words = array_merge($this->words, $words);
-            }
+            }//end if
         }//end foreach
 
         $this->_parseWords();
@@ -266,13 +266,11 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
         $wordWasEmpty    = true;
 
         foreach ($this->words as $wordPos => $word) {
-
             if (trim($word) !== '') {
                 $wordWasEmpty = false;
             }
 
             if ($word{0} === '@') {
-
                 $tag = substr($word, 1);
 
                 // Filter out @ tags in the comment description.
@@ -330,9 +328,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                                             'line' => $this->getLine($wordPos),
                                            );
                     }
-
                 }//end if
-
             }//end if
         }//end foreach
 
@@ -347,7 +343,7 @@ abstract class PHP_CodeSniffer_CommentParser_AbstractParser
                 $numWords = count($this->words);
                 $endPos   = $numWords;
 
-                if ($prevTag === 'package' || $prevTag === 'subpaackage') {
+                if ($prevTag === 'package' || $prevTag === 'subpackage') {
                     // These are single-word tags, so anything after a newline
                     // is really a comment.
                     for ($endPos = $prevTagPos; $endPos < $numWords; $endPos++) {

@@ -23,7 +23,7 @@
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.2.0RC1
+ * @version   Release: 1.2.2
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeSniffer_Sniff
@@ -65,7 +65,7 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
             }
         }
 
-        if ($tokens[$i]['code'] === T_WHITESPACE) {
+        if ($i >= 0 && $tokens[$i]['code'] === T_WHITESPACE) {
             $statementIndent = strlen($tokens[$i]['content']);
         }
 
@@ -116,7 +116,13 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
             }//end if
         }//end for
 
-        // The openning brace needs to be one space away
+        // From here on, we are checking the spacing of the opening and closing
+        // braces. If this IF statement does not use braces, we end here.
+        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
+            return;
+        }
+
+        // The opening brace needs to be one space away
         // from the closing parenthesis.
         if ($tokens[($closeBracket + 1)]['code'] !== T_WHITESPACE) {
             $length = 0;
@@ -125,14 +131,14 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
         }
 
         if ($length !== 1) {
-            $error = "There must be a single space between the closing parenthesis and the openning brace of a multi-line IF statement; found $length spaces";
+            $error = "There must be a single space between the closing parenthesis and the opening brace of a multi-line IF statement; found $length spaces";
             $phpcsFile->addError($error, ($closeBracket + 1));
         }
 
         // And just in case they do something funny before the brace...
         $next = $phpcsFile->findNext(T_WHITESPACE, ($closeBracket + 1), null, true);
         if ($next !== false && $tokens[$next]['code'] !== T_OPEN_CURLY_BRACKET) {
-            $error = 'There must be a single space between the closing parenthesis and the openning brace of a multi-line IF statement';
+            $error = 'There must be a single space between the closing parenthesis and the opening brace of a multi-line IF statement';
             $phpcsFile->addError($error, $next);
         }
 

@@ -26,7 +26,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.2.0RC1
+ * @version   Release: 1.2.2
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Sniff
@@ -78,8 +78,15 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
     {
         $tokens = $phpcsFile->getTokens();
 
+        $ignore = array(
+                   T_DOUBLE_COLON,
+                   T_OBJECT_OPERATOR,
+                   T_FUNCTION,
+                   T_CONST,
+                  );
+
         $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        if (in_array($tokens[$prevToken]['code'], array(T_DOUBLE_COLON, T_OBJECT_OPERATOR, T_FUNCTION)) === true) {
+        if (in_array($tokens[$prevToken]['code'], $ignore) === true) {
             // Not a call to a PHP function.
             return;
         }

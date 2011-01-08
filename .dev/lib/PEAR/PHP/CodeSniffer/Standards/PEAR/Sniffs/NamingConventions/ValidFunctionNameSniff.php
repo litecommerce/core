@@ -30,7 +30,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.2.0RC1
+ * @version   Release: 1.2.2
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
@@ -41,30 +41,28 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
      *
      * @var array
      */
-    private $_magicMethods = array(
-                              'construct',
-                              'destruct',
-                              'call',
-                              'callStatic',
-                              'get',
-                              'set',
-                              'isset',
-                              'unset',
-                              'sleep',
-                              'wakeup',
-                              'toString',
-                              'set_state',
-                              'clone',
-                             );
+    protected $magicMethods = array(
+                               'construct',
+                               'destruct',
+                               'call',
+                               'callStatic',
+                               'get',
+                               'set',
+                               'isset',
+                               'unset',
+                               'sleep',
+                               'wakeup',
+                               'toString',
+                               'set_state',
+                               'clone',
+                              );
 
     /**
      * A list of all PHP magic functions.
      *
      * @var array
      */
-    private $_magicFunctions = array(
-                                'autoload',
-                               );
+    protected $magicFunctions = array('autoload');
 
 
     /**
@@ -89,13 +87,18 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
      */
     protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $currScope)
     {
-        $className  = $phpcsFile->getDeclarationName($currScope);
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
+        if ($methodName === null) {
+            // Ignore closures.
+            return;
+        }
+
+        $className  = $phpcsFile->getDeclarationName($currScope);
 
         // Is this a magic method. IE. is prefixed with "__".
         if (preg_match('|^__|', $methodName) !== 0) {
             $magicPart = substr($methodName, 2);
-            if (in_array($magicPart, $this->_magicMethods) === false) {
+            if (in_array($magicPart, $this->magicMethods) === false) {
                  $error = "Method name \"$className::$methodName\" is invalid; only PHP magic methods should be prefixed with a double underscore";
                  $phpcsFile->addError($error, $stackPtr);
             }
@@ -168,11 +171,15 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
     protected function processTokenOutsideScope(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $functionName = $phpcsFile->getDeclarationName($stackPtr);
+        if ($functionName === null) {
+            // Ignore closures.
+            return;
+        }
 
         // Is this a magic function. IE. is prefixed with "__".
         if (preg_match('|^__|', $functionName) !== 0) {
             $magicPart = substr($functionName, 2);
-            if (in_array($magicPart, $this->_magicFunctions) === false) {
+            if (in_array($magicPart, $this->magicFunctions) === false) {
                  $error = "Function name \"$functionName\" is invalid; only PHP magic methods should be prefixed with a double underscore";
                  $phpcsFile->addError($error, $stackPtr);
             }

@@ -23,7 +23,7 @@
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @version   Release: 1.2.0RC1
+ * @version   Release: 1.2.2
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffer_Sniff
@@ -69,7 +69,9 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         }
 
         // Find the previous non-empty token.
-        $previous = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        $search   = PHP_CodeSniffer_Tokens::$emptyTokens;
+        $search[] = T_BITWISE_AND;
+        $previous = $phpcsFile->findPrevious($search, ($stackPtr - 1), null, true);
         if ($tokens[$previous]['code'] === T_FUNCTION) {
             // It's a function definition, not a function call.
             return;
