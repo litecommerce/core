@@ -62,28 +62,62 @@ class Converter extends AUtils
     }
 
     /**
-     * Parse string into array
+     * Parse arguments array
      *
-     * @param string $query     Query
-     * @param string $glue      char to agglutinate "name" and "value"
-     * @param string $separator char to agglutinate <"name", "value"> pairs
-     * @param string $quotes    char to quote the "value" param
+     * @param array  $args   Array to parse
+     * @param string $glue   Char to agglutinate "name" and "value"
+     * @param string $quotes Char to quote the "value" param
      *
-     * @return string
+     * @return array
      * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
-    public static function parseQuery($query, $glue = '=', $separator = '&', $quotes = '')
+    public static function parseArgs(array $args, $glue = '=', $quotes = '')
     {
         $result = array();
 
-        foreach (explode($separator, $query) as $part) {
+        foreach ($args as $part) {
             if (1 < count($tokens = explode($glue, trim($part)))) {
-                $result[$tokens[0]] = isset($tokens[1]) ? trim($tokens[1], $quotes) : '';
+                $result[$tokens[0]] = trim($tokens[1], $quotes);
             }
         }
 
-        return $result ?: $query;
+        return $result;
+    }
+
+    /**
+     * Parse string into array
+     *
+     * @param string $query     Query
+     * @param string $glue      Char to agglutinate "name" and "value"
+     * @param string $separator Char to agglutinate <"name", "value"> pairs
+     * @param string $quotes    Char to quote the "value" param
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function parseQuery($query, $glue = '=', $separator = '&', $quotes = '')
+    {
+        return static::parseArgs(explode($separator, $query), $glue, $quotes);
+    }
+
+    /**
+     * Remove leading characters from string
+     *
+     * @param string $string string to prepare
+     * @param string $chars  charlist to remove
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function trimLeadingChars($string, $chars)
+    {
+        return ltrim($string, $chars);
     }
 
     /**
@@ -145,4 +179,18 @@ class Converter extends AUtils
         return preg_replace('/(?!:\A)([A-Z])/e', '\'_\' . strtolower(\'\\1\')', $string);
     }
 
+    /**
+     * Prepare file path
+     *
+     * @param string $dir Dir to prepare
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getCanonicalDir($dir)
+    {
+        return static::trimTrailingChars(realpath($dir), LC_DS) . LC_DS;
+    }
 }

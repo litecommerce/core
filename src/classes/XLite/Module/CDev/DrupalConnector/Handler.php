@@ -38,37 +38,6 @@ namespace XLite\Module\CDev\DrupalConnector;
 class Handler extends \XLite\Core\CMSConnector
 {
     /**
-     * Portals (cache)
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $portals = null;
-
-    /**
-     * Portal parameters 
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $portalParams = array();
-
-    /**
-     * Landing link 
-     * 
-     * @var    \XLite\Module\CDev\DrupalConnector\Model\LandingLink
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $landingLink;
-
-
-    /**
      * Return name of current CMS 
      * 
      * @return string
@@ -93,6 +62,112 @@ class Handler extends \XLite\Core\CMSConnector
     }
 
     /**
+     * Method to get raw Drupal request arguments
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getArgs()
+    {
+        return arg();
+    }
+
+    /**
+     * Check if current page is a LC controller
+     *
+     * @param array &$args Request arguments
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isController(array &$args)
+    {
+        return \XLite\Module\CDev\DrupalConnector\Core\Converter::DRUPAL_ROOT_NODE === array_shift($args);
+    }
+
+    /**
+     * Translate Drupal request into LC format
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getLCArgs()
+    {
+        $lcArgs     = array();
+        $drupalArgs = $this->getArgs();
+
+        if ($this->isController($drupalArgs)) {
+
+            foreach (array('target', 'action') as $param) {
+                $lcArgs[$param] = empty($drupalArgs) ? '' : array_shift($drupalArgs);
+            }
+
+            $lcArgs = array_merge($lcArgs, \Includes\Utils\Converter::parseArgs($drupalArgs, '-'), $_POST);
+
+        } else {
+
+            $lcArgs = array('target' => $this->getDefaultTarget());
+        }
+
+        return $lcArgs;
+    }
+
+    /**
+     * Initialization
+     *
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function init()
+    {
+        parent::init();
+
+        $this->mapRequest($this->getLCArgs());
+    }
+
+
+
+    // ---------------------------------  FIXME: to revise
+
+    /**
+     * Portals (cache)
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $portals = null;
+
+    /**
+     * Portal parameters
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $portalParams = array();
+
+    /**
+     * Landing link
+     *
+     * @var    \XLite\Module\CDev\DrupalConnector\Model\LandingLink
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $landingLink;
+
+    /**
      * Get landing link 
      * FIXME
      * 
@@ -115,8 +190,6 @@ class Handler extends \XLite\Core\CMSConnector
 
         return $this->landingLink->getLink();
     }
-
-    // FIXME: to revise
 
     /**
      * Get portals 

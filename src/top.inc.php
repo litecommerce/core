@@ -46,6 +46,7 @@ define('LC_LIB_DIR',           LC_ROOT_DIR . 'lib' . LC_DS);
 define('LC_SKINS_DIR',         LC_ROOT_DIR . 'skins' . LC_DS);
 define('LC_CONFIG_DIR',        LC_ROOT_DIR . 'etc' . LC_DS);
 define('LC_INCLUDES_DIR',      LC_ROOT_DIR . 'Includes' . LC_DS);
+define('LC_MODULES_DIR',       LC_CLASSES_DIR . 'XLite' . LC_DS . 'Module' . LC_DS);
 define('LC_COMPILE_DIR',       LC_VAR_DIR . 'run' . LC_DS);
 define('LC_CLASSES_CACHE_DIR', LC_COMPILE_DIR . 'classes' . LC_DS);
 define('LC_MODEL_CACHE_DIR',   LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Model' . LC_DS);
