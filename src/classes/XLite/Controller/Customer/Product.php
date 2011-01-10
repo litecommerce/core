@@ -48,6 +48,18 @@ class Product extends \XLite\Controller\Customer\Catalog
     protected $params = array('target', 'product_id');
 
     /**
+     * Check whether the title is to be displayed in the content area 
+     * 
+     * @return boolean
+     * @access public
+     * @since  3.0.0
+     */
+    public function isTitleVisible()
+    {
+        return false;
+    }
+
+    /**
      * Common method to determine current location 
      * 
      * @return string
