@@ -13,4 +13,4 @@
  * @ListChild (list="itemsList.product.grid.customer.info.photo", weight="999")
  * @ListChild (list="itemsList.product.list.customer.photo", weight="999")
  *}
-<div class="quicklook"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="quicklook-link quicklook-link-{product.product_id}">&nbsp;</a></div>
+<div class="quicklook"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="quicklook-link quicklook-link-{product.product_id}"><img src="images/spacer.gif" alt="{t(#Quick look#)}" /></a></div>

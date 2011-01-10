@@ -11,8 +11,8 @@
  * @since     3.0.0
  *}
 <div class="product-photo" style="height:{getWidgetMaxHeight()}px; width:{getWidgetMaxWidth()}px">
-  <a href="{getZoomImageURL()}" class="cloud-zoom" id="pimage_{product.product_id}" rel="adjustX: {getZoomAdjustX()}, showTitle: false, tintOpacity: 0.5, tint: '#fff', lensOpacity: 0">
-    <widget class="\XLite\View\Img" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.product_id}" maxWidth="{getWidgetMaxWidth()}" maxHeight="{getWidgetMaxHeight()}" />
+  <a href="{getZoomImageURL()}" class="cloud-zoom" id="pimage_{product.product_id}" rel="adjustX: {getZoomAdjustX()}, showTitle: false, tintOpacity: 0.5, tint: '#fff', lensOpacity: 0" title="{t(#Thumbnail#)}">
+    <widget class="\XLite\View\Img" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.product_id}" maxWidth="{getWidgetMaxWidth()}" maxHeight="{getWidgetMaxHeight()}" alt="{t(#Thumbnail#)}" />
     <widget class="\XLite\View\SaveMark" product="{product}" />
     {displayCommentedData(getJSData())}
   </a>

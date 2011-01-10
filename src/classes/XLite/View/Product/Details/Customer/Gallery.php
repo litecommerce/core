@@ -82,6 +82,23 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
     }
 
     /**
+     * Get list item class attribute
+     * 
+     * @param integer $i Detailed image index
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getListItemClassAttribute($i)
+    {
+        $class = $this->getListItemClass($i);
+
+        return $class ? 'class="' . $class . '"' : '';
+    }
+
+    /**
      * Get list item class name
      * 
      * @param integer $i Detailed image index
@@ -163,6 +180,20 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
         return strpos($this->viewListName, 'quicklook') ? 300 : 330;
     }
 
-
+    /**
+     * Get image alternative text 
+     * 
+     * @param \XLite\Model\Base\Image $image Image
+     * @param integer                 $i     Image index
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAlt(\XLite\Model\Base\Image $image, $i)
+    {
+        return $image->getAlt() ?: \XLite\Core\Translation::lbl('Image X', array('index' => $i));
+    }
 }
 
