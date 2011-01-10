@@ -241,7 +241,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      */
     public static function isCMSStarted()
     {
-        return isset(self::$currentCMS);
+        return isset(static::$currentCMS);
     }
 
     /**
@@ -260,15 +260,16 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     }
 
     /**
-     * Handler should called this function first to prevent any possible conflicts
+     * Initialization
      *
-     * @return void
-     * @access public
+     * @return null
+     * @access public                                           
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function init()
     {
-        self::$currentCMS = $this->getCMSName();
+        static::$currentCMS = $this->getCMSName();
     }
 
     /**
@@ -280,7 +281,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      */
     public function checkCurrentCMS()
     {
-        return $this->getCMSName() === self::$currentCMS;
+        return $this->getCMSName() === static::$currentCMS;
     }
 
     /**
