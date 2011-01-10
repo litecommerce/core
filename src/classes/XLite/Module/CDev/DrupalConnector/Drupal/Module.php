@@ -38,6 +38,97 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
     /**
+     * List of registered portals 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $portals = array();
+
+    /**
+     * For custom modules; ability to add Drupal menu nodes
+     * 
+     * @param array &$menus List of node descriptions
+     *  
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addMenus(array &$menus)
+    {
+    }
+
+    /**
+     * Register a portal
+     *
+     * @param string  $url        Drupal URL
+     * @param string  $controller Controller class name
+     * @param integer $type       Node type
+     *
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function registerPortal($url, $controller, $type = MENU_LOCAL_TASK)
+    {
+        $this->portals[$url] = new \XLite\Module\CDev\DrupalConnector\Model\Portal($url, $controller);
+    }
+
+    /**
+     * Here we can register so called "portals": controllers with custom URLs
+     * 
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function registerPortals()
+    {
+        $this->registerPortal('user/%/orders', '\XLite\Controller\Customer\OrderList');
+    }
+
+    /**
+     * Prepare portals for Drupal hook "menu"
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPortalMenus()
+    {
+        $menus = array();
+
+        foreach ($this->portals as $portal) {
+            $menus[$portal->getURL()] = $portal->getDrupalMenuDescription();
+        }
+
+        return $menus;
+    }
+
+    /**
+     * Prepare list of Drupal menu descriptions (e.g. add portals)
+     *
+     * @param array $menus List to prepare
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareMenus(array $menus)
+    {
+        return $this->getPortalMenus() + $menus;
+    }
+
+
+    // ------------------------------ Drupal hook handlers -
+
+    /**
      * Hook "init" 
      * 
      * @return null
@@ -60,7 +151,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     public function invokeHookMenu()
     {
-        return array(
+        $menus = array(
 
             'admin/modules/lc_connector' => array(
                 'title'            => 'LC Connector',
@@ -78,5 +169,10 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                 'type'             => MENU_CALLBACK,
             ),
         );
+
+        $this->addMenus($menus);
+        $this->registerPortals();
+
+        return $this->prepareMenus($menus);
     }
 }

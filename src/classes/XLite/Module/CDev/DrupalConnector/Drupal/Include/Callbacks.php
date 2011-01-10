@@ -96,3 +96,27 @@ function lcConnectorSubmitWidgetDeleteForm(array &$form, array &$formState)
 {
     return \XLite\Module\CDev\DrupalConnector\Drupal\Admin::getInstance()->submitWidgetDeleteForm($form, $formState);
 }
+
+/**
+ * Get portal title 
+ * 
+ * @return string
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function lcConnectorGetPortalTitle()
+{
+    return 'Test';
+}
+
+/**
+ * Get portal content
+ *
+ * @return string
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function lcConnectorGetPortalContent()
+{
+    return 'Test';
+}
