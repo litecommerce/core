@@ -428,6 +428,7 @@ XLite\Model\LanguageLabel:
   - { name: 'Enter a positive number', translations: [{ code: en, label: 'Enter a positive number' }] }
   - { name: 'Enter a negative number', translations: [{ code: en, label: 'Enter a negative number' }] }
   - { name: 'This field is required', translations: [{ code: en, label: 'This field is required' }] }
+  - { name: 'Image X', translations: [{ code: en, label: 'Image #{{index}}' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }

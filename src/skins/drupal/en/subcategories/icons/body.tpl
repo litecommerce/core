@@ -14,7 +14,7 @@
   <li FOREACH="getSubcategories(),subcategory">
     <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^subcategory.category_id))}">
       <span class="subcategory-icon">
-        <widget class="\XLite\View\Image" image="{subcategory.image}" maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{subcategory.name}" centerImage=1 />
+        <widget class="\XLite\View\Image" image="{subcategory.image}" maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" centerImage=1 />
       </span>
       <span class="subcategory-name">{subcategory.name}</span>
     </a>

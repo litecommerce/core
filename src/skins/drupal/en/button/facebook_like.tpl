@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<iframe src="http://www.facebook.com/plugins/like.php?href={getCurrentURL():u}&amp;layout=standard&amp;show_faces=true&amp;width={getWidth()}&amp;action=like&amp;colorscheme=light&amp;height={getHeight()}" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:{getWidth()}px; height:{getHeight()}px;" allowTransparency="true"></iframe>
+<object data="http://www.facebook.com/plugins/like.php?href={getCurrentURL():u}&amp;layout=standard&amp;show_faces=true&amp;width={getWidth()}&amp;action=like&amp;colorscheme=light&amp;height={getHeight()}" type="text/html" style="border: none 0px; overflow: hidden; width: {getWidth()}px; height: {getHeight()}px;" title="Facebook Like"><p>Facebook Like</p></object>

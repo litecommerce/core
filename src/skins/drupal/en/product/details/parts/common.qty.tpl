@@ -15,4 +15,4 @@
  * @ListChild (list="product.details.quicklook.info.buttons", weight="10")
  * @ListChild (list="product.details.quicklook.info.buttons-added", weight="10")
  *}
-<span class="product-qty">{t(#Qty#)}: <input type="text" value="{product.getMinPurchaseLimit()}" class="quantity field-requred field-integer field-positive field-non-zero" name="amount" /></span>
+<span class="product-qty">{t(#Qty#)}: <input type="text" value="{product.getMinPurchaseLimit()}" class="quantity field-requred field-integer field-positive field-non-zero" name="amount" title="{t(#Quantity#)}" /></span>

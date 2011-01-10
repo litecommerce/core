@@ -157,7 +157,7 @@ class ProductOptions extends \XLite\View\AView
     {
         $list = parent::getJSFiles();
 
-        $list[] = 'modules/ProductOptions/options_validation.js';
+        $list[] = 'modules/CDev/ProductOptions/options_validation.js';
 
         return $list;
     }
