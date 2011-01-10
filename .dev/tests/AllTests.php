@@ -136,6 +136,7 @@ class XLite_Tests_AllTests
     {
         $suite = new XLite_Tests_TestSuite('LiteCommerce - AllTests');
 
+        $deploy = null;
         $includes = false;
         $includeTests = array();
         $excludes = array();
@@ -162,8 +163,6 @@ class XLite_Tests_AllTests
                 $k = array_search('ONLYWEB', $includes);
                 unset($includes[$k]);
             }
-
-            $deploy = null;
 
             if (in_array('DEPLOY_DRUPAL', $includes)) {
                 $deploy = 'Drupal';
@@ -221,6 +220,21 @@ class XLite_Tests_AllTests
         foreach ($iterator as $filePath => $fileObject) {
             if (preg_match($pattern, $filePath, $matches)) {
                 require_once $filePath;
+            }
+        }
+
+        // Include fake classes
+        if (!defined('DEPLOYMENT_TEST')) {
+            $classesDir  = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'FakeClass' . DIRECTORY_SEPARATOR;
+            $pattern     = '/^' . preg_quote($classesDir, '/') . '.+\.php$/Ss';
+
+            $dirIterator = new RecursiveDirectoryIterator($classesDir . DIRECTORY_SEPARATOR);
+            $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
+
+            foreach ($iterator as $filePath => $fileObject) {
+                if (preg_match($pattern, $filePath, $matches)) {
+                    require_once $filePath;
+                }
             }
         }
 
