@@ -16,8 +16,6 @@
  * @since      3.0.0
  */
 
-require_once (__DIR__ . '/../../FakeClass/Model/Shipping.php');
-
 class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
 {
     /**

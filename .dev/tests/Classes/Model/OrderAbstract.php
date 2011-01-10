@@ -26,8 +26,6 @@
  * @since      3.0.0
  */
 
-require_once PATH_TESTS . '/FakeClass/Model/OrderItem.php';
-
 abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
 {
     protected $testOrder = array(
