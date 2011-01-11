@@ -110,7 +110,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
 
         $this->click('//input[@id="place_order_agree"]');
         $this->click('css=.current .button-row button');
-        $this->waitForLocalCondition('selenium.browserbot.getCurrentWindow().location.href.search(/checkoutSuccess/) != -1');
+        $this->waitForLocalCondition('location.href.search(/checkoutSuccess/) != -1');
 
         // Check order
         $ordeid = null;
@@ -144,8 +144,9 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         );
 
         // Title
-        $this->assertElementPresent(
-            "//h1[@id='page-title' and text()='Order #" . $order->getOrderId() . ', ' . $date . "']",
+        $this->assertEquals(
+            'Order #' . $order->getOrderId() . ', ' . $date,
+            $this->getJSExpression('jQuery("#page-title").html()'),
             'check page title'
         );
 

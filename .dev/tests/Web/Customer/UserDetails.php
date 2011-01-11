@@ -26,9 +26,7 @@
  * @since      3.0.0
  */
 
-require_once __DIR__ . '/ACustomer.php';
-
-class XLite_Web_Customer_userDetails extends XLite_Web_Customer_ACustomer
+class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 {
     protected function login($user = 'master', $password = 'master')
     {
@@ -86,9 +84,9 @@ class XLite_Web_Customer_userDetails extends XLite_Web_Customer_ACustomer
             '123'
         );
         $this->waitForLocalCondition(
-            'jQuery("#edit-pass-pass1-wrapper .password-strength .error").html() == "Low"',
+            'jQuery(".form-item-pass-pass1 .password-strength .password-strength-text").html() == "Weak"',
             3000,
-            'check Low label'
+            'check Weak label'
         );
 
         $this->typeKeys(
@@ -96,9 +94,9 @@ class XLite_Web_Customer_userDetails extends XLite_Web_Customer_ACustomer
             '123lakjsdhf'
         );
         $this->waitForLocalCondition(
-            'jQuery("#edit-pass-pass1-wrapper .password-strength .warning").html() == "Medium"',
+            'jQuery(".form-item-pass-pass1 .password-strength .password-strength-text").html() == "Good"',
             3000,
-            'check Medium label'
+            'check Good label'
         );
 
         $this->typeKeys(
@@ -106,34 +104,38 @@ class XLite_Web_Customer_userDetails extends XLite_Web_Customer_ACustomer
             '123lakjsdhf(*&%A'
         );
         $this->waitForLocalCondition(
-            'jQuery("#edit-pass-pass1-wrapper .password-strength .ok").html() == "High"',
+            'jQuery(".form-item-pass-pass1 .password-strength .password-strength-text").html() == "Strong"',
             3000,
-            'check High label'
+            'check Strong label'
         );
 
         // Check password confirm
         $this->typeKeys(
             'css=#edit-pass-pass1',
-            '123'
+            'aaa'
         );
         $this->typeKeys(
             'css=#edit-pass-pass2',
-            '456'
+            'bbb'
         );
+        $this->getJSExpression('jQuery(".form-item-pass-pass2 input").keyup()');
+
         $this->waitForLocalCondition(
-            'jQuery("#edit-pass-pass2-wrapper .password-confirm .error").html() == "No"',
+            'jQuery(".form-item-pass-pass2 .password-confirm .error").html() == "no"',
             3000,
-            'check No label'
+            'check "no" label'
         );
 
         $this->typeKeys(
             'css=#edit-pass-pass2',
-            '123'
+            'aaa'
         );
+        $this->getJSExpression('jQuery(".form-item-pass-pass2 input").keyup()');
+
         $this->waitForLocalCondition(
-            'jQuery("#edit-pass-pass2-wrapper .password-confirm .ok").html() == "Yes"',
+            'jQuery(".form-item-pass-pass2 .password-confirm .ok").html() == "yes"',
             3000,
-            'check Yes label'
+            'check "yes" label'
         );
 
         // Submit wrong password
@@ -142,6 +144,6 @@ class XLite_Web_Customer_userDetails extends XLite_Web_Customer_ACustomer
 
         $this->clickAndWait('css=#edit-submit');
 
-        $this->assertJqueryPresent('#status-messages ul li.error', 'check errors');
+        $this->assertJqueryPresent('.messages.error h2', 'check errors');
     }
 }

@@ -141,7 +141,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
             'master'
         );
         $this->waitInlineProgress('#create_profile_username', 'duplicate username');
-        $this->assertInputErrorPresent('#create_profile_username');
+        $this->assertInputErrorPresent('#create_profile_username', 'profile username is duplicate');
         $this->assertJqueryNotPresent('p.username-verified:visible');
     }
 
@@ -361,7 +361,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->click('css=.current .button-row button');
 
         // Go to shop
-        $this->waitForLocalCondition('selenium.browserbot.getCurrentWindow().location.href.search(/checkoutSuccess/) != -1');
+        $this->waitForLocalCondition('location.href.search(/checkoutSuccess/) != -1');
 
         // Check order
         $ordeid = null;
@@ -602,7 +602,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->typeKeys('//input[@id="create_profile_username"]', $username);
 
         $this->waitInlineProgress('#create_profile_username', 'username');
-        $this->assertInputErrorNotPresent('#create_profile_username');
+        $this->assertInputErrorNotPresent('#create_profile_username', 'profile username is unique');
 
         $this->assertJqueryPresent('p.username-verified:visible');
     }
