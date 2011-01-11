@@ -71,7 +71,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
                 $label = $this->t('This user name is empty');
                 \XLite\Core\Event::invalidElement('username', $label);
 
-            } elseif (user_load(array('name' => \XLite\Core\Request::getInstance()->username))) {
+            } elseif (user_load_by_name(\XLite\Core\Request::getInstance()->username)) {
 
                 // Username is already exists
                 $this->valid = false;
@@ -83,7 +83,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
 
             } elseif (
                 \XLite\Core\Request::getInstance()->email
-                && user_load(array('mail' => \XLite\Core\Request::getInstance()->email))
+                && user_load_multiple(array(), array('mail' => \XLite\Core\Request::getInstance()->email))
             ) {
 
                 // E-mail is already exists in Drupal DB

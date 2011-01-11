@@ -85,14 +85,6 @@ class XLite_Web_Customer_Subcategories extends XLite_Web_Customer_ACustomer
                 "A subcategory has a wrong name ($mode mode)"
             );
 
-            if ($mode=='icons') {
-                $this->assertEquals(
-                    $name,
-                    $listed['imgAlt'],
-                    "A subcategory image has a wrong alt ($mode mode)"
-                );
-            }
-
             $this->open($listed['link']);
             $titleSelector = "h1.title#page-title";
             $this->assertElementPresent(

@@ -39,7 +39,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         $this->openAndWait('store/product//product_id-' . $product->getProductId());
 
         $this->assertElementPresent(
-            "//h1[@id='page-title' and text()='" . $product->getName() . "']",
+            "//h1[@class='fn title' and text()='" . $product->getName() . "']",
             'check name'
         );
 
@@ -140,7 +140,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             'check Add to bag button'
         );
 
-        $facebookSelector = "css=form.product-details .product-details-info .facebook iframe";
+        $facebookSelector = "css=form.product-details .product-details-info .facebook object";
         $this->assertElementPresent(
             $facebookSelector,
             "check Facebook widget"
@@ -148,7 +148,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $url = urlencode($this->getLocation());
         $facebookLink = "http://www.facebook.com/plugins/like.php?href=$url&layout=standard&show_faces=true&width=450&action=like&colorscheme=light&height=24";
-        $iframeLink = $this->getJSExpression('jQuery(".facebook iframe").attr("src")');
+        $iframeLink = $this->getJSExpression('jQuery(".facebook object").attr("data")');
         $this->assertEquals(
             $iframeLink,
             $facebookLink,
