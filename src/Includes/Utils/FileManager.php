@@ -155,9 +155,7 @@ class FileManager extends \Includes\Utils\AUtils
      */
     public static function mkdirRecursive($dir, $mode = 0755)
     {
-        if (!file_exists($dir)) {
-            @mkdir($dir, $mode, true);   
-        }
+        return !file_exists($dir) ? @mkdir($dir, $mode, true) : true;
     }
 
     /**
@@ -183,6 +181,36 @@ class FileManager extends \Includes\Utils\AUtils
             rmdir($dir);
         }
     }
+
+    /**
+     * Copy the whole directory tree
+     * 
+     * @param string $fromDir Catalog FROM which files will be copied
+     * @param string $toDir   Catalog TO which files will be copied
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function copyRecursive($fromDir, $toDir)
+    {
+        if (static::isDir($fromDir)) {
+
+            $filter = new \Includes\Utils\FileFilter($fromDir, null, \RecursiveIteratorIterator::SELF_FIRST);
+
+            foreach ($filter->getIterator() as $file) {
+
+                $filePath = $file->getPathname();
+
+                $newDestination = str_replace($fromDir, $toDir, $filePath);
+
+                $file->isDir() ? \Includes\Utils\FileManager::mkdirRecursive($newDestination) : @copy($filePath, $newDestination);
+
+            }
+        }
+    }
+
 
     /**
      * Return hash of the file

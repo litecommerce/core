@@ -901,9 +901,10 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * Install (with upload) module
+     * Install (with upload) module 
+     * TODO!!!!  refactor with \XLite\Model\PHARModule using. (there must be a specific check procedure)
      * 
-     * @param boolean $overrideExists Ovverride exist module OPTIONAL
+     * @param boolean $overrideExists Override exist module OPTIONAL
      *  
      * @return boolean
      * @access public
@@ -915,11 +916,17 @@ class Module extends \XLite\Model\AEntity
         $result = false;
 
         if (!$this->getModel() || $overrideExists) {
+
             $path = $this->upload();
+
             if ($path) {
+
                 $newPath = LC_CLASSES_DIR . $this->getName() . '.phar';
+
                 rename($path, $newPath);
+
                 $this->getModel()->disableDepended();
+
                 \XLite\Core\Database::getEM()->remove($this->getModel());
                 \XLite\Core\Database::getEM()->flush();
 
@@ -929,7 +936,9 @@ class Module extends \XLite\Model\AEntity
                     $this->getModel(true);
                     $result = true;
                 }
+
             }
+
         }
 
         return $result;

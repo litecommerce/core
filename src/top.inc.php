@@ -51,6 +51,7 @@ define('LC_COMPILE_DIR',       LC_VAR_DIR . 'run' . LC_DS);
 define('LC_CLASSES_CACHE_DIR', LC_COMPILE_DIR . 'classes' . LC_DS);
 define('LC_MODEL_CACHE_DIR',   LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Model' . LC_DS);
 define('LC_PROXY_CACHE_DIR',   LC_MODEL_CACHE_DIR . 'Proxy' . LC_DS);
+define('LC_LOCAL_REPOSITORY',  LC_VAR_DIR . 'addons' . LC_DS);
 
 // Namespaces
 define('LC_NAMESPACE',      'XLite');
