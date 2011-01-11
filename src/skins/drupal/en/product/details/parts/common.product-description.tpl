@@ -12,4 +12,4 @@
  *
  * @ListChild (list="product.details.page.tabs", weight="20")
  *}
-<div class="description product-description">{description:h}</div>
+<div class="description product-description">{product.description:h}</div>
