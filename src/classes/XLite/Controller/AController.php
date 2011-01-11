@@ -715,27 +715,6 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Get AJAX-called viewer 
-     * 
-     * @return \XLite\View\AView
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getAJAXViewer()
-    {
-        $params = array();
-
-        foreach (array(self::PARAM_SILENT, self::PARAM_DUMP_STARTED) as $name) {
-            $params[$name] = $this->get($name);
-        }
-
-        $class = \XLite\Core\Request::getInstance()->widget;
-
-        return new $class($params, $this->getViewerTemplate());
-    }
-
-    /**
      * This function called after template output
      * FIXME - may be there is a better way to handle this?
      * 
