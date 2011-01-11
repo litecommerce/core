@@ -44,6 +44,7 @@ class UploadAddons extends \XLite\View\Button\PopupButton
     const UPLOAD_ADDON_CSS_CLASS    = 'upload-addons';
     const UPLOAD_ADDONS_WIDGET      = 'XLite\View\ModulesManager\UploadAddons';
 
+
     /** 
      * Return content for popup button
      * 
@@ -75,6 +76,22 @@ class UploadAddons extends \XLite\View\Button\PopupButton
     }
 
     /** 
+     * Get a list of JavaScript files required to display the widget properly
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {   
+        $list = parent::getJSFiles();
+
+        $list[] = \XLite\View\ModulesManager\UploadAddons::JS_SCRIPT;
+
+        return $list;
+    }
+
+    /** 
      * getClass 
      * 
      * @return string
@@ -85,4 +102,5 @@ class UploadAddons extends \XLite\View\Button\PopupButton
     {
         return parent::getClass() . ' ' . self::UPLOAD_ADDON_CSS_CLASS;
     }
+
 }

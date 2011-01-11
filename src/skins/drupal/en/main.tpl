@@ -128,9 +128,6 @@
 <!-- [left] -->
 
 <widget class="\XLite\View\TopCategories" />
-{*
-<widget module="CDev\Bestsellers" class="\XLite\Module\CDev\Bestsellers\View\Bestsellers" widgetType="sidebar" />
-*}
 <widget module="CDev\GiftCertificates" template="common/sidebar_box.tpl" head="Gift certificates" dir="modules/GiftCertificates/menu">
 <widget module="CDev\Affiliate" template="common/sidebar_box.tpl" head="Affiliate" dir="modules/Affiliate/menu">
 <widget template="common/sidebar_box.tpl" head="Help" dir="help">

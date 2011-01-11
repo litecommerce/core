@@ -41,7 +41,12 @@ class UploadAddons extends \XLite\View\Dialog
     /**
      * Target that is allowed for Upload Addons widget 
      */
-    const UPLOAD_ADDONS_TARGET = 'upload_addons';
+    const UPLOAD_ADDONS_TARGET  = 'upload_addons';
+
+    /**
+     * Javascript file that is used for multiadd functionality 
+     */
+    const JS_SCRIPT             = 'modules_manager/upload_addons/js/upload_addons.js';
 
 
     /**
@@ -60,6 +65,23 @@ class UploadAddons extends \XLite\View\Dialog
     
         return $result;
     }
+
+    /** 
+     * Get a list of JavaScript files required to display the widget properly
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {   
+        $list = parent::getJSFiles();
+
+        $list[] = self::JS_SCRIPT;
+
+        return $list;
+    }   
+
 
     /**
      * Return title

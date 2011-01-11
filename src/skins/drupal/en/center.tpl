@@ -40,9 +40,6 @@
 
 <!-- [modules] {{{ -->
 <widget module="CDev\DetailedImages" target="product" template="common/dialog.tpl" body="modules/CDev/DetailedImages/body.tpl" head="Detailed Images" IF="{product.detailedImages}">
-{*
-<widget module="CDev\Bestsellers" class="\XLite\Module\CDev\Bestsellers\View\Bestsellers" template="common/dialog.tpl" IF="{!config.Bestsellers.bestsellers_menu}" name="bestsellerswidget">
-*}
 <widget module="CDev\FeaturedProducts" class="\XLite\Module\CDev\FeaturedProducts\View\Customer\FeaturedProducts" template="common/dialog.tpl">
 <widget module="CDev\Promotion" target="checkout" mode="bonusList" template="common/dialog.tpl" body="modules/CDev/Promotion/bonus_list.tpl" head="You qualify for a special offer">
 <widget module="CDev\Promotion" target="checkout" template="common/dialog.tpl" body="modules/CDev/Promotion/coupon_failed.tpl" head="The discount coupon cannot be used" mode="couponFailed">

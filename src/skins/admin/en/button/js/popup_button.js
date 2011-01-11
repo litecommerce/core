@@ -15,14 +15,12 @@ jQuery(document).ready(
   function() {
     jQuery('.popup-button').each(
       function () {
-
         var button;
-
         button = this;
+
         jQuery(this).click(
           function () {
             var urlParams;
-
             urlParams = core.getCommentedData(button, 'url_params');
 
             return !popup.load(

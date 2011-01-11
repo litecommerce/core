@@ -356,21 +356,36 @@ class Module extends \XLite\Model\Repo\ARepo
         foreach ($list as $key) {
 
             list($author, $name) = explode('\\', $key);
-            $module = $this->findOneByAuthorAndName($author, $name);
+
+            $module = $this->findOneBy(
+                array(
+                    'author' => $author, 
+                    'name'   => $name,
+                )
+            );
 
             if ($module) {
+
                 if ($module->getEnabled()) {
+
                     $module->disableDepended();
+
                     $needRebuild = true;
+
                 }
+
                 $this->uninstallEmergency($module);
+
                 $changed = true;
             }
         }
 
         if ($changed) {
+
             \XLite\Core\Database::getEM()->flush();
+
             if ($needRebuild) {
+
                 \XLite::setCleanUpCacheFlag(true);
             }
         }
