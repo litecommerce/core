@@ -46,13 +46,15 @@ BODY.PopUp {
         BACKGROUND-COLOR: #FFFFFF;
 }
 
-a:link,
-a:visited,
-a:hover,
-a:active
-{
+a {
   color: #2c5fa6;
   text-decoration: underline;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Trebuchet MS", Helvetica, Sans-serif;  
 }
 
 h1 {
@@ -60,12 +62,11 @@ h1 {
   font-weight: normal;
   line-height: 36px;
   margin-bottom: 20px;
-  font-family: "Trebuchet MS", Helvetica, Sans-serif;  
   color: #69a4c9;
 }
 
-H2 {
-  font-size: 13px;
+h2 {
+  font-size: 20px;
 }
 
 H3 {
