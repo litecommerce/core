@@ -259,12 +259,26 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             }
 
         } catch (\Exception $exception) {
+
+            try {
+                $location = preg_replace('/[\/\\&\?:]/Ss', '-', $this->getLocation());
+                file_put_contents(
+                    LC_ROOT_DIR . 'var/log/selenium.' . $location . '.' . date('Ymd-His') . '.html',
+                    '<!--' . PHP_EOL
+                    . 'Exception: ' . $exception->getMessage() . ';' . PHP_EOL
+                    . 'Back trace: ' . var_export(\XLite\Core\Operator::getInstance()->getBackTrace(), true) . PHP_EOL
+                    . '-->' . PHP_EOL . $this->getHtml()
+                );
+
+            } catch (\RuntimeException $e) {
+            }
+
             try {
                 $this->stop();
 
             } catch (\RuntimeException $e) {
-                throw $e;
             }
+
             throw $exception;
         }
     }
