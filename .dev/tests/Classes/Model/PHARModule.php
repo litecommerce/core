@@ -136,10 +136,81 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
 
     public function testDeploy()
     {
+        // Deploying only classes directory module
+        @copy($this->getFile('test_module.phar'), LC_LOCAL_REPOSITORY . 'test_module.phar');
+
+        $phar = new \XLite\Model\PHARModule('test_module.phar');
+
+        $status = $phar->check();
+
+        $this->assertEquals('ok', $status, 'Good module must be validated');
+
+        $phar->deploy();
+
+        $phar->cleanUp();
+
+        $dir = LC_CLASSES_DIR . 'XLite' . LC_DS . 'Module' . LC_DS . 'CDev' . LC_DS . 'Good';
+
+        $this->assertTrue(is_dir($dir), 'Classes catalog was not created');
+
+        $files = array(
+            'CHANGELOG',
+            'Main.php',
+            'install.php',
+            'install.yaml',
+        );
+
+        foreach ($files as $file) {
+            $this->assertTrue(is_file($dir . LC_DS . $file));
+        }
+
+        \Includes\Utils\FileManager::unlinkRecursive($dir);
+
+        @unlink(LC_LOCAL_REPOSITORY . 'test_module.phar');
     }
+
+    public function testDeploy2()
+    {
+        // Deploying classes and skins directories module
+        @copy($this->getFile('test_module2.phar'), LC_LOCAL_REPOSITORY . 'test_module2.phar');
+
+        $phar = new \XLite\Model\PHARModule('test_module2.phar');
+
+        $status = $phar->check();
+
+        $this->assertEquals('ok', $status, 'new Bestsellers module must be validated');
+
+        $phar->deploy();
+
+        $phar->cleanUp();
+
+        $classesDir = LC_CLASSES_DIR . 'XLite' . LC_DS . 'Module' . LC_DS . 'TestAuthor';
+
+        $skins = array(
+            LC_SKINS_DIR . 'admin' . LC_DS . 'en' . LC_DS . 'modules' . LC_DS . 'TestAuthor',
+            LC_SKINS_DIR . 'drupal' . LC_DS . 'en' . LC_DS . 'modules' . LC_DS . 'TestAuthor',
+        );
+
+        $this->assertTrue(is_dir($classesDir . LC_DS . 'Bestsellers'), 'Classes catalog was not created');
+
+        foreach ($skins as $skin) {
+            $this->assertTrue(is_dir($skin . LC_DS . 'Bestsellers'), $skin . ' was not created');
+        }
+
+        \Includes\Utils\FileManager::unlinkRecursive($classesDir);
+
+        foreach ($skins as $skin) {
+            \Includes\Utils\FileManager::unlinkRecursive($skin);
+        }
+
+        @unlink(LC_LOCAL_REPOSITORY . 'test_module2.phar');
+    }
+
 
     public function testCleanUp()
     {
+
+
     }
 
 }
