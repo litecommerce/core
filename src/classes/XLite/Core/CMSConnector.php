@@ -123,24 +123,6 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     }
 
     /**
-     * Return ID of LC profile associated with the passed ID of CMS profile
-     * 
-     * @param integer $cmsUserId CMS profile ID
-     *  
-     * @return integer 
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getProfileIdByCMSId($cmsUserId)
-    {
-        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
-            ->findOneByCMSId($this->getProfileDBFields($cmsUserId));
-
-        return $profile ? $profile->getProfileId() : null;
-    }
-
-    /**
      * getCleanURLTargets 
      * 
      * @return array
@@ -427,6 +409,42 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     public function prepareProfileData($cmsUserId, array $data)
     {
         return $this->getProfileDBFields($cmsUserId) + $data;
+    }
+
+    /**
+     * Return ID of LC profile associated with the passed ID of CMS profile
+     *
+     * @param integer $cmsUserId CMS profile ID
+     *
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProfileIdByCMSId($cmsUserId)
+    {
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
+            ->findOneByCMSId($this->getProfileDBFields($cmsUserId));
+
+        return $profile ? $profile->getProfileId() : null;
+    }
+
+    /**
+     * Return ID of CMS profile associated with the passed ID of LC profile
+     *
+     * @param integer $lcUserId LC profile ID
+     *
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCMSIdByProfileId($lcUserId)
+    {
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
+            ->find($lcUserId);
+
+        return $profile ? $profile->getCMSProfileId() : null;
     }
 
     /**
