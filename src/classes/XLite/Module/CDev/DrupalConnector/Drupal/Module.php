@@ -47,6 +47,22 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected $portals = array();
 
+
+    /**
+     * Constructor
+     * 
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function __construct()
+    {
+        parent::__construct();
+
+        $this->registerPortals();
+    }
+
     /**
      * For custom modules; ability to add Drupal menu nodes
      * 
@@ -66,6 +82,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      *
      * @param string  $url        Drupal URL
      * @param string  $controller Controller class name
+     * @param string  $title      Portal title
      * @param integer $type       Node type
      *
      * @return null
@@ -73,9 +90,9 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function registerPortal($url, $controller, $type = MENU_LOCAL_TASK)
+    protected function registerPortal($url, $controller, $title = '', $type = MENU_LOCAL_TASK)
     {
-        $this->portals[$url] = new \XLite\Module\CDev\DrupalConnector\Model\Portal($url, $controller);
+        $this->portals[$url] = new \XLite\Module\CDev\DrupalConnector\Model\Portal($url, $controller, $title, $type);
     }
 
     /**
@@ -88,7 +105,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected function registerPortals()
     {
-        $this->registerPortal('user/%/orders', '\XLite\Controller\Customer\OrderList');
+        $this->registerPortal('user/%/orders', '\XLite\Controller\Customer\OrderList', 'Order history');
     }
 
     /**
@@ -123,6 +140,21 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     protected function prepareMenus(array $menus)
     {
         return $this->getPortalMenus() + $menus;
+    }
+
+    /**
+     * Check if there is a portal corresponding to the passed path
+     * 
+     * @param string $path Druapl path to check
+     *  
+     * @return \XLite\Module\CDev\DrupalConnector\Model\Portal|null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPortal($path)
+    {
+        return isset($this->portals[$path]) ? $this->portals[$path] : null;
     }
 
 
@@ -170,8 +202,8 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             ),
         );
 
+        // For developers' purposes
         $this->addMenus($menus);
-        $this->registerPortals();
 
         return $this->prepareMenus($menus);
     }

@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,42 +26,31 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\CDev\DrupalConnector\Controller;
+namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 
 /**
- * Abstract controller 
+ * OrderList 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class AController extends \XLite\Controller\AController implements \XLite\Base\IDecorator
+class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\Base\IDecorator
 {
     /**
-     * Return Viewer object
+     * Get order ID from Drupal URL
      * 
-     * @return \XLite\View\Controller
-     * @access public
+     * @param string $path Portal path
+     * @param array  $args Druapl URL arguments
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getViewer()
+    protected static function getOrderIdFromDrupalArgs($path, array $args)
     {
-        $viewer = parent::getViewer();
-
-        if (
-            $this->isAJAXViewer()
-            && \XLite\Core\Request::getInstance()->widgetConfId
-            && \XLite\Module\CDev\DrupalConnector\Handler::isCMSStarted()
-        ) {
-            $data = \XLite\Module\CDev\DrupalConnector\Drupal\Model::getInstance()
-                ->getBlock(\XLite\Core\Request::getInstance()->widgetConfId);
-
-            if ($data && isset($data['options']) && is_array($data['options'])) {
-                $viewer->setWidgetParams($data['options']);
-            }
-        }
-
-        return $viewer;
+        return 'user/%/orders' === $path && !empty($args[1]) ? array('user_id' => $args[1]) : array();
     }
 
     /**
@@ -78,21 +67,6 @@ abstract class AController extends \XLite\Controller\AController implements \XLi
      */
     public static function getPortalLCArgs($path, array $args = array(), array $pageArgs = array())
     {
-        return array('target' => static::getTargetByClassName()) + $pageArgs;
-    }
-
-    /**
-     * Argument convertion: <LC> --> <DRUPAL>
-     *
-     * @param array $args LC URL arguments
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getPortalDrupalArgs(array $args = array())
-    {
-        \Includes\ErrorHandler::fireError('"' . __METHOD__ . '" must be redeclared in derived class');
+        return parent::getPortalLCArgs($path, $args, $pageArgs) + static::getOrderIdFromDrupalArgs($path, $args);
     }
 }

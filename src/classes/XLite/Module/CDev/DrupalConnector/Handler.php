@@ -62,6 +62,18 @@ class Handler extends \XLite\Core\CMSConnector
     }
 
     /**
+     * Get landing link
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLandingLink()
+    {
+    }
+
+    /**
      * Method to get raw Drupal request arguments
      *
      * @return array
@@ -75,7 +87,33 @@ class Handler extends \XLite\Core\CMSConnector
     }
 
     /**
-     * Check if current page is a LC controller
+     * Check if current page is an LC portal
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPortal()
+    {
+        $result = array(null, null, array());
+        $item   = menu_get_item();
+
+        if ($item && !empty($item['path'])) {
+
+            $result[0] = \XLite\Module\CDev\DrupalConnector\Drupal\Module::getInstance()->getPortal($item['path']);
+
+            if ($result[0]) {
+                $result[1] = $item['path'];
+                $result[2] = empty($item['page_arguments']) ? array() : $item['page_arguments'];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Check if current page is an LC controller
      *
      * @param array &$args Request arguments
      *
@@ -90,6 +128,62 @@ class Handler extends \XLite\Core\CMSConnector
     }
 
     /**
+     * Return portal arguments
+     *
+     * @param \XLite\Module\CDev\DrupalConnector\Model\Portal $portal   Portal model object
+     * @param string                                          $path     Portal path
+     * @param array                                           $args     Drupal URL arguments
+     * @param array                                           $pageArgs Drupal page arguments
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPortalArgs(
+        \XLite\Module\CDev\DrupalConnector\Model\Portal $portal,
+        $path,
+        array $args,
+        array $pageArgs = array()
+    ) {
+        return $portal->getLCArgs($path, $args, \Includes\Utils\Converter::parseArgs($pageArgs), '-');
+    }
+
+    /**
+     * Return controller arguments
+     *
+     * @param array $args Drupal URL arguments
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getControllerArgs(array $args)
+    {
+        $result = array();
+
+        foreach (array('target', 'action') as $param) {
+            $result[$param] = empty($args) ? '' : array_shift($args);
+        }
+
+        return array_merge($result, \Includes\Utils\Converter::parseArgs($args, '-'), $_POST);
+    }
+
+    /**
+     * Return default arguments
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultArgs()
+    {
+        return array('target' => $this->getDefaultTarget());
+    }
+
+    /**
      * Translate Drupal request into LC format
      *
      * @return array
@@ -99,23 +193,28 @@ class Handler extends \XLite\Core\CMSConnector
      */
     protected function getLCArgs()
     {
-        $lcArgs     = array();
-        $drupalArgs = $this->getArgs();
+        $result = array();
+        $args   = $this->getArgs();
 
-        if ($this->isController($drupalArgs)) {
+        list($portal, $path, $pageArgs) = $this->getPortal();
+        
+        if ($portal) {
 
-            foreach (array('target', 'action') as $param) {
-                $lcArgs[$param] = empty($drupalArgs) ? '' : array_shift($drupalArgs);
-            }
+            // Portal (LC controller with custom URL)
+            $result += $this->getPortalArgs($portal, $path, $args, $pageArgs);
 
-            $lcArgs = array_merge($lcArgs, \Includes\Utils\Converter::parseArgs($drupalArgs, '-'), $_POST);
+        } elseif ($this->isController($args)) {
+
+            // Regular LC controller
+            $result += $this->getControllerArgs($args);
 
         } else {
 
-            $lcArgs = array('target' => $this->getDefaultTarget());
+            // Non-LC page
+            $result += $this->getDefaultArgs();
         }
 
-        return $lcArgs;
+        return $result;
     }
 
     /**
@@ -145,7 +244,7 @@ class Handler extends \XLite\Core\CMSConnector
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $portals = null;
+/*    protected $portals = null;
 
     /**
      * Portal parameters
@@ -155,7 +254,7 @@ class Handler extends \XLite\Core\CMSConnector
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $portalParams = array();
+/*    protected $portalParams = array();
 
     /**
      * Landing link
@@ -165,7 +264,7 @@ class Handler extends \XLite\Core\CMSConnector
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $landingLink;
+/*    protected $landingLink;
 
     /**
      * Get landing link 
@@ -176,7 +275,7 @@ class Handler extends \XLite\Core\CMSConnector
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getLandingLink()
+/*    public function getLandingLink()
     {
         if (!isset($this->landingLink)) {
             \XLite\Core\Database::getRepo('XLite\Module\CDev\DrupalConnector\Model\LandingLink')->removeExpired();
@@ -199,7 +298,7 @@ class Handler extends \XLite\Core\CMSConnector
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getPortals()
+/*    public function getPortals()
     {
         if (is_null($this->portals)) {
             $this->definePortals();
@@ -216,7 +315,7 @@ class Handler extends \XLite\Core\CMSConnector
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function definePortals()
+/*    protected function definePortals()
     {
         $this->portals = array(
             /*
@@ -233,7 +332,7 @@ class Handler extends \XLite\Core\CMSConnector
                 'argumentsPreprocessor' => array($this, 'getOrdersArgPreprocess'),
             ),
             */
-            'user/%/orders' => array(
+/*            'user/%/orders' => array(
                 'menu'   => array(
                     'title'            => 'Orders history',
                     'access callback'  => 'lc_connector_user_access',
@@ -297,7 +396,7 @@ class Handler extends \XLite\Core\CMSConnector
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isPortal($target)
+/*    public function isPortal($target)
     {
         return false !== $this->getPortalKey($target);
     }
@@ -314,7 +413,7 @@ class Handler extends \XLite\Core\CMSConnector
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getPortalPrefix($target, $action, array &$params)
+/*    public function getPortalPrefix($target, $action, array &$params)
     {
         $key = $this->getPortalKey($target);
         $portals = $this->getPortals();
@@ -383,7 +482,7 @@ class Handler extends \XLite\Core\CMSConnector
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getPortalKey($target)
+/*    protected function getPortalKey($target)
     {
         $result = false;
 
@@ -408,7 +507,7 @@ class Handler extends \XLite\Core\CMSConnector
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getAddressesURLPrefix()
+/*    public function getAddressesURLPrefix()
     {
         $uid = user_uid_optional_to_arg('%');
         
@@ -427,7 +526,7 @@ class Handler extends \XLite\Core\CMSConnector
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getOrdersURLPrefix()
+/*    public function getOrdersURLPrefix()
     {
         $uid = user_uid_optional_to_arg('%');
 
@@ -446,7 +545,7 @@ class Handler extends \XLite\Core\CMSConnector
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getOrderURLPrefix()
+/*    public function getOrderURLPrefix()
     {
         $result = $this->getOrdersURLPrefix();
 
@@ -469,7 +568,7 @@ class Handler extends \XLite\Core\CMSConnector
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getInvoiceURLPrefix()
+/*    public function getInvoiceURLPrefix()
     {
         $result = $this->getOrderURLPrefix();
 
@@ -488,7 +587,7 @@ class Handler extends \XLite\Core\CMSConnector
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getOrdersArgPreprocess(array $args)
+/*    public function getOrdersArgPreprocess(array $args)
     {
         $result = array();
 
@@ -510,7 +609,7 @@ class Handler extends \XLite\Core\CMSConnector
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getOrderArgPreprocess(array $args)
+/*    public function getOrderArgPreprocess(array $args)
     {
         $result = $this->getOrdersArgPreprocess($args);
 
@@ -527,7 +626,7 @@ class Handler extends \XLite\Core\CMSConnector
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getWishlistURLPrefix()
+/*    public function getWishlistURLPrefix()
     {
         $uid = user_uid_optional_to_arg('%');
 
@@ -536,5 +635,5 @@ class Handler extends \XLite\Core\CMSConnector
             $uid,
             'wishlist',
         );
-    }
+    }*/
 }
