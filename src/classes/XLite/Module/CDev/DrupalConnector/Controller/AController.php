@@ -84,15 +84,16 @@ abstract class AController extends \XLite\Controller\AController implements \XLi
     /**
      * Argument convertion: <LC> --> <DRUPAL>
      *
-     * @param array $args LC URL arguments
+     * @param string $path Drupal path
+     * @param array  $args LC URL arguments
      *
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getPortalDrupalArgs(array $args = array())
+    public static function getPortalDrupalArgs($path, array $args = array())
     {
-        \Includes\ErrorHandler::fireError('"' . __METHOD__ . '" must be redeclared in derived class');
+        return $path . (empty($args) ? '' : ('/' . \Includes\Utils\Converter::buildQuery($args, '-', '/')));
     }
 }

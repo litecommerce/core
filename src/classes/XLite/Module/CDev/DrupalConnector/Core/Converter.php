@@ -71,17 +71,10 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
             // Standalone URL
             $result = parent::buildURL($target, $action, $params, $interface);
 
-        // FIXME - to remove
-        /*} elseif (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->isPortal($target)) {
+        } elseif ($portal = \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getPortalByTarget($target)) {
 
             // Drupal URL (portal)
-            $result = \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getPortalPrefix($target, $action, $params);
-
-            if ($params) {
-                $result .= '/' . \Includes\Utils\Converter::buildQuery($params, '-', '/');
-            }
-
-            $result = self::normalizeDrupalURL($result);*/
+            $result = static::normalizeDrupalURL($portal->getDrupalArgs($target, $action, $params));
 
         } else {
 
@@ -133,7 +126,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      */
     public static function buildDrupalURL($target = '', $action = '', array $params = array())
     {
-        return self::normalizeDrupalURL(self::buildDrupalPath($target, $action, $params));
+        return static::normalizeDrupalURL(self::buildDrupalPath($target, $action, $params));
     }
 
     /**

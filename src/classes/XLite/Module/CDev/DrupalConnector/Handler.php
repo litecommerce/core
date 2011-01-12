@@ -218,6 +218,45 @@ class Handler extends \XLite\Core\CMSConnector
     }
 
     /**
+     * Get portal object by path
+     * 
+     * @param string $path Path to compare
+     *  
+     * @return \XLite\Module\CDev\DrupalConnector\Model\Portal
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPortalByPath($path)
+    {
+        return \XLite\Module\CDev\DrupalConnector\Drupal\Module::getInstance()->getPortal($path);
+    }
+
+    /**
+     * Get portal object by target
+     * 
+     * @param string $target Target to search
+     *  
+     * @return \XLite\Module\CDev\DrupalConnector\Model\Portal
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPortalByTarget($target)
+    {
+        $class = \XLite\Core\Converter::getControllerClass($target);
+
+        $portals = array_filter(
+            \XLite\Module\CDev\DrupalConnector\Drupal\Module::getInstance()->getPortals(),
+            function (\XLite\Module\CDev\DrupalConnector\Model\Portal $portal) use ($class) {
+                return $portal->getController() === $class;
+            }
+        );
+
+        return is_array($portals) ? array_shift($portals) : null;
+    }
+
+    /**
      * Initialization
      *
      * @return null

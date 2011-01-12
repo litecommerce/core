@@ -143,6 +143,19 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     }
 
     /**
+     * Getter
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPortals()
+    {
+        return $this->portals;
+    }
+
+    /**
      * Check if there is a portal corresponding to the passed path
      * 
      * @param string $path Druapl path to check

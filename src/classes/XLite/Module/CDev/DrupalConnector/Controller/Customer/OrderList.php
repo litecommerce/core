@@ -38,6 +38,32 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\Base\IDecorator
 {
     /**
+     * getProfileId 
+     * 
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getProfileId()
+    {
+        return intval(\XLite\Core\Request::getInstance()->profile_id);
+    }
+
+    /**
+     * Check if current page is the "Order history" portal
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function isPortal()
+    {
+        return (bool) \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getPortalByPath('user/%/orders');
+    }
+
+    /**
      * Get order ID from Drupal URL
      * 
      * @param string $path Portal path
@@ -50,7 +76,7 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
      */
     protected static function getOrderIdFromDrupalArgs($path, array $args)
     {
-        return 'user/%/orders' === $path && !empty($args[1]) ? array('user_id' => $args[1]) : array();
+        return static::isPortal() && !empty($args[1]) ? array('profile_id' => $args[1]) : array();
     }
 
     /**
@@ -68,5 +94,37 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
     public static function getPortalLCArgs($path, array $args = array(), array $pageArgs = array())
     {
         return parent::getPortalLCArgs($path, $args, $pageArgs) + static::getOrderIdFromDrupalArgs($path, $args);
+    }
+
+    /**
+     * Argument convertion: <LC> --> <DRUPAL>
+     *
+     * @param string $path Drupal path
+     * @param array  $args LC URL arguments
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getPortalDrupalArgs($path, array $args = array())
+    {
+        return preg_replace('/\%/', static::getProfileId(), parent::getPortalDrupalArgs($path, $args), 1);
+    }
+
+    /**
+     * Initialization
+     *
+     * @return null
+     * @access public
+     * @since  3.0.0
+     */
+    public function init()
+    {
+        parent::init();
+
+        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS() && static::isPortal()) {
+            drupal_set_title(t('Order history'));
+        }
     }
 }

@@ -152,9 +152,9 @@ abstract class Handler extends \XLite\Base
     /**
      * Initialize handler
      *
-     * @return void
+     * @return null
      * @access public
-     * @since  3.0.0 EE
+     * @since  3.0.0
      */
     public function init()
     {
