@@ -29,7 +29,7 @@
 namespace XLite\View\ModulesManager;
 
 /**
- * Modules modify widget
+ * Addons search and installation widget
  *
  * @package XLite
  * @see     ____class_see____
@@ -37,8 +37,13 @@ namespace XLite\View\ModulesManager;
  *
  * @ListChild (list="admin.center", zone="admin")
  */
-class Manage extends \XLite\View\Dialog
+class Install extends \XLite\View\Dialog
 {
+    /**
+     * Marketplace URL
+     */
+    const MARKETPLACE_URL = 'https://www.litecommerce.com/marketplace';
+
     /**
      * Return list of targets allowed for this widget
      *
@@ -50,7 +55,7 @@ class Manage extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-        $result[] = 'modules';
+        $result[] = 'addons_list';
     
         return $result;
     }
@@ -82,7 +87,7 @@ class Manage extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'Manage Add-ons';
+        return 'Install new Add-ons';
     }
 
     /**
@@ -94,7 +99,7 @@ class Manage extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'modules_manager' . LC_DS . 'manage';
+        return 'modules_manager' . LC_DS . 'install';
     }
 
 }

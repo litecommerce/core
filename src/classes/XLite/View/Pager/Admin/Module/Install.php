@@ -26,75 +26,53 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\ModulesManager;
+namespace XLite\View\Pager\Admin\Module;
 
 /**
- * Modules modify widget
- *
+ * Pager for the orders search page
+ * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0
- *
- * @ListChild (list="admin.center", zone="admin")
+ * @since   3.0.0
  */
-class Manage extends \XLite\View\Dialog
+class Install extends \XLite\View\Pager\Admin\Module\AModule
 {
     /**
-     * Return list of targets allowed for this widget
+     * Check if pages list is visible or not
      *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = 'modules';
-    
-        return $result;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'modules_manager' . LC_DS . 'common.css';
-        $list[] = $this->getDir() . LC_DS . 'style.css';
-
-        return $list;
-    }
-
-    /**
-     * Return title
-     *
-     * @return string
+     * @return boolean
      * @access protected
      * @since  3.0.0
      */
-    protected function getHead()
+    protected function isPagesListVisible()
     {
-        return 'Manage Add-ons';
+        return parent::isPagesListVisible() && 'search' === \XLite\Core\Request::getInstance()->mode;
     }
 
     /**
-     * Return templates directory name
+     * isItemsPerPageVisible
      *
-     * @return string
+     * @return boolean
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDir()
+    protected function isItemsPerPageVisible()
     {
-        return 'modules_manager' . LC_DS . 'manage';
+        return parent::isItemsPerPageVisible() && 'search' === \XLite\Core\Request::getInstance()->mode;
+    }
+
+    /**
+     * getItemsPerPageDefault
+     *
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getItemsPerPage()
+    {
+        return 'search' === \XLite\Core\Request::getInstance()->mode ? 10 : 5;
     }
 
 }

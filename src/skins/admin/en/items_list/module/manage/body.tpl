@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Modules
+ * Modules list
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,7 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-{***
 <script type="text/javascript">
 var confirmNotes = [];
 confirmNotes['uninstall'] = '{t(#Are you sure you want to uninstall this add-on?#)}';
@@ -20,7 +19,7 @@ confirmNotes['disable']   = '{t(#Are you sure you want to disable this add-on?#)
 var dependedAlert = '{t(#The following dependent add-ons will be automatically disabled:#)}';
 var depends = [];
 
-<!-- 
+<!--
 function confirmNote(action, id)
 {
 
@@ -31,20 +30,14 @@ function confirmNote(action, id)
       extraTxt += depends[id][i] + "\n";
     }
   }
-  
+
   return confirmNotes[action]
     ? confirm(confirmNotes[action] + extraTxt)
     : confirm('{t(#Are you sure?#)}');
 }
 -->
 </script>
-***}
 
-{displayViewListContent(#modules.manage.buttons#)}
-
-<br /><br />
-
-{***
 <div class="modules-filters">
 
   <div class="tags">
@@ -59,11 +52,17 @@ function confirmNote(action, id)
   <div class="clear"></div>
 
 </div>
-***}
 
-{* Display add-ons list *}
-<widget class="\XLite\View\ItemsList\Module\Manage" />
+<form action="admin.php" method="post" name="modules_form_{key}" class="modules-list">
+  <input type="hidden" name="target" value="modules">
+  <input type="hidden" name="action" value="update">
+  <input type="hidden" name="module_type" value="{key}" />
 
-{***
-<div IF="getModulesCount(getFilter())=0">{t(#No modules found#)}</div>
-***}
+  <table cellspacing="0" cellpadding="0" class="items-list data-table modules-list">
+
+    <tr FOREACH="getPageData(),idx,module" class="{getRowClass(idx,##,#TableRow#)}{if:!module.getEnabled()} disabled{end:}">
+      {displayListPart(#columns#,_ARRAY_(#module#^module))}
+    </tr>
+
+  </table>
+</form>

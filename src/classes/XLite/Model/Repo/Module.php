@@ -38,6 +38,22 @@ namespace XLite\Model\Repo;
 class Module extends \XLite\Model\Repo\ARepo
 {
     /**
+     * Allowable search params 
+     */
+    const P_SUBSTRING    = 'substring';
+    const P_TAG          = 'tag';
+    const P_ORDER_BY     = 'orderBy';
+    const P_LIMIT        = 'limit';
+    const P_PRICE_FILTER = 'priceFilter';
+    const P_STATUS       = 'status';
+
+    /**
+     * Price criteria 
+     */
+    const PRICE_FREE = 'free';
+    const PRICE_PAID = 'paid';
+
+    /**
      * Repository type 
      * 
      * @var    string
@@ -104,6 +120,257 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
+     * Return list of handling search params 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHandlingSearchParams()
+    {
+        return array(
+            self::P_SUBSTRING,
+            self::P_TAG,
+            self::P_ORDER_BY,
+            self::P_LIMIT,
+            self::P_PRICE_FILTER,
+            self::P_STATUS,
+        );
+    }
+
+    /**
+     * Return conditions parameters that are responsible for substring set of fields.
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSubstringSearchFields()
+    {
+        return array(
+            'm.moduleName',
+            'm.description',
+        );
+    }
+
+    /**
+     * Check if param can be used for search
+     * 
+     * @param string $param Name of param to check
+     *  
+     * @return boolean 
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isSearchParamHasHandler($param)
+    {
+        return in_array($param, $this->getHandlingSearchParams());
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndLimit(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
+    {
+        call_user_func_array(array($this, 'assignFrame'), array_merge(array($queryBuilder), $value));
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndSubstring(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
+    {
+        $searchWords = $this->getSearchWords($value);
+
+        $cnd = new \Doctrine\ORM\Query\Expr\Orx();
+
+        foreach ($this->getSubstringSearchFields() as $field) {
+
+            foreach ($searchWords as $index => $word) {
+
+                // Collect OR expressions
+                $cnd->add($field . ' LIKE :word' . $index);
+
+                $queryBuilder->setParameter('word' . $index, '%' . $word . '%');
+
+            }
+        }
+
+        $queryBuilder->andWhere($cnd);
+    }
+
+    /**
+     * Return search words for "All" and "Any" INCLUDING parameter
+     *
+     * @param string $value Search string
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSearchWords($value)
+    {
+        $value = trim($value);
+
+        $result = array();
+
+        if (preg_match_all('/"([^"]+)"/', $value, $match)) {
+
+            $result = $match[1];
+
+            $value = str_replace($match[0], '', $value);
+
+        }
+
+        return array_merge(
+            (array)$result,
+            array_map(
+                'trim',
+                explode(' ', $value)
+            )
+        );
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndTag(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
+    {
+    }
+
+    /**
+     * prepareCndOrderBy 
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
+     * @param mixed                      $value        Searchable value
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        list($sort, $order) = $value;
+
+        $queryBuilder->addOrderBy($sort, $order);
+
+        // FIXME: to remove after implementation of the manage addons page via items list
+        $this->defaultOrderBy = array();
+    }
+
+    /**
+     * prepareCndOrderBy
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
+     * @param mixed                      $value        Searchable value
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndPriceFilter(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        if (self::PRICE_FREE === $value) {
+            $queryBuilder->andWhere($queryBuilder->expr()->eq('m.price', 0));
+        } elseif (self::PRICE_PAID === $value) {
+            $queryBuilder->andWhere($queryBuilder->expr()->gt('m.price', 0));
+        }
+    }
+
+    /**
+     * prepareCndStatus
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
+     * @param mixed                      $value        Searchable value
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndStatus(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        $queryBuilder->andWhere('m.status = :status')->setParameter('status', $value);
+    }
+
+    /**
+     * Call corresponded method to handle a search condition
+     * 
+     * @param mixed                      $value        Condition data
+     * @param string                     $key          Condition name
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder)
+    {
+        if ($this->isSearchParamHasHandler($key)) {
+            $this->{'prepareCnd' . ucfirst($key)}($queryBuilder, $value);
+        } else {
+            // TODO - add logging here
+        }
+    }
+
+    /**
+     * Common search
+     * 
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param boolean                $countOnly Return items list or only its size OPTIONAL
+     *  
+     * @return \Doctrine\ORM\PersistentCollection|integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
+    {
+        $queryBuilder = $this->createQueryBuilder();
+
+        $this->currentSearchCnd = $cnd;
+
+        foreach ($this->currentSearchCnd as $key => $value) {
+            $this->callSearchConditionHandler($value, $key, $queryBuilder);
+        }
+
+        $result = $queryBuilder->getQuery()->getResult();
+
+        return $countOnly ? count($result) : $result;
+    }
+
+    /**
      * Find all modules
      * 
      * @return array
@@ -132,7 +399,13 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     public function findInactiveModules()
     {
-        return $this->findByEnabled(false);
+        return $this->createQueryBuilder()
+            ->andWhere('m.enabled = :enabled')
+            ->andWhere('m.installed = :installed')
+            ->setParameter('enabled', false)
+            ->setParameter('installed', true)
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -157,7 +430,7 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Find all modules as names list
+     * Find all installed modules as names list
      * 
      * @return array
      * @access public
@@ -334,18 +607,6 @@ class Module extends \XLite\Model\Repo\ARepo
 
                 $module = new \XLite\Model\Module();
                 $module->create($name, $author);
-                if ($module::INSTALLED == $module->getInstalled()) {
-                    /* FIXME - obsolete code
-                    \XLite\Core\TopMessage::getInstance()->add(
-                        $module->getMainClass()->getPostInstallationNotes()
-                    );
-                    */
-
-                } else {
-                    \XLite\Core\TopMessage::getInstance()->addError(
-                        'The X module has been installed incorrectly. Please see the logs for more information'
-                    );
-                }
 
                 \XLite\Core\Database::getEM()->persist($module);
                 $changed = true;
@@ -368,7 +629,7 @@ class Module extends \XLite\Model\Repo\ARepo
 
                 if ($module->getEnabled()) {
 
-                    $module->disableDepended();
+                    $module->disable();
 
                     $needRebuild = true;
 
@@ -402,7 +663,9 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     protected function defineAllModulesQuery()
     {
-        return $this->createQueryBuilder();
+        return $this->createQueryBuilder()
+            ->andWhere('m.installed = :installed')
+            ->setParameter('installed', true);
     }
 
     /**
@@ -415,7 +678,9 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     protected function defineAllNamesQuery()
     {
-        return $this->createQueryBuilder();
+        return $this->createQueryBuilder()
+            ->andWhere('m.installed = :installed')
+            ->setParameter('installed', true);
     }
 
     /**
