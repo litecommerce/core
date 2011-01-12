@@ -83,8 +83,16 @@ class Modules extends \XLite\Controller\Admin\AAdmin
             ? ' <i>(' . $upgradablesCount . ')</i>'
             : '';
         
-        $this->addQuickLink($this->t('Manage add-ons') . $upgradablesLabel, $this->buildURL('modules'), true);
-        $this->addQuickLink($this->t('Install new add-ons'), $this->buildURL('install_addons'));
+        $this->addQuickLink(
+            $this->t('Manage add-ons') . $upgradablesLabel,
+            $this->buildURL('modules'),
+            true
+        );
+
+        $this->addQuickLink(
+            $this->t('Install new add-ons'),
+            $this->buildURL('addons_list', '', array('mode' => 'featured'))
+        );
     }
 
     /**

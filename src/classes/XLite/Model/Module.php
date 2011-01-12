@@ -41,7 +41,10 @@ namespace XLite\Model;
  *          @UniqueConstraint (name="an", columns={"author","name"})
  *      },
  *      indexes={
- *          @Index (name="enabled", columns={"enabled"})
+ *          @Index (name="enabled", columns={"enabled"}),
+ *          @Index (name="date", columns={"date"}),
+ *          @Index (name="downloads", columns={"downloads"}),
+ *          @Index (name="rating", columns={"rating"})
  *      }
  * )
  * @HasLifecycleCallbacks
@@ -49,24 +52,13 @@ namespace XLite\Model;
 class Module extends \XLite\Model\AEntity
 {
     /**
-     * Installed statuses
-     * TODO: to revise
-     */
-
-    const NOT_INSTALLED     = 0;
-    const INSTALLED         = 1;
-    const INSTALLED_WO_SQL  = 2;
-    const INSTALLED_WO_PHP  = 3;
-    const INSTALLED_WO_CTRL = 4;
-
-    /**
      * Remote status
      */
     const NOT_EXIST = 0;
     const EXISTS    = 1;
-    const OBSOLETE  = 2;
 
     const UPLOAD_CODE_LENGTH = 32;
+    const MARKETPLACE_URL = 'https://www.litecommerce.com/marketplace';
 
     /**
      * Module id 
@@ -128,7 +120,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @Column (type="boolean")
      */
-    protected $installed = self::NOT_INSTALLED;
+    protected $installed = false;
 
     /**
      * Status
@@ -173,6 +165,18 @@ class Module extends \XLite\Model\AEntity
      * @Column (type="string", length=255)
      */
     protected $authorName = '';
+
+    /**
+     * Order creation timestamp
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="integer")
+     */
+    protected $date = 0;
 
     /**
      * Version
@@ -228,6 +232,17 @@ class Module extends \XLite\Model\AEntity
      * @Column (type="decimal", precision=14, scale=2)
      */
     protected $price = 0;
+
+    /**
+     * Price
+     *
+     * @var    float
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="boolean")
+     */
+    protected $purchased = false;
 
     /**
      * Currency code
@@ -360,6 +375,19 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
+     * Check if the module is free
+     *
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isFree()
+    {
+        return 0 >= $this->getPrice();
+    }
+
+    /**
      * Get external page URL
      *
      * @return string
@@ -370,6 +398,19 @@ class Module extends \XLite\Model\AEntity
     public function getPageURL()
     {
         return sprintf($this->pageURL, $this->getPath());
+    }
+
+    /**
+     * Get author page URL
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAuthorPageURL()
+    {
+        return sprintf($this->pageURL, $this->getAuthor());
     }
 
     /**
@@ -429,25 +470,6 @@ class Module extends \XLite\Model\AEntity
         $path = LC_MODULES_DIR . $name . LC_DS . 'install.yaml';
         if (file_exists($path)) {
             \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::addFixtureToList($path);
-        }
-
-        // Install SQL dump
-        $path = LC_MODULES_DIR . $name . LC_DS . 'install.sql';
-
-        if (file_exists($path)) {
-            try {
-                \XLite\Core\Database::getInstance()->importSQLFromFile($path);
-
-            } catch (\InvalidArgumentException $exception) {
-
-                \XLite\Logger::getInstance()->log($exception->getMessage(), PEAR_LOG_ERR);
-                $status = self::INSTALLED_WO_SQL;
-
-            } catch (\PDOException $exception) {
-
-                \XLite\Logger::getInstance()->log($exception->getMessage(), PEAR_LOG_ERR);
-                $status = self::INSTALLED_WO_SQL;
-            }
         }
 
         $class = $this->getMainClass();
@@ -613,7 +635,7 @@ class Module extends \XLite\Model\AEntity
         $status = true;
 
         // Check installed status
-        if (self::INSTALLED != $this->getInstalled()) {
+        if (!$this->getInstalled()) {
             $status = false;
         }
 
@@ -671,7 +693,6 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Create module
-     * TODO: to test this, when author code changes are implemented
      * 
      * @param string $name   Module code (class)
      * @param string $author Module author (code)
@@ -683,53 +704,12 @@ class Module extends \XLite\Model\AEntity
      */
     public function create($name = null, $author = null)
     {
-        // Seet common properties
+        // Set common properties
         $this->setName($name);
         $this->setAuthor($author);
-        $this->setInstalled(self::NOT_INSTALLED);
+        $this->setInstalled(true);
         $this->setEnabled(false);
 
-        $status = self::INSTALLED;
-
-        $mainClass = $this->getMainClass();
-
-        if ($mainClass) {
-
-        } else {
-            $status = self::INSTALLED_WO_CTRL;
-        }
-
-        $errorMessage = null;
-
-        switch ($status) {
-            case self::INSTALLED:
-                $errorMessage = 'The X module has been installed successfully';
-                break;
-
-            case self::INSTALLED_WO_SQL:
-                $errorMessage = 'The X module has been installed with errors: the DB has not been modified correctly';
-                break;
-
-            case self::INSTALLED_WO_PHP:
-                $errorMessage = 'The X module has been installed incorrectly. Please see the logs for more information';
-                break;
-
-            case self::INSTALLED_WO_CTRL:
-                $errorMessage = 'The X module has been installed, but the module has a wrong module control class';
-                break;
-
-            default:
-
-        }
-
-        if ($errorMessage) {
-            \XLite\Logger::getInstance()->log(
-                \XLite\Core\Translation::lbl($errorMessage, array('module' => $name)),
-                PEAR_LOG_ERR
-            );
-        }
-
-        $this->setInstalled($status);
         \XLite\Core\Database::getEM()->persist($this);
         \XLite\Core\Database::getEM()->flush();
     }

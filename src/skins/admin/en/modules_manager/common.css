@@ -1,0 +1,120 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Modules modify page styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+.modules-list .dependencies,
+.modules-list .status
+{
+  white-space: nowrap;
+}
+
+.modules-list td.active {
+  text-align: center;
+}
+
+.modules-list td.enabled {
+  font-weight: bold;
+}
+
+.modules-list a {
+  text-decoration: underline;
+  color: #0055bd;
+}
+
+table.modules-list tr td {
+  padding: 20px;
+  border-top: solid 1px #e5e5e5;
+  border-bottom: 0;
+  border-right: 0;
+  border-left: 0;
+  vertical-align: top;
+}
+
+table.modules-list tr.disabled td {
+  background-color: #f2f2f2;
+}
+
+table.modules-list div.name {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+table.modules-list div.description {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+table.modules-list tr.disabled div.name,
+table.modules-list tr.disabled div.actions span
+{
+  color: #8f8f8f;
+}
+
+table.modules-list div.version {
+  font-size: 12px;
+  color: #5c88a8;
+  margin-bottom: 10px;
+}
+
+table.modules-list div.author {
+  font-size: 12px;
+  color: #5c88a8;
+  margin-bottom: 10px;
+}
+
+table.modules-list div.actions {
+  margin-bottom: 10px;
+}
+
+table.modules-list div.actions a,
+table.modules-list div.actions span
+{
+  margin-right: 20px;
+  font-size: 14px;
+}
+
+table.modules-list div.dependencies {
+  color: #5c88a8;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+table.modules-list div.dependencies ul {
+  margin: 5px 0 5px 5px;
+}
+
+table.modules-list div.dependencies ul li {
+  padding: 3px 0;
+
+}
+
+table.modules-list tr.disabled div.module-name {
+  color: #a3a3a3;
+  white-space: nowrap;
+}
+
+table.modules-list div.upgrade-note {
+  border: solid 1px #a8d6a5;
+  padding: 10px;
+  background: #e4f7e4;
+  margin: 0;
+  font-size: 14px;
+  width: 90%;
+}
+
+table.modules-list div.module-url {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+table.modules-list div.icon-container {
+  position: relative;
+}

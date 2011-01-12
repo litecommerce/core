@@ -12,13 +12,13 @@
  *}
 
 <div class="items-list widgetclass-{getWidgetClass()} widgettarget-{getWidgetTarget()} sessioncell-{getSessionCell()}">
-  <div class="list-pager">{pager.display()}</div>
+  <div IF="pager.isVisible()" class="list-pager">{pager.display()}</div>
 
   <div IF="isHeaderVisible()" class="list-header">{displayViewListContent(#itemsList.admin.header#)}</div>
 
   <widget template="{getPageBodyTemplate()}" />
 
-  <div class="list-pager">{pager.display()}</div>
+  <div IF="pager.isVisible()" class="list-pager">{pager.display()}</div>
 
   <p /><div IF="isFooterVisible()" class="list-footer">{displayViewListContent(#itemsList.admin.footer#)}</div>
 
