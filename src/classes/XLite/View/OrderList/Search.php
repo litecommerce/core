@@ -148,7 +148,11 @@ class Search extends \XLite\View\OrderList\AOrderList
 
         $cnd = $cnd ?: new \XLite\Core\CommonCell();
 
-        if (!$this->getProfile()->isAdmin()) {
+        if ($this->getProfile()->isAdmin()) {
+            if (!empty(\XLite\Core\Request::getInstance()->profile_id)) {
+                $cnd->profileId = \XLite\Core\Request::getInstance()->profile_id;
+            }   
+        } else {
             $cnd->profileId = $this->getProfile()->getProfileId();
         }
 

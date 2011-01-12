@@ -93,8 +93,14 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      */
     public function checkAccess()
     {
-        return parent::checkAccess()
-            && $this->auth->isLogged();
+        $auth = \XLite\Core\Auth::getInstance();
+
+        return parent::checkAccess() 
+            && $auth->isLogged() 
+            && (
+                $auth->getProfile()->isAdmin() 
+                || $auth->getProfile()->getProfileId() == \XLite\Core\Request::getInstance()->userId
+            );
     }
 
     /**

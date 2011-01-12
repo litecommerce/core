@@ -82,19 +82,6 @@ class Portal extends \XLite\Base\SuperClass
 
 
     /**
-     * Return portal default title callback
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getTitleCallback()
-    {
-        return 'lcConnectorGetControllerTitle';
-    }
-
-    /**
      * Return portal default page content callback
      *
      * @return string
@@ -118,6 +105,19 @@ class Portal extends \XLite\Base\SuperClass
     protected function getAccessCallback()
     {
         return 'lc_connector_check_controller_access';
+    }
+
+    /**
+     * Get default portal type 
+     * 
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultType()
+    {
+        return defined('MENU_LOCAL_TASK') ? MENU_LOCAL_TASK : 132;
     }
 
     /**
@@ -210,7 +210,6 @@ class Portal extends \XLite\Base\SuperClass
     {
         return array(
             'title'           => $this->getTitle(),
-            'title callback'  => $this->getTitleCallback(),
             'page callback'   => $this->getContentCallback(),
             'access callback' => $this->getAccessCallback(),
             'type'            => $this->getType(),
@@ -231,34 +230,29 @@ class Portal extends \XLite\Base\SuperClass
      */
     public function getLCArgs($path, array $args = array(), array $pageArgs = array())
     {
-        return call_user_func_array(array($this->getController(), 'getPortalLCArgs'), array($path, $args, $pageArgs));
+        return call_user_func_array(
+            array($this->getController(), 'getPortalLCArgs'),
+            array($path, $args, $pageArgs)
+        );
     }
 
     /**
      * Argument convertion: <LC> --> <DRUPAL>
      *
-     * @param array $args LC URL arguments
+     * @param string $target Current target
+     * @param string $action Current action
+     * @param array  $args   LC URL arguments
      *
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getDrupalArgs(array $args = array())
+    public function getDrupalArgs($target, $action, array $args = array())
     {
-        return call_user_func_array(array($this->getController(), 'getPortalDrupalArgs'), array($args));
-    }
-
-    /**
-     * Get default portal type 
-     * 
-     * @return integer
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDefaultType()
-    {
-        return defined('MENU_LOCAL_TASK') ? MENU_LOCAL_TASK : 132;
+        return call_user_func_array(
+            array($this->getController(), 'getPortalDrupalArgs'),
+            array($this->getURL(), $args + (empty($action) ? array() : array('action' => $action)))
+        );
     }
 }
