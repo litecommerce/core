@@ -78,7 +78,7 @@ class Portal extends \XLite\Base\SuperClass
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $type = MENU_LOCAL_TASK;
+    protected $type;
 
 
     /**
@@ -133,7 +133,7 @@ class Portal extends \XLite\Base\SuperClass
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct($url, $controller, $title = '', $type = MENU_LOCAL_TASK)
+    public function __construct($url, $controller, $title = '', $type = null)
     {
         // Check if we can replace second argument to the "\XLite\Controller\Customer\ACustomer"
         if (!is_subclass_of($controller, '\XLite\Controller\AController')) {
@@ -143,7 +143,7 @@ class Portal extends \XLite\Base\SuperClass
         $this->url        = $url;
         $this->controller = $controller;
         $this->title      = $title;
-        $this->type       = $type;
+        $this->type       = isset($type) ? $type : $this->getDefaultType();
     }
 
     /**
@@ -247,5 +247,18 @@ class Portal extends \XLite\Base\SuperClass
     public function getDrupalArgs(array $args = array())
     {
         return call_user_func_array(array($this->getController(), 'getPortalDrupalArgs'), array($args));
+    }
+
+    /**
+     * Get default portal type 
+     * 
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultType()
+    {
+        return defined('MENU_LOCAL_TASK') ? MENU_LOCAL_TASK : 132;
     }
 }
