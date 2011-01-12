@@ -101,6 +101,10 @@ if (!defined('INCLUDE_ONLY_TESTS') || !preg_match('/DEPLOY_/', constant('INCLUDE
     PHPUnit_Util_Filter::addDirectoryToFilter(PATH_SRC . '/var/run/classes/XLite/Model/Proxy');
 }
 
+foreach (glob(LC_ROOT_DIR . 'var/log/selenium.*.html') as $f) {
+    @unlink($f);
+}
+
 /**
  * Class to run all the tests
  * 
