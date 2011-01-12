@@ -61,6 +61,16 @@ class Portal extends \XLite\Base\SuperClass
     protected $controller;
 
     /**
+     * Portal title 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $title = '';
+
+    /**
      * Portal type for Drupal
      * 
      * @var    integer
@@ -72,19 +82,6 @@ class Portal extends \XLite\Base\SuperClass
 
 
     /**
-     * Return portal default title
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getTitle()
-    {
-        return '';
-    }
-
-    /**
      * Return portal default title callback
      *
      * @return string
@@ -94,7 +91,7 @@ class Portal extends \XLite\Base\SuperClass
      */
     protected function getTitleCallback()
     {
-        return 'lcConnectorGetPortalTitle';
+        return 'lcConnectorGetControllerTitle';
     }
 
     /**
@@ -107,7 +104,7 @@ class Portal extends \XLite\Base\SuperClass
      */
     protected function getContentCallback()
     {
-        return 'lcConnectorGetPortalContent';
+        return 'lcConnectorGetControllerContent';
     }
 
     /**
@@ -128,6 +125,7 @@ class Portal extends \XLite\Base\SuperClass
      * 
      * @param string  $url        Drupal URL
      * @param string  $controller Controller class name
+     * @param string  $title      Portal title
      * @param integer $type       Node type
      *  
      * @return null
@@ -135,7 +133,7 @@ class Portal extends \XLite\Base\SuperClass
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct($url, $controller, $type = MENU_LOCAL_TASK)
+    public function __construct($url, $controller, $title = '', $type = MENU_LOCAL_TASK)
     {
         // Check if we can replace second argument to the "\XLite\Controller\Customer\ACustomer"
         if (!is_subclass_of($controller, '\XLite\Controller\AController')) {
@@ -144,6 +142,7 @@ class Portal extends \XLite\Base\SuperClass
 
         $this->url        = $url;
         $this->controller = $controller;
+        $this->title      = $title;
         $this->type       = $type;
     }
 
@@ -171,6 +170,19 @@ class Portal extends \XLite\Base\SuperClass
     public function getController()
     {
         return $this->controller;
+    }
+
+    /**
+     * Return portal default title
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**
@@ -203,5 +215,37 @@ class Portal extends \XLite\Base\SuperClass
             'access callback' => $this->getAccessCallback(),
             'type'            => $this->getType(),
         );
+    }
+
+    /**
+     * Argument convertion: <DRUPAL> --> <LC>
+     *
+     * @param string $path     Portal path 
+     * @param array  $args     Druapl URL arguments
+     * @param array  $pageArgs LC-specific URL arguments
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLCArgs($path, array $args = array(), array $pageArgs = array())
+    {
+        return call_user_func_array(array($this->getController(), 'getPortalLCArgs'), array($path, $args, $pageArgs));
+    }
+
+    /**
+     * Argument convertion: <LC> --> <DRUPAL>
+     *
+     * @param array $args LC URL arguments
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDrupalArgs(array $args = array())
+    {
+        return call_user_func_array(array($this->getController(), 'getPortalDrupalArgs'), array($args));
     }
 }

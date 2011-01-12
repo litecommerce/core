@@ -94,6 +94,21 @@ abstract class AController extends \XLite\Core\Handler
 
 
     /**
+     * Get target by controller class name
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getTargetByClassName()
+    {
+        $parts = explode('\\', get_called_class());
+
+        return \Includes\Utils\Converter::convertFromCamelCase(lcfirst(array_pop($parts)));
+    }
+
+    /**
      * Check if current page is accessible
      *
      * @return boolean 
@@ -255,6 +270,7 @@ abstract class AController extends \XLite\Core\Handler
         // Ability to define last element in path via short function
         $params = (array) $this->getLocation();
 
+        // FIXME - check this
         if ($params) {
             call_user_func_array(array('static', 'addLocationNode'), $params);
         }
@@ -663,7 +679,7 @@ abstract class AController extends \XLite\Core\Handler
     protected function setSilenceClose($flag = true)
     {
         if (\XLite\Core\Request::getInstance()->isAJAX()) {
-            $this->silenceClose = (bool)$flag;
+            $this->silenceClose = (bool) $flag;
         }
     }
 
@@ -1206,8 +1222,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getCurrentCurrency()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Currency')
-            ->find(840);
+        return \XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840);
     }
 
     /**
