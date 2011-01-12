@@ -136,7 +136,7 @@ class PHARModule extends \XLite\Base
 
                 $result = $this->deployToTemp();
 
-            } catch (Exception $e) {
+            } catch (UnexpectedValueException $e) {
 
                 $this->error = $e->getMessage();
             }
@@ -167,7 +167,6 @@ class PHARModule extends \XLite\Base
             if (self::STATUS_OK === $result) {
 
                 $result = $this->checkIniFile();
-
 
                 if (self::STATUS_OK === $result) {
 
@@ -409,7 +408,7 @@ class PHARModule extends \XLite\Base
             foreach ($this->getRequiredFields() as $field) {
                 if (
                     !isset($specification[$field])
-                    && !empty($specification[$field])
+                    || empty($specification[$field])
                 ) {
                     $result = self::STATUS_WRONG_SPECIFICATION;
                 }
