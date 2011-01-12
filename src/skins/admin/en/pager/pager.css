@@ -92,6 +92,9 @@ div.pager-items-total {
 }
 
 div.pager-items-total input.page-length {
+  border-color: #7f7f7f #cbcbcb #cbcbcb #7f7f7f;
+  border-style: solid;
+  border-width: 1px;
+  text-align: center;
   width: 2em;
-  text-align: right;
 }
