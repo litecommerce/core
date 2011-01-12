@@ -238,13 +238,29 @@ class Operator extends \XLite\Base\Singleton
      */
     public function getBackTrace($slice = 0)
     {
+        return $this->prepareBackTrace(debug_backtrace(false), $slice);
+    }
+
+    /**
+     * Prepare back trace raw data
+     * 
+     * @param array   $backTrace Back trace raw data
+     * @param integer $slice     Trace slice count OPTIONAL
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function prepareBackTrace(array $backTrace, $slice = 0)
+    {
         $patterns = array_keys($this->filesRepositories);
         $placeholders = preg_replace('/^(.+)$/Ss', '<\1>/', array_values($this->filesRepositories));
 
         $slice = max(0, $slice) + 1;
 
         $trace = array();
-        foreach (debug_backtrace(false) as $l) {
+        foreach ($backTrace as $l) {
             if (0 < $slice) {
                 $slice--;
                 continue;
