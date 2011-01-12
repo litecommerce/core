@@ -35,30 +35,8 @@ namespace XLite\Controller\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Order extends \XLite\Controller\Customer\ACustomer
+class Order extends \XLite\Controller\Customer\Base\Order
 {
-    /**
-     * Controller parameters
-     * FIXME - to remove
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $params = array('target', 'order_id');
-
-    /**
-     * Order (cache)
-     * 
-     * @var    \XLite\Model\Order
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $order;
-
-
     /**
      * Return the current page title (for the content area)
      * 
@@ -68,23 +46,7 @@ class Order extends \XLite\Controller\Customer\ACustomer
      */
     public function getTitle()
     {
-        return 'Order #' . $this->getOrder()->getOrderId()
-            . ', ' . date('M d, Y, H:i', $this->getOrder()->getDate());
-    }
-
-    /**
-     * Add the base part of the location path
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function addBaseLocation()
-    {
-        parent::addBaseLocation();
-
-        $this->addLocationNode('Search orders', $this->buildURL('order_list'));
+        return 'Order #' . $this->getOrderId() . ', ' . date('M d, Y, H:i', $this->getOrder()->getDate());
     }
 
     /**
@@ -98,85 +60,5 @@ class Order extends \XLite\Controller\Customer\ACustomer
     protected function getLocation()
     {
         return 'Order details';
-    }
-
-    /**
-     * Check if current page is accessible
-     * 
-     * @return boolean 
-     * @access public
-     * @since  3.0.0
-     */
-    public function checkAccess()
-    {
-        return parent::checkAccess() && $this->checkOrderAccess();
-    }
-
-    /**
-     * Check controller visibility
-     *
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isVisible()
-    {
-        return !is_null($this->getOrder());
-    }
-
-    /**
-     * Check order access 
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function checkOrderAccess()
-    {
-        $access = false;
-        $auth = \XLite\Core\Auth::getInstance();
-        if ($auth->isLogged()) {
-            // Not valid order is processed in isValid() method
-            $access = !$this->getOrder()
-                || $auth->getProfile()->getProfileId() == $this->getOrder()->getOrigProfile()->getProfileId();
-        }
-
-        return \XLite\Core\Session::getInstance()->last_order_id == \XLite\Core\Request::getInstance()->order_id
-            || $access;
-    }
-
-    /**
-     * Get order 
-     * 
-     * @return \XLite\Model\Order
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getOrder()
-    {
-        if (!isset($this->order)) {
-
-            $this->order = \XLite\Core\Database::getRepo('XLite\Model\Order')
-                ->find(intval(\XLite\Core\Request::getInstance()->order_id));
-
-        }
-
-        return $this->order;
-    }
-
-    /**
-     * Get secure controller status
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSecure()
-    {
-        return $this->config->Security->customer_security;
     }
 }

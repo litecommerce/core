@@ -38,17 +38,23 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
 class Invoice extends \XLite\Controller\Customer\Invoice implements \XLite\Base\IDecorator
 {
     /**
-     * Check order access 
-     * TODO: check the logic
-     * TODO: merge with "Order" controller
-     * 
-     * @return boolean
-     * @access protected
+     * Argument convertion: <LC> --> <DRUPAL>
+     *
+     * @param string $path Drupal path
+     * @param array  $args LC URL arguments
+     *
+     * @return array
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function checkOrderAccess()
+    public static function getPortalDrupalArgs($path, array $args = array())
     {
-        return user_access('administer users') || parent::checkOrderAccess();
+        if (!empty($args['printable'])) {
+            $path = 'print/' . $path;
+        }
+        unset($args['printable']);
+
+        return parent::getPortalDrupalArgs($path, $args);
     }
 }

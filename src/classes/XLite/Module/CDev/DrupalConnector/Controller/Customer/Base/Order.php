@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Controller
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,22 +26,22 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
+namespace XLite\Module\CDev\DrupalConnector\Controller\Customer\Base;
 
 /**
- * OrderList 
+ * Order controller
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\Base\IDecorator
+abstract class Order extends \XLite\Controller\Customer\Base\Order implements \XLite\Base\IDecorator
 {
     /**
      * Get ID of LC profile
-     * 
+     *
      * @param integer $id Drupal profile ID
-     *  
+     *
      * @return integer
      * @access protected
      * @see    ____func_see____
@@ -69,7 +69,7 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
 
     /**
      * Check if current page is the "Order history" portal
-     * 
+     *
      * @return boolean
      * @access protected
      * @see    ____func_see____
@@ -77,7 +77,7 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
      */
     protected static function isPortal()
     {
-        return (bool) \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getPortalByPath('user/%/orders');
+        return (bool) \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getPortalByPath('user/%/orders/%');
     }
 
     /**
@@ -96,8 +96,9 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
     {
         $result = parent::getPortalLCArgs($path, $args, $pageArgs);
 
-        if (static::isPortal() && !empty($args[1])) {
+        if (static::isPortal() && !empty($args[1]) && !empty($args[3])) {
             $result['profile_id'] = static::getLCProfileId($args[1]);
+            $result['order_id'] = $args[3];
         }
 
         return $result;
@@ -116,25 +117,17 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
      */
     public static function getPortalDrupalArgs($path, array $args = array())
     {
-        $id = empty($args['profile_id']) ? \XLite\Core\Request::getInstance()->profile_id : $args['profile_id'];
-        unset($args['profile_id']);
+        foreach (array('profileId' => 'profile_id', 'orderId' => 'order_id') as $var => $param) {
 
-        return preg_replace('/\%/', static::getDrupalProfileId($id), parent::getPortalDrupalArgs($path, $args), 1);
-    }
-
-    /**
-     * Initialization
-     *
-     * @return null
-     * @access public
-     * @since  3.0.0
-     */
-    public function init()
-    {
-        parent::init();
-
-        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS() && static::isPortal()) {
-            drupal_set_title(t('Order history'));
+            $$var = empty($args[$param]) ? \XLite\Core\Request::getInstance()->$param : $args[$param];
+            unset($args[$param]);
         }
+
+        $result = parent::getPortalDrupalArgs($path, $args);
+
+        $result = preg_replace('/\%/', static::getDrupalProfileId($profileId), $result, 1);
+        $result = preg_replace('/\%/', $orderId, $result, 1);
+
+        return $result;
     }
 }

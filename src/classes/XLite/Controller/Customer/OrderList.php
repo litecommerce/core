@@ -99,7 +99,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
             && $auth->isLogged() 
             && (
                 $auth->getProfile()->isAdmin() 
-                || $auth->getProfile()->getProfileId() == \XLite\Core\Request::getInstance()->userId
+                || $auth->getProfile()->getProfileId() == \XLite\Core\Request::getInstance()->profile_id
             );
     }
 

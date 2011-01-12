@@ -35,98 +35,30 @@ namespace XLite\Controller\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Invoice extends \XLite\Controller\Customer\ACustomer
+class Invoice extends \XLite\Controller\Customer\Base\Order
 {
     /**
-     * Controller parameters
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
      * @since  3.0.0
      */
-    protected $params = array('target', 'order_id');
+    public function getTitle()
+    {
+        return 'Invoice #' . $this->getOrderId() . ', ' . date('M d, Y, H:i', $this->getOrder()->getDate());
+    }
 
     /**
-     * Order (cache)
-     * 
-     * @var    \XLite\Model\Order
-     * @access private
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    private $order = null;
-
-    /**
-     * Common method to determine current location 
-     * 
+     * Common method to determine current location
+     *
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getLocation()
     {
         return 'Invoice';
     }
-
-    /**
-     * Check if current page is accessible
-     * 
-     * @return boolean 
-     * @access public
-     * @since  3.0.0
-     */
-    public function checkAccess()
-    {
-        return parent::checkAccess()
-            && $this->checkOrderAccess();
-    }
-
-    /**
-     * Check order access 
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function checkOrderAccess()
-    {
-        return \XLite\Core\Session::getInstance()->getInstance()->last_order_id == \XLite\Core\Request::getInstance()->order_id
-            || (
-                $this->auth->isLogged()
-                && $this->auth->getProfile()->getProfileId() == $this->getOrder()->getOrigProfile()->getProfileId()
-            );
-    }
-
-    /**
-     * Get order 
-     * 
-     * @return \XLite\Model\Order
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getOrder()
-    {
-        if (is_null($this->order)) {
-            $this->order = new \XLite\Model\Order(intval(\XLite\Core\Request::getInstance()->order_id));
-        }
-
-        return $this->order;
-    }
-
-    /**
-     * Get secure controller status
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSecure()
-    {
-        return $this->config->Security->customer_security;
-    }
 }
-
