@@ -581,7 +581,7 @@ abstract class AView extends \XLite\Core\Handler
                 'js/jquery.mousewheel.js',
             ),
             'css' => array(
-                'css/jquery-ui.css',
+                'ui/jquery-ui.css',
             ),
         );
 
