@@ -120,6 +120,7 @@ class Logger extends \XLite\Base\Singleton
         );
 
         set_error_handler(array($this, 'registerPHPError'));
+        set_exception_handler(array($this, 'registerException'));
 
         // Default log path
         $path = $this->getErrorLogPath();
@@ -170,13 +171,14 @@ class Logger extends \XLite\Base\Singleton
      * 
      * @param string $message Message
      * @param string $level   Level code OPTIONAL
+     * @param array  $trace   Back trace OPTIONAL
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function log($message, $level = LOG_DEBUG)
+    public function log($message, $level = LOG_DEBUG, array $trace = array())
     {
         $dir = getcwd();
         chdir(LC_DIR);
@@ -206,7 +208,8 @@ class Logger extends \XLite\Base\Singleton
 
         // Add debug backtrace
         if (PEAR_LOG_ERR >= $level) {
-            $message .= PHP_EOL . 'Backtrace:' . PHP_EOL . "\t" . implode(PHP_EOL . "\t", $this->getBackTrace());
+            $backTrace = $trace ? $this->prepareBackTrace($trace) : $this->getBackTrace();
+            $message .= PHP_EOL . 'Backtrace:' . PHP_EOL . "\t" . implode(PHP_EOL . "\t", $backTrace);
         }
 
         $logger->log(trim($message) . PHP_EOL, $level);
@@ -282,6 +285,21 @@ class Logger extends \XLite\Base\Singleton
     }
 
     /**
+     * Prepare back trace 
+     * 
+     * @param array $trace Back trace raw data
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareBackTrace(array $trace)
+    {
+        return \XLite\Core\Operator::getInstance()->prepareBackTrace($trace);
+    }
+
+    /**
      * Detect class name by object
      * 
      * @param object $obj Object
@@ -315,8 +333,7 @@ class Logger extends \XLite\Base\Singleton
 
         if (
             ini_get('error_reporting') & $errno
-            && 0 != ini_get('display_errors')
-            && 0 != ini_get('log_errors')
+            && (0 != ini_get('display_errors') || 0 != ini_get('log_errors'))
             && 0 != error_reporting()
             && (1 != ini_get('ignore_repeated_errors') || !isset(self::$hashErrors[$hash]))
         ) {
@@ -334,11 +351,11 @@ class Logger extends \XLite\Base\Singleton
                         . ' in <strong>' . $errfile . '</strong> on line <strong>' . $errline . '</strong><br />';
                 }
 
-                echo ($displayMessage . "\n");
+                echo ($displayMessage . PHP_EOL);
             }
 
             // Save to log
-            if (1 == ini_get('log_errors')) {
+            if (0 != ini_get('log_errors')) {
                 $this->log($message, $this->convertPHPErrorToLogError($errno));
             }
 
@@ -349,6 +366,48 @@ class Logger extends \XLite\Base\Singleton
         }
 
         return true;
+    }
+
+    /**
+     * Register non-catched exception 
+     * 
+     * @param \Exception $exception Exception
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function registerException(\Exception $exception)
+    {
+        if (
+            ini_get('error_reporting') & E_ERROR
+            && (0 != ini_get('display_errors') || 0 != ini_get('log_errors'))
+            && 0 != error_reporting()
+        ) {
+
+            $message = 'Exception: ' . $exception->getMessage()
+                . ' in ' . $exception->getFile() . ' on line ' . $exception->getLine();
+
+            // Display error
+            if (0 != ini_get('display_errors')) {
+
+                if (isset($_SERVER['REQUEST_METHOD'])) {
+                    $displayMessage = '<strong>Exception</strong>: ' . $exception->getMessage()
+                        . ' in <strong>' . $exception->getFile() . '</strong>'
+                        . ' on line <strong>' . $exception->getLine() . '</strong><br />';
+                } else {
+                    $displayMessage = $message;
+                }
+
+                echo ($displayMessage . PHP_EOL);
+            }
+
+            // Save to log
+            if (0 != ini_get('log_errors')) {
+                $this->log($message, PEAR_LOG_ERR, $exception->getTrace());
+            }
+        }
     }
 
     /**
