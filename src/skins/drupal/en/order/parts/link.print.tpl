@@ -12,5 +12,5 @@
  * @ListChild (list="order.links", weight="20")
  *}
 <li class="print">
-  <a href="{buildUrl(#invoice#,##,_ARRAY_(#order_id#^order.order_id,#printable#^#1#))}"><span>{t(#Print invoice#)}</span></a>
+  <a href="javascript:void(0);" onclick="javascript: window.print(); return false;"><span>{t(#Print invoice#)}</span></a>
 </li>
