@@ -57,8 +57,13 @@ class Module extends \XLite\Model\AEntity
     const NOT_EXIST = 0;
     const EXISTS    = 1;
 
+    /**
+     * Common params
+     */
     const UPLOAD_CODE_LENGTH = 32;
-    const MARKETPLACE_URL = 'https://www.litecommerce.com/marketplace';
+    const MARKETPLACE_URL    = 'https://www.litecommerce.com/marketplace/';
+    const MODULE_UPLOAD_PATH = '%1$s/upload?code=%2$s';
+    const MODULE_PAGE_PATH   = 'module/%1$s';
 
     /**
      * Module id 
@@ -321,26 +326,6 @@ class Module extends \XLite\Model\AEntity
     protected $oldEnabled;
 
     /**
-     * Upload URL
-     *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $uploadURL = 'https://litecommerce.com/module/%1$s/upload?code=%2$s';
-
-    /**
-     * Page URL
-     *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $pageURL = 'https://litecommerce.com/module/%1$s/';
-
-    /**
      * Model (cache)
      *
      * @var    \XLite\Model\Module
@@ -397,7 +382,7 @@ class Module extends \XLite\Model\AEntity
      */
     public function getPageURL()
     {
-        return sprintf($this->pageURL, $this->getPath());
+        return static::MARKETPLACE_URL . sprintf(static::MODULE_PAGE_PATH, $this->getPath());
     }
 
     /**
@@ -410,7 +395,7 @@ class Module extends \XLite\Model\AEntity
      */
     public function getAuthorPageURL()
     {
-        return sprintf($this->pageURL, $this->getAuthor());
+        return static::MARKETPLACE_URL . sprintf(static::MODULE_PAGE_PATH, $this->getAuthor());
     }
 
     /**
@@ -865,7 +850,7 @@ class Module extends \XLite\Model\AEntity
 
         if ($this->canUpload()) {
             $request = new \XLite\Model\HTTPS();
-            $request->url = sprintf($this->uploadURL, $this->getActualName(), $this->uploadCode);
+            $request->url = self::MARKETPLACE_URL . sprintf(self::MODULE_UPLOAD_PATH, $this->getActualName(), $this->uploadCode);
             $request->method = 'get';
             if (
                 $request::HTTPS_SUCCESS == $request->request()
