@@ -422,35 +422,4 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     {
         $this->updateWidgetSettings($formState['delta'], array());
     }
-
-
-    // ------------------------------ Module settings form -
-
-    /**
-     * Return form description for the module settings
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getModuleSettingsForm()
-    {
-        $form = array(
-
-            'settings' => array(
-                'lc_dir' => array(
-                    '#type'          => 'textfield',
-                    '#title'         => t('LiteCommerce installation dir'),
-                    '#required'      => true,
-                    '#default_value' => variable_get('lc_dir', self::LC_DIR_DEFAULT),
-                ),
-
-                '#type'  => 'fieldset',
-                '#title' => t('LC Connector module settings'),
-            ),
-        );
-
-        return system_settings_form($form);
-    }
 }

@@ -205,14 +205,6 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     {
         $menus = array(
 
-            'admin/modules/lc_connector' => array(
-                'title'            => 'LC Connector',
-                'description'      => 'Settings for the LC connector module.',
-                'page callback'    => 'drupal_get_form',
-                'page arguments'   => array('lcConnectorGetSettingsForm'),
-                'access arguments' => array('administer users'),
-            ),
-
             \XLite\Module\CDev\DrupalConnector\Core\Converter::DRUPAL_ROOT_NODE . '/%' => array(
                 'title'            => 'Store',
                 'title callback'   => 'lcConnectorGetControllerTitle',

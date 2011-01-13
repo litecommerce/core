@@ -17,18 +17,6 @@
  */
 
 /**
- * Get module settings form 
- * 
- * @return array
- * @see    ____func_see____
- * @since  3.0.0
- */
-function lcConnectorGetSettingsForm()
-{
-    return \XLite\Module\CDev\DrupalConnector\Drupal\Admin::getInstance()->getModuleSettingsForm();
-}
-
-/**
  * Return LC controller title
  * 
  * @return string
