@@ -73,6 +73,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
 
     /**
      * Set metadata driver for Doctrine config
+     * FIXME: to revise
      * 
      * @param \Doctrine\ORM\Configuration $config config object
      *  
@@ -96,13 +97,8 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
 
         foreach ($iterator as $dir) {
 
-            if (
-                \Includes\Utils\FileManager::isDir($dir->getPathName())
-            ) {
-                $iterator2 = new \RecursiveDirectoryIterator(
-                    $dir->getPathName(),
-                    \FilesystemIterator::SKIP_DOTS
-                );
+            if (\Includes\Utils\FileManager::isDir($dir->getPathName())) {
+                $iterator2 = new \RecursiveDirectoryIterator($dir->getPathName(), \FilesystemIterator::SKIP_DOTS);
            
                 foreach ($iterator2 as $dir2) {
                     if (
