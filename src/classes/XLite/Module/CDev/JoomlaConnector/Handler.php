@@ -48,29 +48,4 @@ class Handler extends \XLite\Core\CMSConnector
     {
         return '____JOOMLA____';
     }
-
-    /**
-     * Return the default controller name 
-     * 
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getDefaultTarget()
-    {
-        return null;
-    }
-
-    /**
-     * Get landing link
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0 EE
-     */
-    public function getLandingLink()
-    {
-        return null;
-    }
 }

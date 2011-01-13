@@ -62,18 +62,6 @@ class Handler extends \XLite\Core\CMSConnector
     }
 
     /**
-     * Get landing link
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getLandingLink()
-    {
-    }
-
-    /**
      * Method to get raw Drupal request arguments
      *
      * @return array
