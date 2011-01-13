@@ -1152,10 +1152,6 @@ class HTTPS extends \XLite\Base
 
         $result = 0;
     
-        if ($curl instanceof \XLite\Model\HTTPS) {
-            $object = $curl;
-        }
-    
         if ($header) {
             $result = $this->setHeadersCallback($header);
         }
