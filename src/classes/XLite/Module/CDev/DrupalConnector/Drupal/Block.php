@@ -38,37 +38,6 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 class Block extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
     /**
-     * Already registered resources
-     *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $registeredResources = array('js' => array(), 'css' => array());
-
-
-    /**
-     * Check and prepare JS and CSS files
-     *
-     * @param array $resources List of resources
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function prepareResources(array $resources)
-    {
-        foreach ($resources as $type => &$files) {
-            $files = array_diff($files, $this->registeredResources[$type]);
-            $this->registeredResources[$type] = array_merge($this->registeredResources[$type], $files);
-        }
-
-        return $resources;
-    }
-
-    /**
      * Get block content from LC (if needed)
      *
      * @param array     &$data An array of data, as returned from the hook_block_view()
@@ -94,7 +63,7 @@ class Block extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                     $data['content'] = $content;
 
                     // Register JS and/or CSS
-                    $this->registerWidgetResourcse($widget);
+                    $this->registerResources($widget);
 
                 } else {
 
@@ -103,22 +72,5 @@ class Block extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                 }
             }
         }
-    }
-
-    /**
-     * Register LC widget resourcse
-     *
-     * @param \XLite\View\AView $widget LC widget to get resources list
-     *
-     * @return null
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function registerWidgetResourcse(\XLite\View\AView $widget)
-    {
-        \XLite\Module\CDev\DrupalConnector\Drupal\Helper::getInstance()->registerResources(
-            $this->prepareResources($widget->getRegisteredResources())
-        );
     }
 }

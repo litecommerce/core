@@ -162,7 +162,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         
         drupal_set_breadcrumb(array_merge($drupalNodes, $lcNodes));
 
-        \XLite\Module\CDev\DrupalConnector\Drupal\Block::getInstance()->registerWidgetResourcse($widget);
+        $this->registerResources($widget);
     }
 
     /**
@@ -219,16 +219,15 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         // Perform some common actions
         $this->performCommonActions();
 
-        $content = $this->getHandler()->getViewer()->getContent();
+        // Current viewer
+        $viewer = $this->getHandler()->getViewer();
 
-        \XLite\Module\CDev\DrupalConnector\Drupal\Helper::getInstance()->registerResources(
-            $this->getHandler()->getViewer()->getRegisteredResources()
-        );
-
-        $title = $this->getTitle();
+        $content = $viewer->getContent();
+        $this->registerResources($viewer);
 
         $trail = array();
-        if ($this->getHandler()->getViewer()->isTitleVisible() && $title) {
+
+        if ($viewer->isTitleVisible() && ($title = $this->getTitle())) {
             $trail[] = array(
                 'title'             => $this->getTitle(),
                 'link_path'         => '',
