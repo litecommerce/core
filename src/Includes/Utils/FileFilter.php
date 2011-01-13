@@ -88,7 +88,11 @@ class FileFilter extends AUtils
      */
     protected function getUnfilteredIterator()
     {
-        return new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->dir), $this->mode);
+        return new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($this->dir),
+            $this->mode,
+            \FilesystemIterator::SKIP_DOTS
+        );
     }
 
 
