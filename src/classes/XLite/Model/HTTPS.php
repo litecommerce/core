@@ -581,9 +581,11 @@ class HTTPS extends \XLite\Base
      */
     protected function initLibCURL()
     {
-        $post = 'POST' == $this->method;
+        $post = 'POST' === strtoupper($this->method);
+        $get  = 'GET'  === strtoupper($this->method);
 
         $url = $this->url;
+
         if (!$post) {
             $data = $this->getPost();
             if ($data) {
@@ -592,8 +594,18 @@ class HTTPS extends \XLite\Base
         }
 
         $c = curl_init($url);
+        
+        if ($post) {
+            curl_setopt($c, CURLOPT_POST, $post);
+        } elseif($get) {
+            curl_setopt($c, CURLOPT_HTTPGET, $get);
+        } else {
+            curl_setopt($c, CURLOPT_NOBODY, 1);
+            curl_setopt($c, CURLOPT_CUSTOMREQUEST, $this->method);
+        }
 
         $url = new \Net_URL2($this->url);
+
         if ($url->port != 443 && $url->port != 80) {
             curl_setopt($c, CURLOPT_PORT, $url->port);
         }
@@ -613,8 +625,6 @@ class HTTPS extends \XLite\Base
             curl_setopt($c, CURLOPT_PROXY, $this->config->Security->proxy);
         }
 
-        curl_setopt($c, CURLOPT_POST, $post);
-        curl_setopt($c, CURLOPT_HEADER, false);
         curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
 
         if ($post) {
@@ -633,7 +643,11 @@ class HTTPS extends \XLite\Base
             curl_setopt($c, CURLOPT_REFERER, $this->referer);
         }
 
+        curl_setopt($c, CURLOPT_HEADER, 0);
+
+        $this->headers[] = 'Content-Type: application/x-www-form-urlencoded';
         $headers = $this->getHeaders();
+
         if (count($headers) > 0) {
             curl_setopt($c, CURLOPT_HTTPHEADER, $headers);
         }
@@ -645,8 +659,8 @@ class HTTPS extends \XLite\Base
             }
         }
 
-        saveCURLHeader($this);
-        curl_setopt($c, CURLOPT_HEADERFUNCTION, 'saveCURLHeader');
+        $this->saveCURLHeader($c);
+        curl_setopt($c, CURLOPT_HEADERFUNCTION, array($this, 'saveCURLHeader'));
 
         if ($this->user) {
             curl_setopt($c, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
@@ -1121,32 +1135,34 @@ class HTTPS extends \XLite\Base
 
         return tempnam($dir, $name);
     }
-}
 
-/**
- * cURL header callback
- * 
- * @param mixed  $curl   CURL request resource or \XLite\Model\HTTPS object
- * @param string $header Headers string
- *  
- * @return integer
- * @see    ____func_see____
- * @since  3.0.0
- */
-function saveCURLHeader($curl, $header = '')
-{
-    static $object = null;
+    /**
+     * cURL header callback
+     * 
+     * @param mixed  $curl   CURL request resource or \XLite\Model\HTTPS object
+     * @param string $header Headers string
+     *  
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function saveCURLHeader($curl, $header = '')
+    {
+        static $object = null;
 
-    $result = 0;
+        $result = 0;
+    
+        if ($curl instanceof \XLite\Model\HTTPS) {
+            $object = $curl;
+        }
+    
+        if ($header) {
+            $result = $this->setHeadersCallback($header);
+        }
 
-    if ($curl instanceof \XLite\Model\HTTPS) {
-        $object = $curl;
+        return $result;
     }
 
-    if ($header) {
-        $result = $object->setHeadersCallback($header);
-    }
-
-    return $result;
 }
+
 
