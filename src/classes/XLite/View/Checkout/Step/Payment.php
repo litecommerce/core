@@ -136,4 +136,19 @@ class Payment extends \XLite\View\Checkout\Step\AStep
     {
         return $this->getCart()->getProfile() && $this->getCart()->getProfile()->isEqualAddress();
     }
+
+    /**
+     * Check - display Address book button or not
+     *
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isDisplayAddressButton()
+    {
+        return !$this->isAnonymous()
+            && $this->getCart()->getProfile()
+            && 0 < count($this->getCart()->getProfile()->getAddresses());
+    }
 }

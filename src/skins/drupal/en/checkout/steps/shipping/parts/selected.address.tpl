@@ -12,7 +12,7 @@
  * @ListChild (list="checkout.shipping.selected", weight="10")
  *}
 <h3>{t(#Enter shipping address#)}</h3>
-<widget IF="!isAnonymous()" class="\XLite\View\Button\Link" label="Address book" location="{buildURL(#select_address#,##,_ARRAY_(#atype#^#s#))}" style="address-book" />
+<widget IF="isDisplayAddressButton()" class="\XLite\View\Button\Link" label="Address book" location="{buildURL(#select_address#,##,_ARRAY_(#atype#^#s#))}" style="address-book" />
 
 <widget class="\XLite\View\Form\Checkout\UpdateProfile" name="shippingAddress" className="address shipping-address" />
 

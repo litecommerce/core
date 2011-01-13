@@ -13,7 +13,7 @@
  *}
 <div class="secondary">
   <h3>{t(#Billing address#)}</h3>
-  <widget IF="!isAnonymous()" class="\XLite\View\Button\Link" label="Address book" location="{buildURL(#select_address#,##,_ARRAY_(#atype#^#b#))}" style="address-book" />
+  <widget IF="isDisplayAddressButton()" class="\XLite\View\Button\Link" label="Address book" location="{buildURL(#select_address#,##,_ARRAY_(#atype#^#b#))}" style="address-book" />
 
   <widget class="\XLite\View\Checkout\BillingAddress" />
 </div>
