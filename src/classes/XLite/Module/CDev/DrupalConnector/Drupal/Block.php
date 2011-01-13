@@ -43,7 +43,7 @@ class Block extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array     &$data An array of data, as returned from the hook_block_view()
      * @param \stdClass $block The block object, as loaded from the database
      *
-     * @return null
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  1.0.0
@@ -68,9 +68,11 @@ class Block extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                 } else {
 
                     // Block is not visible
-                    $data['content'] = '';
+                    $data['content'] = null;
                 }
             }
         }
+
+        return true;
     }
 }
