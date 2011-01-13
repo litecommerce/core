@@ -195,24 +195,6 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      */
     abstract public function getCMSName();
 
-    /**
-     * Return the default controller name 
-     * 
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    abstract public function getDefaultTarget();
-
-    /**
-     * Get landing link
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0 EE
-     */
-    abstract public function getLandingLink();
-
 
     /**
      * Determines if we export content into a CMS

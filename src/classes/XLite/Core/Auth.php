@@ -335,9 +335,13 @@ class Auth extends \XLite\Base
      * @access public
      * @since  3.0.0
      */
-    public function isAdmin(\XLite\Model\Profile $profile)
+    public function isAdmin(\XLite\Model\Profile $profile = null)
     {
-        return $profile->getAccessLevel() === $this->getAdminAccessLevel();
+        if (!isset($profile)) {
+            $profile = $this->getProfile();
+        }
+
+        return $profile && $profile->getAccessLevel() === $this->getAdminAccessLevel();
     }
 
     /**

@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Model
+ * @subpackage Controller
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,46 +26,64 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\CDev\DrupalConnector\Model\Repo;
+namespace XLite\Controller\Customer;
 
 /**
- * Landing link repository
+ * AdminAreaRedirector 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class LandingLink extends \XLite\Model\Repo\ARepo
+class AdminAreaRedirector extends \XLite\Controller\Customer\ACustomer
 {
     /**
-     * Remove expired links
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
+     * Check if current page is accessible
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
      */
-    public function removeExpired()
+    protected function checkAccess()
     {
-        return $this->defineRemoveExpiredQuery()
-            ->getQuery()
-            ->execute();
+        return parent::checkAccess() && \XLite\Core\Auth::getInstance()->isAdmin();
     }
 
     /**
-     * Define query for removeExpired() method
+     * Must be accessible
      * 
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return boolean 
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkStorefrontAccessability()
+    {
+        return true;
+    }
+
+    /**
+     * Return URL to redirect to
+     * 
+     * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineRemoveExpiredQuery()
+    protected function getAdminAreaURLArgs()
     {
-        return $this->_em
-            ->createQueryBuilder()
-            ->delete($this->_entityName, 'l')
-            ->andWhere('l.expiry < :time')
-            ->setParameter('time', time());
+        return \XLite\Core\Session::getInstance()->getName() . '=' . \XLite\Core\Session::getInstance()->getId();
+    }
+
+    /**
+     * Perform redirect 
+     * 
+     * @return null
+     * @access public
+     * @since  3.0.0
+     */             
+    public function handleRequest()
+    {
+        $this->redirect(\Includes\Utils\URLManager::getShopURL('admin.php?' . $this->getAdminAreaURLArgs()));
     }
 }
