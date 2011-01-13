@@ -63,5 +63,5 @@ sForm.submit(function(e){
 
 <div class="compatibility-note">
   <p>These modules are suitable for the current LiteCommerce version only!</p>
-  <p>To see the list of all available modules, go to <a href="{%static::MARKETPLACE_URL%}">LC Marketplace</a></p>
+  <p>To see the list of all available modules, go to <a href="{getMarketPlaceURL()}">LC Marketplace</a></p>
 </div>
