@@ -78,6 +78,18 @@ class XML extends \XLite\Base
     protected $xml = '';
 
     /**
+     * Constructor
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
      * Parse XML errors 
      * 
      * @param string $xml Initial XML
