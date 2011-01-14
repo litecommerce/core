@@ -62,7 +62,7 @@ depends[{module.getModuleId()}][{k}] = '{getInstalledProperty(m,#moduleName#)} (
   {if:module.isUpdateAvailable()}
     <div class="upgrade-note">
       {t(#A new version is available#)}
-      <br /><br />
+      <br />
       <widget class="\XLite\View\Button\Submit" label="{t(#Upgrade#)}" /> {t(#to v.#)}{module.getLastVersion()}
     </div>
   {end:}
