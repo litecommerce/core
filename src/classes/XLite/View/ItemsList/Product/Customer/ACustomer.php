@@ -186,10 +186,10 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
                 'Show \'Add to Cart\' button', true, true
             ),
             self::PARAM_ICON_MAX_WIDTH => new \XLite\Model\WidgetParam\Int(
-                'Maximal icon width', 110, true
+                'Maximal icon width', 180, true
             ),
             self::PARAM_ICON_MAX_HEIGHT => new \XLite\Model\WidgetParam\Int(
-                'Maximal icon height', 110, true
+                'Maximal icon height', 180, true
             ),
             self::PARAM_SHOW_ALL_ITEMS_PER_PAGE => new \XLite\Model\WidgetParam\Checkbox(
                 'Display all items on one page', false, true
