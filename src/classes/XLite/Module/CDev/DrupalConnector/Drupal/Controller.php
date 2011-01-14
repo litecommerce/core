@@ -157,9 +157,25 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         );
         array_shift($lcNodes);
 
-        $drupalNodes = drupal_get_breadcrumb();
-        $drupalNodes = array(array_shift($drupalNodes));
-        
+        // Add store root node
+        $trails = menu_get_active_trail();
+        array_splice(
+            $trails,
+            1,
+            0,
+            array(
+                array(
+                    'title'             => t('Store'),
+                    'href'              => \XLite\Core\Converter::buildFullURL(),
+                    'link_path'         => '',
+                    'localized_options' => array(),
+                    'type'              => MENU_VISIBLE_IN_BREADCRUMB,
+                ),
+            )
+        );
+        menu_set_active_trail($trails);
+
+        $drupalNodes = array_slice(drupal_get_breadcrumb(), 0, 2);
         drupal_set_breadcrumb(array_merge($drupalNodes, $lcNodes));
 
         $this->registerResources($widget);
