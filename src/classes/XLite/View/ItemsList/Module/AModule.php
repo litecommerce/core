@@ -123,56 +123,9 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
         $result = parent::getSearchCondition();
 
         $result->{\XLite\Model\Repo\Module::P_ORDER_BY} = array($this->getSortBy(), $this->getSortOrder());
-
-        foreach (static::getSearchParams() as $modelParam => $requestParam) {
-            $result->$modelParam = $this->getParam($requestParam);
-        }
-
-        // Remove substring and tag params for the Featured add-ons pages
-        if ('featured' === \XLite\Core\Request::getInstance()->mode) {
-            $result->{self::PARAM_SUBSTRING} = null;
-            $result->{self::PARAM_TAG} = null;
-            $result->{self::PARAM_PRICE_FILTER} = null;
-        }
-
         $result->{self::PARAM_STATUS} = \XLite\Model\Module::EXISTS;
 
         return $result;
-    }
-
-    /**
-     * getSearchParams
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getSearchParams()
-    {
-        return array(
-            \XLite\Model\Repo\Module::P_SUBSTRING    => self::PARAM_SUBSTRING,
-            \XLite\Model\Repo\Module::P_TAG          => self::PARAM_TAG,
-            \XLite\Model\Repo\Module::P_PRICE_FILTER => self::PARAM_PRICE_FILTER,
-        );
-    }
-
-    /**
-     * Define so called "request" parameters
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineRequestParams()
-    {
-        parent::defineRequestParams();
-
-        $this->requestParams = array_merge(
-            $this->requestParams,
-            static::getSearchParams()
-        );
     }
 
     /**

@@ -692,8 +692,6 @@ class Module extends \XLite\Model\AEntity
         // Set common properties
         $this->setName($name);
         $this->setAuthor($author);
-        $this->setInstalled(true);
-        $this->setEnabled(false);
 
         \XLite\Core\Database::getEM()->persist($this);
         \XLite\Core\Database::getEM()->flush();
@@ -849,9 +847,12 @@ class Module extends \XLite\Model\AEntity
         $result = false;
 
         if ($this->canUpload()) {
+
             $request = new \XLite\Model\HTTPS();
-            $request->url = self::MARKETPLACE_URL . sprintf(self::MODULE_UPLOAD_PATH, $this->getActualName(), $this->uploadCode);
-            $request->method = 'get';
+            $request->url = self::MARKETPLACE_URL 
+                . sprintf(self::MODULE_UPLOAD_PATH, $this->getActualName(), $this->uploadCode);
+            $request->method = 'GET';
+
             if (
                 $request::HTTPS_SUCCESS == $request->request()
                 && $request->response

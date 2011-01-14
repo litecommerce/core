@@ -46,7 +46,8 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
      */
     protected function isPagesListVisible()
     {
-        return parent::isPagesListVisible() && 'search' === \XLite\Core\Request::getInstance()->mode;
+        return parent::isPagesListVisible()
+            && \XLite\View\ItemsList\Module\Install::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode;
     }
 
     /**
@@ -59,7 +60,8 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
      */
     protected function isItemsPerPageVisible()
     {
-        return parent::isItemsPerPageVisible() && 'search' === \XLite\Core\Request::getInstance()->mode;
+        return parent::isItemsPerPageVisible()
+            && \XLite\View\ItemsList\Module\Install::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode;
     }
 
     /**
@@ -72,7 +74,7 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
      */
     protected function getItemsPerPage()
     {
-        return 'search' === \XLite\Core\Request::getInstance()->mode ? 10 : 5;
+        return \XLite\View\ItemsList\Module\Install::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode ? 10 : 5;
     }
 
 }
