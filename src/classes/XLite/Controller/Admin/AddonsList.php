@@ -145,4 +145,19 @@ class AddonsList extends \XLite\Controller\Admin\AAdmin
             : null;
     }
 
+    /**
+     * Handles the request. Parses the request variables if necessary.
+     * Attempts to call the specified action function 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function handleRequest()
+    {
+        \XLite\Core\Database::getRepo('\XLite\Model\Module')->checkModules();
+
+        parent::handleRequest();
+    }
+
 }

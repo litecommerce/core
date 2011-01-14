@@ -48,10 +48,51 @@ class Module extends \XLite\Model\Repo\ARepo
     const P_STATUS       = 'status';
 
     /**
+     * Param to force update addons 
+     */
+    const P_FORCE_UPDATE = 'updateAddons';
+
+    /**
      * Price criteria 
      */
     const PRICE_FREE = 'free';
     const PRICE_PAID = 'paid';
+
+    /**
+     * Marketplace connect params
+     */
+    const INFO_SCRIPT_PATH  = 'get_info.php';
+    const REQUEST_TYPE_LIST = 'addonsList';
+    const PARAM_REQUEST     = 'request';
+    const ADDONS_UPDATED    = 'addonsUpdated';
+
+    /**
+     * Fileds that go into update from marketplace
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $updateFields = array(
+        'name',
+        'author',
+        'status',
+        'description',
+        'moduleName',
+        'authorName',
+        'date',
+        'version',
+        'changelog',
+        'hash',
+        'packHash',
+        'price',
+        'currency',
+        'rating',
+        'downloads',
+        'iconURL',
+        'dependencies',
+    );
 
     /**
      * Repository type 
@@ -62,6 +103,16 @@ class Module extends \XLite\Model\Repo\ARepo
      * @since  3.0.0
      */
     protected $type = self::TYPE_INTERNAL;
+
+    /**
+     * Update error 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $updateError = null;
 
     /**
      * Default 'order by' field name
@@ -503,6 +554,27 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
+     * Find by actual name
+     * 
+     * @param string $name   Module name
+     * @param string $author Module author
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findByActualName($name, $author)
+    {
+        return $this->findOneBy(
+            array(
+                'name'   => $name,
+                'author' => $author
+            )
+        );
+    }
+
+    /**
      * Get enabled modules list
      * FIXME - remove cycle
      * 
@@ -587,6 +659,8 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     public function checkModules()
     {
+        // Step 1: check installed modules
+
         $list = $this->findAllNames();
         $changed = false;
         $needRebuild = false;
@@ -605,25 +679,27 @@ class Module extends \XLite\Model\Repo\ARepo
 
             } else {
 
-                $module = new \XLite\Model\Module();
-                $module->create($name, $author);
+                $module = $this->findByActualName($name, $author);
+
+                if (!$module) {
+                    $module = new \XLite\Model\Module();
+                    $module->create($name, $author);
+                }
+
+                $module->installed = true;
 
                 \XLite\Core\Database::getEM()->persist($module);
                 $changed = true;
             }
         }
 
-        // Emergency modules uninstall
+        // Step 2: Emergency modules uninstall
+
         foreach ($list as $key) {
 
             list($author, $name) = explode('\\', $key);
 
-            $module = $this->findOneBy(
-                array(
-                    'author' => $author, 
-                    'name'   => $name,
-                )
-            );
+            $module = $this->findByActualName($name, $author);
 
             if ($module) {
 
@@ -650,8 +726,149 @@ class Module extends \XLite\Model\Repo\ARepo
                 \XLite::setCleanUpCacheFlag(true);
             }
         }
+
+        // Step 3: update modules list from the market place
+
+        if (
+            !\XLite\Core\Session::getInstance()->{static::ADDONS_UPDATED}
+            || \XLite\Core\Request::getInstance()->{static::P_FORCE_UPDATE}
+        ) {
+            $result = $this->updateAddonsList();
+            if ($result) {
+                \XLite\Core\Session::getInstance()->set(static::ADDONS_UPDATED, 1);
+            }
+        }
     }
 
+    /**
+     * Grab modules XML from the market place
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAddonsXML()
+    {
+        $response = '';
+
+        $request = new \XLite\Model\HTTPS();
+        $request->url = \XLite\Model\Module::MARKETPLACE_URL . static::INFO_SCRIPT_PATH
+            . '?' . static::PARAM_REQUEST . '=' . static::REQUEST_TYPE_LIST;
+        $request->method = 'GET';
+
+        if (
+            $request::HTTPS_SUCCESS == $request->request()
+            && $request->response
+        ) {
+            // Success
+            $response = $request->response;
+
+        } else {
+
+            // Error occured
+            $this->updateError = $request->error;
+        }
+
+        return $response;
+    }
+
+    /**
+     * Process modules XML from the market place
+     *
+     * @param string $xmlData XML content
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processXMLResponse($xmlData)
+    {
+        $result = true;
+
+        $xml = new \XLite\Model\XML();
+  
+        $parsed = $xml->parse($xmlData);
+
+        if ($xml->error) {
+            $this->updateError = $xml->error;
+            $result = false;
+        }
+
+        if (is_array($parsed) && $parsed['ADDONSLISTRESPONSE']) {
+
+            if ('OK' === $parsed['ADDONSLISTRESPONSE']['STATUS']) {
+
+                // Mark non-installed addons
+                $q = $this->getEntityManager()->createQuery(
+                    'update \XLite\Model\Module m set m.status = '
+                    . \XLite\Model\Module::NOT_EXIST . ' where m.enabled = false'
+                );
+
+                $updated = $q->execute();
+
+                // Process rows
+                foreach ($parsed['ADDONSLISTRESPONSE']['ADDONSLIST'] as $v) {
+
+                    $data = array();
+
+                    foreach ($this->updateFields as $f) {
+                        $val = $v[strtoupper($f)];
+                        if (!is_null($val)) {
+                            $data[$f] = $val;
+                        }
+                    }
+
+                    $data['status'] = \XLite\Model\Module::EXISTS;
+
+                    $module = $this->findByActualName($data['name'], $data['author']);
+
+                    if (!$module) {
+                        $module = new \XLite\Model\Module();
+                    }
+
+                    $module->map($data);
+
+                    \XLite\Core\Database::getEM()->persist($module);
+                    \XLite\Core\Database::getEM()->flush();
+                }
+
+            } else {
+
+                // Process error
+                $this->updateError = $parsed['STATUSDESC'];
+            }
+
+        } else {
+
+            // did not receive data or incorrect format
+            $this->updateError = 'Received XML is empty or contains incorrect format';
+        }
+
+        return $result;
+    }
+
+    /**
+     * Update Addons List
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function updateAddonsList()
+    {
+        $xmlData = $this->getAddonsXML();
+
+        if (!$this->updateError && $xmlData) {
+            $processed = $this->processXMLResponse($xmlData);
+        }
+
+        // TODO: log the error and show warning message to admin
+
+        return !$this->updateError;
+    } 
 
     /**
      * Define query builder for findAllModules()

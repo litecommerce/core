@@ -49,6 +49,13 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     const SORT_ORDER_DESC = 'desc';
 
     /**
+     * Modes 
+     */
+
+    const MODE_SEARCH   = 'search';
+    const MODE_FEATURED = 'featured';
+
+    /**
      * Currently applie sortOption (cached)
      *
      * @var    array
@@ -101,7 +108,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
                 static::SORT_OPT_NEWEST     => 'Newest',
             );
 
-            if ('search' === \XLite\Core\Request::getInstance()->mode) {
+            if (static::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode) {
                 static::$sortOptions += array(
                     static::SORT_OPT_ALPHA  => 'Alphabetically'
                 );
@@ -137,6 +144,67 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         }
 
         return static::$sortOption;
+    }
+
+    /**
+     * Return params list to use for search
+     *
+     * @return \XLite\Core\CommonCell
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSearchCondition()
+    {
+        $result = parent::getSearchCondition();
+
+        foreach (static::getSearchParams() as $modelParam => $requestParam) {
+            $result->$modelParam = $this->getParam($requestParam);
+        }
+
+        // Remove substring and tag params for the Featured add-ons pages
+        if (self::MODE_SEARCH !== \XLite\Core\Request::getInstance()->mode) {
+            $result->{self::PARAM_SUBSTRING} = null;
+            $result->{self::PARAM_TAG} = null;
+            $result->{self::PARAM_PRICE_FILTER} = null;
+        }
+
+        return $result;
+    }
+
+    /**
+     * getSearchParams
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getSearchParams()
+    {
+        return array(
+            \XLite\Model\Repo\Module::P_SUBSTRING    => self::PARAM_SUBSTRING,
+            \XLite\Model\Repo\Module::P_TAG          => self::PARAM_TAG,
+            \XLite\Model\Repo\Module::P_PRICE_FILTER => self::PARAM_PRICE_FILTER,
+        );
+    }
+
+    /**
+     * Define so called "request" parameters
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineRequestParams()
+    {
+        parent::defineRequestParams();
+
+        $this->requestParams = array_merge(
+            $this->requestParams,
+            static::getSearchParams()
+        );
     }
 
     /**
@@ -185,7 +253,9 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function getCommonParams()
     {
-        $mode = 'search' === \XLite\Core\Request::getInstance()->mode ? 'search' : 'featured';
+        $mode = static::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode
+            ? static::MODE_SEARCH
+            : static::MODE_FEATURED;
 
         return parent::getCommonParams() + array('mode' => $mode);
     }
@@ -238,8 +308,9 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     protected function getDefaultModes()
     {
         $list = parent::getDefaultModes();
-        $list[] = 'search';
-        $list[] = 'featured';
+        $list[] = static::MODE_SEARCH;
+        $list[] = static::MODE_FEATURED;
+        $list[] = '';
 
         return $list;
     }
