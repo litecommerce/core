@@ -729,15 +729,27 @@ class Module extends \XLite\Model\Repo\ARepo
 
         // Step 3: update modules list from the market place
 
-        if (
-            !\XLite\Core\Session::getInstance()->{static::ADDONS_UPDATED}
-            || \XLite\Core\Request::getInstance()->{static::P_FORCE_UPDATE}
-        ) {
+        if ($this->isUpdateNeeded()) {
             $result = $this->updateAddonsList();
             if ($result) {
                 \XLite\Core\Session::getInstance()->set(static::ADDONS_UPDATED, 1);
             }
         }
+    }
+
+    /**
+     * Check if the addons data needs to be updated 
+     * from the market place
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isUpdateNeeded()
+    {
+        return !\XLite\Core\Session::getInstance()->{static::ADDONS_UPDATED}
+            || \XLite\Core\Request::getInstance()->{static::P_FORCE_UPDATE};
     }
 
     /**
