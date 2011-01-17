@@ -134,7 +134,7 @@ class Order extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareCndProfile(\Doctrine\ORM\QueryBuilder $queryBuilder, XLite\Model\Profile $value)
+    protected function prepareCndProfile(\Doctrine\ORM\QueryBuilder $queryBuilder, \XLite\Model\Profile $value)
     {
         if (!empty($value)) {
             $queryBuilder
