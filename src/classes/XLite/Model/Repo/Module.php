@@ -242,14 +242,14 @@ class Module extends \XLite\Model\Repo\ARepo
      * Prepare certain search condition
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     * @param array                      $value        Condition data
+     * @param string|null                $value        Condition data
      *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareCndSubstring(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
+    protected function prepareCndSubstring(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         $searchWords = $this->getSearchWords($value);
 
@@ -307,14 +307,14 @@ class Module extends \XLite\Model\Repo\ARepo
      * Prepare certain search condition
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     * @param array                      $value        Condition data
+     * @param string|null                $value        Condition data
      *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareCndTag(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
+    protected function prepareCndTag(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
     }
 
@@ -882,7 +882,7 @@ class Module extends \XLite\Model\Repo\ARepo
         if ($this->updateError) {
             \XLite\Logger::getInstance()->log(
                 'The following error occured during add-ons update procedure:'
-                    . PHP_EOL . $this->updateError
+                . PHP_EOL . $this->updateError
             );
         } else {
             \XLite\Logger::getInstance()->log(
