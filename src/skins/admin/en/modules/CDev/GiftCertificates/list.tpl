@@ -46,8 +46,8 @@
         </select>
       </td>
       <td>{price_format(cert.debit):h}/{price_format(cert.amount):h}</td>
-      <td>{date_format(cert.add_date)}</td>
-      <td>{date_format(cert.expirationDate)}</td>
+      <td>{formatDate(cert.add_date)}</td>
+      <td>{formatDate(cert.expirationDate)}</td>
       <td align="center">
         <span IF="cert.profile_id">{cert.profile.login}</span>
         <span IF="!cert.profile_id">N/A</span>

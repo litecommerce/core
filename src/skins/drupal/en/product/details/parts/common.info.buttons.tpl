@@ -13,9 +13,9 @@
  * @ListChild (list="product.details.page.info", weight="100")
  * @ListChild (list="product.details.quicklook.info", weight="100")
  *}
-<div class="product-buttons" IF="!isProductAdded()">
+<div class="product-buttons shade-base" IF="!isProductAdded()">
   {displayListPart(#buttons#)}
 </div>
-<div class="product-buttons product-buttons-added" IF="isProductAdded()">
+<div class="product-buttons shade-base product-buttons-added" IF="isProductAdded()">
   {displayListPart(#buttons-added#)}
 </div>

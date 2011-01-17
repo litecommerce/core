@@ -33,7 +33,7 @@
 
 <h2 class="invoice">Invoice #{order.order_id}</h2>
 <div class="invoice-title">
-{time_format(order.date)}
+{formatTime(order.date)}
 <span>Grand total: {price_format(order,#total#):h}</span>
 </div>
 

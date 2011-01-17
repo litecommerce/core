@@ -40,17 +40,17 @@ class WidgetDataTransport extends \XLite\Base
     /**
      * Handler to use
      * 
-     * @var    mixed
+     * @var    \XLite\View\AView|null
      * @access protected
      * @since  3.0.0
      */
-    protected $handler = null;
+    protected $handler;
 
 
     /**
      * Save passed handler
      * 
-     * @param mixed $handler Passed handler
+     * @param \XLite\View\AView|null $handler Passed handler
      *  
      * @return void
      * @access public
@@ -59,6 +59,19 @@ class WidgetDataTransport extends \XLite\Base
     public function __construct($handler)
     {
         $this->handler = $handler;
+    }
+
+    /**
+     * Get widget 
+     * 
+     * @return \XLite\View\AView
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProtectedWidget()
+    {
+        return $this->handler;
     }
 
     /**

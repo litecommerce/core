@@ -70,8 +70,8 @@ function searchOrders()
       {end:}
       </td>
       <td nowrap align="left">{if:user.orders_count}<a href="{buildUrl(#order_list#,##,_ARRAY_(#mode#^#search#,#login#^user.login))}"><u>{user.orders_count}</u></a>{else:}n/a{end:}</td>
-      <td nowrap align="left">{if:user.added}{time_format(user.added):h}{else:}Unknown{end:}</td>
-      <td nowrap align="left">{if:user.last_login}{time_format(user.last_login):h}{else:}Never{end:}</td>
+      <td nowrap align="left">{if:user.added}{formatTime(user.added):h}{else:}Unknown{end:}</td>
+      <td nowrap align="left">{if:user.last_login}{formatTime(user.last_login):h}{else:}Never{end:}</td>
     </tr>
 
   </table>

@@ -78,7 +78,7 @@
    <Column ss:StyleID="s32" ss:AutoFitWidth="0" ss:Span="1"/>
    <Column ss:Index="8" ss:StyleID="s32" ss:AutoFitWidth="0" ss:Width="52.5"/>
    <Row>
-    <Cell ss:StyleID="s28"><Data ss:Type="String">{config.Company.company_name:t} orders for period {date_format(startDate)} - {date_format(endDate)}</Data></Cell>
+    <Cell ss:StyleID="s28"><Data ss:Type="String">{config.Company.company_name:t} orders for period {formatDate(startDate)} - {formatDate(endDate)}</Data></Cell>
     <Cell ss:StyleID="s28"/>
     <Cell ss:StyleID="s35"/>
     <Cell ss:StyleID="s28"/>
@@ -91,7 +91,7 @@
     <Cell ss:StyleID="s21" ss:HRef="{getShopUrl(#/admin.php?target=order#)}&amp;order_id={order.order_id}"><Data
       ss:Type="Number">{order.order_id}</Data></Cell>
     <Cell><Data ss:Type="String"><widget template="common/order_status.tpl"></Data></Cell>
-    <Cell ss:StyleID="s35"><Data ss:Type="String">{time_format(order.date)}</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">{formatTime(order.date)}</Data></Cell>
     <Cell><Data ss:Type="String">{order.profile.billing_address.title:t} {order.profile.billing_address.firstname:t} {order.profile.billing_address.lastname:t}</Data></Cell>
     <Cell ss:StyleID="s32"><Data ss:Type="Number">{order.subtotal}</Data></Cell>
     <Cell ss:StyleID="s32"><Data ss:Type="Number">{order.tax}</Data></Cell>
@@ -144,7 +144,7 @@
    </Row>
    <Row>
     <Cell><Data ss:Type="String">Order date:</Data></Cell>
-    <Cell ss:StyleID="s35"><Data ss:Type="String">{time_format(order.date)}</Data></Cell>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">{formatTime(order.date)}</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">Order Status:</Data></Cell>

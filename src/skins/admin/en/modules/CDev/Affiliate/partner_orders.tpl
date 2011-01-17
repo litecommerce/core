@@ -92,7 +92,7 @@
 <tr FOREACH="sales,sidx,sale" class="{getRowClass(sidx,#TableRow#,##)}">
     <td><a href="admin.php?target=profile&profile_id={sale.partner.profile_id}"><u>{sale.partner.login:h}</u></a></td>
     <td><a href="admin.php?target=order&order_id={sale.order.order_id}"><u>{sale.order.order_id}</u></a></td>
-    <td><a href="admin.php?target=order&order_id={sale.order.order_id}"><u>{date_format(sale.order.date)}</u></a></td>
+    <td><a href="admin.php?target=order&order_id={sale.order.order_id}"><u>{formatDate(sale.order.date)}</u></a></td>
     <td align=right>{price_format(sale.order,#subtotal#):h}</td>
     <td align=right>{price_format(sale,#commissions#):h}</td>
     <td>

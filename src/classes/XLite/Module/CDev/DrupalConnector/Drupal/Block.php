@@ -63,7 +63,9 @@ class Block extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                     $data['content'] = $content;
 
                     // Register JS and/or CSS
-                    $this->registerResources($widget);
+                    if ($widget->getProtectedWidget()) {
+                        $this->registerResources($widget->getProtectedWidget());
+                    }
 
                 } else {
 

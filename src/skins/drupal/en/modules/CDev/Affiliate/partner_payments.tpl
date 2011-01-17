@@ -57,7 +57,7 @@
     <td align=center><b>Amount</b></td>
 </tr>
 <tr FOREACH="pager.pageData,payment">
-    <td>{date_format(payment.paid_date):h}</td>
+    <td>{formatDate(payment.paid_date):h}</td>
     <td align=right>{price_format(payment.amount):h}</td>
 </tr>
 <tr>

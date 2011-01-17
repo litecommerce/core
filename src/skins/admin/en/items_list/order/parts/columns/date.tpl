@@ -12,4 +12,4 @@
  * @ListChild (list="itemsList.order.admin.search.columns", weight="50")
  *}
 
-<td class="date">{time_format(order.getDate())}</td>
+<td class="date">{formatTime(order.getDate())}</td>

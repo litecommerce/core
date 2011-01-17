@@ -43,8 +43,8 @@ function onViewGC() {
 	<tr FOREACH="xlite.auth.profile.activeGiftCertificates,id,cert" class="{getRowClass(id,##,#BottomBox#)}">
 		<td>{cert.gcid}<font IF="cert.displayWarning" class="Star">&nbsp;*&nbsp;</font></td>
 		<td>{price_format(cert.debit):h}/{price_format(cert.amount):h}</td>
-		<td>{date_format(cert.add_date)}</td>
-		<td>{date_format(cert.expiration_date)}</td>
+		<td>{formatDate(cert.add_date)}</td>
+		<td>{formatDate(cert.expiration_date)}</td>
 	</tr>
 	</table>
 	<font class="Star">&nbsp;*&nbsp;</font><i>- these certificates will expire sooner than in {config.CDev.GiftCertificates.expiration_warning_days} day(s).</i>

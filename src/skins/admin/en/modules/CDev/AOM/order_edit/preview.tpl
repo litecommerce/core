@@ -22,7 +22,7 @@
 				<tr>
 			        <td nowrap class="ProductDetailsTitle">Date:</td>
 					<td>&nbsp;</td>	
-			        <td>{time_format(cloneOrder.date)}</td>
+			        <td>{formatTime(cloneOrder.date)}</td>
 				</tr>
 			    <tr>
 			        <td nowrap class="ProductDetailsTitle">Status:</td>

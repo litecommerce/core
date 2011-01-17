@@ -112,6 +112,16 @@ abstract class AItemsList extends \XLite\View\Container
         self::SORT_ORDER_DESC => 'Descending',
     );
 
+    /**
+     * Sorting widget IDs list 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $sortWidgetIds = array();
+
 
     /**
      * Return dir which contains the page body template
@@ -506,6 +516,31 @@ abstract class AItemsList extends \XLite\View\Container
     protected function getURLAJAXParamsJS()
     {
         return $this->getJSArray($this->getURLAJAXParams());
+    }
+
+    /**
+     * Get sorting widget unique ID 
+     * 
+     * @param boolean $getLast Get last ID or next
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSortWidgetId($getLast = false)
+    {
+        $class = get_called_class();
+
+        if (isset(static::$sortWidgetIds[$class])) {
+            static::$sortWidgetIds[$class] = 0;
+        }
+
+        if (!$getLast) {
+            static::$sortWidgetIds[$class]++;
+        }
+        
+        return str_replace('\\', '-', $class) . '-sortby-' . static::$sortWidgetIds[$class];
     }
 
     /**

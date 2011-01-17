@@ -87,7 +87,7 @@
 </tr>
 <tr FOREACH="salesStats,key,stat" class="{getRowClass(key,#TableRow#,##)}" valign=top>
     <td>{stat.order.order_id}</td>
-    <td align=center>{date_format(stat.order.date)}</td>
+    <td align=center>{formatDate(stat.order.date)}</td>
     <td nowrap>
         {foreach:stat.order.items,oidx,oitem}
             {if:oitem.product_id}

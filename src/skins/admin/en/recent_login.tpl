@@ -20,7 +20,7 @@
                 </tr>
 				<tbody IF="recentAdmins">
 				<tr FOREACH="recentAdmins,recentAdmin" class="DialogBox">
-					<td align="center">{time_format(recentAdmin.last_login):h}</td>
+					<td align="center">{formatTime(recentAdmin.last_login):h}</td>
 					<td>{recentAdmin.login:h}</td>
 				</tr>
 			</table>	

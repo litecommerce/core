@@ -36,7 +36,7 @@
 				<tr>
 			        <td nowrap class="AomProductDetailsTitle">Date:</td>
 					<td>&nbsp;</td>	
-			        <td>{time_format(order.date)}</td>
+			        <td>{formatTime(order.date)}</td>
 				</tr>
 			    <tr>
 			        <td nowrap class="AomProductDetailsTitle">Status:</td>

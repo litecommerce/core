@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 <div class="order-title">
-  Order #{order.order_id}, {time_format(order.date)}
+  Order #{order.order_id}, {formatTime(order.date)}
   <div class="status-{order.status}">
     <widget template="common/order_status.tpl" />
   </div>

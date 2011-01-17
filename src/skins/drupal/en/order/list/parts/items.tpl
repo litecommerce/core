@@ -20,7 +20,7 @@
       <div class="title">
 
         <ul class="order-body-item-spec">
-          <li class="date">{time_format(order.date)}</li>
+          <li class="date">{formatTime(order.date)}</li>
           <li class="details">
             <button onclick="javascript:document.location='{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id))}';">{t(#Details#)}</button>
           </li>

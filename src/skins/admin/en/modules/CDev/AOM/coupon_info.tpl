@@ -25,8 +25,8 @@
 <td IF="DC.type=#freeship#">Free shipping</td>
 <td>{price_format(DC.minamount):h}</td>
 <td nowrap>
-<span IF="!DC.expired">{date_format(DC.expire):h}</span>
-<span IF="DC.expired"><font class="ErrorMessage">{date_format(DC.expire):h}</font></span>
+<span IF="!DC.expired">{formatDate(DC.expire):h}</span>
+<span IF="DC.expired"><font class="ErrorMessage">{formatDate(DC.expire):h}</font></span>
 </td>
 <td IF="clone"><input type="submit" value="Delete"></td>
 </tr>

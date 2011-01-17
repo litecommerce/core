@@ -13,6 +13,6 @@
  *}
 <h2 class="invoice">Invoice #{order.getOrderId()}</h2>
 <div class="invoice-title">
-{time_format(order.getDate())}
-<span>{t(#Grand total#)}: {order.getTotal():p}</span>
+  {formatTime(order.getDate())}
+  <span>{t(#Grand total#)}: {order.getTotal():p}</span>
 </div>

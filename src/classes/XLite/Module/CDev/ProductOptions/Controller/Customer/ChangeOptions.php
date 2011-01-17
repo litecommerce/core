@@ -69,7 +69,10 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      */
     public function getTitle()
     {
-        return $this->t('Change options');
+        return $this->t(
+            '"X product" options',
+            array('product' => $this->getItem()->getName())
+        );
     }
 
     /**
