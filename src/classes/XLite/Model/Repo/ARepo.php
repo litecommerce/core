@@ -1201,9 +1201,25 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             list($regular, $assocs) = $this->getEntityProperties();
         }
 
-        $entity = $this->findOneByRecord($record, $parent);
-        if (!$entity && $parent && $parentAssoc && $parentAssoc['getter'] && !$parentAssoc['many']) {
+        // Strongly insert entity
+        $insert = \XLite\Core\Database::getInstance()->getFixturesLoadingOption('insert');
+        $entity = $insert ? null : $this->findOneByRecord($record, $parent);
+        if (!$entity && !$insert && $parent && $parentAssoc && $parentAssoc['getter'] && !$parentAssoc['many']) {
             $entity = $parent->$parentAssoc['getter']();
+        }
+
+        // Add specified model directive
+        $addModel = \XLite\Core\Database::getInstance()->getFixturesLoadingOption('addModel');
+        $isAddModel = false;
+        if ($addModel == get_called_class()) {
+            $isAddModel = true;
+
+        } elseif (
+            $addModel
+            && !$entity
+            && !\XLite\Core\Database::getInstance()->getFixturesLoadingOption('isAddModel')
+        ) {
+            return $result;
         }
 
         if ($entity) {
@@ -1226,6 +1242,10 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
         $result++;
 
+        if ($isAddModel) {
+            \XLite\Core\Database::getInstance()->setFixturesLoadingOption('isAddModel', true);
+        }
+
         foreach ($this->assembleAssociationsFromRecord($record, $assocs) as $name => $value) {
             if ($assocs[$name]['many']) {
                 $result += $assocs[$name]['repo']->loadFixtures($value, $entity, $assocs[$name]);
@@ -1241,83 +1261,8 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             }
         }
 
-        return $result;
-    }
-
-    /**
-     * Insert fixtures 
-     * 
-     * @param array                $data        Data
-     * @param \XLite\Model\AEntity $parent      Entity parent callback OPTIONAL
-     * @param array                $parentAssoc Entity mapped propery method OPTIONAL
-     *  
-     * @return boolean|integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function insertFixtures(array $data, \XLite\Model\AEntity $parent = null, array $parentAssoc = array())
-    {
-        $result = 0;  
-        list($regular, $assocs) = $this->getEntityProperties();
-        foreach ($data as $record) {
-            $result += $this->insertFixture($record, $regular, $assocs, $parent, $parentAssoc);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Insert fixture 
-     * 
-     * @param array                $record      Record
-     * @param array                $regular     Regular fields info OPTIONAL
-     * @param array                $assocs      Associations info OPTIONAL
-     * @param \XLite\Model\AEntity $parent      Entity parent callback OPTIONAL
-     * @param array                $parentAssoc Entity mapped propery method OPTIONAL
-     *  
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function insertFixture(
-        array $record,
-        array $regular = array(),
-        array $assocs = array(),
-        \XLite\Model\AEntity $parent = null,
-        array $parentAssoc = array()
-    ) {
-
-        $result = 0;
-
-        if (!$regular || !$assocs) {
-            list($regular, $assocs) = $this->getEntityProperties();
-        }
-
-        $class = $this->_class->name;
-        $entity = new $class;
-        $entity->map($this->assembleRegularFieldsFromRecord($record, $regular));
-
-        \XLite\Core\Database::getEM()->persist($entity);
-
-        if ($this->flushAfterLoading) {
-            \XLite\Core\Database::getEM()->flush();
-        }
-
-        if ($parent) {
-            $this->linkLoadedEntity($entity, $parent, $parentAssoc);
-        }
-
-        $result++;
-
-        foreach ($this->assembleAssociationsFromRecord($record, $assocs) as $name => $value) {
-            if ($assocs[$name]['many']) {
-                $result += $assocs[$name]['repo']->insertFixtures($value, $entity, $assocs[$name]);
-
-            } else {
-                $result += $assocs[$name]['repo']->insertFixture($value, array(), array(), $entity, $assocs[$name]);
-            }
+        if ($isAddModel) {
+            \XLite\Core\Database::getInstance()->setFixturesLoadingOption('isAddModel');
         }
 
         return $result;
