@@ -733,7 +733,7 @@ class Module extends \XLite\Model\Repo\ARepo
         if ($this->isUpdateNeeded()) {
             $result = $this->updateAddonsList();
             if ($result) {
-                \XLite\Core\Session::getInstance()->set(static::ADDONS_UPDATED, 1);
+                \XLite\Core\Session::getInstance()->set(static::ADDONS_UPDATED, time());
             }
         }
     }
