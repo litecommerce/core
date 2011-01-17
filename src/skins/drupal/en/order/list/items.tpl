@@ -28,11 +28,12 @@
 
 </table>
 
+{*
 <script type="text/javascript">
-$(document).ready(
+jQuery(document).ready(
   function() {
     // Assign orders items short list constroller
-    $('.orders-list ul.list li.order-{order.order_id}').each(
+    jQuery('.orders-list ul.list li.order-{order.order_id}').each(
       function() {
         new OrderItemsShortListController(this);
       }
@@ -40,3 +41,4 @@ $(document).ready(
   }
 );
 </script>
+*}

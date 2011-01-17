@@ -583,7 +583,7 @@ function Delete()
         </tr>
         </table>
     </td>
-    <td nowrap>{time_format(ntf.date)}</td>
+    <td nowrap>{formatTime(ntf.date)}</td>
     <td align=center>
     <span IF="ntf.type=#product#"><img src="images/modules/ProductAdviser/product.gif" width=14 height=14 border=0></span>
     <span IF="ntf.type=#price#"><img src="images/modules/ProductAdviser/price.gif" width=14 height=18 border=0></span>
@@ -746,7 +746,7 @@ function SwitchEditMode(preview, ntf_id)
         </tr>
         </table>
     </td>
-    <td nowrap>{time_format(ntf.date)}</td>
+    <td nowrap>{formatTime(ntf.date)}</td>
     <td align=center>
     <span IF="ntf.type=#product#"><img src="images/modules/ProductAdviser/product.gif" width=14 height=14 border=0></span>
     <span IF="ntf.type=#price#"><img src="images/modules/ProductAdviser/price.gif" width=14 height=18 border=0></span>

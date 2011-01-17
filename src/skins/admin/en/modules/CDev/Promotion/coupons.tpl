@@ -177,8 +177,8 @@ No coupons found.
 <td>{price_format(DC.minamount):h}</td>
 <td align="center"><span IF="DC.timesOverused"><font class="ErrorMessage">{DC.timesUsed}/{DC.times}</font></span><span IF="!DC.timesOverused">{DC.timesUsed}/{DC.times}</span></td>
 <td nowrap>
-<span IF="!DC.expired">{date_format(DC.expire):h}</span>
-<span IF="DC.expired"><font class="ErrorMessage">{date_format(DC.expire):h}</font></span>
+<span IF="!DC.expired">{formatDate(DC.expire):h}</span>
+<span IF="DC.expired"><font class="ErrorMessage">{formatDate(DC.expire):h}</font></span>
 </td>
 <td align="center"><input type="button" value="&nbsp;Edit&nbsp;" onClick="location.href = 'admin.php?target=discount_coupon&coupon_id={DC.coupon_id}';"></td>
 <td IF="!DC.childrenCount"><input type="button" value="Delete" onClick="DeleteCoupon('{DC.coupon_id}')"></td>
@@ -227,7 +227,7 @@ orders greater than {price_format(DC.minamount):h}
         <td IF="!child.order" width=50>&nbsp;#{child.order_id}&nbsp;(child.coupon)</td>
         <td IF="child.order" width=90>&nbsp;<widget class="\XLite\View\StatusSelect" order="{child.order}" template="common/order_status.tpl"></td>
         <td IF="!child.order" width=90>&nbsp;n/a&nbsp;</td>
-        <td nowrap IF="child.order" width=120>&nbsp;<a href="admin.php?target=order&order_id={child.order_id}">{time_format(child.order.date)}</a>&nbsp;</td>
+        <td nowrap IF="child.order" width=120>&nbsp;<a href="admin.php?target=order&order_id={child.order_id}">{formatTime(child.order.date)}</a>&nbsp;</td>
         <td IF="!child.order" width=120>&nbsp;n/a&nbsp;</td>
         <td nowrap IF="child.order" width=90>&nbsp;<a href="admin.php?target=order&order_id={child.order_id}">{child.order.profile.billing_title} {child.order.profile.billing_firstname} {child.order.profile.billing_lastname}</a>&nbsp;</td>
         <td IF="!child.order" width=90>&nbsp;n/a&nbsp;</td>

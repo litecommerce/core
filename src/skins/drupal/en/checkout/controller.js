@@ -575,6 +575,10 @@ CheckoutView.prototype.openLoginPopup = function()
   }
 }
 
+CheckoutView.prototype.getShadeBase = function()
+{
+  return jQuery('.step.current .step-box', this.base).eq(0);
+}
 
 /**
  * Shipping methods list widget

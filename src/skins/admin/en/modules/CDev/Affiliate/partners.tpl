@@ -106,7 +106,7 @@
     <td><input type=checkbox name="ids[]" value="{partner.profile_id}"></td>
     <td nowrap><a href="admin.php?target=profile&profile_id={partner.profile_id}&mode=modify"><u>{partner.login:h}</u></a></td>
     <td>{partner.billing_firstname:h} {partner.billing_lastname:h}&nbsp;&nbsp;&nbsp;(<a href="admin.php?target=profile&profile_id={partner.profile_id}&mode=modify"><u>edit profile...</u></a>)</td>
-    <td>{time_format(partner.partner_signup)}</td>
+    <td>{formatTime(partner.partner_signup)}</td>
     <td>
         &nbsp;
         {foreach:xlite.factory.\XLite\Module\CDev\Affiliate\Model\AffiliatePlan.findAll(),ap}

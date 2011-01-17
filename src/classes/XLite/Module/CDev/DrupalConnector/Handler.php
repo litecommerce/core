@@ -38,6 +38,20 @@ namespace XLite\Module\CDev\DrupalConnector;
 class Handler extends \XLite\Core\CMSConnector
 {
     /**
+     * Message types translation table (XLite to Drupal)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $messageTypes = array(
+        \XLite\Core\TopMessage::INFO    => 'status',
+        \XLite\Core\TopMessage::WARNING => 'warning',
+        \XLite\Core\TopMessage::ERROR   => 'error',
+    );
+
+    /**
      * Return name of current CMS 
      * 
      * @return string
@@ -257,5 +271,24 @@ class Handler extends \XLite\Core\CMSConnector
         parent::init();
 
         $this->mapRequest($this->getLCArgs());
+        $this->setPreviousTopMessages();
     }
+
+    /**
+     * Set Drupal messages using LC top messages data
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    protected function setPreviousTopMessages()
+    {
+        foreach (\XLite\Core\TopMessage::getInstance()->unloadPreviousMessages() as $message) {
+            drupal_set_message(
+                $message['text'],
+                isset($this->messageTypes[$message['type']]) ? $this->messageTypes[$message['type']] : 'status'
+            );
+        }
+    }
+
 }

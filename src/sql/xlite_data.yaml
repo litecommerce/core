@@ -33,7 +33,7 @@ XLite\Model\Config:
   - { name: company_website, category: Company, type: text, orderby: 370, value: 'http://', translations: [{ code: en, option_name: 'Company website', option_comment: '' }] }
   - { name: customer_presentation, category: General, type: separator, orderby: 200, translations: [{ code: en, option_name: 'Customer Zone settings', option_comment: '' }] }
   - { name: customer_security, category: Security, type: checkbox, value: Y, translations: [{ code: en, option_name: 'Use HTTPS in the Customer Zone (for logi', option_comment: 'heckout and profile pages)' }] }
-  - { name: date_format, category: General, type: select, orderby: 660, value: '%b %', translations: [{ code: en, option_name: 'Date format', option_comment: '' }] }
+  - { name: date_format, category: General, type: select, orderby: 660, value: '%b %d, %Y', translations: [{ code: en, option_name: 'Date format', option_comment: '' }] }
   - { name: decimal_delim, category: General, type: select, orderby: 650, value: ., translations: [{ code: en, option_name: 'Currency decimal delimiter', option_comment: '' }] }
   - { name: defaultSources, category: Images, type: serialized }
   - { name: default_country, category: General, type: country, orderby: 310, value: US, translations: [{ code: en, option_name: 'Default country in the registration form', option_comment: '' }] }

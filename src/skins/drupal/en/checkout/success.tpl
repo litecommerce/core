@@ -15,7 +15,7 @@
   <div class="buttons-row">
     <widget class="\XLite\View\Button\Link" label="Continue shopping" location="{getContinueURL()}" />
     &nbsp;&nbsp;
-    <widget class="\XLite\View\Button\Link" label="Print invoice" location="{buildUrl(#invoice#,##,_ARRAY_(#order_id#^order.order_id,#printable#^#1#))}" />
+    <widget class="\XLite\View\Button\Link" label="Print invoice" location="#" jsCode="window.print(); return false;" />
   </div>
 
   <hr class="tiny" />

@@ -29,7 +29,7 @@ core.bind(
             function(event) {
               return !popup.load(
                 this,
-                null,
+                'change-options',
                 function() {
                   o.closePopupHandler();
                 }

@@ -86,7 +86,7 @@ In order to redeem this gift certificate please follow these steps:
 </td>
 </tr>
 </table>
-<p align="center"><b>Note:</b> This certificate was issued on {date_format(gc.add_date)} and will expire on {date_format(gc.expiration_date)}.</p>
+<p align="center"><b>Note:</b> This certificate was issued on {formatDate(gc.add_date)} and will expire on {formatDate(gc.expiration_date)}.</p>
 <p align="center">
 Thank you for using LiteCommerce shopping system<br>                               <br>
 Phone: {config.Company.company_phone}<br>

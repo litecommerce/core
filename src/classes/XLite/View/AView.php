@@ -848,19 +848,15 @@ abstract class AView extends \XLite\Core\Handler
      * @access protected
      * @since  3.0.0
      */
-    protected function date_format($base, $field = null, $format = null)
+    protected function formatDate($base, $field = null, $format = null)
     {
-        if (!isset($format)) {
-            $format = $this->config->General->date_format;
-        }
-
         if (is_object($base)) {
             $base = $base instanceof \XLite\Model\AEntity
                 ? $base->$field
                 : $base->get($field);
         }
 
-        return strftime($format, $base);
+        return \XLite\Core\Converter::formatDate($base, $format);
     }
 
     /**
@@ -874,13 +870,15 @@ abstract class AView extends \XLite\Core\Handler
      * @access protected
      * @since  3.0.0
      */
-    protected function time_format($base, $field = null, $format = null)
+    protected function formatTime($base, $field = null, $format = null)
     {
-        return $this->date_format(
-            $base,
-            $field,
-            $this->config->General->date_format . ', ' . $this->config->General->time_format
-        );
+        if (is_object($base)) {
+            $base = $base instanceof \XLite\Model\AEntity
+                ? $base->$field
+                : $base->get($field);
+        }
+
+        return \XLite\Core\Converter::formatTime($base, $format);
     }
 
     /**

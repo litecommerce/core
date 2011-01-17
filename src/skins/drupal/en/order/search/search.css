@@ -113,7 +113,9 @@ h2.order-search-title {
 }
 
 table.order-list-items,
-  table.order-list-items td
+table.order-list-items td,
+table.order-list-items tr,
+table.order-list-items tbody
 {
   border: none 0px;
   vertical-align: top;

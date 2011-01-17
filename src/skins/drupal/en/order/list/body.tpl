@@ -17,9 +17,9 @@
 {* TODO Restore
 
 <script type="text/javascript">
-$(document).ready(
+jQuery(document).ready(
   function() {
-    $('.orders-list.{getClassIdentifier()}').each(
+    jQuery('.orders-list.{getClassIdentifier()}').each(
       function() {
         new OrdersListController(this, {getAJAXRequestParamsAsJSObject():r});
       }

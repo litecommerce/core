@@ -53,7 +53,7 @@
    x:FullRows="1">
    <Column ss:Width="53.25"/>
    <Row FOREACH="salesData,x,y">
-    <Cell ss:StyleID="s21"><Data ss:Type="String">{date_format(x)}</Data></Cell>
+    <Cell ss:StyleID="s21"><Data ss:Type="String">{formatDate(x)}</Data></Cell>
     <Cell><Data ss:Type="Number">{y}</Data></Cell>
    </Row>
   </Table>

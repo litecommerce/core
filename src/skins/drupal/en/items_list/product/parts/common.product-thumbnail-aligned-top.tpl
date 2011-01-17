@@ -13,5 +13,5 @@
  * @ListChild (list="itemsList.product.list.customer.photo", weight="10")
  *}
 <a IF="isShowThumbnails()&product.hasImage()" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-thumbnail" title="{t(#Thumbnail#)}">
-  <widget class="\XLite\View\Image" image="{product.getImage()}" maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{product.name}" verticalCenter="0" className="photo" />
+  <widget class="\XLite\View\Image" image="{product.getImage()}" maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{product.name}" verticalAlign="top" className="photo" />
 </a>

@@ -45,9 +45,17 @@ class Image extends \XLite\View\AView
     const PARAM_MAX_WIDTH         = 'maxWidth';
     const PARAM_MAX_HEIGHT        = 'maxHeight';
     const PARAM_CENTER_IMAGE      = 'centerImage';
-    const PARAM_VERTICAL_CENTER   = 'verticalCenter';
+    const PARAM_VERTICAL_ALIGN    = 'verticalAlign';
     const PARAM_USE_CACHE         = 'useCache';
     const PARAM_USE_DEFAULT_IMAGE = 'useDefaultImage';
+
+
+    /**
+     * Vertical align types 
+     */
+    const VERTICAL_ALIGN_TOP    = 'top';
+    const VERTICAL_ALIGN_MIDDLE = 'middle';
+    const VERTICAL_ALIGN_BOTTOM = 'bottom';
 
 
     /**
@@ -119,7 +127,7 @@ class Image extends \XLite\View\AView
             self::PARAM_MAX_WIDTH         => new \XLite\Model\WidgetParam\Int('Max. width', 0),
             self::PARAM_MAX_HEIGHT        => new \XLite\Model\WidgetParam\Int('Max. height', 0),
             self::PARAM_CENTER_IMAGE      => new \XLite\Model\WidgetParam\Checkbox('Center the image after resizing', true),
-            self::PARAM_VERTICAL_CENTER   => new \XLite\Model\WidgetParam\Checkbox('Whether to center vertically, or not', true),
+            self::PARAM_VERTICAL_ALIGN    => new \XLite\Model\WidgetParam\String('Vertical align', self::VERTICAL_ALIGN_MIDDLE),
             self::PARAM_USE_CACHE         => new \XLite\Model\WidgetParam\Bool('Use cache', 1),
             self::PARAM_USE_DEFAULT_IMAGE => new \XLite\Model\WidgetParam\Bool('Use default image', 1),
         );
@@ -275,14 +283,25 @@ class Image extends \XLite\View\AView
         $vertical = ($this->getParam(self::PARAM_MAX_HEIGHT) - $this->properties['height']) / 2;
         $horizontal = ($this->getParam(self::PARAM_MAX_WIDTH) - $this->properties['width']) / 2;
 
-        $top    = max(0, ceil($vertical));
-        $bottom = max(0, floor($vertical));
         $left   = max(0, ceil($horizontal));
         $right  = max(0, floor($horizontal));
 
-        if (!$this->getParam(self::PARAM_VERTICAL_CENTER)) {
-            $top = 0;
-            $bottom = 0;
+        switch ($this->getParam(self::PARAM_VERTICAL_ALIGN)) {
+            case self::VERTICAL_ALIGN_TOP:
+                $top = 0;
+                $bottom = 0;
+
+                break;
+
+            case self::VERTICAL_ALIGN_BOTTOM:
+                $top    = $this->getParam(self::PARAM_MAX_HEIGHT) - $this->properties['height'];
+                $bottom = 0;
+
+                break;
+
+            default:
+                $top    = max(0, ceil($vertical));
+                $bottom = max(0, floor($vertical));
         }
 
         if (0 < $top || 0 < $bottom || 0 < $left || 0 < $right) {

@@ -178,7 +178,9 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         $drupalNodes = array_slice(drupal_get_breadcrumb(), 0, 2);
         drupal_set_breadcrumb(array_merge($drupalNodes, $lcNodes));
 
-        $this->registerResources($widget);
+        if ($widget->getProtectedWidget()) {
+            $this->registerResources($widget->getProtectedWidget());
+        }
     }
 
     /**

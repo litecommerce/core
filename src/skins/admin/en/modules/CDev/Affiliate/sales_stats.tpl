@@ -99,7 +99,7 @@
     <td><a href="admin.php?target=profile&profile_id={stat.partner.profile_id}"><u>{stat.partner.login:h}</u></a></td>
     <td IF="show_parent"><a href="admin.php?target=profile&profile_id={stat.partner.parentProfile.profile_id}"><u>{stat.partner.parentProfile.login:h}</u></a></td>
     <td><a href="admin.php?target=order&order_id={stat.order.order_id}"><u>{stat.order.order_id}</u></a></td>
-    <td align=center><a href="admin.php?target=order&order_id={stat.order.order_id}"><u>{date_format(stat.order.date)}</u></a></td>
+    <td align=center><a href="admin.php?target=order&order_id={stat.order.order_id}"><u>{formatDate(stat.order.date)}</u></a></td>
     <td nowrap>
         {foreach:stat.order.items,oidx,oitem}
             {if:oitem.product_id}

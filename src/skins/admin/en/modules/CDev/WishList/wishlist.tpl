@@ -31,7 +31,7 @@ function delete_warning()
 
   <tr>
     <td nowrap><b>Creation date:</b></td>
-    <td>{date_format(wishlist.date)}</td>
+    <td>{formatDate(wishlist.date)}</td>
   </tr>
 
   <tr>

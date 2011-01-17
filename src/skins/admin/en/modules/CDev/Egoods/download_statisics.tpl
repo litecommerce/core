@@ -19,7 +19,7 @@
 </td>
 <tr FOREACH="pager.pageData,stat_line">
 	<td><a href="{getProductHref(stat_line.file_id)}"><u>{getProductName(stat_line.file_id)}</u></a>&nbsp;</td>
-	<td nowrap>{time_format(stat_line.date)}&nbsp;</td>
+	<td nowrap>{formatTime(stat_line.date)}&nbsp;</td>
 	<td>{stat_line.headers}</td>
 </tr>
 </table>

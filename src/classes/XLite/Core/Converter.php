@@ -589,4 +589,45 @@ class Converter extends \XLite\Base\Singleton
         return $value * $multiplier;
     }
 
+    /**
+     * Format time 
+     * 
+     * @param integer $base   UNIX time stamp
+     * @param string  $format Format string
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function formatTime($base, $format = null)
+    {
+        if (!$format) {
+            $config = \XLite\Core\Config::getInstance();
+            $format = $config->General->date_format . ', ' . $config->General->time_format;
+        }
+
+        return strftime($format, $base);
+    }
+
+    /**
+     * Format date 
+     * 
+     * @param integer $base   UNIX time stamp
+     * @param string  $format Format string
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function formatDate($base, $format = null)
+    {
+        if (!$format) {
+            $format = \XLite\Core\Config::getInstance()->General->date_format;
+        }
+
+        return strftime($format, $base);
+    }
+
 }

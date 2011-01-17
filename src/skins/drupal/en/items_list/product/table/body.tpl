@@ -12,7 +12,7 @@
  *}
 <div class="products">
 
-  <table class="products-table" IF="getPageData()">
+  <table class="products-table" cellspacing="0" IF="getPageData()">
     <tr>
       {displayListPart(#captions#)}
     </tr>

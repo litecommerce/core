@@ -15,7 +15,7 @@
 <body>
 <p>Dear {cert.recipient},</p>
 
-<p>you have received this message because your gift certificate {cert.gcid} will expire on {date_format(cert.expirationDate)}.</p>
+<p>you have received this message because your gift certificate {cert.gcid} will expire on {formatDate(cert.expirationDate)}.</p>
 
 <p>{signature:h}</p>
 </body>

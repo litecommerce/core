@@ -48,7 +48,7 @@ End date
 <th>&nbsp;</th></tr>
 <tr class=Center FOREACH="specialOffers,specialOffer">
 	<td><input type="checkbox" name="offer_ids[{specialOffer.offer_id}]"></td>
-	<td>{date_format(specialOffer,#date#)}</td>
+	<td>{formatDate(specialOffer,#date#)}</td>
 	<td>{specialOffer.title}</td>
 	<td align="center"><input type="checkbox" name="active[{specialOffer.offer_id}]" checked="{specialOffer.enabled}"></td>
 	<td>{if:specialOffer.status=#Available#}
@@ -66,8 +66,8 @@ End date
 		{specialOffer.status}
 		</font>
 	</td>
-	<td>{date_format(specialOffer,#start_date#)}</td>
-	<td>{date_format(specialOffer,#end_date#)}</td>
+	<td>{formatDate(specialOffer,#start_date#)}</td>
+	<td>{formatDate(specialOffer,#end_date#)}</td>
 	<td><a href="admin.php?target=SpecialOffer&offer_id={specialOffer.offer_id}"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Edit</a></td>
 </tr>
 </table>

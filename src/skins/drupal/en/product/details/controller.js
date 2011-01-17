@@ -253,7 +253,7 @@ ProductDetailsView.prototype.hideLightbox = function()
 
 // Get base element for shade / unshade operation
 ProductDetailsView.prototype.getShadeBase = function() {
-  return this.base.parents('#content').eq(0);
+  return jQuery('.shade-base', this.base).eq(0);
 }
 
 // Image gallery switcher

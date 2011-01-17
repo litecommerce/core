@@ -15,8 +15,8 @@
 
 <div IF="isSortBySelectorVisible()" class="sort-box">
 
-  <span>Sort by</span>
-  <select class="sort-crit">
+  <label for="{getSortWidgetId()}">{t(#Sort by#)}</label>
+  <select class="sort-crit" id="{getSortWidgetId(true)}">
     <option FOREACH="sortByModes,key,name" value="{key}" selected="{isSortByModeSelected(key)}">{name}</option>
   </select>
 

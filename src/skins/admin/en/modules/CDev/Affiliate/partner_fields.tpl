@@ -57,7 +57,7 @@
 <tr valign="middle">
     <td align="right">Sign-up date</td>
     <td>&nbsp;</td>
-    <td>{time_format(partner_signup)}</td>
+    <td>{formatTime(partner_signup)}</td>
     <td>&nbsp;</td>
 </tr>
 

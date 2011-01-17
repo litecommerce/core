@@ -238,6 +238,22 @@ class TopMessage extends \XLite\Base\Singleton
     }
 
     /**
+     * Unload previous messages 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function unloadPreviousMessages()
+    {
+        $messages = $this->getPreviousMessages();
+        $this->messages = array();
+
+        return $messages;
+    }
+
+    /**
      * Clear list
      * 
      * @return void

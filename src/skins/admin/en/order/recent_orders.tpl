@@ -24,7 +24,7 @@
     <td>&nbsp;<a href="admin.php?target=order&order_id={order.order_id}" onClick="this.blur()"><u>{order.order_id}</u></a></td>
     <td><widget template="common/order_status.tpl"></td>
 	<widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/orders/factor.tpl">
-    <td nowrap><a href="admin.php?target=order&order_id={order.order_id}" onClick="this.blur()">{time_format(order.date)}</a></td>
+    <td nowrap><a href="admin.php?target=order&order_id={order.order_id}" onClick="this.blur()">{formatTime(order.date)}</a></td>
     <td nowrap>
 		<table border=0 cellpadding=0 cellspacing=0 width=100%>
 		<tr>
