@@ -141,6 +141,19 @@ class Database extends \XLite\Base\Singleton
     );
 
     /**
+     * Fixtures loading prtocedure options 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $fixturesLoadingOptions = array(
+        'insert'   => false,
+        'addModel' => null,
+    );
+
+    /**
      * Get entity manager 
      * 
      * @return \Doctrine\ORM\EntityManager
@@ -745,6 +758,37 @@ class Database extends \XLite\Base\Singleton
     }
 
     /**
+     * Get fixtures loading procedure option 
+     *
+     * @param string $name  Option name
+     * 
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFixturesLoadingOption($name)
+    {
+        return isset($this->fixturesLoadingOptions[$name]) ? $this->fixturesLoadingOptions[$name] : null;
+    }
+
+    /**
+     * Set fixtures loading procedure option
+     *
+     * @param string $name  Option name
+     * @param mixed  $value Option value OPTIONAL
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setFixturesLoadingOption($name, $value = null)
+    {
+        $this->fixturesLoadingOptions[$name] = $value;
+    }
+
+    /**
      * Load fixtures from YAML file 
      * 
      * @param string $path YAML file path
@@ -766,19 +810,24 @@ class Database extends \XLite\Base\Singleton
                 $repo = static::getRepo($entityName);
 
                 if ($repo) {
-                    $isLoad = true;
-
                     if (isset($rows['directives'])) {
-                        $isLoad = !isset($rows['directives']['insert']) || !$rows['directives']['insert'];
+                        $this->fixturesLoadingOptions['insert'] = isset($rows['directives']['insert'])
+                            && $rows['directives']['insert'];
+                        if (isset($rows['directives']['addModel'])) {
+                            $this->fixturesLoadingOptions['addModel'] = $rows['directives']['addModel'];
+                        }
                         unset($rows['directives']);
                     }
 
-                    $result += $isLoad ? $repo->loadFixtures($rows) : $repo->insertFixtures($rows);
+                    $result += $repo->loadFixtures($rows);
 
                     static::$em->flush();
                     static::$em->clear();
                 }
             }
+
+            $this->fixturesLoadingOptions['insert'] = false;
+            $this->fixturesLoadingOptions['addModel'] = null;
         }
 
         return $result;
