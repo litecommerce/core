@@ -884,6 +884,10 @@ class Module extends \XLite\Model\Repo\ARepo
                 'The following error occured during add-ons update procedure:'
                 . PHP_EOL . $this->updateError
             );
+            \XLite\Core\TopMessage::getInstance()->addWarning(
+                'Error occured when getting addons data from the LiteCommerce Market place. '
+                . 'Check log file for details.'
+            );
         } else {
             \XLite\Logger::getInstance()->log(
                 'Add-ons data has been successfully updated from the Market place'
