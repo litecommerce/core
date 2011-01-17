@@ -65,6 +65,7 @@ class Module extends \XLite\Model\Repo\ARepo
     const REQUEST_TYPE_LIST = 'addonsList';
     const PARAM_REQUEST     = 'request';
     const ADDONS_UPDATED    = 'addonsUpdated';
+    const LAST_UPDATE_TTL   = 86400;
 
     /**
      * Fileds that go into update from marketplace
@@ -749,6 +750,7 @@ class Module extends \XLite\Model\Repo\ARepo
     protected function isUpdateNeeded()
     {
         return !\XLite\Core\Session::getInstance()->{static::ADDONS_UPDATED}
+            || \XLite\Core\Session::getInstance()->{static::ADDONS_UPDATED} + static::LAST_UPDATE_TTL > time()
             || \XLite\Core\Request::getInstance()->{static::P_FORCE_UPDATE};
     }
 
@@ -877,7 +879,16 @@ class Module extends \XLite\Model\Repo\ARepo
             $processed = $this->processXMLResponse($xmlData);
         }
 
-        // TODO: log the error and show warning message to admin
+        if ($this->updateError) {
+            \XLite\Logger::getInstance()->log(
+                'The following error occured during add-ons update procedure:'
+                    . PHP_EOL . $this->updateError
+            );
+        } else {
+            \XLite\Logger::getInstance()->log(
+                'Add-ons data has been successfully updated from the Market place'
+            );
+        }
 
         return !$this->updateError;
     } 
