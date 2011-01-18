@@ -1423,9 +1423,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
         list($regular, $assocs) = $this->getEntityProperties();
         foreach ($data as $record) {
-            if ($this->unloadFixture($record, $regular, $assocs, $parent, $parentAssoc)) {
-                $result++;
-            }
+            $result += $this->unloadFixture($record, $regular, $assocs, $parent, $parentAssoc);
         }
 
         return $result;
@@ -1462,10 +1460,34 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         $entity = $this->findOneByRecord($record, $parent);
 
         if ($entity) {
-            \XLite\Core\Database::getEM()->remove($entity);
+            $addModel = \XLite\Core\Database::getInstance()->getFixturesLoadingOption('addModel');
+            
+            if (!$addModel || $addModel == $this->_class->name) {
+                \XLite\Core\Database::getEM()->remove($entity);
+                $result++;
+
+            } elseif ($addModel) {
+
+                // Search target model into childs list
+                foreach ($this->assembleAssociationsFromRecord($record, $assocs) as $name => $value) {
+                    if ($assocs[$name]['many']) {
+                        $result += $assocs[$name]['repo']->unloadFixtures($value, $entity, $assocs[$name]);
+
+                    } else {
+                        $result += $assocs[$name]['repo']->unloadFixture(
+                            $value,
+                            array(),
+                            array(),
+                            $entity,
+                            $assocs[$name]
+                        );
+                    }
+                }
+ 
+            }
         }
 
-        return $entity;
+        return $result;
     }
 
     /**
