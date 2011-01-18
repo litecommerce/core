@@ -93,14 +93,14 @@ class Logger extends \XLite\Base\Singleton
     );
 
     /**
-     * Mark tempaltes flag
+     * Mark templates flag
      * 
      * @var    boolean
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $markTempaltes = false;
+    protected static $markTemplates = false;
 
     /**
      * Constructor
@@ -143,7 +143,7 @@ class Logger extends \XLite\Base\Singleton
             ini_set('log_errors', 1);
         }
 
-        self::$markTempaltes = (bool)\XLite::getInstance()->getOptions(array('debug', 'mark_templates'));
+        self::$markTemplates = (bool)\XLite::getInstance()->getOptions(array('debug', 'mark_templates'));
 
         $logger = \Log::singleton(
             $this->getType(),
@@ -531,6 +531,6 @@ class Logger extends \XLite\Base\Singleton
      */
     public static function isMarkTemplates()
     {
-        return self::$markTempaltes;
+        return self::$markTemplates;
     }
 }
