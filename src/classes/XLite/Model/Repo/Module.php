@@ -733,7 +733,7 @@ class Module extends \XLite\Model\Repo\ARepo
         if ($this->isUpdateNeeded()) {
             $result = $this->updateAddonsList();
             if ($result) {
-                \XLite\Core\Session::getInstance()->set(static::ADDONS_UPDATED, time());
+                \XLite\Core\Session::getInstance()->set(static::ADDONS_UPDATED, LC_START_TIME);
             }
         }
     }
@@ -747,11 +747,25 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isUpdateNeeded()
+    protected static function isUpdateNeeded()
     {
-        return !\XLite\Core\Session::getInstance()->{static::ADDONS_UPDATED}
-            || \XLite\Core\Session::getInstance()->{static::ADDONS_UPDATED} + static::LAST_UPDATE_TTL > time()
+        return !static::isAddonsInfoActual()
             || \XLite\Core\Request::getInstance()->{static::P_FORCE_UPDATE};
+    }
+
+    /**
+     * Returns timestamp of the last addons update
+     * from the marketplace
+     * 
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function isAddonsInfoActual()
+    {
+        return \XLite\Core\Session::getInstance()->{static::ADDONS_UPDATED}
+            && \XLite\Core\Session::getInstance()->{static::ADDONS_UPDATED} + static::LAST_UPDATE_TTL > LC_START_TIME;
     }
 
     /**

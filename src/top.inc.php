@@ -58,6 +58,9 @@ define('LC_NAMESPACE',      'XLite');
 define('LC_MODEL_NS',       LC_NAMESPACE . '\Model');
 define('LC_MODEL_PROXY_NS', LC_MODEL_NS . '\Proxy');
 
+// Timestamp of the application start
+define('LC_START_TIME', time());
+
 // Disabled xdebug coverage for Selenium-based tests [DEVELOPMENT PURPOSE]
 if (isset($_COOKIE) && !empty($_COOKIE['no_xdebug_coverage']) && function_exists('xdebug_stop_code_coverage')) {
     @xdebug_stop_code_coverage();
