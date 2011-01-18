@@ -1211,7 +1211,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         // Add specified model directive
         $addModel = \XLite\Core\Database::getInstance()->getFixturesLoadingOption('addModel');
         $isAddModel = false;
-        if ($addModel == get_called_class()) {
+        if ($addModel == $this->_class->name) {
             $isAddModel = true;
 
         } elseif (
