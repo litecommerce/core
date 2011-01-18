@@ -770,6 +770,7 @@ class Module extends \XLite\Model\Repo\ARepo
 
     /**
      * Grab modules XML from the market place
+     * TODO: possibly, adjust this to support xml download via insecure connection
      * 
      * @return string
      * @access protected
@@ -781,7 +782,7 @@ class Module extends \XLite\Model\Repo\ARepo
         $response = '';
 
         $request = new \XLite\Model\HTTPS();
-        $request->url = \XLite\Model\Module::MARKETPLACE_URL . static::INFO_SCRIPT_PATH
+        $request->url = \XLite\Model\Module::getMarketplaceURL() . static::INFO_SCRIPT_PATH
             . '?' . static::PARAM_REQUEST . '=' . static::REQUEST_TYPE_LIST;
         $request->method = 'GET';
 
