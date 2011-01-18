@@ -823,11 +823,11 @@ class Database extends \XLite\Base\Singleton
 
                     static::$em->flush();
                     static::$em->clear();
+
+                    $this->fixturesLoadingOptions['insert'] = false;
+                    $this->fixturesLoadingOptions['addModel'] = null;
                 }
             }
-
-            $this->fixturesLoadingOptions['insert'] = false;
-            $this->fixturesLoadingOptions['addModel'] = null;
         }
 
         return $result;
