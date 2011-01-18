@@ -1,0 +1,2373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addonsListResponse>
+    <status>OK</status>
+    <statusDesc></statusDesc>
+    <coreVersion>1.0</coreVersion>
+    <addonsList>
+        <row>
+            <name>AustraliaPost</name>
+
+            <author>CDev</author>
+            <status>0</status>
+            <description>This module introduces Australia Post real-time shipping cost calculations</description>
+            <moduleName>Australia Post</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+
+            <version>1.0</version>
+            <changelog/>
+            <hash></hash>
+            <packHash></packHash>
+            <price>10.50</price>
+            <currency></currency>
+            <rating>75</rating>
+
+            <downloads>130</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+        </row>
+
+        <row>
+            <name>AuthorizeNet</name>
+            <author>CDev</author>
+
+            <status>0</status>
+            <description>Authorize.Net SIM (Server Integration Method) credit card payment processor</description>
+            <moduleName>Authorize.Net SIM</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+
+            <changelog/>
+            <hash></hash>
+            <packHash></packHash>
+            <price>10.50</price>
+            <currency></currency>
+            <rating>60</rating>
+            <downloads>168</downloads>
+
+            <iconURL></iconURL>
+            <dependencies/>
+        </row>
+
+        <row>
+            <name>Bestsellers</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>This module enables bestsellers list</description>
+            <moduleName>Bestsellers</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+            <changelog/>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>10.50</price>
+            <currency></currency>
+            <rating>80</rating>
+            <downloads>160</downloads>
+            <iconURL></iconURL>
+
+            <dependencies/>
+        </row>
+
+        <row>
+            <name>DrupalConnector</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>Integration with the Drupal CMS</description>
+
+            <moduleName>Drupal Connector</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+            <changelog/>
+
+            <hash></hash>
+            <packHash></packHash>
+
+            <price>10.50</price>
+            <currency></currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies/>
+        </row>
+
+        <row>
+            <name>FeaturedProducts</name>
+            <author>CDev</author>
+            <status>0</status>
+            <description>This module enables featured products list</description>
+
+            <moduleName>Featured Products</moduleName>
+
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>10.50</price>
+
+            <currency></currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+
+            <name>ProductOptions</name>
+            <author>CDev</author>
+            <status>0</status>
+            <description>Support for product options, enabling you to provide customers with a choice of product variants</description>
+
+            <moduleName>Product Options</moduleName>
+            <authorName>Creative Development LLC</authorName>
+
+            <date>0</date>
+            <version>1.0</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>10.50</price>
+            <currency></currency>
+
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>Quantum</name>
+
+            <author>CDev</author>
+            <status>0</status>
+            <description>QuantumGateway integration (QGWdatabase Engine API)</description>
+
+            <moduleName>Quantum</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+
+            <version>1.0</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>10.50</price>
+            <currency></currency>
+            <rating>0</rating>
+
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>AOM</name>
+            <author>CDev</author>
+
+            <status>0</status>
+            <description>This module provides your online store with an advanced order management tool</description>
+
+            <moduleName>Advanced Order Management</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+
+            <changelog>a:0:{}</changelog>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>10.50</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>AccountingPackage</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>Integration with QuickBooks, Peachtree and MYOB</description>
+            <moduleName>Accounting Package</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>10.50</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>AdvancedSecurity</name>
+            <author>CDev</author>
+
+            <status>0</status>
+
+            <description>This module provides strong cryptographic protection for email and sensitive data of LiteCommerce store</description>
+            <moduleName>Advanced Security</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.03</version>
+
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>Affiliate</name>
+
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>This module adds a feature rich affiliate marketing mechanism to your online store</description>
+            <moduleName>Affiliate</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+
+            <version>1.03</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+
+            <name>AntiFraud</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>Antifraud Service</description>
+            <moduleName>AntiFraud</moduleName>
+            <authorName>Creative Development LLC</authorName>
+
+            <date>0</date>
+            <version>1.03</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>CanadaPost</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>This module introduces CanadaPost real-time shipping cost calculations</description>
+            <moduleName>Canada Post</moduleName>
+
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.03</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+
+        </row>
+
+        <row>
+            <name>ChronoPay</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>ChronoPay WEB payment gateway</description>
+
+            <moduleName>ChronoPay</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.03</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>CyberSource</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>CyberSource credit card payment processor</description>
+            <moduleName>CyberSource</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.03</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>Demo</name>
+            <author>CDev</author>
+
+            <status>0</status>
+
+            <description>Demo mode</description>
+            <moduleName>Demo mode</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>EcommerceReports</name>
+
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>EcommerceReports</description>
+            <moduleName>Ecommerce Reports</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+
+            <name>Egoods</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>Support for downloadable product sales (e-books, audio and video files, software and PIN codes)</description>
+            <moduleName>eGoods</moduleName>
+            <authorName>Creative Development LLC</authorName>
+
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>Froogle</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>This module allows you export product information into Froogle format</description>
+            <moduleName>Froogle</moduleName>
+
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+
+        </row>
+
+        <row>
+            <name>GiftCertificates</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>Gift certificates</description>
+
+            <moduleName>Gift Certificates</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>GoogleCheckout</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>GoogleCheckout module</description>
+            <moduleName>Google Checkout</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>GreetVisitor</name>
+            <author>CDev</author>
+
+            <status>0</status>
+
+            <description>This module greets customer by his name when he returns to the site</description>
+            <moduleName>Greet Visitor</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>Intershipper</name>
+
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>Intershipper real-time shipping calculation</description>
+            <moduleName>Intershipper</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+
+            <name>InventoryTracking</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>Inventory tracking module</description>
+            <moduleName>Inventory tracking</moduleName>
+            <authorName>Creative Development LLC</authorName>
+
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>JoomlaConnector</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>Integration with the Joomla CMS</description>
+            <moduleName>Joomla Connector</moduleName>
+
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+
+        </row>
+
+        <row>
+            <name>MultiCurrency</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>This module introduces support for multiple currencies</description>
+
+            <moduleName>Multiple Currencies</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>Nochex</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>Nochex payment gateway</description>
+            <moduleName>Nochex</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>PayFlowLink</name>
+            <author>CDev</author>
+
+            <status>0</status>
+
+            <description>PayFlow Link credit card payment processor</description>
+            <moduleName>PayFlow Link</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>PayPalPro</name>
+
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>This module introduces support for several PayPal website payment solutions</description>
+            <moduleName>PayPal Pro</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+
+            <name>ProductAdviser</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>ProductAdviser add-on introduces multiple cross-selling features and a customer notification mechanism</description>
+            <moduleName>Product Adviser</moduleName>
+            <authorName>Creative Development LLC</authorName>
+
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>Promotion</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>PromotionTools module introduces mechanisms for managing special offers, bonus points and discount coupons</description>
+            <moduleName>Promotion Tools</moduleName>
+
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+
+        </row>
+
+        <row>
+            <name>SagePay</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>SagePay VSP Direct and VSP Form credit card payment processor</description>
+
+            <moduleName>SagePay</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>SecureTrading</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>securetrading.com credit card processor</description>
+            <moduleName>SecureTrading</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>TwoCheckoutCom</name>
+            <author>CDev</author>
+
+            <status>0</status>
+
+            <description>TwoCheckout.com credit card payment processor gateway</description>
+            <moduleName>2checkout</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>UPSOnlineTools</name>
+
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>This module enables the access to UPS OnLine Tools</description>
+            <moduleName>UPS OnLine Tools</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+
+            <name>USPS</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>USPS real-time shipping calculation</description>
+            <moduleName>USPS</moduleName>
+            <authorName>Creative Development LLC</authorName>
+
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>WholesaleTrading</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>This module introduces wholesale trading business logic support</description>
+            <moduleName>Wholesale Trading</moduleName>
+
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+
+        </row>
+
+        <row>
+            <name>WishList</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>This module introduces &quot;Wish List&quot; and &quot;Send to Friend&quot; features</description>
+
+            <moduleName>WishList</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>WorldPay</name>
+            <author>CDev</author>
+
+            <status>0</status>
+
+            <description>RBS WorldPay payment gateway</description>
+            <moduleName>WorldPay</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+
+            <iconURL></iconURL>
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>XCartImport</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>Import data from X-Cart Gold</description>
+            <moduleName>X-Cart Import</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>XPaymentsConnector</name>
+            <author>CDev</author>
+
+            <status>0</status>
+
+            <description>X-Payments connector</description>
+            <moduleName>X-Payments connector</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>ePDQ</name>
+
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>ePDQ Payment Gateway</description>
+            <moduleName>ePDQ</moduleName>
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency>USD</currency>
+
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+
+            <name>eSelect</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>eSelect credit card payment processor</description>
+            <moduleName>eSelect</moduleName>
+            <authorName>Creative Development LLC</authorName>
+
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+            <price>0.00</price>
+
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+        </row>
+
+        <row>
+            <name>eWAYxml</name>
+            <author>CDev</author>
+            <status>0</status>
+
+            <description>eWAYxml credit card payment processor</description>
+            <moduleName>eWAYxml</moduleName>
+
+            <authorName>Creative Development LLC</authorName>
+            <date>0</date>
+            <version>1.0</version>
+            <changelog>a:0:{}</changelog>
+
+            <hash></hash>
+            <packHash></packHash>
+
+            <price>0.00</price>
+            <currency>USD</currency>
+            <rating>0</rating>
+            <downloads>0</downloads>
+            <iconURL></iconURL>
+
+            <dependencies>a:0:{}</dependencies>
+
+        </row>
+
+        <row>
+            <name>MegaModule1</name>
+            <author>Igoryan</author>
+            <status>0</status>
+
+            <description>This is description of module 1 made by igoryan</description>
+
+            <moduleName>SuperModule 1</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.11</version>
+            <changelog/>
+
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>1</rating>
+            <downloads>1</downloads>
+            <iconURL></iconURL>
+
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule2</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 2 made by igoryan</description>
+
+            <moduleName>SuperModule 2</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.12</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+
+            <price>0.00</price>
+            <currency></currency>
+            <rating>2</rating>
+            <downloads>2</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule3</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 3 made by igoryan</description>
+
+            <moduleName>SuperModule 3</moduleName>
+
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.13</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+
+            <currency></currency>
+            <rating>3</rating>
+            <downloads>3</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+
+            <name>MegaModule4</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 4 made by igoryan</description>
+
+            <moduleName>SuperModule 4</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+
+            <date>0</date>
+            <version>4.4.14</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+
+            <rating>4</rating>
+            <downloads>4</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule5</name>
+
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 5 made by igoryan</description>
+
+            <moduleName>SuperModule 5</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+
+            <version>4.4.15</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>5</rating>
+
+            <downloads>5</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule6</name>
+            <author>Igoryan</author>
+
+            <status>0</status>
+            <description>This is description of module 6 made by igoryan</description>
+
+            <moduleName>SuperModule 6</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.16</version>
+
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>6</rating>
+            <downloads>6</downloads>
+
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule7</name>
+            <author>Igoryan</author>
+            <status>0</status>
+
+            <description>This is description of module 7 made by igoryan</description>
+
+            <moduleName>SuperModule 7</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.17</version>
+            <changelog/>
+
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>7</rating>
+            <downloads>7</downloads>
+            <iconURL></iconURL>
+
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule8</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 8 made by igoryan</description>
+
+            <moduleName>SuperModule 8</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.18</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+
+            <price>0.00</price>
+            <currency></currency>
+            <rating>8</rating>
+            <downloads>8</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule9</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 9 made by igoryan</description>
+
+            <moduleName>SuperModule 9</moduleName>
+
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.19</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+
+            <currency></currency>
+            <rating>9</rating>
+            <downloads>9</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+
+            <name>MegaModule10</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 10 made by igoryan</description>
+
+            <moduleName>SuperModule 10</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+
+            <date>0</date>
+            <version>4.4.110</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+
+            <rating>10</rating>
+            <downloads>10</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule11</name>
+
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 11 made by igoryan</description>
+
+            <moduleName>SuperModule 11</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+
+            <version>4.4.111</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>11</rating>
+
+            <downloads>11</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule12</name>
+            <author>Igoryan</author>
+
+            <status>0</status>
+            <description>This is description of module 12 made by igoryan</description>
+
+            <moduleName>SuperModule 12</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.112</version>
+
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>12</rating>
+            <downloads>12</downloads>
+
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule13</name>
+            <author>Igoryan</author>
+            <status>0</status>
+
+            <description>This is description of module 13 made by igoryan</description>
+
+            <moduleName>SuperModule 13</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.113</version>
+            <changelog/>
+
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>13</rating>
+            <downloads>13</downloads>
+            <iconURL></iconURL>
+
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule14</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 14 made by igoryan</description>
+
+            <moduleName>SuperModule 14</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.114</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+
+            <price>0.00</price>
+            <currency></currency>
+            <rating>14</rating>
+            <downloads>14</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule15</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 15 made by igoryan</description>
+
+            <moduleName>SuperModule 15</moduleName>
+
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.115</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+
+            <currency></currency>
+            <rating>15</rating>
+            <downloads>15</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+
+            <name>MegaModule16</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 16 made by igoryan</description>
+
+            <moduleName>SuperModule 16</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+
+            <date>0</date>
+            <version>4.4.116</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+
+            <rating>16</rating>
+            <downloads>16</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule17</name>
+
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 17 made by igoryan</description>
+
+            <moduleName>SuperModule 17</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+
+            <version>4.4.117</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>17</rating>
+
+            <downloads>17</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule18</name>
+            <author>Igoryan</author>
+
+            <status>0</status>
+            <description>This is description of module 18 made by igoryan</description>
+
+            <moduleName>SuperModule 18</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.118</version>
+
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>18</rating>
+            <downloads>18</downloads>
+
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule19</name>
+            <author>Igoryan</author>
+            <status>0</status>
+
+            <description>This is description of module 19 made by igoryan</description>
+
+            <moduleName>SuperModule 19</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.119</version>
+            <changelog/>
+
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>19</rating>
+            <downloads>19</downloads>
+            <iconURL></iconURL>
+
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule20</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 20 made by igoryan</description>
+
+            <moduleName>SuperModule 20</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.120</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+
+            <price>0.00</price>
+            <currency></currency>
+            <rating>20</rating>
+            <downloads>20</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule21</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 21 made by igoryan</description>
+
+            <moduleName>SuperModule 21</moduleName>
+
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.121</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+
+            <currency></currency>
+            <rating>21</rating>
+            <downloads>21</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+
+            <name>MegaModule22</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 22 made by igoryan</description>
+
+            <moduleName>SuperModule 22</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+
+            <date>0</date>
+            <version>4.4.122</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+
+            <rating>22</rating>
+            <downloads>22</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule23</name>
+
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 23 made by igoryan</description>
+
+            <moduleName>SuperModule 23</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+
+            <version>4.4.123</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>23</rating>
+
+            <downloads>23</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule24</name>
+            <author>Igoryan</author>
+
+            <status>0</status>
+            <description>This is description of module 24 made by igoryan</description>
+
+            <moduleName>SuperModule 24</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.124</version>
+
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>24</rating>
+            <downloads>24</downloads>
+
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule25</name>
+            <author>Igoryan</author>
+            <status>0</status>
+
+            <description>This is description of module 25 made by igoryan</description>
+
+            <moduleName>SuperModule 25</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.125</version>
+            <changelog/>
+
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>25</rating>
+            <downloads>25</downloads>
+            <iconURL></iconURL>
+
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule26</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 26 made by igoryan</description>
+
+            <moduleName>SuperModule 26</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.126</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+
+            <price>0.00</price>
+            <currency></currency>
+            <rating>26</rating>
+            <downloads>26</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule27</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 27 made by igoryan</description>
+
+            <moduleName>SuperModule 27</moduleName>
+
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.127</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+
+            <currency></currency>
+            <rating>27</rating>
+            <downloads>27</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+
+            <name>MegaModule28</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 28 made by igoryan</description>
+
+            <moduleName>SuperModule 28</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+
+            <date>0</date>
+            <version>4.4.128</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+
+            <rating>28</rating>
+            <downloads>28</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule29</name>
+
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 29 made by igoryan</description>
+
+            <moduleName>SuperModule 29</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+
+            <version>4.4.129</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>29</rating>
+
+            <downloads>29</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule30</name>
+            <author>Igoryan</author>
+
+            <status>0</status>
+            <description>This is description of module 30 made by igoryan</description>
+
+            <moduleName>SuperModule 30</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.130</version>
+
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>30</rating>
+            <downloads>30</downloads>
+
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule31</name>
+            <author>Igoryan</author>
+            <status>0</status>
+
+            <description>This is description of module 31 made by igoryan</description>
+
+            <moduleName>SuperModule 31</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.131</version>
+            <changelog/>
+
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>31</rating>
+            <downloads>31</downloads>
+            <iconURL></iconURL>
+
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule32</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 32 made by igoryan</description>
+
+            <moduleName>SuperModule 32</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.132</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+
+            <price>0.00</price>
+            <currency></currency>
+            <rating>32</rating>
+            <downloads>32</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule33</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 33 made by igoryan</description>
+
+            <moduleName>SuperModule 33</moduleName>
+
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.133</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+
+            <currency></currency>
+            <rating>33</rating>
+            <downloads>33</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+
+            <name>MegaModule34</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 34 made by igoryan</description>
+
+            <moduleName>SuperModule 34</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+
+            <date>0</date>
+            <version>4.4.134</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+
+            <rating>34</rating>
+            <downloads>34</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule35</name>
+
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 35 made by igoryan</description>
+
+            <moduleName>SuperModule 35</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+
+            <version>4.4.135</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>35</rating>
+
+            <downloads>35</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule36</name>
+            <author>Igoryan</author>
+
+            <status>0</status>
+            <description>This is description of module 36 made by igoryan</description>
+
+            <moduleName>SuperModule 36</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.136</version>
+
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>36</rating>
+            <downloads>36</downloads>
+
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule37</name>
+            <author>Igoryan</author>
+            <status>0</status>
+
+            <description>This is description of module 37 made by igoryan</description>
+
+            <moduleName>SuperModule 37</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.137</version>
+            <changelog/>
+
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>37</rating>
+            <downloads>37</downloads>
+            <iconURL></iconURL>
+
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule38</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 38 made by igoryan</description>
+
+            <moduleName>SuperModule 38</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.138</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+
+            <price>0.00</price>
+            <currency></currency>
+            <rating>38</rating>
+            <downloads>38</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule39</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 39 made by igoryan</description>
+
+            <moduleName>SuperModule 39</moduleName>
+
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.139</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+
+            <currency></currency>
+            <rating>39</rating>
+            <downloads>39</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+
+            <name>MegaModule40</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 40 made by igoryan</description>
+
+            <moduleName>SuperModule 40</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+
+            <date>0</date>
+            <version>4.4.140</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+
+            <rating>40</rating>
+            <downloads>40</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule41</name>
+
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 41 made by igoryan</description>
+
+            <moduleName>SuperModule 41</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+
+            <version>4.4.141</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>41</rating>
+
+            <downloads>41</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule42</name>
+            <author>Igoryan</author>
+
+            <status>0</status>
+            <description>This is description of module 42 made by igoryan</description>
+
+            <moduleName>SuperModule 42</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.142</version>
+
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>42</rating>
+            <downloads>42</downloads>
+
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule43</name>
+            <author>Igoryan</author>
+            <status>0</status>
+
+            <description>This is description of module 43 made by igoryan</description>
+
+            <moduleName>SuperModule 43</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.143</version>
+            <changelog/>
+
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>43</rating>
+            <downloads>43</downloads>
+            <iconURL></iconURL>
+
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule44</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 44 made by igoryan</description>
+
+            <moduleName>SuperModule 44</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.144</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+
+            <price>0.00</price>
+            <currency></currency>
+            <rating>44</rating>
+            <downloads>44</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule45</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 45 made by igoryan</description>
+
+            <moduleName>SuperModule 45</moduleName>
+
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.145</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+
+            <currency></currency>
+            <rating>45</rating>
+            <downloads>45</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+
+            <name>MegaModule46</name>
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 46 made by igoryan</description>
+
+            <moduleName>SuperModule 46</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+
+            <date>0</date>
+            <version>4.4.146</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+
+            <rating>46</rating>
+            <downloads>46</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule47</name>
+
+            <author>Igoryan</author>
+            <status>0</status>
+            <description>This is description of module 47 made by igoryan</description>
+
+            <moduleName>SuperModule 47</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+
+            <version>4.4.147</version>
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>47</rating>
+
+            <downloads>47</downloads>
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule48</name>
+            <author>Igoryan</author>
+
+            <status>0</status>
+            <description>This is description of module 48 made by igoryan</description>
+
+            <moduleName>SuperModule 48</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.148</version>
+
+            <changelog/>
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>48</rating>
+            <downloads>48</downloads>
+
+            <iconURL></iconURL>
+            <dependencies/>
+
+        </row>
+
+        <row>
+            <name>MegaModule49</name>
+            <author>Igoryan</author>
+            <status>0</status>
+
+            <description>This is description of module 49 made by igoryan</description>
+
+            <moduleName>SuperModule 49</moduleName>
+            <authorName>Igor Kulomzin</authorName>
+            <date>0</date>
+            <version>4.4.149</version>
+            <changelog/>
+
+            <hash></hash>
+
+            <packHash></packHash>
+            <price>0.00</price>
+            <currency></currency>
+            <rating>49</rating>
+            <downloads>49</downloads>
+            <iconURL></iconURL>
+
+            <dependencies/>
+
+        </row>
+    </addonsList>
+</addonsListResponse>
