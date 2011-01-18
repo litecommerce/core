@@ -414,10 +414,9 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		echo "Warning! Logo image file $LOGO_IMAGE not found"
 	fi
 
-	#sed -i '' -E 's/lc_path = .*/lc_path = .\/litecommerce/' modules/lc_connector/lc_connector.info
-	sed -i "" "s/..\/..\/xlite\/src/modules\/lc_connector\/litecommerce/" modules/lc_connector/Handler/Abstract.php
+	sed -i '' -E 's/lc_dir_default = .*/lc_dir_default = .\/modules\/lc_connector\/litecommerce/' modules/lc_connector/lc_connector.info
 
-	# Restore orininal file PoweredBy.php from temporary directory
+	# Restore original file PoweredBy.php from temporary directory
 	cp ${OUTPUT_DIR}/tmp/PoweredBy.php ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/classes/XLite/View/
 	cp ${OUTPUT_DIR}/tmp/install_settings.php ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/Includes/install/
 
