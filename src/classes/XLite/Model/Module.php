@@ -373,6 +373,24 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
+     * Get marketplace URL
+     * TODO: remove debug condition before release
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMarketplaceURL()
+    {
+        $debugOptions = \XLite::getInstance()->getOptions('debug');
+
+        return isset($debugOptions['marketplace_dev_url'])
+            ? $debugOptions['marketplace_dev_url']
+            : static::MARKETPLACE_URL;
+    }
+
+    /**
      * Get external page URL
      *
      * @return string
@@ -382,7 +400,7 @@ class Module extends \XLite\Model\AEntity
      */
     public function getPageURL()
     {
-        return static::MARKETPLACE_URL . sprintf(static::MODULE_PAGE_PATH, $this->getPath());
+        return static::getMarketplaceURL() . sprintf(static::MODULE_PAGE_PATH, $this->getPath());
     }
 
     /**
@@ -395,7 +413,7 @@ class Module extends \XLite\Model\AEntity
      */
     public function getAuthorPageURL()
     {
-        return static::MARKETPLACE_URL . sprintf(static::MODULE_PAGE_PATH, $this->getAuthor());
+        return static::getMarketplaceURL() . sprintf(static::MODULE_PAGE_PATH, $this->getAuthor());
     }
 
     /**
@@ -849,7 +867,7 @@ class Module extends \XLite\Model\AEntity
         if ($this->canUpload()) {
 
             $request = new \XLite\Model\HTTPS();
-            $request->url = self::MARKETPLACE_URL 
+            $request->url = self::getMarketplaceURL() 
                 . sprintf(self::MODULE_UPLOAD_PATH, $this->getActualName(), $this->uploadCode);
             $request->method = 'GET';
 
