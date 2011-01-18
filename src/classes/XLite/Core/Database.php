@@ -810,22 +810,14 @@ class Database extends \XLite\Base\Singleton
                 $repo = static::getRepo($entityName);
 
                 if ($repo) {
-                    if (isset($rows['directives'])) {
-                        $this->fixturesLoadingOptions['insert'] = isset($rows['directives']['insert'])
-                            && $rows['directives']['insert'];
-                        if (isset($rows['directives']['addModel'])) {
-                            $this->fixturesLoadingOptions['addModel'] = $rows['directives']['addModel'];
-                        }
-                        unset($rows['directives']);
-                    }
+                    $rows = $this->detectDirectives($rows);
 
                     $result += $repo->loadFixtures($rows);
 
                     static::$em->flush();
                     static::$em->clear();
 
-                    $this->fixturesLoadingOptions['insert'] = false;
-                    $this->fixturesLoadingOptions['addModel'] = null;
+                    $this->resetDirectives();
                 }
             }
         }
@@ -855,10 +847,14 @@ class Database extends \XLite\Base\Singleton
                 $repo = static::getRepo($entityName);
 
                 if ($repo) {
+                    $rows = $this->detectDirectives($rows);
+
                     $result += $repo->unloadFixtures($rows);
 
                     static::$em->flush();
                     static::$em->clear();
+
+                    $this->resetDirectives();
                 }
             }
         }
@@ -866,6 +862,44 @@ class Database extends \XLite\Base\Singleton
         return $result;
     }
 
+
+    /**
+     * Detect fixtures loading directives 
+     * 
+     * @param array $rows Entity fixtures
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function detectDirectives(array $rows)
+    {
+        if (isset($rows['directives'])) {
+            $this->fixturesLoadingOptions['insert'] = isset($rows['directives']['insert'])
+                && $rows['directives']['insert'];
+            if (isset($rows['directives']['addModel'])) {
+                $this->fixturesLoadingOptions['addModel'] = $rows['directives']['addModel'];
+            }
+            unset($rows['directives']);
+        }
+
+        return $rows;
+    }
+
+    /**
+     * Reset fixtures loading directives 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function resetDirectives()
+    {
+        $this->fixturesLoadingOptions['insert'] = false;
+        $this->fixturesLoadingOptions['addModel'] = null;
+    }
 
     /**
      * Setup doctrine cache 
