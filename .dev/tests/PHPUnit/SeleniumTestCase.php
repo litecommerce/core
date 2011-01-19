@@ -267,7 +267,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
                     '<!--' . PHP_EOL
                     . 'Exception: ' . $exception->getMessage() . ';' . PHP_EOL
                     . 'Back trace: ' . var_export(\XLite\Core\Operator::getInstance()->getBackTrace(), true) . PHP_EOL
-                    . '-->' . PHP_EOL . $this->getHtml()
+                    . '-->' . PHP_EOL . $this->getHtmlSource()
                 );
 
             } catch (\RuntimeException $e) {
