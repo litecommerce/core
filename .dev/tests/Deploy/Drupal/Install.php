@@ -370,7 +370,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         );
 
         $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().document.getElementsByClassName("percentage").length > 0 && selenium.browserbot.getCurrentWindow().document.getElementsByClassName("percentage")[0].innerHTML == "100%"',
+            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("body")[0].innerHTML.search(/<div class="percentage">100%<\/div>/) != -1',
             350000
         );
 
