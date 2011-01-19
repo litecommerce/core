@@ -91,12 +91,12 @@ class OrderItemOption extends \XLite\Model\Repo\ARepo
 
         if (\XLite\Core\Database::SCHEMA_UPDATE == $type || \XLite\Core\Database::SCHEMA_CREATE == $type) {
             $schema = preg_replace(
-                '/(\w+order_item_options` ADD FOREIGN KEY \(`group_id`\) REFERENCES `\w+option_groups` \(`group_id`\)$)/Ss',
+                '/(\w+order_item_options` ADD FOREIGN KEY \(`group_id`\) REFERENCES `\w+option_groups` \(`group_id`\)$)$/Ss',
                 '$1 ON DELETE SET NULL',
                 $schema
             );
             $schema = preg_replace(
-                '/(\w+order_item_options` ADD FOREIGN KEY \(`option_id`\) REFERENCES `\w+options` \(`option_id`\)$)/Ss',
+                '/(\w+order_item_options` ADD FOREIGN KEY \(`option_id`\) REFERENCES `\w+options` \(`option_id`\)$)$/Ss',
                 '$1 ON DELETE SET NULL',
                 $schema
             );
