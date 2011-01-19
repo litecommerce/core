@@ -35,7 +35,7 @@ namespace XLite\Model\OrderModifier;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
+abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
     /**
      * Modifier name definition
