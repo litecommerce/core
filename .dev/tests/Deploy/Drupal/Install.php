@@ -369,18 +369,12 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             sprintf('Check that page header equals to text "Installing LiteCommerce" (pass %d)', $pass)
         );
 
-        $this->waitForLocalCondition(
-            'jQuery(".percentage").html() == "100%"',
-            350000,
-            'Waiting for LiteCommerce installing'
-        );
-
-        $nextPageTitle = 'Installing ' . self::PRODUCT_NAME;
-
         $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("h1").length > 0 && selenium.browserbot.getCurrentWindow().document.getElementsByTagName("h1")[0].innerHTML == "' . $nextPageTitle . '"',
+            'selenium.browserbot.getCurrentWindow().document.getElementsByClassName("percentage").length > 0 && selenium.browserbot.getCurrentWindow().document.getElementsByClassName("percentage")[0].innerHTML == "100%"',
             350000
         );
+
+        $this->waitForPageToLoad(10000);
     }
 
     /**
