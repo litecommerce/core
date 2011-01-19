@@ -35,7 +35,7 @@ namespace XLite\Model\OrderModifier;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
+abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
     const MODIFIER_TAX = 'tax';
 
