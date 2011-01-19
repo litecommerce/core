@@ -369,10 +369,26 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             sprintf('Check that page header equals to text "Installing LiteCommerce" (pass %d)', $pass)
         );
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("body")[0].innerHTML.search(/<div class="percentage">100%<\/div>/) != -1',
-            350000
-        );
+        $counter = 100;
+
+        while ($counter > 0) {
+
+            sleep(3);
+
+            if ($this->isElementPresent('//div[@class="percentage"]')) {
+                $percentage = $this->getText('//div[@class="percentage"]');
+            }
+
+            if ($percentage == '100%') {
+                break;
+            }
+
+            $counter--;
+        }
+
+        if ('100%' != $percentage) {
+            $this->assertTrue(false, sprintf('Percentage of batch process does not achived the value of 100% (%d)', $percentage));
+        }
 
         $this->waitForPageToLoad(10000);
     }
@@ -396,30 +412,28 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             sprintf('Check that page header equals to text "Installing %s" (pass %d)', self::PRODUCT_NAME, $pass)
         );
 
-        $this->waitForLocalCondition(
-            'jQuery(".percentage").html() == "100%"',
-            250000,
-            'Waiting for Drupal module installing'
-        );
+        $counter = 100;
 
-        if ($this->isElementPresent('//div[@class="percentage"]')) {
-            $percentage = $this->getText('//div[@class="percentage"]');
+        while ($counter > 0) {
+
+            sleep(3);
+
+            if ($this->isElementPresent('//div[@class="percentage"]')) {
+                $percentage = $this->getText('//div[@class="percentage"]');
+            }
+
+            if ($percentage == '100%') {
+                break;
+            }
+
+            $counter--;
         }
 
         if ('100%' != $percentage) {
-            
-            if ($pass < self::MAX_ITERATIONS_COUNT) {
-                $this->stepFour($pass + 1);
-            
-            } else {
-                $this->assertTrue(false, sprintf('Maximum iterations count value was exceeded (%d)', $pass));
-            }
+            $this->assertTrue(false, sprintf('Percentage of batch process does not achived the value of 100% (%d)', $percentage));
         }
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("h1").length > 0 && selenium.browserbot.getCurrentWindow().document.getElementsByTagName("h1")[0].innerHTML == "Configure site"',
-            50000
-        );
+        $this->waitForPageToLoad(10000);
     }
 
     /**
