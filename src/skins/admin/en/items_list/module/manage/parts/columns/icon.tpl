@@ -15,11 +15,9 @@
   <a name="{module.getName()}"></a>
   <div class="icon-container">
 
-    {if:!module.getEnabled()}
-      <div class="addon-disabled">
-        <img src="images/spacer.gif" width="48" height="48" alt="" />
-      </div>
-    {end:}
+    <div IF="!module.getEnabled()" class="addon-disabled">
+      <img src="images/spacer.gif" width="48" height="48" alt="" />
+    </div>
 
     <div class="module-icon">
       {if:module.hasIcon()}

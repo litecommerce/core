@@ -44,10 +44,14 @@ div.top-controls div.action-buttons {
   float: right;
 }
 
-.modules-list div.price {
-  color: #ee5f00;
+.modules-list div.price-info {
   margin-bottom: 10px;
+}
+
+.modules-list span.price-value {
+  color: #ee5f00;
   font-size: 16px;
+  text-transform: uppercase;
 }
 
 .modules-list div.installed {
