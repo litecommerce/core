@@ -18,37 +18,30 @@
   <div class="actions">
     {if:module.getEnabled()}
       <a href="{buildUrl(#modules#,#disable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('disable', '{module.getModuleId()}');">{t(#Disable#)}</a>
-      {if:module.showSettingsForm()}
-        <a href="{module.getSettingsFormLink()}">{t(#Settings#)}</a>
-      {end:}
+      <a IF="module.showSettingsForm()" href="{module.getSettingsFormLink()}">{t(#Settings#)}</a>
     {else:}
-      {if:!canEnable(module)}
-        <span class="disabled">{t(#Enable#)}</span>
-      {else:}
-        <a href="{buildUrl(#modules#,#enable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('enable', '{module.getModuleId()}');">{t(#Enable#)}</a>
-      {end:}
+      <span IF="!canEnable(module)" class="disabled">{t(#Enable#)}</span>
+      <a IF="canEnable(module)" href="{buildUrl(#modules#,#enable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('enable', '{module.getModuleId()}');">{t(#Enable#)}</a>
     {end:}
-    {if:!module.getEnabled()}
-      <a class="uninstall" href="{buildUrl(#modules#,#uninstall#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('uninstall', '{module.getModuleId()}');">{t(#Uninstall#)}</a>
-    {end:}
-
+    <a IF="!module.getEnabled()" class="uninstall" href="{buildUrl(#modules#,#uninstall#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('uninstall', '{module.getModuleId()}');">{t(#Uninstall#)}</a>
   </div>
 
-  {if:!canEnable(module)}
-  <div class="dependencies">
+  <div IF="!canEnable(module)" class="dependencies">
     {t(#Add-on cannot be enabled.#)}
-    {if:getInstalledProperty(module,#dependencies#)}
+    <div IF="getInstalledProperty(module,#dependencies#)">
       <br />
       {t(#The following add-on(s) must be enabled:#)}
       <ul>
         <li FOREACH="module.getDependenciesModules(),depend">
           <a href="#{depend.getName()}">{getInstalledProperty(depend,#moduleName#)} ({t(#by#)} {getInstalledProperty(m,#author#)})</a>
-          [ {if:depend.getEnabled()}<span class="good">{t(#enabled#)}</span>{else:}<span class="none">{t(#disabled#)}</span>{end:} ]
+          [ 
+            <span IF="depend.getEnabled()" class="good">{t(#enabled#)}</span>
+            <span IF="!depend.getEnabled()" class="none">{t(#disabled#)}</span>
+          ]
         </li>
       </ul>
-    {end:}
+    </div>
   </div>
-  {end:}
 
 <script type="text/javascript">
 depends[{module.getModuleId()}] = [];
@@ -59,12 +52,10 @@ depends[{module.getModuleId()}][{k}] = '{getInstalledProperty(m,#moduleName#)} (
 {end:}
 </script>
 
-  {if:module.isUpdateAvailable()}
-    <div class="upgrade-note">
-      {t(#A new version is available#)}
-      <br />
-      <widget class="\XLite\View\Button\Submit" label="{t(#Upgrade#)}" /> {t(#to v.#)}{module.getLastVersion()}
-    </div>
-  {end:}
+  <div IF="module.isUpdateAvailable()" class="upgrade-note">
+    {t(#A new version is available#)}
+    <br />
+    <widget class="\XLite\View\Button\Submit" label="{t(#Upgrade#)}" /> {t(#to v.#)}{module.getLastVersion()}
+  </div>
 
 </td>
