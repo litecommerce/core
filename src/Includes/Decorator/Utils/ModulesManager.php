@@ -362,14 +362,14 @@ abstract class ModulesManager extends AUtils
             $row = \Includes\Utils\Database::fetchAll('SELECT COUNT(*) as cnt FROM ' . static::getTableName() . ' WHERE author = "' . addslashes($data['author']) . '" AND name = "' . addslashes($data['name']) . '"');
             if (0 < intval($row[0]['cnt'])) {
                 \Includes\Utils\Database::execute(
-                    'UPDATE ' . static::getTableName() . ' SET enabled = ? WHERE author = ? AND name = ?',
-                    array(1, $data['author'], $data['name'])
+                    'UPDATE ' . static::getTableName() . ' SET enabled = ?, data_installed = ? WHERE author = ? AND name = ?',
+                    array(1, 1, $data['author'], $data['name'])
                 );
 
             } else {
                 \Includes\Utils\Database::execute(
-                    'REPLACE INTO ' . static::getTableName() . ' SET enabled = ?, installed = ?, author = ?, name = ?',
-                    array(1, 1, $data['author'], $data['name'])
+                    'REPLACE INTO ' . static::getTableName() . ' SET enabled = ?, data_installed = ?, installed = ?, author = ?, name = ?',
+                    array(1, 1, 1, $data['author'], $data['name'])
                 );
             }
             $i++;

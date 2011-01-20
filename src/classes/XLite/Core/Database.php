@@ -1014,6 +1014,19 @@ class Database extends \XLite\Base\Singleton
     }
 
     /**
+     * Get table prefix 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTablePrefix()
+    {
+        return $this->tablePrefix;
+    }
+
+    /**
      * postPersist event handler
      * 
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $arg Event argument
@@ -1082,6 +1095,106 @@ class Database extends \XLite\Base\Singleton
                 $this->detectCustomRepositoryClassName($classMetadata->getReflectionClass()->getName())
             );
         }
+    }
+
+    /**
+     * Get disabled structures
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDisabledStructures()
+    {
+        $path = $this->getDisabledStructuresPath();
+        $tables = array();
+        $columns = array();
+
+        if (file_exists($path)) {
+            $data = file_get_contents($path);
+            $data = substr($data, strlen($this->getServiceHeader()));
+            foreach (\Symfony\Component\Yaml\Yaml::load($data) as $module => $list) {
+                if (isset($list['tables']) && is_array($list['tables'])) {
+                    $tables = array_merge($tables, $list['tables']);
+                }
+                if (isset($list['columns']) && is_array($list['columns'])) {
+                    $columns = array_merge($columns, $list['columns']);
+                }
+            }
+        }
+
+        return array($tables, $columns);
+    }
+
+    /**
+     * Set disabled tables list
+     * 
+     * @param string $module     Module unique name
+     * @param array  $structures Disabled structures
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setDisabledStructures($module, array $structures = array())
+    {
+        $path = $this->getDisabledStructuresPath();
+
+        $data = array();
+
+        if (file_exists($path)) {
+            $data = file_get_contents($path);
+            $data = substr($data, strlen($this->getServiceHeader()));
+            $data = \Symfony\Component\Yaml\Yaml::load($data);
+        }
+
+        if (!$structures || (!$structures[0] && !$structures[1])) {
+            unset($data[$module]);
+
+        } else {
+            $data[$module] = array(
+                'tables'  => $structures[0],
+                'columns' => $structures[1],
+            );
+        }
+
+        if ($data) {
+            file_put_contents(
+                $path,
+                $this->getServiceHeader() . \Symfony\Component\Yaml\Yaml::dump($data)
+            );
+
+        } elseif (file_exists($path)) {
+            unlink($path);
+        }
+    }
+
+    /**
+     * Get disabled tables list storage path 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDisabledStructuresPath()
+    {
+        return LC_VAR_DIR . '.disabled.structures.php';
+    }
+
+    /**
+     * Get data storage service header 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getServiceHeader()
+    {
+        return '<' . '?php die(); ?' . '>' . "\n";
     }
 
     /**

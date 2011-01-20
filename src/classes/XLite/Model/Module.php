@@ -118,7 +118,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Installed status
      * 
-     * @var    integer
+     * @var    boolean
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -126,6 +126,18 @@ class Module extends \XLite\Model\AEntity
      * @Column (type="boolean")
      */
     protected $installed = false;
+
+    /**
+     * Module data dump (YAML or SQL) installed status
+     *
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="boolean")
+     */
+    protected $data_installed = false;
 
     /**
      * Status
@@ -381,7 +393,8 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getMarketplaceURL()
+
+    public static function getMarketplaceURL()
     {
         $debugOptions = \XLite::getInstance()->getOptions('debug');
 
@@ -440,6 +453,25 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
+     * Call module static method
+     * 
+     * @param string $method Method name
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function callModuleStatic($method)
+    {
+        $class = $this->getMainClass();
+
+        return $class
+            ? call_user_func_array(array($class, $method), array_slice(func_get_args(), 1))
+            : null;
+    }
+
+    /**
      * Prepare entity before update 
      * 
      * @return void
@@ -467,16 +499,15 @@ class Module extends \XLite\Model\AEntity
      */
     protected function prepareEnable()
     {
-        $name = $this->getAuthor() . LC_DS . $this->getName();
+        \XLite\Core\Database::getInstance()->setDisabledStructures($this->getActualName());
 
         // Install YAML fixtures
-        $path = LC_MODULES_DIR . $name . LC_DS . 'install.yaml';
-        if (file_exists($path)) {
-            \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::addFixtureToList($path);
-        }
+        if ($this->getDataInstalled()) {
+            $this->installWakeUpDBData();
 
-        $class = $this->getMainClass();
-        $class::installModule($this);
+        } else {
+            $this->installDBData();
+        }
     }
 
     /**
@@ -489,15 +520,64 @@ class Module extends \XLite\Model\AEntity
      */
     public function prepareDisable()
     {
-        $name = $this->getAuthor() . LC_DS . $this->getName();
+        \XLite\Core\Database::getInstance()->setDisabledStructures(
+            $this->getActualName(),
+            $this->getModuleProtectedStructures()
+        );
 
-        $class = $this->getMainClass();
+        $this->installSleepDBData();
+    }
 
-        // Try run custom uninstall method
-        if ($class::uninstallModule($this)) { 
+    /**
+     * Install DB data 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function installDBData()
+    {
+        // Install YAML fixtures
+        $path = $this->getRootDirectory() . 'install.yaml';
+        if (file_exists($path)) {
+            \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::addFixtureToList($path);
+        }
 
-            $upath = LC_MODULES_DIR . $name . LC_DS . 'uninstall.yaml';
-            $ipath = LC_MODULES_DIR . $name . LC_DS . 'install.yaml';
+        // Install SQL dump
+        $path = $this->getRootDirectory() . 'install.sql';
+
+        if (file_exists($path)) {
+            try {
+                \XLite\Core\Database::getInstance()->importSQLFromFile($path);
+
+            } catch (\InvalidArgumentException $exception) {
+
+            } catch (\PDOException $exception) {
+
+            }
+        }
+
+        // Custom install
+        $this->callModuleStatic('installModule', $this);
+
+        $this->setDataInstalled(true);
+    }
+
+    /**
+     * Uninstall DB data 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function uninstallDBData()
+    {
+        if ($this->callModuleStatic('uninstallModule', $this)) { 
+
+            $upath = $this->getRootDirectory() . 'uninstall.yaml';
+            $ipath = $this->getRootDirectory() . 'install.yaml';
 
             if (file_exists($upath)) {
 
@@ -512,7 +592,7 @@ class Module extends \XLite\Model\AEntity
         }
 
         // Uninstall SQL dump
-        $path = LC_MODULES_DIR . $name . LC_DS . 'uninstall.sql';
+        $path = $this->getRootDirectory() . 'uninstall.sql';
 
         if (file_exists($path)) {
             try {
@@ -524,7 +604,78 @@ class Module extends \XLite\Model\AEntity
 
             }
         }
+
+        $this->setDataInstalled(false);
     }
+
+    /**
+     * Install wake-up DB data 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function installWakeUpDBData()
+    {
+        // Install YAML fixtures
+        $path = $this->getRootDirectory() . 'wakeup.yaml';
+        if (file_exists($path)) {
+            \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::addFixtureToList($path);
+        }
+
+        // Install SQL dump
+        $path = $this->getRootDirectory() . 'wakeup.sql';
+
+        if (file_exists($path)) {
+            try {
+                \XLite\Core\Database::getInstance()->importSQLFromFile($path);
+
+            } catch (\InvalidArgumentException $exception) {
+
+            } catch (\PDOException $exception) {
+
+            }
+        }
+
+        // Custom install
+        $this->callModuleStatic('wakeUpModule', $this);
+    }
+
+    /**
+     * Install sleep DB data 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function installSleepDBData()
+    {
+        // Install YAML fixtures
+        $path = $this->getRootDirectory() . 'sleep.yaml';
+        if (file_exists($path)) {
+            \XLite\Core\Database::getInstance()->unloadFixturesFromYaml($path);
+        }
+
+        // Install SQL dump
+        $path = $this->getRootDirectory() . 'sleep.sql';
+
+        if (file_exists($path)) {
+            try {
+                \XLite\Core\Database::getInstance()->importSQLFromFile($path);
+
+            } catch (\InvalidArgumentException $exception) {
+
+            } catch (\PDOException $exception) {
+
+            }
+        }
+
+        // Custom install
+        $this->callModuleStatic('sleepModule', $this);
+    }
+
 
     /**
      * Get translated dependencies
@@ -674,8 +825,6 @@ class Module extends \XLite\Model\AEntity
      */
     public function getHash()
     {
-        $class = $this->getMainClassName();
-
         $path = LC_CLASSES_DIR . $this->getPath() . LC_DS;
         $iterator = new \RecursiveDirectoryIterator($path);
         $iterator = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::CHILD_FIRST);
@@ -728,7 +877,7 @@ class Module extends \XLite\Model\AEntity
         $status = true;
 
         // Remove repository (if needed)
-        \Includes\Utils\FileManager::unlinkRecursive(LC_MODULES_DIR . $this->getPath());
+        \Includes\Utils\FileManager::unlinkRecursive($this->getRootDirectory());
 
         return $status;
     }
@@ -802,6 +951,19 @@ class Module extends \XLite\Model\AEntity
     public function getActualName()
     {
         return \Includes\Decorator\Utils\ModulesManager::getActualName($this->getAuthor(), $this->getName());
+    }
+
+    /**
+     * Get module root directory 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRootDirectory()
+    {
+        return LC_MODULES_DIR . $this->getPath() . LC_DS;
     }
 
     /**
@@ -1027,6 +1189,81 @@ class Module extends \XLite\Model\AEntity
         }
 
         return array_unique($dependencies);
+    }
+
+    /**
+     * Get module protected structures
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModuleProtectedStructures()
+    {
+        $tables = array();
+        $columns = array();
+        $tool = new \Doctrine\ORM\Tools\SchemaTool(\XLite\Core\Database::getEM());
+
+        $tablePrefixLength = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
+
+        $classPrefix = 'XLite\\Module\\' . $this->getActualName() . '\\Model\\';
+        $pattern = $this->getRootDirectory() . 'Model' . LC_DS . '*.php';
+        foreach (glob($pattern) as $path) {
+            $class = $classPrefix . substr(basename($path), 0, -4);
+            if (\XLite\Core\Operator::isClassExists($class)) {
+                $reflection = new \ReflectionClass($class);
+
+                if (
+                    !in_array('XLite\Base\IDecorator', $reflection->getInterfaceNames())
+                    && \XLite\Core\Database::getRepo($class)->canTableDisabled()
+                ) {
+
+                    // Protected tables                    
+                    $table = substr(
+                        \XLite\Core\Database::getEM()->getClassMetadata($class)->getTableName(),
+                        $tablePrefixLength
+                    );
+                    $tables[] = $table;
+
+                } elseif (in_array('XLite\Base\IDecorator', $reflection->getInterfaceNames())) {
+
+                    // Protected columns
+                    $cols = array();
+                    foreach ($reflection->getProperties(\ReflectionProperty::IS_PROTECTED) as $col) {
+                        if ($col->getDeclaringClass() == $reflection && preg_match('/@Column/Ss', $col->getDocComment())) {
+                            $cols[$col->getName()] = false;
+                        }
+                    }
+
+                    if ($cols && preg_match('/class\s+\S+\s+extends\s+(\S+)\s/Ss', file_get_contents($path), $match)) {
+                        $original = ltrim($match[1], '\\');
+                        $cm = \XLite\Core\Database::getEM()->getClassMetadata($original);
+
+                        $schema = $tool->getCreateSchemaSql(array($cm));
+                        
+                        foreach ($cols as $col => $tmp) {
+                            if (preg_match('/((?:, |\()' . $col . ' .+(?:, |\)))/USs', $schema[0], $match)) {
+                                $cols[$col] = trim($match[1], ', ');
+
+                            } else {
+                                unset($cols[$col]);
+                            }
+                        }
+
+                        if ($cols) {
+                            $table = substr(
+                                $cm->getTableName(),
+                                strlen(\XLite\Core\Database::getInstance()->getTablePrefix())
+                            );
+                            $columns[$table] = $cols;
+                        }
+                    }
+                }
+            }
+        }
+
+        return array($tables, $columns);
     }
 
 }
