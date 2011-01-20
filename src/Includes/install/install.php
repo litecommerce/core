@@ -410,10 +410,11 @@ function checkPhpDisableFunctions(&$errorMsg, &$value)
 {
     $result = true;
 
-    list($value, $allowed) = getDisabledFunctions();
-    if (!empty($value)) {
+    list($list, $allowed) = getDisabledFunctions();
+    if (!empty($list)) {
         $result = false;
-        $errorMsg = 'Disabled functions discovered (' . implode(', ', $value) . ') that must be enabled';
+        $value = substr(@ini_get('disable_functions'), 0, 45) . '...';
+        $errorMsg = 'Disabled functions discovered (' . implode(', ', $list) . ') that must be enabled';
 
     } else {
         $value = 'none';
@@ -483,7 +484,7 @@ function getDisabledFunctions()
         'sqlite_escape_string', 'sqlite_unbuffered_query', 'sqlite_query', 'sqlite_num_rows', 'is_a', 'fflush', 'fsockopen', 'flock', 'octdec', 'openlog', 
         'syslog', 'closelog', 'filter_var', 'escapeshellcmd', 'openssl_pkcs7_sign', 'openssl_error_string', 'get_magic_quotes_runtime', 'set_magic_quotes_runtime', 'chunk_split', 'addcslashes', 
         'stream_get_filters', 'stream_filter_append', 'stream_get_contents', 'stream_filter_remove', 'html_entity_decode', 'openssl_pkey_get_private', 'openssl_sign', 'sha1', 'restore_error_handler', 'socket_set_timeout', 
-        'socket_get_status', 'getservbyname', 'gethostbyname', 'socket_set_blocking', 'stream_set_write_buffer', 'stream_select', 'trigger_error', 'dl', 'imagecopy', 'imageconvolution', 
+        'socket_get_status', 'getservbyname', 'gethostbyname', 'socket_set_blocking', 'stream_set_write_buffer', 'stream_select', 'trigger_error', 'imagecopy', 'imageconvolution', 
         'natcasesort', 'ctype_xdigit', 'ob_get_clean', 'ctype_digit', 'is_infinite', 'str_ireplace', 'array_reduce', 'create_function', 'preg_last_error', 'json_encode', 
         'json_decode', 'simplexml_load_string', 'strtok', 'class_parents', 'posix_isatty', 'get_defined_vars', 'getmypid', 'stripos', 'array_change_key_case', 'spliti', 
         'checkdate', 'checkdnsrr', 'soundex', 'acos', 'pi', 'cos', 'func_num_args', 'func_get_arg', 'is_subclass_of', 'localeconv', 
@@ -499,6 +500,7 @@ function getDisabledFunctions()
 
     if (!empty($value)) {
         $list = array_map('trim', explode(',', $value));
+        $list = array_unique($list);
         $intersect = array_intersect($list, $usedFunctions);
         $allowed = array_diff($list, $usedFunctions);
     }
