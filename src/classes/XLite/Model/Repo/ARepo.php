@@ -1518,6 +1518,12 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     {
         if (\XLite\Core\Database::SCHEMA_UPDATE == $type || \XLite\Core\Database::SCHEMA_CREATE == $type) {
 
+            $schema = preg_replace(
+                '/(`\S+` ADD FOREIGN KEY \([^\)]+\) REFERENCES `\S+` \([^\)]+\)$\s*)$/Ss',
+                '$1 ON DELETE CASCADE',
+                $schema
+            );    
+
             foreach ($this->getDetailedForeignKeys() as $cell) {
                 if (
                     is_array($cell)
@@ -1532,9 +1538,9 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
                     }
 
                     $pattern = '/(' . $this->_class->getTableName() .'`'
-                    . ' ADD FOREIGN KEY \(`' . implode('`,`', $cell['fields']) . '`\)'
-                    . ' REFERENCES `' . $this->_em->getClassMetadata($cell['referenceRepo'])->getTableName() . '`'
-                    . ' \(`' . implode('`,`', $cell['referenceFields']) . '`\)$)/Ss';
+                        . ' ADD FOREIGN KEY \(`' . implode('`,`', $cell['fields']) . '`\)'
+                        . ' REFERENCES `' . $this->_em->getClassMetadata($cell['referenceRepo'])->getTableName() . '`'
+                        . ' \(`' . implode('`,`', $cell['referenceFields']) . '`\))\s*(?:.+)?$/Ss';
 
                     $replace = '$1 ON DELETE ' . (isset($cell['delete']) ? strtoupper($cell['delete']) : 'CASCADE');
 
@@ -1548,8 +1554,83 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
                     $schema = preg_replace($pattern, $replace, $schema);
                 }
             }
+
+            list($disabledTables, $disabledColumns) = \XLite\Core\Database::getInstance()
+                ->getDisabledStructures();
+
+            // Do not drop disabled tables and foreign keys
+            foreach ($disabledTables as $i => $t) {
+                $disabledTables[$i] = preg_quote($t, '/');
+            }
+            $tablePrefix = preg_quote(\XLite\Core\Database::getInstance()->getTablePrefix(), '/');
+
+            if ($disabledTables) {
+                $schema = preg_grep(
+                    '/DROP TABLE IF EXISTS `' . $tablePrefix . '(?:' . implode('|', $disabledTables) . ')`/Ss',
+                    $schema,
+                    PREG_GREP_INVERT
+                );
+                $schema = preg_grep(
+                    '/ALTER TABLE `' . $tablePrefix . '(?:' . implode('|', $disabledTables) . ')` DROP FOREIGN KEY /Ss',
+                    $schema,
+                    PREG_GREP_INVERT
+                );
+            }
+
+            // Do not drop disabled columns
+            foreach ($disabledColumns as $t => $fields) {
+                $t = preg_quote($t, '/');
+
+                foreach ($fields as $f => $change) {
+                    $f = preg_quote($f, '/');
+                    if (preg_match('/NOT NULL/Ss', $change) || !preg_match('/^\S+\s+\S+\s+NULL/Ss', $change)) {
+
+                        // Change NOT NULL to NULL
+                        $change = preg_replace('/^([^`]\S*[^`])\s/', '`\1` ', $change);
+                        if (preg_match('/NOT NULL/Ss', $change)) {
+                            $change = preg_replace('/\s+NOT NULL/Ss', ' NULL', $change);
+
+                        } else {
+                            $change = preg_replace('/^(\S+\s+\S+)\s+/Ss', '\1 NULL ', $change);
+                        }
+
+                        $schema = preg_replace(
+                            '/(ALTER TABLE `' . $tablePrefix . $t . '`.*) DROP `' . $f . '`(, |$)/Ss',
+                            '\1 MODIFY ' . $change . '\2',
+                            $schema
+                        );
+
+                    } else {
+                        $schema = preg_replace(
+                            '/(ALTER TABLE `' . $tablePrefix . $t . '`.*) DROP `' . $f . '`(, |$)/Ss',
+                            '\1 ',
+                            $schema
+                        );
+                    }
+                }
+            }
+
+            // Clear empty ALTER TABLE
+            $schema = preg_replace(
+                '/ALTER TABLE `' . $tablePrefix . '[^`]+`\s*$/Ss',
+                '',
+                $schema
+            );
         }
 
         return $schema;
+    }
+
+    /**
+     * Check - can repository table disabled into DB or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function canTableDisabled()
+    {
+        return true;
     }
 }

@@ -75,34 +75,29 @@ class OrderItemOption extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Process DB schema 
-     * 
-     * @param array  $schema Schema
-     * @param string $type   Schema type
-     *  
+     * Get detailed foreign keys
+     *
      * @return array
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function processSchema(array $schema, $type)
+    protected function getDetailedForeignKeys()
     {
-        $schema = parent::processSchema($schema, $type);
+        $list = parent::getDetailedForeignKeys();
 
-        if (\XLite\Core\Database::SCHEMA_UPDATE == $type || \XLite\Core\Database::SCHEMA_CREATE == $type) {
-            $schema = preg_replace(
-                '/(\w+order_item_options` ADD FOREIGN KEY \(`group_id`\) REFERENCES `\w+option_groups` \(`group_id`\)$)$/Ss',
-                '$1 ON DELETE SET NULL',
-                $schema
-            );
-            $schema = preg_replace(
-                '/(\w+order_item_options` ADD FOREIGN KEY \(`option_id`\) REFERENCES `\w+options` \(`option_id`\)$)$/Ss',
-                '$1 ON DELETE SET NULL',
-                $schema
-            );
-        }
+        $list[] = array(
+            'fields'          => array('group_id'),
+            'referenceRepo'   => 'XLite\Module\CDev\ProductOptions\Model\OptionGroup',
+            'delete'          => 'SET NULL',
+        );
+        $list[] = array(
+            'fields'          => array('option_id'),
+            'referenceRepo'   => 'XLite\Module\CDev\ProductOptions\Model\Option',
+            'delete'          => 'SET NULL',
+        );
 
-        return $schema;
+        return $list;
     }
 }
 

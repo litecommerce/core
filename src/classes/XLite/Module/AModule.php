@@ -205,6 +205,32 @@ abstract class AModule
     }
 
     /**
+     * Custom wake-up (enable) module routine
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function wakeUpModule(\XLite\Model\Module $module)
+    {
+        return true;
+    }
+
+    /**
+     * Custom sleep (disable) module routine
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function sleepModule(\XLite\Model\Module $module)
+    {
+        return true;
+    }
+
+    /**
      * Return module name by class name
      * 
      * @return string
