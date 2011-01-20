@@ -1,3 +1,13 @@
+# vim: set ts=2 sw=2 sts=2 et:
+# 
+# Demo store
+#  
+# @author    Creative Development LLC <info@cdev.ru> 
+# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @version   SVN: $Id$
+# @link      http://www.litecommerce.com/
+# @since     3.0.0
 XLite\Model\Product:
   - { price: 19.99, sale_price: 19.99, sku: '00001', weight: 0.32, translations: [{ code: en, name: 'Planet Express Babydoll' }], images: [{ path: demo_store_p4003.jpeg, mime: image/jpeg, width: 500, height: 494, size: 29749, date: 1280310731, orderby: -10 }] }
   - { price: 18.99, sale_price: 18.99, sku: '00002', weight: 0.32, translations: [{ code: en, name: 'Digital Angel' }], images: [{ path: demo_store_d4004_1.jpeg, mime: image/jpeg, width: 220, height: 355, size: 14696, alt: Front }, { path: demo_store_p4004.jpeg, mime: image/jpeg, width: 489, height: 500, size: 115220, orderby: -1 }] }
