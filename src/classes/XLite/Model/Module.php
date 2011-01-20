@@ -387,7 +387,7 @@ class Module extends \XLite\Model\AEntity
 
         return isset($debugOptions['marketplace_dev_url'])
             ? $debugOptions['marketplace_dev_url']
-            : static::MARKETPLACE_URL;
+            : self::MARKETPLACE_URL;
     }
 
     /**
