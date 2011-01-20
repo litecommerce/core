@@ -74,10 +74,10 @@ abstract class Autoloader
     {
         require_once (LC_LIB_DIR . 'Doctrine' . LC_DS . 'Common' . LC_DS . 'ClassLoader.php');
 
-        $loader = new \Doctrine\Common\ClassLoader('Doctrine', LC_LIB_DIR);
+        $loader = new \Doctrine\Common\ClassLoader('Doctrine', rtrim(LC_LIB_DIR, LC_DS));
         $loader->register();
 
-        $loader = new \Doctrine\Common\ClassLoader('Symfony', LC_LIB_DIR);
+        $loader = new \Doctrine\Common\ClassLoader('Symfony', rtrim(LC_LIB_DIR, LC_DS));
         $loader->register();
     }
 
