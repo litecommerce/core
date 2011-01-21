@@ -158,6 +158,7 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_Model_OrderAbstract
 
         $item = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->find($id);
 
+        $this->assertFalse(is_null($item), 'check item from DB');
         $this->assertFalse(is_null($item->getProduct()), 'check dump object #2');
     }
 
