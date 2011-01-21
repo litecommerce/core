@@ -159,7 +159,6 @@ class Address extends \XLite\View\Model\AModel
 
                     if (isset($profile)) {
                         $this->address->setProfile($profile);
-                        $this->address->setProfileId($profileId);
                     }
                 }
 
@@ -441,7 +440,6 @@ class Address extends \XLite\View\Model\AModel
 
                     if (isset($profile)) {
                         $address->setProfile($profile);
-                        $address->setProfileId($profileId);
                     }
                 }
             }
