@@ -540,21 +540,6 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Find all by names
-     * 
-     * @param array $names Modules names
-     *  
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findAllByNames(array $names)
-    {
-        return $this->defineAllByNamesQuery($names)->getQuery()->getResult();
-    }
-
-    /**
      * Find by actual name
      * 
      * @param string $name   Module name
@@ -940,7 +925,7 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Define query builder for findAllByNames()
+     * Define query builder for findAllByModuleIds()
      *
      * @param array $ids Module ids
      *
@@ -994,25 +979,6 @@ class Module extends \XLite\Model\Repo\ARepo
         return $this->createQueryBuilder()
             ->andWhere('m.enabled = :enabled')
             ->setParameter('enabled', $enabled);
-    }
-
-    /**
-     * Define query builder for findAllByNames()
-     *
-     * @param array $names Modules names
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineAllByNamesQuery(array $names)
-    {
-        $qb = $this->createQueryBuilder();
-
-        $ids = \XLite\Core\Database::buildInCondition($qb, $names, 'name');
-
-        return $qb->andWhere('m.name IN (' . implode(', ', $ids) . ')');
     }
 
     /**
