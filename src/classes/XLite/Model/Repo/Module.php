@@ -718,7 +718,7 @@ class Module extends \XLite\Model\Repo\ARepo
         if ($this->isUpdateNeeded()) {
             $result = $this->updateAddonsList();
             if ($result) {
-                \XLite\Core\Session::getInstance()->set(static::ADDONS_UPDATED, LC_START_TIME);
+                \XLite\Core\TmpVars::getInstance()->{static::ADDONS_UPDATED} = LC_START_TIME;
             }
         }
     }
@@ -749,8 +749,8 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     protected static function isAddonsInfoActual()
     {
-        return \XLite\Core\Session::getInstance()->{static::ADDONS_UPDATED}
-            && \XLite\Core\Session::getInstance()->{static::ADDONS_UPDATED} + static::LAST_UPDATE_TTL > LC_START_TIME;
+        return \XLite\Core\TmpVars::getInstance()->{static::ADDONS_UPDATED}
+            && \XLite\Core\TmpVars::getInstance()->{static::ADDONS_UPDATED} + static::LAST_UPDATE_TTL > LC_START_TIME;
     }
 
     /**
