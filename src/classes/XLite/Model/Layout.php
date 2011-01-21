@@ -116,7 +116,7 @@ class Layout extends \XLite\Base\Singleton
      */
     public function getSkinURL($url)
     {
-        return $this->path . $url;
+        return str_replace(LC_DS, '/', $this->getPath() . $url);
     }
 
     /** 
