@@ -1108,8 +1108,7 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * Install (with upload) module 
-     * TODO!!!!  refactor with \XLite\Model\PHARModule using. (there must be a specific check procedure)
+     * Install (with upload) module. TODO (remove?)
      * 
      * @param boolean $overrideExists Override exist module OPTIONAL
      *  
