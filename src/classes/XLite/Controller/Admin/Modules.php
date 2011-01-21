@@ -118,6 +118,34 @@ class Modules extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Pack module into PHAR module file
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionPack()
+    {
+        $this->set('returnUrl', $this->buildUrl('modules'));
+
+        $id = \XLite\Core\Request::getInstance()->moduleId;
+
+        $packModule = new \XLite\Model\PackModule($id);
+
+        if (\XLite\Model\PackModule::STATUS_OK === $packModule->createPackage()) {
+
+            $packModule->downloadPackage();
+
+            $packModule->cleanUp();
+
+            exit(0);
+        }
+
+        $packModule->cleanUp();
+    }
+
+    /**
      * Disable module
      *
      * @return void
@@ -157,8 +185,10 @@ class Modules extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\TopMessage::getInstance()->addError('The module to uninstall has not been found');
 
         } else {
-            $notes = $module->getMainClass()->getPostUninstallationNotes();
-            
+
+            $class = $module->getMainClass();
+            $notes = $class::getPostUninstallationNotes();
+
             // Disable this and depended modules
             $module->disableModule();
 

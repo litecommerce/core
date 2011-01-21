@@ -591,7 +591,9 @@ class Module extends \XLite\Model\AEntity
     protected function installDBData()
     {
         // Install YAML fixtures
+
         $path = $this->getRootDirectory() . 'install.yaml';
+
         if (file_exists($path)) {
             \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::addFixtureToList($path);
         }
@@ -931,6 +933,13 @@ class Module extends \XLite\Model\AEntity
         // Remove repository (if needed)
         \Includes\Utils\FileManager::unlinkRecursive($this->getRootDirectory());
 
+        // Remove skins catalogs (if needed)
+        $skins = $this->fetchSkins();
+
+        foreach ($skins as $skinDir) {
+            \Includes\Utils\FileManager::unlinkRecursive($this->constructSkinPath($skinDir));
+        }
+
         return $status;
     }
 
@@ -1243,6 +1252,92 @@ class Module extends \XLite\Model\AEntity
         return array_unique($dependencies);
     }
 
+
+    /**
+     * Retrieve skins list from the temporary local repository of module
+     * 
+     * @return array list of skins in the format: {new skin path} => {skin path from temporary local repository of module}
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function fetchSkins()
+    {   
+        $result = array();
+
+        $iterator = $this->getFetchSkinsIterator();
+
+        $iterator->setMaxDepth(2);
+
+        while($iterator->valid()) {
+            if (
+                $iterator->isDir()
+                && 1 == $iterator->getDepth()
+            ) { 
+                $this->registerFetchedSkin($iterator, $result);
+            }   
+
+            $iterator->next();
+        }   
+
+        return $result;
+    }   
+
+    /** 
+     * Return file iterator for fetching skins 
+     * 
+     * @return \RecursiveIteratorIterator
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getFetchSkinsIterator()
+    {
+        return new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator(LC_SKINS_DIR),
+            \RecursiveIteratorIterator::SELF_FIRST,
+            \FilesystemIterator::SKIP_DOTS
+        );  
+    }
+
+
+    /**
+     * Register specific modules skins catalogs from file iterator. 
+     * 
+     * @param \RecursiveIteratorIterator $iterator File iterator
+     * @param array                      $registry Array for registration the skins dir
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function registerFetchedSkin(\RecursiveIteratorIterator $iterator, &$registry)
+    {
+        $subPath = $iterator->getSubPathName();
+
+        if (is_dir($this->constructSkinPath($subPath))) {
+
+            $registry[] = $subPath;
+        }
+    }
+
+    /** 
+     * Construct relative path to module skin inside of LiteCommerce skin module repository
+     * 
+     * @param string $dir Catalog path
+     *  
+     * @return string relative path to skin
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function constructSkinPath($dir)
+    {   
+        return LC_SKINS_DIR . $dir . LC_DS . 'modules' . LC_DS . $this->getPath();
+    }   
+
+
     /**
      * Get module protected structures
      * 
@@ -1260,9 +1355,13 @@ class Module extends \XLite\Model\AEntity
         $tablePrefixLength = strlen(\XLite\Core\Database::getInstance()->getTablePrefix());
 
         $classPrefix = 'XLite\\Module\\' . $this->getActualName() . '\\Model\\';
+
         $pattern = $this->getRootDirectory() . 'Model' . LC_DS . '*.php';
+
         foreach (glob($pattern) as $path) {
+
             $class = $classPrefix . substr(basename($path), 0, -4);
+
             if (\XLite\Core\Operator::isClassExists($class)) {
                 $reflection = new \ReflectionClass($class);
 

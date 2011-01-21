@@ -81,7 +81,19 @@ class PHARModule extends \XLite\Base
      * @see    ____var_see____
      * @since  3.0.0
      */
+    protected $phar       = null;
+
+
+    /**
+     * Module model for inner use
+     * 
+     * @var    mixed
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $module     = null;
+
 
     /**
      * Inner catalog to the first temporary deploying
@@ -93,6 +105,7 @@ class PHARModule extends \XLite\Base
      */
     protected $tempDir    = null;
 
+
     /**
      * Error message of the \Phar object
      * 
@@ -102,6 +115,18 @@ class PHARModule extends \XLite\Base
      * @since  3.0.0
      */
     protected $error      = null;
+
+
+    /**
+     * Status of last operation
+     * 
+     * @var    mixed
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $status     = null;
+
 
     /**
      * Array of values from the INI file
@@ -117,22 +142,24 @@ class PHARModule extends \XLite\Base
     /**
      * Constructor of the class. 
      * 
-     * @param mixed $module name of the .PHAR file in the inner local repository
+     * @param mixed $phar name of the .PHAR file in the inner local repository
      *  
-     * @return string status of the initialization and deploying
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct($module)
+    public function __construct($phar)
     {
         $result = self::STATUS_ERROR;
 
-        if (is_file(LC_LOCAL_REPOSITORY . $module)) {
+        $this->makeTempDir();
+
+        if (is_file(LC_LOCAL_REPOSITORY . $phar)) {
 
             try {
 
-                $this->module = new \Phar(LC_LOCAL_REPOSITORY . $module);
+                $this->phar = new \Phar(LC_LOCAL_REPOSITORY . $phar);
 
                 $result = $this->deployToTemp();
 
@@ -142,14 +169,14 @@ class PHARModule extends \XLite\Base
             }
         }
 
-        return $result;
+        $this->status = $result;
     }
 
 
     /**
      * Checks the .PHAR file
      * 
-     * @return string status of validation
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -159,8 +186,8 @@ class PHARModule extends \XLite\Base
         $result = self::STATUS_ERROR;
 
         if (
-            !is_null($this->module)
-            && !is_null($this->tempDir)
+            !is_null($this->phar)
+            && !is_null($this->getTempDir())
         ) {
             $result = $this->checkFileStructure();
 
@@ -170,13 +197,14 @@ class PHARModule extends \XLite\Base
 
                 if (self::STATUS_OK === $result) {
 
-                    $result = $this->checkInstall();
+                    $this->initModule();
 
+                    $result = $this->checkInstall();
                 }
             }
         }
 
-        return $result;
+        $this->status = $result;
     }
 
 
@@ -190,7 +218,7 @@ class PHARModule extends \XLite\Base
      */
     public function deploy()
     {
-        if (!is_null($this->iniFile)) {
+        if (!is_null($this->module)) {
 
             $this->deployClasses();
 
@@ -209,16 +237,16 @@ class PHARModule extends \XLite\Base
      */
     public function cleanUp()
     {
-        if (!is_null($this->tempDir)) {
-            \Includes\Utils\FileManager::unlinkRecursive($this->tempDir);
+        if (!is_null($this->getTempDir())) {
+            \Includes\Utils\FileManager::unlinkRecursive($this->getTempDir());
         }
     }
 
 
     /**
-     * Returns error message of .PHAR file operations
+     * Error message of .PHAR file operations getter
      * 
-     * @return void
+     * @return mixed
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -226,6 +254,50 @@ class PHARModule extends \XLite\Base
     public function getError()
     {
         return $this->error;
+    }
+
+
+    /**
+     * Status of last operation getter
+     * 
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Temporary storage getter
+     * 
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTempDir()
+    {
+        return $this->tempDir;
+    }
+
+
+    /**
+     * Module model initialization
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function initModule()
+    {
+        $this->module = new \XLite\Model\Module();
+
+        $this->module->setName($this->getModuleName());
+        $this->module->setAuthor($this->getAuthor());
     }
 
 
@@ -239,10 +311,10 @@ class PHARModule extends \XLite\Base
      */
     protected function deployClasses()
     {
-        $classesTempDir = $this->getClassesDir();
-        $classesDir     = $this->getModuleClassesDir();
+        $classesTempDir = $this->getClassesTempDir();
+        $classesDir     = $this->module->getRootDirectory();
 
-        if (!is_null($classesTempDir)) {
+        if (is_dir($classesTempDir)) {
 
             \Includes\Utils\FileManager::mkdirRecursive($classesDir);
 
@@ -264,7 +336,7 @@ class PHARModule extends \XLite\Base
      */
     protected function deploySkins()
     {
-        if (!is_null($this->tempDir)) {
+        if (is_dir($this->getSkinsTempDir())) {
 
             $skins = $this->fetchSkins();
 
@@ -290,27 +362,19 @@ class PHARModule extends \XLite\Base
     {
         $result = array();
 
-        $skinsDir = $this->getSkinsDir();
+        $iterator = $this->getFetchSkinsIterator();
 
-        if (!is_null($skinsDir)) {
+        $iterator->setMaxDepth(2);
 
-            $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($skinsDir), \RecursiveIteratorIterator::SELF_FIRST);
-
-            $iterator->setMaxDepth(2);
-
-            while($iterator->valid()) {
-
-                if (!$iterator->isDot() && $iterator->isDir() && 1 == $iterator->getDepth()) {
-
-                    $subPath = $iterator->getSubPathName();
-
-                    $dir = $this->constructSkinPath($subPath);
-
-                    $result[LC_SKINS_DIR . $dir] = $skinsDir . LC_DS . $subPath;
-                }
-
-                $iterator->next();
+        while($iterator->valid()) {
+            if (
+                $iterator->isDir() 
+                && 1 == $iterator->getDepth()
+            ) {
+                $this->registerFetchedSkin($iterator, $result);
             }
+
+            $iterator->next();
         }
 
         return $result;
@@ -318,18 +382,41 @@ class PHARModule extends \XLite\Base
 
 
     /**
-     * Construct relative path to module skin inside of LiteCommerce skin module repository
+     * Return file iterator for fetching skins 
      * 
-     * @param string $dir Catalog path
-     *  
-     * @return string relative path to skin
+     * @return \RecursiveIteratorIterator
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function constructSkinPath($dir)
+    protected function getFetchSkinsIterator()
     {
-        return $dir . LC_DS . 'modules' . LC_DS . $this->getModuleSpecificPath();
+        return new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($this->getSkinsTempDir()),
+            \RecursiveIteratorIterator::SELF_FIRST,
+            \FilesystemIterator::SKIP_DOTS
+        );
+    }
+
+
+    /**
+     * Register specific modules skins catalogs from file iterator. 
+     * 
+     * @param \RecursiveIteratorIterator $iterator File iterator
+     * @param array                      $registry Array for registration the skins dir
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function registerFetchedSkin(\RecursiveIteratorIterator $iterator, &$registry)
+    {
+        $subPath = $iterator->getSubPathName();
+
+        $dir = $this->module->constructSkinPath($subPath);
+
+        $registry[$dir] = $this->getSkinsTempDir() . LC_DS . $subPath;
     }
 
 
@@ -343,8 +430,8 @@ class PHARModule extends \XLite\Base
      */
     protected function getIniFile()
     {
-        return !is_null($this->tempDir) && is_file($this->tempDir . self::MODULE_INI)
-            ? $this->tempDir . self::MODULE_INI
+        return !is_null($this->getTempDir())
+            ? $this->getTempDir() . self::MODULE_INI
             : null;
     }
 
@@ -357,10 +444,10 @@ class PHARModule extends \XLite\Base
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getClassesDir()
+    protected function getClassesTempDir()
     {
-        return !is_null($this->tempDir) && is_dir($this->tempDir . self::CLASSES_DIR)
-            ? $this->tempDir . self::CLASSES_DIR
+        return !is_null($this->getTempDir())
+            ? $this->getTempDir() . self::CLASSES_DIR
             : null;
     }
     
@@ -373,10 +460,10 @@ class PHARModule extends \XLite\Base
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getSkinsDir()
+    protected function getSkinsTempDir()
     {
-        return !is_null($this->tempDir) && is_dir($this->tempDir . self::SKINS_DIR)
-            ? $this->tempDir . self::SKINS_DIR
+        return !is_null($this->getTempDir())
+            ? $this->getTempDir() . self::SKINS_DIR
             : null;
     }
 
@@ -433,46 +520,41 @@ class PHARModule extends \XLite\Base
             self::MODULE,
             self::MODULE_DIR,
             self::MODULE_AUTHOR,
-            self::MODULE_VERSION,
         );
     }
 
 
     /**
-     * Returns classes catalog of the deployed module inside of the LiteCommerce classes structure
+     * Return author from INI file
      * 
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getModuleClassesDir()
+    protected function getAuthor()
     {
-        return
-            LC_CLASSES_DIR 
-            . 'XLite' 
-            . LC_DS . 'Module' 
-            . LC_DS . $this->getModuleSpecificPath();
+        return $this->iniFile[self::MODULE_SPECIFICATION][self::MODULE_AUTHOR];
     }
 
 
     /**
-     * Returns the module specific relative path. It provides the unique author-module_dir pair inside the LiteCommerce module catalogs
+     * Return module name from INI file 
      * 
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getModuleSpecificPath()
+    protected function getModuleName()
     {
-        return $this->iniFile[self::MODULE_SPECIFICATION][self::MODULE_AUTHOR]
-            . LC_DS . $this->iniFile[self::MODULE_SPECIFICATION][self::MODULE_DIR];
+        return $this->iniFile[self::MODULE_SPECIFICATION][self::MODULE_DIR];
     }
 
 
     /**
-     * Validation of Install availability. Currently you cannot install the module that has the same classes catalog with some already retrieved module.
+     * Validation of Install availability. 
+     * Currently you cannot install the module which has the same classes catalog with some already retrieved module.
      * 
      * @return string status of validation
      * @access protected
@@ -481,7 +563,7 @@ class PHARModule extends \XLite\Base
      */
     protected function checkInstall()
     {
-        return is_dir($this->getModuleClassesDir()) ? self::STATUS_WRONG_INSTALL : self::STATUS_OK;
+        return is_dir($this->module->getRootDirectory()) ? self::STATUS_WRONG_INSTALL : self::STATUS_OK;
     }
 
 
@@ -497,10 +579,10 @@ class PHARModule extends \XLite\Base
     {
         // Check primary file/catalog structure
         return (
-            !is_null($this->getIniFile())
+            is_file($this->getIniFile())
             && (
-                !is_null($this->getClassesDir())
-                || !is_null($this->getSkinsDir())
+                is_dir($this->getClassesTempDir())
+                || is_dir($this->getSkinsTempDir())
             )   
         ) ? self::STATUS_OK : self::STATUS_WRONG_STRUCTURE;
     }
@@ -520,7 +602,7 @@ class PHARModule extends \XLite\Base
 
         @unlink($fn);
 
-        $this->tempDir = @mkdir($fn) ? $fn . LC_DS : null;
+        $this->tempDir = \Includes\Utils\FileManager::mkdirRecursive($fn) ? $fn . LC_DS : null;
     }
 
 
@@ -534,11 +616,9 @@ class PHARModule extends \XLite\Base
      */
     protected function deployToTemp()
     {
-        $this->makeTempDir();
-
         return (
-            !is_null($this->tempDir) 
-            && $this->module->extractTo($this->tempDir)
+            !is_null($this->getTempDir()) 
+            && $this->phar->extractTo($this->getTempDir())
         ) ? self::STATUS_OK : self::STATUS_ERROR;
     }
 }

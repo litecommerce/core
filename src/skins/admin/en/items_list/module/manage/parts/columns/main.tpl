@@ -15,16 +15,8 @@
   <div class="name">{getInstalledProperty(module,#moduleName#)}</div>
   <div class="author">{t(#Author#)}: {getInstalledProperty(module,#authorName#)}</div>
   <div class="version">{t(#Version#)}: {getInstalledProperty(module,#version#)}</div>
-  <div class="actions">
-    {if:module.getEnabled()}
-      <a href="{buildUrl(#modules#,#disable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('disable', '{module.getModuleId()}');">{t(#Disable#)}</a>
-      <a IF="module.showSettingsForm()" href="{module.getSettingsFormLink()}">{t(#Settings#)}</a>
-    {else:}
-      <span IF="!canEnable(module)" class="disabled">{t(#Enable#)}</span>
-      <a IF="canEnable(module)" href="{buildUrl(#modules#,#enable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('enable', '{module.getModuleId()}');">{t(#Enable#)}</a>
-    {end:}
-    <a IF="!module.getEnabled()" class="uninstall" href="{buildUrl(#modules#,#uninstall#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('uninstall', '{module.getModuleId()}');">{t(#Uninstall#)}</a>
-  </div>
+
+  <div class="actions">{displayListPart(#actions#,_ARRAY_(#module#^module))}</div>
 
   <div IF="!canEnable(module)" class="dependencies">
     {t(#Add-on cannot be enabled.#)}

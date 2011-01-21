@@ -63,8 +63,6 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
 
             $addonInfo = $_FILES[self::UPLOAD_NAME];
 
-            $moveResult = $this->moveToLocalRepository($addonInfo);
-
             foreach ($addonInfo['name'] as $index => $name) {
 
                 $moveResult = $this->moveToLocalRepository($addonInfo['tmp_name'][$index], $name);
@@ -73,9 +71,12 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
 
                     $module = new \XLite\Model\PHARModule($name);
 
-                    $result = $module->check();
+                    if (\XLite\Model\PHARModule::STATUS_OK === $module->getStatus()) {
 
-                    if (\XLite\Model\PHARModule::STATUS_OK === $result) {
+                        $module->check();
+                    }
+
+                    if (\XLite\Model\PHARModule::STATUS_OK === $module->getStatus()) {
 
                         $module->deploy();
 
@@ -84,7 +85,7 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
                         \XLite\Core\TopMessage::addError(
                             'Checking procedure returns with "{{result}}" result for {{index}}: {{file}} file.',
                             array(
-                                'result'    => $result,
+                                'result'    => $module->getStatus() . '::' . $module->getError(),
                                 'file'      => $name,
                                 'index'     => $index,
                             )
