@@ -1063,15 +1063,61 @@ function doUpdateConfig(&$params, $silentMode = false)
 /**
  * Prepare to remove a cache of classes
  * 
+ * @param array $params Database access data and other parameters
+ *
  * @return bool
  * @access public
  * @see    ____func_see____
  * @since  3.0.0
  */
-function doRemoveCache()
+function doRemoveCache($params)
 {
+    $result = true;
+
     \Includes\Decorator\Utils\CacheManager::cleanupCacheIndicators();
+
+    // Remove all LiteCommerce tables if exists
+    $connection = dbConnect($params, $pdoErrorMsg);
+
+    if ($connection) {
+
+        // Check MySQL version
+        $mysqlVersionErr = $currentMysqlVersion = '';
+
+        if (!checkMysqlVersion($mysqlVersionErr, $currentMysqlVersion, true)) {
+            fatal_error($mysqlVersionErr . (!empty($currentMysqlVersion) ? '<br />(current version is ' . $currentMysqlVersion . ')' : ''));
+            $checkError = true;
+        }
+
+        // Check if LiteCommerce tables is already exists
+        $res = dbFetchAll('SHOW TABLES LIKE \'xlite_%\'');
+
+        if (is_array($res)) {
+
+            dbExecute('SET FOREIGN_KEY_CHECKS=0');
+
+            foreach ($res as $row) {
+                $tableName = array_pop($row);
+                $pdoErrorMsg = '';
+
+                $_query = sprintf('DROP TABLE `%s`', $tableName);
+                dbExecute($_query, $pdoErrorMsg);
+
+                if (!empty($pdoErrorMsg)) {
+                    $result = false;
+                    break;
+                }
+            }
+
+            dbExecute('SET FOREIGN_KEY_CHECKS=1');
+        }
+    } else {
+        $result = false;
+    }
+
+    return $result;
 }
+
 /**
  * Generate a cache of classes
  * 
@@ -1092,7 +1138,7 @@ function doBuildCache()
 
     $response = inst_http_request($url_request);
 
-    if (preg_match('/(?:error|warning|notice)/Ssi', $responce)) {
+    if (preg_match('/(?:error|warning|notice)/Ssi', $response)) {
         fatal_error(sprintf("Cache building procedure failed:<br />\n\nRequest URL: %s<br />\n\nResponce: %s", $url_request, $response));
         $result = false;
     }
@@ -1382,8 +1428,6 @@ LiteCommerce software has been successfully installed and is now available at th
 <LI><U><A href="cart.php" style="COLOR: #000055; TEXT-DECORATION: underline;" target="_blank"><b>CUSTOMER ZONE (FRONT-END): cart.php</b></A></U></LI>
 <P>
 <LI><U><A href="admin.php" style="COLOR: #000055; TEXT-DECORATION: underline;" target="_blank"><b>ADMINISTRATOR ZONE (BACKOFFICE): admin.php</b></A></U><BR></LI>
-<P>
-<LI><A href="quickstart/index.html" target="_blank" style="COLOR: #000055; TEXT-DECORATION: underline;"><b>QUICK START WIZARD</b></A>&nbsp;will help you prepare your store for going live by guiding you through the main steps LiteCommerce shipping system setup.<BR></LI>
 </OL>
 
 <br />
@@ -2958,7 +3002,7 @@ function module_cfg_install_db_js_next()
 
 
 /**
- * Database installing module
+ * Building cache and installing database
  * 
  * @param array $params 
  *  
@@ -2967,34 +3011,98 @@ function module_cfg_install_db_js_next()
  * @see    ____func_see____
  * @since  3.0.0
  */
-function module_install_db(&$params)
+function module_install_cache(&$params)
 {
     global $error;
-    $clrNumber = 2;
+
+    $result = true;
+
+    $steps = array(
+        1 => array(
+            'text'     => 'Preparing for cache generation and dropping an old LiteCommerce tables if exists',
+            'function' => 'doRemoveCache'
+        ),
+        2 => array(
+            'text'     => 'Building the classes cache',
+            'function' => 'doBuildCache',
+        ),
+        3 => array(
+            'text'     => 'Loading the database, building the templates cache',
+            'function' => 'doBuildCache',
+        ),
+    );
 
 ?>
-</TD>
-</TR>
-</TABLE>
+</td>
+</tr>
+</table>
 
-<SCRIPT language="javascript">
-    loaded = false;
+<script language="javascript">
+    progressId = '1';
+    maxIterations = 100;
+    iterationId = 1;
+
+    function passed() {
+         if (progressId) {
+            document.getElementById('progress_' + progressId).innerHTML = document.getElementById('progress_' + progressId).innerHTML + ' [passed]';
+            iterationId = 1;
+        }
+    }
 
     function refresh() {
-        window.scroll(0, 100000);
-
-        if (loaded == false)
+        if (iterationId < maxIterations && progressId) {
+            document.getElementById('progress_' + progressId).innerHTML = document.getElementById('progress_' + progressId).innerHTML + '.';
+            iterationId = iterationId + 1;
             setTimeout('refresh()', 1000);
+        }
     }
 
     setTimeout('refresh()', 1000);
-</SCRIPT>
+</script>
+
+<br />
+
+<div id="progress">Building cache, please wait...</div>
 
 <?php
 
-    $result = doInstallDatabase('all', $params);
+    foreach ($steps as $stepIndex => $stepData) {
+
+        if ($result) {
+
+            if ($stepIndex > 1) {
+                echo <<<OUT
+<script language="javascript">
+    passed();
+    progressId = '{$stepIndex}';
+</script>
+
+OUT;
+            }
+
+            echo <<<OUT
+<br /><br />
+<div id="progress_$stepIndex">Step $stepIndex: {$stepData['text']}...</div>
+
+OUT;
+
+            echo str_repeat(' ', 10000); flush();
+
+            $result = $stepData['function']($params);
+
+        } else {
+            break;
+        }
+    }
 
 ?>
+
+<script language="javascript">
+    passed();
+    progressId = false;
+</script>
+
+<br /><br />
 
 <table class="TableTop" width="100%" border="0" cellspacing="0" cellpadding="0">
 
@@ -3006,19 +3114,12 @@ function module_install_db(&$params)
         </center>
 
         <br />
-
-<script language="javascript">
-    loaded = true;
-</script>
-
 <?php
 
     $error = !$result;
 
     return false;
-
 } 
-
 
 /**
  * Install_dirs module

@@ -147,22 +147,23 @@ $modules = array (
                 'images_to_fs'
             )
         ),
-	array( // 3
-			"name"          => "install_db",
-			"comment"       => "Installing LiteCommerce database",
-            "auth_required" => true,
-			"js_back"       => 0,
-			"js_next"       => 0,
-            "remove_params" => array()
-		),
-	array( // 5
+	array( // 4
 			"name"          => "install_dirs",
 			"comment"       => "Setting up templates",
             "auth_required" => true,
 			"js_back"       => 0,
 			"js_next"       => 0,
             "remove_params" => array()
+        ),
+	array( // 5
+			"name"          => "install_cache",
+			"comment"       => "Building cache",
+            "auth_required" => true,
+			"js_back"       => 0,
+			"js_next"       => 0,
+            "remove_params" => array()
 		),
+
 	array( // 6
 			"name"          => "cfg_create_admin",
 			"comment"       => "Creating administrator account",
@@ -184,7 +185,6 @@ $modules = array (
             "remove_params" => array()
 		)
 );
-
 
 /*
  * Process service requests
