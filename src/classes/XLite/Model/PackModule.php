@@ -29,7 +29,7 @@
 namespace XLite\Model;
 
 /**
- * ____description____  !!TODO !!! TODO ))) REFACTOR it with \XLite\Model\PHARModule ... there are a plenty of same and similar methods and variables
+ * Module packaging model TODO: refactor with \XLite\Model\PHARModule
  * 
  * @package XLite
  * @see     ____class_see____
@@ -112,7 +112,7 @@ class PackModule extends \XLite\Base
     /**
      * Constructor of module packaging model
      * 
-     * @param integer $moduleId module identificator
+     * @param integer $moduleId Module identificator
      *  
      * @return void
      * @access public
@@ -130,7 +130,7 @@ class PackModule extends \XLite\Base
     /**
      * Create PHAR package routine
      * 
-     * @return string status of package creation 
+     * @return string Status of package creation 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -141,7 +141,7 @@ class PackModule extends \XLite\Base
 
         if (
             !is_null($this->getTempDir())
-            && !is_null($this->module)
+            && !is_null($this->getModule())
         ) {
             $result = self::STATUS_OK;
 
@@ -185,7 +185,7 @@ class PackModule extends \XLite\Base
 
             $download = $this->getPharGZName();
 
-        } else if (is_file($this->getPharName())) {
+        } elseif (is_file($this->getPharName())) {
 
             $download = $this->getPharName();
 
@@ -243,14 +243,29 @@ class PackModule extends \XLite\Base
      * Temporary storage getter
      * 
      * @return mixed
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getTempDir()
+    protected function getTempDir()
     {
         return $this->tempDir;
     }
+
+
+    /**
+     * Module model getter
+     * 
+     * @return mixed
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModule()
+    {
+        return $this->module;
+    }
+
 
     /**
      * Return PHAR name of module file
@@ -262,7 +277,7 @@ class PackModule extends \XLite\Base
      */
     protected function getPharName()
     {
-        return LC_LOCAL_REPOSITORY . $this->module->getAuthor() . '-' . $this->module->getName() . self::PHAR;
+        return LC_LOCAL_REPOSITORY . $this->getModule()->getAuthor() . '-' . $this->getModule()->getName() . self::PHAR;
     }
 
     /**
@@ -289,7 +304,7 @@ class PackModule extends \XLite\Base
     protected function collectClasses()
     {
         $classesTempDir = $this->getClassesTempDir();
-        $classesDir     = $this->module->getRootDirectory();
+        $classesDir     = $this->getModule()->getRootDirectory();
 
         if (!is_null($classesDir)) {
 
@@ -315,12 +330,12 @@ class PackModule extends \XLite\Base
     {
         if (!is_null($this->getTempDir())) {
 
-            $skins = $this->module->fetchSkins();
+            $skins = $this->getModule()->fetchSkins();
 
             foreach ($skins as $skinDir) {
 
                 $skinsTempDir = $this->getSkinsTempDir($skinDir);
-                $skinsDir     = $this->module->constructSkinPath($skinDir);
+                $skinsDir     = $this->getModule()->constructSkinPath($skinDir);
 
                 \Includes\Utils\FileManager::mkdirRecursive($skinsTempDir);
 
@@ -336,7 +351,7 @@ class PackModule extends \XLite\Base
     /**
      * Returns INI file path in the temporary local repository of module
      * 
-     * @return string file path to the INI file
+     * @return string File path to the INI file
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -352,7 +367,7 @@ class PackModule extends \XLite\Base
     /**
      * Returns the classes catalog inside the temporary local repository of module
      * 
-     * @return string catalog path
+     * @return string Catalog path
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -402,10 +417,10 @@ class PackModule extends \XLite\Base
 
             $iniContent = <<<DATA
 [{$section}]
- {$module} = "{$this->module->getName()}"
- {$author} = "{$this->module->getAuthor()}"
- {$moduleDir} = "{$this->module->getName()}"
- {$moduleVersion} = "{$this->module->getVersion()}"
+ {$module} = "{$this->getModule()->getName()}"
+ {$author} = "{$this->getModule()->getAuthor()}"
+ {$moduleDir} = "{$this->getModule()->getName()}"
+ {$moduleVersion} = "{$this->getModule()->getVersion()}"
 DATA;
 
             $result = file_put_contents($this->getIniFile(), $iniContent);
