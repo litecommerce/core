@@ -231,6 +231,21 @@ abstract class AModule
     }
 
     /**
+     * Get backup data 
+     * 
+     * @param \XLite\Model\Module $module Module
+     *  
+     * @return array|void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getBackupData(\XLite\Model\Module $module)
+    {
+        return null;
+    }
+
+    /**
      * Return module name by class name
      * 
      * @return string

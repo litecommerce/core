@@ -377,5 +377,59 @@ class Operator extends \XLite\Base\Singleton
     {
         return get_class($class);
     }
+
+    /**
+     * Save service YAML 
+     * 
+     * @param string $path File path
+     * @param array  $data Data
+     *  
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function saveServiceYAML($path, array $data)
+    {
+        return file_put_contents(
+            $path,
+            $this->getServiceHeader() . \Symfony\Component\Yaml\Yaml::dump($data)
+        );
+    }
+
+    /**
+     * Load service YAML 
+     * 
+     * @param string $path File path
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function loadServiceYAML($path)
+    {
+        $data = null;
+
+        if (file_exists($path)) {
+            $data = \Symfony\Component\Yaml\Yaml::load($path);
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get data storage service header 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getServiceHeader()
+    {
+        return '# <' . '?php if (!defined(\'LC_DS\')) { die(); } ?' . '>' . PHP_EOL . PHP_EOL;
+    }
+
 }
 

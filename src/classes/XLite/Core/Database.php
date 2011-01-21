@@ -1112,9 +1112,7 @@ class Database extends \XLite\Base\Singleton
         $columns = array();
 
         if (file_exists($path)) {
-            $data = file_get_contents($path);
-            $data = substr($data, strlen($this->getServiceHeader()));
-            foreach (\Symfony\Component\Yaml\Yaml::load($data) as $module => $list) {
+            foreach (\XLite\Core\Operator::getInstance()->loadServiceYAML($path) as $module => $list) {
                 if (isset($list['tables']) && is_array($list['tables'])) {
                     $tables = array_merge($tables, $list['tables']);
                 }
@@ -1145,9 +1143,7 @@ class Database extends \XLite\Base\Singleton
         $data = array();
 
         if (file_exists($path)) {
-            $data = file_get_contents($path);
-            $data = substr($data, strlen($this->getServiceHeader()));
-            $data = \Symfony\Component\Yaml\Yaml::load($data);
+            $data = \XLite\Core\Operator::getInstance()->loadServiceYAML($path);
         }
 
         if (!$structures || (!$structures[0] && !$structures[1])) {
@@ -1161,10 +1157,7 @@ class Database extends \XLite\Base\Singleton
         }
 
         if ($data) {
-            file_put_contents(
-                $path,
-                $this->getServiceHeader() . \Symfony\Component\Yaml\Yaml::dump($data)
-            );
+            \XLite\Core\Operator::getInstance()->saveServiceYAML($path, $data);
 
         } elseif (file_exists($path)) {
             unlink($path);
@@ -1182,19 +1175,6 @@ class Database extends \XLite\Base\Singleton
     protected function getDisabledStructuresPath()
     {
         return LC_VAR_DIR . '.disabled.structures.php';
-    }
-
-    /**
-     * Get data storage service header 
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getServiceHeader()
-    {
-        return '<' . '?php die(); ?' . '>' . "\n";
     }
 
     /**

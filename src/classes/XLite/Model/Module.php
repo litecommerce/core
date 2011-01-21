@@ -504,6 +504,7 @@ class Module extends \XLite\Model\AEntity
         // Install YAML fixtures
         if ($this->getDataInstalled()) {
             $this->installWakeUpDBData();
+            $this->restoreBackup();
 
         } else {
             $this->installDBData();
@@ -526,6 +527,57 @@ class Module extends \XLite\Model\AEntity
         );
 
         $this->installSleepDBData();
+        $this->saveBackup();
+    }
+
+    /**
+     * Save backup 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function saveBackup()
+    {
+        $data = $this->callModuleStatic('getBackupData', $this);
+
+        $path = $this->getBackupPath();
+        if (is_array($data) && $data) {
+            \XLite\Core\Operator::getInstance()->saveServiceYAML($path, $data);
+
+        } elseif (file_exists($path)) {
+            unlink($path);
+        }
+    }
+
+    /**
+     * Restore backup 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function restoreBackup()
+    {
+        $path = $this->getBackupPath();
+        if (file_exists($path)) {
+            \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::addFixtureToList($path);
+        }
+    }
+
+    /**
+     * Get module backup path 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getBackupPath()
+    {
+        return LC_VAR_DIR . 'backup' . LC_DS . $this->getAuthor() . '-' . $this->getName() . '.php';
     }
 
     /**
