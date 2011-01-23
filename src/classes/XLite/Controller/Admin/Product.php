@@ -62,7 +62,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode('Search products', $this->buildURL('products'));
+        $this->addLocationNode('Search products', $this->buildURL('product_list'));
     }
 
     /**
@@ -303,6 +303,22 @@ class Product extends \XLite\Controller\Admin\AAdmin
         );
     }
 
+    /**
+     * Update inventory 
+     * 
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdateInventory()
+    {
+        \XLite\Core\Database::getRepo('\XLite\Model\Inventory')->updateById(
+            $this->getProductId(),
+            $this->getPostedData()
+        );
+    }
+
 
     /**
      * Alias
@@ -323,6 +339,19 @@ class Product extends \XLite\Controller\Admin\AAdmin
         }
 
         return $result;
+    }
+
+    /**
+     * getInventory 
+     * 
+     * @return \XLite\Model\Inventory
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getInventory()
+    {
+        return $this->getProduct()->getInventory();
     }
 
     /**
@@ -403,8 +432,9 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * @since  3.0.0
      */
     public $pages = array(
-    	'info'            => 'Product info',
-        'images'          => 'Product images',
+    	'info'      => 'Product info',
+        'images'    => 'Product images',
+        'inventory' => 'Inventory tracking',
     );
 
     /**
@@ -416,9 +446,10 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * @since  3.0.0
      */
     public $pageTemplates = array(
-    	'info'            => 'product/info.tpl',
-        'default'         => 'product/info.tpl',
-        'images'          => 'product/product_images.tpl',
+    	'info'      => 'product/info.tpl',
+        'default'   => 'product/info.tpl',
+        'images'    => 'product/product_images.tpl',
+        'inventory' => 'product/inventory.tpl'
     );
 
 

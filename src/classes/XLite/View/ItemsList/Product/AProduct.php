@@ -41,9 +41,10 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      * Allowed sort criterions
      */
 
-    const SORT_BY_MODE_PRICE = 'p.price';
-    const SORT_BY_MODE_NAME  = 'translations.name';
-    const SORT_BY_MODE_SKU   = 'p.sku';
+    const SORT_BY_MODE_PRICE  = 'p.price';
+    const SORT_BY_MODE_NAME   = 'translations.name';
+    const SORT_BY_MODE_SKU    = 'p.sku';
+    const SORT_BY_MODE_AMOUNT = 'i.amount';
 
 
     /**
@@ -186,9 +187,10 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
     public function __construct(array $params = array())
     {
         $this->sortByModes += array(
-            self::SORT_BY_MODE_PRICE => 'Price',
-            self::SORT_BY_MODE_NAME  => 'Name',
-            self::SORT_BY_MODE_SKU   => 'SKU',
+            self::SORT_BY_MODE_PRICE  => static::t('Price'),
+            self::SORT_BY_MODE_NAME   => static::t('Name'),
+            self::SORT_BY_MODE_SKU    => static::t('SKU'),
+            self::SORT_BY_MODE_AMOUNT => static::t('Amount'),
         );
 
         parent::__construct($params);

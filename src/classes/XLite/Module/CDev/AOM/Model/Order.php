@@ -120,11 +120,12 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
             $this->promotionStatusChanged(1);
         }
 
-        if ($this->xlite->get('InventoryTrackingEnabled')) {
+        // FIXME[INVENTORY_TRACKING]: check this later
+        /*if ($this->xlite->get('InventoryTrackingEnabled')) {
             if ($this->config->InventoryTracking->track_placed_order) {
     	        $this->changeInventory(false);
             }
-        }
+        }*/
 
         if ($this->xlite->get('EgoodsEnabled')) {
             $this->Egoods_uncheckedOut();
@@ -142,11 +143,12 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
             $this->promotionStatusChanged(-1);
         }
 
-        if ($this->xlite->get('InventoryTrackingEnabled')) {
+        // FIXME[INVENTORY_TRACKING]: check this later
+        /*if ($this->xlite->get('InventoryTrackingEnabled')) {
             if ($this->config->InventoryTracking->track_placed_order) {
                 $this->changeInventory(true);
             }
-        }
+        }*/
 
         if ($this->xlite->get('EgoodsEnabled')) {
             $this->Egoods_checkedOut();
@@ -186,11 +188,13 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
             $this->Egoods_processed();
         }
 
-        if ($this->xlite->get('InventoryTrackingEnabled')) {
+        // FIXME[INVENTORY_TRACKING]: check this later
+        /*if ($this->xlite->get('InventoryTrackingEnabled')) {
             if (!$this->config->InventoryTracking->track_placed_order) {
                 $this->changeInventory(true);
             }
-        }
+        }*/
+
         if ($this->xlite->get('AffiliateEnabled')) {
             if (method_exists($this,"affiliate_processed")) {
             	$this->Affiliate_processed();
@@ -216,11 +220,12 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
             $this->addBonusPointsSpecialOffer(-1);
         }
 
-        if ($this->xlite->get('InventoryTrackingEnabled')) {
+        // FIXME[INVENTORY_TRACKING]: check this later
+        /*if ($this->xlite->get('InventoryTrackingEnabled')) {
             if (!$this->config->InventoryTracking->track_placed_order) {
     	        $this->changeInventory(false);
         	}
-        }
+        }*/
 
         if ($this->xlite->get('GiftCertificatesEnabled')) {
             $this->setGCStatus('P');
@@ -710,12 +715,13 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
         }
     }
 
-    function updateInventory($item)
+    // FIXME[INVENTORY_TRACKING]: check this later
+    /*function updateInventory($item)
     {
         if (!$this->xlite->get('InventoryTrackingEnabled')) return;
         if ($this->doNotCheckInventory) return;
         parent::updateInventory($item);
-    }
+    }*/
 
     function calcShippingCost()
     {

@@ -225,8 +225,9 @@ $replace_str = <<<EOT
 EOT;
 patch_template($location, $check_str, $find_str, $replace_str);
 
+// FIXME[INVENTORY_TRACKING]: check this later
 // checking for InventoryTracking module
-$location = "skins/admin/en/modules/CDev/InventoryTracking/inventory_tracking.tpl";
+/*$location = "skins/admin/en/modules/CDev/InventoryTracking/inventory_tracking.tpl";
 if (is_template_patched($location, "inventory_tracking")) {
     // patching "skins/admin/en/modules/CDev/InventoryTracking/inventory_tracking.tpl"
     $check_str = "modules/CDev/ProductAdviser/inventory_changed.tpl";
@@ -244,7 +245,7 @@ EOT;
 <tr>
 EOT;
     patch_template($location, $check_str, $find_str, $replace_str);
-}
+}*/
 
 // checking for ProductOptions module
 $location = "skins/admin/en/modules/CDev/ProductOptions/inventory_tracking.tpl";

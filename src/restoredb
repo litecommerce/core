@@ -167,7 +167,7 @@ if (isset($argv[1]) && $argv[1] == 'demo') {
     _do_yaml_upload('sql/local/xlite_test_accounts.yaml');
 }
 
-if (file_exists('sql/local/xlite_local_demo.sql')) {
+if (file_exists('sql/local/xlite_local_demo.yaml')) {
     _do_yaml_upload('sql/local/xlite_local_demo.yaml');
 }
 

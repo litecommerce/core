@@ -237,7 +237,8 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     protected function prepareCndSKU(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $queryBuilder->andWhere('p.sku LIKE :sku')
+        $queryBuilder
+            ->andWhere('p.sku LIKE :sku')
             ->setParameter('sku', '%' . $value . '%');
     }
 
@@ -254,12 +255,14 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     protected function prepareCndCategoryId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $queryBuilder->innerJoin('p.categoryProducts', 'cp')
+        $queryBuilder
+            ->innerJoin('p.categoryProducts', 'cp')
             ->innerJoin('cp.category', 'c')
             ->addOrderBy('cp.orderby');
 
         if (empty($this->currentSearchCnd->{self::P_SEARCH_IN_SUBCATS})) {
-            $queryBuilder->andWhere('c.category_id = :categoryId')
+            $queryBuilder
+                ->andWhere('c.category_id = :categoryId')
                 ->setParameter('categoryId', $value);
 
         } elseif (!\XLite\Core\Database::getRepo('XLite\Model\Category')->addSubTreeCondition($queryBuilder, $value)) {
@@ -440,6 +443,11 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     {
         list($sort, $order) = $value;
 
+        // FIXME - add aliases for sort modes
+        if ('i.amount' === $sort) {
+            $queryBuilder->innerJoin('p.inventory', 'i');
+        }
+
         $queryBuilder->addOrderBy($sort, $order);
     }
 
@@ -494,7 +502,8 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     protected function addEnabledCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
         if (!\XLite::isAdminZone()) {
-            $queryBuilder->andWhere(($alias ?: $queryBuilder->getRootAlias()) . '.enabled = :enabled')
+            $queryBuilder
+                ->andWhere(($alias ?: $queryBuilder->getRootAlias()) . '.enabled = :enabled')
                 ->setParameter('enabled', true);
         }
     }

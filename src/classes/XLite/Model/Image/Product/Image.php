@@ -37,9 +37,9 @@ namespace XLite\Model\Image\Product;
  *
  * @Entity 
  * @Table  (name="product_images",
- *      indexes={
- *          @Index (name="id", columns={"id"})
- *      }
+ *          indexes={
+ *              @Index (name="id", columns={"id"})
+ *          }
  * )
  */
 class Image extends \XLite\Model\Base\Image
@@ -51,6 +51,7 @@ class Image extends \XLite\Model\Base\Image
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="255")
      */
     protected $alt = '';
@@ -62,6 +63,7 @@ class Image extends \XLite\Model\Base\Image
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer")
      */
     protected $orderby = 0;

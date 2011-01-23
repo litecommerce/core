@@ -50,14 +50,15 @@ abstract class ProductsList extends \XLite\View\ItemsList\Product\Customer\ACust
     {
         $result = parent::isShowAdd2Cart($product);
 
-        if (
+        // FIXME[INVENTORY_TRACKING]: check this later
+        /*if (
             $result
             && $this->xlite->get('InventoryTrackingEnabled')
             && $product->getComplex('inventory.found')
             && !$product->get('tracking')
         ) {
             $result = 0 < $product->getComplex('inventory.amount');
-        }
+        }*/
 
         return $result;
     }

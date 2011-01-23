@@ -27,8 +27,8 @@
  */
 
 // Uncomment these lines for debug
-// error_reporting(E_ALL | E_STRICT);
-// ini_set('display_errors', true);
+error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors', true);
 
 // It's the feature of PHP 5. We need to explicitly define current time zone.
 // See also http://bugs.php.net/bug.php?id=48914

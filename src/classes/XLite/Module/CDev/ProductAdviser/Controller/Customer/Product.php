@@ -83,7 +83,8 @@ class Product extends \XLite\Controller\Customer\Product implements \XLite\Base\
 
         parent::init();
 
-        if ($this->xlite->PA_InventorySupport && $this->config->CDev->ProductAdviser->customer_notifications_enabled) {
+        // FIXME[INVENTORY_TRACKING]: check this later
+        /*if ($this->xlite->PA_InventorySupport && $this->config->CDev->ProductAdviser->customer_notifications_enabled) {
 
             if ($this->getProduct()->getComplex('inventory.amount') == 0 && $this->getProduct()->get('tracking') == 0) {
 
@@ -128,14 +129,15 @@ class Product extends \XLite\Controller\Customer\Product implements \XLite\Base\
                     }
                 }
             }
-        }
+        }*/
     }
 
     function getRejectedItem()
     {
-        return ($this->xlite->get('PA_InventorySupport') && $this->config->CDev->ProductAdviser->customer_notifications_enabled)
+        // FIXME[INVENTORY_TRACKING]: check this later
+        /*return ($this->xlite->get('PA_InventorySupport') && $this->config->CDev->ProductAdviser->customer_notifications_enabled)
             ? $this->rejectedItemInfo
-            : null;
+            : null;*/
     }
 
     function isNotificationSaved($rejectedItemInfo)

@@ -270,14 +270,15 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
             $option_keys[] = sprintf("%s:%s", $_opt->class, $_opt->option);
         }
 
-        $key = $this->get('key')."|".implode("|", $option_keys);
+        // FIXME[INVENTORY_TRACKING]: check this later
+        /* $key = $this->get('key')."|".implode("|", $option_keys);
         $inventory = new \XLite\Module\CDev\InventoryTracking\Model\Inventory();
         $inventories = $inventory->findAll("inventory_id LIKE '".$this->get('product_id')."|%' AND enabled=1", "order_by");
         foreach ($inventories as $i) {
             if ($i->keyMatch($key)) {
                 return $i->get('amount');
             }
-        }
+        }*/
 
         return -1; // -1 means infinity
     }

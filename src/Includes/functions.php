@@ -809,18 +809,6 @@ function func_set_memory_limit($new_limit) {
     return func_check_memory_limit($current_limit, $new_limit);
 }
 
-function func_is_timezone_changable() {
-    return function_exists('date_default_timezone_set') && class_exists('DateTimeZone');
-}
-
-function func_get_timezone() {
-    return function_exists('date_default_timezone_get') ? @date_default_timezone_get() : null;
-}
-
-function func_get_timezones() {
-    return class_exists('DateTimeZone') ? DateTimeZone::listIdentifiers() : null;
-}
-
 function func_htmlspecialchars($str) {
     $str = preg_replace(
         '/&(?!(?:amp|#\d+|#x\d+|euro|copy|pound|curren|cent|yen|reg|trade|lt|gt|lte|gte|quot);)/Ss',

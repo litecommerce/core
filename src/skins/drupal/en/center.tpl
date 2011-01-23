@@ -14,7 +14,6 @@
 <widget module="CDev\GoogleCheckout" class="\XLite\Module\CDev\GoogleCheckout\View\GoogleAltCheckout">
 
 <!-- [main] {{{ -->
-<widget module="CDev\InventoryTracking" target="cart" mode="exceeding" template="common/dialog.tpl" body="modules/CDev/InventoryTracking/exceeding.tpl" head="InventoryTracking Notification">
 <widget module="CDev\WholesaleTrading" mode="update_error" template="common/dialog.tpl" body="modules/CDev/WholesaleTrading/update_error.tpl" head="Product quantities not changed">
 <widget module="CDev\WishList" mode="wishlist" template="common/dialog.tpl" body="modules/CDev/WishList/wishlist_note.tpl" head="Wishlist Notification">
 <!-- [/main] }}} -->

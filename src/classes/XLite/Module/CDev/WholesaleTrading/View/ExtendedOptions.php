@@ -154,7 +154,8 @@ class ExtendedOptions extends \XLite\View\AView
     {
         $resul = array(0, 0);
 
-        if ($this->xlite->getComplex('mm.activeModules.InventoryTracking')) {
+        // FIXME[INVENTORY_TRACKING]: check this later
+        /*if ($this->xlite->getComplex('mm.activeModules.InventoryTracking')) {
             $purchaseLimit = $this->getParam(self::PARAM_PRODUCT)->get('purchaseLimit');
             $result[0] = ($purchaseLimit && $purchaseLimit->get('min') > 1) ? $purchaseLimit->get('min') : 1;
 
@@ -170,7 +171,7 @@ class ExtendedOptions extends \XLite\View\AView
             }
 
             $result[1] = $amount;
-        }
+        }*/
 
         return '[' . implode(', ', $result) . ']';
     }

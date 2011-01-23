@@ -35,11 +35,12 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity
+ *
  * @Table (name="product_translations",
- *      indexes={
- *          @Index (name="ci", columns={"code","id"}),
- *          @Index (name="id", columns={"id"})
- *      }
+ *         indexes={
+ *              @Index (name="ci", columns={"code","id"}),
+ *              @Index (name="id", columns={"id"})
+ *         }
  * )
  */
 class ProductTranslation extends \XLite\Model\Base\Translation

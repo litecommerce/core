@@ -15,37 +15,6 @@
 
   <table border="0">
 
-    	<tr>
-    		<td class="FormButton" nowrap="nowrap" height="10">Product SKU</td>
-    		<td width="10" height="10"></td>
-    		<td height="10"><input size="6" name="sku" value="{getCondition(#sku#):r}"></td>
-    	</tr>
-
-    	<tr>
-    		<td class="FormButton" nowrap="nowrap" height="10">Product Title</td>
-    		<td width="10" height="10"></td>
-    		<td height="10"><input size="30" name="substring" value="{getCondition(#substring#):r}"></td>
-    	</tr>
-
-    	<tr>
-    		<td class="FormButton" nowrap="nowrap" height="10">In category</td>
-    		<td width="10" height="10"><font class="ErrorMessage">*</font></td>
-    		<td height="10">
-          <widget class="\XLite\View\CategorySelect" fieldName="categoryId" selectedCategoryId="{getCondition(#categoryId#):r}" allOption />
-        </td>
-  	  </tr>
-
-    	<tr>
-    		<td class="FormButton" nowrap="nowrap" height="10" colspan="3">
-    			Search in subcategories
-    			<input type="checkbox" name="searchInSubcats" checked="{getCondition(#searchInSubcats#)|!mode=#search#}" value="1">
-    		</td>
-      </tr>
-
-      <widget module="CDev\ProductAdviser" template="modules/CDev/ProductAdviser/product_search.tpl">
-
-      <widget module="CDev\InventoryTracking" template="modules/CDev/InventoryTracking/product_search.tpl">
-
       {displayViewListContent(#product.search.conditions#)}
 
       <tr>

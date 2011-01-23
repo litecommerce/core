@@ -69,7 +69,7 @@ class Price extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT            => new \XLite\Model\WidgetParam\Object(
+            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object(
                 'Product', null, false, '\XLite\Model\Product'
             ),
             self::PARAM_DISPLAY_ONLY_PRICE => new \XLite\Model\WidgetParam\Bool(

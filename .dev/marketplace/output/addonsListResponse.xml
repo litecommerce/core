@@ -584,32 +584,6 @@
         </row>
 
         <row>
-
-            <name>InventoryTracking</name>
-            <author>CDev</author>
-            <status>0</status>
-
-            <description>Inventory tracking module</description>
-            <moduleName>Inventory tracking</moduleName>
-            <authorName>Creative Development LLC</authorName>
-
-            <date>0</date>
-            <version>1.0</version>
-            <changelog>a:0:{}</changelog>
-
-            <hash></hash>
-            <packHash></packHash>
-            <price>0.00</price>
-
-            <currency>USD</currency>
-            <rating>0</rating>
-            <downloads>0</downloads>
-            <iconURL></iconURL>
-
-            <dependencies>a:0:{}</dependencies>
-        </row>
-
-        <row>
             <name>JoomlaConnector</name>
             <author>CDev</author>
             <status>0</status>

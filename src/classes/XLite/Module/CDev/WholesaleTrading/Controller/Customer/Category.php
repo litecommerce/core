@@ -273,8 +273,9 @@ class Category extends \XLite\Controller\Customer\Category implements \XLite\Bas
             }
         }
 
+        // FIXME[INVENTORY_TRACKING]: check this later
         // check for inventory
-        if ($this->xlite->get('InventoryTrackingEnabled')) {
+        /* if ($this->xlite->get('InventoryTrackingEnabled')) {
             $inventory = new \XLite\Module\CDev\InventoryTracking\Model\Inventory();
             $p = new \XLite\Model\Product($product_id);
             
@@ -300,7 +301,8 @@ class Category extends \XLite\Controller\Customer\Category implements \XLite\Bas
                     }
                 }
             }
-        }
+        }*/
+
         return "";
     }
 
@@ -337,7 +339,8 @@ class Category extends \XLite\Controller\Customer\Category implements \XLite\Bas
 
     function isProductOutOfStock($product_id, $option_idx = null)
     {
-        if (!$this->xlite->get('InventoryTrackingEnabled')) return false;
+        // FIXME[INVENTORY_TRACKING]: check this later
+        /* if (!$this->xlite->get('InventoryTrackingEnabled')) return false;
         $product = new \XLite\Model\Product($product_id);
         if ($this->xlite->get('ProductOptionsEnabled') && $product->hasOptions() && $product->get('tracking') && (!is_null($option_idx))) {
             $avail = $product->getAmountByOptions($option_idx);
@@ -351,13 +354,14 @@ class Category extends \XLite\Controller\Customer\Category implements \XLite\Bas
                 return $inventory->get('amount') <= 0;
             }
             return false; // unlimited
-        }
+        }*/
     }
 
     function getProductExpandedItems($product)
     {
         $items = (array) $product->get('expandedItems');
-        if ($this->xlite->get('InventoryTrackingEnabled') && $this->config->InventoryTracking->exclude_product && 
+        // FIXME[INVENTORY_TRACKING]: check this later
+        /* if ($this->xlite->get('InventoryTrackingEnabled') && $this->config->InventoryTracking->exclude_product && 
             $this->xlite->get('ProductOptionsEnabled') && $product->hasOptions() && $product->get('tracking')) {
             // remove out-of-stock options combinations from the expanded items list
             $product_id = $product->get('product_id');
@@ -366,7 +370,7 @@ class Category extends \XLite\Controller\Customer\Category implements \XLite\Bas
                     unset($items[$key]);
                 }
             }
-        }
+        }*/
         return $items;
     }
 }

@@ -63,7 +63,8 @@ class NotifyLink extends \XLite\View\AView
     protected function isVisible()
     {
         return parent::isVisible()
-            && $this->xlite->get('PA_InventorySupport')
+            // FIXME[INVENTORY_TRACKING]: check this later
+            /*&& $this->xlite->get('PA_InventorySupport')*/
             && ($this->config->CDev->ProductAdviser->customer_notifications_mode & 2) != 0
             && $this->getRejectedItem();
     }

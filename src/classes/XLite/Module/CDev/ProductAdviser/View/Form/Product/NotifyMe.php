@@ -83,9 +83,11 @@ class NotifyMe extends \XLite\View\Form\Product\AProduct
             if (\XLite\Core\Request::getInstance()->amount) {
                 $params['amount'] = \XLite\Core\Request::getInstance()->amount;
 
-            } elseif ($this->getProduct()->get('inventory')) {
+            } 
+            // FIXME[INVENTORY_TRACKING]: check this later
+            /*elseif ($this->getProduct()->get('inventory')) {
                 $params['amount'] = $this->getProduct()->getInventory()->get('amount');
-            }
+            }*/
 
             if (\XLite\Core\Request::getInstance()->product_options) {
                 $params['product_options'] = \XLite\Core\Request::getInstance()->product_options;

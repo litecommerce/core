@@ -604,7 +604,8 @@ function Delete()
     <span IF="ntf.product.productOptionsStr">
     <br><b>Options:&nbsp;</b>{ntf.product.productOptionsStr}
     </span>
-    <br><b>Quantity:&nbsp;</b>was <b>{ntf.quantity}</b>, now is <b><span IF="xlite.PA_InventorySupport">{ntf.product.quantity}</span><span IF="!xlite.PA_InventorySupport"><font color=red>n/a</font></span></b>
+    {* FIXME[INVENTORY_TRACKING]: revise it later *}
+    {*<br><b>Quantity:&nbsp;</b>was <b>{ntf.quantity}</b>, now is <b><span IF="xlite.PA_InventorySupport">{ntf.product.quantity}</span><span IF="!xlite.PA_InventorySupport"><font color=red>n/a</font></span></b>*}
     </span>
     </span>
     <span IF="ntf.type=#price#">

@@ -451,42 +451,53 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
         } else {
 
+            $cart = $this->getCart();
+
             if (isset(\XLite\Core\Request::getInstance()->notes)) {
-                $this->getCart()->setNotes(\XLite\Core\Request::getInstance()->notes);
+                $cart->setNotes(\XLite\Core\Request::getInstance()->notes);
             }
 
-            $this->getCart()->processCheckOut();
+            if (\XLite\Model\Order::STATUS_TEMPORARY == $cart->getStatus()) {
+               $cart->setDate(time());
+
+                $profile = \XLite\Core\Auth::getInstance()->getProfile();
+                if ($profile->getOrder()) {
+                    // anonymous checkout:
+                    // use the current profile as order profile
+                    $cart->setProfile($profile);
+                }
+            }
 
             // Get first (and only) payment transaction
         
-            $transaction = $this->getCart()->getFirstOpenPaymentTransaction();
+            $transaction = $cart->getFirstOpenPaymentTransaction();
 
             $result = null;
 
             if ($transaction) {
                 $result = $transaction->handleCheckoutAction();
 
-            } elseif (!$this->getCart()->isOpen()) {
+            } elseif (!$cart->isOpen()) {
 
                 $result = \XLite\Model\Payment\Transaction::COMPLETED;
 
                 $status = \XLite\Model\Order::STATUS_PROCESSED;
 
-                foreach ($this->getCart()->getPaymentTransactions() as $t) {
+                foreach ($cart->getPaymentTransactions() as $t) {
                     if ($t::STATUS_SUCCESS != $t->getStatus()) {
                         $status = \XLite\Model\Order::STATUS_QUEUED;
                         break;
                     }
                 }
 
-                $this->getCart()->setStatus($status);
+                $cart->setStatus($status);
             }
 
             if (\XLite\Model\Payment\Transaction::PROLONGATION == $result) {
                 $this->set('silent', true);
                 exit (0);
 
-            } elseif ($this->getCart()->isOpen()) {
+            } elseif ($cart->isOpen()) {
 
                 // Order is open - go to Select payment method step
 
@@ -502,17 +513,17 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             } else {
 
-                $status = $this->getCart()->isPayed()
+                $status = $cart->isPayed()
                     ? \XLite\Model\Order::STATUS_PROCESSED
                     : \XLite\Model\Order::STATUS_QUEUED;
-                $this->getCart()->setStatus($status);
+                $cart->setStatus($status);
 
                 $this->processSucceed();
                 $this->setReturnUrl(
                     $this->buildURL(
                         'checkoutSuccess',
                         '',
-                        array('order_id' => $this->getCart()->getOrderId())
+                        array('order_id' => $cart->getOrderId())
                     )
                 );
 
