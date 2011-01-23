@@ -439,7 +439,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         // Save as new
 
-        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find(1);
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findOneBy(array('login' => 'rnd_tester@cdev.ru'));
         $profileCount = count($profile->getAddresses());
 
         $this->typeKeys(
@@ -474,7 +474,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         \XLite\Core\Database::getEM()->clear();
 
-        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find(1);
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findOneBy(array('login' => 'rnd_tester@cdev.ru'));
 
         $this->assertEquals($profileCount + 1, count($profile->getAddresses()), 'check addresses count #2');
         $this->assertEquals('John Smith aaa', $profile->getAddresses()->get($profileCount)->getName(), 'check name');
@@ -551,7 +551,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         \XLite\Core\Database::getEM()->clear();
 
-        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find(1);
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findOneBy(array('login' => 'rnd_tester@cdev.ru'));
 
         $this->assertEquals($profileCount + 2, count($profile->getAddresses()), 'check addresses count #3');
         $this->assertEquals('John Smith bbb', $profile->getAddresses()->get($profileCount + 1)->getName(), 'check name #2');
@@ -576,7 +576,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         \XLite\Core\Database::getEM()->clear();
 
-        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find(1);
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findOneBy(array('login' => 'rnd_tester@cdev.ru'));
 
         $this->assertEquals($profileCount + 2, count($profile->getAddresses()), 'check addresses count #4');
         $this->assertFalse((bool)$profile->getAddresses()->get($profileCount)->getIsShipping(), 'check is shipping #2');
