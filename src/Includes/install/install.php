@@ -3024,7 +3024,7 @@ function module_install_cache(&$params)
 
 <br />
 
-<iframe id="process_iframe" src="install.php?target=install&action=cache" width="600" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
+<iframe id="process_iframe" src="install.php?target=install&action=cache" width="100%" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
 
 <br /><br />
 
