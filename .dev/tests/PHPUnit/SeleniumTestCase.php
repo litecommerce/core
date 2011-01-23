@@ -608,21 +608,23 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     protected function waitForLocalCondition($condition, $ttl = 10000, $message = null)
     {
-        if (preg_match('/^jQuery/Ss', $condition)) {
-            $this->waitForCondition(
-                '"undefined" != typeof(selenium.browserbot.getCurrentWindow().jQuery)'
-                . ' && selenium.browserbot.getCurrentWindow().' . $condition,
-                isset($ttl) ? $ttl : 10000,
-                $message
-            );
-            
-        } else {
-            $this->waitForCondition(
-                'selenium.browserbot.getCurrentWindow().' . $condition,
-                isset($ttl) ? $ttl : 10000,
-                $message
-            );
+        if (!is_array($condition)) {
+            $condition = array($condition);
         }
+
+        foreach ($condition as $k => $v) {
+            $condition[$k] = 'selenium.browserbot.getCurrentWindow().' . $v;
+        }
+
+        if (0 < count(preg_grep('/jQuery/Ss', $condition))) {
+            array_unshift($condition, '"undefined" != typeof(selenium.browserbot.getCurrentWindow().jQuery)');
+        }
+
+        $this->waitForCondition(
+            implode(' && ', $condition),
+            isset($ttl) ? $ttl : 10000,
+            $message
+        );
     }
 
     /**

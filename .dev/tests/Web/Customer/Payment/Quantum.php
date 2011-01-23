@@ -174,8 +174,11 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
         $this->clickAndWait('css=.current .button-row button');
 
         // Go to payment gateway
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("form").length > 0 && selenium.browserbot.getCurrentWindow().document.getElementsByTagName("form")[0].ccnum',
+        $this->waitForLocalCondition(
+            array(
+                'document.getElementsByTagName("form").length > 0',
+                'document.getElementsByTagName("form")[0].ccnum',
+            ),
             20000
         );
 
