@@ -91,8 +91,6 @@ $lcSettings = array(
 
     // The list of directories that should be created by installation script
     'directories_to_create' => array(
-        'var/backup',
-        'var/html',
     ),
 
     // The list of files that should be created by installation script
