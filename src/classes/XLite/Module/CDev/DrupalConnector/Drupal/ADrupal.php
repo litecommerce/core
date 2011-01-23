@@ -85,7 +85,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @param string $action Action to perform
      * @param array  $data   Request data
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -155,7 +155,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      *
      * @param string $file Resource file path
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -173,7 +173,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      *
      * @param string $file Resource file path
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -190,7 +190,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      *
      * @param string $file Resource file path
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -208,7 +208,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @param string $type Resource type ("js" or "css")
      * @param string $file Resource file path
      *  
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -239,7 +239,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      *
      * @param \XLite\View\AView $widget LC widget to get resources list
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

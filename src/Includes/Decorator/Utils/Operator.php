@@ -77,7 +77,7 @@ abstract class Operator extends \Includes\Decorator\Utils\Base\Operator
      * @param \Includes\Decorator\DataStructure\Node\ClassInfo $parent     class to decorate
      * @param array                                            $decorators list of decorators (classes)
      *  
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

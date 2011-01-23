@@ -112,7 +112,7 @@ CODE;
      *
      * @param string $value value to set
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -279,7 +279,7 @@ CODE;
      * @param string $class class name
      * @param string $code  code to place
      *  
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -302,7 +302,7 @@ CODE;
      * @param string $template    template to use
      * @param array  $substitutes list of entries to substitude
      *  
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -372,7 +372,7 @@ CODE;
     /**
      * Put prepared code into the files
      * 
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -403,7 +403,7 @@ CODE;
     /**
      * Execute "run" hook handler
      * 
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

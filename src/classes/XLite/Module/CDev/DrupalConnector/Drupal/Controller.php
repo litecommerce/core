@@ -95,7 +95,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      *
      * @param string $content Content to display
      * 
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -116,7 +116,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Set no-cache headers 
      * 
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -140,7 +140,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Set LC breadcrumbs 
      * 
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -186,7 +186,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Common actions for "getTitle()" and "getContent()"
      * 
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

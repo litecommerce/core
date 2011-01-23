@@ -53,7 +53,7 @@ abstract class Graph extends \Includes\DataStructure\Node\ANode
      * 
      * @param string $method name of method to exec
      *  
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -134,7 +134,7 @@ abstract class Graph extends \Includes\DataStructure\Node\ANode
     /**
      * Clear all parents refs
      * 
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -183,7 +183,7 @@ abstract class Graph extends \Includes\DataStructure\Node\ANode
      *
      * @param string $key key to set
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

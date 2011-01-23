@@ -79,7 +79,7 @@ abstract class AHierarchical
      *
      * @param \Includes\DataStructure\Node\ANode $node current node
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -246,7 +246,7 @@ abstract class AHierarchical
      * @param \Includes\DataStructure\Node\ANode $node node to change key
      * @param string                             $key  new key
      *  
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -360,7 +360,7 @@ abstract class AHierarchical
      * @param \Includes\DataStructure\Node\ANode $root   root node of current level
      * @param int                                $offset level offset
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -460,7 +460,7 @@ abstract class AHierarchical
      * @param \Includes\DataStructure\Node\ANode $root      root node for current step
      * @param array                              $checklist list of nodes which are not still checked
      *  
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

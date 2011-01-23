@@ -306,7 +306,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
     /**
      * Update inventory 
      * 
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

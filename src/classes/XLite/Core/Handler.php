@@ -152,7 +152,7 @@ abstract class Handler extends \XLite\Base
     /**
      * Initialize handler
      *
-     * @return null
+     * @return void
      * @access public
      * @since  3.0.0
      */

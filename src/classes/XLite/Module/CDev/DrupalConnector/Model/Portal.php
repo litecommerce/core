@@ -128,7 +128,7 @@ class Portal extends \XLite\Base\SuperClass
      * @param string  $title      Portal title
      * @param integer $type       Node type
      *  
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

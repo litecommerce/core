@@ -110,7 +110,7 @@ abstract class DataCollector extends \Includes\Decorator\Utils\AUtils
     /**
      * Return module dependencies graph
      * 
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

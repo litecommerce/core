@@ -107,7 +107,7 @@ abstract class I18n extends \XLite\Model\AEntity
      * 
      * @param \XLite\Model\Base\Translation $translation Translation to add
      *  
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
