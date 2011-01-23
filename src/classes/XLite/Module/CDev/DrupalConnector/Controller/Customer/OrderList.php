@@ -125,7 +125,7 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
     /**
      * Initialization
      *
-     * @return null
+     * @return void
      * @access public
      * @since  3.0.0
      */

@@ -68,7 +68,7 @@ class ModulesGraph extends \Includes\DataStructure\Hierarchical\Graph
      *
      * @param \Includes\DataStructure\Node\ANode $node node to get info
      * 
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -138,7 +138,7 @@ class ModulesGraph extends \Includes\DataStructure\Hierarchical\Graph
      * @param \Includes\DataStructure\Node\ANode $root      root node for current step
      * @param array                              $checklist list of nodes which are not still checked
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

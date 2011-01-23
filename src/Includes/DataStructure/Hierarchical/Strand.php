@@ -43,7 +43,7 @@ class Strand extends \Includes\DataStructure\Hierarchical\AHierarchical
      * @param \Includes\DataStructure\Node\ANode $root      root node for current step
      * @param array                              $checklist list of nodes which are not still checked
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

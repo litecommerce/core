@@ -78,7 +78,7 @@ class AdminAreaRedirector extends \XLite\Controller\Customer\ACustomer
     /**
      * Perform redirect 
      * 
-     * @return null
+     * @return void
      * @access public
      * @since  3.0.0
      */             

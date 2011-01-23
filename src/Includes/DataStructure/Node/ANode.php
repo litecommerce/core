@@ -177,7 +177,7 @@ abstract class ANode extends \Includes\DataStructure\Cell
      * 
      * @param string $key key to set
      *  
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

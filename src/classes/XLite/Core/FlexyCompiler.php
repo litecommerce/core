@@ -1286,7 +1286,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
     /**
      * Constructor
      * 
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

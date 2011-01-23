@@ -74,7 +74,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     /**
      * Execute "preprocess" hook handler
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

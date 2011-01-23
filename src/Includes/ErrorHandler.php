@@ -43,7 +43,7 @@ abstract class ErrorHandler
      * @param string  $message Error message
      * @param integer $code    Error code
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -59,7 +59,7 @@ abstract class ErrorHandler
      * @param string  $message Error message
      * @param integer $code    Error code
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -123,7 +123,7 @@ abstract class ErrorHandler
      * @param string  $message Error message
      * @param integer $code    Error code
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

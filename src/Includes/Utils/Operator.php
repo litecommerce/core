@@ -175,7 +175,7 @@ class Operator extends AUtils
      * 
      * @param string $name class name
      *  
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

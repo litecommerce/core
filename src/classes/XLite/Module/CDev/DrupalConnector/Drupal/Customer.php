@@ -43,7 +43,7 @@ class Customer extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$form      Form description
      * @param array &$formState Form state
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  1.0.0
@@ -61,7 +61,7 @@ class Customer extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      *
      * @param stdClass $account Current user descriptor
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

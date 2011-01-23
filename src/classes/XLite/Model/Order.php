@@ -1485,7 +1485,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * 
      * @param string $handler Base part of handler name
      *  
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -1514,7 +1514,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * A "change status" handler
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -1526,7 +1526,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * A "change status" handler
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -1538,7 +1538,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * A "change status" handler
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -1550,7 +1550,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * A "change status" handler
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -1563,7 +1563,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * A "change status" handler
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -1575,7 +1575,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * A "change status" handler
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -1609,7 +1609,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * 
      * @param integer $sign flag; "1" or "-1"
      *  
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

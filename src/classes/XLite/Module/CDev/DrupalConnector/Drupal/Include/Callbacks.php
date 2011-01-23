@@ -46,7 +46,7 @@ function lcConnectorGetControllerContent()
  * @param array &$form      Form description
  * @param array &$formState Form state
  *  
- * @return null
+ * @return void
  * @see    ____func_see____
  * @since  3.0.0
  */
@@ -61,7 +61,7 @@ function lcConnectorValidateWidgetModifyForm(array &$form, array &$formState)
  * @param array &$form       Form description
  * @param array &$form_state Form state
  *
- * @return null
+ * @return void
  * @see    ____func_see____
  * @since  3.0.0
  */
@@ -76,7 +76,7 @@ function lcConnectorSubmitWidgetModifyForm(array &$form, array &$formState)
  * @param array &$form       Form description
  * @param array &$form_state Form state
  *
- * @return null
+ * @return void
  * @see    ____func_see____
  * @since  3.0.0
  */

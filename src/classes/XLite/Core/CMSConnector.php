@@ -226,7 +226,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Initialization
      *
-     * @return null
+     * @return void
      * @access public                                           
      * @see    ____func_see____
      * @since  3.0.0

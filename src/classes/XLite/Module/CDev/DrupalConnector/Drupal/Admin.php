@@ -100,7 +100,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      *
      * @param array $form Form description
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0
@@ -145,7 +145,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      *
      * @param array $form Form description
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0
@@ -160,7 +160,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      *
      * @param array $form Form description
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0
@@ -178,7 +178,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string $label Widget class readable name
      * @param array  $block Block description
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0
@@ -233,7 +233,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param integer $blockId  Block delta
      * @param array   $settings Settings list
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0
@@ -262,7 +262,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$form      Form description
      * @param array &$formState Form state
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  1.0.0
@@ -322,7 +322,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$form      Form description
      * @param array &$formState Form state
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  1.0.0
@@ -338,7 +338,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$form      Form description
      * @param array &$formState Form state
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  1.0.0
@@ -382,7 +382,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$form      Form description
      * @param array &$formState Form state
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  1.0.0
@@ -413,7 +413,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param array &$form      Form description
      * @param array &$formState Form state
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  1.0.0

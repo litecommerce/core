@@ -115,7 +115,7 @@ abstract class Tree extends \Includes\DataStructure\Node\ANode
      *
      * @param string $key key to set
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

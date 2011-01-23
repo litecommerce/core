@@ -41,7 +41,7 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
     /**
      * prepareCreate 
      * 
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

@@ -150,7 +150,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      *
      * @param string $step current step name
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -236,7 +236,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      *
      * @param string $step current step
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -257,7 +257,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      *
      * @param string $step current step
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

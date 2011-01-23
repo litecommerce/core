@@ -141,7 +141,7 @@ class Inventory extends \XLite\Model\AEntity
      *
      * @param integer $delta Amount delta
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

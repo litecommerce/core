@@ -40,7 +40,7 @@ class Drupal extends \XLite\Controller\Customer\ACustomer
     /**
      * Do not perform any action 
      * 
-     * @return null
+     * @return void
      * @access public
      * @since  3.0.0
      */

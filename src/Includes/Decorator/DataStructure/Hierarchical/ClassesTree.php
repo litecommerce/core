@@ -85,7 +85,7 @@ class ClassesTree extends \Includes\DataStructure\Hierarchical\Graph
      *
      * @param \Includes\DataStructure\Node\ANode $node current node
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

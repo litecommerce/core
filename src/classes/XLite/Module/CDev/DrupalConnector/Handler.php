@@ -261,7 +261,7 @@ class Handler extends \XLite\Core\CMSConnector
     /**
      * Initialization
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

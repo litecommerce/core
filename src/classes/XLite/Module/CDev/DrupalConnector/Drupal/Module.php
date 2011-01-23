@@ -51,7 +51,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Constructor
      * 
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -68,7 +68,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * 
      * @param array &$menus List of node descriptions
      *  
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -85,7 +85,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string  $title      Portal title
      * @param integer $type       Node type
      *
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -98,7 +98,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Here we can register so called "portals": controllers with custom URLs
      * 
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -183,7 +183,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Hook "init" 
      * 
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
