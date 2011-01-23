@@ -1139,7 +1139,7 @@ function doBuildCache()
     $response = inst_http_request($url_request);
 
     if (preg_match('/(?:error|warning|notice)/Ssi', $response)) {
-        fatal_error(sprintf("Cache building procedure failed:<br />\n\nRequest URL: %s<br />\n\nResponce: %s", $url_request, $response));
+        fatal_error(sprintf("Cache building procedure failed:<br />\n\nRequest URL: %s<br />\n\nResponse: %s", $url_request, $response));
         $result = false;
     }
 
