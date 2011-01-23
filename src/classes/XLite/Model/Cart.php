@@ -34,6 +34,7 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @Entity (repositoryClass="\XLite\Model\Repo\Cart")
  * @HasLifecycleCallbacks
  */
@@ -206,30 +207,6 @@ class Cart extends \XLite\Model\Order
     }
 
     /**
-     * Order 'complete' event
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function processCheckOut()
-    {
-        parent::processCheckOut();
-
-        if (self::STATUS_TEMPORARY == $this->getStatus()) {
-            $this->setDate(time());
-
-            $profile = \XLite\Core\Auth::getInstance()->getProfile();
-            if ($profile->getOrder()) {
-                // anonymous checkout:
-                // use the current profile as order profile
-                $this->setProfile($profile);
-            }
-        }
-    }
-
-    /**
      * Mark cart as order 
      * 
      * @return void
@@ -241,5 +218,4 @@ class Cart extends \XLite\Model\Order
     {
         $this->getRepository()->markAsOrder($this->getOrderId());
     }
-
 }

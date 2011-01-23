@@ -35,8 +35,8 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  *
- * @Entity                (repositoryClass="\XLite\Model\Repo\Order")
- * @Table                 (name="orders",
+ * @Entity (repositoryClass="\XLite\Model\Repo\Order")
+ * @Table  (name="orders",
  *      indexes={
  *          @Index (name="date", columns={"date"}),
  *          @Index (name="total", columns={"total"}),
@@ -641,9 +641,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function setSubtotal($value)
     {
-        $this->subtotal = $this->getCurrency()
-            ? $this->getCurrency()->roundValue($value)
-            : $value;
+        $this->subtotal = $this->getCurrency() ? $this->getCurrency()->roundValue($value) : $value;
     }
 
     /**
@@ -796,6 +794,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
 
     /**
      * Add payment transaction 
+     * FIXME: move logic into \XLite\Model\Payment\Transaction
      * 
      * @param \XLite\Model\Payment\Method $method   Payment method
      * @param float                       $value    Value OPTIONAL
@@ -884,8 +883,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function isOpen()
     {
-        return $this->getFirstOpenPaymentTransaction()
-            || 0 < $this->getOpenTotal();
+        return $this->getFirstOpenPaymentTransaction() || 0 < $this->getOpenTotal();
     }
 
     /**
@@ -948,8 +946,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function setProfile(\XLite\Model\Profile $profile = null)
     {
-        if (!isset($profile) && $this->profile) {
-            $this->profile->setOrder(null);
+        // FIXME: is it really needed?
+        if (!isset($profile) && $this->getProfile()) {
+            $this->getProfile()->setOrder(null);
         }
 
         $this->profile = $profile;
@@ -957,6 +956,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
 
     /**
      * Set original profile
+     * FIXME: is it really needed?
      *
      * @param \XLite\Model\Profile $profile Profile
      *
@@ -1141,100 +1141,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
-     * Postprocess status changes
-     * 
-     * @param string $oldStatus Old status
-     * @param string $newStatus New status
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function changeStatusPostprocess($oldStatus, $newStatus) 
-    {
-        $list = array(self::STATUS_PROCESSED, self::STATUS_COMPLETED, self::STATUS_QUEUED);
-
-        if (
-            !in_array($oldStatus, $list)
-            && in_array($newStatus, $list)
-        ) {
-            $this->processCheckOut();
-        }
-
-        if (self::STATUS_INPROGRESS == $oldStatus && self::STATUS_QUEUED == $newStatus) {
-            $this->processQueue();
-        }
-
-        if (
-            self::STATUS_PROCESSED != $oldStatus
-            && self::STATUS_COMPLETED != $oldStatus
-            && (self::STATUS_PROCESSED == $newStatus || self::STATUS_COMPLETED == $newStatus)
-        ) {
-            $this->processProcess();
-        }
-
-        if (
-            (self::STATUS_PROCESSED == $oldStatus || self::STATUS_COMPLETED == $oldStatus)
-            && self::STATUS_PROCESSED != $newStatus
-            && self::STATUS_COMPLETED != $newStatus
-        ) {
-            $this->processDecline();
-        }
-
-        if (
-            in_array($oldStatus, $list)
-            && !in_array($newStatus, $list)
-        ) {
-            $this->processUncheckOut();
-        }
-
-        if (
-            self::STATUS_FAILED != $oldStatus
-            && self::STATUS_DECLINED != $oldStatus
-            && (self::STATUS_FAILED == $newStatus || self::STATUS_DECLINED == $newStatus)
-        ) {
-            $this->processFail();
-        }
-    }
-
-    /**
-     * Order 'complete' event
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function processCheckOut()
-    {
-    }
-
-    /**
-     * Order 'charge back' event
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function processUncheckOut() 
-    {
-    }
-
-    /**
-     * Called when an order is qeued
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function processQueue() 
-    {
-    }
-
-    /**
      * Called when an order successfully placed by a client 
      * 
      * @return void
@@ -1308,7 +1214,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function processProcess()
+    protected function sendProcessMail()
     {
         $mail = new \XLite\View\Mailer();
         $mail->order = $this;
@@ -1334,18 +1240,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
-     * Called when an order status changed from processed to not processed
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function processDecline()
-    {
-    }
-
-    /**
      * Called when the order status changed to failed
      * 
      * @return void
@@ -1353,7 +1247,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function processFail()
+    protected function sendFailMail()
     {
         $mail = new \XLite\View\Mailer();
         $mail->order = $this;
@@ -1499,5 +1393,231 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $this->payment_transactions = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
+    }
+
+
+    // ------------------------------ Change status routines -
+
+    /**
+     * List of change status handlers
+     *
+     * TODO: check if it's correct
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $statusHandlers = array(
+
+        self::STATUS_TEMPORARY => array(
+            self::STATUS_PROCESSED  => array('checkout', 'process'),
+            self::STATUS_COMPLETED  => array('checkout', 'process'),
+            self::STATUS_QUEUED     => array('checkout'),
+            self::STATUS_DECLINED   => array('fail'),
+            self::STATUS_FAILED     => array('fail'),
+        ),
+
+        self::STATUS_INPROGRESS => array(
+            self::STATUS_PROCESSED  => array('checkout', 'process'),
+            self::STATUS_COMPLETED  => array('checkout', 'process'),
+            self::STATUS_QUEUED     => array('checkout', 'queue'),
+            self::STATUS_DECLINED   => array('fail'),
+            self::STATUS_FAILED     => array('fail'),
+        ),
+
+        self::STATUS_QUEUED => array(
+            self::STATUS_TEMPORARY  => array('uncheckout'),
+            self::STATUS_INPROGRESS => array('uncheckout'),
+            self::STATUS_PROCESSED  => array('process'),
+            self::STATUS_COMPLETED  => array('process'),
+            self::STATUS_DECLINED   => array('uncheckout', 'fail'),
+            self::STATUS_FAILED     => array('uncheckout', 'fail'),
+        ),
+
+        self::STATUS_PROCESSED => array(
+            self::STATUS_TEMPORARY  => array('decline', 'uncheckout'),
+            self::STATUS_INPROGRESS => array('decline', 'uncheckout'),
+            self::STATUS_QUEUED     => array('decline'),
+            self::STATUS_DECLINED   => array('decline', 'uncheckout', 'fail'),
+            self::STATUS_FAILED     => array('decline', 'uncheckout', 'fail'),
+        ),
+
+        self::STATUS_COMPLETED => array(
+            self::STATUS_TEMPORARY  => array('decline', 'uncheckout'),
+            self::STATUS_INPROGRESS => array('decline', 'uncheckout'),
+            self::STATUS_QUEUED     => array('decline'),
+            self::STATUS_DECLINED   => array('decline', 'uncheckout', 'fail'),
+            self::STATUS_FAILED     => array('decline', 'uncheckout', 'fail'),
+        ),
+
+        self::STATUS_DECLINED => array(
+            self::STATUS_PROCESSED  => array('checkout', 'process'),
+            self::STATUS_COMPLETED  => array('checkout', 'process'),
+            self::STATUS_QUEUED     => array('checkout'),
+        ),
+
+        self::STATUS_FAILED => array(
+            self::STATUS_PROCESSED  => array('checkout', 'process'),
+            self::STATUS_COMPLETED  => array('checkout', 'process'),
+            self::STATUS_QUEUED     => array('checkout'),
+        ),
+    );
+
+    /**
+     * Return base part of the certain "change status" handler name
+     * 
+     * @param string $old Old order status
+     * @param string $new New order status
+     *  
+     * @return string|false
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getStatusHandlers($old, $new)
+    {
+        return isset(static::$statusHandlers[$old][$new]) ? static::$statusHandlers[$old][$new] : array();
+    }
+
+    /**
+     * Call a method handling certain status change
+     * 
+     * @param string $handler Base part of handler name
+     *  
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function callStatusHandler($handler)
+    {
+        $this->{'process' . ucfirst($handler)}();
+    }
+
+    /**
+     * Postprocess status changes
+     *
+     * @param string $old Old status
+     * @param string $new New status
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function changeStatusPostprocess($old, $new)
+    {
+        array_map(array($this, 'callStatusHandler'), $this->getStatusHandlers($old, $new));
+    }
+
+    /**
+     * A "change status" handler
+     *
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processCheckout()
+    {
+    }
+
+    /**
+     * A "change status" handler
+     *
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processUncheckout()
+    {
+    }
+
+    /**
+     * A "change status" handler
+     *
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processQueue()
+    {
+    }
+
+    /**
+     * A "change status" handler
+     *
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processProcess()
+    {
+        $this->sendProcessMail();
+    }
+
+    /**
+     * A "change status" handler
+     *
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processDecline()
+    {
+    }
+
+    /**
+     * A "change status" handler
+     *
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processFail()
+    {
+        $this->sendFailMail();
+    }
+
+
+    // ------------------------------ Inventory tracking -
+
+    /**
+     * Get item inventory delta
+     *
+     * @param \XLite\Model\OrderItem $item Current item
+     * @param integer                $sign Flag; "1" or "-1"
+     *
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getItemInventoryAmount(\XLite\Model\OrderItem $item, $sign)
+    {
+        return $sign * $item->getAmount();
+    }
+
+    /**
+     * Increase / decrease item products inventory
+     * 
+     * @param integer $sign flag; "1" or "-1"
+     *  
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function changeItemsInventory($sign)
+    {
+        foreach ($this->getItems() as $item) {
+            $item->getProduct()->changeAmount($this->getItemInventoryAmount($item, $sign));
+        }
     }
 }

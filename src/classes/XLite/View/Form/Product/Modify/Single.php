@@ -35,7 +35,7 @@ namespace XLite\View\Form\Product\Modify;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Single extends \XLite\View\Form\Product\Modify\AModify
+class Single extends \XLite\View\Form\Product\Modify\Base\Single
 {
     /**
      * Return form name
@@ -51,18 +51,6 @@ class Single extends \XLite\View\Form\Product\Modify\AModify
     }
 
     /**
-     * getDefaultTarget
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTarget()
-    {
-        return 'product';
-    }
-
-    /**
      * getDefaultAction
      *
      * @return string
@@ -72,18 +60,6 @@ class Single extends \XLite\View\Form\Product\Modify\AModify
     protected function getDefaultAction()
     {
         return 'modify';
-    }
-
-    /**
-     * getDefaultParams 
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultParams()
-    {
-        return parent::getDefaultParams() + array('product_id' => $this->getProductId());
     }
 
     /**

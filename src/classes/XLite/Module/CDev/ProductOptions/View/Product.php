@@ -46,6 +46,7 @@ abstract class Product extends \XLite\View\Product\Details\Customer\ACustomer im
      */
     public function isAvailableForSale()
     {
+        // FIXME[INVENTORY_TRACKING]: check this later
         /* TODO - rework
         if ($this->xlite->get('InventoryTrackingEnabled')) {
             $product = $this->getProduct();

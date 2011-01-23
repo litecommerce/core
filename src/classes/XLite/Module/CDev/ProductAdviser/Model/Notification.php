@@ -155,12 +155,13 @@ class Notification extends \XLite\Model\AModel
 
             $quantity = $this->get('quantity');
             $p->set('quantity', 0);
-        	if ($this->xlite->get('PA_InventorySupport')) {
+            // FIXME[INVENTORY_TRACKING]: check this later
+        	/*if ($this->xlite->get('PA_InventorySupport')) {
     			$inventory = new \XLite\Module\CDev\InventoryTracking\Model\Inventory();
     			if ($inventory->find("inventory_id='".addslashes($this->getProductKey())."'")) {
         			$p->set('quantity', $inventory->get('amount'));
     			}
-            }
+            }*/
             $this->ntfProduct = $p;
     	}
         

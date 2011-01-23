@@ -922,7 +922,6 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Initialize controller
-     * FIXME - backward compatibility; to delete
      *
      * @return void
      * @access public

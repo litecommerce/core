@@ -242,10 +242,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
                 return PHP_VERSION;
                 break;
 
-            case 'timezone_changable':
-                return func_is_timezone_changable();
-                break;
-
             case 'os_type':
                 list($os_type) = explode(' ', PHP_OS);
                 return $os_type;
@@ -928,11 +924,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      */
     public function getTimeZonesList()
     {
-        $list = func_get_timezones();
-        if (is_array($list))
-            return $list;
-        else
-            return array('Not supported');
+        return \DateTimeZone::listIdentifiers();
     }
 
     /**
@@ -945,11 +937,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      */
     public function getCurrentTimeZone()
     {
-        $tz = func_get_timezone();
-        if ($tz)
-            return $tz;
-        else
-            return "Not supported";
+        return date_default_timezone_get();
     }
 
     /**
@@ -965,6 +953,22 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     public function getStateById($stateId)
     {
         return \XLite\Core\Database::getRepo('XLite\Model\State')->find($stateId);
+    }
+
+    /**
+     * Return list of possible order statuses for inventory tracking
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getInventoryOrderStatuses()
+    {
+        return array(
+            \XLite\Model\Order::STATUS_QUEUED    => static::t('Placed'),
+            \XLite\Model\Order::STATUS_PROCESSED => static::t('Processed'),
+        );
     }
 }
 

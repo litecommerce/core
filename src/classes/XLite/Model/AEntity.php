@@ -70,9 +70,7 @@ abstract class AEntity
      */                                                                           
     public function __construct(array $data = array())                            
     {
-        if (!empty($data)) {
-            $this->map($data);
-        }
+        empty($data) ?: $this->map($data);
     }
 
     /**

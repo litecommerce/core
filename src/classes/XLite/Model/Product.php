@@ -103,12 +103,12 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Is product available or not
      * 
-     * @var    bool
+     * @var    boolean
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="boolean")
      */
     protected $enabled = true;
 
@@ -210,6 +210,18 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @OrderBy   ({"orderby" = "ASC"})
      */
     protected $images;
+
+    /**
+     * Qty in stock 
+     * 
+     * @var    \XLite\Model\Product\Inventory
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @OneToOne (targetEntity="XLite\Model\Inventory", mappedBy="product", fetch="LAZY", cascade={"all"})
+     */
+    protected $inventory;
 
     /**
      * Get object unique id 
@@ -564,5 +576,38 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
         $this->order_items      = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
+    }
+
+
+    // ------------------------------ Inventory tracking -
+
+    /**
+     * Alias: unconditionally change inventory amount
+     *
+     * @param integer $amount Value to set
+     *
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setAmount($amount)
+    {
+        $this->getInventory()->setAmount($amount);
+    }
+
+    /**
+     * Alias: increase / decrease product inventory amount
+     *
+     * @param integer $delta Amount delta
+     *
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function changeAmount($delta)
+    {
+        $this->getInventory()->changeAmount($delta);
     }
 }

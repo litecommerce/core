@@ -35,8 +35,7 @@ namespace XLite\Module\CDev\ProductAdviser\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Order extends \XLite\Model\Order
-implements \XLite\Base\IDecorator
+class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
     /**
      * checkedOut 
@@ -116,7 +115,8 @@ implements \XLite\Base\IDecorator
 
         parent::updateInventory($item);
 
-        if (
+        // FIXME[INVENTORY_TRACKING]: revise it later
+        /*if (
             $this->xlite->get('PA_InventorySupport')
             && $this->config->CDev->ProductAdviser->customer_notifications_enabled
             && $item->get('outOfStock')
@@ -143,6 +143,6 @@ implements \XLite\Base\IDecorator
 
             $this->session->set('rejectedItem', $rejectedItemInfo);
             $this->xlite->set('rejectedItemPresented', true);
-        }
+        }*/
     }
 }

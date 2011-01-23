@@ -163,9 +163,7 @@ abstract class Image extends \XLite\Model\AEntity
      */
     public function getExtension()
     {
-        return $this->isURL()
-            ? $this->getExtensionByMIME()
-            : pathinfo($this->path, PATHINFO_EXTENSION);
+        return $this->isURL() ? $this->getExtensionByMIME() : pathinfo($this->getPath(), PATHINFO_EXTENSION);
     }
 
     /**
@@ -213,9 +211,7 @@ abstract class Image extends \XLite\Model\AEntity
      */
     public function getURL()
     {
-        return $this->isURL()
-            ? $this->path
-            : $this->getRepository()->getWebRoot() . $this->path;
+        return $this->isURL() ? $this->getPath() : ($this->getRepository()->getWebRoot() . $this->getPath());
     }
 
     /**
@@ -228,9 +224,7 @@ abstract class Image extends \XLite\Model\AEntity
      */
     public function getFrontURL()
     {
-        return (!$this->getRepository()->isCheckImage() || $this->checkImageHash())
-            ? $this->getURL()
-            : null;
+        return (!$this->getRepository()->isCheckImage() || $this->checkImageHash()) ? $this->getURL() : null;
     }
 
     /**
@@ -504,7 +498,7 @@ abstract class Image extends \XLite\Model\AEntity
      */
     public function isExists()
     {
-        return isset($this->image_id);
+        return !is_null($this->getImageId());
     }
 
     /**
@@ -523,5 +517,4 @@ abstract class Image extends \XLite\Model\AEntity
             $this->setDate(time());
         }
     }
-
 }

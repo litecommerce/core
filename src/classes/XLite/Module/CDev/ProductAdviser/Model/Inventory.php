@@ -29,13 +29,13 @@
 namespace XLite\Module\CDev\ProductAdviser\Model;
 
 /**
- * ____description____
+ * FIXME[INVENTORY_TRACKING]: check this later
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Inventory extends \XLite\Module\CDev\InventoryTracking\Model\Inventory implements \XLite\Base\IDecorator
+/*class Inventory extends \XLite\Module\CDev\InventoryTracking\Model\Inventory implements \XLite\Base\IDecorator
 {
     function set($property, $value)
     {
@@ -89,4 +89,4 @@ There <?php echo ($inventoryCAI == 1) ? "is" : "are"; ?> <b><font color=blue><?p
 
     	return $result;
     }
-}
+}*/

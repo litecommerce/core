@@ -184,14 +184,6 @@ abstract class Main extends \XLite\Module\AModule
         }
         /////////////////////////////////////
 
-        $inventorySupport = \XLite\Core\Operator::isClassExists('\XLite\Module\CDev\InventoryTracking\Model\Inventory');
-        \XLite::getInstance()->set('PA_InventorySupport', $inventorySupport);
-        if ($inventorySupport) {
-            if (!\XLite::getInstance()->is('adminZone')) {
-            }
-        }
-        if (\XLite::getInstance()->is('adminZone')) {
-        }
         \XLite::getInstance()->set('ProductAdviserEnabled', true);
     }
 

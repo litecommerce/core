@@ -171,22 +171,20 @@ function setUnitSymbol(symbol) {
             {end:}
 
             {if:option.name=#time_zone#}
-              {if:!timezone_changable}
-                This option is not available in your PHP version.
-              {else:}
-                <select name="{option.name}">
-                  {foreach:timezoneslist,tz}  
-                    {if:option.value=##}
-                      <option value="{tz}" selected="{tz=currenttimezone}">{tz}</option>
-                    {else:}
-                      <option value="{tz}" selected="{option.value=tz}">{tz}</option>
-                    {end:}
+              <select name="{option.name}">
+                {foreach:timezoneslist,tz}  
+                  {if:option.value=##}
+                    <option value="{tz}" selected="{tz=currenttimezone}">{tz}</option>
+                  {else:}
+                    <option value="{tz}" selected="{option.value=tz}">{tz}</option>
                   {end:}
-                </select>
-              {end:}
+                {end:}
+              </select>
             {end:}
 
             <widget class="\XLite\View\ModulesManager\Settings" section="{page}" option="{option}" />
+
+            {displayViewListContent(#general_settings.general.parts#,_ARRAY_(#page#^page,#option#^option))}
 
           </td>
         {else:}

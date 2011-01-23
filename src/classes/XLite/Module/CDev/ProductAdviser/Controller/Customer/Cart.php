@@ -51,7 +51,8 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
     {
         parent::action_add();
 
-        if ($this->xlite->get('PA_InventorySupport') && $this->config->CDev->ProductAdviser->customer_notifications_enabled) {
+        // FIXME[INVENTORY_TRACKING]: check this later
+        /*if ($this->xlite->get('PA_InventorySupport') && $this->config->CDev->ProductAdviser->customer_notifications_enabled) {
 
             if (!is_null($this->cart->get('outOfStock'))) {
 
@@ -71,7 +72,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
     		} elseif (!$this->xlite->get('rejectedItemPresented')) {
             		$this->session->set('rejectedItem', null);
     		}
-    	}
+    	}*/
     }
 
     /**
@@ -84,9 +85,10 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      */
     public function getRejectedItem()
     {
-        if (!($this->xlite->get('PA_InventorySupport') && $this->config->CDev->ProductAdviser->customer_notifications_enabled)) {
+        // FIXME[INVENTORY_TRACKING]: check this later
+        /*if (!($this->xlite->get('PA_InventorySupport') && $this->config->CDev->ProductAdviser->customer_notifications_enabled)) {
             return null;
-        }
+        }*/
 
         if (!$this->session->isRegistered('rejectedItem')) {
             if (!is_null($this->rejectedItemInfo)) {
