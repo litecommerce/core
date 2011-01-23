@@ -1076,6 +1076,8 @@ function doRemoveCache($params)
 
     \Includes\Decorator\Utils\CacheManager::cleanupCacheIndicators();
 
+    \Includes\Decorator\Utils\CacheManager::cleanupRebuildIndicator();
+
     // Remove all LiteCommerce tables if exists
     $connection = dbConnect($params, $pdoErrorMsg);
 
@@ -3015,108 +3017,47 @@ function module_install_cache(&$params)
 {
     global $error;
 
-    $result = true;
-
-    $steps = array(
-        1 => array(
-            'text'     => 'Preparing for cache generation and dropping an old LiteCommerce tables if exists',
-            'function' => 'doRemoveCache'
-        ),
-        2 => array(
-            'text'     => 'Building the classes cache',
-            'function' => 'doBuildCache',
-        ),
-        3 => array(
-            'text'     => 'Loading the database, building the templates cache',
-            'function' => 'doBuildCache',
-        ),
-    );
-
 ?>
 </td>
 </tr>
 </table>
 
-<script language="javascript">
-    progressId = '1';
-    maxIterations = 100;
-    iterationId = 1;
-
-    function passed() {
-         if (progressId) {
-            document.getElementById('progress_' + progressId).innerHTML = document.getElementById('progress_' + progressId).innerHTML + ' [passed]';
-            iterationId = 1;
-        }
-    }
-
-    function refresh() {
-        if (iterationId < maxIterations && progressId) {
-            document.getElementById('progress_' + progressId).innerHTML = document.getElementById('progress_' + progressId).innerHTML + '.';
-            iterationId = iterationId + 1;
-            setTimeout('refresh()', 1000);
-        }
-    }
-
-    setTimeout('refresh()', 1000);
-</script>
-
 <br />
 
-<div id="progress">Building cache, please wait...</div>
-
-<?php
-
-    foreach ($steps as $stepIndex => $stepData) {
-
-        if ($result) {
-
-            if ($stepIndex > 1) {
-                echo <<<OUT
-<script language="javascript">
-    passed();
-    progressId = '{$stepIndex}';
-</script>
-
-OUT;
-            }
-
-            echo <<<OUT
-<br /><br />
-<div id="progress_$stepIndex">Step $stepIndex: {$stepData['text']}...</div>
-
-OUT;
-
-            echo str_repeat(' ', 10000); flush();
-
-            $result = $stepData['function']($params);
-
-        } else {
-            break;
-        }
-    }
-
-?>
-
-<script language="javascript">
-    passed();
-    progressId = false;
-</script>
+<iframe id="process_iframe" src="install.php?target=install&action=cache" width="600" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
 
 <br /><br />
 
-<table class="TableTop" width="100%" border="0" cellspacing="0" cellpadding="0">
+<table id="buttons" class="TableTop" width="100%" border="0" cellspacing="0" cellpadding="0">
 
 <tr>
     <td>
 
         <center>
-<?php if ($result) { ?><BR><?php message("Push the \"Next\" button below to continue"); } ?>
+            <br /><?php message("Wait until cache is built then push the \"Next\" button below to continue"); ?>
         </center>
 
         <br />
+
+<script language="javascript">
+
+    function isProcessComplete() {
+
+        if (document.getElementById('process_iframe').contentDocument.getElementById('finish') && document.getElementById('button_next')) {
+            document.getElementById('button_next').disabled = '';
+
+        } else {
+            setTimeout('isProcessComplete()', 1000);
+        }
+    }
+
+    setTimeout('isProcessComplete()', 1000);
+
+</script>
+
 <?php
 
-    $error = !$result;
+    $error = true;
 
     return false;
 } 

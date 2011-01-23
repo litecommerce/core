@@ -200,6 +200,41 @@ if (isset($HTTP_GET_VARS['target']) && $HTTP_GET_VARS['target'] == 'install') {
         die($_SERVER['HTTP_HOST']);
     }
 
+    if (isset($HTTP_GET_VARS['action']) && $HTTP_GET_VARS['action'] == 'cache') {
+
+        $step = 0;
+        $result = true;
+
+        if (isset($HTTP_GET_VARS['step']) && intval($HTTP_GET_VARS['step']) > 0) {
+
+            $step = intval($HTTP_GET_VARS['step']);
+
+            if ($step <= 2) {
+                echo sprintf('Building cache: Pass #%d...', $step);
+                echo str_repeat(' ', 256); flush();
+                $result = doBuildCache();
+            
+            } else {
+                die('<div id="finish">Cache is built</div>') ;
+            }
+
+        } else {
+            $pdoErrorMsg = '';
+            echo sprintf('Building cache: Preparing for cache generation and dropping an old LiteCommerce tables if exists...', $step);
+            echo str_repeat(' ', 256); flush();
+            $result = doRemoveCache(null, $pdoErrorMsg);
+        }
+
+        if ($result) {
+            $location = sprintf('install.php?target=install&action=cache&step=%d', ++$step);
+
+            echo '<script type="text/javascript">self.location=\'' . $location . '\';</script>'
+                . '<noscript><a href="' . $location . '">Click here to redirect</a></noscript><br /><br />';
+        }
+
+        exit();
+    }
+
 	// Memory test action
 	if (isset($HTTP_GET_VARS['action']) && $HTTP_GET_VARS['action'] == 'memory_test' && isset($HTTP_GET_VARS['size'])) {
         $size = intval($HTTP_GET_VARS['size']);
@@ -625,7 +660,7 @@ if ($current < count($modules)) {
 
 ?>
 
-  <INPUT name="next_button" type="button" value="Next &gt;"<?php echo ($error || $current == get_step('check_cfg') ? ' disabled="disabled"' : ''); ?> onClick="javascript: if (step_next()) { ifrm.submit(); return true; } else { return false; }" />
+  <INPUT id="button_next" name="next_button" type="button" value="Next &gt;"<?php echo ($error || $current == get_step('check_cfg') ? ' disabled="disabled"' : ''); ?> onClick="javascript: if (step_next()) { ifrm.submit(); return true; } else { return false; }" />
 
  </td>
 </TR>
