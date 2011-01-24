@@ -1047,8 +1047,6 @@ function doUpdateConfig(&$params, $silentMode = false)
             $configUpdated = false;
         }
 
-        \Includes\Utils\FileManager::unlinkRecursive(LC_COMPILE_DIR);
-
         if ($configUpdated !== true && !$silentMode) {
             fatal_error('Cannot open configuration file "' . constant('LC_CONFIG_FILE') . '" for writing. This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.');
         }
@@ -1169,11 +1167,12 @@ function doInstallDirs($params, $silentMode = false)
         ob_start();
     }
 
-    echo "<BR><B>Creating directories...</B><BR>\n";
+    if (!empty($lcSettings['directories_to_create'])) {
+        echo "<BR><B>Creating directories...</B><BR>\n";
+        $result = create_dirs($lcSettings['directories_to_create']);
+    }
 
-    $result = create_dirs($lcSettings['directories_to_create']);
-
-    if ($result) {
+    if ($result && !empty($lcSettings['writable_directories'])) {
         chmod_others_directories($lcSettings['writable_directories']);
         echo "<BR><B>Creating .htaccess files...</B><BR>\n";
         $result = create_htaccess_files($lcSettings['files_to_create']);
@@ -1604,6 +1603,8 @@ function checkPermissionsRecursive($object)
                     }
             
                 }
+
+                closedir($handle);
             }
         }
 

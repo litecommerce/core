@@ -178,6 +178,9 @@ class FileManager extends \Includes\Utils\AUtils
                 $file->isDir() ? rmdir($file->getPathname()) : static::delete($file->getPathname());
             }
 
+            // Unset is required to release directory and avoid 'Permission denied' warning on rmdir() on windoows servers
+            unset($filter);
+
             rmdir($dir);
         }
     }
