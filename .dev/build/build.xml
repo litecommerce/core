@@ -97,34 +97,44 @@
 	<!-- Install Drupal+LC (cc) -->
 	<target name="phpunit-deployment-cc">
 		<exec executable="/u/xcart/bin/phpunit-xlite" dir="${buildDir}" failonerror="on">
-            <arg line="xliteAllTests ${buildDir}/.dev/tests/AllTests.php DEPLOY_DRUPAL" />
+            <arg value="xliteAllTests" />
+			<arg value="${buildDir}/.dev/tests/AllTests.php" />
+			<arg value="DEPLOY_DRUPAL" />
         </exec>
     </target>
 
 	<target name="prepare-db">
 		<!-- Replace SQL data by the demo data (for testing) -->
 		<exec executable="/usr/local/php-530/bin/php" dir="${installDir}" failonerror="on">
-			<arg line="${installDir}/modules/lc_connector/litecommerce/restoredb demo all" />
+			<arg value="${installDir}/modules/lc_connector/litecommerce/restoredb" />
+			<arg value="demo" />
+			<arg value="all" />
 		</exec>
 		<!-- Rebuild cache: first pass -->
 		<exec executable="/usr/local/php-530/bin/php" dir="${installDir}">
-			<arg line="${installDir}/modules/lc_connector/litecommerce/cart.php" />
+			<arg value="${installDir}/modules/lc_connector/litecommerce/cart.php" />
 		</exec>
 		<!-- Rebuild cache: second pass -->
         <exec executable="/usr/local/php-530/bin/php" dir="${installDir}">
-			<arg line="${installDir}/modules/lc_connector/litecommerce/cart.php" />
+			<arg value="${installDir}/modules/lc_connector/litecommerce/cart.php" />
         </exec>
 	</target>
 
 	<target name="php-codesniffer">
 		<exec executable="${sourceDir}/.dev/phpcs" dir="${installDir}" output="${buildDir}/reports/checkstyle.txt">
-			<arg line="--report=full --standard=${sourceDir}/.dev/code-sniffs/XLite --ignore=.dev,src/etc,src/var ${installDir}/modules/lc_connector/litecommerce/classes" />
+			<arg value="--report=full" />
+			<arg value="--standard=${sourceDir}/.dev/code-sniffs/XLite" />
+			<arg value="--ignore=.dev,src/etc,src/var" />
+			<arg value="${installDir}/modules/lc_connector/litecommerce/classes" />
 		</exec>
 	</target>
 
     <target name="php-codesniffer-cc">
         <exec executable="${sourceDir}/.dev/phpcs" dir="${installDir}" output="${buildDir}/logs/checkstyle.xml">
-			<arg line="--report=checkstyle --standard=${sourceDir}/.dev/code-sniffs/XLite --ignore=.dev,src/etc,src/var ${installDir}/modules/lc_connector/litecommerce/classes" />
+			<arg value="--report=checkstyle" />
+			<arg value="--standard=${sourceDir}/.dev/code-sniffs/XLite" />
+			<arg value="--ignore=.dev,src/etc,src/var" />
+			<arg value="${installDir}/modules/lc_connector/litecommerce/classes" />
         </exec>
     </target>
 
@@ -134,10 +144,18 @@
 		</copy>
 		<mkdir dir="${buildDir}/logs/coverage" />
 		<exec executable="phpunit" dir="${buildDir}" failonerror="on" output="${buildDir}/reports/phpunit.txt">
-			<arg line="--log-xml ${buildDir}/logs/phpunit.xml --coverage-html ${buildDir}/logs/coverage xliteAllTests ${buildDir}/.dev/tests/AllTests.php" />
+			<arg value="--log-xml" />
+			<arg value="${buildDir}/logs/phpunit.xml" />
+			<arg value="--coverage-html" />
+			<arg value="${buildDir}/logs/coverage" />
+			<arg value="xliteAllTests" />
+			<arg value="${buildDir}/.dev/tests/AllTests.php" />
 		</exec>
         <exec executable="/usr/local/php-530/bin/php" dir="${sourceDir}">
-            <arg line=".dev/tests/graph.php ${buildDir}/logs/phpunit.xml.speed ${buildDir}/reports ../../../artifacts/xlite" />
+            <arg value=".dev/tests/graph.php" />
+			<arg value="${buildDir}/logs/phpunit.xml.speed" />
+			<arg value="${buildDir}/reports" />
+			<arg value="../../../artifacts/xlite" />
         </exec>
 	</target>
 
@@ -147,10 +165,24 @@
 		</copy>
 		<mkdir dir="${buildDir}/coverage" />
         <exec executable="/u/xcart/bin/phpunit-xlite" dir="${buildDir}" failonerror="on">
-            <arg line="--log-xml ${buildDir}/logs/phpunit.xml --log-pmd ${buildDir}/logs/phpunit.pmd.xml --log-metrics ${buildDir}/logs/phpunit.metrics.xml --coverage-xml ${buildDir}/logs/phpunit.coverage.xml --coverage-html ${buildDir}/coverage xliteAllTests ${buildDir}/.dev/tests/AllTests.php" />
+            <arg value="--log-xml" />
+			<arg value="${buildDir}/logs/phpunit.xml" />
+			<arg value="--log-pmd" />
+			<arg value="${buildDir}/logs/phpunit.pmd.xml" />
+			<arg value="--log-metrics" />
+			<arg value="${buildDir}/logs/phpunit.metrics.xml" />
+			<arg value="--coverage-xml" />
+			<arg value="${buildDir}/logs/phpunit.coverage.xml" />
+			<arg value="--coverage-html" />
+			<arg value="${buildDir}/coverage" />
+			<arg value="xliteAllTests" />
+			<arg value="${buildDir}/.dev/tests/AllTests.php" />
         </exec>
 		<exec executable="/usr/local/php-530/bin/php" dir="${sourceDir}">
-			<arg line=".dev/tests/graph.php ${buildDir}/logs/phpunit.xml.speed ${buildDir}/reports ../../../artifacts/xlite" />
+			<arg value=".dev/tests/graph.php" />
+			<arg value="${buildDir}/logs/phpunit.xml.speed" />
+			<arg value="${buildDir}/reports" />
+			<arg value="../../../artifacts/xlite" />
 		</exec>
     </target>
 
@@ -159,7 +191,10 @@
 		</jmeter>
 		<xslt in="${buildDir}/logs/JMeterResults.jtl" out="${buildDir}/reports/jmeter.html" style="${sourceDir}/.dev/loadtests/jmeter-results-report.xsl" />
 		<exec executable="/usr/local/php-530/bin/php" dir="${sourceDir}">
-			<arg line=".dev/loadtests/graph.php ${buildDir}/logs/JMeterResults.jtl ${buildDir}/reports ../../../artifacts/xlite" />
+			<arg value=".dev/loadtests/graph.php" />
+			<arg value="${buildDir}/logs/JMeterResults.jtl" />
+			<arg value="${buildDir}/reports" />
+			<arg value="../../../artifacts/xlite" />
 		</exec>
 	</target>
 
@@ -169,7 +204,11 @@
 
 	<target name="pdepend">
 		<exec executable="/usr/local/php-530/bin/php" dir="${buildDir}">
-			<arg line="${sourceDir}/.dev/pdepend.php --jdepend-chart=${buildDir}/reports/pdepend.svg --overview-pyramid=${buildDir}/reports/pyramid.svg --optimization=best ${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
+			<arg value="${sourceDir}/.dev/pdepend.php" />
+			<arg value="--jdepend-chart=${buildDir}/reports/pdepend.svg" />
+			<arg value="--overview-pyramid=${buildDir}/reports/pyramid.svg" />
+			<arg value="--optimization=best" />
+			<arg value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
 		</exec>
 	</target>
 
