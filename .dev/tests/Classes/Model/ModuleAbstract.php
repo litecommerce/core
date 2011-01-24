@@ -103,16 +103,14 @@ abstract class XLite_Tests_Model_ModuleAbstract extends XLite_Tests_TestCase
     protected function getEnabledModule($val = true, $name = null)
     {
         $conditions = array(
-            'enabled' => $val,
-            'installed' => true
+            'enabled'   => $val,
+            'installed' => true,
         );
 
-        if (!is_null($name)) {
-            $conditions += array(
-                'name' => $name
-            );
+        if (isset($name)) {
+            $conditions['name'] = $name;
         }
 
-        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy($conditions);
+        return \XLite\Core\Database::getRepo('XLite\Model\Module')->findOneBy($conditions);
     }
 }

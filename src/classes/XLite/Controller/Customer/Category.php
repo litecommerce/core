@@ -62,7 +62,7 @@ class Category extends \XLite\Controller\Customer\Catalog
     /**
      * getModelObject
      *
-     * @return \XLite\Model\AModel
+     * @return \XLite\Model\AEntity
      * @access protected
      * @since  3.0.0
      */

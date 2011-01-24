@@ -40,7 +40,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     /**
      * getModelObject
      *
-     * @return \XLite\Model\AModel
+     * @return \XLite\Model\AEntity
      * @access protected
      * @since  3.0.0
      */

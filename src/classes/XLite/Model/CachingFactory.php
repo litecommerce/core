@@ -31,7 +31,7 @@ namespace XLite\Model;
 /**
  * Abstract caching factory 
  * 
- * @package LiteCommerce
+ * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
