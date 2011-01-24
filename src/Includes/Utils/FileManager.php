@@ -31,16 +31,16 @@ namespace Includes\Utils;
 /**
  * FileManager 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class FileManager extends \Includes\Utils\AUtils
 {
     /**
      * Return the default filesystem permissions
      * 
-     * @param string $path file path (optional)
+     * @param string $path File path (optional)
      *  
      * @return int|null
      * @access protected
@@ -188,15 +188,16 @@ class FileManager extends \Includes\Utils\AUtils
     /**
      * Copy the whole directory tree
      * 
-     * @param string $fromDir Catalog FROM which files will be copied
-     * @param string $toDir   Catalog TO which files will be copied
+     * @param string $fromDir       Catalog FROM which files will be copied
+     * @param string $toDir         Catalog TO which files will be copied
+     * @param string $regexpExclude Pattern for file/catalog excluding
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function copyRecursive($fromDir, $toDir)
+    public static function copyRecursive($fromDir, $toDir, $regexpExclude = null)
     {
         if (static::isDir($fromDir)) {
 
@@ -204,12 +205,18 @@ class FileManager extends \Includes\Utils\AUtils
 
             foreach ($filter->getIterator() as $file) {
 
-                $filePath = $file->getPathname();
+                if (
+                    is_null($regexpExclude)
+                    || 0 >= preg_match($regexpExclude, $file->getRealPath())
+                ) {
+                    $filePath = $file->getPathname();
 
-                $newDestination = str_replace($fromDir, $toDir, $filePath);
+                    $newDestination = str_replace($fromDir, $toDir, $filePath);
 
-                $file->isDir() ? \Includes\Utils\FileManager::mkdirRecursive($newDestination) : @copy($filePath, $newDestination);
-
+                    $file->isDir() 
+                        ? \Includes\Utils\FileManager::mkdirRecursive($newDestination) 
+                        : @copy($filePath, $newDestination);
+                }
             }
         }
     }

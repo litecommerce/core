@@ -92,7 +92,9 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
                         );
                     }
 
+                    // Remove the temporary content and uploaded PHAR file
                     $module->cleanUp();
+                    @unlink($name);
                 }
             }
 
