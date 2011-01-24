@@ -74,7 +74,6 @@ class PackModule extends \XLite\Base
     const MODULE_VERSION    = 'module_version';
 
 
-
     /**
      * Temporary repository of module package
      * 
@@ -294,6 +293,20 @@ class PackModule extends \XLite\Base
     }
 
     /**
+     * Return File filter regexp
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getFileFilter()
+    {
+        return '/(?:' . preg_quote(LC_DS, LC_DS) . '\.(?!htaccess)|CVS)/Ss';
+    }
+
+
+    /**
      * Collect module classes structure into temporary classes catalog
      * 
      * @return void
@@ -312,7 +325,8 @@ class PackModule extends \XLite\Base
 
             \Includes\Utils\FileManager::copyRecursive(
                 $classesDir,
-                $classesTempDir
+                $classesTempDir,
+                $this->getFileFilter()
             );
         }
     }
@@ -341,7 +355,8 @@ class PackModule extends \XLite\Base
 
                 \Includes\Utils\FileManager::copyRecursive(
                     $skinsDir, 
-                    $skinsTempDir
+                    $skinsTempDir,
+                    $this->getFileFilter()
                 );
             }
         }
