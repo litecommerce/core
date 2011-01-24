@@ -466,7 +466,7 @@ class Module extends \XLite\Model\AEntity
     {
         $class = $this->getMainClass();
 
-        return $class
+        return ($class && method_exists($class, $method))
             ? call_user_func_array(array($class, $method), array_slice(func_get_args(), 1))
             : null;
     }
@@ -778,7 +778,7 @@ class Module extends \XLite\Model\AEntity
      */
     public function getSettingsFormLink()
     {
-        $link = $this->__call('getSettingsForm');
+        $link = $this->callModuleStatic('getSettingsForm');
 
         return is_null($link)
             ? \XLite\Core\Converter::buildURL('module', '', array('moduleId' => $this->getModuleId()), 'admin.php')
@@ -848,7 +848,7 @@ class Module extends \XLite\Model\AEntity
         }
 
         // Check dependencies
-        if ($status && $this->__call('getDependencies')) {
+        if ($status && $this->callModuleStatic('getDependencies')) {
 
             foreach ($this->getDependenciesModules() as $module) {
 
@@ -957,7 +957,7 @@ class Module extends \XLite\Model\AEntity
     public function __call($method, array $args = array())
     {
         return method_exists($this->getMainClass(), $method)
-            ? call_user_func_array(array($this->getMainClass(), $method), $args)
+            ? call_user_func_array(array($this, 'callModuleStatic'), func_get_args())
             : parent::__call($method, $args);
 
     }
@@ -998,7 +998,7 @@ class Module extends \XLite\Model\AEntity
      */
     public function getCurrentVersion()
     {
-        return $this->__call('getVersion');
+        return $this->callModuleStatic('getVersion');
     }
 
     /**
@@ -1255,7 +1255,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Retrieve skins list from the temporary local repository of module
      * 
-     * @return array list of skins in the format: {new skin path} => {skin path from temporary local repository of module}
+     * @return array List of skins in the format: {new skin path} => {skin path from temporary local repository of module}
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -1268,7 +1268,7 @@ class Module extends \XLite\Model\AEntity
 
         $iterator->setMaxDepth(2);
 
-        while($iterator->valid()) {
+        while ($iterator->valid()) {
             if (
                 $iterator->isDir()
                 && 1 == $iterator->getDepth()
@@ -1303,8 +1303,8 @@ class Module extends \XLite\Model\AEntity
     /**
      * Register specific modules skins catalogs from file iterator. 
      * 
-     * @param \RecursiveIteratorIterator $iterator File iterator
-     * @param array                      $registry Array for registration the skins dir
+     * @param \RecursiveIteratorIterator $iterator  File iterator
+     * @param array                      &$registry Array for registration the skins dir
      *  
      * @return void
      * @access protected
@@ -1326,7 +1326,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @param string $dir Catalog path
      *  
-     * @return string relative path to skin
+     * @return string Relative path to skin
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -1379,41 +1379,65 @@ class Module extends \XLite\Model\AEntity
                 } elseif (in_array('XLite\Base\IDecorator', $reflection->getInterfaceNames())) {
 
                     // Protected columns
-                    $cols = array();
-                    foreach ($reflection->getProperties(\ReflectionProperty::IS_PROTECTED) as $col) {
-                        if ($col->getDeclaringClass() == $reflection && preg_match('/@Column/Ss', $col->getDocComment())) {
-                            $cols[$col->getName()] = false;
-                        }
-                    }
-
-                    if ($cols && preg_match('/class\s+\S+\s+extends\s+(\S+)\s/Ss', file_get_contents($path), $match)) {
-                        $original = ltrim($match[1], '\\');
-                        $cm = \XLite\Core\Database::getEM()->getClassMetadata($original);
-
-                        $schema = $tool->getCreateSchemaSql(array($cm));
-                        
-                        foreach ($cols as $col => $tmp) {
-                            if (preg_match('/((?:, |\()' . $col . ' .+(?:, |\)))/USs', $schema[0], $match)) {
-                                $cols[$col] = trim($match[1], ', ');
-
-                            } else {
-                                unset($cols[$col]);
-                            }
-                        }
-
-                        if ($cols) {
-                            $table = substr(
-                                $cm->getTableName(),
-                                strlen(\XLite\Core\Database::getInstance()->getTablePrefix())
-                            );
-                            $columns[$table] = $cols;
-                        }
+                    list($table, $cols) = $this->getModuleProtectedColumns($reflection, $path, $tool);
+                    if ($table) {
+                        $columns[$table] = $cols;
                     }
                 }
             }
         }
 
         return array($tables, $columns);
+    }
+
+    /**
+     * Get module protected columns 
+     * 
+     * @param \Reflection                    $reflection Class reflection data
+     * @param string                         $path       Class repository path
+     * @param \Doctrine\ORM\Tools\SchemaTool $tool       Doctrine schema tool
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModuleProtectedColumns(\Reflection $reflection, $path, \Doctrine\ORM\Tools\SchemaTool $tool)
+    {
+        $cols = array();
+        $table = null;
+
+        foreach ($reflection->getProperties(\ReflectionProperty::IS_PROTECTED) as $col) {
+            if ($col->getDeclaringClass() == $reflection && preg_match('/@Column/Ss', $col->getDocComment())) {
+                $cols[$col->getName()] = false;
+            }
+        }
+
+        if ($cols && preg_match('/class\s+\S+\s+extends\s+(\S+)\s/Ss', file_get_contents($path), $match)) {
+            $original = ltrim($match[1], '\\');
+            $cm = \XLite\Core\Database::getEM()->getClassMetadata($original);
+
+            $schema = $tool->getCreateSchemaSql(array($cm));
+                        
+            foreach ($cols as $col => $tmp) {
+                if (preg_match('/((?:, |\()' . $col . ' .+(?:, |\)))/USs', $schema[0], $match)) {
+                    $cols[$col] = trim($match[1], ', ');
+
+                } else {
+                    unset($cols[$col]);
+                }
+            }
+
+            if ($cols) {
+                $table = substr(
+                    $cm->getTableName(),
+                    strlen(\XLite\Core\Database::getInstance()->getTablePrefix())
+                );
+            }
+        }
+
+        return array($table, $cols);
+
     }
 
 }

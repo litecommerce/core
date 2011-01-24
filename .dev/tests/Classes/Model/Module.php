@@ -153,20 +153,45 @@ class XLite_Tests_Model_Module extends XLite_Tests_Model_ModuleAbstract
     {
         $module = $this->getEnabledModule();
         $module->setEnabled(false);
-        
+        \XLite\Core\Database::getEM()->flush();
+
+        \XLite\Core\Database::getEM()->clear();
+ 
         $module = \XLite\Core\Database::getRepo('XLite\Model\Module')->find($module->getModuleId());
         $this->assertFalse($module->getEnabled(), 'check if module is disabled');
         
         $module->setEnabled(true);
+        \XLite\Core\Database::getEM()->flush();
         $this->assertTrue($module->getEnabled(), 'check if module is enabled');
     }
 
-    public function testPrepareUpdate()
+    public function testProtectedStructures()
     {
-        // TODO: check if possible
+        $path = LC_VAR_DIR . '.disabled.structures.php';
+
+        if (file_exists($path)) {
+            unlink($path);
+        }
+
+        $module = \Xlite\Core\Database::getRepo('XLite\Model\Module')
+            ->findOneBy(array('author' => 'CDev', 'name' => 'ProductOptions'));
+        $module->disableModule();
+        \XLite\Core\Database::getEM()->flush();
+
+        $etalon = "# <?php if (!defined('LC_DS')) { die(); } ?>
+
+CDev\ProductOptions:
+  tables: [options, option_exceptions, option_groups, option_group_translations, option_surcharges, option_translations, order_item_options]
+  columns: {  }
+";
+
+        $this->assertEquals($etalon, file_get_contents($path), 'check .disabled.structures.php');
+        if (file_exists($path)) {
+            unlink($path);
+        }
     }
 
-    public function testPrepareDisable()
+    public function testPrepareUpdate()
     {
         // TODO: check if possible
     }

@@ -1537,7 +1537,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
                         $cell['referenceFields'] = $cell['fields'];
                     }
 
-                    $pattern = '/(' . $this->_class->getTableName() .'`'
+                    $pattern = '/(' . $this->_class->getTableName() . '`'
                         . ' ADD FOREIGN KEY \(`' . implode('`,`', $cell['fields']) . '`\)'
                         . ' REFERENCES `' . $this->_em->getClassMetadata($cell['referenceRepo'])->getTableName() . '`'
                         . ' \(`' . implode('`,`', $cell['referenceFields']) . '`\))\s*(?:.+)?$/Ss';

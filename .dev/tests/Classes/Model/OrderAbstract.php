@@ -70,7 +70,7 @@ abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
 
         $list = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
         foreach ($list as $p) {
-            if (!$p->getOrder()) {
+            if (!$p->getOrder() && $p->getLogin() == 'rnd_tester@cdev.ru') {
                 $order->setProfileCopy($p);
                 break;
             }

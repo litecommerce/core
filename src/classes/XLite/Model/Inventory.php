@@ -31,6 +31,10 @@ namespace XLite\Model;
 /**
  * Product inventory
  *
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ *
  * @Entity
  * @Table  (name="inventory",
  *          indexes={
