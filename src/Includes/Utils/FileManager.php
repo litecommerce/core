@@ -38,22 +38,6 @@ namespace Includes\Utils;
 class FileManager extends \Includes\Utils\AUtils
 {
     /**
-     * Return the default filesystem permissions
-     * 
-     * @param string $path File path (optional)
-     *  
-     * @return int|null
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getDefaultFilePermissions($path = null)
-    {
-        return null;
-    }
-
-
-    /**
      * Checks whether a file or directory exists
      *
      * @param string $file file name to check
@@ -144,18 +128,98 @@ class FileManager extends \Includes\Utils\AUtils
     }
 
     /**
+     * Return directory where a file is located
+     * 
+     * @param string $file File path
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getDir($file)
+    {
+        return dirname($file);
+    }
+
+    /**
+     * Return real path
+     * 
+     * @param string $dir Path to prepare
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getRealPath($dir)
+    {
+        return realpath($dir);
+    }
+
+    /**
+     * Return relative path by an absolute one
+     *
+     * @param string $path      Path to convert
+     * @param string $compareTo Base part of the path
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getRelativePath($path, $compareTo)
+    {
+        return str_replace(static::getCanonicalDir($compareTo), '', static::getRealPath($path));
+    }
+
+    /**
+     * Prepare file path
+     *
+     * @param string  $dir   Dir to prepare
+     * @param boolean $check Call or not "realpath()"
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getCanonicalDir($dir, $check = true)
+    {
+        return \Includes\Utils\Converter::trimTrailingChars($check ? static::getRealPath($dir) : $dir, LC_DS) . LC_DS;
+    }
+
+    /**
+     * Create directory
+     *
+     * @param string  $dir  Directory path
+     * @param integer $mode Permissions
+     *
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function mkdir($dir, $mode = 0755)
+    {
+        return mkdir($dir, $mode) && static::chmod($dir, $mode);
+    }
+
+    /**
      * Create directories tree recursive
      * 
-     * @param string $dir directory path
+     * @param string  $dir  Directory path
+     * @param integer $mode Permissions
      *  
-     * @return void
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public static function mkdirRecursive($dir, $mode = 0755)
     {
-        return !file_exists($dir) ? @mkdir($dir, $mode, true) : true;
+        return static::isExists($dir) ?: 
+            (static::mkdirRecursive(static::getDir($dir), $mode) && static::mkdir($dir, $mode));
     }
 
     /**
@@ -175,10 +239,11 @@ class FileManager extends \Includes\Utils\AUtils
             $filter = new \Includes\Utils\FileFilter($dir, null, \RecursiveIteratorIterator::CHILD_FIRST);
 
             foreach ($filter->getIterator() as $file) {
-                $file->isDir() ? rmdir($file->getPathname()) : static::delete($file->getPathname());
+                $file->isDir() ? rmdir($file->getRealPath()) : static::delete($file->getRealPath());
             }
 
-            // Unset is required to release directory and avoid 'Permission denied' warning on rmdir() on windoows servers
+            // Unset is required to release directory 
+            // and avoid 'Permission denied' warning on rmdir() on Windoows servers
             unset($filter);
 
             rmdir($dir);
@@ -188,39 +253,29 @@ class FileManager extends \Includes\Utils\AUtils
     /**
      * Copy the whole directory tree
      * 
-     * @param string $fromDir       Catalog FROM which files will be copied
-     * @param string $toDir         Catalog TO which files will be copied
-     * @param string $regexpExclude Pattern for file/catalog excluding
+     * @param string $dirFrom Catalog from which files will be copied
+     * @param string $dirTo   Catalog to which files will be copied
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function copyRecursive($fromDir, $toDir, $regexpExclude = null)
+    public static function copyRecursive($dirFrom, $dirTo)
     {
-        if (static::isDir($fromDir)) {
+        if (static::isDir($dirFrom)) {
 
-            $filter = new \Includes\Utils\FileFilter($fromDir, null, \RecursiveIteratorIterator::SELF_FIRST);
+            $dirFrom = static::getCanonicalDir($dirFrom);
+            $dirTo   = static::getCanonicalDir($dirTo, false);
+
+            $filter = new \Includes\Utils\FileFilter($dirFrom, null, \RecursiveIteratorIterator::SELF_FIRST);
 
             foreach ($filter->getIterator() as $file) {
-
-                if (
-                    is_null($regexpExclude)
-                    || 0 >= preg_match($regexpExclude, $file->getRealPath())
-                ) {
-                    $filePath = $file->getPathname();
-
-                    $newDestination = str_replace($fromDir, $toDir, $filePath);
-
-                    $file->isDir() 
-                        ? \Includes\Utils\FileManager::mkdirRecursive($newDestination) 
-                        : @copy($filePath, $newDestination);
-                }
+                $pathTo = $dirTo . static::getRelativePath($pathFrom = $file->getRealPath(), $dirFrom);
+                $file->isDir() ? static::mkdirRecursive($pathTo) : copy($fromPath, $pathTo);
             }
         }
     }
-
 
     /**
      * Return hash of the file
@@ -250,34 +305,31 @@ class FileManager extends \Includes\Utils\AUtils
      */
     public static function getUniquePath($dir, $file)
     {
-        $dir = \Includes\Utils\Converter::trimTrailingChars($dir, LC_DS) . LC_DS;
+        $dir      = static::getCanonicalDir($dir, false);
         $pathinfo = pathinfo($file);
-        $counter = 1;
+        $counter  = 1;
 
-        $path = $dir . $file;
-        while (static::isFile($path)) {
+        while (static::isFile($path = $dir . $file)) {
             $file = $pathinfo['filename'] . '_' . $counter++ . '.' . $pathinfo['extension'];
-            $path = $dir . $file;
         }
 
         return $path;
     }
 
     /**
-     * Return relative path by an absolute one
+     * Change file or directory permissions
      * 
-     * @param string $path      path to convert
-     * @param string $compareTo base part of the path
-     * @param string $extension file extension
+     * @param string  $path File path 
+     * @param integer $mode Permissions
      *  
-     * @return string
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getRelativePath($path, $compareTo, $extension = 'php')
+    public static function chmod($path, $mode)
     {
-        return preg_replace('/^' . preg_quote($compareTo, '/') . '(.*)\.' . $extension . '$/i', '$1.' . $extension, $path);
+        return chmod($path, $mode);
     }
 
     /**
@@ -298,44 +350,41 @@ class FileManager extends \Includes\Utils\AUtils
     /**
      * Write data to a file
      * 
-     * @param string $path        file path
-     * @param string $data        data to write
-     * @param int    $permissions permisions to set
-     * @param int    $flags       some optional flags
+     * @param string $path  File path
+     * @param string $data  Data to write
+     * @param int    $mode  Permisions to set
+     * @param int    $flags Some optional flags
      *  
-     * @return int
+     * @return integer
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function write($path, $data, $permissions = null, $flags = 0)
+    public static function write($path, $data, $mode = 0644, $flags = 0)
     {
-        $result = file_put_contents($path, $data, $flags);
+        // Create directory if not exists
+        static::isDir($dir = static::getDir($path)) ?: static::mkdirRecursive($dir);
 
-        if (isset($permissions) || !is_null($permissions = static::getDefaultFilePermissions())) {
-            $result = chmod($path, $permissions) && $result;
-        }
-
-        return $result;
+        return (false !== file_put_contents($path, $data, $flags)) && static::chmod($path, $mode);
     }
 
     /**
      * Replace data to a file by pattern
      *
-     * @param string $path        file path
-     * @param string $data        data to write
-     * @param string $pattern     pattern to use for replacement
-     * @param int    $permissions permisions to set
-     * @param int    $flags       some optional flags
+     * @param string $path    File path
+     * @param string $data    Data to write
+     * @param string $pattern Pattern to use for replacement
+     * @param int    $mode    Permisions to set
+     * @param int    $flags   Some optional flags
      *
      * @return int
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function replace($path, $data, $pattern, $permissions = null, $flags = 0)
+    public static function replace($path, $data, $pattern, $mode = 0644, $flags = 0)
     {
-        return static::write($path, preg_replace($pattern, $data, static::read($path)), $permissions, $flags);
+        return static::write($path, preg_replace($pattern, $data, static::read($path)), $mode, $flags);
     }
 
     /**
