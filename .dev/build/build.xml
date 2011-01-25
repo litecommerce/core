@@ -48,7 +48,7 @@
 
 	<target name="prepare">
 		<exec executable="svn" dir="${sourceDir}/.dev">
-			<arg line="up" />
+			<arg value="up" />
 		</exec>
         <exec executable="${sourceDir}/.dev/build/release/release.sh" dir="${buildDir}">
 			<arg line="-c -b ${label} -d ${distrDir} -t" />
