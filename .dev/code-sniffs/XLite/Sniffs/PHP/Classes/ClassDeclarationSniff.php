@@ -208,6 +208,77 @@ class XLite_Sniffs_PHP_Classes_ClassDeclarationSniff extends XLite_ReqCodesSniff
 
         } while ($pos !== false);
 
+		// Check methods order
+        $pos  = $tokens[$stackPtr]['scope_opener'] + 1;
+		$curlyEnd  = $tokens[$stackPtr]['scope_closer'];
+		$functions = array();
+
+		while ($next = $phpcsFile->findNext(array(T_FUNCTION), $pos, $curlyEnd - 1)) {
+			$a = $tokens[$next - 2]['content'];
+			$b = $tokens[$next - 4]['content'];
+
+			if ('static' == $a || 'abstract' == $a) {
+				$z = $a;
+				$a = $b;
+				$b = $z;
+			}
+
+			$namePos = $phpcsFile->findNext(array(T_STRING), $next + 1, $curlyEnd - 1);
+			$name = $tokens[$namePos]['content'];
+
+			$functions[$name] = array($a, trim($b), $tokens[$next]['line'], $next);
+
+			$pos = $next + 1;
+		}
+
+		$exists = array();
+
+		foreach ($functions as $name => $f) {
+
+			$key = trim($f[1] . ' ' . $f[0]);
+
+			$prev = array();
+
+			switch ($key) {
+                case 'abstract public':
+                    $prev[] = 'abstract protected';
+
+                case 'abstract protected':
+                    $prev[] = 'static public';
+
+                case 'static public':
+                    $prev[] = 'static protected';
+
+                case 'static protected':
+                    $prev[] = 'public';
+
+                case 'public':
+                    $prev[] = 'protected';
+
+                case 'protected':
+                    $prev[] = 'private';
+			}
+
+			foreach ($prev as $p) {
+				if (isset($exists[$p])) {
+					$phpcsFile->addError(
+						$this->getReqPrefix('?')
+						. 'Method \'' . $key . ' function ' . $name . '\' is place after lesser method '
+						. '\'' . $p . ' function ' . $exists[$p] . '\' : ' . $functions[$exists[$p]][2],
+						$f[3]
+					);
+				}
+			}
+
+			if (!isset($exists[$key])) {
+				$exists[$key] = $name;
+			}
+		}
+
+//var_dump($functions);
+//die();
+		
+
 
     }//end process()
 

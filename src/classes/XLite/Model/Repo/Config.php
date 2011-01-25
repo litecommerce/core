@@ -87,7 +87,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineCacheCells()
+    protected static function defineCacheCells()
     {
         $list = parent::defineCacheCells();
 
@@ -99,90 +99,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
 
         return $list;
     }
-
-    /**
-     * Remove option from the "black list" 
-     * 
-     * @param string $category Option category
-     * @param string $name     Option name
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function enableOption($category, $name)
-    {
-        unset($this->disabledOptions[$category][array_search($name, $this->disabledOptions[$category])]);
-    }
-
-    /**
-     * Add option to the "black list" 
-     * 
-     * @param string $category Option category
-     * @param string $name     Option name
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function disableOption($category, $name)
-    {
-        if (!isset($this->disabledOptions[$category])) {
-            $this->disabledOptions[$category] = array();
-        }
-
-        $this->disabledOptions[$category][] = $name;
-    }
-
-    /**
-     * Return query (and its params) which is used to filter options 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getOptionsAvailabilityCondition()
-    {
-        $conditions = array();
-        $params = array();
-
-        foreach ($this->disabledOptions as $category => $options) {
-
-            $condition = 'c.category = :category' . $category;
-            $params['category' . $category] = $category;
-
-            list($keys, $options) = \XLite\Core\Database::prepareArray($options, $category);
-            $condition .= ' AND c.name IN (' . implode(',', $keys) . ')';
-            $params += $options;
-
-            $conditions[] = 'NOT (' . $condition . ')';
-        }
-
-        return array(empty($conditions) ? null : '(' . implode(') AND (', $conditions) . ')', $params);
-    }
-
-    /**
-     * Add "filter" condition to the query builder
-     * 
-     * @param \Doctrine\ORM\QueryBuilder $qb Current query builder
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function prepareOptionsAvailabilityCondition(\Doctrine\ORM\QueryBuilder $qb)
-    {
-        list($condition, $params) = $this->getOptionsAvailabilityCondition();
-
-        return isset($condition) 
-            ? $qb->andWhere($condition)->setParameters($qb->getParameters() + $params) 
-            : $qb;
-    }
-
 
     /**
      * Create a new QueryBuilder instance that is prepopulated for this entity name
@@ -227,23 +143,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Define query builder for getByCategory()
-     *
-     * @param string $category Category name
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineByCategoryQuery($category)
-    {
-        return $this->createQueryBuilder()
-            ->andWhere('c.category = :category')
-            ->setParameter('category', $category);
-    }
-
-    /**
      * Find all visible settings by category name
      * 
      * @param string $category Category name
@@ -256,24 +155,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
     public function findByCategoryAndVisible($category)
     {
         return $this->defineByCategoryAndVisibleQuery($category)->getQuery()->getResult();
-    }
-
-    /**
-     * Define query for findByCategoryAndVisible() method
-     * 
-     * @param string $category Category name
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineByCategoryAndVisibleQuery($category)
-    {
-        return $this->createQueryBuilder()
-            ->andWhere('c.category = :category AND c.type != :empty')
-            ->setParameter('category', $category)
-            ->setParameter('empty', '');
     }
 
     /**
@@ -302,36 +183,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
         }
 
         return $data;
-    }
-
-    /**
-     * Define query builder for getAllOptions()
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineAllOptionsQuery()
-    {
-        return $this->createQueryBuilder();
-    }
-
-    /**
-     * Check (and modify) option name and value
-     * 
-     * @param string &$category Option category
-     * @param string &$name     Option name
-     * @param mixed  &$value    Option value
-     *  
-     * @return boolean 
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function checkNameAndValue(&$category, &$name, &$value)
-    {
-        return true;
     }
 
     /**
@@ -427,34 +278,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Check if option type is a valid 
-     * 
-     * @param string $optionType Option type
-     *  
-     * @return boolean 
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isValidOptionType($optionType)
-    {
-        return in_array(
-            $optionType, 
-            array(
-                '',
-                'text',
-                'textarea',
-                'checkbox',
-                'country',
-                'state',
-                'select',
-                'serialized',
-                'separator'
-            )
-        );
-    }
-
-    /**
      * Create new option / Update option value
      * 
      * @param array $data Option data in the following format
@@ -512,4 +335,181 @@ class Config extends \XLite\Model\Repo\Base\I18n
         \XLite\Core\Database::getEM()->persist($option);
         \XLite\Core\Database::getEM()->flush();
     }
+
+    /**
+     * Remove option from the "black list" 
+     * 
+     * @param string $category Option category
+     * @param string $name     Option name
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function enableOption($category, $name)
+    {
+        unset($this->disabledOptions[$category][array_search($name, $this->disabledOptions[$category])]);
+    }
+
+    /**
+     * Add option to the "black list" 
+     * 
+     * @param string $category Option category
+     * @param string $name     Option name
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function disableOption($category, $name)
+    {
+        if (!isset($this->disabledOptions[$category])) {
+            $this->disabledOptions[$category] = array();
+        }
+
+        $this->disabledOptions[$category][] = $name;
+    }
+
+    /**
+     * Return query (and its params) which is used to filter options 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getOptionsAvailabilityCondition()
+    {
+        $conditions = array();
+        $params = array();
+
+        foreach ($this->disabledOptions as $category => $options) {
+
+            $condition = 'c.category = :category' . $category;
+            $params['category' . $category] = $category;
+
+            list($keys, $options) = \XLite\Core\Database::prepareArray($options, $category);
+            $condition .= ' AND c.name IN (' . implode(',', $keys) . ')';
+            $params += $options;
+
+            $conditions[] = 'NOT (' . $condition . ')';
+        }
+
+        return array(empty($conditions) ? null : '(' . implode(') AND (', $conditions) . ')', $params);
+    }
+
+    /**
+     * Add "filter" condition to the query builder
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $qb Current query builder
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareOptionsAvailabilityCondition(\Doctrine\ORM\QueryBuilder $qb)
+    {
+        list($condition, $params) = $this->getOptionsAvailabilityCondition();
+
+        return isset($condition) 
+            ? $qb->andWhere($condition)->setParameters($qb->getParameters() + $params) 
+            : $qb;
+    }
+
+    /**
+     * Define query builder for getByCategory()
+     *
+     * @param string $category Category name
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineByCategoryQuery($category)
+    {
+        return $this->createQueryBuilder()
+            ->andWhere('c.category = :category')
+            ->setParameter('category', $category);
+    }
+
+    /**
+     * Define query for findByCategoryAndVisible() method
+     * 
+     * @param string $category Category name
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineByCategoryAndVisibleQuery($category)
+    {
+        return $this->createQueryBuilder()
+            ->andWhere('c.category = :category AND c.type != :empty')
+            ->setParameter('category', $category)
+            ->setParameter('empty', '');
+    }
+
+    /**
+     * Define query builder for getAllOptions()
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAllOptionsQuery()
+    {
+        return $this->createQueryBuilder();
+    }
+
+    /**
+     * Check (and modify) option name and value
+     * 
+     * @param string &$category Option category
+     * @param string &$name     Option name
+     * @param mixed  &$value    Option value
+     *  
+     * @return boolean 
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkNameAndValue(&$category, &$name, &$value)
+    {
+        return true;
+    }
+
+    /**
+     * Check if option type is a valid 
+     * 
+     * @param string $optionType Option type
+     *  
+     * @return boolean 
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isValidOptionType($optionType)
+    {
+        return in_array(
+            $optionType, 
+            array(
+                '',
+                'text',
+                'textarea',
+                'checkbox',
+                'country',
+                'state',
+                'select',
+                'serialized',
+                'separator'
+            )
+        );
+    }
+
 }
