@@ -1394,7 +1394,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Get module protected columns 
      * 
-     * @param \Reflection                    $reflection Class reflection data
+     * @param \ReflectionClass               $reflection Class reflection data
      * @param string                         $path       Class repository path
      * @param \Doctrine\ORM\Tools\SchemaTool $tool       Doctrine schema tool
      *  
@@ -1403,7 +1403,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getModuleProtectedColumns(\Reflection $reflection, $path, \Doctrine\ORM\Tools\SchemaTool $tool)
+    protected function getModuleProtectedColumns(\ReflectionClass $reflection, $path, \Doctrine\ORM\Tools\SchemaTool $tool)
     {
         $cols = array();
         $table = null;
