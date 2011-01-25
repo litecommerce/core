@@ -69,12 +69,16 @@ abstract class XLite_Tests_Model_OrderAbstract extends XLite_Tests_TestCase
         \XLite\Core\Database::getEM()->flush();
 
         $list = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
+        $found = false;
         foreach ($list as $p) {
             if (!$p->getOrder() && $p->getLogin() == 'rnd_tester@cdev.ru') {
                 $order->setProfileCopy($p);
+                $found = true;
                 break;
             }
         }
+
+        $this->assertTrue($found, 'test order\'s profile is not found');
 
         $order->calculate();
 

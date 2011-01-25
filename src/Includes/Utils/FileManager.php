@@ -403,4 +403,50 @@ class FileManager extends \Includes\Utils\AUtils
     {
         return !static::isExists($path) ?: unlink($path);
     }
+
+    /**
+     * Normalize path
+     * 
+     * @param string $path Path
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function normalize($path)
+    {
+        return array_reduce(explode('/', $path), array(get_called_class(), 'normalizeCallback'), 0);
+    }
+
+    /**
+     * Path nrmalization procedure callback 
+     * 
+     * @param string $a Path part 1
+     * @param string $b Path part 2
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function normalizeCallback($a, $b)
+    {
+        if (0 === $a) {
+            $a = '/';
+        }
+ 
+        if ('' === $b || '.' === $b) {
+            $result = $a;
+
+        } elseif ('..' === $b) {
+            $result = dirname($a);
+
+        } else {
+ 
+            $result = preg_replace('/' . preg_quote(LC_DS, '/') . '+/S', LC_DS, $a . LC_DS . $b);
+        }
+
+        return $result;
+    }
 }
