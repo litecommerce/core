@@ -163,7 +163,7 @@ class PHARModule extends \XLite\Base
 
                 $result = $this->deployToTemp();
 
-            } catch (UnexpectedValueException $e) {
+            } catch (\UnexpectedValueException $e) {
 
                 $this->error = $e->getMessage();
             }

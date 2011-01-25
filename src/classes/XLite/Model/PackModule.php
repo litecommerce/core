@@ -158,7 +158,7 @@ class PackModule extends \XLite\Base
 
                 $phar->compress(\Phar::GZ);
 
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
 
                 $this->error = $e->getMessage();
 
