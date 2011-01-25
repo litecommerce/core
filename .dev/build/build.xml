@@ -108,7 +108,7 @@
 		<exec executable="/usr/local/php-530/bin/php" dir="${installDir}" failonerror="on">
 			<arg value="${installDir}/modules/lc_connector/litecommerce/restoredb" />
 			<arg value="demo" />
-			<arg value="all" />
+			<arg value="admin" />
 		</exec>
 		<!-- Rebuild cache: first pass -->
 		<exec executable="/usr/local/php-530/bin/php" dir="${installDir}">
