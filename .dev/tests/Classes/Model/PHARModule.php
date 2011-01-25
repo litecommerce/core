@@ -39,14 +39,9 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
     {
         @copy($this->getFile('bad.phar'), LC_LOCAL_REPOSITORY . 'bad.phar');
 
-        try {
+        $phar = new \XLite\Model\PHARModule('bad.phar');
 
-            $phar = new \XLite\Model\PHARModule('bad.phar');
-
-        } catch (Exception $e) {
-
-            $message = $e->getMessage();
-        }
+        $message = $phar->getError();
 
         $this->assertEquals(
             $message,
@@ -85,9 +80,9 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
         // NO ini file checking
         @copy($this->getFile('no_ini.phar'), LC_LOCAL_REPOSITORY . 'no_ini.phar');
         $phar = new \XLite\Model\PHARModule('no_ini.phar');
-        $status = $phar->check();
+        $phar->check();
 
-        $this->assertEquals($status, 'wrong_structure', 'Wrong status for no INI file');
+        $this->assertEquals($phar->getStatus(), 'wrong_structure', 'Wrong status for no INI file');
 
         $phar->cleanUp();
         @unlink(LC_LOCAL_REPOSITORY . 'no_ini.phar');
@@ -95,9 +90,9 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
         // NO catalogs checking
         @copy($this->getFile('no_dir.phar'), LC_LOCAL_REPOSITORY . 'no_dir.phar');
         $phar = new \XLite\Model\PHARModule('no_dir.phar');
-        $status = $phar->check();
+        $phar->check();
 
-        $this->assertEquals($status, 'wrong_structure', 'Wrong status for no DIR file');
+        $this->assertEquals($phar->getStatus(), 'wrong_structure', 'Wrong status for no DIR file');
 
         $phar->cleanUp();
         @unlink(LC_LOCAL_REPOSITORY . 'no_dir.phar');
@@ -105,9 +100,9 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
         // Corrupted INI checking
         @copy($this->getFile('corrupted_ini.phar'), LC_LOCAL_REPOSITORY . 'corrupted_ini.phar');
         $phar = new \XLite\Model\PHARModule('corrupted_ini.phar');
-        $status = $phar->check();
+        $phar->check();
 
-        $this->assertEquals($status, 'ini_corrupted', 'Wrong status for corrupted INI file');
+        $this->assertEquals($phar->getStatus(), 'ini_corrupted', 'Wrong status for corrupted INI file');
 
         $phar->cleanUp();
         @unlink(LC_LOCAL_REPOSITORY . 'corrupted_ini.phar');
@@ -115,9 +110,9 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
         // Wrong INI checking
         @copy($this->getFile('wrong_ini.phar'), LC_LOCAL_REPOSITORY . 'wrong_ini.phar');
         $phar = new \XLite\Model\PHARModule('wrong_ini.phar');
-        $status = $phar->check();
+        $phar->check();
 
-        $this->assertEquals($status, 'wrong_specification', 'Wrong status for wrong INI file');
+        $this->assertEquals($phar->getStatus(), 'wrong_specification', 'Wrong status for wrong INI file');
 
         $phar->cleanUp();
         @unlink(LC_LOCAL_REPOSITORY . 'wrong_ini.phar');
@@ -125,9 +120,9 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
         // Already installed module checking
         @copy($this->getFile('already.phar'), LC_LOCAL_REPOSITORY . 'already.phar');
         $phar = new \XLite\Model\PHARModule('already.phar');
-        $status = $phar->check();
+        $phar->check();
 
-        $this->assertEquals($status, 'wrong_install', 'Wrong status for already installed module');
+        $this->assertEquals($phar->getStatus(), 'wrong_install', 'Wrong status for already installed module');
 
         $phar->cleanUp();
         @unlink(LC_LOCAL_REPOSITORY . 'already.phar');
@@ -141,9 +136,9 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
 
         $phar = new \XLite\Model\PHARModule('test_module.phar');
 
-        $status = $phar->check();
+        $phar->check();
 
-        $this->assertEquals('ok', $status, 'Good module must be validated');
+        $this->assertEquals('ok', $phar->getStatus(), 'Good module must be validated');
 
         $phar->deploy();
 
@@ -176,9 +171,9 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
 
         $phar = new \XLite\Model\PHARModule('test_module2.phar');
 
-        $status = $phar->check();
+        $phar->check();
 
-        $this->assertEquals('ok', $status, 'new Bestsellers module must be validated');
+        $this->assertEquals('ok', $phar->getStatus(), 'new Bestsellers module must be validated');
 
         $phar->deploy();
 
