@@ -51,18 +51,40 @@ function _do_yaml_upload($yamlfile)
     \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::addFixtureToList($yamlfile);
 }
 
-if (isset($argv[1]) && $argv[1] == 'help') {
+
+if ($argc > 1) {
+
+    $params = array_unique($argv);
+
+    array_shift($params);
+
+    define('R_INSTALL_DEMO', in_array('demo', $params));
+
+    define('R_DISPLAY_HELP', in_array('help', $params));
+
+    define('R_INSTALL_ADMIN', in_array('admin', $params));
+
+    define('R_INSTALL_STANDALONE', in_array('standalone', $params));
+
+} else {
+    define('R_DISPLAY_HELP', true);
+}
+
+
+if (R_DISPLAY_HELP) {
 	echo <<<OUT
-Usage: $argv[0] [option1] [option2]
+Usage: $argv[0] [options]
 
 where:
-  option1 - one of the following: demo (install all demo data), standalone (only demo data for LC standalone distributive), drupal (install only demo data for distributive and enable DrupalConnector module; uses by default).
-  option2 - if has a value 'all' then all modules will be enabled (only if option1=demo)
+  options - one or several of the following:
+        demo       - install all demo data (excluding the admin user),
+        standalone - do not enable DrupalConnector module
+        admin      - install admin user account
 
 Examples:
   $argv[0]
   $argv[0] demo
-  $argv[0] demo all
+  $argv[0] demo admin
   $argv[0] standalone
 
 OUT;
@@ -116,7 +138,7 @@ $modules = array();
 
 _do_yaml_upload('sql/xlite_data.yaml');
 
-if (!isset($argv[1]) || $argv[1] != 'demo') {
+if (!R_INSTALL_DEMO) {
     _do_yaml_upload('sql/xlite_demo.yaml');
 }
 
@@ -130,10 +152,8 @@ $enabledModules = array(
     'ProductOptions',
 );
 
-if (
-    (isset($argv[2]) && $argv[2] == 'all')
-    || (isset($argv[1]) && 'drupal' == $argv[1])
-) {
+if (!R_INSTALL_STANDALONE) {
+    // Enable DrupalConnector module if 'standalone' option is not passed
     $enabledModules[] = 'DrupalConnector';
 }
 
@@ -157,10 +177,16 @@ foreach (glob('classes/XLite/Module/CDev/*/Main.php') as $f) {
     }
 }
 
+if (R_INSTALL_ADMIN) {
+    // Install Administrator profile
+    _do_yaml_upload('sql/demo/xlite_demo_user_admin.yaml');
+}
+
+// Install users profiles
 _do_yaml_upload('sql/demo/xlite_demo_user.yaml');
 
-if (isset($argv[1]) && $argv[1] == 'demo') {
-
+if (R_INSTALL_DEMO) {
+    // Install demo data
     _do_yaml_upload('sql/demo/xlite_demo_data.yaml');
     _do_yaml_upload('sql/demo/xlite_demo_store.yaml');
     _do_yaml_upload('sql/demo/xlite_demo_orders.yaml');
