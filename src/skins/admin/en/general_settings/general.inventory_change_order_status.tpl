@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Currently not used; saved for future
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -13,8 +13,8 @@
  * @ListChild (list="general_settings.general.parts", weight="400")
  *}
 
-{if:option.name=#inventory_change_order_status#}
+{*if:option.name=#inventory_change_order_status#}
 <select name="{option.name}">
   <option FOREACH="getInventoryOrderStatuses(),status,label" value="{status}" selected="{option.value=status}">{label:h}</option>
 </select>
-{end:}
+{end:*}

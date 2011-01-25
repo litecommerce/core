@@ -17,8 +17,8 @@
   <td>{t(#Inventory tracking for this product is#)}</td>
   <td>
     <select name="{getNamePostedData(#enabled#)}">
-      <option value="1" selected="{inventory.isEnabled()=#1#}">{t(#Enabled#)}</option>
-      <option value="0" selected="{inventory.isEnabled()=#0#}">{t(#Disabled#)}</option>
+      <option value="1" selected="{inventory.getEnabled()=#1#}">{t(#Enabled#)}</option>
+      <option value="0" selected="{inventory.getEnabled()=#0#}">{t(#Disabled#)}</option>
     </select>
   </td>
 </tr>

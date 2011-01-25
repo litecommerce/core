@@ -331,18 +331,30 @@ abstract class AEntity
      */
     public function cloneEntity()
     {
-        $class = $this instanceof \Doctrine\ORM\Proxy\Proxy ? $this->_entityClass : get_called_class();
-
+        $class  = $this instanceof \Doctrine\ORM\Proxy\Proxy ? $this->_entityClass : get_called_class();
         $entity = new $class();
+        $fields = array_keys(\XLite\Core\Database::getEM()->getClassMetadata($class)->fieldMappings);
 
-        $cmd = \XLite\Core\Database::getEM()->getClassMetadata($class);
         $map = array();
-        foreach (array_keys($cmd->fieldMappings) as $f) {
-            $map[$f] = $this->$f;
+
+        foreach ($fields as $field) {
+            $map[$field] = $this->$field;
         }
 
         $entity->map($map);
 
         return $entity;
+    }
+
+    /**
+     * Since Doctrine lifecycle callbacks do not allow to modify associations, we've added this method
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function beforeCommit()
+    {
     }
 }

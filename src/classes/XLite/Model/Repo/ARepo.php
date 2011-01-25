@@ -862,11 +862,11 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Flushes all changes to objects that have been queued up to now to the database
      *
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function flushChanges()
+    public function flushChanges()
     {
         return $this->getEntityManager()->flush();
     }
@@ -933,6 +933,10 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         $entity = new $this->_entityName($data);
         $this->getEntityManager()->persist($entity);
 
+        // Since Doctrine lifecycle callbacks do not allow
+        // to modify associations, we've added this method
+        $entity->beforeCommit();
+
         return $entity;
     }
 
@@ -950,6 +954,10 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     protected function performUpdate(\XLite\Model\AEntity $entity, array $data = array())
     {
         $entity->map($data);
+
+        // Since Doctrine lifecycle callbacks do not allow
+        // to modify associations, we've added this method
+        $entity->beforeCommit();
     }
 
     /**
@@ -964,6 +972,10 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     protected function performDelete(\XLite\Model\AEntity $entity)
     {
+        // Since Doctrine lifecycle callbacks do not allow
+        // to modify associations, we've added this method
+        $entity->beforeCommit();
+
         $this->getEntityManager()->remove($entity);
     }
 
