@@ -302,7 +302,7 @@ class PackModule extends \XLite\Base
      */
     protected function getFileFilter()
     {
-        return '/(?:' . preg_quote(LC_DS, LC_DS) . '\.(?!htaccess)|CVS)/Ss';
+        return '/(?:' . preg_quote(LC_DS, '/') . '\.(?!htaccess)|CVS)/Ss';
     }
 
 
