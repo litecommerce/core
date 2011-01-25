@@ -34,6 +34,9 @@ ini_set('display_errors', true);
 // See also http://bugs.php.net/bug.php?id=48914
 @date_default_timezone_set(@date_default_timezone_get());
 
+// Timestamp of the application start
+define('LC_START_TIME', time());
+
 // Short name
 define('LC_DS', DIRECTORY_SEPARATOR);
 
@@ -58,8 +61,8 @@ define('LC_NAMESPACE',      'XLite');
 define('LC_MODEL_NS',       LC_NAMESPACE . '\Model');
 define('LC_MODEL_PROXY_NS', LC_MODEL_NS . '\Proxy');
 
-// Timestamp of the application start
-define('LC_START_TIME', time());
+// Modes
+define('LC_IS_CLI_MODE', 'cli' === PHP_SAPI);
 
 // Disabled xdebug coverage for Selenium-based tests [DEVELOPMENT PURPOSE]
 if (isset($_COOKIE) && !empty($_COOKIE['no_xdebug_coverage']) && function_exists('xdebug_stop_code_coverage')) {

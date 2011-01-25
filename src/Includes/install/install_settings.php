@@ -121,6 +121,7 @@ $lcSettings = array(
 );
 
 // Switch classes autoloader to the orig classes dir instead of compiled classes storage if cache isn't built yet
+// FIXME
 if (\Includes\Decorator\Utils\CacheManager::isRebuildNeeded()) {
     \Includes\Autoloader::switchLcAutoloadDir();
 }
