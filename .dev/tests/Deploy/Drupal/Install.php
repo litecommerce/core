@@ -369,11 +369,11 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             sprintf('Check that page header equals to text "Installing LiteCommerce" (pass %d)', $pass)
         );
 
-        $counter = 100;
+        $counter = 300;
 
         while ($counter > 0) {
 
-            sleep(3);
+            sleep(1);
 
             if ($this->isElementPresent('//div[@class="percentage"]')) {
                 $percentage = $this->getText('//div[@class="percentage"]');
@@ -390,7 +390,10 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             $this->assertTrue(false, sprintf('Percentage of batch process does not achived the value of 100% (%d)', $percentage));
         }
 
-        $this->waitForPageToLoad(10000);
+        $this->waitForCondition(
+            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title")[0].innerHTML.search(/Installing ' . self::PRODUCT_NAME . '/) != -1',
+            20000
+        );
     }
 
     /**
@@ -412,11 +415,11 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             sprintf('Check that page header equals to text "Installing %s" (pass %d)', self::PRODUCT_NAME, $pass)
         );
 
-        $counter = 100;
+        $counter = 300;
 
         while ($counter > 0) {
 
-            sleep(3);
+            sleep(1);
 
             if ($this->isElementPresent('//div[@class="percentage"]')) {
                 $percentage = $this->getText('//div[@class="percentage"]');
@@ -433,7 +436,10 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             $this->assertTrue(false, sprintf('Percentage of batch process does not achived the value of 100% (%d)', $percentage));
         }
 
-        $this->waitForPageToLoad(10000);
+        $this->waitForCondition(
+            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title")[0].innerHTML.search(/Configure site/) != -1',
+            20000
+        );
     }
 
     /**
@@ -573,12 +579,12 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
          // Check that link to the installed store is presented
         $this->assertElementPresent(
-            '//div[@id="content"]/p/a[text()="your new site"]',
+            '//div[@id="content"]/p/a[text()="Visit your new site"]',
             'Check that "your new site" text is presented'
         );
 
         // Click link to the frontend
-        $this->clickAndWait('//a[text()="your new site"]');
+        $this->clickAndWait('//a[text()="Visit your new site"]');
     }
 
     /**
