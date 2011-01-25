@@ -972,7 +972,8 @@ class Module extends \XLite\Model\AEntity
      */
     public function isUpdateAvailable()
     {
-        return -1 === version_compare($this->getCurrentVersion(), $this->getLastVersion());
+        return !is_null($this->getCurrentVersion())
+            && -1 === version_compare($this->getCurrentVersion(), $this->getLastVersion());
     }
 
     /**
