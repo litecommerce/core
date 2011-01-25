@@ -4,7 +4,7 @@
  * Check credit card data
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   SVN: $Id: check_cc.js 2678 2010-04-20 06:11:11Z max $
  * @link      http://www.litecommerce.com/
