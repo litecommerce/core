@@ -957,18 +957,19 @@ class Settings extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Return list of possible order statuses for inventory tracking
+     * NOTE: currently not used; saved for future
      * 
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getInventoryOrderStatuses()
+    /* public function getInventoryOrderStatuses()
     {
         return array(
             \XLite\Model\Order::STATUS_QUEUED    => static::t('Placed'),
             \XLite\Model\Order::STATUS_PROCESSED => static::t('Processed'),
         );
-    }
+    } */
 }
 

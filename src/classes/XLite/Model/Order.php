@@ -259,26 +259,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
     protected $addItemError;
 
     /**
-     * Flag - status is changed or not
-     * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $statusChanged = false;
-
-    /**
-     * Previous order status
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $oldStatus;
-
-    /**
      * Return list of all aloowed order statuses
      * 
      * @param string $status Status to get OPTIONAL
@@ -605,29 +585,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
 
     }
     */
-
-    /**
-     * Set status 
-     * 
-     * @param string $value Status code
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setStatus($value)
-    {
-        if ($this->status != $value && !$this->statusChanged) {
-            $this->statusChanged = true;
-            $this->oldStatus = $this->status;
-        }
-
-        $this->status = $value;
-
-        // TODO - rework
-        //$this->refresh('shippingRates');
-    }
 
     /**
      * Set subtotal 
@@ -1273,46 +1230,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
-     * Prepare order before save data operation
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     * @PrePersist
-     * @PreUpdate
-     */
-    public function prepareBeforeSave() 
-    {
-        if (!is_numeric($this->date)) {
-            $this->setDate(time());
-        }
-
-        if ($this->statusChanged) {
-            $this->changeStatusPostprocess($this->oldStatus, $this->getStatus());
-            $this->statusChanged = false;
-        }
-    }
-
-    /**
-     * Prepare order before remove operation
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     * @PreRemove
-     */
-    public function prepareBeforeRemove()
-    {
-        if (in_array($this->getStatus(), array(self::STATUS_QUEUED, self::STATUS_INPROGRESS))) {
-            $status = $this->getStatus();
-            $this->setStatus(self::STATUS_DECLINED);
-            $this->changeStatusPostprocess($status, self::STATUS_DECLINED);
-        }
-    }
-
-    /**
      * Check - CC info showing available or not
      * 
      * @return boolean
@@ -1396,13 +1313,68 @@ class Order extends \XLite\Model\Base\ModifierOwner
     }
 
 
+    // ------------------------------ Lifecycle callbacks -
+
+    /**
+     * Prepare order before save data operation
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     *
+     * @PrePersist
+     * @PreUpdate
+     */
+    public function prepareBeforeSave()
+    {
+        if (!is_numeric($this->date)) {
+            $this->setDate(time());
+        }
+    }
+
+    /**
+     * Prepare order before remove operation
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     *
+     * @PreRemove
+     */
+    public function prepareBeforeRemove()
+    {
+        if (in_array($this->getStatus(), array(self::STATUS_QUEUED, self::STATUS_INPROGRESS))) {
+            $status = $this->getStatus();
+            $this->setStatus(self::STATUS_DECLINED);
+            $this->changeStatusPostprocess($status, self::STATUS_DECLINED);
+        }
+    }
+
+    /**
+     * Since Doctrine lifecycle callbacks do not allow to modify associations, we've added this method
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function beforeCommit()
+    {
+        if ($this->isStatusChanged()) {
+            $this->changeStatusPostprocess($this->oldStatus, $this->getStatus());
+            $this->oldStatus = null;
+        }
+    }
+
     // ------------------------------ Change status routines -
 
     /**
-     * List of change status handlers
+     * List of change status handlers;
+     * top index - old status, second index - new one
+     * (<old_status> ----> <new_status>: $statusHandlers[$old][$new])
      *
-     * TODO: check if it's correct
-     * 
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -1465,6 +1437,52 @@ class Order extends \XLite\Model\Base\ModifierOwner
     );
 
     /**
+     * Order previous status
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $oldStatus;
+
+    
+    /**
+     * Set status
+     *
+     * @param string $value Status code
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setStatus($value)
+    {
+        if ($this->getStatus() != $value && !$this->isStatusChanged()) {
+            $this->oldStatus = $this->getStatus();
+        }
+
+        $this->status = $value;
+
+        // TODO - rework
+        //$this->refresh('shippingRates');
+    }
+
+    /**
+     * Check if order status was changed
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isStatusChanged()
+    {
+        return isset($this->oldStatus);
+    }
+
+    /**
      * Return base part of the certain "change status" handler name
      * 
      * @param string $old Old order status
@@ -1481,21 +1499,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
-     * Call a method handling certain status change
-     * 
-     * @param string $handler Base part of handler name
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function callStatusHandler($handler)
-    {
-        $this->{'process' . ucfirst($handler)}();
-    }
-
-    /**
      * Postprocess status changes
      *
      * @param string $old Old status
@@ -1508,7 +1511,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     protected function changeStatusPostprocess($old, $new)
     {
-        array_map(array($this, 'callStatusHandler'), $this->getStatusHandlers($old, $new));
+        foreach ($this->getStatusHandlers($old, $new) as $handler) {
+            $this->{'process' . ucfirst($handler)}();
+        }
     }
 
     /**
@@ -1558,6 +1563,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     protected function processProcess()
     {
         $this->sendProcessMail();
+        $this->decreaseInventory();
     }
 
     /**
@@ -1570,6 +1576,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     protected function processDecline()
     {
+        $this->increaseInventory();
     }
 
     /**
@@ -1619,5 +1626,31 @@ class Order extends \XLite\Model\Base\ModifierOwner
         foreach ($this->getItems() as $item) {
             $item->getProduct()->changeAmount($this->getItemInventoryAmount($item, $sign));
         }
+    }
+
+    /**
+     * Order processed: decrease products inventory 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function decreaseInventory()
+    {
+        $this->changeItemsInventory(-1);
+    }
+
+    /**
+     * Order declined: increase products inventory
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function increaseInventory()
+    {
+        $this->changeItemsInventory(1);
     }
 }

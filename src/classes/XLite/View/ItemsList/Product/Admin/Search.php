@@ -223,7 +223,7 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
     {
         $result = parent::getSearchCondition();
 
-        foreach (\XLite\View\ItemsList\Product\Admin\Search::getSearchParams() as $modelParam => $requestParam) {
+        foreach (static::getSearchParams() as $modelParam => $requestParam) {
             $result->$modelParam = $this->getParam($requestParam);
         }
 
@@ -248,7 +248,6 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Product')
-            ->search($cnd, $countOnly);
+        return \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd, $countOnly);
     }
 }

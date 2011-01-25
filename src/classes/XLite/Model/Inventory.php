@@ -37,9 +37,9 @@ namespace XLite\Model;
  *
  * @Entity
  * @Table  (name="inventory",
- *          indexes={
- *              @Index (name="id", columns={"id"})
- *          }
+ *      indexes={
+ *          @Index (name="id", columns={"id"})
+ *      }
  * )
  */
 class Inventory extends \XLite\Model\AEntity
@@ -126,18 +126,30 @@ class Inventory extends \XLite\Model\AEntity
      */
     protected $product;
 
-
     /**
-     * Check if inventory tracking is enabled 
+     * Check if low limit is reached; send mail to admin 
      * 
-     * @return boolean
-     * @access public
+     * @return void
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isEnabled()
+    protected function checkForLowLimit()
     {
-        return (bool) $this->getEnabled();
+        return $this->getLowLimitEnabled() && $this->getAmount() < $this->getLowLimitAmount();
+    }
+
+    /**
+     * Send notification to admin: product low limit is reached
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function sendLowLimitNotification()
+    {
+        // TODO: add functionality after the Mailer will be refactored
     }
 
     /**
@@ -152,6 +164,13 @@ class Inventory extends \XLite\Model\AEntity
      */
     public function changeAmount($delta)
     {
-        !$this->isEnabled() ?: $this->setAmount($this->getAmount() + $delta);
+        if ($this->getEnabled()) {
+
+            // Change by delta
+            $this->setAmount($this->getAmount() + $delta);
+
+            // Check for low limit
+            !$this->checkForLowLimit() ?: $this->sendLowLimitNotification();
+        }
     }
 }

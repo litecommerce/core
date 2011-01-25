@@ -48,6 +48,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     const P_CATEGORY_ID       = 'categoryId';
     const P_SUBSTRING         = 'substring';
     const P_SEARCH_IN_SUBCATS = 'searchInSubcats';
+    const P_LOW_INVENTORY     = 'lowInventory';
     const P_ORDER_BY          = 'orderBy';
     const P_LIMIT             = 'limit';
     const P_INCLUDING         = 'including';    
@@ -100,6 +101,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
             self::P_SKU,
             self::P_CATEGORY_ID,
             self::P_SUBSTRING,
+            self::P_LOW_INVENTORY,
             self::P_ORDER_BY,
             self::P_LIMIT,
         );
@@ -426,6 +428,27 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
                 explode(' ', $value)
             )
         );
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndLowInventory(\Doctrine\ORM\QueryBuilder $queryBuilder)
+    {
+        $queryBuilder
+            ->innerJoin('p.inventory', 'i')
+            ->andWhere('i.enabled = :enabled')
+            ->setParameter('enabled', true)
+            ->andWhere('i.lowLimitEnabled = :lowLimitEnabled')
+            ->setParameter('lowLimitEnabled', true)
+            ->andWhere('i.amount < i.lowLimitAmount');
     }
 
     /**

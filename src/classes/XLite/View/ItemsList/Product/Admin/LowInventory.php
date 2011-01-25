@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,96 +26,84 @@
  * @since      3.0.0
  */
 
-namespace XLite\Controller\Admin;
+namespace XLite\View\ItemsList\Product\Admin;
 
 /**
- * ____description____
+ * LowInventory 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Order extends \XLite\Controller\Admin\AAdmin
+class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
 {
     /**
-     * Common method to determine current location
+     * Return title
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return 'Products with low inventory';
+    }
+
+    /**
+     * Return class name for the list pager
      *
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getLocation()
+    protected function getPagerClass()
     {
-        return 'Order #' . \XLite\Core\Request::getInstance()->order_id;
+        return '\XLite\View\Pager\Admin\Product';
     }
 
     /**
-     * Add part to the location nodes list
+     * Return name of the base widgets list
      *
-     * @return void
+     * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function addBaseLocation()
+    protected function getListName()
     {
-        parent::addBaseLocation();
-
-        $this->addLocationNode('Search orders', $this->buildURL('orders_list'));
+        return parent::getListName() . '.search';
     }
 
     /**
-     * getRequestData 
-     * TODO: to remove
-     * 
-     * @return void
+     * Return params list to use for search
+     *
+     * @return \XLite\Core\CommonCell
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getRequestData()
+    protected function getSearchCondition()
     {
-        return \Includes\Utils\ArrayManager::filterArrayByKeys(
-            \XLite\Core\Request::getInstance()->getData(),
-            array('status', 'notes')
-        );
-    }
-
-    /**
-     * doActionUpdate 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function doActionUpdate()
-    {
-        $request = \XLite\Core\Request::getInstance();
-
-        return \XLite\Core\Database::getRepo('\XLite\Model\Order')->updateById(
-            \XLite\Core\Request::getInstance()->order_id,
-            $this->getRequestData()
-        );
-    } 
-
-    /**
-     * getViewerTemplate
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getViewerTemplate()
-    {
-        $result = parent::getViewerTemplate();
-
-        if ('invoice' === \XLite\Core\Request::getInstance()->mode) {
-            $result = 'common/print_invoice.tpl';
-        }
+        $result = parent::getSearchCondition();
+        $result->{\XLite\Model\Repo\Product::P_LOW_INVENTORY} = true;
 
         return $result;
+    }
+
+    /**
+     * Return products list
+     *
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param boolean                $countOnly Return items list or only its size OPTIONAL
+     *
+     * @return array|integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd, $countOnly);
     }
 }

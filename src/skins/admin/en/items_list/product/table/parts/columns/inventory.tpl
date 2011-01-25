@@ -13,5 +13,5 @@
  *}
 
 <td>
-  <input class="inventory" size="10" value="{product.inventory.getAmount():r}" name="{getNamePostedData(#amount#,product.getProductId())}" disabled="{!product.inventory.isEnabled()}" />
+  <input class="inventory" size="10" value="{product.inventory.getAmount():r}" name="{getNamePostedData(#amount#,product.getProductId())}" disabled="{!product.inventory.getEnabled()}" />
 </td>

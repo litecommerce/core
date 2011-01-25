@@ -41,7 +41,7 @@ XLite\Model\Config:
   - { name: default_purchase_limit, category: General, type: text, orderby: 293, value: '9999', translations: [{ code: en, option_name: 'Default purchase limit', option_comment: '' }] }
   - { name: default_select_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Default payment method', option_comment: '' }] }
   - { name: default_zipcode, category: General, type: text, orderby: 320, value: '10000', translations: [{ code: en, option_name: 'Default zip/postal code in the registration form', option_comment: '' }] }
-  - { name: inventory_change_order_status, category: General, type: select, orderby: 330, value: 'Q', translations: [{ code: en, option_name: 'Decrease product inventory amount when order is', option_comment: '' }] }
+  # - { name: inventory_change_order_status, category: General, type: select, orderby: 330, value: 'Q', translations: [{ code: en, option_name: 'Decrease product inventory amount when order is', option_comment: '' }] }
   - { name: direct_product_url, category: General, type: checkbox, orderby: 255, value: N, translations: [{ code: en, option_name: 'Allow direct URL access to products from disabled categories', option_comment: '' }] }
   - { name: discounts_after_taxes, category: Taxes, type: checkbox, orderby: 210, value: N, translations: [{ code: en, option_name: 'Discounts charged after taxes application', option_comment: '' }] }
   - { name: display_check_number, category: General, type: checkbox, orderby: 215, value: Y, translations: [{ code: en, option_name: 'Display check number for eCheck payment method', option_comment: '' }] }
