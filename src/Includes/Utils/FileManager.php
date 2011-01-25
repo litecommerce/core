@@ -272,7 +272,9 @@ class FileManager extends \Includes\Utils\AUtils
 
             foreach ($filter->getIterator() as $file) {
                 $pathTo = $dirTo . static::getRelativePath($pathFrom = $file->getRealPath(), $dirFrom);
-                $file->isDir() ? static::mkdirRecursive($pathTo) : copy($fromPath, $pathTo);
+                $file->isDir()
+                    ? static::mkdirRecursive($pathTo)
+                    : copy($pathFrom, $pathTo);
             }
         }
     }
