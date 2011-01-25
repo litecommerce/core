@@ -688,7 +688,7 @@ if ($current < count($modules)) {
 
 <HR size=1 noshade>
 <DIV ALIGN=right style="margin-bottom: 8px;">
-  <FONT size=1>Copyright &copy; 2003 - 2010 <A href="http://www.qtmsoft.com/">Creative Development</A>&nbsp;&nbsp;</FONT>
+  <FONT size=1>Copyright &copy; 2003 - 2011 <A href="http://www.qtmsoft.com/">Creative Development</A>&nbsp;&nbsp;</FONT>
 </DIV>
 
 </TD>
