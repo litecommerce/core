@@ -67,9 +67,9 @@ abstract class Parser extends \Includes\Decorator\Utils\Base\Parser
      */
     protected static function getPatternParserMain()
     {
-        return '/\{\*(?:[^\*]|(?:\*+[^\*\}]))*@\s*'
+        return '/ \* @'
             . (LC_DEVELOPER_MODE ? \Includes\Decorator\Plugin\Templates\ATemplates::TAG_LIST_CHILD : '\w+')
-            . '\s*.*(?:[^\*]|(?:\*+[^\*\}]))*\*+\}/USsi';
+            . ' \(([^)]+)\)\s*$/Smi';
     }
 
     /**
