@@ -369,7 +369,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             sprintf('Check that page header equals to text "Installing LiteCommerce" (pass %d)', $pass)
         );
 
-        $counter = 300;
+        $counter = 400;
 
         while ($counter > 0) {
 
@@ -387,7 +387,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         }
 
         if ('100%' != $percentage) {
-            $this->assertTrue(false, sprintf('Percentage of batch process does not achived the value of 100% (%d)', $percentage));
+            $this->assertTrue(false, sprintf('Percentage of batch process does not achived the value of 100\% (%d)', $percentage));
         }
 
         $this->waitForCondition(
