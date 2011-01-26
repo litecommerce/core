@@ -80,8 +80,10 @@ class TopMessage extends \XLite\View\AView
      * @access protected
      * @since  3.0.0
      */
-    protected function getTopMessages() 
+    protected function getTopMessages()
     {
+        \XLite\Core\TopMessage::getInstance()->clear();
+
         return \XLite\Core\TopMessage::getInstance()->getPreviousMessages();
     }
 

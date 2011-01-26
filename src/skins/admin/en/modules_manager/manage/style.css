@@ -67,3 +67,18 @@ div.modules-filters div.activity a.current {
 div.modules-filters div.tags {
   float: left;
 }
+
+div.actions a {
+  float: left;
+}
+
+div.pack-warning {
+  float: left;
+  display: inline;
+}
+
+div.pack-warning a {
+  float: right;
+  padding-left: 10px;
+  cursor: help;
+}

@@ -1008,7 +1008,9 @@ class HTTPS extends \XLite\Base
 
         $data = $this->getPost();
 
-        fputs($pipes[0], $this->method . ' ' . $url->path . '?' . $url->getQueryString() . ' HTTP/1.0' . self::CRLF);
+        $url = new \Net_URL2($this->url);
+
+        fputs($pipes[0], $this->method . ' ' . $url->path . '?' . $url->getQuery() . ' HTTP/1.0' . self::CRLF);
         fputs($pipes[0], 'Host: ' . $url->host . self::CRLF);
         fputs($pipes[0], 'User-Agent: Mozilla/4.5 [en]' . self::CRLF);
         fputs($pipes[0], 'Content-Type: ' . $this->conttype . self::CRLF);

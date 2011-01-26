@@ -11,4 +11,5 @@
  * @since     3.0.0
  * @ListChild (list="itemsList.module.manage.columns.actions", weight="30")
  *}
-<a href="{buildUrl(#modules#,#pack#,_ARRAY_(#moduleId#^module.getModuleId()))}">{t(#Pack it#)}</a>
+<a IF="enabledPacking()" href="{buildUrl(#modules#,#pack#,_ARRAY_(#moduleId#^module.getModuleId()))}">{t(#Pack it#)}</a>
+<div IF="!enabledPacking()" class="pack-warning">{t(#Packing is disabled#)} <a href="#warn-pack" class="popup-link" rel="#warn-pack">{t(#Why#)}?</a></div>
