@@ -192,16 +192,15 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         );
 
         // Copy file default.settings.php to settings.php
-        if (defined('DRUPAL_SITE_PATH') && file_exists(constant('DRUPAL_SITE_PATH'))) {
-            $srcFile = constant('DRUPAL_SITE_PATH') . '/src/sites/default/default.settings.php';
-            $dstFile = constant('DRUPAL_SITE_PATH') . '/src/sites/default/settings.php';
-            copy($srcFile, $dstFile);
-        
-        } else {
-            // Fail test if DRUPAL_SITE_PATH constant is undefined or wrong
-            $this->assertTrue(false, 'DRUPAL_SITE_PATH constant is undefined or has a wrong value. Define it in .dev/tests/local.php');
-        }
+        $this->assertTrue(
+            defined('DRUPAL_SITE_PATH') && file_exists(constant('DRUPAL_SITE_PATH')),
+            'DRUPAL_SITE_PATH constant is undefined or has a wrong value. Define it in .dev/tests/local.php'
+        );
 
+        $srcFile = constant('DRUPAL_SITE_PATH') . '/src/sites/default/default.settings.php';
+        $dstFile = constant('DRUPAL_SITE_PATH') . '/src/sites/default/settings.php';
+        copy($srcFile, $dstFile);
+        
         // Reload page
         $this->refreshAndWait();
     }
@@ -371,6 +370,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
         $counter = 400;
 
+        $percentage = null;
         while ($counter > 0) {
 
             sleep(1);
@@ -386,9 +386,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             $counter--;
         }
 
-        if ('100%' != $percentage) {
-            $this->assertTrue(false, sprintf('Percentage of batch process does not achived the value of 100\% (%d)', $percentage));
-        }
+        $this->assertEquals('100%', $percentage, 'Percentage of batch process does not achived the value of 100%');
 
         $this->waitForCondition(
             'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title")[0].innerHTML.search(/Installing ' . self::PRODUCT_NAME . '/) != -1',
@@ -417,6 +415,8 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
         $counter = 300;
 
+        $percentage = null;
+
         while ($counter > 0) {
 
             sleep(1);
@@ -432,9 +432,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             $counter--;
         }
 
-        if ('100%' != $percentage) {
-            $this->assertTrue(false, sprintf('Percentage of batch process does not achived the value of 100% (%d)', $percentage));
-        }
+        $this->assertEquals('100%', $percentage, 'Percentage of batch process does not achived the value of 100%');
 
         $this->waitForCondition(
             'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title")[0].innerHTML.search(/Configure site/) != -1',
@@ -646,7 +644,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         $configFile = $this->getBuildDir() . '/config.local.php';
 
         if (!file_exists($configFile)) {
-            $this->assertTrue(false, 'File .dev/build/config.local.php not found');
+            $this->fail('File .dev/build/config.local.php not found');
         }
 
         $options = parse_ini_file($configFile, true);
@@ -686,29 +684,22 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             $options['database_details']['password']
         );
 
-        if ($connect) {
+        $this->assertTrue(is_resource($connect), 'Wrong database connection parameters!');
 
-            // Drop / create database
-            @mysql_query(sprintf('DROP DATABASE %s', $options['database_details']['database']));
-            @mysql_query(sprintf('CREATE DATABASE %s', $options['database_details']['database']));
+        // Drop / create database
+        @mysql_query(sprintf('DROP DATABASE %s', $options['database_details']['database']));
+        @mysql_query(sprintf('CREATE DATABASE %s', $options['database_details']['database']));
 
-            // Try to select database
-            $dbSelected = @mysql_select_db($options['database_details']['database']);
+        // Try to select database
+        $dbSelected = @mysql_select_db($options['database_details']['database']);
 
-            if ($dbSelected) {
-                // Check that database is empty
-                $res = @mysql_query('SHOW TABLES');
-                if ($res) {
-                    $row = @mysql_result($res, 0);
-                    $this->assertTrue(empty($row), sprintf('Cannot empty database %s', $options['database_details']['database']));
-                }
+        $this->assertTrue($dbSelected, sprintf('Cannot select database %s', $options['database_details']['database']));
 
-            } else {
-                $this->assertTrue(false, sprintf('Cannot select database %s', $options['database_details']['database']));
-            }
-        
-        } else {
-            $this->assertTrue(false, 'Wrong database connection parameters!');
+        // Check that database is empty
+        $res = @mysql_query('SHOW TABLES');
+        if ($res) {
+            $row = @mysql_result($res, 0);
+            $this->assertTrue(empty($row), sprintf('Cannot empty database %s', $options['database_details']['database']));
         }
     }
 
@@ -722,24 +713,17 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      */
     protected function prepareHtaccess()
     {
-        if (defined('DRUPAL_SITE_PATH')) {
+        $this->assertTrue(defined('DRUPAL_SITE_PATH'), 'DRUPAL_SITE_PATH constant undefined');
 
-            $fileName = DRUPAL_SITE_PATH . '/src/.htaccess';
+        $fileName = DRUPAL_SITE_PATH . '/src/.htaccess';
 
-            $uri = preg_replace('/\/$/', '', parse_url($this->baseURL, PHP_URL_PATH));
+        $uri = preg_replace('/\/$/', '', parse_url($this->baseURL, PHP_URL_PATH));
 
-            if (file_exists($fileName)) {
-                $content = file_get_contents($fileName);
-                $content = preg_replace('/(.*RewriteEngine +on)/Ssi', "\\1\n  RewriteBase " . preg_quote($uri), $content);
-                file_put_contents($fileName, $content);
+        $this->assertTrue(file_exists($fileName), $fileName . ' file not found');
 
-            } else {
-                $this->assertTrue(false, $fileName . ' file not found');
-            }
-
-        } else {
-            $this->assertTrue(false, 'DRUPAL_SITE_PATH constant undefined');
-        }
+        $content = file_get_contents($fileName);
+        $content = preg_replace('/(.*RewriteEngine +on)/Ssi', "\\1\n  RewriteBase " . preg_quote($uri), $content);
+        file_put_contents($fileName, $content);
     }
 
 }
