@@ -67,7 +67,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineCacheCells()
+    protected static function defineCacheCells()
     {
         $list = parent::defineCacheCells();
 

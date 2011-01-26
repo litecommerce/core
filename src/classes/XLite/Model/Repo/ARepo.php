@@ -166,7 +166,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineCacheCells()
+    protected static function defineCacheCells()
     {
         return array();
     }
