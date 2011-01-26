@@ -2827,7 +2827,9 @@ OUT;
 
         $response = inst_http_request_install("action=http_host", $url);
 
-        if (strpos($response, $params['xlite_http_host']) === false) {
+        list($_host, $_port) = explode(':', $params['xlite_http_host']);
+
+        if (strpos($response, $_host) === false) {
             fatal_error('The web server name and/or web drectory is invalid! Press \'BACK\' button and review web server settings you provided');
             $checkError = true;
 

@@ -211,7 +211,7 @@ if (isset($HTTP_GET_VARS['target']) && $HTTP_GET_VARS['target'] == 'install') {
 
             if ($step <= 2) {
                 echo sprintf('Building cache: Pass #%d...', $step);
-                echo str_repeat(' ', 256); flush();
+                echo str_repeat(' ', 1000); flush();
                 $result = doBuildCache();
             
             } else {
@@ -221,7 +221,7 @@ if (isset($HTTP_GET_VARS['target']) && $HTTP_GET_VARS['target'] == 'install') {
         } else {
             $pdoErrorMsg = '';
             echo sprintf('Building cache: Preparing for cache generation and dropping an old LiteCommerce tables if exists...', $step);
-            echo str_repeat(' ', 256); flush();
+            echo str_repeat(' ', 1000); flush();
             $result = doRemoveCache(null, $pdoErrorMsg);
         }
 
