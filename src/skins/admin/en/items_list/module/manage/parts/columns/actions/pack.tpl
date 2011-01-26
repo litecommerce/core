@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="itemsList.module.manage.columns.actions", weight="30")
  *}
-<a href="{buildUrl(#modules#,#pack#,_ARRAY_(#moduleId#^module.getModuleId()))}">{t(#Pack it!#)}</a>
+<a href="{buildUrl(#modules#,#pack#,_ARRAY_(#moduleId#^module.getModuleId()))}">{t(#Pack it#)}</a>
