@@ -67,7 +67,7 @@ class Zone extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineCacheCells()
+    protected static function defineCacheCells()
     {
         $list = parent::defineCacheCells();
 
