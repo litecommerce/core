@@ -74,6 +74,24 @@ class Manage extends \XLite\View\Dialog
     }
 
     /**
+     * Register files from common repository
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCommonFiles()
+    {
+        $list = parent::getCommonFiles();
+
+        $list['js'][] = 'js/jquery.cluetip.js';
+
+        return $list;
+    }
+
+
+    /**
      * Return title
      *
      * @return string

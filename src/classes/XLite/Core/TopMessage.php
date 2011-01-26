@@ -88,7 +88,6 @@ class TopMessage extends \XLite\Base\Singleton
     protected function __construct()
     {
         $this->messages = $this->getMessages();
-        $this->clear();
     }
 
     /**
@@ -108,7 +107,9 @@ class TopMessage extends \XLite\Base\Singleton
         $result = false;
 
         if (!empty($text)) {
+
             $text = strval($text);
+
             if (0 < strlen($text)) {
 
                 if (!$rawText) {
@@ -119,13 +120,14 @@ class TopMessage extends \XLite\Base\Singleton
                     $type = self::INFO;
                 }
 
-                $messages = $this->getMessages();
-                $messages[] = array(
+                // To prevent repeats in top messages texts we use unique key for text
+                $this->messages[$type . md5($text)] = array(
                     self::FIELD_TEXT => $text,
                     self::FIELD_TYPE => $type,
                 );
-                $this->messages = $messages;
-                \XLite\Core\Session::getInstance()->topMessages = $messages;
+
+                \XLite\Core\Session::getInstance()->topMessages = $this->messages;
+
                 $result = true;
             }
         }
@@ -217,6 +219,7 @@ class TopMessage extends \XLite\Base\Singleton
     public function getMessages()
     {
         $messages = \XLite\Core\Session::getInstance()->topMessages;
+
         if (!is_array($messages)) {
             $messages = array();
         }

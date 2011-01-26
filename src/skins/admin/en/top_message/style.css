@@ -42,9 +42,9 @@
 
 #top_messages li {
   list-style: none;
-  padding-left: 25px;
+  padding: 3px 3px 3px 25px;
   background-repeat: no-repeat;
-  height: 18px;
+  background-position: 3px 3px;
   font-style: normal;
 }
 

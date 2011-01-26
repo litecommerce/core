@@ -66,3 +66,5 @@ function confirmNote(action, id)
 
   </table>
 </form>
+
+<widget IF="!enabledPacking()" template="items_list/module/manage/parts/columns/actions/pack_warn.tpl" />
