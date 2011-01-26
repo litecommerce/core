@@ -416,7 +416,7 @@ class FileManager extends \Includes\Utils\AUtils
      */
     public static function normalize($path)
     {
-        return array_reduce(explode('/', $path), array(get_called_class(), 'normalizeCallback'), 0);
+        return array_reduce(explode(LC_DS, $path), array(get_called_class(), 'normalizeCallback'), 0);
     }
 
     /**
@@ -433,7 +433,7 @@ class FileManager extends \Includes\Utils\AUtils
     protected static function normalizeCallback($a, $b)
     {
         if (0 === $a) {
-            $a = '/';
+            $a = ('/' === LC_DS ? LC_DS : '');
         }
  
         if ('' === $b || '.' === $b) {
@@ -444,7 +444,7 @@ class FileManager extends \Includes\Utils\AUtils
 
         } else {
  
-            $result = preg_replace('/' . preg_quote(LC_DS, '/') . '+/S', LC_DS, $a . LC_DS . $b);
+            $result = preg_replace('/' . preg_quote(LC_DS, '/') . '+/S', LC_DS, $a . ('' === $a ? '' : LC_DS) . $b);
         }
 
         return $result;
