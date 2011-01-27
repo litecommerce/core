@@ -76,31 +76,18 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
                         $module->check();
                     }
 
-                    if (\XLite\Model\PHARModule::STATUS_OK === $module->getStatus()) {
-
-                        $module->deploy();
-
-                    } else {
-
-                        \XLite\Core\TopMessage::addError(
-                            'Checking procedure returns with "{{result}}" result for {{index}}: {{file}} file.',
-                            array(
-                                'result'    => $module->getStatus() . '::' . $module->getError(),
-                                'file'      => $name,
-                                'index'     => $index,
-                            )
-                        );
-                    }
+                    $this->deployModule($module, $index, $name);
 
                     // Remove the temporary content and uploaded PHAR file
                     $module->cleanUp();
+
                     @unlink($name);
                 }
             }
 
         } else {
 
-            \XLite\Core\TopMessage::addError(
+            \XLite\Core\TopMessage::getInstance()->addError(
                 'You should provide .PHAR file to use this form'
             );
         }
@@ -111,13 +98,50 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
 
 
     /**
+     * Deploy module method
+     * 
+     * @param \XLite\Model\PHARModule $module Model of PHAR module to deploy
+     * @param integer                 $index  Index of the PHAR file in the batch
+     * @param string                  $name   Name of the PHAR file
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function deployModule(\XLite\Model\PHARModule $module, $index, $name)
+    {
+        if (\XLite\Model\PHARModule::STATUS_OK === $module->getStatus()) {
+
+            $module->deploy();
+
+            \XLite\Core\TopMessage::getInstance()->addInfo(
+                'Module(s) has been uploaded successfully'
+            );
+
+        } else {
+
+            \XLite\Core\TopMessage::getInstance()->addError(
+                'Checking procedure returns with "{{result}}" result for {{index}}: {{file}} file.',
+                array(
+                    'result'    => $module->getStatus() . '::' . $module->getError(),
+                    'file'      => $name,
+                    'index'     => $index,
+                )
+            );
+        }   
+    }
+
+
+
+    /**
      * Move the uploaded file to inner local repository.
      * TODO ... Maybe move this method to the doActionUpload... It is not necessary to use it separately.
      * 
-     * @param string $uploadedFile full path to uploaded file
-     * @param string $newFile      real name of the file
+     * @param string $uploadedFile Full path to uploaded file
+     * @param string $newFile      Real name of the file
      *  
-     * @return string status of moving the uploaded file.
+     * @return string Status of moving the uploaded file.
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
