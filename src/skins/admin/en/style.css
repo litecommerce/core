@@ -144,7 +144,7 @@ textarea:focus
 
 select
 {
-  height: 24px;
+  /* height: 24px;*/
   line-height: 24px;
 }
 
