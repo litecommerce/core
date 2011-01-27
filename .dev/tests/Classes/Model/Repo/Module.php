@@ -85,8 +85,6 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
         $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findAllModules();
 
         $this->assertEquals(44, count($result), 'Number of found modules does not match');
-        $this->assertEquals(1, $result[0]->getModuleId(), 'ID of the first found module does not match');
-        $this->assertEquals(41, $result[count($result)-1]->getModuleId(), 'ID of the last found module does not match');
     }
 
     /**
@@ -133,11 +131,14 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
      */
     public function testFindAllNames()
     {
+        \XLite\Core\Database::getCacheDriver()->delete('Model_Module.data.names.all');
+
         $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findAllNames();
 
         $this->assertEquals(44, count($result), 'Number of found modules does not match');
 
         $this->assertEquals('CDev\AustraliaPost', $result[0], 'First found module name does not match');
+        // NOTE: This test work is all another test is passed + data cache cell 'names' must be removed
         $this->assertEquals('CDev\XPaymentsConnector', $result[count($result)-1], 'Last found module name does not match');
     }
 
