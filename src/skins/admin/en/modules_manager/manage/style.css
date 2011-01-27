@@ -82,3 +82,8 @@ div.pack-warning a {
   padding-left: 10px;
   cursor: help;
 }
+
+#cluetip-inner {
+  padding: 10px;
+  background: #eeeeee;
+} 

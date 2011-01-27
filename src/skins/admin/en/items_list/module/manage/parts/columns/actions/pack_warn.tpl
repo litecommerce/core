@@ -11,18 +11,16 @@
  * @since     3.0.0
  *}
 <div id="warn-pack">
-{t(#Probably you need to change "phar.readonly" variable. It should be equal to "Off". Please advise about server configuration with your hosting service provider#)}
+{t(#Probably you need to change "phar.readonly" value in your "PHP.INI" file. It should be equal to "Off". Please advise about server configuration with your hosting service provider#)}
 </div>
 <script type="text/javascript">
 <!--
 jQuery(document).ready(
   function () {
-    jQuery('.popup-link').cluetip(
-    {
+    jQuery('.popup-link').cluetip({
       local: true,
       showTitle: false
-    }
-    );
+    });
   }
 );
 -->
