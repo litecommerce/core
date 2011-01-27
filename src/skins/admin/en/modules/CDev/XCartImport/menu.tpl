@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="menu.maintenance", weight="34")
  *}
-<a href="admin.php?target=xcart_import" class="SidebarItem">Import database from X-Cart gold</a>
+<widget class="\XLite\View\TopMenu\Node" title="Import database from X-Cart gold" link="admin.php?target=xcart_import" />

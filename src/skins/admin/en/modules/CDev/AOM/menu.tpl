@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="menu.settings", weight="82")
  *}
-<a href="admin.php?target=order_statuses">Order life cycles</a><br>
+<widget class="\XLite\View\TopMenu\Node" title="Order life cycles" link="admin.php?target=order_statuses" />

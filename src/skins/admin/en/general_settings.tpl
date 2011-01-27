@@ -16,12 +16,12 @@
   <input type="hidden" name="page" value="{page}">
   <input type="hidden" name="moduleId" value="{moduleId}" IF="moduleId">
 
-  <table cellSpacing="2" cellpadding="2" width="100%">
+  <table cellspacing="1" cellpadding="5" class="settings-table">
     {foreach:getOptions(),option}
       <tr>
         {if:!option.type=#separator#}
           {if:!option.type=#serialized#}
-            <td align="right" width="50%">{option.option_name:h}: </td>
+            <td class="setting-name" width="50%">{option.option_name:h}: </td>
           {end:}
           <td width="50%">
 
@@ -189,20 +189,7 @@ function setUnitSymbol(symbol) {
           </td>
         {else:}
           <td colspan="2">
-
-            <table cellspacing="0" cellpadding="0" width="100%">
-              <tr>
-                <td colspan=2>&nbsp;</td>
-              </tr>
-              <tr>
-                <td class="SidebarTitle" align="center" nowrap="nowrap">&nbsp;&nbsp;&nbsp;{option.option_name:h}&nbsp;&nbsp;&nbsp;</td>
-                <td width="100%">&nbsp;</td>
-              </tr>
-              <tr>
-                <td class="SidebarTitle" align="center" colspan="2" height="3"></td>
-              </tr>
-            </table>
-
+            <h2>{option.option_name:h}</h2>
           </td>
         {end:}
 
@@ -225,7 +212,7 @@ function setUnitSymbol(symbol) {
           <td colspan="2">&nbsp;</td>
         </tr>
         <tr>
-          <td align="right"><input type="submit" value="Submit" /></td>
+          <td ><input type="submit" value="Submit" /></td>
           <td>&nbsp;</td>
         </tr>
     {end:}

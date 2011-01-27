@@ -1,0 +1,193 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id: pager.css 4863 2011-01-12 09:27:40Z igoryan $
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+
+/**
+ * Top menu
+ */
+#topMenu
+{
+  height: 36px;
+  background: transparent none;
+  position: absolute;
+  text-align: left;
+  margin: 0 auto;
+  z-index: 100;
+  top: 39px;
+  left 0;
+}
+
+#topMenu ul
+{
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#topMenu ul ul li
+{
+  float: left;
+}
+
+#topMenu ul ul li a
+{
+  display: block;
+  float: left;
+}
+
+#topMenu ul ul div
+{
+  position: absolute;
+  left: -9999px;
+  overflow: hidden;
+  width: 100%;
+}
+
+#topMenu ul#menuOuter
+{
+  display: inline-block;
+  margin-left: 90px;
+}
+
+#topMenu ul#menuOuter li.root
+{
+  display: inline-block;
+  height: 66px;
+}
+
+#topMenu ul ul li a
+{
+    background: #d0e9ff;
+    color: #06528f;
+    font-size: 16px;
+    height: 36px;
+    line-height: 36px;
+    margin-right: 5px;
+    padding: 0 15px;
+    text-decoration: none;
+    -moz-border-radius: 10px 10px 0 0;
+    -webkit-border-radius: 10px 10px 0 0;
+    border-radius: 10px 10px 0 0;
+}
+
+#topMenu ul ul li.hl > a
+{
+  background: #106bac;
+  color: #d0e9ff;
+}
+
+#topMenu ul ul li a:hover
+{
+}
+
+#topMenu ul ul li:hover > a
+{
+}
+
+#topMenu ul ul li.current > a
+{
+  color: #333;
+  background: #fff;
+}
+
+#topMenu ul ul li.current div
+{
+  left: 0;
+  top: 36px;
+  text-align: left;
+}
+
+#topMenu ul ul :hover div
+{
+  left: 0;
+  top: 36px;
+  text-align: left;
+}
+
+#topMenu ul ul li div ul
+{
+  display: inline-block;
+  margin-left: 20px;
+}
+
+#topMenu ul ul li div ul li
+{
+  display: inline-block;
+  display: inline;
+  margin: 10px 0;
+}
+
+#topMenu ul ul div li a
+{
+  font-size: 14px;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 15px;
+  color: #06528F;
+  background: 0 none; 
+}
+
+#topMenu ul ul div li a:hover
+{
+  background: 0 none !important;
+}
+
+#topMenu ul ul li div ul li.active a
+{
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
+  background: none repeat scroll 0 0 #83a8c7 !important;
+  color: #fff !important;
+  cursor: default;
+}
+
+#topMenu ul ul div a:hover
+{
+}
+
+#topMenu ul#menuOuter li.root a:hover
+{
+  background: #e0f0ff;
+  color: #06528f;
+}
+
+#topMenu ul#menuOuter li.root:hover ul li.current div
+{
+  left: -9999px;
+}
+
+#topMenu ul#menuOuter li.root a:hover ul li.current div
+{
+  left: -9999px;
+}
+
+#topMenu ul#menuOuter li.root:hover ul li.current:hover div
+{
+  left: 0;
+}
+
+#topMenu ul#menuOuter li.root a:hover ul li.current a:hover div
+{
+  left: 0;
+}
+
+#topMenu ul#menuOuter li.root:hover ul li.current a
+{
+}
+
+#topMenu ul#menuOuter li.root a:hover ul li.current a
+{
+  background-image:none;
+  color:#fff;
+  line-height: 30px;
+}

@@ -13,55 +13,39 @@
 
 <widget class="\XLite\View\TopMessage" />
 
-<table border=0 width="100%" height="100%">
-<tr>
-<td valign=top>
+<div id="page-container">
 
-<!-- [top] -->
-<table cellspacing="0" width="100%" style="background-color: #f4f4f4; border-bottom: 1px solid #e9ecf3;">
-<tr>
-   <td style="padding: 10px;"><img src="images/logo.png" alt="" /></td>
-    <td style="white-space: nowrap;">
-      <div style="font-size: 24px;"><span style="color: #2d69ab;">Lite</span><span style="color: #676767;">Commerce</span></div>
-      <div>Version: {config.Version.version:h}</div>
-    </td>
-   <td align="right" valign="top" nowrap="nowrap" width="100%">
-   	  <br />
-      Welcome <span class="FormButton"><span IF="!auth.profile.billing_address.firstname=##">{auth.profile.billing_address.title} {auth.profile.billing_address.firstname} {auth.profile.billing_address.lastname}</span><span IF="auth.profile.billing_address.firstname=##">{auth.profile.login}</span></span>!<br>
-      (<span class="FormButton">{auth.profile.login}</span> logged in)</span>
-      <span IF="recentAdmins">,&nbsp;<a href="admin.php?target=recent_login"><u>login history </u></a></span>
+  <div id="header">
+
+    <div class="logo"></div>
+
+    <div class="sw-version">
+      <span class="current">{t(#v.#)} {config.Version.version:h}</span>
+      <span class="upgrade-note">
+        {*** TODO ***}
       </span>
-   	  <br />
-      <a href="admin.php?target=login&action=logoff" class="FormButton"><img src="images/go.gif" width="13" height="13" align="absmiddle" /> Log Off</a>
-   </td>
-</TR>
-</TABLE>
-<BR>
-<!-- [/top] -->
+    </div>
 
-<!-- [main_view] -->
-<table border="0" width="100%" align="center" cellpadding="0" cellspacing="0">
-<tr>
-  <td nobr width="150" valign="top">
-    {displayViewListContent(#menus#)}
-  </td>
-  <td width="20">&nbsp;</td>
-  <td valign="top">
-    <noscript>
-      <table border=0 width=500 cellpadding=2 cellspacing=0 align=center>
-        <tr>
-          <td align=center class=ErrorMessage nowrap>This site requires JavaScript to function properly.<br>Please enable JavaScript in your web browser.</td>
-        </tr>
-      </table>
-    </noscript>
-<!-- [center] -->
+    <widget class="\XLite\View\TopMenu" />
+    
+    <widget template="top_links/top_links.tpl" />
+  
+  </div><!-- [/header] -->
 
-{* FIXME - to remove *}
-<div style="width: 100%; text-align: center;" IF="!isTested()">
-  <img src="images/icon_warning.gif" />
-  <strong>This controller is not working properly for current LC version</strong>
-  <br /><br />
-</div>
+  <div id="content">
+
+    <div id="main">
+    
+      <noscript>
+        <div class="noscript">{t(#This site requires JavaScript to function properly.<br>Please enable JavaScript in your web browser.#)}</div>
+      </noscript>
+
+      {* FIXME - to remove *}
+      <div style="width: 100%; text-align: center;" IF="!isTested()">
+        <img src="images/icon_warning.gif" />
+        <strong>This controller is not working properly for current LC version</strong>
+        <br /><br />
+      </div>
 
 <widget class="\XLite\View\Location" />
 
@@ -168,31 +152,23 @@
 {*TODO: move as much as possible into this list*}
 {displayViewListContent(#admin.center#)}
 
-<!-- [/center] -->
-    </td>
-    <td width="10">&nbsp;</td>
-</table>
-<!-- [/main_view] -->
+    </div><!-- [/main] -->
+  
+    <div id="sub-section"></div>
+  
+  </div><!-- [/content] -->
 
-</td>
-</tr>
+  <div id="footer">
 
-<tr>
-<td align="center">
-<!-- [bottom] -->
-<table WIDTH="100%" BORDER=0 CELLPADDING=3 CELLSPACING=0>
-<tr>
-<td bgcolor=#E0E0E0 HEIGHT=15 align=left>
-<widget class="\XLite\View\PoweredBy" />
-</td>
-<td bgcolor=#E0E0E0 HEIGHT=15 align=right>
-<font color="#8A8A8A">Copyright &copy; {config.Company.start_year} {config.Company.company_name}</font>
-&nbsp;</td>
-</tr>
-</table>
-<!-- [/bottom] -->
+    <div class="left">
+      <widget class="\XLite\View\PoweredBy" />
+    </div>
+  
+    <div class="right">
+    </div>
 
-</td>
-</tr>
-</table>
+    <div class="clear"></div>
 
+  </div><!-- [/footer] -->
+
+</div><!-- [/page-container] -->

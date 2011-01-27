@@ -11,5 +11,5 @@
  * @since     3.0.0
  * @ListChild (list="menu.settings", weight="72")
  *}
-<a href="admin.php?target=currencies">Currencies</a>
+<widget class="\XLite\View\TopMenu\Node" title="Currencies" link="admin.php?target=currencies" />
 

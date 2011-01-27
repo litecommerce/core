@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="menu.management", weight="42")
  *}
-<a href="admin.php?target=gift_certificates">Gift certificates</a>
+<widget class="\XLite\View\TopMenu\Node" title="Gift certificates" link="admin.php?target=gift_certificates" />

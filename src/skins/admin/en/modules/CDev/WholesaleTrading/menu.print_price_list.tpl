@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="menu.catalog", weight="60")
  *}
-<a href="admin.php?target=price_list">Print price list</a>
+<widget class="\XLite\View\TopMenu\Node" title="Print price list" link="admin.php?target=price_list" />

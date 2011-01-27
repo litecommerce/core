@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="menu.management", weight="14")
  *}
-<a href="admin.php?target=wishlists">Wish lists</a>
+<widget class="\XLite\View\TopMenu\Node" title="Wish lists" link="admin.php?target=wishlists" />

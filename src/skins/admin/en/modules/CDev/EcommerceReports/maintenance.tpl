@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="menu.maintenance", weight="32")
  *}
-<a href="admin.php?target=general_stats">E-commerce Reports</a>
+<widget class="\XLite\View\TopMenu\Node" title="E-commerce Reports" link="admin.php?target=general_stats" />

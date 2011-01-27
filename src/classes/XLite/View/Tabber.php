@@ -127,7 +127,8 @@ class Tabber extends \XLite\View\AView
     }
 
     /**
-     * Get splitted pages 
+     * Get splitted pages
+     * FIXME: to remove
      * 
      * @param integer $splitParameter Split parameter
      *  
