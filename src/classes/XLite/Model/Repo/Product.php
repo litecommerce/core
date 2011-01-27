@@ -600,20 +600,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     public function findByCleanUrl($url)
     {
-        try {
-            $result = $this->createQueryBuilder()
-                ->andWhere('p.clean_url = :url')
-                ->setMaxResults(1)
-                ->setParameter('url', $url)
-                ->getQuery()
-                ->getSingleResult();
-
-        } catch (\Doctrine\ORM\NoResultException $exception) {
-            $result = null;
-            // TODO - add logging here
-        }
-
-        return $result;
+        return $this->findOneBy(array('clean_url' => $url));
     }
 
     /**

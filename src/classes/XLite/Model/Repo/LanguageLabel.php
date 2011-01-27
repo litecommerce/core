@@ -67,7 +67,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function defineCacheCells()
+    protected function defineCacheCells()
     {
         $list = parent::defineCacheCells();
 
@@ -153,14 +153,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      */
     public function countByName($name)
     {
-        try {
-            $count = intval($this->defineCountByNameQuery($name)->getQuery()->getSingleScalarResult());
-
-        } catch (\Doctrine\ORM\NonUniqueResultException $exception) {
-            $count = 0;
-        }
-
-        return $count;
+        return intval($this->defineCountByNameQuery($name)->getSingleScalarResult());
     }
 
     /**

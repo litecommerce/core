@@ -646,17 +646,7 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     public function findOneByCMSId(array $fields)
     {
-        try {
-            $profile = $this->defineFindOneByCMSIdQuery($fields)
-                ->getQuery()
-                ->getSingleResult();
-
-        } catch (\Doctrine\ORM\NoResultException $exception) {
-            $profile = null;
-        }
-
-        return $profile;
-
+        return $this->defineFindOneByCMSIdQuery($fields)->getSingleResult();
     }
 
     /**
@@ -744,16 +734,7 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     public function findByLoginPassword($login, $password = null, $orderId = 0)
     {
-        try {
-            $profile = $this->defineFindByLoginPasswordQuery($login, $password, $orderId)
-                ->getQuery()
-                ->getSingleResult();
-
-        } catch (\Doctrine\ORM\NoResultException $exception) {
-            $profile = null;
-        }
-
-        return $profile;
+        return $this->defineFindByLoginPasswordQuery($login, $password, $orderId)->getSingleResult();
     }
 
     /**
@@ -804,7 +785,7 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     public function findRecentAdmins()
     {
-        return $this->defineFindRecentAdminsQuery()->getQuery()->getResult();
+        return $this->defineFindRecentAdminsQuery()->getResult();
     }
 
     /**
@@ -819,16 +800,7 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     public function findUserWithSameLogin(\XLite\Model\Profile $profile) 
     {
-        try {
-            $profile = $this->defineFindUserWithSameLoginQuery($profile)
-                ->getQuery()
-                ->getSingleResult();
-
-        } catch (\Doctrine\ORM\NoResultException $exception) {
-            $profile = null;
-        }
-
-        return $profile;
+        return $this->defineFindUserWithSameLoginQuery($profile)->getSingleResult();
     }
 
     /**
@@ -841,9 +813,7 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     public function findCountOfAdminAccounts()
     {
-        $result = $this->defineFindCountOfAdminAccountsQuery()->getQuery()->getSingleScalarResult();
-    
-        return intval($result);
+        return intval($this->defineFindCountOfAdminAccountsQuery()->getSingleScalarResult());
     }
 
     /**
@@ -939,12 +909,7 @@ class Profile extends \XLite\Model\Repo\ARepo
             isset($data['login'])
             && (isset($data['order_id']) && 0 == $data['order_id'] || 1 == count($data))
         ) {
-            try {
-                $entity = $this->defineOneByRecord($data['login'])->getQuery()->getSingleResult();
-
-            } catch (\Doctrine\ORM\NoResultException $e) {
-                $entity = null;
-            }
+            $entity = $this->defineOneByRecord($data['login'])->getSingleResult();
             
         } else {
             $entity = parent::findOneByRecord($data, $parent);

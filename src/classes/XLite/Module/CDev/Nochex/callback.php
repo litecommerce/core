@@ -31,13 +31,6 @@
 
 /* vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 
-/**
-* 
-*
-* @package 
-* @access public
-*/
-
     $_REQUEST['target'] = "callback";
     $_REQUEST['action']	= "callback";
     $_REQUEST['order_id'] = $_GET['order_id'];

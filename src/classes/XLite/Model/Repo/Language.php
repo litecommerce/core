@@ -75,7 +75,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function defineCacheCells()
+    protected function defineCacheCells()
     {
         $list = parent::defineCacheCells();
 
@@ -209,14 +209,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      */
     public function findOneByCode($code)
     {
-        try {
-            $language = $this->defineOneByCodeQuery($code)->getQuery()->getSingleResult();
-
-        } catch (\Doctrine\ORM\NoResultException $exception) {
-            $language = null;
-        }
-
-        return $language;
+        return $this->defineOneByCodeQuery($code)->getSingleResult();
     }
 
     /**

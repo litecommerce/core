@@ -67,7 +67,7 @@ class Zone extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function defineCacheCells()
+    protected function defineCacheCells()
     {
         $list = parent::defineCacheCells();
 
@@ -158,12 +158,10 @@ class Zone extends \XLite\Model\Repo\ARepo
 
         if (!isset($data)) {
 
-            try {
-                $data = $this->defineFindZone($zoneId)->getQuery()->getSingleResult();
-                $this->saveToCache($data, 'zone', array('zone_id' => $zoneId));
+            $data = $this->defineFindZone($zoneId)->getSingleResult();
 
-            } catch (\Doctrine\ORM\NoResultException $exception) {
-                $data = null;
+            if ($data) {
+                $this->saveToCache($data, 'zone', array('zone_id' => $zoneId));
             }
         }
 

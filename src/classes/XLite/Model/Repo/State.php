@@ -65,7 +65,7 @@ class State extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function defineCacheCells()
+    protected function defineCacheCells()
     {
         $list = parent::defineCacheCells();
 
@@ -122,20 +122,27 @@ class State extends \XLite\Model\Repo\ARepo
      */
     public function getCodeById($stateId)
     {
-        try {
-            $code = $this->createQueryBuilder()
-                ->where('s.state_id = :id')
-                ->setMaxResults(1)
-                ->setParameter('id', $stateId)
-                ->getQuery()
-                ->getSingleResult()
-                ->getCode();
+        $entity = $this->defineGetCodeByIdQuery($stateId)->getSingleResult();
 
-        } catch (\Doctrine\ORM\NoResultException $exception) {
-            $code = null;
-        }
+        return $entity ? $entity->getCode() : null;
+    }
 
-        return $code;
+    /**
+     * Define query builder for getCodeById() method
+     * 
+     * @param integer $stateId State id
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineGetCodeByIdQuery($stateId)
+    {
+        return $this->createQueryBuilder()
+            ->where('s.state_id = :id')
+            ->setMaxResults(1)
+            ->setParameter('id', $stateId);
     }
 
     /**
@@ -168,12 +175,10 @@ class State extends \XLite\Model\Repo\ARepo
      */
     public function findOneByStateId($stateId)
     {
-        try {
-            $state = $this->defineOneByStateIdQuery($stateId)->getQuery()->getSingleResult();
-            $state->detach();
+        $state = $this->defineOneByStateIdQuery($stateId)->getSingleResult();
 
-        } catch (\Doctrine\ORM\NoResultException $exception) {
-            $state = null;
+        if ($state) {
+            $state->detach();
         }
 
         return $state;
@@ -282,16 +287,7 @@ class State extends \XLite\Model\Repo\ARepo
      */
     public function findOneByCountryAndCode($countryCode, $code)
     {
-        try {
-            $state = $this->defineOneByCountryAndCodeQuery($countryCode, $code)
-                ->getQuery()
-                ->getSingleResult();
-
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $state = null;
-        }
-
-        return $state;
+        return $this->defineOneByCountryAndCodeQuery($countryCode, $code)->getSingleResult();
     }
 
     /**

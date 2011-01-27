@@ -65,7 +65,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function defineCacheCells()
+    protected function defineCacheCells()
     {
         $list = parent::defineCacheCells();
 
@@ -157,14 +157,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      */
     public function findOneByName($name, $onlyActive = true)
     {
-        try {
-            $m = $this->defineOneByNameQuery($name, $onlyActive)->getQuery()->getSingleResult();
-
-        } catch (\Doctrine\ORM\NoResultException $exception) {
-            $m = null;
-        }
-
-        return $m;
+        return $this->defineOneByNameQuery($name, $onlyActive)->getSingleResult();
     }
 
     /**

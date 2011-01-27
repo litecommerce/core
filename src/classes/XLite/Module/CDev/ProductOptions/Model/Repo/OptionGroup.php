@@ -132,16 +132,7 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
      */
     public function findOneByGroupIdAndProductId($groupId, $productId)
     {
-        try {
-            $group = $this->defineOneByGroupIdAndProductIdQuery($groupId, $productId)
-                ->getQuery()
-                ->getSingleResult();
-
-        } catch (\Doctrine\ORM\NoResultException $exception) {
-            $group = null;
-        }
-
-        return $group;
+        return $this->defineOneByGroupIdAndProductIdQuery($groupId, $productId)->getSingleResult();
     }
 
     /**

@@ -50,16 +50,7 @@ class Transaction extends \XLite\Model\Repo\ARepo
      */
     public function findOneByParams(array $params, $orderId = null)
     {
-        try {
-            $transaction = $this->defineOneByParamsQuery($params, $orderId)
-                ->getQuery()
-                ->getSingleResult();
-
-        } catch (\Doctrine\ORM\NoResultException $exception) {
-            $transaction = null;
-        }
-
-        return $transaction;
+        return $this->defineOneByParamsQuery($params, $orderId)->getSingleResult();
     }
 
     /**
