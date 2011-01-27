@@ -68,7 +68,7 @@ class TemplatePatch extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function defineCacheCells()
+    protected function defineCacheCells()
     {
         $list = parent::defineCacheCells();
         $list['all'] = array();

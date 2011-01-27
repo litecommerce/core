@@ -204,16 +204,7 @@ class FormId extends \XLite\Model\Repo\ARepo
      */
     protected function getFrontierId($sessionId)
     {
-        try {
-            $id = $this->defineGetFrontierQuery($this->frontierLength, $sessionId)
-                ->getQuery()
-                ->getSingleScalarResult();
-
-        } catch (\Doctrine\ORM\NoResultException $exception) {
-            $id = null;
-        }
-
-        return $id ?: null;
+        return $this->defineGetFrontierQuery($this->frontierLength, $sessionId)->getSingleScalarResult() ?: null;
     }
 
     /**

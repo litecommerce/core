@@ -405,16 +405,10 @@ class Order extends \XLite\Model\Repo\ARepo
 
         if ($countOnly) {
             $queryBuilder->select('COUNT(o.order_id)');
-
-            try {
-                $result = intval($queryBuilder->getQuery()->getSingleScalarResult());
-
-            } catch (\Doctrine\ORM\NoResultException $exception) {
-                $result = 0;
-            }
+            $result = intval($queryBuilder->getSingleScalarResult());
 
         } else {
-            $result = $queryBuilder->getQuery()->getResult();
+            $result = $queryBuilder->getResult();
         }
 
         return $result;

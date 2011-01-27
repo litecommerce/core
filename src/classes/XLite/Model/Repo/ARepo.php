@@ -146,6 +146,16 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     protected $type = self::TYPE_STORE;
 
     /**
+     * Query builder class 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $queryBuilderClass;
+
+    /**
      * Get repository type 
      * 
      * @return string
@@ -166,7 +176,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function defineCacheCells()
+    protected function defineCacheCells()
     {
         return array();
     }
@@ -571,7 +581,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         if ($this->defaultOrderBy) {
 
             if (!isset($alias)) {
-                $alias = $this->getMainAlias($qb);
+                $alias = $this->getMainAlias($queryBuilder);
             }
 
             if (is_string($this->defaultOrderBy)) {
@@ -622,11 +632,13 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function createQueryBuilder($alias = null)
     {
-        if (!isset($alias)) {
-            $alias = $this->getDefaultAlias();
-        }
+        $alias = $alias ?: $this->getDefaultAlias();
 
-        return $this->assignDefaultOrderBy(parent::createQueryBuilder($alias), $alias);
+        $qb = $this->getQueryBuilder()
+            ->select($alias)
+            ->from($this->_entityName, $alias);
+
+        return $this->assignDefaultOrderBy($qb, $alias);
     }
 
     /**
@@ -644,13 +656,38 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     {
         $alias = $alias ?: $this->getDefaultAlias();
 
-        return parent::createQueryBuilder($alias);
+        return $this->getQueryBuilder()
+            ->select($alias)
+            ->from($this->_entityName, $alias);
     }
 
     /**
-     * getDefaultAlias 
+     * Get query builder 
      * 
-     * @return void
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getQueryBuilder()
+    {
+        if (!isset($this->queryBuilderClass)) {
+            $this->queryBuilderClass = str_replace('\\Repo\\', '\\QuieryBuilder\\', get_called_class());
+
+            if (!\XLite\Core\Operator::isClassExists($this->queryBuilderClass)) {
+                $this->queryBuilderClass = '\XLite\Model\QueryBuilder\Base\Common';
+            }
+        }
+
+        $class = $this->queryBuilderClass;
+
+        return new $class($this->_em);
+    }
+
+    /**
+     * Get default alias 
+     * 
+     * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -675,18 +712,11 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function count()
     {
-        try {
-            $count = intval($this->defineCountQuery()->getQuery()->getSingleScalarResult());
-
-        } catch (\Doctrine\ORM\NonUniqueResultException $exception) {
-            $count = 0;
-        }
-
-        return $count;
+        return intval($this->defineCountQuery()->getSingleScalarResult());
     }
 
     /**
-     * Define Query fo rcount() method
+     * Define query for count() method
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected

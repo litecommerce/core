@@ -70,14 +70,7 @@ class Option extends \XLite\Model\Repo\Base\I18n
             && isset($data['sku'])
             && $data['sku']
         ) {
-            try {
-                $entity = $this->defineOneBySkuAndNameQuery($data['sku'], $data['group'], $data['name'])
-                    ->getQuery()
-                    ->getSingleResult();
-
-            } catch (\Doctrine\ORM\NoResultException $e) {
-                $entity = null;
-            }
+            $entity = $this->defineOneBySkuAndNameQuery($data['sku'], $data['group'], $data['name'])->getSingleResult();
         }
 
         return $entity;

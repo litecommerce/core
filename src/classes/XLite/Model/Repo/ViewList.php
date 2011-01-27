@@ -69,7 +69,7 @@ class ViewList extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function defineCacheCells()
+    protected function defineCacheCells()
     {
         $list = parent::defineCacheCells();
 
@@ -115,14 +115,7 @@ class ViewList extends \XLite\Model\Repo\ARepo
      */
     public function findOneByTplAndList($tpl, $list)
     {
-        try {
-            $list = $this->defineOneByTplAndListQuery($tpl, $list)->getQuery()->getSingleResult();
-
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $list = null;
-        }
-
-        return $list;
+        return $this->defineOneByTplAndListQuery($tpl, $list)->getSingleResult();
     }
 
     /**
