@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="menu.management", weight="45")
  *}
-<a href="admin.php?target=DiscountCoupons">Discount coupons</a>
+<widget class="\XLite\View\TopMenu\Node" title="Discount coupons" link="admin.php?target=DiscountCoupons" />

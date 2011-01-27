@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="menu.management", weight="12")
  *}
-<a href="admin.php?target=create_order&action=create_order">Create order</a>
+<widget class="\XLite\View\TopMenu\Node" title="Create order" link="admin.php?target=create_order&action=create_order" />

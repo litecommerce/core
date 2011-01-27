@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="menu.catalog", weight="70")
  *}
-<a href="admin.php?target=global_discount">Global discounts</a>
+<widget class="\XLite\View\TopMenu\Node" title="Global discounts" link="admin.php?target=global_discount" />

@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="menu.management", weight="44")
  *}
-<a href="admin.php?target=SpecialOffers">Special offers</a>
+<widget class="\XLite\View\TopMenu\Node" title="Special offers" link="admin.php?target=SpecialOffers" />

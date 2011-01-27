@@ -359,6 +359,7 @@ abstract class ATabs extends \XLite\View\AView
 
     /**
      * Returns tabs splitted into multiple chunks
+     * TODO: to remove
      * 
      * @param integer $splitParameter Maximum number of characters per a line with tab titles OPTIONAL
      *  

@@ -10,27 +10,11 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-Use this section to manage your store's image files.
-<hr>
-<table cellSpacing=2 cellpadding=2 border=0 width="100%">
-<TR>
-    <TD colspan=2>
-        <table cellspacing=0 cellpadding=0 border=0 width="100%">
-        <tr>
-            <td colspan=2>&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="SidebarTitle" align=center nowrap>&nbsp;&nbsp;&nbsp;Images location&nbsp;&nbsp;&nbsp;</td>
-            <td width=100%>&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="SidebarTitle" align=center colspan=2 height=3></td>
-        </tr>
-        </table>
-    </TD>
-</TR>
-</table>
-<br />
+
+{t(#Use this section to manage your store's image files.#)}
+
+<h2>{t(#Images location#)}</h2>
+
 <table cellpadding="0" cellspacing="0" border="0">
 	<tr>
 		<td class="CenterBorder">
