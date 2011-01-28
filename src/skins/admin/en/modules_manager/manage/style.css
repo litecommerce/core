@@ -75,12 +75,17 @@ div.actions a {
 div.pack-warning {
   float: left;
   display: inline;
+  font-size: 14px;
 }
 
 div.pack-warning a {
   float: right;
   padding-left: 10px;
   cursor: help;
+}
+
+.pack-warn-clear {
+  clear: both;
 }
 
 #cluetip-inner {

@@ -1553,6 +1553,20 @@ abstract class AView extends \XLite\Core\Handler
 
 
     /**
+     * Checks if specific developer mode is defined
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function developerMode()
+    {
+        return defined('LC_DEVELOPER_MODE') && constant('LC_DEVELOPER_MODE');
+    }
+
+
+    /**
      * So called "static constructor".
      *
      * NOTE: do not call the "parent::__constructStatic()" explicitly: it will be called automatically
@@ -1582,5 +1596,6 @@ abstract class AView extends \XLite\Core\Handler
     {
         echo ('<!--' . "\r\n" . 'DATACELL' . "\r\n" . json_encode($data) . "\r\n" . '-->' . "\r\n");
     }
+
 }
 
