@@ -118,7 +118,7 @@ class Zone extends \XLite\Model\Repo\ARepo
         $data = $this->getFromCache('all');
 
         if (!isset($data)) {
-            $data = $this->defineFindAllZones()->getQuery()->getResult();
+            $data = $this->defineFindAllZones()->getResult();
             $this->saveToCache($data, 'all');
         }
 

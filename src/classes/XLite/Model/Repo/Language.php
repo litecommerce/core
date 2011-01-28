@@ -100,7 +100,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
     {
         $data = $this->getFromCache('all');
         if (!isset($data)) {
-            $data = $this->defineAllLanguagesQuery()->getQuery()->getResult();
+            $data = $this->defineAllLanguagesQuery()->getResult();
             $this->saveToCache($data, 'all');
         }
 
@@ -132,7 +132,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
     {
         $data = $this->getFromCache('status', array('status' => \XLite\Model\Language::ENABLED));
         if (!isset($data)) {
-            $data = $this->defineByStatusQuery(\XLite\Model\Language::ENABLED)->getQuery()->getResult();
+            $data = $this->defineByStatusQuery(\XLite\Model\Language::ENABLED)->getResult();
             $this->saveToCache($data, 'status', array('status' => \XLite\Model\Language::ENABLED));
         }
 
@@ -166,7 +166,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      */
     public function findAddedLanguages()
     {
-        return $this->defineAddedQuery()->getQuery()->getResult();
+        return $this->defineAddedQuery()->getResult();
     }
 
     /**
@@ -194,7 +194,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      */
     public function findInactiveLanguages()
     {
-        return $this->defineByStatusQuery(\XLite\Model\Language::INACTIVE)->getQuery()->getResult();
+        return $this->defineByStatusQuery(\XLite\Model\Language::INACTIVE)->getResult();
     }
 
     /**

@@ -63,7 +63,7 @@ class FeaturedProduct extends \XLite\Model\Repo\ARepo
             $categoryId = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getRootCategoryId();
         }
 
-        return $this->defineByCategoryIdQuery($categoryId)->getQuery()->getResult();
+        return $this->defineByCategoryIdQuery($categoryId)->getResult();
     }
 
     /**

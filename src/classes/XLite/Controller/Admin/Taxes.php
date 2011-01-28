@@ -1057,9 +1057,7 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
     {
         $qb = \XLite\Core\Database::getRepo('XLite\Model\Country')->createQueryBuilder();
         $keys = \XLite\Core\Database::buildInCondition($qb, $ids, 'id');
-        $list = $qb->andWhere('c.code IN (' . implode(', ', $keys). ')')
-            ->getQuery()
-            ->getResult();
+        $list = $qb->andWhere('c.code IN (' . implode(', ', $keys). ')')->getResult();
 
         $result = array();
         foreach ($list as $m) {
@@ -1081,15 +1079,13 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
      */
     protected function convertStateIds(array $ids)
     {
-        $qb = \XLite\Core\Database::getRepo('\XLite\Model\State')->createQueryBuilder();
+        $qb = \XLite\Core\Database::getRepo('XLite\Model\State')->createQueryBuilder();
         $keys = \XLite\Core\Database::buildInCondition($qb, $ids, 'id');
-        $list = $qb->andWhere('s.state_id IN (' . implode(', ', $keys). ')')
-            ->getQuery()
-            ->getResult();
+        $list = $qb->andWhere('s.state_id IN (' . implode(', ', $keys). ')')->getResult();
 
         $result = array();
         foreach ($list as $m) {
-            $result[] = $m->state;
+            $result[] = $m->getState();
         }
 
         return $result;
@@ -1109,13 +1105,11 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
     {
         $qb = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->createQueryBuilder();
         $keys = \XLite\Core\Database::buildInCondition($qb, $ids, 'id');
-        $list = $qb->andWhere('m.membership_id IN (' . implode(', ', $keys). ')')
-            ->getQuery()
-            ->getResult();
+        $list = $qb->andWhere('m.membership_id IN (' . implode(', ', $keys). ')')->getResult();
 
         $result = array();
         foreach ($list as $m) {
-            $result[] = $m->name;
+            $result[] = $m->getName();
         }
 
         return $result;

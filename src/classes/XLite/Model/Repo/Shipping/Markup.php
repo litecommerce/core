@@ -198,9 +198,7 @@ class Markup extends \XLite\Model\Repo\ARepo
         // Iterate through zones and generate markups list
         foreach ($customerZones as $zone) {
 
-            $markups = $this->defineFindMarkupsByProcessorQuery($processor, $order, $zone->getZoneId())
-                ->getQuery()
-                ->getResult();
+            $markups = $this->defineFindMarkupsByProcessorQuery($processor, $order, $zone->getZoneId())->getResult();
 
             foreach ($markups as $markupData) {
 
@@ -229,11 +227,7 @@ class Markup extends \XLite\Model\Repo\ARepo
      */
     public function findMarkupsByZoneAndMethod($zoneId = null, $methodId = null)
     {
-        $data = $this->defineFindMarkupsByZoneAndMethodQuery($zoneId, $methodId)
-            ->getQuery()
-            ->getResult();
-
-        return $data;
+        return $this->defineFindMarkupsByZoneAndMethodQuery($zoneId, $methodId)->getResult();
     }
 
     /**
@@ -248,11 +242,7 @@ class Markup extends \XLite\Model\Repo\ARepo
      */
     public function findMarkupsByIds($ids)
     {
-        $data = $this->defineFindMarkupsByIdsQuery($ids)
-            ->getQuery()
-            ->getResult();
-
-        return $data;
+        return $this->defineFindMarkupsByIdsQuery($ids)->getResult();
     }
 
 }

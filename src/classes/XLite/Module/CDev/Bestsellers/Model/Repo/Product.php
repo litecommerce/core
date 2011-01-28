@@ -103,11 +103,9 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
      */
     protected function getObjectOnlyResult($qb)
     {
-        $data = $qb->getQuery()->getResult();
-
         $result = array();
 
-        foreach ($data as $row) {
+        foreach ($qb->getResult() as $row) {
 
             if (is_array($row)) {
 
@@ -120,8 +118,6 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
             $result[] = $object;
 
         }
-
-        unset($data);
 
         return $result;
     }

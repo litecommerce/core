@@ -128,11 +128,7 @@ class Method extends \XLite\Model\Repo\ARepo
      */
     public function findMethodsByProcessor($processorId)
     {
-        $data = $this->defineFindMethodsByProcessor($processorId)
-            ->getQuery()
-            ->getResult();
-
-        return $data;
+        return $this->defineFindMethodsByProcessor($processorId)->getResult();
     }
 
     /**
@@ -147,11 +143,7 @@ class Method extends \XLite\Model\Repo\ARepo
      */
     public function findMethodsByIds($ids)
     {
-        $data = $this->defineFindMethodsByIds($ids)
-            ->getQuery()
-            ->getResult();
-
-        return $data;
+        return $this->defineFindMethodsByIds($ids)->getResult();
     }
 
 }

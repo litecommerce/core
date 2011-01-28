@@ -557,7 +557,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
             $queryBuilder->select('COUNT(p.product_id)');
         }
 
-        $result = $queryBuilder->getQuery()->getResult();
+        $result = $queryBuilder->getResult();
 
         return $countOnly ? count($result) : $result;
     }

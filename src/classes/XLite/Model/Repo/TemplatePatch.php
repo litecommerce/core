@@ -88,7 +88,7 @@ class TemplatePatch extends \XLite\Model\Repo\ARepo
     {
         $data = $this->getFromCache('all');
         if (is_null($data)) {
-            $data = $this->defineAllPatchesQuery()->getQuery()->getResult();
+            $data = $this->defineAllPatchesQuery()->getResult();
             $data = $this->postprocessAllPatches($data);
             $this->saveToCache($data, 'all');
         }

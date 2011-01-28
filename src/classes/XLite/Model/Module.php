@@ -817,17 +817,7 @@ class Module extends \XLite\Model\AEntity
      */
     public function getDependenciesModules()
     {
-        $qb    = $this->getRepository()->createQueryBuilder();
-        $names = \XLite\Core\Database::buildInCondition($qb, $this->getDependencies(), 'classNames');
-        $expr  = $qb->expr()->concat('m.author', $qb->expr()->concat(':delimiter', 'm.name'));
-
-        $qb->setParameter('delimiter', '\\');
-
-        foreach ($names as $k => $dp) {
-            $qb->orWhere($qb->expr()->eq($expr, ':classNames' . $k));
-        }
-
-        return $qb->getQuery()->getResult();
+        return $this->getRepository()->findDependenciesByModule($this);
     }
 
     /**
@@ -1197,18 +1187,18 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * getDependencies 
+     * Get dependencies 
      * 
      * @return array
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDependencies()
+    public function getCalculatedDependencies()
     {
         return array_map(
             array('\Includes\Decorator\Utils\ModulesManager', 'composeDependency'),
-            call_user_func(array($this->getMainClass(), __FUNCTION__))
+            call_user_func(array($this->getMainClass(), 'getDependencies'))
         );
     }
 
@@ -1239,7 +1229,7 @@ class Module extends \XLite\Model\AEntity
 
         foreach ($this->getRepository()->getActiveModules() as $m) {
 
-            $tmp = $m->getDependencies();
+            $tmp = $m->getCalculatedDependencies();
             if (
                 !empty($tmp)
                 && in_array($this->getActualName(), $tmp)

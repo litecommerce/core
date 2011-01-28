@@ -118,17 +118,7 @@ class OptionException extends \XLite\Model\Repo\ARepo
      */
     public function getNextExceptionId()
     {
-        try {
-            $max = $this->defineNextExceptionIdQuery()
-                ->getQuery()
-                ->getSingleScalarResult();
-            $max = intval($max);
-
-        } catch (\Doctrine\ORM\NonUniqueResultException $exception) {
-            $max = 0;
-        }
-
-        return $max + 1;
+        return intval($this->defineNextExceptionIdQuery()->getSingleScalarResult()) + 1;
     }
 
     /**
@@ -157,9 +147,7 @@ class OptionException extends \XLite\Model\Repo\ARepo
      */
     public function findByExceptionId($exceptionId)
     {
-        return $this->defineByExceptionIdQuery($exceptionId)
-            ->getQuery()
-            ->getResult();
+        return $this->defineByExceptionIdQuery($exceptionId)->getResult();
     }
 
     /**
@@ -191,9 +179,7 @@ class OptionException extends \XLite\Model\Repo\ARepo
      */
     public function findByExceptionIds(array $exceptionIds)
     {
-        return $this->defineByExceptionIdsQuery($exceptionIds)
-            ->getQuery()
-            ->getResult();
+        return $this->defineByExceptionIdsQuery($exceptionIds)->getResult();
     }
 
     /**

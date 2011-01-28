@@ -271,9 +271,7 @@ class Order extends \XLite\Model\Repo\ARepo
      */
     public function findAllExipredTemporaryOrders()
     {
-        return $this->defineAllExpiredTemporaryOrdersQuery()
-            ->getQuery()
-            ->getResult();
+        return $this->defineAllExpiredTemporaryOrdersQuery()->getResult();
     }
 
     /**

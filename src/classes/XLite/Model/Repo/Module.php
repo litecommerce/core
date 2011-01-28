@@ -151,6 +151,45 @@ class Module extends \XLite\Model\Repo\ARepo
     protected $modules = null;
 
     /**
+     * Find dependency modules by module 
+     * 
+     * @param \XLite\Model\Module $module Module
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findDependenciesByModule(\XLite\Model\Module $module)
+    {
+        return $this->defineFindDependenciesByModuleQuery($module)->getResult();
+    }
+
+    /**
+     * Define query for findDependenciesByModule() method
+     * 
+     * @param \XLite\Model\Module $module Module
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineFindDependenciesByModuleQuery(\XLite\Model\Module $module)
+    {
+        $qb = $this->createQueryBuilder()
+            ->setParameter('delimiter', '\\');;
+        $names = \XLite\Core\Database::buildInCondition($qb, $module->getCalculatedDependencies(), 'classNames');
+        $expr  = $qb->expr()->concat('m.author', $qb->expr()->concat(':delimiter', 'm.name'));
+
+        foreach ($names as $k => $dp) {
+            $qb->orWhere($qb->expr()->eq($expr, ':classNames' . $k));
+        }
+
+        return $qb;
+    }
+
+    /**
      * Define cache cells 
      * 
      * @return array
@@ -333,10 +372,7 @@ class Module extends \XLite\Model\Repo\ARepo
     {
         list($sort, $order) = $value;
 
-        $queryBuilder->addOrderBy($sort, $order);
-
-        // FIXME: to remove after implementation of the manage addons page via items list
-        $this->defaultOrderBy = array();
+        $queryBuilder->orderBy($sort, $order);
     }
 
     /**
@@ -417,7 +453,7 @@ class Module extends \XLite\Model\Repo\ARepo
             $this->callSearchConditionHandler($value, $key, $queryBuilder);
         }
 
-        $result = $queryBuilder->getQuery()->getResult();
+        $result = $queryBuilder->getResult();
 
         return $countOnly ? count($result) : $result;
     }
@@ -434,7 +470,7 @@ class Module extends \XLite\Model\Repo\ARepo
     {
         $data = $this->getFromCache('all');
         if (!isset($data)) {
-            $data = $this->defineAllModulesQuery()->getQuery()->getResult();
+            $data = $this->defineAllModulesQuery()->getResult();
             $this->saveToCache($data, 'all');
         }
 
@@ -451,13 +487,7 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     public function findInactiveModules()
     {
-        return $this->createQueryBuilder()
-            ->andWhere('m.enabled = :enabled')
-            ->andWhere('m.installed = :installed')
-            ->setParameter('enabled', false)
-            ->setParameter('installed', true)
-            ->getQuery()
-            ->getResult();
+        return $this->defineFindInactiveModulesQuery()->getResult();
     }
 
     /**
@@ -493,7 +523,7 @@ class Module extends \XLite\Model\Repo\ARepo
     {
         $data = $this->getFromCache('names');
         if (!isset($data)) {
-            $data = $this->defineAllNamesQuery()->getQuery()->getResult();
+            $data = $this->defineAllNamesQuery()->getResult();
             $data = $this->postprocessAllNames($data);
             $this->saveToCache($data, 'names');
         }
@@ -513,9 +543,9 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     public function findAllByModuleIds(array $ids)
     {
-        return !empty($ids)
-            ? $this->defineAllByModuleIdsQuery($ids)->getQuery()->getResult()
-            : array();
+        return empty($ids)
+            ? array()
+            : $this->defineAllByModuleIdsQuery($ids)->getResult();
     }
 
     /**
@@ -532,7 +562,7 @@ class Module extends \XLite\Model\Repo\ARepo
     {
         $data = $this->getFromCache('enabled', array('enabled' => $enabled));
         if (!isset($data)) {
-            $data = $this->defineAllEnabledQuery($enabled)->getQuery()->getResult();
+            $data = $this->defineAllEnabledQuery($enabled)->getResult();
             $this->saveToCache($data, 'enabled', array('enabled' => $enabled));
         }
 
@@ -721,6 +751,23 @@ class Module extends \XLite\Model\Repo\ARepo
                 \XLite\Core\TmpVars::getInstance()->{static::ADDONS_UPDATED} = LC_START_TIME;
             }
         }
+    }
+
+    /**
+     * Define query for findInactiveModules() method
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineFindInactiveModulesQuery()
+    {
+        return $this->createQueryBuilder()
+            ->andWhere('m.enabled = :enabled')
+            ->andWhere('m.installed = :installed')
+            ->setParameter('enabled', false)
+            ->setParameter('installed', true);
     }
 
     /**

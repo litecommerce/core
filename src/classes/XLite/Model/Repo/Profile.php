@@ -697,13 +697,9 @@ class Profile extends \XLite\Model\Repo\ARepo
             $this->callSearchConditionHandler($value, $key, $queryBuilder);
         }
 
-        $result = $queryBuilder->getQuery()->getResult();
+        $result = $queryBuilder->getResult();
 
-        if ($countOnly) {
-            $result = count($result);
-        }
-
-        return $result;
+        return $countOnly ? count($result) : $result;
     }
 
     /**

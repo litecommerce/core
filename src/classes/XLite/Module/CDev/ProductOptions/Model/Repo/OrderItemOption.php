@@ -50,9 +50,7 @@ class OrderItemOption extends \XLite\Model\Repo\ARepo
      */
     public function findByItemIdAndOrderId($itemId, $orderId)
     {
-        return $this->defineByItemIdAndOrderIdQuery($itemId, $orderId)
-            ->getQuery()
-            ->getResult();
+        return $this->defineByItemIdAndOrderIdQuery($itemId, $orderId)->getResult();
     }
 
     /**

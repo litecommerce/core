@@ -317,9 +317,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function getMaxRightPos()
     {
-        return $this->defineMaxRightPosQuery()
-            ->getQuery()
-            ->getSingleScalarResult();
+        return $this->defineMaxRightPosQuery()->getSingleScalarResult();
     }
 
     /**
@@ -444,8 +442,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
             if ($parent) {
 
                 // Update indexes in the nested set
-                $this->defineUpdateIndexQuery('lpos', $parent->getLpos())->getQuery()->execute();
-                $this->defineUpdateIndexQuery('rpos', $parent->getLpos())->getQuery()->execute();
+                $this->defineUpdateIndexQuery('lpos', $parent->getLpos())->execute();
+                $this->defineUpdateIndexQuery('rpos', $parent->getLpos())->execute();
 
                 // Create record in DB
                 $entity = parent::performInsert($this->prepareNewCategoryData($data, $parent));
@@ -582,9 +580,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getCategories($rootId = null)
     {
-        return $this->defineFullTreeQuery($rootId)
-            ->getQuery()
-            ->getResult();
+        return $this->defineFullTreeQuery($rootId)->getResult();
     }
 
     /**
@@ -599,9 +595,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getSubcategories($rootId)
     {
-        return $this->defineSubcategoriesQuery($rootId)
-            ->getQuery()
-            ->getResult();
+        return $this->defineSubcategoriesQuery($rootId)->getResult();
     }
 
     /**
@@ -616,7 +610,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getSiblings(\XLite\Model\Category $category)
     {
-        return $this->defineSiblingsQuery($category)->getQuery()->getResult();
+        return $this->defineSiblingsQuery($category)->getResult();
     }
 
     /**
@@ -631,9 +625,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getSubtree($categoryId)
     {
-        return $this->defineSubtreeQuery($categoryId)
-            ->getQuery()
-            ->getResult();
+        return $this->defineSubtreeQuery($categoryId)->getResult();
     }
 
     /**
@@ -648,9 +640,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getCategoryPath($categoryId)
     {
-        return $this->defineCategoryPathQuery($categoryId)
-            ->getQuery()
-            ->getResult();
+        return $this->defineCategoryPathQuery($categoryId)->getResult();
     }
 
     /**
@@ -665,9 +655,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getCategoryDepth($categoryId)
     {
-        return $this->defineCategoryDepthQuery($categoryId)
-            ->getQuery()
-            ->getSingleScalarResult();
+        return $this->defineCategoryDepthQuery($categoryId)->getSingleScalarResult();
     }
 
     /**
@@ -682,9 +670,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function findAllByProductId($productId)
     {
-        return $this->defineSearchByProductIdQuery($productId)
-            ->getQuery()
-            ->getResult();
+        return $this->defineSearchByProductIdQuery($productId)->getResult();
     }
 
     /**
@@ -736,8 +722,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
             : $this->delete($entity);
 
         // Update indexes in the nested set
-        $this->defineUpdateIndexQuery('lpos', $right, -$width)->getQuery()->execute();
-        $this->defineUpdateIndexQuery('rpos', $right, -$width)->getQuery()->execute();
+        $this->defineUpdateIndexQuery('lpos', $right, -$width)->execute();
+        $this->defineUpdateIndexQuery('rpos', $right, -$width)->execute();
     }
 
 
@@ -826,8 +812,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
             // Update indexes in the nested set
             if (isset($parent)) {
 
-                $this->defineUpdateIndexQuery('lpos', $parent->getRpos() - 1)->getQuery()->execute();
-                $this->defineUpdateIndexQuery('rpos', $parent->getRpos() - 1)->getQuery()->execute();
+                $this->defineUpdateIndexQuery('lpos', $parent->getRpos() - 1)->execute();
+                $this->defineUpdateIndexQuery('rpos', $parent->getRpos() - 1)->execute();
 
                 $entity->setLpos($parent->getRpos());
                 $entity->setRpos($parent->getRpos() + 1);

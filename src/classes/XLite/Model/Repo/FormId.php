@@ -111,7 +111,7 @@ class FormId extends \XLite\Model\Repo\ARepo
             $sessionId = \XLite\Core\Session::getInstance()->getModel()->getId();
         }
 
-        return intval($this->defineByFormIdAndSessionIdQuery($formId, $sessionId)->getQuery()->getSingleScalarResult());
+        return intval($this->defineByFormIdAndSessionIdQuery($formId, $sessionId)->getSingleScalarResult());
     }
 
     /**
@@ -188,7 +188,7 @@ class FormId extends \XLite\Model\Repo\ARepo
 
         $id = $this->getFrontierId($sessionId);
         if ($id) {
-            $this->defineRemoveExpiredQuery($id, $sessionId)->getQuery()->execute();
+            $this->defineRemoveExpiredQuery($id, $sessionId)->execute();
         }
     }
 
@@ -241,7 +241,7 @@ class FormId extends \XLite\Model\Repo\ARepo
      */
     protected function defineRemoveExpiredQuery($id, $sessionId)
     {
-        return $this->_em->createQueryBuilder()
+        return $this->getQueryBuilder()
             ->delete($this->_entityName, 'f')
             ->andWhere('f.id < :id AND f.session_id = :sid')
             ->setParameter('id', $id)
