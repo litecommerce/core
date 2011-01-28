@@ -50,8 +50,8 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      */
     public function linkProfiles($profileId, $cmsProfileId)
     {
-        $this->defineUnlinkProfilesQuery($cmsProfileId)->getQuery()->execute();
-        $this->defineLinkProfilesQuery($profileId, $cmsProfileId)->getQuery()->execute();
+        $this->defineUnlinkProfilesQuery($cmsProfileId)->execute();
+        $this->defineLinkProfilesQuery($profileId, $cmsProfileId)->execute();
     }
 
     /**
@@ -66,7 +66,7 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      */
     protected function defineUnlinkProfilesQuery($cmsProfileId)
     {
-        $qb = $this->_em->createQueryBuilder();
+        $qb = $this->getQueryBuilder();
 
         return $qb->update($this->_entityName, 'p')
             ->set('p.cms_name', $qb->expr()->literal(''))
@@ -89,7 +89,7 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      */
     protected function defineLinkProfilesQuery($profileId, $cmsProfileId)
     {
-        $qb = $this->_em->createQueryBuilder();
+        $qb = $this->getQueryBuilder();
 
         $cmsName = $qb->expr()->literal(\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getCMSName());
 

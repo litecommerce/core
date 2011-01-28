@@ -216,7 +216,7 @@ class State extends \XLite\Model\Repo\ARepo
     {
         $data = $this->getFromCache('all');
         if (!isset($data)) {
-            $data = $this->defineAllStatesQuery()->getQuery()->getResult();
+            $data = $this->defineAllStatesQuery()->getResult();
             $this->saveToCache($data, 'all');
         }
 
@@ -253,7 +253,7 @@ class State extends \XLite\Model\Repo\ARepo
         $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($countryCode);
 
         return $country
-            ? $this->defineByCountryQuery($country)->getQuery()->getResult()
+            ? $this->defineByCountryQuery($country)->getResult()
             : array();
     }
 

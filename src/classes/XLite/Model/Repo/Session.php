@@ -81,9 +81,7 @@ class Session extends \XLite\Model\Repo\ARepo
      */
     public function removeExpired()
     {
-        return $this->defineRemoveExpiredQuery()
-            ->getQuery()
-            ->execute();
+        return $this->defineRemoveExpiredQuery()->execute();
     }
 
     /**
@@ -96,8 +94,7 @@ class Session extends \XLite\Model\Repo\ARepo
      */
     protected function defineRemoveExpiredQuery()
     {
-        return $this->_em
-            ->createQueryBuilder()
+        return $this->getQueryBuilder()
             ->delete($this->_entityName, 's')
             ->andWhere('s.expiry < :time')
             ->setParameter('time', time());
@@ -115,7 +112,7 @@ class Session extends \XLite\Model\Repo\ARepo
      */
     public function countBySid($sid)
     {
-        return intval($this->defineCountBySidQuery($sid)->getQuery()->getSingleScalarResult());
+        return intval($this->defineCountBySidQuery($sid)->getSingleScalarResult());
     }
 
     /**

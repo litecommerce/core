@@ -95,4 +95,17 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
 
         return $scalar;
     }
+
+    /**
+     * Execute query
+     * 
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function execute()
+    {
+        return $this->getQuery()->execute();
+    }
 }

@@ -112,9 +112,7 @@ class Country extends \XLite\Model\Repo\ARepo
     {
         $data = $this->getFromCache('enabled');
         if (!isset($data)) {
-            $data = $this->defineAllEnabledQuery()
-                ->getQuery()
-                ->getResult();
+            $data = $this->defineAllEnabledQuery()->getResult();
             $this->saveToCache($data, 'enabled');
         }
 
@@ -150,9 +148,7 @@ class Country extends \XLite\Model\Repo\ARepo
     {
         $data = $this->getFromCache('all');
         if (!isset($data)) {
-            $data = $this->defineAllCountriesQuery()
-                ->getQuery()
-                ->getResult();
+            $data = $this->defineAllCountriesQuery()->getResult();
             $this->saveToCache($data, 'all');
         }
 
@@ -186,9 +182,7 @@ class Country extends \XLite\Model\Repo\ARepo
     {
         $data = $this->getFromCache('states');
         if (!isset($data)) {
-            $data = $this->defineCountriesStatesQuery()
-                ->getQuery()
-                ->getResult();
+            $data = $this->defineCountriesStatesQuery()->getResult();
             $data = $this->postprocessCountriesStates($data);
             $this->saveToCache($data, 'states');
         }

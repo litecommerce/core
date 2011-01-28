@@ -755,7 +755,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             $alias = $this->getMainAlias($qb);
             $qb->andWhere($alias . '.' . $this->_class->identifier[0] . ' IN (' . implode(', ', $keys) . ')');
 
-            $result = $qb->getQuery()->getResult();
+            $result = $qb->getResult();
         }
 
         return $result;
@@ -774,7 +774,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function findFrame($start = 0, $limit = 0)
     {
-        return $this->defineFrameQuery($start, $limit)->getQuery()->getResult();
+        return $this->defineFrameQuery($start, $limit)->getResult();
     }
 
     /**

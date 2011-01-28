@@ -68,8 +68,8 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
         $this->assertEquals(44, count($result), 'Number of found modules does not match');
 
         // If the first selected (SORT_BY_MODE_NAME, SORT_ORDER_ASC) is the "AustraliaPost" one
-        $this->assertEquals(1, $result[0]->getModuleId(), 'ID of the first found module does not match');
-        $this->assertEquals(41, $result[count($result)-1]->getModuleId(), 'ID of the last found module does not match');
+        $this->assertEquals('2checkout', $result[0]->getModuleName(), 'Name of the first found module does not match');
+        $this->assertEquals('X-Payments connector', $result[count($result)-1]->getModuleName(), 'Name of the last found module does not match');
     }
 
     /**
@@ -100,8 +100,8 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
         $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findInactiveModules();
 
         $this->assertEquals(37, count($result), 'Number of found inactive modules does not match');
-        $this->assertEquals(8, $result[0]->getModuleId(), 'ID of the first found module does not match');
-        $this->assertEquals(44, $result[count($result)-1]->getModuleId(), 'ID of the last found module does not match');
+        $this->assertEquals('Accounting Package', $result[0]->getModuleName(), 'Name of the first found module does not match');
+        $this->assertEquals('X-Payments connector', $result[count($result)-1]->getModuleName(), 'Name of the last found module does not match');
     }
 
     /**
@@ -133,7 +133,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
     {
         \XLite\Core\Database::getCacheDriver()->delete('Model_Module.data.names.all');
 
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findAllNames();
+        $result = \XLite\Core\Database::getRepo('XLite\Model\Module')->findAllNames();
 
         $this->assertEquals(44, count($result), 'Number of found modules does not match');
 

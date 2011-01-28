@@ -79,9 +79,7 @@ class Method extends \XLite\Model\Repo\Base\I18n
      */
     public function findAllMethods()
     {
-        return $this->defineAllMethodsQuery()
-            ->getQuery()
-            ->getResult();
+        return $this->defineAllMethodsQuery()->getResult();
     }
 
     /**
@@ -107,9 +105,7 @@ class Method extends \XLite\Model\Repo\Base\I18n
      */
     public function findAllActive()
     {
-        $list = $this->defineAllActiveQuery()
-            ->getQuery()
-            ->getResult();
+        $list = $this->defineAllActiveQuery()->getResult();
 
         foreach ($list as $k => $v) {
             if (!$v->isEnabled()) {

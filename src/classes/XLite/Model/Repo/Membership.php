@@ -90,7 +90,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
     {
         $data = $this->getFromCache('all');
         if (!isset($data)) {
-            $data = $this->defineAllMembershipsQuery()->getQuery()->getResult();
+            $data = $this->defineAllMembershipsQuery()->getResult();
             $this->saveToCache($data, 'all');
         }
 
@@ -122,7 +122,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
     {
         $data = $this->getFromCache('active', array('active' => true));
         if (!isset($data)) {
-            $data = $this->defineActiveMembershipsQuery()->getQuery()->getResult();
+            $data = $this->defineActiveMembershipsQuery()->getResult();
             $this->saveToCache($data, 'active', array('active' => true));
         }
 

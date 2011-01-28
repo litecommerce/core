@@ -95,10 +95,8 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
 
         $data = $this->getFromCache('all_by_code', array('code' => $code));
         if (is_null($data)) {
-            $data = $this->postprocessLabelsByCode(
-                $this->defineLabelsByCodeQuery()->getQuery()->getResult(),
-                $code
-            );
+            $data = $this->defineLabelsByCodeQuery()->getResult();
+            $data = $this->postprocessLabelsByCode($data, $code);
             $this->saveToCache($data, 'all_by_code', array('code' => $code));
         }
 
@@ -187,7 +185,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      */
     public function findLikeName($name, $start = 0, $limit = 0)
     {
-        return $this->defineLikeNameQuery($name, $start, $limit)->getQuery()->getResult();
+        return $this->defineLikeNameQuery($name, $start, $limit)->getResult();
     }
 
     /**

@@ -59,10 +59,7 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
      */
     public function findActiveByProductId($productId)
     {
-        $data = $this->defineActiveByProductIdQuery(intval($productId))
-            ->getQuery()
-            ->getResult();
-
+        $data = $this->defineActiveByProductIdQuery(intval($productId))->getResult();
         $data = $this->postprocessActiveByProductId($data, intval($productId));
 
         return $data;
@@ -213,7 +210,7 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
             && isset($data['sku'])
             && $data['sku']
         ) {
-            $entity = $this->defineOneBySkuAndNameQuery($data['sku'], $data['name'])->getQuery()->getSingleResult();
+            $entity = $this->defineOneBySkuAndNameQuery($data['sku'], $data['name'])->getSingleResult();
         }
 
         return $entity;

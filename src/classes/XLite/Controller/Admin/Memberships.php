@@ -83,7 +83,6 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
                         ->setParameter('name', $row['membership'])
                         ->setParameter('id', $id)
                         ->setMaxResults(1)
-                        ->getQuery()
                         ->getSingleResult();
 
                     // TODO - add top message
@@ -120,8 +119,8 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
             $list = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->createQueryBuilder()
                 ->where('m.membership_id IN (' . implode(', ', $keys). ')')
                 ->setParameters($data)
-                ->getQuery()
                 ->getResult();
+
             foreach ($list as $m) {
                 \XLite\Core\Database::getEM()->remove($m);
             }

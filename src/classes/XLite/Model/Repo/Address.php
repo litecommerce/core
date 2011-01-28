@@ -57,9 +57,8 @@ class Address extends \XLite\Model\Repo\ARepo
      */
     protected function defineFindAllCities()
     {
-        return $this->_em->createQueryBuilder()
+        return $this->createQueryBuilder()
             ->select('a.city')
-            ->from($this->_entityName, 'a')
             ->addGroupBy('a.city')
             ->addOrderBy('a.city');
     }
@@ -74,12 +73,12 @@ class Address extends \XLite\Model\Repo\ARepo
      */
     public function findAllCities()
     {
-        $result = $this->defineFindAllCities()->getQuery()->getArrayResult();
+        $result = $this->defineFindAllCities()->getResult();
     
         $cities = array();
 
         foreach ($result as $res) {
-            $cities[] = $res['city'];
+            $cities[] = $res->getCity();
         }
 
         return $cities;

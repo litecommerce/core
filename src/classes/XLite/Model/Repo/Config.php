@@ -132,7 +132,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
         }
         
         if (!isset($data)) {
-            $data = $this->defineByCategoryQuery($category)->getQuery()->getResult();
+            $data = $this->defineByCategoryQuery($category)->getResult();
             if (!$doNotProcess) {
                 $data = $this->processOptions($data);
                 $this->saveToCache($data, 'category', array('category' => $category));
@@ -154,7 +154,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
      */
     public function findByCategoryAndVisible($category)
     {
-        return $this->defineByCategoryAndVisibleQuery($category)->getQuery()->getResult();
+        return $this->defineByCategoryAndVisibleQuery($category)->getResult();
     }
 
     /**
@@ -176,7 +176,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
         }
         
         if (!isset($data)) {
-            $data = $this->defineAllOptionsQuery()->getQuery()->getResult();
+            $data = $this->defineAllOptionsQuery()->getResult();
             $data = $this->detachList($data);
             $data = $this->processOptions($data);
             $this->saveToCache($data, 'all');
