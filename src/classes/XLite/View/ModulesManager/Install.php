@@ -37,7 +37,7 @@ namespace XLite\View\ModulesManager;
  *
  * @ListChild (list="admin.center", zone="admin")
  */
-class Install extends \XLite\View\Dialog
+class Install extends \XLite\View\ModulesManager\AModulesManager
 {
     /**
      * Return list of targets allowed for this widget
@@ -94,19 +94,7 @@ class Install extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'modules_manager' . LC_DS . 'install';
-    }
-
-    /**
-     * Return marketplace URL
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getMarketPlaceURL()
-    {
-        return \XLite\Model\Module::MARKETPLACE_URL;
+        return parent::getDir() . LC_DS . 'install';
     }
 
 }

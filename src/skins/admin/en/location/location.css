@@ -11,6 +11,10 @@
  * @since     3.0.0
  */
 
+div#location {
+  height: 30px;
+}
+
 li.location-node {
   display: inline;
 }
@@ -18,7 +22,6 @@ li.location-node {
 div.location-node {
   display: inline;
   position: relative;
-  padding-bottom: 2em;
 }
 
 div.location-node:hover ul.location-subnodes {

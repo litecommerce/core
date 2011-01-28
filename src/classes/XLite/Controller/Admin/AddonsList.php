@@ -51,36 +51,6 @@ class AddonsList extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Method to create quick links
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineQuickLinks()
-    {
-        parent::defineQuickLinks();
-
-        // Count upgradable add-ons
-        $upgradablesCount = count(\XLite\Core\Database::getRepo('\XLite\Model\Module')->findUpgradableModules());
-        $upgradablesLabel = 0 < $upgradablesCount
-            ? ' <i>(' . $upgradablesCount . ')</i>'
-            : '';
-        
-        $this->addQuickLink(
-            $this->t('Manage add-ons') . $upgradablesLabel,
-            $this->buildURL('modules')
-        );
-
-        $this->addQuickLink(
-            $this->t('Install new add-ons'),
-            $this->buildURL('addons_list', '', array('mode' => 'featured')),
-            true
-        );
-    }
-
-    /**
      * doActionSearch
      *
      * @return void

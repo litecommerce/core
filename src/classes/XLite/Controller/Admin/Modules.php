@@ -66,36 +66,6 @@ class Modules extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Method to create quick links
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineQuickLinks()
-    {
-        parent::defineQuickLinks();
-
-        // Count upgradable add-ons
-        $upgradablesCount = count(\XLite\Core\Database::getRepo('\XLite\Model\Module')->findUpgradableModules());
-        $upgradablesLabel = 0 < $upgradablesCount
-            ? ' <i>(' . $upgradablesCount . ')</i>'
-            : '';
-        
-        $this->addQuickLink(
-            $this->t('Manage add-ons') . $upgradablesLabel,
-            $this->buildURL('modules'),
-            true
-        );
-
-        $this->addQuickLink(
-            $this->t('Install new add-ons'),
-            $this->buildURL('addons_list', '', array('mode' => 'featured'))
-        );
-    }
-
-    /**
      * Enable module
      *
      * @return void
@@ -141,18 +111,20 @@ class Modules extends \XLite\Controller\Admin\AAdmin
 
                 $packModule->cleanUp();
 
-                exit(0);
+                exit (0);
 
             } else {
 
-                \XLite\Core\TopMessage::getInstance()->addError('Module packaging finished with the error: "' . $packModule->getError() . '"');
+                \XLite\Core\TopMessage::getInstance()
+                    ->addError('Module packaging finished with the error: "' . $packModule->getError() . '"');
             }
 
             $packModule->cleanUp();
 
         } else {
 
-            \XLite\Core\TopMessage::getInstance()->addError('Module packing is available in the DEVELOPER mode only. Check etc/config.php file');
+            \XLite\Core\TopMessage::getInstance()
+                ->addError('Module packing is available in the DEVELOPER mode only. Check etc/config.php file');
         }
     }
 
