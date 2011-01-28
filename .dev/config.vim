@@ -28,6 +28,8 @@ endfunction
 function LC_PHPSettings()
 	nnoremap <C-a> :call LC_PhpDocFile()<CR>
 	inoremap <C-a> <C-R>=ClassName()<CR>
+	set foldenable
+	set foldmethod=marker
 endfunction
 
 function LC_YAMLSettings()
