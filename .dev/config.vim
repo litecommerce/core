@@ -30,6 +30,7 @@ function LC_PHPSettings()
 	inoremap <C-a> <C-R>=ClassName()<CR>
 	set foldenable
 	set foldmethod=marker
+    set foldmarker={{{,}}}
 endfunction
 
 function LC_YAMLSettings()
