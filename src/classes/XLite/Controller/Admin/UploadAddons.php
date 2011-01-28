@@ -76,6 +76,7 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
                         $module->check();
                     }
 
+                    // Deploy module wrapper (Some additional text or warnings are shown)
                     $this->deployModule($module, $index, $name);
 
                     // Remove the temporary content and uploaded PHAR file

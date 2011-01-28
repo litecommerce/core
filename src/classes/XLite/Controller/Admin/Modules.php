@@ -129,25 +129,31 @@ class Modules extends \XLite\Controller\Admin\AAdmin
     {
         $this->set('returnUrl', $this->buildUrl('modules'));
 
-        $id = \XLite\Core\Request::getInstance()->moduleId;
+        if (LC_DEVELOPER_MODE) {
 
-        $packModule = new \XLite\Model\PackModule($id);
+            $id = \XLite\Core\Request::getInstance()->moduleId;
 
-        if (\XLite\Model\PackModule::STATUS_OK === $packModule->createPackage()) {
+            $packModule = new \XLite\Model\PackModule($id);
 
-            $packModule->downloadPackage();
+            if (\XLite\Model\PackModule::STATUS_OK === $packModule->createPackage()) {
+
+                $packModule->downloadPackage();
+
+                $packModule->cleanUp();
+
+                exit(0);
+
+            } else {
+
+                \XLite\Core\TopMessage::getInstance()->addError('Module packaging finished with the error: "' . $packModule->getError() . '"');
+            }
 
             $packModule->cleanUp();
 
-            exit(0);
-
         } else {
 
-            \XLite\Core\TopMessage::getInstance()->addError('Module packaging finished with the error: "' . $packModule->getError() . '"');
-
+            \XLite\Core\TopMessage::getInstance()->addError('Module packing is available in the DEVELOPER mode only. Check etc/config.php file');
         }
-
-        $packModule->cleanUp();
     }
 
     /**
