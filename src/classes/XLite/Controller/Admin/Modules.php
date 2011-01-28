@@ -223,18 +223,4 @@ class Modules extends \XLite\Controller\Admin\AAdmin
         $this->set('returnUrl', $this->buildUrl('modules'));
     }
 
-
-    /**
-     * Checks if the PHAR packaging is enabled.
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function enabledPacking()
-    {
-        return '' === ini_get('phar.readonly');
-    }
-
 }
