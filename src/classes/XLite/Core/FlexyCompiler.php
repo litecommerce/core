@@ -960,16 +960,22 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
     function flexySimpleExpression(&$str)
     {
-        if (substr($str, 0, 1) == "#") {
+        if ('#' == substr($str, 0, 1)) {
+
             // find next #
-            $pos = strpos($str, "#", 1);
-            if ($pos===false) $this->error("No closing #");
-            $result = '\'' . substr($str, 1, $pos-1) . '\'';
-            $str = substr($str, $pos+1);
+            $pos = strpos($str, '#', 1);
+            if (false === $pos) {
+                $this->error('No closing #');
+            }
+            $result = '\'' . addslashes(substr($str, 1, $pos - 1)) . '\'';
+
+            $str = substr($str, $pos + 1);
+
             return $result;
         }
+
         if (substr($str, 0, 1) == "%") {
-            // find next #
+            // find next %
             $pos = strpos($str, "%", 1);
             if ($pos===false) $this->error("No closing %");
             $result = substr($str, 1, $pos-1);
