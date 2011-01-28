@@ -29,68 +29,14 @@
 namespace XLite\View\ModulesManager;
 
 /**
- * Modules modify widget
+ * Addons search and installation widget
  *
  * @package XLite
  * @see     ____class_see____
  * @since   3.0
- *
- * @ListChild (list="admin.center", zone="admin")
  */
-class Manage extends \XLite\View\ModulesManager\AModulesManager
+class AModulesManager extends \XLite\View\Dialog
 {
-    /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = 'modules';
-    
-        return $result;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'modules_manager' . LC_DS . 'common.css';
-        $list[] = $this->getDir() . LC_DS . 'style.css';
-
-        return $list;
-    }
-
-    /**
-     * Register files from common repository
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCommonFiles()
-    {
-        $list = parent::getCommonFiles();
-
-        $list['js'][] = 'js/jquery.cluetip.js';
-
-        return $list;
-    }
-
-
     /**
      * Return title
      *
@@ -100,11 +46,11 @@ class Manage extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getHead()
     {
-        return 'Manage Add-ons' . $this->getUpgradableModulesFlag();
+        return '';
     }
 
     /**
-     * Return templates directory name
+     * Return templates directory
      *
      * @return string
      * @access protected
@@ -112,7 +58,34 @@ class Manage extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'manage';
+        return 'modules_manager';
     }
 
+    /**
+     * Return marketplace URL
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getMarketPlaceURL()
+    {
+        return \XLite\Model\Module::MARKETPLACE_URL;
+    }
+
+    /**
+     * Return upgradable modules flag label:
+     * - empty string if no any
+     * - number of upgradable modules in brackets
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getUpgradableModulesFlag()
+    {
+        $upgadeables = count(\Xlite\Core\Database::getRepo('XLite\Model\Module')->findUpgradableModules());
+
+        return 0 < $upgadeables ? ' (' . $upgadeables . ')' : '';
+    }
 }
