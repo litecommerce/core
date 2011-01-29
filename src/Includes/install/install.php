@@ -258,6 +258,11 @@ function doCheckRequirements()
         'critical' => false,
     );
 
+    $checkRequirements['lc_php_phar'] = array(
+        'title'    => 'Phar extension',
+        'critical' => false,
+    );
+
     $checkRequirements['lc_https_bouncer'] = array(
         'title'    => 'HTTPS bouncers',
         'critical' => false,
@@ -1011,6 +1016,31 @@ function checkPhpGdlib(&$errorMsg, &$value)
 
     if (!$result) {
         $errorMsg = 'GDlib extension v.2.0 or later required for some modules.';
+    }
+
+    return $result;
+}
+
+/**
+ * Check Phar extension
+ *
+ * @param string   $errorMsg   Error message if checking failed
+ * @param string   $value      Actual value of the checked parameter
+ *
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function checkPhpPhar(&$errorMsg, &$value)
+{
+    $result = false;
+
+    if (extension_loaded('phar')) {
+        $errorMsg = 'Phar extension is not loaded';
+
+    } else {
+        $result = true;
     }
 
     return $result;
@@ -2810,6 +2840,7 @@ function module_check_cfg()
                 'lc_mem_allocation',
                 'lc_recursion_test',
                 'lc_php_gdlib',
+                'lc_php_phar',
                 'lc_https_bouncer',
                 'lc_xml_support'
             )
