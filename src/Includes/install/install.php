@@ -1034,13 +1034,11 @@ function checkPhpGdlib(&$errorMsg, &$value)
  */
 function checkPhpPhar(&$errorMsg, &$value)
 {
-    $result = false;
+    $result = true;
 
-    if (extension_loaded('phar')) {
+    if (!extension_loaded('Phar')) {
         $errorMsg = 'Phar extension is not loaded';
-
-    } else {
-        $result = true;
+        $result = false;
     }
 
     return $result;
