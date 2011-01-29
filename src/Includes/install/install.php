@@ -122,22 +122,27 @@ OUT;
  * @see    ____func_see____
  * @since  3.0.0
  */
-function x_install_log_mask_params(&$params)
+function x_install_log_mask_params($params)
 {
-    $fieldsToMask = array(
+    static $fieldsToMask = array(
         'auth_code',
         'mysqlpass',
         'password',
-        'confirm_password'
+        'confirm_password',
+        'pass1',
+        'pass2',
     );
 
-    if (isset($params['params'])) {
-        foreach ($params['params'] as $key => $value) {
-            if (in_array($key, $fieldsToMask)) {
-                $params['params'][$key] = empty($value) ? '<empty>' : '<specified>';
-            }
+    foreach ($params as $key => $value) {
+        if (is_array($value)) {
+            $params[$key] = x_install_log_mask_params($value);
+
+        } elseif (in_array($key, $fieldsToMask)) {
+            $params[$key] = empty($value) ? '<empty>' : '<specified>';
         }
     }
+
+    return $params;
 }
 
 
@@ -3500,6 +3505,6 @@ function module_install_done(&$params)
  * Log every request to install.php
  */
 $_params = ('POST' == $_SERVER['REQUEST_METHOD'] ? $_POST : $_GET);
-x_install_log_mask_params($_params);
-x_install_log(null, $_params);
+
+x_install_log(null, x_install_log_mask_params($_params);
 
