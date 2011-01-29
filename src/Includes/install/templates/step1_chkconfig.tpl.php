@@ -432,6 +432,12 @@ echo $requirements['lc_file_permissions']['description'];
 GDLib 2.0 or better required for automatic generation of product thumbnails form product images and for some other modules. GDLib must be compiled with libJpeg (ensure that PHP is configured with the option --with-jpeg-dir=DIR, where DIR is the directory where libJpeg is installed). Please contact the support services of your hosting provider to adjust this parameter.
 </div>
 
+<div id="lc_php_phar" style="display : none">
+<font class="ErrorTitle">Non-critical dependency failed</font>
+<br><br>
+Phar extension is required to install external LiteCommerce addons from marketplace. Please contact the support services of your hosting provider to adjust this parameter.
+</div>
+
 <div id="lc_https_bouncer" style="display : none">
 <font class="ErrorTitle">Non-critical dependency failed</font>
 <br><br>
