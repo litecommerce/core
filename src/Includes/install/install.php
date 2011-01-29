@@ -39,6 +39,108 @@ if (!defined('XLITE_INSTALL_MODE')) {
     die('Incorrect call of the script. Stopping.');
 }
 
+
+/**
+ * Logging functions
+ */
+
+
+/**
+ * Write a record to log
+ * 
+ * @param $message string The log message
+ *
+ * @return void
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+
+function x_install_log($message = null)
+{
+    if (!isset($_REQUEST['lcdebug'])) {
+        return null;
+    
+    } elseif (!isset($_COOKIE['lcdebug'])) {
+        setcookie('lcdebug', true);
+    } 
+    
+    $fileName =  LC_VAR_DIR . 'log' . LC_DS . 'install_log.' . date('Y-m-d') . '.php';
+    $securityHeader = "<?php die(1); ?>\n";
+
+    if (!file_exists($fileName) || $securityHeader > filesize($fileName)) {
+        file_put_contents($fileName, $securityHeader);
+    }
+
+    $args = func_get_args();
+
+    $message = array_shift($args);
+
+    if (empty($message)) {
+        $message = 'Debug info';
+    }
+
+    $currentDate = date(DATE_RFC822);
+
+    $port = $_SERVER['SERVER_PORT'] ? ':' . $_SERVER['SERVER_PORT'] : '';
+
+    $output =<<< OUT
+
+
+--------------------------------------------------------------------
+[$currentDate]
+[{$_SERVER['REQUEST_METHOD']}, {$_SERVER['SERVER_PROTOCOL']}] http://{$_SERVER['HTTP_HOST']}{$port}{$_SERVER['REQUEST_URI']}
+[{$_SERVER['SERVER_SOFTWARE']}]
+$message
+
+OUT;
+
+    if (!empty($args)) {
+
+        ob_start();
+
+        foreach ($args as $value) {
+            var_dump($value);
+        }
+
+        $varDump = ob_get_contents();
+        ob_end_clean();
+
+        $output .= $varDump;
+    }
+
+    file_put_contents($fileName, $output, FILE_APPEND);
+}
+
+/**
+ * Mask some private data in the $params array to avoid this to be passeded to the log
+ * 
+ * @param $param array An array $_POST or $_GET
+ *
+ * @return void
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function x_install_log_mask_params(&$params)
+{
+    $fieldsToMask = array(
+        'auth_code',
+        'mysqlpass',
+        'password',
+        'confirm_password'
+    );
+
+    if (isset($params['params'])) {
+        foreach ($params['params'] as $key => $value) {
+            if (in_array($key, $fieldsToMask)) {
+                $params['params'][$key] = empty($value) ? '<empty>' : '<specified>';
+            }
+        }
+    }
+}
+
+
 /*
  * Checking requirements section
  */
@@ -163,6 +265,8 @@ function doCheckRequirements()
 
     $passed = array();
 
+    $requirementsOk = true;
+
     while (count($passed) < count($checkRequirements)) {
 
         foreach ($checkRequirements as $reqName => $reqData) {
@@ -209,8 +313,22 @@ function doCheckRequirements()
             $checkRequirements[$reqName]['description'] = $errorMsg;
             $checkRequirements[$reqName]['value'] = $value;
 
+            $requirementsOk = $requirementsOk && $checkRequirements[$reqName]['status'];
             $passed[] = $reqName;
         }
+    }
+
+    if ($requirementsOk) {
+        x_install_log('Checking requirements is successfully complete');
+
+    } else {
+        $failedRequirements = array();
+        foreach ($checkRequirements as $key => $value) {
+            if (!$value['status']) {
+                $failedRequirements[$key] = $value;
+            }
+        }
+        x_install_log('Some requirements are failed', $failedRequirements);
     }
 
     return $checkRequirements;
@@ -1036,11 +1154,6 @@ function doUpdateConfig(&$params, $silentMode = false)
 
         // Write parameters into the config file
         if (@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
-
-            if (!$silentMode) {
-                echo "<br /><b>Updating " . constant('LC_CONFIG_FILE') . " file... </b><br />\n"; flush();
-            }
-
             $configUpdated = change_config($params);
 
         } else {
@@ -1071,6 +1184,7 @@ function doUpdateConfig(&$params, $silentMode = false)
 function doRemoveCache($params)
 {
     $result = true;
+    $pdoErrorMsg = '';
 
     \Includes\Decorator\Utils\CacheManager::cleanupCacheIndicators();
 
@@ -1081,20 +1195,12 @@ function doRemoveCache($params)
 
     if ($connection) {
 
-        // Check MySQL version
-        $mysqlVersionErr = $currentMysqlVersion = '';
-
-        if (!checkMysqlVersion($mysqlVersionErr, $currentMysqlVersion, true)) {
-            fatal_error($mysqlVersionErr . (!empty($currentMysqlVersion) ? '<br />(current version is ' . $currentMysqlVersion . ')' : ''));
-            $checkError = true;
-        }
-
         // Check if LiteCommerce tables is already exists
         $res = dbFetchAll('SHOW TABLES LIKE \'xlite_%\'');
 
         if (is_array($res)) {
 
-            dbExecute('SET FOREIGN_KEY_CHECKS=0');
+            dbExecute('SET FOREIGN_KEY_CHECKS=0', $pdoErrorMsg);
 
             foreach ($res as $row) {
                 $tableName = array_pop($row);
@@ -1109,10 +1215,20 @@ function doRemoveCache($params)
                 }
             }
 
-            dbExecute('SET FOREIGN_KEY_CHECKS=1');
+            $pdoErrorMsg2 = '';
+            dbExecute('SET FOREIGN_KEY_CHECKS=1', $pdoErrorMsg2);
+
+            if (empty($pdoErrorMsg)) {
+                $pdoErrorMsg = $pdoErrorMsg2;
+            }
         }
+
     } else {
         $result = false;
+    }
+
+    if (!$result) {
+        x_install_log('doRemoveCache() failed', $pdoErrorMsg);
     }
 
     return $result;
@@ -1142,6 +1258,8 @@ function doBuildCache()
         fatal_error(sprintf("Cache building procedure failed:<br />\n\nRequest URL: %s<br />\n\nResponse: %s", $url_request, $response));
         $result = false;
     }
+
+    x_install_log('Building cache', array('result' => $result, 'url' => $url_request, 'response' => $response));
 
     return $result;
 }
@@ -1180,7 +1298,12 @@ function doInstallDirs($params, $silentMode = false)
 
     if ($result) {
         echo "<BR><B>Copying templates...</B><BR>\n";
-        $result = copy_files(constant('LC_TEMPLATES_REPOSITORY'), "", constant('LC_TEMPLATES_DIRECTORY'));
+        $failedList = array();
+        $result = copy_files(constant('LC_TEMPLATES_REPOSITORY'), "", constant('LC_TEMPLATES_DIRECTORY'), $failedList);
+    
+        if (!$result) {
+            x_install_log('copy_files() failed', $failedList);
+        }
     }
 
     if ($result) {
@@ -1447,6 +1570,8 @@ PLEASE WRITE THIS CODE DOWN UNLESS YOU ARE GOING TO REMOVE "<?php echo $install_
 
     }
 
+    x_install_log('Installation complete');
+
     return $result;
 }
 
@@ -1470,6 +1595,8 @@ function create_dirs($dirs)
 {
     $result = true;
 
+    $failedDirs = array();
+
     $dir_permission = 0777;
 
     $data = @parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'));
@@ -1487,6 +1614,7 @@ function create_dirs($dirs)
         if (!@file_exists(constant('LC_ROOT_DIR') . $val)) {
             $res = @mkdir(constant('LC_ROOT_DIR') . $val, $dir_permission);
             $result &= $res;
+            $failedDirs[] = constant('LC_ROOT_DIR') . $val;
             echo status($res);
 
         } else {
@@ -1494,6 +1622,10 @@ function create_dirs($dirs)
         }
 
         echo "<BR>\n"; flush();
+    }
+
+    if (!$result) {
+        x_install_log('Failed to create directories', $failedDirs);
     }
 
     return $result;
@@ -1535,6 +1667,8 @@ function create_htaccess_files($files_to_create)
 {
     $result = true;
 
+    $failedFiles = array();
+
     if (is_array($files_to_create)) {
 
         foreach($files_to_create as $file=>$content) {
@@ -1550,11 +1684,16 @@ function create_htaccess_files($files_to_create)
             } else {
                 echo status(false);
                 $result = false;
+                $failedFiles[] = constant('LC_ROOT_DIR') . $file;
             }
 
             echo "<BR>\n";
             flush();
         }
+    }
+
+    if (!$result) {
+        x_install_log('Failed to create files', $failedFiles);
     }
 
     return $result;
@@ -1627,7 +1766,7 @@ function checkPermissionsRecursive($object)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function copy_files($source_dir, $parent_dir, $destination_dir)
+function copy_files($source_dir, $parent_dir, $destination_dir, &$failedList)
 {
     $result = true;
 
@@ -1651,6 +1790,7 @@ function copy_files($source_dir, $parent_dir, $destination_dir)
                 if (!@copy($sourceFile, $destinationFile)) {
                     echo "Copying $source_dir$parent_dir/$file to $destination_dir$parent_dir/$file ... " . status(false) . "<BR>\n";
                     $result = false;
+                    $failedList[] = sprintf('copy(%s, %s)', $sourceFile, $destinationFile);
                 }
 
                 flush();
@@ -1664,6 +1804,7 @@ function copy_files($source_dir, $parent_dir, $destination_dir)
                     if (!@mkdir($destinationFile, $dir_permission)) {
                         echo status(false);
                         $result = false;
+                        $failedList[] = sprintf('mkdir(%s)', $destinationFile);
 
                     } else {
                         echo status(true);
@@ -1677,7 +1818,7 @@ function copy_files($source_dir, $parent_dir, $destination_dir)
 
                 flush();
 
-                $result &= copy_files($source_dir . '/' . $file, $parent_dir . '/' . $file, $destination_dir);
+                $result &= copy_files($source_dir . '/' . $file, $parent_dir . '/' . $file, $destination_dir, $failedList);
             }
         }
 
@@ -1686,6 +1827,7 @@ function copy_files($source_dir, $parent_dir, $destination_dir)
     } else {
         echo status(false) . "<BR>\n";
         $result = false;
+        $failedList[] = sprintf('opendir(%s)', constant('LC_ROOT_DIR') . $source_dir);
     }
 
     return $result;
@@ -2186,6 +2328,9 @@ function status_skipped()
  * @since  3.0.0
  */
 function fatal_error($txt) {
+
+    x_install_log('Fatal error: ' . $txt);
+
 ?>
 <CENTER>
 <P>
@@ -2206,6 +2351,9 @@ function fatal_error($txt) {
  * @since  3.0.0
  */
 function warning_error($txt) {
+
+    x_install_log('Warning: ' . $txt);
+
 ?>
 <CENTER>
 <P>
@@ -2245,7 +2393,16 @@ function rename_install_script()
     @rename(LC_ROOT_DIR . 'install.php', LC_ROOT_DIR . $install_name);
     @clearstatcache();
 
-    return (!@file_exists(LC_ROOT_DIR . 'install.php') && @file_exists(LC_ROOT_DIR . $install_name) ? $install_name : false);
+    $result = (!@file_exists(LC_ROOT_DIR . 'install.php') && @file_exists(LC_ROOT_DIR . $install_name) ? $install_name : false);
+    
+    if ($result) {
+        x_install_log('Installation script renamed to ' . $install_name);
+    
+    } else {
+        x_install_log('Warning! Installation script renaming failed');
+    }
+
+    return $result;
 }
 
 /**
@@ -2371,7 +2528,7 @@ function check_authcode(&$params)
     }
 
     if (!isset($params['auth_code']) || trim($params['auth_code']) != $authcode) {
-        message('Incorrect auth code! You cannot proceed with the installation.');
+        warning_error('Incorrect auth code! You cannot proceed with the installation.');
         exit();
     }
 }
@@ -2387,7 +2544,7 @@ function check_authcode(&$params)
 function get_authcode()
 {
     if (!$data = @parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
-        die('<font color=red>ERROR: config file not found (' . constant('LC_CONFIG_FILE') . ')</font>');
+        fatal_error('Config file not found (' . constant('LC_CONFIG_FILE') . ')');
     }
 
     return !empty($data['auth_code']) ? $data['auth_code'] : null;
@@ -3334,9 +3491,15 @@ function module_install_done(&$params)
     return false;
 }
 
-/*
+/**
  * End of Modules section
  */
 
 
+/**
+ * Log every request to install.php
+ */
+$_params = ('POST' == $_SERVER['REQUEST_METHOD'] ? $_POST : $_GET);
+x_install_log_mask_params($_params);
+x_install_log(null, $_params);
 

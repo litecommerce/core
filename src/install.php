@@ -578,7 +578,7 @@ $enctype = (isset($modules[$current]['form_enctype']) ? 'enctype="' . $modules[$
 
 ?>
 
-<FORM method="POST" name="ifrm" action="<?php echo $HTTP_SERVER_VARS['REQUEST_URI'] ?>" <?php print $enctype ?>>
+<FORM method="POST" name="ifrm" action="install.php" <?php print $enctype ?>>
 
 <TR>
 <TD valign="middle">
