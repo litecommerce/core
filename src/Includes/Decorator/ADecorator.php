@@ -61,10 +61,12 @@ abstract class ADecorator
     const N_NAMESPACE     = 'namespace';
     const N_CLASS_COMMENT = 'comment';
     const N_TAGS          = 'tags';
+    const N_CLASS_TYPE    = 'classType';
     const N_CLASS         = 'class';
     const N_PARENT_CLASS  = 'parentClass';
     const N_INTERFACES    = 'interfaces';
     const N_FILE_PATH     = 'filePath';
+    const N_IS_EMPTY      = 'isEmpty';
 
 
     /**

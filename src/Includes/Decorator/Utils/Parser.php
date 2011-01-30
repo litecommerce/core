@@ -62,19 +62,19 @@ abstract class Parser extends \Includes\Decorator\Utils\Base\Parser
     protected static function getPatternParserMain()
     {
         // phpDocumenter comment
-        $pattern  = '.*(?:\s*(\/\*+.*\*+\/))?\s*';
+        $pattern  = '(.*\s*)(\/\*+.*\*+\/)?\s*';
         // Namespace
-        $pattern  = '(?:(?:namespace\s+)([\w\\\]+)\s*;' . $pattern . ')?';
+        $pattern  = '(?:(namespace\s+)([\w\\\]+)\s*;' . $pattern . ')?';
         // Class accessability modifier
-        $pattern .= '((?:abstract|final)\s+)?';
+        $pattern .= '((abstract|final)\s+)?';
         // Class or interface name
-        $pattern .= '(class|interface)\s+([\w\\\]+)';
+        $pattern .= '((?:class|interface)\s+)([\w\\\]+)';
         // Parent class name
         $pattern .= '(\s+extends\s+([\w\\\]+))?';
         // Implemented interfaces
         $pattern .= '(\s+implements\s+([\w\\\]+(?:\s*,\s*[\w\\\]+)*))?';
         // Whitespaces
-        $pattern .= '\s*(\/\*.*\*\/)?\s*{';
+        $pattern .= '((?:\s*(\/\*.*\*\/)?\s*)?{)';
 
         return '/' . $pattern . '/USsi';
     }
@@ -90,12 +90,47 @@ abstract class Parser extends \Includes\Decorator\Utils\Base\Parser
     protected static function getSchemaParserMain()
     {
         return array(
-            self::N_NAMESPACE     => 1,
-            self::N_CLASS_COMMENT => 2,
-            self::N_CLASS         => 5,
-            self::N_PARENT_CLASS  => 7,
-            self::N_INTERFACES    => 9,
+            self::N_NAMESPACE     => 2,
+            self::N_CLASS_COMMENT => 4,
+            self::N_CLASS_TYPE    => 6,
+            self::N_CLASS         => 8,
+            self::N_PARENT_CLASS  => 10,
+            self::N_INTERFACES    => 12,
         );
+    }
+
+    /**
+     * Replacement to prepare class definition
+     * 
+     * @param array $data Replacement data
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getReplacementParserMain(array $data)
+    {
+        return (empty($data[self::N_NAMESPACE]) ? '' : ('namespace ' . $data[self::N_NAMESPACE])) . ';$3'
+            . (empty($data[self::N_CLASS_COMMENT]) ? '$4' : $data[self::N_CLASS_COMMENT]) 
+            . "\n" . '$5$7' . $data[self::N_CLASS]
+            . (empty($data[self::N_PARENT_CLASS]) ? '$9' : (' extends ' . $data[self::N_PARENT_CLASS])) . '$11$13';
+    }
+
+    /**
+     * Prepare class defintion 
+     * 
+     * @param string $content Class file content
+     * @param array  $data    Class info
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function prepareClassDefintion($content, array $data)
+    {
+        return preg_replace(static::getPatternParserMain(), static::getReplacementParserMain($data), $content);
     }
 
 

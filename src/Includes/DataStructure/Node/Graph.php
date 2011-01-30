@@ -49,24 +49,6 @@ abstract class Graph extends \Includes\DataStructure\Node\ANode
 
 
     /**
-     * Perform some action for all parents
-     * 
-     * @param string $method name of method to exec
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function invokeAllParents($method)
-    {
-        foreach ($this->getParents() as $parent) {
-            $parent->$method($this);
-        }
-    }
-
-
-    /**
      * Check parent by key
      *
      * @param string $key node key
@@ -98,7 +80,20 @@ abstract class Graph extends \Includes\DataStructure\Node\ANode
             \Includes\ErrorHandler::fireError('Node "' . $this->getKey() . '" has no parent "' . $key . '"');
         }
 
-        return isset($key) ? $this->parents[$key] : $this->parents;
+        return \Includes\Utils\Converter::getIndex($this->parents, $key);
+    }
+
+    /**
+     * Return first parent node
+     *
+     * @return self
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getParent()
+    {
+        return \Includes\Utils\Converter::getIndex(array_values($this->getParents()), 0, true);
     }
 
     /**
@@ -156,9 +151,9 @@ abstract class Graph extends \Includes\DataStructure\Node\ANode
      */
     public function addChild(self $node)
     {
-        $node->addParent($this);
-
         parent::addChild($node);
+
+        $node->addParent($this);
     }
 
     /**
@@ -173,9 +168,9 @@ abstract class Graph extends \Includes\DataStructure\Node\ANode
      */
     public function removeChild(self $node)
     {
-        $node->removeParent($this);
-
         parent::removeChild($node);
+
+        $node->removeParent($this);
     }
 
     /**
@@ -190,9 +185,13 @@ abstract class Graph extends \Includes\DataStructure\Node\ANode
      */
     public function changeKey($key)
     {
+        $this->invokeAll('removeChild', $parents = $this->getParents());
+        $this->invokeAll('removeParent', $children = $this->getChildren());
+
         parent::changeKey($key);
 
-        $this->invokeAllParents('addChild');
+        $this->invokeAll('addChild', $parents);
+        $this->invokeAll('addParent', $children);
     }
 
     /**
@@ -205,6 +204,8 @@ abstract class Graph extends \Includes\DataStructure\Node\ANode
      */
     public function remove()
     {
-        $this->invokeAllParents('removeChild');
+        parent::remove();
+
+        $this->invokeAll('removeChild', $this->getParents());
     }
 }

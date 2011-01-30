@@ -59,16 +59,61 @@ class Graph extends \Includes\DataStructure\Hierarchical\AHierarchical
 
 
     /**
+     * Check if there are more than one parent
+     * 
+     * @param \Includes\DataStructure\Node\Graph $node node to get info
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkParentsCount(\Includes\DataStructure\Node\Graph $node)
+    {
+        return 1 < count($node->getParents());
+    }
+
+    /**
+     * Error message for tree integrity violation
+     * 
+     * @param array $classes List of class names
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getIsNotATreeErrorMessage(array $classes)
+    {
+        return 'The following classes has more than one parent: "' . explode('", "', $classes) . '"';
+    }
+
+    /**
+     * Tree integrity violation
+     * 
+     * @param array $nodes List of nodes with multiple parents
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function fireIsNotATreeError(array $nodes)
+    {
+        \Includes\ErrorHandler::fireError($this->getIsNotATreeErrorMessage(array_keys($nodes)));
+    }
+
+    /**
      * Method to get length of node critical path
      * 
      * @param \Includes\DataStructure\Node\Graph $node node to get info
      *  
      * @return int
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCriticalPath(\Includes\DataStructure\Node\Graph $node)
+    protected function getCriticalPath(\Includes\DataStructure\Node\Graph $node)
     {
         $length = 1;
 
@@ -96,5 +141,18 @@ class Graph extends \Includes\DataStructure\Hierarchical\AHierarchical
         }
 
         return isset($key) ? @$this->criticalPaths[$key] : $this->criticalPaths;
+    }
+
+    /**
+     * Check if graph is a tree
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkIsTree()
+    {
+        !($nodes = $this->findByCallback(array($this, 'checkParentsCount'))) ?: $this->fireIsNotATreeError($nodes);
     }
 }

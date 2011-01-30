@@ -297,7 +297,7 @@ abstract class Parser extends \Includes\Decorator\Utils\AUtils
     public static function parse(\SplFileInfo $fileInfo)
     {
         $data = array();
-        $content = file_get_contents($path = $fileInfo->getPathname());
+        $content = \Includes\Utils\FileManager::read($path = $fileInfo->getPathname());
 
         // There is the stack of defined parsers. Execute them one by one
         foreach (static::$parsers as $name => $parser) {

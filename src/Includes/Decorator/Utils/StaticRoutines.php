@@ -35,26 +35,13 @@ namespace Includes\Decorator\Utils;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class StaticRoutines extends AUtils
+class StaticRoutines extends \Includes\Decorator\Utils\AUtils
 {
     /**
      * Name of the function which is used as the static constructor 
      */
-    const STATIC_CONSTRUCTOR_NAME = '__constructStatic';
+    const CONSTRUCTOR_NAME = '__constructStatic';
 
-
-    /**
-     * Return name of the function which is used as the static constructor
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getConstructorName()
-    {
-        return static::STATIC_CONSTRUCTOR_NAME;
-    }
 
     /**
      * Return pattern to search static constructor in PHP code 
@@ -66,27 +53,26 @@ class StaticRoutines extends AUtils
      */
     protected static function getConstructorPattern()
     {
-        return '/^\s*(?:final\s+)?\s*(?:public\s+)?static\s+function\s+' . static::getConstructorName() . '\s*\(\s*\)/USism';
+        return '/^\s*(?:final\s+)?\s*(?:public\s+)?static\s+function\s+' . self::CONSTRUCTOR_NAME . '\s*\(\s*\)/USism';
     }
 
 
     /**
      * Check and (if found) add the static constructor call
      *
-     * @param array  &$info    class info
-     * @param string &$content class file content
+     * @param \Includes\Decorator\DataStructure\Node\ClassInfo $info     Class info
+     * @param string                                           &$content Class file content
      *
-     * @return void
+     * @return null
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function checkForStaticConstructor(array &$info, &$content)
+    public static function checkForStaticConstructor(\Includes\Decorator\DataStructure\Node\ClassInfo $info, &$content)
     {
         if (preg_match(static::getConstructorPattern(), $content)) {
-            $content .= "\n\n" . '// Call static constructor' . "\n" 
-                . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : $info[self::INFO_CLASS_ORIG]) 
-                . '::' . static::getConstructorName() . '();';
+            $content .= "\n\n" . '// Call static constructor' . "\n";
+            $content .= $info->getClass() . '::' . self::CONSTRUCTOR_NAME . '();';
         }
     }
 }

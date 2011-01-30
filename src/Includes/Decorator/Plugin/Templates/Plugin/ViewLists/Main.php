@@ -251,9 +251,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
         return $this->getAllListChildTagAttributes(
             $this->getAnnotatedPHPClasses(),
             function (\Includes\DataStructure\Cell $node) {
-                return array(
-                    'child' => \Includes\Decorator\Utils\Operator::getFinalClass($node->getClass()),
-                );
+                return array('child' => $node->getFinalClass());
             }
         );
     }
