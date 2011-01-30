@@ -60,7 +60,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     {
         foreach (static::getTemplatesCollection()->getList() as $template) {
             static::$flexy->prepare(
-                \Includes\Utils\FileManager::getRelativePath($template->__get(self::N_FILE_PATH), LC_ROOT_DIR, 'tpl'),
+                \Includes\Utils\FileManager::getRelativePath($template->__get(self::N_FILE_PATH), LC_ROOT_DIR),
                 true
             );
         }

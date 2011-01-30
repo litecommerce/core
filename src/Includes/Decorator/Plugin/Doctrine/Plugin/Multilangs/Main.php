@@ -170,7 +170,7 @@ CODE;
      */
     protected function prepareClassName($name)
     {
-        return ltrim($name, '\\');
+        return \Includes\Utils\Converter::trimLeadingChars($name, '\\');
     }
 
     /**
@@ -286,8 +286,8 @@ CODE;
      */
     protected function addReplacement($class, $code)
     {
-        $file = LC_CLASSES_CACHE_DIR . static::getClassesTree()->find($class)->__get(self::N_FILE_PATH);
-
+        $file = \Includes\Decorator\Utils\Operator::getClassFilePath(static::getClassesTree()->find($class));
+    
         if (!isset($this->replacements[$file])) {
             $this->replacements[$file] = '';
         }
@@ -397,7 +397,8 @@ CODE;
      */
     public function filterByMultilangParent(\Includes\Decorator\DataStructure\Node\ClassInfo $node)
     {
-        return $node->isExtends('\XLite\Model\Base\I18n');
+        // NOTE: do not change call order: it will cause the error in production mode
+        return $this->getClassMetadata($node->getClass()) && is_subclass_of($node->getClass(), '\XLite\Model\Base\I18n');
     }
 
     /**
@@ -415,7 +416,7 @@ CODE;
 
             // Main and translation class names.
             // E.g. "\XLite\Model\Product" and "\XLite\Model\ProductTranslation"
-            $main = $node->__get(self::N_CLASS);
+            $main = $node->getClass();
             $translation = $this->getTranslationClass($main);
 
             // Add the "translation" field to the main class (if not defined manually)

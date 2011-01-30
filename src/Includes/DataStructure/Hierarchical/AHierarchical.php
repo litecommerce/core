@@ -31,9 +31,9 @@ namespace Includes\DataStructure\Hierarchical;
 /**
  * AHierarchical 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class AHierarchical
 {
@@ -86,7 +86,6 @@ abstract class AHierarchical
      */
     protected function performCleanupAction(\Includes\DataStructure\Node\ANode $node)
     {
-         // !$node->isStub() ?: $this->removeNode($node);
     }
 
     /**
@@ -99,9 +98,7 @@ abstract class AHierarchical
      */
     protected function collectGarbage()
     {
-        foreach ($this->getIndex() as $node) {
-            $this->performCleanupAction($node);
-        }
+        array_map(array($this, 'performCleanupAction'), $this->getIndex());
     }
 
     /**
@@ -257,7 +254,9 @@ abstract class AHierarchical
             \Includes\ErrorHandler::fireError('Duplicate key: "' . $key . '"');
         }
 
+        unset($this->index[$node->getKey()]);
         $node->changeKey($key);
+        $this->index[$node->getKey()] = $node;
     }
 
     /**
@@ -457,8 +456,8 @@ abstract class AHierarchical
     /**
      * Check tree integrity
      * 
-     * @param \Includes\DataStructure\Node\ANode $root      root node for current step
-     * @param array                              $checklist list of nodes which are not still checked
+     * @param \Includes\DataStructure\Node\ANode $root       root node for current step
+     * @param array                              &$checklist list of nodes which are not still checked
      *  
      * @return void
      * @access public
@@ -477,7 +476,7 @@ abstract class AHierarchical
             // By some reason node was not added to the index
             if (!isset($checklist[$node->getKey()])) {
                 \Includes\ErrorHandler::fireError(
-                    'Node "' . $node->getKey() . '" is not indexed or included into a hamilton cycle'
+                    'Node "' . $node->getKey() . '" is not indexed, or included into a hamilton cycle'
                 );
             }
 

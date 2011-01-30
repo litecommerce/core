@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace \XLite\Module\CDev\ProductOptions\View\Button;
+namespace XLite\Module\CDev\ProductOptions\View\Button;
 
 /**
  * Delete slected option groups button

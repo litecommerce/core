@@ -84,6 +84,24 @@ abstract class ANode extends \Includes\DataStructure\Cell
     }
 
     /**
+     * Perform some action for a nodes list
+     *
+     * @param string $method  Name of method to exec
+     * @param array  $parents List of nodes
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function invokeAll($method, array $nodes)
+    {
+        foreach ($nodes as $node) {
+            $node->$method($this);
+        }
+    }
+
+    /**
      * Get node key
      *
      * @return string|int
@@ -93,7 +111,7 @@ abstract class ANode extends \Includes\DataStructure\Cell
      */
     public function getKey()
     {
-        return $this->__get($this->getKeyField());
+        return $this->{$this->getKeyField()};
     }
 
     /**
@@ -113,7 +131,7 @@ abstract class ANode extends \Includes\DataStructure\Cell
             \Includes\ErrorHandler::fireError('Node "' . $this->getKey() . '" has no child "' . $key . '"');
         }
 
-        return isset($key) ? $this->children[$key] : $this->children;
+        return \Includes\Utils\Converter::getIndex($this->children, $key);
     }
 
     /**
@@ -126,7 +144,7 @@ abstract class ANode extends \Includes\DataStructure\Cell
      */
     public function isStub()
     {
-        return $this->__isset(self::IS_STUB);
+        return isset($this->{self::IS_STUB});
     }
 
     /**
@@ -184,8 +202,7 @@ abstract class ANode extends \Includes\DataStructure\Cell
      */
     public function changeKey($key)
     {
-        $this->remove();
-        $this->__set($this->getKeyField(), $key);
+        $this->{$this->getKeyField()} = $key;
     }
 
     /**
@@ -203,7 +220,7 @@ abstract class ANode extends \Includes\DataStructure\Cell
     {
         $this->remove();
 
-        $this->__unset(self::IS_STUB);
+        unset($this->{self::IS_STUB});
         $this->setData($data);
 
         $parent->addChild($this);

@@ -127,7 +127,7 @@ abstract class Autoloader
      */
     public static function __lc_autoload($class)
     {
-        self::autoloadCommon('XLite', $class, static::$lcAutoloadDir);
+        self::autoloadCommon(LC_NAMESPACE, $class, static::$lcAutoloadDir);
     }
 
     /**
@@ -142,7 +142,7 @@ abstract class Autoloader
      */
     public static function __lc_autoload_includes($class)
     {
-        self::autoloadCommon('Includes', $class, LC_ROOT_DIR);
+        self::autoloadCommon(LC_NAMESPACE_INCLUDES, $class, LC_ROOT_DIR);
     }
 
     /**

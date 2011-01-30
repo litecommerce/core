@@ -57,6 +57,22 @@ class ClassInfo extends \Includes\DataStructure\Node\Graph
     }
 
     /**
+     * Get class name parts (namespace and basename)
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getNameParts()
+    {
+        $parts = explode('\\', \Includes\Utils\Converter::trimLeadingChars($this->getClass(), '\\'));
+        $base  = array_pop($parts);
+
+        return array(implode('\\', $parts), $base);
+    }
+
+    /**
      * Check if class implements an interface
      * 
      * @param self   $node      node to check
@@ -69,7 +85,37 @@ class ClassInfo extends \Includes\DataStructure\Node\Graph
      */
     protected function checkForInterface(self $node, $interface = self::INTERFACE_DECORATOR)
     {
-        return in_array($interface, (array) $node->__get(\Includes\Decorator\ADecorator::N_INTERFACES));
+        return in_array($interface, $node->getInterfaces());
+    }
+
+    /**
+     * Check if class exytends a current one
+     *
+     * @param self $node Node to check
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkForParentClass(self $node)
+    {
+        return in_array($this->getClass(), $node->getParentClasses());
+    }
+
+    /**
+     * Check if class is a decorator
+     *
+     * @param self $node Node to check
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkForDecorator(self $node)
+    {
+        return $this->checkForInterface($node, self::INTERFACE_DECORATOR) && $this->checkForParentClass($node);
     }
 
 
@@ -87,6 +133,19 @@ class ClassInfo extends \Includes\DataStructure\Node\Graph
     }
 
     /**
+     * Return list of class description tags
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTags()
+    {
+        return (array) $this->{\Includes\Decorator\ADecorator::N_TAGS};
+    }
+
+    /**
      * Get tag value from class comment
      * 
      * @param string $name tag name
@@ -98,9 +157,7 @@ class ClassInfo extends \Includes\DataStructure\Node\Graph
      */
     public function getTag($name)
     {
-        $tags = $this->__get(\Includes\Decorator\ADecorator::N_TAGS);
-
-        return isset($tags[$name = strtolower($name)]) ? $tags[$name] : null;
+        return \Includes\Utils\Converter::getIndex($this->getTags(), strtolower($name), true);
     }
 
     /**
@@ -130,7 +187,46 @@ class ClassInfo extends \Includes\DataStructure\Node\Graph
      */
     public function isExtends($class)
     {
-        return in_array($class, (array) $this->__get(\Includes\Decorator\ADecorator::N_PARENT_CLASS));
+        return (bool) \Includes\Utils\ArrayManager::searchInObjectsArray($this->getParents(), static::getKeyField(), $class);
+    }
+
+    /**
+     * Return list of parent classes
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getParentClasses()
+    {
+        return array_values(array_filter((array) $this->{\Includes\Decorator\ADecorator::N_PARENT_CLASS}));
+    }
+
+    /**
+     * Return the parent class name (from the PHP "extends")
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getParentClass()
+    {
+        return \Includes\Utils\Converter::getIndex($this->getParentClasses(), 0, true);
+    }
+
+    /**
+     * Return list of implemented interfaces
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getInterfaces()
+    {
+        return array_values(array_filter((array) $this->{\Includes\Decorator\ADecorator::N_INTERFACES}));
     }
 
     /**
@@ -175,7 +271,46 @@ class ClassInfo extends \Includes\DataStructure\Node\Graph
      */
     public function getDecorators()
     {
-        return ($nodes = $this->getChildren()) ? array_filter($nodes, array($this, 'checkForInterface')) : array();
+        return ($nodes = $this->getChildren()) ? array_filter($nodes, array($this, 'checkForDecorator')) : array();
+    }
+
+    /**
+     * Return top-level class in node decoration chain
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFinalClass()
+    {
+        return $this->isDecorator() ? $this->getParentClass() : $this->getClass();
+    }
+
+    /**
+     * Return node namespace
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getNamespace()
+    {
+        return \Includes\Utils\Converter::getIndex($this->getNameParts(), 0, true);
+    }
+
+    /**
+     * Return class basename part
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getBasename()
+    {
+        return \Includes\Utils\Converter::getIndex($this->getNameParts(), 1, true);
     }
 
     /**
@@ -192,7 +327,7 @@ class ClassInfo extends \Includes\DataStructure\Node\Graph
     {
         // An unexpected logical error (replacement in non-root node)
         if ($this->checkIfChildExists($node->getClass()) && $this->getParents()) {
-            \Includes\Decorator\ADecorator::fireError('Duplicate child class - "' . $node->getClass() . '"');
+            \Includes\ErrorHandler::fireError('Duplicate child class - "' . $node->getClass() . '"');
         }
 
         parent::addChild($node);

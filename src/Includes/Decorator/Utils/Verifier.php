@@ -38,6 +38,36 @@ namespace Includes\Decorator\Utils;
 abstract class Verifier extends \Includes\Decorator\Utils\Base\Verifier
 {
     /**
+     * Error for non-LC classes
+     * 
+     * @param \Includes\Decorator\DataStructure\Node\ClassInfo $node Class description
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function fireNonLCClassError(\Includes\Decorator\DataStructure\Node\ClassInfo $node)
+    {
+        \Includes\ErrorHandler::fireError('Non-LC added to the tree: "' . $node->getClass() . '"');
+    }
+
+    /**
+     * Check if node describes a class from "XLite" namespace
+     * 
+     * @param string $class Class to check
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function isLCClass($class)
+    {
+        return 0 === strpos(\Includes\Utils\Converter::trimLeadingChars($class, '\\'), LC_NAMESPACE);
+    }
+
+    /**
      * Check if node is valid
      * 
      * @param \Includes\Decorator\DataStructure\Node\ClassInfo $node node to check
@@ -49,6 +79,6 @@ abstract class Verifier extends \Includes\Decorator\Utils\Base\Verifier
      */
     public static function checkNode(\Includes\Decorator\DataStructure\Node\ClassInfo $node)
     {
-        // TODO: move the "checkClassCommentAttributes" method here
+        static::isLCClass($node->getClass()) ?: static::fireNonLCClassError($node);
     }
 }

@@ -65,40 +65,6 @@ class ClassesTree extends \Includes\DataStructure\Hierarchical\Graph
     }
 
     /**
-     * Check constrains
-     *
-     * @param \Includes\DataStructure\Node\ANode $node node to check
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function checkAddedNode(\Includes\DataStructure\Node\ANode $node)
-    {
-        \Includes\Decorator\Utils\Verifier::checkNode($node);
-    }
-
-
-    /**
-     * Action to perform in "collectGarbage" method
-     *
-     * @param \Includes\DataStructure\Node\ANode $node current node
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function performCleanupAction(\Includes\DataStructure\Node\ANode $node)
-    {
-        parent::performCleanupAction($node);
-
-        // TODO: uncomment when new Decorator will be completed
-        // $node->__unset(\Includes\Decorator\ADecorator::N_PARENT_CLASS);
-    }
-
-    /**
      * Stub function to use in "addNode()"
      *
      * @param \Includes\DataStructure\Node\ANode $node node to get info
@@ -110,6 +76,9 @@ class ClassesTree extends \Includes\DataStructure\Hierarchical\Graph
      */
     protected function getNodeParents(\Includes\DataStructure\Node\ANode $node)
     {
-        return array_merge(parent::getNodeParents($node), $node->__get(\Includes\Decorator\ADecorator::N_PARENT_CLASS));
+        return array_merge(
+            parent::getNodeParents($node),
+            (array) array_filter($node->getParentClasses(), array('\Includes\Decorator\Utils\Verifier', 'isLCClass'))
+        );
     }
 }
