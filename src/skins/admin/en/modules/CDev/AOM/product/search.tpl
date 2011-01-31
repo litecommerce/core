@@ -22,12 +22,16 @@
 	<TR>
 		<TD class="FormButton" noWrap height=10>Product SKU</TD>
 		<TD width=10 height=10></TD>
-		<TD height=10><INPUT size=6 name="search_productsku" value="{search_productsku}"></TD>
+		<TD height=10>
+      <input type="text" size="6" name="search_productsku" value="{search_productsku}">
+    </TD>
 	</TR>
 	<TR>
 		<TD class="FormButton" noWrap height=10>Product Title</TD>
 		<TD width=10 height=10></TD>
-		<TD height=10><INPUT size=30 name="substring" value="{substring}"></TD>
+		<TD height=10>
+      <input type="text" size="30" name="substring" value="{substring}">
+    </TD>
 	</TR>
 	<TR>
 		<TD class="FormButton" noWrap height=10>In category</TD>

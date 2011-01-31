@@ -12,4 +12,4 @@
  * @ListChild (list="itemsList.product.table.admin.search.columns", weight="50")
  *}
 
-<td><input class="pos" size="5" name="{getNamePostedData(#pos#,product.getProductId())}" value="{product.getOrderBy():r}" /></td>
+<td><input type="text" class="pos" size="5" name="{getNamePostedData(#pos#,product.getProductId())}" value="{product.getOrderBy():r}" /></td>

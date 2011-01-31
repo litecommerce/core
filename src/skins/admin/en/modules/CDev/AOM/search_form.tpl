@@ -27,25 +27,31 @@
 <table border="0" cellpadding="3" cellspacing="0">
 	<tr>		
 		<td class="FormButton">Order ID:</td>
-		<td align="right"><input size=8 name=start_order_id value="{start_order_id}" style="BORDER : solid; BORDER-WIDTH : 1px; BORDER-COLOR : #B2B2B3;"> - <input size=8 name=end_order_id value="{end_order_id}" style="BORDER : solid; BORDER-WIDTH : 1px; BORDER-COLOR : #B2B2B3;"> </td>
-	    <td>&nbsp;</td>
+		<td align="right">
+      <input type="text" size="8" name="start_order_id" value="{start_order_id}" style="BORDER : solid; BORDER-WIDTH : 1px; BORDER-COLOR : #B2B2B3;"> - 
+      <input type="text" size="8" name="end_order_id" value="{end_order_id}" style="BORDER : solid; BORDER-WIDTH : 1px; BORDER-COLOR : #B2B2B3;">
+    </td>
+	  <td>&nbsp;</td>
 		<td class="FormButton">E-mail:</td>
-		<td width="220"><input type="text" name="login" value="{login}" class="Input"></td>	   
+    <td width="220"><input type="text" name="login" value="{login}" class="Input"></td>	   
 	</tr>
 	<tr>
-        <td class="FormButton">Order total:</td>
-        <td align="right"><input size=8 name=start_total value="{start_total}" style="BORDER : solid; BORDER-WIDTH : 1px; BORDER-COLOR : #B2B2B3;"> - <input size=8 name=end_total value="{end_total}" style="BORDER : solid; BORDER-WIDTH : 1px; BORDER-COLOR : #B2B2B3;"> </td>
-        <td>&nbsp;</td>
-        <td class="FormButton">Customer info:</td>
-        <td><input type="text" name="person_info" value="{person_info}" class="Input"></td>
+    <td class="FormButton">Order total:</td>
+    <td align="right">
+      <input type="text" size="8" name="start_total" value="{start_total}" style="BORDER : solid; BORDER-WIDTH : 1px; BORDER-COLOR : #B2B2B3;"> - 
+      <input type="text" size="8" name="end_total" value="{end_total}" style="BORDER : solid; BORDER-WIDTH : 1px; BORDER-COLOR : #B2B2B3;">
+    </td>
+    <td>&nbsp;</td>
+    <td class="FormButton">Customer info:</td>
+    <td><input type="text" name="person_info" value="{person_info}" class="Input"></td>
 	</tr>	
-    <tr>
+  <tr>
         <td class="FormButton">Order status:</td>
         <td><widget class="\XLite\View\StatusSelect" field="status" allOption style="width: 100%"></td>
         <td>&nbsp;</td>
         <td class="FormButton">Product name:</td>
         <td><input type="text" name="product_name" value="{product_name}" class="Input"></td>
-    </tr>
+  </tr>
 	<tr>
         <td class="FormButton">Payment method:</td>
         <td><select class="Input" name="payment_method">

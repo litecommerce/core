@@ -137,7 +137,7 @@
 
 <tr>
     <td class="FormButton">Product page title </td>
-	<td><input name="{getNamePostedData(#meta_title#)}" value="{product.meta_title}" size=50></td>
+	<td><input type="text" name="{getNamePostedData(#meta_title#)}" value="{product.meta_title}" size="50"></td>
 </tr>
 
 <tr>
@@ -156,15 +156,15 @@
 
 <tr>
     <td class="FormButton">Meta keywords</td>
-    <td><input name="{getNamePostedData(#meta_tags#)}" value="{product.meta_tags}" size=50></td>
+    <td><input type="text" name="{getNamePostedData(#meta_tags#)}" value="{product.meta_tags}" size="50"></td>
 </tr>
 <tr>
     <td class="FormButton">Meta description</td>
-    <td><input name="{getNamePostedData(#meta_desc#)}" value="{product.meta_desc}" size=50></td>
+    <td><input type="text" name="{getNamePostedData(#meta_desc#)}" value="{product.meta_desc}" size="50"></td>
 </tr>
 <tr>
     <td class="FormButton">Clean URL</td>
-    <td><input name="{getNamePostedData(#clean_url#)}" value="{product.clean_url}" size="50" /></td>
+    <td><input type="text" name="{getNamePostedData(#clean_url#)}" value="{product.clean_url}" size="50" /></td>
 </tr>
 
 <tr>
