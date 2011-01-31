@@ -66,6 +66,9 @@
 		<exec executable="git" dir="${buildDir}/.dev/lib">
 			<arg line="clone git://github.com/manuelpichler/phpmd.git phpmd" />
 		</exec>
+		<exec executable="git" dir="${buildDir}/.dev/lib">
+			<arg line="clone git://github.com/peej/phpdoctor.git phpdoctor" />
+		</exec>
 
 		<echo message="Run release builder" />
         <exec executable="${sourceDir}/.dev/build/release/release.sh" dir="${buildDir}">
@@ -93,17 +96,10 @@
 	</target>
 
 	<target name="php-documentor">
-		<!-- PHP Documentor temporary disabled as documentation in PHP files is corrupted
 		<exec executable="php" dir="${installDir}/modules/lc_connector/litecommerce/classes">
-            <arg line="${sourceDir}/.dev/build/phpdoc_postprocess.php ${apiUrl}" />
+            <arg line="${buildDir}/.dev/lib/phpdoctor/phpdoc.php ${buildDir}/.dev/build/phpdoctor.ini" />
 		</exec>
-		<exec executable="/u/xcart/phpdoc" dir="${buildDir}">
-			<arg line="-ct type -ue on -t ${buildDir}/api -d ${srcDir}/modules/lc_connector/litecommerce/classes -it @see -dn LiteCommerce -dc LiteCommerce" />
-			<redirector outputproperty="${buildDir}/logs/phpdoc.log">
-				<outputmapper type="merge" to="${buildDir}/logs/phpdoc.log"/>
-			</redirector>
-		</exec>
-		-->
+		<move file="${installDir}/modules/lc_connector/litecommerce/classes/api" tofile="${buildDir}/api" />
 	</target>
 
 	<target name="tests" depends="prepare-db,phpunit" />
