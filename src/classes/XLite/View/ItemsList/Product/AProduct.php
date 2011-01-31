@@ -20,7 +20,7 @@
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    SVN: $Id: AProductsList.php 3650 2010-08-01 14:39:12Z vvs $
+ * @version    SVN: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      3.0.0

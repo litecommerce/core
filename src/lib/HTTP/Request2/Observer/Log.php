@@ -38,7 +38,7 @@
  * @author   David Jean Louis <izi@php.net>
  * @author   Alexey Borzov <avb@php.net>
  * @license  http://opensource.org/licenses/bsd-license.php New BSD License
- * @version  SVN: $Id: Log.php 290743 2009-11-14 13:27:49Z avb $
+ * @version  SVN: $Id$
  * @link     http://pear.php.net/package/HTTP_Request2
  */
 

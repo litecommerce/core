@@ -39,7 +39,7 @@
  * @author    Christian Schmidt <schmidt@php.net>
  * @copyright 2007-2009 Peytz & Co. A/S
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @version   CVS: $Id: URL2.php 290036 2009-10-28 19:52:49Z schmidt $
+ * @version   CVS: $Id$
  * @link      http://www.rfc-editor.org/rfc/rfc3986.txt
  */
 
