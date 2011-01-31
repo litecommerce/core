@@ -29,12 +29,13 @@
 namespace XLite\View\ModulesManager;
 
 /**
- * Modules modify widget
+ * Modules upload widget
  *
  * @package XLite
  * @see     ____class_see____
  * @since   3.0
  *
+ * @ListChild (list="center")
  */
 class UploadAddons extends \XLite\View\Dialog
 {

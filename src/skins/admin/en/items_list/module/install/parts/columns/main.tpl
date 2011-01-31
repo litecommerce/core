@@ -20,13 +20,24 @@
     <span class="price-value" IF="module.isFree()">{t(#Free#)}</span>
     <span class="price-value" IF="!module.isFree()">{formatPrice(module.getPrice())}</span>
     <span IF="module.getPurchased()" class="purchased">({t(#Purchased#)})</span>
-    <div class="install" IF="canInstall(module)">
-      <widget class="\XLite\View\Button\Submit" label="{t(#Install#)}" />
-    </div>
-    <div class="purchase" IF="canPurchase(module)">
-      <widget class="\XLite\View\Button\Submit" label="{t(#Purchase#)}" />
-      <span class="enter-license">{t(#or#)} <a href="#">{t(#enter license key#)}</a></span>
-    </div>
+
+    <form action="admin.php" method="post">
+      <input type="hidden" name="target" value="module_license" />
+      <input type="hidden" name="target" value="retrieve" />
+      <input type="hidden" name="module" value="{module.getName()}" />
+      <input type="hidden" name="author" value="{module.getAuthor()}" />
+
+      <div class="install" IF="canInstall(module)">
+        <widget class="\XLite\View\Button\Submit" label="{t(#Install#)}" />
+      </div>
+
+      <div class="purchase" IF="canPurchase(module)">
+        <widget class="\XLite\View\Button\Submit" label="{t(#Purchase#)}" />
+        <span class="enter-license">{t(#or#)} <a href="#">{t(#enter license key#)}</a></span>
+      </div>
+
+    </form>
+
   </div>
     
   <div IF="module.isUpdateAvailable()" class="upgrade-note">
