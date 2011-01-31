@@ -58,15 +58,6 @@
         <mkdir dir="${buildDir}/.dev/lib" />
 
 		<exec executable="git" dir="${buildDir}/.dev/lib">
-			<arg line="clone git://github.com/pdepend/pdepend.git pdepend" />
-		</exec>
-		<exec executable="git" dir="${buildDir}/.dev/lib">
-			<arg line="clone git clone git://repo.or.cz/gitstats.git gitstats" />
-		</exec>
-		<exec executable="git" dir="${buildDir}/.dev/lib">
-			<arg line="clone git://github.com/manuelpichler/phpmd.git phpmd" />
-		</exec>
-		<exec executable="git" dir="${buildDir}/.dev/lib">
 			<arg line="clone git://github.com/peej/phpdoctor.git phpdoctor" />
 		</exec>
 
