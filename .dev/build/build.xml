@@ -47,30 +47,54 @@
     </target>
 
 	<target name="prepare">
-		<exec executable="svn" dir="${sourceDir}/.dev">
-			<arg value="up" />
+
+		<echo message="Update current source" />
+		<exec executable="git" dir="${sourceDir}">
+			<arg value="pull origin master" />
 		</exec>
+
+		<echo message="Renew external library" />
+        <delete dir="${sourceDir}/.dev/lib" failonerror="false" quiet="true" />
+        <mkdir dir="${buildDir}/.dev/lib" />
+
+		<exec executable="git" dir="${buildDir}/.dev/lib">
+			<arg line="clone git://github.com/pdepend/pdepend.git pdepend" />
+		</exec>
+		<exec executable="git" dir="${buildDir}/.dev/lib">
+			<arg line="clone git clone git://repo.or.cz/gitstats.git gitstats" />
+		</exec>
+		<exec executable="git" dir="${buildDir}/.dev/lib">
+			<arg line="clone git://github.com/manuelpichler/phpmd.git phpmd" />
+		</exec>
+
+		<echo message="Run release builder" />
         <exec executable="${sourceDir}/.dev/build/release/release.sh" dir="${buildDir}">
 			<arg line="-c -b ${label} -d ${distrDir} -t" />
         </exec>
+
+		<echo message="Deploy built releases" />
 		<exec executable="/usr/bin/tar" dir="${buildDir}">
 			<arg line="-xzf ${distrDir}/drupal-lc-${version}-build${label}-test.tgz" />
 		</exec>
 		<move file="${buildDir}/drupal" tofile="${installDir}" />
+
+		<echo message="Copy .dev from source directory" />
 		<mkdir dir="${buildDir}/.dev" />
         <copy todir="${buildDir}/.dev">
             <fileset dir="${sourceDir}/.dev" />
 		</copy>
+
+		<echo message="Prepare deployed repositories" />
 		<copy file="${buildDir}/.dev/build/config.local-cc.php" tofile="${buildDir}/.dev/build/config.local.php" />
 		<copy file="${buildDir}/.dev/tests/local-cc.php" tofile="${buildDir}/.dev/tests/local.php" />
-		<exec executable="/usr/local/php-530/bin/php" dir="${installDir}/modules/lc_connector/litecommerce">
+		<exec executable="php" dir="${installDir}/modules/lc_connector/litecommerce">
             <arg line="${sourceDir}/.dev/build/devcode_postprocess.php" />
         </exec>
 	</target>
 
 	<target name="php-documentor">
 		<!-- PHP Documentor temporary disabled as documentation in PHP files is corrupted
-		<exec executable="/usr/local/php-530/bin/php" dir="${installDir}/modules/lc_connector/litecommerce/classes">
+		<exec executable="php" dir="${installDir}/modules/lc_connector/litecommerce/classes">
             <arg line="${sourceDir}/.dev/build/phpdoc_postprocess.php ${apiUrl}" />
 		</exec>
 		<exec executable="/u/xcart/phpdoc" dir="${buildDir}">
@@ -83,7 +107,7 @@
 	</target>
 
 	<target name="tests" depends="prepare-db,phpunit" />
-	<target name="xtests" depends="prepare-db,plint,php-codesniffer,phpunit,jmeter,pdepend" />
+	<target name="xtests" depends="prepare-db,plint,php-codesniffer,phpunit,jmeter" />
 
 	<target name="tests-cc" depends="prepare-db,plint,php-codesniffer-cc,phpunit-cc,jmeter" />
 
@@ -105,17 +129,17 @@
 
 	<target name="prepare-db">
 		<!-- Replace SQL data by the demo data (for testing) -->
-		<exec executable="/usr/local/php-530/bin/php" dir="${installDir}" failonerror="on">
+		<exec executable="php" dir="${installDir}" failonerror="on">
 			<arg value="${installDir}/modules/lc_connector/litecommerce/restoredb" />
 			<arg value="demo" />
 			<arg value="admin" />
 		</exec>
 		<!-- Rebuild cache: first pass -->
-		<exec executable="/usr/local/php-530/bin/php" dir="${installDir}">
+		<exec executable="php" dir="${installDir}">
 			<arg value="${installDir}/modules/lc_connector/litecommerce/cart.php" />
 		</exec>
 		<!-- Rebuild cache: second pass -->
-        <exec executable="/usr/local/php-530/bin/php" dir="${installDir}">
+        <exec executable="php" dir="${installDir}">
 			<arg value="${installDir}/modules/lc_connector/litecommerce/cart.php" />
         </exec>
 	</target>
@@ -151,7 +175,7 @@
 			<arg value="xliteAllTests" />
 			<arg value="${buildDir}/.dev/tests/AllTests.php" />
 		</exec>
-        <exec executable="/usr/local/php-530/bin/php" dir="${sourceDir}">
+        <exec executable="php" dir="${sourceDir}">
             <arg value=".dev/tests/graph.php" />
 			<arg value="${buildDir}/logs/phpunit.xml.speed" />
 			<arg value="${buildDir}/reports" />
@@ -178,7 +202,7 @@
 			<arg value="xliteAllTests" />
 			<arg value="${buildDir}/.dev/tests/AllTests.php" />
         </exec>
-		<exec executable="/usr/local/php-530/bin/php" dir="${sourceDir}">
+		<exec executable="php" dir="${sourceDir}">
 			<arg value=".dev/tests/graph.php" />
 			<arg value="${buildDir}/logs/phpunit.xml.speed" />
 			<arg value="${buildDir}/reports" />
@@ -190,7 +214,7 @@
 		<jmeter jmeterhome="${jmeterDir}" testplan="${sourceDir}/.dev/loadtests/JMeterLoadTest.jmx" resultlog="${buildDir}/logs/JMeterResults.jtl">
 		</jmeter>
 		<xslt in="${buildDir}/logs/JMeterResults.jtl" out="${buildDir}/reports/jmeter.html" style="${sourceDir}/.dev/loadtests/jmeter-results-report.xsl" />
-		<exec executable="/usr/local/php-530/bin/php" dir="${sourceDir}">
+		<exec executable="php" dir="${sourceDir}">
 			<arg value=".dev/loadtests/graph.php" />
 			<arg value="${buildDir}/logs/JMeterResults.jtl" />
 			<arg value="${buildDir}/reports" />
@@ -202,30 +226,27 @@
 		<exec executable="${sourceDir}/.dev/phpl.sh" dir="${installDir}/modules/lc_connector/litecommerce" failonerror="true" output="${buildDir}/reports/plint.html" />
 	</target>
 
-	<target name="pdepend">
-		<exec executable="/usr/local/php-530/bin/php" dir="${buildDir}">
-			<arg value="${sourceDir}/.dev/pdepend.php" />
-			<arg value="--jdepend-chart=${buildDir}/reports/pdepend.svg" />
-			<arg value="--overview-pyramid=${buildDir}/reports/pyramid.svg" />
-			<arg value="--optimization=best" />
-			<arg value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
-		</exec>
-	</target>
-
 	<target name="analysis">
-		<exec executable="svn" dir="${sourceDir}" output="${buildDir}/reports/xlite-svn.log">
-			<arg line="log --verbose --xml -r '{2010-02-01}:HEAD'" />
-		</exec>
-		<exec executable="python" dir="${sourceDir}" output="${buildDir}/reports/xlite.gource">
-			<arg line="${sourceDir}/.dev/build/svn-gource.py --filter-dirs ${buildDir}/reports/xlite-svn.log" />
-		</exec>
-		<mkdir dir="${buildDir}/reports/statsvn" />
-        <exec executable="java" dir="${sourceDir}" output="/dev/null">
-            <arg line="-mx128m -jar ${sourceDir}/.dev/build/statsvn/statsvn.jar -title LiteCommerce -output-dir ${buildDir}/reports/statsvn ${buildDir}/reports/xlite-svn.log ${sourceDir}" />
+
+        <exec executable="php" dir="${buildDir}">
+            <arg value="${sourceDir}/.dev/pdepend.php" />
+            <arg value="--jdepend-chart=${buildDir}/reports/pdepend.svg" />
+            <arg value="--overview-pyramid=${buildDir}/reports/pyramid.svg" />
+            <arg value="--optimization=best" />
+            <arg value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
         </exec>
-        <delete>
-            <fileset file="${buildDir}/reports/xlite-svn.log" />
-        </delete>
+
+        <exec executable="php" dir="${buildDir}" output="${buildDir}/reports/phpmd.html">
+            <arg value="${sourceDir}/.dev/phpmd.php" />
+            <arg value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
+			<arg value="html" />
+			<arg value="rulesets/codesize.xml,rulesets/design.xml,rulesets/naming.xml,rulesets/unusedcode.xml" />
+        </exec>
+
+		<mkdir dir="${buildDir}/reports/gitstat" />
+        <exec executable="${buildDir}/.dev/lib/gitstats" dir="${sourceDir}" output="/dev/null">
+            <arg line="-c project_name=XLite -c authors_top=10 ${sourceDir} ${buildDir}/reports/gitstat" />
+        </exec>
 	</target>
 
 	<target name="comparison">
