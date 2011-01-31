@@ -47,7 +47,7 @@
  */
 
 @date_default_timezone_set(@date_default_timezone_get());
-set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/lib/PEAR');
+set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/lib/pdepend/PEAR');
 
 require_once 'PHP/Depend/TextUI/Command.php';
 
