@@ -6,7 +6,7 @@
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   SVN: $Id: common.js 2190 2010-03-09 23:59:26Z vvs $
+ * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */

@@ -9,7 +9,7 @@
  * @subpackage Core
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2009 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @version    SVN: $Id$
+ * @version    GIT: $Id$
  * @link       http://www.qtmsoft.com/
  * @since      3.0.0
  */

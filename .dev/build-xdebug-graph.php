@@ -2,7 +2,7 @@
 /**
  * XDebug profiler log visualizer
  *
- * @version SVN: $Id$
+ * @version GIT: $Id$
  */
 
 // Constants
