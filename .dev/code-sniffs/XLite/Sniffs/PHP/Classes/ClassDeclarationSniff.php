@@ -231,54 +231,113 @@ class XLite_Sniffs_PHP_Classes_ClassDeclarationSniff extends XLite_ReqCodesSniff
 			$pos = $next + 1;
 		}
 
-		$exists = array();
+		// Collect blocks
+        $pos  = $tokens[$stackPtr]['scope_opener'] + 1;
+        $blocks = array();
 
-		foreach ($functions as $name => $f) {
+        while ($next = $phpcsFile->findNext(array(T_COMMENT), $pos, $curlyEnd - 1)) {
+            $pos = $next + 1;
+ 			if (preg_match('/^\/\/\s+\{\{\{\s+(.+)$/S', $tokens[$next]['content'], $match)) {
+				$name = $match[1];
+				$pos2 = $next + 1;
+				$commentEnd = null;
+				while ($next2 = $phpcsFile->findNext(array(T_COMMENT), $pos2, $curlyEnd)) {
+		            if (preg_match('/^\/\/\s+\}\}\}/S', $tokens[$next2]['content'])) {
+						$commentEnd = $next2;
+						break;
+					}
 
-			$key = trim($f[1] . ' ' . $f[0]);
-
-			$prev = array();
-
-			switch ($key) {
-                case 'abstract public':
-                    $prev[] = 'abstract protected';
-
-                case 'abstract protected':
-                    $prev[] = 'static public';
-
-                case 'static public':
-                    $prev[] = 'static protected';
-
-                case 'static protected':
-                    $prev[] = 'public';
-
-                case 'public':
-                    $prev[] = 'protected';
-
-                case 'protected':
-                    $prev[] = 'private';
-			}
-
-			foreach ($prev as $p) {
-				if (isset($exists[$p])) {
-					$phpcsFile->addError(
-						$this->getReqPrefix('?')
-						. 'Method \'' . $key . ' function ' . $name . '\' is place after lesser method '
-						. '\'' . $p . ' function ' . $exists[$p] . '\' : ' . $functions[$exists[$p]][2],
-						$f[3]
-					);
+					$pos2 = $next2 + 1;
 				}
-			}
 
-			if (!isset($exists[$key])) {
-				$exists[$key] = $name;
+				if (isset($commentEnd)) {
+					$blocks[$next] = array($name, $commentEnd);
+					$pos = $commentEnd + 1;
+				}
 			}
 		}
 
-//var_dump($functions);
-//die();
-		
+		if (!$blocks) {
+			$blocks[$tokens[$stackPtr]['scope_opener']] = array('Class', $curlyEnd);
+		}
 
+		$internalFunctions = array();
+
+        foreach ($blocks as $bbegin => $bdata) {
+            list($bname, $bend) = $bdata;
+
+            foreach ($functions as $name => $f) {
+                if ($f[3] > $bbegin && $f[3] < $bend) {
+					$internalFunctions[$name] = true;
+				}
+			}
+		}
+
+		$outerFunctions = array();
+		foreach ($functions as $name => $f) {
+			if (!isset($internalFunctions[$name])) {
+				$outerFunctions[] = $f[3];
+			}
+		}
+
+		if ($outerFunctions) {
+			$blocks[min($outerFunctions) - 1] = array(
+				'Outer methods',
+				$tokens[max($outerFunctions)]['scope_closer'] + 1
+			);
+		}
+
+		foreach ($blocks as $bbegin => $bdata) {
+			list($bname, $bend) = $bdata;
+
+			$exists = array();
+
+			foreach ($functions as $name => $f) {
+
+				if ($f[3] < $bbegin || $f[3] > $bend) {
+					continue;
+				}
+
+				$key = trim($f[1] . ' ' . $f[0]);
+
+				$prev = array();
+
+				switch ($key) {
+    	            case 'abstract public':
+        	            $prev[] = 'abstract protected';
+
+	                case 'abstract protected':
+    	                $prev[] = 'static public';
+
+	                case 'static public':
+    	                $prev[] = 'static protected';
+
+	                case 'static protected':
+    	                $prev[] = 'public';
+
+	                case 'public':
+    	                $prev[] = 'protected';
+
+	                case 'protected':
+    	                $prev[] = 'private';
+				}
+
+				foreach ($prev as $p) {
+					if (isset($exists[$p])) {
+						$phpcsFile->addError(
+							$this->getReqPrefix('?')
+							. 'Method \'' . $key . ' function ' . $name . '\' is place after lesser method '
+							. '\'' . $p . ' function ' . $exists[$p] . '\' : ' . $functions[$exists[$p]][2],
+							$f[3]
+						);
+					}
+				}
+
+				if (!isset($exists[$key])) {
+					$exists[$key] = $name;
+				}
+			}
+		}
 
     }//end process()
 
