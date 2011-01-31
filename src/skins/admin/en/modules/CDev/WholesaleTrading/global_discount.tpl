@@ -18,15 +18,15 @@
 
 <table border=0 cellpadding=3 cellspacing=1>
 <tr>
-	<td class=TableHead>Order subtotal</td>
-	<td class=TableHead>Membership</td>
-	<td class=TableHead>Discount</td>
-	<td class=TableHead>Discount type</td>
+	<td class="TableHead">Order subtotal</td>
+	<td class="TableHead">Membership</td>
+	<td class="TableHead">Discount</td>
+	<td class="TableHead">Discount type</td>
 </tr>
 <tr>
-	<td><input name="gd_subtotal" value="{discount.subtotal}" size="7"></td>
+	<td><input type="text" name="gd_subtotal" value="{discount.subtotal}" size="7"></td>
 	<td><widget class="\XLite\View\MembershipSelect" field="gd_membership" allOption value="{discount.membership}"></td>
-	<td><input name="gd_value" value="{discount.discount}" size="7"></td>
+	<td><input type="text" name="gd_value" value="{discount.discount}" size="7"></td>
 	<td>
 		<select name="gd_type" align="right">
 		<option value="a" selected="{discount.discount_type=#a#}">absolute</option>
@@ -53,7 +53,7 @@
 <tr><td colspan=2>&nbsp;</td>
 <tr>
 	<td>Subtotal:</td>
-	<td><input size="7" name="discount_subtotal"></td>
+	<td><input type="text" size="7" name="discount_subtotal"></td>
 </tr>
 <tr>
     <td>Membership:</td>
@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>Discount:</td>
-	<td><input size="7" name="discount_value"></td>
+	<td><input type="text" size="7" name="discount_value"></td>
 </tr>
 <tr>
 	<td>Discount type</td>

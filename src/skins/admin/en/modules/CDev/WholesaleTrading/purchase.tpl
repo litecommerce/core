@@ -17,11 +17,11 @@
 <table border="0">
 <tr>
 	<td>Minimal purchase limit</td>
-	<td><input name="min_purchase" size="7" value="{PurchaseLimit.min}">
+	<td><input type="text" name="min_purchase" size="7" value="{PurchaseLimit.min}">
 </tr>
 <tr>
 	<td>Maximal purchase limit</td>
-	<td><input name="max_purchase" size="7" value="{purchaseLimit.max}">
+	<td><input type="text" name="max_purchase" size="7" value="{purchaseLimit.max}">
 </tr>
 <tr>
 	<td colspan="2"><input type="submit" value=" Update "></td>

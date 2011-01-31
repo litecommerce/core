@@ -64,7 +64,7 @@
 	<td>Status</td>
 	</tr>
 	<tr>
-	<td><input size="32" name="new_pin"><widget class="\XLite\Validator\RequiredValidator" field="new_pin"></td>
+	<td><input type="text" size="32" name="new_pin"><widget class="\XLite\Validator\RequiredValidator" field="new_pin"></td>
 	<td>
 		<select name="new_pin_enabled">
 			<option value="1" selected>Enabled</option>
@@ -189,7 +189,7 @@
 <input type="hidden" name="action" value="update_pin_cmd_line">
 <br><br>
 <font class="AdminHead">PIN codes external generator command line: </font>
-<input name="gen_cmd_line" size="64" value="{product.pinSettings.gen_cmd_line}">
+<input type="text" name="gen_cmd_line" size="64" value="{product.pinSettings.gen_cmd_line}">
 <br><br>
 <input type="submit" value=" Update ">
 </form>
