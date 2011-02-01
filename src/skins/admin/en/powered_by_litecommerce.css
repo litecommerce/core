@@ -14,3 +14,7 @@ div.powered-by {
   padding: 10px 25px;
   text-align: left;
 }
+
+#footer .powered-by p {
+  color: #8f8f8f;
+}
