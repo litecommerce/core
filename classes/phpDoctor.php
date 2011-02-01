@@ -584,6 +584,7 @@ class PHPDoctor
                             $currentPackage .= '\\'.str_replace(' ', '\\', ucwords(str_replace(DIRECTORY_SEPARATOR, ' ', substr(dirname($filename), strlen($this->sourcePath()) + 1))));
                         }
                         $defaultPackage = $oldDefaultPackage = $currentPackage;
+						$namespace = null;
                         $fileData = array();
                         
                         $currentElement = array(); // stack of element family, current at top of stack
@@ -640,7 +641,12 @@ class PHPDoctor
                                         $class->set('docComment', $currentData['docComment']);
                                     }
                                     $class->set('data', $currentData); // set data
-                                    if (isset($currentData['package']) && $currentData['package'] != NULL) { // set package
+                                    if (
+										isset($currentData['package'])
+										&& isset($currentData['package'])
+										&& (!$this->_useClassPathAsPackage || !isset($namespace))
+									) {
+										// set package
                                         $currentPackage = $currentData['package'];
                                     }
                                     $class->set('package', $currentPackage);
