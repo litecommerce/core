@@ -53,20 +53,6 @@
 			<arg value="pull origin master" />
 		</exec>
 
-		<echo message="Renew external library" />
-        <delete dir="${sourceDir}/.dev/lib" failonerror="false" quiet="true" />
-        <mkdir dir="${buildDir}/.dev/lib" />
-
-		<exec executable="git" dir="${buildDir}/.dev/lib">
-			<arg line="clone git://github.com/pdepend/pdepend.git pdepend" />
-		</exec>
-		<exec executable="git" dir="${buildDir}/.dev/lib">
-			<arg line="clone git clone git://repo.or.cz/gitstats.git gitstats" />
-		</exec>
-		<exec executable="git" dir="${buildDir}/.dev/lib">
-			<arg line="clone git://github.com/manuelpichler/phpmd.git phpmd" />
-		</exec>
-
 		<echo message="Run release builder" />
         <exec executable="${sourceDir}/.dev/build/release/release.sh" dir="${buildDir}">
 			<arg line="-c -b ${label} -d ${distrDir} -t" />
@@ -93,17 +79,10 @@
 	</target>
 
 	<target name="php-documentor">
-		<!-- PHP Documentor temporary disabled as documentation in PHP files is corrupted
 		<exec executable="php" dir="${installDir}/modules/lc_connector/litecommerce/classes">
-            <arg line="${sourceDir}/.dev/build/phpdoc_postprocess.php ${apiUrl}" />
+            <arg line="${buildDir}/.dev/lib/phpdoctor/phpdoc.php ${buildDir}/.dev/build/phpdoctor.cc.ini" />
 		</exec>
-		<exec executable="/u/xcart/phpdoc" dir="${buildDir}">
-			<arg line="-ct type -ue on -t ${buildDir}/api -d ${srcDir}/modules/lc_connector/litecommerce/classes -it @see -dn LiteCommerce -dc LiteCommerce" />
-			<redirector outputproperty="${buildDir}/logs/phpdoc.log">
-				<outputmapper type="merge" to="${buildDir}/logs/phpdoc.log"/>
-			</redirector>
-		</exec>
-		-->
+		<move file="${installDir}/modules/lc_connector/litecommerce/classes/api" tofile="${buildDir}/api" />
 	</target>
 
 	<target name="tests" depends="prepare-db,phpunit" />
@@ -244,7 +223,7 @@
         </exec>
 
 		<mkdir dir="${buildDir}/reports/gitstat" />
-        <exec executable="${buildDir}/.dev/lib/gitstats" dir="${sourceDir}" output="/dev/null">
+        <exec executable="${buildDir}/.dev/lib/gitstats/gitstats" dir="${sourceDir}">
             <arg line="-c project_name=XLite -c authors_top=10 ${sourceDir} ${buildDir}/reports/gitstat" />
         </exec>
 	</target>

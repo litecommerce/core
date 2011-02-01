@@ -31,15 +31,15 @@
 	<input type="hidden" name="target" value="product">
 	<input type="hidden" name="action" value="update_wholesale_pricing">
 	<input type="hidden" name="wprice_id" value="{wholesale_price.price_id}">
-	<tr class=TableHead>
+	<tr class="TableHead">
 		<td>Amount</td>
 		<td>Price per product</td>
 		<td>Membership</td>
 	    <td IF="config.Taxes.prices_include_tax">Wholesale price with tax</td>
 	</tr>
 	<tr>
-		<td><input name="w_amount" size="5" value="{wholesale_price.amount}"></td>
-		<td align="right"><input name="w_price" size="15" value="{wholesale_price.price}"></td>
+		<td><input name="w_amount" type="text" size="5" value="{wholesale_price.amount}"></td>
+		<td align="right"><input type="text" name="w_price" size="15" value="{wholesale_price.price}"></td>
 		<td align="right">
 			<select name="w_membership">
 			<option value="all" selected="{wholesale_price.membership=#all#}">All</option>
@@ -70,8 +70,8 @@
 	<input type="hidden" name="target" value="product">
 	<input type="hidden" name="action" value="add_wholesale_pricing">
 	<tr>
-		<td><input name="wp_amount" size="5"></td>
-		<td align="right"><input name="wp_price" size="15"></td>
+		<td><input type="text" name="wp_amount" size="5"></td>
+		<td align="right"><input type="text" name="wp_price" size="15"></td>
 		<td align="right">
 			<select name="wp_membership">
 			<option value="all" selected>All</option>

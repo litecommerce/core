@@ -17,7 +17,7 @@
 <table border=0 cellpadding=3 cellspacing=1>
 <tr>
 	<td>Price message when price is denied</td>
-	<td><input name="price_denied_message" size="50" value="{config.CDev.WholesaleTrading.price_denied_message}"></td>
+	<td><input type="text" name="price_denied_message" size="50" value="{config.CDev.WholesaleTrading.price_denied_message}"></td>
 </tr>
 <tr>
 	<td>Clone purchase limit settings when a product is cloned</td>

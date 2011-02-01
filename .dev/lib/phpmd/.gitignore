@@ -1,0 +1,12 @@
+config.properties
+build
+build.number
+cachegrind.out.*
+lib
+nbproject
+setup
+catalog.xml
+.settings
+.buildpath
+.project
+.idea
