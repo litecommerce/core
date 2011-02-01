@@ -48,7 +48,7 @@ div.login-box {
   background: url("../images/keyhole_icon.png") no-repeat 100% 20px transparent;
   margin: 0 auto;
   padding-right: 110px;
-  width: 450px;
+  width: 470px;
 }
 
 div.login-box h2 {
@@ -72,6 +72,12 @@ div.login-page .forgot-password {
   text-align: right;
   float: right;
   margin-top: 20px;
+}
+
+div.login-page .forgot-password a {
   text-decoration: underline;
 }
 
+div.login-box input {
+  width: 285px;
+}
