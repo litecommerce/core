@@ -137,6 +137,12 @@ class PHPDoctor
 	 */
 	var $_ignorePackageTags = FALSE;
 
+    /** Ignore tags list
+     *
+     * @var str[]
+     */
+	var $_ignoreTags = array();
+
 	/** Overview file. The "source" file that contains the overview
 	 * documentation.
 	 *
@@ -298,6 +304,7 @@ class PHPDoctor
 		if (isset($this->_options['default_package'])) $this->_defaultPackage = $this->_options['default_package'];
 		if (isset($this->_options['use_class_path_as_package'])) $this->_useClassPathAsPackage = $this->_options['use_class_path_as_package'];
 		if (isset($this->_options['ignore_package_tags'])) $this->_ignorePackageTags = $this->_options['ignore_package_tags'];
+        if (isset($this->_options['ignore_tags'])) $this->_ignoreTags = array_map('strtolower', array_map('trim', explode(',', trim($this->_options['ignore_tags']))));
 		
     // use first path element
 		//if (isset($this->_options['overview'])) $this->_overview = $this->makeAbsolutePath($this->_options['overview'], $this->_sourcePath[0]);
@@ -1327,6 +1334,11 @@ class PHPDoctor
 					$data['static'] = TRUE;
 					break;
 				default: //create tag
+
+					if (in_array(strtolower($name), $this->_ignoreTags)) {
+						break;
+					}
+	
 					$name = '@'.$name;
 					if (isset($data['tags'][$name])) {
 						if (is_array($data['tags'][$name])) {
