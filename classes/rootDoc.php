@@ -203,7 +203,7 @@ class RootDoc extends Doc
 		if (isset($this->_packages[$name])) {
 			$return =& $this->_packages[$name];
 		} elseif ($create) {
-			$newPackage =& new packageDoc($name, $this);
+			$newPackage = new packageDoc($name, $this);
 			$this->addPackage($newPackage);
 			$return =& $newPackage;
 		}

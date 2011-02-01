@@ -345,7 +345,7 @@ class ClassDoc extends ProgramElementDoc
                         if (!isset($methods[$name]->_parameters[$paramName]) || $type->typeName() == 'mixed') {
                             $phpdoctor->verbose('> Merging method '.$this->name().':'.$name.' with parameter '.$paramName.' from parent '.$parent->name().':'.$parentMethod->name());
                             $paramType =& $param->type();
-                            $methods[$name]->_parameters[$paramName] =& new fieldDoc($paramName, $methods[$name], $this->_root);
+                            $methods[$name]->_parameters[$paramName] = new fieldDoc($paramName, $methods[$name], $this->_root);
                             $methods[$name]->_parameters[$paramName]->set('type', new type($paramType->typeName(), $this->_root));
                         }
                     }
