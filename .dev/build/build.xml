@@ -80,7 +80,7 @@
 
 	<target name="php-documentor">
 		<exec executable="php" dir="${installDir}/modules/lc_connector/litecommerce/classes">
-            <arg line="${buildDir}/.dev/lib/phpdoctor/phpdoc.php ${buildDir}/.dev/build/phpdoctor.ini" />
+            <arg line="${buildDir}/.dev/lib/phpdoctor/phpdoc.php ${buildDir}/.dev/build/phpdoctor.cc.ini" />
 		</exec>
 		<move file="${installDir}/modules/lc_connector/litecommerce/classes/api" tofile="${buildDir}/api" />
 	</target>
@@ -223,7 +223,7 @@
         </exec>
 
 		<mkdir dir="${buildDir}/reports/gitstat" />
-        <exec executable="${buildDir}/.dev/lib/gitstats" dir="${sourceDir}" output="/dev/null">
+        <exec executable="${buildDir}/.dev/lib/gitstats/gitstats" dir="${sourceDir}">
             <arg line="-c project_name=XLite -c authors_top=10 ${sourceDir} ${buildDir}/reports/gitstat" />
         </exec>
 	</target>
