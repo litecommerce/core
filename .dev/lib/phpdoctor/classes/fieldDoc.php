@@ -51,7 +51,7 @@ class FieldDoc extends ProgramElementDoc
 		$this->_name = trim($name, '$\'"');
 		$this->_parent =& $parent; // set reference to parent
 		$this->_root =& $root; // set reference to root
-		$this->_type = new type('mixed', $root);
+		$this->_type =& new type('mixed', $root);
 		$this->_filename = $filename;
 		$this->_lineNumber = $lineNumber;
 		$this->_sourcePath = $sourcePath;
