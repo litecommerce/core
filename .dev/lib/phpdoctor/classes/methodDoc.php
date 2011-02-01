@@ -51,7 +51,7 @@ class MethodDoc extends ExecutableDoc
 		$this->_name = $name;
 		$this->_parent =& $parent; // set reference to parent
 		$this->_root =& $root; // set reference to root
-		$this->_returnType =& new type('void', $root);
+		$this->_returnType = new type('void', $root);
 		$this->_filename = $filename;
 		$this->_lineNumber = $lineNumber;
 		$this->_sourcePath = $sourcePath;
