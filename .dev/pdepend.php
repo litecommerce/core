@@ -47,8 +47,14 @@
  */
 
 @date_default_timezone_set(@date_default_timezone_get());
-set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/lib/pdepend/PEAR');
+set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/lib/pdepend');
 
-require_once 'PHP/Depend/TextUI/Command.php';
+require_once 'PHP/Depend/Autoload.php';
+
+// Allow as much memory as possible by default
+ini_set('memory_limit', -1);
+
+$autoload = new PHP_Depend_Autoload();
+$autoload->register();
 
 exit(PHP_Depend_TextUI_Command::main());
