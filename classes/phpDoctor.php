@@ -795,7 +795,6 @@ class PHPDoctor
                                             $method->set("name", "__construct");
                                             $ce->addMethod($method);
                                         } else {
-                                            if ($this->_hasPrivateName($method->name())) $method->makePrivate();
                                             if (isset($currentData['access']) && $currentData['access'] == 'private') $method->makePrivate();
                                             $this->verbose(' is a method of '.get_class($ce).' '.$ce->name());
                                             if ($this->_includeElements($method)) {
@@ -878,8 +877,6 @@ class PHPDoctor
                                                 }
                                                 $const =& new fieldDoc($name, $ce, $rootDoc, $filename, $lineNumber, $this->sourcePath()); // create field object
                                                 $this->verbose('Found '.get_class($const).': '.$const->name());
-                                                if ($this->_hasPrivateName($const->name())) $const->makePrivate();
-                                                $const->set('final', TRUE);
                                                 if (isset($value)) { // set value
                                                     $value = trim($value);
                                                     if (strlen($value) > 30 && substr($value, 0, 5) == 'array') {
@@ -1032,7 +1029,6 @@ class PHPDoctor
                                                 }
                                                 $field =& new fieldDoc($name, $ce, $rootDoc, $filename, $lineNumber, $this->sourcePath()); // create field object
                                                 $this->verbose('Found '.get_class($field).': '.$field->name());
-                                                if ($this->_hasPrivateName($field->name())) $field->makePrivate();
                                                 if (isset($value)) { // set value
                                                     $value = trim($value);
                                                     if (strlen($value) > 30 && substr($value, 0, 5) == 'array') {
@@ -1414,18 +1410,6 @@ class PHPDoctor
 			return TRUE;
 		}
 		return FALSE;
-	}
-	
-	/**
-	 * Does the given element name conform to the format that is used for private
-	 * elements?
-	 *
-	 * @param str name The name to check
-	 * @return bool
-	 */
-	function _hasPrivateName($name)
-	{
-		return substr($name, 0, 1) == '_';
 	}
 	
 }

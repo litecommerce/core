@@ -4,7 +4,7 @@
 }
 
 body {
-	font-family: "Times New Roman", Times, serif;
+	font-family: Tahoma,sans-serif;
 	margin: 0px;
 	padding: 10px;
 	font-size: 100%;
@@ -27,7 +27,7 @@ table {
 }
 
 table, th, td {
-    border: 2px solid #999;
+    border: 1px solid #999;
 }
 
 th {
@@ -78,6 +78,10 @@ h1 {
 h2 {
     font-size: 120%;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+ul li a {
+	white-space: nowrap;
 }
 
 /* page header */
@@ -166,7 +170,6 @@ a.location {
 
 #definition h1 {
     margin: 0 0 10px;
-    font-family: "Times New Roman", Times, serif;
 }
 
 #definition h2 {
@@ -175,7 +178,6 @@ a.location {
     background-color: #ccf;
     text-align: left;
     font-size: 140%;
-    font-family: "Times New Roman", Times, serif;
 }
 
 pre.tree {
