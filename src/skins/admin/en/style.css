@@ -122,16 +122,19 @@ input[type=password],
 select,
 textarea
 {
-  border: solid 1px #bbb;
-  padding: 2px;
+  border-top: solid 1px #808080;
+  border-left: solid 1px #808080;
+  border-right: solid 1px #dfdfdf;
+  border-bottom: solid 1px #dfdfdf;
+  padding: 3px;
   background: #fff;
-  line-height: 16px;
 }
 
 input[type=text],
 input[type=password]
 {
   height: 16px;
+  line-height: 16px;
 }
 
 input[type=text]:focus,
@@ -152,25 +155,43 @@ select
  * Layout
  */
 
+html,
 body
 {
-  min-width:640px
+  min-width: 640px;
+  height: 100%;
 }
 
 #page-container,
-#header,
 #content,
 #sub-section,
 #footer
 {
-  overflow:hidden;
-  display:inline-block;
+  overflow: hidden;
+}
+
+#page-container {
+  min-height: 100%;
+  position: relative;
 }
 
 #page-container
 {
   vertical-align: top;
   width: 100%;
+}
+
+#header {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 
 /* safari and opera need this */
@@ -190,20 +211,9 @@ body
   min-width: 640px;
 }
 
-#header,
-#content
-{
-  float:left;
-}
-
 #sub-section
 {
   float:right
-}
-
-#header
-{
-  width:100%;
 }
 
 
@@ -214,7 +224,7 @@ body
 #header, #menu
 {
   background: #0C263D url(images/admin_header_bg.png) repeat-x left top;
-  height: 75px;
+  height: 76px;
 }
 
 #header .logo
@@ -245,109 +255,15 @@ body
   color: #fff;
 }
 
-/* Top links */
-
-#top-links
-{
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 5px 10px 0 0;
-}
-
-#top-links ul{
-  list-style-type: none;
-  padding: 0;
-  margin:0;
-}
-
-#top-links li
-{
-  float: left;
-  position: relative;
-  z-index: 100;
-}
-
-#top-links li a
-{
-  background: url(images/top_links_arrow_bg.gif) no-repeat 100% 7px;
-}
-
-#top-links a,
-#top-links span,
-#top-links :visited
-{
-  display: block;
-  font-size: 12px;
-  margin: 7px 10px;
-  padding-right: 12px;
-  color: #6ba5d4;
-  text-decoration: none;
-  text-align: left;
-}
-
-#top-links a:hover
-{
-  color: #fff;
-}
-
-#top-links ul div
-{
-  visibility: hidden;
-  position: absolute;
-  min-width: 120px;
-  height: 0;
-}
-
-#top-links ul li.last div
-{
-  right: 0;
-}
-
-#top-links ul ul
-{
-  background: #123552;
-  border: solid 1px #1d4970;
-}
-
-#top-links ul ul li
-{
-  float: none;
-}
-
-#top-links ul li:hover ul,
-#top-links ul a:hover ul{
-  visibility: visible;
-}
-
-#top-links ul ul li a
-{
-  background: 0 none;
-  padding: 0;
-  margin: 10px;
-}
-
-#top-links ul ul li a, 
-#top-links ul ul li a:visited
-{
-  text-decoration: underline;
-}
-
-#top-links ul ul li a.text
-{
-  color: #fff;
-  cursor: default;
-  text-decoration: none;
-}
-
-#top-links ul ul li a.frontend-opened
-{
-  color: #7bffb0;
-}
-
 /**
  * Footer styles
  */
+
+#footer {
+  padding-top: 10px;
+  border-top: solid 1px #e6e6e6;
+  height: 60px;
+}
 
 #footer .left
 {
@@ -370,9 +286,9 @@ body
 #content
 {
   background: url(images/content_top_bg.gif) repeat-x top left;
-  padding: 15px 0;
+  padding: 15px 0 60px 0;
   border-top: 1px solid #dfe5e8;
-  margin-top: 50px;
+  margin-top: 130px;
 }
 
 div.noscript
@@ -444,7 +360,7 @@ div.page-tabs ul li.tab-current a
 
 
 /**
- * Some common pages styles
+ * Pages styles
  */
 
 /* Settings page */
@@ -773,11 +689,11 @@ button
     border: 1px solid #cadce8;
     color: #2c5fa6;
     cursor: pointer;
-    font-size: 15px;
-    height: 36px;
-    line-height: 1em;
+    font-size: 16px;
+    line-height: 16px;
     margin: 7px 7px 7px 0;
-    padding: 6px 20px;
+    padding: 6px 15px;
+    font-family: "Trebuchet MS", Helvetica, Arial;
 }
 
 button span
@@ -795,7 +711,6 @@ button:hover
 
 button.main
 {
-  height: 30px;
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -803,11 +718,12 @@ button.main
 button.main span
 {
   font-size: 18px;
+  line-height: 18px;
 }
 
 button.invert
 {
-  background-image: url(images/button_bg_blue.png);
+  background: url(images/button_bg_blue.png) repeat 0 0;
   border-color: transparent;
 }
 
@@ -821,6 +737,7 @@ button.invert:hover
   background-color: transparent;
   background-image: url(images/button_bg_blue_hover.png);
 }
+
 .ui-widget-overlay
 {
   background-color: black;
@@ -1359,14 +1276,6 @@ button.delete-address
 #orders-count
 {
   font-weight: normal;
-}
-
-.table input,
-.table select
-{
-  border-width: 1px;
-  border-color: #000000;
-  font-size: 12px;
 }
 
 .profile-form input,

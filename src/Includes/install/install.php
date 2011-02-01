@@ -1045,7 +1045,7 @@ function checkPhpPhar(&$errorMsg, &$value)
 }
 
 /**
- * Check https bouncers presence
+ * Check https bouncers presence (libcurl only checking)
  * 
  * @param string   $errorMsg   Error message if checking failed
  * @param string   $value      Actual value of the checked parameter
@@ -1057,18 +1057,35 @@ function checkPhpPhar(&$errorMsg, &$value)
  */
 function checkHttpsBouncer(&$errorMsg, &$value)
 {
-    $result = false;
+    $result = true;
 
-    $https = new \XLite\Model\HTTPS();
-    $httpsBouncer = $https->detectSoftware();
+    if (!function_exists('curl_init') || !function_exists('curl_version')) {
+        $result = false;
+        $errorMsg = 'libcurl extension is not found';
+    
+    } else {
 
-    if ($httpsBouncer !== false) {
-        $result = true;
-        $value = $httpsBouncer;
-    }
+        $version = curl_version();
 
-    if (!$result) {
-        $errorMsg = 'No HTTPS bouncers found. It\'s required for some modules.';
+        if (is_array($version)) {
+
+            $value = 'libcurl ' . $version['version'];
+
+            if (!empty($version['ssl_version'])) {
+                $value = $value . ', ' . $version['ssl_version'];
+            }
+
+        } else {
+            $value = $version;
+        }
+
+        if (
+            (is_array($version) && !in_array('https', $version['protocols']))
+            || (!is_array($version) && !preg_match('/ssl|tls/Ssi', $version))
+        ) {
+            $errorMsg = 'libcurl extension found but it does not support secure protocols';
+            $result = false;             
+        }
     }
 
     return $result;
@@ -1291,8 +1308,6 @@ function doBuildCache()
         fatal_error(sprintf("Cache building procedure failed:<br />\n\nRequest URL: %s<br />\n\nResponse: %s", $url_request, $response));
         $result = false;
     }
-
-    x_install_log('Building cache', array('result' => $result, 'url' => $url_request, 'response' => $response));
 
     return $result;
 }
@@ -2114,6 +2129,16 @@ function inst_http_request($url_request)
     if (!empty($error)) {
         $response = $error . "\n" . $response;
     }
+
+    x_install_log(
+        'inst_http_request() result', 
+        array(
+            'url_request' => $url_request, 
+            'url' => $url, 
+            'response' => $response, 
+            'error' => $error,
+        ),
+    );
 
     return $response;
 }

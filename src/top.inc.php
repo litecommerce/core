@@ -26,7 +26,6 @@
  * @since      3.0.0
  */
 
-// Uncomment these lines for debug
 error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', true);
 
