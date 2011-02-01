@@ -2,3 +2,4 @@
 /phpdoc.sh
 /api
 /config.local.php
+/config.local-cc.php
