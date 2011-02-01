@@ -3,7 +3,7 @@
 @date_default_timezone_set(@date_default_timezone_get());
 set_include_path(
 	get_include_path()
-	. PATH_SEPARATOR . dirname(__FILE__) . '/lib/pdepend/PEAR'
+	. PATH_SEPARATOR . dirname(__FILE__) . '/lib/pdepend'
 	. PATH_SEPARATOR . dirname(__FILE__) . '/lib/phpmd/source'
 );
 
