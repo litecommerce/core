@@ -1309,8 +1309,6 @@ function doBuildCache()
         $result = false;
     }
 
-    x_install_log('Building cache', array('result' => $result, 'url' => $url_request, 'response' => $response));
-
     return $result;
 }
 
@@ -2131,6 +2129,16 @@ function inst_http_request($url_request)
     if (!empty($error)) {
         $response = $error . "\n" . $response;
     }
+
+    x_install_log(
+        'inst_http_request() result', 
+        array(
+            'url_request' => $url_request, 
+            'url' => $url, 
+            'response' => $response, 
+            'error' => $error,
+        ),
+    );
 
     return $response;
 }
