@@ -29,32 +29,36 @@
 namespace XLite\View;
 
 /**
- * Bread crumbs widget
+ * Top-right side drop down links
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Location extends \XLite\View\AView
+class TopLinks extends \XLite\View\AView
 {
     /**
-     * Widget param names
+     * Return widget directory
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
      */
-
-    const PARAM_NODES = 'nodes';
-
+    protected function getDir()
+    {
+        return 'top_links';
+    }
 
     /**
      * Return widget default template
      *
      * @return string
      * @access protected
-     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
     {
-        return 'location.tpl';
+        return $this->getDir() . LC_DS . 'top_links.tpl';
     }
 
     /**
@@ -70,42 +74,9 @@ class Location extends \XLite\View\AView
         return \XLite\Core\Auth::getInstance()->isLogged();
     }
 
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_NODES => new \XLite\Model\WidgetParam\Collection(
-                'Breadcrumbs', $this->getLocationPath()
-            ),
-        );
-    }
-
 
     /**
-     * Return breadcrumbs 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getNodes()
-    {
-        return $this->getParam(self::PARAM_NODES);
-    }
-
-
-    /**
-     * Get a list of CSS files
+     * Register CSS files
      *
      * @return array
      * @access public
@@ -115,7 +86,7 @@ class Location extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-        $list[] = 'location/location.css';
+        $list[] = 'top_links/style.css';
 
         return $list;
     }

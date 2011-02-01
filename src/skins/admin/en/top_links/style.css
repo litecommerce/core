@@ -1,0 +1,109 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Top links
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+#top-links
+{
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px 10px 0 0;
+}
+
+#top-links ul{
+  list-style-type: none;
+  padding: 0;
+  margin:0;
+}
+
+#top-links li
+{
+  float: left;
+  position: relative;
+  z-index: 100;
+}
+
+#top-links li a
+{
+  background: url("../images/top_links_arrow_bg.gif") no-repeat 100% 7px;
+}
+
+#top-links a,
+#top-links span,
+#top-links :visited
+{
+  display: block;
+  font-size: 12px;
+  margin: 7px 10px;
+  padding-right: 12px;
+  color: #6ba5d4;
+  text-decoration: none;
+  text-align: left;
+}
+
+#top-links a:hover
+{
+  color: #fff;
+}
+
+#top-links ul div
+{
+  visibility: hidden;
+  position: absolute;
+  min-width: 120px;
+  height: 0;
+}
+
+#top-links ul li.last div
+{
+  right: 0;
+}
+
+#top-links ul ul
+{
+  background: #123552;
+  border: solid 1px #1d4970;
+}
+
+#top-links ul ul li
+{
+  float: none;
+}
+
+#top-links ul li:hover ul,
+#top-links ul a:hover ul{
+  visibility: visible;
+}
+
+#top-links ul ul li a
+{
+  background: 0 none;
+  padding: 0;
+  margin: 10px;
+}
+
+#top-links ul ul li a,
+#top-links ul ul li a:visited
+{
+  text-decoration: underline;
+}
+
+#top-links ul ul li a.text
+{
+  color: #fff;
+  cursor: default;
+  text-decoration: none;
+}
+
+#top-links ul ul li a.frontend-opened
+{
+  color: #7bffb0;
+}

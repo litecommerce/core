@@ -38,18 +38,6 @@ namespace XLite\Controller\Admin;
 class Login extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * getViewerTemplate
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getViewerTemplate()
-    {
-        return 'login.tpl';
-    }
-
-    /**
      * getAccessLevel 
      * 
      * @return void

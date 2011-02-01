@@ -13,31 +13,17 @@
 
 <widget class="\XLite\View\TopMessage" />
 
-<div id="page-container">
-
-  <div id="header">
-
-    <div class="logo"></div>
-
-    <div class="sw-version">
-      <span class="current">{t(#v.#)} {config.Version.version:h}</span>
-      <span class="upgrade-note">
-        {*** TODO ***}
-      </span>
-    </div>
-
-    <widget class="\XLite\View\TopMenu" />
-    
-    <widget template="top_links/top_links.tpl" />
-  
-  </div><!-- [/header] -->
+<div id="page-container"{if:!auth.isLogged()} class="login-page"{end:}>
 
   <div id="content">
 
     <div id="main">
     
       <noscript>
-        <div class="noscript">{t(#This site requires JavaScript to function properly.<br>Please enable JavaScript in your web browser.#)}</div>
+        <div class="noscript">
+          {t(#This site requires JavaScript to function properly.#)}
+          <br />{t(#Please enable JavaScript in your web browser.#)}
+        </div>
       </noscript>
 
       {* FIXME - to remove *}
@@ -50,6 +36,7 @@
 <widget class="\XLite\View\Location" />
 
 <widget target="access_denied" template="access_denied.tpl" />
+
 <widget template="common/dialog.tpl" head="Customer zone warning" body="customer_zone_warning.tpl" IF="{getCustomerZoneWarning()}" />
 <widget target="main" template="common/dialog.tpl" head="Welcome to the Administrator Zone" body="menu.tpl" />
 <widget target="module" template="common/dialog.tpl" head="{getLocation()}" body="general_settings.tpl" />
@@ -158,12 +145,31 @@
   
   </div><!-- [/content] -->
 
+
+  <div id="header">
+
+    <div class="logo"></div>
+
+    <div class="sw-version">
+      <span class="current">{t(#LiteCommerce shopping cart software v.#)} {config.Version.version:h}</span>
+      <span class="upgrade-note">
+        {*** TODO ***}
+      </span>
+    </div>
+
+    <widget class="\XLite\View\TopMenu" />
+    <widget class="\XLite\View\TopLinks" />
+    <h1 IF="!auth.isLogged()">{t(#Administration Zone#)}</h1>
+
+  </div><!-- [/header] -->
+
+
   <div id="footer">
 
     <div class="left">
       <widget class="\XLite\View\PoweredBy" />
     </div>
-  
+
     <div class="right">
     </div>
 

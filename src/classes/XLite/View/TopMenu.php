@@ -62,6 +62,19 @@ class TopMenu extends \XLite\View\AView
     }
 
     /**
+     * Check if widget is visible
+     *
+     * @return boolean 
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return \XLite\Core\Auth::getInstance()->isLogged();
+    }
+
+    /**
      * Register CSS files
      *
      * @return array

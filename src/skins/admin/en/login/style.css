@@ -1,0 +1,77 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Authentication page
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+div.login-page {
+  width: 960px !important;
+  margin: 0 auto;
+}
+
+div.login-page #header .logo {
+  background-image: url("../images/logo_admin.png");
+  height: 70px;
+  width: 82px;
+}
+
+div.login-page #header, #menu {
+  background: transparent none;
+}
+
+div.login-page #header .sw-version {
+  left: 100px;
+}
+
+div.login-page h1 {
+  margin: 30px 0 0 100px;
+  font-family: Arial,Verdana,sans-serif;
+  font-size: 36px;
+}
+
+div.login-page #content {
+  background: transparent none;
+  border-top: 0 none;
+}
+
+div.login-box-wrapper {
+  width: 100%;
+}
+
+div.login-box {
+  background: url("../images/keyhole_icon.png") no-repeat 100% 20px transparent;
+  margin: 0 auto;
+  padding-right: 110px;
+  width: 450px;
+}
+
+div.login-box h2 {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+div.login-box table tr td,
+div.login-box table tr th
+{
+  padding: 5px 20px 5px 0;
+  text-align: left;
+  font-weight: normal;
+}
+
+div.login-box table tr th {
+  font-size: 16px;
+  color: #456583;
+}
+
+div.login-page .forgot-password {
+  text-align: right;
+  float: right;
+  margin-top: 20px;
+  text-decoration: underline;
+}
+
