@@ -441,7 +441,7 @@ Phar extension is required to install external LiteCommerce addons from marketpl
 <div id="lc_https_bouncer" style="display : none">
 <font class="ErrorTitle">Non-critical dependency failed</font>
 <br><br>
-CURL executable module, libCURL module or OpenSSL external application, and an SSL certificate required, if you want to process credit cards using Authorize.NET, PayPal or other payment gateways, or use real time shipping calculation services (these services require that your site accepts secure connections via HTTPS/SSL protocol). Please contact the support services of your hosting provider to adjust this parameter.
+libCURL module with HTTPS protocol support and an SSL certificate required, if you want to process credit cards using Authorize.NET, PayPal or other payment gateways, or use real time shipping calculation services (these services require that your site accepts secure connections via HTTPS/SSL protocol). Please contact the support services of your hosting provider to adjust this parameter.
 </div>
 
 <div id="lc_xml_support" style="display : none">
