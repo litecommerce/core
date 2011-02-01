@@ -20,7 +20,7 @@
       <tr>
         <td class="FormButton" nowrap="nowrap" height="10">Order id</td>
         <td height="10">
-          <input size="6" name="orderId" value="{getCondition(#orderId#)}" />
+          <input type="text" size="6" name="orderId" value="{getCondition(#orderId#)}" />
         </td>
       </tr>
 

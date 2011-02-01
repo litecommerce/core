@@ -21,28 +21,28 @@
     <td align="right">Sales Permit/Tax ID#</td>
     <td>&nbsp;</td>
     <td>
-	<input name="tax_id" size="32" value="{tax_id}">
+	<input type="text" name="tax_id" size="32" value="{tax_id}">
 	</td>
 </tr>
 <tr IF="xlite.config.CDev.WholesaleTrading.WholesalerFieldsVat" valign="middle">
     <td align="right">VAT Registration number</td>
     <td>&nbsp;</td>
     <td>
-	<input name="vat_number" size="32" value="{vat_number}">
+	<input type="text" name="vat_number" size="32" value="{vat_number}">
 	</td>
 </tr>
 <tr IF="xlite.config.CDev.WholesaleTrading.WholesalerFieldsGst" valign="middle">
     <td align="right">GST Registration number</td>
     <td>&nbsp;</td>
     <td>
-	<input name="gst_number" size="32" value="{gst_number}">
+	<input type="text" name="gst_number" size="32" value="{gst_number}">
 	</td>
 </tr>
 <tr IF="xlite.config.CDev.WholesaleTrading.WholesalerFieldsPst" valign="middle">
     <td align="right">PST Registration number</td>
     <td>&nbsp;</td>
     <td>
-	<input name="pst_number" size="32" value="{pst_number}">
+	<input type="text" name="pst_number" size="32" value="{pst_number}">
 	</td>
 </tr>
 </tbody>

@@ -16,5 +16,5 @@
 <tr>
   <td class="FormButton" nowrap="nowrap" height="10">Product Title</td>
   <td width="10" height="10"></td>
-  <td height="10"><input size="30" name="substring" value="{getCondition(#substring#):r}"></td>
+  <td height="10"><input type="text" size="30" name="substring" value="{getCondition(#substring#):r}"></td>
 </tr>

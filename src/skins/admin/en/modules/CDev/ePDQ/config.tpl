@@ -76,12 +76,12 @@
 
 <tr>
 <td>ePDQ encription tool URL:</td>
-<td><input name=params[param08] size=32 value="{pm.params.param08}"></td>
+<td><input type="text" name=params[param08] size=32 value="{pm.params.param08}"></td>
 </tr>
 
 <tr>
 <td>ePDQ gateway URL:</td>
-<td><input name=params[param09] size=32 value="{pm.params.param09}"></td>
+<td><input type="text" name=params[param09] size=32 value="{pm.params.param09}"></td>
 </tr>
 
 <tr>

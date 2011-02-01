@@ -71,7 +71,7 @@
 		</tr>
 		<tr>
 			<td><input type="radio" name="remote" value="N"> Open local file</td>
-			<td><input name='local_file'></td>
+			<td><input type="text" name="local_file"></td>
 		</tr>
 		</table>
 	</td>
@@ -167,9 +167,9 @@
 			<td>Expires on</td>
 		</tr>
 		<tr>
-			<td><input name="new_acc" size="32" value="{newLinkAccessKey}"></td>
+			<td><input type="text" name="new_acc" size="32" value="{newLinkAccessKey}"></td>
 			<td nowrap><widget class="\XLite\View\Date" field="new_exp_date"></td>
-			<td><input name="new_downloads" size="10" value="{config.CDev.Egoods.exp_downloads}"></td>
+			<td><input type="text" name="new_downloads" size="10" value="{config.CDev.Egoods.exp_downloads}"></td>
 			<td>
 				<select name="new_expires">
 				<option value="T" selected="{config.CDev.Egoods.link_expires=#T#}">Date</option>
@@ -213,7 +213,7 @@
 		</tr>
 		<tr>
 			<td><input type="radio" name="new_remote" value="N" checked="!isValidEgoodsStoreDir()"> Use local file</td>
-			<td><input name='new_local_file'></td>
+			<td><input type="text" name="new_local_file"></td>
 		</tr>
 		</table>
 	</td>

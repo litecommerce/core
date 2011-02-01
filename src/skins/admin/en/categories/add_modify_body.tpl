@@ -44,7 +44,7 @@
       <td width="15%" class="FormButton">Category&nbsp;name</td>
       <td class="Star">*</td>
       <td width="85%">
-        <input name="name" value="{category.name}" size="50" maxlength="255" />
+        <input type="text" name="name" value="{category.name}" size="50" maxlength="255" />
         &nbsp;<font IF="!valid" class="ValidateErrorMessage">&lt;&lt; Required field</font>
       </td>
     </tr>
@@ -101,25 +101,25 @@
     <tr>
       <td class="FormButton">HTML title ('title' tag)</td>
       <td>&nbsp;</td>
-      <td><input name="meta_title" value="{category.meta_title}" size="50" /></td>
+      <td><input type="text" name="meta_title" value="{category.meta_title}" size="50" /></td>
     </tr>
 
     <tr>
       <td class="FormButton">Meta keywords</td>
       <td>&nbsp;</td>
-      <td><input name="meta_tags" value="{category.meta_tags}" size="50" /></td>
+      <td><input type="text" name="meta_tags" value="{category.meta_tags}" size="50" /></td>
     </tr>
 
     <tr>
       <td class="FormButton">Meta description</td>
       <td>&nbsp;</td>
-      <td><input name="meta_desc" value="{category.meta_desc}" size="50" /></td>
+      <td><input type="text" name="meta_desc" value="{category.meta_desc}" size="50" /></td>
     </tr>
 
     <tr>
       <td class="FormButton">Clean URL </td>
       <td>&nbsp;</td>
-      <td><input name="clean_url" value="{category.clean_url}" size="50" /></td>
+      <td><input type="text" name="clean_url" value="{category.clean_url}" size="50" /></td>
     </tr>
 
     <tr>

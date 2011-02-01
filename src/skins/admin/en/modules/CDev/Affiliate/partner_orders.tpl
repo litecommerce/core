@@ -30,7 +30,7 @@
 </tr>    
 <tr>
     <td  nowrap height=10>Order id</td>
-    <td><input size=6 name=order_id1 value="{order_id1}"> - <input size=6 name=order_id2 value="{order_id2}"> </td>
+    <td><input type="text" size="6" name="order_id1" value="{order_id1}" /> - <input type="text" size="6" name="order_id2" value="{order_id2}" /></td>
 </tr>
 <tr>
     <td>Order status:</td>

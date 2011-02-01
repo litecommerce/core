@@ -80,27 +80,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
     );
 
     /**
-     * Define cache cells 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineCacheCells()
-    {
-        $list = parent::defineCacheCells();
-
-        $list['all'] = array();
-
-        $list['category'] = array(
-            self::ATTRS_CACHE_CELL => array('category')
-        );
-
-        return $list;
-    }
-
-    /**
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      *
      * @param string $alias Table alias OPTIONAL
@@ -337,6 +316,27 @@ class Config extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
+     * Define cache cells
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineCacheCells()
+    {
+        $list = parent::defineCacheCells();
+
+        $list['all'] = array();
+
+        $list['category'] = array(
+            self::ATTRS_CACHE_CELL => array('category')
+        );
+
+        return $list;
+    }
+
+    /**
      * Remove option from the "black list" 
      * 
      * @param string $category Option category
@@ -511,5 +511,4 @@ class Config extends \XLite\Model\Repo\Base\I18n
             )
         );
     }
-
 }

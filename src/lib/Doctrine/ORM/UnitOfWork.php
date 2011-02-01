@@ -462,6 +462,7 @@ class UnitOfWork implements PropertyChangedListener
                         // A PersistentCollection was de-referenced, so delete it.
                         if  ( ! in_array($orgValue, $this->collectionDeletions, true)) {
                             $this->collectionDeletions[] = $orgValue;
+                            $changeSet[$propName] = $orgValue; // Signal changeset, to-many assocs will be ignored.
                         }
                     }
                 } else if ($isChangeTrackingNotify) {
@@ -1837,11 +1838,19 @@ class UnitOfWork implements PropertyChangedListener
         if ($class->isIdentifierComposite) {
             $id = array();
             foreach ($class->identifier as $fieldName) {
-                $id[$fieldName] = $data[$fieldName];
+                if (isset($class->associationMappings[$fieldName])) {
+                    $id[$fieldName] = $data[$class->associationMappings[$fieldName]['joinColumns'][0]['name']];
+                } else {
+                    $id[$fieldName] = $data[$fieldName];
+                }
             }
             $idHash = implode(' ', $id);
         } else {
-            $idHash = $data[$class->identifier[0]];
+            if (isset($class->associationMappings[$class->identifier[0]])) {
+                $idHash = $data[$class->associationMappings[$class->identifier[0]]['joinColumns'][0]['name']];
+            } else {
+                $idHash = $data[$class->identifier[0]];
+            }
             $id = array($class->identifier[0] => $idHash);
         }
 
@@ -1894,7 +1903,11 @@ class UnitOfWork implements PropertyChangedListener
                             foreach ($assoc['targetToSourceKeyColumns'] as $targetColumn => $srcColumn) {
                                 $joinColumnValue = isset($data[$srcColumn]) ? $data[$srcColumn] : null;
                                 if ($joinColumnValue !== null) {
-                                    $associatedId[$targetClass->fieldNames[$targetColumn]] = $joinColumnValue;
+                                    if ($targetClass->containsForeignIdentifier) {
+                                        $associatedId[$targetClass->getFieldForColumn($targetColumn)] = $joinColumnValue;
+                                    } else {
+                                        $associatedId[$targetClass->fieldNames[$targetColumn]] = $joinColumnValue;
+                                    }
                                 }
                             }
                             if ( ! $associatedId) {
@@ -1946,11 +1959,11 @@ class UnitOfWork implements PropertyChangedListener
                         $reflField = $class->reflFields[$field];
                         $reflField->setValue($entity, $pColl);
                         
-                        if ($assoc['fetch'] == ClassMetadata::FETCH_LAZY) {
-                            $pColl->setInitialized(false);
-                        } else {
+                        if ($assoc['fetch'] == ClassMetadata::FETCH_EAGER) {
                             $this->loadCollection($pColl);
                             $pColl->takeSnapshot();
+                        } else {
+                            $pColl->setInitialized(false);
                         }
                         $this->originalEntityData[$oid][$field] = $pColl;
                     }
@@ -2111,7 +2124,7 @@ class UnitOfWork implements PropertyChangedListener
      * Gets the EntityPersister for an Entity.
      *
      * @param string $entityName  The name of the Entity.
-     * @return Doctrine\ORM\Persister\AbstractEntityPersister
+     * @return Doctrine\ORM\Persisters\AbstractEntityPersister
      */
     public function getEntityPersister($entityName)
     {
