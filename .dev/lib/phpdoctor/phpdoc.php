@@ -21,19 +21,21 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 error_reporting(E_ALL & ~E_DEPRECATED);
 
+@date_default_timezone_set(@date_default_timezone_get());
+
 // check we are running from the command line
 if (!isset($argv[0])) {
     die('This program must be run from the command line using the CLI version of PHP');
     
 // check we are using the correct version of PHP
-} elseif (!defined('T_COMMENT') || !extension_loaded('tokenizer') || version_compare(phpversion(), '4.3.0', '<')) {
-    error('You need PHP version 4.3.0 or greater with the "tokenizer" extension to run this script, please upgrade');
+} elseif (!defined('T_COMMENT') || !extension_loaded('tokenizer') || version_compare(phpversion(), '5.3.0', '<')) {
+    error('You need PHP version 5.3.0 or greater with the "tokenizer" extension to run this script, please upgrade');
     exit;
 }
 
 // include PHPDoctor class
 set_include_path(get_include_path() . PATH_SEPARATOR . dirname($argv[0]));
-require('classes'.DIRECTORY_SEPARATOR.'phpDoctor.php');
+require('classes' . DIRECTORY_SEPARATOR . 'phpDoctor.php');
 
 // get name of config file to use
 if (!isset($argv[1])) {
@@ -48,10 +50,8 @@ if (!isset($argv[1])) {
     }
 }
 
-$phpdoc =& new phpDoctor($argv[1]);
+$phpdoc = new phpDoctor($argv[1]);
 
 $rootDoc =& $phpdoc->parse();
 
 $phpdoc->execute($rootDoc);
-
-?>
