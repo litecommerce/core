@@ -1,9 +1,0 @@
-- [+] 19 Oct 2007, Alien - Improvement (0023634): The hardcoded table prefix was removed.
-
-Version 2.3:
-- [+] Osipov - Improvement (0009795): If the module settings are not complete, the real time shipping rates are not calculated.
-
-Version 2.2:
-- [+] Sheriff - Improvement (0001978): Unregistered customers now can see shipping rates for the 'default country' instead of the 'N/A' message (in LiteCommerce 2.2.X).
-- [!] 07 Mar 2005, Asd - Bug: The compiled code/templates cache was not cleaned up during the module uninstallation. Fixed.
-

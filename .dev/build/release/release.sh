@@ -19,6 +19,7 @@ Usage: $0 [options]
   -c   clear output directory if exists
   -d   output directory (optional, script directory by default)
   -f   config file (<script_dir>/config.sh by default)
+  -l   generate distributives from local repository instead of remote
   -s   safe mode (output directory is not removed and checkout is skipped)
   -t   generate builds for testing (with additional data)
   -h   this help
@@ -77,20 +78,112 @@ die ()
 	exit 2
 }
 
+get_current_time ()
+{
+	_current_time=`$PHP -qr 'echo mktime();'`
+	eval "$1=$_current_time"
+}
+
+#
+# Function calculates the time difference between start time and current time
+# Parameters:
+# $1 - start time
+get_elapsed_time()
+{
+	if [ x$1 = x ]; then
+		echo 'Wrong call of get_elapsed_time()'
+		exit 2;
+	fi
+
+	_php_code='$s=mktime()-'$1'; echo sprintf("%d:%02d:%02d", ($s1=intval($s/3600)), ($s2=intval(($s-$s1*3600)/60)), ($s-$s1*3600-$s2*60));'
+
+	_elapsed_time=`eval $PHP" -qr '"$_php_code"'"`
+}
+
+#
+# Download an archived code from the GitHub and deploy it to the specified directory
+#
+# @param $1 The name of temporary directory where to deploy archive
+# @param $2 URL of an archive to download (remote repo mode) or directory path (local repo mode)
+#
+prepare_directory()
+{
+	get_current_time 'GIT_START_TIME'
+
+	_ERR_MSG='';
+
+	if [ "x$1" = "x" -o "x$2" = "x" ]; then
+		_ERR_MSG='Error: Wrong parameters passed to prepare_directory()';
+
+	else
+
+		if [ "x${LOCAL_REPO}" = "x" ]; then
+			# Download archive
+			curl -L $2 -o $1.tgz >>LOG 2>>LOG
+			#cp ${BASE_DIR}/$1.tgz .
+
+		else
+
+			if [ -d $2 ]; then
+				_curdir=`pwd`
+				cd $2
+				git archive --format=tar --prefix=git-prj/ HEAD | gzip > ${OUTPUT_DIR}/$1.tgz
+				cd $_curdir
+			else
+				die "Local repo directory not found ($2)"
+			fi
+
+		fi
+
+		# Check the downloaded archive
+		tar -tzf $1.tgz >>TAR_LOG 2>>TAR_LOG
+		_ERR=`grep "^tar: Error " TAR_LOG`
+
+		if [ "x${_ERR}" = "x" ]; then
+
+			rm -f TAR_LOG LOG
+
+			# Unpack archive and move it to the specified temporary directory ($1)
+			mkdir _xxx
+			cd _xxx
+			tar -xzf ../$1.tgz
+			_tmp_dir=`ls`
+			mv $_tmp_dir ../$1
+			cd ..
+			rm -rf _xxx
+			rm -f $1.tgz
+
+		else
+			_ERR_MSG='Error: Archive is corrupted';
+		fi
+	fi
+
+	if [ "x${_ERR_MSG}" = "x" ]; then
+		echo '[ok]'
+	else
+		echo ""
+		echo $_ERR_MSG
+		exit 2;
+	fi
+}
+
+
 #############################################################################
 
 PHP='/usr/local/bin/php -d date.timezone=Europe/Moscow'
-START_TIME=`$PHP -qr 'echo mktime();'`
+
+get_current_time 'START_TIME';
 
 echo -e "LiteCommerce distributives generator\n"
 
 # Read options
-while getopts "b:cd:f:sth" option; do
+while getopts "b:cd:f:lsth" option; do
 	case $option in
 		b) XLITE_BUILD_NUMBER=$OPTARG ;;
 		c) CLEAR_OUTPUT_DIR=1 ;;
 		d) PARAM_OUTPUT_DIR=$OPTARG ;;
 		f) CONFIG=$OPTARG ;;
+		l) LOCAL_REPO=1;;
 		s) SAFE_MODE=1 ;;
 		t) TEST_MODE=1 ;;
 		h) show_usage $0 ;;
@@ -115,20 +208,36 @@ else
 	exit 2
 fi
 
+# Include local config file
+if [ -f ${BASE_DIR}/config.local.sh ]; then
+	. ${BASE_DIR}/config.local.sh
+fi
+
 # Check parameters
 if [ "x${XLITE_VERSION}" = "x" ]; then
 	echo "Failed: LiteCommerce version is not specified";
 	exit 2
 fi
 
-if [ "x${XLITE_SVN}" = "x" ]; then
-	echo "Failed: LiteCommerce SVN repository is not specified";
-	exit 2
-fi
+if [ "x${LOCAL_REPO}" = "x" ]; then
 
-if [ "x${DRUPAL_SVN}" = "x" ]; then
-	echo "Failed: Drupal SVN repository is not specified";
-	exit 2
+	if [ "x${XLITE_REPO}" = "x" ]; then
+		echo "Failed: LiteCommerce repository is not specified";
+		exit 2
+	fi
+
+	if [ "x${DRUPAL_REPO}" = "x" ]; then
+		echo "Failed: Drupal repository is not specified";
+		exit 2
+	fi
+
+else
+
+	if [ "x${DRUPAL_LOCAL_REPO}" = "x" ]; then
+		echo "Failed: Drupal local repository is not specified";
+		exit 2
+	fi
+
 fi
 
 if [ "x${XLITE_MODULES}" = "x" ]; then
@@ -161,14 +270,20 @@ VERSION=${XLITE_VERSION}${BUILD_SUFFIX}
 echo "Input data:"
 echo "*** CONFIG: ${CONFIG}"
 echo "*** VERSION: ${VERSION}"
-echo "*** LC REPOSITORY: $XLITE_SVN"
-echo "*** DRUPAL REPOSITORY: $DRUPAL_SVN"
+
+if [ "x${LOCAL_REPO}" = "x" ]; then
+	echo "*** MODE: REMOTE REPO"
+	echo "*** LC REPOSITORY: $XLITE_REPO"
+	echo "*** DRUPAL REPOSITORY: $DRUPAL_REPO"
+else
+	echo "*** MODE: LOCAL REPO"
+	echo "*** DRUPAL LOCAL REPOSITORY: $DRUPAL_LOCAL_REPO"
+fi
+
 echo "*** OUTPUT_DIR: $OUTPUT_DIR"
 
 [ $SAFE_MODE ] && echo "*** SAFE_MODE enabled"
 
-echo "";
-echo "Generating LiteCommerce from SVN repository";
 echo "";
 
 # Prepare output directory
@@ -193,81 +308,67 @@ if [ ! $SAFE_MODE ]; then
 
 	# Do LiteCommerce checkout...
 
-	echo -n "LiteCommerce checkout...";
+	echo -n "Getting LiteCommerce core from GitHub...";
 
-	if svn export ${XLITE_SVN} ${LITECOMMERCE_DIRNAME} >>LOG_OUT 2>>LOG_ERR; then
+	TMP_XLITE_REPO='_tmp_xlite_repo';
 
-		rm -f LOG_ERR LOG_OUT
-		echo " [success]"
-
+	if [ "x${LOCAL_REPO}" = "x" ]; then
+		prepare_directory $TMP_XLITE_REPO $XLITE_REPO
 	else
-		SVN_ERROR="LiteCommerce"
-		echo " [failed]"
-	    echo "Failed: Unable to checkout LiteCommerce. Logs are below:"
-	    echo "** stderr:"
-	    cat LOG_ERR
-	    echo "** stdout:"
-		cat LOG_OUT
+		prepare_directory $TMP_XLITE_REPO `realpath ${BASE_DIR}/../../../`
+	fi
+
+	get_elapsed_time $GIT_START_TIME
+
+	echo "(time elapsed: ${_elapsed_time})";
+
+	echo -n "   Removing .git* service files/directories..."
+
+	cd $TMP_XLITE_REPO
+	find . -name ".git*" -exec rm -rf {} \;
+	cd ..
+	echo " [ok]"
+
+	if [ -d ${TMP_XLITE_REPO}/src -a -d ${TMP_XLITE_REPO}/.dev ]; then
+		mv ${TMP_XLITE_REPO}/src ${LITECOMMERCE_DIRNAME}
+		mv ${TMP_XLITE_REPO}/.dev xlite_dev
+		rm -rf ${TMP_XLITE_REPO}
+	else
+		echo "Wrong LiteCommerce repository structure"
 		exit 2
 	fi
 
-	# Do LiteCommerce .dev checkout...
-
-	echo -n "LiteCommerce .dev checkout...";
-
-	if svn export ${XLITE_DEV_SVN} xlite_dev >>LOG_OUT 2>>LOG_ERR; then
-
-		rm -f LOG_ERR LOG_OUT
-		echo " [success]"
-
-	else
-		SVN_ERROR="LiteCommerce .dev"
-		echo " [failed]"
-	    echo "Failed: Unable to checkout LiteCommerce .dev directory. Logs are below:"
-	    echo "** stderr:"
-	    cat LOG_ERR
-	    echo "** stdout:"
-		cat LOG_OUT
-		exit 2
-	fi
 
 	# Do Drupal checkout...
 
-	echo -n "Drupal checkout..."
+	echo -n "Getting Drupal from GitHub..."
 
-	if svn export ${DRUPAL_SVN} ${DRUPAL_DIRNAME} >>LOG_OUT 2>>LOG_ERR; then
+	get_current_time 'GIT_START_TIME'
 
-		rm -f LOG_ERR LOG_OUT
-		echo " [success]"
+	TMP_DRUPAL_REPO='_tmp_drupal_repo';
 
+	if [ "x${LOCAL_REPO}" = "x" ]; then
+		prepare_directory $TMP_DRUPAL_REPO $DRUPAL_REPO
 	else
-		SVN_ERROR="Drupal"
-		echo " [failed]"
-	    echo "Failed: Unable to checkout Drupal. Logs are below:"
-	    echo "** stderr:"
-	    cat LOG_ERR
-	    echo "** stdout:"
-		cat LOG_OUT
-		exit 2
+		prepare_directory $TMP_DRUPAL_REPO $DRUPAL_LOCAL_REPO
 	fi
 
-	# Do Drupal .dev checkout...
+	get_elapsed_time $GIT_START_TIME
 
-	echo -n "Drupal .dev checkout..."
+	echo "(time elapsed: ${_elapsed_time})";
 
-	if svn export ${DRUPAL_DEV_SVN} drupal_dev >>LOG_OUT 2>>LOG_ERR; then
+	echo -n "   Removing .git* service files/directories..."
 
-		rm -f LOG_ERR LOG_OUT
-		echo " [success]"
+	cd $TMP_DRUPAL_REPO
+	find . -name ".git*" -exec rm -rf {} \;
+	cd ..
+	echo " [ok]"
 
+	if [ -d ${TMP_DRUPAL_REPO}/.dev ]; then
+		mv ${TMP_DRUPAL_REPO}/.dev drupal_dev
+		mv ${TMP_DRUPAL_REPO} ${DRUPAL_DIRNAME}
 	else
-		SVN_ERROR="Drupal"
-		echo " [failed]"
-	    echo "Failed: Unable to checkout Drupal .dev directory. Logs are below:"
-	    echo "** stderr:"
-	    cat LOG_ERR
-	    echo "** stdout:"
-		cat LOG_OUT
+		echo "Wrong Drupal repository structure"
 		exit 2
 	fi
 
@@ -508,8 +609,7 @@ fi
 #
 # Calculate and display elapsed time
 #
-_php_code='$s=mktime()-'$START_TIME'; echo sprintf("%d:%02d:%02d", ($s1=intval($s/3600)), ($s2=intval(($s-$s1*3600)/60)), ($s-$s1*3600-$s2*60));'
-_elapsed_time=`eval $PHP" -qr '"$_php_code"'"`
+get_elapsed_time $START_TIME
 
 echo -e "\nTime elapsed: ${_elapsed_time}\n"
 

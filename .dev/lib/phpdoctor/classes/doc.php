@@ -258,7 +258,7 @@ class Doc {
 				if (!is_array($value)) {
 					if ($member == 'type') {
 						$this->set('type', new type($value, $this->_root));
-					} else {
+					} elseif ($member != 'package') {
 						$this->set($member, $value);
 					}
 				}
@@ -306,7 +306,7 @@ class Doc {
 				    } else {
                         if (!isset($this->_parameters[$name])) {
                             //phpdoctor::warning('Unknown parameter "'.$name.'" found for method "'.$this->_package.'.'.$this->_parent->name().'::'.$this->_name.'".');
-                            $this->_parameters[$name] =& new fieldDoc($name, $this, $this->_root);
+                            $this->_parameters[$name] = new fieldDoc($name, $this, $this->_root);
                             if (isset($this->_package)) $this->_parameters[$name]->set('package', $this->_package);
                         }
                         $this->_parameters[$name]->set('type', new type($param['type'], $this->_root));
@@ -315,7 +315,7 @@ class Doc {
 			}
 			// merge return type
 			if (isset($this->_returnType) && isset($this->_data['return'])) {
-				$this->_returnType =& new type($this->_data['return'], $this->_root);
+				$this->_returnType = new type($this->_data['return'], $this->_root);
 			}
 			// merge exceptions
 			if (isset($this->_throws) && isset($this->_data['throws'])) {
