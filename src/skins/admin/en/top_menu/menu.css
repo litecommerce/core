@@ -16,13 +16,13 @@
  */
 #topMenu
 {
-  height: 36px;
+  height: 35px;
   background: transparent none;
   position: absolute;
   text-align: left;
   margin: 0 auto;
   z-index: 100;
-  top: 39px;
+  top: 40px;
   left 0;
 }
 
