@@ -19,6 +19,7 @@
 		<property name="distrDir" location="${buildDir}/output" />
 		<property name="installDir" location="${buildDir}/src" />
 		<property name="label" value="manual" />
+		<property name="varRunClasses" value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
 	</target>
 
     <target name="set-properties-cc" depends="set-properties-common">
@@ -30,6 +31,7 @@
 		<property name="srcDir" location="${sourceDir}/src" />
 		<property name="distrDir" location="${buildDir}/output" />
 		<property name="installDir" location="${buildDir}/src" />
+        <property name="varRunClasses" value="${installDir}/var/run/classes" />
     </target>
 
     <target name="set-properties-common">
@@ -211,13 +213,13 @@
             <arg value="${sourceDir}/.dev/pdepend.php" />
             <arg value="--jdepend-chart=${buildDir}/reports/pdepend.svg" />
             <arg value="--overview-pyramid=${buildDir}/reports/pyramid.svg" />
-            <arg value="--optimization=best" />
-            <arg value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
+			<arg value="--coderank-mode=property,inheritance,method" />
+            <arg value="${varRunClasses}" />
         </exec>
 
         <exec executable="php" dir="${buildDir}" output="${buildDir}/reports/phpmd.html">
             <arg value="${sourceDir}/.dev/phpmd.php" />
-            <arg value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
+            <arg value="${sourceDir}/src/classes" />
 			<arg value="html" />
 			<arg value="rulesets/codesize.xml,rulesets/design.xml,rulesets/naming.xml,rulesets/unusedcode.xml" />
         </exec>
