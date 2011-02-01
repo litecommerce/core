@@ -258,7 +258,7 @@ class Doc {
 				if (!is_array($value)) {
 					if ($member == 'type') {
 						$this->set('type', new type($value, $this->_root));
-					} else {
+					} elseif ($member != 'package') {
 						$this->set($member, $value);
 					}
 				}
