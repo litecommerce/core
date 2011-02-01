@@ -2,3 +2,4 @@
 *.tpl ident
 *.css ident
 *.js ident
+*.sh ident
