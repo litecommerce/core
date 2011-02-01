@@ -358,16 +358,14 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     /**
      * Check if cache rebuild is needed
      *
-     * FIXME: must be protected. See Includes/install/install_settings.php
-     * 
      * @param string $step current step name
      *  
      * @return boolean
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function isRebuildNeeded($step)
+    protected static function isRebuildNeeded($step)
     {
         return !\Includes\Utils\FileManager::isExists(static::getCacheStateIndicatorFileName($step));
     }

@@ -6,13 +6,11 @@
 # LiteCommerce version (no spaces allowed as it's used as part of distributive name)
 XLITE_VERSION="3.x-dev"
 
-# LiteCommerce SVN repository
-XLITE_SVN="svn://svn.crtdev.local/repo/xlite/main/src"
-XLITE_DEV_SVN="svn://svn.crtdev.local/repo/xlite/main/.dev"
+# LiteCommerce repository URL
+XLITE_REPO="https://github.com/litecommerce/core/tarball/master"
 
-# Drupal SVN repository
-DRUPAL_SVN="svn://svn.crtdev.local/repo/xlite_cms/main/src"
-DRUPAL_DEV_SVN="svn://svn.crtdev.local/repo/xlite_cms/main/.dev"
+# Drupal repository URL
+DRUPAL_REPO="https://github.com/litecommerce/drupal/tarball/CVS"
 
 # Output directory name
 OUTPUT_DIR="output"
