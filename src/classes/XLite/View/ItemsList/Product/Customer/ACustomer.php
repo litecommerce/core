@@ -619,6 +619,25 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
+     * Prepare CSS files needed for popups
+     * TODO: check if there is a more convinient way to do that
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPopupCSS()
+    {
+        return array_merge(
+            $this->getWidget(array(), '\XLite\View\Product\Details\Customer\Page\QuickLook')->getCSSFiles(),
+            $this->getWidget(array(), '\XLite\View\Product\Details\Customer\Image')->getCSSFiles(),
+            $this->getWidget(array(), '\XLite\View\Product\Details\Customer\Gallery')->getCSSFiles(),
+            $this->getWidget(array(), '\XLite\View\Product\QuantityBox')->getCSSFiles()
+        );
+    }
+
+    /**
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
@@ -628,19 +647,10 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = $this->getDir() . '/quick_look.css';
         $list[] = 'css/cloud-zoom.css';
 
-        // FIXME
-        foreach (array('Page\QuickLook', 'Image', 'Gallery') as $class) {
-            $list = array_merge(
-                $list, 
-                $this->getWidget(array(), '\XLite\View\Product\Details\Customer\\' . $class)->getCSSFiles()
-            );
-        }
-
-        return $list;
+        return array_merge($list, $this->getPopupCSS());
     }
 
 

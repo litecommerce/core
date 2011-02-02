@@ -151,7 +151,6 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         // Static call of the non-static function
         $list[] = self::getDir() . '/products_list.css';
 
@@ -168,7 +167,6 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         // Static call of the non-static function
         $list[] = self::getDir() . '/controller.js';
 
@@ -195,5 +193,4 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
 
         parent::__construct($params);
     }
-
 }
