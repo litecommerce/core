@@ -147,7 +147,8 @@ function openDialog(selector, additionalOptions)
       draggable: false,
       modal: true,
       resizable: false,
-      height: 500,
+      minWidth: 350,
+      minHeight: 150,
       open: function(event) {
         jQuery('.ui-dialog').css(
           {
@@ -160,6 +161,18 @@ function openDialog(selector, additionalOptions)
     if (additionalOptions) {
       for (var k in additionalOptions) {
         options[k] = additionalOptions[k];
+      }
+    }
+
+    // Grab title from h2/h1 tag
+    var hTags = ['h2','h1'];
+    var tagSelector;
+    for (var i in hTags) {
+      tagSelector = hTags[i] + ':first-child';
+      if (!options.title && jQuery(selector + ' ' + tagSelector).length) {
+        options.title = jQuery(selector + ' ' + tagSelector).html();
+        jQuery(selector + ' ' + tagSelector).remove();
+        break;
       }
     }
 
@@ -244,7 +257,7 @@ function openWaitBar()
       width:         200,
       open:          function() {
         jQuery(window._waitBar).css('min-height', 'auto');
-        jQuery('.ui-dialog-titlebar-close', jQuery(window._waitBar).parents('.ui-dialog').eq(0)).remove();
+        jQuery('.ui-dialog-titlebar', jQuery(window._waitBar).parents('.ui-dialog').eq(0)).remove();
       }
     };
 

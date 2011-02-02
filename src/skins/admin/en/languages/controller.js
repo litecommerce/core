@@ -20,7 +20,7 @@ function openAddNewLanguage(link, page)
     url += '&page=' + page;
   }
 
-  loadDialogByLink(link, url, {width: 600});
+  loadDialogByLink(link, url, {width: 600, height: 500});
 
   return false;
 }

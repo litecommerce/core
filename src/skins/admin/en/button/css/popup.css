@@ -12,7 +12,7 @@
  */
 
 .blockOverlay {
-  background: url("../images/popup_overlay.png") left top;
+  background: url("../../images/popup_overlay.png") left top;
 }
 
 .blockMsg .close-link, .blockMsg .block-container {
