@@ -52,7 +52,9 @@
 
 		<echo message="Update current source" />
 		<exec executable="git" dir="${sourceDir}">
-			<arg value="pull origin master" />
+			<arg value="pull" />
+			<arg value="origin" />
+			<arg value="master" />
 		</exec>
 
 		<echo message="Run release builder" />
@@ -73,7 +75,7 @@
 		</copy>
 
 		<echo message="Prepare deployed repositories" />
-		<copy file="${buildDir}/.dev/build/config.local-cc.php" tofile="${buildDir}/.dev/build/config.local.php" />
+		<copy file="/u/xcart/etc/config.local-cc.php" tofile="${buildDir}/.dev/build/config.local.php" />
 		<copy file="${buildDir}/.dev/tests/local-cc.php" tofile="${buildDir}/.dev/tests/local.php" />
 		<exec executable="php" dir="${installDir}/modules/lc_connector/litecommerce">
             <arg line="${sourceDir}/.dev/build/devcode_postprocess.php" />
@@ -225,6 +227,7 @@
         </exec>
 
 		<mkdir dir="${buildDir}/reports/gitstat" />
+		<chmod file="${buildDir}/.dev/lib/gitstats/gitstats" perm="ugo+rx" />
         <exec executable="${buildDir}/.dev/lib/gitstats/gitstats" dir="${sourceDir}">
             <arg line="-c project_name=XLite -c authors_top=10 ${sourceDir} ${buildDir}/reports/gitstat" />
         </exec>
