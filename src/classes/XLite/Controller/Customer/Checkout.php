@@ -121,6 +121,19 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
+     * Check amount for all cart items
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkItemsAmount()
+    {
+        // Do not call parent: it's only needed to check amounts in cart, not on checkout
+    }
+
+    /**
      * Update profile 
      * 
      * @return void

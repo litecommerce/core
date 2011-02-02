@@ -11,4 +11,5 @@
  * @since     3.0.0
  *}
 
+<div class="product-max-qty">{t(#Max#)}: <span class="product-max-qty-container">{getMaxQuantity()}</span></div>
 <input type="text" value="{getBoxValue()}" class="{getClass()}" name="{getBoxName()}" title="{t(getBoxTitle())}" />
