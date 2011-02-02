@@ -19,6 +19,7 @@
 		<property name="distrDir" location="${buildDir}/output" />
 		<property name="installDir" location="${buildDir}/src" />
 		<property name="label" value="manual" />
+		<property name="varRunClasses" value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
 	</target>
 
     <target name="set-properties-cc" depends="set-properties-common">
@@ -30,6 +31,7 @@
 		<property name="srcDir" location="${sourceDir}/src" />
 		<property name="distrDir" location="${buildDir}/output" />
 		<property name="installDir" location="${buildDir}/src" />
+        <property name="varRunClasses" value="${installDir}/var/run/classes" />
     </target>
 
     <target name="set-properties-common">
@@ -50,7 +52,9 @@
 
 		<echo message="Update current source" />
 		<exec executable="git" dir="${sourceDir}">
-			<arg value="pull origin master" />
+			<arg value="pull" />
+			<arg value="origin" />
+			<arg value="master" />
 		</exec>
 
 		<echo message="Run release builder" />
@@ -71,7 +75,7 @@
 		</copy>
 
 		<echo message="Prepare deployed repositories" />
-		<copy file="${buildDir}/.dev/build/config.local-cc.php" tofile="${buildDir}/.dev/build/config.local.php" />
+		<copy file="/u/xcart/etc/config.local-cc.php" tofile="${buildDir}/.dev/build/config.local.php" />
 		<copy file="${buildDir}/.dev/tests/local-cc.php" tofile="${buildDir}/.dev/tests/local.php" />
 		<exec executable="php" dir="${installDir}/modules/lc_connector/litecommerce">
             <arg line="${sourceDir}/.dev/build/devcode_postprocess.php" />
@@ -211,18 +215,19 @@
             <arg value="${sourceDir}/.dev/pdepend.php" />
             <arg value="--jdepend-chart=${buildDir}/reports/pdepend.svg" />
             <arg value="--overview-pyramid=${buildDir}/reports/pyramid.svg" />
-            <arg value="--optimization=best" />
-            <arg value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
+			<arg value="--coderank-mode=property,inheritance,method" />
+            <arg value="${varRunClasses}" />
         </exec>
 
         <exec executable="php" dir="${buildDir}" output="${buildDir}/reports/phpmd.html">
             <arg value="${sourceDir}/.dev/phpmd.php" />
-            <arg value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
+            <arg value="${sourceDir}/src/classes" />
 			<arg value="html" />
 			<arg value="rulesets/codesize.xml,rulesets/design.xml,rulesets/naming.xml,rulesets/unusedcode.xml" />
         </exec>
 
 		<mkdir dir="${buildDir}/reports/gitstat" />
+		<chmod file="${buildDir}/.dev/lib/gitstats/gitstats" perm="ugo+rx" />
         <exec executable="${buildDir}/.dev/lib/gitstats/gitstats" dir="${sourceDir}">
             <arg line="-c project_name=XLite -c authors_top=10 ${sourceDir} ${buildDir}/reports/gitstat" />
         </exec>
