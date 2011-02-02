@@ -41,7 +41,7 @@ if (!defined('XLITE_INSTALL_MODE')) {
 
 <?php
 
-message('You are about to install LiteCommerce shopping system.<BR>This installation wizard will guide you through the installation process.')
+message(xtr('installation_start_text'));
 
 ?>
 
@@ -69,7 +69,7 @@ if (COPYRIGHT_EXISTS) {
 <input type="hidden" name="params[force_current]" value="<?php print get_step("check_cfg") ?>" />
 
 <TABLE border=0>
-<TR><TD colspan=2><b>Auth code: </b><INPUT type=text name="params[auth_code]" size=20><BR><FONT size=1>(required for protection from unauthorized<BR> use of installation script)</FONT></TD></TR>
+<TR><TD colspan=2><b><?php echo xtr('Auth code'); ?>: </b><INPUT type=text name="params[auth_code]" size=20><BR><FONT size=1><?php echo xtr('(required for protection from unauthorized<BR> use of installation script)'); ?></FONT></TD></TR>
 </TABLE>
 <P>
 
@@ -87,7 +87,7 @@ if (COPYRIGHT_EXISTS) {
 
 ?>
 
-<label><INPUT type=checkbox name="agree" onClick="this.blur(); setNextButtonDisabled(!this.checked);" /> I accept the License Agreement</label>
+    <label><INPUT type=checkbox name="agree" onClick="this.blur(); setNextButtonDisabled(!this.checked);" /> <?php echo xtr('I accept the License Agreement'); ?></label>
 
 <?php
 
@@ -97,7 +97,7 @@ if (COPYRIGHT_EXISTS) {
 
 ?>
 
-<P class="install_error">Could not find license agreement file.<br>Aborting installation.</P>
+    <P class="install_error"><?php echo xtr('Could not find license agreement file.<br>Aborting installation.'); ?></P>
 
 <?php
 
