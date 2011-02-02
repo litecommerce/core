@@ -144,15 +144,20 @@ class PackageFrameWriter extends HTMLWriter
 
 		$classes =& $rootDoc->classes();
 		if ($classes) {
-            ksort($classes);
+			$fullClasses = array();
+
+			foreach ($classes as $name => $class) {
+				$fullClasses[$class->packageName() . '\\' . $class->name()] = $class;
+			}
+
+            ksort($fullClasses);
 			echo "<h2>Classes</h2>\n";
 			echo "<ul>\n";
-			foreach($classes as $name => $class) {
-				$package =& $classes[$name]->containingPackage();
+			foreach($fullClasses as $name => $class) {
 				if ($class->isInterface()) {
-					echo '<li><em><a href="', $classes[$name]->asPath(), '" title="', $classes[$name]->packageName(),'" target="main">', $classes[$name]->name(), "</a></em></li>\n";
+					echo '<li><em><a href="', $class->asPath(), '" title="', $class->packageName(),'" target="main">', $name, "</a></em></li>\n";
 				} else {
-					echo '<li><a href="', $classes[$name]->asPath(), '" title="', $classes[$name]->packageName(),'" target="main">', $classes[$name]->name(), "</a></li>\n";
+					echo '<li><a href="', $class->asPath(), '" title="', $class->packageName(),'" target="main">', $name, "</a></li>\n";
 				}
 			}
 			echo "</ul>\n\n";
