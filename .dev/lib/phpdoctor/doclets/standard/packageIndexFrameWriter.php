@@ -27,6 +27,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 class PackageIndexFrameWriter extends HTMLWriter
 {
 
+	protected $prev_packages = array();
+
+	protected $packagesTree = array();
+
 	/** Build the package frame index.
 	 *
 	 * @param Doclet doclet
@@ -50,12 +54,18 @@ class PackageIndexFrameWriter extends HTMLWriter
 
 		$rootDoc =& $this->_doclet->rootDoc();
 
-		echo "<ul>\n";
         $packages =& $rootDoc->packages();
         ksort($packages);
-		foreach($packages as $name => $package) {
-			echo '<li><a href="'.$package->asPath().'/package-frame.html" target="index">'.$package->name().'</a></li>'."\n";
+		$prev_packages = array();
+
+        foreach ($packages as $name => $package) {
+			$prev_packages[$package->name()] = $package->asPath();
 		}
+
+		$tree = $this->buildPackagesTree($prev_packages);
+
+        echo '<ul class="packages-index">' . "\n";
+		$this->displayTreePackages($tree);
 		echo "</ul>\n\n";
 		
 		echo '</body>', "\n\n";
@@ -67,6 +77,46 @@ class PackageIndexFrameWriter extends HTMLWriter
 	
 	}
 
+    /** Build packages tree.
+     *
+     * @param array  Packages array
+     * @param string Current root
+     * @return array
+     */
+	protected function buildPackagesTree(array $packages, $root = '')
+	{
+        $data = array();
+
+        $len = strlen($root);
+        foreach ($packages as $k => $v) {
+            if (strncmp($root, $k, $len) === 0 && strlen($k) > $len && false === strpos($k, '\\', $len + 1)) {
+                $data[$k] = array(
+                    'path'   => $v,
+					'full'   => $k,
+                    'name'   => ltrim(substr($k, $len), '\\'),
+                    'childs' => $this->buildPackagesTree($packages, $k),
+                );  
+            }   
+        }
+
+        return $data;
+	}
+
+    /** Display packages tree.
+     *
+     * @param array  Packages array
+     */
+	protected function displayTreePackages(array $packages)
+	{
+        foreach ($packages as $k => $v) {
+            echo '<li><a href="' . $v['path'] . '/package-frame.html" target="index" title="' . $v['full'] . '">' . $v['name'] . '</a></li>' . "\n";
+            if ($v['childs']) {
+                echo ('<ul>' . "\n");
+                $this->displayTreePackages($v['childs']);
+                echo ('</ul>' . "\n");
+            }
+        }
+	}
 }
 
 ?>
