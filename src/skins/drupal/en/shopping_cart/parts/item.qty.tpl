@@ -14,7 +14,7 @@
 <td class="item-qty">
   <widget class="\XLite\View\Form\Cart\Item\Update" item="{item}" name="updateItem{item.getItemId()}" className="update-quantity" />
     <div>
-      <input type="text" name="amount" value="{item.getAmount()}" class="quantity field-integer field-positive wheel-ctrl watcher"/>
+      <widget class="\XLite\View\Product\QuantityBox" fieldValue="{item.getAmount()}" style="wheel-ctrl watcher" />
     </div>
   <widget name="updateItem{item.getItemId()}" end />
 </td>

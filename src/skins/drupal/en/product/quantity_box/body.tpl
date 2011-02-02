@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Product details main block
+ * Product quantity box (for customer area)
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,10 +9,6 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="product.details.page", weight="30")
  *}
 
-<div class="product-details-info">
-  {displayViewListContent(#product.details.page.info#)}
-</div>
-
+<input type="text" value="{getBoxValue()}" class="{getClass()}" name="{getBoxName()}" title="{t(getBoxTitle())}" />

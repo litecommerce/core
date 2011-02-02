@@ -38,32 +38,6 @@ namespace XLite\Controller\Customer;
 class Cart extends \XLite\Controller\Customer\ACustomer
 {
     /**
-     * Cart item to operate (cache) 
-     * 
-     * @var    \XLite\Model\OrderItem
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $currentItem = null;
-
-
-    /**
-     * Recalculate cart on each start of the cart page
-     * TODO: check and if it will decrease performance - rework
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function handleRequest()
-    {
-        parent::handleRequest();
-
-        $this->updateCart();
-    }
-
-    /**
      * Common method to determine current location 
      * 
      * @return string
@@ -73,6 +47,142 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     protected function getLocation()
     {
         return $this->getTitle();
+    }
+
+    /**
+     * Return current product Id
+     *
+     * @return integer
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getProductId()
+    {
+        return intval(\XLite\Core\Request::getInstance()->product_id);
+    }
+
+    /**
+     * Return product amount
+     *
+     * @return integer
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getAmount()
+    {
+        return intval(\XLite\Core\Request::getInstance()->amount);
+    }
+
+    /**
+     * Alias
+     *
+     * @return \XLite\Model\Product
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProduct()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')->find($this->getProductId());
+    }
+
+    /**
+     * Get available amount for the product
+     *
+     * @param \XLite\Model\Product $product Product to add
+     *
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProductAvailableAmount(\XLite\Model\Product $product)
+    {
+        return $product->getInventory()->getAvailableAmount();
+    }
+
+    /**
+     * Get total inventory amount for the product
+     *
+     * @param \XLite\Model\Product $product Product to check
+     *
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProductAmount(\XLite\Model\Product $product)
+    {
+        return $product->getInventory()->getAmount();
+    }
+
+    /**
+     * Check if the requested amount is available for the product
+     *
+     * @param \XLite\Model\Product $product Product to add
+     * @param integer              $amount  Amount to check OPTIONAL
+     *
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkAmount(\XLite\Model\Product $product, $amount = null)
+    {
+        return !$product->getInventory()->getEnabled();
+    }
+
+    /**
+     * Check product amount before add it to the cart
+     * 
+     * @param \XLite\Model\Product $product Product to add
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkAmountToAdd(\XLite\Model\Product $product)
+    {
+        return $this->checkAmount($product) 
+            || $this->getProductAvailableAmount($product) >= $this->getAmount();
+    }
+
+    /**
+     * Check amount for all cart items
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkItemsAmount()
+    {
+        foreach ($this->getCart()->getItemsWithWrongAmounts() as $item) {
+            $this->processInvalidAmountError($product = $item->getProduct(), $this->getProductAmount($product));
+        }
+    }
+
+    /**
+     * Correct product amount
+     * 
+     * @param \XLite\Model\Product $product Product to add
+     *  
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function correctAmount(\XLite\Model\Product $product)
+    {
+        $amount = $this->getAmount();
+
+        if (!$this->checkAmountToAdd($product)) {
+            $amount = $this->getProductAvailableAmount($product);
+            $this->processInvalidAmountError($product, $this->getProductAvailableAmount($product));
+        }
+
+        return $amount;
     }
 
     /**
@@ -87,12 +197,107 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      */
     protected function getCurrentItem(\XLite\Model\Product $product)
     {
-        if (!isset($this->currentItem)) {
-            $this->currentItem = new \XLite\Model\OrderItem();
-            $this->currentItem->setProduct($product);
+        $item = new \XLite\Model\OrderItem();
+
+        $item->setProduct($product);
+        $item->setAmount($this->correctAmount($product));
+
+        return $item;
+    }
+
+    /**
+     * Add product to the cart
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addCurrentItem()
+    {
+        return ($product = $this->getProduct()) && $this->getCart()->addItem($this->getCurrentItem($product));
+    }
+
+    /**
+     * Show message about wrong product amount 
+     * 
+     * @param \XLite\Model\Product $product Product to process
+     * @param integer              $amount  Available amount
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processInvalidAmountError(\XLite\Model\Product $product, $amount)
+    {
+        \XLite\Core\TopMessage::getInstance()->addWarning(
+            'Only ' . $amount . ' items are available for the "' . $product->getName() . '" product'
+        );
+    }
+
+    /**
+     * Process 'Add item' error
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processAddItemError()
+    {
+        if (\XLite\Model\Cart::NOT_VALID_ERROR == $this->getCart()->getAddItemError()) {
+            \XLite\Core\TopMessage::getInstance()->addError('Product has not been added to cart');
+        }
+    }
+
+    /**
+     * Process 'Add item' success
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processAddItemSuccess()
+    {
+        \XLite\Core\TopMessage::getInstance()->addInfo('Product has been added to the cart');
+    }
+
+    /**
+     * URL to return after product is added
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getURLToReturn()
+    {
+        if (!($url = \XLite\Core\Session::getInstance()->productListURL)) {
+            $url = empty($_SERVER['HTTP_REFERER']) 
+                ? $this->buildUrl('product', '', array('product_id' => $this->getProductId()))
+                : $_SERVER['HTTP_REFERER'];
         }
 
-        return $this->currentItem;
+        return $url;
+    }
+
+    /**
+     * URL to return after product is added
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setURLToReturn()
+    {
+        if (\XLite\Core\Config::getInstance()->General->redirect_to_cart) {
+            \XLite\Core\Session::getInstance()->continueURL = $this->getURLToReturn();
+        } else {
+            $this->setReturnUrl($this->getURLToReturn());
+        }
     }
 
     /**
@@ -105,67 +310,48 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      */
     protected function doActionAdd()
     {
-        $result = false;
-        $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')
-            ->find(\XLite\Core\Request::getInstance()->product_id);
+        // Add product to the cart and set a top message (if needed)
+        $this->addCurrentItem() ? $this->processAddItemSuccess() : $this->processAddItemError();
 
-        if (isset($product)) {
-            // add product to the cart
-            if ($this->getCart()->addItem($this->getCurrentItem($product))) {
-                $this->updateCart();
+        // Update cart
+        $this->updateCart();
 
-                \XLite\Core\TopMessage::getInstance()->add('Product has been added to the cart');
-
-            } else {
-
-                $this->processAddItemError();
-
-            }
-
-            $productListUrl = null;
-
-            if (\XLite\Core\Session::getInstance()->productListURL) {
-                $productListUrl = \XLite\Core\Session::getInstance()->productListURL;
-
-            } elseif (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER']) {
-                $productListUrl = $_SERVER['HTTP_REFERER'];
-
-            } else {
-                $productListUrl = $this->buildUrl('product', '', array('product_id' => $product->getProductId()));
-            }
-
-            if ($productListUrl) {
-                if (\XLite\Core\Config::getInstance()->General->redirect_to_cart) {
-                    \XLite\Core\Session::getInstance()->continueURL = $productListUrl;
-
-                } else {
-                    $this->setReturnUrl($productListUrl);
-                }
-            }
-        }
-
-        return $result;
+        // Set return URL
+        $this->setURLToReturn();
     }
 
-    /**
-     * Process 'Add item' error 
+    /** 
+     * Initialize controller
      * 
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function processAddItemError()
+    public function init()
     {
-        if (\XLite\Model\Cart::NOT_VALID_ERROR == $this->getCart()->getAddItemError()) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                'Product has not been added to cart',
-                \XLite\Core\TopMessage::ERROR
-            );
-        }
+        parent::init();
 
-        $this->valid = false;
+        $this->checkItemsAmount();
     }
+
+    /**
+     * Get page title
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return $this->getCart()->isEmpty()
+            ? $this->t('Your shopping bag is empty')
+            : $this->t('Your shopping bag - X items', array('count' => $this->getCart()->countQuantity()));
+    }
+
+
+    // TODO: refactoring
 
     /**
      * 'delete' action
@@ -276,26 +462,11 @@ class Cart extends \XLite\Controller\Customer\ACustomer
         }
 
         \XLite\Core\TopMessage::getInstance()->add('Item has been deleted from cart');
+        $this->setReturnUrl($this->buildURL('cart'));
     }
 
     function isSecure()
     {
         return $this->is('HTTPS') ? true : parent::isSecure();
     }
-
-    /**
-     * Get page title
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return $this->getCart()->isEmpty()
-            ? $this->t('Your shopping bag is empty')
-            : $this->t('Your shopping bag - X items', array('count' => $this->getCart()->countQuantity()));
-    }
 }
-

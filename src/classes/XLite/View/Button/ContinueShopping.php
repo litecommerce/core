@@ -26,40 +26,40 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Product\Details\Customer;
+namespace XLite\View\Button;
 
 /**
- * ACustomer 
+ * "Continue shopping" button
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class ACustomer extends \XLite\View\Product\Details\ADetails
+class ContinueShopping extends \XLite\View\Button\GoBack
 {
     /**
-     * Check if widget is visible
-     *
-     * @return boolean 
+     * getDefaultLabel 
+     * 
+     * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isVisible()
+    protected function getDefaultLabel()
     {
-        return parent::isVisible() && $this->getProduct();
+        return 'Continue shopping';
     }
 
     /**
-     * Checks whether a product was added to the cart
-     * 
-     * @return boolean
-     * @access public
+     * getClass
+     *
+     * @return string
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isProductAdded()
+    protected function getClass()
     {
-        return $this->getCart()->isProductAdded($this->getProduct()->getProductId());
+        return parent::getClass() . 'bright continue';
     }
 }

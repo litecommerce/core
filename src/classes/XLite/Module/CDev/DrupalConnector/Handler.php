@@ -290,5 +290,4 @@ class Handler extends \XLite\Core\CMSConnector
             );
         }
     }
-
 }

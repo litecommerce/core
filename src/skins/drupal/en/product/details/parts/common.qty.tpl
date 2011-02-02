@@ -10,9 +10,12 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *
- * @ListChild (list="product.details.page.info.buttons.cart-buttons", weight="0")
- * @ListChild (list="product.details.page.info.buttons-added.cart-buttons", weight="0")
- * @ListChild (list="product.details.quicklook.info.buttons", weight="10")
- * @ListChild (list="product.details.quicklook.info.buttons-added", weight="10")
+ * @ListChild (list="product.details.page.info.buttons.cart-buttons", weight="10")
+ * @ListChild (list="product.details.page.info.buttons-added.cart-buttons", weight="10")
+ * @ListChild (list="product.details.quicklook.info.buttons.cart-buttons", weight="10")
+ * @ListChild (list="product.details.quicklook.info.buttons-added.cart-buttons", weight="10")
  *}
-<span class="product-qty">{t(#Qty#)}: <input type="text" value="{product.getMinPurchaseLimit()}" class="quantity field-requred field-integer field-positive field-non-zero" name="amount" title="{t(#Quantity#)}" /></span>
+
+<span class="product-qty">
+  {t(#Qty#)}: <widget class="\XLite\View\Product\QuantityBox" product="{product}" />
+</span>

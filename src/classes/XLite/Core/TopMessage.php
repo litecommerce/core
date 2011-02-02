@@ -252,6 +252,7 @@ class TopMessage extends \XLite\Base\Singleton
     {
         $messages = $this->getPreviousMessages();
         $this->messages = array();
+        $this->clear();
 
         return $messages;
     }
