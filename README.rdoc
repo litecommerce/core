@@ -1,0 +1,13 @@
+== What is LiteCommerce?
+
+LiteCommerce is a free PHP/MySQL-driven open-source e-commerce solution that allows you to build a multifunctional e-commerce website (with forums, blog, articles, and so on) instead of just an online catalog with a checkout. LiteCommerce can work with Drupal and use all features provided by this CMS. However it can be installed as stand-alone application and used as online shopping cart with catalog and checkout.
+
+Learn more information at {our website}[http://www.litecommerce.com] or {find us on Facebook}[http://facebook.com/litecommerce].
+
+== Contributions
+
+We are looking for contributors who could help us extend LiteCommerce and make it better. Translations to other languages are welcome as well.
+
+== License
+
+LiteCommerce is free and distributed under {Open Software License v. 3.0}[http://www.opensource.org/licenses/osl-3.0.php].

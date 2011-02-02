@@ -425,9 +425,10 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 	for i in ${MODULE_DIRS}; do
 
-		find -E $i -depth 2 -type d ! -regex ".*/($modules_list_regexp)" -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
-
-		find $i -depth 1 -type d -empty -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+		if [ -d $i ]; then
+			find -E $i -depth 2 -type d ! -regex ".*/($modules_list_regexp)" -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+			find $i -depth 1 -type d -empty -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+		fi
 	
 	done
 
