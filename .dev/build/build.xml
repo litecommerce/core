@@ -52,7 +52,9 @@
 
 		<echo message="Update current source" />
 		<exec executable="git" dir="${sourceDir}">
-			<arg value="pull origin master" />
+			<arg value="pull" />
+			<arg value="origin" />
+			<arg value="master" />
 		</exec>
 
 		<echo message="Run release builder" />
