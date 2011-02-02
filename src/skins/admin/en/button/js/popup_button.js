@@ -22,12 +22,9 @@ jQuery(document).ready(
           function () {
             var urlParams;
             urlParams = core.getCommentedData(button, 'url_params');
-
-            return !popup.load(
-              URLHandler.buildURL(urlParams),
-              'popup_button_window',
-              false,
-              50000
+            return loadDialogByLink(
+              button,
+              URLHandler.buildURL(urlParams)
             );
           }
         );

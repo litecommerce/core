@@ -606,15 +606,3 @@ ul.added-languages li span.selected {
 .language-options-dialog .default-switcher input {
   margin: 2px 3px 0px 0px;
 }
-
-/* Common dialog styles */
-.add-new-language-dialog.ui-dialog-content,
-  .select-language-dialog.ui-dialog-content,
-  .label-dialog.ui-dialog-content,
-  .confirm-language-delete-dialog.ui-dialog-content
-  .language-options-dialog.ui-dialog-content
-{
-  overflow: hidden;
-  overflow-y: auto;
-  font-size: 12px;
-}

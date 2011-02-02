@@ -194,6 +194,7 @@
     </target>
 
 	<target name="jmeter">
+        <echo message="Run JMeter" />
 		<jmeter jmeterhome="${jmeterDir}" testplan="${sourceDir}/.dev/loadtests/JMeterLoadTest.jmx" resultlog="${buildDir}/logs/JMeterResults.jtl">
 		</jmeter>
 		<xslt in="${buildDir}/logs/JMeterResults.jtl" out="${buildDir}/reports/jmeter.html" style="${sourceDir}/.dev/loadtests/jmeter-results-report.xsl" />
@@ -206,11 +207,13 @@
 	</target>
 
 	<target name="plint">
+        <echo message="Run PHPlint" />
 		<exec executable="${sourceDir}/.dev/phpl.sh" dir="${installDir}/modules/lc_connector/litecommerce" failonerror="true" output="${buildDir}/reports/plint.html" />
 	</target>
 
 	<target name="analysis">
 
+        <echo message="Run PHPDepend" />
         <exec executable="php" dir="${buildDir}">
             <arg value="${sourceDir}/.dev/pdepend.php" />
             <arg value="--jdepend-chart=${buildDir}/reports/pdepend.svg" />
@@ -219,6 +222,7 @@
             <arg value="${varRunClasses}" />
         </exec>
 
+        <echo message="Run PHPMD" />
         <exec executable="php" dir="${buildDir}" output="${buildDir}/reports/phpmd.html">
             <arg value="${sourceDir}/.dev/phpmd.php" />
             <arg value="${sourceDir}/src/classes" />
@@ -226,6 +230,7 @@
 			<arg value="rulesets/codesize.xml,rulesets/design.xml,rulesets/naming.xml,rulesets/unusedcode.xml" />
         </exec>
 
+        <echo message="Run Git stats" />
 		<mkdir dir="${buildDir}/reports/gitstat" />
 		<chmod file="${buildDir}/.dev/lib/gitstats/gitstats" perm="ugo+rx" />
         <exec executable="${buildDir}/.dev/lib/gitstats/gitstats" dir="${sourceDir}">
