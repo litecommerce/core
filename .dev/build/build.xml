@@ -75,7 +75,7 @@
 		</copy>
 
 		<echo message="Prepare deployed repositories" />
-		<copy file="${buildDir}/.dev/build/config.local-cc.php" tofile="${buildDir}/.dev/build/config.local.php" />
+		<copy file="/u/xcart/etc/config.local-cc.php" tofile="${buildDir}/.dev/build/config.local.php" />
 		<copy file="${buildDir}/.dev/tests/local-cc.php" tofile="${buildDir}/.dev/tests/local.php" />
 		<exec executable="php" dir="${installDir}/modules/lc_connector/litecommerce">
             <arg line="${sourceDir}/.dev/build/devcode_postprocess.php" />
