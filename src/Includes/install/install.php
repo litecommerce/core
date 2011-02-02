@@ -2137,7 +2137,7 @@ function inst_http_request($url_request)
             'url' => $url, 
             'response' => $response, 
             'error' => $error,
-        ),
+        )
     );
 
     return $response;
