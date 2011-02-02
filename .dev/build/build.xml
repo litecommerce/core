@@ -227,6 +227,7 @@
         </exec>
 
 		<mkdir dir="${buildDir}/reports/gitstat" />
+		<chmod file="${buildDir}/.dev/lib/gitstats/gitstats" perm="ugo+rx" />
         <exec executable="${buildDir}/.dev/lib/gitstats/gitstats" dir="${sourceDir}">
             <arg line="-c project_name=XLite -c authors_top=10 ${sourceDir} ${buildDir}/reports/gitstat" />
         </exec>
