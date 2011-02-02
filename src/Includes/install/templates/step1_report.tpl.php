@@ -43,7 +43,7 @@ if (!defined('XLITE_INSTALL_MODE')) {
 <HTML>
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<TITLE>LiteCommerce v.<?php echo LC_VERSION; ?> Installation Wizard</TITLE>
+<TITLE>LiteCommerce v.<?php echo LC_VERSION; ?> <?php echo xtr('Installation Wizard'); ?></TITLE>
 
 <STYLE type="text/css">
 
@@ -179,7 +179,7 @@ if (!$is_original) {
 <TD>
 <TABLE width=300 height=100 class="TableTop" cellpadding=2 cellspacing=2>
 <TR>
-<TD align=center><B>Inspecting your server configuration.<br>It can take several minutes, please wait.</B></TD>
+<TD align=center><B><?php echo xtr('Inspecting your server configuration.<br>It can take several minutes, please wait.'); ?></B></TD>
 </TR>
 </TABLE>
 </TD>
@@ -202,11 +202,11 @@ if (!$is_original) {
    <td style="padding: 10px;"><img src="skins_original/admin/en/images/logo.png" alt="" /></td>
     <td style="white-space: nowrap;">
       <div style="font-size: 24px;"><span style="color: #2d69ab;">Lite</span><span style="color: #676767;">Commerce</span></div>
-      <div>Version: <?php echo LC_VERSION; ?></div>
+      <div><?php echo xtr('Version'); ?>: <?php echo LC_VERSION; ?></div>
     </td>
    <td align="right" valign="middle" nowrap="nowrap" width="100%" style="padding-right: 20px;">
-    <span class="HeadTitle">Installation Wizard</span><br />
-    <span class="HeadSteps">Step 1: <?php echo $modules[1]['comment'] ?></span>
+   <span class="HeadTitle"><?php echo xtr('Installation Wizard'); ?></span><br />
+    <span class="HeadSteps"><?php echo xtr('Step :step', array(':step' => 1)); ?>: <?php echo $modules[1]['comment'] ?></span>
    </td>
 </tr>
 </table>
@@ -231,10 +231,10 @@ if (!$is_original) {
 }
 
 if ($report) {
-	$report = (($is_original) ? '[original report]' : '[replicated report]') . "\n\n". $report;
+	$report = (($is_original) ? xtr('[original report]') : xtr('[replicated report]')) . "\n\n". $report;
 
 } else {
-	$report = 'Report generation failed.';
+	$report = xtr('Report generation failed.');
 }
 
 ?>
@@ -246,10 +246,8 @@ if ($report) {
 <table border="0" cellpadding="1" cellspacing="2" align=center width=90%>
 	<tr>
 		<td colspan=2><br>
-   		<FONT class="PageTitle"><B>Technical problems report</B></FONT><BR>
-		<br>Our testing has identified some problems. Do you want to send a report about your server configuration and test results, <br>
-		so we could analyse it and fix the problems? Please fill in all the required fields below.<br>
-		<br>You can find more information about LiteCommerce software at <a href="http://litecommerce.com/faqs.html" target="_blank"><u>LiteCommerce FAQs</u></a> page.
+        <FONT class="PageTitle"><B><?php echo xtr('Technical problems report'); ?></B></FONT><BR>
+        <br><?php echo xtr('ask_send_report_text'); ?>
 		</td>
 	</tr>
 	<tr>
@@ -260,9 +258,9 @@ if ($report) {
 	</tr>
 	<tr>
 		<td colspan=2>
-		<b>Technical problems report:</b>
-		<span id="notes_url1" style="display:"><a href="javascript:ShowNotes(true);" onClick="this.blur()"><u>See details &gt;&gt;</u></a></span>
-		<span id="notes_url2" style="display: none"><a href="javascript:ShowNotes(false);" onClick="this.blur()"><u>Hide details &gt;&gt;</u></a></span>
+        <b><?php echo xtr('Technical problems report'); ?>:</b>
+        <span id="notes_url1" style="display:"><a href="javascript:ShowNotes(true);" onClick="this.blur()"><u><?php echo xtr('See details'); ?> &gt;&gt;</u></a></span>
+        <span id="notes_url2" style="display: none"><a href="javascript:ShowNotes(false);" onClick="this.blur()"><u><?php echo xtr('Hide details'); ?> &gt;&gt;</u></a></span>
 		</td>
 	</tr>
 	<tr id="notes_body" style="display: none">
@@ -273,7 +271,7 @@ if ($report) {
 		<td colspan=2>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan=2><b>Additional comments:</b></td>
+    <td colspan=2><b><?php echo xtr('Additional comments'); ?>:</b></td>
 	</tr>
 	<tr>
 		<td colspan=2><textarea name="user_note" cols=50 rows=15 style="FONT-FAMILY: Courier;"></textarea></td>
@@ -286,8 +284,8 @@ if ($report) {
 		<td colspan=2>
         <table border="0" cellpadding="1" cellspacing="2" align=center width=100%>
         	<tr>
-        		<td align=left><input type="submit" class="DialogMainButton" value="Send report (*)"></td>
-        		<td align=right><input type="button" value="Close window" onClick="javascript: window.close();"></td>
+            <td align=left><input type="submit" class="DialogMainButton" value="<?php echo xtr('Send report'); ?> (*)"></td>
+            <td align=right><input type="button" value="<?php echo xtr('Close window'); ?>" onClick="javascript: window.close();"></td>
         		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
         	</tr>
 		</table>
@@ -306,8 +304,7 @@ if (!$is_original) {
 ?>
 	<tr>
 		<td colspan=2>
-		<b>(*)</b> The report will be sent to our support HelpDesk. A regular support ticket will be created on your behalf. <br>
-		Please login to your HelpDesk account to receive a solution to this problem. Note that it will reduce your support points balance.
+        <b>(*)</b> <?php echo xtr('where_report_will_be_sent_text'); ?>
 		<br><br>
 		</td>
 	</tr>
