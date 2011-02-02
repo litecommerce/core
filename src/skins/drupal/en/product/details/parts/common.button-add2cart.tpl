@@ -10,7 +10,8 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *
- * @ListChild (list="product.details.page.info.buttons.cart-buttons", weight="10")
- * @ListChild (list="product.details.quicklook.info.buttons.cart-buttons", weight="10")
+ * @ListChild (list="product.details.page.info.buttons.cart-buttons", weight="20")
+ * @ListChild (list="product.details.quicklook.info.buttons.cart-buttons", weight="20")
  *}
-<widget class="\XLite\View\Button\Submit" label="Add to Bag" style="bright add2cart" />
+
+<widget class="\XLite\View\Button\Submit" label="{t(#Add to Bag#)}" style="bright add2cart" />

@@ -478,6 +478,8 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     public static function rebuildCache()
     {
-        array_map(array('static', 'runStepConditionally'), static::$steps);
+        foreach (static::$steps as $step) {
+            static::runStepConditionally($step);
+        }
     }
 }

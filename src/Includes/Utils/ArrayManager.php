@@ -88,26 +88,84 @@ class ArrayManager extends AUtils
     }
 
     /**
-     * Search entity in array by a field value
+     * Return some object property values
      *
-     * @param array  $array     array to search
-     * @param string $fieldName field to search by
-     * @param mixed  $value     value to use for comparison
+     * @param array   $array    Array to use
+     * @param string  $field    Field to return
+     * @param boolean $isGetter Determines if the second param is a property name or a method
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getObjectsArrayFieldValues(array $array, $field, $isGetter = false)
+    {
+        return array_map(
+            function ($var) use ($field, $isGetter) {
+                return \Includes\Utils\Converter::getObjectField($var, $field, $isGetter);
+            },
+            $array
+        );
+    }
+
+    /**
+     * Search entities in array by a field value
+     *
+     * @param array   $array    Array to search
+     * @param string  $field    Field to search by
+     * @param mixed   $value    Value to use for comparison
+     * @param boolean $isGetter Determines if the second param is a property name or a method
      *
      * @return mixed
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function searchInObjectsArray(array $array, $fieldName, $value)
+    public static function searchAllInObjectsArray(array $array, $field, $value, $isGetter = false)
     {
         $list = array_filter(
             $array,
-            function ($var) use ($fieldName, $value) {
-                return $var->$fieldName == $value;
+            function ($var) use ($field, $value, $isGetter) {
+                return \Includes\Utils\Converter::getObjectField($var, $field, $isGetter) == $value;
             }
         );
 
-        return empty($list) ? null : reset($list);
+        return $list ?: array();
+    }
+
+    /**
+     * Search entity in array by a field value
+     *
+     * @param array   $array    Array to search
+     * @param string  $field    Field to search by
+     * @param mixed   $value    Value to use for comparison
+     * @param boolean $isGetter Determines if the second param is a property name or a method
+     *
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function searchInObjectsArray(array $array, $field, $value, $isGetter = false)
+    {
+        return ($list = static::searchAllInObjectsArray($array, $field, $value, $isGetter)) ? reset($list) : null;
+    }
+
+    /**
+     * Sum some object property values
+     *
+     * @param array   $array    Array to use
+     * @param string  $field    Field to sum by
+     * @param boolean $isGetter Determines if the second param is a property name or a method
+     *
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function sumObjectsArrayFieldValues(array $array, $field, $isGetter = false)
+    {
+        return array_sum(static::getObjectsArrayFieldValues($array, $field, $isGetter));
     }
 }

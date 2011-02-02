@@ -15,6 +15,7 @@
  * @ListChild (list="product.details.quicklook.info.buttons", weight="20")
  * @ListChild (list="product.details.quicklook.info.buttons-added", weight="20")
  *}
-<div class="buttons-row">
+
+<div class="buttons-row" IF="!product.isOutOfStock()">
   {displayListPart(#cart-buttons#)}
 </div>

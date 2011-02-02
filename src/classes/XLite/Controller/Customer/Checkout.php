@@ -178,14 +178,12 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
                 $profile->setLogin($login);
 
-                \XLite\Core\Database::getEM()->flush();
-
                 $this->getCart()->setProfile($profile);
 
                 \XLite\Core\Session::getInstance()->order_create_profile = (bool)$this->requestData['create_profile'];
                 $this->getCart()->setOrigProfile($profile);
 
-                \XLite\Core\Database::getEM()->flush();
+                $this->updateCart();
             }
         }
     }
@@ -386,6 +384,19 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
+     * If we can proceed with checkout with current cart
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkCart()
+    {
+        return !$this->getCart()->isEmpty() && !((bool) $this->getCart()->getItemsWithWrongAmounts());
+    }
+
+    /**
      * Go to cart view if cart is empty
      * 
      * @return void
@@ -394,7 +405,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     public function handleRequest()
     {
-        if ($this->getCart()->isEmpty()) {
+        if (!$this->checkCart()) {
             $this->setReturnUrl($this->buildURL('cart'));
         }
 
@@ -625,7 +636,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
         \XLite\Core\Session::getInstance()->last_order_id = $this->getCart()->getOrderId();
         unset(\XLite\Core\Session::getInstance()->order_id);
 
-        \XLite\Core\Database::getEM()->flush();
+        $this->updateCart();
 
         // anonymous checkout: logoff
         if ($isAnonymous && \XLite\Core\Auth::getInstance()->getProfile()) {

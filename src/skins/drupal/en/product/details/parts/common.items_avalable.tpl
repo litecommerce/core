@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Product details Buy more button
+ * Quantity input box
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,7 +10,10 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *
- * @ListChild (list="product.details.page.info.buttons-added.cart-buttons", weight="30")
- * @ListChild (list="product.details.quicklook.info.buttons-added.cart-buttons", weight="30")
+ * @ListChild (list="product.details.page.info", weight="18")
+ * @ListChild (list="product.details.quicklook.info", weight="18")
  *}
-<widget class="\XLite\View\Button\Submit" label="Buy more" style="action buy-more" />
+
+<span class="stock-level product-in-stock" IF="!product.isOutOfStock()">
+  {t(#In stock#)} <span class="product-items-available">({product.inventory.getAvailableAmount()} {t(#items available#)})</span>
+</span>

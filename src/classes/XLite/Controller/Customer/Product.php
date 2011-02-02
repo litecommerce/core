@@ -150,8 +150,6 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     protected function isVisible()
     {
-        return parent::isVisible()
-            && $this->getProduct();
+        return parent::isVisible() && $this->getProduct();
     }
-
 }
