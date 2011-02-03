@@ -16,7 +16,7 @@
     {getInstalledProperty(module,#description#)}
   </div>
   <div class="module-url">
-    <a href="{module.getPageURL()}" target="_blank">{t(#Visit add-on\'s page#)}</a>
+    <a href="{module.getPageURL()}" target="_blank">{t(#Visit add-on's page#)}</a>
   </div>
 </td>
 

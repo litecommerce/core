@@ -198,21 +198,19 @@ class Marketplace extends \XLite\Base\Singleton
 
         $result = static::STATUS_ERROR;
 
+        $filename = $moduleInfo[static::MODULE_AUTHOR] . '_' . $moduleInfo[static::MODULE_NAME] . '.phar';
+
         if (is_null($this->getError())) {
 
             // TODO Retrive module name first!!
             $result = file_put_contents(
-                LC_LOCAL_REPOSITORY
-                . $moduleInfo[static::MODULE_AUTHOR]
-                . '_'
-                . $moduleInfo[static::MODULE_NAME]
-                . '.phar',
+                LC_LOCAL_REPOSITORY . $filename,
                 $file
             );
 
-            $result = (false !== $result && 0 < $result) 
-                ? static::STATUS_ERROR 
-                : static::STATUS_SUCCESS;
+            $result = (false !== $result && 0 < $result)
+                ? $filename
+                : static::STATUS_ERROR;
         }
 
         return $result;

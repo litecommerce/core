@@ -29,7 +29,7 @@
 namespace XLite\Controller\Admin;
 
 /**
- * ____description____
+ * Module marketplace installation controller
  * 
  * @package XLite
  * @see     ____class_see____
@@ -38,22 +38,106 @@ namespace XLite\Controller\Admin;
 class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
 {
 
+
+    /**
+     * Action of getting LICENSE text. Redirection to GET request
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function doActionGetLicense()
     {
-
+        $this->set(
+            'returnUrl', 
+            $this->buildURL(
+                'module_installation',
+                'show_license',
+                array(
+                    'module_id' => $this->getModuleId(),
+                )
+            )
+        );
     }
 
+
+    /**
+     * Action of getting package from marketplace
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function doActionGetPackage()
     {
+        $result = \XLite\RemoteModel\Marketplace::getInstance()->retriveToLocalRepository(
+            $this->getModuleId()
+        );
 
+        if (\XLite\RemoteModel\Marketplace::STATUS_ERROR !== $result) {
+
+            // TODO Compare with Upload Addons feature... 
+            // has the same functionality
+            $module = new \XLite\Model\PHARModule($result);
+
+            if (\XLite\Model\PHARModule::STATUS_OK === $module->getStatus()) {
+
+                $module->check();
+            }
+
+            if (\XLite\Model\PHARModule::STATUS_OK === $module->getStatus()) {
+
+                $module->deploy();
+
+                \XLite\Core\TopMessage::getInstance()->addInfo(
+                    'Module has been uploaded successfully'
+                );
+
+            } else {
+
+                \XLite\Core\TopMessage::getInstance()->addError(
+                    'Checking procedure returns with "{{result}}" result for {{file}} file.',
+                    array(
+                        'result'    => $module->getStatus() . '::' . $module->getError(),
+                        'file'      => $result,
+                    )
+                );
+            }
+
+            $module->cleanUp();
+
+            @unlink(LC_LOCAL_REPOSITORY . $result);
+        }
+
+        $this->set('returnUrl', $this->buildURL('modules'));
     }
 
-    protected function getModuleId()
+
+    /**
+     * Return module identificator from request
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModuleId()
     {
         return \XLite\Core\Request::getInstance()->module_id;
     }
 
-    protected function getLicense()
+
+    /**
+     * Return LICENSE text for the module
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLicense()
     {
         return \XLite\RemoteModel\Marketplace::getInstance()->getLicense(
             $this->getModuleId()

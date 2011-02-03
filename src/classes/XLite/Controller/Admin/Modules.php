@@ -75,7 +75,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionEnable()
     {
-        $this->set('returnUrl', $this->buildUrl('modules'));
+        $this->set('returnUrl', $this->buildURL('modules'));
 
         $id = \XLite\Core\Request::getInstance()->moduleId;
         $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id);
@@ -138,7 +138,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionDisable()
     {
-        $this->set('returnUrl', $this->buildUrl('modules'));
+        $this->set('returnUrl', $this->buildURL('modules'));
 
         $id = \XLite\Core\Request::getInstance()->moduleId;
         $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id);
@@ -198,7 +198,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
             }
         }
         
-        $this->set('returnUrl', $this->buildUrl('modules'));
+        $this->set('returnUrl', $this->buildURL('modules'));
     }
 
 }
