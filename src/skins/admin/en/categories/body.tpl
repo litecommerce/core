@@ -94,7 +94,7 @@
     </tr>
 
     {if:category.hasSubcategories()}
-    <tr FOREACH="getSubcategories(getCategoryId()),id,cat" class="{getRowClass(id,##,#TableRow#)}">
+    <tr FOREACH="getSubcategories(getCategoryId()),id,cat" class="{getRowClass(id,##,#highlight#)}">
 
       <td width="100%">
         <a href="admin.php?target=categories&category_id={cat.category_id}" title="Click here to access/add subcategories" onClick="this.blur()"><font class="ItemsList"><u>{cat.name:h}</u></font></a> ({cat.products_count} products){if:!cat.enabled}&nbsp;&nbsp;<font color=red>(disabled)</font>{end:}
