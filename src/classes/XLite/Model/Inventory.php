@@ -153,7 +153,46 @@ class Inventory extends \XLite\Model\AEntity
     }
 
     /**
-     * Increase / decrease product inventory amount (for
+     * Get list of cart items containing current product
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLockedItems()
+    {
+        return \XLite\Model\Cart::getInstance()->getItemsByProductId($this->getProduct()->getProductId());
+    }
+
+    /**
+     * Return "locked" amount: items already added to the cart
+     * 
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLockedAmount()
+    {
+        return \Includes\Utils\ArrayManager::sumObjectsArrayFieldValues($this->getLockedItems(), 'getAmount', true);
+    }
+
+    /**
+     * Default qty value to show to customers
+     * 
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultAmount()
+    {
+        return self::AMOUNT_DEFAULT_INV_TRACK;
+    }
+
+    /**
+     * Increase / decrease product inventory amount
      *
      * @param integer $delta Amount delta
      *
@@ -172,5 +211,31 @@ class Inventory extends \XLite\Model\AEntity
             // Check for low limit
             !$this->checkForLowLimit() ?: $this->sendLowLimitNotification();
         }
+    }
+
+    /**
+     * Return product amount available to add to cart
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAvailableAmount()
+    {
+        return $this->getEnabled() ? max(0, $this->getAmount() - $this->getLockedAmount()) : $this->getDefaultAmount();
+    }
+
+    /**
+     * Alias: is product in stock or not
+     *
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isOutOfStock()
+    {
+        return $this->getEnabled() ? 0 >= $this->getAvailableAmount() : false;
     }
 }

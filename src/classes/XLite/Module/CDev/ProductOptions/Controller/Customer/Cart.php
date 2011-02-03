@@ -49,6 +49,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
 
     /**
      * Get (and create) current cart item
+     * TODO: simplify
      *
      * @param \XLite\Model\Product $product Product to add
      *
@@ -59,37 +60,27 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      */
     protected function getCurrentItem(\XLite\Model\Product $product)
     {
-        if (!isset($this->currentItem)) {
-            parent::getCurrentItem($product);
+        $item = parent::getCurrentItem($product);
 
-            // set item options if present
-            if (
-                is_object($this->currentItem->getProduct())
-                && $this->currentItem->getProduct()->hasOptions()
-            ) {
+        if ($item->getProduct() && $item->getProduct()->hasOptions()) {
 
-                if (isset(\XLite\Core\Request::getInstance()->product_options)) {
-                    $options = $this->currentItem->getProduct()
-                        ->prepareOptions(\XLite\Core\Request::getInstance()->product_options);
-                    if (!$this->currentItem->getProduct()->checkOptionsException($options)) {
-                        $options = null;
-                    }
+            if (isset(\XLite\Core\Request::getInstance()->product_options)) {
+                $options = $item->getProduct()->prepareOptions(\XLite\Core\Request::getInstance()->product_options);
+                if (!$item->getProduct()->checkOptionsException($options)) {
+                    $options = null;
+                } 
+            } else {
+                $options = $item->getProduct()->getDefaultProductOptions();
+            }
 
-                } else {
-                    $options = $this->currentItem->getProduct()
-                        ->getDefaultProductOptions();
-                }
-
-                if (is_array($options)) {
-                    $this->currentItem->setProductOptions($options);
-
-                } else {
-                    $this->optionInvalid = true;
-                }
+            if (is_array($options)) {
+                $item->setProductOptions($options);
+            } else {
+                $this->optionInvalid = true;
             }
         }
 
-        return $this->currentItem;
+        return $item;
     }
 
     /**

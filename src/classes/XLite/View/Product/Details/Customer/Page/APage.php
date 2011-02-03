@@ -48,7 +48,6 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = self::getDir() . '/controller.js';
 
         return $list;
@@ -65,11 +64,8 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
     public function getCommonFiles()
     {
         $list = parent::getCommonFiles();
-
         $list['js'][] = 'js/jquery.blockUI.js';
 
         return $list;
     }
-
-
 }

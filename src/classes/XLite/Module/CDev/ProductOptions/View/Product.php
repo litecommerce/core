@@ -88,7 +88,6 @@ abstract class Product extends \XLite\View\Product\Details\Customer\ACustomer im
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'modules/CDev/ProductOptions/product_details.css';
 
         return $list;

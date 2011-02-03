@@ -384,6 +384,26 @@ class Order extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
+     * Find items by product ID
+     * 
+     * @param integer $productId Product ID to use
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getItemsByProductId($productId)
+    {
+        return (array) array_filter(
+            $this->getItems()->toArray(),
+            function (\XLite\Model\OrderItem $item) use ($productId) {
+                return $item->getProduct()->getProductId() == $productId;
+            }
+        );
+    }
+
+    /**
      * Create new cart item 
      * 
      * @param \XLite\Model\OrderItem $item New item
@@ -527,6 +547,28 @@ class Order extends \XLite\Model\Base\ModifierOwner
     public function isQueued()
     {
         return self::STATUS_QUEUED == $this->getStatus();
+    }
+
+    /**
+     * Check item amounts
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getItemsWithWrongAmounts()
+    {
+        $items = array();
+
+        foreach ($this->getItems() as $item) {
+            $inventory = $item->getProduct()->getInventory();
+            if ($inventory->getEnabled() && $inventory->getAmount() < $item->getAmount()) {
+                $items[] = $item;
+            }
+        }
+
+        return $items;
     }
 
     /**

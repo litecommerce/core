@@ -116,9 +116,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      */
     protected function updateCart()
     {
-        $cart = $this->getCart();
-        \XLite\Core\Database::getEM()->flush();
-
+        $cart  = $this->getCart();
         $total = $cart->getTotal();
 
         $cart->normalizeItems();
@@ -128,7 +126,7 @@ abstract class ACustomer extends \XLite\Controller\AController
             $cart->renewPaymentMethod();
         }
 
-        \XLite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getRepo('\XLite\Model\Order')->update($cart);
 
         $this->assembleEvent();
 
@@ -200,20 +198,6 @@ abstract class ACustomer extends \XLite\Controller\AController
     }
 
     /**
-     * Return current (or default) product object
-     * 
-     * @return \XLite\Model\Product
-     * @access public
-     * @since  3.0.0
-     */
-    public function getProduct()
-    {
-        $product = parent::getProduct();
-
-        return $product->getEnabled() ? $product : null;
-    }
-
-    /**
      * Return cart instance 
      * 
      * @return \XLite\Model\Order
@@ -236,11 +220,9 @@ abstract class ACustomer extends \XLite\Controller\AController
      * @access public
      * @since  3.0.0
      */
-    public function getShopUrl($url, $secure = false)
+    public function getShopUrl($url = '', $secure = false)
     {
-        $currentSecurity = $this->config->Security->full_customer_security;
-
-        return parent::getShopUrl($url, $currentSecurity ? $currentSecurity : $secure);
+        return parent::getShopUrl($url, $this->config->Security->full_customer_security ?: $secure);
     }
 
     /**

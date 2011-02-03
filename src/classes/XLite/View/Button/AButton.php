@@ -107,6 +107,7 @@ abstract class AButton extends \XLite\View\AView
      * 
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getClass()
@@ -153,7 +154,6 @@ abstract class AButton extends \XLite\View\AView
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = 'button/button.js';
 
         return $list;

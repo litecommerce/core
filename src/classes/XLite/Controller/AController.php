@@ -441,7 +441,7 @@ abstract class AController extends \XLite\Core\Handler
      * @access public
      * @since  3.0.0
      */
-    public function getShopUrl($url, $secure = false)
+    public function getShopUrl($url = '', $secure = false)
     {
         return \XLite::getInstance()->getShopUrl($url, $secure);
     }
@@ -922,11 +922,12 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Initialize controller
-     *
+     * 
      * @return void
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
-     */ 
+     */
     public function init()
     {
         parent::init();

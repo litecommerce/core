@@ -138,7 +138,6 @@ class TopMessage extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = $this->getDir() . '/style.css';
 
         return $list;
@@ -154,7 +153,6 @@ class TopMessage extends \XLite\View\AView
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = $this->getDir() . '/controller.js';
 
         return $list;

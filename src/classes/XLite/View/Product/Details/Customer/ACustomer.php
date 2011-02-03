@@ -62,5 +62,4 @@ abstract class ACustomer extends \XLite\View\Product\Details\ADetails
     {
         return $this->getCart()->isProductAdded($this->getProduct()->getProductId());
     }
-
 }

@@ -29,6 +29,13 @@
 class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
 {
 
+    public function setUp()
+    {
+        parent::setUp();
+
+        \Includes\Utils\FileManager::mkdirRecursive(LC_LOCAL_REPOSITORY);
+    }
+
     private function getFile($file)
     {
         return dirname(__FILE__) . LC_DS . 'phars' . LC_DS . $file;
@@ -63,7 +70,7 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
 
     public function testGoodConstruct()
     {
-        @copy($this->getFile('good.phar'), LC_LOCAL_REPOSITORY . 'good.phar');
+        copy($this->getFile('good.phar'), LC_LOCAL_REPOSITORY . 'good.phar');
 
         $message = '';
 
@@ -81,67 +88,66 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
 
         $phar->cleanUp();
 
-        @unlink(LC_LOCAL_REPOSITORY . 'good.phar');
+        unlink(LC_LOCAL_REPOSITORY . 'good.phar');
     }
 
     public function testCheck()
     {
         // NO ini file checking
-        @copy($this->getFile('no_ini.phar'), LC_LOCAL_REPOSITORY . 'no_ini.phar');
+        copy($this->getFile('no_ini.phar'), LC_LOCAL_REPOSITORY . 'no_ini.phar');
         $phar = new \XLite\Model\PHARModule('no_ini.phar');
         $phar->check();
 
         $this->assertEquals($phar->getStatus(), 'wrong_structure', 'Wrong status for no INI file');
 
         $phar->cleanUp();
-        @unlink(LC_LOCAL_REPOSITORY . 'no_ini.phar');
+        unlink(LC_LOCAL_REPOSITORY . 'no_ini.phar');
 
         // NO catalogs checking
-        @copy($this->getFile('no_dir.phar'), LC_LOCAL_REPOSITORY . 'no_dir.phar');
+        copy($this->getFile('no_dir.phar'), LC_LOCAL_REPOSITORY . 'no_dir.phar');
         $phar = new \XLite\Model\PHARModule('no_dir.phar');
         $phar->check();
 
         $this->assertEquals($phar->getStatus(), 'wrong_structure', 'Wrong status for no DIR file');
 
         $phar->cleanUp();
-        @unlink(LC_LOCAL_REPOSITORY . 'no_dir.phar');
+        unlink(LC_LOCAL_REPOSITORY . 'no_dir.phar');
 
         // Corrupted INI checking
-        @copy($this->getFile('corrupted_ini.phar'), LC_LOCAL_REPOSITORY . 'corrupted_ini.phar');
+        copy($this->getFile('corrupted_ini.phar'), LC_LOCAL_REPOSITORY . 'corrupted_ini.phar');
         $phar = new \XLite\Model\PHARModule('corrupted_ini.phar');
         $phar->check();
 
         $this->assertEquals($phar->getStatus(), 'ini_corrupted', 'Wrong status for corrupted INI file');
 
         $phar->cleanUp();
-        @unlink(LC_LOCAL_REPOSITORY . 'corrupted_ini.phar');
+        unlink(LC_LOCAL_REPOSITORY . 'corrupted_ini.phar');
 
         // Wrong INI checking
-        @copy($this->getFile('wrong_ini.phar'), LC_LOCAL_REPOSITORY . 'wrong_ini.phar');
+        copy($this->getFile('wrong_ini.phar'), LC_LOCAL_REPOSITORY . 'wrong_ini.phar');
         $phar = new \XLite\Model\PHARModule('wrong_ini.phar');
         $phar->check();
 
         $this->assertEquals($phar->getStatus(), 'wrong_specification', 'Wrong status for wrong INI file');
 
         $phar->cleanUp();
-        @unlink(LC_LOCAL_REPOSITORY . 'wrong_ini.phar');
+        unlink(LC_LOCAL_REPOSITORY . 'wrong_ini.phar');
 
         // Already installed module checking
-        @copy($this->getFile('already.phar'), LC_LOCAL_REPOSITORY . 'already.phar');
+        copy($this->getFile('already.phar'), LC_LOCAL_REPOSITORY . 'already.phar');
         $phar = new \XLite\Model\PHARModule('already.phar');
         $phar->check();
 
         $this->assertEquals($phar->getStatus(), 'wrong_install', 'Wrong status for already installed module');
 
         $phar->cleanUp();
-        @unlink(LC_LOCAL_REPOSITORY . 'already.phar');
-
+        unlink(LC_LOCAL_REPOSITORY . 'already.phar');
     }
 
     public function testDeploy()
     {
         // Deploying only classes directory module
-        @copy($this->getFile('test_module.phar'), LC_LOCAL_REPOSITORY . 'test_module.phar');
+        copy($this->getFile('test_module.phar'), LC_LOCAL_REPOSITORY . 'test_module.phar');
 
         $phar = new \XLite\Model\PHARModule('test_module.phar');
 
@@ -170,13 +176,13 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
 
         \Includes\Utils\FileManager::unlinkRecursive($dir);
 
-        @unlink(LC_LOCAL_REPOSITORY . 'test_module.phar');
+        unlink(LC_LOCAL_REPOSITORY . 'test_module.phar');
     }
 
     public function testDeploy2()
     {
         // Deploying classes and skins directories module
-        @copy($this->getFile('test_module2.phar'), LC_LOCAL_REPOSITORY . 'test_module2.phar');
+        copy($this->getFile('test_module2.phar'), LC_LOCAL_REPOSITORY . 'test_module2.phar');
 
         $phar = new \XLite\Model\PHARModule('test_module2.phar');
 
@@ -207,7 +213,7 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
             \Includes\Utils\FileManager::unlinkRecursive($skin);
         }
 
-        @unlink(LC_LOCAL_REPOSITORY . 'test_module2.phar');
+        unlink(LC_LOCAL_REPOSITORY . 'test_module2.phar');
     }
 
 

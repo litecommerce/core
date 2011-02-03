@@ -74,7 +74,7 @@ if (!defined('XLITE_INSTALL_MODE')) {
  <TR class="Clr<?php echo $clrNumber; $clrNumber = ($clrNumber == 2) ? 1 : 2; ?>">
   <TD align=center><B><?php echo $stepData['title']; ?></B></TD>
   <TD width="1%">&nbsp;</TD>
-  <TD width="1%" align=center><B>Status</B></TD>
+  <TD width="1%" align=center><B><?php echo xtr('Status'); ?></B></TD>
   <TD width="1%" align=center>&nbsp;</TD>
  </TR>
 
@@ -124,18 +124,11 @@ if (!defined('XLITE_INSTALL_MODE')) {
     <TD valign=top>
 
     <div id="lc_loopback" style="display : none">
-    <font class="ErrorTitle">Installation cannot be continued<br>because the loopback test failed to host "<?php echo $_SERVER["HTTP_HOST"]; ?>".</font>
-	<br><br>
-	If a firewall is installed on your system, please open access to "<?php echo $_SERVER["HTTP_HOST"]; ?>".
+    <font class="ErrorTitle"><?php echo xtr('loopback_test_failed', array(':host' => $_SERVER["HTTP_HOST"])); ?>
     </div>
 
     <div id="lc_php_version" style="display : none">
-    <font class="ErrorTitle">Dependency failed: Unsupported version of PHP (<?php echo phpversion(); ?>)</font>
-    <br><br>
-	Currently versions <b>4.1.0</b> - <b>4.4.X</b>, <b>5.1.X</b> and <b>5.2.X</b> are supported. <BR><BR>
-
-    <p>This version of LiteCommerce will work on any OS<br>where PHP/MySQL meets minimum <a href="http://www.litecommerce.com/server_requirements.html"><u>system requirements</u></a>.
-    <br><br>You can find more information about LiteCommerce software<br>at <a href="http://www.litecommerce.com/faqs.html"><u>http://www.litecommerce.com/faqs.html</u></a>.
+    <font class="ErrorTitle"><?php echo xtr('php_version_failed', array(':phpver' => phpversion())); ?>
     </div>
 <?php
         $info = get_info();
@@ -170,7 +163,7 @@ if (!defined('XLITE_INSTALL_MODE')) {
     </div>
 
 <div id="lc_php_open_basedir" style="display : none">
-<font class="ErrorTitle">Non-critical dependency failed</font>
+<font class="ErrorTitle"><?php echo xtr('Non-critical dependency failed'); ?></font>
 <br><br>
 For Curl, openSSL and other external applications to work correctly with LiteCommerce, the value of open_basedir restriction variable in php.ini file must be empty or contain a valid path to external applications. A good solution is to add a valid path to external applications to the system 'PATH' variable.
 <p>To adjust this parameter:
@@ -255,7 +248,7 @@ Please contact the support services of your hosting provider to adjust this para
 </div>
 
 <div id="lc_php_allow_url_fopen" style="display : none">
-    <font class="ErrorTitle">Non-critical dependency failed</font>
+    <font class="ErrorTitle"><?php echo xtr('Non-critical dependency failed'); ?></font>
     <br><br>
 	For LiteCommerce application to work correctly, the value of allow_url_fopen variable in php.ini file must be "On".
 
@@ -313,7 +306,7 @@ Please contact the support services of your hosting provider to adjust this para
 </div>
 
 <div id="lc_mem_allocation" style="display: none">
-<font class="ErrorTitle">Non-critical dependency failed</font>
+<font class="ErrorTitle"><?php echo xtr('Non-critical dependency failed'); ?></font>
 <br><br>
 The configuration of the server where LiteCommerce will be installed meets the Server requirements, however some server software issues have been identified which can impair LiteCommerce operation.
 <br><br>
@@ -321,7 +314,7 @@ Please contact our support team for further investigation.
 </div>
 
 <div id="lc_recursion_test" style="display : none">
-<font class="ErrorTitle">Non-critical dependency failed</font>
+<font class="ErrorTitle"><?php echo xtr('Non-critical dependency failed'); ?></font>
 <br><br>
 The configuration of the server where LiteCommerce will be installed meets the Server requirements, however some server software issues have been identified which can impair LiteCommerce operation.
 <br><br>
@@ -385,7 +378,7 @@ Please contact our support team for further investigation.
 </div>
 
 <div id="lc_php_upload_max_filesize" style="display : none">
-<font class="ErrorTitle">Non-critical dependency failed</font>
+<font class="ErrorTitle"><?php echo xtr('Non-critical dependency failed'); ?></font>
 <br><br>
 The configuration of the server where LiteCommerce will be installed meets the Server requirements, however some server software issues have been identified which can impair LiteCommerce operation.
     <br><br>
@@ -409,7 +402,7 @@ The configuration of the server where LiteCommerce will be installed meets the S
 </div>
 
 <div id="lc_test_http_post" style="display : none">
-<font class="ErrorTitle">Non-critical dependency failed</font>
+<font class="ErrorTitle"><?php echo xtr('Non-critical dependency failed'); ?></font>
 <br><br>
 The configuration of the server where LiteCommerce will be installed makes sending POST requests to external servers impossible. Please contact the support services of your hosting provider to adjust this parameter.
 </div>
@@ -427,25 +420,25 @@ echo $requirements['lc_file_permissions']['description'];
 </div>
 
 <div id="lc_php_gdlib" style="display : none">
-<font class="ErrorTitle">Non-critical dependency failed</font>
+<font class="ErrorTitle"><?php echo xtr('Non-critical dependency failed'); ?></font>
 <br><br>
 GDLib 2.0 or better required for automatic generation of product thumbnails form product images and for some other modules. GDLib must be compiled with libJpeg (ensure that PHP is configured with the option --with-jpeg-dir=DIR, where DIR is the directory where libJpeg is installed). Please contact the support services of your hosting provider to adjust this parameter.
 </div>
 
 <div id="lc_php_phar" style="display : none">
-<font class="ErrorTitle">Non-critical dependency failed</font>
+<font class="ErrorTitle"><?php echo xtr('Non-critical dependency failed'); ?></font>
 <br><br>
 Phar extension is required to install external LiteCommerce addons from marketplace. Please contact the support services of your hosting provider to adjust this parameter.
 </div>
 
 <div id="lc_https_bouncer" style="display : none">
-<font class="ErrorTitle">Non-critical dependency failed</font>
+<font class="ErrorTitle"><?php echo xtr('Non-critical dependency failed'); ?></font>
 <br><br>
 libCURL module with HTTPS protocol support and an SSL certificate required, if you want to process credit cards using Authorize.NET, PayPal or other payment gateways, or use real time shipping calculation services (these services require that your site accepts secure connections via HTTPS/SSL protocol). Please contact the support services of your hosting provider to adjust this parameter.
 </div>
 
 <div id="lc_xml_support" style="display : none">
-<font class="ErrorTitle">Non-critical dependency failed</font>
+<font class="ErrorTitle"><?php echo xtr('Non-critical dependency failed'); ?></font>
 <br><br>
 Xml/EXPAT and DOMDocument extensions for PHP are required for real-time shipping modules as well as for a payment modules. Please contact the support services of your hosting provider to adjust this parameter.
 </div>
@@ -480,8 +473,8 @@ Xml/EXPAT and DOMDocument extensions for PHP are required for real-time shipping
 <TABLE width=100% class="TableTop" cellpadding=2 cellspacing=2>
 <TR>
     <TD valign=middle nowrap><IMG src="skins_original/default/en/images/code.gif"></TD>
-	<TD valign=middle width=100%>Our testing has identified some problems. Do you want to send a report about your server configuration and test results, so we could analyse it and fix the problems?</TD>
-	<TD valign=middle nowrap><input type="button" value="Send report" onclick="javascript:window.open('install.php?target=install&action=send_report&ruid=<?php echo $report_uid; ?>','SEND_REPORT','toolbar=no,status=no,scrollbars=yes,resizable=yes,menubar=no,location=no,direction=no');"></TD>
+    <TD valign=middle width=100%><?php echo xtr('requirements_failed_text'); ?></TD>
+    <TD valign=middle nowrap><input type="button" value="<?php echo xtr('Send report'); ?>" onclick="javascript:window.open('install.php?target=install&action=send_report&ruid=<?php echo $report_uid; ?>','SEND_REPORT','toolbar=no,status=no,scrollbars=yes,resizable=yes,menubar=no,location=no,direction=no');"></TD>
 </TR>
 </TABLE>
 </TD>
@@ -547,15 +540,15 @@ Xml/EXPAT and DOMDocument extensions for PHP are required for real-time shipping
     if (!$errorsFound) {
 
         echo "<br />";
-        message("Push the \"Next\" button below to continue");
+        message(xtr('Push the \'Next\' button below to continue'));
 
         if ($warningsFound) {
 
 ?>
 
 <BR>
-<P>Your server configuration is not optimal; this can make your LiteCommerce-based store partially or even completely inoperative. Are you sure you want to continue the installation?</P>
-<label><INPUT type="checkbox" onClick="javascript: setNextButtonDisabled(!this.checked);">&nbsp;Yes, I want to continue the installation.</label>
+<P><?php echo xtr('requirement_warning_text'); ?></P>
+<label><INPUT type="checkbox" onClick="javascript: setNextButtonDisabled(!this.checked);">&nbsp;<?php echo xtr('Yes, I want to continue the installation.'); ?></label>
 
 <?php 
         } 

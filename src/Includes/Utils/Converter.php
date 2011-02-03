@@ -195,4 +195,21 @@ class Converter extends AUtils
     {
         return isset($index) ? (isset($data[$index]) ? $data[$index] : null) : ($strict ? null : $data);
     }
+
+    /**
+     * Wrapper to return property from object
+     * 
+     * @param object  $object   Object to get property from
+     * @param string  $field    Field to get
+     * @param boolean $isGetter Determines if the second param is a property name or a method
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getObjectField($object, $field, $isGetter = false)
+    {
+        return $isGetter ? $object->$field() : $object->$field;
+    }
 }
