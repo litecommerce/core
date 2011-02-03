@@ -11,6 +11,6 @@
  * @since     3.0.0
    *}
 <div class="powered-by">
-  <p class="copyright">&copy; 2010 {config.Company.company_name}</p>
-  <p>{getMessage():h}</p>
+  <p class="copyright">&copy; 2011 {config.Company.company_name}. All rights reserved.</p>
+  <p class="powered-by-label">{getMessage():h}</p>
 </div>
