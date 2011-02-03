@@ -92,7 +92,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
       <td><br />&nbsp;</td>
     </tr>
 
-    <tr class="DialogBox">
+    <tr class="dialog-box">
       <td class="AdminHead" colspan=5>{processor.getProcessorName()}</td>
     </tr>
 
@@ -114,7 +114,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
             <th valign="top">&nbsp;</th>
           </tr>
 
-          <tr FOREACH="processor.getShippingMethods(),shipping_idx,method" class="{getRowClass(shipping_idx,#DialogBox#,#TableRow#)}">
+          <tr FOREACH="processor.getShippingMethods(),shipping_idx,method" class="{getRowClass(shipping_idx,#dialog-box#,#highlight#)}">
             <td>
               <input type="text" name="methods[{method.getMethodId()}][name]" size="50" value="{method.getName()}" IF="processor.isMethodNamesAdjustable()" />
               <span IF="!processor.isMethodNamesAdjustable()">{method.getName()}</span>
@@ -161,7 +161,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
       <td>&nbsp;</td>
     </tr>
 
-    <tr class="DialogBox">
+    <tr class="dialog-box">
       <td class="AdminTitle">Add shipping method</td>
     </tr>
 
@@ -179,7 +179,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
             <th class="TableHead">Pos.</th>
           </tr>
 
-          <tr class="DialogBox">
+          <tr class="dialog-box">
             <td>
               <input type="text" name="name" size="50" value="{name}" />
             </td>

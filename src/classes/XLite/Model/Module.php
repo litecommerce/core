@@ -413,7 +413,7 @@ class Module extends \XLite\Model\AEntity
      */
     public function getPageURL()
     {
-        return static::getMarketplaceURL() . sprintf(static::MODULE_PAGE_PATH, $this->getPath());
+        return \XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL() . sprintf(static::MODULE_PAGE_PATH, $this->getPath());
     }
 
     /**
@@ -426,7 +426,7 @@ class Module extends \XLite\Model\AEntity
      */
     public function getAuthorPageURL()
     {
-        return static::getMarketplaceURL() . sprintf(static::MODULE_PAGE_PATH, $this->getAuthor());
+        return \XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL() . sprintf(static::MODULE_PAGE_PATH, $this->getAuthor());
     }
 
     /**
@@ -1067,7 +1067,7 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * Upload module
+     * Upload module. TODO refactor (remove ????)
      * 
      * @return boolean
      * @access public
@@ -1081,8 +1081,10 @@ class Module extends \XLite\Model\AEntity
         if ($this->canUpload()) {
 
             $request = new \XLite\Model\HTTPS();
-            $request->url = self::getMarketplaceURL() 
+
+            $request->url = \XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL()
                 . sprintf(self::MODULE_UPLOAD_PATH, $this->getActualName(), $this->uploadCode);
+
             $request->method = 'GET';
 
             if (

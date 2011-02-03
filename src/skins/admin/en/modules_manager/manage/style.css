@@ -22,6 +22,10 @@
   color: #8f8f8f;
 }
 
+table.modules-list div.actions a {
+  padding-bottom: 5px;
+}
+
 table.modules-list div.actions a.uninstall {
   color: #ae2803;
 }
