@@ -259,7 +259,8 @@ body
  * Footer styles
  */
 
-#footer {
+#footer
+{
   padding-top: 10px;
   border-top: solid 1px #e6e6e6;
   height: 60px;
@@ -280,7 +281,7 @@ body
 }
 
 /**
- * Main content styles
+ * Common styles
  */
 
 #content
@@ -298,16 +299,7 @@ div.noscript
   font-weight: bold;
 }
 
-
 /* Page tabs */
-
-div.tabbed-content-wrapper
-{
-}
-
-div.tabs-container
-{
-}
 
 div.page-tabs
 {
@@ -338,8 +330,8 @@ div.page-tabs ul li a
   -moz-border-radius: 10px 10px 0 0;
   -webkit-border-radius: 10px 10px 0 0;
   border-radius: 10px 10px 0 0;
-  background: none repeat scroll 0 0 #EBF7FF;
-  border-color: #CADCE8 #CADCE8;
+  background: none repeat scroll 0 0 #ebf7ff;
+  border-color: #cadce8 #cadce8;
   border-style: solid solid none;
   border-width: 1px 1px 0;
   display: block;
@@ -358,12 +350,69 @@ div.page-tabs ul li.tab-current a
   border-bottom: 1px solid #fff;
 }
 
+/* Data table */
 
-/**
- * Pages styles
- */
+table.data-table th,
+table.data-table td
+{
+  padding: 5px 10px;
+  white-space: nowrap;
+  color: #333;
+}
 
-/* Settings page */
+table.data-table th
+{
+  background-color: #e5ebef;
+}
+
+table.data-table td a
+{
+  text-decoration: underline;
+} 
+  
+table.data-table th,
+table.data-table th a,
+table.data-table th span
+{ 
+  font-size: 16px;
+  font-weight: normal;
+  color: #154e9c;
+}
+
+table.data-table th a {
+  text-decoration: none;
+}
+
+table.data-table th a:hover {
+  text-decoration: underline;
+}
+
+table.data-table tr.highlight td
+{
+  background-color: #f2f2f2;
+}
+
+table.data-table .extender
+{
+  width: 100%;
+}
+
+table.data-table td.extender input
+{
+  width: 90%;
+}
+
+table.data-table td.center
+{
+  text-align: center;
+}
+
+.dialog-box
+{
+  background-color: #fff;
+}
+
+/* Settings pages */
 table.settings-table tr td.setting-name
 {
   padding: 7px 0 7px 10px;
@@ -374,6 +423,8 @@ table.settings-table tr td h2
 {
   margin: 30px 0 10px 0;
 }
+
+
 
 /***********************************************************
   FIXME: TO REVISE BELOW STYLES, REMOVE UNNECESSARY
@@ -406,10 +457,6 @@ ul,
 .CategoriesList
 {
 	font-size: 12px;
-}
-.DialogBox
-{
-        BACKGROUND-COLOR: #ffffff;
 }
 .DialogBorder
 {
@@ -568,58 +615,7 @@ table.plain-table td
   padding: 5px 0px 10px 0px;
 }
 
-table.data-table
-{
-  background-color: #ddd;
-}
 
-table.data-table th
-{
-  background-color: #e5ebef;
-  padding: 3px 5px;
-}
-
-table.data-table td
-{
-  background-color: #fff;
-  padding: 3px;
-}
-
-table.data-table tr.highlight td
-{
-  background-color: #f2f2f2;
-}
-
-table.data-table .extender
-{
-  width: 100%;
-}
-
-table.data-table td.extender input
-{
-  width: 90%;
-}
-
-table.data-table td.center
-{
-  text-align: center;
-}
-
-table.data-table a
-{
-  text-decoration: underline;
-  color: #0055bd;
-}
-
-table.data-table a:hover
-{
-  text-decoration: none;
-}
-
-table.data-table input.extender
-{
-  width: 98%;
-}
 
 input.orderby
 {
@@ -761,6 +757,15 @@ button.invert:hover
   );
 }
 
+.highlight
+{
+    background-color: #eee;
+}
+
+
+
+
+
 .AomTableHead
 {
     BACKGROUND-COLOR: #E5EBEF;
@@ -863,10 +868,6 @@ A.AomMenu:active
 .UpdateButton
 {
 	    background-color: #CDD9E1; 
-}
-.TableRow
-{
-    BACKGROUND-COLOR: #EEEEEE
 }
 .Bottom
 {
@@ -1090,114 +1091,6 @@ TABLE.SubHeader
 	HEIGHT: 1px;
 }
 
-li.address-text-title,
-li.address-text-firstname,
-li.address-text-lastname,
-li.address-text-city,
-li.address-text-state_id,
-li.address-text-zipcode
-{
-  display: inline; 
-}
-
-li.address-text-street,
-li.address-text-phone
-{
-  padding-top: 5px;
-}
-
-.address-text-comma-title,
-.address-text-comma-firstname,
-.address-text-comma-lastname,
-.address-text-comma-street,
-.address-text-comma-zipcode,
-.address-text-comma-country_code,
-.address-text-comma-phone
-{
-  display: none;
-}
-
-.address-text-label-title,
-.address-text-label-firstname,
-.address-text-label-lastname,
-.address-text-label-street,
-.address-text-label-city,
-.address-text-label-state_id,
-.address-text-label-zipcode,
-.address-text-label-country_code
-{
-  display: none;
-}
-
-ul.address-box
-{
-  -moz-border-radius:5px 5px 5px 5px;
-  border-style:solid;
-  border-width:1px;
-  float: left;
-  margin-right: 20px;
-  margin-bottom: 20px;
-  padding:20px;
-  width: 300px;
-  border-color:#DFDFDF;
-  background-color: #F4F4F4;
-}
-
-.address-center-button
-{
-  text-align: center;
-  padding-top: 60px;
-}
-
-.address-text
-{
-  font-family: Helvetica,Arial,sans-serif;
-  font-size: 14px;
-}
-
-img.address-type-icon
-{
-  display: block;
-  padding: 5px 5px 5px 5px;
-}
-
-.address-form-label
-{
-  width: 100px;
-}
-
-.address-form-element
-{
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-button.delete-address
-{
-  border: 0px;
-  vertical-align: middle;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  background-position: left center;
-  background-image: url(images/icon_trash.png);
-  height: 24px;
-  padding-left: 15px;
-  padding-right: 5px;
-  cursor: pointer;
-}
-
-button.delete-address span
-{
-  font-family: Helvetica,Arial,sans-serif;
-  font-size: 10px;
-  color: #666666;
-  text-decoration: underline;
-}
-
-button.delete-address
-{
-}
-
 .header
 {
   font-weight: bold;
@@ -1213,8 +1106,7 @@ button.delete-address
 {
   padding-left: 25px;
   padding-bottom: 10px;
-  font-size: 11px;
-  font-weight: bold;
+  font-size: 12px;
 }
 
 .table-label

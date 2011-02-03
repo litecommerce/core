@@ -28,7 +28,7 @@ Order by: <select name="listOrder" onChange="document.searchStat.submit()">
 	<th>Count</th>
 	<th>Products found</th>
 </tr>
-<tr FOREACH="searchStat,ind,stat" class="{getRowClass(ind,#DialogBox#,#TableRow#)}">
+<tr FOREACH="searchStat,ind,stat" class="{getRowClass(ind,#dialog-box#,#highlight#)}">
 	<td>{stat.query}</td>
 	<td align="right">{stat.count}</td>
 	<td align="right">{stat.product_count}</td>

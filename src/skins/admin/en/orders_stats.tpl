@@ -25,37 +25,37 @@
         <th>This week</th>
         <th>This month</th>
     </tr>
-    <tr class="DialogBox">
+    <tr class="dialog-box">
         <td>Processed</td>
         <td align=center>{stat.processed.today}</td>
         <td align=center>{stat.processed.week}</td>
         <td align=center>{stat.processed.month}</td>
     </tr>
-    <tr class="TableRow">
+    <tr class="highlight">
         <td>Queued</td>
         <td align=center>{stat.queued.today}</td>
         <td align=center>{stat.queued.week}</td>
         <td align=center>{stat.queued.month}</td>
     </tr>
-    <tr class="DialogBox">
+    <tr class="dialog-box">
         <td>Failed/Declined</td>
         <td align=center>{stat.failed.today}</td>
         <td align=center>{stat.failed.week}</td>
         <td align=center>{stat.failed.month}</td>
     </tr>
-    <tr class="TableRow">
+    <tr class="highlight">
         <td>Incomplete</td>
         <td align=center>{stat.not_finished.today}</td>
         <td align=center>{stat.not_finished.week}</td>
         <td align=center>{stat.not_finished.month}</td>
     </tr>
-    <tr class="DialogBox">
+    <tr class="dialog-box">
         <td align=right><b>Gross total:</b></td>
         <td align=center>{price_format(stat.total.today):h}</td>
         <td align=center>{price_format(stat.total.week):h}</td>
         <td align=center>{price_format(stat.total.month):h}</td>
     </tr>
-    <tr class="DialogBox">
+    <tr class="dialog-box">
         <td align=right><b>Payments received:</b></td>
         <td align=center>{price_format(stat.paid.today):h}</td>
         <td align=center>{price_format(stat.paid.week):h}</td>

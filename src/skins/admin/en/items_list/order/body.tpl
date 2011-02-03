@@ -11,13 +11,13 @@
  * @since     3.0.0
  *}
 
-<table class="items-list table">
+<table class="data-table items-list">
 
   <tr>
     {displayListPart(#header#,_ARRAY_(#order#^order))}
   </tr>
 
-  <tr FOREACH="getPageData(),idx,order" class="{getRowClass(idx,##,#TableRow#)}">
+  <tr FOREACH="getPageData(),idx,order" class="{getRowClass(idx,##,#highlight#)}">
     {displayListPart(#columns#,_ARRAY_(#order#^order))}
   </tr>
 

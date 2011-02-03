@@ -17,7 +17,7 @@
     {displayListPart(#header#,_ARRAY_(#product#^product))}
   </tr>
 
-  <tr FOREACH="getPageData(),idx,product" class="{getRowClass(idx,##,#TableRow#)}">
+  <tr FOREACH="getPageData(),idx,product" class="{getRowClass(idx,##,#highlight#)}">
     {displayListPart(#columns#,_ARRAY_(#product#^product))}
   </tr>
 
