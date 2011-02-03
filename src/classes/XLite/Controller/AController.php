@@ -130,7 +130,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function getDefaultRedirectCode()
     {
-        return \XLite\Core\Request::getInstance()->isAJAX() ? 200 : 302;
+        return $this->isAJAX() ? 200 : 302;
     }
 
     /**
@@ -566,7 +566,7 @@ abstract class AController extends \XLite\Core\Handler
         }
 
         if ($this->isRedirectNeeded()) {
-            if (\XLite\Core\Request::getInstance()->isAJAX()) {
+            if ($this->isAJAX()) {
 
                 foreach (\XLite\Core\TopMessage::getInstance()->getMessages() as $message) {
                     $encodedMessage = json_encode(
@@ -661,8 +661,8 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function setInternalRedirect($flag = true)
     {
-        if (\XLite\Core\Request::getInstance()->isAJAX()) {
-            $this->internalRedirect = (bool)$flag;
+        if ($this->isAJAX()) {
+            $this->internalRedirect = (bool) $flag;
         }
     }
 
@@ -678,7 +678,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function setSilenceClose($flag = true)
     {
-        if (\XLite\Core\Request::getInstance()->isAJAX()) {
+        if ($this->isAJAX()) {
             $this->silenceClose = (bool) $flag;
         }
     }
@@ -693,7 +693,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function isAJAXViewer()
     {
-        return \XLite\Core\Request::getInstance()->isAJAX() && \XLite\Core\Request::getInstance()->widget;
+        return $this->isAJAX() && \XLite\Core\Request::getInstance()->widget;
     }
 
     /**
@@ -707,6 +707,19 @@ abstract class AController extends \XLite\Core\Handler
     protected function getViewerClass()
     {
         return $this->isAJAXViewer() ? \XLite\Core\Request::getInstance()->widget : '\XLite\View\Controller';
+    }
+
+    /**
+     * Alias: check for an AJAX request
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isAJAX()
+    {
+        return \XLite\Core\Request::getInstance()->isAJAX();
     }
 
     /**

@@ -1666,7 +1666,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     protected function changeItemsInventory($sign)
     {
         foreach ($this->getItems() as $item) {
-            $item->getProduct()->changeAmount($this->getItemInventoryAmount($item, $sign));
+            $item->getProduct()->getInventory()->changeAmount($this->getItemInventoryAmount($item, $sign));
         }
     }
 
