@@ -44,7 +44,9 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
 
     public function testBadConstruct()
     {
-        copy($this->getFile('bad.phar'), LC_LOCAL_REPOSITORY . 'bad.phar');
+        \Includes\Utils\FileManager::mkdirRecursive(LC_LOCAL_REPOSITORY);
+
+        @copy($this->getFile('bad.phar'), LC_LOCAL_REPOSITORY . 'bad.phar');
 
         $phar = new \XLite\Model\PHARModule('bad.phar');
 
@@ -56,7 +58,14 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
             'must be corrupted PHAR'
         );
 
-        unlink(LC_LOCAL_REPOSITORY . 'bad.phar');
+        @unlink(LC_LOCAL_REPOSITORY . 'bad.phar');
+
+        $phar = new \XLite\Model\PHARModule('bad-bad-bad-name.phar');
+
+        $message = $phar->getError();
+        $status  = $phar->getStatus();
+
+        $this->assertTrue(is_null($message) && 'error' === $status, 'Wrong error when addons catalog/file does not exist');
     }
 
     public function testGoodConstruct()

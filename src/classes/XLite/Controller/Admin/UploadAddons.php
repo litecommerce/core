@@ -134,10 +134,8 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
     }
 
 
-
     /**
      * Move the uploaded file to inner local repository.
-     * TODO ... Maybe move this method to the doActionUpload... It is not necessary to use it separately.
      * 
      * @param string $uploadedFile Full path to uploaded file
      * @param string $newFile      Real name of the file
@@ -149,6 +147,8 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
      */
     protected function moveToLocalRepository($uploadedFile, $newFile)
     {
+        \Includes\Utils\FileManager::mkdirRecursive(LC_LOCAL_REPOSITORY);
+
         $newFile = LC_LOCAL_REPOSITORY . $newFile;
 
         return @move_uploaded_file($uploadedFile, $newFile)

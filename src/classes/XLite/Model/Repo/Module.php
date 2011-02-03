@@ -58,14 +58,6 @@ class Module extends \XLite\Model\Repo\ARepo
     const PRICE_FREE = 'free';
     const PRICE_PAID = 'paid';
 
-    /**
-     * Marketplace connect params
-     */
-    const INFO_SCRIPT_PATH  = 'get_info.php';
-    const REQUEST_TYPE_LIST = 'addonsList';
-    const PARAM_REQUEST     = 'request';
-    const ADDONS_UPDATED    = 'addonsUpdated';
-    const LAST_UPDATE_TTL   = 86400;
 
     /**
      * Fileds that go into update from marketplace
@@ -748,7 +740,7 @@ class Module extends \XLite\Model\Repo\ARepo
         if ($this->isUpdateNeeded()) {
             $result = $this->updateAddonsList();
             if ($result) {
-                \XLite\Core\TmpVars::getInstance()->{static::ADDONS_UPDATED} = LC_START_TIME;
+                \XLite\Core\TmpVars::getInstance()->{\XLite\RemoteModel\Marketplace::ADDONS_UPDATED} = LC_START_TIME;
             }
         }
     }
@@ -796,42 +788,11 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     protected static function isAddonsInfoActual()
     {
-        return \XLite\Core\TmpVars::getInstance()->{static::ADDONS_UPDATED}
-            && \XLite\Core\TmpVars::getInstance()->{static::ADDONS_UPDATED} + static::LAST_UPDATE_TTL > LC_START_TIME;
-    }
-
-    /**
-     * Grab modules XML from the market place
-     * TODO: possibly, adjust this to support xml download via insecure connection
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getAddonsXML()
-    {
-        $response = '';
-
-        $request = new \XLite\Model\HTTPS();
-        $request->url = \XLite\Model\Module::getMarketplaceURL() . static::INFO_SCRIPT_PATH
-            . '?' . static::PARAM_REQUEST . '=' . static::REQUEST_TYPE_LIST;
-        $request->method = 'GET';
-
-        if (
-            $request::HTTPS_SUCCESS == $request->request()
-            && $request->response
-        ) {
-            // Success
-            $response = $request->response;
-
-        } else {
-
-            // Error occured
-            $this->updateError = $request->error;
-        }
-
-        return $response;
+        return \XLite\Core\TmpVars::getInstance()->{\XLite\RemoteModel\Marketplace::ADDONS_UPDATED}
+            && (
+                \XLite\Core\TmpVars::getInstance()->{\XLite\RemoteModel\Marketplace::ADDONS_UPDATED} 
+                + \XLite\RemoteModel\Marketplace::LAST_UPDATE_TTL
+            ) > LC_START_TIME;
     }
 
     /**
@@ -920,7 +881,9 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     protected function updateAddonsList()
     {
-        $xmlData = $this->getAddonsXML();
+        $xmlData = \XLite\RemoteModel\Marketplace::getInstance()->getAddonsXML();
+
+        $this->updateError = \XLite\RemoteModel\Marketplace::getInstance()->getError();
 
         if (!$this->updateError && $xmlData) {
             $processed = $this->processXMLResponse($xmlData);

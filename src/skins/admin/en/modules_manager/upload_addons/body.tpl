@@ -1,7 +1,5 @@
-{* vim: set ts=2 sw=2 sts=2 et: *}
-
 {**
- * Modules
+ * Modules upload form
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -14,7 +12,6 @@
 <div class="upload-addons-text">
 {t(#If you have a plugin in a .phar format, you may install it by uploading it here.#)}
 </div>
-
 
 <div class="upload-addon-form">
 

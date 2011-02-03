@@ -83,7 +83,14 @@ set_exception_handler(array('\Includes\ErrorHandler', 'handleException'));
 // FIXME - to remove
 require_once (LC_INCLUDES_DIR . 'prepend.php');
 
-// Check and (if needed) rebild classes cache
+// TODO and FIXME: Check this feature with the installation!!
+// require_once (LC_INCLUDES_DIR . 'NoDBStore.php');
+
+// Check and (if needed) rebuild classes cache
 if (!defined('LC_DO_NOT_REBUILD_CACHE')) {
-    \Includes\Decorator\Utils\CacheManager::rebuildCache();
+    try {
+        \Includes\Decorator\Utils\CacheManager::rebuildCache();
+    } catch (\Exception $e) {
+//        \Includes\NoDBStore::showStorePage();
+    }
 }
