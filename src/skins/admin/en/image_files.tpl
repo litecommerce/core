@@ -26,7 +26,7 @@
 					<th>Database</th>
 					<th>Default location</th>
 				</tr>
-				<tr FOREACH="imageClasses,className,imageClass" class="DialogBox">
+				<tr FOREACH="imageClasses,className,imageClass" class="dialog-box">
 					<td>{imageClass.comment}</td>
 					<td>{imageClass.image.createFileName(#??#)}</td>
 					<td align="center">{imageClass.image.filesystemCount}

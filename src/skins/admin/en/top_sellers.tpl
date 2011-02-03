@@ -29,7 +29,7 @@
         <th>This week</th>
         <th>This month</th>
     </tr>
-    <tr foreach="counter,ind,cidx" class="{getRowClass(ind,#DialogBox#,#TableRow#)}">
+    <tr foreach="counter,ind,cidx" class="{getRowClass(ind,#dialog-box#,#highlight#)}">
         <td align=center>{inc(cidx)}.</td>
         <td><a href="admin.php?target=product&product_id={getTopProduct(#today#,cidx,#id#)}">{truncate(getTopProduct(#today#,cidx,#name#),50):h}</a></td>
         <td><a href="admin.php?target=product&product_id={getTopProduct(#week#,cidx,#id#)}">{truncate(getTopProduct(#week#,cidx,#name#),50):h}</a></td>

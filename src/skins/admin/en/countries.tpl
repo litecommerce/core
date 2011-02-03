@@ -83,7 +83,7 @@ Use this section to manage the list of existing countries. This list is used in 
 		<form action="admin.php" method="post" name="countries_form">
 		<input type="hidden" name="target" value="countries">
 		<input type="hidden" name="action" value="update">
-		<tr FOREACH="getCountries(),country_idx,country" class="{getRowClass(country_idx,#DialogBox#,#TableRow#)}">
+		<tr FOREACH="getCountries(),country_idx,country" class="{getRowClass(country_idx,#dialog-box#,#highlight#)}">
 		    <td align="center"><a href="admin.php?target=states&country_code={country.code}" title="Click here to view states of country" onClick="this.blur();"><u>{country.code}</u></a></td>
 		    <td>
 		        <input type="text" size="34" maxlength="50" name="countries[{country.code}][country]" value="{country.country:r}">
@@ -138,7 +138,7 @@ Use this section to manage the list of existing countries. This list is used in 
 
 <table cellpadding="0" cellspacing="0" border="0">
 	<tr><td>&nbsp;</td></tr>
-	<tr class="DialogBox">
+	<tr class="dialog-box">
 		<td class="AdminTitle">Add new country</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
@@ -153,7 +153,7 @@ Use this section to manage the list of existing countries. This list is used in 
 					<th class="TableHead">VAT taxable</th>
 					<th class="TableHead">Active</th>
 				</tr>
-				<tr class="DialogBox">
+				<tr class="dialog-box">
 					<td><input type="text" size="3" maxlength="2" name="code" value="{code}"></td>
 					<td><input type="text" size="34" maxlength="50" name="country" value="{country}"></td>
 					<td><input type="text" size="15" maxlength="32" name="language" value="{language}"></td>
