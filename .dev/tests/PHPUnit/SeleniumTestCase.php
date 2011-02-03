@@ -266,7 +266,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
                     LC_ROOT_DIR . 'var/log/selenium.' . $location . '.' . date('Ymd-His') . '.html',
                     '<!--' . PHP_EOL
                     . 'Exception: ' . $exception->getMessage() . ';' . PHP_EOL
-                    . 'Back trace: ' . var_export(\XLite\Core\Operator::getInstance()->getBackTrace(), true) . PHP_EOL
+                    . (defined('DEPLOYMENT_TEST') ? '' : 'Back trace: ' . var_export(\XLite\Core\Operator::getInstance()->getBackTrace(), true) . PHP_EOL)
                     . '-->' . PHP_EOL . $this->getHtmlSource()
                 );
 
