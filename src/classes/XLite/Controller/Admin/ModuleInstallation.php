@@ -35,18 +35,30 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ModuleLicense extends \XLite\Controller\Admin\AAdmin
+class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
 {
 
-
-    protected function doActionRetrieve()
+    protected function doActionGetLicense()
     {
-        $moduleName = \XLite\Core\Request::getInstance()->module;
-        $author     = \XLite\Core\Request::getInstance()->author;
 
-
-        var_dump(\XLite\Core\Request::getInstance());
-die;
     }
+
+    protected function doActionGetPackage()
+    {
+
+    }
+
+    protected function getModuleId()
+    {
+        return \XLite\Core\Request::getInstance()->module_id;
+    }
+
+    protected function getLicense()
+    {
+        return \XLite\RemoteModel\Marketplace::getInstance()->getLicense(
+            $this->getModuleId()
+        );
+    }
+
 
 }
