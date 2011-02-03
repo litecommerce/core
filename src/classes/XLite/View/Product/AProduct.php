@@ -53,8 +53,6 @@ abstract class AProduct extends \XLite\View\AView
     /**
      * Return widget default template
      *
-     * TODO - should be moved to the AView class (in the far future)
-     *
      * @return string
      * @access protected
      * @see    ____func_see____

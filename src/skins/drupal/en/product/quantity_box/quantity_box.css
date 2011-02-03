@@ -1,0 +1,30 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Product quantity box
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+
+input[type="text"].quantity.wrong-amount
+{
+  border: 1px solid #e04013;
+}
+
+.product-max-qty
+{
+  display: none;
+  position: absolute;
+  margin: -90px 0 0 8px;
+  width: 79px;
+  text-align: center;
+  padding: 10px;
+  color: #fff;
+  z-index: 1000;
+  background: url(images/max_qty_box.png) no-repeat 8px 5px;
+}

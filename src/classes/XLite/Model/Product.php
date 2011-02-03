@@ -582,6 +582,19 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     // ------------------------------ Inventory tracking -
 
     /**
+     * Alias: get inventory amount
+     *
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAmount()
+    {
+        $this->getInventory()->getAmount();
+    }
+
+    /**
      * Alias: unconditionally change inventory amount
      *
      * @param integer $amount Value to set
@@ -609,5 +622,18 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     public function changeAmount($delta)
     {
         $this->getInventory()->changeAmount($delta);
+    }
+
+    /**
+     * Alias: is product in stock or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isOutOfStock()
+    {
+        return $this->getInventory()->isOutOfStock();
     }
 }

@@ -28,7 +28,6 @@
 
 namespace XLite\View\Button;
 
-
 /**
  * "Go back" button
  * 
@@ -59,7 +58,6 @@ class GoBack extends \XLite\View\Button\Regular
      */
     protected function getDefaultJSCode()
     {
-        return 'history.go(-1)';
+        return 'self.history.go(-1)';
     }
 }
-

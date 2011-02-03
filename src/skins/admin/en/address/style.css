@@ -65,10 +65,7 @@
 
 .address-dialog input
 {
-  border-width: 1px;
-  border-color: #000000;
   width: 300px;
-  font-size: 12px;
 }
 
 .address-dialog input.name {

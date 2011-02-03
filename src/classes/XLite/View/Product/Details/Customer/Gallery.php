@@ -62,9 +62,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function getLightBoxImagesDir()
     {
-        return \XLite::getInstance()->getShopUrl(
-            \XLite\Model\Layout::getInstance()->getPath() . 'images/lightbox'
-        );
+        return \XLite::getInstance()->getShopUrl(\XLite\Model\Layout::getInstance()->getPath() . 'images/lightbox');
     }
 
     /**
@@ -77,8 +75,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function isVisible()
     {
-        return parent::isVisible()
-            && $this->getProduct()->countImages() > 1;
+        return parent::isVisible() && $this->getProduct()->countImages() > 1;
     }
 
     /**
@@ -143,7 +140,6 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
     public function getCommonFiles()
     {
         $list = parent::getCommonFiles();
-
         $list['js'][] = 'js/jquery.colorbox-min.js';
         $list['css'][] = 'css/colorbox.css';
 
@@ -161,7 +157,6 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = $this->getDir() . '/parts/gallery.css';
 
         return $list;

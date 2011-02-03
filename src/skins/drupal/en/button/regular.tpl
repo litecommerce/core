@@ -10,4 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<button type="button" onclick="javascript: {getJSCode():h}" class="{getClass()}"{if:getId()} id="{getId()}"{end:}><span>{getButtonLabel()}</span></button>
+
+<button type="button" onclick="javascript: {getJSCode():h}" class="{getClass()}"{if:getId()} id="{getId()}"{end:}>
+  <span>{t(getButtonLabel())}</span>
+</button>

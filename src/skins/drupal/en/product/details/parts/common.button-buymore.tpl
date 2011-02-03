@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *
- * @ListChild (list="product.details.page.info.buttons-added.cart-buttons", weight="10")
- * @ListChild (list="product.details.quicklook.info.buttons-added.cart-buttons", weight="10")
+ * @ListChild (list="product.details.page.info.buttons-added.cart-buttons", weight="30")
+ * @ListChild (list="product.details.quicklook.info.buttons-added.cart-buttons", weight="30")
  *}
 <widget class="\XLite\View\Button\Submit" label="Buy more" style="action buy-more" />

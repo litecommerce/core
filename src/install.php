@@ -105,8 +105,8 @@ $reportFName = $tmpdir . LC_DS . 'check_report_' . $report_uid . '.txt';
 // Installation modules (steps)
 $modules = array (
 	array( // 0
-			"name"          => "default",
-			"comment"       => "License agreement",
+			"name"          => 'default',
+			"comment"       => xtr('License agreement'),
             "auth_required" => false,
 			"js_back"       => 0,
 			"js_next"       => 1,
@@ -118,8 +118,8 @@ $modules = array (
             )
 		),
 	array( // 1
-			"name"          => "check_cfg",
-			"comment"       => "Checking PHP configuration",
+			"name"          => 'check_cfg',
+			"comment"       => xtr('Checking PHP configuration'),
             "auth_required" => true,
 			"js_back"       => 0,
 			"js_next"       => 0,
@@ -136,8 +136,8 @@ $modules = array (
             )
 		),
 	array( // 2
-			"name"          => "cfg_install_db",
-			"comment"       => "Preparing to install LiteCommerce database",
+			"name"          => 'cfg_install_db',
+			"comment"       => xtr('Preparing to install LiteCommerce database'),
             "auth_required" => true,
 			"js_back"       => 1,
 			"js_next"       => 1,
@@ -148,16 +148,16 @@ $modules = array (
             )
         ),
 	array( // 4
-			"name"          => "install_dirs",
-			"comment"       => "Setting up templates",
+			"name"          => 'install_dirs',
+			"comment"       => xtr('Setting up templates'),
             "auth_required" => true,
 			"js_back"       => 0,
 			"js_next"       => 0,
             "remove_params" => array()
         ),
 	array( // 5
-			"name"          => "install_cache",
-			"comment"       => "Building cache",
+			"name"          => 'install_cache',
+			"comment"       => xtr('Building cache'),
             "auth_required" => true,
 			"js_back"       => 0,
 			"js_next"       => 0,
@@ -165,8 +165,8 @@ $modules = array (
 		),
 
 	array( // 6
-			"name"          => "cfg_create_admin",
-			"comment"       => "Creating administrator account",
+			"name"          => 'cfg_create_admin',
+			"comment"       => xtr('Creating administrator account'),
             "auth_required" => true,
 			"js_back"       => 0,
 			"js_next"       => 1,
@@ -177,8 +177,8 @@ $modules = array (
             )
 		),
 	array( // 7
-			"name"          => "install_done",
-			"comment"       => "Installation complete",
+			"name"          => 'install_done',
+			"comment"       => xtr('Installation complete'),
             "auth_required" => true,
 			"js_back"       => 0,
 			"js_next"       => 0,
@@ -210,17 +210,17 @@ if (isset($HTTP_GET_VARS['target']) && $HTTP_GET_VARS['target'] == 'install') {
             $step = intval($HTTP_GET_VARS['step']);
 
             if ($step <= 2) {
-                echo sprintf('Building cache: Pass #%d...', $step);
+                echo xtr('Building cache: Pass #:step...', array(':step' => $step));
                 echo str_repeat(' ', 1000); flush();
                 $result = doBuildCache();
             
             } else {
-                die('<div id="finish">Cache is built</div>') ;
+                die('<div id="finish">' . xtr('Cache is built') . '</div>') ;
             }
 
         } else {
             $pdoErrorMsg = '';
-            echo sprintf('Building cache: Preparing for cache generation and dropping an old LiteCommerce tables if exists...', $step);
+            echo xtr('Building cache: Preparing for cache generation and dropping an old LiteCommerce tables if exists...');
             echo str_repeat(' ', 1000); flush();
             $result = doRemoveCache(null, $pdoErrorMsg);
         }
@@ -229,7 +229,7 @@ if (isset($HTTP_GET_VARS['target']) && $HTTP_GET_VARS['target'] == 'install') {
             $location = sprintf('install.php?target=install&action=cache&step=%d', ++$step);
 
             echo '<script type="text/javascript">self.location=\'' . $location . '\';</script>'
-                . '<noscript><a href="' . $location . '">Click here to redirect</a></noscript><br /><br />';
+                . '<noscript><a href="' . $location . '">' . xtr('Click here to redirect') . '</a></noscript><br /><br />';
         }
 
         exit();
@@ -244,7 +244,7 @@ if (isset($HTTP_GET_VARS['target']) && $HTTP_GET_VARS['target'] == 'install') {
 		}
 
 		if (!function_exists('memory_get_usage')) {
-			die("MEMORY-TEST-SKIPPED\nReason: memory_get_usage() is disabled on your hosting.");
+			die("MEMORY-TEST-SKIPPED\n" . xtr('Reason: memory_get_usage() is disabled on your hosting.'));
 		}
 
 		// check memory limit set
@@ -330,7 +330,7 @@ if (isset($params['force_current']) && $params['force_current'] == get_step('che
 }
 
 if ($current < 0 || $current >= count($modules)) {
-	die('Fatal error: Invalid current step. Stopped.');
+	die(xtr('Fatal error: Invalid current step. Stopped.'));
 }
 
 // check for the pre- and post- methods
@@ -346,7 +346,7 @@ if ($current) {
             $func();
 
         } else {
-            die('Internal error: function ' . $func . '() not found');
+            die(xtr('Internal error: function :funcname() not found', array(':funcname' => $func)));
         }
     }
 }
@@ -364,7 +364,7 @@ if (isset($params['force_current']) && (isset($_POST['go_back']) && $_POST['go_b
 <HTML>
 <HEAD>
 <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<TITLE>LiteCommerce v.<?php echo LC_VERSION; ?> Installation Wizard</TITLE>
+<TITLE>LiteCommerce v.<?php echo LC_VERSION; ?> <?php echo xtr('Installation Wizard'); ?></TITLE>
 
 <STYLE type="text/css">
 
@@ -525,7 +525,7 @@ function setNextButtonDisabled(flag)
 <TD>
 <TABLE width=300 height=100 class="TableTop" cellpadding=2 cellspacing=2>
 <TR>
-<TD align=center><B>Inspecting your server configuration.<br>It can take several minutes, please wait.</B></TD>
+<TD align=center><B><?php echo xtr('Inspecting your server configuration.<br>It can take several minutes, please wait.'); ?></B></TD>
 </TR>
 </TABLE>
 </TD>
@@ -542,11 +542,11 @@ function setNextButtonDisabled(flag)
    <td style="padding: 10px;"><img src="skins_original/admin/en/images/logo.png" alt="" /></td>
     <td style="white-space: nowrap;">
       <div style="font-size: 24px;"><span style="color: #2d69ab;">Lite</span><span style="color: #676767;">Commerce</span></div>
-      <div>Version: <?php echo LC_VERSION; ?></div>
+      <div><?php echo xtr('Version'); ?>: <?php echo LC_VERSION; ?></div>
     </td>
    <td align="right" valign="middle" nowrap="nowrap" width="100%" style="padding-right: 20px;">
-    <span class="HeadTitle">Installation Wizard</span><br />
-   <span class="HeadSteps">Step <?php echo $current ?>: <?php echo $modules[$current]['comment'] ?></span>
+   <span class="HeadTitle"><?php echo xtr('Installation Wizard'); ?></span><br />
+   <span class="HeadSteps"><?php echo xtr('Step :step', array(':step' => $current)); ?>: <?php echo $modules[$current]['comment'] ?></span>
    </td>
 </tr>
 </table>
@@ -562,7 +562,7 @@ function setNextButtonDisabled(flag)
 
 <NOSCRIPT>
     <br>
-    <DIV class="ErrorMessage">This installer requires JavaScript to function properly.<br>Please enable Javascript in your web browser.</DIV>
+    <DIV class="ErrorMessage"><?php echo xtr('This installer requires JavaScript to function properly.<br>Please enable Javascript in your web browser.'); ?></DIV>
     <br>
 </NOSCRIPT>
 
@@ -644,7 +644,7 @@ if ($current < count($modules)) {
 
   <INPUT type="hidden" name="go_back" value="0" />
   <INPUT type=hidden name="current" value="<?php echo $current ?>" />
-  <INPUT type=button value="&lt; Back"<?php echo ($prev > 0 ? '' : ' disabled') ?> onClick="javascript:document.ifrm.go_back.value='1'; return step_back();" />
+  <INPUT type=button value="&lt; <?php echo xtr('Back'); ?>"<?php echo ($prev > 0 ? '' : ' disabled') ?> onClick="javascript:document.ifrm.go_back.value='1'; return step_back();" />
 
 <?php
 
@@ -652,7 +652,7 @@ if ($current < count($modules)) {
 
  ?>
 
-  <INPUT name="try_again" type="button" value="Try again" onClick="javascript:document.ifrm.go_back.value='1'; document.ifrm.current.value='1'; document.ifrm.submit();" />
+     <INPUT name="try_again" type="button" value="<?php echo xtr('Try again'); ?>" onClick="javascript:document.ifrm.go_back.value='1'; document.ifrm.current.value='1'; document.ifrm.submit();" />
 
 <?php
        
@@ -660,7 +660,7 @@ if ($current < count($modules)) {
 
 ?>
 
-  <INPUT id="button_next" name="next_button" type="button" value="Next &gt;"<?php echo ($error || $current == get_step('check_cfg') ? ' disabled="disabled"' : ''); ?> onClick="javascript: if (step_next()) { ifrm.submit(); return true; } else { return false; }" />
+  <INPUT id="button_next" name="next_button" type="button" value="<?php echo xtr('Next'); ?> &gt;"<?php echo ($error || $current == get_step('check_cfg') ? ' disabled="disabled"' : ''); ?> onClick="javascript: if (step_next()) { ifrm.submit(); return true; } else { return false; }" />
 
  </td>
 </TR>

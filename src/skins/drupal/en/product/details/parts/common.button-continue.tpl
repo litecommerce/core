@@ -13,4 +13,5 @@
  * @ListChild (list="product.details.page.info.buttons-added", weight="20")
  * @ListChild (list="product.details.quicklook.info.buttons-added", weight="30")
  *}
-<widget class="\XLite\View\Button\Regular" label="Continue shopping" style="bright continue" jsCode="self.history.go(-1);" />
+
+<widget class="\XLite\View\Button\ContinueShopping" />

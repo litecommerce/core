@@ -41,6 +41,79 @@ if (!defined('XLITE_INSTALL_MODE')) {
 
 
 /**
+ * Returns a processed text by specified label value
+ * 
+ * @param $label string Label value
+ * @param $substitute array Array for substitution parameters in the text found by label
+ *
+ * @return string
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function xtr($label, array $substitute = array())
+{
+    $text = getTextByLabel($label);
+
+    if (!empty($substitute)) {
+        foreach ($substitute as $key => $value) {
+            $text = str_replace($key, $value, $text);
+        }
+    }
+
+    return $text;
+}
+
+/**
+ * Returns a text by label. If label not found in translation file then label itself will be returned
+ * 
+ * @param $label string Label value
+ *
+ * @return string
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function getTextByLabel($label)
+{
+    $result = $label;
+
+    static $translation;
+
+    if (!isset($translation)) {
+
+        // Get language code from cookies...
+        if (isset($_COOKIE['lang']) && !empty($_COOKIE['lang'])) {
+            $languageCode = $_COOKIE['lang'];
+
+        // or from main installation settings
+        } else {
+            global $lcSettings;
+            $languageCode = $lcSettings['default_language_code'];
+        }
+
+        // Check if language code value is satisfied to alpha-2 pattern for security reasons
+        if (!preg_match('/^[a-z]{2}$/', $languageCode)) {
+            $languageCode = 'en';
+        }
+
+        // Generate name of file that should contain language variables
+        $labelsFile = constant('LC_ROOT_DIR') . 'Includes/install/translations/' . $languageCode . '.php';
+
+        // Check if this file exists and include it (it must be correct php script, that is contained $translation array)
+        if (file_exists($labelsFile)) {
+            include_once $labelsFile;
+        }
+    }
+
+    // Check if label value defined in translation array and assign this as a result
+    if (!empty($translation[$label])) {
+        $result = $translation[$label];
+    }
+
+    return $result;
+}
+
+
+/**
  * Logging functions
  */
 
@@ -164,23 +237,23 @@ function doCheckRequirements()
     $checkRequirements = array();
 
     $checkRequirements['lc_install_script'] = array(
-        'title'    => 'Installation script',
+        'title'    => xtr('Installation script'),
         'critical' => true,
     );
 
     $checkRequirements['lc_loopback'] = array(
-        'title'    => 'Loopback test',
+        'title'    => xtr('Loopback test'),
         'critical' => true,
         'depends' => 'lc_install_script'
     );
 
     $checkRequirements['lc_php_version'] = array(
-        'title'    => 'PHP version',
+        'title'    => xtr('PHP version'),
         'critical' => true,
     );
 
     $checkRequirements['lc_php_safe_mode'] = array(
-        'title'    => 'PHP safe_mode',
+        'title'    => xtr('PHP safe_mode'),
         'critical' => true,
     );
 
@@ -195,33 +268,33 @@ function doCheckRequirements()
     );
 
     $checkRequirements['lc_php_disable_functions'] = array(
-        'title'    => 'Disabled functions',
+        'title'    => xtr('Disabled functions'),
         'critical' => true,
     );
 
     $checkRequirements['lc_php_memory_limit'] = array(
-        'title'    => 'Memory limit',
+        'title'    => xtr('Memory limit'),
         'critical' => true,
     );
 
     $checkRequirements['lc_php_file_uploads'] = array(
-        'title'    => 'File uploads',
+        'title'    => xtr('File uploads'),
         'critical' => true,
     );
 
     $checkRequirements['lc_php_mysql_support'] = array(
-        'title'    => 'MySQL support',
+        'title'    => xtr('MySQL support'),
         'critical' => true,
     );
 
     $checkRequirements['lc_php_pdo_mysql'] = array(
-        'title'    => 'PDO extension',
+        'title'    => xtr('PDO extension'),
         'critical' => true,
         'depends'  => 'lc_php_mysql_support'
     );
 
     $checkRequirements['lc_php_upload_max_filesize'] = array(
-        'title'    => 'Upload file size limit',
+        'title'    => xtr('Upload file size limit'),
         'critical' => false,
     );
 
@@ -231,45 +304,45 @@ function doCheckRequirements()
     );
 
     $checkRequirements['lc_mem_allocation'] = array(
-        'title'    => 'Memory allocation test',
+        'title'    => xtr('Memory allocation test'),
         'critical' => false,
         'depends'  => 'lc_loopback'
     );
 
     $checkRequirements['lc_recursion_test'] = array(
-        'title'    => 'Recursion test',
+        'title'    => xtr('Recursion test'),
         'critical' => false,
         'depends'  => 'lc_loopback'
     );
 
     $checkRequirements['lc_file_permissions'] = array(
-        'title'    => 'File permissions',
+        'title'    => xtr('File permissions'),
         'critical' => true,
     );
 
     $checkRequirements['lc_mysql_version'] = array(
-        'title'    => 'MySQL version',
+        'title'    => xtr('MySQL version'),
         'critical' => true,
         'depends'  => 'lc_php_mysql_support'
     );
 
     $checkRequirements['lc_php_gdlib'] = array(
-        'title'    => 'GDlib extension',
+        'title'    => xtr('GDlib extension'),
         'critical' => false,
     );
 
     $checkRequirements['lc_php_phar'] = array(
-        'title'    => 'Phar extension',
+        'title'    => xtr('Phar extension'),
         'critical' => false,
     );
 
     $checkRequirements['lc_https_bouncer'] = array(
-        'title'    => 'HTTPS bouncers',
+        'title'    => xtr('HTTPS bouncers'),
         'critical' => false,
     );
 
     $checkRequirements['lc_xml_support'] = array(
-        'title'    => 'XML extensions support',
+        'title'    => xtr('XML extensions support'),
         'critical' => false,
     );
 
@@ -314,7 +387,7 @@ function doCheckRequirements()
             }
 
             if (!function_exists($funcName)) {
-                die("Internal error: function $funcName() does not exists");
+                die(xtr('Internal error: function :func() does not exists', array(':func' => $funcName)));
             }
 
             // Check requirement and init its properies
@@ -329,7 +402,7 @@ function doCheckRequirements()
     }
 
     if ($requirementsOk) {
-        x_install_log('Checking requirements is successfully complete');
+        x_install_log(xtr('Checking requirements is successfully complete'));
 
     } else {
         $failedRequirements = array();
@@ -338,7 +411,7 @@ function doCheckRequirements()
                 $failedRequirements[$key] = $value;
             }
         }
-        x_install_log('Some requirements are failed', $failedRequirements);
+        x_install_log(xtr('Some requirements are failed'), $failedRequirements);
     }
 
     return $checkRequirements;
@@ -360,7 +433,7 @@ function checkInstallScript(&$errorMsg, $value = null)
     $result = @file_exists(LC_ROOT_DIR . 'install.php');
     
     if (!$result) {
-        $errorMsg = 'LiteCommerce installation script not found. Restore it  and try again';
+        $errorMsg = xtr('LiteCommerce installation script not found. Restore it  and try again');
     }
 
     return $result;
@@ -385,7 +458,7 @@ function checkLoopback(&$errorMsg, $value = null)
 
     if (strpos($response, "LOOPBACK-TEST-OK") === false) {
         $result = false;
-        $errorMsg = "Loopback test failed. Response:\n" . $response;
+        $errorMsg = xtr('Loopback test failed. Response:') . "\n" . $response;
     }
 
     return $result;
@@ -412,12 +485,12 @@ function checkPhpVersion(&$errorMsg, &$value)
 
     if (version_compare($currentPhpVersion, constant('LC_PHP_VERSION_MIN')) < 0) {
         $result = false;
-        $errorMsg = 'PHP Version must be ' . constant('LC_PHP_VERSION_MIN') . ' as a minimum';
+        $errorMsg = xtr('PHP Version must be :minver as a minimum', array(':minver' => constant('LC_PHP_VERSION_MIN')));
     }
 
     if ($result && constant('LC_PHP_VERSION_MAX') != '' && version_compare($currentPhpVersion, constant('LC_PHP_VERSION_MAX')) > 0) {
         $result = false;
-        $errorMsg = 'PHP Version must be not greater than ' . constant('LC_PHP_VERSION_MAX');
+        $errorMsg = xtr('PHP Version must be not greater than :maxver', array(':maxver' => constant('LC_PHP_VERSION_MAX')));
     }
     
     if ($result && isset($lcSettings['forbidden_php_versions']) && is_array($lcSettings['forbidden_php_versions'])) {
@@ -432,7 +505,7 @@ function checkPhpVersion(&$errorMsg, &$value)
                     $result = true;
 
                 } else {
-                    $errorMsg = 'Unsupported PHP version detected';
+                    $errorMsg = xtr('Unsupported PHP version detected');
                     break;
                 }
             }
@@ -463,7 +536,7 @@ function checkPhpSafeMode(&$errorMsg, &$value)
 
     if (version_compare(phpversion(), '5.3.0') < 0 && 'off' != strtolower($value)) {
         $result = false;
-        $errorMsg = 'PHP safe_mode option value should be Off if PHP is earlier 5.3.0';
+        $errorMsg = xtr('PHP safe_mode option value should be Off if PHP is earlier 5.3.0');
     }
 
     return $result;
@@ -490,7 +563,7 @@ function checkPhpMagicQuotesSybase(&$errorMsg, &$value)
 
     if (version_compare(phpversion(), '5.3.0') < 0 && 'off' != strtolower($value)) {
         $result = false;
-        $errorMsg = 'PHP option magic_quotes_sybase value should be Off if PHP is earlier 5.3.0';
+        $errorMsg = xtr('PHP option magic_quotes_sybase value should be Off if PHP is earlier 5.3.0');
     }
 
     return $result;
@@ -517,7 +590,7 @@ function checkPhpSqlSafeMode(&$errorMsg, &$value)
 
     if ('off' != strtolower($value)) {
         $result = false;
-        $errorMsg = 'PHP option sql.safe_mode value should be Off';
+        $errorMsg = xtr('PHP option sql.safe_mode value should be Off');
     }
 
     return $result;
@@ -542,7 +615,7 @@ function checkPhpDisableFunctions(&$errorMsg, &$value)
     if (!empty($list)) {
         $result = false;
         $value = substr(@ini_get('disable_functions'), 0, 45) . '...';
-        $errorMsg = 'Disabled functions discovered (' . implode(', ', $list) . ') that must be enabled';
+        $errorMsg = xtr('Disabled functions discovered (:funclist) that must be enabled', array(':funclist' => implode(', ', $list)));
 
     } else {
         $value = 'none';
@@ -654,14 +727,14 @@ function checkPhpMemoryLimit(&$errorMsg, &$value)
     $value = @ini_get("memory_limit");
 
     if (is_disabled_memory_limit()) {
-        $value = 'Unlimited';
+        $value = xtr('Unlimited');
 
     } else {
 
         $result = check_memory_limit($value, constant('LC_PHP_MEMORY_LIMIT_MIN'));
 
         if (!$result) {
-            $errorMsg = 'PHP memory_limit option value should be ' . constant('LC_PHP_MEMORY_LIMIT_MIN') . ' as a minimum';
+            $errorMsg = xtr('PHP memory_limit option value should be :minval as a minimum', array(':minval' => constant('LC_PHP_MEMORY_LIMIT_MIN')));
         }
     }
 
@@ -687,7 +760,7 @@ function checkPhpFileUploads(&$errorMsg, &$value)
 
     if ('off' == strtolower($value)) {
         $result = false;
-        $errorMsg = 'PHP file_uploads option value should be On';
+        $errorMsg = xtr('PHP file_uploads option value should be On');
     }
 
     return $result;
@@ -711,7 +784,7 @@ function checkPhpMysqlSupport(&$errorMsg, &$value)
     if (!function_exists('mysql_connect')) {
         $result = false;
         $value = 'Off';
-        $errorMsg = 'Support MySQL is disabled in PHP. It must be enabled.';
+        $errorMsg = xtr('Support MySQL is disabled in PHP. It must be enabled.');
 
     } else {
         $value = 'On';
@@ -741,7 +814,7 @@ function checkPhpPdoMysql(&$errorMsg, &$value)
 
     if (!preg_match('/mysql/', $info['pdo_drivers']) || !class_exists('PDO')) {
         $result = false;
-        $errorMsg = 'PDO extension with MySQL support must be installed.';
+        $errorMsg = xtr('PDO extension with MySQL support must be installed.');
     }
 
     return $result;
@@ -766,7 +839,7 @@ function checkPhpUploadMaxFilesize(&$errorMsg, &$value)
 
     if (empty($value)) {
         $result = false;
-        $errorMsg = 'PHP option upload_max_filesize should contain a value. It is empty currently.';
+        $errorMsg = xtr('PHP option upload_max_filesize should contain a value. It is empty currently.');
     }
 
     return $result;
@@ -791,7 +864,7 @@ function checkPhpAllowUrlFopen(&$errorMsg, &$value)
 
     if ('off' == strtolower($value)) {
         $result = false;
-        $errorMsg = 'PHP allow_url_fopen option value should be On';
+        $errorMsg = xtr('PHP allow_url_fopen option value should be On');
     }
 
     return $result;
@@ -825,7 +898,7 @@ function checkMemAllocation(&$errorMsg, &$value)
         
         if (strpos($response, "MEMORY-TEST-OK") === false) {
             $status = false;
-            $errorMsg = "Memory allocation test failed. Response:\n" . substr($response, 0, 255);
+            $errorMsg = xtr('Memory allocation test failed. Response:') . "\n" . substr($response, 0, 255);
             break;
         }
         
@@ -854,7 +927,7 @@ function checkRecursionTest(&$errorMsg, &$value)
 
     if (strpos($response, "RECURSION-TEST-OK") === false) {
         $result = false;
-        $errorMsg = 'Recursion test failed.';
+        $errorMsg = xtr('Recursion test failed.');
         $value = constant('MAX_RECURSION_DEPTH');
     }
 
@@ -913,10 +986,10 @@ function checkFilePermissions(&$errorMsg, &$value)
     if (count($perms) > 0) {
         $result = false;
         if (LC_OS_CODE === 'win') {
-            $errorMsg = "Permissions checking failed. Please make sure that the following files have writable permissions:\n<br /><br /><i>" . implode("<br />\n", $perms) . '</i>';
+            $errorMsg = xtr("Permissions checking failed. Please make sure that the following files have writable permissions:\n<br /><br /><i>:perms</i>", array(':perms' => implode("<br />\n", $perms)));
 
         } else {
-            $errorMsg = "Permissions checking failed. Please make sure that the following file permissions are assigned (UNIX only):\n<br /><br /><i>" . implode("<br />\n", $perms) . '</i>';
+            $errorMsg = xtr("Permissions checking failed. Please make sure that the following file permissions are assigned (UNIX only):\n<br /><br /><i>:perms</i>", array(':perms' => implode("<br />\n", $perms)));
         }
     }
 
@@ -938,7 +1011,7 @@ function checkFilePermissions(&$errorMsg, &$value)
 function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
 {
     $result = true;
-    $value = 'unknown';
+    $value = xtr('unknown');
     $pdoErrorMsg = '';
 
     $version = false;
@@ -956,7 +1029,7 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
         $isConnected = dbConnect($data, $pdoErrorMsg);
 
         if (!$isConnected) {
-            $errorMsg = 'Can\'t connect to MySQL server' . (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : '');
+            $errorMsg = xtr('Can\'t connect to MySQL server') . (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : '');
             $result = false;
         }
     }
@@ -975,15 +1048,11 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
 
             if (version_compare($version, constant('LC_MYSQL_VERSION_MIN')) < 0) {
                 $result = false;
-                $errorMsg = 'MySQL version must be ' . constant('LC_MYSQL_VERSION_MIN') . ' as a minimum.';
-
-//            } elseif ((version_compare($version, "5.0.50") >= 0 && version_compare($version, "5.0.52") < 0)) {
-//                $result = false;
-//                $errorMsg = 'The version of MySQL which is currently used (' . $version . ') contains known bugs, that is why LiteCommerce may operate incorrectly. It is recommended to update MySQL to a more stable version.';
+                $errorMsg = xtr('MySQL version must be :minver as a minimum.', array(':minver' => constant('LC_MYSQL_VERSION_MIN')));
             }
 
         } else {
-            $errorMsg = 'Cannot get the MySQL server version' . (!empty($pdoErrorMsg) ? ' : ' . $pdoErrorMsg : '.');
+            $errorMsg = xtr('Cannot get the MySQL server version') . (!empty($pdoErrorMsg) ? ' : ' . $pdoErrorMsg : '.');
             $result = false;
         }
     }
@@ -1015,7 +1084,7 @@ function checkPhpGdlib(&$errorMsg, &$value)
     }
 
     if (!$result) {
-        $errorMsg = 'GDlib extension v.2.0 or later required for some modules.';
+        $errorMsg = xtr('GDlib extension v.2.0 or later required for some modules.');
     }
 
     return $result;
@@ -1037,7 +1106,7 @@ function checkPhpPhar(&$errorMsg, &$value)
     $result = true;
 
     if (!extension_loaded('Phar')) {
-        $errorMsg = 'Phar extension is not loaded';
+        $errorMsg = xtr('Phar extension is not loaded');
         $result = false;
     }
 
@@ -1061,7 +1130,7 @@ function checkHttpsBouncer(&$errorMsg, &$value)
 
     if (!function_exists('curl_init') || !function_exists('curl_version')) {
         $result = false;
-        $errorMsg = 'libcurl extension is not found';
+        $errorMsg = xtr('libcurl extension is not found');
     
     } else {
 
@@ -1083,7 +1152,7 @@ function checkHttpsBouncer(&$errorMsg, &$value)
             (is_array($version) && !in_array('https', $version['protocols']))
             || (!is_array($version) && !preg_match('/ssl|tls/Ssi', $version))
         ) {
-            $errorMsg = 'libcurl extension found but it does not support secure protocols';
+            $errorMsg = xtr('libcurl extension found but it does not support secure protocols');
             $result = false;             
         }
     }
@@ -1123,7 +1192,7 @@ function checkXmlSupport(&$errorMsg, &$value)
     }
 
     if (!$result) {
-        $errorMsg = 'XML/Expat and DOM extensions are required for some modules.';
+        $errorMsg = xtr('XML/Expat and DOM extensions are required for some modules.');
     }
 
     return $result;
@@ -1211,11 +1280,11 @@ function doUpdateConfig(&$params, $silentMode = false)
         }
 
         if ($configUpdated !== true && !$silentMode) {
-            fatal_error('Cannot open configuration file "' . constant('LC_CONFIG_FILE') . '" for writing. This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.');
+            fatal_error(xtr('config_writing_error', array(':configfile' => constant('LC_CONFIG_FILE'))));
         }
 
     } elseif (!$silentMode) {
-        fatal_error('Cannot connect to MySQL server' . (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : '') . '.<br />This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.');
+        fatal_error(xtr('mysql_connection_error', array(':pdoerr', (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : ''))));
     }
 
     return $configUpdated;
@@ -1278,7 +1347,7 @@ function doRemoveCache($params)
     }
 
     if (!$result) {
-        x_install_log('doRemoveCache() failed', $pdoErrorMsg);
+        x_install_log(xtr('doRemoveCache() failed'), $pdoErrorMsg);
     }
 
     return $result;
@@ -1305,7 +1374,7 @@ function doBuildCache()
     $response = inst_http_request($url_request);
 
     if (preg_match('/(?:error|warning|notice)/Ssi', $response)) {
-        fatal_error(sprintf("Cache building procedure failed:<br />\n\nRequest URL: %s<br />\n\nResponse: %s", $url_request, $response));
+        fatal_error(xtr("Cache building procedure failed:<br />\n\nRequest URL: :requesturl<br />\n\nResponse: :response", array(':requesturl' => $url_request, ':response' => $response)));
         $result = false;
     }
 
@@ -1334,28 +1403,28 @@ function doInstallDirs($params, $silentMode = false)
     }
 
     if (!empty($lcSettings['directories_to_create'])) {
-        echo "<BR><B>Creating directories...</B><BR>\n";
+        echo '<br /><b>' . xtr('Creating directories...') . '</b><br />';
         $result = create_dirs($lcSettings['directories_to_create']);
     }
 
     if ($result && !empty($lcSettings['writable_directories'])) {
         chmod_others_directories($lcSettings['writable_directories']);
-        echo "<BR><B>Creating .htaccess files...</B><BR>\n";
+        echo '<br /><b>' . xtr('Creating .htaccess files...') . '</b><br />';
         $result = create_htaccess_files($lcSettings['files_to_create']);
     }
 
     if ($result) {
-        echo "<BR><B>Copying templates...</B><BR>\n";
+        echo '<br /><b>' . xtr('Copying templates...') . '</b><br />';
         $failedList = array();
         $result = copy_files(constant('LC_TEMPLATES_REPOSITORY'), "", constant('LC_TEMPLATES_DIRECTORY'), $failedList);
     
         if (!$result) {
-            x_install_log('copy_files() failed', $failedList);
+            x_install_log(xtr('copy_files() failed'), $failedList);
         }
     }
 
     if ($result) {
-        echo "<BR><B>Updating config file...</B><BR>\n";
+        echo '<br /><b>' . xtr('Updating config file...') . '</b><br>';
         $result = doUpdateConfig($params, $silentMode);
     }
 
@@ -1384,7 +1453,7 @@ function doInstallDirs($params, $silentMode = false)
     } else {
 
         if (!$result) {
-            fatal_error("Fatal error encountered while creating directories, probably because of incorrect directory permissions. This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.");
+            fatal_error(xtr('fatal_error_creating_dirs'));
         }
     }
 
@@ -1417,7 +1486,7 @@ function doCreateAdminAccount(&$params, $silentMode = false)
 
     if (empty($login) || empty($password)) {
         $result = false;
-        $errorMsg = fatal_error('Login and password can\'t be empty.');
+        $errorMsg = fatal_error(xtr('Login and password can\'t be empty.'));
 
     } else {
         $password = md5($password);
@@ -1438,36 +1507,36 @@ function doCreateAdminAccount(&$params, $silentMode = false)
 
                 $query = "UPDATE xlite_profiles SET password='$password', access_level='100', status='E' WHERE profile_id='$profileId'";
 
-                echo "<BR><B>Updating primary administrator profile...</B><BR>\n";
+                echo '<br /><b>' . xtr('Updating primary administrator profile...') . '</b><br />';
 
             } else {
                 // Register default admin account
 
                 $query = "INSERT INTO xlite_profiles (login, password, access_level, status) VALUES ('$login', '$password', 100, 'E')";
 
-                echo "<BR><B>Registering primary administrator profile...</B><BR>";
+                echo '<br /><b>' . xtr('Registering primary administrator profile...') . '</b><br />';
             }
             
             dbExecute($query, $pdoErrorMsg);
 
             if (empty($pdoErrorMsg)) {
-                echo '<FONT color="green">[OK]</FONT>';
+                echo '<font color="green">[OK]</font>';
 
             } else {
                 // an error has occured
-                echo '<FONT color="red">[FAILED]</FONT>';
+                echo '<font color="red">[FAILED]</font>';
                 $result = false;
-                $errorMsg = fatal_error('ERROR: ' . $pdoErrorMsg);
+                $errorMsg = fatal_error(xtr('ERROR') . ': ' . $pdoErrorMsg);
             }
 
         } else {
             $result = false;
-            $errorMsg = fatal_error('ERROR: ' . $pdoErrorMsg);
+            $errorMsg = fatal_error(xtr('ERROR') . ': ' . $pdoErrorMsg);
         }
 
     } else {
         $result = false;
-        $errorMsg = fatal_error('Can\'t connect to MySQL server or select database you specified' . (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : '') . '.<br />Press \'BACK\' button and review MySQL server settings you provided.');
+        $errorMsg = fatal_error(xtr('cannot_connect_mysql_server', array(':pdoerr' => (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : ''))));
     }
 
     if ($silentMode) {
@@ -1502,22 +1571,13 @@ function doFinishInstallation(&$params, $silentMode = false)
     if ($install_name ) {
 
         // Text for email notification
-        $install_rename_email =<<<OUT
-To ensure the security of your LiteCommerce installation, the file "install.php" has been renamed to "{$install_name}".
-
-Now, if you choose to re-install LiteCommerce, you should rename the file "{$install_name}" back to "install.php" and open the following URL in your browser:
-     http://{$params['xlite_http_host']}{$params['xlite_web_dir']}/install.php
-OUT;
+        $install_rename_email = xtr('script_renamed_text', array(':newname' => $install_name, ':host' => $params['xlite_http_host'], ':webdir' => $params['xlite_web_dir']));
 
         // Text for confirmation web page
-        $install_rename =<<<OUT
-<P>To ensure the security of your LiteCommerce installation, the file "install.php" has been renamed to "{$install_name}".</P>
-
-<P>Now, if you choose to re-install LiteCommerce, you should rename the file "{$install_name}" back to "install.php"</P>
-OUT;
+        $install_rename = xtr('script_renamed_text_html', array(':newname' => $install_name));
 
     } else {
-        $install_rename = '<P><font color="red"><b>WARNING!</b> The install.php script could not be renamed! To ensure the security of your LiteCommerce installation and prevent the unallowed use of this script, you should manually rename or delete it.</font></P>';
+        $install_rename = xtr('script_cannot_be_renamed_text');
         $install_rename_email = strip_tags($install_rename);
     }
 
@@ -1542,43 +1602,26 @@ OUT;
 
         if (!empty($_perms)) {
             $perms = implode("<br />\n", $_perms);
-            $perms =<<<OUT
-<P>Before you proceed using LiteCommerce shopping system software, please set the following secure file permissions:<BR><BR>
-
-<FONT color="darkblue">$perms</FONT>
-OUT;
+            $perms = xtr('correct_permissions_text', array(':perms' => $perms));
         }
     }
 
     // Prepare email notification text
     $perms_no_tags = strip_tags($perms);
 
-    $message =<<<EOF
-Congratulations!
-
-LiteCommerce software has been successfully installed and is now available at the following URLs:
-
-CUSTOMER ZONE (FRONT-END)
-     http://{$params['xlite_http_host']}{$params['xlite_web_dir']}/cart.php
-
-ADMINISTRATOR ZONE (BACKOFFICE)
-     http://{$params['xlite_http_host']}{$params['xlite_web_dir']}/admin.php
-     Login (e-mail): {$params['login']}
-     Password:       {$params['password']}
-
-{$perms_no_tags}
-
-{$install_rename_email}
-
-Auth code for running install.php script is: {$authcode}
-
-Thank you for choosing LiteCommerce shopping system!
-
---
-LiteCommerce Installation Wizard
-
-
-EOF;
+    $message = xtr(
+        'congratulations_text', 
+        array(
+            ':host' => $params['xlite_http_host'], 
+            ':webdir' => $params['xlite_web_dir'], 
+            ':login' => $params['login'], 
+            ':password' => $params['password'],
+            ':perms' => $perms_no_tags,
+            ':renametext' => $install_rename_email,
+            ':authcode' => $authcode,
+            
+        )
+    );
 
     // Send email notification to the admin account email
     @mail($params["login"], "LiteCommerce installation complete", $message,
@@ -1590,16 +1633,17 @@ EOF;
 ?>
 
 <CENTER>
-<H3><?php message('Installation complete.'); ?></H3>
+<H3><?php message(xtr('Installation complete.')); ?></H3>
 </CENTER>
 
-LiteCommerce software has been successfully installed and is now available at the following URLs:
+<?php echo xtr('LiteCommerce software has been successfully installed and is now available at the following URLs:'); ?>
+
 <BR />
 
 <OL>
-<LI><U><A href="cart.php" style="COLOR: #000055; TEXT-DECORATION: underline;" target="_blank"><b>CUSTOMER ZONE (FRONT-END): cart.php</b></A></U></LI>
+<LI><U><A href="cart.php" style="COLOR: #000055; TEXT-DECORATION: underline;" target="_blank"><b><?php echo xtr('CUSTOMER ZONE (FRONT-END)'); ?>: cart.php</b></A></U></LI>
 <P>
-<LI><U><A href="admin.php" style="COLOR: #000055; TEXT-DECORATION: underline;" target="_blank"><b>ADMINISTRATOR ZONE (BACKOFFICE): admin.php</b></A></U><BR></LI>
+<LI><U><A href="admin.php" style="COLOR: #000055; TEXT-DECORATION: underline;" target="_blank"><b><?php echo xtr('ADMINISTRATOR ZONE (BACKOFFICE)'); ?>: admin.php</b></A></U><BR></LI>
 </OL>
 
 <br />
@@ -1611,14 +1655,15 @@ LiteCommerce software has been successfully installed and is now available at th
 
 <?php echo $install_rename; ?>
 
-<P>Your auth code for running install.php in the future is: <B><?php print get_authcode(); ?></b><br />
-PLEASE WRITE THIS CODE DOWN UNLESS YOU ARE GOING TO REMOVE "<?php echo $install_name; ?>"</P>
+<P><?php echo xtr('Your auth code for running install.php in the future is:'); ?> <B><?php print get_authcode(); ?></b><br />
+<?php echo xtr('PLEASE WRITE THIS CODE DOWN UNLESS YOU ARE GOING TO REMOVE \':filename\'', array(':filename' => $install_name)); ?>
+</P>
 
 <?php
 
     }
 
-    x_install_log('Installation complete');
+    x_install_log(xtr('Installation complete'));
 
     return $result;
 }
@@ -1657,7 +1702,7 @@ function create_dirs($dirs)
     }
 
     foreach ($dirs as $val) {
-        echo "Creating directory: [$val] ... ";
+        echo xtr('Creating directory: [:dirname] ... ', array(':dirname' => $val));
 
         if (!@file_exists(constant('LC_ROOT_DIR') . $val)) {
             $res = @mkdir(constant('LC_ROOT_DIR') . $val, $dir_permission);
@@ -1666,14 +1711,14 @@ function create_dirs($dirs)
             echo status($res);
 
         } else {
-            echo '<font color="blue">[Already exists]</font>';
+            echo '<font color="blue">[' . xtr('Already exists') . ']</font>';
         }
 
         echo "<BR>\n"; flush();
     }
 
     if (!$result) {
-        x_install_log('Failed to create directories', $failedDirs);
+        x_install_log(xtr('Failed to create directories'), $failedDirs);
     }
 
     return $result;
@@ -1721,7 +1766,7 @@ function create_htaccess_files($files_to_create)
 
         foreach($files_to_create as $file=>$content) {
 
-            echo 'Creating file: [' . $file . '] ... ';
+            echo xtr('Creating file: [:filename] ... ', array(':filename' => $file));
 
             if ($fd = @fopen(constant('LC_ROOT_DIR') . $file, 'w')) {
                 @fwrite($fd, $content);
@@ -1741,7 +1786,7 @@ function create_htaccess_files($files_to_create)
     }
 
     if (!$result) {
-        x_install_log('Failed to create files', $failedFiles);
+        x_install_log(xtr('Failed to create files'), $failedFiles);
     }
 
     return $result;
@@ -1836,7 +1881,16 @@ function copy_files($source_dir, $parent_dir, $destination_dir, &$failedList)
             if (@is_file($sourceFile) && $file != '.htaccess') {
 
                 if (!@copy($sourceFile, $destinationFile)) {
-                    echo "Copying $source_dir$parent_dir/$file to $destination_dir$parent_dir/$file ... " . status(false) . "<BR>\n";
+                    echo xtr(
+                        'Copying :source_dir:parent_dir/:file to :destination_dir:parent_dir/:file ... ',
+                        array(
+                            ':source_dir' => $source_dir,
+                            ':parent_dir' => $parent_dir,
+                            ':file' => $file,
+                            ':destination_dir' => $destination_dir,
+                        )
+                    ) 
+                    . status(false) . "<BR>\n";
                     $result = false;
                     $failedList[] = sprintf('copy(%s, %s)', $sourceFile, $destinationFile);
                 }
@@ -1845,7 +1899,14 @@ function copy_files($source_dir, $parent_dir, $destination_dir, &$failedList)
 
             } elseif (@is_dir($sourceFile) && $file != '.' && $file != '..') {
 
-                echo "Creating directory $destination_dir$parent_dir/$file ... ";
+                echo xtr(
+                    'Creating directory :destination_dir:parent_dir/:file ... ',
+                    array(
+                        ':destination_dir' => $destination_dir,
+                        ':parent_dir' => $parent_dir,
+                        ':file' => $file,
+                    )
+                );
 
                 if (!@file_exists($destinationFile)) {
 
@@ -1859,7 +1920,7 @@ function copy_files($source_dir, $parent_dir, $destination_dir, &$failedList)
                     }
 
                 } else {
-                    echo '<font color="blue">[Already exists]</font>';
+                    echo '<font color="blue">[' . xtr('Already exists') . ']</font>';
                 }
 
                 echo "<BR>\n";
@@ -2353,10 +2414,10 @@ function status($status, $code = null)
             $first_error = $code;
         }
 
-        $return = ($status ? '<FONT color=green>[OK]</FONT>' : '<a href="javascript: showDetails(\'' . $code  . '\');" onClick=\'this.blur();\' title=\'Click here to see more detailes\'><FONT color=red style="text-decoration : underline" id="failed_' . $code . '">[FAILED]</FONT></a>');
+        $return = ($status ? '<FONT color=green>[OK]</FONT>' : '<a href="javascript: showDetails(\'' . $code  . '\');" onClick=\'this.blur();\' title=\'' . xtr('Click here to see more details') . '\'><FONT color=red style="text-decoration : underline" id="failed_' . $code . '">[' . xtr('FAILED') . ']</FONT></a>');
 
     } else {
-        $return = ($status ? '<FONT color=green>[OK]</FONT>' : '<FONT color=red>[FAILED]</FONT>');
+        $return = ($status ? '<FONT color=green>[OK]</FONT>' : '<FONT color=red>[' . xtr('FAILED') . ']</FONT>');
     }
 
     return $return;
@@ -2372,7 +2433,7 @@ function status($status, $code = null)
  */
 function status_skipped() 
 {
-    return '<FONT color=blue>[SKIPPED]</FONT>';
+    return '<FONT color=blue>[' . xtr('SKIPPED') . ']</FONT>';
 }
 
 /**
@@ -2387,12 +2448,12 @@ function status_skipped()
  */
 function fatal_error($txt) {
 
-    x_install_log('Fatal error: ' . $txt);
+    x_install_log(xtr('Fatal error') . ': ' . $txt);
 
 ?>
 <CENTER>
 <P>
- <B><FONT color=red>Fatal error: <?php echo $txt ?><BR>Please correct the error(s) before proceeding to the next step.</FONT></B>
+<B><FONT color=red><?php echo xtr('Fatal error'); ?>: <?php echo $txt ?><br /><?php echo xtr('Please correct the error(s) before proceeding to the next step.'); ?></FONT></B>
 </P>
 </CENTER>
 <?php
@@ -2410,12 +2471,12 @@ function fatal_error($txt) {
  */
 function warning_error($txt) {
 
-    x_install_log('Warning: ' . $txt);
+    x_install_log(xtr('Warning') . ': ' . $txt);
 
 ?>
 <CENTER>
 <P>
- <B><FONT color=red>Warning: <?php echo $txt ?></FONT></B>
+ <B><FONT color=red><?php echo xtr('Warning'); ?>: <?php echo $txt ?></FONT></B>
 </P>
 </CENTER>
 <?php
@@ -2454,10 +2515,10 @@ function rename_install_script()
     $result = (!@file_exists(LC_ROOT_DIR . 'install.php') && @file_exists(LC_ROOT_DIR . $install_name) ? $install_name : false);
     
     if ($result) {
-        x_install_log('Installation script renamed to ' . $install_name);
+        x_install_log(xtr('Installation script renamed to :filename', array(':filename' => $install_name)));
     
     } else {
-        x_install_log('Warning! Installation script renaming failed');
+        x_install_log(xtr('Warning! Installation script renaming failed'));
     }
 
     return $result;
@@ -2586,7 +2647,7 @@ function check_authcode(&$params)
     }
 
     if (!isset($params['auth_code']) || trim($params['auth_code']) != $authcode) {
-        warning_error('Incorrect auth code! You cannot proceed with the installation.');
+        warning_error(xtr('Incorrect auth code! You cannot proceed with the installation.'));
         exit();
     }
 }
@@ -2602,7 +2663,7 @@ function check_authcode(&$params)
 function get_authcode()
 {
     if (!$data = @parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
-        fatal_error('Config file not found (' . constant('LC_CONFIG_FILE') . ')');
+        fatal_error(xtr('Config file not found (:filename)', array(':filename' => constant('LC_CONFIG_FILE'))));
     }
 
     return !empty($data['auth_code']) ? $data['auth_code'] : null;
@@ -2629,7 +2690,7 @@ function save_authcode(&$params) {
     $auth_code = generate_authcode();
 
     if (!@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE')) || !$config = file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
-        message('Cannot open config file (' . constant('LC_CONFIG_FILE') . ') for writing!');
+        message(xtr('Cannot open config file \':filename\' for writing!', array(':filename' => constant('LC_CONFIG_FILE'))));
         exit();
     }
 
@@ -2640,7 +2701,7 @@ function save_authcode(&$params) {
     }
 
     if (!save_config($new_config)) {
-        message('Config file "' . constant('LC_CONFIG_FILE') . '" write failed!');
+        message(xtr('Config file \':filename\' write failed!', array(':filename' => constant('LC_CONFIG_FILE'))));
         exit();
     }
 
@@ -2800,7 +2861,7 @@ function module_default_js_next()
         if (document.ifrm.agree.checked) {
             return true;
         } else {
-            alert("You must accept the License Agreement to proceed with the installation. If you do not agree with the terms of the License Agreement, do not install the software.");
+            alert("<?php echo xtr('You must accept the License Agreement to proceed with the installation. If you do not agree with the terms of the License Agreement, do not install the software.'); ?>");
         }
         return false;
     }
@@ -2826,20 +2887,20 @@ function module_check_cfg()
     $warningsFound = false;
 
     $sections = array(
-        'A' => 'Environment checking',
-        'B' => 'Inspecting server configuration'
+        'A' => xtr('Environment checking'),
+        'B' => xtr('Inspecting server configuration'),
     );
 
     $steps = array(
         1 => array(
-            'title'        => 'Verification steps',
+            'title'        => xtr('Verification steps'),
             'section'      => 'A',
             'requirements' => array(
                 'lc_loopback'
             )
         ),
         2 => array(
-            'title'        => 'Checking critical dependencies',
+            'title'        => xtr('Checking critical dependencies'),
             'section'      => 'B',
             'requirements' => array(
                 'lc_php_version',
@@ -2854,7 +2915,7 @@ function module_check_cfg()
             )
         ),
         3 => array(
-            'title'        => 'Checking non-critical dependencies',
+            'title'        => xtr('Checking non-critical dependencies'),
             'section'      => 'B',
             'requirements' => array(
                 'lc_php_file_uploads',
@@ -2906,67 +2967,67 @@ function module_cfg_install_db(&$params)
 
     $paramFields = array(
         'xlite_http_host'  => array(
-            'title'       => 'Web server name',
-            'description' => 'Hostname of your web server (E.g.: www.example.com).',
+            'title'       => xtr('Web server name'),
+            'description' => xtr('Hostname of your web server (E.g.: www.example.com).'),
             'def_value'   => $_SERVER['HTTP_HOST'],
             'required'    => true
         ),
         'xlite_https_host' => array(
-            'title'       => 'Secure web server name',
-            'description' => 'Hostname of your secure (HTTPS-enabled) web server (E.g.: secure.example.com). If omitted, it is assumed to be the same as the web server name.',
+            'title'       => xtr('Secure web server name'),
+            'description' => xtr('Hostname of your secure (HTTPS-enabled) web server (E.g.: secure.example.com). If omitted, it is assumed to be the same as the web server name.'),
             'def_value'   => $_SERVER['HTTP_HOST'],
             'required'    => true
         ),
         'xlite_web_dir'    => array(
-            'title'       => 'LiteCommerce web directory',
-            'description' => 'Path to LiteCommerce files within the web space of your web server (E.g.: /shop).',
+            'title'       => xtr('LiteCommerce web directory'),
+            'description' => xtr('Path to LiteCommerce files within the web space of your web server (E.g.: /shop).'),
             'def_value'   => preg_replace('/\/install(\.php)*/Ss', '', $_SERVER['REQUEST_URI']),
             'required'    => false
         ),
         'mysqlhost'        => array(
-            'title'       => 'MySQL server name',
-            'description' => 'Hostname or IP address of your MySQL server.',
+            'title'       => xtr('MySQL server name'),
+            'description' => xtr('Hostname or IP address of your MySQL server.'),
             'def_value'   => 'localhost',
             'required'    => true
         ),
         'mysqlport'        => array(
-            'title'       => 'MySQL server port',
-            'description' => 'If your database server is listening to a non-standard port, specify its number (e.g. 3306).',
+            'title'       => xtr('MySQL server port'),
+            'description' => xtr('If your database server is listening to a non-standard port, specify its number (e.g. 3306).'),
             'def_value'   => '',
             'required'    => false
         ),
         'mysqlsock'        => array(
-            'title'       => 'MySQL server socket',
-            'description' => 'If your database server is used a non-standard socket, specify it (e.g. /tmp/mysql-5.1.34.sock).',
+            'title'       => xtr('MySQL server socket'),
+            'description' => xtr('If your database server is used a non-standard socket, specify it (e.g. /tmp/mysql-5.1.34.sock).'),
             'def_value'   => '',
             'required'    => false
         ),
         'mysqlbase'        => array(
-            'title'       => 'MySQL database name',
-            'description' => 'The name of the existing database to use (if the database does not exist on the server, you should create it to continue the installation).',
+            'title'       => xtr('MySQL database name'),
+            'description' => xtr('The name of the existing database to use (if the database does not exist on the server, you should create it to continue the installation).'),
             'def_value'   => '',
             'required'    => true
         ),
         'mysqluser'        => array(
-            'title'       => 'MySQL username',
-            'description' => 'MySQL username. The user must have full access to the database specified above.',
+            'title'       => xtr('MySQL username'),
+            'description' => xtr('MySQL username. The user must have full access to the database specified above.'),
             'def_value'   => '',
             'required'    => true
         ),
         'mysqlpass'        => array(
-            'title'       => 'MySQL password',
-            'description' => 'Password for the above MySQL username.',
+            'title'       => xtr('MySQL password'),
+            'description' => xtr('Password for the above MySQL username.'),
             'def_value'   => '',
             'required'    => false
         ),
         'demo'             => array(
-            'title'       => 'Install sample catalog',
-            'description' => 'Specify whether you would like to setup sample categories and products?',
+            'title'       => xtr('Install sample catalog'),
+            'description' => xtr('Specify whether you would like to setup sample categories and products?'),
             'def_value'   => '1',
             'required'    => false,
             'step'        => 2,
             'type'        => 'select',
-            'select_data' => array(1 => 'Yes', 0 => 'No')
+            'select_data' => array(1 => xtr('Yes'), 0 => xtr('No'))
         )
     );
 
@@ -3022,13 +3083,9 @@ function module_cfg_install_db(&$params)
         $output = ob_get_contents();
         ob_end_clean();
 
-        $messageText =<<<OUT
-<p>
- <b><font color="darkgreen">The Installation Wizard needs to know your web server and MySQL database details:</font></b>
-</p>
-OUT;
+        $messageText = '<p><b><font color="darkgreen">' . xtr('The Installation Wizard needs to know your web server and MySQL database details:') . '</font></b></p>';
 
-        $bottomMessage = 'Push the "Next" button below to continue';
+        $bottomMessage = xtr('Push the "Next" button below to continue');
 
 
     // Display second step: review parameters and enter additional data
@@ -3051,7 +3108,7 @@ OUT;
         }
 
         if (strpos($response, $_host) === false) {
-            fatal_error('The web server name and/or web drectory is invalid! Press \'BACK\' button and review web server settings you provided');
+            fatal_error(xtr('The web server name and/or web drectory is invalid! Press \'BACK\' button and review web server settings you provided'));
             $checkError = true;
 
         // Check if database settings provided are valid
@@ -3071,7 +3128,7 @@ OUT;
 
                 // Check if config.php file is writeable
                 if (!@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
-                    fatal_error('Cannot open file "' . constant('LC_CONFIG_FILE') . '" for writing. To install the software, please correct the problem and start the installation again...');
+                    fatal_error(xtr('Cannot open file \':filename\' for writing. To install the software, please correct the problem and start the installation again...', array(':filename' => constant('LC_CONFIG_FILE'))));
                     $checkError = true;
 
                 } else {
@@ -3086,7 +3143,7 @@ OUT;
 
                         foreach ($res as $row) {
                             if (in_array('xlite_products', $row)) {
-                                warning_error('Installation Wizard has detected that the specified database has existing LiteCommerce tables. If you continue with the installation, the tables will be purged.');
+                                warning_error(xtr('Installation Wizard has detected that the specified database has existing LiteCommerce tables. If you continue with the installation, the tables will be purged.'));
                                 break;
                             }
                         }
@@ -3094,7 +3151,7 @@ OUT;
                 }
 
             } else {
-                fatal_error('Can\'t connect to MySQL server specified' . (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : '') . '<br /> Press \'BACK\' button and review MySQL server settings you provided.');
+                fatal_error(xtr('Can\'t connect to MySQL server specified:pdoerr<br /> Press \'BACK\' button and review MySQL server settings you provided.', array(':pdoerr' => (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : ''))));
                 $checkError = true;
             }
         } 
@@ -3122,7 +3179,7 @@ OUT;
         }
 
         if (!$checkError) {
-            $bottomMessage = 'Push the "Next" button below to begin the installation';
+            $bottomMessage = xtr('Push the "Next" button below to begin the installation');
 
         } else {
             $error = true;
@@ -3195,28 +3252,28 @@ function module_cfg_install_db_js_next()
 
             if (document.ifrm.elements[i].name.search("xlite_http_host") != -1) {
                 if (document.ifrm.elements[i].value == "") {
-                    alert("You must provide web server name");
+                    alert("<?php echo xtr('You must provide web server name'); ?>");
                     return false;
                 }
             }
 
             if (document.ifrm.elements[i].name.search("mysqlhost") != -1) {
                 if (document.ifrm.elements[i].value == "") {
-                    alert ("You must provide MySQL server name");
+                    alert ("<?php echo xtr('You must provide MySQL server name'); ?>");
                     return false;
                 }
             }
 
             if (document.ifrm.elements[i].name.search("mysqluser") != -1) {
                 if (document.ifrm.elements[i].value == "") {
-                    alert ("You must provide MySQL username");
+                    alert ("<?php echo xtr('You must provide MySQL username'); ?>");
                     return false;
                 }
             }
 
             if (document.ifrm.elements[i].name.search("mysqlbase") != -1) {
                 if (document.ifrm.elements[i].value == "") {
-                    alert ("You must provide MySQL database name");
+                    alert ("<?php echo xtr('You must provide MySQL database name'); ?>");
                     return false;
                 }
             }
@@ -3258,7 +3315,7 @@ function module_install_cache(&$params)
     <td>
 
         <center>
-            <br /><?php message("Wait until cache is built then push the \"Next\" button below to continue"); ?>
+            <br /><?php message(xtr('Wait until cache is built then push the \'Next\' button below to continue')); ?>
         </center>
 
         <br />
@@ -3325,7 +3382,7 @@ function module_install_dirs(&$params)
     $result = doInstallDirs($params);
 
     if (!$result) {
-        fatal_error("Fatal error encountered while creating directories, probably because of incorrect directory permissions. This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.");
+        fatal_error(xtr('Fatal error encountered while creating directories, probably because of incorrect directory permissions. This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.'));
     }
 
 ?>
@@ -3343,7 +3400,7 @@ function module_install_dirs(&$params)
 ?>
             <br />
 <?php
-        message('Push the "Next" button below to continue'); 
+        message(xtr('Push the \'Next\' button below to continue')); 
      }
 ?>
 
@@ -3397,21 +3454,21 @@ function module_cfg_create_admin(&$params)
 
     $paramFields = array(
         'login'             => array(
-            'title'       => 'E-mail',
-            'description' => 'E-mail address of the store administrator',
+            'title'       => xtr('E-mail'),
+            'description' => xtr('E-mail address of the store administrator'),
             'def_value'   => isset($params['login']) ? $params['login'] : '',
             'required'    => true,
             'type'        => 'text'
         ),
         'password'          => array(
-            'title'       => 'Password',
+            'title'       => xtr('Password'),
             'description' => '',
             'def_value'   => isset($params['password']) ? $params['password'] : '',
             'required'    => true,
             'type'        => 'password'
         ),
         'confirm_password'  => array(
-            'title'       => 'Confirm password',
+            'title'       => xtr('Confirm password'),
             'description' => '',
             'def_value'   => isset($params['confirm_password']) ? $params['confirm_password'] : '',
             'required'    => true,
@@ -3425,7 +3482,7 @@ function module_cfg_create_admin(&$params)
 
 <CENTER>
 <P>
- <B><FONT color="darkgreen">Creating administrator profile</FONT></B>
+<B><FONT color="darkgreen"><?php echo xtr('Creating administrator profile'); ?></FONT></B>
 </P>
 
 
@@ -3433,7 +3490,7 @@ function module_cfg_create_admin(&$params)
 
  <TR class="Clr<?php echo $clrNumber; $clrNumber = ($clrNumber == 2) ? 1 : 2; ?>">
    <td colspan=2>
-<p align=justify>E-mail and password that you provide on this screen will be used to create primary administrator profile. Use them as credentials to access the Administrator Zone of your online store.</p>
+   <p align=justify><?php echo xtr('E-mail and password that you provide on this screen will be used to create primary administrator profile. Use them as credentials to access the Administrator Zone of your online store.'); ?></p>
    <p>
    </td>
  </tr>
@@ -3486,15 +3543,15 @@ function module_cfg_create_admin_js_next()
         // validate password and password confirm
         //
         if (document.ifrm.elements['params[password]'].value == "") {
-            alert('Please, enter non-empty password');
+            alert('<?php echo xtr('Please, enter non-empty password'); ?>');
             return false;
         }    
         if (document.ifrm.elements['params[confirm_password]'].value == "") {
-            alert('Please, enter non-empty password confirmation');
+            alert('<?php echo xtr('Please, enter non-empty password confirmation'); ?>');
             return false;
         }    
         if (document.ifrm.elements['params[password]'].value != document.ifrm.elements['params[confirm_password]'].value) {
-            alert("Password doesn't match confirmation!");
+            alert("<?php echo xtr('Password doesn\'t match confirmation!'); ?>");
             return false;
         }
         return true;
@@ -3507,7 +3564,7 @@ function module_cfg_create_admin_js_next()
         if (goodEmail != -1) {
             return true;
         } else {
-            alert("Please, specify a valid e-mail address!");
+            alert("<?php echo xtr('Please, specify a valid e-mail address!'); ?>");
             field.focus();
             field.select();
             return false;
