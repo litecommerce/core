@@ -68,7 +68,7 @@ function deleteZones()
 
   <table cellpadding="3" cellspacing="1" width="500">
 
-  <tbody FOREACH="getShippingZones(),k,zn" class="{getRowClass(k,#DialogBox#,#TableRow#)}">
+  <tbody FOREACH="getShippingZones(),k,zn" class="{getRowClass(k,#dialog-box#,#highlight#)}">
 
     <tr>
       <td><input type="checkbox" name="to_delete[{zn.getZoneId()}]"{if:zn.getZoneId()=1} disabled="disabled"{end:}} /></td>

@@ -51,9 +51,9 @@ jQuery(document).ready(function(){
 
 </div>
 
-<table cellspacing="0" cellpadding="0" class="items-list data-table modules-list">
+<table cellspacing="0" cellpadding="0" class="data-table items-list modules-list">
 
-  <tr FOREACH="getPageData(),idx,module" class="{getRowClass(idx,##,#TableRow#)}">
+  <tr FOREACH="getPageData(),idx,module" class="{getRowClass(idx,##,#highlight#)}">
     {displayListPart(#columns#,_ARRAY_(#module#^module))}
   </tr>
 

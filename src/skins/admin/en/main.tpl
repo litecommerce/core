@@ -86,7 +86,6 @@
 <widget module="CDev\EcommerceReports" template="modules/CDev/EcommerceReports/reports.tpl">
 
 <widget target="css_edit" template="common/dialog.tpl" body="css_editor/css_edit.tpl" head="CSS Editor">
-<widget target="image_edit" template="common/dialog.tpl" body="image_editor/edit.tpl" head="Image Editor">
 
 {*
 <widget target="change_skin" template="common/dialog.tpl" body="change_skin.tpl" head="Change Current Skin">
@@ -98,8 +97,6 @@
 <widget class="\XLite\View\Tabber" target="db" body="{pageTemplate}" switch="page">
 
 <widget target="import_users" template="common/dialog.tpl" body="import_users.tpl" head="Import users">
-<widget target="import_catalog" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">
-<widget target="export_catalog" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">
 <widget target="update_inventory" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">
 
 <widget target="template_editor" class="\XLite\View\Tabber" body="{pageTemplate}" switch="editor">

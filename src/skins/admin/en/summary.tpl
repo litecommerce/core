@@ -114,7 +114,7 @@ function setVisible(element_id)
 </tr>
 
 {foreach:check_dirs,k,v}
-<tr class="{getRowClass(k,#DialogBox#,#TableRow#)}">
+<tr class="{getRowClass(k,#dialog-box#,#highlight#)}">
 	<td>{v.dir}</td>
 	<td>
 		{if:v.error=##}<font class="SuccessMessage">OK</font>{end:}
@@ -124,7 +124,7 @@ function setVisible(element_id)
         {if:v.error=#cannot_chmod_subdirs#}<font class="ErrorMessage">subdirectories problems</font>&nbsp;&nbsp;<a href="javascript: setVisible('details_{k}')" class="NavigationPath"><b>details</b>&nbsp;&gt;&gt</a>{end:}
 	</td>
 </tr>
-<tr class="{getRowClass(k,#DialogBox#,#TableRow#)}" style="display : none" id="details_{k}" IF="v.error=#cannot_chmod_subdirs#">
+<tr class="{getRowClass(k,#dialog-box#,#highlight#)}" style="display : none" id="details_{k}" IF="v.error=#cannot_chmod_subdirs#">
     <td colspan="4">
         &nbsp;Cannot set {dirPermissionStr} permissions for subdirectories:<br />
         {foreach:v.subdirs,sid,subdir}
@@ -135,7 +135,7 @@ function setVisible(element_id)
 {end:}
 
 {foreach:check_files,k,v}
-<tr class="{getRowClass(k,#DialogBox#,#TableRow#)}">
+<tr class="{getRowClass(k,#dialog-box#,#highlight#)}">
   <td>{v.file}</td>
   <td>
  		{if:v.error=##}<font class="SuccessMessage">OK</font>{end:}

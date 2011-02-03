@@ -11,58 +11,18 @@
  * @since     3.0.0
  */
 
-.items-list
+table.items-list
 {
-}
-
-.items-list .sort-order
-{
-}
-
-.items-list .sort-order span.selected
-{
-  font-weight: bold;
-  text-decoration: underline;
-}
-
-.items-list .sort-order div.part
-{
-  display: inline;
-}
-
-.items-list .table
-{
-  padding: 5px;
   width: 100%;
 }
 
-.items-list .table td
-{
-  padding: 3px;
-  white-space: nowrap;
-}
-
-.items-list .table a.name
+table.items-list .sort-order span.selected
 {
   font-weight: bold;
   text-decoration: underline;
 }
 
-.items-list .table a:hover
+table.items-list .sort-order div.part
 {
-  text-decoration: none;
-}
-
-.items-list .table th
-{
-  padding: 5px;
-  font-size: 1.3em;
-  font-weight: normal;
-  background-color: #e5ebef;
-  white-space: nowrap;
-}
-
-.items-list .table a
-{
-  text-decoration: underline;
+  display: inline;
 }

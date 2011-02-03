@@ -163,7 +163,8 @@ class ImportCatalog extends \XLite\Controller\Admin\AAdmin
 
     function getImagesDir()
     {
-        $image = new \XLite\Model\Image();
-        return ($this->xlite->config->Images->images_directory != "") ? $this->xlite->config->Images->images_directory : \XLite\Model\Image::IMAGES_DIR;
+        //$image = new \XLite\Model\Image();
+        //return ($this->xlite->config->Images->images_directory != "") ? $this->xlite->config->Images->images_directory : \XLite\Model\Image::IMAGES_DIR;
+        return LC_IMAGES_DIR;
     }
 }

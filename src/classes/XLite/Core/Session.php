@@ -91,8 +91,10 @@ class Session extends \XLite\Base\Singleton
      */
     protected function __construct()
     {
-        $this->clearGardage();
+        $this->clearGarbage();
+
         if (!$this->restoreSession()) {
+
             $this->createSession();
         }
 
@@ -201,7 +203,7 @@ class Session extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function clearGardage()
+    protected function clearGarbage()
     {
         \XLite\Core\Database::getRepo('XLite\Model\Session')->removeExpired();
     }
@@ -235,6 +237,7 @@ class Session extends \XLite\Base\Singleton
         $this->createSession();
 
         if ($old) {
+
             foreach (\XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findById($oldId) as $cell) {
                 $cell->setId($this->session->getId());
             }
