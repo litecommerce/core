@@ -20,7 +20,7 @@
     <th valign="top" align=center>Total</th>
     <th valign="top">&nbsp;</th>
 </tr>
-<tr FOREACH="recentOrders,order_idx,order" class="{getRowClass(order_idx,##,#TableRow#)}">
+<tr FOREACH="recentOrders,order_idx,order" class="{getRowClass(order_idx,##,#highlight#)}">
     <td>&nbsp;<a href="admin.php?target=order&order_id={order.order_id}" onClick="this.blur()"><u>{order.order_id}</u></a></td>
     <td><widget template="common/order_status.tpl"></td>
 	<widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/orders/factor.tpl">

@@ -19,7 +19,7 @@
                     <th>Logged as</th>
                 </tr>
 				<tbody IF="recentAdmins">
-				<tr FOREACH="recentAdmins,recentAdmin" class="DialogBox">
+				<tr FOREACH="recentAdmins,recentAdmin" class="dialog-box">
 					<td align="center">{formatTime(recentAdmin.last_login):h}</td>
 					<td>{recentAdmin.login:h}</td>
 				</tr>

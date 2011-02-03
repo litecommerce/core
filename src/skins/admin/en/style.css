@@ -259,7 +259,8 @@ body
  * Footer styles
  */
 
-#footer {
+#footer
+{
   padding-top: 10px;
   border-top: solid 1px #e6e6e6;
   height: 60px;
@@ -280,7 +281,7 @@ body
 }
 
 /**
- * Main content styles
+ * Common styles
  */
 
 #content
@@ -298,16 +299,7 @@ div.noscript
   font-weight: bold;
 }
 
-
 /* Page tabs */
-
-div.tabbed-content-wrapper
-{
-}
-
-div.tabs-container
-{
-}
 
 div.page-tabs
 {
@@ -338,8 +330,8 @@ div.page-tabs ul li a
   -moz-border-radius: 10px 10px 0 0;
   -webkit-border-radius: 10px 10px 0 0;
   border-radius: 10px 10px 0 0;
-  background: none repeat scroll 0 0 #EBF7FF;
-  border-color: #CADCE8 #CADCE8;
+  background: none repeat scroll 0 0 #ebf7ff;
+  border-color: #cadce8 #cadce8;
   border-style: solid solid none;
   border-width: 1px 1px 0;
   display: block;
@@ -358,12 +350,69 @@ div.page-tabs ul li.tab-current a
   border-bottom: 1px solid #fff;
 }
 
+/* Data table */
 
-/**
- * Pages styles
- */
+table.data-table th,
+table.data-table td
+{
+  padding: 5px 10px;
+  white-space: nowrap;
+  color: #333;
+}
 
-/* Settings page */
+table.data-table th
+{
+  background-color: #e5ebef;
+}
+
+table.data-table td a
+{
+  text-decoration: underline;
+} 
+  
+table.data-table th,
+table.data-table th a,
+table.data-table th span
+{ 
+  font-size: 16px;
+  font-weight: normal;
+  color: #154e9c;
+}
+
+table.data-table th a {
+  text-decoration: none;
+}
+
+table.data-table th a:hover {
+  text-decoration: underline;
+}
+
+table.data-table tr.highlight td
+{
+  background-color: #f2f2f2;
+}
+
+table.data-table .extender
+{
+  width: 100%;
+}
+
+table.data-table td.extender input
+{
+  width: 90%;
+}
+
+table.data-table td.center
+{
+  text-align: center;
+}
+
+.dialog-box
+{
+  background-color: #fff;
+}
+
+/* Settings pages */
 table.settings-table tr td.setting-name
 {
   padding: 7px 0 7px 10px;
@@ -374,6 +423,8 @@ table.settings-table tr td h2
 {
   margin: 30px 0 10px 0;
 }
+
+
 
 /***********************************************************
   FIXME: TO REVISE BELOW STYLES, REMOVE UNNECESSARY
@@ -406,10 +457,6 @@ ul,
 .CategoriesList
 {
 	font-size: 12px;
-}
-.DialogBox
-{
-        BACKGROUND-COLOR: #ffffff;
 }
 .DialogBorder
 {
@@ -568,58 +615,7 @@ table.plain-table td
   padding: 5px 0px 10px 0px;
 }
 
-table.data-table
-{
-  background-color: #ddd;
-}
 
-table.data-table th
-{
-  background-color: #e5ebef;
-  padding: 3px 5px;
-}
-
-table.data-table td
-{
-  background-color: #fff;
-  padding: 3px;
-}
-
-table.data-table tr.highlight td
-{
-  background-color: #f2f2f2;
-}
-
-table.data-table .extender
-{
-  width: 100%;
-}
-
-table.data-table td.extender input
-{
-  width: 90%;
-}
-
-table.data-table td.center
-{
-  text-align: center;
-}
-
-table.data-table a
-{
-  text-decoration: underline;
-  color: #0055bd;
-}
-
-table.data-table a:hover
-{
-  text-decoration: none;
-}
-
-table.data-table input.extender
-{
-  width: 98%;
-}
 
 input.orderby
 {
@@ -761,6 +757,15 @@ button.invert:hover
   );
 }
 
+.highlight
+{
+    background-color: #eee;
+}
+
+
+
+
+
 .AomTableHead
 {
     BACKGROUND-COLOR: #E5EBEF;
@@ -863,10 +868,6 @@ A.AomMenu:active
 .UpdateButton
 {
 	    background-color: #CDD9E1; 
-}
-.TableRow
-{
-    BACKGROUND-COLOR: #EEEEEE
 }
 .Bottom
 {
@@ -1213,8 +1214,7 @@ button.delete-address
 {
   padding-left: 25px;
   padding-bottom: 10px;
-  font-size: 11px;
-  font-weight: bold;
+  font-size: 12px;
 }
 
 .table-label

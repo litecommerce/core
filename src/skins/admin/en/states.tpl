@@ -60,7 +60,7 @@ function setHeaderChecked()
 <p>
 <table cellpadding="0" cellspacing="0" border="0">
 	<tr><td>&nbsp;</td></tr>
-	<tr class="DialogBox">
+	<tr class="dialog-box">
 		<td class="AdminHead">List of states</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
@@ -73,7 +73,7 @@ function setHeaderChecked()
 				    <th class="TableHead"><input id="select_states" type="checkbox" onClick="this.blur();setChecked('update_delete_states_form','state_ids',this.checked);"></th>
 				</tr>
 
-				<tr FOREACH="states,state_idx,state" class="{getRowClass(state_idx,#DialogBox#,#TableRow#)}">
+				<tr FOREACH="states,state_idx,state" class="{getRowClass(state_idx,#dialog-box#,#highlight#)}">
 				    <td>
 				        <input type="text" size="8" name="state_data[{state.state_id}][code]" value="{state.code:r}">
 				    </td>
@@ -117,7 +117,7 @@ function setHeaderChecked()
 
 <table cellpadding="0" cellspacing="0" border="0">
 	<tr><td>&nbsp;</td></tr>
-	<tr class="DialogBox">
+	<tr class="dialog-box">
 		<td class="AdminTitle">Add new state</td>
 	</tr>
 	<tr><td>&nbsp;</td></tr>
@@ -128,7 +128,7 @@ function setHeaderChecked()
 			    <th class="TableHead">Code</th>
 			    <th class="TableHead">State</th>
 			</tr>
-			<tr class="DialogBox">
+			<tr class="dialog-box">
 			    <td><input type="text" size="8" name="code" value="{code}"></td>
 			    <td><input type="text" size="30" name="state" value="{state}"></td>
 			</tr>
@@ -137,7 +137,7 @@ function setHeaderChecked()
 	</tr>
 	<tr><td>&nbsp;</td></tr>
 {if:!valid}
-	<tr class="DialogBox">
+	<tr class="dialog-box">
 		<td IF="status=#code#" colspan="2"><font class="ErrorMessage">&gt;&gt;&nbsp;Mandatory field "Code" empty.</font><br><br></td>
 		<td IF="status=#state#" colspan="2"><font class="ErrorMessage">&gt;&gt;&nbsp;Mandatory field "State" empty.</font><br><br></td>
 	</tr>

@@ -58,9 +58,9 @@ function confirmNote(action, id)
   <input type="hidden" name="action" value="update" />
   <input type="hidden" name="module_type" value="{key}" />
 
-  <table cellspacing="0" cellpadding="0" class="items-list data-table modules-list">
+  <table cellspacing="0" cellpadding="0" class="data-table items-list modules-list">
 
-    <tr FOREACH="getPageData(),idx,module" class="{getRowClass(idx,##,#TableRow#)}{if:!module.getEnabled()} disabled{end:}">
+    <tr FOREACH="getPageData(),idx,module" class="{getRowClass(idx,##,#highlight#)}{if:!module.getEnabled()} disabled{end:}">
       {displayListPart(#columns#,_ARRAY_(#module#^module))}
     </tr>
 

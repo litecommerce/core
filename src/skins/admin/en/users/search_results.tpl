@@ -40,7 +40,7 @@ function searchOrders()
   <input type="hidden" name="action" value="" />
   <input type="hidden" name="backUrl" value="{url:r}" />
 
-  <table border="0" width="100%">
+  <table border="0" width="100%" class="data-table">
 
     <tr class="TableHead">
       <td width="10">&nbsp;</td>
@@ -52,7 +52,7 @@ function searchOrders()
       <td nowrap align="left" width="110">Last login</td>
     </tr>
 
-    <tr FOREACH="namedWidgets.searchResults.pageData,id,user" class="{getRowClass(id,##,#TableRow#)}">
+    <tr FOREACH="namedWidgets.searchResults.pageData,id,user" class="{getRowClass(id,##,#highlight#)}">
       <td align="center" width="10"><input type="radio" name="profile_id" value="{user.profile_id}" checked="{isSelected(id,#0#)}"></td>
       <td nowrap><a href="{buildUrl(#profile#,##,_ARRAY_(#profile_id#^user.profile_id))}"><u>{user.login:h}</u></a>{if:!user.status=#E#} (disabled account){end:}</td>
       <td nowrap><a href="{buildUrl(#address_book#,##,_ARRAY_(#profile_id#^user.profile_id))}"><u>{if:user.billing_address.firstname&user.billing_address.lastname}{user.billing_address.firstname:h}&nbsp;{user.billing_address.lastname:h}{else:}n/a{end:}</u></a></td>

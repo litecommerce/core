@@ -43,7 +43,7 @@
     </tr>
 
     <tbody FOREACH="_rates,ind,tax">
-      <tr class="{getRowClass(ind,#DialogBox#,#TableRow#)}">
+      <tr class="{getRowClass(ind,#dialog-box#,#highlight#)}">
         {getLevels(ind):h}
         {if:isCondition(tax)}
           <td colspan="{getColspan(ind,#3#)}" bgcolor="#e8e8e8">
