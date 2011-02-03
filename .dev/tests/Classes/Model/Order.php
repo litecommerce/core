@@ -26,8 +26,23 @@
  * @since      3.0.0
  */
 
+/**
+ * XLite_Tests_Model_Order 
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 {
+    /**
+     * testCreate 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function testCreate()
     {
         $order = $this->getTestOrder();

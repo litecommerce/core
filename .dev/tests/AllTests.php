@@ -294,7 +294,6 @@ class XLite_Tests_AllTests
                     if (isset($includeTests[$matches[1]])) {
                         eval($class . '::$testsRange = array($includeTests[$matches[1]]);');
                     }
-
                 }
             }
         }
