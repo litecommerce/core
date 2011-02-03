@@ -82,10 +82,7 @@
 
 <widget module="CDev\GoogleCheckout" template="modules/CDev/GoogleCheckout/main.tpl">
 
-<widget template="stats.tpl">
 <widget module="CDev\EcommerceReports" template="modules/CDev/EcommerceReports/reports.tpl">
-
-<widget target="css_edit" template="common/dialog.tpl" body="css_editor/css_edit.tpl" head="CSS Editor">
 
 {*
 <widget target="change_skin" template="common/dialog.tpl" body="change_skin.tpl" head="Change Current Skin">

@@ -32,6 +32,7 @@
       <widget template="{getTabTemplate()}" IF="isTemplateOnlyTab()" />
       <widget widget="{getTabWidget()}" IF="isWidgetOnlyTab()" />
       <widget widget="{getTabWidget()}" template="{getTabTemplate()}" IF="isFullWidgetTab()" />
+      <widget template="{getPageTemplate()}" IF="isCommonTab()" />
     </div>
 
   </div>
