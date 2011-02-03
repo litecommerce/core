@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Product quantity box (for customer area)
+ * Popup box to display error
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,6 +9,10 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ *
+ * @ListChild (list="product.quantity-box", weight="10")
  *}
 
-{displayViewListContent(#product.quantity-box#)}
+<div class="product-max-qty">
+  {t(#Max#)}: <span class="product-max-qty-container">{getMaxQuantity()}</span>
+</div>
