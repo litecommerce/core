@@ -29,27 +29,16 @@
 namespace XLite\View\ModulesManager;
 
 /**
- * Modules upload widget
+ * Addons search and installation widget
  *
  * @package XLite
  * @see     ____class_see____
  * @since   3.0
  *
- * @ListChild (list="center")
+ * @ListChild (list="admin.center", zone="admin")
  */
-class UploadAddons extends \XLite\View\Dialog
+class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
 {
-    /**
-     * Target that is allowed for Upload Addons widget 
-     */
-    const UPLOAD_ADDONS_TARGET  = 'upload_addons';
-
-    /**
-     * Javascript file that is used for multiadd functionality 
-     */
-    const JS_SCRIPT             = 'modules_manager/upload_addons/js/upload_addons.js';
-
-
     /**
      * Return list of targets allowed for this widget
      *
@@ -61,28 +50,25 @@ class UploadAddons extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
-        $result[] = self::UPLOAD_ADDONS_TARGET;
+        $result[] = 'module_installation';
     
         return $result;
     }
 
-    /** 
-     * Get a list of JavaScript files required to display the widget properly
-     * 
-     * @return void
+    /**
+     * Register CSS files
+     *
+     * @return array
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getJSFiles()
-    {   
-        $list = parent::getJSFiles();
-
-        $list[] = self::JS_SCRIPT;
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
 
         return $list;
-    }   
-
+    }
 
     /**
      * Return title
@@ -93,7 +79,7 @@ class UploadAddons extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'Upload add-ons';
+        return 'Install addon';
     }
 
     /**
@@ -105,7 +91,7 @@ class UploadAddons extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'modules_manager' . LC_DS . 'upload_addons';
+        return parent::getDir() . LC_DS . 'license';
     }
 
 }

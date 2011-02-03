@@ -156,7 +156,8 @@ class PackModule extends \XLite\Base
 
                 $phar->buildFromDirectory($this->getTempDir());
 
-                $phar->compress(\Phar::GZ);
+                // TODO check compatibility. not every server supports it.
+                // $phar->compress(\Phar::GZ);
 
             } catch (\Exception $e) {
 
@@ -191,7 +192,6 @@ class PackModule extends \XLite\Base
         } else {
 
             $download = null;
-
         }
 
         if (!is_null($download)) {
