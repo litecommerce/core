@@ -1,17 +1,44 @@
-Options -Indexes
-<IfModule mod_access.c>
-<Files "*.tpl">
-Deny from all  
-</Files>
-<Files "*.php">
-Deny from all
-</Files>
-<Files "*.pl">
-Deny from all 
-</Files>
-<Files "*.conf">
-Deny from all
-</Files>
+# vim: set ts=2 sw=2 sts=2 et:
+# GIT: $Id$
+#
+# Skins-specified Apache options
+#
 
-Allow from all 
+Options -Indexes
+
+<IfModule mod_access.c>
+  <Files "*.tpl">
+    Deny from all  
+  </Files>
+
+  <Files "*.php">
+    Deny from all
+  </Files>
+
+  <Files "*.pl">
+    Deny from all 
+  </Files>
+
+  <Files "*.conf">
+    Deny from all
+  </Files>
+
+  Allow from all 
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive Off
+
+  # Cache all files for 2 weeks after access (A).
+  ExpiresDefault A1209600
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "(\.js\.gz|\.css\.gz)$">
+    # Serve correct encoding type.
+    Header append Content-Encoding gzip
+
+    # Force proxies to cache gzipped & non-gzipped css/js files separately.
+    Header append Vary Accept-Encoding
+  </FilesMatch>
 </IfModule>
