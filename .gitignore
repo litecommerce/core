@@ -1,3 +1,6 @@
 /DIFF
 /.local
 /build
+/.dev/tests/dump.sql
+/coverage
+/var

@@ -28,11 +28,19 @@ function ProductQuantityBoxController(base)
 
     var o = this;
 
-    this.block.change(
+    this.block.bind(
+      'change keyup',
       function (event) {
-        (parseInt(jQuery('span.product-max-qty-container', this.base).html()) < parseInt(jQuery('input.quantity', this.base).val())) 
+        (parseInt(jQuery('span.product-max-qty-container', o.base).html()) < parseInt(jQuery('input.quantity', o.base).val())) 
           ? o.showErrorBox() 
           : o.hideErrorBox();
+      }
+    );
+
+    this.block.bind(
+      'ready',
+      function (event) {
+        o.block.data('max', parseInt(jQuery('span.product-max-qty-container', this.base).html()));
       }
     );
   }

@@ -638,6 +638,25 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
+     * Prepare JS files needed for popups
+     * TODO: check if there is a more convinient way to do that
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPopupJS()
+    {
+        return array_merge(
+            $this->getWidget(array(), '\XLite\View\Product\Details\Customer\Page\QuickLook')->getJSFiles(),
+            $this->getWidget(array(), '\XLite\View\Product\Details\Customer\Image')->getJSFiles(),
+            $this->getWidget(array(), '\XLite\View\Product\Details\Customer\Gallery')->getJSFiles(),
+            $this->getWidget(array(), '\XLite\View\Product\QuantityBox')->getJSFiles()
+        );
+    }
+
+    /**
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
@@ -653,7 +672,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         return array_merge($list, $this->getPopupCSS());
     }
 
-
     /**
      * Get a list of JavaScript files required to display the widget properly
      *
@@ -665,15 +683,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     {
         $list = parent::getJSFiles();
 
-        // FIXME
-        foreach (array('Page\QuickLook', 'Image', 'Gallery') as $class) {
-            $list = array_merge(
-                $list,
-                $this->getWidget(array(), '\XLite\View\Product\Details\Customer\\' . $class)->getJSFiles()
-            );
-        }
-
-        return $list;
+        return array_merge($list, $this->getPopupJS());
     }
 
     /**

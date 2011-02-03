@@ -146,7 +146,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
      */
     protected function isCartPage()
     {
-        $this->getParam(self::PARAM_IS_CART_PAGE);
+        return $this->getParam(self::PARAM_IS_CART_PAGE);
     }
 
     /**
