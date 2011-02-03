@@ -22,10 +22,9 @@
     <span IF="module.getPurchased()" class="purchased">({t(#Purchased#)})</span>
 
     <form action="admin.php" method="post">
-      <input type="hidden" name="target" value="module_license" />
-      <input type="hidden" name="target" value="retrieve" />
-      <input type="hidden" name="module" value="{module.getName()}" />
-      <input type="hidden" name="author" value="{module.getAuthor()}" />
+      <input type="hidden" name="target" value="module_installation" />
+      <input type="hidden" name="action" value="get_license" />
+      <input type="hidden" name="module_id" value="{module.getModuleId()}" />
 
       <div class="install" IF="canInstall(module)">
         <widget class="\XLite\View\Button\Submit" label="{t(#Install#)}" />

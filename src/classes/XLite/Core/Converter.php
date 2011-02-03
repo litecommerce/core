@@ -156,22 +156,16 @@ class Converter extends \XLite\Base\Singleton
     {
         $url = isset($interface) ? $interface : \XLite::getInstance()->getScript();
 
-        $parts = array();
-
         if ($target) {
-            $parts[] = 'target=' . $target;
+            $params['target'] = $target;
         }
 
         if ($action) {
-            $parts[] = 'action=' . $action;
+            $params['action'] = $action;
         }
 
-        if ($params) {
-            $parts[] = http_build_query($params);
-        }
-
-        if ($parts) {
-            $url .= '?' . implode('&', $parts);
+        if (!empty($params)) {
+            $url .= '?' . http_build_query($params);
         }
 
         return $url;
