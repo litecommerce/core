@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="menu.catalog", weight="30")
  *}
-<widget class="\XLite\View\TopMenu\Node" title="Import catalog" linkTarget="import_catalog" />
+<widget class="\XLite\View\TopMenu\Node" title="Import/Export" linkTarget="import_catalog" />

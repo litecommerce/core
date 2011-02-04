@@ -14,32 +14,22 @@
 {if:featuredProductsList}
   <widget class="\XLite\Module\CDev\FeaturedProducts\View\Form\Update" name="fpupdate_form" />
 
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+     <table class="data-table" width="100%">
 
-    <tr>
-      <td bgcolor="#dddddd">
+      <tr>
+        <th width="2"0>Delete</th>
+        <th width="2"0>Pos.</th>
+        <th>Title</th>
+      </tr>
 
-        <table cellpadding="2" cellspacing="1" border="0" width="100%">
-
-          <tr class="TableHead" bgcolor="#ffffff">
-            <th width="2"0>Delete</th>
-            <th width="2"0>Pos.</th>
-            <th>Title</th>
-          </tr>
-
-          <tr bgcolor="#ffffff" FOREACH="featuredProductsList,featuredProduct">
-            <td align="center" width="2"0><input type="checkbox" name="delete[{featuredProduct.id}]" /></td>
-            <td align="center" width="2"0><input type="text" size="4" name="orderbys[{featuredProduct.id}]" value="{featuredProduct.order_by}" /></td>
-            <td nowrap>
-              <a href="admin.php?target=product&product_id={featuredProduct.product.product_id}">{featuredProduct.product.name:h}</a>
-              <font IF="{!featuredProduct.product.enabled}" color="red">&nbsp;&nbsp;&nbsp;(not available for sale)</font>
-            </td>
-          </tr>
-
-        </table>
-
-      </td>
-    </tr>
+      <tr FOREACH="featuredProductsList,idx,featuredProduct" class="{getRowClass(idx,##,#highlight#)}">
+        <td align="center" width="2"0><input type="checkbox" name="delete[{featuredProduct.id}]" /></td>
+        <td align="center" width="2"0><input type="text" size="4" name="orderbys[{featuredProduct.id}]" value="{featuredProduct.order_by}" /></td>
+        <td nowrap>
+          <a href="admin.php?target=product&product_id={featuredProduct.product.product_id}">{featuredProduct.product.name:h}</a>
+          <font IF="{!featuredProduct.product.enabled}" color="red">&nbsp;&nbsp;&nbsp;(not available for sale)</font>
+        </td>
+      </tr>
 
     </table>
 

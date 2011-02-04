@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,22 +26,48 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\CDev\Demo\Controller\Admin;
+namespace XLite\View\Tabs;
 
-class ImageEdit extends \XLite\Controller\Admin\ImageEdit
-implements \XLite\Base\IDecorator
+/**
+ * Tabs related to user profile section
+ * 
+ * @package    XLite
+ * @subpackage View
+ * @see        ____class_see____
+ * @since      3.0.0
+ *
+ * @ListChild (list="admin.center", zone="admin")
+ */
+class Statistics extends \XLite\View\Tabs\ATabs
 {
     /**
-     * Change image
-     * 
-     * @return void
+     * Description of tabs related to user profile section and their targets
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $tabs = array(
+        'orders_stats' => array(
+            'title'    => 'Order statistics',
+        ),
+        'top_sellers' => array(
+            'title'    => 'Top sellers',
+        ),
+    );
+
+    /**
+     * getTitle
+     *
+     * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionChange()
+    protected function getTitle()
     {
-        \XLite\Module\CDev\Demo\Main::doForbidAction();
+        return $this->t('Statistics');
     }
-}
 
+}

@@ -146,7 +146,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
      */
     protected function isCartPage()
     {
-        $this->getParam(self::PARAM_IS_CART_PAGE);
+        return $this->getParam(self::PARAM_IS_CART_PAGE);
     }
 
     /**
@@ -230,7 +230,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
     {
         $list = parent::getJSFiles();
         if (!$this->isCartPage()) {
-            $list[] = $this->getDir() . '/quantity_box.js';
+            $list[] = $this->getDir() . '/controller.js';
         }
 
         return $list;

@@ -28,3 +28,8 @@ input[type="text"].quantity.wrong-amount
   z-index: 1000;
   background: url(images/max_qty_box.png) no-repeat 8px 5px;
 }
+
+.product-quicklook .product-max-qty
+{
+  margin-top: -70px;
+}

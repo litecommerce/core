@@ -51,6 +51,7 @@ class Inventory extends \XLite\Model\AEntity
     const AMOUNT_DEFAULT_INV_TRACK = 1000;
     const AMOUNT_DEFAULT_LOW_LIMIT = 10;
 
+
     /**
      * Inventory unique ID
      *
@@ -127,32 +128,6 @@ class Inventory extends \XLite\Model\AEntity
     protected $product;
 
     /**
-     * Check if low limit is reached; send mail to admin 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function checkForLowLimit()
-    {
-        return $this->getLowLimitEnabled() && $this->getAmount() < $this->getLowLimitAmount();
-    }
-
-    /**
-     * Send notification to admin: product low limit is reached
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function sendLowLimitNotification()
-    {
-        // TODO: add functionality after the Mailer will be refactored
-    }
-
-    /**
      * Get list of cart items containing current product
      * 
      * @return array
@@ -203,14 +178,7 @@ class Inventory extends \XLite\Model\AEntity
      */
     public function changeAmount($delta)
     {
-        if ($this->getEnabled()) {
-
-            // Change by delta
-            $this->setAmount($this->getAmount() + $delta);
-
-            // Check for low limit
-            !$this->checkForLowLimit() ?: $this->sendLowLimitNotification();
-        }
+        !$this->getEnabled() ?: $this->setAmount($this->getAmount() + $delta);
     }
 
     /**
@@ -237,5 +205,17 @@ class Inventory extends \XLite\Model\AEntity
     public function isOutOfStock()
     {
         return $this->getEnabled() ? 0 >= $this->getAvailableAmount() : false;
+    }
+
+    /**
+     * Check if product amount is less than its low limit
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isLowLimitReached()
+    {
+        return $this->getEnabled() && $this->getLowLimitEnabled() && $this->getAmount() < $this->getLowLimitAmount();
     }
 }

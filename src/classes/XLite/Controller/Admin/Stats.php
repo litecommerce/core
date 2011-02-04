@@ -37,13 +37,21 @@ namespace XLite\Controller\Admin;
  */
 class Stats extends \XLite\Controller\Admin\AAdmin
 {
+    /**
+     * params 
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     */
     public $params = array('target');
-    public $page = "orders_stats";
-    public $pages = array('orders_stats' => 'Order statistics',
-                       'top_sellers' => 'Top sellers',
-                       'searchStat' => 'Search statistics',
-                       );
 
+    /**
+     * getTodayDate 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     */
     function getTodayDate()
     {
         if (is_null($this->todayDate)) {
@@ -52,6 +60,12 @@ class Stats extends \XLite\Controller\Admin\AAdmin
         return $this->todayDate;
     }
 
+    /**
+     * getWeekDate 
+     * 
+     * @return int
+     * @see    ____func_see____
+     */
     function getWeekDate()
     {
         if (is_null($this->weekDate)) {
@@ -60,6 +74,12 @@ class Stats extends \XLite\Controller\Admin\AAdmin
         return $this->weekDate;
     }
 
+    /**
+     * getMonthDate 
+     * 
+     * @return int
+     * @see    ____func_see____
+     */
     function getMonthDate()
     {
         if (is_null($this->monthDate)) {

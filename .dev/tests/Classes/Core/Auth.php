@@ -26,10 +26,15 @@
  * @since      3.0.0
  */
 
+/**
+ * XLite_Tests_Core_Auth 
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
 {
-
-
     /**
      * tearDown
      *
@@ -471,5 +476,4 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
 
         $this->assertTrue($result, 'Checking access to the login section');
     }
-
 }
