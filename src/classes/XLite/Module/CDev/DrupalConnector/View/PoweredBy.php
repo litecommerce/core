@@ -51,4 +51,25 @@ class PoweredBy extends \XLite\View\PoweredBy implements \XLite\Base\IDecorator
             ? drupal_is_front_page()
             : parent::isLink();
     }
+
+    /**
+     * Return a Powered By message
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMessage()
+    {
+        if ($this->isLink()) {
+            $phrase = 'Powered by <a href="http://www.litecommerce.com/">LiteCommerce 3</a> integrated with <a href="http://drupal.org/">Drupal</a>';
+
+        } else {
+            $phrase = 'Powered by LiteCommerce 3 integrated with Drupal';
+        }
+
+        return $phrase;
+    }
+
 }

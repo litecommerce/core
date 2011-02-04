@@ -18,3 +18,11 @@ XLite\Model\Config:
     translations:
       - code: en
         option_name: Root URL of the Drupal installation
+  - name: minify_resources
+    category: CDev\DrupalConnector
+    type: checkbox
+    orderby: 20
+    value: '1'
+    translations:
+      - code: en
+        option_name: Minify JS and CSS resources in Drupa 6.x style

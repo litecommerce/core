@@ -133,7 +133,15 @@ ul.products-list li
   width: 53px;
   height: 53px;
   margin: 0 auto;
+  padding: 0px;
+}
+
+.products .product .quicklook a.quicklook-link img {
+  width: 53px;
+  height: 53px;
   background: transparent url(images/icon_quick_look.png) no-repeat top left;
+  margin: 0px;
+  padding: 0px;
 }
 
 
