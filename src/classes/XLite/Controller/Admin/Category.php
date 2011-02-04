@@ -64,22 +64,23 @@ class Category extends \XLite\Controller\Admin\Catalog
     {
         if (empty($categoryId)) {
             $categoryId = $this->getCategoryId();
-        }
+        }   
 
         $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->find($categoryId);
 
-        $img = \XLite\Core\Database::getRepo('XLite\Model\Image\Category\Image')->findOneById($categoryId);
+        $img = $category->getImage();
 
         if (!$img) {
             $img = new \XLite\Model\Image\Category\Image();
-            $img->setCategory($category);
-            $category->setImage($img);
-            \XLite\Core\Database::getEM()->persist($img);
-        }
+        }   
 
         if ($img->loadFromRequest('postedData', 'image')) {
-            \XLite\Core\Database::getEM()->flush();
-        }
+            if (!$img->getCategory())  {
+                $img->setCategory($category);
+                $category->setImage($img);
+                \XLite\Core\Database::getEM()->persist($img);
+            }   
+        }   
 
         return $img;
     }

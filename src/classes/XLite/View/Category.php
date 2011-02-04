@@ -111,7 +111,7 @@ class Category extends \XLite\View\AView
     protected function getWebPreprocessingUrls()
     {
         return array(
-            \Xlite::getInstance()->getShopUrl(),
+            \Xlite::getInstance()->getShopUrl(''),
         );
     }
 
