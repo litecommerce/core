@@ -17,7 +17,7 @@
 
 checkboxes_form = 'shippingratesform';
 checkboxes = new Array(
-{foreach:getShippingMarkups(),k,markup}{if:!k=0},{end:}'sm_{markup.getZoneId()}_{markup.getMethodId()}','to_delete[{markup.getMarkupId()}]'{end:}
+{foreach:getShippingMarkups(),k,markup}{if:!k=0},{end:}'sm_{markup.getZone()}_{markup.getShippingMethod()}','to_delete[{markup.getMarkupId()}]'{end:}
 );
 var lbl_no_items_have_been_selected = 'There are no markups selected';
 
