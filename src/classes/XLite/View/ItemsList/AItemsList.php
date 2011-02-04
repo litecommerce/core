@@ -709,7 +709,7 @@ abstract class AItemsList extends \XLite\View\Container
         $list = parent::getJSFiles();
 
         // Static call of the non-static function
-        $list[] = self::getDir() . '/controller.js';
+        $list[] = self::getDir() . '/items_list.js';
 
         return $list;
     }
