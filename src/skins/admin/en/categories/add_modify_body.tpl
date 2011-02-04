@@ -83,7 +83,7 @@
       <td class="FormButton">Membership</td>
       <td class="Star">*</td>
       <td>
-        <widget class="\XLite\View\MembershipSelect" template="common/select_membership.tpl" field="membership_id" value="{category.membership_id}" />
+        <widget class="\XLite\View\MembershipSelect" template="common/select_membership.tpl" field="membership_id" value="{category.membership}" />
       </td>  
     </tr>
 

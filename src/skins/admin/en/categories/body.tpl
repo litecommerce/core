@@ -45,12 +45,14 @@
           <td nowrap>Membership access:</td>
           <td>&nbsp;</td>
           <td class="FormButton">
-            {if:isSelected(#0#,category.membership_id)}No membership
+
+            {if:isSelected(#0#,category.membership)}No membership
             {else:}
               {foreach:getMemberships(),membership}
-                {if:category.membership_id=membership.membership_id}{category.membership.name}{end:}
+                {if:category.membership=membership.membership_id}{category.membership.name}{end:}
               {end:}
             {end:}
+
           </td>
         </tr>
 
