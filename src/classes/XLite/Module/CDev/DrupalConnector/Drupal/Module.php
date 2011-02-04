@@ -232,15 +232,17 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     public function optimizeJSFiles(array $list)
     {
-        uasort($list, 'drupal_sort_css_js');
+        if (\XLite\Core\Config::getInstance()->CDev->DrupalConnector->minify_resources) {
+            uasort($list, 'drupal_sort_css_js');
 
-        $i = 0;
-
-        foreach ($list as $name => $script) {
-            $list[$name]['weight'] = $i++;
-            $list[$name]['group'] = JS_DEFAULT;
-            $list[$name]['defer'] = true;
-            $list[$name]['every_page'] = false;
+            $i = 0;
+    
+            foreach ($list as $name => $script) {
+                $list[$name]['weight'] = $i++;
+                $list[$name]['group'] = JS_DEFAULT;
+                $list[$name]['defer'] = true;
+                $list[$name]['every_page'] = false;
+            }
         }
 
         return $list;
@@ -258,14 +260,16 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     public function optimizeCSSFiles($list)
     {
-        uasort($list, 'drupal_sort_css_js');
+        if (\XLite\Core\Config::getInstance()->CDev->DrupalConnector->minify_resources) {
+            uasort($list, 'drupal_sort_css_js');
 
-        $i = 0;
+            $i = 0;
 
-        foreach ($list as $name => $style) {
-            $list[$name]['weight'] = $i++;
-            $list[$name]['group'] = CSS_DEFAULT;
-            $list[$name]['every_page'] = false;
+            foreach ($list as $name => $style) {
+                $list[$name]['weight'] = $i++;
+                $list[$name]['group'] = CSS_DEFAULT;
+                $list[$name]['every_page'] = false;
+            }
         }
 
         return $list;
