@@ -28,6 +28,13 @@
 
 require_once __DIR__ . '/ACustomer.php';
 
+/**
+ * XLite_Web_Customer_Cart 
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
 {
     /**

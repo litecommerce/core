@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,36 +26,50 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\CDev\Demo\Controller\Admin;
+namespace XLite\View\Tabs;
 
-class CssEdit extends \XLite\Controller\Admin\CssEdit
-implements \XLite\Base\IDecorator
+/**
+ * Tabs related to user profile section
+ * 
+ * @package    XLite
+ * @subpackage View
+ * @see        ____class_see____
+ * @since      3.0.0
+ *
+ * @ListChild (list="admin.center", zone="admin")
+ */
+class ImportExport extends \XLite\View\Tabs\ATabs
 {
     /**
-     * Save CSS
-     * 
-     * @return void
+     * Description of tabs related to user profile section and their targets
+     *
+     * @var    array
      * @access protected
-     * @see    ____func_see____
+     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected function doActionSave()
-    {
-        \XLite\Module\CDev\Demo\Main::doForbidAction();
-    }
+    protected $tabs = array(
+        'import_catalog' => array(
+            'title'    => 'Import catalog',
+            'template' => 'product/import.tpl',
+        ),
+        'export_catalog' => array(
+            'title'    => 'Export catalog',
+            'template' => 'product/export.tpl',
+        ),
+    );
 
     /**
-     * Restore default CSS
-     * 
-     * @return void
+     * getTitle
+     *
+     * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionRestoreDefault()
+    protected function getTitle()
     {
-        \XLite\Module\CDev\Demo\Main::doForbidAction();
+        return $this->t('Import/Export');
     }
 
 }
-

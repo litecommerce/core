@@ -14,6 +14,6 @@
  * @ListChild (list="product.details.quicklook.info", weight="18")
  *}
 
-<span class="stock-level product-out-of-stock" IF="product.isOutOfStock()">
+<span class="stock-level product-out-of-stock" IF="product.inventory.isOutOfStock()">
   {t(#Out of stock#)}
 </span>

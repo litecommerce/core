@@ -38,7 +38,6 @@ namespace XLite\View\Tabs;
  */
 abstract class ATabs extends \XLite\View\AView
 {
-
     /**
      * Information on tab widgets and their targets defined as an array(tab) descriptions:
      *
@@ -61,7 +60,6 @@ abstract class ATabs extends \XLite\View\AView
      */
     protected $tabs = array();
 
-
     /**
      * Cached result of the getTabs() method
      * 
@@ -70,17 +68,7 @@ abstract class ATabs extends \XLite\View\AView
      * @see    ____var_see____
      * @since  3.0.0
      */
-    private $processedTabs = null;
-
-    /**
-     * Extra information on tabs calculated before displaying the tabs
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $tabsInfo = array();
+    protected $processedTabs = null;
 
     /**
      * Returns the default widget template
@@ -133,19 +121,17 @@ abstract class ATabs extends \XLite\View\AView
         return parent::isVisible() && in_array($this->getCurrentTarget(), $this->getTabTargets());
     }
 
-
     /**
-     * Returns an URL to a tab
+     * Returns tab URL
      * 
      * @param string $target Tab target
-     * @param array  $tab    Tab description (see $this->tabs)
      *  
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function buildTabURL($target, $tab)
+    protected function buildTabURL($target)
     {
         return $this->buildURL($target);
     }
@@ -154,18 +140,16 @@ abstract class ATabs extends \XLite\View\AView
      * Checks whether a tab is selected
      * 
      * @param mixed $target Tab target
-     * @param mixed $tab    Tab description (see $this->tabs)
      *  
      * @return boolean
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isSelectedTab($target, $tab)
+    protected function isSelectedTab($target)
     {
         return ($target === $this->getCurrentTarget());
     }
-
 
     /**
      * Returns default values for a tab description
@@ -177,7 +161,11 @@ abstract class ATabs extends \XLite\View\AView
      */
     protected function getDefaultTabValues()
     {
-        return array('title'=>'', 'widget'=>'', 'template'=>'');
+        return array(
+            'title'     => '',
+            'widget'    => '',
+            'template'  => '',
+        );
     }
 
     
@@ -198,7 +186,7 @@ abstract class ATabs extends \XLite\View\AView
 
             $defaultValues = $this->getDefaultTabValues();
 
-            foreach ($this->tabs as $target=>$tab) {
+            foreach ($this->tabs as $target => $tab) {
 
                 $tab['selected'] = $this->isSelectedTab($target, $tab);
                 $tab['url'] = $this->buildTabURL($target, $tab);
@@ -243,24 +231,6 @@ abstract class ATabs extends \XLite\View\AView
         return (isset($tabs[$target]) ? $tabs[$target] : null);
     }
 
-    /**
-     * Checks whether no template is specified for the selected tab
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isWidgetOnlyTab()
-    {
-        $tab = $this->getSelectedTab();
-
-        if (!is_null($tab)) {
-            return !empty($tab['widget']) && empty($tab['template']);
-        } else {
-            return false;
-        }
-    }
 
     /**
      * Register JS files
@@ -288,7 +258,6 @@ abstract class ATabs extends \XLite\View\AView
         return $list;
     }
 
-
     /**
      * Checks whether no widget class is specified for the selected tab
      * 
@@ -301,11 +270,7 @@ abstract class ATabs extends \XLite\View\AView
     {
         $tab = $this->getSelectedTab();
 
-        if (!is_null($tab)) {
-            return empty($tab['widget']) && !empty($tab['template']);
-        } else {
-            return false;
-        }
+        return !is_null($tab) && empty($tab['widget']) && !empty($tab['template']);
     }
 
     /**
@@ -320,11 +285,22 @@ abstract class ATabs extends \XLite\View\AView
     {
         $tab = $this->getSelectedTab();
 
-        if (!is_null($tab)) {
-            return !empty($tab['widget']) && !empty($tab['template']);
-        } else {
-            return false;
-        }
+        return !is_null($tab) && !empty($tab['widget']) && !empty($tab['template']);
+    }
+
+    /**
+     * Checks whether no template is specified for the selected tab
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isWidgetOnlyTab()
+    {
+        $tab = $this->getSelectedTab();
+
+        return !is_null($tab) && !empty($tab['widget']) && empty($tab['template']);
     }
 
     /**
@@ -358,98 +334,18 @@ abstract class ATabs extends \XLite\View\AView
     }
 
     /**
-     * Returns tabs splitted into multiple chunks
-     * TODO: to remove
+     * Checks whether no template is specified for the selected tab
      * 
-     * @param integer $splitParameter Maximum number of characters per a line with tab titles OPTIONAL
-     *  
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSplittedTabs($splitParameter = 0)
-    {
-        $pages = $this->getTabs();
-
-        $pagesTitlesTotalLength = 0;
-
-        foreach ($pages as $page) {
-            $pagesTitlesTotalLength += strlen($page['title']);
-        }
-
-        // Split tabs into {$splitParameter} arrays
-
-          $splitParameter = intval($splitParameter);
-
-           $pagesCurrentLength = 0;
-        $pagesNumber = 0;
-
-        foreach ($pages as $page) {
-
-            $pagesCurrentLength += strlen($page['title']);
-
-            if ($pagesCurrentLength > $splitParameter) {
-                break;
-            }
-
-            $pagesNumber++;
-
-        }
-
-        $splitParameter = $pagesNumber;
-
-        $pages = $this->split($pages, (1 < $splitParameter ? $splitParameter : 1));
-        krsort($pages);
-
-        $pagesTitlesLengthMax = 0;
-
-        foreach ($pages as $pageIdx => $pagesArray) {
-
-            $pagesTitlesLength = 0;
-
-            foreach ($pagesArray as $page) {
-
-                $pagesTitlesLength += (is_null($page) ? 0 : strlen($page['title']));
-
-                if ($pagesTitlesLength > $pagesTitlesLengthMax) {
-                    $pagesTitlesLengthMax = $pagesTitlesLength;
-                }
-            }
-
-            $this->tabsInfo[$pageIdx] = array(
-                'titlesLength' => $pagesTitlesLength,
-                'titlesLengthMax' => 0,
-                'titlesFullness' => 0,
-            );
-        }
-
-        foreach ($this->tabsInfo as $pageIdx => $pagesInfo) {
-            $tab = &$this->tabsInfo[$pageIdx];
-            $tab['titlesLengthMax'] = $pagesTitlesLengthMax;
-            $tab['titlesFullness'] = ceil($tab['titlesLength'] * 100 / $tab['titlesLengthMax']);
-        }
-
-        return $pages;
-    }
-
-    /**
-     * Checks whether a title is wider than the specified percent of total length of all titles
-     * 
-     * @param string  $pageIdx       Page identificator (key in the $pages array)
-     * @param integer $widthPercents Percent value OPTIONAL
-     *  
      * @return boolean
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isTitleWider($pageIdx, $widthPercents = 100)
+    public function isCommonTab()
     {
-        return isset($pageIdx)
-            && 0 < count($this->tabsInfo)
-            && isset($this->tabsInfo[$pageIdx])
-            && $this->tabsInfo[$pageIdx]['titlesFullness'] > $widthPercents;
+        $tab = $this->getSelectedTab();
+
+        return !is_null($tab) && empty($tab['widget']) && empty($tab['template']);
     }
 
 }
