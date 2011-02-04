@@ -52,7 +52,7 @@ ItemsList.prototype.listeners.pagesCount = function(handler)
   );
 }
 
-ItemsList.prototype.listeners.checboxes = function(handler)
+ItemsList.prototype.listeners.checkboxes = function(handler)
 {
   jQuery('input:checkbox.check-all', handler.container).click(
     function() {

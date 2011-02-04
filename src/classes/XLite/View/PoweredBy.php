@@ -105,7 +105,6 @@ class PoweredBy extends \XLite\View\AView
         return strtr($this->getPhrase(), $replace);
     }
 
-
     /**
      * Get a Powered By phrase
      * 

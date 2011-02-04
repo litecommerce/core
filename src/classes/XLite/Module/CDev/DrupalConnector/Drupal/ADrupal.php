@@ -180,8 +180,11 @@ abstract class ADrupal extends \XLite\Base\Singleton
      */
     protected function getResourceInfoJS($file)
     {
+        $scope = $this->getJSScope($file);
+
         return array(
-            'scope' => $this->getJSScope($file),
+            'scope' => $scope,
+            'defer' => $scope == 'footer',
         );
     }
 
