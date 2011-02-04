@@ -1,8 +1,22 @@
-Options -Indexes
-<IfModule mod_access.c>
-<Files ~ "(\.jpg|\.gif|\.png|\.bmp|\.tiff|\.swf|\.jpeg)">
-Allow from all
-</Files>
+# vim: set ts=2 sw=2 sts=2 et:
+# GIT: $Id$
+#
+# Images-specified Apache options
+#
 
-Deny from all
+Options -Indexes
+
+<IfModule mod_expires.c>
+  ExpiresActive Off
+
+  # Cache all files for 2 weeks after access (A).
+  ExpiresDefault A1209600
+</IfModule>
+
+<IfModule mod_access.c>
+  <Files ~ "(\.jpg|\.gif|\.png|\.bmp|\.tiff|\.swf|\.jpeg)">
+    Allow from all
+  </Files>
+
+  Deny from all
 </IfModule>

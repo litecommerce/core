@@ -219,4 +219,60 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
         return $this->prepareMenus($menus);
     }
+
+    /**
+     * Optimize javscript files list
+     * 
+     * @param array $list Files list
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function optimizeJSFiles(array $list)
+    {
+        if (\XLite\Core\Config::getInstance()->CDev->DrupalConnector->minify_resources) {
+            uasort($list, 'drupal_sort_css_js');
+
+            $i = 0;
+    
+            foreach ($list as $name => $script) {
+                $list[$name]['weight'] = $i++;
+                $list[$name]['group'] = JS_DEFAULT;
+                $list[$name]['defer'] = true;
+                $list[$name]['every_page'] = false;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Optimize CSS files list
+     *
+     * @param array $list Files list
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function optimizeCSSFiles($list)
+    {
+        if (\XLite\Core\Config::getInstance()->CDev->DrupalConnector->minify_resources) {
+            uasort($list, 'drupal_sort_css_js');
+
+            $i = 0;
+
+            foreach ($list as $name => $style) {
+                $list[$name]['weight'] = $i++;
+                $list[$name]['group'] = CSS_DEFAULT;
+                $list[$name]['every_page'] = false;
+            }
+        }
+
+        return $list;
+    }
+
 }
