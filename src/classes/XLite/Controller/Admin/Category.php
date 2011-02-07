@@ -259,7 +259,8 @@ class Category extends \XLite\Controller\Admin\Catalog
     {
         $result = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneByCleanUrl($cleanURL);
 
-        return !isset($result) || (!is_null($categoryId) && intval($categoryId ) == intval($result->getCategoryId()));
+        return !isset($result)
+            || (!is_null($categoryId) && intval($categoryId ) == intval($result->getCategoryId()));
     }
 
     function action_icon()
