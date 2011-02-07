@@ -278,7 +278,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
             // Check that error message is presented
             $this->assertElementPresent(
-                '//div[@id="console"]/div[@class="messages error"]/p[@class="error" and contains(text(),"Failed to connect to your database server")]',
+                '//div[@id="console"]/div[@class="messages error"]/descendant::p[@class="error" and contains(text(),"Failed to connect to your database server")]',
                 'Check that error message is presented (Database configuration step)'
             );
         }
