@@ -252,7 +252,7 @@ abstract class Image extends \XLite\Model\AEntity
         if (file_exists($path . $fn)) {
 
             // File is exists
-            $result = \XLite\Core\Converter::getCroppedDimensions(
+            $result = \XLite\Core\ImageOperator::getCroppedDimensions(
                 $this->width,
                 $this->height,
                 $width,
@@ -264,8 +264,9 @@ abstract class Image extends \XLite\Model\AEntity
         } else {
 
             // File is not exists
-            $result = \XLite\Core\Converter::resizeImageSoft($this, $width, $height);
-            $result[2] = (!$result[2] || !file_put_contents($path . $fn, $result[2]))
+            $operator = new \XLite\Core\ImageOperator($this);
+            $result = $operator->resizeDown($width, $height);
+            $result[2] = (!$result[2] || !file_put_contents($path . $fn, $operator->getImage()))
                 ? $this->getURL()
                 : $this->getRepository()->getWebCacheRoot($sizeName) . '/' . $fn;
 

@@ -403,6 +403,48 @@ class FileManager extends \Includes\Utils\AUtils
     }
 
     /**
+     * Find executable file
+     * 
+     * @param string $filename File name
+     *  
+     * @return string|void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function findExecutable($filename)
+    {
+        $pathSeparator = LC_OS_IS_WIN ? ';' : ':';
+
+        $directories = explode($pathSeparator, @getenv('PATH'));
+
+        if (!LC_OS_IS_WIN) {
+            array_unshift($directories, '/usr/bin', '/usr/local/bin');
+        }
+
+        $result = null;
+
+        foreach ($directories as $dir) {
+
+            $file = $dir . LC_DS . $filename;
+
+            if (LC_OS_IS_WIN) {
+                if (is_executable($file . '.exe')) {
+                    $result = $file . '.exe';
+                    break;
+                }
+
+            } elseif (is_executable($file)) {
+                $result = $file;
+                break;
+            }
+
+        }
+
+        return $result;
+    }
+
+    /**
      * Normalize path
      * 
      * @param string $path Path
