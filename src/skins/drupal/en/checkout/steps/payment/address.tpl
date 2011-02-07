@@ -12,7 +12,7 @@
  *}
 <widget class="\XLite\View\Form\Checkout\UpdateProfile" name="billingAddress" className="address billing-address" />
 
-  <div class="same-address">
+  <div class="same-address" IF="cart.isShippingVisible()">
     <input type="hidden" name="same_address" value="0" />
     <input id="same_address" type="checkbox" name="same_address" value="1" checked="{isSameAddress()}" />
     <label for="same_address">{t(#The same as shipping#)}</label>

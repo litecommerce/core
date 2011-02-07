@@ -183,6 +183,40 @@ class Steps extends \XLite\View\AView
     }
 
     /**
+     * Check - has specified step left arrow or not
+     * 
+     * @param \XLite\View\Checkout\Step\AStep $step Step
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function hasLeftArrow(\XLite\View\Checkout\Step\AStep $step)
+    {
+        $steps = $this->getSteps();
+
+        return array_shift($steps) != $step;
+    }
+
+    /**
+     * Check - has specified step right arrow or not
+     * 
+     * @param \XLite\View\Checkout\Step\AStep $step Step
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function hasRightArrow(\XLite\View\Checkout\Step\AStep $step)
+    {
+        $steps = $this->getSteps();
+
+        return array_pop($steps) != $step;
+    }
+
+    /**
      * Define checkout widget steps 
      * 
      * @return array
@@ -192,11 +226,16 @@ class Steps extends \XLite\View\AView
      */
     protected function defineSteps()
     {
-        return array(
-            '\XLite\View\Checkout\Step\Shipping',
-            '\XLite\View\Checkout\Step\Payment',
-            '\XLite\View\Checkout\Step\Review',
-        );
+        $steps = array();
+
+        if ($this->getCart()->isShippingVisible()) {
+            $steps[] = '\XLite\View\Checkout\Step\Shipping';
+        }
+
+        $steps[] = '\XLite\View\Checkout\Step\Payment';
+        $steps[] = '\XLite\View\Checkout\Step\Review';
+    
+        return $steps;
     }
 }
 
