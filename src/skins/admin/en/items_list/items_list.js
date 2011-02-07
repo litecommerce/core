@@ -127,7 +127,7 @@ ItemsList.prototype.changePageLength = function(handler)
 // Add event listeners
 ItemsList.prototype.addListeners = function()
 {
-  for (x in this.listeners) {
+  for (var x in this.listeners) {
     this.listeners[x](this);
   }
 }

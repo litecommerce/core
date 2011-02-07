@@ -23,7 +23,7 @@
 
   <div FOREACH="product.getImages(),id,image" class="Text">
     <p>
-      <font class="AdminHead">Image #{inc(id)}</font><br />
+      <font class="admin-head">Image #{inc(id)}</font><br />
       <strong>Note:</strong> Image border will not be displayed in customer's frontend
     </p>
     <img src="{image.getURL()}" style="border: 1px solid #b2b2b3;" alt="" />
@@ -70,7 +70,7 @@
   <table cellspacing="3" cellpadding="0">
 
     <tr>
-      <td colspan="2" valign="top" class="AdminTitle">Add Image</td>
+      <td colspan="2" valign="top" class="admin-title">Add Image</td>
     </tr>
 
     <tr>

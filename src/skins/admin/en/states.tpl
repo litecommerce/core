@@ -43,7 +43,7 @@ function setHeaderChecked()
 <font IF="status=#updated#" class="SuccessMessage"><br><br>&gt;&gt;&nbsp;State(s) updated successfully&nbsp;&lt;&lt;<br><br></font>
 
 <form name="select_country_form" method="GET">
-<p class="AdminHead">Select country<p>
+<p class="admin-head">Select country</p>
 <input type="hidden" name="target" value="states">
 <widget class="\XLite\View\CountrySelect" field="country_code" country="{country_code}" onchange="javascript: document.select_country_form.submit();" all />
 </form>
@@ -57,16 +57,9 @@ function setHeaderChecked()
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="country_code" value="{country_code}">
 
-<p>
-<table cellpadding="0" cellspacing="0" border="0">
-	<tr><td>&nbsp;</td></tr>
-	<tr class="dialog-box">
-		<td class="AdminHead">List of states</td>
-	</tr>
-	<tr><td>&nbsp;</td></tr>
-	<tr>
-		<td class="CenterBorder">
-			<table cellspacing="1" cellpadding="2" border="0">
+<h2>List of states</h2>
+			
+      <table class="data-table">
 				<tr class="TableHead">
 				    <th class="TableHead">Code</th>
 				    <th class="TableHead">State</th>
@@ -88,23 +81,11 @@ function setHeaderChecked()
 		</td>
 	</tr>
 	<tr>
-    	<td colspan="3">
-			<table border=0 width="100%">
-            	<tr>
-                	<td align=left>
-	        		<input type="submit" name="update" value="Update" class="DialogMainButton">
-    	            </td>
-	                <td align=right>
-    	    		<input type="submit" name="delete" value="Delete selected" onClick="document.update_delete_states_form.action.value='delete'; document.update_delete_states_form.submit()">
-        	        </td>
-				</tr>
-			</table>
-	    </td>
+    <td colspan="3">
+	    <input type="submit" name="update" value="Update" class="DialogMainButton">&nbsp;
+    	<input type="submit" name="delete" value="Delete selected" onClick="document.update_delete_states_form.action.value='delete'; document.update_delete_states_form.submit()">
+    </td>
 	</tr>
-	<tr>
-	    <td colspan="3">&nbsp;</td>
-	</tr>
-</tbody>
 </table>
 
 </form>
@@ -115,27 +96,16 @@ function setHeaderChecked()
 <input type="hidden" name="country_code" value="{country_code}">
 <input type="hidden" name="action" value="add">
 
-<table cellpadding="0" cellspacing="0" border="0">
-	<tr><td>&nbsp;</td></tr>
-	<tr class="dialog-box">
-		<td class="AdminTitle">Add new state</td>
-	</tr>
-	<tr><td>&nbsp;</td></tr>
+<h2>Add new state</h2>
+<table class="data-table">
 	<tr>
-		<td class="CenterBorder">
-			<table cellspacing="1" cellpadding="2" border="0">
-			<tr>
-			    <th class="TableHead">Code</th>
-			    <th class="TableHead">State</th>
-			</tr>
-			<tr class="dialog-box">
-			    <td><input type="text" size="8" name="code" value="{code}"></td>
-			    <td><input type="text" size="30" name="state" value="{state}"></td>
-			</tr>
-			</table>
-		</td>
+	  <th class="TableHead">Code</th>
+	  <th class="TableHead">State</th>
 	</tr>
-	<tr><td>&nbsp;</td></tr>
+	<tr class="dialog-box">
+	  <td><input type="text" size="8" name="code" value="{code}"></td>
+	  <td><input type="text" size="30" name="state" value="{state}"></td>
+  </tr>
 {if:!valid}
 	<tr class="dialog-box">
 		<td IF="status=#code#" colspan="2"><font class="ErrorMessage">&gt;&gt;&nbsp;Mandatory field "Code" empty.</font><br><br></td>
