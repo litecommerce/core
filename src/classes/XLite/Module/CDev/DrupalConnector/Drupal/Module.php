@@ -314,7 +314,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     public function translateOutboundURL(&$path, array &$options, $originalPath)
     {
-        if (self::LANDING_LINK_PATH === $path) {
+        if (self::LANDING_LINK_PATH === $path && \XLite\Core\Auth::getInstance()->isAdmin()) {
             $path = \Includes\Utils\URLManager::getShopURL('admin.php?' . $this->getAdminAreaURLArgs());
             $options['external'] = true;
         }
