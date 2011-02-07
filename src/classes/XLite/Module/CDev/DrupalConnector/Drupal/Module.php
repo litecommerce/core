@@ -39,8 +39,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
     /**
      * So called "landing" link path.
-     * NOTE: do not wrap this constant into a function:
-     * it can cause the perfomance loss
+     * NOTE: do not wrap this constant into a function: * it can cause the perfomance loss
      */
     const LANDING_LINK_PATH = 'admin/lc_admin_area';
 
