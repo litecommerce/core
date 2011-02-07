@@ -165,6 +165,10 @@ prepare_directory()
 		echo $_ERR_MSG
 		exit 2;
 	fi
+
+	get_elapsed_time $GIT_START_TIME
+
+	echo "(time elapsed: ${_elapsed_time})";
 }
 
 
@@ -308,19 +312,16 @@ if [ ! $SAFE_MODE ]; then
 
 	# Do LiteCommerce checkout...
 
-	echo -n "Getting LiteCommerce core from GitHub...";
-
 	TMP_XLITE_REPO='_tmp_xlite_repo';
 
 	if [ "x${LOCAL_REPO}" = "x" ]; then
+		echo -n "Getting LiteCommerce core from GitHub...";
 		prepare_directory $TMP_XLITE_REPO $XLITE_REPO
 	else
+		echo -n "Getting LiteCommerce core from local git repository...";
 		prepare_directory $TMP_XLITE_REPO `realpath ${BASE_DIR}/../../../`
 	fi
 
-	get_elapsed_time $GIT_START_TIME
-
-	echo "(time elapsed: ${_elapsed_time})";
 
 	echo -n "   Removing .git* service files/directories..."
 
@@ -341,21 +342,17 @@ if [ ! $SAFE_MODE ]; then
 
 	# Do Drupal checkout...
 
-	echo -n "Getting Drupal from GitHub..."
-
-	get_current_time 'GIT_START_TIME'
 
 	TMP_DRUPAL_REPO='_tmp_drupal_repo';
 
 	if [ "x${LOCAL_REPO}" = "x" ]; then
+		echo -n "Getting Drupal from GitHub..."
 		prepare_directory $TMP_DRUPAL_REPO $DRUPAL_REPO
 	else
+		echo -n "Getting Drupal from local git repository..."
 		prepare_directory $TMP_DRUPAL_REPO $DRUPAL_LOCAL_REPO
 	fi
 
-	get_elapsed_time $GIT_START_TIME
-
-	echo "(time elapsed: ${_elapsed_time})";
 
 	echo -n "   Removing .git* service files/directories..."
 
