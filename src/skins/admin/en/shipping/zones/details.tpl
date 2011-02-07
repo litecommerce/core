@@ -134,7 +134,7 @@ Select a country or a state from a list, specify the zone where the country or s
       <td>
         <input type="hidden" id="zone_states_store" name="zone_states_store" value="" />
         <select id="zone_states" multiple="multiple" size="15" style="width: 100%;">
-          <option FOREACH="zone.getZoneStates(),st" value="{st.getCountryCode()}_{st.getCode()}">{st.country.getCountry()}: {st.getState()}</option>
+          <option FOREACH="zone.getZoneStates(),st" value="{st.country.getCode()}_{st.getCode()}">{st.country.getCountry()}: {st.getState()}</option>
           <option value="">&nbsp;</option>
         </select>
 
@@ -152,7 +152,7 @@ Select a country or a state from a list, specify the zone where the country or s
       </td>
       <td>
         <select id="rest_states" multiple="multiple" size="15" style="width: 100%;">
-          <option FOREACH="zone.getZoneStates(1),st" value="{st.getCountryCode()}_{st.getCode()}">{st.country.getCountry()}: {st.getState()}</option>
+          <option FOREACH="zone.getZoneStates(1),st" value="{st.country.getCode()}_{st.getCode()}">{st.country.getCountry()}: {st.getState()}</option>
         </select>
       </td>
     </tr>

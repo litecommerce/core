@@ -197,8 +197,8 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             'DRUPAL_SITE_PATH constant is undefined or has a wrong value. Define it in .dev/tests/local.php'
         );
 
-        $srcFile = constant('DRUPAL_SITE_PATH') . '/src/sites/default/default.settings.php';
-        $dstFile = constant('DRUPAL_SITE_PATH') . '/src/sites/default/settings.php';
+        $srcFile = constant('DRUPAL_SITE_PATH') . '/sites/default/default.settings.php';
+        $dstFile = constant('DRUPAL_SITE_PATH') . '/sites/default/settings.php';
         copy($srcFile, $dstFile);
         
         // Reload page
@@ -715,7 +715,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     {
         $this->assertTrue(defined('DRUPAL_SITE_PATH'), 'DRUPAL_SITE_PATH constant undefined');
 
-        $fileName = DRUPAL_SITE_PATH . '/src/.htaccess';
+        $fileName = DRUPAL_SITE_PATH . '/.htaccess';
 
         $uri = preg_replace('/\/$/', '', parse_url($this->baseURL, PHP_URL_PATH));
 

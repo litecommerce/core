@@ -270,7 +270,6 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
                 $newElement = new \XLite\Model\ZoneElement();
 
-                $newElement->setZoneId($zone->getZoneId());
                 $newElement->setElementValue($elementValue);
                 $newElement->setElementType($elementType);
                 $newElement->setZone($zone);
