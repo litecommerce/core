@@ -106,4 +106,19 @@ class Review extends \XLite\View\Checkout\Step\AStep
             )
         );
     }
+
+    /**
+     * Get payment template 
+     * 
+     * @return string|void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPaymentTemplate()
+    {
+        return $this->getCart()->getPaymentMethod()
+            ? $this->getCart()->getPaymentMethod()->getProcessor()->getInputTemplate()
+            : null;
+    }
 }

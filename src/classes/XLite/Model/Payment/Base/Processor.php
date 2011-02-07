@@ -101,6 +101,21 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
+     * Get input errors 
+     * 
+     * @param array $data Input data
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getInputErrors(array $data)
+    {
+        return array();
+    }
+
+    /**
      * Get settings widget or template 
      * 
      * @return string Widget class name or template path
