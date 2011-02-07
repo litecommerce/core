@@ -362,7 +362,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
     
         } else {
 
-            $this->getCart()->getProfile()->setLastPaymentId($pm->getMethodId());
+            if ($this->getCart()->getProfile()) {
+                $this->getCart()->getProfile()->setLastPaymentId($pm->getMethodId());
+            }
             $this->getCart()->setPaymentMethod($pm);
             $this->updateCart();
 

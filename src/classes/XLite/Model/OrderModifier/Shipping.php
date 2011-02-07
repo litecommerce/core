@@ -244,6 +244,7 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
         if ($this->getShippingId() != $newShippingId) {
 
             $this->setShippingId($newShippingId);
+            $this->setShippingMethodName($rate->getMethod()->getName());
 
             \XLite\Core\Database::getEM()->flush();
         }
@@ -392,6 +393,28 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
         }
 
         return $result;
+    }
+
+    /**
+     * Get shipping method name 
+     * 
+     * @return string|void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getActualShippingName()
+    {
+        $name = null;
+
+        if ($this->getShippingMethod()) {
+            $name = $this->getShippingMethod()->getName();
+
+        } elseif ($this->getShippingMethodName()) {
+            $name = $this->getShippingMethodName();
+        }
+
+        return $name;
     }
 
     /**
