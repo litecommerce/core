@@ -41,6 +41,8 @@ namespace XLite\Model;
  *          @Index (name="id", columns={"id"})
  *      }
  * )
+ *
+ * @HasLifecycleCallbacks
  */
 class Inventory extends \XLite\Model\AEntity
 {
@@ -128,6 +130,21 @@ class Inventory extends \XLite\Model\AEntity
     protected $product;
 
     /**
+     * Check and (if needed) correct amount value
+     * 
+     * @param integer $amount Value to check
+     *  
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function correctAmount($amount)
+    {
+        return max(0, intval($amount));
+    }
+
+    /**
      * Get list of cart items containing current product
      * 
      * @return array
@@ -167,6 +184,49 @@ class Inventory extends \XLite\Model\AEntity
     }
 
     /**
+     * Send notification to admin about product low limit
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function sendLowLimitNotification()
+    {
+        // TODO: add code after the Mailer will be refactored
+    }
+
+    /**
+     * Setter
+     * 
+     * @param integer $amount Amount to set
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $this->correctAmount($amount);
+    }
+
+    /**
+     * Setter
+     * 
+     * @param integer $amount Amount to set
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setLowLimitAmount($amount)
+    {
+        $this->lowLimitAmount = $this->correctAmount($amount);
+    }
+
+    /**
      * Increase / decrease product inventory amount
      *
      * @param integer $delta Amount delta
@@ -178,7 +238,9 @@ class Inventory extends \XLite\Model\AEntity
      */
     public function changeAmount($delta)
     {
-        !$this->getEnabled() ?: $this->setAmount($this->getAmount() + $delta);
+        if ($this->getEnabled()) {
+            $this->setAmount($this->getAmount() + $delta);
+        }
     }
 
     /**
@@ -217,5 +279,22 @@ class Inventory extends \XLite\Model\AEntity
     public function isLowLimitReached()
     {
         return $this->getEnabled() && $this->getLowLimitEnabled() && $this->getAmount() < $this->getLowLimitAmount();
+    }
+
+    /**
+     * Perform some actions before inventory saved
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     *
+     * @PreUpdate
+     */
+    public function proccessPreUpdate()
+    {
+        if ($this->isLowLimitReached()) {
+            $this->sendLowLimitNotification();
+        }
     }
 }

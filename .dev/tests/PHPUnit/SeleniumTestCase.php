@@ -364,7 +364,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             XLite_Tests_TestSuite::$currentClass = $currentClass;
         }
 
-        $this->baseURL = SELENIUM_SOURCE_URL/* . '/src/'*/;
+        $this->baseURL = rtrim(SELENIUM_SOURCE_URL, '/') . '/';
 
         $this->setBrowserUrl($this->baseURL);
 
