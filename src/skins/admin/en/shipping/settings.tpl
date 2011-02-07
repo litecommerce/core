@@ -41,7 +41,7 @@
     <tbody FOREACH="getOptions(),option">
 
       <tr IF="option.type=#separator#">
-        <td colspan="2"><br /><b>{option.option_name:h}</b></td>
+        <td colspan="2" class="admin-title">{option.option_name:h}</td>
       </tr>
 
       <tr IF="!option.type=#separator#">

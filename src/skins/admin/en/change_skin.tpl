@@ -53,7 +53,7 @@
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
 	<td width="50%">
-	<b>Current layout skin:</b>&nbsp;<span class="AdminHead">{if:currentSkin=##}???{else:}{currentSkin}{end:}</span>
+	<b>Current layout skin:</b>&nbsp;<span class="admin-head">{if:currentSkin=##}???{else:}{currentSkin}{end:}</span>
 	</td>
 	<td width="50%">
     Select the layout skin for your store:&nbsp;

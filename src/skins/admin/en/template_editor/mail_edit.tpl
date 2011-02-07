@@ -12,7 +12,7 @@
  *}
 <p IF="status=#updated#" class="SuccessMessage">&gt;&gt; Mail templates have been updated successfully &lt;&lt;</p>
 
-<p class="AdminHead">{mailTemplates.body.comment}</p>
+<p class="admin-head">{mailTemplates.body.comment}</p>
 
 <form action="admin.php" method="POST">
 <input type="hidden" name="target" value="template_editor">

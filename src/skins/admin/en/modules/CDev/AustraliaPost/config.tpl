@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<div class="AdminTitle">Australia Post settings</div>
+<div class="admin-title">Australia Post settings</div>
 
 <br />
 

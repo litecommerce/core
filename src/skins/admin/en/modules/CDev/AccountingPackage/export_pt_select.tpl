@@ -12,7 +12,7 @@
  *}
 To export the found orders into Peachtree Accounting follow the steps below<hr>
 
-<p class="AdminHead">Step 1: Export of Customer List
+<p class="admin-head">Step 1: Export of Customer List
 
 <p align="justify">Click on "Export customer list" button below to export customer records for the found orders and save the resulting CSV file. You can name this file as you like to suit your requirements. 
 
@@ -24,7 +24,7 @@ To export the found orders into Peachtree Accounting follow the steps below<hr>
 
 <p><br>
 
-<p class="AdminHead">Step 2: Export of Sales Journal
+<p class="admin-head">Step 2: Export of Sales Journal
 
 <p align="justify">Click on "Export sales journal" button below to export sales journal records for the found orders and save the resulting CSV file. You can name this file as you like to suit your requirements. 
 
@@ -63,7 +63,7 @@ function export_sales() {
 
 <p><br>
 
-<p class="AdminHead">Step 3: Export of Cash Receipts Journal
+<p class="admin-head">Step 3: Export of Cash Receipts Journal
 
 <p align="justify">Click on "Export cash receipts" button below to export cash receipts journal records for the found orders and save the resulting CSV file. You can name this file as you like to suit your requirements. 
 

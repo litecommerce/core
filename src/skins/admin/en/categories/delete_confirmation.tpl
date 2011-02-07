@@ -47,7 +47,7 @@
     </tr>
 
     <tr>
-      <td colspan="3" class="AdminTitle">
+      <td colspan="3" class="admin-title">
         Warning: this operation can not be reverted!
       </td>
     </tr>
