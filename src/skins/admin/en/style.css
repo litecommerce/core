@@ -319,6 +319,8 @@ div.page-tabs
 {
   height: 37px;
   border-bottom: 1px solid #cadce8;
+  background: #f5f5f5;
+  padding-top: 10px;
 }
 
 div.tab-content
@@ -359,7 +361,7 @@ div.page-tabs ul li a
 
 div.page-tabs ul li.tab-current a
 {
-  background: 0 none;
+  background: #fff;
   color: #333;
   border-bottom: 1px solid #fff;
 }

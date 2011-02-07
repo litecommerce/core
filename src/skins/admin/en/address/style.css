@@ -170,7 +170,7 @@ button.delete-address
   background-color: transparent;
   background-repeat: no-repeat;
   background-position: left center;
-  background-image: url(images/icon_trash.png);
+  background-image: url(../images/icon_trash.png);
   height: 24px;
   padding-left: 15px;
   padding-right: 5px;
