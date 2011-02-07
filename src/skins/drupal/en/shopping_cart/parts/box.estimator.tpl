@@ -11,7 +11,9 @@
  * @since     3.0.0
  * @ListChild (list="cart.panel.box", weight="10")
  *}
+{if:cart.isShippingVisible()}
 <div class="estimator">
+
   {if:isShippingEstimate()&cart.shippingMethod}
 
     <ul>
@@ -25,12 +27,19 @@
 
   {else:}
 
-    <widget class="\XLite\View\Form\Cart\ShippingEstimator\Open" name="shippingEstimator" />
-      <div class="buttons">
-        <widget class="\XLite\View\Button\Submit" label="Estimate shipping cost" style="action estimate" />
-      </div>
-    <widget name="shippingEstimator" end />
+    {if:cart.isShippingAvailable()}
+      <widget class="\XLite\View\Form\Cart\ShippingEstimator\Open" name="shippingEstimator" />
+        <div class="buttons">
+          <widget class="\XLite\View\Button\Submit" label="Estimate shipping cost" style="action estimate" />
+        </div>
+      <widget name="shippingEstimator" end />
+
+    {else:}
+      <span class="error">{t(#Delivery methods is not defined.#)}</span>
+      <span class="error">{t(#Shipping is not available.#)}</span>
+    {end:}
 
   {end:}
 
 </div>
+{end:}
