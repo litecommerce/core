@@ -10,15 +10,11 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<p align=justify>This section displays order placement statistics for today, this week and this month.</p>
+<p align="justify">This section displays order placement statistics for today, this week and this month.</p>
 
-<br>
+<br /><br />
 
-<p>
-<table border=0 cellpadding=0 cellspacing=0 width="80%">
-<tr>
-<td bgcolor=#dddddd>
-    <table cellpadding=3 cellspacing=1 border=0 width="100%">
+<table class="data-table" width="80%">
     <tr class=TableHead bgcolor=#ffffff>
         <th align=left>Status</th>
         <th>Today</th>
@@ -62,10 +58,6 @@
         <td align=center>{price_format(stat.paid.month):h}</td>
     </tr>
     </table>
-</td>
-</tr>
-</table>
-</p>
 
-<p>
+<br /><br />
 <widget class="\XLite\View\Button" label="Perform order search" href="admin.php?target=order_list" font="FormButton">

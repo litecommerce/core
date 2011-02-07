@@ -15,11 +15,8 @@
 
 <h2>{t(#Images location#)}</h2>
 
-<table cellpadding="0" cellspacing="0" border="0">
-	<tr>
-		<td class="CenterBorder">
-			<table border="0" cellspacing="1" cellpadding="3">
-				<tr class="TableHead">
+			<table class="data-table">
+				<tr>
 					<th>&nbsp;</th>
 					<th>Naming schema</th>
 					<th>File system</th>
@@ -84,24 +81,8 @@ Image files can either be placed in the <i><b>{imagesDir}</b></i> sub-directory 
 <b>Note:</b> '??' in the names of image files are replaced with the corresponding category/product identifiers.
 </p>
 
-<table cellSpacing=2 cellpadding=2 border=0 width="100%">
-<TR>
-    <TD colspan=2>
-        <table cellspacing=0 cellpadding=0 border=0 width="100%">
-        <tr>
-            <td colspan=2>&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="SidebarTitle" align=center nowrap>&nbsp;&nbsp;&nbsp;Images directory&nbsp;&nbsp;&nbsp;</td>
-            <td width=100%>&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="SidebarTitle" align=center colspan=2 height=3></td>
-        </tr>
-        </table>
-    </TD>
-</TR>
-</table>
+<h2>Images directory</h2>
+
 <br />
 <form name="update_images_dir_form" method="POST">
 <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}" />

@@ -82,7 +82,7 @@ Select a country or a state from a list, specify the zone where the country or s
     {* Countries *}
 
 	  <tr class="dialog-box">
-	  	<td class="AdminHead" colspan="3"><br />Countries<hr /></td>
+	  	<td class="admin-head" colspan="3"><br />Countries<hr /></td>
 	  </tr>
 
     <tr>
@@ -121,7 +121,7 @@ Select a country or a state from a list, specify the zone where the country or s
     {* States *}
 
 	  <tr class="dialog-box">
-	  	<td class="AdminHead" colspan="3"><br />States<hr /></td>
+	  	<td class="admin-head" colspan="3"><br />States<hr /></td>
 	  </tr>
 
     <tr>
@@ -160,7 +160,7 @@ Select a country or a state from a list, specify the zone where the country or s
     {* City masks *}
 
 	  <tr class="dialog-box">
-	  	<td class="AdminHead" colspan="3">City masks<hr /></td>
+	  	<td class="admin-head" colspan="3">City masks<hr /></td>
 	  </tr>
 
     <tr>
@@ -185,7 +185,7 @@ Select a country or a state from a list, specify the zone where the country or s
     {* Zip code masks *}
 
 	  <tr class="dialog-box">
-	  	<td class="AdminHead" colspan="3">Zip/postal code masks<hr /></td>
+	  	<td class="admin-head" colspan="3">Zip/postal code masks<hr /></td>
 	  </tr>
 
     <tr>
@@ -211,7 +211,7 @@ Select a country or a state from a list, specify the zone where the country or s
     {* Address masks *}
 
 	  <tr class="dialog-box">
-	  	<td class="AdminHead" colspan="3">Address masks<hr /></td>
+	  	<td class="admin-head" colspan="3">Address masks<hr /></td>
 	  </tr>
 
     <tr>

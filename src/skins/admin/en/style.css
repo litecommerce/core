@@ -299,6 +299,20 @@ div.noscript
   font-weight: bold;
 }
 
+.admin-head,
+.admin-title
+{
+  color: #69a4c9;
+  font-family: "Trebuchet MS",Helvetica,Arial;
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.admin-title
+{
+  color: #0D2335;
+}
+
 /* Page tabs */
 
 div.page-tabs
@@ -485,14 +499,6 @@ ul,
 .Info
 {
         COLOR: #000000; FONT-STYLE: italic;
-}
-.AdminHead
-{
-        COLOR: #000000; FONT-WEIGHT: bold; font-size: 12px;
-}
-.AdminTitle
-{
-        COLOR: #FF3300; FONT-WEIGHT: bold; font-size: 12px;
 }
 .ProductTitle
 {

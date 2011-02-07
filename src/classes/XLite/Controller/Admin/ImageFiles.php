@@ -40,7 +40,7 @@ class ImageFiles extends \XLite\Controller\Admin\AAdmin
     function getImagesDir()
     {
         $images = $this->get('imageClasses');
-        return ($this->xlite->config->Images->images_directory != "") ? $this->xlite->config->Images->images_directory : \XLite\Model\Image::IMAGES_DIR;
+        return ($this->xlite->config->Images->images_directory != "") ? $this->xlite->config->Images->images_directory : LC_IMAGES_DIR;
     }
 
     function action_move_to_filesystem($from = false)

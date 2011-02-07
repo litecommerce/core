@@ -21,9 +21,9 @@
   <input type="hidden" name="page" value="{page}">
   <input type="hidden" name="action" value="update_rates">
 
-  <table cellspacing="1" cellpadding="3">
+  <table class="data-table">
     <tr>
-    	<th class="TableHead" colspan="{getMaxColspan(#1#)}">
+    	<th colspan="{getMaxColspan(#1#)}">
     		<table border="0" cellspacing="0" cellpadding="0" width="100%">
 		      <tr>
       			<td align="left">
@@ -36,10 +36,10 @@
 		      </tr>
 		    </table>
       </th>
-	    <th class="TableHead">&nbsp;&nbsp;Tax&nbsp;&nbsp;</th>
-	    <th class="TableHead">&nbsp;&nbsp;%&nbsp;&nbsp;</th>
-	    <th class="TableHead">Pos.</th>
-	    <th class="TableHead">Actions</th>
+	    <th>&nbsp;&nbsp;Tax&nbsp;&nbsp;</th>
+	    <th>&nbsp;&nbsp;%&nbsp;&nbsp;</th>
+	    <th>Pos.</th>
+	    <th>Actions</th>
     </tr>
 
     <tbody FOREACH="_rates,ind,tax">

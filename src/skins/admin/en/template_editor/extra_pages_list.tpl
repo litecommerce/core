@@ -15,7 +15,7 @@
 <br />
 <br />
 <span IF="extraPages">
-<p class="AdminHead">Available pages</p>
+<p class="admin-head">Available pages</p>
 <table cellpadding=0 cellspacing=0 border=0>
 <tr><td>
 
@@ -27,7 +27,7 @@
 <table border=0 cellpadding=5 cellspacing=1 class="TableHead" width=100%>
 <tr>
     <th align="right"">Page: </th>
-	<td class="AdminHead"><i>{page.title:h}</i></td>
+	<td class="admin-head"><i>{page.title:h}</i></td>
 </tr>
 <tr class="Center">
     <th align="right"">Template: </th>
@@ -64,6 +64,6 @@
 
 </span>
 
-<span class="AdminTitle">Add new page</span>
+<span class="admin-title">Add new page</span>
 <br>
 <widget template="template_editor/extra_page.tpl">
