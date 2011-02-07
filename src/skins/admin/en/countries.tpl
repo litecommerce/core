@@ -58,16 +58,13 @@ Use this section to manage the list of existing countries. This list is used in 
 <font IF="status=#deleted#" class="SuccessMessage"><br><br>&gt;&gt;&nbsp;Country(s) deleted successfully&nbsp;&lt;&lt;<br><br></font>
 <font IF="status=#updated#" class="SuccessMessage"><br><br>&gt;&gt;&nbsp;Country(s) updated successfully&nbsp;&lt;&lt;<br><br></font>
 
-<p>
-<table cellpadding="0" cellspacing="0" border="0">
-	<tr>
-		<td class="CenterBorder">
-	<table border="0" cellspacing="1" cellpadding="2">
+<form action="admin.php" method="post" name="countries_form">
+<input type="hidden" name="target" value="countries">
+<input type="hidden" name="action" value="update">
+	<table class="data-table">
 		<tr class="TableHead">
     		<th class="TableHead">Code</th>
 		    <th class="TableHead">Country</th>
-			<th class="TableHead">Language</th>
-		    <th class="TableHead">Charset</th>
 		    <th class="TableHead">VAT taxable<br>
 		    	<input id="enable_countries_vat" type="checkbox" onClick="this.blur();setChecked('enable_countries_vat',this.checked);">
 		    </th>
@@ -80,19 +77,10 @@ Use this section to manage the list of existing countries. This list is used in 
 			</th>
 		</tr>
 
-		<form action="admin.php" method="post" name="countries_form">
-		<input type="hidden" name="target" value="countries">
-		<input type="hidden" name="action" value="update">
 		<tr FOREACH="getCountries(),country_idx,country" class="{getRowClass(country_idx,#dialog-box#,#highlight#)}">
 		    <td align="center"><a href="admin.php?target=states&country_code={country.code}" title="Click here to view states of country" onClick="this.blur();"><u>{country.code}</u></a></td>
 		    <td>
 		        <input type="text" size="34" maxlength="50" name="countries[{country.code}][country]" value="{country.country:r}">
-		    </td>
-			<td align="center">
-				<input type="text" size="15" maxlength="32" name="countries[{country.code}][language]" value="{country.language:r}">
-			</td>
-		    <td align="center">
-		        <input type="text" size="15" maxlength="32" name="countries[{country.code}][charset]" value="{country.charset:r}">
 		    </td>
 		    <td align="center">
 		        <input id="country_vat_{country_idx}" type="checkbox" name="countries[{country.code}][eu_member]" value="Y" checked="{country.eu_member}" onClick="this.blur();">
@@ -109,12 +97,9 @@ Use this section to manage the list of existing countries. This list is used in 
 				<input id="countries_ids" type="checkbox" name="delete_countries[]" value="{country.code}" onClick="this.blur();">
 			</td>
 		</tr>
-	</table>
-		</td>
-	</tr>
 
-<tr>
-    <td colspan="7">
+    <tr>
+      <td colspan="5">
 		<table border=0 width="100%">
 		<tr>
 			<td align="left"><br><input type="submit" class="DialogMainButton" name="submit" value="Update"></td>
@@ -125,8 +110,8 @@ Use this section to manage the list of existing countries. This list is used in 
 	<script language="Javascript">CheckBoxes["enable_countries_vat"] = CountryVatEnabledCheckBoxes;</script>
 	<script language="Javascript">CheckBoxes["enable_countries"] = CountryEnabledCheckBoxes;</script>
 </tr>
-</form>
 </table>
+</form>
 
 <p>
 
@@ -135,35 +120,21 @@ Use this section to manage the list of existing countries. This list is used in 
 <input type="hidden" name="target" value="countries">
 <input type="hidden" name="action" value="add">
 
-
-<table cellpadding="0" cellspacing="0" border="0">
-	<tr><td>&nbsp;</td></tr>
-	<tr class="dialog-box">
-		<td class="AdminTitle">Add new country</td>
-	</tr>
-	<tr><td>&nbsp;</td></tr>
-	<tr>
-		<td class="CenterBorder">
-			<table cellspacing="1" cellpadding="2" border="0">
+<h2>Add new country</h2>
+			
+      <table class="data-table">
 				<tr class="TableHead">
 					<th class="TableHead">Code</th>
 					<th class="TableHead">Country</th>
-					<th class="TableHead">Language</th>
-					<th class="TableHead">Charset</th>
 					<th class="TableHead">VAT taxable</th>
 					<th class="TableHead">Active</th>
 				</tr>
 				<tr class="dialog-box">
 					<td><input type="text" size="3" maxlength="2" name="code" value="{code}"></td>
 					<td><input type="text" size="34" maxlength="50" name="country" value="{country}"></td>
-					<td><input type="text" size="15" maxlength="32" name="language" value="{language}"></td>
-					<td><input type="text" size="15" maxlength="32" name="charset" {if:charset}value="{charset}"{else:}value="iso-8859-1"{end:}></td>
 					<td align="middle"><input type="checkbox" name="eu_member" value="Y" checked="{isSelected(eu_member,#Y#)}"></td>
 					<td align="middle"><input type="checkbox" name="enabled" value="Y" checked></td>
 				</tr>
-			</table>
-		</td>
-	</tr>
 
 {if:!valid}
 	<tr>
@@ -178,7 +149,6 @@ Use this section to manage the list of existing countries. This list is used in 
 	</tr>
 </table>
 </form>
-
 
 {if:!valid}
 <script language="javascript">

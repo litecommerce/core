@@ -313,8 +313,8 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
         $methods = array();
 
         foreach ($markups as $markup) {
-            if (!isset($methods[$markup->getMethodId()])) {
-                $methods[$markup->getMethodId()] = $markup->getShippingMethod();
+            if (!isset($methods[$markup->getShippingMethod()->getMethodId()])) {
+                $methods[$markup->getShippingMethod()->getMethodId()] = $markup->getShippingMethod();
             }
         }
 
@@ -335,8 +335,8 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
                 foreach ($markups as $markup) {
 
                     if (
-                        $markup->getZoneId() == $zone->getZoneId()
-                        && $markup->getMethodId() == $method->getMethodId()
+                        $markup->getZone()->getZoneId() == $zone->getZoneId()
+                        && $markup->getShippingMethod()->getMethodId() == $method->getMethodId()
                     ) {
                         $resultMethod['markups'][] = $markup;
                     }

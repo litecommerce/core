@@ -93,7 +93,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
     </tr>
 
     <tr class="dialog-box">
-      <td class="AdminHead" colspan=5>{processor.getProcessorName()}</td>
+      <td class="admin-head" colspan=5>{processor.getProcessorName()}</td>
     </tr>
 
     <tr IF="processor.getProcessorId()=#ups#">
@@ -101,14 +101,14 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
     </tr>
 
     <tr>
-      <td class="CenterBorder">
+      <td>
 
-        <table cellspacing="1" cellpadding="2" border="0" width="100%">
+        <table class="data-table">
 
-          <tr class="TableHead">
-            <th class="TableHead" width="90%">Shipping method</th>
-            <th class="TableHead">Pos.</th>
-            <th class="TableHead">Active<br />
+          <tr>
+            <th width="90%">Shipping method</th>
+            <th>Pos.</th>
+            <th>Active<br />
               <input id="enable_method_{processor.getProcessorId()}" type="checkbox" onClick="this.blur();setChecked('{processor.getProcessorId()}',this.checked);" />
             </th>
             <th valign="top">&nbsp;</th>
@@ -162,7 +162,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
     </tr>
 
     <tr class="dialog-box">
-      <td class="AdminTitle">Add shipping method</td>
+      <td class="admin-title">Add shipping method</td>
     </tr>
 
     <tr>
@@ -170,13 +170,13 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
     </tr>
 
     <tr>
-      <td class="CenterBorder">
+      <td>
 
-        <table cellspacing="1" cellpadding="2" border="0">
+        <table class="data-table">
 
           <tr>
-            <th class="TableHead">Shipping method</th>
-            <th class="TableHead">Pos.</th>
+            <th>Shipping method</th>
+            <th>Pos.</th>
           </tr>
 
           <tr class="dialog-box">

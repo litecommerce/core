@@ -17,7 +17,7 @@ Use this section to manage tax scheme definitions, save or reset your current ta
 		text-align  : justify;
 	}
 </style>
-<p class=AdminHead>
+<p class=admin-head>
 	Reset/delete tax scheme
 </p>
 <p class="adminParagraph">
@@ -72,7 +72,7 @@ function deleteSchema()
 </script>
 </form>
 <br><br>
-<p class=AdminHead>Save the current tax scheme</p>
+<p class=admin-head>Save the current tax scheme</p>
 <p class="adminParagraph"><b>Note:</b> To save your current tax scheme choose the scheme name from the list or the ' - new name - ' option to save the scheme under a new name.</p>
 <form action="admin.php" method=POST name=save_schema_form>
 <input type="hidden" name="target" value="taxes">
@@ -104,7 +104,7 @@ function saveSchema()
 </form>
 <span IF="schemas">
 <br><br>
-<p class=AdminHead>Export tax scheme</p>
+<p class=admin-head>Export tax scheme</p>
 <p class="adminParagraph"> 
 	<b>Note:</b> To export a scheme, choose it from the drop-down list and click on the 'Export' button. To have your current tax scheme exported, it needs to be saved first.
 </p>
@@ -123,7 +123,7 @@ function saveSchema()
 </span>
 
 <br><br>
-<p class=AdminHead>Import tax scheme</p>
+<p class=admin-head>Import tax scheme</p>
 <p class="">
 <b>Note:</b> Locate the tax scheme file (*.tax) you want to import and click on the 'Import' button.
 </p>

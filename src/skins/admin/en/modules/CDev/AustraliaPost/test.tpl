@@ -13,7 +13,7 @@
 
 <br /><br /><br />
 
-<div class="AdminTitle">Test Australia Post rates calculation</div>
+<div class="admin-title">Test Australia Post rates calculation</div>
 
 <br />
 

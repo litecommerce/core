@@ -15,7 +15,7 @@ Use HTML code provided in this section to create product-specific 'Add to Cart' 
 
 <table border="0" width="100%">
 <tr>
-    <td colspan="2" class="AdminHead">Link to product thumbnail</td>
+    <td colspan="2" class="admin-head">Link to product thumbnail</td>
 </tr>    
 <tr><td colspan="2">&nbsp;</td></tr>
 {if:product.hasThumbnail()}
@@ -34,7 +34,7 @@ Use HTML code provided in this section to create product-specific 'Add to Cart' 
 {end:}
 <tr><td colspan="2">&nbsp;</td></tr>
 <tr>
-    <td colspan="2" class="AdminHead">Simple HTML link to add product to cart</td>
+    <td colspan="2" class="admin-head">Simple HTML link to add product to cart</td>
 </tr>
 <tr><td colspan="2">&nbsp;</td></tr>
 <tr>
@@ -49,7 +49,7 @@ Use HTML code provided in this section to create product-specific 'Add to Cart' 
 </tr>    
 <tr><td colspan="2">&nbsp;</td></tr>
 <tr>
-    <td colspan="2" class="AdminHead">HTML button to add product to cart</td>
+    <td colspan="2" class="admin-head">HTML button to add product to cart</td>
 </tr>    
 <tr><td colspan="2">&nbsp;</td></tr>
 <tr>
