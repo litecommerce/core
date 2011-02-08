@@ -49,8 +49,14 @@ class Marketplace extends \XLite\Base\Singleton
     const MARKETPLACE_URL   = 'https://www.litecommerce.com/marketplace/';
 
     const ADDONS_UPDATED    = 'addonsUpdated';
+    const VERSION_UPDATED   = 'versionUpdated';
+    const LAST_VERSION      = 'lastVersion';
     const LAST_UPDATE_TTL   = 86400;
 
+    /**
+     * Param to force update addons 
+     */
+    const P_FORCE_UPDATE    = 'forceMPRequest';
 
     /**
      * Error status
@@ -81,6 +87,11 @@ class Marketplace extends \XLite\Base\Singleton
      * Addon target 
      */
     const ADDON_TARGET          = 'addon';
+
+    /**
+     * Addon target 
+     */
+    const VERSION_TARGET        = 'version';
 
     /**
      * Author variable in request 
@@ -279,6 +290,61 @@ class Marketplace extends \XLite\Base\Singleton
         }
 
         return $response;
+    }
+
+    /**
+     * Get last version
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLastVersion()
+    {
+        if (static::isVersionUpdateNeeded()) {
+            $version = $this->requestMarketplace(
+                static::VERSION_TARGET,
+                static::GET_ACTION
+            );
+
+            \XLite\Core\TmpVars::getInstance()->LAST_VERSION = trim($version);
+        }
+
+        return \XLite\Core\TmpVars::getInstance()->LAST_VERSION;
+    }
+
+    /**
+     * Returns timestamp of the last version update
+     * from the marketplace
+     * 
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function isVersionInfoActual()
+    {
+        return \XLite\Core\TmpVars::getInstance()->{\XLite\RemoteModel\Marketplace::VERSION_UPDATED}
+            && (
+                \XLite\Core\TmpVars::getInstance()->{\XLite\RemoteModel\Marketplace::VERSION_UPDATED}
+                + \XLite\RemoteModel\Marketplace::LAST_UPDATE_TTL
+            ) > LC_START_TIME;
+    }
+
+    /**
+     * Check if needs to retreive latest version information 
+     * from the market place
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function isVersionUpdateNeeded()
+    {
+        return !static::isVersionInfoActual()
+            || \XLite\Core\Request::getInstance()->{static::P_FORCE_UPDATE};
     }
 
 }

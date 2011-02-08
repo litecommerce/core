@@ -522,4 +522,31 @@ EOT;
             )
         );
     }
+
+    /**
+     * Get last Core version
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLastCoreVersion()
+    {
+        return \XLite\RemoteModel\Marketplace::getInstance()->getLastVersion();
+    }
+
+    /**
+     * Is core upgrade available
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isCoreUpgradeAvailable()
+    {
+        return !is_null($this->getLastCoreVersion())
+            && -1 === version_compare($this->config->Version->version, $this->getLastCoreVersion());
+    }
 }

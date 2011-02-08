@@ -145,9 +145,10 @@
     <div class="logo"></div>
 
     <div class="sw-version">
-      <span class="current">{t(#LiteCommerce shopping cart software v.#)} {config.Version.version:h}</span>
-      <span class="upgrade-note">
-        {*** TODO ***}
+      <span class="current" IF="!auth.isLogged()">{t(#LiteCommerce shopping cart software#)}</span>
+      <span class="current" IF="auth.isLogged()">{t(#v.#)} {config.Version.version:h}</span>
+      <span IF="auth.isLogged()" class="upgrade-note" IF="isCoreUpgradeAvailable()">
+        {t(#New version is available#)}&nbsp;(<a href="#">{getLastCoreVersion()}</a>)</span>
       </span>
     </div>
 
