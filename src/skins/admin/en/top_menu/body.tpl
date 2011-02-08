@@ -34,6 +34,8 @@ jQuery(document).ready(function(){
   
   if (selectedTab) {
     jQuery(selectedTab).addClass('current');
+
+    jQuery('div', selectedTab).clone().attr('id','topMenuLine').appendTo('#header');
   }
 
 });

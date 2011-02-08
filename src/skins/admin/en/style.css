@@ -313,6 +313,13 @@ div.noscript
   color: #0D2335;
 }
 
+.main-menu-item-header
+{
+  color: #294F6C;
+  text-decoration: none;
+  font-size: 22px;
+}
+
 /* Page tabs */
 
 div.page-tabs
@@ -893,10 +900,6 @@ A.AomMenu:active
 .CenterBorder
 {
    BACKGROUND-COLOR: #CDD9E1;
-}
-.MainMenuItemHeader
-{
-        COLOR: #294F6C; TEXT-DECORATION: none; FONT-WEIGHT: bold; font-size: 12px;
 }
 
 .displayPageHeader
