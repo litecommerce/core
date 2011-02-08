@@ -1,7 +1,7 @@
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
- * ____file_title____
+ * AJAX-related styles
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -14,7 +14,7 @@
 /* Modal wait screen */
 .wait-block
 {
-  border:  1px solid #777;
+  border:  1px solid #cadce8;
   background: #fff none;
   padding: 9px;
   width: 30%;
@@ -30,7 +30,7 @@
   padding: 0;
   margin: 0;
   height: 11px;
-  background: transparent url(images/progress.gif) repeat-x left top;
+  background: transparent url(../images/progress.gif) repeat-x left top;
 }
 
 .wait-block-overlay

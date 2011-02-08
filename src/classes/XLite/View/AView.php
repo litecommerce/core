@@ -534,11 +534,12 @@ abstract class AView extends \XLite\Core\Handler
     public function getCSSFiles()
     {
         $list = array(
-            'ajax.css',
+            'css/style.css',
+            'css/ajax.css',
         );
 
         if (\XLite\Logger::isMarkTemplates()) {
-            $list[] = 'template_debuger.css';
+            $list[] = 'css/template_debuger.css';
         }
 
         return $list;

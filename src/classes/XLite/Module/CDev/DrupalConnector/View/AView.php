@@ -167,6 +167,28 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
         return $result;
     }
 
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+            $key = array_search($list, 'css/style.css');
+            if (false !== $key) {
+                unset($list[$key]);
+            }
+        }
+
+        return $list;
+    }
+
     /**  
      * Register files from common repository
      *

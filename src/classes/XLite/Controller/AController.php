@@ -376,13 +376,13 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Perform some actions before redirect
      *
-     * @param string|null $action Performed action
+     * @param string $action Performed action OPTIONAL
      *
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function actionPostprocess($action)
+    protected function actionPostprocess($action = null)
     {
         if (isset($action)) {
             $method = __FUNCTION__ . \XLite\Core\Converter::convertToCamelCase($action);
@@ -543,7 +543,28 @@ abstract class AController extends \XLite\Core\Handler
 
             $this->display404();
 
-        } elseif (!empty(\XLite\Core\Request::getInstance()->action) && $this->isValid()) {
+        } else {
+            $this->callAction();
+        }
+
+        if ($this->isRedirectNeeded()) {
+            $this->doRedirect();
+        }
+    }
+
+    /**
+     * Call controller action or special default action
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function callAction()
+    {
+        $action = null;
+
+        if (!empty(\XLite\Core\Request::getInstance()->action) && $this->isValid()) {
 
             $action = \XLite\Core\Request::getInstance()->action;
 
@@ -559,48 +580,81 @@ abstract class AController extends \XLite\Core\Handler
                 $this->$newMethodName();
             }
 
-            $this->actionPostprocess($action);
-
         } else {
             $this->doNoAction();
         }
 
-        if ($this->isRedirectNeeded()) {
-            if ($this->isAJAX()) {
+        $this->actionPostprocess($action);
+    }
 
-                foreach (\XLite\Core\TopMessage::getInstance()->getMessages() as $message) {
-                    $encodedMessage = json_encode(
-                        array(
-                            'type'    => $message[\XLite\Core\TopMessage::FIELD_TYPE],
-                            'message' => $message[\XLite\Core\TopMessage::FIELD_TEXT],
-                        )
-                    );
-                    header('event-message: ' . $encodedMessage);
-                }
-                \XLite\Core\TopMessage::getInstance()->clear();
+    /**
+     * Do redirect 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doRedirect()
+    {
+        if ($this->isAJAX()) {
+            $this->translateTopMessagesToHTTPHeaders();
+            $this->assignAJAXResponseStatus();
+        }
 
-                if (!$this->isValid()) {
+        $this->redirect();
+    }
 
-                    // AXAX-based - cancel redirect
-                    header('ajax-response-status: 0');
-                    header('not-valid: 1');
+    /**
+     * Translate top messages to HTTP headers (AJAX)
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function translateTopMessagesToHTTPHeaders()
+    {
+        foreach (\XLite\Core\TopMessage::getInstance()->getMessages() as $message) {
+            $encodedMessage = json_encode(
+                array(
+                    'type'    => $message[\XLite\Core\TopMessage::FIELD_TYPE],
+                    'message' => $message[\XLite\Core\TopMessage::FIELD_TEXT],
+                )
+            );
+            header('event-message: ' . $encodedMessage);
+        }
+        \XLite\Core\TopMessage::getInstance()->clear();
+    }
 
-                } elseif ($this->internalRedirect) {
+    /**
+     * Assign AJAX response status to HTTP header(s)
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function assignAJAXResponseStatus()
+    {
+        if (!$this->isValid()) {
 
-                    // Popup internal redirect
-                    header('ajax-response-status: 279');
+            // AXAX-based - cancel redirect
+            header('ajax-response-status: 0');
+            header('not-valid: 1');
 
-                } elseif ($this->silenceClose) {
+        } elseif ($this->internalRedirect) {
 
-                    // Popup silence close
-                    header('ajax-response-status: 277');
+            // Popup internal redirect
+            header('ajax-response-status: 279');
 
-                } else {
-                    header('ajax-response-status: 270');
-                }
-            }
+        } elseif ($this->silenceClose) {
 
-            $this->redirect();
+            // Popup silence close
+            header('ajax-response-status: 277');
+
+        } else {
+            header('ajax-response-status: 270');
         }
     }
 
