@@ -50,7 +50,7 @@ fieldset {
 Main template main.tpl wallpaper.
 */
 .Wallpaper {
-  background-image: url("images/head_back_long.jpg");
+  background-image: url(../images/head_back_long.jpg);
   background-repeat: no-repeat;
   background-COLOR: #8CC2E6;
 }
@@ -724,40 +724,40 @@ A.GoLink: active {
 }
 
 .SearchButtonBG {
-  background-image: url('images/rect_button_bg.gif');
+  background-image: url(../images/rect_button_bg.gif);
 }
 
 .MainHeaderBG {
-  background-image: url('images/header_hr.gif');
+  background-image: url(../images/header_hr.gif);
   background-repeat: repeat-x;
   background-position: bottom;
 }
 
 .CommonButtonBG {
-  background-image: url('images/but_bg.gif');
+  background-image: url(../images/but_bg.gif);
 }
 
 .SubmitButtonBG {
-  background-image: url('images/but_bg.gif');
+  background-image: url(../images/but_bg.gif);
 }
 
 .CommonButton2LeftBG {
-  background-image: url('images/btn2_left.gif');
+  background-image: url(../images/btn2_left.gif);
   background-repeat: no-repeat;
 }
 
 .CommonButton2CenterBG {
-  background-image: url('images/btn2_bg.gif');
+  background-image: url(../images/btn2_bg.gif);
 }
 
 .SidebarBoxLeftBG {
-  background-image: url('images/menu_2.gif');
+  background-image: url(../images/menu_2.gif);
   background-repeat: no-repeat;
   background-position: right;
 }
 
 .SidebarBoxCenterBG {
-  background-image: url('images/menu_1.gif');
+  background-image: url(../images/menu_1.gif);
   background-repeat: no-repeat;
   background-position: left;
   color: #FFFFFF;
@@ -767,35 +767,35 @@ A.GoLink: active {
 }
 
 .TabSelectedBG {
-  background-image: url('images/tab_selected_bg.gif');
+  background-image: url(../images/tab_selected_bg.gif);
 }
 
 .TabNormalBG {
-  background-image: url('images/tab_bg.gif');
+  background-image: url(../images/tab_bg.gif);
 }
 
 .TabberPageSelectedLeftBG {
-  background-image: url('images/tab_a1.gif');
+  background-image: url(../images/tab_a1.gif);
 }
 
 .TabberPageSelectedCenterBG {
-  background-image: url('images/tab_bg_a.gif');
+  background-image: url(../images/tab_bg_a.gif);
 }
 
 .TabberPageSelectedRightBG {
-  background-image: url('images/tab_a2.gif');
+  background-image: url(../images/tab_a2.gif);
 }
 
 .TabberPageNormalLeftBG {
-  background-image: url('images/tab_p1.gif');
+  background-image: url(../images/tab_p1.gif);
 }
 
 .TabberPageNormalCenterBG {
-  background-image: url('images/tab_bg_p.gif');
+  background-image: url(../images/tab_bg_p.gif);
 }
 
 .TabberPageNormalRightBG {
-  background-image: url('images/tab_p2.gif');
+  background-image: url(../images/tab_p2.gif);
 }
 
 TABLE.Container {

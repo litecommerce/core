@@ -223,13 +223,13 @@ body
 
 #header, #menu
 {
-  background: #0C263D url(images/admin_header_bg.png) repeat-x left top;
+  background: #0C263D url(../images/admin_header_bg.png) repeat-x left top;
   height: 76px;
 }
 
 #header .logo
 {
-  background: url(images/logo.png) no-repeat 0 0;
+  background: url(../images/logo.png) no-repeat 0 0;
   width: 180px;
   height: 76px;
   float: left;
@@ -286,7 +286,7 @@ body
 
 #content
 {
-  background: url(images/content_top_bg.gif) repeat-x top left;
+  background: url(../images/content_top_bg.gif) repeat-x top left;
   padding: 15px 0 60px 0;
   border-top: 1px solid #dfe5e8;
   margin-top: 130px;
@@ -587,11 +587,6 @@ a.FormButton:hover
 
 .truncate
 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  -moz-binding: url(https://xcart2-530.crtdev.local/~max/xlite/src/skins/ellipsis.xml#ellipsis);
 }
 
 div.clear
@@ -658,7 +653,7 @@ ul.form label
 
 ul.form li.required label
 {
-  background: transparent url(images/red_star.png) no-repeat right 5px;
+  background: transparent url(../images/red_star.png) no-repeat right 5px;
 }
 
 ul.form li .note
@@ -687,7 +682,7 @@ button
     -moz-border-radius: 19px;
     -webkit-border-radius: 19px;
     border-radius: 19px;
-    background: url("images/button_bg_light.png") repeat-x center top #eff8fe;
+    background: url(../images/button_bg_light.png) repeat-x center top #eff8fe;
     border: 1px solid #cadce8;
     color: #2c5fa6;
     cursor: pointer;
@@ -725,7 +720,7 @@ button.main span
 
 button.invert
 {
-  background: url(images/button_bg_blue.png) repeat 0 0;
+  background: url(../images/button_bg_blue.png) repeat 0 0;
   border-color: transparent;
 }
 
@@ -737,7 +732,7 @@ button.invert span
 button.invert:hover
 {
   background-color: transparent;
-  background-image: url(images/button_bg_blue_hover.png);
+  background-image: url(../images/button_bg_blue_hover.png);
 }
 
 /**
@@ -745,7 +740,7 @@ button.invert:hover
  */
 .wait-box .box
 {
-  background: transparent url(images/progress.gif) repeat-x left top;
+  background: transparent url(../images/progress.gif) repeat-x left top;
   width: 100%;
   height: 11px;
 }
@@ -933,7 +928,7 @@ A.AomMenu:active
 .adv-block a.close,
 .adv-block a.close img
 {
-  background: transparent url(images/remove.png) no-repeat left top;
+  background: transparent url(../images/remove.png) no-repeat left top;
   padding: 0;
   margin: 0;
   border: 0;
@@ -995,19 +990,19 @@ A.AomMenu:active
 
 .adv-block h2.custom
 {
-  background: transparent url(images/adv_icon_custom.png) no-repeat left 6px;
+  background: transparent url(../images/adv_icon_custom.png) no-repeat left 6px;
   padding-left: 60px;
 }
 
 .adv-block h2.support
 {
-  background: transparent url(images/adv_icon_support.png) no-repeat left 22px;
+  background: transparent url(../images/adv_icon_support.png) no-repeat left 22px;
   padding-left: 50px; 
 }
 
 .adv-block h2.hosting
 {
-  background: transparent url(images/adv_icon_hosting.png) no-repeat left 20px;
+  background: transparent url(../images/adv_icon_hosting.png) no-repeat left 20px;
   padding-left: 55px;
 }
 
