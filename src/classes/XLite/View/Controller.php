@@ -105,8 +105,8 @@ class Controller extends \XLite\View\AView
             'area-' . (\XLite::isAdminZone() ? 'a' : 'c'),
             'skin-' . \XLite\Model\Layout::getInstance()->getSkin(),
             'target-' . (\XLite\Core\Request::getInstance()->target ?: \XLite::TARGET_DEFAULT),
-            'area-' . (\XLite::isAdminZone() ? 'a' : 'c'),
-            
+            'one-sidebar',
+            'sidebar-first',
         );
     }
 
