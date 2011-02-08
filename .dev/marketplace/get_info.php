@@ -31,15 +31,54 @@ if ('addons' === $_GET['target']) {
 
 } elseif ('addon' === $_GET['target']) {
 
-	// FREE MODULES !!!!! ONLY!!!!!
-	// TODO !!! PAID MODULES RETRIVING!!!
+	if (isset($_GET['key'])) {
 
-	$outFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR
-		. basename($_GET['author']) . '_' . basename($_GET['module']) . '.phar';
+	    // Paid module retrieving
+    	// TODO MAke DB request for a key
+	    $outFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'paid-modules' . DIRECTORY_SEPARATOR
+    	    . basename($_GET['author']) . '_' . basename($_GET['module']) . '.phar';
 
-	if (file_exists($outFile) && is_readable($outFile)) {
-        echo file_get_contents($outFile);
-    }
+	    $keyFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'paid-modules' . DIRECTORY_SEPARATOR
+    	    . basename($_GET['author']) . '_' . basename($_GET['module']) . '.key';
+
+		$refundKeyFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'paid-modules' . DIRECTORY_SEPARATOR
+            . basename($_GET['author']) . '_' . basename($_GET['module']) . '.refund.key'; 
+
+		// Refund keys must be stored separately to prevent repeated use in main KEY set
+		$refundKeys = file_exists($refundKeyFile) ? file($refundKeyFile, FILE_IGNORE_NEW_LINES) : array();
+
+		$keys = file_exists($keyFile) ? file($keyFile, FILE_IGNORE_NEW_LINES) : array();
+
+		// TODO after changing to DB:
+		// Only 7 downloads in a week are allowed for one key [9 demand]
+
+	    if (
+			in_array($_GET['key'], $keys)
+			&& !in_array($_GET['key'], $refundKeys)
+		) {
+                
+    		echo file_get_contents($outFile);
+
+	    } else { 
+
+        	echo 'Wrong key!';
+    	}
+
+	} else {
+
+		// Free module retrieving
+		$outFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR
+			. basename($_GET['author']) . '_' . basename($_GET['module']) . '.phar';
+
+		if (file_exists($outFile)) {
+
+    	    echo file_get_contents($outFile);
+
+	    } else {
+
+			echo 'No module';
+		}
+	}
 
 } elseif ('license' === $_GET['target']) {
 
@@ -47,10 +86,14 @@ if ('addons' === $_GET['target']) {
         . basename($_GET['author']) . '_' . basename($_GET['module']);
 
     if (file_exists($outFile) && is_readable($outFile)) {
-        echo file_get_contents($outFile);
-    }
-}
 
+        echo file_get_contents($outFile);
+
+    } else {
+
+		echo ('No license');
+	}
+}
 
 exit(0);
 ?>

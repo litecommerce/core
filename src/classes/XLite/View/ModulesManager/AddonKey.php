@@ -29,27 +29,33 @@
 namespace XLite\View\ModulesManager;
 
 /**
- * Addons search and installation widget
+ * Enter addon key page
  *
  * @package XLite
  * @see     ____class_see____
  * @since   3.0
+ *
+ * @ListChild (list="admin.center", zone="admin")
  */
-class AModulesManager extends \XLite\View\Dialog
+class AddonKey extends \XLite\View\ModulesManager\AModulesManager
 {
-
-    /** 
-     * Return module identificator
-     * 
-     * @return integer
-     * @access protected
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getModuleId()
-    {   
-        return \XLite\Core\Request::getInstance()->module_id;    
-    }   
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+
+        $result[] = 'addon_key';
+    
+        return $result;
+    }
+
 
     /**
      * Return title
@@ -60,11 +66,11 @@ class AModulesManager extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return '';
+        return 'Enter license key';
     }
 
     /**
-     * Return templates directory
+     * Return templates directory name
      *
      * @return string
      * @access protected
@@ -72,35 +78,7 @@ class AModulesManager extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'modules_manager';
-    }
-
-    /**
-     * Return marketplace URL
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getMarketPlaceURL()
-    {
-        return \XLite\Model\Module::MARKETPLACE_URL;
-    }
-
-    /**
-     * Return upgradable modules flag label:
-     * - empty string if no any
-     * - number of upgradable modules in brackets
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getUpgradableModulesFlag()
-    {
-        $upgradeables = count(\Xlite\Core\Database::getRepo('XLite\Model\Module')->findUpgradableModules());
-
-        return 0 < $upgradeables ? ' (' . $upgradeables . ')' : '';
+        return 'modules_manager' . LC_DS . 'enter_key';
     }
 
 }

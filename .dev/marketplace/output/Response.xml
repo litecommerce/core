@@ -2308,8 +2308,8 @@
             <hash></hash>
 
             <packHash></packHash>
-            <price>0.00</price>
-            <currency></currency>
+            <price>10.50</price>
+            <currency>USD</currency>
             <rating>48</rating>
             <downloads>48</downloads>
 

@@ -141,7 +141,7 @@ class Database extends \XLite\Base\Singleton
     );
 
     /**
-     * Fixtures loading prtocedure options 
+     * Fixtures loading procedure options 
      * 
      * @var    array
      * @access protected

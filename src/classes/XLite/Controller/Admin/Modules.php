@@ -78,11 +78,15 @@ class Modules extends \XLite\Controller\Admin\AAdmin
         $this->set('returnUrl', $this->buildURL('modules'));
 
         $id = \XLite\Core\Request::getInstance()->moduleId;
+
         $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id);
 
         if ($module) {
+
             $module->setEnabled(true);
+
             \XLite\Core\Database::getEM()->flush();
+
             \XLite::setCleanUpCacheFlag(true);
         }
     }
@@ -141,10 +145,13 @@ class Modules extends \XLite\Controller\Admin\AAdmin
         $this->set('returnUrl', $this->buildURL('modules'));
 
         $id = \XLite\Core\Request::getInstance()->moduleId;
+
         $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id);
 
         if ($module) {
+
             $module->disableModule();
+
             \XLite::setCleanUpCacheFlag(true);
         }
     }
@@ -175,16 +182,10 @@ class Modules extends \XLite\Controller\Admin\AAdmin
             // Disable this and depended modules
             $module->disableModule();
 
-            \XLite::setCleanUpCacheFlag(true);
-
             $status = $module->uninstall();
-
-            \XLite\Core\Database::getEM()->remove($module);
-            \XLite\Core\Database::getEM()->flush();
 
             if ($status) {
                 \XLite\Core\TopMessage::getInstance()->addInfo('The module has been uninstalled successfully');
-
             } else {
                 \XLite\Core\TopMessage::getInstance()->addWarning('The module has been partially uninstalled');
             }

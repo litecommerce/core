@@ -26,7 +26,7 @@
   <div class="module-info">
     <ul>
       <li><span class="by">{t(#by#)} <a href="{module.getAuthorPageURL()}" target="_blank">{module.getAuthorName()}</a></li>
-      <li><a href="{module.getPageURL()}" target="_blank">{t(#Visit add-on\'s page#)}</a></li>
+      <li><a href="{module.getPageURL()}" target="_blank">{t(#Visit add-on's page#)}</a></li>
     </ul>
   </div>
 </td>
