@@ -372,7 +372,7 @@ class Image extends \XLite\View\AView
      */
     protected function processDefaultImage()
     {
-        list($this->properties['width'], $this->properties['height']) = \XLite\Core\Converter::getCroppedDimensions(
+        list($this->properties['width'], $this->properties['height']) = \XLite\Core\ImageOperator::getCroppedDimensions(
             \XLite::getInstance()->getOptions(array('images', 'default_image_width')),
             \XLite::getInstance()->getOptions(array('images', 'default_image_height')),
             max(0, $this->getParam(self::PARAM_MAX_WIDTH)),

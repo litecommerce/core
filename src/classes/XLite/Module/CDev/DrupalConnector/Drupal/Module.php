@@ -38,6 +38,13 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
     /**
+     * So called "landing" link path.
+     * NOTE: do not wrap this constant into a function: * it can cause the perfomance loss
+     */
+    const LANDING_LINK_PATH = 'admin/lc_admin_area';
+
+
+    /**
      * List of registered portals 
      * 
      * @var    array
@@ -48,20 +55,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     protected $portals = array();
 
 
-    /**
-     * Constructor
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function __construct()
-    {
-        parent::__construct();
-
-        $this->registerPortals();
-    }
+    // ------------------------------ Auxiliary methods - 
 
     /**
      * For custom modules; ability to add Drupal menu nodes
@@ -75,6 +69,37 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected function addMenus(array &$menus)
     {
+    }
+
+    /**
+     * Return URL to redirect to
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAdminAreaURLArgs()
+    {
+        return \XLite\Core\Session::getInstance()->getName() . '=' . \XLite\Core\Session::getInstance()->getId();
+    }
+
+
+    // ------------------------------ Portals -
+
+    /**
+     * Constructor
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function __construct()
+    {
+        parent::__construct();
+
+        $this->registerPortals();
     }
 
     /**
@@ -111,7 +136,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
         // So called "landing link"
         $this->registerPortal(
-            'admin/lc_admin_area', '\XLite\Controller\Customer\AdminAreaRedirector', 'LC admin area', MENU_NORMAL_ITEM
+            self::LANDING_LINK_PATH, '\XLite\Controller\Customer\ACustomer', 'LC admin area', MENU_NORMAL_ITEM
         );
     }
 
@@ -275,4 +300,23 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         return $list;
     }
 
+    /**
+     * Alters outbound URLs
+     *
+     * @param string &$path         The outbound path to alter
+     * @param array  &$options      A set of URL options
+     * @param string $originalPath The original path, before being altered by any modules
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function translateOutboundURL(&$path, array &$options, $originalPath)
+    {
+        if (self::LANDING_LINK_PATH === $path && \XLite\Core\Auth::getInstance()->isAdmin()) {
+            $path = \Includes\Utils\URLManager::getShopURL('admin.php?' . $this->getAdminAreaURLArgs());
+            $options['external'] = true;
+        }
+    }
 }

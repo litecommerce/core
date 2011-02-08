@@ -70,6 +70,9 @@ global $lcSettings;
 
 $lcSettings = array(
 
+    // Default language code
+    'default_language_code' => 'en',
+
     // PHP versions that are not supported
     'forbidden_php_versions' => array(),
 

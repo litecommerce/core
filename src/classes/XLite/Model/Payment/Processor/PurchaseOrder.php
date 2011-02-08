@@ -69,6 +69,29 @@ class PurchaseOrder extends \XLite\Model\Payment\Processor\Offline
     }
 
     /**
+     * Get input errors
+     *
+     * @param array $data Input data
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getInputErrors(array $data)
+    {
+        $errors = parent::getInputErrors($data);
+
+        foreach ($this->getInputDataLabels() as $k => $t) {
+            if (!isset($data[$k]) || !$data[$k]) {
+                $errors[] = \XLite\Core\Translation::lbl('X field is required', array('field' => $t));
+            }
+        }
+
+        return $errors;
+    }
+
+    /**
      * Get input data access levels list
      *
      * @return array

@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="invoice.bottom.address", weight="10")
  *}
-<td class="ship">
+<td class="ship" IF="order.profile.getShippingAddress()">
   <strong>{t(#Shipping address#)}</strong>
   <p>
     {order.profile.shipping_address.title} {order.profile.shipping_address.firstname:h} {order.profile.shipping_address.lastname:h}

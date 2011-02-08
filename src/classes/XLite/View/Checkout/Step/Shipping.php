@@ -76,7 +76,7 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
         return $this->getCart()->getProfile()
             && $this->getCart()->getProfile()->getShippingAddress()
             && $this->getCart()->getProfile()->getShippingAddress()->isCompleted(\XLite\Model\Address::SHIPPING)
-            && $this->getCart()->getShippingMethod();
+            && (!$this->getCart()->isShippingVisible() || $this->getCart()->getShippingMethod());
     }
 
     /**

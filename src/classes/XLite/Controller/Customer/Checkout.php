@@ -362,7 +362,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
     
         } else {
 
-            $this->getCart()->getProfile()->setLastPaymentId($pm->getMethodId());
+            if ($this->getCart()->getProfile()) {
+                $this->getCart()->getProfile()->setLastPaymentId($pm->getMethodId());
+            }
             $this->getCart()->setPaymentMethod($pm);
             $this->updateCart();
 
@@ -475,86 +477,116 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
         } else {
 
-            $cart = $this->getCart();
+            $data = is_array(\XLite\Core\Request::getInstance()->payment)
+                ? \XLite\Core\Request::getInstance()->payment
+                : array();
 
-            if (isset(\XLite\Core\Request::getInstance()->notes)) {
-                $cart->setNotes(\XLite\Core\Request::getInstance()->notes);
-            }
+            $errors = $this->getCart()->getFirstOpenPaymentTransaction()
+                ->getPaymentMethod()
+                ->getProcessor()
+                ->getInputErrors($data);
 
-            if (\XLite\Model\Order::STATUS_TEMPORARY == $cart->getStatus()) {
-               $cart->setDate(time());
-
-                $profile = \XLite\Core\Auth::getInstance()->getProfile();
-                if ($profile->getOrder()) {
-                    // anonymous checkout:
-                    // use the current profile as order profile
-                    $cart->setProfile($profile);
+            if ($errors) {
+                foreach ($errors as $error) {
+                    \XLite\Core\TopMessage::getInstance()->addError($error);
                 }
-            }
-
-            // Get first (and only) payment transaction
-        
-            $transaction = $cart->getFirstOpenPaymentTransaction();
-
-            $result = null;
-
-            if ($transaction) {
-                $result = $transaction->handleCheckoutAction();
-
-            } elseif (!$cart->isOpen()) {
-
-                $result = \XLite\Model\Payment\Transaction::COMPLETED;
-
-                $status = \XLite\Model\Order::STATUS_PROCESSED;
-
-                foreach ($cart->getPaymentTransactions() as $t) {
-                    if ($t::STATUS_SUCCESS != $t->getStatus()) {
-                        $status = \XLite\Model\Order::STATUS_QUEUED;
-                        break;
-                    }
-                }
-
-                $cart->setStatus($status);
-            }
-
-            if (\XLite\Model\Payment\Transaction::PROLONGATION == $result) {
-                $this->set('silent', true);
-                exit (0);
-
-            } elseif ($cart->isOpen()) {
-
-                // Order is open - go to Select payment method step
-
-                if ($transaction && $transaction->getNote()) {
-                    \XLite\Core\TopMessage::getInstance()->add(
-                        $transaction->getNote(),
-                        $transaction->isFailed() ? \XLite\Core\TopMessage::ERROR : \XLite\Core\TopMessage::INFO,
-                        true
-                    );
-                }
-
-                $this->setReturnUrl($this->buildURL('checkout'));
+                $this->redirect($this->buildURL('checkout'));
 
             } else {
+                $this->doPayment();
+            }
+        }
+    }
 
-                $status = $cart->isPayed()
-                    ? \XLite\Model\Order::STATUS_PROCESSED
-                    : \XLite\Model\Order::STATUS_QUEUED;
-                $cart->setStatus($status);
+    /**
+     * Do payment 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doPayment()
+    {
+        $cart = $this->getCart();
 
-                $this->processSucceed();
-                $this->setReturnUrl(
-                    $this->buildURL(
-                        'checkoutSuccess',
-                        '',
-                        array('order_id' => $cart->getOrderId())
-                    )
-                );
+        if (isset(\XLite\Core\Request::getInstance()->notes)) {
+            $cart->setNotes(\XLite\Core\Request::getInstance()->notes);
+        }
 
+        if (\XLite\Model\Order::STATUS_TEMPORARY == $cart->getStatus()) {
+           $cart->setDate(time());
+
+            $profile = \XLite\Core\Auth::getInstance()->getProfile();
+            if ($profile->getOrder()) {
+                // anonymous checkout:
+                // use the current profile as order profile
+                $cart->setProfile($profile);
+            }
+        }
+
+        // Get first (and only) payment transaction
+        
+        $transaction = $cart->getFirstOpenPaymentTransaction();
+
+        $result = null;
+
+        if ($transaction) {
+            $result = $transaction->handleCheckoutAction();
+
+         } elseif (!$cart->isOpen()) {
+
+            $result = \XLite\Model\Payment\Transaction::COMPLETED;
+
+            $status = \XLite\Model\Order::STATUS_PROCESSED;
+
+            foreach ($cart->getPaymentTransactions() as $t) {
+                if ($t::STATUS_SUCCESS != $t->getStatus()) {
+                    $status = \XLite\Model\Order::STATUS_QUEUED;
+                    break;
+                }
             }
 
-            $this->updateCart();
+            $cart->setStatus($status);
         }
+
+        if (\XLite\Model\Payment\Transaction::PROLONGATION == $result) {
+            $this->set('silent', true);
+            exit (0);
+
+        } elseif ($cart->isOpen()) {
+
+            // Order is open - go to Select payment method step
+
+            if ($transaction && $transaction->getNote()) {
+                \XLite\Core\TopMessage::getInstance()->add(
+                    $transaction->getNote(),
+                    $transaction->isFailed() ? \XLite\Core\TopMessage::ERROR : \XLite\Core\TopMessage::INFO,
+                    true
+                );
+            }
+
+            $this->setReturnUrl($this->buildURL('checkout'));
+
+        } else {
+
+            $status = $cart->isPayed()
+                ? \XLite\Model\Order::STATUS_PROCESSED
+                : \XLite\Model\Order::STATUS_QUEUED;
+            $cart->setStatus($status);
+
+            $this->processSucceed();
+            $this->setReturnUrl(
+                $this->buildURL(
+                    'checkoutSuccess',
+                    '',
+                    array('order_id' => $cart->getOrderId())
+                )
+            );
+
+        }
+
+        $this->updateCart();
     }
 
     /**

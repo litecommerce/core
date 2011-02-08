@@ -13,6 +13,10 @@
  *}
 <widget class="\XLite\View\Form\Checkout\Place" name="placeOrder" className="place"/>
 
+  {if:getPaymentTemplate()}
+    <widget template="{getPaymentTemplate()}" />
+  {end:}
+
   <div class="notes">
     <label for="place_order_note">{t(#Customer note#)}:</label>
     <textarea name="notes"></textarea>
