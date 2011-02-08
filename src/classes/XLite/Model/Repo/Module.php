@@ -1013,7 +1013,7 @@ class Module extends \XLite\Model\Repo\ARepo
             PEAR_LOG_ERR
         );
 
-        \XLite\Core\Database::getEM()->remove($module);
+        $module->setInstalled(false);
     }
 
     /**

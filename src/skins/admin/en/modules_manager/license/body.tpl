@@ -14,7 +14,7 @@
 <div class="module-license">
 
   <div class="form">
-    <form action="admin.php" method="post" name="search_form" >
+    <form action="admin.php" method="post" name="getAddonForm" >
       <input type="hidden" name="target" value="module_installation" />
       <input type="hidden" name="action" value="get_package" />
       <input type="hidden" name="module_id" value="{getModuleId()}" />

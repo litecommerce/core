@@ -129,7 +129,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
 
     public function getMarketplaceURL()
-    {    
+    {
         $debugOptions = \XLite::getInstance()->getOptions('debug');
 
         return isset($debugOptions['marketplace_dev_url'])

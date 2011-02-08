@@ -115,7 +115,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
     public function testFindUpgradableModules()
     {
         $result = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findUpgradableModules();
-
+exit(1);
         $this->assertEquals(6, count($result), 'Number of found upgradable modules does not match');
         $this->assertEquals(10, $result[0]->getModuleId(), 'ID of the first found module does not match');
         $this->assertEquals(15, $result[count($result)-1]->getModuleId(), 'ID of the last found module does not match');

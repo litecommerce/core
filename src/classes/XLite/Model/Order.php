@@ -29,7 +29,7 @@
 namespace XLite\Model;
 
 /**
- * Class represens an order
+ * Class represents an order
  * 
  * @package XLite
  * @see     ____class_see____
