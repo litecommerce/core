@@ -35,7 +35,7 @@ namespace XLite\View\ModulesManager;
  * @see     ____class_see____
  * @since   3.0
  *
- * @ListChild (list="center")
+ * @ListChild (list="admin.center", zone="admin")
  */
 class UploadAddons extends \XLite\View\Dialog
 {

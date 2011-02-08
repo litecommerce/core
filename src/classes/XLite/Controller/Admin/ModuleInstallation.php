@@ -38,7 +38,6 @@ namespace XLite\Controller\Admin;
 class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
 {
 
-
     /**
      * Action of getting LICENSE text. Redirection to GET request
      * 
@@ -72,13 +71,59 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionGetPackage()
     {
+        $moduleById = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->getModuleId());
+
+        $mapFields = array(
+            'module' => $moduleById->getName(),
+            'author' => $moduleById->getAuthor(),
+        );  
+
+        // Register module license key for a further use
+        $moduleKey = \XLite\Core\Database::getRepo('\XLite\Model\ModuleKey')->findOneBy($mapFields);
+
+        if (!is_null(\XLite\Core\Request::getInstance()->key)) {
+
+            if (is_null($moduleKey)) {
+
+                $moduleKey = new \XLite\Model\ModuleKey();
+                
+                $moduleKey->map(
+                    $mapFields + array(
+                        'keyValue' => \XLite\Core\Request::getInstance()->key,
+                    )
+                );
+
+                \XLite\Core\Database::getEM()->persist($moduleKey);
+
+            } else {
+
+                $moduleKey->setKeyValue(\XLite\Core\Request::getInstance()->key);
+            }
+
+            $key = \XLite\Core\Request::getInstance()->key;
+
+            \XLite\Core\Database::getEM()->flush();
+
+        } else {
+
+            // Check if there is a working license key for this module
+            if (!is_null($moduleKey)) {
+
+                $key = $moduleKey->getKeyValue();
+            }
+        }
+
+        // Retrieve the module package from the Marketplace to Local Repository of the LC
         $result = \XLite\RemoteModel\Marketplace::getInstance()->retriveToLocalRepository(
-            $this->getModuleId()
+            $this->getModuleId(),
+            (isset($key) && !empty($key))
+                ? array('key' => $key)
+                : array()
         );
 
         if (\XLite\RemoteModel\Marketplace::STATUS_ERROR !== $result) {
 
-            // TODO Compare with Upload Addons feature... 
+            // TODO Refactor with Upload Addons feature... 
             // has the same functionality
             $module = new \XLite\Model\PHARModule($result);
 
@@ -94,6 +139,10 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
                 \XLite\Core\TopMessage::getInstance()->addInfo(
                     'Module has been uploaded successfully'
                 );
+
+                $moduleById->setPurchased(true);
+
+                \XLite\Core\Database::getEM()->flush();
 
             } else {
 
@@ -114,9 +163,8 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
         $this->set('returnUrl', $this->buildURL('modules'));
     }
 
-
-    /**
-     * Return module identificator from request
+    /** 
+     * Return module identificator
      * 
      * @return integer
      * @access public
@@ -124,10 +172,9 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * @since  3.0.0
      */
     public function getModuleId()
-    {
-        return \XLite\Core\Request::getInstance()->module_id;
-    }
-
+    {   
+        return \XLite\Core\Request::getInstance()->module_id;    
+    }   
 
     /**
      * Return LICENSE text for the module
@@ -143,6 +190,5 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
             $this->getModuleId()
         );
     }
-
 
 }
