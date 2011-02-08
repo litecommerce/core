@@ -200,7 +200,7 @@ class Order extends \XLite\Model\Repo\ARepo
     {
         if (
             !empty($value)
-            !is_null(\XLite\Model\Order::getAllowedStatuses($value))
+            && !is_null(\XLite\Model\Order::getAllowedStatuses($value))
         ) {
             $queryBuilder
                 ->andWhere('o.status = :status')
