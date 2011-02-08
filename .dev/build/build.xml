@@ -5,7 +5,7 @@
 
 	<target name="build" depends="set-properties,clean,prepare,phpunit-deployment,php-documentor,analysis,create-build,tests" />
 
-	<target name="cc" depends="set-properties-cc,clean,prepare,analysis,phpunit-deployment-cc,php-documentor,comparison,create-build,tests-cc" />
+	<target name="cc" depends="set-properties-cc,clean,prepare,phpunit-deployment-cc,php-documentor,analysis,comparison,create-build,tests-cc" />
 
 	<target name="pure-build" depends="set-properties,clean,prepare,php-documentor,create-build" />
 
@@ -19,7 +19,7 @@
 		<property name="distrDir" location="${buildDir}/output" />
 		<property name="installDir" location="${buildDir}/src" />
 		<property name="label" value="manual" />
-		<property name="varRunClasses" value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
+		<property name="varRunClasses" value="${installDir}/var/run/classes" />
 	</target>
 
     <target name="set-properties-cc" depends="set-properties-common">
@@ -31,7 +31,7 @@
 		<property name="srcDir" location="${sourceDir}/src" />
 		<property name="distrDir" location="${buildDir}/output" />
 		<property name="installDir" location="${buildDir}/src" />
-        <property name="varRunClasses" value="${installDir}/var/run/classes" />
+		<property name="varRunClasses" value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
     </target>
 
     <target name="set-properties-common">
