@@ -126,6 +126,18 @@ class Order extends \XLite\Model\Base\ModifierOwner
     protected $shipping_id = 0;
 
     /**
+     * Shipping method name
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", nullable=true)
+     */
+    protected $shipping_method_name = '';
+
+    /**
      * Shipping tracking code
      * 
      * @var    string

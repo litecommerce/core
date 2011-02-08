@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="checkout.shipping.selected", weight="20")
  *}
-<div class="secondary">
+<div class="secondary" IF="cart.isShippingVisible()">
   <h3>{t(#Delivery methods#)}</h3>
   <widget class="\XLite\View\Checkout\ShippingMethodsList" />
 </div>

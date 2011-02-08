@@ -129,14 +129,6 @@ default_image_height = 140
 unsharp_mask_filter_on_resize = off
 
 ;
-; ----------------------
-;  PHP settings
-; ----------------------
-;
-[php_settings]
-memory_limit = "32M"
-
-;
 ; Installer authcode.
 ; A person who do not know the auth code can not access the installation script.
 ; Installation authcode is created authomatically and stored in this section.

@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="invoice.bottom.methods", weight="10")
  *}
-<td class="shipping">
+<td class="shipping" IF="order.getActualShippingName()">
   <strong>{t(#Shipping method#)}:</strong>
-  {if:order.getShippingMethod()}{order.shippingMethod.getName():h}{else:}n/a{end:}
+  {order.getActualShippingName():h}
 </td>

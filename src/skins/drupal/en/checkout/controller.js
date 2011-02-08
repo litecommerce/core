@@ -505,10 +505,11 @@ CheckoutView.prototype.refreshState = function()
     var shippingAddressIsValid = !shippingAddressForm.length || shippingAddressForm.get(0).validate(true);
 
     // Shipping is selected
+    var shippingVisible = 0 < jQuery('form.shipping-methods', this.base).length;
     var shippingMethodsIsExists = 0 < jQuery('ul.shipping-rates input', this.base).length;
     var shippingMethodIsSelected = 1 == jQuery('ul.shipping-rates input:checked', this.base).length;
 
-    // Show or hide address-not-completed note
+    // Show or hide address-not-completed / email-not-defined note
     if (shippingMethodsIsExists && shippingAddressForm.length) {
       if (shippingAddressForm.get(0).validate(true)) {
         jQuery('.shipping-step .address-not-completed', this.base).hide();
@@ -526,7 +527,7 @@ CheckoutView.prototype.refreshState = function()
       }
     }
 
-    result = result && profileIsCreate && shippingAddressIsValid && shippingMethodIsSelected;
+    result = result && profileIsCreate && (!shippingVisible || (shippingAddressIsValid && shippingMethodIsSelected));
 
   } else if (box.hasClass('payment-step')) {
 
