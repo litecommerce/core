@@ -201,7 +201,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * @access public
      * @since  3.0.0
      */
-    public function getShopUrl($url, $secure = false)
+    public function getShopUrl($url = '', $secure = false)
     {
         $add = (strpos($url, '?') ? '&' : '?') . 'feed=' . \XLite\Core\Request::getInstance()->action;
 
