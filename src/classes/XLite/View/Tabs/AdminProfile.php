@@ -86,14 +86,13 @@ class AdminProfile extends \XLite\View\Tabs\ATabs
      * Returns an URL to a tab
      * 
      * @param string $target Tab target
-     * @param array  $tab    Tab description (see $this->tabs)
      *  
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function buildTabURL($target, $tab)
+    protected function buildTabURL($target)
     {
         $profileId = \XLite\Core\Request::getInstance()->profile_id;
 

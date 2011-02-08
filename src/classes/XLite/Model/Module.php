@@ -1357,7 +1357,10 @@ class Module extends \XLite\Model\AEntity
             if (\XLite\Core\Operator::isClassExists($class)) {
                 $reflection = new \ReflectionClass($class);
 
-                if (
+                if (!$reflection->isSubclassOf('\XLite\Model\AEntity')) {
+                    // Do nothing - class is not Doctrine-based model
+
+                } elseif (
                     !in_array('XLite\Base\IDecorator', $reflection->getInterfaceNames())
                     && \XLite\Core\Database::getRepo($class)->canTableDisabled()
                 ) {
