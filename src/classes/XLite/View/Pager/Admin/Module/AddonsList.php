@@ -35,6 +35,6 @@ namespace XLite\View\Pager\Admin\Module;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Install extends \XLite\View\Pager\Admin\Module\AModule
+class AddonsList extends \XLite\View\Pager\Admin\Module\AModule
 {
 }
