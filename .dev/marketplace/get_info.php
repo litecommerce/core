@@ -4,6 +4,7 @@ $allowedTargets = array(
     'addons',
 	'addon',
 	'license',
+    'version',
 );
 
 $allowedActions = array(
@@ -93,7 +94,17 @@ if ('addons' === $_GET['target']) {
 
 		echo ('No license');
 	}
+
+} elseif ('version' === $_GET['target']) {
+
+	$outFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'output' . DIRECTORY_SEPARATOR . 'version';
+
+    if (file_exists($outFile) && is_readable($outFile)) {
+        echo file_get_contents($outFile);
+    }
+
 }
+
 
 exit(0);
 ?>

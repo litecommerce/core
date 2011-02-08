@@ -255,6 +255,11 @@ body
   color: #fff;
 }
 
+#header .sw-version .upgrade-note a {
+  color: #82c4fa;
+  text-decoration: underline;
+}
+
 /**
  * Footer styles
  */
