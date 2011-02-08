@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="menu.sales", weight="20")
  *}
-<widget class="\XLite\View\TopMenu\Node" title="Search orders" linkTarget="order_list" />
+<widget class="\XLite\View\TopMenu\Node" title="Search orders" linkTarget="order_list" extra="{_ARRAY_(#mode#^#search#)}" />
