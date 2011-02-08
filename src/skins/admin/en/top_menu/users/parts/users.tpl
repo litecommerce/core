@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="menu.users", weight="10")
  *}
-<widget class="\XLite\View\TopMenu\Node" title="Users" linkTarget="users" />
+<widget class="\XLite\View\TopMenu\Node" title="Users" linkTarget="users" extra="{_ARRAY_(#mode#^#search#)}" />
