@@ -79,6 +79,38 @@ class Controller extends \XLite\View\AView
     }
 
     /**
+     * Get body classes 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getBodyClasses()
+    {
+        return implode(' ', $this->defineBodyClasses());
+    }
+
+    /**
+     * Define body classes list
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see___
+     * @since  3.0.0
+     */
+    protected function defineBodyClasses()
+    {
+        return array(
+            'area-' . (\XLite::isAdminZone() ? 'a' : 'c'),
+            'skin-' . \XLite\Model\Layout::getInstance()->getSkin(),
+            'target-' . (\XLite\Core\Request::getInstance()->target ?: \XLite::TARGET_DEFAULT),
+            'area-' . (\XLite::isAdminZone() ? 'a' : 'c'),
+            
+        );
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -166,9 +198,11 @@ class Controller extends \XLite\View\AView
     {
         if ($this->useDefaultDisplayMode()) {
             $this->getContentWidget()->display();
+
         } else {
             $this->prepareContent();
             $this->startPage();
+
             parent::display();
         }
     }

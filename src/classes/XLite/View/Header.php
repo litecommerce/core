@@ -37,6 +37,57 @@ namespace XLite\View;
  */
 class Header extends \XLite\View\AView
 {
+
+    /**
+     * Default meta description 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $defaultMetaDescription = 'The powerful shopping cart software for web stores and e-commerce enabled stores is based on PHP / PHP4 with SQL database with highly configurable implementation based on templates';
+
+    /**
+     * Default title 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $defaultTitle = 'Litecommerce';
+
+    /**
+     * Get meta description 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMetaDescription()
+    {
+        $data = method_exists(\XLite::getController(), 'getMetaDescription')
+            ? \XLite::getController()->getMetaDescription()
+            : \Xlite\Core\Translation::lbl($this->defaultMetaDescription);
+
+        return $data;
+    }
+
+    /**
+     * Get title 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPageTitle()
+    {
+        return \XLite::getController()->getPageTitle() ?: $this->defaultTitle;
+    }
+
     /**
      * Return widget default template
      *
@@ -50,9 +101,9 @@ class Header extends \XLite\View\AView
     }
 
     /**
-     * getJSResources 
+     * Get collected javascript resources 
      * 
-     * @return void
+     * @return array
      * @access protected
      * @since  3.0.0
      */
@@ -62,9 +113,9 @@ class Header extends \XLite\View\AView
     }
 
     /**
-     * getCSSResources 
+     * Get collected CSS resources 
      * 
-     * @return void
+     * @return array
      * @access protected
      * @since  3.0.0
      */
