@@ -46,7 +46,7 @@ if (file_exists(PATH_TESTS . '/local.php')) {
 }
 
 if (defined('DRUPAL_SITE_PATH') && !defined('LOCAL_TESTS')) {
-    define('PATH_SRC', realpath(DRUPAL_SITE_PATH . '/src/modules/lc_connector/litecommerce'));
+    define('PATH_SRC', realpath(DRUPAL_SITE_PATH . '/modules/lc_connector/litecommerce'));
 
 } else { 
     define('PATH_SRC', realpath(PATH_ROOT . '/src'));
