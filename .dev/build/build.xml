@@ -37,6 +37,7 @@
     <target name="set-properties-common">
         <property name="version" value="3.x-dev" />
 		<property name="apiUrl" value="http://xcart2-530.crtdev.local/~max/xlite/build/api" />
+		<property name="php53" value="/usr/local/php-530/bin/php" />
     </target>
 
 	<target name="clean">
@@ -53,8 +54,6 @@
 		<echo message="Update current source" />
 		<exec executable="git" dir="${sourceDir}">
 			<arg value="pull" />
-			<arg value="origin" />
-			<arg value="master" />
 		</exec>
 
 		<echo message="Run release builder" />
@@ -118,11 +117,11 @@
 			<arg value="admin" />
 		</exec>
 		<!-- Rebuild cache: first pass -->
-		<exec executable="php" dir="${installDir}">
+		<exec executable="${php53}" dir="${installDir}">
 			<arg value="${installDir}/modules/lc_connector/litecommerce/cart.php" />
 		</exec>
 		<!-- Rebuild cache: second pass -->
-        <exec executable="php" dir="${installDir}">
+		<exec executable="${php53}" dir="${installDir}">
 			<arg value="${installDir}/modules/lc_connector/litecommerce/cart.php" />
         </exec>
 	</target>
