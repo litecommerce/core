@@ -1,0 +1,138 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Layout styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+
+#page-wrapper
+{
+	width: 960px;
+	margin: 0 auto;
+	padding: 0;
+}
+
+.page-admin-structure-block-demo #page-wrapper
+{
+	width: 1230px;
+}
+
+/*
+ * COLUMNS
+ */
+
+#content
+{
+	padding: 0;
+	margin: 0;
+	float: left;
+  min-height: 206px;
+}
+/* 206px is for the 1024x768 resolution */
+
+.no-sidebars #content
+{
+	width: 960px;
+	float: none;
+}
+
+.sidebar-first #content
+{
+	width: 690px;
+}
+/* 690 = 960-240-30 */
+
+.sidebar-second #content,
+.page-admin.two-sidebars #content
+{
+	width: 680px;
+}
+/* 680 = 960-240-40 = 1230-240-40-240-30 */
+
+.two-sidebars #content
+{
+	width: 410px;
+}
+/* 410 = 960-240-40-240-30 */
+
+.sidebar
+{
+	width: 240px;
+	padding: 0;
+	margin: 0;
+	float: left;
+}
+
+#sidebar-first
+{
+	margin-right: 30px;
+  clear: left;
+}
+
+#sidebar-second
+{
+	margin-left: 40px;
+  clear: right;
+}
+
+/*
+ * HEADER
+ */
+
+#header-area
+{
+	height: 90px;
+  width: 100%;
+  display: table;
+}
+
+#logo,
+#name-and-slogan,
+#header,
+#header-bar
+{
+  display: table-cell;
+}
+
+#logo,
+#header,
+#header-bar
+{
+  width: 1px;
+}
+
+#logo,
+#name-and-slogan
+{
+  vertical-align: middle;
+}
+
+#header,
+#header-bar
+{
+  vertical-align: top;
+}
+
+#header .block
+{
+  float: left;
+}
+
+#header .block .content
+{
+  height: 70px;
+}
+
+#main-menu,
+#breadcrumb,
+#main-wrapper,
+#footer-area
+{
+  clear: both;
+}

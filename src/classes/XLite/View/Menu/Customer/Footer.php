@@ -26,36 +26,17 @@
  * @since      3.0.0
  */
 
-namespace XLite\View;
+namespace XLite\View\Menu\Customer;
 
 /**
- * \XLite\View\Content 
+ * Footer menu 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Content extends \XLite\View\AView
+class Footer extends \XLite\View\Menu\AMenu
 {
-    /**
-     * Chunk size
-     */
-    const BUFFER_SIZE = 8192;
-
-
-    /**
-     * getBufferSize 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getOutputChunkSize()
-    {
-        return self::BUFFER_SIZE;
-    }
-
     /**
      * Return widget default template
      *
@@ -65,50 +46,37 @@ class Content extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return null;
+        return 'footer_menu.tpl';
     }
 
     /**
-     * Echo chunk
-     *
-     * @param string &$chunk Text chunk to output
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function echoChunk(&$chunk)
-    {
-        \Includes\Utils\Operator::flush($chunk, false);
-    }
-
-    /**
-     * echoContent 
+     * Define menu items 
      * 
-     * @return void
+     * @return array
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function echoContent()
+    protected function defineItems()
     {
-        array_map(
-            array($this, 'echoChunk'),
-            str_split(\XLite\View\Controller::$bodyContent, $this->getOutputChunkSize())
+        return array(
+            array(
+                'target' => 'help',
+                'url'    => $this->buildURL('help'),
+                'label'  => $this->t('Help'),
+            ),
+            array(
+                'url'    => $this->buildURL('help', '', array('mode' => 'contactus')),
+                'label'  => $this->t('Contact us'),
+            ),
+            array(
+                'url'    => $this->buildURL('help', '', array('mode' => 'contactus')),
+                'label'  => $this->t('Privacy statement'),
+            ),
+            array(
+                'url'    => $this->buildURL('help', '', array('mode' => 'terms_conditions')),
+                'label'  => $this->t('Terms and conditions'),
+            ),
         );
     }
-
-
-    /**
-     * display
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function display()
-    {
-        isset(\XLite\View\Controller::$bodyContent) ? $this->echoContent() : parent::display();
-    }
-
 }
-

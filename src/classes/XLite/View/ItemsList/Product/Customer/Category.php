@@ -34,6 +34,8 @@ namespace XLite\View\ItemsList\Product\Customer;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0
+ *
+ * @ListChild (list="center.bottom", zone="customer")
  */
 class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
 {

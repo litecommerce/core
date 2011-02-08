@@ -532,7 +532,7 @@ abstract class AItemsList extends \XLite\View\Container
     {
         $class = get_called_class();
 
-        if (isset(static::$sortWidgetIds[$class])) {
+        if (!isset(static::$sortWidgetIds[$class])) {
             static::$sortWidgetIds[$class] = 0;
         }
 

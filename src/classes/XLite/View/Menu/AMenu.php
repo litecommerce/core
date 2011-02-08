@@ -26,100 +26,109 @@
  * @since      3.0.0
  */
 
-namespace XLite\View;
+namespace XLite\View\Menu;
 
 /**
- * Page header
+ * Abstract menu 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Header extends \XLite\View\AView
+abstract class AMenu extends \XLite\View\AView
 {
-
     /**
-     * Default meta description 
+     * Items 
      * 
-     * @var    string
+     * @var    array
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $defaultMetaDescription = 'The powerful shopping cart software for web stores and e-commerce enabled stores is based on PHP / PHP4 with SQL database with highly configurable implementation based on templates';
+    protected $items;
 
     /**
-     * Default title 
+     * Get menu items 
      * 
-     * @var    string
+     * @return array
      * @access protected
-     * @see    ____var_see____
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected $defaultTitle = 'Litecommerce';
+    protected function getItems()
+    {
+        if (!isset($this->items)) {
+            $this->items = $this->defineItems();
+
+            foreach ($this->items as $k => $v) {
+                $v['active'] = $this->isActiveItem($v);
+            }
+        }
+
+        return $this->items;
+    }
 
     /**
-     * Get meta description 
+     * Check - specified item is active or not
      * 
+     * @param array $item Menu item
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isActiveItem(array $item)
+    {
+        return isset($v['target']) ? \XLite::getTarget() == $v['target'] : false;
+    }
+
+    /**
+     * Define menu items 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract protected function defineItems();
+
+    /**
+     * Display item class as tag attribute
+     * 
+     * @param integer $i Item index
+     *  
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getMetaDescription()
+    protected function displayItemClass($i)
     {
-        return method_exists(\XLite::getController(), 'getMetaDescription')
-            ? \XLite::getController()->getMetaDescription()
-            : $this->t($this->defaultMetaDescription);
+        $classes = array('leaf');
+
+        if (0 == $i) {
+            $classes[] = 'first';
+        }
+
+        if (count($this->getItems()) == $i + 1) {
+            $classes[] = 'last';
+        }
+
+        return $classes ? ' class="' . implode(' ', $classes) . '"' : '';
     }
 
     /**
-     * Get title 
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getTitle()
-    {
-        return \XLite::getController()->getPageTitle() ?: $this->t($this->defaultTitle);
-    }
-
-    /**
-     * Return widget default template
+     * Check if widget is visible
      *
-     * @return string
+     * @return boolean 
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultTemplate()
+    protected function isVisible()
     {
-        return 'header.tpl';
-    }
-
-    /**
-     * Get collected javascript resources 
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getJSResources()
-    {
-        return self::getRegisteredResources(self::RESOURCE_JS);
-    }
-
-    /**
-     * Get collected CSS resources 
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getCSSResources()
-    {
-        return self::getRegisteredResources(self::RESOURCE_CSS);
+        return parent::isVisible()
+            && $this->getItems();
     }
 }
-

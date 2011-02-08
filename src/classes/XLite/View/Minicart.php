@@ -78,7 +78,7 @@ class Minicart extends \XLite\View\SideBarBox
      */                                                
     protected function getHead()                       
     {
-        return 'Your shopping cart';
+        return '';
     }
 
     /**

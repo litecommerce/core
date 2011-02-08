@@ -26,36 +26,17 @@
  * @since      3.0.0
  */
 
-namespace XLite\View;
+namespace XLite\View\Menu\Customer;
 
 /**
- * \XLite\View\Content 
+ * Main menu 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Content extends \XLite\View\AView
+class Top extends \XLite\View\Menu\AMenu
 {
-    /**
-     * Chunk size
-     */
-    const BUFFER_SIZE = 8192;
-
-
-    /**
-     * getBufferSize 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getOutputChunkSize()
-    {
-        return self::BUFFER_SIZE;
-    }
-
     /**
      * Return widget default template
      *
@@ -65,50 +46,30 @@ class Content extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return null;
+        return 'top_menu.tpl';
     }
 
     /**
-     * Echo chunk
-     *
-     * @param string &$chunk Text chunk to output
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function echoChunk(&$chunk)
-    {
-        \Includes\Utils\Operator::flush($chunk, false);
-    }
-
-    /**
-     * echoContent 
+     * Define menu items 
      * 
-     * @return void
+     * @return array
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function echoContent()
+    protected function defineItems()
     {
-        array_map(
-            array($this, 'echoChunk'),
-            str_split(\XLite\View\Controller::$bodyContent, $this->getOutputChunkSize())
+        return array(
+            array(
+                'target' => \XLite::TARGET_DEFAULT,
+                'url'    => $this->buildURL(''),
+                'label'  => $this->t('Home'),
+            ),
+            array(
+                'target' => 'register',
+                'url'    => $this->buildURL('register'),
+                'label'  => $this->t('Register'),
+            ),
         );
     }
-
-
-    /**
-     * display
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function display()
-    {
-        isset(\XLite\View\Controller::$bodyContent) ? $this->echoContent() : parent::display();
-    }
-
 }
-
