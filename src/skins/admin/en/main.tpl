@@ -64,7 +64,6 @@
 <widget module="CDev\AntiFraud" target='order' IF="{mode}" mode="{mode}" template="common/dialog.tpl" body="modules/CDev/AntiFraud/tracking/message.tpl" head="AntiFraud Service Notification">
 <widget module="CDev\AntiFraud" target='order' template="common/dialog.tpl" body="modules/CDev/AntiFraud/order.tpl" head="AntiFraud Service" IF="{order.details.af_result}">
 <widget target="currencies" module="MultiCurrency" template="common/dialog.tpl" body="modules/CDev/MultiCurrency/currencies.tpl">
-<widget target="order_list" template="order/search.tpl">
 
 {* Order details page *}
 <widget class="\XLite\View\Order\Details\Admin\Model" template="order/order.tpl" />

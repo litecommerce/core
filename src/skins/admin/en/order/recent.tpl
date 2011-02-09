@@ -10,17 +10,11 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget template="common/dialog.tpl" name="searchOrdersForm" head="Search orders" body="order/search_form.tpl" />
-
 {* Open <form ...> tag *}
 <widget class="\XLite\View\Form\Order\Modify\Batch" name="orders_form" />
 
   {* List of orders *}
-  <widget class="\XLite\View\ItemsList\Order\Admin\Search" />
+  <widget class="\XLite\View\ItemsList\Order\Admin\Recent" />
 
 {* Close </form> tag *}
 <widget name="orders_form" end />
-
-<widget module="CDev\AccountingPackage" template="common/dialog.tpl" head="Export found orders to MYOB Plus" body="modules/CDev/AccountingPackage/export_myob_select.tpl" mode="export_myob" />
-
-<widget module="CDev\AccountingPackage" template="common/dialog.tpl" head="Export found orders to Peachtree" body="modules/CDev/AccountingPackage/export_pt_select.tpl" mode="export_pt" />
