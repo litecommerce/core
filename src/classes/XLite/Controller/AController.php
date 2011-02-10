@@ -262,17 +262,16 @@ abstract class AController extends \XLite\Core\Handler
         $this->locationPath = array();
 
         // Common element for all location lines
-        $this->addLocationNode('Home', $this->buildURL());
+        $this->locationPath[] = new \XLite\View\Location\Node\Home();
 
         // Ability to add part to the line
         $this->addBaseLocation();
 
         // Ability to define last element in path via short function
-        $params = (array) $this->getLocation();
+        $location = $this->getLocation();
 
-        // FIXME - check this
-        if ($params) {
-            call_user_func_array(array('static', 'addLocationNode'), $params);
+        if ($location) {
+            $this->addLocationNode($location);
         }
     }
 

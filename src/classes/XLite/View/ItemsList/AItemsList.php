@@ -53,7 +53,7 @@ abstract class AItemsList extends \XLite\View\Container
 
 
     /**
-     * defaultTemplate
+     * Default layout template
      *
      * @var    string
      * @access protected

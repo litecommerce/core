@@ -14,11 +14,11 @@
 <table class="data-table items-list">
 
   <tr>
-    {displayListPart(#header#,_ARRAY_(#order#^order))}
+    {displayNestedViewListContent(#header#,_ARRAY_(#order#^order))}
   </tr>
 
   <tr FOREACH="getPageData(),idx,order" class="{getRowClass(idx,##,#highlight#)}">
-    {displayListPart(#columns#,_ARRAY_(#order#^order))}
+    {displayNestedViewListContent(#columns#,_ARRAY_(#order#^order))}
   </tr>
 
   <tr FOREACH="getViewList(#itemsList.order.admin.items#),w">

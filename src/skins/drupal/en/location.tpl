@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Breadcrumbs
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,6 +11,9 @@
  * @since     3.0.0
  *}
 
-<ul class="location-line">
-  <li FOREACH="getNodes(),index,node" class="location-node">{if:!#0#=index}&nbsp;::&nbsp;{end:}{node.display()}</li>
-</ul>
+<div class="breadcrumb">
+  {foreach:getNodes(),index,node}
+    {if:!#0#=index}<span class="separator">&raquo;</span>{end:}
+    {node.display()}
+  {end:}
+</div>

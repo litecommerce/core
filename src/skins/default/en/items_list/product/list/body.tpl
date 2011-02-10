@@ -13,7 +13,7 @@
 <ul class="list-body list-body-list">
 
   <li FOREACH="getPageData(),product" class="hproduct item">
-    {displayListPart(#body#,_ARRAY_(#product#^product))}
+    {displayNestedViewListContent(#body#,_ARRAY_(#product#^product))}
   </li>
 
   <li FOREACH="getViewList(#itemsList.product.list.customer.items#),w" class="item additional-item">

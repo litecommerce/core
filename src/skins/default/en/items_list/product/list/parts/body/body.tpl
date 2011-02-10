@@ -13,5 +13,5 @@
  *}
 
 <div class="body">
-  {displayListPart(#info#,_ARRAY_(#product#^product))}
+  {displayNestedViewListContent(#info#,_ARRAY_(#product#^product))}
 </div>

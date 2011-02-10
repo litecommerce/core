@@ -61,16 +61,11 @@ class Footer extends \XLite\View\Menu\AMenu
     {
         return array(
             array(
-                'target' => 'help',
-                'url'    => $this->buildURL('help'),
-                'label'  => $this->t('Help'),
-            ),
-            array(
                 'url'    => $this->buildURL('help', '', array('mode' => 'contactus')),
                 'label'  => $this->t('Contact us'),
             ),
             array(
-                'url'    => $this->buildURL('help', '', array('mode' => 'contactus')),
+                'url'    => $this->buildURL('help', '', array('mode' => 'privacy_statement')),
                 'label'  => $this->t('Privacy statement'),
             ),
             array(

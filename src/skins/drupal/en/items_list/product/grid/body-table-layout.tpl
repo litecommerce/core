@@ -21,7 +21,7 @@
         {foreach:row,idx,product}
           <td IF="product" class="product-cell hproduct">
             <div class="{getProductCellClass(product)}">
-              {displayListPart(#info#,_ARRAY_(#product#^product))}
+              {displayInheritedViewListContent(#info#,_ARRAY_(#product#^product))}
             </div>
           </td>
           <td IF="!product">&nbsp;</td>

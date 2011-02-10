@@ -26,26 +26,43 @@
  * @since      3.0.0
  */
 
-namespace XLite\View;
+namespace XLite\View\Location\Node;
 
 /**
- * Abstract dialog
+ * Home node 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Dialog extends \XLite\View\Container
+class Home extends \XLite\View\Location\Node
 {
     /**
-     * Return default template
-     * 
+     * Return widget default template
+     *
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
     {
-        return 'common/dialog.tpl';
+        return 'location/home.tpl';
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams[self::PARAM_NAME]->setValue('Home');
+        $this->widgetParams[self::PARAM_LINK]->setValue($this->buildURL());
     }
 }

@@ -381,7 +381,7 @@ abstract class AView extends \XLite\Core\Handler
             $markTplText = get_called_class() . ' : ' . $original . ' (' . $cnt . ')'
                 . ($this->viewListName ? ' [\'' . $this->viewListName . '\' list child]' : '');
 
-            echo ('<!-- ' . $markTplText . ' {{{ -->');
+            echo ('<!-- ' . $markTplText . ' {' . '{{ -->');
         }
 
         ob_start();
@@ -392,7 +392,7 @@ abstract class AView extends \XLite\Core\Handler
         echo ($this->postprocessContent($content));
 
         if ($markTemplates) {
-            echo ('<!-- }}} ' . $markTplText . ' -->');
+            echo ('<!-- }}' . '} ' . $markTplText . ' -->');
         }
 
         if ($profilerEnabled) {
@@ -1112,7 +1112,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getViewListChildren($list)
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\ViewList')->findClassList(
+        return \XLite\Core\Database::getRepo('XLite\Model\ViewList')->findClassList(
             $list,
             $this->detectCurrentViewZone()
         );
@@ -1445,19 +1445,6 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Return current list name
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getListName()
-    {
-        return null;
-    }
-
-    /**
      * Combines the nested list name from the parent list name and a suffix
      * 
      * @param string $part Suffix to be added to the parent list name
@@ -1469,7 +1456,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getNestedListName($part)
     {
-        return (is_null($this->viewListName) ? $this->getListName() : $this->viewListName) . '.' . $part;
+        return $this->viewListName ? $this->viewListName . '.' . $part : $part;
     }
 
     /**
@@ -1483,7 +1470,7 @@ abstract class AView extends \XLite\Core\Handler
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function displayListPart($part, array $params = array())
+    protected function displayNestedViewListContent($part, array $params = array())
     {
         $this->displayViewListContent($this->getNestedListName($part), $params);
     }
@@ -1505,6 +1492,66 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
+     * Return internal list name
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getListName()
+    {
+        return null;
+    }
+
+    /**
+     * Combines the inherited list name from the parent list name and a suffix
+     * 
+     * @param string $part Suffix to be added to the inherited list name
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getInheritedListName($part)
+    {
+        return $this->getListName() ? $this->getListName() . '.' . $part : $part;
+    }
+
+    /**
+     * Display a inherited view list
+     * 
+     * @param string $part   Suffix that should be appended to the name of a inherited list (will be delimited with a dot)
+     * @param array  $params Widget params
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function displayInheritedViewListContent($part, array $params = array())
+    {
+        $this->displayViewListContent($this->getInheritedListName($part), $params);
+    }
+
+    /**
+     * Get a inherited view list 
+     * 
+     * @param string $part      Suffix of the inherited list name
+     * @param array  $arguments List common arguments
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getInheritedViewList($part, array $arguments = array())
+    {
+        return $this->getViewList($this->getInheritedListName($part), $arguments);
+    }
+
+    /**
      * Display view list content 
      * 
      * @param string $list      List name
@@ -1519,7 +1566,6 @@ abstract class AView extends \XLite\Core\Handler
     {
         echo ($this->getViewListContent($list, $arguments));
     }
-
 
     /**
      * getNamePostedData 

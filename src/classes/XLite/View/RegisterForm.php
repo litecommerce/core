@@ -34,6 +34,8 @@ namespace XLite\View;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="center")
  */
 class RegisterForm extends \XLite\View\Dialog
 {
@@ -96,7 +98,7 @@ class RegisterForm extends \XLite\View\Dialog
 
         $this->widgetParams += array(
             self::PARAM_HEAD => new \XLite\Model\WidgetParam\String(
-                'Title', 'Profile details'
+                'Title', 'register' == \XLite\Core\Request::getInstance()->mode ? 'New customer' : 'Modify profile'
             ),
             self::PARAM_PROFILE_ID => new \XLite\Model\WidgetParam\ObjectId\Profile(
                 'Profile Id', \XLite\Core\Request::getInstance()->profile_id
@@ -119,6 +121,35 @@ class RegisterForm extends \XLite\View\Dialog
         // TODO - add decalarations here
 
         return $result;
+    }
+
+    /**
+     * Return list of allowed targets
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        return array(
+            'profile',
+        );
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean 
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && in_array(\XLite\Core\Request::getInstance()->mode, array('register', 'modify'));
     }
 }
 

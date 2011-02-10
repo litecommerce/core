@@ -39,4 +39,4 @@
 
 </ul>
 
-{displayListPart(#itemsTotal#)}
+{displayNestedViewListContent(#itemsTotal#)}

@@ -16,16 +16,16 @@
   <tbody FOREACH="getProductRows(),row">
 
     <tr class="info">
-      <td FOREACH="row,product" class="hproduct"><div IF="product">{displayListPart(#title#,_ARRAY_(#product#^product))}</div></td>
+      <td FOREACH="row,product" class="hproduct"><div IF="product">{displayNestedViewListContent(#title#,_ARRAY_(#product#^product))}</div></td>
     </tr>
 
     <tr class="buttons">
-      <td FOREACH="row,product" class="product"><div IF="product">{displayListPart(#info#,_ARRAY_(#product#^product))}</div></td>
+      <td FOREACH="row,product" class="product"><div IF="product">{displayNestedViewListContent(#info#,_ARRAY_(#product#^product))}</div></td>
     </tr>
 
   </tbody>
 
-  {displayListPart(#items#)}
+  {displayNestedViewListContent(#items#)}
 
 </table>
 
