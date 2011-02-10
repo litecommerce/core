@@ -143,6 +143,12 @@ auth_code = ""
 developer_mode = Off
 
 ;
+; Decorator options
+;
+[decorator]
+time_limit=240
+
+;
 ; Other options
 ;
 [other]
