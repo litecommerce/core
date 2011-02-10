@@ -4,3 +4,5 @@
 /.dev/tests/dump.sql
 /coverage
 /var
+/src/var/.decorator.fixtures.ini.php
+/src/var/.decorator.modules.ini.php
