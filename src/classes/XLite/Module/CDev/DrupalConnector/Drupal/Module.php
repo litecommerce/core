@@ -81,7 +81,14 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected function getAdminAreaURLArgs()
     {
-        return \XLite\Core\Session::getInstance()->getName() . '=' . \XLite\Core\Session::getInstance()->getId();
+        $query = '';
+
+        if (\XLite\Core\Auth::getInstance()->isAdmin()) {
+            $query .= '?' . \XLite\Core\Session::getInstance()->getName();
+            $query .= '=' . \XLite\Core\Session::getInstance()->getId();
+        }
+
+        return $query;
     }
 
 
@@ -136,7 +143,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
         // So called "landing link"
         $this->registerPortal(
-            self::LANDING_LINK_PATH, '\XLite\Controller\Customer\ACustomer', 'LC admin area', MENU_NORMAL_ITEM
+            self::LANDING_LINK_PATH, '\XLite\Controller\Admin\Main', 'LC admin area', MENU_NORMAL_ITEM
         );
     }
 
@@ -314,8 +321,8 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     public function translateOutboundURL(&$path, array &$options, $originalPath)
     {
-        if (self::LANDING_LINK_PATH === $path && \XLite\Core\Auth::getInstance()->isAdmin()) {
-            $path = \Includes\Utils\URLManager::getShopURL('admin.php?' . $this->getAdminAreaURLArgs());
+        if (self::LANDING_LINK_PATH === $path) {
+            $path = \Includes\Utils\URLManager::getShopURL('admin.php' . $this->getAdminAreaURLArgs());
             $options['external'] = true;
         }
     }
