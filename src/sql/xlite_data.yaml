@@ -477,7 +477,7 @@ XLite\Model\Language:
   - { code: dv, code3: div, translations: [{ code: en, name: Divehi }] }
   - { code: nl, code3: dut, translations: [{ code: en, name: Dutch }] }
   - { code: dz, code3: dzo, translations: [{ code: en, name: Dzongkha }] }
-  - { code: en, code3: eng, translations: [{ code: en, name: English }] }
+  - { code: en, code3: eng, translations: [{ code: en, name: English }], status: 2 }
   - { code: eo, code3: epo, translations: [{ code: en, name: Esperanto }] }
   - { code: et, code3: est, translations: [{ code: en, name: Estonian }] }
   - { code: ee, code3: ewe, translations: [{ code: en, name: Ewe }] }

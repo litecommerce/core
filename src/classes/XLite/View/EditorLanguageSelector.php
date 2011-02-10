@@ -48,6 +48,17 @@ class EditorLanguageSelector extends \XLite\View\AView
     protected $currentCode = null;
 
     /**
+     * Enabled languages (cache)
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $activeLanguages = null;
+
+
+    /**
      * Return widget default template
      *
      * @return string
@@ -60,6 +71,20 @@ class EditorLanguageSelector extends \XLite\View\AView
     }
 
     /**
+     * Check if widget is visible
+     *
+     * @return boolean 
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return 1 < count($this->getLanguages());
+    }
+
+
+    /**
      * Get languages list
      * 
      * @return array
@@ -69,13 +94,18 @@ class EditorLanguageSelector extends \XLite\View\AView
      */
     public function getLanguages()
     {
-        $list = array();
+        if (is_null($this->activeLanguages)) {
 
-        foreach (\XLite\Core\Database::getRepo('\XLite\Model\Language')->findActiveLanguages() as $l) {
-            $list[$l->code] = $l->name;
+            $list = array();
+
+            foreach (\XLite\Core\Database::getRepo('\XLite\Model\Language')->findActiveLanguages() as $l) {
+                $list[$l->code] = $l->name;
+            }
+
+            $this->activeLanguages = $list;
         }
 
-        return $list;
+        return $this->activeLanguages;
     }
 
     /**
