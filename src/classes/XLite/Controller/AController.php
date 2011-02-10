@@ -759,7 +759,9 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function getViewerClass()
     {
-        return $this->isAJAXViewer() ? \XLite\Core\Request::getInstance()->widget : '\XLite\View\Controller';
+        return $this->isAJAXViewer()
+            ? \XLite\Core\Request::getInstance()->widget
+            : '\XLite\View\Controller';
     }
 
     /**
@@ -784,16 +786,9 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getViewer()
     {
-        $params = array();
-
-        // FIXME: is it really needed?
-        foreach (array(self::PARAM_SILENT, self::PARAM_DUMP_STARTED) as $name) {
-            $params[$name] = $this->get($name);
-        }
-
         $class = $this->getViewerClass();
 
-        return new $class($params, $this->getViewerTemplate());
+        return new $class($this->getViewerParams(), $this->getViewerTemplate());
     }
 
     /**
@@ -1315,5 +1310,39 @@ abstract class AController extends \XLite\Core\Handler
     public function getCategoryId()
     {
         return intval(\XLite\Core\Request::getInstance()->category_id) ?: $this->getRootCategoryId();
+    }
+
+    /**
+     * Get viewer parameyers
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getViewerParams()
+    {
+        $params = array();
+
+        // FIXME: is it really needed?
+        foreach (array(self::PARAM_SILENT, self::PARAM_DUMP_STARTED) as $name) {
+            $params[$name] = $this->get($name);
+        }
+
+        if ($this->isAJAXViewer()) {
+            $data = \XLite\Core\Request::getInstance()->getData();
+
+            if (isset($data['target'])) {
+                unset($data['target']);
+            }
+
+            if (isset($data['action'])) {
+                unset($data['action']);
+            }
+
+            $params += $data;
+        }
+
+        return $params;
     }
 }

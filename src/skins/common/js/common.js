@@ -14,7 +14,7 @@ var URLHandler = {
 
   mainParams: {target: true, action: true},
 
-  baseURLPart: 'admin.php?',
+  baseURLPart: ('undefined' != typeof(window.xliteConfig) ? xliteConfig.script : 'admin.php') + '?',
   argSeparator: '&',
   nameValueSeparator: '=',
 

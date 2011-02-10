@@ -202,13 +202,13 @@ ul.pager li.next-page
 }
 
 
-ul.display-modes
+.items-list ul.display-modes
 {
   line-height: 38px;
   margin-left: 16px;
 }
 
-ul.display-modes li
+.items-list ul.display-modes li
 {
   height: 22px;
   line-height: 22px;
@@ -618,6 +618,11 @@ ul.subcategory-icons a
 .products-list .price
 {
   font-size: 20px;
+}
+
+.products-sidebar .product-name {
+  text-align: center;
+  font-size: 16px;
 }
 
 .products .product-price

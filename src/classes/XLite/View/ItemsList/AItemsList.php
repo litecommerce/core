@@ -629,7 +629,7 @@ abstract class AItemsList extends \XLite\View\Container
      */
     protected function isPagerVisible()
     {
-        return true;
+        return $this->getPager()->isVisible();
     }
 
     /**

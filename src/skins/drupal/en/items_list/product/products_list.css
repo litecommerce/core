@@ -73,20 +73,29 @@ table.product td.product-photo
 
 
 ul.products-grid,
-ul.products-list
+ul.products-list,
+ul.products-sidebar
 {
   margin: 0;
   padding: 0;
 }
 
 ul.products-grid li,
-ul.products-list li
+ul.products-list li,
+ul.products-sidebar li
 {
   background-image: none;
   list-style: none;
   padding-left: 0;
 }
 
+ul.products-sidebar li {
+  padding-bottom: 20px;
+}
+
+ul.products-sidebar li.last {
+  padding-bottom: 0px;
+}
 
 .products div.product,      /* Position nested elements inside a product tag */
 .products div.product-info,     /* Tables and table cells cannot be relative, so we position tags inside a wrapper in table cells */
@@ -179,7 +188,6 @@ ul.products-list li
 
 .cart-tray .tray-area
 {
-  height: 100%;
   background-image: url(images/bag/tray.png);
   background-repeat: no-repeat;
   background-position: center center;
