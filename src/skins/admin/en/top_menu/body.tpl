@@ -28,14 +28,16 @@ jQuery(document).ready(function(){
   var activeItem = jQuery('li.active', menuObj);
   var selectedTab;
 
-  selectedTab = activeItem.length
-    ? activeItem.parents('li').get(0)
-    : jQuery('li:first-child', menuObj).get(0);
-  
-  if (selectedTab) {
-    jQuery(selectedTab).addClass('current');
+  if (activeItem.length) {
 
-    jQuery('div', selectedTab).clone().attr('id','topMenuLine').appendTo('#header');
+    selectedTab = activeItem.parents('li').get(0);
+
+    if (selectedTab) {
+      jQuery(selectedTab).addClass('current');
+      jQuery('div', selectedTab).clone().attr('id','topMenuLine').appendTo('#header');
+      jQuery('#content').css('margin-top', parseInt(jQuery('#content').css('margin-top')) + parseInt(jQuery('#topMenuLine').css('height')));
+    }
+
   }
 
 });
