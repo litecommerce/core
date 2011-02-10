@@ -26,6 +26,11 @@
 
   <link FOREACH="getCSSResources(),file" href="{file}" rel="stylesheet" type="text/css" />
 
+  <script type="text/javascript">
+var xliteConfig = {
+  script: '{getScript():h}'
+};
+  </script>
   <script FOREACH="getJSResources(),file" type="text/javascript" src="{file}"></script>
 
   {displayViewListContent(#head#)}

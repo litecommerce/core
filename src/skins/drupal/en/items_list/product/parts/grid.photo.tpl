@@ -11,5 +11,6 @@
  * @since     3.0.0
  *
  * @ListChild (list="itemsList.product.grid.customer.info", weight="10")
+ * @ListChild (list="itemsList.product.sidebar.customer.info", weight="10")
  *}
 <div class="product-photo">{displayNestedViewListContent(#photo#,_ARRAY_(#product#^product))}</div>

@@ -628,7 +628,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      */
     protected function isItemsPerPageVisible()
     {
-        return !((bool) $this->getParam(self::PARAM_ONLY_PAGES));
+        return !$this->getParam(self::PARAM_ONLY_PAGES);
     }
 
     /**
@@ -653,7 +653,8 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      */
     protected function isVisible()
     {
-        return $this->isPagesListVisible() || $this->isItemsPerPageVisible();
+        return parent::isVisible()
+            && ($this->isPagesListVisible() || $this->isItemsPerPageVisible());
     }
 
 

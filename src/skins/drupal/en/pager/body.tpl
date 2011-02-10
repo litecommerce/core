@@ -17,4 +17,4 @@
   </li>
 </ul>
 
-{displayNestedViewListContent(#itemsTotal#)}
+{displayInheritedViewListContent(#itemsTotal#)}

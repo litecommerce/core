@@ -90,6 +90,19 @@ MinicartView.prototype.postprocess = function(isSuccess)
 
   if (isSuccess) {
     var o = this;
+
+    // Get display mode
+    var re = /lc-minicart-([^ ]+)/;
+    if (!this.widgetParams && this.base.attr('class') && -1 != this.base.attr('class').search(re)) {
+      if (!this.widgetParams) {
+        this.widgetParams = {};
+      }
+
+      var m = this.base.attr('class').match(re);
+      this.widgetParams.displayMode = m[1];
+    }
+
+    // Initialize view mode toggle mechanim
     this.base.click(
       function(event) {
         event.stopPropagation();

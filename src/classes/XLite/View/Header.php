@@ -121,5 +121,18 @@ class Header extends \XLite\View\AView
     {
         return self::getRegisteredResources(self::RESOURCE_CSS);
     }
+
+    /**
+     * Get script 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getScript()
+    {
+        return \XLite::getScript();
+    }
 }
 
