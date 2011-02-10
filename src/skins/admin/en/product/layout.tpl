@@ -34,7 +34,7 @@
 
 <tr>
     <td colspan="2">
-    <input type=button value="Save field order" onClick="javascript: document.data_form.action.value='layout'; document.data_form.submit();">
+    <widget class="\XLite\View\Button\Regular" label="Save field order" jsCode="javascript: document.data_form.action.value='layout'; document.data_form.submit();" />
     </td>
 </tr>
 </table>

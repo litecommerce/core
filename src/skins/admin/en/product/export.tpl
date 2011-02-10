@@ -35,7 +35,7 @@
     </td>
 </tr>
 <tr>
-    <td colspan=2> <input type=submit value="Export products" class="DialogMainButton"> </td>
+    <td colspan=2> <widget class="\XLite\View\Button\Submit" label="Export products" style="main-button" /> </td>
 </tr>
 </table>
 </form>

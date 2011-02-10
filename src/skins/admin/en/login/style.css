@@ -49,6 +49,7 @@ div.login-box {
   margin: 0 auto;
   padding-right: 110px;
   width: 470px;
+  min-height: 200px;
 }
 
 div.login-box h2 {

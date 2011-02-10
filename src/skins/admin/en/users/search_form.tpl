@@ -73,7 +73,7 @@ function managedate(type, status) {
           <td height="10">
             <input type="text" name="posted_data[pattern]" size="30" style="width:70%" value="{getSearchParams(#pattern#)}" />
             &nbsp;
-            <input type="submit" value="Search" />
+            <widget class="\XLite\View\Button\Submit" label="Search" />
           </td>
         </tr>
 
@@ -201,9 +201,9 @@ function managedate(type, status) {
         </tr>
 
         <tr>
-          <td><input type="button" value="Reset" onClick="javascript: resetForm();" /></td>
+          <td><widget class="\XLite\View\Button\Regular" label="Reset" jsCode="javascript: resetForm();" /></td>
           <td>
-            <input type="submit" value="Search" />
+            <widget class="\XLite\View\Button\Submit" label="Search" />
           </td>
         </tr>
 

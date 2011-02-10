@@ -575,9 +575,6 @@ a.FormButton:hover
   font-weight: bold;
   text-decoration: none;
 }
-.DialogMainButton
-{
-}   
 .ErrorMessage
 {
         COLOR: #FF0000; FONT-WEIGHT: bold; 
@@ -705,10 +702,10 @@ button
     border: 1px solid #cadce8;
     color: #2c5fa6;
     cursor: pointer;
-    font-size: 16px;
-    line-height: 16px;
+    font-size: 12px;
+    line-height: 12px;
     margin: 7px 7px 7px 0;
-    padding: 6px 15px;
+    padding: 3px 12px;
     font-family: "Trebuchet MS", Helvetica, Arial;
 }
 
@@ -725,16 +722,17 @@ button:hover
   border-color: #b1c9e0;
 }
 
-button.main
+button.main-button,
+input.main-button
 {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 6px 15px;
 }
 
-button.main span
+button.main-button span,
+input.main-button
 {
-  font-size: 18px;
-  line-height: 18px;
+  font-size: 16px;
+  line-height: 16px;
 }
 
 button.invert

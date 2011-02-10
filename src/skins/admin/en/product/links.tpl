@@ -54,12 +54,16 @@ Use HTML code provided in this section to create product-specific 'Add to Cart' 
 <tr><td colspan="2">&nbsp;</td></tr>
 <tr>
     <td>Example:</td>
-    <td><input type="button" value="Add to cart" onclick="document.location='{getShopUrl(#cart.php#)}?target=product&action=buynow&product_id={product.product_id}&category_id={product.category.category_id}'">
+    <td>
+      <widget class="\XLite\View\Button\Regular" label="Add to cart" jsCode="document.location='{getShopUrl(#cart.php#)}?target=product&action=buynow&product_id={product.product_id}&category_id={product.category.category_id}'" />
     </td>
 </tr>    
 <tr>
     <td valign="top">HTML code:</td>
-    <td><textarea cols="80" rows="5"><input type="button" value="Add to cart" onclick="document.location='{getShopUrl(#cart.php#)}?target=product&action=buynow&product_id={product.product_id}&category_id={product.category.category_id}'"></textarea>
+    <td>
+      <textarea cols="80" rows="5">
+        <widget class="\XLite\View\Button\Regular" label="Add to cart" jsCode="document.location='{getShopUrl(#cart.php#)}?target=product&action=buynow&product_id={product.product_id}&category_id={product.category.category_id}'" />
+      </textarea>
     </td>
 </tr>    
 </table>

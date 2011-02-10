@@ -21,7 +21,7 @@
 
   <div class="form-panel languages-search-panel">
     <input type="text" name="name" value="{getSearchSubstring()}" class="big" lang="{defaultLanguage.code}" xml:lang="{defaultLanguage.code}" />
-    <widget class="\XLite\View\Button\Submit" label="Search" style="main" />
+    <widget class="\XLite\View\Button\Submit" label="Search" style="main-button" />
     {if:isTranslatedLanguageSelected()}
       <a href="admin.php?target=languages&action=search&language={language}">{t(#Show all labels#)}</a>
     {else:}

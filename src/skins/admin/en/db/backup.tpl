@@ -64,9 +64,9 @@ file from the server later on and delete it from the server by clicking on the
         <td colspan='3'>&nbsp;</td>
     </tr>
 	<tr>
-        <td><input type=submit value="Download SQL file" class="DialogMainButton"></td>
+        <td><widget class="\XLite\View\Button\Submit" label="Download SQL file" style="main-button" /></td>
 		<td>
-		{if:fileWritable}&nbsp;&nbsp;&nbsp;<input type=button value="Create SQL file" onClick="document.backup_form.write_to_file.value = '1'; document.backup_form.submit();">
+		{if:fileWritable}&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" label="Create SQL file" jsCode="document.backup_form.write_to_file.value = '1'; document.backup_form.submit();" />
 		{else:}
 		<table border=0 cellpadding=2 cellspacing=2>
 		<tr>
@@ -83,7 +83,7 @@ file from the server later on and delete it from the server by clicking on the
 		</table>
 		{end:}
 		</td>
-		<td>{if:fileExists}&nbsp;&nbsp;&nbsp;<input type="button" "delete" value="Delete SQL file" onclick="document.backup_form.action.value='delete'; document.backup_form.submit();">{end:}</td>
+		<td IF="fileExists">&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" value="delete" label="Delete SQL file" jsCode="document.backup_form.action.value='delete'; document.backup_form.submit();" /></td>
 	</tr>
 	<tr>
 		<td colspan='3'>&nbsp;</td>

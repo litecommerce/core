@@ -123,17 +123,17 @@ function func_restoreNode()
 	<td width=50%>
         <table border=0 cellpadding=3 cellspacing=3>
         <tr>
-        	<td><input type=button value="Copy" onClick="javascript: func_copyNode()"></td>
-        	<td><input type=button value="Rename/Move" onClick="javascript: func_renameNode()"></td>
-        	<td><input type=button value="Remove" onClick="javascript: func_removeNode()"></td>
+        	<td><widget class="\XLite\View\Button\Regular" label="Copy" jsCode="javascript: func_copyNode()" /></td>
+        	<td><widget class="\XLite\View\Button\Regular" label="Rename/Move" jsCode="javascript: func_renameNode()" /></td>
+        	<td><widget class="\XLite\View\Button\Regular" label="Remove" jsCode="javascript: func_removeNode()" /></td>
         </tr>
         </table>
 	</td>
 	<td width=50%>
         <table border=0 cellpadding=3 cellspacing=3 align=right>
         <tr>
-        	<td><input type=button value="New File" onClick="javascript: func_newFile()"></td>
-        	<td><input type=button value="New Directory" onClick="javascript: func_newDir()"></td>
+        	<td><widget class="\XLite\View\Button\Regular" label="New File" jsCode="javascript: func_newFile()" /></td>
+        	<td><widget class="\XLite\View\Button\Regular" label="New Directory" jsCode="javascript: func_newDir()" /></td>
         </tr>
         </table>
 	</td>
@@ -145,9 +145,9 @@ function func_restoreNode()
 	<td colspan=2>
         <table border=0 cellpadding=3 cellspacing=3>
         <tr>
-        	<td><input type=button value="Restore" onClick="javascript: func_restoreNode()"></td>
+        	<td><widget class="\XLite\View\Button\Regular" label="Restore" jsCode="javascript: func_restoreNode()" /></td>
         	<td>&nbsp;&nbsp;&nbsp;</td>
-        	<td><input type=button value="Restore All" onClick="javascript: func_restoreAll()"></td>
+        	<td><widget class="\XLite\View\Button\Regular" label="Restore All" jsCode="javascript: func_restoreAll()" /></td>
         	<td><b>WARNING:</b> ALL CHANGES MADE TO ALL TEMPLATES WILL BE LOST</td>
         </tr>
         </table>

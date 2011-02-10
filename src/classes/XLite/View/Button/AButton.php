@@ -41,6 +41,8 @@ abstract class AButton extends \XLite\View\AView
      * Widget parameter names
      */
 
+    const PARAM_NAME     = 'name';
+    const PARAM_VALUE    = 'value';
     const PARAM_LABEL    = 'label';
     const PARAM_STYLE    = 'style';
     const PARAM_DISABLED = 'disabled';
@@ -95,6 +97,8 @@ abstract class AButton extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
+            self::PARAM_NAME     => new \XLite\Model\WidgetParam\String('Name', '', true),
+            self::PARAM_NAME     => new \XLite\Model\WidgetParam\String('Value', '', true),
             self::PARAM_LABEL    => new \XLite\Model\WidgetParam\String('Label', $this->getDefaultLabel(), true),
             self::PARAM_STYLE    => new \XLite\Model\WidgetParam\String('Button style', ''),
             self::PARAM_DISABLED => new \XLite\Model\WidgetParam\Bool('Disabled', 0),
@@ -126,6 +130,30 @@ abstract class AButton extends \XLite\View\AView
     protected function getId()
     {
         return $this->getParam(self::PARAM_ID);
+    }
+
+    /**
+     * Return button name 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getName()
+    {
+        return $this->getParam(self::PARAM_NAME);
+    }
+
+    /**
+     * Return button value 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getValue()
+    {
+        return $this->getParam(self::PARAM_VALUE);
     }
 
 

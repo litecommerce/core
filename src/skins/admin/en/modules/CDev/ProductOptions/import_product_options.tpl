@@ -43,6 +43,6 @@ File (CSV) local:<br><input type=text size=32 name=localfile><widget IF="invalid
 <br>
 File (CSV) for upload:<br><input type=file size=32 name=userfile><widget IF="invalid_userfile" template="common/uploaded_file_validator.tpl" state="{invalid_userfile_state}" /><br>
 <br>
-<input type=submit value=" Import ">
+<widget class="\XLite\View\Button\Submit" label=" Import " />
 
 </form>

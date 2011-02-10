@@ -159,9 +159,9 @@ function submitForm(formName, action)
 
     <tr>
       <td>
-        <input type="button" value="Delete selected" onclick="javascript: if (checkMarks(this.form, new RegExp('to_delete\\[[0-9]+\\]', 'gi'))) submitForm('shippingratesform', 'delete');" />
+        <widget class="\XLite\View\Button\Regular" label="Delete selected" jsCode="javascript: if (checkMarks(this.form, new RegExp('to_delete\\[[0-9]+\\]', 'gi'))) submitForm('shippingratesform', 'delete');" />
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="submit" value="Update" />
+        <widget class="\XLite\View\Button\Submit" label="Update" />
       </td>
     </tr>
 
@@ -252,7 +252,7 @@ function submitForm(formName, action)
   </table>
 
   <br />
-  <input type="submit" value="Add" />
+  <widget class="\XLite\View\Button\Submit" label="Add" />
 
 </form>
 

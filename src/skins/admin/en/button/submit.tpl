@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<button type="submit" class="{style}"><span>{getButtonLabel()}</span></button>
+<button type="submit" name="{getName()}" value="{getValue()}" class="{getClass()}"><span>{getButtonLabel()}</span></button>

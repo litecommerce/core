@@ -20,7 +20,7 @@
     <label for="hd_message">Message:</label>
     <textarea id="hd_message" name="message" rows="3" cols="60"></textarea>
   </div>
-  <input type="submit" value="Send" class="submit" />
+  <widget class="\XLite\View\Button\Submit" label="Send" style="submit" />
 </form>
 {foreach:getCSSFiles(),src}
 <link rel="stylesheet" type="text/css" href="skins/admin/en/{src}" />

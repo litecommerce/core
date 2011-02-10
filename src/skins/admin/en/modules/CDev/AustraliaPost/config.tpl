@@ -48,7 +48,7 @@
     </tr>
 
     <tr>
-      <td colspan="2"><br /><input type="submit" value="Save" /></TD>
+      <td colspan="2"><br /><widget class="\XLite\View\Button\Submit" label="Save" /></TD>
     </tr>
 
   </table>

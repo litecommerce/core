@@ -39,7 +39,7 @@ You have specified incorrect file format or the file doesn't match.
 </tr>
 <tr>
     <td colspan="2">
-    <input type=button value="Save field order" onClick="javascript: document.data_form.action.value='layout'; document.data_form.submit();">
+    <widget class="\XLite\View\Button\Regular" label="Save field order" jsCode="javascript: document.data_form.action.value='layout'; document.data_form.submit();" />
     </td>
 </tr>
 </table>
@@ -67,7 +67,7 @@ You have specified incorrect file format or the file doesn't match.
     File (CSV) for upload:<br><input type=file size=32 name=userfile><widget IF="invalid_file" template="common/uploaded_file_validator.tpl" />
     <br><br>
     <input type="checkbox" value="yes" name="md5_import" checked="{md5_import}" />Import password as md5 hash<br /><br />
-    <input type=submit value="Import users" class="DialogMainButton">
+    <widget class="\XLite\View\Button\Submit" label="Import users" style="main-button" />
     </td>
 </tr>
 </table>

@@ -53,10 +53,10 @@
 <table border="0" cellpadding=2 cellspacing=2 width="430">
 <tr>
 <td align=left>
-<input type="submit" value=" Save " class="DialogMainButton">
+<widget class="\XLite\View\Button\Submit" label=" Save " style="main-button" />
 </td>
 <td align=right>
-<input type="button" name="cancel" value="Cancel" onclick="javascript: document.location='{url}'">
+<widget class="\XLite\View\Button\Regular" name="cancel" label="Cancel" jsCode="javascript: document.location='{url}'" />
 </td>
 </tr>
 </table>

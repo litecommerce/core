@@ -195,7 +195,7 @@
 
 {* Will be revised later *}
 {*&nbsp;
-<input type="button" value=" Clone " onClick="document.modify_form.action.value='clone'; document.modify_form.submit();">*}
+<widget class="\XLite\View\Button\Regular" label=" Clone " jsCode="document.modify_form.action.value='clone'; document.modify_form.submit();" />*}
 </td> 
 
 <td>&nbsp;</td>

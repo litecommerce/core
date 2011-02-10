@@ -71,8 +71,8 @@ Select a country or a state from a list, specify the zone where the country or s
         <font class="FormButton">Zone name:</font>
         <input type="text" size="50" name="zone_name" value="{zone.getZoneName()}" />
         &nbsp;&nbsp;
-        <input type="button" value="Update" onClick="javascript: onZoneSubmit();" IF="!mode=#add#" />
-        <input type="button" value="Create" onClick="javascript: onZoneSubmit();" IF="mode=#add#" />
+        <widget class="\XLite\View\Button\Regular" IF="!mode=#add#" label="Update" jsCode="javascript: onZoneSubmit();" />
+        <widget class="\XLite\View\Button\Regular" IF="mode=#add#" label="Create" jsCode="javascript: onZoneSubmit();" />
         <br /><br />
       </td>
     </tr>
@@ -107,9 +107,9 @@ Select a country or a state from a list, specify the zone where the country or s
 
       </td>
       <td align="center">
-        <input type="button" value="&lt;&lt;" onclick="javascript: moveSelect(document.getElementById('zone_countries'), document.getElementById('rest_countries'), 'R');" />
+        <widget class="\XLite\View\Button\Regular" label="&lt;&lt;" jsCode="javascript: moveSelect(document.getElementById('zone_countries'), document.getElementById('rest_countries'), 'R');" />
         <br /><br />
-        <input type="button" value="&gt;&gt;" onclick="javascript: moveSelect(document.getElementById('zone_countries'), document.getElementById('rest_countries'), 'L');" />
+        <widget class="\XLite\View\Button\Regular" label="&gt;&gt;" jsCode="javascript: moveSelect(document.getElementById('zone_countries'), document.getElementById('rest_countries'), 'L');" />
       </td>
       <td>
         <select id="rest_countries" multiple="multiple" size="15" style="width: 100%;">
@@ -146,9 +146,9 @@ Select a country or a state from a list, specify the zone where the country or s
 
       </td>
       <td align="center">
-        <input type="button" value="&lt;&lt;" onclick="javascript: moveSelect(document.getElementById('zone_states'), document.getElementById('rest_states'), 'R');" />
+        <widget class="\XLite\View\Button\Regular" label="&lt;&lt;" jsCode="javascript: moveSelect(document.getElementById('zone_states'), document.getElementById('rest_states'), 'R');" />
         <br /><br />
-        <input type="button" value="&gt;&gt;" onclick="javascript: moveSelect(document.getElementById('zone_states'), document.getElementById('rest_states'), 'L');" />
+        <widget class="\XLite\View\Button\Regular" label="&gt;&gt;" jsCode="javascript: moveSelect(document.getElementById('zone_states'), document.getElementById('rest_states'), 'L');" />
       </td>
       <td>
         <select id="rest_states" multiple="multiple" size="15" style="width: 100%;">
@@ -235,7 +235,7 @@ Select a country or a state from a list, specify the zone where the country or s
 
     <tr>
       <td colspan="3"><br /><br /><hr />
-        <input type="button" onClick="javascript: onZoneSubmit();" value="Save zone details" />
+        <widget class="\XLite\View\Button\Regular" jsCode="javascript: onZoneSubmit();" label="Save zone details" />
       </td>
     </tr>
 

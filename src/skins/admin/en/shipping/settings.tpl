@@ -19,14 +19,14 @@
   <div IF="config.Shipping.shipping_enabled=#Y#">
     {t(#Shipping is enabled#)} <br /><br />
     <input type="hidden" name="shipping_enabled" value="N" />
-    <input type="submit" value="Disable shipping" />
+    <widget class="\XLite\View\Button\Submit" label="Disable shipping" />
     <br /><br /><hr />
   </div>
 
   <div IF="!config.Shipping.shipping_enabled=#Y#">
     {t(#Shipping is disabled#)} <br /><br />
     <input type="hidden" name="shipping_enabled" value="Y" />
-    <input type="submit" value="Enable shipping" />
+    <widget class="\XLite\View\Button\Submit" label="Enable shipping" />
   </div>
 
 </form>
@@ -70,7 +70,7 @@
     </tbody>
 
     <tr>
-      <td align="right"><br /><input type="submit" value="Submit" /></td>
+      <td align="right"><br /><widget class="\XLite\View\Button\Submit" label="Submit" /></td>
     <tr>
 
   </table>

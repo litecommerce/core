@@ -80,7 +80,7 @@ function deleteZones()
   <tr>
   <td colspan="2">
   <br />
-  <input type="button" value="Delete selected" onclick="javascript: deleteZones();" IF="isZonesDefined()" />
+  <widget class="\XLite\View\Button\Regular" IF="isZonesDefined()" label="Delete selected" jsCode="javascript: deleteZones();" />
   </td>
 </tr>
 
@@ -93,5 +93,5 @@ function deleteZones()
 <br />
 <br />
 
-<input type="button" value="Add zone" onclick="javascript: self.location='admin.php?target=shipping_zones&mode=add';" />
+<widget class="\XLite\View\Button\Regular" label="Add zone" jsCode="javascript: self.location='admin.php?target=shipping_zones&mode=add';" />
 

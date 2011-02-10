@@ -20,7 +20,7 @@ To export the found orders into Peachtree Accounting follow the steps below<hr>
 
 <p align="justify">To find the list of imported customers select Maintain :: Customers/Prospects from Peachtree main menu.
 
-<p><input type="button" name="export" value="Export customer list..." onclick="javascript: document.location='{url:h}&action=export_pt&export_result=customer'">
+<p><widget class="\XLite\View\Button\Regular" name="export" label="Export customer list..." jsCode="javascript: document.location='{url:h}&action=export_pt&export_result=customer'" />
 
 <p><br>
 
@@ -41,7 +41,7 @@ To export the found orders into Peachtree Accounting follow the steps below<hr>
 
 <p align="justify">To find the list of imported sales select "Tasks :: Sales / Invoicing" menu.
 
-<p><input type="button" name="export" value="Export sales journal..." onclick="javascript: export_sales();">
+<p><widget class="\XLite\View\Button\Regular" name="export" label="Export sales journal..." jsCode="javascript: export_sales();" />
 
 <script language="Javascript">
 function export_sales() {
@@ -75,7 +75,7 @@ function export_sales() {
 Cash Account number <font class="Star">*</font> <input type="text" name="cash_account" value="{config.ImportExport.cash_account}" size=7>
 </form>
 
-<p><input type="button" name="export" value="Export cash receipts..." onclick="javascript: export_payments();">
+<p><widget class="\XLite\View\Button\Regular" name="export" label="Export cash receipts..." jsCode="javascript: export_payments();" />
 
 <script language="Javascript">
 function export_payments() {

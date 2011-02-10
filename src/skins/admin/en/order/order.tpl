@@ -42,7 +42,7 @@
 
 <tr valign="top">
 	<td></td>
-	<td><input type="submit" value=" Submit"></td>
+	<td><widget class="\XLite\View\Button\Submit" label=" Submit" /></td>
 </tr>
 </table>
 </form>
