@@ -54,9 +54,9 @@ function setDelete(form, input, check)
 Use this section to manage the list of existing countries. This list is used in the shipping and taxation settings and calculations, and in the registration form at the Customer Front-end.
 <hr>
 
-<font IF="status=#added#" class="SuccessMessage"><br><br>&gt;&gt;&nbsp;Country added successfully&nbsp;&lt;&lt;<br><br></font>
-<font IF="status=#deleted#" class="SuccessMessage"><br><br>&gt;&gt;&nbsp;Country(s) deleted successfully&nbsp;&lt;&lt;<br><br></font>
-<font IF="status=#updated#" class="SuccessMessage"><br><br>&gt;&gt;&nbsp;Country(s) updated successfully&nbsp;&lt;&lt;<br><br></font>
+<font IF="status=#added#" class="SuccessMessage"><br /><br />&gt;&gt;&nbsp;Country added successfully&nbsp;&lt;&lt;<br /><br /></font>
+<font IF="status=#deleted#" class="SuccessMessage"><br /><br />&gt;&gt;&nbsp;Country(s) deleted successfully&nbsp;&lt;&lt;<br /><br /></font>
+<font IF="status=#updated#" class="SuccessMessage"><br /><br />&gt;&gt;&nbsp;Country(s) updated successfully&nbsp;&lt;&lt;<br /><br /></font>
 
 <form action="admin.php" method="post" name="countries_form">
 <input type="hidden" name="target" value="countries">
@@ -65,14 +65,14 @@ Use this section to manage the list of existing countries. This list is used in 
 		<tr class="TableHead">
     		<th class="TableHead">Code</th>
 		    <th class="TableHead">Country</th>
-		    <th class="TableHead">VAT taxable<br>
+		    <th class="TableHead">VAT taxable<br />
 		    	<input id="enable_countries_vat" type="checkbox" onClick="this.blur();setChecked('enable_countries_vat',this.checked);">
 		    </th>
-		    <th class="TableHead">Active<br>
+		    <th class="TableHead">Active<br />
 		    	<input id="enable_countries" type="checkbox" onClick="this.blur();setChecked('enable_countries',this.checked);">
 			</th>
 			<widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/risk_country/label.tpl">
-			<th class="TableHead">Delete<br>
+			<th class="TableHead">Delete<br />
 				<input id="delete_countries" type="checkbox" onClick="this.blur();setDelete('countries_form','countries_ids',this.checked);">
 			</th>
 		</tr>
@@ -143,10 +143,10 @@ Use this section to manage the list of existing countries. This list is used in 
 
 {if:!valid}
 	<tr>
-		<td IF="status=#exists#" colspan="6"><font class="ErrorMessage"><br>&gt;&gt;&nbsp;Specified country code is already in use</font><br><br></td>
-		<td IF="status=#code#" colspan="6"><font class="ErrorMessage"><br>&gt;&gt;&nbsp;Mandatory field "Code" is empty.</font><br><br></td>
-		<td IF="status=#country#" colspan="6"><font class="ErrorMessage"><br>&gt;&gt;&nbsp;Mandatory field "Country" is empty</font><br><br></td>
-		<td IF="status=#charset#" colspan="6"><font class="ErrorMessage"><br>&gt;&gt;&nbsp;Mandatory field "Charset" is empty</font><br><br></td>
+		<td IF="status=#exists#" colspan="6"><font class="ErrorMessage"><br />&gt;&gt;&nbsp;Specified country code is already in use</font><br /><br /></td>
+		<td IF="status=#code#" colspan="6"><font class="ErrorMessage"><br />&gt;&gt;&nbsp;Mandatory field "Code" is empty.</font><br /><br /></td>
+		<td IF="status=#country#" colspan="6"><font class="ErrorMessage"><br />&gt;&gt;&nbsp;Mandatory field "Country" is empty</font><br /><br /></td>
+		<td IF="status=#charset#" colspan="6"><font class="ErrorMessage"><br />&gt;&gt;&nbsp;Mandatory field "Charset" is empty</font><br /><br /></td>
 	</tr>
 {end:}
 	<tr>

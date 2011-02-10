@@ -20,12 +20,12 @@ This section contains the store's basic templates to be edited.
 
 <span FOREACH="basicTemplates,temp">
 <p>
-<span IF="{temp.comment}"><b>{temp.comment}</b>, </span><i>template file: {temp.path}</i><br>
-<span IF="!temp.isExists()" class="ErrorMessage">This file does not exist. It will be created automatically after you have edited the template and saved your modifications.<br></span>
-<span IF="temp.read_only_access" class="ErrorMessage">WARNING! File cannot be overwritten! Please check and correct file permissions.<br></span>
+<span IF="{temp.comment}"><b>{temp.comment}</b>, </span><i>template file: {temp.path}</i><br />
+<span IF="!temp.isExists()" class="ErrorMessage">This file does not exist. It will be created automatically after you have edited the template and saved your modifications.<br /></span>
+<span IF="temp.read_only_access" class="ErrorMessage">WARNING! File cannot be overwritten! Please check and correct file permissions.<br /></span>
 <textarea name="template[{temp.path}]" cols="81" rows="10">{temp.content}</textarea>
-<br>
+<br />
 <widget class="\XLite\View\Button\Submit" label=" Update templates " />
-<br><br>
+<br /><br />
 </span>
 </form>

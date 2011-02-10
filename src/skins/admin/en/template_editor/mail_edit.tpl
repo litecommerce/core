@@ -27,7 +27,7 @@
 <td>
 	<table border="0" cellpadding=0 cellspacing=0 width=100%>
     <tr>
-    	<td width=50%><img src="images/letter.gif" border="0" align="top">&nbsp;<b>Mail templates folder:</b><br><i>{node}</i></td>
+    	<td width=50%><img src="images/letter.gif" border="0" align="top">&nbsp;<b>Mail templates folder:</b><br /><i>{node}</i></td>
     	<td width=50% align=right><a href="{url}"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Go back</a></td>
 	</tr>
 	</table>
@@ -40,13 +40,13 @@
 </tr>
 </table>
 
-<b>Subject:</b><span class="ErrorMessage" IF="subjectWriteError">&nbsp;WARNING! File cannot be overwritten! Please check and correct file permissions.</span><br>
+<b>Subject:</b><span class="ErrorMessage" IF="subjectWriteError">&nbsp;WARNING! File cannot be overwritten! Please check and correct file permissions.</span><br />
 <input type="text" name="subject" value="{mailTemplates.subject.content}" size="81">
-<br><br>
-<b>Body:</b><span class="ErrorMessage" IF="bodyWriteError">&nbsp;WARNING! File cannot be overwritten! Please check and correct file permissions.</span><br>
+<br /><br />
+<b>Body:</b><span class="ErrorMessage" IF="bodyWriteError">&nbsp;WARNING! File cannot be overwritten! Please check and correct file permissions.</span><br />
 <textarea name="body" cols="81" rows="20">{mailTemplates.body.content}</textarea>
-<br><br>
-<b>Signature:</b><span class="ErrorMessage" IF="signatureWriteError">&nbsp;WARNING! File cannot be overwritten! Please check and correct file permissions.</span><br>
+<br /><br />
+<b>Signature:</b><span class="ErrorMessage" IF="signatureWriteError">&nbsp;WARNING! File cannot be overwritten! Please check and correct file permissions.</span><br />
 <textarea name="signature" cols="81" rows="7">{mailTemplates.signature.content}</textarea>
 <p>
 

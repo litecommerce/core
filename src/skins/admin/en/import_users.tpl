@@ -15,7 +15,7 @@
 
 <p IF="import_error">
 <font class="ErrorMessage">
-&gt;&gt; Import error occured &lt;&lt;<br>
+&gt;&gt; Import error occured &lt;&lt;<br />
 You have specified incorrect file format or the file doesn't match. 
 </font>
 </p>
@@ -47,25 +47,25 @@ You have specified incorrect file format or the file doesn't match.
 <table border="0">
 <tr>
     <td colspan=2>
-    <br>
-    Field delimiter:<br><widget template="common/delimiter.tpl">
+    <br />
+    Field delimiter:<br /><widget template="common/delimiter.tpl">
     </td>
 </tr>
 <tr>
     <td colspan=2>
-    Text qualifier:<br><widget template="common/qualifier.tpl">
+    Text qualifier:<br /><widget template="common/qualifier.tpl">
     </td>
 </tr>
 <tr>
     <td colspan=2>
-    File (CSV) local:<br>
+    File (CSV) local:<br />
     <input type=text size=32 name=localfile>
     </td>
 </tr>
 <tr>
     <td colspan=2>
-    File (CSV) for upload:<br><input type=file size=32 name=userfile><widget IF="invalid_file" template="common/uploaded_file_validator.tpl" />
-    <br><br>
+    File (CSV) for upload:<br /><input type=file size=32 name=userfile><widget IF="invalid_file" template="common/uploaded_file_validator.tpl" />
+    <br /><br />
     <input type="checkbox" value="yes" name="md5_import" checked="{md5_import}" />Import password as md5 hash<br /><br />
     <widget class="\XLite\View\Button\Submit" label="Import users" style="main-button" />
     </td>

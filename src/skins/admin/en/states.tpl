@@ -37,10 +37,10 @@ function setHeaderChecked()
 <p>Use this section to manage the lists of counties, provinces, regions and states of different countries. The lists are used in shipping and tax settings and calculations, and in the registration form at the Customer Front-end.
 <hr>
 
-<font IF="status=#country_code#" class="ErrorMessage"><br><br>&gt;&gt;&nbsp;Please, select country&nbsp;&lt;&lt;<br><br></font>
-<font IF="status=#added#" class="SuccessMessage"><br><br>&gt;&gt;&nbsp;State added successfully&nbsp;&lt;&lt;<br><br></font>
-<font IF="status=#deleted#" class="SuccessMessage"><br><br>&gt;&gt;&nbsp;State(s) deleted successfully&nbsp;&lt;&lt;<br><br></font>
-<font IF="status=#updated#" class="SuccessMessage"><br><br>&gt;&gt;&nbsp;State(s) updated successfully&nbsp;&lt;&lt;<br><br></font>
+<font IF="status=#country_code#" class="ErrorMessage"><br /><br />&gt;&gt;&nbsp;Please, select country&nbsp;&lt;&lt;<br /><br /></font>
+<font IF="status=#added#" class="SuccessMessage"><br /><br />&gt;&gt;&nbsp;State added successfully&nbsp;&lt;&lt;<br /><br /></font>
+<font IF="status=#deleted#" class="SuccessMessage"><br /><br />&gt;&gt;&nbsp;State(s) deleted successfully&nbsp;&lt;&lt;<br /><br /></font>
+<font IF="status=#updated#" class="SuccessMessage"><br /><br />&gt;&gt;&nbsp;State(s) updated successfully&nbsp;&lt;&lt;<br /><br /></font>
 
 <form name="select_country_form" method="GET">
 <p class="admin-head">Select country</p>
@@ -49,7 +49,7 @@ function setHeaderChecked()
 </form>
 
 <span IF="!states">
-<br>No states found.
+<br />No states found.
 </span>
 <p>
 <form IF="states" action="admin.php" name="update_delete_states_form" method="POST">
@@ -108,8 +108,8 @@ function setHeaderChecked()
   </tr>
 {if:!valid}
 	<tr class="dialog-box">
-		<td IF="status=#code#" colspan="2"><font class="ErrorMessage">&gt;&gt;&nbsp;Mandatory field "Code" empty.</font><br><br></td>
-		<td IF="status=#state#" colspan="2"><font class="ErrorMessage">&gt;&gt;&nbsp;Mandatory field "State" empty.</font><br><br></td>
+		<td IF="status=#code#" colspan="2"><font class="ErrorMessage">&gt;&gt;&nbsp;Mandatory field "Code" empty.</font><br /><br /></td>
+		<td IF="status=#state#" colspan="2"><font class="ErrorMessage">&gt;&gt;&nbsp;Mandatory field "State" empty.</font><br /><br /></td>
 	</tr>
 {end:}
 	<tr>

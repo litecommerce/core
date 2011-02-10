@@ -103,7 +103,7 @@ function setVisible(element_id)
 
 <tr>
   <td class="setting-name">GDLib:</td>
-  <td>{if:gdlib}{gdlib}{else:}<font class="ErrorMessage">Not detected</font><br><b>Warning:</b> PHP 'gd' extension is not installed. Captchas in customer zone will not work{end:}</td>
+  <td>{if:gdlib}{gdlib}{else:}<font class="ErrorMessage">Not detected</font><br /><b>Warning:</b> PHP 'gd' extension is not installed. Captchas in customer zone will not work{end:}</td>
 </tr>
 
 {if:!isWin()}

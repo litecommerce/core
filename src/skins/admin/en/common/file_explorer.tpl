@@ -25,7 +25,7 @@
 {end:}
 {node.name}</a>
 
-{if:node.comment}&nbsp;&nbsp;-&nbsp;<font style="font-size:8pt">{node.comment}</font><br>
+{if:node.comment}&nbsp;&nbsp;-&nbsp;<font style="font-size:8pt">{node.comment}</font><br />
 {else:}
 <br />
 {end:}

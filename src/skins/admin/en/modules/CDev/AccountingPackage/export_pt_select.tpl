@@ -22,7 +22,7 @@ To export the found orders into Peachtree Accounting follow the steps below<hr>
 
 <p><widget class="\XLite\View\Button\Regular" name="export" label="Export customer list..." jsCode="javascript: document.location='{url:h}&action=export_pt&export_result=customer'" />
 
-<p><br>
+<p><br />
 
 <p class="admin-head">Step 2: Export of Sales Journal
 
@@ -61,7 +61,7 @@ function export_sales() {
 </script>
 
 
-<p><br>
+<p><br />
 
 <p class="admin-head">Step 3: Export of Cash Receipts Journal
 
@@ -91,7 +91,7 @@ function export_payments() {
 }
 </script>
 
-<p><br>
+<p><br />
 
 <p align="justify">After you pass all export steps successfully you will be able to manage the exported orders.
 

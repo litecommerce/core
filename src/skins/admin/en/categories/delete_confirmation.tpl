@@ -57,7 +57,7 @@
     </tr>
 
     <tr>	
-      <td colspan="3">Are you sure you want to continue?<br><br>
+      <td colspan="3">Are you sure you want to continue?<br /><br />
         <widget class="\XLite\View\Button\Submit" label="Yes" style="main-button" />&nbsp;&nbsp;
         <widget class="\XLite\View\Button\Regular" label="No" jsCode="javascript: document.location='admin.php?target=categories&category_id={category.parent.getCategoryId()}'" />
       </td>

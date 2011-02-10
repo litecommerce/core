@@ -54,7 +54,7 @@
     </table>
 </td></tr>
 
-<tr><td><br><hr><br></td></tr>
+<tr><td><br /><hr><br /></td></tr>
 
 </tbody>
 </table>
@@ -65,5 +65,5 @@
 </span>
 
 <span class="admin-title">Add new page</span>
-<br>
+<br />
 <widget template="template_editor/extra_page.tpl">

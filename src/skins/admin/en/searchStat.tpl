@@ -19,7 +19,7 @@ Order by: <select name="listOrder" onChange="document.searchStat.submit()">
 	<option FOREACH="orders,order,name" selected="{order=listOrder}">{order}</option>
 </select>
 </form>
-<br>
+<br />
 <table border=0 cellpadding=0 cellspacing=0>
 <tr><td class="TableHead">
 <table border=0 cellpadding=3 cellspacing=1>
@@ -37,7 +37,7 @@ Order by: <select name="listOrder" onChange="document.searchStat.submit()">
 </td></tr>
 </table>
 
-<br>
+<br />
 
 <form action="admin.php" method="POST">
 <input type="hidden" name="target" value="searchStat">

@@ -31,8 +31,8 @@ This page allows to export product options into CSV file.<hr>
 </tr>
 </table>
 <p>
-Field delimiter:<br><widget template="common/delimiter.tpl"><br>
-<br>
+Field delimiter:<br /><widget template="common/delimiter.tpl"><br />
+<br />
 <widget class="\XLite\View\Button\Submit" label=" Export " />
 
 </form>
