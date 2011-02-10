@@ -33,6 +33,6 @@ This page allows to export product options into CSV file.<hr>
 <p>
 Field delimiter:<br><widget template="common/delimiter.tpl"><br>
 <br>
-<input type=submit value=" Export ">
+<widget class="\XLite\View\Button\Submit" label=" Export " />
 
 </form>

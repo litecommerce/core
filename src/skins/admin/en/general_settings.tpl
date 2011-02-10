@@ -212,7 +212,7 @@ function setUnitSymbol(symbol) {
           <td colspan="2">&nbsp;</td>
         </tr>
         <tr>
-          <td ><input type="submit" value="Submit" /></td>
+          <td ><widget class="\XLite\View\Button\Submit" label="Submit" /></td>
           <td>&nbsp;</td>
         </tr>
     {end:}

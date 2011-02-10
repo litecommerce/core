@@ -82,8 +82,8 @@ function setHeaderChecked()
 	</tr>
 	<tr>
     <td colspan="3">
-	    <input type="submit" name="update" value="Update" class="DialogMainButton">&nbsp;
-    	<input type="submit" name="delete" value="Delete selected" onClick="document.update_delete_states_form.action.value='delete'; document.update_delete_states_form.submit()">
+      <widget class="\XLite\View\Button\Submit" name="update" label="Update" style="main-button" />
+      <widget class="\XLite\View\Button\Submit" label="Delete selected" name="delete" jsCode="document.update_delete_states_form.action.value='delete'; document.update_delete_states_form.submit()" />
     </td>
 	</tr>
 </table>
@@ -113,7 +113,9 @@ function setHeaderChecked()
 	</tr>
 {end:}
 	<tr>
-		<td colspan=2> <input type="submit" name="add" value="Add new"> </td>
+		<td colspan=2>
+      <widget class="\XLite\View\Button\Submit" label="Add new" name="add" />
+    </td>
 	</tr>
 </table>
 

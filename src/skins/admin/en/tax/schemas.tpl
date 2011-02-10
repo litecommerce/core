@@ -41,9 +41,9 @@ To delete a tax scheme, choose it from the drop-down menu and click on the 'Dele
 <option>-- select scheme --</option>
 <option FOREACH="taxes.predefinedSchemas,schema,options">{schema}</option>
 </select>
-<input type="button" value=" Reset " onclick="resetSchema()" class="DialogMainButton">
+<widget class="\XLite\View\Button\Regular" label="Reset" jsCode="resetSchema()" style="main-button" />
 &nbsp;
-<input type=button value=" Delete scheme " onClick="deleteSchema()">
+<widget class="\XLite\View\Button\Regular" label=" Delete scheme " jsCode="deleteSchema()" />
 <script language=JavaScript>
 // <!--
 function resetSchema()
@@ -83,7 +83,7 @@ function deleteSchema()
 <option value="">-- new name --</option>
 <option FOREACH="schemas,schema,options" value="{schema}">{schema}</option>
 </select>
-<input type="button" value=" Save " onclick="saveSchema()" class="DialogMainButton">
+<widget class="\XLite\View\Button\Regular" label="Save" jsCode="saveSchema()" style="main-button" />
 <script language=JavaScript>
 // <!--
 function saveSchema()
@@ -117,7 +117,7 @@ function saveSchema()
 <select name="export_schema">
 <option FOREACH="schemas,schema,options" value="{schema}">{schema}</option>
 </select>
-<input type="submit" value=" Export " class="DialogMainButton">
+<widget class="\XLite\View\Button\Submit" label=" Export " style="main-button" />
 
 </form>
 </span>
@@ -132,7 +132,7 @@ function saveSchema()
 <input type="hidden" name="page" value="{page}">
 <input type="hidden" name="action" value="import">
 <input type=file name=userfile><widget IF="invalid_file" template="common/uploaded_file_validator.tpl" />&nbsp;
-<input type="submit" value=" Import " class="DialogMainButton">
+<widget class="\XLite\View\Button\Submit" label=" Import " style="main-button" />
 </form>
 
 <script IF="invalid_file" language="javascript">

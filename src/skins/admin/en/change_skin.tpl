@@ -82,7 +82,7 @@
 	<td colspan=2 align=center>
 	    <br>
 	    <br>
-       	<input type="submit" id="submit_button" value="Install selected skin">
+       	<widget class="\XLite\View\Button\Submit" label="Install selected skin" id="submit_button" />
  	</td>
 </tr>
 </table>

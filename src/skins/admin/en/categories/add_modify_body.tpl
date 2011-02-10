@@ -128,7 +128,7 @@
 
     <tr>
       <td colspan="3">
-        <input type="submit" {if:getRequestParamValue(#mode#)=#modify#} value="Update" {else:} value="Create category" {end:} />
+        <widget class="\XLite\View\Button\Submit" label="{if:getRequestParamValue(#mode#)=#modify#}Update{else:}Create category{end:}" />
       </td>
     </tr>
 
@@ -167,9 +167,9 @@ Not available right now
 
     <tr>
       <td colspan="3">
-        <input type="button" onclick="javascript:document.forms['move_form'].submit();" value="Move after selected" />
+        <widget class="\XLite\View\Button\Regular" label="Move after selected" jsCode="javascript:document.forms['move_form'].submit();" />
         &nbsp;&nbsp;&nbsp;
-        <input type="button" onclick="javascript:document.forms['move_form'].elements['action'].value='move_as_child';document.forms['move_form'].submit();" value="Make as child of selected" />
+        <widget class="\XLite\View\Button\Regular" label="Make as child of selected" jsCode="javascript:document.forms['move_form'].elements['action'].value='move_as_child';document.forms['move_form'].submit();" />
       </td>
     </tr>
 

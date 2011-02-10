@@ -47,5 +47,5 @@ Order by: <select name="listOrder" onChange="document.searchStat.submit()">
 <option value="2">requested once or twice</option>
 <option value="1000000">All</option>
 </select>
-<input type="submit" value="Cleanup">
+<widget class="\XLite\View\Button\Submit" label="Cleanup" />
 </form>

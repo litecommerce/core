@@ -68,7 +68,7 @@
 
   <br /><br />
 
-  <input type="submit" value="Calculate rates" />
+  <widget class="\XLite\View\Button\Submit" label="Calculate rates" />
 
   <div>Note: a new window will open</div>
 

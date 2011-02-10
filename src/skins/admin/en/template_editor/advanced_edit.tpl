@@ -50,10 +50,14 @@
 
 <tr>
 <td align=left>
-<input type="submit" value=" Save " class="DialogMainButton">
+<widget class="\XLite\View\Button\Submit" label=" Save " style="main-button" />
 </td>
 <td align=right>
-{if:file.node}<input type="button" value=" Cancel " onclick="document.location='{url}&node={file.node:u}'">{else:}<input type="button" value=" Cancel " onclick="document.location='{url}'">{end:}
+{if:file.node}
+<widget class="\XLite\View\Button\Regular" label="Cancel" jsCode="document.location='{url}&node={file.node:u}'" />
+{else:}
+<widget class="\XLite\View\Button\Regular" label="Cancel" jsCode="document.location='{url}'" />
+{end:}
 </td>
 </tr>
 

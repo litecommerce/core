@@ -102,8 +102,13 @@ Use this section to manage the list of existing countries. This list is used in 
       <td colspan="5">
 		<table border=0 width="100%">
 		<tr>
-			<td align="left"><br><input type="submit" class="DialogMainButton" name="submit" value="Update"></td>
-			<td align="right"><input type="submit" name="delete" value="Delete selected" onClick="document.countries_form.action.value='delete';"></td>
+			<td align="left">
+        <br />
+        <widget class="\XLite\View\Button\Submit" style="main-button" name="submit" label="Update" />
+      </td>
+			<td align="right">
+        <widget class="\XLite\View\Button\Submit" label="Delete selected" name="delete" jsCode="document.countries_form.action.value='delete';" />
+      </td>
 		</tr>
 		</table>
 	</td>
@@ -145,7 +150,9 @@ Use this section to manage the list of existing countries. This list is used in 
 	</tr>
 {end:}
 	<tr>
-		<td colspan="6"><input type="submit" name="country_add" value="Add new"></td>
+		<td colspan="6">
+      <widget class="\XLite\View\Button\Submit" label="Add new" name="country_add" />
+    </td>
 	</tr>
 </table>
 </form>

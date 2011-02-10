@@ -25,7 +25,7 @@ This section contains the store's basic templates to be edited.
 <span IF="temp.read_only_access" class="ErrorMessage">WARNING! File cannot be overwritten! Please check and correct file permissions.<br></span>
 <textarea name="template[{temp.path}]" cols="81" rows="10">{temp.content}</textarea>
 <br>
-<input type="submit" value=" Update templates ">
+<widget class="\XLite\View\Button\Submit" label=" Update templates " />
 <br><br>
 </span>
 </form>

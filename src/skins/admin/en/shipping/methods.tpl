@@ -126,7 +126,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
               <script language="Javascript" IF="method.getEnabled()">setHeaderChecked("{processor.getProcessorId()}");</script>
             </td>
             <td>
-              <input type="button" name="delete" value="Delete" onclick="javascript: onDeleteButton('{method.getMethodId()}');" />
+              <widget class="\XLite\View\Button\Regular" name="delete" label="Delete" jsCode="javascript: onDeleteButton('{method.getMethodId()}');" />
             </td>
           </tr>
 
@@ -140,7 +140,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
     <tr>
       <td colspan="4">
         <br />
-        <input type="submit" value="Update" class="DialogMainButton" />
+        <widget class="\XLite\View\Button\Submit" label="Update" style="main-button" />
       </td>
     </tr>
 
@@ -194,7 +194,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
     </tr>
 
     <tr>
-      <td colspan="5"><br /><input type="submit" value="Add" /></td>
+      <td colspan="5"><br /><widget class="\XLite\View\Button\Submit" label="Add" /></td>
     </tr>
 
     <tr IF="!moduleArrayPointer=moduleArraySize">

@@ -33,7 +33,7 @@
 							<input type="hidden" name="action" value="move_to_database">
 							<input type="hidden" name="index" value="{className}">
 							<tr>
-								<td><input type="submit" value="Move to database"></td>
+								<td><widget class="\XLite\View\Button\Submit" label="Move to database" /></td>
 							</tr>
 							</form>
 						</table>
@@ -45,7 +45,7 @@
 							<input type="hidden" name="action" value="move_to_filesystem">
 							<input type="hidden" name="index" value="{className}">
 							<tr>
-								<td><input type="submit" value="Move to filesystem"></td>
+								<td><widget class="\XLite\View\Button\Submit" label="Move to filesystem" /></td>
 							</tr>
 							</form>
 						</table>
@@ -63,7 +63,7 @@
 								<option value="F" selected="imageClass.image.defaultSource=#F#">File system</option>
 								</select>
 								</td>
-								<td><input type="submit" value="Update"></td>
+								<td><widget class="\XLite\View\Button\Submit" label="Update" /></td>
 							</tr>
 							</form>
 						</table>
@@ -91,5 +91,5 @@ Images directory : <input type="text" name="images_dir" value="{imagesDir}" size
 <b>Note:</b> enter the relative path to the directory, where images are stored. For example, if images are stored in the <i><b>images</b></i> sub-directory of your LiteCommerce installation, enter <i><b>images</b></i> in this field. If you don't specify images directory then <i><b>images</b></i> will be used as default.
 <br />
 <br />
-<input type="submit" value=" Update " />
+<widget class="\XLite\View\Button\Submit" label=" Update " />
 </form>

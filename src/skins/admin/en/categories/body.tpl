@@ -70,7 +70,7 @@
 
         <tr>
           <td colspan="3">
-            <input type="button" value="Modify" onClick="onModifyClick('{category.category_id}')" />
+            <widget class="\XLite\View\Button\Regular" label="Modify" jsCode="onModifyClick('{category.category_id}')" />
           </td>
         </tr>
 
@@ -103,13 +103,13 @@
       </td>
 
       <td nowrap>
-        <input type="button" value="Add child" onClick="onAddChildClick('{cat.category_id}')" />
+        <widget class="\XLite\View\Button\Regular" label="Add child" jsCode="onAddChildClick('{cat.category_id}')" />
       </td>
 
       <td nowrap>
-        <input type="button" value="Delete" onClick="onDeleteClick('{cat.category_id}')" />
+        <widget class="\XLite\View\Button\Regular" label="Delete" jsCode="onDeleteClick('{cat.category_id}')" />
         &nbsp;&nbsp;
-        <input type="button" value="Delete subcategories" onClick="onDeleteSubcatsClick('{cat.category_id}')" IF="cat.hasSubcategories()" />
+        <widget class="\XLite\View\Button\Regular" IF="cat.hasSubcategories()" label="Delete subcategories" jsCode="onDeleteSubcatsClick('{cat.category_id}')" />
       </td>
 
     </tr>

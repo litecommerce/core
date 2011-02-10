@@ -83,7 +83,7 @@
     <br>
     <input type="checkbox" value="yes" name="delete_products" checked="{delete_products}" onClick="javascript: if (document.data_form.delete_products.checked) return confirm('Are you sure?');">Drop all products before import
     <br><br>
-    <input type=submit value="Import products" class="DialogMainButton">
+    <widget class="\XLite\View\Button\Submit" label="Import products" style="main-button" />
     </td>
 </tr>
 </table>

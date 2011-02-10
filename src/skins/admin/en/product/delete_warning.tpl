@@ -22,6 +22,7 @@
 <input type="hidden" name="product_id" value="{product_id}">
 Do you really want to delete the product #{product_id}:
 <strong>{product.name} ?</strong>
-<p>
-<input type="submit" name="confirmed" value=" Yes ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="confirmed" value=" No ">
+<p />
+  <widget class="\XLite\View\Button\Submit" label="Yes" name="confirmed" value="Yes" />
+  <widget class="\XLite\View\Button\Submit" label="No" name="confirmed" value="No" />
 </form>

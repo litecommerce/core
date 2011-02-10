@@ -80,7 +80,7 @@ function searchOrders()
 
   <p align="left">
     
-    <input type="button" name="Delete" value="Delete selected profile" onClick="javascript: deleteProfile();" />
+    <widget class="\XLite\View\Button\Regular" name="Delete" label="Delete selected profile" jsCode="javascript: deleteProfile();" />
 
   </p>
 

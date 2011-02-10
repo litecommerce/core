@@ -58,8 +58,8 @@
 
     <tr>	
       <td colspan="3">Are you sure you want to continue?<br><br>
-        <input type="submit" value="Yes" class="DialogMainButton" />&nbsp;&nbsp;
-        <input type="button" value="No" onclick="javascript: document.location='admin.php?target=categories&category_id={category.parent.getCategoryId()}'" />
+        <widget class="\XLite\View\Button\Submit" label="Yes" style="main-button" />&nbsp;&nbsp;
+        <widget class="\XLite\View\Button\Regular" label="No" jsCode="javascript: document.location='admin.php?target=categories&category_id={category.parent.getCategoryId()}'" />
       </td>
     </tr>
 

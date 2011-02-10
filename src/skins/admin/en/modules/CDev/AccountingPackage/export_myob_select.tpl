@@ -19,7 +19,7 @@ To export the found orders into MYOB Accounting 2005 follow the steps below<hr>
 
 <p align="justify">To find the exported customer cards, click on Cards List in the Card File Command Center and select All Cards tab.
 
-<p><input type="button" name="submit" value="Export customer cards.." onclick="javascript: document.location='{url:h}&action=export_myob&export_result=customer_cards'">
+<p><widget class="\XLite\View\Button\Regular" name="submit" label="Export customer cards.." jsCode="javascript: document.location='{url:h}&action=export_myob&export_result=customer_cards'" />
 
 <p><br>
 
@@ -37,7 +37,7 @@ Income Account Number <font class=Star>*</font> <input type="text" name="income_
 
 <p align="justify">There are several ways that MYOB Accounting 2005 provides to find exported transactions. For example, Click on Find Transactions in any command center, select the Invoice tab then then select All Invoices in the Search By. The list of exported item sale transaction will appear. Please refer to your MYOB Manual for further assistance on finding transactions.
 
-<p><input type="button" name="submit" value="Export sales transaction.." onclick="javascript: export_sales(document.order_sales_form.income_account_number.value)">
+<p><widget class="\XLite\View\Button\Regular" name="submit" label="Export sales transaction.." jsCode="javascript: export_sales(document.order_sales_form.income_account_number.value)" />
 <script language="Javascript">
 
 function export_sales(income_account_number) {
@@ -63,7 +63,7 @@ function export_sales(income_account_number) {
 
 <p align="justify">See Step 2 of the explanation on how to find exported transactions.
 
-<p><input type="button" name="submit" value="Export received payments.." onclick="javascript: export_received_payments(document.received_payments_form.deposit_account.value);">
+<p><widget class="\XLite\View\Button\Regular" name="submit" label="Export received payments.." jsCode="javascript: export_received_payments(document.received_payments_form.deposit_account.value);" />
 
 <script language="Javascript">
 function export_received_payments(deposit_account) {

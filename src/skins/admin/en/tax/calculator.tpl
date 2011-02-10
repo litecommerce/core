@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td colspan=2 align=center>
-    <br><input type="submit" value=" Calculate taxes ">
+    <br><widget class="\XLite\View\Button\Submit" label=" Calculate taxes " />
 	</td>
 </tr>
 </form>

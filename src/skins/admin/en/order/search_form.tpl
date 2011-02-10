@@ -57,10 +57,10 @@
       <tr>
         <td class="FormButton" width="78">&nbsp;</td>
         <td height="30">
-          <input type="submit" value=" Search " class="DialogMainButton" />
+          <widget class="\XLite\View\Button\Submit" label=" Search " style="main-button" />
           {* TODO - restore and uncomment *}
           {*&nbsp;&nbsp;&nbsp;
-          <input type="button" value=" Export to.. " onclick="document.order_search_form.action.value=document.order_search_form.export_format.value;document.order_search_form.submit()" />
+          <widget class="\XLite\View\Button\Regular" label=" Export to.. " jsCode="document.order_search_form.action.value=document.order_search_form.export_format.value;document.order_search_form.submit()" />
           &nbsp;
           <select name="export_format">
             <option value="default" selected>- select export format -</option>

@@ -45,10 +45,10 @@
     <table border="0" cellpadding=2 cellspacing=2 width="100%">
     <tr>
     <td align=left>
-    <input type=button value=" Edit " onclick="document.location='admin.php?target=template_editor&editor=extra_pages&mode=page_edit&page={page.page}'" class="DialogMainButton">
+    <widget class="\XLite\View\Button\Regular" label=" Edit " jsCode="document.location='admin.php?target=template_editor&editor=extra_pages&mode=page_edit&page={page.page}'" style="main-button" />
     </td>
     <td align=right>
-    <input type=button value="Delete" onclick="document.location='admin.php?target=template_editor&editor=extra_pages&mode=remove_page&page={page.page}'">
+    <widget class="\XLite\View\Button\Regular" label="Delete" jsCode="document.location='admin.php?target=template_editor&editor=extra_pages&mode=remove_page&page={page.page}'" />
     </td>
     </tr>
     </table>
