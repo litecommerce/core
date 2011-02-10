@@ -20,6 +20,6 @@
 
   <div IF="pager.isVisible()" class="list-pager">{pager.display()}</div>
 
-  <p /><div IF="isFooterVisible()" class="list-footer">{displayViewListContent(#itemsList.admin.footer#)}</div>
+  <div IF="isFooterVisible()" class="list-footer">{displayViewListContent(#itemsList.admin.footer#)}</div>
 
 </div>
