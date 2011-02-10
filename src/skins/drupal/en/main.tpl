@@ -49,7 +49,7 @@
     <div id="main-wrapper">
       <div id="main" class="clearfix">
 
-        <div id="sidebar-first" class="column sidebar">
+        <div id="sidebar-first" class="column sidebar" IF="isSidebarFirstVisible()">
           <div class="section">
             {displayViewListContent(#sidebar.first#)}
           </div>
@@ -59,6 +59,12 @@
           <div class="section">
             <a id="main-content"></a>
             <widget template="center.tpl" />
+          </div>
+        </div>
+
+        <div id="sidebar-second" class="column sidebar" IF="isSidebarSecondVisible()">
+          <div class="section">
+            {displayViewListContent(#sidebar.second#)}
           </div>
         </div>
 

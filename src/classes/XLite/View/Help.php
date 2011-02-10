@@ -29,23 +29,61 @@
 namespace XLite\View;
 
 /**
- * Abstract dialog
+ * Help dialog
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="center")
  */
-abstract class Dialog extends \XLite\View\Container
+class Help extends \XLite\View\SectionDialog
 {
     /**
-     * Return default template
+     * Define sections list
      * 
-     * @return string
+     * @return array
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultTemplate()
+    protected function defineSections()
     {
-        return 'common/dialog.tpl';
+        return array(
+            'terms_conditions' => array(
+                'head' => 'Terms and conditions',
+                'body' => 'terms_conditions.tpl',
+            ),
+            'privacy_statement' => array(
+                'head' => 'Privacy statement',
+                'body' => 'privacy_statement.tpl',
+            ),
+            'contactus' => array(
+                'head' => 'Contact us',
+                'body' => 'contactus.tpl',
+            ),
+            'contactusMessage' => array(
+                'head' => 'Message is sent',
+                'body' => 'contactus_message.tpl',
+            ),
+        );
     }
+
+    /**
+     * Return list of allowed targets
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $list = parent::getAllowedTargets();
+
+        $list[] = 'help';
+
+        return $list;
+    }
+
 }

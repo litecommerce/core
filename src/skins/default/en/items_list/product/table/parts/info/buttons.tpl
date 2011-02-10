@@ -12,5 +12,5 @@
  * @ListChild (list="itemsList.product.table.customer.info", weight="40")
  *}
 <td IF="isShowAdd2Cart(product)" class="product-button-column">
-  {displayListPart(#buttons#,_ARRAY_(#product#^product))}
+  {displayNestedViewListContent(#buttons#,_ARRAY_(#product#^product))}
 </td>

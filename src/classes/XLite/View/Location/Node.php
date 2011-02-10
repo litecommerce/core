@@ -84,6 +84,44 @@ class Node extends \XLite\View\AView
         );
     }
 
+    /**
+     * Get node name
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getName()
+    {
+        return $this->getParam(self::PARAM_NAME);
+    }
+
+    /**
+     * Get link URL
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLink()
+    {
+        return $this->getParam(self::PARAM_LINK);
+    }
+
+    /**
+     * Get subnodes
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSubnodes()
+    {
+        return $this->getParam(self::PARAM_SUBNODES);
+    }
 
     /**
      * Static method to create nodes in controller classes

@@ -29,23 +29,54 @@
 namespace XLite\View;
 
 /**
- * Abstract dialog
+ * Authorization
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="center", zone="customer")
  */
-abstract class Dialog extends \XLite\View\Container
+class Authorization extends \XLite\View\SimpleDialog
 {
     /**
-     * Return default template
+     * Return title 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return 'Authentication';
+    }
+
+    /**
+     * Return file name for the center part template 
      * 
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getDefaultTemplate()
+    protected function getBody()
     {
-        return 'common/dialog.tpl';
+        return 'authentication.tpl';
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean 
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        $target = \XLite\Core\Request::getInstance()->target;
+
+        return parent::isVisible()
+            && ('login' == $target || ('profile' == $target && 'login' == \XLite\Core\Request::getInstance()->mode));
     }
 }

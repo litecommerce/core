@@ -29,23 +29,52 @@
 namespace XLite\View;
 
 /**
- * Abstract dialog
+ * Section-based dialog
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Dialog extends \XLite\View\Container
+abstract class SectionDialog extends \XLite\View\SimpleDialog
 {
     /**
-     * Return default template
+     * Return title 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        $mode = strval(\XLite\Core\Request::getInstance()->mode);
+        $sections = $this->defineSections();
+
+        return isset($sections[$mode]) ? $sections[$mode]['head'] : null;
+    }
+
+    /**
+     * Return file name for the center part template 
      * 
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getDefaultTemplate()
+    protected function getBody()
     {
-        return 'common/dialog.tpl';
+        $mode = strval(\XLite\Core\Request::getInstance()->mode);
+        $sections = $this->defineSections();
+
+        return isset($sections[$mode]) ? $sections[$mode]['body'] : null;
     }
+
+    /**
+     * Define sections list
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract protected function defineSections();
 }

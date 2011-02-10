@@ -29,23 +29,57 @@
 namespace XLite\View;
 
 /**
- * Abstract dialog
+ * Profile dialog
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="center")
  */
-abstract class Dialog extends \XLite\View\Container
+class Profile extends \XLite\View\SectionDialog
 {
     /**
-     * Return default template
+     * Define sections list
      * 
-     * @return string
+     * @return array
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultTemplate()
+    protected function defineSections()
     {
-        return 'common/dialog.tpl';
+        return array(
+            'account' => array(
+                'head' => 'Your account',
+                'body' => 'account.tpl',
+            ),
+            'success' => array(
+                'head' => 'Registration complete',
+                'body' => 'register_success.tpl',
+            ),
+            'delete' => array(
+                'head' => 'Delete profile - Confirmation',
+                'body' => 'delete_profile.tpl',
+            ),
+        );
     }
+
+    /**
+     * Return list of allowed targets
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $list = parent::getAllowedTargets();
+
+        $list[] = 'profile';
+
+        return $list;
+    }
+
 }

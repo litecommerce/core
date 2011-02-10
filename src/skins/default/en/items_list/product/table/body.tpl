@@ -13,7 +13,7 @@
 <table class="list-body list-body-table" cellspacing="0">
 
   <tr FOREACH="getPageData(),product" class="hproduct item">
-    {displayListPart(#info#,_ARRAY_(#product#^product))}
+    {displayNestedViewListContent(#info#,_ARRAY_(#product#^product))}
   </tr>
 
   <tr FOREACH="getViewList(#itemsList.product.table.customer.items#),w">

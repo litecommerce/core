@@ -29,23 +29,42 @@
 namespace XLite\View;
 
 /**
- * Abstract dialog
+ * Access denied 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="center")
  */
-abstract class Dialog extends \XLite\View\Container
+class AccessDenied extends \XLite\View\AView
 {
     /**
-     * Return default template
-     * 
+     * Return widget default template
+     *
      * @return string
      * @access protected
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
     {
-        return 'common/dialog.tpl';
+        return 'access_denied.tpl';
+    }
+
+    /**
+     * Return list of allowed targets
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $list = parent::getAllowedTargets();
+
+        $list[] = 'access_denied';
+
+        return $list;
     }
 }

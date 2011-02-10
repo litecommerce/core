@@ -17,5 +17,5 @@
  *}
 
 <div class="buttons-row" IF="!product.inventory.isOutOfStock()">
-  {displayListPart(#cart-buttons#)}
+  {displayNestedViewListContent(#cart-buttons#)}
 </div>

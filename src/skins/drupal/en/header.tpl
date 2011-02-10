@@ -22,7 +22,11 @@
   <meta IF="getMetaDescription()" name="description" content="{getMetaDescription():r}" />
   <meta IF="getKeywords()" name="keywords" content="{getKeywords():r}" />
 
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
   <link FOREACH="getCSSResources(),file" href="{file}" rel="stylesheet" type="text/css" />
 
   <script FOREACH="getJSResources(),file" type="text/javascript" src="{file}"></script>
+
+  {displayViewListContent(#head#)}
 </head>

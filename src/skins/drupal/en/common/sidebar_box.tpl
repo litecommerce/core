@@ -13,5 +13,5 @@
 
 <div class="block block-block">
   <h2 IF="getHead()">{getHead()}</h2>
-  <div class="content"><widget template="{dir}/body.tpl"></div>
+  <div class="content"><widget template="{getBody()}"></div>
 </div>

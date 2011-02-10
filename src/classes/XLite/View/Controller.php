@@ -101,13 +101,60 @@ class Controller extends \XLite\View\AView
      */
     protected function defineBodyClasses()
     {
-        return array(
+        $classes = array(
             'area-' . (\XLite::isAdminZone() ? 'a' : 'c'),
             'skin-' . \XLite\Model\Layout::getInstance()->getSkin(),
             'target-' . (\XLite\Core\Request::getInstance()->target ?: \XLite::TARGET_DEFAULT),
-            'one-sidebar',
-            'sidebar-first',
         );
+
+        $first = $this->isSidebarFirstVisible();
+        $second = $this->isSidebarSecondVisible();
+
+        if ($first && $second) {
+            $classes[] = 'two-sidebar';
+
+        } elseif ($first || $second) {
+            $classes[] = 'one-sidebar';
+
+        } else {
+            $classes[] = 'no-sidebars';
+        }
+        
+        if ($first) {
+            $classes[] = 'sidebar-first';
+        }
+
+        if ($second) {
+            $classes[] = 'sidebar-second';
+        }
+
+        return $classes;
+    }
+
+    /**
+     * Chewck - first sidebar is visible or not
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isSidebarFirstVisible()
+    {
+        return !in_array(\XLite\Core\Request::getInstance()->target, array('cart', 'product', 'checkout'));
+    }
+
+    /**
+     * Check - second sidebar is visible or not
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isSidebarSecondVisible()
+    {
+        return false;
     }
 
     /**

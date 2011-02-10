@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Common node
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,12 +11,12 @@
  * @since     3.0.0
  *}
 
-<div class="location-node{if:subnodes} expandable{end:}">
+<div class="location-node{if:getSubnodes()} expandable{end:}">
 
-  {if:getParam(%static::PARAM_LINK%)}<a href="{getParam(%static::PARAM_LINK%)}" class="location-title">{end:}{getParam(%static::PARAM_NAME%):h}{if:getParam(%static::PARAM_LINK%)}</a>{end:}
+  {if:getLink()}<a href="{getLink()}" class="location-title">{end:}{getName()}{if:getLink()}</a>{end:}
 
-  <ul class="location-subnodes" IF="subnodes">
-    <li FOREACH="subnodes,node"><a href="{node.getParam(%static::PARAM_LINK%)}">{node.getParam(%static::PARAM_NAME%)}</a></li>
+  <ul class="location-subnodes" IF="getSubnodes()">
+    <li FOREACH="getSubnodes(),node"><a href="{node.getLink()}">{node.getName()}</a></li>
   </ul>
 
 </div>

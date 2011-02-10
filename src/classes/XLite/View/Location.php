@@ -58,19 +58,6 @@ class Location extends \XLite\View\AView
     }
 
     /**
-     * Check if widget is visible
-     *
-     * @return boolean 
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isVisible()
-    {
-        return \XLite\Core\Auth::getInstance()->isLogged();
-    }
-
-    /**
      * Define widget parameters
      *
      * @return void
@@ -100,7 +87,7 @@ class Location extends \XLite\View\AView
      */
     public function getNodes()
     {
-        return $this->getParam(self::PARAM_NODES);
+        return array_values($this->getParam(self::PARAM_NODES));
     }
 
 
@@ -115,6 +102,7 @@ class Location extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
+
         $list[] = 'location/location.css';
 
         return $list;

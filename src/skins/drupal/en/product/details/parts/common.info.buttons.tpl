@@ -15,9 +15,9 @@
  *}
 
 <div class="product-buttons shade-base" IF="!isProductAdded()">
-  {displayListPart(#buttons#)}
+  {displayNestedViewListContent(#buttons#)}
 </div>
 
 <div class="product-buttons shade-base product-buttons-added" IF="isProductAdded()">
-  {displayListPart(#buttons-added#)}
+  {displayNestedViewListContent(#buttons-added#)}
 </div>

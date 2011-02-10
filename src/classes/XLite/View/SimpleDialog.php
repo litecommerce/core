@@ -29,23 +29,50 @@
 namespace XLite\View;
 
 /**
- * Abstract dialog
+ * Simple dialog
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Dialog extends \XLite\View\Container
+abstract class SimpleDialog extends \XLite\View\Dialog
 {
     /**
-     * Return default template
+     * Return templates directory name 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return null;
+    }
+
+    /**
+     * Return file name for the center part template 
      * 
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getDefaultTemplate()
+    protected function getBody()
     {
-        return 'common/dialog.tpl';
+        return null;
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean 
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getBody();
     }
 }
