@@ -98,7 +98,7 @@ abstract class AButton extends \XLite\View\AView
 
         $this->widgetParams += array(
             self::PARAM_NAME     => new \XLite\Model\WidgetParam\String('Name', '', true),
-            self::PARAM_NAME     => new \XLite\Model\WidgetParam\String('Value', '', true),
+            self::PARAM_VALUE    => new \XLite\Model\WidgetParam\String('Value', '', true),
             self::PARAM_LABEL    => new \XLite\Model\WidgetParam\String('Label', $this->getDefaultLabel(), true),
             self::PARAM_STYLE    => new \XLite\Model\WidgetParam\String('Button style', ''),
             self::PARAM_DISABLED => new \XLite\Model\WidgetParam\Bool('Disabled', 0),
@@ -154,6 +154,43 @@ abstract class AButton extends \XLite\View\AView
     protected function getValue()
     {
         return $this->getParam(self::PARAM_VALUE);
+    }
+
+    /**
+     * hasName 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     */
+    protected function hasName()
+    {
+        return '' !== $this->getParam(self::PARAM_NAME);
+    }
+
+    /**
+     * hasValue 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     */
+    protected function hasValue()
+    {
+        return '' !== $this->getParam(self::PARAM_VALUE);
+    }
+
+    /**
+     * hasClass 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function hasClass()
+    {
+        return '' !== $this->getParam(self::PARAM_STYLE);
     }
 
 
