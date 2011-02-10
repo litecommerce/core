@@ -62,4 +62,7 @@ From this page, you can build and maintain the store in a very easy way!
 </tr>
 </table>
 
-<br /><hr /><p /><widget class="\XLite\View\ItemsList\Product\Admin\LowInventory" />
+<br />
+<hr />
+<br />
+<widget class="\XLite\View\ItemsList\Product\Admin\LowInventory" />
