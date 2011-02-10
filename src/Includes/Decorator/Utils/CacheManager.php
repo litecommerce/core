@@ -44,12 +44,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     const MESSAGE = 'Re-building cache, please wait...';
 
     /**
-     * Time limit to build cache 
-     */
-
-    const TIME_LIMIT = 180;
-
-    /**
      * Cache building steps
      */
 
@@ -308,7 +302,10 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         static::startStep($step);
 
         // Perform step-specific actions
-        \Includes\Utils\Operator::executeWithCustomMaxExecTime(self::TIME_LIMIT, static::getStepCallback($step));
+        \Includes\Utils\Operator::executeWithCustomMaxExecTime(
+            \Includes\Utils\ConfigParser::getOptions(array('decorator', 'time_limit')),
+            static::getStepCallback($step)
+        );
 
         // (Un)Set indicator files and redirect
         static::completeStep($step);
