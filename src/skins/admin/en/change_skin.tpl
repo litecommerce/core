@@ -65,12 +65,12 @@
 	</td>
 </tr>
 <tr IF="isDisplayWarning()">
-	<td colspan="2" class="ErrorMessage"><br>Warning: The module for current commercial skin "{if:currentSkin=##}???{else:}{currentSkin}{end:}" is deleted or deactivated. You can check the module status in the '<a href="admin.php?target=modules">Modules</a>' section of the Admin menu.</td>
+	<td colspan="2" class="ErrorMessage"><br />Warning: The module for current commercial skin "{if:currentSkin=##}???{else:}{currentSkin}{end:}" is deleted or deactivated. You can check the module status in the '<a href="admin.php?target=modules">Modules</a>' section of the Admin menu.</td>
 </tr>
 <tr id="preview_container" style="display: none;">
 	<td colspan=2>
-	    <br>
-	    <br>
+	    <br />
+	    <br />
        	<table width="640" border=0 cellpadding=0 cellspacing=0 align=center>
     	<tr>
      		<td width=640><div style="overflow: auto; height: 350; width: 660"><img id="preview_img" border=1 src=""></div></td>
@@ -80,8 +80,8 @@
 </tr>
 <tr id="button_container">
 	<td colspan=2 align=center>
-	    <br>
-	    <br>
+	    <br />
+	    <br />
        	<widget class="\XLite\View\Button\Submit" label="Install selected skin" id="submit_button" />
  	</td>
 </tr>

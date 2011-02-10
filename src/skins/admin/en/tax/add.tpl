@@ -75,13 +75,13 @@ function changeVal(param)
 		</select>
 	</td></tr>
 </table>
-<br>
+<br />
 <b>Tax value (optional; if not specified, a new folder will be created)</b>
 <hr>
 <table border="0" cellpadding="7">
 <tr valign="bottom">
 	<td>Tax name, either existing or new. A special name 'Tax' means total tax:</td>
-	<td>Tax value (%). You can use an '=' sign to define an expression. <br>
+	<td>Tax value (%). You can use an '=' sign to define an expression. <br />
 	<b>Example:</b> "=Tax1+(1+Tax1/100.0) * Tax2" - this will calculate Tax2 after the Tax1 was applied.
 </td></tr>
 <tr><td nowrap>
@@ -91,14 +91,14 @@ function changeVal(param)
 		<option FOREACH="taxNames,_taxName">{_taxName}</option>
 	</select>
 </td><td>
-	<input type="text" name="taxValue" value="{getNoteTaxValue(tax)}" size="40" style="width:300pt"><br>
+	<input type="text" name="taxValue" value="{getNoteTaxValue(tax)}" size="40" style="width:300pt"><br />
 </td></tr>
 <tr IF="exp_error">
     <td>&nbsp;</td>
     <td><table border="0"><tr><td><img src="skins/admin/en/images/code.gif" alt="[!]"></td><td>&nbsp;The {exp_error:h} variables are not defined, the tax rate cannot be calculated.</td></tr></table></td>
 </tr>
 </table>
-<br>
+<br />
 {if:edit}
 <widget class="\XLite\View\Button\Submit" label=" Update " />
 {else:}

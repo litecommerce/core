@@ -72,7 +72,7 @@ file from the server later on and delete it from the server by clicking on the
 		<tr>
 		<td valign=top>&nbsp;&nbsp;&nbsp;<b>Note:</b></td>
 		<td>
-		You cannot save database data to a file on the web server ('var/backup/sqldump.sql.php').<br>
+		You cannot save database data to a file on the web server ('var/backup/sqldump.sql.php').<br />
 		{if:!dirExists}
 		The directory 'var/backup/' does not exist or is not writable.
 		{else:}

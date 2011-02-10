@@ -54,7 +54,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
     </tr>
 
     <tr valign="middle">
-      <td colspan="4"><b>E-mail & Password</b><br><hr size="1" align=left noshade width="80%"></td>
+      <td colspan="4"><b>E-mail & Password</b><br /><hr size="1" align=left noshade width="80%"></td>
     </tr>
 
     <tr valign="middle">
@@ -107,7 +107,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
     </tr>
 
     <tr valign="middle">
-      <td colspan="4"><b>Access Information</b><br><hr size="1" align=left noshade width="80%"></td>
+      <td colspan="4"><b>Access Information</b><br /><hr size="1" align=left noshade width="80%"></td>
     </tr>
 
     <tr valign="middle">
@@ -174,7 +174,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 <!-- ********************************* BILLING ADDRESS ********************************* -->
 
     <tr valign="middle">
-      <td colspan="4"><b>Billing Address</b><br><hr size="1" align=left noshade width="80%"></td>
+      <td colspan="4"><b>Billing Address</b><br /><hr size="1" align=left noshade width="80%"></td>
     </tr>
 
     <tr valign="middle">

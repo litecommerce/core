@@ -73,7 +73,7 @@
 	    </td>
 	</tr>
 </table>
-<br>
+<br />
 <p align="justify">
 Image files can either be placed in the <i><b>{imagesDir}</b></i> sub-directory of your LiteCommerce installation or stored in the database. Using this section you can specify where you want different kinds of images to be located. Storing images in the database makes it easier to backup them, while leaving them as files helps to keep the database more compact.
 </p>

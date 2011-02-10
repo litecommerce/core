@@ -13,7 +13,7 @@
 
 <p IF="message=#added#"><font class="SuccessMessage">&gt;&gt;&nbsp;Shipping rate has been added successfully&nbsp;&lt;&lt;</font></p>
 
-<p IF="message=#add_failed#"><font class="ErrorMessage">&gt;&gt;&nbsp;Shipping rate cannot be added&nbsp;&lt;&lt;</font><br>Please make sure that <b>"min weight", "min total", "min items", "shipping zone", "shipping method"</b> fields do not overlap with other shipping rates.</p>
+<p IF="message=#add_failed#"><font class="ErrorMessage">&gt;&gt;&nbsp;Shipping rate cannot be added&nbsp;&lt;&lt;</font><br />Please make sure that <b>"min weight", "min total", "min items", "shipping zone", "shipping method"</b> fields do not overlap with other shipping rates.</p>
 
 <script type="text/javascript" language="JavaScript 1.2">
 <!--

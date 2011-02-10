@@ -50,19 +50,19 @@
 </tr>
 <tr>
 	<td colspan=2 align=center>
-    <br><widget class="\XLite\View\Button\Submit" label=" Calculate taxes " />
+    <br /><widget class="\XLite\View\Button\Submit" label=" Calculate taxes " />
 	</td>
 </tr>
 </form>
 </table>
 
 {if:display_taxes}
-<b>Item taxes:</b><br>
+<b>Item taxes:</b><br />
 <table><tr FOREACH="item_taxes,name,value"><td>{name}</td><td>{value}%</td></tr></table>
-<b>Taxes on shipping:</b><br>
+<b>Taxes on shipping:</b><br />
 <table><tr FOREACH="shipping_taxes,name,value"><td>{name}</td><td>{value}%</td></tr></table>
 <p>
-<a href="javascript: window.close()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Close tax calculator</a><br>
+<a href="javascript: window.close()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Close tax calculator</a><br />
 {end:}
 
 </body>

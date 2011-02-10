@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<p>Mandatory fields are marked with an asterisk (<font class="Star">*</font>).<br><br>
+<p>Mandatory fields are marked with an asterisk (<font class="Star">*</font>).<br /><br />
 
 <widget class="XLite\View\Form\Product\Modify\Single" name="modify_form" />
 
@@ -87,7 +87,7 @@
 </tbody>
 
 <tr>
-  <td valign=middle><font class="FormButton">Tax class</font><br>
+  <td valign=middle><font class="FormButton">Tax class</font><br />
     <i>You can specify tax classes in Settings/Taxes/add rate/condition dialog</i>
   </td>
   <td valign="middle">

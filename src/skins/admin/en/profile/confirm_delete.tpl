@@ -13,7 +13,7 @@
 
 <form action="admin.php" name="confirm_delete_profile" method="post">
 
-  WARNING! There are no more available administrators' profiles. You will not be able to manage your store after you delete this profile.<br>
+  WARNING! There are no more available administrators' profiles. You will not be able to manage your store after you delete this profile.<br />
 
   <br />
 

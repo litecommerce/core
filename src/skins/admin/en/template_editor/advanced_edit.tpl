@@ -43,7 +43,7 @@
 
 <tr>
 <td colspan=2>
-<br>
+<br />
 <textarea name="content" cols="120" rows="40">{file.content}</textarea>
 </td>
 </tr>

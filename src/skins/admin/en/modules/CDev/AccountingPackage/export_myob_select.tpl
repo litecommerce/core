@@ -21,7 +21,7 @@ To export the found orders into MYOB Accounting 2005 follow the steps below<hr>
 
 <p><widget class="\XLite\View\Button\Regular" name="submit" label="Export customer cards.." jsCode="javascript: document.location='{url:h}&action=export_myob&export_result=customer_cards'" />
 
-<p><br>
+<p><br />
 
 <p><font class="admin-head">Step 2: Export of sales transaction</font>
 
@@ -49,7 +49,7 @@ function export_sales(income_account_number) {
 }
 </script>
 
-<p><br>
+<p><br />
 
 <p><font class="admin-head">Step 3: Export of received payments</font>
 
@@ -75,7 +75,7 @@ function export_received_payments(deposit_account) {
 }
 </script>
 
-<p><br>
+<p><br />
 
 <p align="justify">After you successfully pass all export steps you will be able to manage the exported orders.
 

@@ -11,12 +11,12 @@
  * @since     3.0.0
  *}
 <p>Use this section to export catalog data into a CSV file.
-<br><br>
+<br /><br />
 <b>Note:</b> Graphic content is not included in the exported CSV file, only image file names are exported for product thumbnails and images.
 <hr>
 
 <p IF="!valid">
-    <font class="ErrorMessage">&gt;&gt; Error occured &lt;&lt;<br></font>
+    <font class="ErrorMessage">&gt;&gt; Error occured &lt;&lt;<br /></font>
 </p>
 
 <p>
@@ -30,8 +30,8 @@
 <table border="0">
 <tr>
     <td colspan=2>
-    <br>
-    Delimiter:<br><widget template="common/delimiter.tpl">
+    <br />
+    Delimiter:<br /><widget template="common/delimiter.tpl">
     </td>
 </tr>
 <tr>

@@ -40,10 +40,10 @@ Use this section to restore the database of your online store. Please note that 
         <td>&nbsp;</td>
         <td>
 You can upload the database data directly from your local computer by clicking on the 'Browse' button, choosing an SQL dump file and clicking on the 'Upload and restore' button.  While this method is more convenient, it has a file size limitation of <b>{getUploadMaxFilesize():h}</b>.
-<br><br>
+<br /><br />
 Alternatively, upload the file named 'sqldump.sql.php' to the 'var/backup/' sub-directory of your LiteCommerce installation on the web server and click on the
 'Restore from server' button. After the restore you might want to delete the file from the server by clicking on the 'Delete SQL file' button above.
-<br><br>
+<br /><br />
 To restore the images which are stored in the file system, you have to copy them from the archive to LiteCommerce catalog, taking into consideration the catalog structure.
         </td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -53,7 +53,7 @@ To restore the images which are stored in the file system, you have to copy them
 </span>
 
 <hr>
-<span class="ErrorMessage" IF="error">{error:h}<br></span>
+<span class="ErrorMessage" IF="error">{error:h}<br /></span>
 <p class="adminParagraph">
 <b class="Star">Warning:</b> Restore procedure is irreversible and erases all data tables from your store database. It is highly recommended that you backup your present database data before restoring one of the previous states from a backup.
 </p>
@@ -74,7 +74,7 @@ To restore the images which are stored in the file system, you have to copy them
 </tr>
 </table>
 <span id="max_upload_note" style="display: none">
-<br>
+<br />
 <b class="Star">Warning:</b> Maximum size of the file to upload is <b>{getUploadMaxFilesize():h}</b>.
 </form>
 </span>
