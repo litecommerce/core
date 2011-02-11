@@ -66,35 +66,35 @@ Use this section to manage the list of existing countries. This list is used in 
     		<th class="TableHead">Code</th>
 		    <th class="TableHead">Country</th>
 		    <th class="TableHead">VAT taxable<br />
-		    	<input id="enable_countries_vat" type="checkbox" onClick="this.blur();setChecked('enable_countries_vat',this.checked);">
+		    	<input id="enable_countries_vat" type="checkbox" onclick="this.blur();setChecked('enable_countries_vat',this.checked);">
 		    </th>
 		    <th class="TableHead">Active<br />
-		    	<input id="enable_countries" type="checkbox" onClick="this.blur();setChecked('enable_countries',this.checked);">
+		    	<input id="enable_countries" type="checkbox" onclick="this.blur();setChecked('enable_countries',this.checked);">
 			</th>
 			<widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/risk_country/label.tpl">
 			<th class="TableHead">Delete<br />
-				<input id="delete_countries" type="checkbox" onClick="this.blur();setDelete('countries_form','countries_ids',this.checked);">
+				<input id="delete_countries" type="checkbox" onclick="this.blur();setDelete('countries_form','countries_ids',this.checked);">
 			</th>
 		</tr>
 
 		<tr FOREACH="getCountries(),country_idx,country" class="{getRowClass(country_idx,#dialog-box#,#highlight#)}">
-		    <td align="center"><a href="admin.php?target=states&country_code={country.code}" title="Click here to view states of country" onClick="this.blur();"><u>{country.code}</u></a></td>
+		    <td align="center"><a href="admin.php?target=states&country_code={country.code}" title="Click here to view states of country" onclick="this.blur();"><u>{country.code}</u></a></td>
 		    <td>
 		        <input type="text" size="34" maxlength="50" name="countries[{country.code}][country]" value="{country.country:r}">
 		    </td>
 		    <td align="center">
-		        <input id="country_vat_{country_idx}" type="checkbox" name="countries[{country.code}][eu_member]" value="Y" checked="{country.eu_member}" onClick="this.blur();">
+		        <input id="country_vat_{country_idx}" type="checkbox" name="countries[{country.code}][eu_member]" value="Y" checked="{country.eu_member}" onclick="this.blur();">
 		        <script language="Javascript">CountryVatEnabledCheckBoxes[CountryVatEnabledCheckBoxes.length]="country_vat_{country_idx}";</script>
 		        <script language="Javascript" IF="country.enabled">setHeaderChecked("enable_countries_vat");</script>
 		    </td>
 		    <td align="center">
-		        <input id="country_enabled_{country_idx}" type="checkbox" name="countries[{country.code}][enabled]" value="Y" checked="{country.enabled}" onClick="this.blur();">
+		        <input id="country_enabled_{country_idx}" type="checkbox" name="countries[{country.code}][enabled]" value="Y" checked="{country.enabled}" onclick="this.blur();">
 		        <script language="Javascript">CountryEnabledCheckBoxes[CountryEnabledCheckBoxes.length]="country_enabled_{country_idx}";</script>
 		        <script language="Javascript" IF="country.enabled">setHeaderChecked("enable_countries");</script>
 		    </td>
 			    <widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/risk_country/checkbox.tpl">
 			<td align="center">
-				<input id="countries_ids" type="checkbox" name="delete_countries[]" value="{country.code}" onClick="this.blur();">
+				<input id="countries_ids" type="checkbox" name="delete_countries[]" value="{country.code}" onclick="this.blur();">
 			</td>
 		</tr>
 

@@ -81,7 +81,7 @@
     File (CSV) for upload:<br /><input type=file size=32 name=userfile><widget IF="invalid_userfile" template="common/uploaded_file_validator.tpl" state="{invalid_userfile_state}" />
     <br />
     <br />
-    <input type="checkbox" value="yes" name="delete_products" checked="{delete_products}" onClick="javascript: if (document.data_form.delete_products.checked) return confirm('Are you sure?');">Drop all products before import
+    <input type="checkbox" value="yes" name="delete_products" checked="{delete_products}" onclick="javascript: if (document.data_form.delete_products.checked) return confirm('Are you sure?');">Drop all products before import
     <br /><br />
     <widget class="\XLite\View\Button\Submit" label="Import products" style="main-button" />
     </td>

@@ -37,7 +37,7 @@ function ShowNotes()
 
 Use this section to define rules for calculating shipping rates.
 
-<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="NavigationPath" onClick="this.blur()"><b>How to define shipping rates &gt;&gt;&gt;</b></a></span>
+<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="NavigationPath" onclick="this.blur()"><b>How to define shipping rates &gt;&gt;&gt;</b></a></span>
 <span id="notes_body" style="display: none">
 <p align="justify">
 Shipping rates are comprised of several components (rate types) and are 

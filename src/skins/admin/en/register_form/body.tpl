@@ -65,7 +65,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
           <tr valign="middle">
             <td><input type="text" name="login" value="{login:r}" size="32" maxlength="128" /></td>
-            <td nowrap>&nbsp;&nbsp;<a IF="mode=#modify#&access_level=#0#" href="javascript: SearchOrders()" onClick="this.blur()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> <font class="FormButton">View order history</font></a></td>
+            <td nowrap>&nbsp;&nbsp;<a IF="mode=#modify#&access_level=#0#" href="javascript: SearchOrders()" onclick="this.blur()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> <font class="FormButton">View order history</font></a></td>
           </tr>
 
         </table>
@@ -456,7 +456,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
       <td width="160">&nbsp;</td>
       <td >
         <input IF="getRequestParamValue(#mode#)=#register#" type="submit" name="modify" value="Add profile" />
-        <input IF="getRequestParamValue(#mode#)=#modify#|getRequestParamValue(#mode#)=##" type="button" name="modify" value="Update profile" onClick="javascript: document.profile_form.submit()" />
+        <input IF="getRequestParamValue(#mode#)=#modify#|getRequestParamValue(#mode#)=##" type="button" name="modify" value="Update profile" onclick="javascript: document.profile_form.submit()" />
         <br />
       </td>
     </tr>
