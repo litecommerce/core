@@ -252,21 +252,6 @@ function doCheckRequirements()
         'critical' => true,
     );
 
-    $checkRequirements['lc_php_safe_mode'] = array(
-        'title'    => xtr('PHP safe_mode'),
-        'critical' => true,
-    );
-
-    $checkRequirements['lc_php_magic_quotes_sybase'] = array(
-        'title'    => 'magic_quotes_sybase',
-        'critical' => true,
-    );
-
-    $checkRequirements['lc_php_sql_safe_mode'] = array(
-        'title'    => 'sql.safe_mode',
-        'critical' => true,
-    );
-
     $checkRequirements['lc_php_disable_functions'] = array(
         'title'    => xtr('Disabled functions'),
         'critical' => true,
@@ -295,11 +280,6 @@ function doCheckRequirements()
 
     $checkRequirements['lc_php_upload_max_filesize'] = array(
         'title'    => xtr('Upload file size limit'),
-        'critical' => false,
-    );
-
-    $checkRequirements['lc_php_allow_url_fopen'] = array(
-        'title'    => 'allow_url_fopen',
         'critical' => false,
     );
 
@@ -510,87 +490,6 @@ function checkPhpVersion(&$errorMsg, &$value)
                 }
             }
         }
-    }
-
-    return $result;
-}
-
-/**
- * Check if PHP option safe_mode is on/off
- * 
- * @param string $errorMsg Error message if checking failed
- * @param string $value    Actual value of the checked parameter
- *  
- * @return bool
- * @access public
- * @see    ____func_see____
- * @since  3.0.0
- */
-function checkPhpSafeMode(&$errorMsg, &$value)
-{
-    $result = true;
-
-    $value = (ini_get('safe_mode') ? 'On' : 'Off');
-
-    // PHP Safe mode must be Off if PHP is earlier 5.3
-
-    if (version_compare(phpversion(), '5.3.0') < 0 && 'off' != strtolower($value)) {
-        $result = false;
-        $errorMsg = xtr('PHP safe_mode option value should be Off if PHP is earlier 5.3.0');
-    }
-
-    return $result;
-}
-
-/**
- * Check if PHP option magic_quotes_sybase is on/off
- * 
- * @param string $errorMsg Error message if checking failed
- * @param string $value    Actual value of the checked parameter
- *  
- * @return bool
- * @access public
- * @see    ____func_see____
- * @since  3.0.0
- */
-function checkPhpMagicQuotesSybase(&$errorMsg, &$value)
-{
-    $result = true;
-
-    $value = (ini_get('magic_quotes_sybase') ? 'On' : 'Off');
-
-    // PHP Safe mode must be Off if PHP is earlier 5.3
-
-    if (version_compare(phpversion(), '5.3.0') < 0 && 'off' != strtolower($value)) {
-        $result = false;
-        $errorMsg = xtr('PHP option magic_quotes_sybase value should be Off if PHP is earlier 5.3.0');
-    }
-
-    return $result;
-}
-
-/**
- * Check if PHP option sql.safe_mode is on/off
- * 
- * @param string $errorMsg Error message if checking failed
- * @param string $value    Actual value of the checked parameter
- *  
- * @return bool
- * @access public
- * @see    ____func_see____
- * @since  3.0.0
- */
-function checkPhpSqlSafeMode(&$errorMsg, &$value)
-{
-    $result = true;
-
-    $value = (ini_get('sql.safe_mode') ? 'On' : 'Off');
-
-    // PHP Safe mode must be Off if PHP is earlier 5.3
-
-    if ('off' != strtolower($value)) {
-        $result = false;
-        $errorMsg = xtr('PHP option sql.safe_mode value should be Off');
     }
 
     return $result;
@@ -846,31 +745,6 @@ function checkPhpUploadMaxFilesize(&$errorMsg, &$value)
 }
 
 /**
- * Check if PHP option allow_url_fopen is on/off
- * 
- * @param string $errorMsg Error message if checking failed
- * @param string $value    Actual value of the checked parameter
- *  
- * @return bool
- * @access public
- * @see    ____func_see____
- * @since  3.0.0
- */
-function checkPhpAllowUrlFopen(&$errorMsg, &$value)
-{
-    $result = true;
-
-    $value = (ini_get('allow_url_fopen') ? 'On' : 'Off');
-
-    if ('off' == strtolower($value)) {
-        $result = false;
-        $errorMsg = xtr('PHP allow_url_fopen option value should be On');
-    }
-
-    return $result;
-}
-
-/**
  * Check the memory allocation
  * 
  * @param string $errorMsg Error message if checking failed
@@ -885,7 +759,7 @@ function checkMemAllocation(&$errorMsg, &$value)
 {
     $result = true;
     
-    $sizes = array(16, 32, 48, 64);
+    $sizes = array(64, 128, 256);
     
     foreach ($sizes as $size) {
         
@@ -1267,6 +1141,10 @@ function doUpdateConfig(&$params, $silentMode = false)
     // Update etc/config.php file
     $configUpdated = true;
 
+    if (!$silentMode) {
+        echo '<br /><b>' . xtr('Updating config file...') . '</b><br>';
+    }
+
     $isConnected = dbConnect($params, $pdoErrorMsg);
 
     if ($isConnected) {
@@ -1279,7 +1157,7 @@ function doUpdateConfig(&$params, $silentMode = false)
             $configUpdated = false;
         }
 
-        if ($configUpdated !== true && !$silentMode) {
+        if (true !== $configUpdated && !$silentMode) {
             fatal_error(xtr('config_writing_error', array(':configfile' => constant('LC_CONFIG_FILE'))));
         }
 
@@ -1392,7 +1270,7 @@ function doBuildCache()
  * @see    ____func_see____
  * @since  3.0.0
  */
-function doInstallDirs($params, $silentMode = false)
+function doInstallDirs($silentMode = false)
 {
     global $error, $lcSettings;
 
@@ -1402,19 +1280,18 @@ function doInstallDirs($params, $silentMode = false)
         ob_start();
     }
 
+    if ($result && !empty($lcSettings['writable_directories'])) {
+        echo '<div class="section-title">' . xtr('Checking directories permissions...') . '</div>';
+        chmod_others_directories($lcSettings['writable_directories']);
+    }
+
     if (!empty($lcSettings['directories_to_create'])) {
-        echo '<br /><b>' . xtr('Creating directories...') . '</b><br />';
+        echo '<div class="section-title">' . xtr('Creating directories...') . '</div>';
         $result = create_dirs($lcSettings['directories_to_create']);
     }
 
-    if ($result && !empty($lcSettings['writable_directories'])) {
-        chmod_others_directories($lcSettings['writable_directories']);
-        echo '<br /><b>' . xtr('Creating .htaccess files...') . '</b><br />';
-        $result = create_htaccess_files($lcSettings['files_to_create']);
-    }
-
     if ($result) {
-        echo '<br /><b>' . xtr('Copying templates...') . '</b><br />';
+        echo '<div class="section-title">' . xtr('Copying templates...') . '</div>';
         $failedList = array();
         $result = copy_files(constant('LC_TEMPLATES_REPOSITORY'), "", constant('LC_TEMPLATES_DIRECTORY'), $failedList);
     
@@ -1423,23 +1300,13 @@ function doInstallDirs($params, $silentMode = false)
         }
     }
 
-    if ($result) {
-        echo '<br /><b>' . xtr('Updating config file...') . '</b><br>';
-        $result = doUpdateConfig($params, $silentMode);
+    if ($result && !empty($lcSettings['files_to_create'])) {
+        echo '<div class="section-title">' . xtr('Creating .htaccess files...') . '</div>';
+        $result = create_htaccess_files($lcSettings['files_to_create']);
     }
 
     if ($result) {
-
-        $enabledModules = array();
-        foreach ($lcSettings['enable_modules'] as $moduleAuthor => $modules) {
-            $enabledModules[$moduleAuthor] = array();
-            foreach ($modules as $moduleName) {
-                $enabledModules[$moduleAuthor][$moduleName] = 1;
-            }
-        }
-
-        \Includes\Decorator\Utils\ModulesManager::saveModulesToFile($enabledModules);
-        $result = doPrepareFixtures($params, $silentMode);
+        echo '<div class="section-title">Creating directories process is finished</div>';
     }
 
     if ($silentMode) {
@@ -1507,24 +1374,24 @@ function doCreateAdminAccount(&$params, $silentMode = false)
 
                 $query = "UPDATE xlite_profiles SET password='$password', access_level='100', status='E' WHERE profile_id='$profileId'";
 
-                echo '<br /><b>' . xtr('Updating primary administrator profile...') . '</b><br />';
+                echo xtr('Updating primary administrator profile...');
 
             } else {
                 // Register default admin account
 
                 $query = "INSERT INTO xlite_profiles (login, password, access_level, status) VALUES ('$login', '$password', 100, 'E')";
 
-                echo '<br /><b>' . xtr('Registering primary administrator profile...') . '</b><br />';
+                echo xtr('Registering primary administrator profile...');
             }
             
             dbExecute($query, $pdoErrorMsg);
 
             if (empty($pdoErrorMsg)) {
-                echo '<font color="green">[OK]</font>';
+                echo status(true);
 
             } else {
                 // an error has occured
-                echo '<font color="red">[FAILED]</font>';
+                echo status(false);
                 $result = false;
                 $errorMsg = fatal_error(xtr('ERROR') . ': ' . $pdoErrorMsg);
             }
@@ -1632,32 +1499,36 @@ function doFinishInstallation(&$params, $silentMode = false)
 
 ?>
 
-<CENTER>
-<H3><?php message(xtr('Installation complete.')); ?></H3>
-</CENTER>
+<br />
+<br />
 
-<?php echo xtr('LiteCommerce software has been successfully installed and is now available at the following URLs:'); ?>
-
-<BR />
-
-<OL>
-<LI><U><A href="cart.php" style="COLOR: #000055; TEXT-DECORATION: underline;" target="_blank"><b><?php echo xtr('CUSTOMER ZONE (FRONT-END)'); ?>: cart.php</b></A></U></LI>
-<P>
-<LI><U><A href="admin.php" style="COLOR: #000055; TEXT-DECORATION: underline;" target="_blank"><b><?php echo xtr('ADMINISTRATOR ZONE (BACKOFFICE)'); ?>: admin.php</b></A></U><BR></LI>
-</OL>
+<div class="field-label"><?php echo xtr('LiteCommerce software has been successfully installed and is now available at the following URLs:'); ?></div>
 
 <br />
 
-<P>
+<a href="cart.php" class="final-link" target="_blank"><?php echo xtr('Customer zone (front-end)'); ?>: cart.php</a>
+
+<br />
+<br />
+
+<a href="admin.php" class="final-link" target="_blank"><?php echo xtr('Administrator zone (backoffice)'); ?>: admin.php</a>
+
+<br />
+<br />
+<br />
+
 <?php echo $perms; ?>
 
-<br /><br />
+<br />
+<br />
 
 <?php echo $install_rename; ?>
 
-<P><?php echo xtr('Your auth code for running install.php in the future is:'); ?> <B><?php print get_authcode(); ?></b><br />
-<?php echo xtr('PLEASE WRITE THIS CODE DOWN UNLESS YOU ARE GOING TO REMOVE \':filename\'', array(':filename' => $install_name)); ?>
-</P>
+<?php echo xtr('Your auth code for running install.php in the future is:'); ?> <code><?php echo get_authcode(); ?></code>
+
+<br />
+
+<?php echo xtr('PLEASE WRITE THIS CODE DOWN UNLESS YOU ARE GOING TO REMOVE ":filename"', array(':filename' => $install_name)); ?>
 
 <?php
 
@@ -1711,10 +1582,10 @@ function create_dirs($dirs)
             echo status($res);
 
         } else {
-            echo '<font color="blue">[' . xtr('Already exists') . ']</font>';
+            echo '<span class="status-already-exists">' . xtr('Already exists') . '</span>';
         }
 
-        echo "<BR>\n"; flush();
+        echo "<br />\n"; flush();
     }
 
     if (!$result) {
@@ -1741,8 +1612,13 @@ function chmod_others_directories($dirs)
         $dir_permission = isset($data['privileged_permission_dir']) ? base_convert($data['privileged_permission_dir'], 8, 10) : 0711;
 
         foreach($dirs as $dir) {
-            @chmod(constant('LC_ROOT_DIR') . $dir, $dir_permission);
+            echo $dir . '... ';
+            $result = @chmod(constant('LC_ROOT_DIR') . $dir, $dir_permission);
+            echo status($result);
         }
+    
+    } else {
+        echo status(true);
     }
 }
 
@@ -1762,7 +1638,7 @@ function create_htaccess_files($files_to_create)
 
     $failedFiles = array();
 
-    if (is_array($files_to_create)) {
+    if (is_array($files_to_create) && 0 < count($files_to_create)) {
 
         foreach($files_to_create as $file=>$content) {
 
@@ -1882,7 +1758,7 @@ function copy_files($source_dir, $parent_dir, $destination_dir, &$failedList)
 
                 if (!@copy($sourceFile, $destinationFile)) {
                     echo xtr(
-                        'Copying :source_dir:parent_dir/:file to :destination_dir:parent_dir/:file ... ',
+                        'Copying: [:source_dir:parent_dir/:file] to [:destination_dir:parent_dir/:file]... ',
                         array(
                             ':source_dir' => $source_dir,
                             ':parent_dir' => $parent_dir,
@@ -1900,7 +1776,7 @@ function copy_files($source_dir, $parent_dir, $destination_dir, &$failedList)
             } elseif (@is_dir($sourceFile) && $file != '.' && $file != '..') {
 
                 echo xtr(
-                    'Creating directory :destination_dir:parent_dir/:file ... ',
+                    'Creating directory: [:destination_dir:parent_dir/:file]... ',
                     array(
                         ':destination_dir' => $destination_dir,
                         ':parent_dir' => $parent_dir,
@@ -1920,10 +1796,10 @@ function copy_files($source_dir, $parent_dir, $destination_dir, &$failedList)
                     }
 
                 } else {
-                    echo '<font color="blue">[' . xtr('Already exists') . ']</font>';
+                    echo '<span class="status-already-exists">' . xtr('Already exists') . '</span>';
                 }
 
-                echo "<BR>\n";
+                echo "<br />\n";
 
                 flush();
 
@@ -1934,7 +1810,7 @@ function copy_files($source_dir, $parent_dir, $destination_dir, &$failedList)
         closedir($handle);
 
     } else {
-        echo status(false) . "<BR>\n";
+        echo status(false) . "<br />\n";
         $result = false;
         $failedList[] = sprintf('opendir(%s)', constant('LC_ROOT_DIR') . $source_dir);
     }
@@ -2414,10 +2290,17 @@ function status($status, $code = null)
             $first_error = $code;
         }
 
-        $return = ($status ? '<FONT color=green>[OK]</FONT>' : '<a href="javascript: showDetails(\'' . $code  . '\');" onClick=\'this.blur();\' title=\'' . xtr('Click here to see more details') . '\'><FONT color=red style="text-decoration : underline" id="failed_' . $code . '">[' . xtr('FAILED') . ']</FONT></a>');
+        if ($status) {
+            $return = '<span class="status-ok">OK</span>';
+
+        } else {
+            $return = '<a class="status-failed-link" id="failed-' . $code . '" href="javascript: showDetails(\'' . $code  . '\');" onclick=\'this.blur();\' title=\'' . xtr('Click here to see more details') . '\'>' . xtr('Failed') . '</a>';
+        }
 
     } else {
-        $return = ($status ? '<FONT color=green>[OK]</FONT>' : '<FONT color=red>[' . xtr('FAILED') . ']</FONT>');
+        $return = $status 
+            ? '<span class="status-ok">OK</span>' 
+            : '<span class="status-failed">' . xtr('Failed') . '</span>';
     }
 
     return $return;
@@ -2433,7 +2316,7 @@ function status($status, $code = null)
  */
 function status_skipped() 
 {
-    return '<FONT color=blue>[' . xtr('SKIPPED') . ']</FONT>';
+    return '<span class="status-skipped">' . xtr('Skipped') . '</span>';
 }
 
 /**
@@ -2451,11 +2334,7 @@ function fatal_error($txt) {
     x_install_log(xtr('Fatal error') . ': ' . $txt);
 
 ?>
-<CENTER>
-<P>
-<B><FONT color=red><?php echo xtr('Fatal error'); ?>: <?php echo $txt ?><br /><?php echo xtr('Please correct the error(s) before proceeding to the next step.'); ?></FONT></B>
-</P>
-</CENTER>
+<div class="fatal-error"><?php echo xtr('Fatal error'); ?>: <?php echo $txt ?><br /><?php echo xtr('Please correct the error(s) before proceeding to the next step.'); ?></div>
 <?php
 }
 
@@ -2474,12 +2353,12 @@ function warning_error($txt) {
     x_install_log(xtr('Warning') . ': ' . $txt);
 
 ?>
-<CENTER>
-<P>
- <B><FONT color=red><?php echo xtr('Warning'); ?>: <?php echo $txt ?></FONT></B>
-</P>
-</CENTER>
+
+<div class="warning-text">
+    <?php echo xtr('Warning'); ?>: <?php echo $txt ?>
+</div>
 <?php
+
 }
 
 /**
@@ -2765,7 +2644,7 @@ OUT;
                 foreach ($fieldData['select_data'] as $key => $value) {
                     $_selected = ($value == $fieldValue ? ' selected="selected"' : '');
                     $formElement .=<<<OUT
-            <option value="{$key}"{$_selected}>{$value}</OPTION>
+            <option value="{$key}"{$_selected}>{$value}</option>
 OUT;
                 }
             }
@@ -2782,7 +2661,7 @@ OUT;
 
             $_checked = !empty($fieldValue) ? 'checked="checked" ' : '';
             $formElement =<<<OUT
-        <input type="checkbox" name="params[{$fieldName}]" value="Y" {$_checked}/>
+        <input type="checkbox" name="params[{$fieldName}]" value="Y" {$_checked} />
 OUT;
             break;
         }
@@ -2800,15 +2679,15 @@ OUT;
 
             $fieldType = (in_array($fieldType, array('text', 'password')) ? $fieldType : 'text');
             $formElement =<<<OUT
-        <input type="{$fieldType}" name="params[{$fieldName}]" size="30" value="{$fieldValue}" />
+        <input type="{$fieldType}" name="params[{$fieldName}]" class="full-width" value="{$fieldValue}" />
 OUT;
         }
     }
 
     $output =<<<OUT
-    <tr class="Clr{$clrNumber}">
-        <td><b>{$fieldData['title']}</b><br />{$fieldData['description']}</td>
-        <td>{$formElement}</td>
+    <tr class="color-{$clrNumber}">
+        <td class="table-left-column"><div class="field-label">{$fieldData['title']}</div><div class="field-notice">{$fieldData['description']}</div></td>
+        <td class="table-right-column">{$formElement}</td>
     </tr>
 OUT;
 
@@ -2879,7 +2758,8 @@ function module_default_js_next()
  */
 function module_check_cfg()
 {
-    global $first_error, $error, $report_uid, $reportFName, $tryAgain;
+    global $first_error, $error, $report_uid, $reportFName, $tryAgain, $skinsDir;
+    global $requirements;
 
     $requirements = doCheckRequirements();
 
@@ -2893,20 +2773,19 @@ function module_check_cfg()
 
     $steps = array(
         1 => array(
-            'title'        => xtr('Verification steps'),
+            'title'        => xtr('Environment'),
+            'error_msg'    => xtr('Environment checking failed'),
             'section'      => 'A',
             'requirements' => array(
                 'lc_loopback'
             )
         ),
         2 => array(
-            'title'        => xtr('Checking critical dependencies'),
+            'title'        => xtr('Critical dependencies'),
+            'error_msg'    => xtr('Critical dependency failed'),
             'section'      => 'B',
             'requirements' => array(
                 'lc_php_version',
-                'lc_php_safe_mode',
-                'lc_php_magic_quotes_sybase',
-                'lc_php_sql_safe_mode',
                 'lc_php_disable_functions',
                 'lc_php_memory_limit',
                 'lc_php_mysql_support',
@@ -2915,12 +2794,12 @@ function module_check_cfg()
             )
         ),
         3 => array(
-            'title'        => xtr('Checking non-critical dependencies'),
+            'title'        => xtr('Non-critical dependencies'),
+            'error_msg'    => xtr('Non-critical dependency failed'),
             'section'      => 'B',
             'requirements' => array(
                 'lc_php_file_uploads',
                 'lc_php_upload_max_filesize',
-                'lc_php_allow_url_fopen', 
                 'lc_mem_allocation',
                 'lc_recursion_test',
                 'lc_php_gdlib',
@@ -2957,7 +2836,7 @@ function module_cfg_install_db(&$params)
 
     $pdoErrorMsg = '';
 
-    $clrNumber = 2;
+    $clrNumber = 1;
 
     // Remove report file if it was created on the previous step
     if (@file_exists($reportFName)) {
@@ -3032,7 +2911,6 @@ function module_cfg_install_db(&$params)
     );
 
     $messageText = '';
-    $bottomMessage = '';
 
     $displayConfigForm = false;
 
@@ -3074,18 +2952,14 @@ function module_cfg_install_db(&$params)
             $clrNumber = ($clrNumber == 2) ? 1 : 2;
         }
 
+        $output = ob_get_contents();
+        ob_end_clean();
+
 ?>
 
 <input type="hidden" name="cfg_install_db_step" value="1" />
 
 <?php
-
-        $output = ob_get_contents();
-        ob_end_clean();
-
-        $messageText = '<p><b><font color="darkgreen">' . xtr('The Installation Wizard needs to know your web server and MySQL database details:') . '</font></b></p>';
-
-        $bottomMessage = xtr('Push the "Next" button below to continue');
 
 
     // Display second step: review parameters and enter additional data
@@ -3178,32 +3052,18 @@ function module_cfg_install_db(&$params)
             $output = '';
         }
 
-        if (!$checkError) {
-            $bottomMessage = xtr('Push the "Next" button below to begin the installation');
-
-        } else {
-            $error = true;
-        }
-
+        $error = $checkError;
     }
 
 ?>
 
-<center>
 <?php echo $messageText; ?>
-<table width="100%" border="0" cellpadding="4">
+
+<table width="100%" border="0" cellpadding="10">
 
 <?php echo $output; ?>
 
 </table>
-
-<br />
-
-<?php message($bottomMessage); ?>
-
-</center>
-
-<br />
 
 <?php
 
@@ -3305,27 +3165,20 @@ function module_install_cache(&$params)
 
 <br />
 
-<iframe id="process_iframe" src="install.php?target=install&action=cache" width="100%" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
+<iframe id="process_iframe" style="padding-top: 15px;" src="install.php?target=install&action=cache" width="100%" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
 
-<br /><br />
+<br />
+<br />
+<br />
 
-<table id="buttons" class="TableTop" width="100%" border="0" cellspacing="0" cellpadding="0">
+<?php echo xtr('Building cache notice'); ?>
 
-<tr>
-    <td>
-
-        <center>
-            <br /><?php message(xtr('Wait until cache is built then push the \'Next\' button below to continue')); ?>
-        </center>
-
-        <br />
-
-<script language="javascript">
+<script type="text/javascript">
 
     function isProcessComplete() {
 
-        if (document.getElementById('process_iframe').contentDocument.getElementById('finish') && document.getElementById('button_next')) {
-            document.getElementById('button_next').disabled = '';
+        if (document.getElementById('process_iframe').contentWindow.document.getElementById('finish')) {
+            setNextButtonDisabled(false);
 
         } else {
             setTimeout('isProcessComplete()', 1000);
@@ -3357,56 +3210,51 @@ function module_install_dirs(&$params)
 {
     global $error, $lcSettings;
 
-    $clrNumber = 2;
+    $result = doUpdateConfig($params, true);
 
 ?>
-</TD>
-</TR>
-</TABLE>
 
-<SCRIPT language="javascript">
-    loaded = false;
-
-    function refresh() {
-        window.scroll(0, 100000);
-
-        if (loaded == false)
-            setTimeout('refresh()', 1000);
-    }
-
-    setTimeout('refresh()', 1000);
-</SCRIPT>
+<iframe id="process_iframe" src="install.php?target=install&action=dirs" width="100%" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
 
 <?php
 
-    $result = doInstallDirs($params);
+    if ($result) {
 
-    if (!$result) {
+        $enabledModules = array();
+        foreach ($lcSettings['enable_modules'] as $moduleAuthor => $modules) {
+            $enabledModules[$moduleAuthor] = array();
+            foreach ($modules as $moduleName) {
+                $enabledModules[$moduleAuthor][$moduleName] = 1;
+            }
+        }
+
+        \Includes\Decorator\Utils\ModulesManager::saveModulesToFile($enabledModules);
+        $result = doPrepareFixtures($params, true);
+    
+    } else {
         fatal_error(xtr('Fatal error encountered while creating directories, probably because of incorrect directory permissions. This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.'));
     }
 
 ?>
 
-<table class="TableTop" width="100%" border="0" cellspacing="0" cellpadding="0">
+<script type="text/javascript">
 
-<tr>
-  <td>
+    function isProcessComplete() {
 
-<center>
-<?php
+        if (document.getElementById('process_iframe').contentWindow.document.getElementById('finish')) {
+            setNextButtonDisabled(false);
 
-     if ($result) {
+        } else {
+            setTimeout('isProcessComplete()', 1000);
+        }
+    }
 
-?>
-            <br />
-<?php
-        message(xtr('Push the \'Next\' button below to continue')); 
-     }
-?>
+    setTimeout('isProcessComplete()', 1000);
 
-</center>
+</script>
 
-<input type="hidden" name="ck_res" value="<?php echo intval($result); ?>">
+
+<input type="hidden" name="ck_res" value="<?php echo intval($result); ?>" />
 
 <?php
 
@@ -3414,25 +3262,12 @@ function module_install_dirs(&$params)
 
 ?>
 
-<tr>
-    <td colspan="2">
         <input type="hidden" name="params[force_current]" value="<?php echo get_step('install_done'); ?>" />
-    </td>
-</tr>
 
 <?php
     }
-?>    
-    
-<br />
 
-<script language="javascript">
-    loaded = true;
-</script>
-
-<?php
-
-    $error = !$result;
+    $error = true;
 
     return false;
 }
@@ -3450,7 +3285,7 @@ function module_install_dirs(&$params)
  */
 function module_cfg_create_admin(&$params)
 {
-    global $error;
+    global $error, $skinsDir;
 
     $paramFields = array(
         'login'             => array(
@@ -3476,47 +3311,56 @@ function module_cfg_create_admin(&$params)
         ),
     );
 
-    $clrNumber = 1;
+    $clrNumber = 2;
 
 ?>
 
-<CENTER>
-<P>
-<B><FONT color="darkgreen"><?php echo xtr('Creating administrator profile'); ?></FONT></B>
-</P>
+<div>
 
+<div class="field-left">
 
-<TABLE width="60%" border=0 cellpadding=4>
+<?php echo xtr('E-mail and password that you provide on this screen will be used to create primary administrator profile. Use them as credentials to access the Administrator Zone of your online store.'); ?>
 
- <TR class="Clr<?php echo $clrNumber; $clrNumber = ($clrNumber == 2) ? 1 : 2; ?>">
-   <td colspan=2>
-   <p align=justify><?php echo xtr('E-mail and password that you provide on this screen will be used to create primary administrator profile. Use them as credentials to access the Administrator Zone of your online store.'); ?></p>
-   <p>
-   </td>
- </tr>
+<br />
+<br />
+
+<table width="100%" border="0" cellpadding="10">
 
 <?php
+
 
     foreach ($paramFields as $fieldName => $fieldData) {
         displayFormElement($fieldName, $fieldData, $clrNumber);
         $clrNumber = ($clrNumber == 2) ? 1 : 2;
     }
 
+?>
+
+</table>
+
+</div>
+
+<div class="field-right">
+
+    <img class="keyhole-icon" src="<?php echo $skinsDir; ?>images/keyhole_icon.png" alt="" />
+
+</div>
+
+</div>
+
+<div class="clear"></div>
+
+<?php
+
     if (is_null($params["new_installation"])) {
 
 ?>
-    <TR>
-        <TD colspan="2">
-            <input type="hidden" name="params[force_current]" value="<?php echo get_step("install_done")?>">    
-        </TD>
-    </TR>
+
+<input type="hidden" name="params[force_current]" value="<?php echo get_step("install_done")?>" />
 
 <?php
     }
 ?>
-
-</TABLE>
-<P>
 
 <?php
 }
@@ -3597,12 +3441,23 @@ function module_install_done(&$params)
         $accountParams = $accountParams && (isset($paramValue) && strlen(trim($paramValue)) > 0);
     }
 
+?>
+
+<div style="text-align: left;">
+
+<?php
     // create/update admin account from the previous step
     if ($accountParams) {
         doCreateAdminAccount($params);
     }
 
     doFinishInstallation($params);
+
+?>
+
+</div>
+
+<?php
 
     return false;
 }

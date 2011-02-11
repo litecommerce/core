@@ -47,21 +47,20 @@ if (version_compare(phpversion(), '5.3.0') < 0) {
     die('LiteCommerce cannot start on PHP version earlier than 5.3.0 (' . phpversion(). ' is currently used)');
 }
 
-// Init installation process
-if (!file_exists($includeFuncsFile = realpath(dirname(__FILE__)) . '/Includes/install/init.php')) {
-    die('Fatal error: Couldn\'t find file ' . $includeFuncsFile);
+$filesToInclude = array(
+    '/Includes/install/init.php',  // Installation initialization
+    '/Includes/install/install.php', // Installation functions
+    '/Includes/install/templates/common_html.php', // Installation common html blocks functions
+);
+
+foreach ($filesToInclude as $_file) {
+
+    if (!file_exists($includeFuncsFile = realpath(dirname(__FILE__)) . $_file)) {
+        die('Fatal error: Couldn\'t find file ' . $includeFuncsFile);
+    }
+
+    include_once $includeFuncsFile;
 }
-
-require_once $includeFuncsFile;
-
-
-// Include script with main installation functions
-if (!file_exists($includeFuncsFile = realpath(dirname(__FILE__)) . '/Includes/install/install.php')) {
-    die('Fatal error: Couldn\'t find file ' . $includeFuncsFile);
-}
-
-require_once $includeFuncsFile;
-
 
 // Link auto-globals
 if (empty($HTTP_SERVER_VARS)) {
@@ -119,7 +118,7 @@ $modules = array (
 		),
 	array( // 1
 			"name"          => 'check_cfg',
-			"comment"       => xtr('Checking PHP configuration'),
+			"comment"       => xtr('Environment checking'),
             "auth_required" => true,
 			"js_back"       => 0,
 			"js_next"       => 0,
@@ -137,7 +136,7 @@ $modules = array (
 		),
 	array( // 2
 			"name"          => 'cfg_install_db',
-			"comment"       => xtr('Preparing to install LiteCommerce database'),
+			"comment"       => xtr('Configuring LiteCommerce'),
             "auth_required" => true,
 			"js_back"       => 1,
 			"js_next"       => 1,
@@ -196,44 +195,139 @@ if (isset($HTTP_GET_VARS['target']) && $HTTP_GET_VARS['target'] == 'install') {
 		die('LOOPBACK-TEST-OK');
 	}
 
+    // Return HTTP_HOST value
     if (isset($HTTP_GET_VARS['action']) && $HTTP_GET_VARS['action'] == 'http_host') {
         die($_SERVER['HTTP_HOST']);
     }
 
+    // Building cache action
     if (isset($HTTP_GET_VARS['action']) && $HTTP_GET_VARS['action'] == 'cache') {
 
         $step = 0;
         $result = true;
+
+        show_install_html_header();
+        show_install_css();
+?>
+
+</head>
+
+<body>
+
+<?php
+
+        $jsDots =<<<OUT
+<span id="progress-dots"></span>
+
+<script type="text/javascript">
+
+loaded = false;
+maxCounter = 100;
+counter = 0;
+
+function doProgressDots() {
+
+    if (!loaded && counter < maxCounter) {
+        document.getElementById('progress-dots').innerHTML = document.getElementById('progress-dots').innerHTML + ' .';
+        counter = counter + 1;
+        setTimeout('doProgressDots()', 1000);
+    }
+}
+
+doProgressDots();
+
+</script>
+
+OUT;
 
         if (isset($HTTP_GET_VARS['step']) && intval($HTTP_GET_VARS['step']) > 0) {
 
             $step = intval($HTTP_GET_VARS['step']);
 
             if ($step <= 2) {
-                echo xtr('Building cache: Pass #:step...', array(':step' => $step));
-                echo str_repeat(' ', 1000); flush();
+                echo xtr('Building cache: Pass #:step', array(':step' => $step)) . $jsDots;
+                echo '</body></html>';
+                echo str_repeat(' ', 10000);
+                flush();
                 $result = doBuildCache();
             
             } else {
-                die('<div id="finish">' . xtr('Cache is built') . '</div>') ;
+                die('<div id="finish">' . xtr('Cache is built') . '</div>');
             }
 
         } else {
             $pdoErrorMsg = '';
-            echo xtr('Building cache: Preparing for cache generation and dropping an old LiteCommerce tables if exists...');
-            echo str_repeat(' ', 1000); flush();
+            echo xtr('Building cache: Preparing for cache generation and dropping an old LiteCommerce tables if exists') . $jsDots;
+            echo '</body></html>';
+            echo str_repeat(' ', 10000); 
+            flush();
             $result = doRemoveCache(null, $pdoErrorMsg);
         }
 
         if ($result) {
             $location = sprintf('install.php?target=install&action=cache&step=%d', ++$step);
 
-            echo '<script type="text/javascript">self.location=\'' . $location . '\';</script>'
-                . '<noscript><a href="' . $location . '">' . xtr('Click here to redirect') . '</a></noscript><br /><br />';
+?>
+
+<script type="text/javascript">
+    loaded = true;
+    self.location="<?php echo $location; ?>";
+</script>
+
+<noscript>
+    <a href="' . $location . '"><?php echo xtr('Click here to redirect'); ?></a>
+</noscript>
+
+<?php
         }
 
         exit();
     }
+
+    // Creating dirs action
+    if (isset($HTTP_GET_VARS['action']) && $HTTP_GET_VARS['action'] == 'dirs') {
+
+        $result = true;
+
+        show_install_html_header();
+        show_install_css();
+?>
+
+<script type="text/javascript"> 
+    loaded = false; 
+ 
+    function refresh() { 
+        window.scroll(0, 100000); 
+                 
+        if (loaded == false) 
+           setTimeout('refresh()', 1000); 
+    } 
+     
+    setTimeout('refresh()', 1000); 
+</script>
+
+<body>
+
+<?php
+
+        echo str_repeat(' ', 1000); flush();
+        $result = doInstallDirs();
+
+?>
+        
+<script type="text/javascript">
+    loaded = true;
+</script>
+
+<div id="finish"></div>
+
+</body>
+</html>
+
+<?php
+        exit();
+    }
+
 
 	// Memory test action
 	if (isset($HTTP_GET_VARS['action']) && $HTTP_GET_VARS['action'] == 'memory_test' && isset($HTTP_GET_VARS['size'])) {
@@ -358,122 +452,23 @@ if (isset($params['force_current']) && (isset($_POST['go_back']) && $_POST['go_b
 	unset($params['force_current']);
 }
 
+$skinsDir = 'skins_original/admin/en/';
+
 // start html output
 
-?>
-<HTML>
-<HEAD>
-<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<TITLE>LiteCommerce v.<?php echo LC_VERSION; ?> <?php echo xtr('Installation Wizard'); ?></TITLE>
+show_install_html_header();
 
-<STYLE type="text/css">
+show_install_css();
 
-BODY,P,DIV,TH,TD,P,INPUT,SELECT,TEXTAREA {
-        FONT-FAMILY: Verdana, Arial, Helvetica, Sans-serif; 
-        COLOR: #000000; FONT-SIZE: 10px;
-}
-BODY { 
-        MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px; MARGIN-LEFT: 0px; MARGIN-RIGHT: 0px; 
-        BACKGROUND-COLOR: #FFFFFF;
-}
-A:link {
-        COLOR: #000000; TEXT-DECORATION: none;
-}
-A:visited {
-        COLOR: #000000; TEXT-DECORATION: none;
-}
-A:hover {
-        COLOR: #000000; TEXT-DECORATION: underline;
-}
-A:active  {
-        COLOR: #000000; TEXT-DECORATION: none;
-}
-
-<?php
-
-if ($current == 0) {
-
-    $protocolType = (isHTTPS() ? 'https://' : 'http://');
-?>
-
-.background {
-	BACKGROUND-COLOR: #FFFFFF; BACKGROUND-IMAGE: URL("<?php echo $protocolType; ?>www.litecommerce.com/img/logo_lite.gif");
-}
-
-<?php
-
-} else {
+include LC_ROOT_DIR . 'Includes/install/templates/common_js_code.js.php'; 
 
 ?>
 
-.background {
-	BACKGROUND-COLOR: #FFFFFF;
-}
+  <script type="text/javascript">
 
 <?php
 
-}
 
-?>
-
-.TableTop {
-	BACKGROUND-COLOR: #FFFFFF;
-}
-.Clr1 {
-	BACKGROUND-COLOR: #F8F8F8;
-}
-.Clr2 {
-	BACKGROUND-COLOR: #E3EAEF;
-}
-.HeadTitle {
-    FONT-SIZE: 20px; COLOR: #2d69ab; TEXT-DECORATION: none;
-}
-.HeadSteps {
-    FONT-SIZE: 11px; TEXT-DECORATION: none;
-}
-.WelcomeTitle {
-    FONT-SIZE: 11px;
-    COLOR: #000000;
-    TEXT-DECORATION: none;
-}
-
-.ErrorTitle {
-	font-size: 14px; 
-	font-weight: bold; 
-	color: red
-}
-
-DIV.warning_div {
-    margin: 3px;
-    padding: 5px;
-    text-align: left;
-    border: 2px solid red;
-    background: yellow;
-    z-index: 2;
-    width: 300px;
-    position: absolute;
-    font-size: 11px;
-    color: black;
-}
-
-.install_error {
-    font-size: 24px;
-    color: red;
-}
-
-.ErrorMessage {
-    font-weight: bold;
-    color: #ff0000;
-    font-size: 1.1em;
-    text-align: center;
-}
-</STYLE>
-
-<?php include LC_ROOT_DIR . 'Includes/install/templates/common_js_code.js.php'; ?>
-
-<SCRIPT language="javascript">
-
-<?php
 // show module's pertinent scripts
 
 // 'back' button's script
@@ -505,68 +500,114 @@ switch ($modules[$current]['js_next']) {
 
 function setNextButtonDisabled(flag)
 {
-    document.ifrm.next_button.disabled = flag;
+    if (flag) {
+        document.getElementById('next-button').className = 'next-button disabled-button';
+        document.getElementById('next-button').disabled = 'disabled';
+
+    } else {
+        document.getElementById('next-button').className = 'next-button';
+        document.getElementById('next-button').disabled = '';
+    }
 }
-</SCRIPT>
-</HEAD>
 
-<BODY class="background" LEFTMARGIN="0" TOPMARGIN="0" RIGHTMARGIN="0" BOTTOMMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0" style="FONT-FAMILY: Verdana, Arial, Helvetica, Sans-serif; COLOR: #373B3D; FONT-SIZE: 12px; MARGIN-TOP: 0 px; MARGIN-BOTTOM: 0 px; MARGIN-LEFT: 0 px; MARGIN-RIGHT: 0 px; BACKGROUND-COLOR: #FFFFFF;">
+  </script>
 
-<TABLE height="100%" width="100%" cellspacing="0" cellpadding="0">
-<TR>
-<TD valign="top">
+</head>
 
-<DIV style="left: 0px; top: 0px; width: 300px; height: 100px; position: absolute; display: none;" id="waiting_alert">
-<TABLE width=300 height=100 class="TableTop" cellpadding=2 cellspacing=2>
-<TR>
-<TD>
-<TABLE width=300 height=100 class="Clr2" cellpadding=2 cellspacing=2>
-<TR>
-<TD>
-<TABLE width=300 height=100 class="TableTop" cellpadding=2 cellspacing=2>
-<TR>
-<TD align=center><B><?php echo xtr('Inspecting your server configuration.<br>It can take several minutes, please wait.'); ?></B></TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</DIV>
+<body>
 
-<!-- [top] -->
-<table cellspacing="0" width="100%" style="background-color: #f4f4f4; border-bottom: 1px solid #e9ecf3;">
-<tr>
-   <td style="padding: 10px;"><img src="skins_original/admin/en/images/logo.png" alt="" /></td>
-    <td style="white-space: nowrap;">
-      <div style="font-size: 24px;"><span style="color: #2d69ab;">Lite</span><span style="color: #676767;">Commerce</span></div>
-      <div><?php echo xtr('Version'); ?>: <?php echo LC_VERSION; ?></div>
-    </td>
-   <td align="right" valign="middle" nowrap="nowrap" width="100%" style="padding-right: 20px;">
-   <span class="HeadTitle"><?php echo xtr('Installation Wizard'); ?></span><br />
-   <span class="HeadSteps"><?php echo xtr('Step :step', array(':step' => $current)); ?>: <?php echo $modules[$current]['comment'] ?></span>
-   </td>
-</tr>
-</table>
+<div id="page-container" class="install-page">
 
-<br />
-<!-- [/top] -->
+  <div id="header">
+
+    <div class="logo"></div>
+
+    <div class="sw-version">
+      <div class="current">LiteCommerce shopping cart software v.<?php echo LC_VERSION; ?></div>
+      <div class="upgrade-note">
+        &copy; 2011 <a href="http://www.cdev.ru/">Creative Development LLC</a>
+      </div>
+    </div>
+
+    <h1><?php echo xtr('Installation wizard'); ?></h1>
+
+  </div><!-- [/header] -->
 
 <?php
 
-/* common header */
+/**
+ * Generating an array for displaying installation steps
+ */
+
+$rows = array();
+
+foreach ($modules as $id => $moduleData) {
+
+    $index = $id + 1;
+    $currentIndex = $current + 1;
+
+    $divIndex = null;
+    $stepTitle = (string)$index;
+
+    $row = array();
+
+    $row[] = 'step-row';
+
+    if ($currentIndex > $index) {
+        $arrowClass = 'prev-prev';
+
+    } elseif ($currentIndex == $index) {
+        $arrowClass = 'prev-next';
+        $stepTitle = xtr('Step :step', array(':step' => $index)) . ': ' . $moduleData['comment'];
+
+    } else {
+        $row[] = 'next';
+        $arrowClass = 'next-next';
+    }
+
+    if ($index == 1) {
+        $row[] = 'first';
+
+    } elseif ($index == count($modules)) {
+        $row[] = 'last';
+    }
+
+    $rows[] = sprintf('<li class="%s">%s</li>', implode(' ', $row), $stepTitle);
+
+    if ($index < count($modules)) {
+        $rows[] = sprintf('<li class="step-row %s"></li>', $arrowClass);
+    }
+}
 
 ?>
 
-<NOSCRIPT>
-    <br>
-    <DIV class="ErrorMessage"><?php echo xtr('This installer requires JavaScript to function properly.<br>Please enable Javascript in your web browser.'); ?></DIV>
-    <br>
-</NOSCRIPT>
+  <div class="steps-bar">
 
-<TABLE class="TableTop" width="90%" border=0 cellspacing=0 cellpadding=0 align=center>
+    <ul class="steps">
+
+<?php
+
+// Display installation steps
+foreach ($rows as $row) {
+    echo $row . "\n";
+}
+
+?>
+
+    </ul>
+
+  </div>
+
+<div id="waiting_alert" class="hidden">
+    <?php echo xtr('Inspecting your server configuration.<br />It can take several minutes, please wait.'); ?>
+</div>
+
+<noscript>
+    <div class="ErrorMessage"><?php echo xtr('This installer requires JavaScript to function properly.<br />Please enable Javascript in your web browser.'); ?></div>
+</noscript>
+
+
+<div class="content">
 
 <?php
 
@@ -578,10 +619,7 @@ $enctype = (isset($modules[$current]['form_enctype']) ? 'enctype="' . $modules[$
 
 ?>
 
-<FORM method="POST" name="ifrm" action="install.php" <?php print $enctype ?>>
-
-<TR>
-<TD valign="middle">
+<form method="post" name="ifrm" action="install.php" <?php print $enctype ?>>
 
 <?php
 
@@ -598,8 +636,8 @@ $res = $func($params);
 
 ?>
 
-</TD>
-</TR>
+<br />
+<br />
 
 <?php
 
@@ -612,12 +650,6 @@ if (!$res) {
 
 if ($current < count($modules)) {
 
-?>
-
-<TR>
- <TD align="center">
-
-<?php
 
     if (!empty($params)) {
 
@@ -625,7 +657,7 @@ if ($current < count($modules)) {
 
 ?>
 
-  <INPUT type=hidden name="params[<?php echo $key ?>]" value="<?php echo $val ?>">
+  <input type="hidden" name="params[<?php echo $key ?>]" value="<?php echo $val ?>" />
 
 <?php
     
@@ -636,15 +668,32 @@ if ($current < count($modules)) {
 
 ?>
 
-    <INPUT type="hidden" name="ruid" value="<?php echo $report_uid; ?>" />
+    <input type="hidden" name="ruid" value="<?php echo $report_uid; ?>" />
 
 <?php
     }
 ?>
 
-  <INPUT type="hidden" name="go_back" value="0" />
-  <INPUT type=hidden name="current" value="<?php echo $current ?>" />
-  <INPUT type=button value="&lt; <?php echo xtr('Back'); ?>"<?php echo ($prev > 0 ? '' : ' disabled') ?> onClick="javascript:document.ifrm.go_back.value='1'; return step_back();" />
+  <input type="hidden" name="go_back" value="0" />
+  <input type="hidden" name="current" value="<?php echo $current ?>" />
+
+<table class="buttons-bar" align="center" cellspacing="20">
+
+<tr>
+
+<td>
+<?php
+    if ($prev > 0) {
+?>
+  <input type="button" id="back-button" class="small-button" value="<?php echo xtr('Back'); ?>" onclick="javascript:document.ifrm.go_back.value='1'; return step_back();" />
+<?php
+    } else {
+?>
+  <input type="button" class="small-button disabled-button" id="back-button" value="<?php echo xtr('Back'); ?>" disabled="disabled" />
+<?php
+    }
+?>
+</td>
 
 <?php
 
@@ -652,7 +701,9 @@ if ($current < count($modules)) {
 
  ?>
 
-     <INPUT name="try_again" type="button" value="<?php echo xtr('Try again'); ?>" onClick="javascript:document.ifrm.go_back.value='1'; document.ifrm.current.value='1'; document.ifrm.submit();" />
+<td>
+  <input id="try-button" name="try_again" type="button" value="<?php echo xtr('Try again'); ?>" onclick="javascript:document.ifrm.go_back.value='1'; document.ifrm.current.value='1'; document.ifrm.submit();" />
+</td>
 
 <?php
        
@@ -660,10 +711,13 @@ if ($current < count($modules)) {
 
 ?>
 
-  <INPUT id="button_next" name="next_button" type="button" value="<?php echo xtr('Next'); ?> &gt;"<?php echo ($error || $current == get_step('check_cfg') ? ' disabled="disabled"' : ''); ?> onClick="javascript: if (step_next()) { ifrm.submit(); return true; } else { return false; }" />
+<td class="next-button-layer">
+  <input id="next-button" name="next_button" type="submit" value="<?php echo xtr('Next'); ?>"<?php echo ($error || $current == get_step('check_cfg') ? ' class="next-button disabled-button" disabled="disabled"' : ' class="next-button"'); ?> onclick="javascript: if (step_next()) { ifrm.submit(); return true; } else { return false; }" />
+</td>
 
- </td>
-</TR>
+</tr>
+
+</table>
 
 <?php
 
@@ -671,7 +725,7 @@ if ($current < count($modules)) {
 
 ?>
 
-</FORM>
+</form>
 
 <?php
 
@@ -679,22 +733,31 @@ if ($current < count($modules)) {
 
 ?>
 
-</TABLE>
+<br />
+<br />
+<br />
 
-</TD>
-</TR>
-</TR>
-<TD valign="bottom">
+</div><!-- [/content] -->
 
-<HR size=1 noshade>
-<DIV ALIGN=right style="margin-bottom: 8px;">
-  <FONT size=1>Copyright &copy; 2003 - 2011 <A href="http://www.qtmsoft.com/">Creative Development</A>&nbsp;&nbsp;</FONT>
-</DIV>
+</div><!-- [/page-container] -->
 
-</TD>
-</TR>
-</TABLE>
+<?php 
 
-</BODY>
-</HTML>
+if (2 == $current) {
+    include_once LC_DIR . '/Includes/install/templates/step1_report.tpl.php'; 
+}
 
+?>
+
+<script type="text/javascript">
+
+var element = document.getElementById('report-layer');
+
+if (element) {
+    element.style.height = screen.availHeight + 'px';
+}
+
+</script>
+
+</body>
+</html>
