@@ -47,7 +47,7 @@ function ShowNotes()
 
 Use this section to define shipping zones.
 
-<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="NavigationPath" onClick="this.blur()"><b>How to define shipping zones &gt;&gt;&gt;</b></a></span>
+<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="NavigationPath" onclick="this.blur()"><b>How to define shipping zones &gt;&gt;&gt;</b></a></span>
 
 <span id="notes_body" style="display: none"><br /><br />
 Select a country or a state from a list, specify the zone where the country or state should be listed and click on the 'Apply' button. To select more than one country/state, hold down the CTRL key while making a selection. A zone can contain either countries or states. You cannot include both states and countries into the same zone.  

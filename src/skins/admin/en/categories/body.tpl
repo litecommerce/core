@@ -99,7 +99,7 @@
     <tr FOREACH="getSubcategories(getCategoryId()),id,cat" class="{getRowClass(id,##,#highlight#)}">
 
       <td width="100%">
-        <a href="admin.php?target=categories&category_id={cat.category_id}" title="Click here to access/add subcategories" onClick="this.blur()"><font class="ItemsList"><u>{cat.name:h}</u></font></a> ({cat.products_count} products){if:!cat.enabled}&nbsp;&nbsp;<font color=red>(disabled)</font>{end:}
+        <a href="admin.php?target=categories&category_id={cat.category_id}" title="Click here to access/add subcategories" onclick="this.blur()"><font class="ItemsList"><u>{cat.name:h}</u></font></a> ({cat.products_count} products){if:!cat.enabled}&nbsp;&nbsp;<font color=red>(disabled)</font>{end:}
       </td>
 
       <td nowrap>
@@ -130,10 +130,10 @@
 
     <tr>
       <td>
-        <input id="add" type="button" value="Add category" onClick="onAddChildClick({getCategoryId()})">
+        <input id="add" type="button" value="Add category" onclick="onAddChildClick({getCategoryId()})">
       </td>		
       <td align="right" IF="category.getSubCategoriesCount()">
-        <input id="delete_all_button" type="button" value="Delete all" onClick="onDeleteSubcatsClick({category.category_id})">
+        <input id="delete_all_button" type="button" value="Delete all" onclick="onDeleteSubcatsClick({category.category_id})">
       </td>		
     </tr>
 

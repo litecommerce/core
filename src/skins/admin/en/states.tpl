@@ -63,7 +63,7 @@ function setHeaderChecked()
 				<tr class="TableHead">
 				    <th class="TableHead">Code</th>
 				    <th class="TableHead">State</th>
-				    <th class="TableHead"><input id="select_states" type="checkbox" onClick="this.blur();setChecked('update_delete_states_form','state_ids',this.checked);"></th>
+				    <th class="TableHead"><input id="select_states" type="checkbox" onclick="this.blur();setChecked('update_delete_states_form','state_ids',this.checked);"></th>
 				</tr>
 
 				<tr FOREACH="states,state_idx,state" class="{getRowClass(state_idx,#dialog-box#,#highlight#)}">
@@ -74,7 +74,7 @@ function setHeaderChecked()
 				        <input type="text" size="32" name="state_data[{state.state_id}][state]" value="{state.state:r}">
 				    </td>
 				    <td>
-				        <input id="state_ids" type="checkbox" name="delete_states[]" value="{state.state_id}" onClick="this.blur();">
+				        <input id="state_ids" type="checkbox" name="delete_states[]" value="{state.state_id}" onclick="this.blur();">
 				    </td>
 				</tr>
 			</table>

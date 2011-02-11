@@ -12,7 +12,7 @@
  *}
 
 <input type="file" name="{getNamePostedData(getParam(#field#))}" />&nbsp;&nbsp;&nbsp;
-<input IF="hasImage()" type="button" value="Delete" onClick="document.{formName}.{field}_delete.value='1';document.{formName}.action.value='{actionName}';document.{formName}.submit()" />
+<input IF="hasImage()" type="button" value="Delete" onclick="document.{formName}.{field}_delete.value='1';document.{formName}.action.value='{actionName}';document.{formName}.submit()" />
 <input type="hidden" value="0" name="{getParam(#field#)}_delete" />
 
 <br />
