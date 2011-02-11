@@ -36,7 +36,7 @@ if (!defined('XLITE_INSTALL_MODE')) {
 
 ?>
 
-<SCRIPT language="javascript">
+<script type="text/javascript">
 function visibleBox(id, status)
 {
     var Element = document.getElementById(id);
@@ -159,7 +159,8 @@ function showDetails(code)
     var failedElementsIds = new Array("");
     var detailsElement = document.getElementById('detailsElement');
     var hiddenElement = document.getElementById(code);
-    var failedElement = document.getElementById('failed_' + code);
+    var failedElement = document.getElementById('failed-' + code);
+    var failedImageElement = document.getElementById('failed-image-' + code);
 
     if (hiddenElement) {
         detailsElement.innerHTML = hiddenElement.innerHTML;
@@ -168,19 +169,26 @@ function showDetails(code)
         detailsElement.innerHTML = '';
     }
 
-    failedElement.style.fontWeight = 'bold';
-    failedElement.style.textDecoration = '';
+    // failedElement.style.textDecoration = '';
+    failedElement.className = 'status-failed-link-active';
+
+    failedImageElement.style.display = 'inline';
 
     for (var i = 0; i < failedCodes.length; i++) {
         if (failedCodes[i] != code) {
-            var failedElement = document.getElementById('failed_' + failedCodes[i]);
+            var failedElement = document.getElementById('failed-' + failedCodes[i]);
             if (failedElement) {
-                failedElement.style.fontWeight = '';
-                failedElement.style.textDecoration = 'underline';
+                // failedElement.style.textDecoration = 'underline';
+                failedElement.className = 'status-failed-link';
             }
+            var failedImageElement = document.getElementById('failed-image-' + failedCodes[i]);
+            if (failedImageElement) {
+                failedImageElement.style.display = 'none';
+            }
+
         }
     }
 
 }
-</SCRIPT>
+</script>
 

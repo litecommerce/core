@@ -40,278 +40,60 @@ if (!defined('XLITE_INSTALL_MODE')) {
 }
 
 ?>
-<HTML>
-<HEAD>
-<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<TITLE>LiteCommerce v.<?php echo LC_VERSION; ?> <?php echo xtr('Installation Wizard'); ?></TITLE>
 
-<STYLE type="text/css">
+<div id="report-layer" class="report-layer" style="display:none;">
 
-BODY,P,DIV,TH,TD,P,INPUT,SELECT,TEXTAREA {
-        FONT-FAMILY: Verdana, Arial, Helvetica, Sans-serif; 
-        COLOR: #000000; FONT-SIZE: 10pt;
-}
-BODY { 
-        MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px; MARGIN-LEFT: 0px; MARGIN-RIGHT: 0px; 
-        BACKGROUND-COLOR: #FFFFFF;
-		HEIGHT: 100%;
-}
-A:link {
-        COLOR: #000000; TEXT-DECORATION: none;
-}
-A:visited {
-        COLOR: #000000; TEXT-DECORATION: none;
-}
-A:hover {
-        COLOR: #000000; TEXT-DECORATION: underline;
-}
-A:active  {
-        COLOR: #000000; TEXT-DECORATION: none;
-}
+    <div id="report-window" class="report-window">
 
-.background {
-	BACKGROUND-COLOR: #FFFFFF;
-}
-.TableTop {
-	BACKGROUND-COLOR: #FFFFFF;
-}
-.Clr1 {
-	BACKGROUND-COLOR: #F8F8F8;
-}
-.Clr2 {
-	BACKGROUND-COLOR: #E3EAEF;
-}
-.HeadTitle {
-    FONT-SIZE: 20px; COLOR: #2d69ab; TEXT-DECORATION: none;
-}
-.HeadSteps {
-    FONT-SIZE: 11px; TEXT-DECORATION: none;
-}
-.WelcomeTitle {
-    FONT-SIZE: 11px;
-    COLOR: #000000;
-    TEXT-DECORATION: none;
-}
-.PageTitle {
-    FONT-SIZE: 16px;
-    COLOR: #000000;
-    TEXT-DECORATION: none;
-}
-
-DIV.warning_div {
-    margin: 3px;
-    padding: 5px;
-    text-align: left;
-    border: 2px solid red;
-    background: yellow;
-    z-index: 2;
-    width: 300px;
-    position: absolute;
-    font-size: 11px;
-    color: black;
-}
-
-.install_error {
-    font-size: 24px;
-    color: red;
-}
-
-.ErrorMessage {
-    font-weight: bold;
-    color: #ff0000;
-    font-size: 1.1em;
-    text-align: center;
-}
-
-.DialogMainButton {
-	background-color: #CDD9E1;
-}   
-.NavigationPath {
-        COLOR: #294F6C; TEXT-DECORATION: none;
-}
-.NavigationPath:link {
-        COLOR: #294F6C; TEXT-DECORATION: none;
-}
-.NavigationPath:visited {
-        COLOR: #294F6C; TEXT-DECORATION: none;
-}
-.NavigationPath:hover {
-        COLOR: #082032; TEXT-DECORATION: underline;
-}
-.NavigationPath:active {
-        COLOR: #294F6C; TEXT-DECORATION: none;
-}
-</STYLE>
-
-<?php include LC_ROOT_DIR . 'Includes/install/templates/common_js_code.js.php'; ?>
-
-<SCRIPT language="javascript">
-function ShowNotes(status)
-{
-	if (status) {
-    	visibleBox("notes_url1", false);
-    	visibleBox("notes_url2", true);
-    	visibleBox("notes_body", true);
-    } else {
-    	visibleBox("notes_url1", true);
-    	visibleBox("notes_url2", false);
-    	visibleBox("notes_body", false);
-    }
-}
-</SCRIPT>
-
-</HEAD>
-
-<BODY class="background" LEFTMARGIN="0" TOPMARGIN="0" RIGHTMARGIN="0" BOTTOMMARGIN="0" MARGINWIDTH="0" MARGINHEIGHT="0" style="FONT-FAMILY: Verdana, Arial, Helvetica, Sans-serif; COLOR: #373B3D; FONT-SIZE: 12px; MARGIN-TOP: 0 px; MARGIN-BOTTOM: 0 px; MARGIN-LEFT: 0 px; MARGIN-RIGHT: 0 px; BACKGROUND-COLOR: #FFFFFF;">
+<a class="report-close" href="#" onclick="javascript: document.getElementById('report-layer').style.display='none'; return false;"><img src="<?php echo $skinsDir; ?>images/spacer.gif" width="10" height="10" border="0" alt="" /><span class="report-close" style="display: none;">close</span></a>
 
 <?php
 
-if (!$is_original) {
+include_once LC_DIR . '/Includes/install/templates/step1_report.tpl.php';
+
+global $requirements;
+
+$report = make_check_report($requirements);
 
 ?>
 
-<DIV style="left: 0px; top: 0px; width: 300px; height: 100px; position: absolute; display: none;" id="report_waiting_alert">
-<TABLE width=300 height=100 class="TableTop" cellpadding=2 cellspacing=2>
-<TR>
-<TD>
-<TABLE width=300 height=100 class="Clr2" cellpadding=2 cellspacing=2>
-<TR>
-<TD>
-<TABLE width=300 height=100 class="TableTop" cellpadding=2 cellspacing=2>
-<TR>
-<TD align=center><B><?php echo xtr('Inspecting your server configuration.<br>It can take several minutes, please wait.'); ?></B></TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
-</DIV>
+<form method="post" name="report_form" action="https://secure.qtmsoft.com/customer.php">
 
-<?php
-
-}
-
-?>
-
-<!-- [top] -->
-<table cellspacing="0" width="100%" style="background-color: #f4f4f4; border-bottom: 1px solid #e9ecf3;">
-<tr>
-   <td style="padding: 10px;"><img src="skins_original/admin/en/images/logo.png" alt="" /></td>
-    <td style="white-space: nowrap;">
-      <div style="font-size: 24px;"><span style="color: #2d69ab;">Lite</span><span style="color: #676767;">Commerce</span></div>
-      <div><?php echo xtr('Version'); ?>: <?php echo LC_VERSION; ?></div>
-    </td>
-   <td align="right" valign="middle" nowrap="nowrap" width="100%" style="padding-right: 20px;">
-   <span class="HeadTitle"><?php echo xtr('Installation Wizard'); ?></span><br />
-    <span class="HeadSteps"><?php echo xtr('Step :step', array(':step' => 1)); ?>: <?php echo $modules[1]['comment'] ?></span>
-   </td>
-</tr>
-</table>
-
-<br />
-<!-- [/top] -->
-
-<center>
-<?php
-
-if (!$is_original) {
-			
-?>
-<SCRIPT language="javascript">showWaitingAlert(true, "report_");</SCRIPT>
-<?php
-
-	ob_start();
-	module_check_cfg($_POST['params']);
-	ob_end_clean();
-
-	$report = make_check_report($requirements);
-}
-
-if ($report) {
-	$report = (($is_original) ? xtr('[original report]') : xtr('[replicated report]')) . "\n\n". $report;
-
-} else {
-	$report = xtr('Report generation failed.');
-}
-
-?>
-
-<FORM method="POST" name="report_form" action="https://secure.qtmsoft.com/customer.php?target=customer_info&action=install_feedback_report">
-
+<input type="hidden" name="target" value="customer_info" />
+<input type="hidden" name="action" value="install_feedback_report" />
 <input type="hidden" name="product_type" value="LC3" />
 
-<table border="0" cellpadding="1" cellspacing="2" align=center width=90%>
-	<tr>
-		<td colspan=2><br>
-        <FONT class="PageTitle"><B><?php echo xtr('Technical problems report'); ?></B></FONT><BR>
-        <br><?php echo xtr('ask_send_report_text'); ?>
-		</td>
-	</tr>
-	<tr>
-		<td colspan=2>&nbsp;</td>
-	</tr>
-	<tr>
-		<td colspan=2>&nbsp;</td>
-	</tr>
-	<tr>
-		<td colspan=2>
-        <b><?php echo xtr('Technical problems report'); ?>:</b>
-        <span id="notes_url1" style="display:"><a href="javascript:ShowNotes(true);" onClick="this.blur()"><u><?php echo xtr('See details'); ?> &gt;&gt;</u></a></span>
-        <span id="notes_url2" style="display: none"><a href="javascript:ShowNotes(false);" onClick="this.blur()"><u><?php echo xtr('Hide details'); ?> &gt;&gt;</u></a></span>
-		</td>
-	</tr>
-	<tr id="notes_body" style="display: none">
-		<td colspan=2><textarea name="report" cols=90 rows=25 style="FONT-FAMILY: Courier;" readonly><?php echo $report; ?></textarea></td>
-	</tr>
+<div class="report-title"><?php echo xtr('Technical problems report'); ?></div>
 
-	<tr>
-		<td colspan=2>&nbsp;</td>
-	</tr>
-	<tr>
-    <td colspan=2><b><?php echo xtr('Additional comments'); ?>:</b></td>
-	</tr>
-	<tr>
-		<td colspan=2><textarea name="user_note" cols=50 rows=15 style="FONT-FAMILY: Courier;"></textarea></td>
-	</tr>
+<br />
+<br />
 
-	<tr>
-		<td colspan=2>&nbsp;</td>
-	</tr>
-	<tr>
-		<td colspan=2>
-        <table border="0" cellpadding="1" cellspacing="2" align=center width=100%>
-        	<tr>
-            <td align=left><input type="submit" class="DialogMainButton" value="<?php echo xtr('Send report'); ?> (*)"></td>
-            <td align=right><input type="button" value="<?php echo xtr('Close window'); ?>" onClick="javascript: window.close();"></td>
-        		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        	</tr>
-		</table>
-		</td>
-	</tr>
-<?php
+<?php echo xtr('ask_send_report_text'); ?>
 
-if (!$is_original) {
+<br />
+<br />
 
-?>
-	<SCRIPT language="javascript">showWaitingAlert(false, "report_");</SCRIPT>
-<?php
+<textarea name="report" class="report-details" rows="5" cols="70" readonly="readonly"><?php echo $report; ?></textarea>
 
-}
+<br />
+<br />
 
-?>
-	<tr>
-		<td colspan=2>
-        <b>(*)</b> <?php echo xtr('where_report_will_be_sent_text'); ?>
-		<br><br>
-		</td>
-	</tr>
-</table>
-</FORM>
-</center>
+<div class="section-title"><?php echo xtr('Additional comments'); ?></div>
 
-</BODY>
-</HTML>
+<textarea name="user_note" class="report-notes" rows="4" cols="70"></textarea>
+
+<br />
+<br />
+
+<div style="text-align: center;">
+    <input type="submit" value="<?php echo xtr('Send report'); ?>" />
+</div>
+
+</form>
+
+</div>
+
+<div class="clear"></div>
+
+</div>
 
