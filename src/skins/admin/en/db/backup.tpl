@@ -52,7 +52,7 @@ file from the server later on and delete it from the server by clicking on the
 </p>
 </span>
 
-<hr>
+<hr />
 <p class="adminParagraph"><b class="Star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings"><u>General settings</u></a> page before performing backup procedure!</p>
 
 <form action="admin.php" method="post" name="backup_form">

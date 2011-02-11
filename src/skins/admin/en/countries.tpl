@@ -52,7 +52,7 @@ function setDelete(form, input, check)
 
 <p>
 Use this section to manage the list of existing countries. This list is used in the shipping and taxation settings and calculations, and in the registration form at the Customer Front-end.
-<hr>
+<hr />
 
 <font IF="status=#added#" class="SuccessMessage"><br /><br />&gt;&gt;&nbsp;Country added successfully&nbsp;&lt;&lt;<br /><br /></font>
 <font IF="status=#deleted#" class="SuccessMessage"><br /><br />&gt;&gt;&nbsp;Country(s) deleted successfully&nbsp;&lt;&lt;<br /><br /></font>

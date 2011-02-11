@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-To export the found orders into MYOB Accounting 2005 follow the steps below<hr>
+To export the found orders into MYOB Accounting 2005 follow the steps below<hr />
 
 <p><font class="admin-head">Step 1: Export of customer cards</font>
 <p align="justify">Click on "Export customer cards" button below to export customer cards for the found orders and save the resulting CSV file. You can name this file as you like to suit your requirements.

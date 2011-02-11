@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-To export the found orders into Peachtree Accounting follow the steps below<hr>
+To export the found orders into Peachtree Accounting follow the steps below<hr />
 
 <p class="admin-head">Step 1: Export of Customer List
 

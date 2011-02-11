@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-This page allows you to import product options from CSV file.<hr>
+This page allows you to import product options from CSV file.<hr />
 
 
 <p>

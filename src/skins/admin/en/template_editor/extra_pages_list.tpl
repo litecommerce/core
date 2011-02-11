@@ -54,7 +54,7 @@
     </table>
 </td></tr>
 
-<tr><td><br /><hr><br /></td></tr>
+<tr><td><br /><hr /><br /></td></tr>
 
 </tbody>
 </table>
