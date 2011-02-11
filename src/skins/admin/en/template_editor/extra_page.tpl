@@ -64,8 +64,8 @@
 <table border="0" cellpadding=2 cellspacing=2 width="430">
 <tr>
 <td align=left>
-<input IF="{extraPage.page}" type="submit" value=" Update page " class="main-button" onclick="javascript: ValidateName();" />
-<input IF="{!extraPage.page}" type="submit" value=" Add page " class="main-button" onclick="javascript: ValidateName();" />
+<widget class="\XLite\View\Button\Submit" IF="{extraPage.page}" label="Update page" style="main-button" jsCode="javascript: ValidateName();" />
+<widget class="\XLite\View\Button\Submit" IF="{!extraPage.page}" label="Add page" style="main-button" jsCode="javascript: ValidateName();" />
 </td>
 <td align=right>
 <widget class="\XLite\View\Button\Regular" IF="{extraPage.page}" name="cancel" label="Cancel" jsCode="javascript: document.location='{url}'" />
