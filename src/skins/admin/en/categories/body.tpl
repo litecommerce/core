@@ -130,10 +130,10 @@
 
     <tr>
       <td>
-        <input id="add" type="button" value="Add category" onclick="onAddChildClick({getCategoryId()})">
+        <widget class="\XLite\View\Button\Regular" id="add" label="Add category" jsCode="onAddChildClick({getCategoryId()})" />
       </td>		
       <td align="right" IF="category.getSubCategoriesCount()">
-        <input id="delete_all_button" type="button" value="Delete all" onclick="onDeleteSubcatsClick({category.category_id})">
+        <widget class="\XLite\View\Button\Regular" id="delete_all_button" label="Delete all" jsCode="onDeleteSubcatsClick({category.category_id})" />
       </td>		
     </tr>
 

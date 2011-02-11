@@ -455,8 +455,8 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
     <tr valign="middle">
       <td width="160">&nbsp;</td>
       <td >
-        <input IF="getRequestParamValue(#mode#)=#register#" type="submit" name="modify" value="Add profile" />
-        <input IF="getRequestParamValue(#mode#)=#modify#|getRequestParamValue(#mode#)=##" type="button" name="modify" value="Update profile" onclick="javascript: document.profile_form.submit()" />
+        <widget class="\XLite\View\Button\Submit" IF="getRequestParamValue(#mode#)=#register#" name="modify" label="Add profile" />
+        <widget class="\XLite\View\Button\Regular" IF="getRequestParamValue(#mode#)=#modify#|getRequestParamValue(#mode#)=##" name="modify" label="Update profile" jsCode="javascript: document.profile_form.submit()" />
         <br />
       </td>
     </tr>
