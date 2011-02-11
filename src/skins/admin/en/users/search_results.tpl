@@ -13,7 +13,7 @@
 
 <widget class="\XLite\View\PagerOrig" data="{getUsers()}" name="searchResults" itemsPerPage="{config.General.users_per_page}" />
 
-<script language="JavaScript">
+<script type="text/javascript">
 <!--
 
 function deleteProfile()

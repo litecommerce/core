@@ -122,8 +122,8 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
             <td><input type="text" name="methods[{method.getMethodId()}][position]" size="4" value="{method.getPosition()}" /></td>
             <td align="center">
               <input id="shipping_enabled_{method.getMethodId()}" type="checkbox" name="methods[{method.getMethodId()}][enabled]" checked="{method.getEnabled()}" onclick="this.blur();" />
-              <script language="Javascript">populateChecked("{processor.getProcessorId()}", "shipping_enabled_{method.getMethodId()}");</script>
-              <script language="Javascript" IF="method.getEnabled()">setHeaderChecked("{processor.getProcessorId()}");</script>
+              <script type="text/javascript">populateChecked("{processor.getProcessorId()}", "shipping_enabled_{method.getMethodId()}");</script>
+              <script type="text/javascript" IF="method.getEnabled()">setHeaderChecked("{processor.getProcessorId()}");</script>
             </td>
             <td>
               <widget class="\XLite\View\Button\Regular" name="delete" label="Delete" jsCode="javascript: onDeleteButton('{method.getMethodId()}');" />

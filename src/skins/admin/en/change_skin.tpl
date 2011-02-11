@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<script language="Javascript">
+<script type="text/javascript">
 <!-- 
     function selectPreview(elm)
     {
@@ -89,7 +89,7 @@
 
 </form>
 
-<SCRIPT language="JavaScript">
+<SCRIPT type="text/javascript">
 var currentSkin = "{currentSkinName}";
 var previewImages = new Array();
 

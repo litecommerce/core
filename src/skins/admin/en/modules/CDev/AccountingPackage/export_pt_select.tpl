@@ -43,7 +43,7 @@ To export the found orders into Peachtree Accounting follow the steps below<hr>
 
 <p><widget class="\XLite\View\Button\Regular" name="export" label="Export sales journal..." jsCode="javascript: export_sales();" />
 
-<script language="Javascript">
+<script type="text/javascript">
 function export_sales() {
     with (document.export_sales_form) {
         if (receivable_account.value == "") {
@@ -77,7 +77,7 @@ Cash Account number <font class="Star">*</font> <input type="text" name="cash_ac
 
 <p><widget class="\XLite\View\Button\Regular" name="export" label="Export cash receipts..." jsCode="javascript: export_payments();" />
 
-<script language="Javascript">
+<script type="text/javascript">
 function export_payments() {
     with (document.export_payments_form) {
         if(cash_account.value == "") {

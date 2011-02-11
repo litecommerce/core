@@ -135,6 +135,6 @@ function saveSchema()
 <widget class="\XLite\View\Button\Submit" label=" Import " style="main-button" />
 </form>
 
-<script IF="invalid_file" language="javascript">
+<script IF="invalid_file" type="text/javascript">
 setTimeout("window.scroll(0, 100000);", 500);
 </script>
