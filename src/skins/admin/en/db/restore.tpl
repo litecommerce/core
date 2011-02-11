@@ -52,7 +52,7 @@ To restore the images which are stored in the file system, you have to copy them
 </p>
 </span>
 
-<hr>
+<hr />
 <span class="ErrorMessage" IF="error">{error:h}<br /></span>
 <p class="adminParagraph">
 <b class="Star">Warning:</b> Restore procedure is irreversible and erases all data tables from your store database. It is highly recommended that you backup your present database data before restoring one of the previous states from a backup.

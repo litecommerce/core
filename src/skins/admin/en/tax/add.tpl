@@ -77,7 +77,7 @@ function changeVal(param)
 </table>
 <br />
 <b>Tax value (optional; if not specified, a new folder will be created)</b>
-<hr>
+<hr />
 <table border="0" cellpadding="7">
 <tr valign="bottom">
 	<td>Tax name, either existing or new. A special name 'Tax' means total tax:</td>

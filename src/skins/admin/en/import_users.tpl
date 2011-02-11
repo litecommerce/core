@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<p>Use this section to import user data from a CSV file. <hr>
+<p>Use this section to import user data from a CSV file. <hr />
 
 <p IF="import_error">
 <font class="ErrorMessage">

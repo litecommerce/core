@@ -13,7 +13,7 @@
 <p>Use this section to export catalog data into a CSV file.
 <br /><br />
 <b>Note:</b> Graphic content is not included in the exported CSV file, only image file names are exported for product thumbnails and images.
-<hr>
+<hr />
 
 <p IF="!valid">
     <font class="ErrorMessage">&gt;&gt; Error occured &lt;&lt;<br /></font>

@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-This page allows to export product options into CSV file.<hr>
+This page allows to export product options into CSV file.<hr />
 
 <p>
 <form action="admin.php" method=post name=data_form>

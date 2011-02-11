@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<p>Use this section to import catalog data from a CSV file. <hr>
+<p>Use this section to import catalog data from a CSV file. <hr />
 
 <p IF="!valid">
     <font class="ErrorMessage">&gt;&gt; Error occured &lt;&lt;<br /></font>
@@ -55,7 +55,7 @@
 </tr>
 <tr>
     <td colspan=2>
-    Directory where images are located:<BR>
+    Directory where images are located:<br />
     {if:action=#import_products#}
         <input type=text size=32 name=images_directory value="{images_directory}">
     {else:}

@@ -13,7 +13,7 @@
 Use the menus on the left to manage every aspect of your online store.
 <br />
 From this page, you can build and maintain the store in a very easy way!
-<hr>
+<hr />
 
 <table border=0 cellspacing=0 width=90% align="center">
 <tr>
