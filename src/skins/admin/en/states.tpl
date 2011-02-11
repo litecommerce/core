@@ -120,7 +120,7 @@ function setHeaderChecked()
 </table>
 
 {if:!valid}
-<script language="javascript">
+<script type="text/javascript">
 {if:status=#country_code#}
 var anchor = '#select_country';
 {else:}

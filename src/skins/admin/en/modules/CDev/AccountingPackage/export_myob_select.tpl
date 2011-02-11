@@ -38,7 +38,7 @@ Income Account Number <font class=Star>*</font> <input type="text" name="income_
 <p align="justify">There are several ways that MYOB Accounting 2005 provides to find exported transactions. For example, Click on Find Transactions in any command center, select the Invoice tab then then select All Invoices in the Search By. The list of exported item sale transaction will appear. Please refer to your MYOB Manual for further assistance on finding transactions.
 
 <p><widget class="\XLite\View\Button\Regular" name="submit" label="Export sales transaction.." jsCode="javascript: export_sales(document.order_sales_form.income_account_number.value)" />
-<script language="Javascript">
+<script type="text/javascript">
 
 function export_sales(income_account_number) {
     if (income_account_number == "") {
@@ -65,7 +65,7 @@ function export_sales(income_account_number) {
 
 <p><widget class="\XLite\View\Button\Regular" name="submit" label="Export received payments.." jsCode="javascript: export_received_payments(document.received_payments_form.deposit_account.value);" />
 
-<script language="Javascript">
+<script type="text/javascript">
 function export_received_payments(deposit_account) {
     if (deposit_account == "") {
         alert("Please enter Deposit Account Number!");

@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<script language="Javascript">
+<script type="text/javascript">
 <!-- 
 
 var CountryVatEnabledCheckBoxes = new Array();
@@ -84,13 +84,13 @@ Use this section to manage the list of existing countries. This list is used in 
 		    </td>
 		    <td align="center">
 		        <input id="country_vat_{country_idx}" type="checkbox" name="countries[{country.code}][eu_member]" value="Y" checked="{country.eu_member}" onclick="this.blur();">
-		        <script language="Javascript">CountryVatEnabledCheckBoxes[CountryVatEnabledCheckBoxes.length]="country_vat_{country_idx}";</script>
-		        <script language="Javascript" IF="country.enabled">setHeaderChecked("enable_countries_vat");</script>
+		        <script type="text/javascript">CountryVatEnabledCheckBoxes[CountryVatEnabledCheckBoxes.length]="country_vat_{country_idx}";</script>
+		        <script type="text/javascript" IF="country.enabled">setHeaderChecked("enable_countries_vat");</script>
 		    </td>
 		    <td align="center">
 		        <input id="country_enabled_{country_idx}" type="checkbox" name="countries[{country.code}][enabled]" value="Y" checked="{country.enabled}" onclick="this.blur();">
-		        <script language="Javascript">CountryEnabledCheckBoxes[CountryEnabledCheckBoxes.length]="country_enabled_{country_idx}";</script>
-		        <script language="Javascript" IF="country.enabled">setHeaderChecked("enable_countries");</script>
+		        <script type="text/javascript">CountryEnabledCheckBoxes[CountryEnabledCheckBoxes.length]="country_enabled_{country_idx}";</script>
+		        <script type="text/javascript" IF="country.enabled">setHeaderChecked("enable_countries");</script>
 		    </td>
 			    <widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/risk_country/checkbox.tpl">
 			<td align="center">
@@ -112,8 +112,8 @@ Use this section to manage the list of existing countries. This list is used in 
 		</tr>
 		</table>
 	</td>
-	<script language="Javascript">CheckBoxes["enable_countries_vat"] = CountryVatEnabledCheckBoxes;</script>
-	<script language="Javascript">CheckBoxes["enable_countries"] = CountryEnabledCheckBoxes;</script>
+	<script type="text/javascript">CheckBoxes["enable_countries_vat"] = CountryVatEnabledCheckBoxes;</script>
+	<script type="text/javascript">CheckBoxes["enable_countries"] = CountryEnabledCheckBoxes;</script>
 </tr>
 </table>
 </form>
@@ -158,7 +158,7 @@ Use this section to manage the list of existing countries. This list is used in 
 </form>
 
 {if:!valid}
-<script language="javascript">
+<script type="text/javascript">
 <!--
 var anchor = '#add_section';
 if (window.opera) {

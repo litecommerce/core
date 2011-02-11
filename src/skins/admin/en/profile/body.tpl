@@ -436,7 +436,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
     </tbody>
 
-    <script language="JavaScript">
+    <script type="text/javascript">
     	CheckBillingShipping(document.profile_form);
     </script>
 
@@ -467,7 +467,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
 </form>
 
-<script language="javascript">
+<script type="text/javascript">
 <!--
 var access_level_index = document.profile_form.access_level.selectedIndex;
 

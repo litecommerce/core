@@ -141,7 +141,7 @@
 
 </form>
 
-<script language="javascript">
+<script type="text/javascript">
 
 function onDeleteClick(category_id)
 {
