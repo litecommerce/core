@@ -181,7 +181,7 @@ OUT;
         ob_start();
 
         foreach ($args as $value) {
-            var_dump($value);
+            var_export($value);
         }
 
         $varDump = ob_get_contents();
