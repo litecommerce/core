@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<p class="ErrorMessage" IF="!product.getImages()">There are no images loaded for this product</p>
+<p class="error-message" IF="!product.getImages()">There are no images loaded for this product</p>
 
 <br />
 
@@ -21,9 +21,9 @@
   <input type="hidden" name="action" value="update_images" />
   <input type="hidden" name="image_id" value="" />
 
-  <div FOREACH="product.getImages(),id,image" class="Text">
+  <div FOREACH="product.getImages(),id,image">
     <p>
-      <font class="admin-head">Image #{inc(id)}</font><br />
+      <font class="admin-head">Image #{inc(id)}<br />
       <strong>Note:</strong> Image border will not be displayed in customer's frontend
     </p>
     <img src="{image.getURL()}" style="border: 1px solid #b2b2b3;" alt="" />

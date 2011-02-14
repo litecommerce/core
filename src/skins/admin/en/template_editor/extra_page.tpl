@@ -10,8 +10,8 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<p IF="read_only_access" class="ErrorMessage">WARNING! File cannot be {if:!mode=#page_edit#}created{else:}overwritten{end:}! Please check and correct file permissions.</p>
-<p IF="status=#updated#" class="SuccessMessage">&gt;&gt; Page has been updated successfully &lt;&lt;</p>
+<p IF="read_only_access" class="error-message">WARNING! File cannot be {if:!mode=#page_edit#}created{else:}overwritten{end:}! Please check and correct file permissions.</p>
+<p IF="status=#updated#" class="success-message">&gt;&gt; Page has been updated successfully &lt;&lt;</p>
 <widget template="template_editor/notes.tpl">
 <br />
 <br />

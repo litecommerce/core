@@ -21,9 +21,9 @@ Order by: <select name="listOrder" onChange="document.searchStat.submit()">
 </form>
 <br />
 <table border=0 cellpadding=0 cellspacing=0>
-<tr><td class="TableHead">
+<tr><td>
 <table border=0 cellpadding=3 cellspacing=1>
-<tr  class="TableHead">
+<tr >
 	<th>Query</th>
 	<th>Count</th>
 	<th>Products found</th>

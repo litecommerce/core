@@ -22,15 +22,15 @@
 <table IF="extraPages" border=0 cellpadding=0 cellspacing=0>
 <tbody FOREACH="extraPages,page">
 <tr>
-<td class="TableHead">
+<th>
 
-<table border=0 cellpadding=5 cellspacing=1 class="TableHead" width=100%>
+<table border=0 cellpadding=5 cellspacing=1 width=100%>
 <tr>
-    <th align="right"">Page: </th>
+    <th align="right">Page: </th>
 	<td class="admin-head"><i>{page.title:h}</i></td>
 </tr>
 <tr class="Center">
-    <th align="right"">Template: </th>
+    <th align="right">Template: </th>
     <td>{page.page}.tpl</td>
 </tr>
 <tr class="Center">

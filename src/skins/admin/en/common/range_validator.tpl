@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<font class="ValidateErrorMessage">&nbsp;&nbsp;&lt;&lt;&nbsp;The value must be in range {min}-{max}.</font>
+<font class="validate-error-message">&nbsp;&nbsp;&lt;&lt;&nbsp;The value must be in range {min}-{max}.

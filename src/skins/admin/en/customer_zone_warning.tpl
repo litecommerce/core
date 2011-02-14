@@ -10,6 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<span IF="getCustomerZoneWarning()=#maintenance_mode#" class="ErrorMessage">
+<span IF="getCustomerZoneWarning()=#maintenance_mode#" class="error-message">
     Customer zone is closed for maintenance.
 </span>

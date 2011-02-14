@@ -31,13 +31,13 @@ function ShowNotes()
 </style>
 Use this section to backup the database of your online store. Please note
 that database backup procedure can take up to several minutes.
-<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="NavigationPath" onclick="this.blur()"><b>How to backup your store database &gt;&gt;&gt;</b></a></span>
+<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>How to backup your store database &gt;&gt;&gt;</b></a></span>
 <span id="notes_body" style="display: none">
 <p class="adminParagraph">
 <table border=0 cellpadding=5 cellspacing=0>
     <tr>
         <td>&nbsp;&nbsp;</td>
-        <td class="TableHead">&nbsp;&nbsp;</td>
+        <td>&nbsp;&nbsp;</td>
         <td>&nbsp;</td>
         <td>
 You can choose to download your database data (SQL dump) directly to your local
@@ -53,7 +53,7 @@ file from the server later on and delete it from the server by clicking on the
 </span>
 
 <hr />
-<p class="adminParagraph"><b class="Star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings"><u>General settings</u></a> page before performing backup procedure!</p>
+<p class="adminParagraph"><b class="star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings"><u>General settings</u></a> page before performing backup procedure!</p>
 
 <form action="admin.php" method="post" name="backup_form">
 <input type="hidden" name="target" value="db">

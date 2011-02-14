@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<p IF="moreThanOnePage" class="NavigationPath">
+<p IF="moreThanOnePage" class="navigation-path">
 <table border=0 width="90%">
 <tr>
 <td>

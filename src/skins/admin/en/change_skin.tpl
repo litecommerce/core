@@ -44,7 +44,7 @@
 <p>Use this section to configure the look & feel of your store.</p>
 
 <hr />
-<p class="adminParagraph"><b class="Star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings"><u>General settings</u></a> page before performing any operations on this page!</p>
+<p class="adminParagraph"><b class="star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings"><u>General settings</u></a> page before performing any operations on this page!</p>
 
 <form action="admin.php" method="POST" name="change_skin_form">
 <input type="hidden" name="target" value="change_skin">
@@ -65,7 +65,7 @@
 	</td>
 </tr>
 <tr IF="isDisplayWarning()">
-	<td colspan="2" class="ErrorMessage"><br />Warning: The module for current commercial skin "{if:currentSkin=##}???{else:}{currentSkin}{end:}" is deleted or deactivated. You can check the module status in the '<a href="admin.php?target=modules">Modules</a>' section of the Admin menu.</td>
+	<td colspan="2" class="error-message"><br />Warning: The module for current commercial skin "{if:currentSkin=##}???{else:}{currentSkin}{end:}" is deleted or deactivated. You can check the module status in the '<a href="admin.php?target=modules">Modules</a>' section of the Admin menu.</td>
 </tr>
 <tr id="preview_container" style="display: none;">
 	<td colspan=2>

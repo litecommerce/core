@@ -13,9 +13,9 @@
 <p>Use this section to import catalog data from a CSV file. <hr />
 
 <p IF="!valid">
-    <font class="ErrorMessage">&gt;&gt; Error occured &lt;&lt;<br /></font>
-    <font IF="import_error" class="ErrorMessage">You have specified incorrect file format or the file doesn't match.<br /></font>
-    <font IF="category_unspecified_error" class="ErrorMessage">Category unspecified</font>
+    <font class="error-message">&gt;&gt; Error occured &lt;&lt;<br />
+    <font IF="import_error" class="error-message">You have specified incorrect file format or the file doesn't match.<br />
+    <font IF="category_unspecified_error" class="error-message">Category unspecified
 </p>
 
 <p>

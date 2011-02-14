@@ -38,7 +38,7 @@
 </tr>
 
 <tr IF="error">
-<td colspan=2 class="ErrorMessage">WARNING! File cannot be overwritten! Please check and correct file permissions.</td>
+<td colspan=2 class="error-message">WARNING! File cannot be overwritten! Please check and correct file permissions.</td>
 </tr>
 
 <tr>

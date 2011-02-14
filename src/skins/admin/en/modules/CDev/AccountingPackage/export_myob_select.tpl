@@ -12,7 +12,7 @@
  *}
 To export the found orders into MYOB Accounting 2005 follow the steps below<hr />
 
-<p><font class="admin-head">Step 1: Export of customer cards</font>
+<p><font class="admin-head">Step 1: Export of customer cards
 <p align="justify">Click on "Export customer cards" button below to export customer cards for the found orders and save the resulting CSV file. You can name this file as you like to suit your requirements.
 
 <p align="justify">In MYOB: To import the exported customer cards, from the file menu select <b>Import Data</b> ---&gt; <b>Cards</b> ---&gt; <b>Customer Cards</b>. Then select Tab-delimited as an Input File Format, Header Records as a First Record and click on continue. Select the file created with "Export" button and match the Import Fields with the MYOB Matching Import Fields. Then select Import. MYOB will confirm the data that has been imported.
@@ -23,12 +23,12 @@ To export the found orders into MYOB Accounting 2005 follow the steps below<hr /
 
 <p><br />
 
-<p><font class="admin-head">Step 2: Export of sales transaction</font>
+<p><font class="admin-head">Step 2: Export of sales transaction
 
 <p align="justify"> Before you can import transactions into MYOB you must set up an Income Account Number to which the total value of the imported transactions is allocated. Must be valid, preexisting MYOB account number, 5 characters, numeric. May (optionally) have a non-numeric separator between the first digit and the last 4 digits (for example, 1-1234). Please refer to your MYOB Manual for further assistance.
 
 <form name="order_sales_form">
-Income Account Number <font class=Star>*</font> <input type="text" name="income_account_number" value="{config.ImportExport.income_account}" size=7>
+Income Account Number <font class=Star>* <input type="text" name="income_account_number" value="{config.ImportExport.income_account}" size=7>
 </form>
 
 <p align="justify">Click on "Export sales transaction" button below to export the found orders and save the resulting CSV file. You can name this file as you like to suit your requirements.
@@ -51,11 +51,11 @@ function export_sales(income_account_number) {
 
 <p><br />
 
-<p><font class="admin-head">Step 3: Export of received payments</font>
+<p><font class="admin-head">Step 3: Export of received payments
 
 <p align="justify">Before you can import received payments into MYOB you must set up a Deposit Account to which the total value of the received payments is allocated. Must be valid, preexisting MYOB account number. 5 characters, numeric. May (optionally) have a non-numeric separator between the first digit and the last 4 digits (for example, 1-1234). Please refer to your MYOB Manual for further assistance.
 
-<form name="received_payments_form">Deposit Account Number <font class=Star>*</font> <input type="text" name="deposit_account" value="{config.ImportExport.deposit_account}" size=7></form>
+<form name="received_payments_form">Deposit Account Number <font class=Star>* <input type="text" name="deposit_account" value="{config.ImportExport.deposit_account}" size=7></form>
 
 <p align="justify">Click on "Export received payments" button below to export the resulting CSV file. You can name this file as you like to suit your requirements.
 

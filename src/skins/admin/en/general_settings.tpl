@@ -30,7 +30,7 @@
                 {if:isGDLibLoaded()}
                   <input id="{option.name}" type="checkbox" name="{option.name}" checked="{option.value=#Y#}" />
                 {else:}
-                  <input id="{option.name}" type="checkbox" name="{option.name}" checked="checked" disabled="disabled" />&nbsp;<font class="ErrorMessage">GDLib isn't detected</font>
+                  <input id="{option.name}" type="checkbox" name="{option.name}" checked="checked" disabled="disabled" />&nbsp;<font class="error-message">GDLib isn't detected
                 {end:}
               {else:}
                 <input id="{option.name}" type="checkbox" name="{option.name}" checked="{option.value=#Y#}" />
@@ -236,7 +236,7 @@ function https_checkbox_click()
         document.options_form.customer_security.checked = false;
         document.options_form.full_customer_security.disabled = true;
         document.options_form.admin_security.checked = false;
-        document.getElementById("httpsErrorMessage").style.cssText = "";
+        document.getElementById("httpserror-message").style.cssText = "";
         alert("No HTTPS is available. See the red message below.");
     }
     if (document.options_form.customer_security.checked == false) {
@@ -260,8 +260,8 @@ function enableHTTPS()
     document.options_form.full_customer_security.checked = full_customer_security_value;
     document.options_form.admin_security.checked = admin_security_value;
 
-    document.getElementById("httpsErrorMessage").style.cssText = "";
-    document.getElementById("httpsErrorMessage").innerHTML = "<font class='SuccessMessage'>Success</font>";
+    document.getElementById("httpserror-message").style.cssText = "";
+    document.getElementById("httpserror-message").innerHTML = "<font class='success-message'>Success";
 }
 
 document.options_form.customer_security.checked = false;
@@ -276,8 +276,8 @@ document.options_form.admin_security.onclick = https_checkbox_click;
 
   {* Check if https is available *}
   Trying to access the shop at <a href="{getShopUrl(#cart.php#,#1#)}">{getShopUrl(#cart.php#,#1#)}</a> ...
-  <span id="httpsErrorMessage" style="visibility:hidden">
-    <p class="ErrorMessage"><b>FAILED.</b> Secure connection cannot be established.</p>
+  <span id="httpserror-message" style="visibility:hidden">
+    <p class="error-message"><b>FAILED.</b> Secure connection cannot be established.</p>
     To fix this problem, do the following:
     <ul>
       <li> make sure that your hosting service provider has HTTPS protocol enabled;
@@ -290,7 +290,7 @@ document.options_form.admin_security.onclick = https_checkbox_click;
 <script>
 <!--
 if (!httpsEnabled) {
-    document.getElementById("httpsErrorMessage").style.cssText = "";
+    document.getElementById("httpserror-message").style.cssText = "";
 }
 -->
 </script>
@@ -299,7 +299,7 @@ if (!httpsEnabled) {
   <br />
   <p>Trying to perform a background HTTPS request ...</p>
   {if:check_https(config.Security.httpsClient)=#1#}
-    <p class="ErrorMessage"><b>FAILED.</b> Secure connection cannot be established.</p>
+    <p class="error-message"><b>FAILED.</b> Secure connection cannot be established.</p>
     To fix this problem, do the following:</p>
     <ul>
       <li> make sure that your hosting service provider has the HTTPS client installed and configured;
@@ -308,7 +308,7 @@ if (!httpsEnabled) {
       <li IF="openBasedirRestriction">Curl or OpenSSl executable path: LiteCommerce attempted to find Curl or OpenSSL executable in your system automatically. Your hosting provider might need to remove the open_basedir restriction for this directory path.</li>
     </ul>
   {else:}
-    <font class='SuccessMessage'>Success</font>
+    <font class='success-message'>Success
   {end:}
 
 {end:}

@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<span class="ErrorMessage">&lt;&lt; incorrect name format</span>
+<span class="error-message">&lt;&lt; incorrect name format</span>
