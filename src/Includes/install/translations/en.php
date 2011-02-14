@@ -276,6 +276,10 @@ LiteCommerce Installation Wizard
   'lc_php_phar_description' => 'Phar extension is required to install external LiteCommerce addons from marketplace. Please contact the support services of your hosting provider to adjust this parameter.',
   'lc_https_bouncer_description' => 'libCURL module with HTTPS protocol support and an SSL certificate required, if you want to process credit cards using Authorize.NET, PayPal or other payment gateways, or use real time shipping calculation services (these services require that your site accepts secure connections via HTTPS/SSL protocol). Please contact the support services of your hosting provider to adjust this parameter.',
   'lc_xml_support_description' => 'Xml/EXPAT and DOMDocument extensions for PHP are required for real-time shipping modules as well as for a payment modules. Please contact the support services of your hosting provider to adjust this parameter.',
+  'DocBlocks support' => 'DocBlocks support',
+  'DockBlock is not supported message' => 'DocBlock feature is not supported by your PHP. This feature is required for LiteCommerce to work.',
+  'eAccelerator loaded message' => 'The cause of blocking DocBlock feature may be the eAccelerator extension. Disable this extension and try again.',
+  'lc_docblocks_support_description' => 'The Docblocks comments are used in LiteCommerce and should not be stripped out by any PHP extensions.<br /><br />If you have eAccelerator extension loaded, you should unload it in php.ini file or you could reconfigure eAccelerator with the --with-eaccelerator-doc-comment-inclusion switch, then clean eAccelerator cache directory.',
 );
 
 

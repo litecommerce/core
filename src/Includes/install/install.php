@@ -431,10 +431,10 @@ function checkDocblocksSupport(&$errorMsg, $value = null)
     $result = !empty($docblock) && preg_match('/@(param|return)/', $docblock);
     
     if (!$result) {
-        $errorMsg = xtr('DocBlock feature is not supported by your PHP. This feature is required for LiteCommerce to work.');
+        $errorMsg = xtr('DockBlock is not supported message');
 
         if (extension_loaded('eAccelerator')) {
-            $errorMsg .= ' ' . xtr('The cause of blocking DocBlock feature may be the eAccelerator extension. Disable this extension and try again');
+            $errorMsg .= ' ' . xtr('eAccelerator loaded message');
         }
     }
 
