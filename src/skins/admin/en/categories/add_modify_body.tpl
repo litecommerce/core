@@ -17,17 +17,17 @@
 
 <p>
 
-<span IF="getRequestParamValue(#mode#)!=#modify#">Mandatory fields are marked with an asterisk (<font class="Star">*</font>).<br /><br /></span>
+<span IF="getRequestParamValue(#mode#)!=#modify#">Mandatory fields are marked with an asterisk (<font class="star">*).<br /><br /></span>
 
 <b>Note:</b> Use navigation bar above this dialog to navigate through the catalog categories.
 
 <hr />
 
-<p IF="message=#updated#"><font class="SuccessMessage">&gt;&gt;&nbsp;Category has been updated successfully&nbsp;&lt;&lt;</font></p>
+<p IF="message=#updated#"><font class="success-message">&gt;&gt;&nbsp;Category has been updated successfully&nbsp;&lt;&lt;</p>
 
-<p IF="message=#added#"><font class="SuccessMessage">&gt;&gt;&nbsp;Category has been added successfully&nbsp;&lt;&lt;</font></p>
+<p IF="message=#added#"><font class="success-message">&gt;&gt;&nbsp;Category has been added successfully&nbsp;&lt;&lt;</p>
 
-<p IF="!valid"><font class="ErrorMessage">&gt;&gt;&nbsp;There are errors in the form. Category has not been added&nbsp;&lt;&lt;</font></p>
+<p IF="!valid"><font class="error-message">&gt;&gt;&nbsp;There are errors in the form. Category has not been added&nbsp;&lt;&lt;</p>
 
 <p>
 
@@ -41,16 +41,16 @@
   <table border="0" width="100%">
 
     <tr>
-      <td width="15%" class="FormButton">Category&nbsp;name</td>
-      <td class="Star">*</td>
+      <td width="15%">Category&nbsp;name</td>
+      <td class="star">*</td>
       <td width="85%">
         <input type="text" name="name" value="{category.name}" size="50" maxlength="255" />
-        &nbsp;<font IF="!valid" class="ValidateErrorMessage">&lt;&lt; Required field</font>
+        &nbsp;<font IF="!valid" class="validate-error-message">&lt;&lt; Required field
       </td>
     </tr>
 
     <tr>
-      <td class="FormButton" valign="top">Category page title</td>
+      <td valign="top">Category page title</td>
       <td>&nbsp;</td>
       <td>
         <select name="show_title">
@@ -61,7 +61,7 @@
 
 
     <tr>
-      <td class="FormButton" valign="top">Description</td>
+      <td valign="top">Description</td>
       <td>&nbsp;</td>
       <td><textarea name="description" cols="50" rows="10">{category.description}</textarea></td>
     </tr>
@@ -75,21 +75,21 @@
     </tr>
 
     <tr>
-      <td class="FormButton" valign="top">Image</td>
+      <td valign="top">Image</td>
       <td>&nbsp;</td>
     </tr>
 
     <tr>
-      <td class="FormButton">Membership</td>
-      <td class="Star">*</td>
+      <td>Membership</td>
+      <td class="star">*</td>
       <td>
         <widget class="\XLite\View\MembershipSelect" template="common/select_membership.tpl" field="membership_id" value="{category.membership}" />
       </td>  
     </tr>
 
     <tr>
-      <td class="FormButton">Availability</td>
-      <td class="Star">*</td>
+      <td>Availability</td>
+      <td class="star">*</td>
       <td>
         <select name="enabled">
           <option value="1" selected="{category.enabled=#1#}">Enabled</option>
@@ -99,25 +99,25 @@
     </tr>  
 
     <tr>
-      <td class="FormButton">HTML title ('title' tag)</td>
+      <td>HTML title ('title' tag)</td>
       <td>&nbsp;</td>
       <td><input type="text" name="meta_title" value="{category.meta_title}" size="50" /></td>
     </tr>
 
     <tr>
-      <td class="FormButton">Meta keywords</td>
+      <td>Meta keywords</td>
       <td>&nbsp;</td>
       <td><input type="text" name="meta_tags" value="{category.meta_tags}" size="50" /></td>
     </tr>
 
     <tr>
-      <td class="FormButton">Meta description</td>
+      <td>Meta description</td>
       <td>&nbsp;</td>
       <td><input type="text" name="meta_desc" value="{category.meta_desc}" size="50" /></td>
     </tr>
 
     <tr>
-      <td class="FormButton">Clean URL </td>
+      <td>Clean URL </td>
       <td>&nbsp;</td>
       <td><input type="text" name="clean_url" value="{category.clean_url}" size="50" /></td>
     </tr>
@@ -155,7 +155,7 @@ Not available right now
   <table border="0" width="100%">
 
     <tr>
-      <td width="15%" class="FormButton">Select category:</td>
+      <td width="15%">Select category:</td>
       <td width="85%">
         <widget class="\XLite\View\CategorySelect" fieldName="moveTo" currentCategoryId={category.category_id} ignoreCurrentPath rootOption />
       </td>

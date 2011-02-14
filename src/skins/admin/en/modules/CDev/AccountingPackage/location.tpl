@@ -10,5 +10,5 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<span IF="mode=#export_pt#" class="NavigationPath">&nbsp;::&nbsp;Export orders to Peachtree</span>
-<span IF="mode=#export_myob#" class="NavigationPath">&nbsp;::&nbsp;Export orders to MYOB Accounting 2005</span>
+<span IF="mode=#export_pt#" class="navigation-path">&nbsp;::&nbsp;Export orders to Peachtree</span>
+<span IF="mode=#export_myob#" class="navigation-path">&nbsp;::&nbsp;Export orders to MYOB Accounting 2005</span>

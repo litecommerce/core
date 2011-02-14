@@ -14,7 +14,7 @@
 <td class="table-label {getFieldId()}-label">
   <label for="{getFieldId()}">{getParam(#label#)}:</label>
 </td>
-<td class="Star">
+<td class="star">
   {if:getParam(#required#)}*{else:}&nbsp;{end:}
 </td>
 <td class="table-value {getFieldId()}-value">

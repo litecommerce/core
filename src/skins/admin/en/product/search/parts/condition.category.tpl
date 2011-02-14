@@ -14,8 +14,8 @@
  *}
 
 <tr>
-  <td class="FormButton" nowrap="nowrap" height="10">In category</td>
-  <td width="10" height="10"><font class="ErrorMessage">*</font></td>
+  <td nowrap="nowrap" height="10">In category</td>
+  <td width="10" height="10"><font class="error-message">*</td>
   <td height="10">
     <widget class="\XLite\View\CategorySelect" fieldName="categoryId" selectedCategoryId="{getCondition(#categoryId#):r}" allOption />
   </td>

@@ -10,5 +10,5 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<h2 align="center" class="ErrorMessage">Access denied!</h3>
+<h2 align="center" class="error-message">Access denied!</h3>
 <p align="center">You are not allowed to access this resource!</p>

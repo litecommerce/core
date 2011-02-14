@@ -39,9 +39,9 @@ function changeVal(param)
 //-->
 </script>
 
-<div class="ErrorMessage">{error}</div>
+<div class="error-message">{error}</div>
 
-<div IF="inv_exp_error" class="ErrorMessage">There is a mistake in the tax calculation formula.</div>
+<div IF="inv_exp_error" class="error-message">There is a mistake in the tax calculation formula.</div>
 
 <form action="admin.php" method="POST" name="tax_form">
   <input type="hidden" name="page" value="add_rate">

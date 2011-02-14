@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<font class="ValidateErrorMessage">&nbsp;&nbsp;&lt;&lt;&nbsp;State doesn't match country</font>
+<font class="validate-error-message">&nbsp;&nbsp;&lt;&lt;&nbsp;State doesn't match country

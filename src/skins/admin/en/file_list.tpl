@@ -21,7 +21,7 @@
 {else:}<img src="images/folder.gif" border="0" alt="" />
 {end:}
 {node.name}</a>
-{if:node.comment}&nbsp;&nbsp;-&nbsp;<font style="font-size:8pt">{node.comment}</font><br />
+{if:node.comment}&nbsp;&nbsp;-&nbsp;<font style="font-size:8pt">{node.comment}<br />
 {else:}
 <br />
 {end:}

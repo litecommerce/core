@@ -37,10 +37,10 @@ function setHeaderChecked()
 <p>Use this section to manage the lists of counties, provinces, regions and states of different countries. The lists are used in shipping and tax settings and calculations, and in the registration form at the Customer Front-end.
 <hr />
 
-<font IF="status=#country_code#" class="ErrorMessage"><br /><br />&gt;&gt;&nbsp;Please, select country&nbsp;&lt;&lt;<br /><br /></font>
-<font IF="status=#added#" class="SuccessMessage"><br /><br />&gt;&gt;&nbsp;State added successfully&nbsp;&lt;&lt;<br /><br /></font>
-<font IF="status=#deleted#" class="SuccessMessage"><br /><br />&gt;&gt;&nbsp;State(s) deleted successfully&nbsp;&lt;&lt;<br /><br /></font>
-<font IF="status=#updated#" class="SuccessMessage"><br /><br />&gt;&gt;&nbsp;State(s) updated successfully&nbsp;&lt;&lt;<br /><br /></font>
+<font IF="status=#country_code#" class="error-message"><br /><br />&gt;&gt;&nbsp;Please, select country&nbsp;&lt;&lt;<br /><br />
+<font IF="status=#added#" class="success-message"><br /><br />&gt;&gt;&nbsp;State added successfully&nbsp;&lt;&lt;<br /><br />
+<font IF="status=#deleted#" class="success-message"><br /><br />&gt;&gt;&nbsp;State(s) deleted successfully&nbsp;&lt;&lt;<br /><br />
+<font IF="status=#updated#" class="success-message"><br /><br />&gt;&gt;&nbsp;State(s) updated successfully&nbsp;&lt;&lt;<br /><br />
 
 <form name="select_country_form" method="GET">
 <p class="admin-head">Select country</p>
@@ -60,10 +60,10 @@ function setHeaderChecked()
 <h2>List of states</h2>
 			
       <table class="data-table">
-				<tr class="TableHead">
-				    <th class="TableHead">Code</th>
-				    <th class="TableHead">State</th>
-				    <th class="TableHead"><input id="select_states" type="checkbox" onclick="this.blur();setChecked('update_delete_states_form','state_ids',this.checked);"></th>
+				<tr>
+				    <th>Code</th>
+				    <th>State</th>
+				    <th><input id="select_states" type="checkbox" onclick="this.blur();setChecked('update_delete_states_form','state_ids',this.checked);"></th>
 				</tr>
 
 				<tr FOREACH="states,state_idx,state" class="{getRowClass(state_idx,#dialog-box#,#highlight#)}">
@@ -99,8 +99,8 @@ function setHeaderChecked()
 <h2>Add new state</h2>
 <table class="data-table">
 	<tr>
-	  <th class="TableHead">Code</th>
-	  <th class="TableHead">State</th>
+	  <th>Code</th>
+	  <th>State</th>
 	</tr>
 	<tr class="dialog-box">
 	  <td><input type="text" size="8" name="code" value="{code}"></td>
@@ -108,8 +108,8 @@ function setHeaderChecked()
   </tr>
 {if:!valid}
 	<tr class="dialog-box">
-		<td IF="status=#code#" colspan="2"><font class="ErrorMessage">&gt;&gt;&nbsp;Mandatory field "Code" empty.</font><br /><br /></td>
-		<td IF="status=#state#" colspan="2"><font class="ErrorMessage">&gt;&gt;&nbsp;Mandatory field "State" empty.</font><br /><br /></td>
+		<td IF="status=#code#" colspan="2"><font class="error-message">&gt;&gt;&nbsp;Mandatory field "Code" empty.<br /><br /></td>
+		<td IF="status=#state#" colspan="2"><font class="error-message">&gt;&gt;&nbsp;Mandatory field "State" empty.<br /><br /></td>
 	</tr>
 {end:}
 	<tr>

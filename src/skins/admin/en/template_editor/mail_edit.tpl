@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<p IF="status=#updated#" class="SuccessMessage">&gt;&gt; Mail templates have been updated successfully &lt;&lt;</p>
+<p IF="status=#updated#" class="success-message">&gt;&gt; Mail templates have been updated successfully &lt;&lt;</p>
 
 <p class="admin-head">{mailTemplates.body.comment}</p>
 
@@ -40,13 +40,13 @@
 </tr>
 </table>
 
-<b>Subject:</b><span class="ErrorMessage" IF="subjectWriteError">&nbsp;WARNING! File cannot be overwritten! Please check and correct file permissions.</span><br />
+<b>Subject:</b><span class="error-message" IF="subjectWriteError">&nbsp;WARNING! File cannot be overwritten! Please check and correct file permissions.</span><br />
 <input type="text" name="subject" value="{mailTemplates.subject.content}" size="81">
 <br /><br />
-<b>Body:</b><span class="ErrorMessage" IF="bodyWriteError">&nbsp;WARNING! File cannot be overwritten! Please check and correct file permissions.</span><br />
+<b>Body:</b><span class="error-message" IF="bodyWriteError">&nbsp;WARNING! File cannot be overwritten! Please check and correct file permissions.</span><br />
 <textarea name="body" cols="81" rows="20">{mailTemplates.body.content}</textarea>
 <br /><br />
-<b>Signature:</b><span class="ErrorMessage" IF="signatureWriteError">&nbsp;WARNING! File cannot be overwritten! Please check and correct file permissions.</span><br />
+<b>Signature:</b><span class="error-message" IF="signatureWriteError">&nbsp;WARNING! File cannot be overwritten! Please check and correct file permissions.</span><br />
 <textarea name="signature" cols="81" rows="7">{mailTemplates.signature.content}</textarea>
 <p>
 

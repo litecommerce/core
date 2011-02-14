@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<span class="Text">
+<span>
 {if:product.enabled}
 Product <b>"{product.name}"</b> (#{product.product_id}) has been added to the catalog and is available for sale now.<p> 
 {else:}

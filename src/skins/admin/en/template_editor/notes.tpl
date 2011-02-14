@@ -26,7 +26,7 @@ function ShowNotes()
 </script>
 
 <br />
-<span id="notes_url" style="display:"><a href="javascript: ShowNotes();" class="NavigationPath" onclick="this.blur()"><b> Please note  &gt;&gt;&gt;</b></a></span>
+<span id="notes_url" style="display:"><a href="javascript: ShowNotes();" class="navigation-path" onclick="this.blur()"><b> Please note  &gt;&gt;&gt;</b></a></span>
 <span id="notes_body" style="display: none">
 <hr noshade size="1">
 <p>Since it is possible to modify the existing Flexy (<i>Flexy is a templates engine used in Litecommerce</i>) structures or add a custom Flexy code to the templates or user-defined pages, the following rules should be observed:</p>

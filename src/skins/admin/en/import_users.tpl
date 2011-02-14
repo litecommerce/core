@@ -14,10 +14,10 @@
 <p>Use this section to import user data from a CSV file. <hr />
 
 <p IF="import_error">
-<font class="ErrorMessage">
+<font class="error-message">
 &gt;&gt; Import error occured &lt;&lt;<br />
 You have specified incorrect file format or the file doesn't match. 
-</font>
+
 </p>
 
 <p>
@@ -27,7 +27,7 @@ You have specified incorrect file format or the file doesn't match.
 
 <table border=0>
 <tr>
-    <td colspan=2><font class=admin-head>Field order:</font></td>
+    <td colspan=2><font class=admin-head>Field order:</td>
 </tr>
 <tr FOREACH="import_fields,id,fields">
     <td width=1>{id}:</td>
