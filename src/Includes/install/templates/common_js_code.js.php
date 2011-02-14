@@ -134,20 +134,6 @@ function setTop(elm, y)
     }
 }
 
-function showWaitingAlert(status, prefix)
-{
-    id = prefix+"waiting_alert";
-    var Element = document.getElementById(id);
-    if (Element) {
-        var posX = (getWindowWidth() - 300) / 2;
-        var posY = (getWindowHeight() - 100) / 2;
-        setLeft(Element, posX);
-        setTop(Element, posY);
-        visibleBox(id, status);
-    }
-}
-
-
 function showDetails(code)
 {
     if (code == "" && document.getElementById('test_passed_icon')) {

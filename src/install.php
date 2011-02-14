@@ -592,10 +592,6 @@ foreach ($rows as $row) {
 
   </div>
 
-<div id="waiting_alert" class="hidden">
-    <?php echo xtr('Inspecting your server configuration.<br />It can take several minutes, please wait.'); ?>
-</div>
-
 <noscript>
     <div class="ErrorMessage"><?php echo xtr('This installer requires JavaScript to function properly.<br />Please enable Javascript in your web browser.'); ?></div>
 </noscript>

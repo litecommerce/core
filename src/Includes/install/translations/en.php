@@ -234,7 +234,6 @@ LiteCommerce Installation Wizard
   'Fatal error: Invalid current step. Stopped.' => 'Fatal error: Invalid current step. Stopped.',
   'Internal error: function :funcname() not found' => 'Internal error: function :funcname() not found',
   'Installation Wizard' => 'Installation Wizard',
-  'Inspecting your server configuration.<br />It can take several minutes, please wait.' => 'Inspecting your server configuration.<br />It can take several minutes, please wait.',
   'Version' => 'Version',
   'Step :step' => 'Step :step',
   'This installer requires JavaScript to function properly.<br />Please enable Javascript in your web browser.' => 'This installer requires JavaScript to function properly.<br />Please enable Javascript in your web browser.',

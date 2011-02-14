@@ -116,10 +116,6 @@ function get_lc_docblocks_support_description()
 
 ?>
 
-<script type="text/javascript">
-    showWaitingAlert(true, '');
-</script>
-
 <div class="requirements-report">
 
 <div class="requirements-list">
@@ -224,8 +220,6 @@ foreach ($steps as $stepData) {
 foreach ($reqsNotes as $reqNote) {
 
 ?>
-
-    <script type="text/javascript">showWaitingAlert(false, '');</script>
 
     <div id="<?php echo $reqNote['reqname']; ?>" style="display: none">
         <div class="error-title"><?php echo $reqNote['title']; ?></div>
