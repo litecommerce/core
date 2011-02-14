@@ -41,6 +41,14 @@ if (!defined('XLITE_INSTALL_MODE')) {
 
 
 /**
+ * Test class for checking of DocBlock feature support
+ *
+ * @param  Test param
+ * @return Returned value
+ */
+class InstallTestDockblocks { }
+
+/**
  * Returns a processed text by specified label value
  * 
  * @param $label string Label value
@@ -326,6 +334,12 @@ function doCheckRequirements()
         'critical' => false,
     );
 
+    $checkRequirements['lc_docblocks_support'] = array(
+        'title'    => xtr('DocBlocks support'),
+        'critical' => true,
+    );
+
+
     $passed = array();
 
     $requirementsOk = true;
@@ -395,6 +409,36 @@ function doCheckRequirements()
     }
 
     return $checkRequirements;
+}
+
+/**
+ * Check if DocBlock feature is supported
+ * 
+ * @param string $errorMsg Error message if checking failed
+ * @param string $value    Actual value of the checked parameter
+ *  
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function checkDocblocksSupport(&$errorMsg, $value = null)
+{
+    $rc = new ReflectionClass('InstallTestDockblocks');
+    
+    $docblock = $rc->getDocComment();
+    
+    $result = !empty($docblock) && preg_match('/@(param|return)/', $docblock);
+    
+    if (!$result) {
+        $errorMsg = xtr('DocBlock feature is not supported by your PHP. This feature is required for LiteCommerce to work.');
+
+        if (extension_loaded('eAccelerator')) {
+            $errorMsg .= ' ' . xtr('The cause of blocking DocBlock feature may be the eAccelerator extension. Disable this extension and try again');
+        }
+    }
+
+    return $result;
 }
 
 /**
@@ -2788,6 +2832,7 @@ function module_check_cfg()
                 'lc_php_version',
                 'lc_php_disable_functions',
                 'lc_php_memory_limit',
+                'lc_docblocks_support',
                 'lc_php_mysql_support',
                 'lc_php_pdo_mysql',
                 'lc_file_permissions'
