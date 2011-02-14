@@ -279,6 +279,7 @@ LiteCommerce Installation Wizard
   'DockBlock is not supported message' => 'DocBlock feature is not supported by your PHP. This feature is required for LiteCommerce to work.',
   'eAccelerator loaded message' => 'The cause of blocking DocBlock feature may be the eAccelerator extension. Disable this extension and try again.',
   'lc_docblocks_support_description' => 'The Docblocks comments are used in LiteCommerce and should not be stripped out by any PHP extensions.<br /><br />If you have eAccelerator extension loaded, you should unload it in php.ini file or you could reconfigure eAccelerator with the --with-eaccelerator-doc-comment-inclusion switch, then clean eAccelerator cache directory.',
+  'Redirecting to the next step...' => 'Redirecting to the next step...',
 );
 
 

@@ -2893,6 +2893,7 @@ function module_cfg_install_db(&$params)
     global $checkRequirements;
 
     $pdoErrorMsg = '';
+    $output = '';
 
     $clrNumber = 1;
 
@@ -3090,21 +3091,9 @@ function module_cfg_install_db(&$params)
 
         if (!$checkError && !$checkWarning) {
 
-            ob_start();
+            global $autoPost;
 
-            foreach ($paramFields as $fieldName => $fieldData) {
-
-                if (!isset($fieldData['step']) || $fieldData['step'] != 2) {
-                    $fieldData['type'] = 'static';
-                    $fieldData['value'] = (isset($params[$fieldName]) ? $params[$fieldName] : '');
-                }
-
-                displayFormElement($fieldName, $fieldData, $clrNumber);
-                $clrNumber = ($clrNumber == 2) ? 1 : 2;
-            }
-
-            $output = ob_get_contents();
-            ob_end_clean();
+            $autoPost = true;
 
         } else {
             $output = '';
