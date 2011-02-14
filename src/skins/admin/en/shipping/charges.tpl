@@ -84,7 +84,7 @@ and cannot be edited.
 </p>
 </span>
 
-<hr \>
+<hr />
 
 <form name="charges_methods" method="post" action="admin.php">
 
