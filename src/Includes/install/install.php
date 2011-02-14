@@ -2956,7 +2956,8 @@ function module_cfg_install_db(&$params)
             'title'       => xtr('MySQL password'),
             'description' => xtr('Password for the above MySQL username.'),
             'def_value'   => '',
-            'required'    => false
+            'required'    => false,
+            'type'        => 'password',
         ),
         'demo'             => array(
             'title'       => xtr('Install sample catalog'),
