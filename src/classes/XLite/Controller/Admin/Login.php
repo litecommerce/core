@@ -47,7 +47,7 @@ class Login extends \XLite\Controller\Admin\AAdmin
     public function handleRequest()
     {
         if (
-            $this->auth->isAuthorized($this)
+            \XLite\Core\Auth::getInstance()->isLogged()
             && 'logoff' !== \XLite\Core\Request::getInstance()->{static::PARAM_ACTION}
         ) {
             $this->setReturnUrl($this->buildURL());
