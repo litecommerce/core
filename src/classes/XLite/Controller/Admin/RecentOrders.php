@@ -80,7 +80,7 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
         parent::doActionSearch();
 
         $this->session->set(
-            \XLite\View\ItemsList\Order\Admin\Search::getSessionCellName(),
+            \XLite\View\ItemsList\Order\Admin\Recent::getSessionCellName(),
             array(
                 \XLite\Model\Repo\Order::P_DATE => array(
                     LC_START_TIME - 86400,
