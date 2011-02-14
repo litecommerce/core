@@ -1138,6 +1138,19 @@ function doPrepareFixtures(&$params, $silentMode = false)
 
     $result = true;
 
+    $enabledModules = array();
+
+    foreach ($lcSettings['enable_modules'] as $moduleAuthor => $modules) {
+
+        $enabledModules[$moduleAuthor] = array();
+
+        foreach ($modules as $moduleName) {
+            $enabledModules[$moduleAuthor][$moduleName] = 1;
+        }
+    }
+
+        \Includes\Decorator\Utils\ModulesManager::saveModulesToFile($enabledModules);
+
     // Generate fixtures list
     $yamlFiles = $lcSettings['yaml_files']['base'];
 
@@ -3259,16 +3272,6 @@ function module_install_dirs(&$params)
 <?php
 
     if ($result) {
-
-        $enabledModules = array();
-        foreach ($lcSettings['enable_modules'] as $moduleAuthor => $modules) {
-            $enabledModules[$moduleAuthor] = array();
-            foreach ($modules as $moduleName) {
-                $enabledModules[$moduleAuthor][$moduleName] = 1;
-            }
-        }
-
-        \Includes\Decorator\Utils\ModulesManager::saveModulesToFile($enabledModules);
         $result = doPrepareFixtures($params, true);
     
     } else {

@@ -83,21 +83,21 @@ if (COPYRIGHT_EXISTS) {
 
 </table>
 
-<br />
-
 <?php
 
     } else {
 
 ?>
 
-<input type="hidden" name="params[new_installation]" value="<?php print get_step("check_cfg") ?>">
+<input type="hidden" name="params[new_installation]" value="<?php print get_step("check_cfg") ?>" />
 
 <?php
 
     }
 
 ?>
+
+<br />
 
 <span class="checkbox-field">
 <input type="checkbox" id="agree" name="agree" onclick="javascript:setNextButtonDisabled(!this.checked);" />

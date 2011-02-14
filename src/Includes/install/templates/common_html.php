@@ -729,7 +729,6 @@ a.final-link {
 }
 
 .report-window {
-    border-color: red;
     -moz-border-radius: 11px;
     border-radius: 11px;
     -webkit-border-radius: 11px;
@@ -778,8 +777,16 @@ a.report-close {
 }
 
 .warning-text {
-    font-weight: bold;
-    color: red;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+    -webkit-border-radius: 9px;
+    border: 10px solid #7a7a7a;
+    background: white;
+    margin: 10px auto;
+    padding: 20px;
+    width: 500px;
+    font-size: 16px;
+    color: #c11600;
     text-align: center;
 }
 
