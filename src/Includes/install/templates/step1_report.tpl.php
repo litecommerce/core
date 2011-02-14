@@ -39,6 +39,13 @@ if (!defined('XLITE_INSTALL_MODE')) {
 	die('Incorrect call of the script. Stopped.');
 }
 
+
+global $requirements;
+
+if (!empty($requirements) && is_array($requirements)) {
+
+    $report = make_check_report($requirements);
+
 ?>
 
 <div id="report-layer" class="report-layer" style="display:none;">
@@ -47,15 +54,6 @@ if (!defined('XLITE_INSTALL_MODE')) {
 
 <a class="report-close" href="#" onclick="javascript: document.getElementById('report-layer').style.display='none'; return false;"><img src="<?php echo $skinsDir; ?>images/spacer.gif" width="10" height="10" border="0" alt="" /><span class="report-close" style="display: none;">close</span></a>
 
-<?php
-
-include_once LC_DIR . '/Includes/install/templates/step1_report.tpl.php';
-
-global $requirements;
-
-$report = make_check_report($requirements);
-
-?>
 
 <form method="post" name="report_form" action="https://secure.qtmsoft.com/customer.php">
 
@@ -96,4 +94,8 @@ $report = make_check_report($requirements);
 <div class="clear"></div>
 
 </div>
+
+<?php
+
+}
 

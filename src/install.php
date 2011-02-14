@@ -63,37 +63,6 @@ foreach ($filesToInclude as $_file) {
 }
 
 
-/*
- * Prepare data for report file
- */
-
-// Prepare report ID
-if (isset($_REQUEST['ruid']) && $_REQUEST['ruid']) {
-    $report_uid = $_REQUEST["ruid"];
-
-} else {
-	$report_uid = substr(md5(uniqid(time())), 0, 12);
-}
-
-$upload_tmp_dir = @ini_get("upload_tmp_dir");
-
-if (isset($_ENV['TMPDIR'])) {
-    $tmpdir = $_ENV['TMPDIR'];
-
-} elseif (@is_dir('/tmp')) { 
-    $tmpdir = '/tmp';
-
-} elseif (isset($_ENV['TMP'])) {
-    $tmpdir = $_ENV['TMP'];
-
-} elseif (isset($_ENV['TEMP'])) { 
-    $tmpdir = $_ENV['TEMP'];
-
-} elseif (!empty($upload_tmp_dir) && @is_dir($upload_tmp_dir)) {
-	$tmpdir = $upload_tmp_dir;
-}
-
-$reportFName = $tmpdir . LC_DS . 'check_report_' . $report_uid . '.txt';
 
 // Installation modules (steps)
 $modules = array (
@@ -357,21 +326,6 @@ OUT;
 	if (isset($_GET['action']) && $_GET['action'] == 'recursion_test') {
 		recursion_depth_test(1);
 		die('RECURSION-TEST-OK');
-	}
-
-    // Send report
-	if (isset($_GET['action']) && $_GET['action'] == 'send_report') {
-		$is_original = true;
-		$report = '';
-        $report = @file_get_contents($reportFName);
-
-		if (!$report) {
-			$is_original = false;
-        }
-
-        include_once LC_ROOT_DIR . 'Includes/install/templates/step1_report.tpl.php';
-
-		die();
 	}
 }
 
@@ -654,18 +608,29 @@ if ($current < count($modules)) {
         }
     }
 
-    if ($report_uid) {
-
-?>
-
-    <input type="hidden" name="ruid" value="<?php echo $report_uid; ?>" />
-
-<?php
-    }
 ?>
 
   <input type="hidden" name="go_back" value="0" />
   <input type="hidden" name="current" value="<?php echo $current ?>" />
+
+<?php
+
+if (isset($autoPost)) {
+
+    
+?>
+
+    <div><?php echo xtr('Redirecting to the next step...'); ?></div>
+
+    <script type="text/javascript">
+    document.ifrm.submit();
+    </script>
+
+<?php
+
+} else {
+
+?>
 
 <table class="buttons-bar" align="center" cellspacing="20">
 
@@ -712,6 +677,8 @@ if ($current < count($modules)) {
 <?php
 
 }
+}
+
 
 ?>
 
