@@ -27,8 +27,8 @@
 <td>
 	<table border="0" cellpadding=0 cellspacing=0 width=100%>
     <tr>
-    	<td width=50%><img src="images/letter.gif" border="0" align="top">&nbsp;<b>Mail templates folder:</b><br /><i>{node}</i></td>
-    	<td width=50% align=right><a href="{url}"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Go back</a></td>
+    	<td width=50%><img src="images/letter.gif" border="0" align="top" alt="" />&nbsp;<b>Mail templates folder:</b><br /><i>{node}</i></td>
+    	<td width=50% align=right><a href="{url}"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle" alt="" /> Go back</a></td>
 	</tr>
 	</table>
 </td>
