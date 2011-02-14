@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<p IF="message=#added#"><font class="success-message">&gt;&gt;&nbsp;Shipping rate has been added successfully&nbsp;&lt;&lt;</p>
+<p IF="message=#added#"><span class="success-message">&gt;&gt;&nbsp;Shipping rate has been added successfully&nbsp;&lt;&lt;</span></p>
 
 <p IF="message=#add_failed#"><font class="error-message">&gt;&gt;&nbsp;Shipping rate cannot be added&nbsp;&lt;&lt;<br />Please make sure that <b>"min weight", "min total", "min items", "shipping zone", "shipping method"</b> fields do not overlap with other shipping rates.</p>
 

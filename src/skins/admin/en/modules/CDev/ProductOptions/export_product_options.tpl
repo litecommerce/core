@@ -19,7 +19,7 @@ This page allows to export product options into CSV file.<hr />
 
 <table border=0>
 <tr>
-    <td colspan=2><font class=admin-head>Field order:</td>
+    <td colspan=2><span class=admin-head>Field order:</span></td>
 </tr>
 <tr FOREACH="xlite.factory.\XLite\Module\CDev\ProductOptions\Model\ProductOption.getImportFields(#product_options_layout#),id,fields">
     <td width=1>{id}:</td>

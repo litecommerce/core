@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<font class="validate-error-message">&nbsp;&nbsp;&lt;&lt;&nbsp;Please, enter a valid IP address
+<span class="validate-error-message">&nbsp;&nbsp;&lt;&lt;&nbsp;Please, enter a valid IP address</span>

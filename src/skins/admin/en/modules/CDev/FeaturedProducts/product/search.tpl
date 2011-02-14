@@ -16,7 +16,7 @@
 
       <tr>
         <td nowrap="nowrap" height="10">In category</td>
-        <td width="10" height="10"><font class="error-message">*</td>
+        <td width="10" height="10"><span class="error-message">*</span></td>
         <td height="10">
           <widget class="\XLite\View\CategorySelect" fieldName="categoryId" selectedCategoryId="{getCondition(#categoryId#):r}" allOption />
         </td>

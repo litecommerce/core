@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<p>Mandatory fields are marked with an asterisk (<font class="star">*).<br /><br />
+<p>Mandatory fields are marked with an asterisk (<span class="star">*</span>).<br /><br />
 
 <widget class="XLite\View\Form\Product\Modify\Single" name="modify_form" />
 

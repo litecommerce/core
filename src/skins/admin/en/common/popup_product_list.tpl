@@ -34,7 +34,7 @@ function selectProduct(product_id, name)
 <tr FOREACH="pager.pageData,product">
     <td width=1%><a href="javascript: selectProduct({product.product_id},'{addSlashes(product,#name#):r}')">{product.sku}</a></td>
     <td width="70%">
-        <a href="javascript: selectProduct({product.product_id},'{addSlashes(product.name):r}')"><font class="ItemsList">{product.name}</a>
+        <a href="javascript: selectProduct({product.product_id},'{addSlashes(product.name):r}')">{product.name}</a>
     </td>
     <td nowrap align="right">
         <a href="javascript: selectProduct({product.product_id},'{addSlashes(product.name):r}')">{price_format(product.price):h}</a>
