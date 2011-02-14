@@ -62,7 +62,7 @@
 <b>Taxes on shipping:</b><br />
 <table><tr FOREACH="shipping_taxes,name,value"><td>{name}</td><td>{value}%</td></tr></table>
 <p>
-<a href="javascript: window.close()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Close tax calculator</a><br />
+<a href="javascript: window.close()"><img src="images/go.gif" alt="" width="13" height="13" border="0" align="absmiddle"> Close tax calculator</a><br />
 {end:}
 
 </body>
