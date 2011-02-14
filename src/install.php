@@ -62,12 +62,6 @@ foreach ($filesToInclude as $_file) {
     include_once $includeFuncsFile;
 }
 
-// Link auto-globals
-if (empty($HTTP_SERVER_VARS)) {
-	$HTTP_GET_VARS = &$_GET;
-	$HTTP_POST_VARS = &$_POST;
-	$HTTP_SERVER_VARS = &$_SERVER;
-}
 
 /*
  * Prepare data for report file
@@ -188,20 +182,20 @@ $modules = array (
 /*
  * Process service requests
  */
-if (isset($HTTP_GET_VARS['target']) && $HTTP_GET_VARS['target'] == 'install') {
+if (isset($_GET['target']) && $_GET['target'] == 'install') {
 
 	// Loopback action
-	if (isset($HTTP_GET_VARS['action']) && $HTTP_GET_VARS['action'] == 'loopback_test') {
+	if (isset($_GET['action']) && $_GET['action'] == 'loopback_test') {
 		die('LOOPBACK-TEST-OK');
 	}
 
     // Return HTTP_HOST value
-    if (isset($HTTP_GET_VARS['action']) && $HTTP_GET_VARS['action'] == 'http_host') {
+    if (isset($_GET['action']) && $_GET['action'] == 'http_host') {
         die($_SERVER['HTTP_HOST']);
     }
 
     // Building cache action
-    if (isset($HTTP_GET_VARS['action']) && $HTTP_GET_VARS['action'] == 'cache') {
+    if (isset($_GET['action']) && $_GET['action'] == 'build_cache') {
 
         $step = 0;
         $result = true;
@@ -240,9 +234,9 @@ doProgressDots();
 
 OUT;
 
-        if (isset($HTTP_GET_VARS['step']) && intval($HTTP_GET_VARS['step']) > 0) {
+        if (isset($_GET['step']) && intval($_GET['step']) > 0) {
 
-            $step = intval($HTTP_GET_VARS['step']);
+            $step = intval($_GET['step']);
 
             if ($step <= 2) {
                 echo xtr('Building cache: Pass #:step', array(':step' => $step)) . $jsDots;
@@ -265,7 +259,7 @@ OUT;
         }
 
         if ($result) {
-            $location = sprintf('install.php?target=install&action=cache&step=%d', ++$step);
+            $location = sprintf('install.php?target=install&action=build_cache&step=%d', ++$step);
 
 ?>
 
@@ -285,7 +279,7 @@ OUT;
     }
 
     // Creating dirs action
-    if (isset($HTTP_GET_VARS['action']) && $HTTP_GET_VARS['action'] == 'dirs') {
+    if (isset($_GET['action']) && $_GET['action'] == 'dirs') {
 
         $result = true;
 
@@ -330,10 +324,10 @@ OUT;
 
 
 	// Memory test action
-	if (isset($HTTP_GET_VARS['action']) && $HTTP_GET_VARS['action'] == 'memory_test' && isset($HTTP_GET_VARS['size'])) {
-        $size = intval($HTTP_GET_VARS['size']);
+	if (isset($_GET['action']) && $_GET['action'] == 'memory_test' && isset($_GET['size'])) {
+        $size = intval($_GET['size']);
 
-		if ($size <= 0 || $size > 64) {
+		if ($size <= 0) {
 			die('MEMORY-TEST-INVALID-PARAMS');
 		}
 
@@ -360,13 +354,13 @@ OUT;
 	}
 
     // Recursion test action
-	if (isset($HTTP_GET_VARS['action']) && $HTTP_GET_VARS['action'] == 'recursion_test') {
+	if (isset($_GET['action']) && $_GET['action'] == 'recursion_test') {
 		recursion_depth_test(1);
 		die('RECURSION-TEST-OK');
 	}
 
     // Send report
-	if (isset($HTTP_GET_VARS['action']) && $HTTP_GET_VARS['action'] == 'send_report') {
+	if (isset($_GET['action']) && $_GET['action'] == 'send_report') {
 		$is_original = true;
 		$report = '';
         $report = @file_get_contents($reportFName);
