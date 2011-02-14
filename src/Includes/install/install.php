@@ -3354,7 +3354,7 @@ function module_cfg_create_admin(&$params)
         ),
     );
 
-    $clrNumber = 2;
+    $clrNumber = 1;
 
 ?>
 
