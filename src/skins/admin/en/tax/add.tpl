@@ -105,5 +105,5 @@ function changeVal(param)
 <widget class="\XLite\View\Button\Submit" label="Save" style="main-button" />
 <widget class="\XLite\View\Button\Regular" jsCode="document.tax_form.add_another.value='1'; document.tax_form.page.value = 'add_rate'; document.tax_form.submit();" label="Save &amp; add another" />
 {end:}
-&nbsp;&nbsp;&nbsp;<a href="admin.php?target=taxes&page=rates"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"><b> Go back</b></a>
+&nbsp;&nbsp;&nbsp;<a href="admin.php?target=taxes&page=rates"><img src="images/go.gif" alt="" width="13" height="13" border="0" align="absmiddle"><b> Go back</b></a>
 </form>

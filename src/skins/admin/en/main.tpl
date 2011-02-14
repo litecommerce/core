@@ -28,7 +28,7 @@
 
       {* FIXME - to remove *}
       <div style="width: 100%; text-align: center;" IF="!isTested()">
-        <img src="images/icon_warning.gif" />
+        <img src="images/icon_warning.gif" alt="" />
         <strong>This controller is not working properly for current LC version</strong>
         <br /><br />
       </div>
