@@ -109,6 +109,11 @@ function get_lc_xml_support_description()
     return xtr('lc_xml_support_description');
 }
 
+function get_lc_docblocks_support_description()
+{
+    return xtr('lc_docblocks_support_description');
+}
+
 ?>
 
 <script type="text/javascript">
