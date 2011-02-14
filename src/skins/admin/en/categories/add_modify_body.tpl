@@ -17,17 +17,17 @@
 
 <p>
 
-<span IF="getRequestParamValue(#mode#)!=#modify#">Mandatory fields are marked with an asterisk (<font class="star">*).<br /><br /></span>
+<span IF="getRequestParamValue(#mode#)!=#modify#">Mandatory fields are marked with an asterisk (<span class="star">*</span>).<br /><br /></span>
 
 <b>Note:</b> Use navigation bar above this dialog to navigate through the catalog categories.
 
 <hr />
 
-<p IF="message=#updated#"><font class="success-message">&gt;&gt;&nbsp;Category has been updated successfully&nbsp;&lt;&lt;</p>
+<p IF="message=#updated#"><span class="success-message">&gt;&gt;&nbsp;Category has been updated successfully&nbsp;&lt;&lt;</span></p>
 
-<p IF="message=#added#"><font class="success-message">&gt;&gt;&nbsp;Category has been added successfully&nbsp;&lt;&lt;</p>
+<p IF="message=#added#"><span class="success-message">&gt;&gt;&nbsp;Category has been added successfully&nbsp;&lt;&lt;</span></p>
 
-<p IF="!valid"><font class="error-message">&gt;&gt;&nbsp;There are errors in the form. Category has not been added&nbsp;&lt;&lt;</p>
+<p IF="!valid"><span class="error-message">&gt;&gt;&nbsp;There are errors in the form. Category has not been added&nbsp;&lt;&lt;</span></p>
 
 <p>
 
@@ -45,7 +45,7 @@
       <td class="star">*</td>
       <td width="85%">
         <input type="text" name="name" value="{category.name}" size="50" maxlength="255" />
-        &nbsp;<font IF="!valid" class="validate-error-message">&lt;&lt; Required field
+        &nbsp;<span IF="!valid" class="validate-error-message">&lt;&lt; Required field</span>
       </td>
     </tr>
 

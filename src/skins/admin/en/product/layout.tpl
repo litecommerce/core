@@ -14,10 +14,10 @@
 <tr>
     <td colspan=2>
         {if:invalid_field_order}
-            <font class=admin-head>Field order:&nbsp;
-            <font class="validate-error-message">&lt;&lt;&nbsp;Duplicate field: &quot;{invalid_field_name}&quot;</td>
+            <span class="admin-head">Field order:&nbsp;</span>
+            <span class="validate-error-message">&lt;&lt;&nbsp;Duplicate field: &quot;{invalid_field_name}&quot;</span></td>
         {else:}
-            <font class=admin-head>Field order:</td>
+            <span class="admin-head">Field order:</span></td>
         {end:}
 </tr>
 {*<tr FOREACH="xlite.factory.\XLite\Model\Product.importFields,id,fields">

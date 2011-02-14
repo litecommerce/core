@@ -23,7 +23,7 @@
 
   <div FOREACH="product.getImages(),id,image">
     <p>
-      <font class="admin-head">Image #{inc(id)}<br />
+      <span class="admin-head">Image #{inc(id)}</span><br />
       <strong>Note:</strong> Image border will not be displayed in customer's frontend
     </p>
     <img src="{image.getURL()}" style="border: 1px solid #b2b2b3;" alt="" />

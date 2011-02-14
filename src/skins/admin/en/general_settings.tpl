@@ -30,7 +30,7 @@
                 {if:isGDLibLoaded()}
                   <input id="{option.name}" type="checkbox" name="{option.name}" checked="{option.value=#Y#}" />
                 {else:}
-                  <input id="{option.name}" type="checkbox" name="{option.name}" checked="checked" disabled="disabled" />&nbsp;<font class="error-message">GDLib isn't detected
+                  <input id="{option.name}" type="checkbox" name="{option.name}" checked="checked" disabled="disabled" />&nbsp;<span class="error-message">GDLib isn't detected</span>
                 {end:}
               {else:}
                 <input id="{option.name}" type="checkbox" name="{option.name}" checked="{option.value=#Y#}" />
@@ -261,7 +261,7 @@ function enableHTTPS()
     document.options_form.admin_security.checked = admin_security_value;
 
     document.getElementById("httpserror-message").style.cssText = "";
-    document.getElementById("httpserror-message").innerHTML = "<font class='success-message'>Success";
+    document.getElementById("httpserror-message").innerHTML = "<span class='success-message'>Success</span>";
 }
 
 document.options_form.customer_security.checked = false;
@@ -308,7 +308,7 @@ if (!httpsEnabled) {
       <li IF="openBasedirRestriction">Curl or OpenSSl executable path: LiteCommerce attempted to find Curl or OpenSSL executable in your system automatically. Your hosting provider might need to remove the open_basedir restriction for this directory path.</li>
     </ul>
   {else:}
-    <font class='success-message'>Success
+    <span class="success-message">Success</span>
   {end:}
 
 {end:}

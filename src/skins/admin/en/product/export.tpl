@@ -16,7 +16,7 @@
 <hr />
 
 <p IF="!valid">
-    <font class="error-message">&gt;&gt; Error occured &lt;&lt;<br />
+    <span class="error-message">&gt;&gt; Error occured &lt;&lt;</span><br />
 </p>
 
 <p>

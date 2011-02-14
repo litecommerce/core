@@ -20,7 +20,7 @@
 {foreach:getColumnsData(column),node}
 
 <a href="{url:h}&mode=edit&path={path}&node={node.path}"><img src="images/letter.gif" border="0" align="top" alt="click to edit template">&nbsp;{node.name}</a>
-{if:node.comment}&nbsp;&nbsp;-&nbsp;<font style="font-size:8pt">{node.comment}<br />
+{if:node.comment}&nbsp;&nbsp;-&nbsp;<span style="font-size:8pt">{node.comment}</span><br />
 {else:}
 <br />
 {end:}

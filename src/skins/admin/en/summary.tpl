@@ -35,15 +35,15 @@ function setVisible(element_id)
 </tr>	
 <tr>
   <td class="setting-name">LibCurl:</td>
-  <td>{if:check_https(#libcurl#)=#1#}<font class="error-message">Not detected{else:}<font class="success-message">Detected ({libcurl:h}) {end:}</td>
+  <td>{if:check_https(#libcurl#)=#1#}<span class="error-message">Not detected</span>{else:}<span class="success-message">Detected ({libcurl:h})</span> {end:}</td>
 </tr>
 <tr>
   <td class="setting-name">CURL:</td>
-  <td>{if:check_https(#curl#)=#1#}<font class="error-message">Not detected{else:}<font class="success-message">Detected ({curl:h}) {end:}</td>
+  <td>{if:check_https(#curl#)=#1#}<span class="error-message">Not detected</span>{else:}<span class="success-message">Detected ({curl:h})</span> {end:}</td>
 </tr>
 <tr>
   <td class="setting-name">OpenSSL:</td>
-  <td>{if:check_https(#openssl#)=#1#}<font class="error-message">Not detected{else:}<font class="success-message">Detected ({openssl:h}) {end:}</td>
+  <td>{if:check_https(#openssl#)=#1#}<span class="error-message">Not detected</span>{else:}<span class="success-message">Detected ({openssl:h})</span> {end:}</td>
 </tr>
 
 <tr>
@@ -58,7 +58,7 @@ function setVisible(element_id)
 
 <tr>
   <td class="setting-name">LiteCommerce version:</td>
-  <td>{lite_version:h}{if:answeredVersion}&nbsp;&nbsp;(verified version: {if:answeredVersionError}<font color=red><b>unknown</b>{else:}{answeredVersion}{end:}){end:}</td>
+  <td>{lite_version:h}{if:answeredVersion}&nbsp;&nbsp;(verified version: {if:answeredVersionError}<span class="star">unknown</span>{else:}{answeredVersion}{end:}){end:}</td>
 </tr>
 
 <tr IF="answeredVersionError">
@@ -103,7 +103,7 @@ function setVisible(element_id)
 
 <tr>
   <td class="setting-name">GDLib:</td>
-  <td>{if:gdlib}{gdlib}{else:}<font class="error-message">Not detected<br /><b>Warning:</b> PHP 'gd' extension is not installed. Captchas in customer zone will not work{end:}</td>
+  <td>{if:gdlib}{gdlib}{else:}<span class="error-message">Not detected</span><br /><b>Warning:</b> PHP 'gd' extension is not installed. Captchas in customer zone will not work{end:}</td>
 </tr>
 
 {if:!isWin()}
@@ -117,11 +117,11 @@ function setVisible(element_id)
 <tr class="{getRowClass(k,#dialog-box#,#highlight#)}">
 	<td>{v.dir}</td>
 	<td>
-		{if:v.error=##}<font class="success-message">OK{end:}
-		{if:v.error=#cannot_create#}<font class="error-message">cannot create directory{end:}
-		{if:v.error=#cannot_chmod#}<font class="error-message">cannot set {getDirPermissionStr(v.dir)} permissions{end:}
-        {if:v.error=#wrong_owner#}<font class="error-message">incorrect owner for {v.dir} directory{end:}
-        {if:v.error=#cannot_chmod_subdirs#}<font class="error-message">subdirectories problems&nbsp;&nbsp;<a href="javascript: setVisible('details_{k}')" class="navigation-path"><b>details</b>&nbsp;&gt;&gt</a>{end:}
+		{if:v.error=##}<span class="success-message">OK</span>{end:}
+		{if:v.error=#cannot_create#}<span class="error-message">cannot create directory</span>{end:}
+		{if:v.error=#cannot_chmod#}<span class="error-message">cannot set {getDirPermissionStr(v.dir)} permissions</span>{end:}
+        {if:v.error=#wrong_owner#}<span class="error-message">incorrect owner for {v.dir} directory</span>{end:}
+        {if:v.error=#cannot_chmod_subdirs#}<span class="error-message">subdirectories problems</span>&nbsp;&nbsp;<a href="javascript: setVisible('details_{k}')" class="navigation-path"><b>details</b>&nbsp;&gt;&gt</a>{end:}
 	</td>
 </tr>
 <tr class="{getRowClass(k,#dialog-box#,#highlight#)}" style="display : none" id="details_{k}" IF="v.error=#cannot_chmod_subdirs#">
@@ -138,10 +138,10 @@ function setVisible(element_id)
 <tr class="{getRowClass(k,#dialog-box#,#highlight#)}">
   <td>{v.file}</td>
   <td>
- 		{if:v.error=##}<font class="success-message">OK{end:}
-		{if:v.error=#does_not_exist#}<font class="error-message">file does not exist{end:}
-		{if:v.error=#cannot_chmod#}<font class="error-message">cannot set {getDirPermissionStr(v.file)} permissions{end:}
-    {if:v.error=#wrong_owner#}<font class="error-message">incorrect owner for {v.file} file{end:}
+ 		{if:v.error=##}<span class="success-message">OK</span>{end:}
+		{if:v.error=#does_not_exist#}<span class="error-message">file does not exist</span>{end:}
+		{if:v.error=#cannot_chmod#}<span class="error-message">cannot set {getDirPermissionStr(v.file)} permissions</span>{end:}
+    {if:v.error=#wrong_owner#}<span class="error-message">incorrect owner for {v.file} file</span>{end:}
 	</td>
 </tr>
 {end:}
