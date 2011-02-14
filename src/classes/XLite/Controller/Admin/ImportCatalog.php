@@ -45,6 +45,35 @@ class ImportCatalog extends \XLite\Controller\Admin\AAdmin
                                );
     public $category_id = null;
 
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Import catalog';
+    }
+
+    /**
+     * Add part to the location nodes list
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
+
+        $this->addLocationNode('Import/Export', $this->buildURL('import_catalog'));
+    }
+
     function handleRequest()
     {
         if (substr($this->action, 0, 6) == "import" && !$this->checkUploadedFile()) {
