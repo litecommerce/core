@@ -54,9 +54,9 @@ function setDelete(form, input, check)
 Use this section to manage the list of existing countries. This list is used in the shipping and taxation settings and calculations, and in the registration form at the Customer Front-end.
 <hr />
 
-<span IF="status=#added#" class="success-message"><br /><br />&gt;&gt;&nbsp;Country added successfully&nbsp;&lt;&lt;</span><br /><br />
-<span IF="status=#deleted#" class="success-message"><br /><br />&gt;&gt;&nbsp;Country(s) deleted successfully&nbsp;&lt;&lt;</span><br /><br />
-<span IF="status=#updated#" class="success-message"><br /><br />&gt;&gt;&nbsp;Country(s) updated successfully&nbsp;&lt;&lt;</span><br /><br />
+<span IF="status=#added#" class="success-message"><br /><br />&gt;&gt;&nbsp;Country added successfully&nbsp;&lt;&lt;<br /><br /></span>
+<span IF="status=#deleted#" class="success-message"><br /><br />&gt;&gt;&nbsp;Country(s) deleted successfully&nbsp;&lt;&lt;<br /><br /></span>
+<span IF="status=#updated#" class="success-message"><br /><br />&gt;&gt;&nbsp;Country(s) updated successfully&nbsp;&lt;&lt;<br /><br /></span>
 
 <form action="admin.php" method="post" name="countries_form">
 <input type="hidden" name="target" value="countries">
@@ -143,10 +143,10 @@ Use this section to manage the list of existing countries. This list is used in 
 
 {if:!valid}
 	<tr>
-		<td IF="status=#exists#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;Specified country code is already in use</span><br /><br /></td>
-		<td IF="status=#code#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;Mandatory field "Code" is empty.</span><br /><br /></td>
-		<td IF="status=#country#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;Mandatory field "Country" is empty</span><br /><br /></td>
-		<td IF="status=#charset#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;Mandatory field "Charset" is empty</span><br /><br /></td>
+		<td IF="status=#exists#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;Specified country code is already in use<br /><br /></span></td>
+		<td IF="status=#code#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;Mandatory field "Code" is empty.<br /><br /></span></td>
+		<td IF="status=#country#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;Mandatory field "Country" is empty<br /><br /></span></td>
+		<td IF="status=#charset#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;Mandatory field "Charset" is empty<br /><br /></span></td>
 	</tr>
 {end:}
 	<tr>

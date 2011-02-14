@@ -37,10 +37,10 @@ function setHeaderChecked()
 <p>Use this section to manage the lists of counties, provinces, regions and states of different countries. The lists are used in shipping and tax settings and calculations, and in the registration form at the Customer Front-end.
 <hr />
 
-<span IF="status=#country_code#" class="error-message"><br /><br />&gt;&gt;&nbsp;Please, select country&nbsp;&lt;&lt;</span><br /><br />
-<span IF="status=#added#" class="success-message"><br /><br />&gt;&gt;&nbsp;State added successfully&nbsp;&lt;&lt;</span><br /><br />
-<span IF="status=#deleted#" class="success-message"><br /><br />&gt;&gt;&nbsp;State(s) deleted successfully&nbsp;&lt;&lt;</span><br /><br />
-<span IF="status=#updated#" class="success-message"><br /><br />&gt;&gt;&nbsp;State(s) updated successfully&nbsp;&lt;&lt;</span><br /><br />
+<span IF="status=#country_code#" class="error-message"><br /><br />&gt;&gt;&nbsp;Please, select country&nbsp;&lt;&lt;<br /><br /></span>
+<span IF="status=#added#" class="success-message"><br /><br />&gt;&gt;&nbsp;State added successfully&nbsp;&lt;&lt;<br /><br /></span>
+<span IF="status=#deleted#" class="success-message"><br /><br />&gt;&gt;&nbsp;State(s) deleted successfully&nbsp;&lt;&lt;<br /><br /></span>
+<span IF="status=#updated#" class="success-message"><br /><br />&gt;&gt;&nbsp;State(s) updated successfully&nbsp;&lt;&lt;<br /><br /></span>
 
 <form name="select_country_form" method="GET">
 <p class="admin-head">Select country</p>
@@ -108,8 +108,8 @@ function setHeaderChecked()
   </tr>
 {if:!valid}
 	<tr class="dialog-box">
-		<td IF="status=#code#" colspan="2"><span class="error-message">&gt;&gt;&nbsp;Mandatory field "Code" empty.</span><br /><br /></td>
-		<td IF="status=#state#" colspan="2"><span class="error-message">&gt;&gt;&nbsp;Mandatory field "State" empty.</span><br /><br /></td>
+		<td IF="status=#code#" colspan="2"><span class="error-message">&gt;&gt;&nbsp;Mandatory field "Code" empty.<br /><br /></span></td>
+		<td IF="status=#state#" colspan="2"><span class="error-message">&gt;&gt;&nbsp;Mandatory field "State" empty.<br /><br /></span></td>
 	</tr>
 {end:}
 	<tr>
