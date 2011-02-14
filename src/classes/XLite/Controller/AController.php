@@ -792,6 +792,43 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
+     * Process request 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function processRequest()
+    {
+        $viewer = $this->getViewer();
+        $viewer->init();
+
+        if ($this->isAJAXViewer()) {
+            $this->printAJAXOuput($viewer->getContent());
+            
+        } else {
+            $viewer->display();
+        }
+    }
+
+    /**
+     * Print AJAX request ouput 
+     * 
+     * @param string $output Output
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function printAJAXOuput($output)
+    {
+        echo '<h2 class="ajax-title-loadable">' . $this->getTitle() . '</h2>';
+        echo '<div class="ajax-container-loadable">' . $output . '</div>';
+    }
+
+    /**
      * This function called after template output
      * FIXME - may be there is a better way to handle this?
      * 
@@ -1345,4 +1382,29 @@ abstract class AController extends \XLite\Core\Handler
 
         return $params;
     }
+
+    /**
+     * Get meta description
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getMetaDescription()
+    {
+        return null;
+    }
+
+    /**
+     * Get meta keywords
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getKeywords()
+    {
+        return null;
+    }
+
 }

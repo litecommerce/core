@@ -88,8 +88,9 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
       function () {
         return !popup.load(
           URLHandler.buildURL({
-            'target':     'quick_look',
-            'product_id': core.getValueFromClass(this, 'quicklook-link')
+            'target':      'quick_look',
+            'product_id':  core.getValueFromClass(this, 'quicklook-link'),
+            'only_center': 1,
           }), 
           'product-quicklook', 
           false, 

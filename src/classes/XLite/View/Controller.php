@@ -75,7 +75,20 @@ class Controller extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'body.tpl';
+        return $this->isAJAXCenterRequest() ? 'center_top.tpl' : 'body.tpl';
+    }
+
+    /**
+     * Check - current request is AJAX background request for page center or not
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isAJAXCenterRequest()
+    {
+        return $this->isAJAX() && \XLite\Core\Request::getInstance()->only_center;
     }
 
     /**

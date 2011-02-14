@@ -103,13 +103,16 @@ class ImageMagic extends \XLite\Core\ImageOperator\AImageOperator
 
         $new = tempnam(LC_TMP_DIR, 'image.new');
 
-        $exec = $path . ' ' . $this->image . ' -adaptive-resize ' . $width . 'x' . $height . ' ' . $new;
         $output = array();
         $return = 0;
-        exec($exec, $output, $return);
+        exec($path . ' ' . $this->image . ' -coalesce ' . $new, $output, $return);
 
         if (!$return) {
-            $this->image = $new;
+            exec($path . ' ' . $new . ' -adaptive-resize ' . $width . 'x' . $height . ' ' . $new, $output, $return);
+
+            if (!$return) {
+                $this->image = $new;
+            }
         }
 
         return !$return;

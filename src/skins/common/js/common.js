@@ -71,10 +71,12 @@ var URLHandler = {
   // Return some params
   getParams: function(params, toReturn)
   {
-    result = [];
+    var result = [];
 
-    for (x in toReturn) {
-      result[x] = params[x];
+    for (var x in toReturn) {
+      if ('undefined' != typeof(params[x])) {
+        result[x] = params[x];
+      }
     }
 
     return result;
@@ -83,9 +85,9 @@ var URLHandler = {
   // Unset some params
   clearParams: function(params, toClear)
   {
-    result = [];
+    var result = [];
 
-    for (x in params) {
+    for (var x in params) {
       if (!(x in toClear)) {
         result[x] = params[x];
       }

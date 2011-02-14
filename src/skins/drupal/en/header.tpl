@@ -17,7 +17,6 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
   <meta name="Generator" content="Litecommerce 3 (http://litecommerce.com)" />
   <meta IF="getMetaDescription()" name="description" content="{getMetaDescription():r}" />
   <meta IF="getKeywords()" name="keywords" content="{getKeywords():r}" />
@@ -28,7 +27,8 @@
 
   <script type="text/javascript">
 var xliteConfig = {
-  script: '{getScript():h}'
+  script:   '{getScript():h}',
+  language: '{currentLanguage.getCode()}'
 };
   </script>
   <script FOREACH="getJSResources(),file" type="text/javascript" src="{file}"></script>
