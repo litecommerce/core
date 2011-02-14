@@ -16,7 +16,7 @@
   <tr>
 
     <td valign="top" IF="category.hasImage()">
- 		  <img src="{category.image.getUrl()}" border="0" width="{category.image.width}" height="{category.image.height}" />
+ 		  <img src="{category.image.getUrl()}" border="0" width="{category.image.width}" height="{category.image.height}" alt="" />
     </td>
 
     <td width="100%" valign="top">

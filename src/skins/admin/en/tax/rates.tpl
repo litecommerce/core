@@ -27,11 +27,11 @@
     		<table border="0" cellspacing="0" cellpadding="0" width="100%">
 		      <tr>
       			<td align="left">
-			      	<a href="admin.php?target=taxes&page={page}&action=all&open=1" title="Expand all"><img src="images/plus.gif" border="0"></a>/<a href="admin.php?target=taxes&page={page}&action=all&open=0" title="Collapse all"><img src="images/minus.gif" border="0"></a>
+			      	<a href="admin.php?target=taxes&page={page}&action=all&open=1" title="Expand all"><img src="images/plus.gif" border="0" alt="" /></a>/<a href="admin.php?target=taxes&page={page}&action=all&open=0" title="Collapse all"><img src="images/minus.gif" border="0" alt="" /></a>
       			</td>
       			<th align="center">&nbsp;&nbsp;Condition&nbsp;&nbsp;</th>
       			<td align="right">
-			        <span style="font-weight: normal;"><a href="admin.php?target=taxes&page=add_rate&mode=add&ind="><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Add rate/condition</a></span>&nbsp;&nbsp;</th>
+			        <span style="font-weight: normal;"><a href="admin.php?target=taxes&page=add_rate&mode=add&ind="><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle" alt="" /> Add rate/condition</a></span>&nbsp;&nbsp;</th>
   			    </td>
 		      </tr>
 		    </table>

@@ -21,9 +21,9 @@
 
     <div class="module-icon">
       {if:module.hasIcon()}
-        <img src="{module.getIconURL()}" width="48" height="48" border="0" />
+        <img src="{module.getIconURL()}" width="48" height="48" border="0" alt="" />
       {else:}
-        <img src="images/addon_default.png" width="48" height="48" border="0" />
+        <img src="images/addon_default.png" width="48" height="48" border="0" alt="" />
       {end:}
     </div>
 

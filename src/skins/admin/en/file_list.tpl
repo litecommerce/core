@@ -17,8 +17,8 @@
 {foreach:getColumnsData(column),node}
 
 {if:formSelectionName}<input type="radio" name="{formSelectionName}" value="{node.id}">{end:}
-<a href="{node.url:h}" style="font-size:10pt">{if:node.leaf}<img src="images/doc.gif" border="0">
-{else:}<img src="images/folder.gif" border="0">
+<a href="{node.url:h}" style="font-size:10pt">{if:node.leaf}<img src="images/doc.gif" border="0" alt="" />
+{else:}<img src="images/folder.gif" border="0" alt="" />
 {end:}
 {node.name}</a>
 {if:node.comment}&nbsp;&nbsp;-&nbsp;<font style="font-size:8pt">{node.comment}</font><br />

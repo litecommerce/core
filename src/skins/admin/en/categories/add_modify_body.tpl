@@ -67,7 +67,7 @@
     </tr>
 
     <tr>
-      <td>{if:category.hasImage()}<img src="{category.image.getURL()}" border="0" />{else:}<img src="images/no_image.png" border="0" />{end:}</td>
+      <td>{if:category.hasImage()}<img src="{category.image.getURL()}" border="0" alt="" />{else:}<img src="images/no_image.png" border="0" alt="" />{end:}</td>
       <td>&nbsp;</td>
       <td valign="bottom" rowspan=2>
       <widget class="\XLite\View\ImageUpload" field="image" actionName="icon" formName="add_modify_form" object="{category.image}" />
