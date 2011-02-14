@@ -776,6 +776,7 @@ a.report-close {
     display: none;
 }
 
+.fatal-error,
 .warning-text {
     -moz-border-radius: 9px;
     border-radius: 9px;
@@ -786,8 +787,15 @@ a.report-close {
     padding: 20px;
     width: 500px;
     font-size: 16px;
+    text-align: left;
+}
+
+.warning-text {
+    color: #0e55a6;
+}
+
+.fatal-error {
     color: #c11600;
-    text-align: center;
 }
 
 td.table-left-column {
@@ -796,7 +804,7 @@ td.table-left-column {
 }
 
 td.table-right-column {
-    text-align: center;
+    text-align: left;
     width: 30%;
 }
 
