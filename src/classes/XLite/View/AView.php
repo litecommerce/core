@@ -522,7 +522,6 @@ abstract class AView extends \XLite\Core\Handler
         return $content;
     }
 
-
     /**
      * Register CSS files
      *

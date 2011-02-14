@@ -111,12 +111,11 @@ class Cart extends \XLite\View\Dialog
      */
     public function getCSSFiles()
     {
-        return array_merge(
-            parent::getCSSFiles(),
-            array(
-                $this->getDir() . '/cart.css',
-            )
-        );
+        $list = parent::getCSSFiles();
+
+        $list[] = $this->getDir() . '/cart.css';
+
+        return $list;
     }
 
     /**

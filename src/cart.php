@@ -2,7 +2,7 @@
 // vim: set ts=4 sw=4 sts=4 et:
 
 /**
- * ____file_title____
+ * Customer interface
  *  
  * @category   Lite Commerce
  * @package    Lite Commerce
@@ -17,5 +17,5 @@
 
 include_once __DIR__ . '/top.inc.php';
 
-XLite::getInstance()->run()->getViewer()->display();
+XLite::getInstance()->run()->processRequest();
 

@@ -205,7 +205,7 @@ ALoadable.prototype.placeRequestData = function(box)
     jQuery(this.titlePattern).eq(0).html(title.html());
   }
 
-  box = jQuery(this.containerRequestPattern, box).children();
+  box = this.extractContent(box).children();
 
   var id = 'temporary-ajax-id-' + (new Date()).getTime();
 
@@ -223,6 +223,17 @@ ALoadable.prototype.placeRequestData = function(box)
   this.base.removeClass(id);
 
   return true;
+}
+
+// Extract widget content
+ALoadable.prototype.extractContent = function(box)
+{
+  box = jQuery(this.containerRequestPattern, box);
+  if (box.children().eq(0).hasClass('block')) {
+    box = jQuery('.block > .content', box.eq(0));
+  }
+
+  return box;
 }
 
 // [ABSTRACT] Widget post processing (after new widget data placing)

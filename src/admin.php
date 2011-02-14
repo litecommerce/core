@@ -16,5 +16,5 @@
 
 include_once __DIR__ . '/top.inc.php';
 
-XLite::getInstance()->run(true)->getViewer()->display();
+XLite::getInstance()->run(true)->processRequest();
 

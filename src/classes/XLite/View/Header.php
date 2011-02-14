@@ -132,7 +132,7 @@ class Header extends \XLite\View\AView
      */
     protected function getScript()
     {
-        return \XLite::getScript();
+        return \XLite::getInstance()->getScript();
     }
 }
 
