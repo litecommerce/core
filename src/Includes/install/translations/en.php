@@ -201,7 +201,7 @@ LiteCommerce Installation Wizard
   'No' => 'No',
   'The web server name and/or web drectory is invalid! Press \'BACK\' button and review web server settings you provided' => 'The web server name and/or web drectory is invalid! Press \'BACK\' button and review web server settings you provided',
   'Cannot open file \':filename\' for writing. To install the software, please correct the problem and start the installation again...' => 'Cannot open file \':filename\' for writing. To install the software, please correct the problem and start the installation again...',
-  'Installation Wizard has detected that the specified database has existing LiteCommerce tables. If you continue with the installation, the tables will be purged.' => 'Installation Wizard has detected that the specified database has existing LiteCommerce tables. If you continue with the installation, the tables will be purged.',
+  'Installation Wizard has detected LiteCommerce tables' => 'Installation Wizard has detected that the specified database has existing LiteCommerce tables. If you continue with the installation, the tables will be purged.<br /><br />Click \'Back\' button if you want to specify other database or click \'Next\' button to proceed and rewrite existing database.',
   'Can\'t connect to MySQL server specified:pdoerr<br /> Press \'BACK\' button and review MySQL server settings you provided.' => 'Can\'t connect to MySQL server specified:pdoerr<br /> Press \'BACK\' button and review MySQL server settings you provided.',
   'You must provide web server name' => 'You must provide web server name',
   'You must provide MySQL server name' => 'You must provide MySQL server name',

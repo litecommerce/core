@@ -2962,9 +2962,7 @@ function module_cfg_install_db(&$params)
             'description' => xtr('Specify whether you would like to setup sample categories and products?'),
             'def_value'   => '1',
             'required'    => false,
-            'step'        => 2,
-            'type'        => 'select',
-            'select_data' => array(1 => xtr('Yes'), 0 => xtr('No'))
+            'type'        => 'checkbox',
         )
     );
 
@@ -3026,6 +3024,7 @@ function module_cfg_install_db(&$params)
         // Now checking if database named $params[mysqlbase] already exists
 
         $checkError = false;
+        $checkWarning = false;
 
         // Check if web server host and web_dir provided are valid
         $url = 'http://' . $params['xlite_http_host'] . $params['xlite_web_dir'];
@@ -3075,7 +3074,8 @@ function module_cfg_install_db(&$params)
 
                         foreach ($res as $row) {
                             if (in_array('xlite_products', $row)) {
-                                warning_error(xtr('Installation Wizard has detected that the specified database has existing LiteCommerce tables. If you continue with the installation, the tables will be purged.'));
+                                warning_error(xtr('Installation Wizard has detected LiteCommerce tables'));
+                                $checkWarning = true;
                                 break;
                             }
                         }
@@ -3088,7 +3088,7 @@ function module_cfg_install_db(&$params)
             }
         } 
 
-        if (!$checkError) {
+        if (!$checkError && !$checkWarning) {
 
             ob_start();
 
