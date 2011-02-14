@@ -139,7 +139,7 @@ function getTextByLabel($label)
 
 function x_install_log($message = null)
 {
-    if (!isset($_REQUEST['lcdebug'])) {
+    if (!isset($_GET['lcdebug']) && !isset($_POST['lcdebug']) && !isset($_COOKIE['lcdebug'])) {
         return null;
     
     } elseif (!isset($_COOKIE['lcdebug'])) {
@@ -3204,13 +3204,8 @@ function module_install_cache(&$params)
     global $error;
 
 ?>
-</td>
-</tr>
-</table>
 
-<br />
-
-<iframe id="process_iframe" style="padding-top: 15px;" src="install.php?target=install&action=cache" width="100%" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
+<iframe id="process_iframe" style="padding-top: 15px;" src="install.php?target=install&action=build_cache" width="100%" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
 
 <br />
 <br />
