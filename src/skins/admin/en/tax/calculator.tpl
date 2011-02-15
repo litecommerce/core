@@ -18,7 +18,7 @@
 </head>
 <body class="popup">
 
-<table border=0 cellpadding=3 cellspacing=3>
+<table border="0" cellpadding="3" cellspacing="3">
 <form action="admin.php" method="POST">
 <input type="hidden" name="target" value="taxes">
 <input type="hidden" name="action" value="calculator">

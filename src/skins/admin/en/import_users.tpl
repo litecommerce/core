@@ -25,13 +25,13 @@ You have specified incorrect file format or the file doesn't match.
 <input type="hidden" name="target" value="import_users">
 <input type="hidden" name="action" value="import">
 
-<table border=0>
+<table border="0">
 <tr>
     <td colspan=2><span class="admin-head">Field order:</span></td>
 </tr>
 <tr FOREACH="import_fields,id,fields">
-    <td width=1>{id}:</td>
-    <td width=99%>
+    <td width="1">{id}:</td>
+    <td width="99%">
         <select name="user_layout[{id}]">
             <option FOREACH="fields,field,value" value="{field}" selected="{value}">{field}</option>
         </select>

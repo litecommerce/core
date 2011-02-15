@@ -22,13 +22,13 @@
 <input type="hidden" name="page" value="{extraPage.page}">
 <input IF="{extraPage.page}" type="hidden" name="returnUrl" value="{url}&mode=page_edit&page={extraPage.page}&status=updated"/>
 
-<table border="0" cellpadding=2 cellspacing=2 IF="{extraPage.page}" width="430">
+<table border="0" cellpadding="2" cellspacing="2" IF="{extraPage.page}" width="430">
 <tr>
 <td>
-	<table border="0" cellpadding=0 cellspacing=0 width=100%>
+	<table border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
-    	<td width=50%><img src="images/doc.gif" border="0" align="top" alt="" />&nbsp;<b>Page template:</b> <i>{extraPage.page}.tpl</i></td>
-    	<td width=50% align=right><a href="{url}"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle" alt="" /> Go back</a></td>
+    	<td width="50%"><img src="images/doc.gif" border="0" align="top" alt="" />&nbsp;<b>Page template:</b> <i>{extraPage.page}.tpl</i></td>
+    	<td width="50%" align=right><a href="{url}"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle" alt="" /> Go back</a></td>
 	</tr>
 	</table>
 </td>
@@ -61,7 +61,7 @@
 <textarea name="content" cols="81" rows="20">{getExtraPageContent()}</textarea>
 <p>
 
-<table border="0" cellpadding=2 cellspacing=2 width="430">
+<table border="0" cellpadding="2" cellspacing="2" width="430">
 <tr>
 <td align=left>
 <widget class="\XLite\View\Button\Submit" IF="{extraPage.page}" label="Update page" style="main-button" jsCode="javascript: ValidateName();" />

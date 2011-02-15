@@ -22,13 +22,13 @@
 <input type="hidden" name="node" value="{node}">
 <input type="hidden" name="returnUrl" value="{url}&mode=edit&path={path}&node={node}&status=updated"/>
 
-<table border="0" cellpadding=2 cellspacing=2 width="430">
+<table border="0" cellpadding="2" cellspacing="2" width="430">
 <tr>
 <td>
-	<table border="0" cellpadding=0 cellspacing=0 width=100%>
+	<table border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
-    	<td width=50%><img src="images/letter.gif" border="0" align="top" alt="" />&nbsp;<b>Mail templates folder:</b><br /><i>{node}</i></td>
-    	<td width=50% align=right><a href="{url}"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle" alt="" /> Go back</a></td>
+    	<td width="50%"><img src="images/letter.gif" border="0" align="top" alt="" />&nbsp;<b>Mail templates folder:</b><br /><i>{node}</i></td>
+    	<td width="50%" align=right><a href="{url}"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle" alt="" /> Go back</a></td>
 	</tr>
 	</table>
 </td>
@@ -50,7 +50,7 @@
 <textarea name="signature" cols="81" rows="7">{mailTemplates.signature.content}</textarea>
 <p>
 
-<table border="0" cellpadding=2 cellspacing=2 width="430">
+<table border="0" cellpadding="2" cellspacing="2" width="430">
 <tr>
 <td align=left>
 <widget class="\XLite\View\Button\Submit" label=" Save " style="main-button" />
