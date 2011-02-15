@@ -15,11 +15,11 @@
 </div>
 
 <form IF="getOptions()" action="admin.php" method="POST" name="update_option_groups_form">
-  <input type="hidden" name="target" value="product">
-  <input type="hidden" name="action" value="update_option_groups">
-  <input type="hidden" name="page" value="product_options">
-  <input type="hidden" name="language" value="{language}">
-  <input type="hidden" name="product_id" value="{getProductId()}">
+  <input type="hidden" name="target" value="product" />
+  <input type="hidden" name="action" value="update_option_groups" />
+  <input type="hidden" name="page" value="product_options" />
+  <input type="hidden" name="language" value="{language}" />
+  <input type="hidden" name="product_id" value="{getProductId()}" />
 
   <table cellspacing="1" class="data-table">
 

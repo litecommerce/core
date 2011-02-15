@@ -16,10 +16,10 @@
 <br />
 <br />
 <form action="admin.php" method="POST">
-<input type="hidden" name="target" value="template_editor">
-<input type="hidden" name="action" value="update_page">
-<input type="hidden" name="editor" value="extra_pages">
-<input type="hidden" name="page" value="{extraPage.page}">
+<input type="hidden" name="target" value="template_editor" />
+<input type="hidden" name="action" value="update_page" />
+<input type="hidden" name="editor" value="extra_pages" />
+<input type="hidden" name="page" value="{extraPage.page}" />
 <input IF="{extraPage.page}" type="hidden" name="returnUrl" value="{url}&mode=page_edit&page={extraPage.page}&status=updated"/>
 
 <table cellpadding="2" cellspacing="2" IF="{extraPage.page}" width="430">
@@ -49,7 +49,7 @@
 <widget class="\XLite\Validator\RequiredValidator" field="title">
 <br /><br />
 {if:!extraPage.page}
-<input type="hidden" value="1" name="new_page">
+<input type="hidden" value="1" name="new_page" />
 <b>Page name:</b><br />
 <input type="text" name="page" value="{page}" size="80" width="150px" />
 <widget class="\XLite\Validator\PatternValidator" field="page" pattern="/(^[a-zA-Z0-9_]+$)|(^$)/" template="template_editor/name_validator.tpl">

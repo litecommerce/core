@@ -12,12 +12,12 @@
  *}
 <table cellpadding="2" cellspacing="2">
 <form action="admin.php" method="POST" name="editor_form">
-<input type="hidden" name="target" value="template_editor">
-<input type="hidden" name="action" value="advanced_update">
-<input type="hidden" name="editor" value="advanced">
-<input type="hidden" name="zone" value="{zone}">
-<input type="hidden" name="file" value="{file.path}">
-<input type="hidden" name="node" value="{file.node}">
+<input type="hidden" name="target" value="template_editor" />
+<input type="hidden" name="action" value="advanced_update" />
+<input type="hidden" name="editor" value="advanced" />
+<input type="hidden" name="zone" value="{zone}" />
+<input type="hidden" name="file" value="{file.path}" />
+<input type="hidden" name="node" value="{file.node}" />
 
 <tr>
 <td colspan=2>

@@ -14,12 +14,12 @@
 <h3 IF="!isNew()">Modify '{group.getName()}' option group</h3>
 
 <form action="admin.php" method="POST" name="update_option_group_form" class="options-group-modify">
-  <input type="hidden" name="target" value="product">
-  <input type="hidden" name="action" value="update_option_group">
-  <input type="hidden" name="page" value="product_options">
-  <input type="hidden" name="language" value="{language}">
-  <input type="hidden" name="product_id" value="{getProductId()}">
-  <input type="hidden" name="groupId" value="{getGroupId()}">
+  <input type="hidden" name="target" value="product" />
+  <input type="hidden" name="action" value="update_option_group" />
+  <input type="hidden" name="page" value="product_options" />
+  <input type="hidden" name="language" value="{language}" />
+  <input type="hidden" name="product_id" value="{getProductId()}" />
+  <input type="hidden" name="groupId" value="{getGroupId()}" />
 
   <ul class="form">
 

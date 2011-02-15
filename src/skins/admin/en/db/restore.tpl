@@ -60,9 +60,9 @@ To restore the images which are stored in the file system, you have to copy them
 <p class="adminParagraph"><b class="star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings">General settings</a> page before performing restore procedure!</p>
 
 <form action="admin.php" method=post enctype="multipart/form-data">
-<input type="hidden" name="target" value="db">
-<input type="hidden" name="action" value="restore">
-<input type="hidden" name="page" value="{page}">
+<input type="hidden" name="target" value="db" />
+<input type="hidden" name="action" value="restore" />
+<input type="hidden" name="page" value="{page}" />
 <table cellpadding="0" cellspacing="0">
 <tr>
 	<td colspan="3">&nbsp;</td>

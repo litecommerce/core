@@ -22,8 +22,8 @@ You have specified incorrect file format or the file doesn't match.
 
 <p>
 <form action="admin.php" method=post enctype="multipart/form-data" name=data_form>
-<input type="hidden" name="target" value="import_users">
-<input type="hidden" name="action" value="import">
+<input type="hidden" name="target" value="import_users" />
+<input type="hidden" name="action" value="import" />
 
 <table>
 <tr>

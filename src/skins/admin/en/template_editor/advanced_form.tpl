@@ -17,13 +17,13 @@ This section provides the capability to manually modify all templates of the Cus
 <p align="justify">
 <b>Note:</b> You need to know HTML, CSS and JavaScript in order to modify the templates using this tool. Be careful not to alter the expressions in curly brackets, widgets and other special constructions as this may cause improper software operation.</p>
 <form name="templates_form" method="POST">
-<input type="hidden" name="target" value="template_editor">
-<input type="hidden" name="editor" value="{editor}">
-<input type="hidden" name="zone" value="{zone}">
-<input type="hidden" name="action" value="">
-<input type="hidden" name="new_name" value="">
-<input type="hidden" name="file" value="{file.path}">
-<input type="hidden" name="node" value="{file.node}">
+<input type="hidden" name="target" value="template_editor" />
+<input type="hidden" name="editor" value="{editor}" />
+<input type="hidden" name="zone" value="{zone}" />
+<input type="hidden" name="action" value="" />
+<input type="hidden" name="new_name" value="" />
+<input type="hidden" name="file" value="{file.path}" />
+<input type="hidden" name="node" value="{file.node}" />
 
 <widget class="\XLite\View\Tabber" body="template_editor/advanced_tree.tpl" tabPages="getTreePages" switch="zone">
 

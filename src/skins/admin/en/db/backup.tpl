@@ -56,9 +56,9 @@ file from the server later on and delete it from the server by clicking on the
 <p class="adminParagraph"><b class="star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings">General settings</a> page before performing backup procedure!</p>
 
 <form action="admin.php" method="post" name="backup_form">
-<input type="hidden" name="target" value="db">
-<input type="hidden" name="action" value="backup">
-<input type="hidden" name="write_to_file" value="0">
+<input type="hidden" name="target" value="db" />
+<input type="hidden" name="action" value="backup" />
+<input type="hidden" name="write_to_file" value="0" />
 <table cellpadding="0" cellspacing="0">
     <tr>
         <td colspan='3'>&nbsp;</td>

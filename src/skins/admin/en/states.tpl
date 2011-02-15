@@ -44,7 +44,7 @@ function setHeaderChecked()
 
 <form name="select_country_form" method="GET">
 <p class="admin-head">Select country</p>
-<input type="hidden" name="target" value="states">
+<input type="hidden" name="target" value="states" />
 <widget class="\XLite\View\CountrySelect" field="country_code" country="{country_code}" onchange="javascript: document.select_country_form.submit();" all />
 </form>
 
@@ -53,9 +53,9 @@ function setHeaderChecked()
 </span>
 <p>
 <form IF="states" action="admin.php" name="update_delete_states_form" method="POST">
-<input type="hidden" name="target" value="states">
-<input type="hidden" name="action" value="update">
-<input type="hidden" name="country_code" value="{country_code}">
+<input type="hidden" name="target" value="states" />
+<input type="hidden" name="action" value="update" />
+<input type="hidden" name="country_code" value="{country_code}" />
 
 <h2>List of states</h2>
 			
@@ -92,9 +92,9 @@ function setHeaderChecked()
 
 <a name="add_section"></a>
 <form action="admin.php" method="post">
-<input type="hidden" name="target" value="states">
-<input type="hidden" name="country_code" value="{country_code}">
-<input type="hidden" name="action" value="add">
+<input type="hidden" name="target" value="states" />
+<input type="hidden" name="country_code" value="{country_code}" />
+<input type="hidden" name="action" value="add" />
 
 <h2>Add new state</h2>
 <table class="data-table">

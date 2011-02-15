@@ -53,7 +53,7 @@ function searchOrders()
     </tr>
 
     <tr FOREACH="namedWidgets.searchResults.pageData,id,user" class="{getRowClass(id,##,#highlight#)}">
-      <td align="center" width="10"><input type="radio" name="profile_id" value="{user.profile_id}" checked="{isSelected(id,#0#)}"></td>
+      <td align="center" width="10"><input type="radio" name="profile_id" value="{user.profile_id}" checked="{isSelected(id,#0#)}" /></td>
       <td nowrap><a href="{buildUrl(#profile#,##,_ARRAY_(#profile_id#^user.profile_id))}">{user.login:h}</a>{if:!user.status=#E#} (disabled account){end:}</td>
       <td nowrap><a href="{buildUrl(#address_book#,##,_ARRAY_(#profile_id#^user.profile_id))}">{if:user.billing_address.firstname&user.billing_address.lastname}{user.billing_address.firstname:h}&nbsp;{user.billing_address.lastname:h}{else:}n/a{end:}</a></td>
       <td nowrap align="left">

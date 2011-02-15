@@ -20,8 +20,8 @@
     </div>
 
     <form id="login_form" action="{buildUrl(#login#)}" method="POST" name="login_form">
-      <input type="hidden" name="target" value="login">
-      <input type="hidden" name="action" value="login">
+      <input type="hidden" name="target" value="login" />
+      <input type="hidden" name="action" value="login" />
 
       <table>
       <tr>
@@ -30,7 +30,7 @@
       </tr>
       <tr>
         <th>{t(#Password#)}:</th>
-        <td><input type="password" name="password" value="{password:r}" size="32" maxlength="128"></td>
+        <td><input type="password" name="password" value="{password:r}" size="32" maxlength="128" /></td>
       </tr>
       <tr>
         <td>&nbsp;</td>

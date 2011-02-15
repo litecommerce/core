@@ -59,8 +59,8 @@ Use this section to manage the list of existing countries. This list is used in 
 <span IF="status=#updated#" class="success-message"><br /><br />&gt;&gt;&nbsp;Country(s) updated successfully&nbsp;&lt;&lt;<br /><br /></span>
 
 <form action="admin.php" method="post" name="countries_form">
-<input type="hidden" name="target" value="countries">
-<input type="hidden" name="action" value="update">
+<input type="hidden" name="target" value="countries" />
+<input type="hidden" name="action" value="update" />
 	<table class="data-table">
 		<tr>
     		<th>Code</th>
@@ -122,8 +122,8 @@ Use this section to manage the list of existing countries. This list is used in 
 
 <a name="add_section"></a>
 <form action="admin.php" method="post" name="countries_add_form">
-<input type="hidden" name="target" value="countries">
-<input type="hidden" name="action" value="add">
+<input type="hidden" name="target" value="countries" />
+<input type="hidden" name="action" value="add" />
 
 <h2>Add new country</h2>
 			
@@ -137,8 +137,8 @@ Use this section to manage the list of existing countries. This list is used in 
 				<tr class="dialog-box">
 					<td><input type="text" size="3" maxlength="2" name="code" value="{code}" /></td>
 					<td><input type="text" size="34" maxlength="50" name="country" value="{country}" /></td>
-					<td align="middle"><input type="checkbox" name="eu_member" value="Y" checked="{isSelected(eu_member,#Y#)}"></td>
-					<td align="middle"><input type="checkbox" name="enabled" value="Y" checked></td>
+					<td align="middle"><input type="checkbox" name="eu_member" value="Y" checked="{isSelected(eu_member,#Y#)}" /></td>
+					<td align="middle"><input type="checkbox" name="enabled" value="Y" checked /></td>
 				</tr>
 
 {if:!valid}
