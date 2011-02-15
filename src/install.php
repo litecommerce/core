@@ -228,7 +228,7 @@ OUT;
         }
 
         if ($result) {
-            $location = sprintf('install.php?target=install&action=build_cache&step=%d', ++$step);
+            $location = sprintf('install.php?target=install&action=build_cache&step=%d&%d', ++$step, time());
 
 ?>
 
@@ -711,7 +711,7 @@ if (2 == $current) {
 var element = document.getElementById('report-layer');
 
 if (element) {
-    element.style.height = screen.availHeight + 'px';
+    element.style.height = (screen.availHeight + 200) + 'px';
 }
 
 </script>

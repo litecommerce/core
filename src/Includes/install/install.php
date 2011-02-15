@@ -803,7 +803,7 @@ function checkMemAllocation(&$errorMsg, &$value)
 {
     $result = true;
     
-    $sizes = array(64, 128, 256);
+    $sizes = array(32, 64, 128);
     
     foreach ($sizes as $size) {
         
@@ -1138,6 +1138,10 @@ function doPrepareFixtures(&$params, $silentMode = false)
 
     $result = true;
 
+    if (!$silentMode) {
+        echo '<div style="width: 100; text-align: left; margin-bottom: 20px;">' . xtr('Preparing data for cache generation...');
+    }
+
     $enabledModules = array();
 
     foreach ($lcSettings['enable_modules'] as $moduleAuthor => $modules) {
@@ -1149,7 +1153,7 @@ function doPrepareFixtures(&$params, $silentMode = false)
         }
     }
 
-        \Includes\Decorator\Utils\ModulesManager::saveModulesToFile($enabledModules);
+    \Includes\Decorator\Utils\ModulesManager::saveModulesToFile($enabledModules);
 
     // Generate fixtures list
     $yamlFiles = $lcSettings['yaml_files']['base'];
@@ -1189,7 +1193,11 @@ function doPrepareFixtures(&$params, $silentMode = false)
     foreach ($yamlFiles as $file) {
         \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::addFixtureToList($file);
     }
-    
+
+    if (!$silentMode) {
+        echo status($result) . '</div>';
+    }
+
     return $result;
 }
 
@@ -3206,9 +3214,12 @@ function module_install_cache(&$params)
 {
     global $error;
 
+    $result = doPrepareFixtures($params);
+
+    if ($result) {
 ?>
 
-<iframe id="process_iframe" style="padding-top: 15px;" src="install.php?target=install&action=build_cache" width="100%" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
+<iframe id="process_iframe" style="padding-top: 15px;" src="install.php?target=install&amp;action=build_cache&<?php echo time(); ?>" width="100%" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
 
 <br />
 <br />
@@ -3234,6 +3245,10 @@ function module_install_cache(&$params)
 
 <?php
 
+    } else {
+        fatal_error(xtr('Error has encountered while creating fixtures or modules list.'));
+    }
+
     $error = true;
 
     return false;
@@ -3255,18 +3270,15 @@ function module_install_dirs(&$params)
 
     $result = doUpdateConfig($params, true);
 
+    if ($result) {
+    
 ?>
 
 <iframe id="process_iframe" src="install.php?target=install&action=dirs" width="100%" height="300" frameborder="0" marginheight="10" marginwidth="10"></iframe>
 
 <?php
 
-    if ($result) {
-        $result = doPrepareFixtures($params, true);
-    
-    } else {
-        fatal_error(xtr('Fatal error encountered while creating directories, probably because of incorrect directory permissions. This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.'));
-    }
+    }    
 
 ?>
 
