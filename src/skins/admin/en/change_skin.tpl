@@ -44,7 +44,7 @@
 <p>Use this section to configure the look & feel of your store.</p>
 
 <hr />
-<p class="adminParagraph"><b class="star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings"><u>General settings</u></a> page before performing any operations on this page!</p>
+<p class="adminParagraph"><b class="star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings">General settings</a> page before performing any operations on this page!</p>
 
 <form action="admin.php" method="POST" name="change_skin_form">
 <input type="hidden" name="target" value="change_skin">

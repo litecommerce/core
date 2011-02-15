@@ -27,7 +27,7 @@
 <table cellpadding="5" cellspacing="1" width="100%">
 <tr>
     <th align="right">Page: </th>
-	<td class="admin-head"><i>{page.title:h}</i></td>
+	<td class="admin-head">{page.title:h}</td>
 </tr>
 <tr class="Center">
     <th align="right">Template: </th>
@@ -35,7 +35,7 @@
 </tr>
 <tr class="Center">
     <th align="right">URL:</th>
-    <td><a href="{xlite.getShopUrl(#cart.php#)}?page={page.page}" target="_blank"><u>{xlite.getShopUrl(#cart.php#)}?page={page.page}</u></a></td>
+    <td><a href="{xlite.getShopUrl(#cart.php#)}?page={page.page}" target="_blank">{xlite.getShopUrl(#cart.php#)}?page={page.page}</a></td>
 </tr>
 </table>
 

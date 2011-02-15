@@ -30,7 +30,7 @@ Use HTML code provided in this section to create product-specific 'Add to Cart' 
     </td>
 </tr>
 {else:}
-<tr><td colspan="2"><i>Product has no thumbnail</i></td></tr>
+<tr><td colspan="2">Product has no thumbnail</td></tr>
 {end:}
 <tr><td colspan="2">&nbsp;</td></tr>
 <tr>

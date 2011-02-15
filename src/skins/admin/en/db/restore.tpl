@@ -57,7 +57,7 @@ To restore the images which are stored in the file system, you have to copy them
 <p class="adminParagraph">
 <b class="star">Warning:</b> Restore procedure is irreversible and erases all data tables from your store database. It is highly recommended that you backup your present database data before restoring one of the previous states from a backup.
 </p>
-<p class="adminParagraph"><b class="star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings"><u>General settings</u></a> page before performing restore procedure!</p>
+<p class="adminParagraph"><b class="star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings">General settings</a> page before performing restore procedure!</p>
 
 <form action="admin.php" method=post enctype="multipart/form-data">
 <input type="hidden" name="target" value="db">

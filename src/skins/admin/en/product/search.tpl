@@ -31,5 +31,5 @@
 
 <br />
 
-<b>Note:</b> You can also <a href="admin.php?target=product"><u>add a new product</u></a>.
+<b>Note:</b> You can also <a href="admin.php?target=product">add a new product</a>.
 

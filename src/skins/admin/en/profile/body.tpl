@@ -163,7 +163,7 @@ Mandatory fields are marked with an asterisk (<span class="star">*</span>).
     <tr valign="middle">
       <td align="right">Referred by</td>
       <td>&nbsp;</td>
-      <td><a href="{referer}"><u>{referer}</u></a></td>
+      <td><a href="{referer}">{referer}</a></td>
       <td></td>
     </tr>
 

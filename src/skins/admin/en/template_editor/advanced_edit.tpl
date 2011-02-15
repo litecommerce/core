@@ -28,7 +28,7 @@
         	<table cellpadding="0" cellspacing="0">
             <tr>
             	<td><a href="{url:h}&node={file.node}"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt="" /> Go back to&nbsp;</a></td>
-            	<td><a href="{url:h}&node={file.node}"><img src="images/folder.gif" align="top" alt="" />&nbsp;<u>{file.node}</u></a></td>
+            	<td><a href="{url:h}&node={file.node}"><img src="images/folder.gif" align="top" alt="" />&nbsp;{file.node}</a></td>
         	</tr>
         	</table>
     	</td>

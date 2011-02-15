@@ -128,7 +128,7 @@ function setVisible(element_id)
     <td colspan="4">
         &nbsp;Cannot set {dirPermissionStr} permissions for subdirectories:<br />
         {foreach:v.subdirs,sid,subdir}
-            &nbsp;&nbsp;&nbsp;<i>{subdir}</i><br />    
+            &nbsp;&nbsp;&nbsp;{subdir}<br />    
         {end:}
     </td>
 </tr>

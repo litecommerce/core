@@ -27,7 +27,7 @@
 <td>
 	<table cellpadding="0" cellspacing="0" width="100%">
     <tr>
-    	<td width="50%"><img src="images/doc.gif" align="top" alt="" />&nbsp;<b>Page template:</b> <i>{extraPage.page}.tpl</i></td>
+    	<td width="50%"><img src="images/doc.gif" align="top" alt="" />&nbsp;<b>Page template:</b> {extraPage.page}.tpl</td>
     	<td width="50%" align=right><a href="{url}"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt="" /> Go back</a></td>
 	</tr>
 	</table>
@@ -55,7 +55,7 @@
 <widget class="\XLite\Validator\PatternValidator" field="page" pattern="/(^[a-zA-Z0-9_]+$)|(^$)/" template="template_editor/name_validator.tpl">
 <br /><br />
 <b>Note:</b> You can leave the page name field empty. In this case it will be generated automatically. 
-<p><i>Only letters, numbers and symbol "_" are allowed in a page name.</i></p>
+<p>Only letters, numbers and symbol "_" are allowed in a page name.</p>
 {end:}
 <b>Page text:</b><br />
 <textarea name="content" cols="81" rows="20">{getExtraPageContent()}</textarea>
