@@ -51,7 +51,7 @@ if (COPYRIGHT_EXISTS) {
 
     ob_end_clean();
 
-    echo nl2br(htmlspecialchars($tmp));
+    echo nl2br(str_replace('  ', '&nbsp;', htmlspecialchars($tmp)));
 
 ?>
 
