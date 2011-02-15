@@ -16,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
     <LINK href="skins/admin/en/style.css"  rel=stylesheet type=text/css>
 </head>
-<body class="PopUp" LEFTMARGIN=3 TOPMARGIN=3 RIGHTMARGIN=3 BOTTOMMARGIN=3 MARGINWIDTH=0 MARGINHEIGHT=0>
+<body class="popup">
 
 <widget template="product/search.tpl">
 {if:mode=#search#}

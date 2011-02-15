@@ -39,9 +39,9 @@ function changeVal(param)
 //-->
 </script>
 
-<div class="ErrorMessage">{error}</div>
+<div class="error-message">{error}</div>
 
-<div IF="inv_exp_error" class="ErrorMessage">There is a mistake in the tax calculation formula.</div>
+<div IF="inv_exp_error" class="error-message">There is a mistake in the tax calculation formula.</div>
 
 <form action="admin.php" method="POST" name="tax_form">
   <input type="hidden" name="page" value="add_rate">
@@ -77,7 +77,7 @@ function changeVal(param)
 </table>
 <br />
 <b>Tax value (optional; if not specified, a new folder will be created)</b>
-<hr>
+<hr />
 <table border="0" cellpadding="7">
 <tr valign="bottom">
 	<td>Tax name, either existing or new. A special name 'Tax' means total tax:</td>
@@ -105,5 +105,5 @@ function changeVal(param)
 <widget class="\XLite\View\Button\Submit" label="Save" style="main-button" />
 <widget class="\XLite\View\Button\Regular" jsCode="document.tax_form.add_another.value='1'; document.tax_form.page.value = 'add_rate'; document.tax_form.submit();" label="Save &amp; add another" />
 {end:}
-&nbsp;&nbsp;&nbsp;<a href="admin.php?target=taxes&page=rates"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"><b> Go back</b></a>
+&nbsp;&nbsp;&nbsp;<a href="admin.php?target=taxes&page=rates"><img src="images/go.gif" alt="" width="13" height="13" border="0" align="absmiddle"><b> Go back</b></a>
 </form>

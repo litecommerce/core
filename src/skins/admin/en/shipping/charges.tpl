@@ -11,9 +11,9 @@
  * @since     3.0.0
  *}
 
-<p IF="message=#added#"><font class="SuccessMessage">&gt;&gt;&nbsp;Shipping rate has been added successfully&nbsp;&lt;&lt;</font></p>
+<p IF="message=#added#"><span class="success-message">&gt;&gt;&nbsp;Shipping rate has been added successfully&nbsp;&lt;&lt;</span></p>
 
-<p IF="message=#add_failed#"><font class="ErrorMessage">&gt;&gt;&nbsp;Shipping rate cannot be added&nbsp;&lt;&lt;</font><br />Please make sure that <b>"min weight", "min total", "min items", "shipping zone", "shipping method"</b> fields do not overlap with other shipping rates.</p>
+<p IF="message=#add_failed#"><font class="error-message">&gt;&gt;&nbsp;Shipping rate cannot be added&nbsp;&lt;&lt;<br />Please make sure that <b>"min weight", "min total", "min items", "shipping zone", "shipping method"</b> fields do not overlap with other shipping rates.</p>
 
 <script type="text/javascript" language="JavaScript 1.2">
 <!--
@@ -37,7 +37,7 @@ function ShowNotes()
 
 Use this section to define rules for calculating shipping rates.
 
-<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="NavigationPath" onClick="this.blur()"><b>How to define shipping rates &gt;&gt;&gt;</b></a></span>
+<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>How to define shipping rates &gt;&gt;&gt;</b></a></span>
 <span id="notes_body" style="display: none">
 <p align="justify">
 Shipping rates are comprised of several components (rate types) and are 
@@ -84,7 +84,7 @@ and cannot be edited.
 </p>
 </span>
 
-<hr \>
+<hr />
 
 <form name="charges_methods" method="post" action="admin.php">
 

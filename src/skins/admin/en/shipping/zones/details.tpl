@@ -47,7 +47,7 @@ function ShowNotes()
 
 Use this section to define shipping zones.
 
-<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="NavigationPath" onClick="this.blur()"><b>How to define shipping zones &gt;&gt;&gt;</b></a></span>
+<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>How to define shipping zones &gt;&gt;&gt;</b></a></span>
 
 <span id="notes_body" style="display: none"><br /><br />
 Select a country or a state from a list, specify the zone where the country or state should be listed and click on the 'Apply' button. To select more than one country/state, hold down the CTRL key while making a selection. A zone can contain either countries or states. You cannot include both states and countries into the same zone.  
@@ -68,7 +68,7 @@ Select a country or a state from a list, specify the zone where the country or s
 
     <tr>
       <td colspan="3">
-        <font class="FormButton">Zone name:</font>
+        Zone name:
         <input type="text" size="50" name="zone_name" value="{zone.getZoneName()}" />
         &nbsp;&nbsp;
         <widget class="\XLite\View\Button\Regular" IF="!mode=#add#" label="Update" jsCode="javascript: onZoneSubmit();" />
@@ -86,9 +86,9 @@ Select a country or a state from a list, specify the zone where the country or s
 	  </tr>
 
     <tr>
-      <td width="45%" align="center"><font class="FormButton">Set</font></td>
+      <td width="45%" align="center">Set</td>
       <td width="10%">&nbsp;</td>
-      <td width="45%" align="center"><font class="FormButton">Unset</font></td>
+      <td width="45%" align="center">Unset</td>
     </tr>
 
     <tr>
@@ -125,9 +125,9 @@ Select a country or a state from a list, specify the zone where the country or s
 	  </tr>
 
     <tr>
-      <td width="45%" align="center"><font class="FormButton">Set</font></td>
+      <td width="45%" align="center">Set</td>
       <td width="10%">&nbsp;</td>
-      <td width="45%" align="center"><font class="FormButton">Unset</font></td>
+      <td width="45%" align="center">Unset</td>
     </tr>
 
     <tr>
@@ -164,9 +164,9 @@ Select a country or a state from a list, specify the zone where the country or s
 	  </tr>
 
     <tr>
-      <td width="45%" align="center"><font class="FormButton">Set</font></td>
+      <td width="45%" align="center">Set</td>
       <td width="10%">&nbsp;</td>
-      <td width="45%"><font class="FormButton">Examples:</font></td>
+      <td width="45%">Examples:</td>
     </tr>
 
     <tr>
@@ -189,9 +189,9 @@ Select a country or a state from a list, specify the zone where the country or s
 	  </tr>
 
     <tr>
-      <td width="45%" align="center"><font class="FormButton">Set</font></td>
+      <td width="45%" align="center">Set</td>
       <td width="10%">&nbsp;</td>
-      <td width="45%"><font class="FormButton">Examples:</font></td>
+      <td width="45%">Examples:</td>
     </tr>
 
     <tr>
@@ -215,9 +215,9 @@ Select a country or a state from a list, specify the zone where the country or s
 	  </tr>
 
     <tr>
-      <td width="45%" align="center"><font class="FormButton">Set</font></td>
+      <td width="45%" align="center">Set</td>
       <td width="10%">&nbsp;</td>
-      <td width="45%"><font class="FormButton">Examples:</font></td>
+      <td width="45%">Examples:</td>
     </tr>
 
     <tr>

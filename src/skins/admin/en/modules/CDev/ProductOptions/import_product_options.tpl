@@ -10,12 +10,12 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-This page allows you to import product options from CSV file.<hr>
+This page allows you to import product options from CSV file.<hr />
 
 
 <p>
 <p IF="!valid">
-    <font class="ErrorMessage">&gt;&gt; Error occured &lt;&lt;<br /></font>
+    <span class="error-message">&gt;&gt; Error occured &lt;&lt;</span><br />
 </p>
 <form action="admin.php" method=POST name=data_form enctype="multipart/form-data" >
 <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
@@ -23,7 +23,7 @@ This page allows you to import product options from CSV file.<hr>
 
 <table border=0>
 <tr>
-    <td colspan=2><font class=admin-head>Field order:</font></td>
+    <td colspan=2><span class="admin-head">Field order:</span></td>
 </tr>
 <tr FOREACH="xlite.factory.\XLite\Module\CDev\ProductOptions\Model\ProductOption.getImportFields(#product_options_layout#),id,fields">
     <td width=1>{id}:</td>

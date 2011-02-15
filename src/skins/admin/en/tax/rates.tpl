@@ -12,9 +12,9 @@
  *}
 <p>Note: Taxes will not be added to the order if a value for 'Tax' is not defined.</p>
 
-<div IF="inv_exp_error" class="ErrorMessage">There is a mistake in the tax calculation formula.</div>
+<div IF="inv_exp_error" class="error-message">There is a mistake in the tax calculation formula.</div>
 
-<div IF="error" class="ErrorMessage">{error}</div>
+<div IF="error" class="error-message">{error}</div>
 
 <form action="admin.php" method="POST">
   <input type="hidden" name="target" value="taxes">
@@ -27,11 +27,11 @@
     		<table border="0" cellspacing="0" cellpadding="0" width="100%">
 		      <tr>
       			<td align="left">
-			      	<a href="admin.php?target=taxes&page={page}&action=all&open=1" title="Expand all"><img src="images/plus.gif" border="0"></a>/<a href="admin.php?target=taxes&page={page}&action=all&open=0" title="Collapse all"><img src="images/minus.gif" border="0"></a>
+			      	<a href="admin.php?target=taxes&page={page}&action=all&open=1" title="Expand all"><img src="images/plus.gif" border="0" alt="" /></a>/<a href="admin.php?target=taxes&page={page}&action=all&open=0" title="Collapse all"><img src="images/minus.gif" border="0" alt="" /></a>
       			</td>
       			<th align="center">&nbsp;&nbsp;Condition&nbsp;&nbsp;</th>
       			<td align="right">
-			        <span style="font-weight: normal;"><a href="admin.php?target=taxes&page=add_rate&mode=add&ind="><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Add rate/condition</a></span>&nbsp;&nbsp;</th>
+			        <span style="font-weight: normal;"><a href="admin.php?target=taxes&page=add_rate&mode=add&ind=">Add rate/condition</a></span>&nbsp;&nbsp;</th>
   			    </td>
 		      </tr>
 		    </table>
@@ -75,9 +75,9 @@
         {end:}
         <td><input type="text" name="pos[{ind}]" value="{getTreePos(ind)}" size="3"></td>
         <td nowrap>
-          <a href="admin.php?target=taxes&page=add_rate&mode=edit&ind={getPath(ind)}"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt="" /> Edit</a>
+          <a href="admin.php?target=taxes&page=add_rate&mode=edit&ind={getPath(ind)}">Edit</a>
           &nbsp;&nbsp;&nbsp;
-          <a href="admin.php?target=taxes&page=rates&action=delete_rate&ind={ind}"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt="" /> Delete</a>
+          <a href="admin.php?target=taxes&page=rates&action=delete_rate&ind={ind}">Delete</a>
         </td>
       </tr>
       <tr IF="isInvalidExp(ind)">
@@ -96,7 +96,7 @@
 
   <div class="buttons">
     <widget class="\XLite\View\Button\Submit" label="Update" />
-		<a href="javascript:void(0);" onclick="javascript: window.open('admin.php?target=taxes&action=calculator','tax_calculator','width=600,height=550,toolbar=no,status=no,scrollbars=yes,resizable=no,menubar=no,location=no,direction=no'); return false;"><img src="images/go.gif" width="13" height="13" alt="" align="absmiddle" /> Tax calculator</a>
+    <widget class="\XLite\View\Button\Regular" label="Tax calculator" jsCode="window.open('admin.php?target=taxes&action=calculator','tax_calculator','width=600,height=550,toolbar=no,status=no,scrollbars=yes,resizable=no,menubar=no,location=no,direction=no'); return false;" />
   </div>
 
 </form>

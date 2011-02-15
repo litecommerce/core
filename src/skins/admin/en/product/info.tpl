@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<p>Mandatory fields are marked with an asterisk (<font class="Star">*</font>).<br /><br />
+<p>Mandatory fields are marked with an asterisk (<span class="star">*</span>).<br /><br />
 
 <widget class="XLite\View\Form\Product\Modify\Single" name="modify_form" />
 
@@ -21,8 +21,8 @@
   <td>&nbsp;</td>
 </tr>
 <tr>
-  <td class="FormButton" nowrap>SKU</td>
-  <td class=ProductDetails>
+  <td nowrap>SKU</td>
+  <td>
     <input type="text" name="{getNamePostedData(#sku#)}" size="20" value="{product.sku:r}">
   </td>
 </tr>
@@ -30,12 +30,12 @@
   <td>
 	<table border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-  		<td class="FormButton" nowrap width="100%">Product Name</td>
-        <td class="Star">&nbsp;*&nbsp;</td>
+  		<td nowrap width="100%">Product Name</td>
+        <td class="star">&nbsp;*&nbsp;</td>
 	</tr>
 	</table>
   </td>
-  <td class=ProductDetails>
+  <td>
     <input type="text" name="{getNamePostedData(#name#)}" size="45" value="{product.name:r}">
   </td>
 </tr>  
@@ -43,14 +43,14 @@
 	<td>
 	<table border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-  		<td class="FormButton" nowrap width="100%">Category</td>
-        <td class="Star">&nbsp;*&nbsp;</td>
+  		<td nowrap width="100%">Category</td>
+        <td class="star">&nbsp;*&nbsp;</td>
 	</tr>
 	</table>
 	</td>
 	<td> 
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr><widget class="\XLite\View\FormField\Select\Categories" fieldName="{getNamePostedData(##,#category_ids#)}" value="{product.getCategories()}" /></tr>
+      <tr><widget class="\XLite\View\FormField\Select\Categories" fieldName="{getNamePostedData(##,#category_ids#)}" fieldOnly=true value="{product.getCategories()}" /></tr>
     </table>
     </td>
 </tr>
@@ -59,8 +59,8 @@
   <td>
 	<table border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-  		<td class="FormButton" nowrap width="100%">Price</td>
-        <td class="Star">&nbsp;*&nbsp;</td>
+  		<td nowrap width="100%">Price</td>
+        <td class="star">&nbsp;*&nbsp;</td>
 	</tr>
 	</table>
   </td>
@@ -75,7 +75,7 @@
   <td>
 	<table border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-  		<td class="FormButton" nowrap width="100%">Market price</td>
+  		<td nowrap width="100%">Market price</td>
         <td>&nbsp;</td>
 	</tr>
 	</table>
@@ -87,7 +87,7 @@
 </tbody>
 
 <tr>
-  <td valign=middle><font class="FormButton">Tax class</font><br />
+  <td valign=middle>Tax class<br />
     <i>You can specify tax classes in Settings/Taxes/add rate/condition dialog</i>
   </td>
   <td valign="middle">
@@ -99,14 +99,14 @@
 </tr>
 
 <tr>
-  <td valign=middle class=Text><font class="FormButton">Weight</font> ({config.General.weight_symbol:h})</td>
+  <td valign=middle class=Text>Weight ({config.General.weight_symbol:h})</td>
   <td valign="middle">
     <input type="text" name="{getNamePostedData(#weight#)}" size="18" value="{product.weight}">
   </td>
 </tr>
 <tr>
-  <td valign="middle" class="FormButton">Free shipping</td>
-  <td valign="middle" class=ProductDetails>
+  <td valign="middle">Free shipping</td>
+  <td valign="middle">
    <select name="{getNamePostedData(#free_shipping#)}">
         <option value=1 selected="{isSelected(product,#free_shipping#,#1#)}">Yes</option>
         <option value=0 selected="{isSelected(product,#free_shipping#,#0#)}">No</option>
@@ -117,12 +117,12 @@
   <td>
 	<table border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-  		<td class="FormButton" nowrap width="100%">Available for sale</td>
-        <td class="Star">&nbsp;*&nbsp;</td>
+  		<td nowrap width="100%">Available for sale</td>
+        <td class="star">&nbsp;*&nbsp;</td>
 	</tr>
 	</table>
   </td>
-  <td valign="middle" class=ProductDetails>
+  <td valign="middle">
    <select name="{getNamePostedData(#enabled#)}">
         <option value=1 selected="{isSelected(product,#enabled#,#1#)}">Yes</option>
         <option value=0 selected="{isSelected(product,#enabled#,#0#)}">No</option>
@@ -136,45 +136,45 @@
 </tr>
 
 <tr>
-    <td class="FormButton">Product page title </td>
+    <td>Product page title </td>
 	<td><input type="text" name="{getNamePostedData(#meta_title#)}" value="{product.meta_title}" size="50"></td>
 </tr>
 
 <tr>
-  <td valign="top" class="FormButton">Brief Description</td>
-  <td valign="top" class=ProductDetails>
+  <td valign="top">Brief Description</td>
+  <td valign="top">
     <textarea name="{getNamePostedData(#brief_description#)}" cols="45" rows="6">{product.brief_description:h}</textarea>
   </td>
 </tr>
 
 <tr>
-  <td valign="top" class="FormButton">Detailed Description</td>
-  <td valign="top" class=ProductDetails>
+  <td valign="top">Detailed Description</td>
+  <td valign="top">
     <textarea name="{getNamePostedData(#description#)}" cols="45" rows="6">{product.description:h}</textarea>
   </td>
 </tr>
 
 <tr>
-    <td class="FormButton">Meta keywords</td>
+    <td>Meta keywords</td>
     <td><input type="text" name="{getNamePostedData(#meta_tags#)}" value="{product.meta_tags}" size="50"></td>
 </tr>
 <tr>
-    <td class="FormButton">Meta description</td>
+    <td>Meta description</td>
     <td><input type="text" name="{getNamePostedData(#meta_desc#)}" value="{product.meta_desc}" size="50"></td>
 </tr>
 <tr>
-    <td class="FormButton">Clean URL</td>
+    <td>Clean URL</td>
     <td><input type="text" name="{getNamePostedData(#clean_url#)}" value="{product.clean_url}" size="50" /></td>
 </tr>
 
 <tr>
-    <td class="FormButton">Custom Javascript code</td>
+    <td>Custom Javascript code</td>
     <td><textarea name="{getNamePostedData(#javascript#)}" cols="45" rows="6">{product.javascript}</textarea></td>
 </tr>
 
 {* Will be revised later *}
 {*<tr>
-  <td valign=middle class="FormButton">Pos.</td>
+  <td valign=middle>Pos.</td>
   <td valign="middle"><input type="text" name="{getNamePostedData(#order_by#)}" size="5" value="{product.order_by}"></td>
 </tr>*}
 

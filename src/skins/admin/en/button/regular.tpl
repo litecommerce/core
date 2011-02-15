@@ -11,4 +11,4 @@
  * @since     3.0.0
  *}
 
-<button type="button" onclick="javascript: {getJSCode():h}" class="{style}"><span>{getButtonLabel()}</span></button>
+<button type="button" onclick="javascript: {getJSCode():h}"{if:style} class="{style}"{end:}><span>{getButtonLabel()}</span></button>

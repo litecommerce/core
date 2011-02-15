@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<script language="Javascript">
+<script type="text/javascript">
 <!-- 
 
 var CountryVatEnabledCheckBoxes = new Array();
@@ -52,49 +52,49 @@ function setDelete(form, input, check)
 
 <p>
 Use this section to manage the list of existing countries. This list is used in the shipping and taxation settings and calculations, and in the registration form at the Customer Front-end.
-<hr>
+<hr />
 
-<font IF="status=#added#" class="SuccessMessage"><br /><br />&gt;&gt;&nbsp;Country added successfully&nbsp;&lt;&lt;<br /><br /></font>
-<font IF="status=#deleted#" class="SuccessMessage"><br /><br />&gt;&gt;&nbsp;Country(s) deleted successfully&nbsp;&lt;&lt;<br /><br /></font>
-<font IF="status=#updated#" class="SuccessMessage"><br /><br />&gt;&gt;&nbsp;Country(s) updated successfully&nbsp;&lt;&lt;<br /><br /></font>
+<span IF="status=#added#" class="success-message"><br /><br />&gt;&gt;&nbsp;Country added successfully&nbsp;&lt;&lt;<br /><br /></span>
+<span IF="status=#deleted#" class="success-message"><br /><br />&gt;&gt;&nbsp;Country(s) deleted successfully&nbsp;&lt;&lt;<br /><br /></span>
+<span IF="status=#updated#" class="success-message"><br /><br />&gt;&gt;&nbsp;Country(s) updated successfully&nbsp;&lt;&lt;<br /><br /></span>
 
 <form action="admin.php" method="post" name="countries_form">
 <input type="hidden" name="target" value="countries">
 <input type="hidden" name="action" value="update">
 	<table class="data-table">
-		<tr class="TableHead">
-    		<th class="TableHead">Code</th>
-		    <th class="TableHead">Country</th>
-		    <th class="TableHead">VAT taxable<br />
-		    	<input id="enable_countries_vat" type="checkbox" onClick="this.blur();setChecked('enable_countries_vat',this.checked);">
+		<tr>
+    		<th>Code</th>
+		    <th>Country</th>
+		    <th>VAT taxable<br />
+		    	<input id="enable_countries_vat" type="checkbox" onclick="this.blur();setChecked('enable_countries_vat',this.checked);">
 		    </th>
-		    <th class="TableHead">Active<br />
-		    	<input id="enable_countries" type="checkbox" onClick="this.blur();setChecked('enable_countries',this.checked);">
+		    <th>Active<br />
+		    	<input id="enable_countries" type="checkbox" onclick="this.blur();setChecked('enable_countries',this.checked);">
 			</th>
 			<widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/risk_country/label.tpl">
-			<th class="TableHead">Delete<br />
-				<input id="delete_countries" type="checkbox" onClick="this.blur();setDelete('countries_form','countries_ids',this.checked);">
+			<th>Delete<br />
+				<input id="delete_countries" type="checkbox" onclick="this.blur();setDelete('countries_form','countries_ids',this.checked);">
 			</th>
 		</tr>
 
 		<tr FOREACH="getCountries(),country_idx,country" class="{getRowClass(country_idx,#dialog-box#,#highlight#)}">
-		    <td align="center"><a href="admin.php?target=states&country_code={country.code}" title="Click here to view states of country" onClick="this.blur();"><u>{country.code}</u></a></td>
+		    <td align="center"><a href="admin.php?target=states&country_code={country.code}" title="Click here to view states of country" onclick="this.blur();"><u>{country.code}</u></a></td>
 		    <td>
 		        <input type="text" size="34" maxlength="50" name="countries[{country.code}][country]" value="{country.country:r}">
 		    </td>
 		    <td align="center">
-		        <input id="country_vat_{country_idx}" type="checkbox" name="countries[{country.code}][eu_member]" value="Y" checked="{country.eu_member}" onClick="this.blur();">
-		        <script language="Javascript">CountryVatEnabledCheckBoxes[CountryVatEnabledCheckBoxes.length]="country_vat_{country_idx}";</script>
-		        <script language="Javascript" IF="country.enabled">setHeaderChecked("enable_countries_vat");</script>
+		        <input id="country_vat_{country_idx}" type="checkbox" name="countries[{country.code}][eu_member]" value="Y" checked="{country.eu_member}" onclick="this.blur();">
+		        <script type="text/javascript">CountryVatEnabledCheckBoxes[CountryVatEnabledCheckBoxes.length]="country_vat_{country_idx}";</script>
+		        <script type="text/javascript" IF="country.enabled">setHeaderChecked("enable_countries_vat");</script>
 		    </td>
 		    <td align="center">
-		        <input id="country_enabled_{country_idx}" type="checkbox" name="countries[{country.code}][enabled]" value="Y" checked="{country.enabled}" onClick="this.blur();">
-		        <script language="Javascript">CountryEnabledCheckBoxes[CountryEnabledCheckBoxes.length]="country_enabled_{country_idx}";</script>
-		        <script language="Javascript" IF="country.enabled">setHeaderChecked("enable_countries");</script>
+		        <input id="country_enabled_{country_idx}" type="checkbox" name="countries[{country.code}][enabled]" value="Y" checked="{country.enabled}" onclick="this.blur();">
+		        <script type="text/javascript">CountryEnabledCheckBoxes[CountryEnabledCheckBoxes.length]="country_enabled_{country_idx}";</script>
+		        <script type="text/javascript" IF="country.enabled">setHeaderChecked("enable_countries");</script>
 		    </td>
 			    <widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/risk_country/checkbox.tpl">
 			<td align="center">
-				<input id="countries_ids" type="checkbox" name="delete_countries[]" value="{country.code}" onClick="this.blur();">
+				<input id="countries_ids" type="checkbox" name="delete_countries[]" value="{country.code}" onclick="this.blur();">
 			</td>
 		</tr>
 
@@ -112,8 +112,8 @@ Use this section to manage the list of existing countries. This list is used in 
 		</tr>
 		</table>
 	</td>
-	<script language="Javascript">CheckBoxes["enable_countries_vat"] = CountryVatEnabledCheckBoxes;</script>
-	<script language="Javascript">CheckBoxes["enable_countries"] = CountryEnabledCheckBoxes;</script>
+	<script type="text/javascript">CheckBoxes["enable_countries_vat"] = CountryVatEnabledCheckBoxes;</script>
+	<script type="text/javascript">CheckBoxes["enable_countries"] = CountryEnabledCheckBoxes;</script>
 </tr>
 </table>
 </form>
@@ -128,11 +128,11 @@ Use this section to manage the list of existing countries. This list is used in 
 <h2>Add new country</h2>
 			
       <table class="data-table">
-				<tr class="TableHead">
-					<th class="TableHead">Code</th>
-					<th class="TableHead">Country</th>
-					<th class="TableHead">VAT taxable</th>
-					<th class="TableHead">Active</th>
+				<tr>
+					<th>Code</th>
+					<th>Country</th>
+					<th>VAT taxable</th>
+					<th>Active</th>
 				</tr>
 				<tr class="dialog-box">
 					<td><input type="text" size="3" maxlength="2" name="code" value="{code}"></td>
@@ -143,10 +143,10 @@ Use this section to manage the list of existing countries. This list is used in 
 
 {if:!valid}
 	<tr>
-		<td IF="status=#exists#" colspan="6"><font class="ErrorMessage"><br />&gt;&gt;&nbsp;Specified country code is already in use</font><br /><br /></td>
-		<td IF="status=#code#" colspan="6"><font class="ErrorMessage"><br />&gt;&gt;&nbsp;Mandatory field "Code" is empty.</font><br /><br /></td>
-		<td IF="status=#country#" colspan="6"><font class="ErrorMessage"><br />&gt;&gt;&nbsp;Mandatory field "Country" is empty</font><br /><br /></td>
-		<td IF="status=#charset#" colspan="6"><font class="ErrorMessage"><br />&gt;&gt;&nbsp;Mandatory field "Charset" is empty</font><br /><br /></td>
+		<td IF="status=#exists#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;Specified country code is already in use<br /><br /></span></td>
+		<td IF="status=#code#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;Mandatory field "Code" is empty.<br /><br /></span></td>
+		<td IF="status=#country#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;Mandatory field "Country" is empty<br /><br /></span></td>
+		<td IF="status=#charset#" colspan="6"><span class="error-message"><br />&gt;&gt;&nbsp;Mandatory field "Charset" is empty<br /><br /></span></td>
 	</tr>
 {end:}
 	<tr>
@@ -158,7 +158,7 @@ Use this section to manage the list of existing countries. This list is used in 
 </form>
 
 {if:!valid}
-<script language="javascript">
+<script type="text/javascript">
 <!--
 var anchor = '#add_section';
 if (window.opera) {

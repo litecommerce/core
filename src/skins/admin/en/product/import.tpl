@@ -10,12 +10,12 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<p>Use this section to import catalog data from a CSV file. <hr>
+<p>Use this section to import catalog data from a CSV file. <hr />
 
 <p IF="!valid">
-    <font class="ErrorMessage">&gt;&gt; Error occured &lt;&lt;<br /></font>
-    <font IF="import_error" class="ErrorMessage">You have specified incorrect file format or the file doesn't match.<br /></font>
-    <font IF="category_unspecified_error" class="ErrorMessage">Category unspecified</font>
+    <span class="error-message">&gt;&gt; Error occured &lt;&lt;</span><br />
+    <span IF="import_error" class="error-message">You have specified incorrect file format or the file doesn't match.</span><br />
+    <span IF="category_unspecified_error" class="error-message">Category unspecified</span>
 </p>
 
 <p>
@@ -55,7 +55,7 @@
 </tr>
 <tr>
     <td colspan=2>
-    Directory where images are located:<BR>
+    Directory where images are located:<br />
     {if:action=#import_products#}
         <input type=text size=32 name=images_directory value="{images_directory}">
     {else:}
@@ -81,7 +81,7 @@
     File (CSV) for upload:<br /><input type=file size=32 name=userfile><widget IF="invalid_userfile" template="common/uploaded_file_validator.tpl" state="{invalid_userfile_state}" />
     <br />
     <br />
-    <input type="checkbox" value="yes" name="delete_products" checked="{delete_products}" onClick="javascript: if (document.data_form.delete_products.checked) return confirm('Are you sure?');">Drop all products before import
+    <input type="checkbox" value="yes" name="delete_products" checked="{delete_products}" onclick="javascript: if (document.data_form.delete_products.checked) return confirm('Are you sure?');">Drop all products before import
     <br /><br />
     <widget class="\XLite\View\Button\Submit" label="Import products" style="main-button" />
     </td>

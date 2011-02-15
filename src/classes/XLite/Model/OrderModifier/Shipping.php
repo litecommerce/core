@@ -244,7 +244,7 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
         if ($this->getShippingId() != $newShippingId) {
 
             $this->setShippingId($newShippingId);
-            $this->setShippingMethodName($rate->getMethod()->getName());
+            $this->setShippingMethodName($rate ? $rate->getMethod()->getName() : null);
 
             \XLite\Core\Database::getEM()->flush();
         }

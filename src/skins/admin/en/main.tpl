@@ -28,7 +28,7 @@
 
       {* FIXME - to remove *}
       <div style="width: 100%; text-align: center;" IF="!isTested()">
-        <img src="images/icon_warning.gif" />
+        <img src="images/icon_warning.gif" alt="" />
         <strong>This controller is not working properly for current LC version</strong>
         <br /><br />
       </div>
@@ -147,7 +147,7 @@
       <span class="current" IF="!auth.isLogged()">{t(#LiteCommerce shopping cart software#)}</span>
       <span class="current" IF="auth.isLogged()">{t(#v.#)} {config.Version.version:h}</span>
       <span IF="auth.isLogged()&isCoreUpgradeAvailable()" class="upgrade-note">
-        {t(#New version is available#)}&nbsp;(<a href="#">{getLastCoreVersion()}</a>)</span>
+        {t(#New version is available#)}&nbsp;(<a href="#">{getLastCoreVersion()}</a>)
       </span>
     </div>
 

@@ -139,7 +139,7 @@ function func_restoreNode()
 	</td>
 </tr>
 <tr>
-	<td colspan=2><hr></td>
+	<td colspan=2><hr /></td>
 </tr>
 <tr>
 	<td colspan=2>

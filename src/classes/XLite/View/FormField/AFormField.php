@@ -47,7 +47,7 @@ abstract class AFormField extends \XLite\View\AView
     const PARAM_NAME       = 'fieldName';
     const PARAM_LABEL      = 'label';
     const PARAM_COMMENT    = 'comment';
-    const PARAM_WRAPPED    = 'wrapped';
+    const PARAM_FIELD_ONLY = 'fieldOnly';
 
     const PARAM_IS_ALLOWED_FOR_CUSTOMER = 'isAllowedForCustomer';
 
@@ -342,9 +342,9 @@ abstract class AFormField extends \XLite\View\AView
                 'Is allowed for customer',
                 $this->isAllowedForCustomer
             ),
-            self::PARAM_WRAPPED    => new \XLite\Model\WidgetParam\Bool(
-                'Wrapped with label and required flag according to common table structure',
-                true
+            self::PARAM_FIELD_ONLY    => new \XLite\Model\WidgetParam\Bool(
+                'Skip wrapping with label and required flag, display just a field itself',
+                false
             ),
         );
     }

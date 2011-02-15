@@ -23,8 +23,8 @@
       </td>
 
       <td valign="top" align="center">
-        <img src="images/icon_billing.png" title="Billing address" class="address-type-icon" IF="{address.getIsBilling()}" />
-        <img src="images/icon_shipping.png" title="Shipping address" class="address-type-icon" IF="{address.getIsBilling()}" />
+        <img src="images/icon_billing.png" title="Billing address" class="address-type-icon" IF="{address.getIsBilling()}" alt="" />
+        <img src="images/icon_shipping.png" title="Shipping address" class="address-type-icon" IF="{address.getIsBilling()}" alt="" />
       </td>
     </tr>
 
