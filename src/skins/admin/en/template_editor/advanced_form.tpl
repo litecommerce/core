@@ -130,7 +130,7 @@ function func_restoreNode()
         </table>
 	</td>
 	<td width=50%>
-        <table border=0 cellpadding=3 cellspacing=3 align=right>
+        <table border=0 cellpadding=3 cellspacing=3>
         <tr>
         	<td><widget class="\XLite\View\Button\Regular" label="New File" jsCode="javascript: func_newFile()" /></td>
         	<td><widget class="\XLite\View\Button\Regular" label="New Directory" jsCode="javascript: func_newDir()" /></td>
