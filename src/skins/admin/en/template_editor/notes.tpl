@@ -28,7 +28,7 @@ function ShowNotes()
 <br />
 <span id="notes_url" style="display:"><a href="javascript: ShowNotes();" class="navigation-path" onclick="this.blur()"><b> Please note  &gt;&gt;&gt;</b></a></span>
 <span id="notes_body" style="display: none">
-<hr noshade size="1">
+<hr noshade size="1" />
 <p>Since it is possible to modify the existing Flexy (Flexy is a templates engine used in Litecommerce) structures or add a custom Flexy code to the templates or user-defined pages, the following rules should be observed:</p>
 
 <p>- For braces ("&#123;" or "&#125;") to be displayed only for the text decoration the HTML code should be used:</p>
@@ -52,5 +52,5 @@ instead of
 <p>This code record is <b>incorrect</b> and will be interpreted by Flexy as a control structure but not as a JS code.</p>
 
 <p>If you have any technical questions or difficulties with template customization, please feel free to contact our Support team.</p>
-<hr noshade size="1">
+<hr noshade size="1" />
 </span>
