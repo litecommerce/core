@@ -332,6 +332,16 @@ div.noscript
   font-size: 22px;
 }
 
+.highlight
+{
+  background-color: #eee;
+}
+
+.fixed-select
+{
+  width: 170px;
+}
+
 /* Page tabs */
 
 div.page-tabs
@@ -453,23 +463,11 @@ table.data-table td.center
   background-color: #fff;
 }
 
-/* Settings pages */
-table.settings-table tr td.setting-name
-{
-  padding: 7px 0 7px 10px;
-  color: #456583;
+body.popup
+{ 
+  margin: 5px;
+  background: #fff;
 }
-
-table.settings-table tr td h2
-{
-  margin: 30px 0 10px 0;
-}
-
-
-/**
- * Unsorted
- * TODO: group below styles
- */
 
 .star
 {
@@ -491,9 +489,30 @@ div.clear
   height: 0px;
 }
 
+/* Messages */
+
+.error-message
+{
+  color: #ff0000;
+  font-weight: bold;
+}
+
+.validate-error-message
+{
+  color: #ff0000;
+}
+
+.success-message
+{
+  color: green;
+  font-weight: bold;
+}
+
+/* Plain table */
+
 table.plain-table
 {
-  background-color: #000000;
+  background-color: #000;
 }
 
 table.plain-table th
@@ -503,7 +522,7 @@ table.plain-table th
 
 table.plain-table td
 {
-  background-color: #ffffff;
+  background-color: #fff;
 }
 
 .right-panel
@@ -523,6 +542,8 @@ input.price
   width: 8em;
   text-align: right;
 }
+
+/* List-based form */
 
 ul.form
 {
@@ -555,6 +576,21 @@ ul.form li .note
   display: block;
   font-size: 10px;
 }
+
+/* Settings pages */
+
+table.settings-table tr td.setting-name
+{
+  padding: 7px 0 7px 10px;
+  color: #456583;
+}
+
+table.settings-table tr td h2
+{
+  margin: 30px 0 10px 0;
+}
+
+/* Buttons */
 
 div.buttons
 {
@@ -630,9 +666,17 @@ button.invert:hover
   background-image: url(images/button_bg_blue_hover.png);
 }
 
-/**
- * jQueryUI-based wait box 
- */
+* html button
+{
+  behavior: expression(
+    this.onmouseover = new Function("this.className += ' hover'"),
+    this.onmouseout = new Function("this.className = this.className.replace(' hover','')"),
+    this.style.behavior = null
+  );
+}
+
+/* jQueryUI-based wait box */
+
 .wait-box .box
 {
   background: transparent url(images/progress.gif) repeat-x left top;
@@ -644,26 +688,8 @@ button.invert:hover
   display: none;
 }
 
-* html button
-{
-  behavior: expression(
-    this.onmouseover = new Function("this.className += ' hover'"),
-    this.onmouseout = new Function("this.className = this.className.replace(' hover','')"),
-    this.style.behavior = null
-  );
-}
-
-.highlight
-{
-    background-color: #eee;
-}
-
-.fixed-select
-{
-  width: 170px;
-}
-
 /* Advertise block */
+
 .adv-block
 {
   border: 7px solid #dee8ee;
@@ -780,9 +806,7 @@ button.invert:hover
   white-space: nowrap;
 }
 
-.table-value
-{
-}
+/* Profile form */
 
 #referer,
 #added,
@@ -824,29 +848,4 @@ button.invert:hover
 .navigation-path:hover
 {
   color: #082032;
-}
-
-/* Messages */
-
-.error-message
-{
-  color: #ff0000;
-  font-weight: bold;
-}
-
-.validate-error-message
-{
-  color: #ff0000;
-}
-
-.success-message
-{
-  color: green;
-  font-weight: bold;
-}
-
-body.popup
-{ 
-  margin: 5px;
-  background: #fff;
 }
