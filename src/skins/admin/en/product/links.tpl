@@ -21,12 +21,12 @@ Use HTML code provided in this section to create product-specific 'Add to Cart' 
 {if:product.hasThumbnail()}
 <tr>
     <td valign="top">Example:</td>
-    <td><img src="{getShopUrl(#cart.php#)}?target=image&action=product_thumbnail&product_id={product.product_id}" width="70" alt="{product.name:h}">
+    <td><img src="{getShopUrl(#cart.php#)}?target=image&action=product_thumbnail&product_id={product.product_id}" width="70" alt="{product.name:h}" />
     </td>
 </tr>    
 <tr>
     <td valign="top">HTML code:</td>
-    <td><textarea cols="80" rows="5"><img src="{getShopUrl(#cart.php#)}?target=image&action=product_thumbnail&product_id={product.product_id}" width="70" alt="{product.name:h}"></textarea>
+    <td><textarea cols="80" rows="5"><img src="{getShopUrl(#cart.php#)}?target=image&action=product_thumbnail&product_id={product.product_id}" width="70" alt="{product.name:h}" /></textarea>
     </td>
 </tr>
 {else:}
