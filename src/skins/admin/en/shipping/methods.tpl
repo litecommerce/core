@@ -106,7 +106,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
         <table class="data-table">
 
           <tr>
-            <th width="90%">Shipping method</th>
+            <th style="width:90%;">Shipping method</th>
             <th>Pos.</th>
             <th>Active<br />
               <input id="enable_method_{processor.getProcessorId()}" type="checkbox" onclick="this.blur();setChecked('{processor.getProcessorId()}',this.checked);" />
