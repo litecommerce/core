@@ -1,0 +1,50 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Error page style
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+
+body
+{
+  padding: 10px;
+  font-size: 14px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+div.container
+{
+}
+
+div.icon
+{
+  float: left;
+  margin-left: 50px;
+}
+
+div.text
+{
+  margin-left: 450px;
+  padding-top: 30px;
+}
+
+div.text .header
+{
+  color: #a32121;
+  font-size: 22px;
+}
+
+div.text .message
+{
+}
+
+div.clear
+{
+  clear: both;
+}

@@ -15,7 +15,7 @@
   <title>{if:getPageTitle()}{getPageTitle()}{end:}</title>
   <meta http-equiv="Content-Type" content="text/html; charset={charset}" />
   <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-  <meta IFF="!metaDescription" name="description" content="The powerful shopping cart software for web stores and e-commerce enabled stores is based on PHP / PHP4 with SQL database with highly configurable implementation based on templates." />
+  <meta IFF="!metaDescription" name="description" content="The powerful shopping cart software for web stores and e-commerce enabled stores is based on PHP5 with SQL database with highly configurable implementation based on templates." />
   <meta IFF="metaDescription" name="description" content="{metaDescription:r}" />
   <meta IFF="keywords" name="keywords" content="{keywords:r}" />
 
