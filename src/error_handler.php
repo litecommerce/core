@@ -28,6 +28,35 @@
 
 // NOTE: this script must be PHP5.0-compatible
 
-require_once (dirname(__FILE__) . DIRECTORY_SEPARATOR . 'top.inc.php');
+define('LC_ERR_TAG_MSG',   '@MSG@');
+define('LC_ERR_TAG_ERROR', '@ERROR@');
+define('LC_ERR_TAG_CODE',  '@CODE@');
 
-XLite::getInstance()->run()->getViewer()->display();
+define('LC_ERROR_PAGE_MESSAGE', 'ERROR: "' . LC_ERR_TAG_ERROR . '" (' . LC_ERR_TAG_CODE . ') - ' . LC_ERR_TAG_MSG);
+
+/**
+ * Display error message
+ *
+ * @param string  $code    Error code
+ * @param string  $message Error message
+ * @param string  $page    Template of message to display
+ *
+ * @return void
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function showErrorPage($code, $message, $page = LC_ERROR_PAGE_MESSAGE, $prefix = 'ERROR_')
+{
+    echo str_replace(
+        array(LC_ERR_TAG_MSG, LC_ERR_TAG_ERROR, LC_ERR_TAG_CODE),
+        array($message, str_replace($prefix, '', $code), defined($code) ? constant($code) : 'N/A'),
+        $page
+    );
+
+    exit (intval($code));
+}
+
+// Check PHP version before any other operations
+if (!defined('LC_DO_NOT_CHECK_PHP_VERSION') && version_compare(PHP_VERSION, '5.3.0', '<')) {
+    showErrorPage('ERROR_UNSUPPORTED_PHP_VERSION', 'Min allowed PHP version is 5.3.0');
+}

@@ -364,7 +364,7 @@ class XLite extends \XLite\Base
      * 
      * @param boolean $adminZone Admin interface flag OPTIONAL
      *  
-     * @return \XLite\View\AView
+     * @return self
      * @access public
      * @since  3.0.0
      */
