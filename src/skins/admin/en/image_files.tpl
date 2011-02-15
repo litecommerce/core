@@ -75,7 +75,7 @@
 </table>
 <br />
 <p align="justify">
-Image files can either be placed in the <i><b>{imagesDir}</b></i> sub-directory of your LiteCommerce installation or stored in the database. Using this section you can specify where you want different kinds of images to be located. Storing images in the database makes it easier to backup them, while leaving them as files helps to keep the database more compact.
+Image files can either be placed in the <b>{imagesDir}</b> sub-directory of your LiteCommerce installation or stored in the database. Using this section you can specify where you want different kinds of images to be located. Storing images in the database makes it easier to backup them, while leaving them as files helps to keep the database more compact.
 </p>
 <p align="justify">
 <b>Note:</b> '??' in the names of image files are replaced with the corresponding category/product identifiers.
@@ -88,7 +88,7 @@ Image files can either be placed in the <i><b>{imagesDir}</b></i> sub-directory 
 <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}" />
 <input type="hidden" name="action" value="update_images_dir" />
 Images directory : <input type="text" name="images_dir" value="{imagesDir}" size="30" /><br /><br />
-<b>Note:</b> enter the relative path to the directory, where images are stored. For example, if images are stored in the <i><b>images</b></i> sub-directory of your LiteCommerce installation, enter <i><b>images</b></i> in this field. If you don't specify images directory then <i><b>images</b></i> will be used as default.
+<b>Note:</b> enter the relative path to the directory, where images are stored. For example, if images are stored in the <b>images</b> sub-directory of your LiteCommerce installation, enter <b>images</b> in this field. If you don't specify images directory then <b>images</b> will be used as default.
 <br />
 <br />
 <widget class="\XLite\View\Button\Submit" label=" Update " />

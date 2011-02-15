@@ -54,8 +54,8 @@ function searchOrders()
 
     <tr FOREACH="namedWidgets.searchResults.pageData,id,user" class="{getRowClass(id,##,#highlight#)}">
       <td align="center" width="10"><input type="radio" name="profile_id" value="{user.profile_id}" checked="{isSelected(id,#0#)}"></td>
-      <td nowrap><a href="{buildUrl(#profile#,##,_ARRAY_(#profile_id#^user.profile_id))}"><u>{user.login:h}</u></a>{if:!user.status=#E#} (disabled account){end:}</td>
-      <td nowrap><a href="{buildUrl(#address_book#,##,_ARRAY_(#profile_id#^user.profile_id))}"><u>{if:user.billing_address.firstname&user.billing_address.lastname}{user.billing_address.firstname:h}&nbsp;{user.billing_address.lastname:h}{else:}n/a{end:}</u></a></td>
+      <td nowrap><a href="{buildUrl(#profile#,##,_ARRAY_(#profile_id#^user.profile_id))}">{user.login:h}</a>{if:!user.status=#E#} (disabled account){end:}</td>
+      <td nowrap><a href="{buildUrl(#address_book#,##,_ARRAY_(#profile_id#^user.profile_id))}">{if:user.billing_address.firstname&user.billing_address.lastname}{user.billing_address.firstname:h}&nbsp;{user.billing_address.lastname:h}{else:}n/a{end:}</a></td>
       <td nowrap align="left">
       {if:user.access_level=0}
         Customer
@@ -69,7 +69,7 @@ function searchOrders()
         Administrator
       {end:}
       </td>
-      <td nowrap align="left">{if:user.orders_count}<a href="{buildUrl(#order_list#,##,_ARRAY_(#mode#^#search#,#login#^user.login))}"><u>{user.orders_count}</u></a>{else:}n/a{end:}</td>
+      <td nowrap align="left">{if:user.orders_count}<a href="{buildUrl(#order_list#,##,_ARRAY_(#mode#^#search#,#login#^user.login))}">{user.orders_count}</a>{else:}n/a{end:}</td>
       <td nowrap align="left">{if:user.added}{formatTime(user.added):h}{else:}Unknown{end:}</td>
       <td nowrap align="left">{if:user.last_login}{formatTime(user.last_login):h}{else:}Never{end:}</td>
     </tr>

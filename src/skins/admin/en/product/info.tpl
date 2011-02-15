@@ -88,7 +88,7 @@
 
 <tr>
   <td valign=middle>Tax class<br />
-    <i>You can specify tax classes in Settings/Taxes/add rate/condition dialog</i>
+    You can specify tax classes in Settings/Taxes/add rate/condition dialog
   </td>
   <td valign="middle">
     <select name="{getNamePostedData(#tax_class#)}">

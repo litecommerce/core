@@ -67,7 +67,7 @@
 </tr>
 <tr>
     <td colspan=2>
-    <b>Note:</b> If you don't specify images directory then <i><b>{getImagesDir()}</b></i> will be used as default.
+    <b>Note:</b> If you don't specify images directory then <b>{getImagesDir()}</b> will be used as default.
     </td>
 </tr>
 <tr>

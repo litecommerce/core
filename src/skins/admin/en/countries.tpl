@@ -78,7 +78,7 @@ Use this section to manage the list of existing countries. This list is used in 
 		</tr>
 
 		<tr FOREACH="getCountries(),country_idx,country" class="{getRowClass(country_idx,#dialog-box#,#highlight#)}">
-		    <td align="center"><a href="admin.php?target=states&country_code={country.code}" title="Click here to view states of country" onclick="this.blur();"><u>{country.code}</u></a></td>
+		    <td align="center"><a href="admin.php?target=states&country_code={country.code}" title="Click here to view states of country" onclick="this.blur();">{country.code}</a></td>
 		    <td>
 		        <input type="text" size="34" maxlength="50" name="countries[{country.code}][country]" value="{country.country:r}">
 		    </td>
