@@ -100,7 +100,7 @@ Use this section to manage the list of existing countries. This list is used in 
 
     <tr>
       <td colspan="5">
-		<table border=0 width="100%">
+		<table border="0" width="100%">
 		<tr>
 			<td align="left">
         <br />

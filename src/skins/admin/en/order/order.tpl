@@ -22,7 +22,7 @@
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="order_id" value="{order.order_id}">
 <input type="hidden" name="returnUrl" value="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id))}">
-<table border=0>
+<table border="0">
 <tr>
 	<td>Status:</td>
 	<td><widget class="\XLite\View\StatusSelect" field="status" value="{order.status}" /></td>

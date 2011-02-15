@@ -15,7 +15,7 @@
 
 <widget class="XLite\View\Form\Product\Modify\Single" name="modify_form" />
 
-<table border=0 cellpadding="0">
+<table border="0" cellpadding="0">
 <tr>
   <td width="30%">&nbsp;</td>
   <td>&nbsp;</td>

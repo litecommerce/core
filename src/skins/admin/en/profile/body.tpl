@@ -37,9 +37,9 @@ Mandatory fields are marked with an asterisk (<span class="star">*</span>).
     </tr>
 
     <tr valign="middle">
-      <td width=150>&nbsp;</td>
-      <td width=10>&nbsp;</td>
-      <td width=150>&nbsp;</td>
+      <td width="150">&nbsp;</td>
+      <td width="10">&nbsp;</td>
+      <td width="150">&nbsp;</td>
     </tr>
 
   </table>
