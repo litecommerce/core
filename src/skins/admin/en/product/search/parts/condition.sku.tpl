@@ -14,7 +14,7 @@
  *}
 
 <tr>
-  <td nowrap="nowrap" height="10">Product SKU</td>
+  <td class="table-label" height="10">Product SKU</td>
   <td width="10" height="10"></td>
   <td height="10"><input type="text" size="6" name="sku" value="{getCondition(#sku#):r}"></td>
 </tr>
