@@ -18,19 +18,19 @@
     <tbody>
 
       <tr>
-        <td nowrap="nowrap" height="10">Order id</td>
+        <td class="table-label" height="10">Order id</td>
         <td height="10">
           <input type="text" size="6" name="orderId" value="{getCondition(#orderId#)}" />
         </td>
       </tr>
 
       <tr>
-  	    <td nowrap="nowrap" height="10">E-mail:</td>
+  	    <td class="table-label" height="10">E-mail:</td>
       	<td><input type="text" name="login" value="{getCondition(#login#):r}" /></td>
       </tr>
 
       <tr>
-        <td nowrap="nowrap" height="10">Order status:</td>
+        <td class="table-label" height="10">Order status:</td>
         <td height="10">
           <widget class="\XLite\View\StatusSelect" field="status" allOption value="{getCondition(#status#)}" />
         </td>
@@ -39,14 +39,14 @@
       <widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/orders/search_form.tpl" />
 
       <tr>
-        <td nowrap="nowrap" height="10">Order date from:</td>
+        <td class="table-label" height="10">Order date from:</td>
         <td height="10">
           <widget class="\XLite\View\Date" field="startDate" value="{getDateCondition()}" />
         </td>
       </tr>
 
       <tr>
-        <td nowrap="nowrap" height="10">Order date through:</td>
+        <td class="table-label" height="10">Order date through:</td>
         <td height="10">
           <widget class="\XLite\View\Date" field="endDate" value="{getDateCondition(false)}" />
         </td>
