@@ -15,8 +15,8 @@ This section contains the store's basic templates to be edited.
 <widget template="template_editor/notes.tpl">
 </p>
 <form action="admin.php" method="POST">
-<input type="hidden" name="target" value="template_editor">
-<input type="hidden" name="action" value="update_templates">
+<input type="hidden" name="target" value="template_editor" />
+<input type="hidden" name="action" value="update_templates" />
 
 <span FOREACH="basicTemplates,temp">
 <p>

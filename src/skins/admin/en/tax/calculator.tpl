@@ -20,8 +20,8 @@
 
 <table cellpadding="3" cellspacing="3">
 <form action="admin.php" method="POST">
-<input type="hidden" name="target" value="taxes">
-<input type="hidden" name="action" value="calculator">
+<input type="hidden" name="target" value="taxes" />
+<input type="hidden" name="action" value="calculator" />
 <tr>
 	<td>Country:&nbsp;</td><td><widget class="\XLite\View\CountrySelect" field="billing_country" country="{country}" /></td>
 </tr>

@@ -15,11 +15,11 @@
 <p class="admin-head">{mailTemplates.body.comment}</p>
 
 <form action="admin.php" method="POST">
-<input type="hidden" name="target" value="template_editor">
-<input type="hidden" name="action" value="update_mail">
-<input type="hidden" name="editor" value="mail">
-<input type="hidden" name="path" value="{path}">
-<input type="hidden" name="node" value="{node}">
+<input type="hidden" name="target" value="template_editor" />
+<input type="hidden" name="action" value="update_mail" />
+<input type="hidden" name="editor" value="mail" />
+<input type="hidden" name="path" value="{path}" />
+<input type="hidden" name="node" value="{node}" />
 <input type="hidden" name="returnUrl" value="{url}&mode=edit&path={path}&node={node}&status=updated"/>
 
 <table cellpadding="2" cellspacing="2" width="430">

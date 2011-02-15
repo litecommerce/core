@@ -16,7 +16,7 @@
   <input type="hidden" name="target" value="categories" />
   <input type="hidden" name="action" value="delete" />
   <input type="hidden" name="category_id" value="{category.category_id}" />
-  <input type="hidden" name="subcats" value="{%\XLite\Core\Request::getInstance()->subcats%}" />
+  <input type="hidden" name="subcats" value="{%\XLite\Core\Request::getInstance()- />subcats%}" />
 
   <table>
 

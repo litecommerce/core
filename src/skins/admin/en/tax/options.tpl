@@ -24,8 +24,8 @@ function showTaxMsg()
 </script>
 
 <form action="admin.php" method="POST" name="taxes_form">
-  <input type="hidden" name="target" value="taxes">
-  <input type="hidden" name="action" value="update_options">
+  <input type="hidden" name="target" value="taxes" />
+  <input type="hidden" name="action" value="update_options" />
 
   <table cellspacing="1" cellpadding="3">
 
@@ -106,8 +106,8 @@ showTaxMsg();
 </form>
 
 <form action="admin.php" method="POST" name="add_tax_form">
-  <input type="hidden" name="target" value="taxes">
-  <input type="hidden" name="action" value="add_tax">
+  <input type="hidden" name="target" value="taxes" />
+  <input type="hidden" name="action" value="add_tax" />
 
   <h2>Add new tax</h2>
 
