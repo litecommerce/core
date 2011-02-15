@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="itemsList.module.install.columns", weight="70")
  *}
-<td width="60%" valign="top">
+<td style="width:60%;" valign="top">
   <div class="module-info">
     <ul>
       <li>

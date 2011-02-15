@@ -32,8 +32,8 @@ function selectProduct(product_id, name)
     <td nowrap>Price</td>
 </tr>
 <tr FOREACH="pager.pageData,product">
-    <td width="1%"><a href="javascript: selectProduct({product.product_id},'{addSlashes(product,#name#):r}')">{product.sku}</a></td>
-    <td width="70%">
+    <td style="width:1%;"><a href="javascript: selectProduct({product.product_id},'{addSlashes(product,#name#):r}')">{product.sku}</a></td>
+    <td style="width:70%;">
         <a href="javascript: selectProduct({product.product_id},'{addSlashes(product.name):r}')">{product.name}</a>
     </td>
     <td nowrap align="right">

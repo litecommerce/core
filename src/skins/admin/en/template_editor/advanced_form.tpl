@@ -120,7 +120,7 @@ function func_restoreNode()
 
 <table cellpadding="0" cellspacing="0" width="100%">
 <tr>
-	<td width="50%">
+	<td style="width:50%;">
         <table cellpadding="3" cellspacing="3">
         <tr>
         	<td><widget class="\XLite\View\Button\Regular" label="Copy" jsCode="javascript: func_copyNode()" /></td>
@@ -129,7 +129,7 @@ function func_restoreNode()
         </tr>
         </table>
 	</td>
-	<td width="50%">
+	<td style="width:50%;">
         <table cellpadding="3" cellspacing="3">
         <tr>
         	<td><widget class="\XLite\View\Button\Regular" label="New File" jsCode="javascript: func_newFile()" /></td>

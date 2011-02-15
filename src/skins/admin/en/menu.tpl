@@ -21,7 +21,7 @@ From this page, you can build and maintain the store in a very easy way!
 		<table cellspacing="0" cellpadding="3">
         <tr>
             <widget template="menu_item.tpl" href="admin.php?target=order_list" icon="menu/icon_orders.gif" text="<span class='main-menu-item-header'>Orders</span><br />Manage orders placed at your store">
-            <td width="1%">&nbsp;&nbsp;</td>
+            <td style="width:1%;">&nbsp;&nbsp;</td>
             <widget template="menu_item.tpl" href="admin.php?target=settings" icon="menu/icon_general.gif" text="<span class='main-menu-item-header'>General Settings</span><br />Configure your store">
         </tr>
         <tr>
@@ -29,7 +29,7 @@ From this page, you can build and maintain the store in a very easy way!
         </tr>
         <tr>
             <widget template="menu_item.tpl" href="admin.php?target=categories" icon="menu/icon_categories.gif" text="<span class='main-menu-item-header'>Categories</span><br />Setup your online catalog structure">
-            <td width="1%">&nbsp;&nbsp;</td>
+            <td style="width:1%;">&nbsp;&nbsp;</td>
             <widget template="menu_item.tpl" href="admin.php?target=orders_stats" icon="menu/icon_statistics.gif" text="<span class='main-menu-item-header'>Statistics</span><br />Review statistics on various aspects of your store's operation">
         </tr>
         <tr>
@@ -37,7 +37,7 @@ From this page, you can build and maintain the store in a very easy way!
         </tr>
         <tr>
             <widget template="menu_item.tpl" href="admin.php?target=product_list" icon="menu/icon_products.gif" text="<span class='main-menu-item-header'>Products</span><br />Manage your product inventory<br /><br /><a href='admin.php?target=product' style='color:blue;'>Add product</a>">
-            <td width="1%">&nbsp;&nbsp;</td>
+            <td style="width:1%;">&nbsp;&nbsp;</td>
             <widget template="menu_item.tpl" href="admin.php?target=modules" icon="menu/icon_modules.gif" text="<span class='main-menu-item-header'>Add-ons</span><br />Expand the functionality of your store by installing and using add-on modules">
         </tr>
         <tr>
@@ -45,7 +45,7 @@ From this page, you can build and maintain the store in a very easy way!
         </tr>
         <tr>
             <widget template="menu_item.tpl" href="admin.php?target=users&mode=search" icon="menu/icon_users.gif" text="<span class='main-menu-item-header'>Users</span><br />Manage customer and administrator accounts<br /><br /><a href='admin.php?target=profile&mode=register' style='color:blue;'>Add new user</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='admin.php?target=import_users' style='color:blue;'>Import users</a>">
-            <td width="1%">&nbsp;&nbsp;</td>
+            <td style="width:1%;">&nbsp;&nbsp;</td>
             <widget template="menu_item.tpl" icon="menu/icon_catalog.gif" text="<span class='main-menu-item-header'>Store Maintenance</span><br />Perform backups of your store's important data<br /><br /><a href='admin.php?target=import_catalog' style='color:blue;'>Import catalog</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='admin.php?target=export_catalog' style='color:blue;'>Export catalog</a>">
         </tr>
 {*
@@ -53,7 +53,7 @@ From this page, you can build and maintain the store in a very easy way!
             <td colspan="5">&nbsp;</td>
         </tr>
         <tr>
-            <td width="1%">&nbsp;&nbsp;</td>
+            <td style="width:1%;">&nbsp;&nbsp;</td>
             <widget template="menu_item.tpl" href="quickstart/index.html" icon="menu/icon_quick_start.gif" text="<span class='main-menu-item-header'>Quick Start Wizard</span><br />Several configuration steps are required before you can start your sales. Quick Start Wizard guides you through the basic configuration steps.">
         </tr>
 *}

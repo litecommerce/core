@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="itemsList.module.manage.columns", weight="70")
  *}
-<td width="60%">
+<td style="width:60%;">
   <div class="description">
     {getInstalledProperty(module,#description#)}
   </div>

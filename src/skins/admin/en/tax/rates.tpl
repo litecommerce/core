@@ -49,7 +49,7 @@
           <td colspan="{getColspan(ind,#3#)}" bgcolor="#e8e8e8">
             <table cellpadding="0" cellspacing="0">
               <tr>
-                <td width="12">
+                <td style="width:12;">
                   <a name="{ind}"></a>
                   {if:isOpen(tax)}
                     <a href="admin.php?target=taxes&page={page}&action=close&ind={ind}#{ind}" title="Collapse condition"><img src="images/minus.gif" alt="" /></a>
@@ -58,7 +58,7 @@
                   {end:}
                 </td>
                 <td>&nbsp;{getCondition(tax)}&nbsp;</td>
-                <td width="10%" nowrap>&nbsp;<a href="admin.php?target=taxes&page=add_rate&mode=add&ind={getPath(ind)}"><img src="images/go.gif" width="13" height="13" alt="" align="absmiddle" /> Add rate/condition</a></td>
+                <td style="width:10%;" nowrap>&nbsp;<a href="admin.php?target=taxes&page=add_rate&mode=add&ind={getPath(ind)}"><img src="images/go.gif" width="13" height="13" alt="" align="absmiddle" /> Add rate/condition</a></td>
               </tr>
             </table>   
           </td>

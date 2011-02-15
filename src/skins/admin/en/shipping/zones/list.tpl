@@ -72,7 +72,7 @@ function deleteZones()
 
     <tr>
       <td><input type="checkbox" name="to_delete[{zn.getZoneId()}]"{if:zn.getZoneId()=1} disabled="disabled"{end:}} /></td>
-      <td width="100%"><a href="admin.php?target=shipping_zones&zoneid={zn.getZoneId()}">{zn.getZoneName()}</a></td>
+      <td style="width:100%;"><a href="admin.php?target=shipping_zones&zoneid={zn.getZoneId()}">{zn.getZoneName()}</a></td>
     </tr>
 
   </tbody>

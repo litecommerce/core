@@ -23,7 +23,7 @@
           {if:!option.type=#serialized#}
             <td class="setting-name" width="50%">{option.option_name:h}: </td>
           {end:}
-          <td width="50%">
+          <td style="width:50%;">
 
             {if:option.type=#checkbox#}
               {if:option.name=#captcha_protection_system#}
@@ -203,7 +203,7 @@ function setUnitSymbol(symbol) {
         {if:widget_id=#on_contactus#}<td align=right width="50%">On Contact us page: </td>{end:}
         {if:widget_id=#on_add_giftcert#}<td align=right width="50%">On Add Gift Certificate page: </td>{end:}
         {if:widget_id=#on_partner_register#}<td align=right width="50%">On Registration partner page: </td>{end:}
-        <td width="50%"><input type="checkbox" name="active_captcha_pages[{widget_id}]" {if:isActiveCaptchaPage(widget_id)}checked="1"{end:} /></td>
+        <td style="width:50%;"><input type="checkbox" name="active_captcha_pages[{widget_id}]" {if:isActiveCaptchaPage(widget_id)}checked="1"{end:} /></td>
       </tr>
     {end:}
 

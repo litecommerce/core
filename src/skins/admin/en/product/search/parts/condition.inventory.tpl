@@ -14,9 +14,9 @@
  *}
 
 <tr>
-  <td noWrap height=10>Inventory status</td>
-  <td width="10" height=10></td>
-  <td height=10>
+  <td class="table-label">Inventory status</td>
+  <td style="width:10px;height:10px;"></td>
+  <td>
       <select name="inventory">
           <option value="all" selected='{inventory=#all#}'>All</option>
           <option value="low" selected='{inventory=#low#}'>Low stock</option>

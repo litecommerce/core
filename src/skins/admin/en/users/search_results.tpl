@@ -43,7 +43,7 @@ function searchOrders()
   <table width="100%" class="data-table">
 
     <tr>
-      <td width="10">&nbsp;</td>
+      <td style="width:10px;">&nbsp;</td>
       <td nowrap align="left">Login/E-mail</td>
       <td nowrap align="left">Username</td>
       <td nowrap align="left">Access level</td>

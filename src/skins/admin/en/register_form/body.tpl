@@ -36,9 +36,9 @@ Mandatory fields are marked with an asterisk (<span class="star">*</span>).
     </tr>
 
     <tr valign="middle">
-      <td width="150">&nbsp;</td>
-      <td width="10">&nbsp;</td>
-      <td width="150">&nbsp;</td>
+      <td style="width:150;">&nbsp;</td>
+      <td style="width:10px;">&nbsp;</td>
+      <td style="width:150;">&nbsp;</td>
     </tr>
 
   </table>
@@ -46,9 +46,9 @@ Mandatory fields are marked with an asterisk (<span class="star">*</span>).
   <table cellspacing="0" cellpadding="3">
 
     <tr valign="middle">
-      <td width="15%"><img src="images/spacer.gif" width="1" height="1" alt="" /></td>
-      <td width="10"><img src="images/spacer.gif" width="1" height="1" alt="" /></td>
-      <td width="100%"><img src="images/spacer.gif" width="1" height="1" alt="" /></td>
+      <td style="width:15%;"><img src="images/spacer.gif" width="1" height="1" alt="" /></td>
+      <td style="width:10px;"><img src="images/spacer.gif" width="1" height="1" alt="" /></td>
+      <td style="width:100%;"><img src="images/spacer.gif" width="1" height="1" alt="" /></td>
       <td><img src="images/spacer.gif" width="1" height="1" alt="" /></td>
     </tr>
 
@@ -453,7 +453,7 @@ Mandatory fields are marked with an asterisk (<span class="star">*</span>).
   <table width="100%" cellspacing="0" cellpadding="2">
 
     <tr valign="middle">
-      <td width="160">&nbsp;</td>
+      <td style="width:160;">&nbsp;</td>
       <td >
         <widget class="\XLite\View\Button\Submit" IF="getRequestParamValue(#mode#)=#register#" name="modify" label="Add profile" />
         <widget class="\XLite\View\Button\Regular" IF="getRequestParamValue(#mode#)=#modify#|getRequestParamValue(#mode#)=##" name="modify" label="Update profile" jsCode="javascript: document.profile_form.submit()" />
