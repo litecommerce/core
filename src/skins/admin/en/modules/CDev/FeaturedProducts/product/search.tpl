@@ -5,13 +5,13 @@
       <tr>
         <td class="table-label">Product SKU</td>
         <td style="width:10px;height:10px;"></td>
-        <td style="height:10px;"><input type="text" size="6" name="sku" value="{getCondition(#sku#):r}"></td>
+        <td style="height:10px;"><input type="text" size="6" name="sku" value="{getCondition(#sku#):r}" /></td>
       </tr>
 
       <tr>
         <td class="table-label">Product Title</td>
         <td style="width:10px;height:10px;"></td>
-        <td style="height:10px;"><input type="text" size="30" name="substring" value="{getCondition(#substring#):r}"></td>
+        <td style="height:10px;"><input type="text" size="30" name="substring" value="{getCondition(#substring#):r}" /></td>
       </tr>
 
       <tr>

@@ -23,7 +23,7 @@
 <tr>
   <td nowrap>SKU</td>
   <td>
-    <input type="text" name="{getNamePostedData(#sku#)}" size="20" value="{product.sku:r}">
+    <input type="text" name="{getNamePostedData(#sku#)}" size="20" value="{product.sku:r}" />
   </td>
 </tr>
 <tr>
@@ -36,7 +36,7 @@
 	</table>
   </td>
   <td>
-    <input type="text" name="{getNamePostedData(#name#)}" size="45" value="{product.name:r}">
+    <input type="text" name="{getNamePostedData(#name#)}" size="45" value="{product.name:r}" />
   </td>
 </tr>  
 <tr>
@@ -65,7 +65,7 @@
 	</table>
   </td>
   <td valign="middle">
-    <input type="text" name="{getNamePostedData(#price#)}" size="18" value="{product.price}">
+    <input type="text" name="{getNamePostedData(#price#)}" size="18" value="{product.price}" />
   </td>
 </tr>
 <widget module="CDev\ProductAdviser" template="modules/CDev/ProductAdviser/price_changed.tpl" IF="{priceNotifyPresent}" dialog="{dialog}">
@@ -81,7 +81,7 @@
 	</table>
   </td>
   <td valign="middle">
-    <input type="text" name="{getNamePostedData(#sale_price#)}" size="18" value="{product.sale_price}">
+    <input type="text" name="{getNamePostedData(#sale_price#)}" size="18" value="{product.sale_price}" />
   </td>
 </tr>
 </tbody>
@@ -101,7 +101,7 @@
 <tr>
   <td valign=middle class=Text>Weight ({config.General.weight_symbol:h})</td>
   <td valign="middle">
-    <input type="text" name="{getNamePostedData(#weight#)}" size="18" value="{product.weight}">
+    <input type="text" name="{getNamePostedData(#weight#)}" size="18" value="{product.weight}" />
   </td>
 </tr>
 <tr>
@@ -137,7 +137,7 @@
 
 <tr>
     <td>Product page title </td>
-	<td><input type="text" name="{getNamePostedData(#meta_title#)}" value="{product.meta_title}" size="50"></td>
+	<td><input type="text" name="{getNamePostedData(#meta_title#)}" value="{product.meta_title}" size="50" /></td>
 </tr>
 
 <tr>
@@ -156,11 +156,11 @@
 
 <tr>
     <td>Meta keywords</td>
-    <td><input type="text" name="{getNamePostedData(#meta_tags#)}" value="{product.meta_tags}" size="50"></td>
+    <td><input type="text" name="{getNamePostedData(#meta_tags#)}" value="{product.meta_tags}" size="50" /></td>
 </tr>
 <tr>
     <td>Meta description</td>
-    <td><input type="text" name="{getNamePostedData(#meta_desc#)}" value="{product.meta_desc}" size="50"></td>
+    <td><input type="text" name="{getNamePostedData(#meta_desc#)}" value="{product.meta_desc}" size="50" /></td>
 </tr>
 <tr>
     <td>Clean URL</td>
@@ -175,7 +175,7 @@
 {* Will be revised later *}
 {*<tr>
   <td valign=middle>Pos.</td>
-  <td valign="middle"><input type="text" name="{getNamePostedData(#order_by#)}" size="5" value="{product.order_by}"></td>
+  <td valign="middle"><input type="text" name="{getNamePostedData(#order_by#)}" size="5" value="{product.order_by}" /></td>
 </tr>*}
 
 <widget module="CDev\GoogleCheckout" template="modules/CDev/GoogleCheckout/product/info.tpl">

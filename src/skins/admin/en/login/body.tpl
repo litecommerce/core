@@ -26,7 +26,7 @@
       <table>
       <tr>
         <th>{t(#Email#)}:</th>
-        <td><input type="text" name="login" value="{login:r}" size="32" maxlength="128"></td>
+        <td><input type="text" name="login" value="{login:r}" size="32" maxlength="128" /></td>
       </tr>
       <tr>
         <th>{t(#Password#)}:</th>

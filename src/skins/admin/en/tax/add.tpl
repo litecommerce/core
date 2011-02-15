@@ -61,7 +61,7 @@ function changeVal(param)
     <tr FOREACH="taxParams,_param">
       <td><strong>{_param.name}</strong></td>
 	    <td style="white-space: nowrap;">
-		    <input type="text" style="width:330pt" name="{_param.var}" value="{getCondParam(tax,_param.cond,_param.var)}">
+		    <input type="text" style="width:330pt" name="{_param.var}" value="{getCondParam(tax,_param.cond,_param.var)}" />
 		    <select name="select_{_param.var}" onchange="javascript: addVal('{_param.var}', this);">
 			    <option value="">-- select --</option>
       			{if:_param.diplay_ex}
@@ -85,13 +85,13 @@ function changeVal(param)
 	<b>Example:</b> "=Tax1+(1+Tax1/100.0) * Tax2" - this will calculate Tax2 after the Tax1 was applied.
 </td></tr>
 <tr><td nowrap>
-	<input type="text" name="taxName" value="{getNoteTaxName(tax)}" size="25">
+	<input type="text" name="taxName" value="{getNoteTaxName(tax)}" size="25" />
 	<select name="select_taxName" onChange="changeVal('taxName')">
 		<option>-- select --</option>
 		<option FOREACH="taxNames,_taxName">{_taxName}</option>
 	</select>
 </td><td>
-	<input type="text" name="taxValue" value="{getNoteTaxValue(tax)}" size="40" style="width:300pt"><br />
+	<input type="text" name="taxValue" value="{getNoteTaxValue(tax)}" size="40" style="width:300pt" /><br />
 </td></tr>
 <tr IF="exp_error">
     <td>&nbsp;</td>
