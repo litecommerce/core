@@ -49,4 +49,16 @@ abstract class AAdmin extends \XLite\View\ItemsList\Order\AOrder
     {
         return parent::getListName() . '.admin';
     }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean 
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return true;
+    }
 }

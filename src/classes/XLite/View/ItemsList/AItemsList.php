@@ -269,6 +269,42 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
+     * getEmptyListTemplate
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getEmptyListTemplate()
+    {
+        return self::getDir() . LC_DS . $this->getEmptyListFile();
+    }
+
+    /**
+     * getEmptyListFile 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getEmptyListFile()
+    {
+        return 'empty.tpl';
+    }
+
+    /**
+     * isEmptyListTemplateVisible
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isEmptyListTemplateVisible()
+    {
+        return false === $this->hasResults();
+    }
+
+    /**
      * Get pager parameters list
      *
      * @return array
@@ -590,7 +626,19 @@ abstract class AItemsList extends \XLite\View\Container
      */
     protected function isVisible()
     {
-        return parent::isVisible() && 0 < $this->getItemsCount();
+        return parent::isVisible() && $this->hasResults();
+    }
+
+    /**
+     * Check if there are any results to display in list 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     */
+    protected function hasResults()
+    {
+        return 0 < $this->getItemsCount();
     }
 
     /**
