@@ -26,7 +26,7 @@ function setVisible(element_id)
 //-->
 </script>
 
-<table cellspacing="1" cellpadding="5" border="0" class="settings-table">
+<table cellspacing="1" cellpadding="5" class="settings-table">
 
 <tr>
 	<td colspan="2">

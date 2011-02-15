@@ -21,7 +21,7 @@ This page allows you to import product options from CSV file.<hr />
 <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="import_product_options">
 
-<table border="0">
+<table>
 <tr>
     <td colspan=2><span class="admin-head">Field order:</span></td>
 </tr>

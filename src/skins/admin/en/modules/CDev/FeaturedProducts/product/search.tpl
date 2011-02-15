@@ -1,6 +1,6 @@
 <widget class="\XLite\Module\CDev\FeaturedProducts\View\Form\Search" name="search_form" />
 
-  <table border="0" cellpadding="3" cellspacing="1">
+  <table cellpadding="3" cellspacing="1">
 
       <tr>
         <td nowrap="nowrap" height="10">Product SKU</td>

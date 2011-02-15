@@ -27,7 +27,7 @@
 					<td>{imageClass.comment}</td>
 					<td>{imageClass.image.createFileName(#??#)}</td>
 					<td align="center">{imageClass.image.filesystemCount}
-						<table border="0">
+						<table>
 							<form action="admin.php" method="POST" IF="imageClass.image.filesystemCount" style="top-margin: 0">
 							<input type="hidden" name="target" value="image_files">
 							<input type="hidden" name="action" value="move_to_database">
@@ -39,7 +39,7 @@
 						</table>
 					</td>
 					<td align="center">{imageClass.image.databaseCount}
-						<table border="0">
+						<table>
 							<form action="admin.php" method="POST" IF="imageClass.image.databaseCount">
 							<input type="hidden" name="target" value="image_files">
 							<input type="hidden" name="action" value="move_to_filesystem">
@@ -51,7 +51,7 @@
 						</table>
 					</td>
 					<td>
-						<table border="0">
+						<table>
 							<form action="admin.php" method="POST">
 							<input type="hidden" name="target" value="image_files">
 							<input type="hidden" name="action" value="update_default_source">

@@ -38,7 +38,7 @@
   <input type="hidden" name="mode" value="{getRequestParamValue(#mode#)}" />
   <input type="hidden" name="category_id" value="{category_id}" />
  
-  <table border="0" width="100%">
+  <table width="100%">
 
     <tr>
       <td width="15%">Category&nbsp;name</td>
@@ -67,7 +67,7 @@
     </tr>
 
     <tr>
-      <td>{if:category.hasImage()}<img src="{category.image.getURL()}" border="0" alt="" />{else:}<img src="images/no_image.png" border="0" alt="" />{end:}</td>
+      <td>{if:category.hasImage()}<img src="{category.image.getURL()}" alt="" />{else:}<img src="images/no_image.png" alt="" />{end:}</td>
       <td>&nbsp;</td>
       <td valign="bottom" rowspan=2>
       <widget class="\XLite\View\ImageUpload" field="image" actionName="icon" formName="add_modify_form" object="{category.image}" />
@@ -152,7 +152,7 @@ Not available right now
   <input type="hidden" name="action" value="move_after" />
   <input type="hidden" name="category_id" value="{category_id}" />
 
-  <table border="0" width="100%">
+  <table width="100%">
 
     <tr>
       <td width="15%">Select category:</td>

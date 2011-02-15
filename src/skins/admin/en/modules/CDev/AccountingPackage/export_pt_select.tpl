@@ -31,7 +31,7 @@ To export the found orders into Peachtree Accounting follow the steps below<hr /
 <p align="justify"> Before you can export sales transactions you must specify a Receivable Account number and a General Ledger Sales Account number (both should be valid account numbers from your Chart of Accounts). Please refer to your Peachtree Manual for further assistance.
 
 <form name="export_sales_form">
-<table border="0">
+<table>
 <tr><td>Receivable Account number</td><td><span class="star">*</span>* <input type="text" name="receivable_account" value="{config.ImportExport.receivable_account}" size=7></td></tr>
 <tr><td>G/L Account number</td><td><span class="star">*</span>* <input type="text" name="sales_account" value="{config.ImportExport.sales_account}" size=7></td></tr>
 </table>

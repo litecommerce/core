@@ -13,7 +13,7 @@
 
 <widget class="\XLite\View\Form\Product\Search\Admin\Main" name="search_form" />
 
-  <table border="0">
+  <table>
 
       {displayViewListContent(#product.search.conditions#)}
 

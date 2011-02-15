@@ -25,7 +25,7 @@ You have specified incorrect file format or the file doesn't match.
 <input type="hidden" name="target" value="import_users">
 <input type="hidden" name="action" value="import">
 
-<table border="0">
+<table>
 <tr>
     <td colspan=2><span class="admin-head">Field order:</span></td>
 </tr>
@@ -44,7 +44,7 @@ You have specified incorrect file format or the file doesn't match.
 </tr>
 </table>
 
-<table border="0">
+<table>
 <tr>
     <td colspan=2>
     <br />

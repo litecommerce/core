@@ -21,7 +21,7 @@ Mandatory fields are marked with an asterisk (<span class="star">*</span>).
   <input type="hidden" foreach="allparams,paramKey,paramValue" name="{paramKey}" value="{paramValue}" />
   <input type="hidden" name="action" value="{getMode()}" />
 
-  <table width="100%" border="0" cellspacing="0" cellpadding="2">
+  <table width="100%" cellspacing="0" cellpadding="2">
 
     <tr IF="success">
       <td colspan="4"><span class="success-message">&gt;&gt;&nbsp;Profile has been updated successfully&nbsp;&lt;&lt;</span></td>
@@ -43,13 +43,13 @@ Mandatory fields are marked with an asterisk (<span class="star">*</span>).
 
   </table>
 
-  <table border="0" cellspacing="0" cellpadding="3">
+  <table cellspacing="0" cellpadding="3">
 
     <tr valign="middle">
-      <td width="15%"><img src="images/spacer.gif" width="1" height="1" border="0" alt="" /></td>
-      <td width="10"><img src="images/spacer.gif" width="1" height="1" border="0" alt="" /></td>
-      <td width="100%"><img src="images/spacer.gif" width="1" height="1" border="0" alt="" /></td>
-      <td><img src="images/spacer.gif" width="1" height="1" border="0" alt="" /></td>
+      <td width="15%"><img src="images/spacer.gif" width="1" height="1" alt="" /></td>
+      <td width="10"><img src="images/spacer.gif" width="1" height="1" alt="" /></td>
+      <td width="100%"><img src="images/spacer.gif" width="1" height="1" alt="" /></td>
+      <td><img src="images/spacer.gif" width="1" height="1" alt="" /></td>
     </tr>
 
     <tr valign="middle">
@@ -61,11 +61,11 @@ Mandatory fields are marked with an asterisk (<span class="star">*</span>).
       <td><span class="star">*</span></td>
       <td>
 
-        <table border="0" cellspacing="0" cellpadding="0">
+        <table cellspacing="0" cellpadding="0">
 
           <tr valign="middle">
             <td><input type="text" name="login" value="{login:r}" size="32" maxlength="128" /></td>
-            <td nowrap>&nbsp;&nbsp;<a IF="mode=#modify#&access_level=#0#" href="javascript: SearchOrders()" onclick="this.blur()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle" alt="" /> View order history</a></td>
+            <td nowrap>&nbsp;&nbsp;<a IF="mode=#modify#&access_level=#0#" href="javascript: SearchOrders()" onclick="this.blur()"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt="" /> View order history</a></td>
           </tr>
 
         </table>
@@ -141,7 +141,7 @@ Mandatory fields are marked with an asterisk (<span class="star">*</span>).
         {if:xlite.WholesaleTradingEnabled}
         <widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/profile_grant_membership.tpl" />
         {else:}
-        <a IF="mode=#modify#" href="javascript: grantMembership()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle" alt="" /> Grant membership</a>
+        <a IF="mode=#modify#" href="javascript: grantMembership()"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt="" /> Grant membership</a>
         {end:}
       </td>
       <td></td>
@@ -450,7 +450,7 @@ Mandatory fields are marked with an asterisk (<span class="star">*</span>).
 
   <br />
 
-  <table width="100%" border="0" cellspacing="0" cellpadding="2">
+  <table width="100%" cellspacing="0" cellpadding="2">
 
     <tr valign="middle">
       <td width="160">&nbsp;</td>

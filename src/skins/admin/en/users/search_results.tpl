@@ -40,7 +40,7 @@ function searchOrders()
   <input type="hidden" name="action" value="" />
   <input type="hidden" name="backUrl" value="{url:r}" />
 
-  <table border="0" width="100%" class="data-table">
+  <table width="100%" class="data-table">
 
     <tr>
       <td width="10">&nbsp;</td>

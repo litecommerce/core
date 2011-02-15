@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<table border="0" cellpadding="2" cellspacing="2">
+<table cellpadding="2" cellspacing="2">
 <form action="admin.php" method="POST" name="editor_form">
 <input type="hidden" name="target" value="template_editor">
 <input type="hidden" name="action" value="advanced_update">
@@ -21,14 +21,14 @@
 
 <tr>
 <td colspan=2>
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table cellpadding="0" cellspacing="0" width="100%">
     <tr>
-    	<td width="50%"><img src="images/doc.gif" border="0" align="top" alt="" />&nbsp;<b>{file.path}</b></td>
+    	<td width="50%"><img src="images/doc.gif" align="top" alt="" />&nbsp;<b>{file.path}</b></td>
     	<td width="50%" align=right>
-        	<table border="0" cellpadding="0" cellspacing="0">
+        	<table cellpadding="0" cellspacing="0">
             <tr>
-            	<td><a href="{url:h}&node={file.node}"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle" alt="" /> Go back to&nbsp;</a></td>
-            	<td><a href="{url:h}&node={file.node}"><img src="images/folder.gif" border="0" align="top" alt="" />&nbsp;<u>{file.node}</u></a></td>
+            	<td><a href="{url:h}&node={file.node}"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt="" /> Go back to&nbsp;</a></td>
+            	<td><a href="{url:h}&node={file.node}"><img src="images/folder.gif" align="top" alt="" />&nbsp;<u>{file.node}</u></a></td>
         	</tr>
         	</table>
     	</td>

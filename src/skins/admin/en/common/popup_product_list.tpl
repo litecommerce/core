@@ -25,7 +25,7 @@ function selectProduct(product_id, name)
 // -->
 </script>
 <widget class="\XLite\View\PagerOrig" data="{products}" name="pager" itemsPerPage="{xlite.config.General.products_per_page_admin}" />
-<table border="0">
+<table>
 <tr>
     <td>Sku</td>
     <td>Product</td>

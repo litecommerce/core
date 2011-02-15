@@ -33,7 +33,7 @@ Use this section to restore the database of your online store. Please note that 
 <span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>How to restore your LiteCommerce database &gt;&gt;&gt;</b></a></span>
 <span id="notes_body" style="display: none">
 <p class="adminParagraph">
-<table border="0" cellpadding="5" cellspacing="0">
+<table cellpadding="5" cellspacing="0">
     <tr>
         <td>&nbsp;&nbsp;</td>
         <td>&nbsp;&nbsp;</td>
@@ -63,7 +63,7 @@ To restore the images which are stored in the file system, you have to copy them
 <input type="hidden" name="target" value="db">
 <input type="hidden" name="action" value="restore">
 <input type="hidden" name="page" value="{page}">
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 <tr>
 	<td colspan="3">&nbsp;</td>
 </tr>

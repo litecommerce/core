@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 <p IF="moreThanOnePage" class="navigation-path">
-<table border="0" width="90%">
+<table width="90%">
 <tr>
 <td>
 Result pages:&nbsp;{foreach:pageUrls,num,pageUrl}{if:isCurrentPage(num)}<b>[{num}]</b>{else:}<a href="{pageUrl:h}">[<u>{num}</u>]</a>{end:} {end:}

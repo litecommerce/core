@@ -15,7 +15,7 @@
 
 <widget class="XLite\View\Form\Product\Modify\Single" name="modify_form" />
 
-<table border="0" cellpadding="0">
+<table cellpadding="0">
 <tr>
   <td width="30%">&nbsp;</td>
   <td>&nbsp;</td>
@@ -28,7 +28,7 @@
 </tr>
 <tr>
   <td>
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
   		<td nowrap width="100%">Product Name</td>
         <td class="star">&nbsp;*&nbsp;</td>
@@ -41,7 +41,7 @@
 </tr>  
 <tr>
 	<td>
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
   		<td nowrap width="100%">Category</td>
         <td class="star">&nbsp;*&nbsp;</td>
@@ -49,7 +49,7 @@
 	</table>
 	</td>
 	<td> 
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <table cellpadding="0" cellspacing="0" width="100%">
       <tr><widget class="\XLite\View\FormField\Select\Categories" fieldName="{getNamePostedData(##,#category_ids#)}" fieldOnly=true value="{product.getCategories()}" /></tr>
     </table>
     </td>
@@ -57,7 +57,7 @@
 
 <tr>
   <td>
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
   		<td nowrap width="100%">Price</td>
         <td class="star">&nbsp;*&nbsp;</td>
@@ -73,7 +73,7 @@
 <tbody IF="{config.General.enable_sale_price}">
 <tr>
   <td>
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
   		<td nowrap width="100%">Market price</td>
         <td>&nbsp;</td>
@@ -115,7 +115,7 @@
 </tr>
 <tr>
   <td>
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
   		<td nowrap width="100%">Available for sale</td>
         <td class="star">&nbsp;*&nbsp;</td>

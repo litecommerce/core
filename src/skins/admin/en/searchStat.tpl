@@ -20,9 +20,9 @@ Order by: <select name="listOrder" onChange="document.searchStat.submit()">
 </select>
 </form>
 <br />
-<table border="0" cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0">
 <tr><td>
-<table border="0" cellpadding="3" cellspacing="1">
+<table cellpadding="3" cellspacing="1">
 <tr >
 	<th>Query</th>
 	<th>Count</th>
