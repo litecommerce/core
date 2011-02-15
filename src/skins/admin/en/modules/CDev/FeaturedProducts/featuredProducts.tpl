@@ -17,8 +17,8 @@
      <table class="data-table" width="100%">
 
       <tr>
-        <th width="2"0>Delete</th>
-        <th width="2"0>Pos.</th>
+        <th style="width:2;"0>Delete</th>
+        <th style="width:2;"0>Pos.</th>
         <th>Title</th>
       </tr>
 

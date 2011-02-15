@@ -12,7 +12,7 @@
  *}
 <table width="80%" class="data-table">
 <tr>
-  <th width="150px">Date</th>
+  <th style="width:150px;">Date</th>
   <th>Logged as</th>
 </tr>
 <tbody IF="recentAdmins">

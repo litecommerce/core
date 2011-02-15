@@ -69,7 +69,7 @@ function submitForm(formName, action)
 
             <tr>
               <th><input type="checkbox" id="sm_{zn.zone.getZoneId()}_{method.method.getMethodId()}" name="sm_{zn.zone.getZoneId()}_{method.method.getMethodId()}" onclick="javascript:change_all(this.checked, checkboxes_form, checkboxes{zn.zone.getZoneId()}_{method.method.getMethodId()});" /></th>
-              <th width="100%"><label for="sm_{zn.zone.getZoneId()}_{method.method.getMethodId()}">{method.method.getName()}</label></th>
+              <th style="width:100%;"><label for="sm_{zn.zone.getZoneId()}_{method.method.getMethodId()}">{method.method.getName()}</label></th>
             </tr>
 
           </table>
