@@ -48,9 +48,7 @@ class Cart extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return $this->getCart()->isEmpty()
-            ? $this->t('Your shopping bag is empty')
-            : $this->t('Your shopping bag - X items', array('count' => $this->getCart()->countItems()));
+        return null;
     }
 
     /**

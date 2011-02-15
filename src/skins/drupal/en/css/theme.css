@@ -917,7 +917,7 @@ ul.account-links a:hover
   right: 0px;
   width: 41px;
   height: 41px;
-  outline-style: none;
+  outline: none;
   -moz-border-radius-bottomright: 11px;
   -moz-border-radius-topright: 11px;
   -webkit-border-bottom-right-radius: 11px;
@@ -1065,7 +1065,8 @@ ul.account-links a:hover
 }
 #main-menu li a
 {
-  background: url(../images/top-menu-arrows.png) no-repeat left top;
+  background: transparent url(../images/top-menu-arrows.png) no-repeat left top;
+  outline: none;
 }
 
 #main-menu li:hover a
@@ -1696,7 +1697,7 @@ ul.pager span
   display: block;
   text-align: center;
   text-decoration: none;
-  outline-style: none;
+  outline: none;
 }
 
 ul.pager li.next-page,

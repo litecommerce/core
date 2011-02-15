@@ -64,4 +64,15 @@ img {
 table {
   border: 0px;
   border-spacing: 0px;
+  border-collapse: collapse;
 }
+
+.error {
+  color: #8c2e0b;
+}
+
+.marker,
+.form-required {
+  color: #f00;
+}
+

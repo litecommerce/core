@@ -11,7 +11,7 @@
  * @since     3.0.0
  */
 
-@import url(common.css);
-@import url(layout.css);
-@import url(theme.css);
-@import url(lc.css);
+@import "common.css";
+@import "layout.css";
+@import "theme.css";
+@import "lc.css";

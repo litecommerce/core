@@ -119,7 +119,17 @@ class Header extends \XLite\View\AView
      */
     protected function getCSSResources()
     {
-        return self::getRegisteredResources(self::RESOURCE_CSS);
+        $list = array();
+
+        foreach (self::getRegisteredResources(self::RESOURCE_CSS) as $k => $file) {
+            if (!isset($file['media']) || !$file['media']) {
+                $file['media'] = 'all';
+            }
+
+            $list[$k] = $file;
+        }
+
+        return $list;
     }
 
     /**
