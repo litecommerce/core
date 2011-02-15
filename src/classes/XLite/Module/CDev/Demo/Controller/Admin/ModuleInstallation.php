@@ -28,7 +28,7 @@
 
 namespace XLite\Module\CDev\Demo\Controller\Admin;
 
-class Modules extends \XLite\Controller\Admin\Modules
+class ModuleInstallation extends \XLite\Controller\Admin\ModuleInstallation
 implements \XLite\Base\IDecorator
 {
     /**
