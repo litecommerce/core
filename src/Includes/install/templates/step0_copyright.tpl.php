@@ -34,32 +34,29 @@ if (!defined('XLITE_INSTALL_MODE')) {
     die('Incorrect call of the script. Stopping.');
 }
 
-?>
-
-<CENTER>
-<BR><BR><BR>
-
-<?php
-
-message(xtr('installation_start_text'));
-
-?>
-
-<BR><BR><BR>
-
-<?php
     
 if (COPYRIGHT_EXISTS) {
 
 ?>
 
-<TEXTAREA name="copyright" cols="80" rows="22" style="font-family: monospace; FONT-SIZE: 9pt; border: 1px solid #888888; border-right-width: 0px;" readonly>
-<?php
-    readfile(COPYRIGHT_FILE);
-?>
-</TEXTAREA>
+<div id="copyright_notice">
 
-<P>
+<?php
+
+    ob_start();
+
+    require COPYRIGHT_FILE;
+
+    $tmp = ob_get_contents();
+
+    ob_end_clean();
+
+    echo nl2br(htmlspecialchars($tmp));
+
+?>
+
+</div>
+
 <?php
 
     if (!is_null(get_authcode())) {
@@ -68,10 +65,23 @@ if (COPYRIGHT_EXISTS) {
 
 <input type="hidden" name="params[force_current]" value="<?php print get_step("check_cfg") ?>" />
 
-<TABLE border=0>
-<TR><TD colspan=2><b><?php echo xtr('Auth code'); ?>: </b><INPUT type=text name="params[auth_code]" size=20><BR><FONT size=1><?php echo xtr('(required for protection from unauthorized<BR> use of installation script)'); ?></FONT></TD></TR>
-</TABLE>
-<P>
+<br />
+
+<table align="center">
+
+    <tr>
+        <td>
+            <span id="auth-code" class="field-label"><?php echo xtr('Auth code'); ?>:</span>
+            <input type="text" name="params[auth_code]" size="10" title="<?php echo xtr('Auth code'); ?>" />
+        </td>
+
+        <td class="field-notice">
+            <span class="field-notice"><?php echo xtr('Prevents unauthorized use of installation script'); ?></span>
+        </td>
+
+    </tr>
+
+</table>
 
 <?php
 
@@ -79,7 +89,7 @@ if (COPYRIGHT_EXISTS) {
 
 ?>
 
-<input type=hidden name="params[new_installation]" value="<?php print get_step("check_cfg") ?>">
+<input type="hidden" name="params[new_installation]" value="<?php print get_step("check_cfg") ?>" />
 
 <?php
 
@@ -87,7 +97,12 @@ if (COPYRIGHT_EXISTS) {
 
 ?>
 
-    <label><INPUT type=checkbox name="agree" onClick="this.blur(); setNextButtonDisabled(!this.checked);" /> <?php echo xtr('I accept the License Agreement'); ?></label>
+<br />
+
+<span class="checkbox-field">
+<input type="checkbox" id="agree" name="agree" onclick="javascript:setNextButtonDisabled(!this.checked);" />
+<label for="agree"><?php echo xtr('I accept the License Agreement'); ?></label>
+</span>
 
 <?php
 
@@ -97,7 +112,7 @@ if (COPYRIGHT_EXISTS) {
 
 ?>
 
-    <P class="install_error"><?php echo xtr('Could not find license agreement file.<br>Aborting installation.'); ?></P>
+    <div class="install_error"><?php echo xtr('Could not find license agreement file.<br />Aborting installation.'); ?></div>
 
 <?php
 
@@ -105,9 +120,4 @@ if (COPYRIGHT_EXISTS) {
 
 ?>
 
-<BR><BR>
-
-</CENTER>
-
-<BR>
 
