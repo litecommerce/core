@@ -84,7 +84,7 @@
         <td colspan="4">
 	      	<table style="margin-left: 25px;">
             <tr>
-        			<td><img src="skins/admin/en/images/code.gif" alt="[!]"></td>
+        			<td><img src="skins/admin/en/images/code.gif" alt="[!]" /></td>
 	  		      <td IF="!getExpInvalidVar(ind)=#???#">&nbsp;The {getExpInvalidVar(ind):h} variables are not defined, the tax rate cannot be calculated.</td>
         			<td IF="!getInvalidFormula(ind)=#???#">&nbsp;Tax value must be a number or contain '=' at its start: "<b>{getInvalidFormula(ind)}</b>"</td>
 		        </tr>

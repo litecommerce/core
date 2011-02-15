@@ -73,7 +73,7 @@
 	    <br />
        	<table width="640" cellpadding="0" cellspacing="0">
     	<tr>
-     		<td width="640"><div style="overflow: auto; height: 350; width: 660"><img id="preview_img" border="1" src="" alt=""></div></td>
+     		<td width="640"><div style="overflow: auto; height: 350; width: 660"><img id="preview_img" border="1" src="" alt="" /></div></td>
     	</tr>
     	</table>
  	</td>

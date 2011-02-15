@@ -19,7 +19,7 @@
 
 {foreach:getColumnsData(column),node}
 
-<a href="{url:h}&mode=edit&path={path}&node={node.path}"><img src="images/letter.gif" align="top" alt="click to edit template">&nbsp;{node.name}</a>
+<a href="{url:h}&mode=edit&path={path}&node={node.path}"><img src="images/letter.gif" align="top" alt="click to edit template" />&nbsp;{node.name}</a>
 {if:node.comment}&nbsp;&nbsp;-&nbsp;<span style="font-size:8pt">{node.comment}</span><br />
 {else:}
 <br />

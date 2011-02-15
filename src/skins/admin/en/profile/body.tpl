@@ -66,7 +66,7 @@ Mandatory fields are marked with an asterisk (<span class="star">*</span>).
 
           <tr valign="middle">
             <td><input type="text" name="login" value="{login:r}" size="32" maxlength="128" /></td>
-            <td nowrap>&nbsp;&nbsp;<a IF="mode=#modify#&access_level=#0#" href="javascript: SearchOrders()" onclick="this.blur()"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt=""> View order history</a></td>
+            <td nowrap>&nbsp;&nbsp;<a IF="mode=#modify#&access_level=#0#" href="javascript: SearchOrders()" onclick="this.blur()"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt="" /> View order history</a></td>
           </tr>
 
         </table>
