@@ -71,9 +71,9 @@
         {if:isAction(tax)}
           <td colspan="{getColspan(ind)}">&nbsp;</td>
           <td>{getVarName(tax)}</td>
-          <td><input type="text" name="varvalue[{ind}]" value="{getCurrentVarValue(ind,tax)}" size="15"></td>
+          <td><input type="text" name="varvalue[{ind}]" value="{getCurrentVarValue(ind,tax)}" size="15" /></td>
         {end:}
-        <td><input type="text" name="pos[{ind}]" value="{getTreePos(ind)}" size="3"></td>
+        <td><input type="text" name="pos[{ind}]" value="{getTreePos(ind)}" size="3" /></td>
         <td nowrap>
           <a href="admin.php?target=taxes&page=add_rate&mode=edit&ind={getPath(ind)}">Edit</a>
           &nbsp;&nbsp;&nbsp;

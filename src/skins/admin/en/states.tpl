@@ -68,10 +68,10 @@ function setHeaderChecked()
 
 				<tr FOREACH="states,state_idx,state" class="{getRowClass(state_idx,#dialog-box#,#highlight#)}">
 				    <td>
-				        <input type="text" size="8" name="state_data[{state.state_id}][code]" value="{state.code:r}">
+				        <input type="text" size="8" name="state_data[{state.state_id}][code]" value="{state.code:r}" />
 				    </td>
 				    <td>
-				        <input type="text" size="32" name="state_data[{state.state_id}][state]" value="{state.state:r}">
+				        <input type="text" size="32" name="state_data[{state.state_id}][state]" value="{state.state:r}" />
 				    </td>
 				    <td>
 				        <input id="state_ids" type="checkbox" name="delete_states[]" value="{state.state_id}" onclick="this.blur();">
@@ -103,8 +103,8 @@ function setHeaderChecked()
 	  <th>State</th>
 	</tr>
 	<tr class="dialog-box">
-	  <td><input type="text" size="8" name="code" value="{code}"></td>
-	  <td><input type="text" size="30" name="state" value="{state}"></td>
+	  <td><input type="text" size="8" name="code" value="{code}" /></td>
+	  <td><input type="text" size="30" name="state" value="{state}" /></td>
   </tr>
 {if:!valid}
 	<tr class="dialog-box">

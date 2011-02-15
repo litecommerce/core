@@ -80,7 +80,7 @@ Use this section to manage the list of existing countries. This list is used in 
 		<tr FOREACH="getCountries(),country_idx,country" class="{getRowClass(country_idx,#dialog-box#,#highlight#)}">
 		    <td align="center"><a href="admin.php?target=states&country_code={country.code}" title="Click here to view states of country" onclick="this.blur();">{country.code}</a></td>
 		    <td>
-		        <input type="text" size="34" maxlength="50" name="countries[{country.code}][country]" value="{country.country:r}">
+		        <input type="text" size="34" maxlength="50" name="countries[{country.code}][country]" value="{country.country:r}" />
 		    </td>
 		    <td align="center">
 		        <input id="country_vat_{country_idx}" type="checkbox" name="countries[{country.code}][eu_member]" value="Y" checked="{country.eu_member}" onclick="this.blur();">
@@ -135,8 +135,8 @@ Use this section to manage the list of existing countries. This list is used in 
 					<th>Active</th>
 				</tr>
 				<tr class="dialog-box">
-					<td><input type="text" size="3" maxlength="2" name="code" value="{code}"></td>
-					<td><input type="text" size="34" maxlength="50" name="country" value="{country}"></td>
+					<td><input type="text" size="3" maxlength="2" name="code" value="{code}" /></td>
+					<td><input type="text" size="34" maxlength="50" name="country" value="{country}" /></td>
 					<td align="middle"><input type="checkbox" name="eu_member" value="Y" checked="{isSelected(eu_member,#Y#)}"></td>
 					<td align="middle"><input type="checkbox" name="enabled" value="Y" checked></td>
 				</tr>

@@ -29,10 +29,10 @@
 	<td>State:&nbsp;</td><td><widget class="\XLite\View\StateSelect" field="billing_state" state="{state}" isLinked=1 /></td>
 </tr>
 <tr>
-	<td>City:&nbsp;</td><td><input type="text" name="city" value="{city}"></td>
+	<td>City:&nbsp;</td><td><input type="text" name="city" value="{city}" /></td>
 </tr>
 <tr>
-    <td>Zip:&nbsp;</td><td><input type="text" name="zip" value="{zip}"></td>
+    <td>Zip:&nbsp;</td><td><input type="text" name="zip" value="{zip}" /></td>
 </tr>
 <tr>
 	<td>Membership:&nbsp;</td><td><widget class="\XLite\View\MembershipSelect" template="common/select_membership.tpl" field="membership"></td>
@@ -46,7 +46,7 @@
 	</td>
 </tr>
 <tr>
-	<td>Product class:&nbsp;</td><td><input type="text" name="product_class" value="{product_class}"></td>
+	<td>Product class:&nbsp;</td><td><input type="text" name="product_class" value="{product_class}" /></td>
 </tr>
 <tr>
 	<td colspan=2 align=center>

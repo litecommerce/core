@@ -41,7 +41,7 @@
 </table>
 
 <b>Subject:</b><span class="error-message" IF="subjectWriteError">&nbsp;WARNING! File cannot be overwritten! Please check and correct file permissions.</span><br />
-<input type="text" name="subject" value="{mailTemplates.subject.content}" size="81">
+<input type="text" name="subject" value="{mailTemplates.subject.content}" size="81" />
 <br /><br />
 <b>Body:</b><span class="error-message" IF="bodyWriteError">&nbsp;WARNING! File cannot be overwritten! Please check and correct file permissions.</span><br />
 <textarea name="body" cols="81" rows="20">{mailTemplates.body.content}</textarea>
