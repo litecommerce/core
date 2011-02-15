@@ -13,7 +13,7 @@
 
 <div IF="hasShippingMarkups()">
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 
 checkboxes_form = 'shippingratesform';
 checkboxes = new Array(
@@ -63,7 +63,7 @@ function submitForm(formName, action)
 
           <table cellpadding="2" cellspacing="0" width="100%">
 
-            <script type="text/javascript" language="JavaScript 1.2">
+            <script type="text/javascript">
               checkboxes{zn.zone.getZoneId()}_{method.method.getMethodId()} = new Array({foreach:method.markups,k,markup}{if:!k=0},{end:}'to_delete[{markup.getMarkupId()}]'{end:});
             </script> 
 
