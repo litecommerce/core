@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 //<![CDATA[
 
 function visibleBox(id, status)
@@ -38,7 +38,7 @@ Use this section to define shipping zones.
 
 {if:isZonesDefined()}
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 //<![CDATA[
 
 checkboxes_form = 'zonesform';

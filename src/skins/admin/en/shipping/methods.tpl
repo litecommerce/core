@@ -15,7 +15,7 @@
   <widget class="\XLite\View\EditorLanguageSelector" />
 </div>
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 <!-- 
 
 var CheckBoxes = new Array();
@@ -72,7 +72,7 @@ Use this section to define your store's shipping methods.
 
 {foreach:getShippingProcessors(),processor}
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 <!--
 
 CheckBoxes["{processor.getProcessorId()}"] = new Array();

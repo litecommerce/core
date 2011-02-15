@@ -15,7 +15,7 @@
 
 <p IF="message=#add_failed#"><font class="error-message">&gt;&gt;&nbsp;Shipping rate cannot be added&nbsp;&lt;&lt;<br />Please make sure that <b>"min weight", "min total", "min items", "shipping zone", "shipping method"</b> fields do not overlap with other shipping rates.</p>
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 <!--
 
 function visibleBox(id, status)

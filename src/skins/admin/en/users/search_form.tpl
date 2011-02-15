@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 <!--
 
 function switchMembershipDisplaying(index)
@@ -216,32 +216,32 @@ function managedate(type, status) {
 
 </table>
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 <!--
 visibleBox('1');
 managedate('date_type');
 -->
 </script>
 
-<script type="text/javascript" language="JavaScript 1.2" IF="isAdvancedOptionSelected()|mode=#search#&!getUsersCount()">
+<script type="text/javascript" IF="isAdvancedOptionSelected()|mode=#search#&!getUsersCount()">
 <!--
 visibleBox('1');
 -->
 </script>
 
-<script type="text/javascript" language="JavaScript 1.2" IF="getSearchParams(#user_type#)=#A#">
+<script type="text/javascript" IF="getSearchParams(#user_type#)=#A#">
 <!--
 switchMembershipDisplaying(1);
 -->
 </script>
 
-<script type="text/javascript" language="JavaScript 1.2" IF="getSearchParams(#date_period#)=#C#">
+<script type="text/javascript" IF="getSearchParams(#date_period#)=#C#">
 <!--
 managedate('date', false);
 -->
 </script>
 
-<script type="text/javascript" language="JavaScript 1.2" IF="!getSearchParams(#date_period#)=#C#">
+<script type="text/javascript" IF="!getSearchParams(#date_period#)=#C#">
 <!--
 managedate('date', true);
 -->

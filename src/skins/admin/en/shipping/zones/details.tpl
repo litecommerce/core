@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 <!--
 
 var msg_err_zone_rename='Zone name cannot be empty, please specify it';
