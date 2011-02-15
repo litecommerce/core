@@ -24,10 +24,10 @@
   <table class="data-table">
     <tr>
     	<th colspan="{getMaxColspan(#1#)}">
-    		<table border="0" cellspacing="0" cellpadding="0" width="100%">
+    		<table cellspacing="0" cellpadding="0" width="100%">
 		      <tr>
       			<td align="left">
-			      	<a href="admin.php?target=taxes&page={page}&action=all&open=1" title="Expand all"><img src="images/plus.gif" border="0" alt="" /></a>/<a href="admin.php?target=taxes&page={page}&action=all&open=0" title="Collapse all"><img src="images/minus.gif" border="0" alt="" /></a>
+			      	<a href="admin.php?target=taxes&page={page}&action=all&open=1" title="Expand all"><img src="images/plus.gif" alt="" /></a>/<a href="admin.php?target=taxes&page={page}&action=all&open=0" title="Collapse all"><img src="images/minus.gif" alt="" /></a>
       			</td>
       			<th align="center">&nbsp;&nbsp;Condition&nbsp;&nbsp;</th>
       			<td align="right">
@@ -47,7 +47,7 @@
         {getLevels(ind):h}
         {if:isCondition(tax)}
           <td colspan="{getColspan(ind,#3#)}" bgcolor="#e8e8e8">
-            <table border="0" cellpadding="0" cellspacing="0">
+            <table cellpadding="0" cellspacing="0">
               <tr>
                 <td width="12">
                   <a name="{ind}"></a>
@@ -82,7 +82,7 @@
       </tr>
       <tr IF="isInvalidExp(ind)">
         <td colspan="4">
-	      	<table border="0" style="margin-left: 25px;">
+	      	<table style="margin-left: 25px;">
             <tr>
         			<td><img src="skins/admin/en/images/code.gif" alt="[!]"></td>
 	  		      <td IF="!getExpInvalidVar(ind)=#???#">&nbsp;The {getExpInvalidVar(ind):h} variables are not defined, the tax rate cannot be calculated.</td>

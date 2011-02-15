@@ -11,17 +11,17 @@
  * @since     3.0.0
  *}
 
-<table border="0" width="100%" IF="category&!getRootCategoryId()=category.getCategoryId()">
+<table width="100%" IF="category&!getRootCategoryId()=category.getCategoryId()">
 
   <tr>
 
     <td valign="top" IF="category.hasImage()">
- 		  <img src="{category.image.getUrl()}" border="0" width="{category.image.width}" height="{category.image.height}" alt="" />
+ 		  <img src="{category.image.getUrl()}" width="{category.image.width}" height="{category.image.height}" alt="" />
     </td>
 
     <td width="100%" valign="top">
 
-      <table border="0" cellpadding="3" cellspacing="1" valign="top">
+      <table cellpadding="3" cellspacing="1" valign="top">
 
         <tr>
           <td nowrap>Category name:</td>
@@ -86,7 +86,7 @@
 
 <form name="CategoryForm" method="post" action="admin.php">
 
-  <table border="0" cellpadding="3" cellspacing="1" width="90%">
+  <table cellpadding="3" cellspacing="1" width="90%">
 
     <tr>
       <th colspan="5" align="left" IF="category">
@@ -126,7 +126,7 @@
   <input type="hidden" name="action" />
   <input type="hidden" name="mode" />
 
-  <table border="0" cellpadding="3" cellspacing="1" width="90%">
+  <table cellpadding="3" cellspacing="1" width="90%">
 
     <tr>
       <td>

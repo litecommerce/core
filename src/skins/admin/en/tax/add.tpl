@@ -78,7 +78,7 @@ function changeVal(param)
 <br />
 <b>Tax value (optional; if not specified, a new folder will be created)</b>
 <hr />
-<table border="0" cellpadding="7">
+<table cellpadding="7">
 <tr valign="bottom">
 	<td>Tax name, either existing or new. A special name 'Tax' means total tax:</td>
 	<td>Tax value (%). You can use an '=' sign to define an expression. <br />
@@ -95,7 +95,7 @@ function changeVal(param)
 </td></tr>
 <tr IF="exp_error">
     <td>&nbsp;</td>
-    <td><table border="0"><tr><td><img src="skins/admin/en/images/code.gif" alt="[!]"></td><td>&nbsp;The {exp_error:h} variables are not defined, the tax rate cannot be calculated.</td></tr></table></td>
+    <td><table><tr><td><img src="skins/admin/en/images/code.gif" alt="[!]"></td><td>&nbsp;The {exp_error:h} variables are not defined, the tax rate cannot be calculated.</td></tr></table></td>
 </tr>
 </table>
 <br />
@@ -105,5 +105,5 @@ function changeVal(param)
 <widget class="\XLite\View\Button\Submit" label="Save" style="main-button" />
 <widget class="\XLite\View\Button\Regular" jsCode="document.tax_form.add_another.value='1'; document.tax_form.page.value = 'add_rate'; document.tax_form.submit();" label="Save &amp; add another" />
 {end:}
-&nbsp;&nbsp;&nbsp;<a href="admin.php?target=taxes&page=rates"><img src="images/go.gif" alt="" width="13" height="13" border="0" align="absmiddle"><b> Go back</b></a>
+&nbsp;&nbsp;&nbsp;<a href="admin.php?target=taxes&page=rates"><img src="images/go.gif" alt="" width="13" height="13" align="absmiddle"><b> Go back</b></a>
 </form>

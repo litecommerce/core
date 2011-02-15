@@ -22,7 +22,7 @@
   <input type="hidden" name="target" value="aupost" />
   <input type="hidden" name="action" value="test" />
 
-  <table border="0" cellpadding="3" cellspacing="0">
+  <table cellpadding="3" cellspacing="0">
 
     <tr>
       <td>Package weight (g):</td>

@@ -18,7 +18,7 @@
   <input type="hidden" name="category_id" value="{category.category_id}" />
   <input type="hidden" name="subcats" value="{%\XLite\Core\Request::getInstance()->subcats%}" />
 
-  <table border="0">
+  <table>
 
     <tr>
       <td colspan="3">

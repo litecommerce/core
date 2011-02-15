@@ -86,7 +86,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
   <input type="hidden" name="action" value="update" />
   <input type="hidden" name="method_id" value="" />
 
-  <table cellpadding="0" cellspacing="0" border="0" width="600">
+  <table cellpadding="0" cellspacing="0" width="600">
 
     <tr>
       <td><br />&nbsp;</td>
@@ -155,7 +155,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
   <input type="hidden" name="target" value="shipping_methods" />
   <input type="hidden" name="action" value="add" />
 
-  <table cellpadding="0" cellspacing="0" border="0">
+  <table cellpadding="0" cellspacing="0">
     
     <tr>
       <td>&nbsp;</td>

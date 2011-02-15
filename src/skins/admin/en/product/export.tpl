@@ -27,7 +27,7 @@
 
 <widget template="product/layout.tpl">
 
-<table border="0">
+<table>
 <tr>
     <td colspan=2>
     <br />

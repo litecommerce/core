@@ -17,7 +17,7 @@ This page allows to export product options into CSV file.<hr />
 <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
 <input type="hidden" name="action" value="export_product_options">
 
-<table border="0">
+<table>
 <tr>
     <td colspan=2><span class=admin-head>Field order:</span></td>
 </tr>

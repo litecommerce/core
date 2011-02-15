@@ -50,7 +50,7 @@
 <input type="hidden" name="target" value="change_skin">
 <input type="hidden" name="action" value="update">
 
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table cellpadding="0" cellspacing="0" width="100%">
 <tr>
 	<td width="50%">
 	<b>Current layout skin:</b>&nbsp;<span class="admin-head">{if:currentSkin=##}???{else:}{currentSkin}{end:}</span>
@@ -71,7 +71,7 @@
 	<td colspan=2>
 	    <br />
 	    <br />
-       	<table width="640" border="0" cellpadding="0" cellspacing="0">
+       	<table width="640" cellpadding="0" cellspacing="0">
     	<tr>
      		<td width="640"><div style="overflow: auto; height: 350; width: 660"><img id="preview_img" border="1" src="" alt=""></div></td>
     	</tr>

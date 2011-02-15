@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<table border="0">
+<table>
 <tr>
     <td colspan=2>
         {if:invalid_field_order}

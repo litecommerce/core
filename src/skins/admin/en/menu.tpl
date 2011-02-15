@@ -15,10 +15,10 @@ Use the menus on the left to manage every aspect of your online store.
 From this page, you can build and maintain the store in a very easy way!
 <hr />
 
-<table width="80%" border="0" cellspacing="0" cellpadding="3">
+<table width="80%" cellspacing="0" cellpadding="3">
 <tr>
   <td>
-		<table border="0" cellspacing="0" cellpadding="3">
+		<table cellspacing="0" cellpadding="3">
         <tr>
             <widget template="menu_item.tpl" href="admin.php?target=order_list" icon="menu/icon_orders.gif" text="<span class='main-menu-item-header'>Orders</span><br />Manage orders placed at your store">
             <td width="1%">&nbsp;&nbsp;</td>

@@ -91,7 +91,7 @@ and cannot be edited.
   <input type="hidden" name="target" value="shipping_rates" />
   <input type="hidden" name="action" value="change" />
 
-  <table border="0">
+  <table>
 
     <tr>
       <td colspan="2">Edit charges for:</td>

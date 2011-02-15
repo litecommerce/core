@@ -13,7 +13,7 @@
 <widget template="order/invoice/page.tpl" />
 
 <p>
-<b><a href="admin.php?target=order&mode=invoice&order_id={order.order_id}" target="_blank"><input type="image" src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Print invoice</a></b>
+<b><a href="admin.php?target=order&mode=invoice&order_id={order.order_id}" target="_blank"><input type="image" src="images/go.gif" width="13" height="13" align="absmiddle"> Print invoice</a></b>
 <widget module="CDev\UPSOnlineTools" template="modules/CDev/UPSOnlineTools/show_container_details.tpl">
 
 <P>
@@ -22,7 +22,7 @@
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="order_id" value="{order.order_id}">
 <input type="hidden" name="returnUrl" value="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id))}">
-<table border="0">
+<table>
 <tr>
 	<td>Status:</td>
 	<td><widget class="\XLite\View\StatusSelect" field="status" value="{order.status}" /></td>

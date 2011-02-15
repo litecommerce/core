@@ -10,5 +10,5 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<td width="46" valign="top">{if:href}<a href="{href}" onclick="javascript: this.blur()">{end:}<img src="images/{icon}" alt="" border="0">{if:href}</a>{end:}</td>
+<td width="46" valign="top">{if:href}<a href="{href}" onclick="javascript: this.blur()">{end:}<img src="images/{icon}" alt="">{if:href}</a>{end:}</td>
             <td width="45%" valign="top">{if:href}<a href="{href}" onclick="javascript: this.blur()">{end:}{text:h}{if:href}</a>{end:}</td>
