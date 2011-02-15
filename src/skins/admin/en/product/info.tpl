@@ -17,7 +17,7 @@
 
 <table cellpadding="0">
 <tr>
-  <td width="30%">&nbsp;</td>
+  <td style="width:30%;">&nbsp;</td>
   <td>&nbsp;</td>
 </tr>
 <tr>

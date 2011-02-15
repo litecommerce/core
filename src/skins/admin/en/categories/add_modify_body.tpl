@@ -41,9 +41,9 @@
   <table width="100%">
 
     <tr>
-      <td width="15%">Category&nbsp;name</td>
+      <td style="width:15%;">Category&nbsp;name</td>
       <td class="star">*</td>
-      <td width="85%">
+      <td style="width:85%;">
         <input type="text" name="name" value="{category.name}" size="50" maxlength="255" />
         &nbsp;<span IF="!valid" class="validate-error-message">&lt;&lt; Required field</span>
       </td>
@@ -155,8 +155,8 @@ Not available right now
   <table width="100%">
 
     <tr>
-      <td width="15%">Select category:</td>
-      <td width="85%">
+      <td style="width:15%;">Select category:</td>
+      <td style="width:85%;">
         <widget class="\XLite\View\CategorySelect" fieldName="moveTo" currentCategoryId={category.category_id} ignoreCurrentPath rootOption />
       </td>
     </tr>

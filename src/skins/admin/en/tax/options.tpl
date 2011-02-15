@@ -30,7 +30,7 @@ function showTaxMsg()
   <table cellspacing="1" cellpadding="3">
 
     <tr>
-    	<td width="30%">Address to use for tax calculations:</td>
+    	<td style="width:30%;">Address to use for tax calculations:</td>
     	<td>
         <select name="use_billing_info">
     		  <option value="N" selected="{config.Taxes.use_billing_info=0}">Shipping info</option>

@@ -21,8 +21,8 @@
         {end:}
 </tr>
 {*<tr FOREACH="xlite.factory.\XLite\Model\Product.importFields,id,fields">
-    <td width="1">{id}:</td>
-    <td width="99%">
+    <td style="width:1;">{id}:</td>
+    <td style="width:99%;">
         <select name="product_layout[{id}]">
             <option FOREACH="fields,field,value" value="{field}" selected="{isOrderFieldSelected(id,field,value)}">{field}</option>
         </select>

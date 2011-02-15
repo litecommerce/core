@@ -86,9 +86,9 @@ Select a country or a state from a list, specify the zone where the country or s
 	  </tr>
 
     <tr>
-      <td width="45%" align="center">Set</td>
-      <td width="10%">&nbsp;</td>
-      <td width="45%" align="center">Unset</td>
+      <td style="width:45%;" align="center">Set</td>
+      <td style="width:10%;">&nbsp;</td>
+      <td style="width:45%;" align="center">Unset</td>
     </tr>
 
     <tr>
@@ -125,9 +125,9 @@ Select a country or a state from a list, specify the zone where the country or s
 	  </tr>
 
     <tr>
-      <td width="45%" align="center">Set</td>
-      <td width="10%">&nbsp;</td>
-      <td width="45%" align="center">Unset</td>
+      <td style="width:45%;" align="center">Set</td>
+      <td style="width:10%;">&nbsp;</td>
+      <td style="width:45%;" align="center">Unset</td>
     </tr>
 
     <tr>
@@ -164,9 +164,9 @@ Select a country or a state from a list, specify the zone where the country or s
 	  </tr>
 
     <tr>
-      <td width="45%" align="center">Set</td>
-      <td width="10%">&nbsp;</td>
-      <td width="45%">Examples:</td>
+      <td style="width:45%;" align="center">Set</td>
+      <td style="width:10%;">&nbsp;</td>
+      <td style="width:45%;">Examples:</td>
     </tr>
 
     <tr>
@@ -189,9 +189,9 @@ Select a country or a state from a list, specify the zone where the country or s
 	  </tr>
 
     <tr>
-      <td width="45%" align="center">Set</td>
-      <td width="10%">&nbsp;</td>
-      <td width="45%">Examples:</td>
+      <td style="width:45%;" align="center">Set</td>
+      <td style="width:10%;">&nbsp;</td>
+      <td style="width:45%;">Examples:</td>
     </tr>
 
     <tr>
@@ -215,9 +215,9 @@ Select a country or a state from a list, specify the zone where the country or s
 	  </tr>
 
     <tr>
-      <td width="45%" align="center">Set</td>
-      <td width="10%">&nbsp;</td>
-      <td width="45%">Examples:</td>
+      <td style="width:45%;" align="center">Set</td>
+      <td style="width:10%;">&nbsp;</td>
+      <td style="width:45%;">Examples:</td>
     </tr>
 
     <tr>

@@ -19,7 +19,7 @@
  		  <img src="{category.image.getUrl()}" width="{category.image.width}" height="{category.image.height}" alt="" />
     </td>
 
-    <td width="100%" valign="top">
+    <td style="width:100%;" valign="top">
 
       <table cellpadding="3" cellspacing="1" valign="top">
 
@@ -98,7 +98,7 @@
     {if:category.hasSubcategories()}
     <tr FOREACH="getSubcategories(getCategoryId()),id,cat" class="{getRowClass(id,##,#highlight#)}">
 
-      <td width="100%">
+      <td style="width:100%;">
         <a href="admin.php?target=categories&category_id={cat.category_id}" title="Click here to access/add subcategories" onclick="this.blur()">{cat.name:h}</a> ({cat.products_count} products){if:!cat.enabled}&nbsp;&nbsp;<span class="star">(disabled)</span>{end:}
       </td>
 

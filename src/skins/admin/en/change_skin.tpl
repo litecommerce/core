@@ -52,10 +52,10 @@
 
 <table cellpadding="0" cellspacing="0" width="100%">
 <tr>
-	<td width="50%">
+	<td style="width:50%;">
 	<b>Current layout skin:</b>&nbsp;<span class="admin-head">{if:currentSkin=##}???{else:}{currentSkin}{end:}</span>
 	</td>
-	<td width="50%">
+	<td style="width:50%;">
     Select the layout skin for your store:&nbsp;
 	<SELECT name="layout" id="schemas_list" onChange="selectPreview(this)">
 	{foreach:skins,skin_name,skin_info}
@@ -73,7 +73,7 @@
 	    <br />
        	<table width="640" cellpadding="0" cellspacing="0">
     	<tr>
-     		<td width="640"><div style="overflow: auto; height: 350; width: 660"><img id="preview_img" border="1" src="" alt="" /></div></td>
+     		<td style="width:640;"><div style="overflow: auto; height: 350; width: 660"><img id="preview_img" border="1" src="" alt="" /></div></td>
     	</tr>
     	</table>
  	</td>

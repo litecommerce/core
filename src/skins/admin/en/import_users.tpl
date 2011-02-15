@@ -30,8 +30,8 @@ You have specified incorrect file format or the file doesn't match.
     <td colspan=2><span class="admin-head">Field order:</span></td>
 </tr>
 <tr FOREACH="import_fields,id,fields">
-    <td width="1">{id}:</td>
-    <td width="99%">
+    <td style="width:1;">{id}:</td>
+    <td style="width:99%;">
         <select name="user_layout[{id}]">
             <option FOREACH="fields,field,value" value="{field}" selected="{value}">{field}</option>
         </select>

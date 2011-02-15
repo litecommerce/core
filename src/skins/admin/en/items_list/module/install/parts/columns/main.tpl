@@ -12,7 +12,7 @@
  * @ListChild (list="itemsList.module.install.columns", weight="50")
  *}
 
-<td width="40%" valign="top">
+<td style="width:40%;" valign="top">
   <div class="name">{module.getModuleName()}</div>
   <div class="version">{t(#Version#)}: {module.getVersion()}</div>
   <div IF="module.getInstalled()" class="installed">{t(#Already installed#)}</div>
