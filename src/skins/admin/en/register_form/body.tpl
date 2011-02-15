@@ -12,7 +12,7 @@
  *}
 <script type="text/javascript" src="skins/admin/en/js/billing_shipping.js"></script>
 
-Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
+Mandatory fields are marked with an asterisk (<span class="star">*</span>).
 
 <!--hr size="1" noshade-->
 
@@ -24,15 +24,15 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
   <table width="100%" border="0" cellspacing="0" cellpadding="2">
 
     <tr IF="success">
-      <td colspan="4"><font class="SuccessMessage">&gt;&gt;&nbsp;Profile has been updated successfully&nbsp;&lt;&lt;</font></td>
+      <td colspan="4"><span class="success-message">&gt;&gt;&nbsp;Profile has been updated successfully&nbsp;&lt;&lt;</span></td>
     </tr>
 
     <tr IF="!valid">
-      <td colspan="4"><font class="ErrorMessage">&gt;&gt;&nbsp;There are errors in the form. Profile has not been {if:modify}updated!{else:}created!{end:}&nbsp;&lt;&lt;</font></td>
+      <td colspan="4"><span class="error-message">&gt;&gt;&nbsp;There are errors in the form. Profile has not been {if:modify}updated!{else:}created!{end:}&nbsp;&lt;&lt;</span></td>
     </tr>
 
     <tr IF="userExists">
-      <td colspan="4"><font class="ErrorMessage">&gt;&gt;&nbsp;The user {login} is already registered! &nbsp;&lt;&lt;</font></td>
+      <td colspan="4"><span class="error-message">&gt;&gt;&nbsp;The user {login} is already registered! &nbsp;&lt;&lt;</span></td>
     </tr>
 
     <tr valign="middle">
@@ -46,10 +46,10 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
   <table border="0" cellspacing="0" cellpadding="3">
 
     <tr valign="middle">
-      <td width="15%"><img src="images/spacer.gif" width=1 height=1 border=0></td>
-      <td width="10"><img src="images/spacer.gif" width=1 height=1 border=0></td>
-      <td width="100%"><img src="images/spacer.gif" width=1 height=1 border=0></td>
-      <td><img src="images/spacer.gif" width=1 height=1 border=0></td>
+      <td width="15%"><img src="images/spacer.gif" width="1" height="1" border="0" alt="" /></td>
+      <td width="10"><img src="images/spacer.gif" width="1" height="1" border="0" alt="" /></td>
+      <td width="100%"><img src="images/spacer.gif" width="1" height="1" border="0" alt="" /></td>
+      <td><img src="images/spacer.gif" width="1" height="1" border="0" alt="" /></td>
     </tr>
 
     <tr valign="middle">
@@ -58,14 +58,14 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
     <tr valign="middle">
       <td align="right">E-mail</td>
-      <td><font class="Star">*</font></td>
+      <td><span class="star">*</span></td>
       <td>
 
         <table border="0" cellspacing="0" cellpadding="0">
 
           <tr valign="middle">
             <td><input type="text" name="login" value="{login:r}" size="32" maxlength="128" /></td>
-            <td nowrap>&nbsp;&nbsp;<a IF="mode=#modify#&access_level=#0#" href="javascript: SearchOrders()" onClick="this.blur()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> <font class="FormButton">View order history</font></a></td>
+            <td nowrap>&nbsp;&nbsp;<a IF="mode=#modify#&access_level=#0#" href="javascript: SearchOrders()" onclick="this.blur()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle" alt="" /> View order history</a></td>
           </tr>
 
         </table>
@@ -78,7 +78,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
     <tr valign="middle">
       <td align="right">Password</td>
-      <td>{if:mode=#register#}<font class="Star">*</font>{else:}&nbsp;{end:}</td>
+      <td>{if:mode=#register#}<span class="star">*</span>{else:}&nbsp;{end:}</td>
       <td>
         <input type="password" name="password" value="{password:r}" size="32" maxlength="128" />
       </td>
@@ -90,7 +90,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
     <tr valign="middle">
       <td align="right">Confirm password</td>
-      <td>{if:mode=#register#}<font class="Star">*</font>{else:}&nbsp;{end:}</td>
+      <td>{if:mode=#register#}<span class="star">*</span>{else:}&nbsp;{end:}</td>
       <td>
         <input type="password" name="confirm_password" value="{confirm_password:r}" size="32" maxlength="128" />
       </td>
@@ -111,7 +111,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
     <tr valign="middle">
       <td align="right">Access level</td>
-      <td><font class="Star">*</font></td>
+      <td><span class="star">*</span></td>
       <td>
         <select id="access_level" name="access_level" onchange="onAccessLevelChange()">
           <option FOREACH="auth.userTypes,userType" id="{userType}" value="{auth.getAccessLevel(userType)}" selected="{auth.getAccessLevel(userType)=access_level}">{userType}</option>
@@ -122,7 +122,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
     <tr>
       <td align="right">Account status</td>
-      <td><font class="Star">*</font></td>
+      <td><span class="star">*</span></td>
       <td>
         <select name="status">
           <option value="E" selected="{isSelected(status,#E#)}">Enabled</option>
@@ -134,14 +134,14 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
     <tr>
     	<td align="right">Requested membership</td>
-      <td><font class="Star">*</font></td>
+      <td><span class="star">*</span></td>
       <td>
         <widget class="\XLite\View\MembershipSelect" field="pending_membership" value="{pending_membership}" />
         &nbsp;&nbsp;
         {if:xlite.WholesaleTradingEnabled}
         <widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/profile_grant_membership.tpl" />
         {else:}
-        <a IF="mode=#modify#" href="javascript: grantMembership()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> <font class="FormButton">Grant membership</font></a>
+        <a IF="mode=#modify#" href="javascript: grantMembership()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle" alt="" /> Grant membership</a>
         {end:}
       </td>
       <td></td>
@@ -149,7 +149,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
     <tr>
     	<td align="right" valign=top>Granted membership</td>
-      <td valign=top><font class="Star">*</font></td>
+      <td valign="top"><span class="star">*</span></td>
       <td>
         <widget class="\XLite\View\MembershipSelect" field="membership" value="{membership}" />
         <widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/membership_history/caption.tpl" membership_history="{membership_history}" />
@@ -191,7 +191,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
     <tr valign="middle">
       <td align="right">First Name</td>
-      <td><font class="Star">*</font></td>
+      <td><span class="star">*</span></td>
       <td>
         <input type="text" name="billing_firstname" value="{billing_firstname:r}" size="32" maxlength="128" />
       </td>
@@ -202,7 +202,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
     <tr valign="middle">
       <td align="right">Last Name</td>
-      <td><font class="Star">*</font></td>
+      <td><span class="star">*</span></td>
       <td>
         <input type="text" name="billing_lastname" value="{billing_lastname:r}" size="32" maxlength="128" />
       </td>
@@ -222,7 +222,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
     <tr valign="middle">
       <td align="right">Phone</td>
-      <td><font class="Star">*</font></td>
+      <td><span class="star">*</span></td>
       <td>
         <input type="text" name="billing_phone" value="{billing_phone:r}" size="32" maxlength="32" />
       </td>    
@@ -242,7 +242,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
     <tr valign="middle">
       <td align="right">Address</td>
-      <td><font class="Star">*</font></td>
+      <td><span class="star">*</span></td>
       <td>
         <input type="text" name="billing_address" value="{billing_address:r}" size="32" maxlength="64" />
       </td>
@@ -253,7 +253,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
     <tr valign="middle">
       <td align="right">City</td>
-      <td><font class="Star">*</font></td>
+      <td><span class="star">*</span></td>
       <td>
         <input type="text" name="billing_city" value="{billing_city:r}" size="32" maxlength="64" />
       </td>
@@ -264,7 +264,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
     <tr valign="middle">
       <td align="right">State</td>
-      <td><font class="Star">*</font></td>
+      <td><span class="star">*</span></td>
       <td>
     		<widget class="\XLite\View\StateSelect" field="billing_state" state="{billing_state}" isLinked=1 />
       </td>
@@ -283,7 +283,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
     <tr valign="middle">
       <td align="right">Country</td>
-      <td><font class="Star">*</font></td>
+      <td><span class="star">*</span></td>
       <td>
     		<widget class="\XLite\View\CountrySelect" field="billing_country" country="{billing_country}" />
       </td>
@@ -294,7 +294,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
     <tr valign="middle">
       <td align="right">Zip code</td>
-      <td><font class="Star">*</font></td>
+      <td><span class="star">*</span></td>
       <td nowrap>
         <input type="text" name="billing_zipcode" value="{billing_zipcode:r}" size="32" maxlength="32" />
       </td>
@@ -335,7 +335,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
       <tr valign="middle">
         <td align="right">First Name</td>
-        <td><font class="Star">*</font></td>
+        <td><span class="star">*</span></td>
         <td>
           <input type="text" name="shipping_firstname" value="{shipping_firstname:r}" size="32" maxlength="128" />
         </td>
@@ -344,7 +344,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
       <tr valign="middle">
         <td align="right">Last Name</td>
-        <td><font class="Star">*</font></td>
+        <td><span class="star">*</span></td>
         <td>
           <input type="text" name="shipping_lastname" value="{shipping_lastname:r}" size="32" maxlength="128" />
         </td>
@@ -362,7 +362,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
       <tr valign="middle">
         <td align="right">Phone</td>
-        <td><font class="Star">*</font></td>
+        <td><span class="star">*</span></td>
         <td>
           <input type="text" name="shipping_phone" value="{shipping_phone:r}" size="32" maxlength="32" />
         </td>    
@@ -380,7 +380,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
       <tr valign="middle">
         <td align="right">Address</td>
-        <td><font class="Star">*</font></td>
+        <td><span class="star">*</span></td>
         <td>
           <input type="text" name="shipping_address" value="{shipping_address:r}" size="32" maxlength="64" />
         </td>
@@ -389,7 +389,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
       <tr valign="middle">
         <td align="right">City</td>
-        <td><font class="Star">*</font></td>
+        <td><span class="star">*</span></td>
         <td>
           <input type="text" name="shipping_city" value="{shipping_city:r}" size="32" maxlength="64" />
         </td>
@@ -398,7 +398,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
       <tr valign="middle">
         <td align="right">State</td>
-        <td><font class="Star">*</font></td>
+        <td><span class="star">*</span></td>
         <td>
       		<widget class="\XLite\View\StateSelect" field="shipping_state" state="{shipping_state}" isLinked=1 />
         </td>
@@ -416,7 +416,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
       <tr valign="middle">
         <td align="right">Country</td>
-        <td><font class="Star">*</font></td>
+        <td><span class="star">*</span></td>
         <td>
       		<widget class="\XLite\View\CountrySelect" field="shipping_country" country="{shipping_country}" />
         </td>
@@ -425,7 +425,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
       <tr valign="middle">
         <td align="right">Zip code</td>
-        <td><font class="Star">*</font></td>
+        <td><span class="star">*</span></td>
         <td nowrap>
           <input type="text" name="shipping_zipcode" value="{shipping_zipcode:r}" size="32" maxlength="32" />
         </td>
@@ -434,7 +434,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
     </tbody>
 
-    <script language="JavaScript">
+    <script type="text/javascript">
     	CheckBillingShipping(document.profile_form);
     </script>
 
@@ -455,8 +455,8 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
     <tr valign="middle">
       <td width="160">&nbsp;</td>
       <td >
-        <input IF="getRequestParamValue(#mode#)=#register#" type="submit" name="modify" value="Add profile" />
-        <input IF="getRequestParamValue(#mode#)=#modify#|getRequestParamValue(#mode#)=##" type="button" name="modify" value="Update profile" onClick="javascript: document.profile_form.submit()" />
+        <widget class="\XLite\View\Button\Submit" IF="getRequestParamValue(#mode#)=#register#" name="modify" label="Add profile" />
+        <widget class="\XLite\View\Button\Regular" IF="getRequestParamValue(#mode#)=#modify#|getRequestParamValue(#mode#)=##" name="modify" label="Update profile" jsCode="javascript: document.profile_form.submit()" />
         <br />
       </td>
     </tr>
@@ -465,7 +465,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
 </form>
 
-<script language="javascript">
+<script type="text/javascript">
 <!--
 var access_level_index = document.profile_form.access_level.selectedIndex;
 

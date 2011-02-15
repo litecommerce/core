@@ -10,8 +10,8 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<p IF="read_only_access" class="ErrorMessage">WARNING! File cannot be {if:!mode=#page_edit#}created{else:}overwritten{end:}! Please check and correct file permissions.</p>
-<p IF="status=#updated#" class="SuccessMessage">&gt;&gt; Page has been updated successfully &lt;&lt;</p>
+<p IF="read_only_access" class="error-message">WARNING! File cannot be {if:!mode=#page_edit#}created{else:}overwritten{end:}! Please check and correct file permissions.</p>
+<p IF="status=#updated#" class="success-message">&gt;&gt; Page has been updated successfully &lt;&lt;</p>
 <widget template="template_editor/notes.tpl">
 <br />
 <br />
@@ -27,8 +27,8 @@
 <td>
 	<table border="0" cellpadding=0 cellspacing=0 width=100%>
     <tr>
-    	<td width=50%><img src="images/doc.gif" border="0" align="top">&nbsp;<b>Page template:</b> <i>{extraPage.page}.tpl</i></td>
-    	<td width=50% align=right><a href="{url}"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Go back</a></td>
+    	<td width=50%><img src="images/doc.gif" border="0" align="top" alt="" />&nbsp;<b>Page template:</b> <i>{extraPage.page}.tpl</i></td>
+    	<td width=50% align=right><a href="{url}"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle" alt="" /> Go back</a></td>
 	</tr>
 	</table>
 </td>
@@ -64,8 +64,8 @@
 <table border="0" cellpadding=2 cellspacing=2 width="430">
 <tr>
 <td align=left>
-<input IF="{extraPage.page}" type="submit" value=" Update page " class="main-button" onClick="javascript: ValidateName();" />
-<input IF="{!extraPage.page}" type="submit" value=" Add page " class="main-button" onClick="javascript: ValidateName();" />
+<widget class="\XLite\View\Button\Submit" IF="{extraPage.page}" label="Update page" style="main-button" jsCode="javascript: ValidateName();" />
+<widget class="\XLite\View\Button\Submit" IF="{!extraPage.page}" label="Add page" style="main-button" jsCode="javascript: ValidateName();" />
 </td>
 <td align=right>
 <widget class="\XLite\View\Button\Regular" IF="{extraPage.page}" name="cancel" label="Cancel" jsCode="javascript: document.location='{url}'" />

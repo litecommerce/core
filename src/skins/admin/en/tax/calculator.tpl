@@ -16,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
     <LINK href="skins/admin/en/style.css"  rel=stylesheet type=text/css>
 </head>
-<body class="PopUp" LEFTMARGIN=3 TOPMARGIN=3 RIGHTMARGIN=3 BOTTOMMARGIN=3 MARGINWIDTH=0 MARGINHEIGHT=0>
+<body class="popup">
 
 <table border=0 cellpadding=3 cellspacing=3>
 <form action="admin.php" method="POST">
@@ -62,7 +62,7 @@
 <b>Taxes on shipping:</b><br />
 <table><tr FOREACH="shipping_taxes,name,value"><td>{name}</td><td>{value}%</td></tr></table>
 <p>
-<a href="javascript: window.close()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Close tax calculator</a><br />
+<a href="javascript: window.close()"><img src="images/go.gif" alt="" width="13" height="13" border="0" align="absmiddle"> Close tax calculator</a><br />
 {end:}
 
 </body>

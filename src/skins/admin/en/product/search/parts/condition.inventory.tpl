@@ -14,7 +14,7 @@
  *}
 
 <tr>
-  <td class="FormButton" noWrap height=10>Inventory status</td>
+  <td noWrap height=10>Inventory status</td>
   <td width=10 height=10></td>
   <td height=10>
       <select name="inventory">

@@ -10,17 +10,17 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-{if:true=getParam(%static::PARAM_WRAPPED%)}
+{if:!getParam(%static::PARAM_FIELD_ONLY%)}
 <td class="table-label {getFieldId()}-label">
   <label for="{getFieldId()}">{getParam(#label#)}:</label>
 </td>
-<td class="Star">
+<td class="star">
   {if:getParam(#required#)}*{else:}&nbsp;{end:}
 </td>
 <td class="table-value {getFieldId()}-value">
 {end:}
   <widget template="{getDir()}/{getFieldTemplate()}" />
-{if:true=getParam(%static::PARAM_WRAPPED%)}
+{if:!getParam(%static::PARAM_FIELD_ONLY%)}
   <div class="form-field-comment {getFieldId()}-comment">{getParam(#comment#):r}</div>
   <script IF="getInlineJSCode()" type="text/javascript">{getInlineJSCode():r}</script>
 </td>

@@ -109,7 +109,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
             <th width="90%">Shipping method</th>
             <th>Pos.</th>
             <th>Active<br />
-              <input id="enable_method_{processor.getProcessorId()}" type="checkbox" onClick="this.blur();setChecked('{processor.getProcessorId()}',this.checked);" />
+              <input id="enable_method_{processor.getProcessorId()}" type="checkbox" onclick="this.blur();setChecked('{processor.getProcessorId()}',this.checked);" />
             </th>
             <th valign="top">&nbsp;</th>
           </tr>
@@ -121,9 +121,9 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
             </td>
             <td><input type="text" name="methods[{method.getMethodId()}][position]" size="4" value="{method.getPosition()}" /></td>
             <td align="center">
-              <input id="shipping_enabled_{method.getMethodId()}" type="checkbox" name="methods[{method.getMethodId()}][enabled]" checked="{method.getEnabled()}" onClick="this.blur();" />
-              <script language="Javascript">populateChecked("{processor.getProcessorId()}", "shipping_enabled_{method.getMethodId()}");</script>
-              <script language="Javascript" IF="method.getEnabled()">setHeaderChecked("{processor.getProcessorId()}");</script>
+              <input id="shipping_enabled_{method.getMethodId()}" type="checkbox" name="methods[{method.getMethodId()}][enabled]" checked="{method.getEnabled()}" onclick="this.blur();" />
+              <script type="text/javascript">populateChecked("{processor.getProcessorId()}", "shipping_enabled_{method.getMethodId()}");</script>
+              <script type="text/javascript" IF="method.getEnabled()">setHeaderChecked("{processor.getProcessorId()}");</script>
             </td>
             <td>
               <widget class="\XLite\View\Button\Regular" name="delete" label="Delete" jsCode="javascript: onDeleteButton('{method.getMethodId()}');" />

@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-Use HTML code provided in this section to create product-specific 'Add to Cart' links for direct placement on your site's static pages. <hr>
+Use HTML code provided in this section to create product-specific 'Add to Cart' links for direct placement on your site's static pages. <hr />
 <br />
 
 <table border="0" width="100%">

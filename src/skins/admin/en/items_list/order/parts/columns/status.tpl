@@ -13,5 +13,5 @@
  *}
 
 <td class="status">
-  <widget class="\XLite\View\FormField\Select\OrderStatus" wrapped=false fieldName="{getNamePostedData(#status#,order.getOrderId())}" value="{order.getStatus()}" />
+  <widget class="\XLite\View\FormField\Select\OrderStatus" fieldOnly=true fieldName="{getNamePostedData(#status#,order.getOrderId())}" value="{order.getStatus()}" />
 </td>

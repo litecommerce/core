@@ -16,7 +16,7 @@
   <tr>
 
     <td valign="top" IF="category.hasImage()">
- 		  <img src="{category.image.getUrl()}" border="0" width="{category.image.width}" height="{category.image.height}" />
+ 		  <img src="{category.image.getUrl()}" border="0" width="{category.image.width}" height="{category.image.height}" alt="" />
     </td>
 
     <td width="100%" valign="top">
@@ -26,25 +26,25 @@
         <tr>
           <td nowrap>Category name:</td>
           <td>&nbsp;</td>
-          <td class="FormButton">{category.name}</td>
+          <td>{category.name}</td>
         </tr>
 
         <tr>
           <td nowrap>Description:</td>
           <td>&nbsp;</td>
-          <td class="FormButton">{category.description}</td>
+          <td>{category.description}</td>
         </tr>
 
         <tr>
           <td nowrap>Availability:</td>
           <td>&nbsp;</td>
-          <td class="FormButton">{if:category.enabled}Enabled{else:}Disabled{end:}</td>
+          <td>{if:category.enabled}Enabled{else:}Disabled{end:}</td>
         </tr>
 
         <tr>
           <td nowrap>Membership access:</td>
           <td>&nbsp;</td>
-          <td class="FormButton">
+          <td>
 
             {if:isSelected(#0#,category.membership)}No membership
             {else:}
@@ -60,9 +60,9 @@
           <td nowrap>Parent category:</td>
           <td>&nbsp;</td>
           {if:!getRootCategoryId()=category.parent.getCategoryId()}
-          <td class="FormButton"><a href="admin.php?target=categories&category_id={category.parent.getCategoryId()}">{category.parent.getName()}</a></td>
+          <td><a href="admin.php?target=categories&category_id={category.parent.getCategoryId()}">{category.parent.getName()}</a></td>
           {else:}
-          <td class="FormButton"><a href="admin.php?target=categories">[Root Level]</a></td>
+          <td><a href="admin.php?target=categories">[Root Level]</a></td>
           {end:}
         </tr>
 
@@ -90,7 +90,7 @@
 
     <tr>
       <th colspan="5" align="left" IF="category">
-        <span class="FormButton" IF="category">Subcategories structure</span>
+        <span IF="category">Subcategories structure</span>
         <hr />
       </th>
     </tr>
@@ -99,7 +99,7 @@
     <tr FOREACH="getSubcategories(getCategoryId()),id,cat" class="{getRowClass(id,##,#highlight#)}">
 
       <td width="100%">
-        <a href="admin.php?target=categories&category_id={cat.category_id}" title="Click here to access/add subcategories" onClick="this.blur()"><font class="ItemsList"><u>{cat.name:h}</u></font></a> ({cat.products_count} products){if:!cat.enabled}&nbsp;&nbsp;<font color=red>(disabled)</font>{end:}
+        <a href="admin.php?target=categories&category_id={cat.category_id}" title="Click here to access/add subcategories" onclick="this.blur()"><u>{cat.name:h}</u></a> ({cat.products_count} products){if:!cat.enabled}&nbsp;&nbsp;<span class="star">(disabled)</span>{end:}
       </td>
 
       <td nowrap>
@@ -130,10 +130,10 @@
 
     <tr>
       <td>
-        <input id="add" type="button" value="Add category" onClick="onAddChildClick({getCategoryId()})">
+        <widget class="\XLite\View\Button\Regular" id="add" label="Add category" jsCode="onAddChildClick({getCategoryId()})" />
       </td>		
       <td align="right" IF="category.getSubCategoriesCount()">
-        <input id="delete_all_button" type="button" value="Delete all" onClick="onDeleteSubcatsClick({category.category_id})">
+        <widget class="\XLite\View\Button\Regular" id="delete_all_button" label="Delete all" jsCode="onDeleteSubcatsClick({category.category_id})" />
       </td>		
     </tr>
 
@@ -141,7 +141,7 @@
 
 </form>
 
-<script language="javascript">
+<script type="text/javascript">
 
 function onDeleteClick(category_id)
 {

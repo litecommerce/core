@@ -59,7 +59,23 @@ class Db extends \XLite\Controller\Admin\AAdmin
    	public $upload_max_filesize;
    	public $sqldump_dir = 'var/backup/';
     public $sqldump_file = 'var/backup/sqldump.sql.php';
-    
+
+
+    /**
+     * Add part to the location nodes list
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
+
+        $this->addLocationNode('DB Backup/Restore', $this->buildURL('db'));
+    }
+
     function handleRequest()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {

@@ -38,6 +38,25 @@ namespace XLite\Controller\Admin;
 class Login extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * handleRequest 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     */
+    public function handleRequest()
+    {
+        if (
+            \XLite\Core\Auth::getInstance()->isLogged()
+            && 'logoff' !== \XLite\Core\Request::getInstance()->{static::PARAM_ACTION}
+        ) {
+            $this->setReturnUrl($this->buildURL());
+        }
+
+        return parent::handleRequest();
+    }
+
+    /**
      * getAccessLevel 
      * 
      * @return void

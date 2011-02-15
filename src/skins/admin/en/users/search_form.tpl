@@ -69,7 +69,7 @@ function managedate(type, status) {
       <table cellpadding="1" cellspacing="5" width="100%">
 
         <tr>
-          <td height="10" width="20%" class="FormButton" nowrap="nowrap">Search for pattern:</td>
+          <td height="10" width="20%" nowrap="nowrap">Search for pattern:</td>
           <td height="10">
             <input type="text" name="posted_data[pattern]" size="30" style="width:70%" value="{getSearchParams(#pattern#)}" />
             &nbsp;
@@ -92,8 +92,8 @@ function managedate(type, status) {
 
       <table cellpadding="1" cellspacing="5" width="100%">
 
-        <tr class="TableSubHead">
-          <td height="10" class="FormButton" width="20%" nowrap="nowrap">Search for user type:</td>
+        <tr>
+          <td height="10" width="20%" nowrap="nowrap">Search for user type:</td>
           <td height="10">
             <select name="posted_data[user_type]" onChange="javascript: switchMembershipDisplaying(this.selectedIndex)">
               <option value=""{if:!getSearchParams(#user_type#)} selected="selected"{end:}>All</option>
@@ -103,8 +103,8 @@ function managedate(type, status) {
           </td>
         </tr>
 
-        <tr class="TableSubHead" id="membership_box">
-          <td height="10" class="FormButton" width="20%" nowrap="nowrap">Search for users with membership:</td>
+        <tr id="membership_box">
+          <td height="10" width="20%" nowrap="nowrap">Search for users with membership:</td>
           <td height="10">
             <widget class="\XLite\View\MembershipSelect" template="common/select_membership.tpl" field="posted_data[membership]" value="{getSearchParams(#membership#)}" allOption pendingOption />
           </td>
@@ -115,21 +115,21 @@ function managedate(type, status) {
         </tr>
 
         <tr>
-          <td height="10" width="20%" class="FormButton" nowrap="nowrap">Country:</td>
+          <td height="10" width="20%" nowrap="nowrap">Country:</td>
           <td height="10" width="80%">
             <widget class="\XLite\View\CountrySelect" field="posted_data[country]" country="{getSearchParams(#country#)}" fieldId="country_select" />
           </td>
         </tr>
 
         <tr>
-          <td height="10" width="20%" class="FormButton" nowrap="nowrap">State:</td>
+          <td height="10" width="20%" nowrap="nowrap">State:</td>
           <td height="10" width="80%">
             <widget class="\XLite\View\StateSelect" field="posted_data[state]" state="{getSearchParams(#state#)}" fieldId="state_select" isLinked=1 />
           </td>
         </tr>
 
         <tr>
-          <td height="10" width="20%" class="FormButton" nowrap="nowrap">Address pattern:</td>
+          <td height="10" width="20%" nowrap="nowrap">Address pattern:</td>
           <td height="10" width="80%">
             <input type="text" maxlength="64" name="posted_data[address_pattern]" value="{getSearchParams(#address_pattern#)}" style="width:70%" />
           </td>
@@ -141,7 +141,7 @@ function managedate(type, status) {
         </tr>
 
         <tr>
-          <td height="10" width="20%" class="FormButton" nowrap="nowrap">Phone:</td>
+          <td height="10" width="20%" nowrap="nowrap">Phone:</td>
           <td height="10" width="80%">
             <input type="text" maxlength="25" name="posted_data[phone]" value="{getSearchParams(#phone#)}" style="width:70%" />
           </td>
@@ -151,8 +151,8 @@ function managedate(type, status) {
           <td colspan="2">&nbsp;</td>
         </tr>
 
-        <tr class="TableSubHead">
-          <td height="10" class="FormButton">Search for users that are:</td>
+        <tr>
+          <td height="10">Search for users that are:</td>
           <td height="10">
             <select name="posted_data[date_type]" onChange="javascript: managedate('date_type')">
               <option value=""{if:getSearchParams(#date_type#)=##} selected="selected"{end:}>[Please select one]</option>
@@ -162,8 +162,8 @@ function managedate(type, status) {
           </td>
         </tr>
 
-        <tr class="TableSubHead" id="date_period_box">
-          <td class="FormButton" nowrap="nowrap">During the period:</td>
+        <tr id="date_period_box">
+          <td nowrap="nowrap">During the period:</td>
           <td>
 
             <table cellpadding="2" cellspacing="2">

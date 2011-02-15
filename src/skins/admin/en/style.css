@@ -151,6 +151,13 @@ select
   line-height: 24px;
 }
 
+hr
+{
+  color: #ddd;
+  height: 1px;
+}
+
+
 /**
  * Layout
  */
@@ -325,6 +332,16 @@ div.noscript
   font-size: 22px;
 }
 
+.highlight
+{
+  background-color: #eee;
+}
+
+.fixed-select
+{
+  width: 170px;
+}
+
 /* Page tabs */
 
 div.page-tabs
@@ -420,6 +437,12 @@ table.data-table tr.highlight td
   background-color: #f2f2f2;
 }
 
+table.data-table td.separator
+{
+  border-top: solid 1px #E5EBEF;
+  padding: 0;
+}
+
 table.data-table .extender
 {
   width: 100%;
@@ -440,160 +463,15 @@ table.data-table td.center
   background-color: #fff;
 }
 
-/* Settings pages */
-table.settings-table tr td.setting-name
-{
-  padding: 7px 0 7px 10px;
-  color: #456583;
-}
-
-table.settings-table tr td h2
-{
-  margin: 30px 0 10px 0;
-}
-
-
-
-/***********************************************************
-  FIXME: TO REVISE BELOW STYLES, REMOVE UNNECESSARY
-***********************************************************/
-
-BODY.PopUp
+body.popup
 { 
-        MARGIN-TOP: 5 px; MARGIN-BOTTOM: 5 px; MARGIN-LEFT: 5 px; MARGIN-RIGHT: 5 px; 
-        BACKGROUND-COLOR: #FFFFFF;
+  margin: 5px;
+  background: #fff;
 }
 
-HR
+.star
 {
-        COLOR: #DDDDDD; HEIGHT: 1px;
-}
-
-ul,
-  li
-{
-  padding: 0px;
-  margin: 0px;
-  list-style: none;
-}
-
-.Head
-{
-        BACKGROUND-COLOR: #FFF2C9;
-}
-
-.CategoriesList
-{
-	font-size: 12px;
-}
-.DialogBorder
-{
-        BACKGROUND-COLOR: #E5EBEF;
-}
-.DialogTitle
-{
-        COLOR: #082032; FONT-WEIGHT: bold; font-size: 11px;
-}
-.DialogTitleComment
-{
-        COLOR: #082032; FONT-WEIGHT: normal; font-size: 11px;
-}
-.NumberOfArticles
-{
-        COLOR: #000000; FONT-WEIGHT: bold;
-}
-.TopLabel
-{
-        COLOR: #000000; FONT-WEIGHT: bold; font-size: 12px;
-}
-.Text
-{
-        COLOR: #000000;
-}
-.Info
-{
-        COLOR: #000000; FONT-STYLE: italic;
-}
-.ProductTitle
-{
-        COLOR: #082032; FONT-WEIGHT: bold; font-size: 12px;
-}
-.ProductDetailsTitle
-{
-        COLOR: #000000; FONT-WEIGHT: bold; font-size: 10px;
-}
-.ProductDetails
-{
-        COLOR: #000000;
-}
-.ProductPriceTitle
-{
-        COLOR: #000000; FONT-WEIGHT: bold; font-size: 12px;
-}
-.ProductPriceConverting
-{
-        COLOR: #082032; FONT-WEIGHT: bold; font-size: 11px;
-}
-.ProductPrice
-{
-        COLOR: #FF3300; FONT-WEIGHT: bold; font-size: 12px;
-}
-.ProductPriceSmall
-{
-        COLOR: #FF3300; FONT-WEIGHT: bold;
-}
-.ItemsList
-{
-        COLOR: #082032; FONT-WEIGHT: bold;
-}
-.NavigationPath
-{
-        COLOR: #294F6C; TEXT-DECORATION: none;
-}
-.NavigationPath:link
-{
-        COLOR: #294F6C; TEXT-DECORATION: none;
-}
-.NavigationPath:visited
-{
-        COLOR: #294F6C; TEXT-DECORATION: none;
-}
-.NavigationPath:hover
-{
-        COLOR: #082032; TEXT-DECORATION: underline;
-}
-.NavigationPath:active
-{
-        COLOR: #294F6C; TEXT-DECORATION: none;
-}
-a.FormButton:link,
-a.FormButton:active,
-a.FormButton:visited,
-a.FormButton:hover
-{
-  color: #00224c;
-  font-weight: bold;
-  text-decoration: none;
-}
-.ErrorMessage
-{
-        COLOR: #FF0000; FONT-WEIGHT: bold; 
-}
-.ValidateErrorMessage
-{
-        COLOR: #FF0000;
-}
-.SuccessMessage
-{
-        COLOR: green; FONT-WEIGHT: bold; 
-}
-.Star
-{
-        COLOR: #FF0000;
-}
-.TableHead
-{
-    BACKGROUND-COLOR: #E5EBEF
+  color: #ff0000;
 }
 
 .truncate
@@ -611,9 +489,30 @@ div.clear
   height: 0px;
 }
 
+/* Messages */
+
+.error-message
+{
+  color: #ff0000;
+  font-weight: bold;
+}
+
+.validate-error-message
+{
+  color: #ff0000;
+}
+
+.success-message
+{
+  color: green;
+  font-weight: bold;
+}
+
+/* Plain table */
+
 table.plain-table
 {
-  background-color: #000000;
+  background-color: #000;
 }
 
 table.plain-table th
@@ -623,7 +522,7 @@ table.plain-table th
 
 table.plain-table td
 {
-  background-color: #ffffff;
+  background-color: #fff;
 }
 
 .right-panel
@@ -631,8 +530,6 @@ table.plain-table td
   text-align: right;
   padding: 5px 0px 10px 0px;
 }
-
-
 
 input.orderby
 {
@@ -645,6 +542,8 @@ input.price
   width: 8em;
   text-align: right;
 }
+
+/* List-based form */
 
 ul.form
 {
@@ -677,6 +576,21 @@ ul.form li .note
   display: block;
   font-size: 10px;
 }
+
+/* Settings pages */
+
+table.settings-table tr td.setting-name
+{
+  padding: 7px 0 7px 10px;
+  color: #456583;
+}
+
+table.settings-table tr td h2
+{
+  margin: 30px 0 10px 0;
+}
+
+/* Buttons */
 
 div.buttons
 {
@@ -752,9 +666,17 @@ button.invert:hover
   background-image: url(images/button_bg_blue_hover.png);
 }
 
-/**
- * jQueryUI-based wait box 
- */
+* html button
+{
+  behavior: expression(
+    this.onmouseover = new Function("this.className += ' hover'"),
+    this.onmouseout = new Function("this.className = this.className.replace(' hover','')"),
+    this.style.behavior = null
+  );
+}
+
+/* jQueryUI-based wait box */
+
 .wait-box .box
 {
   background: transparent url(images/progress.gif) repeat-x left top;
@@ -766,156 +688,8 @@ button.invert:hover
   display: none;
 }
 
-* html button
-{
-  behavior: expression(
-    this.onmouseover = new Function("this.className += ' hover'"),
-    this.onmouseout = new Function("this.className = this.className.replace(' hover','')"),
-    this.style.behavior = null
-  );
-}
-
-.highlight
-{
-    background-color: #eee;
-}
-
-
-
-
-
-.AomTableHead
-{
-    BACKGROUND-COLOR: #E5EBEF;
-	font-size: 12px;
-	FONT-WEIGHT: bold;
-}
-.Input
-{
-    BORDER : solid;
-    BORDER-WIDTH : 1px;
-    BORDER-COLOR : #B2B2B3;
-    WIDTH : 100%;
-}
-.OrderTitle
-{
-    COLOR : #516176;
-    FONT-WEIGHT: bold;
-}
-.VerBorder
-{
-	border-top: none; 
-	border-left: none;
-	border-right : solid; 
-	border-bottom: none;
-	height: 4px;
-	border-width : 2px;
-	border-right-color: #b2b2b2;
-}
-.VerBorderHighlighted
-{
-    border-top: none;
-    border-left: none;
-    border-right : solid;
-    border-bottom: none;
-    height: 4px;
-    border-width : 2px;
-    border-right-color: #294f6c;
-}
-.LeftVerBorder
-{
-    border-top: none;
-    border-left: solid;
-    border-right : none;
-    border-bottom: none;
-    height: 4px;
-    border-width : 2px;
-    border-left-color: #b2b2b2;
-}
-.LeftVerBorderHighlighted
-{
-    border-top: none;
-    border-left: solid;
-    border-right : none;
-    border-bottom: none;
-    height: 4px;
-    border-width : 2px;
-    border-left-color: #294f6c;
-}
-.HorBorder
-{
-    border-top: solid;                    
-    border-left: none;
-    border-right : none;
-    border-bottom: none;
-    height: 2px;
-    border-width : 2px;
-	border-top-color: #b2b2b2;
-}
-.HorBorderHighlighted
-{
-    border-top: solid;
-    border-left: none;
-    border-right : none;
-    border-bottom: none;
-    height: 2px;
-    border-width : 2px;
-    border-top-color: #294f6c;
-}
-
-A.AomMenu:link
-{
-        color: #466479; TEXT-DECORATION: none;
-        font-size : 11px
-}
-A.AomMenu:visited
-{
-        color: #466479; TEXT-DECORATION: none;
-        font-size : 11px
-}
-A.AomMenu:hover
-{
-        color: #466479; TEXT-DECORATION: underline;
-        font-size : 11px
-}
-A.AomMenu:active 
-{
-        color: #466479; TEXT-DECORATION: none;
-        font-size : 11px;
-}
-.UpdateButton
-{
-	    background-color: #CDD9E1; 
-}
-.Bottom
-{
-    COLOR: #B2B2B3; TEXT-DECORATION: none;
-}
-.FixedSelect
-{
-        WIDTH: 170px;
-}
-.Center
-{
-    BACKGROUND-COLOR: #ffffff;
-}
-
-.CenterBorder
-{
-   BACKGROUND-COLOR: #CDD9E1;
-}
-
-.displayPageHeader
-{
-	COLOR: #FFFFFF; BACKGROUND-COLOR: #6685A5; FONT-WEIGHT: bold; font-size: 12px;
-}
-
-.displayPageFooter
-{
-	COLOR: #8A8A8A; BACKGROUND-COLOR: #E0E0E0;
-}
-
 /* Advertise block */
+
 .adv-block
 {
   border: 7px solid #dee8ee;
@@ -1019,103 +793,6 @@ A.AomMenu:active
   padding-left: 55px;
 }
 
-/*
-	Subheader styles
-*/
-TABLE.SubHeaderGrey
-{
-	WIDTH: 100%;
-	MARGIN-BOTTOM: 10px;
-}
-.SubHeaderGrey
-{
-	COLOR: #666666;
-	FONT-SIZE: 11px;
-	FONT-WEIGHT: bold;
-	PADDING: 0px;
-}
-.SubHeaderGreyLine
-{
-	HEIGHT: 1px;
-	BACKGROUND-COLOR: #CCCCCC;
-	PADDING: 0px;
-}
-TABLE.SubHeaderBlack
-{
-	WIDTH: 100%;
-	MARGIN-BOTTOM: 10px;
-}
-.SubHeaderBlack
-{
-	COLOR: #010101;
-	FONT-SIZE: 12px;
-	FONT-WEIGHT: bold;
-	PADDING: 0px;
-}
-.SubHeaderBlackLine
-{
-	HEIGHT: 1px;
-	BACKGROUND-COLOR: #000000;
-	PADDING: 0px;
-}
-TABLE.SubHeaderRed
-{
-	WIDTH: 100%;
-	MARGIN-BOTTOM: 10px;
-}
-.SubHeaderRed
-{
-	FONT-WEIGHT: bold;
-	PADDING: 0px;
-}
-.SubHeaderRedLine
-{
-	HEIGHT: 1px;
-	BACKGROUND-COLOR: #acb7c7;
-	PADDING: 0px;
-}
-TABLE.SubHeader
-{
-	WIDTH: 100%;
-	MARGIN-BOTTOM: 10px;
-}
-.SubHeader
-{
-	COLOR: #b51a00;
-	FONT-WEIGHT: bold;
-	FONT-SIZE: 11px;
-	PADDING: 0px;
-}
-.SubHeaderLine
-{
-	HEIGHT: 1px;
-	BACKGROUND-COLOR: #9d1500;
-	PADDING: 0px;
-}
-
-.TableSubHead
-{
-	BACKGROUND-COLOR: #EEEEEE;
-	FONT-WEIGHT: normal;
-}
-
-.Spc
-{
-	WIDTH: 1px;
-	HEIGHT: 1px;
-}
-
-.header
-{
-  font-weight: bold;
-  font-size: 13px;
-  color: #333333;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  border-bottom-style: solid;
-  border-width: 1px;
-}
-
 .table tr td
 {
   padding-left: 25px;
@@ -1129,9 +806,7 @@ TABLE.SubHeader
   white-space: nowrap;
 }
 
-.table-value
-{
-}
+/* Profile form */
 
 #referer,
 #added,
@@ -1158,3 +833,19 @@ TABLE.SubHeader
   padding-left: 240px;
 }
 
+/* Navigation path */
+
+.navigation-path,
+.navigation-path:link,
+.navigation-path:visited,
+.navigation-path:active,
+.navigation-path:hover
+{
+  color: #294f6c;
+  text-decoration: none;
+}
+
+.navigation-path:hover
+{
+  color: #082032;
+}

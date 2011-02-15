@@ -38,7 +38,7 @@
       <td>&nbsp;&nbsp;&nbsp;&nbsp;Country:</td> 
       <td>
         <input type="text" size="15" value="Australia" disabled />
-        <span IF="!config.Company.location_country=#AU#"><font class="Star">(!)</font> <a href="admin.php?target=settings&page=Company"><u>Company country</u></a> has wrong value</span>
+        <span IF="!config.Company.location_country=#AU#"><span class="star">(!)</span> <a href="admin.php?target=settings&page=Company"><u>Company country</u></a> has wrong value</span>
       </td>
     </tr>
 

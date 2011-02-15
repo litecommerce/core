@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<select name="{getParam(#fieldName#)}" size="1" {if:nonFixed} style="width:200pt" {else:}  class="FixedSelect" {end:}  >
+<select name="{getParam(#fieldName#)}" size="1" {if:nonFixed} style="width:200px" {else:}  class="fixed-select" {end:}  >
    <option value="" IF="getParam(#allOption#)">All</option>
    <option value="" IF="getParam(#noneOption#)">None</option>
    <option value="" IF="getParam(#rootOption#)" class="CenterBorder">[Root Level]</option>

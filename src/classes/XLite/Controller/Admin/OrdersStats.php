@@ -37,7 +37,33 @@ namespace XLite\Controller\Admin;
  */
 class OrdersStats extends \XLite\Controller\Admin\Stats
 {
-    protected $stats = array();
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Order statistics';
+    }
+
+    /**
+     * Add part to the location nodes list
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
+
+        $this->addLocationNode('Statistics', $this->buildURL('orders_stats'));
+    }
 
     function getPageTemplate()
     {
