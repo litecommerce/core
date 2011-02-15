@@ -50,6 +50,9 @@ CartView.prototype.shadeWidget = true;
 // Update page title
 CartView.prototype.updatePageTitle = true;
 
+// Update breadcrumb last node from loaded request or not
+CartView.prototype.updateBreadcrumb = true;
+
 // Widget target
 CartView.prototype.widgetTarget = 'cart';
 

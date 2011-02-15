@@ -165,11 +165,23 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected static function prepareResources(array $data, $isCommon = false)
     {
-        foreach ($data as &$file) {
-            $file = static::$layout->{'get' . ($isCommon ? 'Common' : '') . 'SkinURL'}($file);
+        $list = array();
+
+        $method = 'get' . ($isCommon ? 'Common' : '') . 'SkinURL';
+
+        foreach ($data as $v) {
+            if (is_string($v)) {
+                $v = array(
+                    'file' => $v,
+                );
+            }
+
+            $v['file'] = static::$layout->$method($v['file']);
+
+            $list[$v['file']] = $v;
         }
 
-        return $data;
+        return $list;
     }
 
     /**
@@ -269,7 +281,19 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function registerResourcesType($type, array $resources)
     {
-        self::$resources[$type] = array_merge(self::$resources[$type], array_diff($resources, self::$resources[$type]));
+        $list = array();
+
+        foreach ($resources as $k => $v) {
+            if (is_string($v)) {
+                $v = array(
+                    'file' => $v,
+                );
+            }
+
+            $list[$v['file']] = $v;
+        }
+
+        self::$resources[$type] = array_merge(self::$resources[$type], $list);
     }
 
     /**
@@ -535,6 +559,10 @@ abstract class AView extends \XLite\Core\Handler
         $list = array(
             'css/style.css',
             'css/ajax.css',
+            array(
+                'file'  => 'css/print.css',
+                'media' => 'print',
+            ),
         );
 
         if (\XLite\Logger::isMarkTemplates()) {

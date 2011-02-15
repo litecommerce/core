@@ -51,6 +51,9 @@ ALoadable.prototype.blockWidget = true;
 // Update page title from loaded request or not
 ALoadable.prototype.updatePageTitle = false;
 
+// Update breadcrumb last node from loaded request or not
+ALoadable.prototype.updateBreadcrumb = false;
+
 // Widget target
 ALoadable.prototype.widgetTarget = null;
 
@@ -64,7 +67,7 @@ ALoadable.prototype.widgetClass = null;
 ALoadable.prototype.titlePattern = 'h1:eq(0)';
 
 // Page title element pattern in request's response data
-ALoadable.prototype.titleRequestPattern = 'h1:eq(0)';
+ALoadable.prototype.titleRequestPattern = 'h2.ajax-title-loadable:eq(0)';
 
 // Container element pattern in request's response data
 ALoadable.prototype.containerRequestPattern = 'div.ajax-container-loadable';
@@ -200,9 +203,8 @@ ALoadable.prototype.extractRequestData = function(div)
 ALoadable.prototype.placeRequestData = function(box)
 {
   // Update page title
-  if (this.updatePageTitle) {
-    var title = jQuery(this.titleRequestPattern, box).eq(0);
-    jQuery(this.titlePattern).eq(0).html(title.html());
+  if (this.updatePageTitle || this.updateBreadcrumb) {
+    this.replacePageTitle(box);
   }
 
   box = this.extractContent(box).children();
@@ -234,6 +236,29 @@ ALoadable.prototype.extractContent = function(box)
   }
 
   return box;
+}
+
+// Repalce page title
+ALoadable.prototype.replacePageTitle = function(box)
+{
+  var title = jQuery(this.titleRequestPattern, box).eq(0).html();
+  if (title) {
+    this.placeNewPageTitle(title);
+  }
+
+  return title;
+}
+
+// Place new page title
+ALoadable.prototype.placeNewPageTitle = function(title)
+{
+  if (this.updatePageTitle) {
+    jQuery(this.titlePattern).eq(0).html(title);
+  }
+
+  if (this.updateBreadcrumb) {
+    jQuery('#breadcrumb .last').find('a,span').html(title);
+  }
 }
 
 // [ABSTRACT] Widget post processing (after new widget data placing)

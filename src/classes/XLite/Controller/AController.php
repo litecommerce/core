@@ -804,7 +804,7 @@ abstract class AController extends \XLite\Core\Handler
         $viewer = $this->getViewer();
         $viewer->init();
 
-        if ($this->isAJAXViewer()) {
+        if ($this->isAJAX()) {
             $this->printAJAXOuput($viewer->getContent());
             
         } else {

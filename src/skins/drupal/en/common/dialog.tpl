@@ -11,6 +11,6 @@
  * @since     3.0.0
  *}
 <div class="block block-block">
-  <h2>{getHead()}</h2>
+  <h2 IF="getHead()">{getHead()}</h2>
   <div class="content"><widget template="{getBody()}" /></div>
 </div>

@@ -114,11 +114,12 @@ abstract class ADrupal extends \XLite\Base\Singleton
      */
     protected function getUniqueResources($type, array $files)
     {
-        $files = array_diff($files, static::$registeredResources[$type]);
         static::$registeredResources[$type] = array_merge(static::$registeredResources[$type], $files);
 
         return $files;
     }
+
+
 
     /**
      * Get JS scope
@@ -153,34 +154,34 @@ abstract class ADrupal extends \XLite\Base\Singleton
     /**
      * Get resource description in Drupal format
      *
-     * @param string $file Resource file path
+     * @param array $file Resource file info
      *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getResourceInfoCommon($file)
+    protected function getResourceInfoCommon(array $file)
     {
         return array(
             'type'     => 'file',
-            'basename' => $this->getResourceBasename($file),
+            'basename' => $this->getResourceBasename($file['file']),
         );
     }
 
     /**
      * Get resource description in Drupal format
      *
-     * @param string $file Resource file path
+     * @param array $file Resource file info
      *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getResourceInfoJS($file)
+    protected function getResourceInfoJS(array $file)
     {
-        $scope = $this->getJSScope($file);
+        $scope = $this->getJSScope($file['file']);
 
         return array(
             'scope' => $scope,
@@ -191,17 +192,18 @@ abstract class ADrupal extends \XLite\Base\Singleton
     /**
      * Get resource description in Drupal format
      *
-     * @param string $file Resource file path
+     * @param array $file Resource file info
      *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getResourceInfoCSS($file)
+    protected function getResourceInfoCSS(array $file)
     {
         return array(
             'group' => CSS_DEFAULT,
+            'media' => isset($file['media']) ? 'all' : $file['media'],
         );
     }
 

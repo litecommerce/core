@@ -23,7 +23,7 @@
 
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
-  <link FOREACH="getCSSResources(),file" href="{file}" rel="stylesheet" type="text/css" />
+  <link FOREACH="getCSSResources(),file" href="{file.file}" rel="stylesheet" type="text/css" media="{file.media}" />
 
   <script type="text/javascript">
 var xliteConfig = {

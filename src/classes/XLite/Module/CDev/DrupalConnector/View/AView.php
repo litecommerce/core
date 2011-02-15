@@ -180,9 +180,14 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
         $list = parent::getCSSFiles();
 
         if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
-            $key = array_search($list, 'css/style.css');
-            if (false !== $key) {
-                unset($list[$key]);
+
+            $filter = array('css/style.css', 'css/print.css');
+
+            foreach ($list as $k => $v) {
+                $fn = is_string($v) ? $v : $v['file'];
+                if (in_array($fn, $filter)) {
+                    unset($list[$k]);
+                }
             }
         }
 

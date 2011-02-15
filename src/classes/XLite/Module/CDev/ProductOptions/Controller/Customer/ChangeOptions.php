@@ -100,11 +100,13 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * @access protected
      * @since  3.0.0
      */
-    protected function actionPostprocess($action)
+    protected function actionPostprocess($action = null)
     {
         parent::actionPostprocess($action);
 
-        $this->assembleReturnUrl();
+        if ($action) {
+            $this->assembleReturnUrl();
+        }
     }
 
     /**

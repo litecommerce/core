@@ -44,7 +44,21 @@ class Node extends \XLite\View\AView
     const PARAM_NAME     = 'name';
     const PARAM_LINK     = 'list';
     const PARAM_SUBNODES = 'subnodes';
+    const PARAM_IS_LAST  = 'last';
 
+
+    /**
+     * Check - node is last in nodes list or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isLast()
+    {
+        return $this->getParam(self::PARAM_IS_LAST);
+    }
 
     /**
      * Return widget default template
@@ -72,14 +86,17 @@ class Node extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_NAME => new \XLite\Model\WidgetParam\String(
+            self::PARAM_NAME     => new \XLite\Model\WidgetParam\String(
                 'Name', ''
             ),
-            self::PARAM_LINK => new \XLite\Model\WidgetParam\String(
+            self::PARAM_LINK     => new \XLite\Model\WidgetParam\String(
                 'Link', ''
             ),
             self::PARAM_SUBNODES => new \XLite\Model\WidgetParam\Collection(
                 'Subnodes', array()               
+            ),
+            self::PARAM_IS_LAST  => new \XLite\Model\WidgetParam\Bool(
+                'Is last?', false
             ),
         );
     }

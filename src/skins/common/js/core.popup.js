@@ -73,7 +73,7 @@ popup.load = function(url, id, unblockCallback, timeout)
 popup.loadByURL = function(url, timeout)
 {
   return core.get(
-    url,
+    this.preprocessURL(url),
     this.postprocessRequestCallback,
     null,
     {
@@ -87,6 +87,8 @@ popup.loadByForm = function(form)
 {
   form = jQuery(form).get(0);
 
+  form.setAttribute('action', this.preprocessURL(form.getAttribute('action')));
+
   return form ? form.submitBackground(this.postprocessRequestCallback) : false;
 }
 
@@ -95,8 +97,10 @@ popup.loadByLink = function(link)
 {
   link = jQuery(link).eq(0);
 
-  return (1 == link.length && link.attr('href'))
-    ? core.get(link.attr('href'), this.postprocessRequestCallback)
+  var href = (1 == link.length && link.attr('href')) ? link.attr('href') : false;
+
+  return href
+    ? core.get(this.preprocessURL(href), this.postprocessRequestCallback)
     : false;
 }
 
@@ -111,12 +115,12 @@ popup.loadByButton = function(button)
 
     // By onclick attribute
     var m = button.attr('onclick').toString().match(/\.location[ ]*=[ ]*['"](.+)['"]/);
-    result = core.get(m[1], this.postprocessRequestCallback);
+    result = core.get(this.preprocessURL(m[1]), this.postprocessRequestCallback);
 
   } else if (button.data('location')) {
 
     // By kQuery data cell
-    result = core.get(button.data('location'), this.postprocessRequestCallback);
+    result = core.get(this.preprocessURL(button.data('location')), this.postprocessRequestCallback);
 
   } else if (0 < button.parents('form').length) {
 
@@ -126,6 +130,16 @@ popup.loadByButton = function(button)
   }
 
   return result;
+}
+
+// Preprocess URL
+popup.preprocessURL = function(url)
+{
+  if (url && -1 == url.search(/only_center=1/)) {
+    url += (-1 == url.search(/\?/) ? '?' : '&') + 'only_center=1';
+  }
+
+  return url;
 }
 
 // Postprocess request

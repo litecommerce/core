@@ -11,9 +11,9 @@
  * @since     3.0.0
  *}
 
-<div class="location-node{if:getSubnodes()} expandable{end:}">
+<div class="location-node{if:getSubnodes()} expandable{end:}{if:isLast()} last{end:}">
 
-  {if:getLink()}<a href="{getLink()}" class="location-title">{end:}{getName()}{if:getLink()}</a>{end:}
+  {if:getLink()}<a href="{getLink()}" class="location-title">{else:}<span class="location-text">{end:}{getName()}{if:getLink()}</a>{else:}</span>{end:}
 
   <ul class="location-subnodes" IF="getSubnodes()">
     <li FOREACH="getSubnodes(),node"><a href="{node.getLink()}">{node.getName()}</a></li>
