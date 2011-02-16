@@ -195,19 +195,6 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Get secure controller status
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSecure()
-    {
-        return false;
-    }
-
-    /**
      * Common method to determine current location 
      * 
      * @return string

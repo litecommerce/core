@@ -121,17 +121,4 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
 
         return $this->order;
     }
-
-    /**
-     * Get secure controller status
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSecure()
-    {
-        return $this->config->Security->customer_security;
-    }
 }

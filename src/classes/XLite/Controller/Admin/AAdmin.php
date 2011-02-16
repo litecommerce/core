@@ -200,14 +200,6 @@ abstract class AAdmin extends \XLite\Controller\AController
         return 'login' == $request->target;
     }
 
-    function getSecure()
-    {
-        if ($this->session->get('no_https')) {
-            return false;
-        }
-        return $this->config->Security->admin_security;
-    }
-
     function getRecentAdmins()
     {
         if ($this->auth->isLogged() && is_null($this->recentAdmins)) {

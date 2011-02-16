@@ -49,12 +49,4 @@ class RecentLogin extends \XLite\Controller\Admin\AAdmin
     {
         return 'Login history';
     }
-
-    function getSecure()
-    {
-        if ($this->session->get('no_https')) {
-            return false;
-        }
-        return $this->config->Security->admin_security;
-    }
 }
