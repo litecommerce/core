@@ -38,18 +38,18 @@ namespace XLite\Controller\Admin;
 class Modules extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Handles the request.
-     * Parses the request variables if necessary. Attempts to call the specified action function 
+     * Call controller action or special default action
      * 
      * @return void
-     * @access public
+     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest()
+    protected function callAction()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Module')->checkModules();
+        \XLite\Core\Database::getRepo('XLite\Model\Module')->checkModules();
 
-        parent::handleRequest();
+        parent::callAction();
     }
 
     /**

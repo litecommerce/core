@@ -34,6 +34,8 @@ namespace XLite\View\Product\Details\Customer\Page;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="center", zone="customer")
  */
 class Main extends \XLite\View\Product\Details\Customer\Page\APage
 {

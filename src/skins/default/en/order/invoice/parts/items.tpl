@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="invoice.base", weight="30")
  *}
-<table cellspacing="0" class="invoice-items">
+<table cellspacing="0" class="items">
 
   <tr>
     {displayViewListContent(#invoice.items.head#)}

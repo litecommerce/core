@@ -37,6 +37,55 @@ namespace XLite\View;
  */
 class Header extends \XLite\View\AView
 {
+
+    /**
+     * Default meta description 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $defaultMetaDescription = 'The powerful shopping cart software for web stores and e-commerce enabled stores is based on PHP / PHP4 with SQL database with highly configurable implementation based on templates';
+
+    /**
+     * Default title 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $defaultTitle = 'Litecommerce';
+
+    /**
+     * Get meta description 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMetaDescription()
+    {
+        return method_exists(\XLite::getController(), 'getMetaDescription')
+            ? \XLite::getController()->getMetaDescription()
+            : $this->t($this->defaultMetaDescription);
+    }
+
+    /**
+     * Get title 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getTitle()
+    {
+        return \XLite::getController()->getPageTitle() ?: $this->t($this->defaultTitle);
+    }
+
     /**
      * Return widget default template
      *
@@ -50,9 +99,9 @@ class Header extends \XLite\View\AView
     }
 
     /**
-     * getJSResources 
+     * Get collected javascript resources 
      * 
-     * @return void
+     * @return array
      * @access protected
      * @since  3.0.0
      */
@@ -62,15 +111,38 @@ class Header extends \XLite\View\AView
     }
 
     /**
-     * getCSSResources 
+     * Get collected CSS resources 
      * 
-     * @return void
+     * @return array
      * @access protected
      * @since  3.0.0
      */
     protected function getCSSResources()
     {
-        return self::getRegisteredResources(self::RESOURCE_CSS);
+        $list = array();
+
+        foreach (self::getRegisteredResources(self::RESOURCE_CSS) as $k => $file) {
+            if (!isset($file['media']) || !$file['media']) {
+                $file['media'] = 'all';
+            }
+
+            $list[$k] = $file;
+        }
+
+        return $list;
+    }
+
+    /**
+     * Get script 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getScript()
+    {
+        return \XLite::getInstance()->getScript();
     }
 }
 

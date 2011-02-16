@@ -53,7 +53,7 @@ abstract class AItemsList extends \XLite\View\Container
 
 
     /**
-     * defaultTemplate
+     * Default layout template
      *
      * @var    string
      * @access protected
@@ -568,7 +568,7 @@ abstract class AItemsList extends \XLite\View\Container
     {
         $class = get_called_class();
 
-        if (isset(static::$sortWidgetIds[$class])) {
+        if (!isset(static::$sortWidgetIds[$class])) {
             static::$sortWidgetIds[$class] = 0;
         }
 
@@ -677,7 +677,7 @@ abstract class AItemsList extends \XLite\View\Container
      */
     protected function isPagerVisible()
     {
-        return true;
+        return $this->getPager()->isVisible();
     }
 
     /**

@@ -17,6 +17,6 @@
   </li>
 </ul>
 
-{displayListPart(#itemsTotal#)}
+{displayNestedViewListContent(#itemsTotal#)}
 
 
