@@ -14,11 +14,11 @@
 
   <table width="100%">
 
-    <tr IF="cart.empty">
-      <td><img src="images/cart_empty.gif" alt=""> Cart is empty</td>
+    <tr IF="cart.isEmpty()">
+      <td><img src="images/cart.isEmpty().gif" alt=""> Cart is empty</td>
     </tr>
 
-    <tr IF="!cart.empty">
+    <tr IF="!cart.isEmpty()">
       <td>
 
         <table width="100%">
@@ -26,7 +26,7 @@
           <tr>
             <td><img src="images/cart_full.gif" alt=""></td>
             <td>
-              <strong>Items:</strong> {cart.itemsCount}
+              <strong>Items:</strong> {cart.getItemsCount()}
               <br />
               <strong>Total:</strong> {price_format(cart,#total#):h}
             </td>

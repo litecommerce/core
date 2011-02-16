@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Core
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -30,4 +30,4 @@
 
 require_once (dirname(__FILE__) . DIRECTORY_SEPARATOR . 'top.inc.php');
 
-XLite::getInstance()->run()->getViewer()->display();
+XLite::getInstance()->run()->processRequest();

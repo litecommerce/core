@@ -1,7 +1,7 @@
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
- * ____file_title____
+ * Drupal connector functions
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,45 +11,184 @@
  * @since     3.0.0
  */
 
-// FIXME - must be improved and synchronized with the "drupal" skin
+// FIXME - must be improved and synchronized with the "default" skin
 
-/**
- * List of all "get"-forms 
- */
-var xliteForms = [];
+// Drupal-specific URLs
+jQuery(document).ready(
+  function() {
+    URLHandler.baseURLPart = '?q=store/';
+    URLHandler.argSeparator = '/';
+    URLHandler.nameValueSeparator = '-';
 
-/**
- * Semaphore 
- */
-var submitStarted = false;
+    URLHandler.getMainParamValue = function(name, params)
+    {
+      if ('action' == name && ('undefined' == typeof(params[name]) || !params[name])) {
+        params[name] = '0';
+      }
 
+      return 'undefined' == typeof(params[name]) ? '' : params[name];
+    }
 
-/**
- * Compose Drupal URL 
- * 
- * @param array $params list of URL params
- *  
- * @return string
- * @since  3.0.0 EE
- */
-function drupalBuldURL(params)
-{
-	// TODO - add the AJAX request here
+    // Extend ALoadable prototype
+    if ('undefined' != typeof(window.ALoadable)) {
+      var oldGetParams = ALoadable.prototype.getParams;
 
-	result = 'store';
-	mainParams = ['target','action'];
+      // Add delta id
+      ALoadable.prototype.getParams = function(params)
+      {
+        params = oldGetParams.apply(this, arguments);
+        var delta = null;
+        this.base.parents('.block').map(
+          function() {
+            if (!delta && this.id) {
+              var m = this.id.match(/^block-block-(.+)$/i);
+              if (m) {
+                delta = m[1];
+              }
+            }
+          }
+        );
 
-	for (i = 0; i < mainParams.length; i++) {
-		result += '/' + params[mainParams[i]];
-		delete params[mainParams[i]];
-	}
+        if (delta) {
+          params.widgetConfId = delta;
+        }
 
-	for (name in params) {
-		result += '/' + name + '-' + params[name];
-	}
+        return params;
 
-	return result;
-}
+      }
+
+      ALoadable.prototype.titlePattern = '#page-title';
+      ALoadable.prototype.titleRequestPattern = 'h2.ajax-title-loadable:eq(0)';
+    }
+
+    // Extend Checkout main widget
+    if ('undefined' != typeof(window.CheckoutView)) {
+
+      var postprocess = CheckoutView.prototype.postprocess;
+
+      // Decorate postprocess method
+      CheckoutView.prototype.postprocess = function(isSuccess, initial)
+      {
+        postprocess.apply(this, arguments);
+
+        if (isSuccess && jQuery('form.create .selector #create_profile_chk', this.commonBase).length) {
+
+          var o = this;
+
+          jQuery('form.create .selector #create_profile_chk', this.commonBase).unbind('change');
+
+          var refreshStateCallback = function() {
+            o.refreshState();
+          }
+
+          var toggle = function()
+          {
+            var isVisible = 1 == jQuery('.username:visible', this.form).length;
+
+            if (this.checked) {
+              jQuery('.username-verified', this.form).hide();
+              jQuery('.username', this.form).show();
+
+              if (!isVisible && this.form.validate(true)) {
+                jQuery(this.form).submit();
+              }
+
+            } else {
+              jQuery('.username', this.form).hide();
+
+              if (isVisible && jQuery('#create_profile_email', this.form).val()) {
+                jQuery(this.form).submit();
+              }
+            }
+
+            o.refreshState();
+          }
+
+          toggle.call(jQuery('form.create .selector #create_profile_chk', this.commonBase).get(0));
+          jQuery('form.create .selector #create_profile_chk', this.commonBase).change(
+            function() {
+              toggle.call(this);
+              if (this.form.validate(true)) {
+                jQuery(this.form).submit();
+              }
+            }
+          );
+
+          jQuery('.profile form.create .username input', this.commonBase).bind(
+            'invalid',
+            function() {
+              jQuery('.username-verified', this.form).hide();
+              o.refreshState();
+            }
+          );
+
+          jQuery('.profile form.create', this.commonBase)
+            .bind(
+              'beforeSubmit',
+              function() {
+                jQuery('.username-verified', this).hide();
+              }
+            )
+            .bind(
+              'afterSubmit',
+              function() {
+                var showUsernameVerifiedNote = 1 == jQuery('#create_profile_chk:checked', this).length;
+                if (showUsernameVerifiedNote) {
+                  var input = jQuery('.username input', this).get(0);
+                  showUsernameVerifiedNote = input.value && input.validate(true);
+                }
+
+                if (showUsernameVerifiedNote) {
+                  jQuery('.username-verified', this).show();
+
+                } else {
+                  jQuery('.username-verified', this).hide();
+                }
+              }
+            );
+
+          if (jQuery('.profile form.create #create_profile_chk:checked', this.commonBase).length) {
+            var input = jQuery('.profile form.create .username input', this.commonBase).get(0);
+            if (input.value && input.validate(true) && !input.isChanged()) {
+              jQuery('.profile form.create .username-verified', this.commonBase).show();
+            }
+          }
+
+          jQuery('.profile form.create #create_profile_username', this.commonBase)
+            .bind('invalid', refreshStateCallback)
+            .bind('valid', refreshStateCallback);
+        }
+      }
+
+      var refreshState = CheckoutView.prototype.refreshState;
+
+      // Decorate refreshState method
+      CheckoutView.prototype.refreshState = function()
+      {
+        refreshState.apply(this, arguments);
+
+        var shippingMethodsIsExists = 0 < jQuery('ul.shipping-rates input', this.base).length;
+        var username = jQuery('#create_profile_username', this.commonBase).get(0);
+        var isCreate = jQuery('#create_profile_chk', this.commonBase).get(0) && jQuery('#create_profile_chk', this.commonBase).get(0).checked;
+        if (
+          shippingMethodsIsExists
+          && username
+          && isCreate
+          && !jQuery('.shipping-step .address-not-completed:visible', this.base).length
+          && !jQuery('.shipping-step .email-not-defined:visible', this.base).length
+          && (!username.validate(true) || !jQuery('#create_profile_username', this.commonBase).val())
+        ) {
+          jQuery('.shipping-step .username-not-defined', this.base).show();
+
+        } else if (username) {
+          jQuery('.shipping-step .username-not-defined', this.base).hide();
+        }
+      }
+
+    }
+
+  }
+);
 
 /**
  * Prepare submit params for the forms having "GET" method
@@ -57,38 +196,35 @@ function drupalBuldURL(params)
  * @param HTMLFormElement $form curretn form
  *  
  * @return void
- * @since  3.0.0 EE
+ * @since  3.0.0
  */
 function drupalOnSubmitGetForm(form)
 {
-	if (!submitStarted) {
+  if (
+    form
+    && form.constructor == HTMLFormElement
+    && form.getAttribute('method')
+    && form.getAttribute('method').toUpperCase() == 'GET'
+  ) {
 
-		submitStarted = true;
+  	var result = {};
 
-		params = xliteForms[form.getAttribute('name')];
-		params.splice(params.indexOf('q'), 1);
+	  for (var i = 0; i < form.elements.length; i++) {
+		  var element = form.elements[i];
+      if (element.name && element.name != 'q') {
+    		result[element.name] = element.value;
+      }
+  	}
 
-		result = [];
+    var q = form.elements.namedItem('q');
+    if (!q) {
+      q = document.createElement('INPUT')
+      q.type = 'hidden';
+      q.name = 'q';
+      form.appendChild(q);
+    }
 
-		for (i = 0; i < params.length; i++) {
-			element = form.elements[params[i]];
-			result[params[i]] = element.value;
-			element.parentNode.removeChild(element);
-		}
-
-		form.q.value = drupalBuldURL(result);
-	}
-}
-
-
-// Drupal-specific URLs
-
-URLHandler.baseURLPart = '?q=store/';
-URLHandler.argSeparator = '/';
-URLHandler.nameValueSeparator = '-';
-
-URLHandler.getMainParamValue = function(name, params)
-{
-  return params[name];
+	  q.value = 'store/' + URLHandler.buildMainPart(result) + URLHandler.buildQueryPart(result);
+  }
 }
 

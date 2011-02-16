@@ -581,6 +581,15 @@ class Session extends \XLite\Base\Singleton
             $code = array();
         }
 
+        if (isset($code[$zone]) && $code[$zone])  {
+            $language = \XLite\Core\Database::getRepo('XLite\Model\Language')
+                ->findOneByCode($code[$zone]);
+
+            if (!$language || $language->getStatus() != $language::ENABLED) {
+                unset($code[$zone]);
+            }
+        }
+
         if (!isset($code[$zone]) || !$code[$zone]) {
             $this->setLanguage($this->defineCurrentLanguage());
             $code = $this->session->language;

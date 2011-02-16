@@ -48,7 +48,7 @@ class Layout extends \XLite\Base\Singleton
 
 
     /**
-     * Current locale
+     * Current skin
      *
      * @var    string
      * @access protected
@@ -58,7 +58,7 @@ class Layout extends \XLite\Base\Singleton
     protected $skin;
 
     /**
-     * Current skin
+     * Current locale
      *
      * @var    string
      * @access protected

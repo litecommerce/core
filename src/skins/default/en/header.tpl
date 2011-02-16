@@ -11,16 +11,27 @@
  * @since     3.0.0
  *}
 
-<head>
-  <title>{if:getPageTitle()}{getPageTitle()}{end:}</title>
-  <meta http-equiv="Content-Type" content="text/html; charset={charset}" />
-  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-  <meta IFF="!metaDescription" name="description" content="The powerful shopping cart software for web stores and e-commerce enabled stores is based on PHP5 with SQL database with highly configurable implementation based on templates." />
-  <meta IFF="metaDescription" name="description" content="{metaDescription:r}" />
-  <meta IFF="keywords" name="keywords" content="{keywords:r}" />
+<head profile="http://www.w3.org/1999/xhtml/vocab">
+  <title>{getTitle()}</title>
 
-  <link href="{%\XLite\Model\Layout::getInstance()->getSkinURL('style.css')%}" rel="stylesheet" type="text/css" />
-  <link FOREACH="getCSSResources(),file" href="{file}" rel="stylesheet" type="text/css" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <meta name="Generator" content="Litecommerce 3 (http://litecommerce.com)" />
+  <meta IF="getMetaDescription()" name="description" content="{getMetaDescription():r}" />
+  <meta IF="getKeywords()" name="keywords" content="{getKeywords():r}" />
 
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+  <link FOREACH="getCSSResources(),file" href="{file.file}" rel="stylesheet" type="text/css" media="{file.media}" />
+
+  <script type="text/javascript">
+var xliteConfig = {
+  script:   '{getScript():h}',
+  language: '{currentLanguage.getCode()}'
+};
+  </script>
   <script FOREACH="getJSResources(),file" type="text/javascript" src="{file}"></script>
+
+  {displayViewListContent(#head#)}
 </head>

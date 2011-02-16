@@ -56,7 +56,7 @@ class Checkout extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'Checkout';
+        return null;
     }
 
     /**

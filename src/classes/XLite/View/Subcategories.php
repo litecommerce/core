@@ -34,6 +34,8 @@ namespace XLite\View;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="center.bottom", zone="customer", weight="100")
  */
 class Subcategories extends \XLite\View\Dialog
 {

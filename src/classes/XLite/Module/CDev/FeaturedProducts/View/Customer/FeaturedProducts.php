@@ -34,6 +34,8 @@ namespace XLite\Module\CDev\FeaturedProducts\View\Customer;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="center.bottom", zone="customer", weight="300")
  */
 class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
 {
@@ -137,7 +139,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
             $products = array();
 
-            $fp = \XLite\Core\Database::getRepo('\XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct')
+            $fp = \XLite\Core\Database::getRepo('XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct')
                 ->getFeaturedProducts($this->category_id);
 
             foreach ($fp as $product) {
@@ -176,6 +178,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
+
         $result[] = 'main';
         $result[] = 'category';
     

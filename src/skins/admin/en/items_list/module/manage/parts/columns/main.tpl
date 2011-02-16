@@ -16,7 +16,7 @@
   <div class="author">{t(#Author#)}: {getInstalledProperty(module,#authorName#)}</div>
   <div class="version">{t(#Version#)}: {getInstalledProperty(module,#version#)}</div>
 
-  <div class="actions">{displayListPart(#actions#,_ARRAY_(#module#^module))}</div>
+  <div class="actions">{displayNestedViewListContent(#actions#,_ARRAY_(#module#^module))}</div>
 
   <div IF="!canEnable(module)" class="dependencies">
     {t(#Add-on cannot be enabled.#)}
