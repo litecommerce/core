@@ -130,12 +130,15 @@ abstract class AAdmin extends \XLite\Controller\AController
         return $currentCode ? $currentCode : \XLite\Core\Translation::getCurrentLanguageCode();
     }
 
-
-
-
-    protected $recentAdmins = null;
-
-    function getCustomerZoneWarning()
+    /**
+     * Returns 'maintenance_mode' string if frontend is closed or null otherwise
+     * 
+     * @return string|null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCustomerZoneWarning()
     {
         return ('Y' == \XLite::getInstance()->config->General->shop_closed) ? 'maintenance_mode' : null;
     }
@@ -153,16 +156,16 @@ abstract class AAdmin extends \XLite\Controller\AController
         return $this->auth->getAdminAccessLevel();
     }
 
-    function handleRequest()
+    /**
+     * Handles the request to admin interface
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest()
     {
-        // auto-login request
-/*
-        if (!$this->auth->is('logged') && isset(\XLite\Core\Request::getInstance()->login) && isset(\XLite\Core\Request::getInstance()->password)) {
-            if ($this->auth->loginAdministrator(\XLite\Core\Request::getInstance()->login, \XLite\Core\Request::getInstance()->password) === \XLite\Core\Auth::RESULT_ACCESS_DENIED) {
-                die('ACCESS DENIED');
-            }
-        }
-*/
         if (
             !$this->auth->isAuthorized($this)
             && !$this->isPublicZone()
@@ -186,7 +189,7 @@ abstract class AAdmin extends \XLite\Controller\AController
     }
 
     /**
-     * Check - current place is public or not
+     * Check - is current place public or not
      * 
      * @return boolean
      * @access protected
@@ -199,6 +202,12 @@ abstract class AAdmin extends \XLite\Controller\AController
 
         return 'login' == $request->target;
     }
+
+
+
+    protected $recentAdmins = null;
+
+
 
     function getSecure()
     {
