@@ -25,7 +25,7 @@
       <tr FOREACH="featuredProductsList,idx,featuredProduct" class="{getRowClass(idx,##,#highlight#)}">
         <td align="center" width="2"0><input type="checkbox" name="delete[{featuredProduct.id}]" /></td>
         <td align="center" width="2"0><input type="text" size="4" name="orderbys[{featuredProduct.id}]" value="{featuredProduct.order_by}" /></td>
-        <td nowrap>
+        <td class="table-label">
           <a href="admin.php?target=product&product_id={featuredProduct.product.product_id}">{featuredProduct.product.name:h}</a>
           <span IF="{!featuredProduct.product.enabled}" color="red">&nbsp;&nbsp;&nbsp;(not available for sale)</span>
         </td>

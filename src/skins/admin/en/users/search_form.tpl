@@ -253,5 +253,5 @@ managedate('date', true);
 
 <br />
 
-<b>Note:</b> You can also <a href="admin.php?target=profile&mode=register">add a new user</a>.
+<b>Note:</b> You can also <a href="admin.php?target=profile&amp;mode=register">add a new user</a>.
 

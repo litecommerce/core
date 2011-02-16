@@ -65,7 +65,7 @@ Mandatory fields are marked with an asterisk (<span class="star">*</span>).
 
           <tr valign="middle">
             <td><input type="text" name="login" value="{login:r}" size="32" maxlength="128" /></td>
-            <td nowrap>&nbsp;&nbsp;<a IF="mode=#modify#&access_level=#0#" href="javascript: SearchOrders()" onclick="this.blur()"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt="" /> View order history</a></td>
+            <td class="table-label">&nbsp;&nbsp;<a IF="mode=#modify#&access_level=#0#" href="javascript: SearchOrders()" onclick="this.blur()"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt="" /> View order history</a></td>
           </tr>
 
         </table>
@@ -295,7 +295,7 @@ Mandatory fields are marked with an asterisk (<span class="star">*</span>).
     <tr valign="middle">
       <td align="right">Zip code</td>
       <td><span class="star">*</span></td>
-      <td nowrap>
+      <td class="table-label">
         <input type="text" name="billing_zipcode" value="{billing_zipcode:r}" size="32" maxlength="32" />
       </td>
       <td>
@@ -426,7 +426,7 @@ Mandatory fields are marked with an asterisk (<span class="star">*</span>).
       <tr valign="middle">
         <td align="right">Zip code</td>
         <td><span class="star">*</span></td>
-        <td nowrap>
+        <td class="table-label">
           <input type="text" name="shipping_zipcode" value="{shipping_zipcode:r}" size="32" maxlength="32" />
         </td>
         <td>&nbsp;</td>

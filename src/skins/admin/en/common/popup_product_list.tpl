@@ -29,14 +29,14 @@ function selectProduct(product_id, name)
 <tr>
     <td>Sku</td>
     <td>Product</td>
-    <td nowrap>Price</td>
+    <td class="table-label">Price</td>
 </tr>
 <tr FOREACH="pager.pageData,product">
     <td style="width:1%;"><a href="javascript: selectProduct({product.product_id},'{addSlashes(product,#name#):r}')">{product.sku}</a></td>
     <td style="width:70%;">
         <a href="javascript: selectProduct({product.product_id},'{addSlashes(product.name):r}')">{product.name}</a>
     </td>
-    <td nowrap align="right">
+    <td class="table-label" align="right">
         <a href="javascript: selectProduct({product.product_id},'{addSlashes(product.name):r}')">{price_format(product.price):h}</a>
     </td>
 </tr>

@@ -84,7 +84,7 @@ function changeVal(param)
 	<td>Tax value (%). You can use an '=' sign to define an expression. <br />
 	<b>Example:</b> "=Tax1+(1+Tax1/100.0) * Tax2" - this will calculate Tax2 after the Tax1 was applied.
 </td></tr>
-<tr><td nowrap>
+<tr><td class="table-label">
 	<input type="text" name="taxName" value="{getNoteTaxName(tax)}" size="25" />
 	<select name="select_taxName" onchange="changeVal('taxName')">
 		<option>-- select --</option>
