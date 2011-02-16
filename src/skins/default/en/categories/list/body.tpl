@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Top categories list
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,9 +10,13 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<table border="0" cellpadding="2" cellspacing="0">
-<tr FOREACH="getCategories(),_category">
-	<td valign="bottom"><img src="images/category_arrow.gif" width="12" height="13" alt=""></td>
-    <td width="100%"><a href="{buildURL(#category#,##,_ARRAY_(#category_id#^_category.category_id))}" class="SidebarItems"><FONT class="CategoriesList">{_category.name}</FONT></a></td>
-</tr>
-</table>
+<ul class="menu menu-list{if:!isSubtree()} catalog-categories catalog-categories-path{end:}">
+  {foreach:getCategories(),idx,_category}
+    <li {displayItemClass(idx,_categoryArraySize,_category):h}>
+      <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^_category.category_id))}" {displayLinkClass(idx,_categoryArraySize,_category):h}>{_category.name}</a>
+    </li>
+  {end:}
+  {foreach:getViewList(#topCategories.childs#,_ARRAY_(#rootId#^getParam(#rootId#),#is_subtree#^getParam(#is_subtree#))),idx,w}
+    <li {displayListItemClass(idx,wArraySize,w):h}>{w.display()}</li>
+  {end:}
+</ul>

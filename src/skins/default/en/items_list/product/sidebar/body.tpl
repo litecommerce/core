@@ -10,22 +10,10 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<ul class="list-body-sidebar">
+<ul class="list-body-sidebar products products-sidebar">
 
-  <li class="hproduct item" FOREACH="getSideBarData(),product">
-
-    <a IF="isShowThumbnails()" class="url product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^product.category.category_id))}"><widget class="\XLite\View\Image" image="{product.getThumbnail()}" maxWidth="45" maxHeight="45" alt="{product.name}" className="photo" /></a>
-
-    <div class="body">
-
-        <a class="fn product-name" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^product.category.category_id))}">{product.name:h}</a>
-        <br />
-
-        {* <widget class="\XLite\View\Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" /> *}
-        <widget class="\XLite\View\BuyNow" product="{product}" IF="isShowAdd2Cart(product)" style="aux-button add-to-cart" showPrice="{isShowPrice()}" />
-
-    </div>
-
+  <li FOREACH="getSideBarData(),i,product" class="hproduct item {getAdditionalItemClass(productArrayPointer,productArraySize)}">
+    {displayInheritedViewListContent(#info#,_ARRAY_(#product#^product))}
   </li>
 
   <li IF="isShowMoreLink()">

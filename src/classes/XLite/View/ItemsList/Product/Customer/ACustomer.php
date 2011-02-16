@@ -317,7 +317,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getDisplayMode()
     {
-        return $this->getParam(self::PARAM_DISPLAY_MODE);
+        return $this->isSideBarBox() ? 'sidebar' : $this->getParam(self::PARAM_DISPLAY_MODE);
     }
 
     /**
@@ -455,6 +455,36 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     protected function getSideBarData()
     {
         return $this->getData($this->getPager()->getLimitCondition(0, $this->getSidebarMaxItems()));
+    }
+
+    /**
+     * Get additional list item class 
+     * 
+     * @param integer $i     Item index
+     * @param integer $count List length
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAdditionalItemClass($i, $count)
+    {
+        $classes = array();
+
+        if (1 == $i) {
+            $classes[] = 'first';
+        }
+
+        if ($count == $i) {
+            $classes[] = 'last';
+        }
+
+        if (0 == $i % 2) {
+            $classes[] = 'odd';
+        }
+
+        return implode(' ', $classes);
     }
 
     /**

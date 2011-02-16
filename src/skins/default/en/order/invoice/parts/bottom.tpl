@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="invoice.base", weight="50")
  *}
-<table cellspacing="0" class="invoice-address">
+<table cellspacing="0" class="addresses">
 
   <tr FOREACH="getViewList(#invoice.bottom#),w">
     {w.display()}    

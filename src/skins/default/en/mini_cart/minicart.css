@@ -1,7 +1,7 @@
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
- * ____file_title____
+ * Minicart styles
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,131 +11,22 @@
  * @since     3.0.0
  */
 
-#lc-minicart {
-    position: relative;
-    padding: 0.5em;
-}
-
-#lc-minicart a,
-#lc-minicart a:active,
-#lc-minicart a:hover,
-#lc-minicart a:visited
-{
-    text-decoration: underline;
-}
-
-#lc-minicart li {
-    background-image: none;
-
-}
-
-/* Minicart title */
-
-.lc-minicart-title {
-    font-size: 12px;
-    font-weight: bold;
-    float: left;
-    margin: 0;
-    padding: 3px 0 0 0.5em;
-    clear: none;
-}
-
-/* Minicart toggle button */
-
-#lc-minicart .toggle-button {
-    width: 35px;
-    height: 24px;
-    margin: 0;
-    padding: 0;
-    background: transparent url(img/minicart-collapsed.gif) no-repeat top left;
-    float: left;
-    cursor: pointer;
-}
-
-#lc-minicart.expanded .toggle-button {
-    background: transparent url(img/minicart-expanded.gif) no-repeat top left;
-}
-
-#lc-minicart.empty .toggle-button {
-    background: transparent url(img/minicart-empty.gif) no-repeat top right;
-    width: 24px;
-    height: 24px;
-    cursor: auto;
-}
-
-#lc-minicart.empty p {
-    margin: 0;
-    padding: 1em 0 0 0;
-}
-
-/* Minicart items */
-
-.lc-minicart-items {
-    clear: both;
-    border: 0;
-    margin: 0;
-    padding: 0;
-}
-
-#lc-minicart .line-item a,
-#lc-minicart .line-item a:active,
-#lc-minicart .line-item a:visited
-{
-    text-decoration: none;
-}
-
-#lc-minicart .line-item a:hover
-{
-    text-decoration: underline;
-}
-
-
-#lc-minicart.empty .lc-minicart-items {
-    border-bottom: none;
-}
-
-#lc-minicart.collapsed .lc-minicart-items {
+.lc-minicart.collapsed .items-list {
     display: none;
 }
 
-.lc-minicart-items ul {
-    padding-top: 1em;
-    list-style: none;
+.lc-minicart .cart-items
+{
+  position: relative;
+  z-index: 9999;
 }
 
-.lc-minicart-items ul li,
-.lc-minicart-items p {
-    padding: 0 0 1em 0;
+.lc-minicart .items-list .item-name
+{
+  display: block;
 }
 
-.lc-minicart-items .line-item {
-    display: block;
-}
-/* Minicart totals */
-
-.lc-minicart-totals {
-    clear: both;
-    padding: 1em 0 0 0;
-}
-
-.lc-minicart-totals p {
-    padding: 0;
-    margin: 0;
-}
-
-.lc-minicart-totals ul {
-    list-style: none;
-    padding: 0;
-}
-
-.lc-minicart-totals li {
-    margin: 0;
-    padding: 0;
-
-}
-
-/* Minicart buttons */
-
-.lc-minicart-links {
-    padding: 0.5em 0 0 0;
+.lc-minicart .items-list
+{
+  position: absolute;
 }

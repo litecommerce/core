@@ -9,6 +9,15 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.list.customer.body", weight="30")
+ *
+ * @ListChild (list="itemsList.product.list.customer.body", weight="20")
  *}
-<a IF="isShowThumbnails()" class="url product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><widget class="\XLite\View\Image" image="{product.getThumbnail()}" centerImage=0 maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{product.name}" className="photo" /></a>
+
+<td class="hproduct">
+  <div class="quick-look-cell">
+  <div class="quick-look-cell-thumbnail">
+    {displayNestedViewListContent(#quick_look.thumbnail#,_ARRAY_(#product#^product))}
+    <a IF="isShowThumbnails()" class="product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><widget class="\XLite\View\Image" image="{product.getImage()}" maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{product.name}" className="photo" /></a>
+  </div>
+  </div>
+</td>

@@ -29,11 +29,13 @@
 namespace XLite\View;
 
 /**
- * ____description____
+ * Welcome page
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="center", zone="customer")
  */
 class Welcome extends \XLite\View\AView
 {

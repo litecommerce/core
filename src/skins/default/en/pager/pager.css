@@ -11,73 +11,42 @@
  * @since     3.0.0
  */
 
-.list-pager,
-.list-pager-low
+ul.pager,
+ul.pager li
 {
-  height: 3em;
-}
-
-ul.pager {
-  padding: 0;
   margin: 0;
-  display: inline;
-  list-style: none;
-}
-
-ul.pager li {
-  margin: 0 0 3px 0;
   padding: 0;
-  border: none;
-  display: inline;
+}
+
+ul.pager li
+{
   list-style: none;
-  background: none;
+  background-image: none;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
-ul.pager li a {
-  border: 0;
-  text-decoration: none;
-  margin: 0;  
-  font-weight: normal;
-  display: inline-block;
-  border: 1px solid #fff;
-  font-size: 1.1em;
-  padding-top: 0.3em;
+ul.pager li.previous-page
+{
+  background-image: url(images/arrow_pager_left.png);
+}
+
+ul.pager li.next-page
+{
+  background-image: url(images/arrow_pager_right.png);
+}
+
+
+ul.pager a,
+ul.pager span
+{
+  width: 1em;
+}
+
+ul.pager li a,
+ul.pager li span
+{
+  display: block;
   text-align: center;
-  width: 2.1em;
-  height: 1.7em;
-}
-
-ul.pager li a:hover,
-ul.pager li a:visited:hover {
-  border-width: 1px;
-  border-color: #b1c9e0;
-}
-
-ul.pager li.selected a {
-  background: #869cb1 none;
-  color: #fff;
-  cursor: text;
-  border-color: #869cb1;
-}
-
-ul.pager li.previous {
-  background: transparent url(images/arrow_pager_left.png) no-repeat center center;
-}
-
-ul.pager li.next {
-  background: transparent url(images/arrow_pager_right.png) no-repeat center;
-}
-
-ul.pager li.disabled a {
-  cursor: text;
-}
-
-div.pager-items-total {
-  float: right;
-  padding-top: 0.6em;
-}
-
-div.pager-items-total input.page-length {
-  width: 2em;
-  text-align: right;
+  text-decoration: none;
 }

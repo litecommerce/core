@@ -12,15 +12,7 @@
  *}
 <div id="shopping-cart" class="checkout-cart">
 
-  <widget module="CDev\ProductOptions" template="modules/CDev/ProductOptions/selected_options_js.tpl">
-
-  <widget template="shopping_cart/items.tpl" />
-
-  <div class="cart-totals">
-    <span>Subtotal: {price_format(cart,#subtotal#):h}</span>
-  </div>
-
-  <widget module="CDev\ProductAdviser" template="modules/CDev/ProductAdviser/OutOfStock/notify_form.tpl" IF="{xlite.PA_InventorySupport}" />
+  {displayViewListContent(#checkout.cart#)}
 
 </div>
 
