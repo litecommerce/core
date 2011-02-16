@@ -12,8 +12,8 @@
  * @ListChild (list="itemsList.module.install.columns", weight="30")
  *}
 
-<td class="icon" width="90" valign="top">
-  <a name="{module.getName()}"></a>
+<td class="icon" valign="top">
+  <a id="{module.getName()}"></a>
   <div class="icon-container">
     <div class="module-icon">
       {if:module.hasIcon()}

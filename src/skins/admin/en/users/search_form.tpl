@@ -51,15 +51,15 @@ function managedate(type, status) {
 -->
 </script>
 
-<p align="justify">
-  Use this section to search and manage user accounts.
-  <hr />
-</p>
+<p>Use this section to search and manage user accounts.</p>
+<hr />
 
 <form action="admin.php" method="post" name="searchform">
 
-  <input type="hidden" name="target" value="users" />
-  <input type="hidden" name="action" value="search" />
+  <fieldset>
+    <input type="hidden" name="target" value="users" />
+    <input type="hidden" name="action" value="search" />
+  </fieldset>
 
   <table cellpadding="0" cellspacing="0" width="100%">
 
