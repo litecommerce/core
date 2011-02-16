@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Layout
+ * Footer
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,10 +9,18 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ *
+ * @ListChild (list="layout.main", weight="400")
  *}
 
-<div id="page-wrapper">
-  <div id="page">
-    {displayViewListContent(#layout.main#)}
+<div id="footer-area">
+
+  <widget class="\XLite\View\Menu\Customer\Footer" />
+
+  <div id="footer">
+    <div class="section">
+      {displayViewListContent(#sidebar.footer#)}
+    </div>
   </div>
+
 </div>
