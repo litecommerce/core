@@ -46,7 +46,7 @@
 <hr />
 <p class="adminParagraph"><b class="star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings">General settings</a> page before performing any operations on this page!</p>
 
-<form action="admin.php" method="POST" name="change_skin_form">
+<form action="admin.php" method="post" name="change_skin_form">
 <input type="hidden" name="target" value="change_skin" />
 <input type="hidden" name="action" value="update" />
 

@@ -16,7 +16,7 @@
 
 <div IF="error" class="error-message">{error}</div>
 
-<form action="admin.php" method="POST">
+<form action="admin.php" method="post">
   <input type="hidden" name="target" value="taxes" />
   <input type="hidden" name="page" value="{page}" />
   <input type="hidden" name="action" value="update_rates" />

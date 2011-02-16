@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<form action="admin.php" name="options_form" method="POST" IF="!page=#Environment#">
+<form action="admin.php" name="options_form" method="post" IF="!page=#Environment#">
   <input type="hidden" name="target" value="{target}" />
   <input type="hidden" name="action" value="update" />
   <input type="hidden" name="page" value="{page}" />

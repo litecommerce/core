@@ -14,7 +14,7 @@
 
 <p class="admin-head">{mailTemplates.body.comment}</p>
 
-<form action="admin.php" method="POST">
+<form action="admin.php" method="post">
 <input type="hidden" name="target" value="template_editor" />
 <input type="hidden" name="action" value="update_mail" />
 <input type="hidden" name="editor" value="mail" />

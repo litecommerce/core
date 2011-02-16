@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 <table cellpadding="2" cellspacing="2">
-<form action="admin.php" method="POST" name="editor_form">
+<form action="admin.php" method="post" name="editor_form">
 <input type="hidden" name="target" value="template_editor" />
 <input type="hidden" name="action" value="advanced_update" />
 <input type="hidden" name="editor" value="advanced" />

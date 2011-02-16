@@ -28,7 +28,7 @@
 					<td>{imageClass.image.createFileName(#??#)}</td>
 					<td align="center">{imageClass.image.filesystemCount}
 						<table>
-							<form action="admin.php" method="POST" IF="imageClass.image.filesystemCount" style="top-margin: 0">
+							<form action="admin.php" method="post" IF="imageClass.image.filesystemCount" style="top-margin: 0">
 							<input type="hidden" name="target" value="image_files" />
 							<input type="hidden" name="action" value="move_to_database" />
 							<input type="hidden" name="index" value="{className}" />
@@ -40,7 +40,7 @@
 					</td>
 					<td align="center">{imageClass.image.databaseCount}
 						<table>
-							<form action="admin.php" method="POST" IF="imageClass.image.databaseCount">
+							<form action="admin.php" method="post" IF="imageClass.image.databaseCount">
 							<input type="hidden" name="target" value="image_files" />
 							<input type="hidden" name="action" value="move_to_filesystem" />
 							<input type="hidden" name="index" value="{className}" />
@@ -52,7 +52,7 @@
 					</td>
 					<td>
 						<table>
-							<form action="admin.php" method="POST">
+							<form action="admin.php" method="post">
 							<input type="hidden" name="target" value="image_files" />
 							<input type="hidden" name="action" value="update_default_source" />
 							<input type="hidden" name="index" value="{className}" />
@@ -84,7 +84,7 @@ Image files can either be placed in the <b>{imagesDir}</b> sub-directory of your
 <h2>Images directory</h2>
 
 <br />
-<form name="update_images_dir_form" method="POST">
+<form name="update_images_dir_form" method="post">
 <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}" />
 <input type="hidden" name="action" value="update_images_dir" />
 Images directory : <input type="text" name="images_dir" value="{imagesDir}" size="30" /><br /><br />

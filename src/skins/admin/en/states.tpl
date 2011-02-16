@@ -42,7 +42,7 @@ function setHeaderChecked()
 <span IF="status=#deleted#" class="success-message"><br /><br />&gt;&gt;&nbsp;State(s) deleted successfully&nbsp;&lt;&lt;<br /><br /></span>
 <span IF="status=#updated#" class="success-message"><br /><br />&gt;&gt;&nbsp;State(s) updated successfully&nbsp;&lt;&lt;<br /><br /></span>
 
-<form name="select_country_form" method="GET">
+<form name="select_country_form" method="get">
 <p class="admin-head">Select country</p>
 <input type="hidden" name="target" value="states" />
 <widget class="\XLite\View\CountrySelect" field="country_code" country="{country_code}" onchange="javascript: document.select_country_form.submit();" all />
@@ -52,7 +52,7 @@ function setHeaderChecked()
 <br />No states found.
 </span>
 <p>
-<form IF="states" action="admin.php" name="update_delete_states_form" method="POST">
+<form IF="states" action="admin.php" name="update_delete_states_form" method="post">
 <input type="hidden" name="target" value="states" />
 <input type="hidden" name="action" value="update" />
 <input type="hidden" name="country_code" value="{country_code}" />

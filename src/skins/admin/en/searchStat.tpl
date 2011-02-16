@@ -39,7 +39,7 @@ Order by: <select name="listOrder" onchange="document.searchStat.submit()">
 
 <br />
 
-<form action="admin.php" method="POST">
+<form action="admin.php" method="post">
 <input type="hidden" name="target" value="searchStat" />
 <input type="hidden" name="action" value="cleanup" />
 <b>Cleanup queries:</b> <select name="maxCount">

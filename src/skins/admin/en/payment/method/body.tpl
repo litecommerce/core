@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<form action="admin.php" method="POST" name="payment_methods">
+<form action="admin.php" method="post" name="payment_methods">
   <input type="hidden" name="target" value="payment_method" />
   <input type="hidden" name="action" value="update" />
   <input type="hidden" name="method_id" value="{method_id}" />
