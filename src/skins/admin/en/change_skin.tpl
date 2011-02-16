@@ -57,7 +57,7 @@
 	</td>
 	<td style="width:50%;">
     Select the layout skin for your store:&nbsp;
-	<SELECT name="layout" id="schemas_list" onChange="selectPreview(this)">
+	<SELECT name="layout" id="schemas_list" onchange="selectPreview(this)">
 	{foreach:skins,skin_name,skin_info}
 	<OPTION value="{skin_name}" selected="skin_info.name=currentSkin">{skin_info.name}</OPTION>
 	{end:}

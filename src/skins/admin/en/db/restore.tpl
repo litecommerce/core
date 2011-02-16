@@ -68,7 +68,7 @@ To restore the images which are stored in the file system, you have to copy them
 	<td colspan="3">&nbsp;</td>
 </tr>
 <tr>
-	<td><input type=file name=userfile onChange="javascript: visibleBox('max_upload_note', true);"><widget IF="invalid_file" template="common/uploaded_file_validator.tpl" /></td>
+	<td><input type=file name=userfile onchange="javascript: visibleBox('max_upload_note', true);"><widget IF="invalid_file" template="common/uploaded_file_validator.tpl" /></td>
 	<td>&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Submit" label="Upload and restore" style="main-button" /></td>
     <td>{if:fileExists}&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Submit" name="local_file" label="Restore from server" />{end:}</td>
 </tr>

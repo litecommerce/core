@@ -95,7 +95,7 @@ function managedate(type, status) {
         <tr>
           <td style="width:20%;height:10px;" class="table-label">Search for user type:</td>
           <td style="height:10px;">
-            <select name="posted_data[user_type]" onChange="javascript: switchMembershipDisplaying(this.selectedIndex)">
+            <select name="posted_data[user_type]" onchange="javascript: switchMembershipDisplaying(this.selectedIndex)">
               <option value=""{if:!getSearchParams(#user_type#)} selected="selected"{end:}>All</option>
               <option value="A"{if:getSearchParams(#user_type#)=#A#} selected="selected"{end:}>Administrator</option>
               <option value="C"{if:getSearchParams(#user_type#)=#C#} selected="selected"{end:}>Non-administrator</option>
@@ -154,7 +154,7 @@ function managedate(type, status) {
         <tr>
           <td style="height:10px;">Search for users that are:</td>
           <td style="height:10px;">
-            <select name="posted_data[date_type]" onChange="javascript: managedate('date_type')">
+            <select name="posted_data[date_type]" onchange="javascript: managedate('date_type')">
               <option value=""{if:getSearchParams(#date_type#)=##} selected="selected"{end:}>[Please select one]</option>
               <option value="R"{if:getSearchParams(#date_type#)=#R#} selected="selected"{end:}>Registered...</option>
               <option value="L"{if:getSearchParams(#date_type#)=#L#} selected="selected"{end:}>Last logged in...</option>
