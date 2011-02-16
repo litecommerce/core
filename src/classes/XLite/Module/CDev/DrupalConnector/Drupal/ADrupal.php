@@ -57,6 +57,15 @@ abstract class ADrupal extends \XLite\Base\Singleton
      */
     protected static $registeredResources = array('js' => array(), 'css' => array());
 
+    /**
+     * Resources weight counter
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $resourcesCounter = 0;
 
     // ------------------------------ Application layer -
 
@@ -166,6 +175,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
         return array(
             'type'     => 'file',
             'basename' => $this->getResourceBasename($file['file']),
+            'weight'   => isset($file['weight']) ? $file['weight'] : static::$resourcesCounter++,
         );
     }
 
@@ -211,14 +221,14 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * Get resource description in Drupal format
      * 
      * @param string $type Resource type ("js" or "css")
-     * @param string $file Resource file path
+     * @param array  $file Resource file info
      *  
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getResourceInfo($type, $file)
+    protected function getResourceInfo($type, array $file)
     {
         return $this->getResourceInfoCommon($file) + $this->{__FUNCTION__ . strtoupper($type)}($file);
     }
@@ -227,16 +237,16 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * Register single resource
      *
      * @param string $type Resource type ("js" or "css")
-     * @param string $file Resource file path
+     * @param array  $file Resource file info
      *
      * @return mixed
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function registerResource($type, $file)
+    protected function registerResource($type, array $file)
     {
-        return call_user_func_array('drupal_add_' . $type, array($file, $this->getResourceInfo($type, $file)));
+        return call_user_func_array('drupal_add_' . $type, array($file['file'], $this->getResourceInfo($type, $file)));
     }
 
     /**
