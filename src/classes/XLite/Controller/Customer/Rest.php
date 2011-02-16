@@ -119,13 +119,13 @@ class Rest extends \XLite\Controller\Customer\ACustomer
     /**
      * Perform some actions before redirect
      *
-     * @param string|null $action Performed action
+     * @param string|null $action Performed action OPTIONAL
      *
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function actionPostprocess($action)
+    protected function actionPostprocess($action = null)
     {
         parent::actionPostprocess($action);
 
