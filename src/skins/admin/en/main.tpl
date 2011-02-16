@@ -73,8 +73,8 @@
 <widget target="order" template="common/dialog.tpl" body="order/order.tpl" head="Order # {order.order_id}">
 {else:}
 <widget module="CDev\AOM" template="modules/CDev/AOM/main.tpl">
-{end:}*}
 </span>
+{end:}*}
 <span IF="xlite.AOMEnabled">
 <widget module="CDev\AOM" template="modules/CDev/AOM/main.tpl">
 </span>
