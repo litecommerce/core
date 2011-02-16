@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Layout
+ * Header bar account links
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,10 +9,10 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ *
+ * @ListChild (list="layout.header.bar", weight="100")
  *}
-
-<div id="page-wrapper">
-  <div id="page">
-    {displayViewListContent(#layout.main#)}
-  </div>
-</div>
+<ul class="account-links inline">
+  <li class="account-link-1 first"><a href="{buildURL(#login#)}" class="log-in">{t(#Log in#)}</a></li>
+  <li class="account-link-2 last"><a href="{buildURL(#register#)}" class="register">{t(#Register#)}</a></li>
+</ul>

@@ -34,6 +34,8 @@ namespace XLite\View\Menu\Customer;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="layout.main", weight="250")
  */
 class Top extends \XLite\View\Menu\AMenu
 {

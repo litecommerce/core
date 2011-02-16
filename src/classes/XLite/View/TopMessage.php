@@ -34,6 +34,8 @@ namespace XLite\View;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="layout.main", weight="100")
  */
 class TopMessage extends \XLite\View\AView
 {
