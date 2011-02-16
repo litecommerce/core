@@ -415,8 +415,6 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		skins/admin/en/images/modules
 		skins/default/en/modules
 		skins/default/en/images/modules
-		skins/drupal/en/modules
-		skins/drupal/en/images/modules
 		skins/mail/en/modules
 		"
 
@@ -577,10 +575,6 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	mv ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME} modules/lc_connector/
 
 	cd modules/lc_connector/${LITECOMMERCE_DIRNAME}
-
-	# Replace default skin with drupal skin
-	rm -rf skins_original/default
-	mv skins_original/drupal skins_original/default
 
 	cd $OUTPUT_DIR
 
