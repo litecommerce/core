@@ -86,7 +86,7 @@ function changeVal(param)
 </td></tr>
 <tr><td nowrap>
 	<input type="text" name="taxName" value="{getNoteTaxName(tax)}" size="25" />
-	<select name="select_taxName" onChange="changeVal('taxName')">
+	<select name="select_taxName" onchange="changeVal('taxName')">
 		<option>-- select --</option>
 		<option FOREACH="taxNames,_taxName">{_taxName}</option>
 	</select>

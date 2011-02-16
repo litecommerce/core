@@ -15,7 +15,7 @@ This section lists search queries performed by customers. Statistics can be orde
 </p>
 <form name="searchStat" action="admin.php" method="get">
 <input type="hidden" name="target" value="searchStat" />
-Order by: <select name="listOrder" onChange="document.searchStat.submit()">
+Order by: <select name="listOrder" onchange="document.searchStat.submit()">
 	<option FOREACH="orders,order,name" selected="{order=listOrder}">{order}</option>
 </select>
 </form>

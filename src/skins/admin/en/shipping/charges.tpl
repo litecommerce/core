@@ -99,14 +99,14 @@ and cannot be edited.
 
     <tr>
       <td>
-        <select name="methodid" onChange="document.charges_methods.submit();">
+        <select name="methodid" onchange="document.charges_methods.submit();">
           <option value="">All shipping methods</option>
           <option FOREACH="getShippingMethods(),m" value="{m.getMethodId()}" selected="{isSelected(m,#method_id#,methodid)}">{m.getName():h}</option>
         </select>
       </td>
 
       <td>
-        <select name="zoneid" onChange="document.charges_methods.submit();">
+        <select name="zoneid" onchange="document.charges_methods.submit();">
           <option value="">All shipping zones</option>
           <option FOREACH="getShippingZones(),k,zn" value="{zn.getZoneId()}" selected="{isSelected(zn,#zone_id#,zoneid)}">{zn.getZoneName()}</option>
         </select>
