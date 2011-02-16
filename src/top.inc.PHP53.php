@@ -65,7 +65,7 @@ require_once (LC_INCLUDES_DIR . 'Autoloader.php');
 \Includes\Autoloader::registerAll();
 
 // Fire the error if LC is not installed
-\Includes\ErrorHandler::checkIsLCInstalled();
+defined('XLITE_INSTALL_MODE') || \Includes\ErrorHandler::checkIsLCInstalled();
 
 // So called "developer" mode. Set it to "false" in production mode!
 define('LC_DEVELOPER_MODE', (bool) \Includes\Utils\ConfigParser::getOptions(array('performance', 'developer_mode')));
