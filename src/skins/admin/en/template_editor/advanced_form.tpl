@@ -16,7 +16,7 @@ This section provides the capability to manually modify all templates of the Cus
 </p>
 <p align="justify">
 <b>Note:</b> You need to know HTML, CSS and JavaScript in order to modify the templates using this tool. Be careful not to alter the expressions in curly brackets, widgets and other special constructions as this may cause improper software operation.</p>
-<form name="templates_form" method="POST">
+<form name="templates_form" method="post">
 <input type="hidden" name="target" value="template_editor" />
 <input type="hidden" name="editor" value="{editor}" />
 <input type="hidden" name="zone" value="{zone}" />

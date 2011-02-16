@@ -12,7 +12,7 @@
  *}
 <h3>Modify option groups exceptions</h3>
 
-<form action="admin.php" method="POST" name="update_option_group_form" class="option-groups-exceptions-modify">
+<form action="admin.php" method="post" name="update_option_group_form" class="option-groups-exceptions-modify">
   <input type="hidden" name="target" value="product" />
   <input type="hidden" name="action" value="update_option_groups_exceptions" />
   <input type="hidden" name="page" value="product_options" />

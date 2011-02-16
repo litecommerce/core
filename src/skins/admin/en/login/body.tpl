@@ -19,7 +19,7 @@
       {additional_note:r}
     </div>
 
-    <form id="login_form" action="{buildUrl(#login#)}" method="POST" name="login_form">
+    <form id="login_form" action="{buildUrl(#login#)}" method="post" name="login_form">
       <input type="hidden" name="target" value="login" />
       <input type="hidden" name="action" value="login" />
 

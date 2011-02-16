@@ -16,7 +16,7 @@
   <widget class="\XLite\View\EditorLanguageSelector" />
 </div>
 
-<form IF="getMemberships()" action="admin.php" method="POST" name="update_membership_form">
+<form IF="getMemberships()" action="admin.php" method="post" name="update_membership_form">
   <input type="hidden" name="target" value="memberships" />
   <input type="hidden" name="action" value="update" />
   <input type="hidden" name="language" value="{language}" />
@@ -49,7 +49,7 @@
 
 <hr />
 
-<form action="admin.php" method="POST" name="add_membership_form">
+<form action="admin.php" method="post" name="add_membership_form">
   <input type="hidden" name="target" value="memberships" />
   <input type="hidden" name="action" value="add" />
   <input type="hidden" name="language" value="{language}" />

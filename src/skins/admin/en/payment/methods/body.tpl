@@ -14,7 +14,7 @@
   <widget class="\XLite\View\EditorLanguageSelector" />
 </div>
 
-<form action="admin.php" method="POST" name="payment_methods">
+<form action="admin.php" method="post" name="payment_methods">
   <input type="hidden" name="target" value="payment_methods" />
   <input type="hidden" name="action" value="update" />
 

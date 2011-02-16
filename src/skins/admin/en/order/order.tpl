@@ -17,7 +17,7 @@
 <widget module="CDev\UPSOnlineTools" template="modules/CDev/UPSOnlineTools/show_container_details.tpl">
 
 <P>
-<form action="admin.php" method="POST">
+<form action="admin.php" method="post">
 <input type="hidden" name="target" value="order" />
 <input type="hidden" name="action" value="update" />
 <input type="hidden" name="order_id" value="{order.order_id}" />

@@ -15,7 +15,7 @@
 <widget template="template_editor/notes.tpl">
 <br />
 <br />
-<form action="admin.php" method="POST">
+<form action="admin.php" method="post">
 <input type="hidden" name="target" value="template_editor" />
 <input type="hidden" name="action" value="update_page" />
 <input type="hidden" name="editor" value="extra_pages" />

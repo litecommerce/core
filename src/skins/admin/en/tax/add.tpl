@@ -43,7 +43,7 @@ function changeVal(param)
 
 <div IF="inv_exp_error" class="error-message">There is a mistake in the tax calculation formula.</div>
 
-<form action="admin.php" method="POST" name="tax_form">
+<form action="admin.php" method="post" name="tax_form">
   <input type="hidden" name="page" value="add_rate" />
   <input type="hidden" name="target" value="taxes" />
   <input type="hidden" name="mode" value="{mode}" />

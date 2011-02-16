@@ -33,7 +33,7 @@ To delete a tax scheme, choose it from the drop-down menu and click on the 'Dele
 <p class="adminParagraph">
 <b>Note:</b> Several predefined schemes, namely {foreach:taxes._predefinedSchemas,schema,options}&quot;{schema}&quot;, {end:} cannot be deleted.
 </p>
-<form action="admin.php" method="POST" name="reset_schema">
+<form action="admin.php" method="post" name="reset_schema">
 <input type="hidden" name="target" value="taxes" />
 <input type="hidden" name="page" value="{page}" />
 <input type="hidden" name="action" value="reset" />
