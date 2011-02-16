@@ -125,8 +125,4 @@ class Login extends \XLite\Controller\Admin\AAdmin
         $this->auth->logoff();
     }
 
-    function getSecure()
-    {
-        return $this->session->get('no_https') ? false : $this->config->Security->admin_security;
-    }
 }

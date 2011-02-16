@@ -142,18 +142,4 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
 
         $this->addLocationNode('Search orders', $this->buildURL('order_list'));
     }
-
-	/**
-     * Get secure controller status
-	 * FIXME: remove if it's not needed
-     *
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSecure()
-    {
-        return $this->config->Security->customer_security;
-    }
 }

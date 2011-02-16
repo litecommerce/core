@@ -207,19 +207,4 @@ class Login extends \XLite\Controller\Customer\ACustomer
 
         return parent::getShopUrl($url . $add, $secure);
     }
-
-    /**
-     * Get secure controller status
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSecure()
-    {
-        return 'login' == \XLite\Core\Request::getInstance()->action
-            ? \XLite\Core\Config::getInstance()->Security->customer_security
-            : parent::getSecure();
-    }
 }
