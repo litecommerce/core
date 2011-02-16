@@ -27,8 +27,11 @@
   <div class="price-filter" IF="mode=#search#">
 
     <form action="admin.php" method="post" name="pricefilterform">
-      <input type="hidden" name="target" value="addons_list" />
-      <input type="hidden" name="action" value="search" />
+
+      <fieldset>
+        <input type="hidden" name="target" value="addons_list" />
+        <input type="hidden" name="action" value="search" />
+      </fieldset>
 
       <select name="priceFilter" onchange="javascript:this.form.submit();">
         <option value="all">{t(#No price filtering#)}</option>

@@ -11,8 +11,8 @@
  * @since     3.0.0
  * @ListChild (list="itemsList.module.manage.columns", weight="30")
  *}
-<td class="icon" width="90">
-  <a name="{module.getName()}"></a>
+<td class="icon">
+  <a id="{module.getName()}"></a>
   <div class="icon-container">
 
     <div IF="!module.getEnabled()" class="addon-disabled">

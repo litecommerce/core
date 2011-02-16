@@ -54,9 +54,12 @@ function confirmNote(action, id)
 </div>
 
 <form action="admin.php" method="post" name="modules_form_{key}" class="modules-list">
-  <input type="hidden" name="target" value="modules" />
-  <input type="hidden" name="action" value="update" />
-  <input type="hidden" name="module_type" value="{key}" />
+
+  <fieldset>
+    <input type="hidden" name="target" value="modules" />
+    <input type="hidden" name="action" value="update" />
+    <input type="hidden" name="module_type" value="{key}" />
+  </fieldset>
 
   <table cellspacing="0" cellpadding="0" class="data-table items-list modules-list">
 
