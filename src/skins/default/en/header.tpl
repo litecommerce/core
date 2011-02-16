@@ -14,7 +14,7 @@
 <head profile="http://www.w3.org/1999/xhtml/vocab">
   <title>{getTitle()}</title>
 
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset={getCharset():h}" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <meta name="Generator" content="Litecommerce 3 (http://litecommerce.com)" />
