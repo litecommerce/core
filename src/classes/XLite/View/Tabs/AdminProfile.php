@@ -70,19 +70,6 @@ class AdminProfile extends \XLite\View\Tabs\ATabs
     );
 
     /**
-     * getTitle
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getTitle()
-    {
-        return 'Modify profile';
-    }
-
-    /**
      * Returns an URL to a tab
      * 
      * @param string $target Tab target

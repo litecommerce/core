@@ -50,6 +50,18 @@ class RecentLogin extends \XLite\Controller\Admin\AAdmin
         return 'Login history';
     }
 
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Login history';
+    }
+
     function getSecure()
     {
         if ($this->session->get('no_https')) {
