@@ -48,7 +48,7 @@ class Methods extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'Payment methods';
+        return null;
     }
 
     /**

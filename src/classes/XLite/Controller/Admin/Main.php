@@ -37,4 +37,15 @@ namespace XLite\Controller\Admin;
  */
 class Main extends \XLite\Controller\Admin\AAdmin
 {
+    /**
+     * Returns the page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Welcome to the Administrator Zone';
+    }
 }

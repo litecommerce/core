@@ -50,6 +50,19 @@ class States extends \XLite\Controller\Admin\AAdmin
         return 'States';
     }
 
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'States';
+    }
+
+
     function init()
     {
         if (!in_array('country_code', $this->params)) {
