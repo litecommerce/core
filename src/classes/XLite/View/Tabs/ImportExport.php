@@ -59,17 +59,4 @@ class ImportExport extends \XLite\View\Tabs\ATabs
         ),
     );
 
-    /**
-     * getTitle
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getTitle()
-    {
-        return $this->t('Import/Export');
-    }
-
 }

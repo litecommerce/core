@@ -60,6 +60,20 @@ class ImportCatalog extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Import/Export';
+    }
+
+    /**
      * Add part to the location nodes list
      *
      * @return void
