@@ -21,7 +21,7 @@
   <td>&nbsp;</td>
 </tr>
 <tr>
-  <td nowrap>SKU</td>
+  <td class="table-label">SKU</td>
   <td>
     <input type="text" name="{getNamePostedData(#sku#)}" size="20" value="{product.sku:r}" />
   </td>
@@ -30,7 +30,7 @@
   <td>
 	<table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-  		<td nowrap width="100%">Product Name</td>
+  		<td class="table-label" width="100%">Product Name</td>
         <td class="star">&nbsp;*&nbsp;</td>
 	</tr>
 	</table>
@@ -43,7 +43,7 @@
 	<td>
 	<table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-  		<td nowrap width="100%">Category</td>
+  		<td class="table-label" width="100%">Category</td>
         <td class="star">&nbsp;*&nbsp;</td>
 	</tr>
 	</table>
@@ -59,7 +59,7 @@
   <td>
 	<table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-  		<td nowrap width="100%">Price</td>
+  		<td class="table-label" width="100%">Price</td>
         <td class="star">&nbsp;*&nbsp;</td>
 	</tr>
 	</table>
@@ -75,7 +75,7 @@
   <td>
 	<table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-  		<td nowrap width="100%">Market price</td>
+  		<td class="table-label" width="100%">Market price</td>
         <td>&nbsp;</td>
 	</tr>
 	</table>
@@ -117,7 +117,7 @@
   <td>
 	<table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-  		<td nowrap width="100%">Available for sale</td>
+  		<td class="table-label" width="100%">Available for sale</td>
         <td class="star">&nbsp;*&nbsp;</td>
 	</tr>
 	</table>

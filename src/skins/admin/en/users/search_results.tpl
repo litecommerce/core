@@ -45,19 +45,19 @@ function searchOrders()
 
     <tr>
       <td style="width:10px;">&nbsp;</td>
-      <td nowrap align="left">Login/E-mail</td>
-      <td nowrap align="left">Username</td>
-      <td nowrap align="left">Access level</td>
-      <td nowrap align="left">Orders count</td>
-      <td nowrap align="left" width="110">Created</td>
-      <td nowrap align="left" width="110">Last login</td>
+      <td class="table-label" align="left">Login/E-mail</td>
+      <td class="table-label" align="left">Username</td>
+      <td class="table-label" align="left">Access level</td>
+      <td class="table-label" align="left">Orders count</td>
+      <td class="table-label" align="left" width="110">Created</td>
+      <td class="table-label" align="left" width="110">Last login</td>
     </tr>
 
     <tr FOREACH="namedWidgets.searchResults.pageData,id,user" class="{getRowClass(id,##,#highlight#)}">
       <td align="center" width="10"><input type="radio" name="profile_id" value="{user.profile_id}" checked="{isSelected(id,#0#)}" /></td>
-      <td nowrap><a href="{buildUrl(#profile#,##,_ARRAY_(#profile_id#^user.profile_id))}">{user.login:h}</a>{if:!user.status=#E#} (disabled account){end:}</td>
-      <td nowrap><a href="{buildUrl(#address_book#,##,_ARRAY_(#profile_id#^user.profile_id))}">{if:user.billing_address.firstname&user.billing_address.lastname}{user.billing_address.firstname:h}&nbsp;{user.billing_address.lastname:h}{else:}n/a{end:}</a></td>
-      <td nowrap align="left">
+      <td class="table-label"><a href="{buildUrl(#profile#,##,_ARRAY_(#profile_id#^user.profile_id))}">{user.login:h}</a>{if:!user.status=#E#} (disabled account){end:}</td>
+      <td class="table-label"><a href="{buildUrl(#address_book#,##,_ARRAY_(#profile_id#^user.profile_id))}">{if:user.billing_address.firstname&user.billing_address.lastname}{user.billing_address.firstname:h}&nbsp;{user.billing_address.lastname:h}{else:}n/a{end:}</a></td>
+      <td class="table-label" align="left">
       {if:user.access_level=0}
         Customer
         {if:user.membership}
@@ -70,9 +70,9 @@ function searchOrders()
         Administrator
       {end:}
       </td>
-      <td nowrap align="left">{if:user.orders_count}<a href="{buildUrl(#order_list#,##,_ARRAY_(#mode#^#search#,#login#^user.login))}">{user.orders_count}</a>{else:}n/a{end:}</td>
-      <td nowrap align="left">{if:user.added}{formatTime(user.added):h}{else:}Unknown{end:}</td>
-      <td nowrap align="left">{if:user.last_login}{formatTime(user.last_login):h}{else:}Never{end:}</td>
+      <td class="table-label" align="left">{if:user.orders_count}<a href="{buildUrl(#order_list#,##,_ARRAY_(#mode#^#search#,#login#^user.login))}">{user.orders_count}</a>{else:}n/a{end:}</td>
+      <td class="table-label" align="left">{if:user.added}{formatTime(user.added):h}{else:}Unknown{end:}</td>
+      <td class="table-label" align="left">{if:user.last_login}{formatTime(user.last_login):h}{else:}Never{end:}</td>
     </tr>
 
   </table>

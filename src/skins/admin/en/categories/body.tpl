@@ -24,25 +24,25 @@
       <table cellpadding="3" cellspacing="1" valign="top">
 
         <tr>
-          <td nowrap>Category name:</td>
+          <td class="table-label">Category name:</td>
           <td>&nbsp;</td>
           <td>{category.name}</td>
         </tr>
 
         <tr>
-          <td nowrap>Description:</td>
+          <td class="table-label">Description:</td>
           <td>&nbsp;</td>
           <td>{category.description}</td>
         </tr>
 
         <tr>
-          <td nowrap>Availability:</td>
+          <td class="table-label">Availability:</td>
           <td>&nbsp;</td>
           <td>{if:category.enabled}Enabled{else:}Disabled{end:}</td>
         </tr>
 
         <tr>
-          <td nowrap>Membership access:</td>
+          <td class="table-label">Membership access:</td>
           <td>&nbsp;</td>
           <td>
 
@@ -57,7 +57,7 @@
         </tr>
 
         <tr>
-          <td nowrap>Parent category:</td>
+          <td class="table-label">Parent category:</td>
           <td>&nbsp;</td>
           {if:!getRootCategoryId()=category.parent.getCategoryId()}
           <td><a href="admin.php?target=categories&category_id={category.parent.getCategoryId()}">{category.parent.getName()}</a></td>
@@ -102,11 +102,11 @@
         <a href="admin.php?target=categories&category_id={cat.category_id}" title="Click here to access/add subcategories" onclick="this.blur()">{cat.name:h}</a> ({cat.products_count} products){if:!cat.enabled}&nbsp;&nbsp;<span class="star">(disabled)</span>{end:}
       </td>
 
-      <td nowrap>
+      <td class="table-label">
         <widget class="\XLite\View\Button\Regular" label="Add child" jsCode="onAddChildClick('{cat.category_id}')" />
       </td>
 
-      <td nowrap>
+      <td class="table-label">
         <widget class="\XLite\View\Button\Regular" label="Delete" jsCode="onDeleteClick('{cat.category_id}')" />
         &nbsp;&nbsp;
         <widget class="\XLite\View\Button\Regular" IF="cat.hasSubcategories()" label="Delete subcategories" jsCode="onDeleteSubcatsClick('{cat.category_id}')" />

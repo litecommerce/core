@@ -74,7 +74,7 @@
           <td><input type="text" name="varvalue[{ind}]" value="{getCurrentVarValue(ind,tax)}" size="15" /></td>
         {end:}
         <td><input type="text" name="pos[{ind}]" value="{getTreePos(ind)}" size="3" /></td>
-        <td nowrap>
+        <td class="table-label">
           <a href="admin.php?target=taxes&page=add_rate&mode=edit&ind={getPath(ind)}">Edit</a>
           &nbsp;&nbsp;&nbsp;
           <a href="admin.php?target=taxes&page=rates&action=delete_rate&ind={ind}">Delete</a>
