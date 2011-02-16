@@ -108,7 +108,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
     protected static function modifyResourcePaths(array $data)
     {
         foreach ($data as &$file) {
-            $file = static::getDrupalRelativePath() . $file;
+            $file['file'] = static::getDrupalRelativePath() . $file['file'];
         }
 
         return $data;
