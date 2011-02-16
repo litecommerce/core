@@ -1,0 +1,78 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Common styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/**
+ * Markup free clearing.
+ *
+ * @see http://perishablepress.com/press/2009/12/06/new-clearfix-hack
+ */
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+/* IE6 */
+* html .clearfix {
+  height: 1%;
+}
+
+/* IE7 */
+*:first-child + html .clearfix {
+  min-height: 1%;
+}
+
+/**
+ * HTML elements
+ */
+fieldset {
+  margin-bottom: 1em;
+  padding: 0.5em;
+}
+
+form {
+  margin: 0px;
+  padding: 0px;
+}
+
+hr {
+  border: 0px none;
+  border-top: 1px solid black;
+  height: 0px;
+}
+
+img {
+  border: 0px;
+}
+
+table {
+  border: 0px;
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+
+.error {
+  color: #8c2e0b;
+}
+
+.marker,
+.form-required {
+  color: #f00;
+}
+

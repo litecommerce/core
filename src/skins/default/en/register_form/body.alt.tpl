@@ -165,7 +165,9 @@ Please leave the password fields empty<br> if you don't want to change the passw
 <tr valign="middle">
     <td align="right">State</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="\XLite\View\StateSelect" field="billing_state" state="{billing_state}" isLinked=1 /></td>
+    <td>
+		<widget class="\XLite\View\StateSelect" field="billing_state" fieldId="billing_state_select" state="{billing_state}" isLinked=1 />
+    </td>
     <td>
         <widget class="\XLite\Validator\RequiredValidator" field="billing_state">
         <widget class="\XLite\Validator\StateValidator" field="billing_state" countryField="billing_country">
@@ -174,14 +176,21 @@ Please leave the password fields empty<br> if you don't want to change the passw
 <tr valign="middle">
 	<td align="right">Other state (specify)</td>
 	<td>&nbsp;</td>
-	<td><input type="text" name="billing_custom_state" value="{billing_custom_state:r}" size="32" maxlength="64" /></td>
-	<td>&nbsp;</td>
+	<td><input type="text" name="billing_custom_state" value="{billing_custom_state:r}" size="32" maxlength="64">
+	</td>
+	<td>
+		&nbsp;
+	</td>
 </tr>
 <tr valign="middle">
     <td align="right">Country</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="\XLite\View\CountrySelect" field="billing_country" country="{billing_country}" /></td>
-    <td><widget class="\XLite\Validator\RequiredValidator" field="billing_country"></td>
+    <td>
+		<widget class="\XLite\View\CountrySelect" field="billing_country" fieldId="billing_country_select" country="{billing_country}" />
+    </td>
+    <td>
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_country">
+    </td>
 </tr>
 <tr valign="middle">
     <td align="right">Zip code</td>
@@ -203,6 +212,12 @@ Please leave the password fields empty<br> if you don't want to change the passw
 <tr valign="middle">
     <td colspan="4">
       <b>Shipping Address (leave empty if same as billing address)</b><br><hr size="1" noshade>
+	  	<div id="btn_copy_billing">
+        <widget class="\XLite\View\Button\Regular" label="Copy Billing Info" jsCode="copyBillingInfo(document.register_form);">
+      </div>
+  		<div id="btn_modify_shipping" style="display: none;">
+        <widget class="\XLite\View\Button\Regular" label="Modify Shipping address" jsCode="OnModifyShippingAddress(document.register_form);">
+      </div>
 	</td>
 </tr>
 <tbody id="shipping_body">
@@ -280,19 +295,28 @@ Please leave the password fields empty<br> if you don't want to change the passw
 <tr valign="middle">
     <td align="right">State</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="\XLite\View\StateSelect" field="shipping_state" state="{shipping_state}" isLinked=1 /></td>
-    <td><widget class="\XLite\Validator\StateValidator" field="shipping_state" countryField="shipping_country"></td>
+    <td>
+		<widget class="\XLite\View\StateSelect" field="shipping_state" state="{shipping_state}" fieldId="shipping_state_select" isLinked=1 />
+    </td>
+    <td>
+        <widget class="\XLite\Validator\StateValidator" field="shipping_state" countryField="shipping_country">
+    </td>
 </tr>
 <tr valign="middle">
 	<td align="right">Other state (specify)</td>
 	<td>&nbsp;</td>
-	<td><input type="text" name="shipping_custom_state" value="{shipping_custom_state:r}" size="32" maxlength="64" /></td>
-	<td>&nbsp;</td>
+	<td><input type="text" name="shipping_custom_state" value="{shipping_custom_state:r}" size="32" maxlength="64">
+	</td>
+	<td>
+		&nbsp;
+	</td>
 </tr>
 <tr valign="middle">
     <td align="right">Country</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="\XLite\View\CountrySelect" field="shipping_country" country="{shipping_country}" /></td>
+    <td>
+		<widget class="\XLite\View\CountrySelect" field="shipping_country" fieldId="shipping_country_select" country="{shipping_country}" />
+    </td>
     <td>&nbsp;</td>
 </tr>
 <tr valign="middle">
@@ -350,6 +374,8 @@ Please leave the password fields empty<br> if you don't want to change the passw
 
 <widget name="registration_form" end />
 
-<script type="text/javascript" language="JavaScript 1.2">
-	CheckBillingShipping(document.register_form);
+<script type="text/javascript">
+<!--
+CheckBillingShipping(document.register_form);
+-->
 </script>

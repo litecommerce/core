@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="invoice.item", weight="30")
  *}
-<td class="price">{item.getPrice()}</td>
+<td class="price">{formatPrice(item.getPrice(),order.getCurrency())}</td>

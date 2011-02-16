@@ -29,7 +29,7 @@
 namespace XLite\View;
 
 /**
- * ____description____
+ * Abstract dialog
  * 
  * @package XLite
  * @see     ____class_see____

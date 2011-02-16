@@ -50,6 +50,7 @@ class Login extends \XLite\View\AView
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
+
         $result[] = 'login';
 
         return $result;
@@ -79,8 +80,6 @@ class Login extends \XLite\View\AView
         return $this->getDir() . LC_DS . 'body.tpl';
     }
 
-
-
     /**
      * Register CSS files
      *
@@ -92,6 +91,7 @@ class Login extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
+
         $list[] = 'login/style.css';
 
         return $list;
