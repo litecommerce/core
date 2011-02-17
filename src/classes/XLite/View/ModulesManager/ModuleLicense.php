@@ -67,6 +67,8 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
     {
         $list = parent::getCSSFiles();
 
+        $list[] = $this->getDir() . LC_DS . 'style.css';
+
         return $list;
     }
 
