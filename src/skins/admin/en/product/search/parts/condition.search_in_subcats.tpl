@@ -14,8 +14,8 @@
  *}
 
 <tr>
-  <td nowrap="nowrap" height="10" colspan="3">
+  <td class="table-label" colspan="3">
     Search in subcategories
-    <input type="checkbox" name="searchInSubcats" checked="{getCondition(#searchInSubcats#)|!mode=#search#}" value="1">
+    <input type="checkbox" name="searchInSubcats" checked="{getCondition(#searchInSubcats#)|!mode=#search#}" value="1" />
   </td>
 </tr>

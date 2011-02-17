@@ -16,6 +16,6 @@
 <tr>
   <td>{t(#Low limit amount#)}</td>
   <td>
-    <input type="text" name="{getNamePostedData(#lowLimitAmount#)}" size="18" value="{inventory.getLowLimitAmount()}">
+    <input type="text" name="{getNamePostedData(#lowLimitAmount#)}" size="18" value="{inventory.getLowLimitAmount()}" />
   </td>
 </tr>

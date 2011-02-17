@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<select id="{getFieldId()}" name="{getName()}"{getAttributesCode():h}>
+<select {getAttributesCode():h}>
   <option FOREACH="getOptions(),optionValue,optionLabel" value="{optionValue}" selected="{optionValue=getValue()}">{optionLabel:h}</option>
 </select>
 

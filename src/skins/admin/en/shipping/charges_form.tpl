@@ -13,7 +13,7 @@
 
 <div IF="hasShippingMarkups()">
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 
 checkboxes_form = 'shippingratesform';
 checkboxes = new Array(
@@ -63,13 +63,13 @@ function submitForm(formName, action)
 
           <table cellpadding="2" cellspacing="0" width="100%">
 
-            <script type="text/javascript" language="JavaScript 1.2">
+            <script type="text/javascript">
               checkboxes{zn.zone.getZoneId()}_{method.method.getMethodId()} = new Array({foreach:method.markups,k,markup}{if:!k=0},{end:}'to_delete[{markup.getMarkupId()}]'{end:});
             </script> 
 
             <tr>
               <th><input type="checkbox" id="sm_{zn.zone.getZoneId()}_{method.method.getMethodId()}" name="sm_{zn.zone.getZoneId()}_{method.method.getMethodId()}" onclick="javascript:change_all(this.checked, checkboxes_form, checkboxes{zn.zone.getZoneId()}_{method.method.getMethodId()});" /></th>
-              <th width="100%"><label for="sm_{zn.zone.getZoneId()}_{method.method.getMethodId()}">{method.method.getName()}</label></th>
+              <th style="width:100%;"><label for="sm_{zn.zone.getZoneId()}_{method.method.getMethodId()}">{method.method.getName()}</label></th>
             </tr>
 
           </table>
@@ -85,35 +85,35 @@ function submitForm(formName, action)
             <tbody FOREACH="method.markups,mid,markup">
 
               <tr>
-                <td rowspan="3" nowrap="nowrap"><img src="images/spacer.gif" width="10" height="1" alt="" /><input type="checkbox" name="to_delete[{markup.getMarkupId()}]" /></td>
+                <td rowspan="3" class="table-label"><img src="images/spacer.gif" width="10" height="1" alt="" /><input type="checkbox" name="to_delete[{markup.getMarkupId()}]" /></td>
                 <td>Weight range:</td>
-                <td nowrap="nowrap">
+                <td class="table-label">
                   <input type="text" name="posted_data[{markup.getMarkupId()}][min_weight]" size="9" value="{markup.getMinWeight()}" />
                   -
                   <input type="text" name="posted_data[{markup.getMarkupId()}][max_weight]" size="9" value="{markup.getMaxWeight()}" />
                 </td>
                 <td>Flat markup ($):</td>
-                <td nowrap="nowrap"><input type="text" name="posted_data[{markup.getMarkupId()}][markup_flat]" size="5" value="{markup.getMarkupFlat()}" /></td>
+                <td class="table-label"><input type="text" name="posted_data[{markup.getMarkupId()}][markup_flat]" size="5" value="{markup.getMarkupFlat()}" /></td>
                 <td>Percent markup:</td>
                 <td><input type="text" name="posted_data[{markup.getMarkupId()}][markup_percent]" size="5" value="{markup.getMarkupPercent()}" /></td>
               </tr>
 
               <tr>
                 <td>Subtotal range:</td>
-                <td nowrap="nowrap">
+                <td class="table-label">
                   <input type="text" name="posted_data[{markup.getMarkupId()}][min_total]" size="9" value="{markup.getMinTotal()}" />
                   -
                   <input type="text" name="posted_data[{markup.getMarkupId()}][max_total]" size="9" value="{markup.getMaxTotal()}" />
                 </td>
                 <td>Per item markup ($):</td>
-                <td nowrap="nowrap"><input type="text" name="posted_data[{markup.getMarkupId()}][markup_per_item]" size="5" value="{markup.getMarkupPerItem()}" /></td>
+                <td class="table-label"><input type="text" name="posted_data[{markup.getMarkupId()}][markup_per_item]" size="5" value="{markup.getMarkupPerItem()}" /></td>
                 <td>Per weight unit markup ($):</td>
-                <td nowrap="nowrap"><input type="text" name="posted_data[{markup.getMarkupId()}][markup_per_weight]" size="5" value="{markup.getMarkupPerWeight()}" /></td>
+                <td class="table-label"><input type="text" name="posted_data[{markup.getMarkupId()}][markup_per_weight]" size="5" value="{markup.getMarkupPerWeight()}" /></td>
               </tr>
 
               <tr>
                 <td>Items range:</td>
-                <td nowrap="nowrap">
+                <td class="table-label">
                   <input type="text" name="posted_data[{markup.getMarkupId()}][min_items]" size="9" value="{markup.getMinItems()}" />
                   -
                   <input type="text" name="posted_data[{markup.getMarkupId()}][max_items]" size="9" value="{markup.getMaxItems()}" />
@@ -195,33 +195,33 @@ function submitForm(formName, action)
 
     <tr>
       <td>Weight range:</td>
-      <td nowrap="nowrap">
+      <td class="table-label">
         <input type="text" name="new[min_weight]" size="9" value="0" />
         -
         <input type="text" name="new[max_weight]" size="9" value="9999999" />
       </td>
       <td>Flat markup ($):</td>
-      <td nowrap="nowrap"><input type="text" name="new[markup_flat]" size="5" value="0" /></td>
+      <td class="table-label"><input type="text" name="new[markup_flat]" size="5" value="0" /></td>
       <td>Percent markup:</td>
       <td><input type="text" name="new[markup_percent]" size="5" value="0" /></td>
     </tr>
 
     <tr>
       <td>Subtotal range:</td>
-      <td nowrap="nowrap">
+      <td class="table-label">
         <input type="text" name="new[min_total]" size="9" value="0" />
         -
         <input type="text" name="new[max_total]" size="9" value="9999999" />
       </td>
       <td>Markup per item ($):</td>
-      <td nowrap="nowrap"><input type="text" name="new[markup_per_item]" size="5" value="0" /></td>
+      <td class="table-label"><input type="text" name="new[markup_per_item]" size="5" value="0" /></td>
       <td>Markup per weight unit ($):</td>
-      <td nowrap="nowrap"><input type="text" name="new[markup_per_weight]" size="5" value="0" /></td>
+      <td class="table-label"><input type="text" name="new[markup_per_weight]" size="5" value="0" /></td>
     </tr>
 
     <tr>
       <td>Items range:</td>
-      <td nowrap="nowrap">
+      <td class="table-label">
         <input type="text" name="new[min_items]" size="9" value="0" />
         -
         <input type="text" name="new[max_items]" size="9" value="9999999" />

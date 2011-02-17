@@ -16,18 +16,18 @@
 <br />
 <span IF="extraPages">
 <p class="admin-head">Available pages</p>
-<table cellpadding=0 cellspacing=0 border=0>
+<table cellpadding="0" cellspacing="0">
 <tr><td>
 
-<table IF="extraPages" border=0 cellpadding=0 cellspacing=0>
+<table IF="extraPages" cellpadding="0" cellspacing="0">
 <tbody FOREACH="extraPages,page">
 <tr>
 <th>
 
-<table border=0 cellpadding=5 cellspacing=1 width=100%>
+<table cellpadding="5" cellspacing="1" width="100%">
 <tr>
     <th align="right">Page: </th>
-	<td class="admin-head"><i>{page.title:h}</i></td>
+	<td class="admin-head">{page.title:h}</td>
 </tr>
 <tr class="Center">
     <th align="right">Template: </th>
@@ -35,14 +35,14 @@
 </tr>
 <tr class="Center">
     <th align="right">URL:</th>
-    <td><a href="{xlite.getShopUrl(#cart.php#)}?page={page.page}" target="_blank"><u>{xlite.getShopUrl(#cart.php#)}?page={page.page}</u></a></td>
+    <td><a href="{xlite.getShopUrl(#cart.php#)}?page={page.page}" target="_blank">{xlite.getShopUrl(#cart.php#)}?page={page.page}</a></td>
 </tr>
 </table>
 
 </td></tr>
 
 <tr><td>
-    <table border="0" cellpadding=2 cellspacing=2 width="100%">
+    <table cellpadding="2" cellspacing="2" width="100%">
     <tr>
     <td align=left>
     <widget class="\XLite\View\Button\Regular" label=" Edit " jsCode="document.location='admin.php?target=template_editor&editor=extra_pages&mode=page_edit&page={page.page}'" style="main-button" />

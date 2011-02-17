@@ -15,7 +15,7 @@
 
 <br />
 
-<form IF="product.getImages()" action="admin.php" name="images_form" method="POST">
+<form IF="product.getImages()" action="admin.php" name="images_form" method="post">
 
   <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}" />
   <input type="hidden" name="action" value="update_images" />
@@ -62,7 +62,7 @@
 <br />
 <br />
 
-<form action="admin.php" method="POST" name="imageForm" enctype="multipart/form-data">
+<form action="admin.php" method="post" name="imageForm" enctype="multipart/form-data">
 
   <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}" />
   <input type="hidden" name="action" value="add_image" />

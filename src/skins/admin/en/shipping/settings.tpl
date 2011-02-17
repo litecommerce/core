@@ -46,7 +46,7 @@
 
       <tr IF="!option.type=#separator#">
         <td align="left" width="50%">{option.option_name:h}: </td>
-        <td width="50%">
+        <td style="width:50%;">
 
         {if:option.type=#checkbox#}
           <input id="{option.name}" type="checkbox" name="{option.name}" checked="{option.value=#Y#}" />
