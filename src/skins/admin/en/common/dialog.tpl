@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<h1>{head}</h1>
+<h2>{head}</h2>
 
 <div class="dialog-content">
   <widget template="{body}">

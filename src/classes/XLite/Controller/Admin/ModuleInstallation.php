@@ -38,6 +38,47 @@ namespace XLite\Controller\Admin;
 class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
 {
 
+    /** 
+     * Return module identificator
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModuleId()
+    {   
+        return \XLite\Core\Request::getInstance()->module_id;    
+    }   
+
+    /** 
+     * Return LICENSE text for the module
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLicense()
+    {   
+        return \XLite\RemoteModel\Marketplace::getInstance()->getLicense(
+            $this->getModuleId()
+        );  
+    }   
+
+    /**
+     * Return title 
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return $this->t('Install addon');
+    }
+
     /**
      * Action of getting LICENSE text. Redirection to GET request
      * 
@@ -161,34 +202,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
         }
 
         $this->set('returnUrl', $this->buildURL('modules'));
-    }
-
-    /** 
-     * Return module identificator
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getModuleId()
-    {   
-        return \XLite\Core\Request::getInstance()->module_id;    
-    }   
-
-    /**
-     * Return LICENSE text for the module
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getLicense()
-    {
-        return \XLite\RemoteModel\Marketplace::getInstance()->getLicense(
-            $this->getModuleId()
-        );
     }
 
 }

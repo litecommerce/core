@@ -28,7 +28,7 @@
       <input type="hidden" name="module_id" value="{module.getModuleId()}" />
 
       <div class="install" IF="canInstall(module)">
-        <widget class="\XLite\View\Button\Submit" label="{t(#Install#)}" />
+        <widget class="\XLite\View\Button\InstallAddon" moduleId="{module.getModuleId()}" />
       </div>
 
       <div class="purchase" IF="canPurchase(module)">
