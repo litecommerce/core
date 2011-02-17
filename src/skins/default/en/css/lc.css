@@ -213,6 +213,7 @@ ul.pager li.next-page
   height: 22px;
   line-height: 22px;
   vertical-align: middle;
+  margin: 0px;
 }
 
 ul.display-modes li a

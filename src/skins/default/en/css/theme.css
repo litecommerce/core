@@ -1370,7 +1370,7 @@ ul.tabs li
 div.tabs .primary
 {
   height: 32px;
-  line-height: 31px;
+  line-height: 32px;
   padding: 0;
   border-bottom-style: solid;
   border-bottom-width: 1px;
@@ -1559,92 +1559,6 @@ div.tabs .secondary a.active
   border-style: none;
 }
 
-/*
- * Status messages
- */
-
-#status-messages
-{
-  position: fixed;  /* TODO: WARNING! IE6 doesn't support this style! Emulation is required */
-  top: 0px;
-  left: 0;
-  right: 0;
-  margin: 0px auto;
-  z-index: 1300000;
-  font-size: 12px;
-  width: 400px;
-}
-
-#status-messages,
-#status-messages ul,
-#status-messages ul li:last-child
-{
-  -moz-border-radius-bottomleft: 5px;
-  -webkit-border-bottom-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  -moz-border-radius-bottomright: 5px;
-  -webkit-border-bottom-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-#status-messages a.close
-{
-  display: block;
-  position: absolute;
-  right: 8px;
-  top: 5px;
-  width: 15px;
-  height: 15px;
-  padding: 0px;
-}
-
-#status-messages a.close img
-{
-  background: transparent url(../images/icon_cross_white.png) no-repeat left top;
-  width: 15px;
-  height: 15px;
-  margin: 0px;
-  padding: 0px;
-}
-
-#status-messages ul
-{
-  margin: 0;
-  padding: 0;
-}
-
-#status-messages li
-{
-  list-style: none;
-  background-image: none;
-  padding: 5px 31px 6px 1em;
-}
-
-#status-messages .status
-{
-}
-
-#status-messages,
-#status-messages a
-{
-  background-color: #fff1a8; /*#eeede8;*/
-  color: black; /*#1b5d8e;*/
-}
-
-#status-messages .warning,
-#status-messages .warning a
-{
-  background-color: #eedeb4;
-  color: #94572a;
-}
-
-#status-messages .error,
-#status-messages .error a
-{
-  background-color: #e65e57;
-  color: white;
-}
-
 /**
  * Float box
  */
@@ -1704,7 +1618,7 @@ ul.pager li.next-page,
 ul.pager li.previous-page
 {
   text-indent: -8000em;
-  background: url(../images/pager.png) no-repeat top left;
+  background: transparent url(../images/pager.png) no-repeat top left;
 }
 
 ul.pager li.previous-page
