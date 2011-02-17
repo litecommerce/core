@@ -369,11 +369,12 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     protected function getEnterKeyURL($moduleId)
     {
         return $this->buildURL(
-            'addon_key',
-            'enter',
+            'addon_key', 
+            'view', 
             array(
+                'widget'    => '\XLite\View\ModulesManager\AddonKey',
                 'module_id' => $moduleId,
-            )   
+            )
         );
     }
 

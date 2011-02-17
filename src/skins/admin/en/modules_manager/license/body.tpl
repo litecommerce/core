@@ -19,14 +19,22 @@
       <input type="hidden" name="action" value="get_package" />
       <input type="hidden" name="module_id" value="{getModuleId()}" />
 
+      <div class="license-block">
+      <div class="license-note">
+      {t(#Note, that clicking 'Install add-on' you agree with#)}
+      <a class="agreement" href="javascript:void(0);" onclick="javascript:jQuery('.license-text').toggle();">{t(#License agreement#)}</a>
+      </div>
+
+      <div class="license-text">
+        <textarea readonly="readonly">
+        {getLicense()}
+        </textarea>
+      </div>
+
+      </div>
+
       <widget class="\XLite\View\Button\Submit" label="{t(#Install add-on#)}" />
     </form>
-  </div>
-
-  <div class="license-text">
-    <pre>
-      {getLicense()}
-    </pre>
   </div>
 
 </div>
