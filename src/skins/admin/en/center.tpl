@@ -10,6 +10,8 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
+<widget template="noscript.tpl" />
+
 <widget class="\XLite\View\Location" />
 
 <h1 class="title" id="page-title" IF="isTitleVisible()&getTitle()">{getTitle():h}</h1>
