@@ -61,7 +61,7 @@ function confirmNote(action, id)
   <table cellspacing="0" cellpadding="0" class="data-table items-list modules-list">
 
     <tr FOREACH="getPageData(),idx,module" class="{getRowClass(idx,##,#highlight#)}{if:!module.getEnabled()} disabled{end:}">
-      {displayNestedViewListContent(#columns#,_ARRAY_(#module#^module))}
+      {displayInheritedViewListContent(#columns#,_ARRAY_(#module#^module))}
     </tr>
 
   </table>
