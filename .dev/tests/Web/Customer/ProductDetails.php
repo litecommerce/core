@@ -141,7 +141,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             'check price'
         );
         $this->assertElementPresent(
-            "css=form.product-details .product-details-info .product-buttons input.quantity.field-integer.field-positive.field-non-zero.wheel-ctrl[type=text][value=1]",
+            "css=form.product-details .product-details-info .product-buttons input.quantity.field-integer.field-positive.field-non-zero[type=text][value=1]",
             'check quantity input box'
         );
 
