@@ -37,6 +37,31 @@ namespace XLite\Controller\Admin;
  */
 class ImageFiles extends \XLite\Controller\Admin\AAdmin
 {
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Image files';
+    }
+
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Image files';
+    }
+
     function getImagesDir()
     {
         $images = $this->get('imageClasses');

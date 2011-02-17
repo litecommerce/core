@@ -13,7 +13,7 @@
 <p align=justify>You can send a message to us using the form below. We will reply as soon as possible!</p>
 
 
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
 function checkEmailAddress(field) {
 var goodEmail = field.value.match({emailValidatorRegExp});
     

@@ -45,7 +45,7 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $currentLanguageCode = null;
+    protected static $currentLanguageCode;
 
     /**
      * Translation driver 
@@ -55,7 +55,7 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $driver = null;
+    protected $driver;
 
     /**
      * Translation drivers query 
@@ -80,11 +80,11 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      */
     public static function getCurrentLanguageCode($force = false)
     {
-        if (!isset(self::$currentLanguageCode) || $force) {
-            self::$currentLanguageCode = \XLite\Core\Session::getInstance()->getLanguage()->getCode();
+        if (!isset(static::$currentLanguageCode) || $force) {
+            static::$currentLanguageCode = \XLite\Core\Session::getInstance()->getLanguage()->getCode();
         }
 
-        return self::$currentLanguageCode;
+        return static::$currentLanguageCode;
     }
 
     /**
@@ -101,7 +101,7 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      */
     public static function lbl($name, array $arguments = array(), $code = null)
     {
-        return self::getInstance()->translate($name, $arguments, $code);
+        return static::getInstance()->translate($name, $arguments, $code);
     }
 
     /**

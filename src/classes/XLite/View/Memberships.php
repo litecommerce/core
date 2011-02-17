@@ -48,7 +48,7 @@ class Memberships extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'Memberships';
+        return null;
     }
 
     /**

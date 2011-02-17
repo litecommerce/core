@@ -50,6 +50,18 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
         return 'Taxes';
     }
 
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Taxes';
+    }
+
     public $params = array('target', 'page', 'mode', 'ind');
 
     public $page = 'options';

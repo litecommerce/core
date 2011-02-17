@@ -75,7 +75,99 @@ class Controller extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'body.tpl';
+        return $this->isAJAXCenterRequest() ? 'center_top.tpl' : 'body.tpl';
+    }
+
+    /**
+     * Check - current request is AJAX background request for page center or not
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isAJAXCenterRequest()
+    {
+        return $this->isAJAX() && \XLite\Core\Request::getInstance()->only_center;
+    }
+
+    /**
+     * Get body classes 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getBodyClasses()
+    {
+        return implode(' ', $this->defineBodyClasses());
+    }
+
+    /**
+     * Define body classes list
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see___
+     * @since  3.0.0
+     */
+    protected function defineBodyClasses()
+    {
+        $classes = array(
+            'area-' . (\XLite::isAdminZone() ? 'a' : 'c'),
+            'skin-' . \XLite\Model\Layout::getInstance()->getSkin(),
+            'target-' . (\XLite\Core\Request::getInstance()->target ?: \XLite::TARGET_DEFAULT),
+        );
+
+        $first = $this->isSidebarFirstVisible();
+        $second = $this->isSidebarSecondVisible();
+
+        if ($first && $second) {
+            $classes[] = 'two-sidebar';
+
+        } elseif ($first || $second) {
+            $classes[] = 'one-sidebar';
+
+        } else {
+            $classes[] = 'no-sidebars';
+        }
+        
+        if ($first) {
+            $classes[] = 'sidebar-first';
+        }
+
+        if ($second) {
+            $classes[] = 'sidebar-second';
+        }
+
+        return $classes;
+    }
+
+    /**
+     * Chewck - first sidebar is visible or not
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isSidebarFirstVisible()
+    {
+        return !in_array(\XLite\Core\Request::getInstance()->target, array('cart', 'product', 'checkout'));
+    }
+
+    /**
+     * Check - second sidebar is visible or not
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isSidebarSecondVisible()
+    {
+        return false;
     }
 
     /**
@@ -166,9 +258,11 @@ class Controller extends \XLite\View\AView
     {
         if ($this->useDefaultDisplayMode()) {
             $this->getContentWidget()->display();
+
         } else {
             $this->prepareContent();
             $this->startPage();
+
             parent::display();
         }
     }

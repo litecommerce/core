@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget template="common/dialog.tpl" name="searchOrdersForm" head="Search orders" body="order/search_form.tpl" />
+<widget template="common/dialog.tpl" name="searchOrdersForm" body="order/search_form.tpl" />
 
 {* Open <form ...> tag *}
 <widget class="\XLite\View\Form\Order\Modify\Batch" name="orders_form" />

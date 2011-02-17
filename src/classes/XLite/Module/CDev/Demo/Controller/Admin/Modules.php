@@ -35,11 +35,11 @@ implements \XLite\Base\IDecorator
      * checkAccess
      * 
      * @return bool
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function checkAccess()
+    public function checkAccess()
     {
         if (\XLite\Core\Request::getInstance()->action) {
             \XLite\Module\CDev\Demo\Main::doForbidAction();

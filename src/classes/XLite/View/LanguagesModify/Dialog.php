@@ -110,7 +110,7 @@ class Dialog extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'Language labels';
+        return null;
     }
 
     /**

@@ -57,6 +57,15 @@ abstract class ADrupal extends \XLite\Base\Singleton
      */
     protected static $registeredResources = array('js' => array(), 'css' => array());
 
+    /**
+     * Resources weight counter
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $resourcesCounter = 0;
 
     // ------------------------------ Application layer -
 
@@ -114,11 +123,12 @@ abstract class ADrupal extends \XLite\Base\Singleton
      */
     protected function getUniqueResources($type, array $files)
     {
-        $files = array_diff($files, static::$registeredResources[$type]);
         static::$registeredResources[$type] = array_merge(static::$registeredResources[$type], $files);
 
         return $files;
     }
+
+
 
     /**
      * Get JS scope
@@ -153,34 +163,35 @@ abstract class ADrupal extends \XLite\Base\Singleton
     /**
      * Get resource description in Drupal format
      *
-     * @param string $file Resource file path
+     * @param array $file Resource file info
      *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getResourceInfoCommon($file)
+    protected function getResourceInfoCommon(array $file)
     {
         return array(
             'type'     => 'file',
-            'basename' => $this->getResourceBasename($file),
+            'basename' => $this->getResourceBasename($file['file']),
+            'weight'   => isset($file['weight']) ? $file['weight'] : static::$resourcesCounter++,
         );
     }
 
     /**
      * Get resource description in Drupal format
      *
-     * @param string $file Resource file path
+     * @param array $file Resource file info
      *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getResourceInfoJS($file)
+    protected function getResourceInfoJS(array $file)
     {
-        $scope = $this->getJSScope($file);
+        $scope = $this->getJSScope($file['file']);
 
         return array(
             'scope' => $scope,
@@ -191,17 +202,18 @@ abstract class ADrupal extends \XLite\Base\Singleton
     /**
      * Get resource description in Drupal format
      *
-     * @param string $file Resource file path
+     * @param array $file Resource file info
      *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getResourceInfoCSS($file)
+    protected function getResourceInfoCSS(array $file)
     {
         return array(
             'group' => CSS_DEFAULT,
+            'media' => isset($file['media']) ? $file['media'] : 'all',
         );
     }
 
@@ -209,14 +221,14 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * Get resource description in Drupal format
      * 
      * @param string $type Resource type ("js" or "css")
-     * @param string $file Resource file path
+     * @param array  $file Resource file info
      *  
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getResourceInfo($type, $file)
+    protected function getResourceInfo($type, array $file)
     {
         return $this->getResourceInfoCommon($file) + $this->{__FUNCTION__ . strtoupper($type)}($file);
     }
@@ -225,16 +237,16 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * Register single resource
      *
      * @param string $type Resource type ("js" or "css")
-     * @param string $file Resource file path
+     * @param array  $file Resource file info
      *
      * @return mixed
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function registerResource($type, $file)
+    protected function registerResource($type, array $file)
     {
-        return call_user_func_array('drupal_add_' . $type, array($file, $this->getResourceInfo($type, $file)));
+        return call_user_func_array('drupal_add_' . $type, array($file['file'], $this->getResourceInfo($type, $file)));
     }
 
     /**

@@ -191,7 +191,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * getMetaDescription
+     * Get meta description
      *
      * @return string
      * @access public
@@ -201,11 +201,18 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     {
         $model = $this->getModelObject();
 
-        return $model && $model->getMetaDesc() ? $model->getMetaDesc() : $this->getDescription();
+        if ($model) {
+            $description = $model->getMetaDesc() ? $model->getMetaDesc() : $this->getDescription();
+
+        } else {
+            $description = parent::getMetaDescription();
+        }
+
+        return $description;
     }
 
     /**
-     * getKeywords
+     * Get meta keywords
      *
      * @return string
      * @access public
@@ -215,6 +222,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     {
         $model = $this->getModelObject();
 
-        return $model ? $model->getMetaTags() : null;
+        return $model ? $model->getMetaTags() : parent::getKeywords();
     }
 }

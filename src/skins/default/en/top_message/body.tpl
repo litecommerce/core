@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Top messages
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,13 +11,13 @@
  * @since     3.0.0
  *}
 
-<div id="{getBlockId()}">
+<div id="status-messages" {if:isHidden()} style="display: none;"{end:}>
 
-  <a href="#" class="close" onclick="javascript: document.getElementById('{getBlockId()}').style.display = 'none';">&nbsp;</a>
-
+  <a href="#" class="close" title="{t(#Close#)}"><img src="images/spacer.gif" alt="{t(#Close#)}" /></a>
+  
   <ul>
     <li FOREACH="getTopMessages(),data" class="{getType(data)}">
-    {getText(data)}
+      <em IF="getPrefix(data)">{getPrefix(data)}</em>{getText(data)}
     </li>
   </ul>
 

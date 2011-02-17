@@ -360,11 +360,28 @@ class XLite extends \XLite\Base
     }
 
     /**
+     * Process request 
+     * 
+     * @return \XLite
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function processRequest()
+    {
+        $this->runController();
+
+        $this->getController()->processRequest();
+
+        return $this;
+    }
+
+    /**
      * Run application
      * 
      * @param boolean $adminZone Admin interface flag OPTIONAL
      *  
-     * @return \XLite\View\AView
+     * @return self
      * @access public
      * @since  3.0.0
      */

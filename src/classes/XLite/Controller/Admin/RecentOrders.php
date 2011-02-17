@@ -55,6 +55,19 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
     }
 
     /**
+     * Return the current page title (for the content area)
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Recent orders';
+    }
+
+
+    /**
      * Common method to determine current location
      *
      * @return string

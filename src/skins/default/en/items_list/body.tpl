@@ -11,20 +11,20 @@
  * @since     3.0.0
  *}
 
-<div class="items-list {getSessionCell()}">
+<div class="{getListCSSClasses()}">
 
-  <div class="list-pager">{pager.display()}</div>
+  {displayCommentedData(getJSData())}
+
+  <h2 IF="isHeadVisible()" class="items-list-title" >{getHead()}</h2>
+
+  <div IF="isPagerVisible()" class="list-pager">{pager.display()}</div>
 
   <div IF="isHeaderVisible()" class="list-header">{displayViewListContent(#itemsList.header#)}</div>
 
   <widget template="{getPageBodyTemplate()}" />
 
-  <div class="list-pager">{pager.display()}</div>
+  <div class="list-pager list-pager-bottom" IF="pager.isPagesListVisible()">{pager.display()}</div>
 
   <div IF="isFooterVisible()" class="list-footer">{displayViewListContent(#itemsList.footer#)}</div>
 
 </div>
-
-<script type="text/javascript">
-  new {getJSHandlerClassName()}('{getSessionCell()}', {getURLParamsJS():h}, {getURLAJAXParamsJS():h});
-</script>
