@@ -14,11 +14,11 @@
 <table class="items-list table">
 
   <tr>
-    {displayNestedViewListContent(#header#,_ARRAY_(#product#^product))}
+    {displayInheritedViewListContent(#header#,_ARRAY_(#product#^product))}
   </tr>
 
   <tr FOREACH="getPageData(),idx,product" class="{getRowClass(idx,##,#highlight#)}">
-    {displayNestedViewListContent(#columns#,_ARRAY_(#product#^product))}
+    {displayInheritedViewListContent(#columns#,_ARRAY_(#product#^product))}
   </tr>
 
   <tr FOREACH="getViewList(#itemsList.product.table.admin.items#),w">
