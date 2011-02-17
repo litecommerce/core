@@ -13,13 +13,13 @@
 <p class="error-message">
 Unable to install module &quot;{mm.moduleName}&quot; because some modules which it depends on, have not been installed or activated yet
 </p>
-<table border="0">
+<table>
 <tr>
 	<td>
 Please, make sure that the following modules are installed and enabled:
 	</td>
 	<td>
-	<table border="0">
+	<table>
 		<tr FOREACH="mm.dependencies,dependency">
 		<td>{dependency}</td>
 		</tr>

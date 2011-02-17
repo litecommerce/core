@@ -14,21 +14,21 @@
 
 <p class="admin-head">{mailTemplates.body.comment}</p>
 
-<form action="admin.php" method="POST">
-<input type="hidden" name="target" value="template_editor">
-<input type="hidden" name="action" value="update_mail">
-<input type="hidden" name="editor" value="mail">
-<input type="hidden" name="path" value="{path}">
-<input type="hidden" name="node" value="{node}">
+<form action="admin.php" method="post">
+<input type="hidden" name="target" value="template_editor" />
+<input type="hidden" name="action" value="update_mail" />
+<input type="hidden" name="editor" value="mail" />
+<input type="hidden" name="path" value="{path}" />
+<input type="hidden" name="node" value="{node}" />
 <input type="hidden" name="returnUrl" value="{url}&mode=edit&path={path}&node={node}&status=updated"/>
 
-<table border="0" cellpadding=2 cellspacing=2 width="430">
+<table cellpadding="2" cellspacing="2" width="430">
 <tr>
 <td>
-	<table border="0" cellpadding=0 cellspacing=0 width=100%>
+	<table cellpadding="0" cellspacing="0" width="100%">
     <tr>
-    	<td width=50%><img src="images/letter.gif" border="0" align="top" alt="" />&nbsp;<b>Mail templates folder:</b><br /><i>{node}</i></td>
-    	<td width=50% align=right><a href="{url}"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle" alt="" /> Go back</a></td>
+    	<td style="width:50%;"><img src="images/letter.gif" align="top" alt="" />&nbsp;<b>Mail templates folder:</b><br />{node}</td>
+    	<td style="width:50%;" align=right><a href="{url}"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt="" /> Go back</a></td>
 	</tr>
 	</table>
 </td>
@@ -41,7 +41,7 @@
 </table>
 
 <b>Subject:</b><span class="error-message" IF="subjectWriteError">&nbsp;WARNING! File cannot be overwritten! Please check and correct file permissions.</span><br />
-<input type="text" name="subject" value="{mailTemplates.subject.content}" size="81">
+<input type="text" name="subject" value="{mailTemplates.subject.content}" size="81" />
 <br /><br />
 <b>Body:</b><span class="error-message" IF="bodyWriteError">&nbsp;WARNING! File cannot be overwritten! Please check and correct file permissions.</span><br />
 <textarea name="body" cols="81" rows="20">{mailTemplates.body.content}</textarea>
@@ -50,7 +50,7 @@
 <textarea name="signature" cols="81" rows="7">{mailTemplates.signature.content}</textarea>
 <p>
 
-<table border="0" cellpadding=2 cellspacing=2 width="430">
+<table cellpadding="2" cellspacing="2" width="430">
 <tr>
 <td align=left>
 <widget class="\XLite\View\Button\Submit" label=" Save " style="main-button" />

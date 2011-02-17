@@ -22,7 +22,7 @@
   <input type="hidden" name="target" value="aupost" />
   <input type="hidden" name="action" value="test" />
 
-  <table border="0" cellpadding="3" cellspacing="0">
+  <table cellpadding="3" cellspacing="0">
 
     <tr>
       <td>Package weight (g):</td>
@@ -38,7 +38,7 @@
       <td>&nbsp;&nbsp;&nbsp;&nbsp;Country:</td> 
       <td>
         <input type="text" size="15" value="Australia" disabled />
-        <span IF="!config.Company.location_country=#AU#"><span class="star">(!)</span> <a href="admin.php?target=settings&page=Company"><u>Company country</u></a> has wrong value</span>
+        <span IF="!config.Company.location_country=#AU#"><span class="star">(!)</span> <a href="admin.php?target=settings&page=Company">Company country</a> has wrong value</span>
       </td>
     </tr>
 

@@ -16,7 +16,7 @@
   <tr>
     <td id="close{mark}" style="{if:visible}display: none; {end:}" onclick="javascript: visibleBox('{mark}');"><img src="images/plus.gif" alt="Click to open" /></td>
     <td id="open{mark}" style="{if:!visible}display: none; {end:}" onclick="javascript: visibleBox('{mark}');"><img src="images/minus.gif" alt="Click to close" /></td>
-    <td nowrap="nowrap" class="ExpandSectionText"><a href="javascript:void(0);" onclick="javascript: visibleBox('{mark}');"><b>{title}</b></a></td>
+    <td class="table-label"><a href="javascript:void(0);" onclick="javascript: visibleBox('{mark}');"><b>{title}</b></a></td>
   </tr>
 
 </table>

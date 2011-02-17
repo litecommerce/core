@@ -38,12 +38,12 @@
   <input type="hidden" name="mode" value="{getRequestParamValue(#mode#)}" />
   <input type="hidden" name="category_id" value="{category_id}" />
  
-  <table border="0" width="100%">
+  <table width="100%">
 
     <tr>
-      <td width="15%">Category&nbsp;name</td>
+      <td style="width:15%;">Category&nbsp;name</td>
       <td class="star">*</td>
-      <td width="85%">
+      <td style="width:85%;">
         <input type="text" name="name" value="{category.name}" size="50" maxlength="255" />
         &nbsp;<span IF="!valid" class="validate-error-message">&lt;&lt; Required field</span>
       </td>
@@ -67,7 +67,7 @@
     </tr>
 
     <tr>
-      <td>{if:category.hasImage()}<img src="{category.image.getURL()}" border="0" alt="" />{else:}<img src="images/no_image.png" border="0" alt="" />{end:}</td>
+      <td>{if:category.hasImage()}<img src="{category.image.getURL()}" alt="" />{else:}<img src="images/no_image.png" alt="" />{end:}</td>
       <td>&nbsp;</td>
       <td valign="bottom" rowspan=2>
       <widget class="\XLite\View\ImageUpload" field="image" actionName="icon" formName="add_modify_form" object="{category.image}" />
@@ -152,11 +152,11 @@ Not available right now
   <input type="hidden" name="action" value="move_after" />
   <input type="hidden" name="category_id" value="{category_id}" />
 
-  <table border="0" width="100%">
+  <table width="100%">
 
     <tr>
-      <td width="15%">Select category:</td>
-      <td width="85%">
+      <td style="width:15%;">Select category:</td>
+      <td style="width:85%;">
         <widget class="\XLite\View\CategorySelect" fieldName="moveTo" currentCategoryId={category.category_id} ignoreCurrentPath rootOption />
       </td>
     </tr>

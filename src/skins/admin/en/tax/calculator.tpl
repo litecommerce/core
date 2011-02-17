@@ -18,10 +18,10 @@
 </head>
 <body class="popup">
 
-<table border=0 cellpadding=3 cellspacing=3>
-<form action="admin.php" method="POST">
-<input type="hidden" name="target" value="taxes">
-<input type="hidden" name="action" value="calculator">
+<table cellpadding="3" cellspacing="3">
+<form action="admin.php" method="post">
+<input type="hidden" name="target" value="taxes" />
+<input type="hidden" name="action" value="calculator" />
 <tr>
 	<td>Country:&nbsp;</td><td><widget class="\XLite\View\CountrySelect" field="billing_country" country="{country}" /></td>
 </tr>
@@ -29,10 +29,10 @@
 	<td>State:&nbsp;</td><td><widget class="\XLite\View\StateSelect" field="billing_state" state="{state}" isLinked=1 /></td>
 </tr>
 <tr>
-	<td>City:&nbsp;</td><td><input type="text" name="city" value="{city}"></td>
+	<td>City:&nbsp;</td><td><input type="text" name="city" value="{city}" /></td>
 </tr>
 <tr>
-    <td>Zip:&nbsp;</td><td><input type="text" name="zip" value="{zip}"></td>
+    <td>Zip:&nbsp;</td><td><input type="text" name="zip" value="{zip}" /></td>
 </tr>
 <tr>
 	<td>Membership:&nbsp;</td><td><widget class="\XLite\View\MembershipSelect" template="common/select_membership.tpl" field="membership"></td>
@@ -46,7 +46,7 @@
 	</td>
 </tr>
 <tr>
-	<td>Product class:&nbsp;</td><td><input type="text" name="product_class" value="{product_class}"></td>
+	<td>Product class:&nbsp;</td><td><input type="text" name="product_class" value="{product_class}" /></td>
 </tr>
 <tr>
 	<td colspan=2 align=center>
@@ -62,7 +62,7 @@
 <b>Taxes on shipping:</b><br />
 <table><tr FOREACH="shipping_taxes,name,value"><td>{name}</td><td>{value}%</td></tr></table>
 <p>
-<a href="javascript: window.close()"><img src="images/go.gif" alt="" width="13" height="13" border="0" align="absmiddle"> Close tax calculator</a><br />
+<a href="javascript: window.close()"><img src="images/go.gif" alt="" width="13" height="13" align="absmiddle" /> Close tax calculator</a><br />
 {end:}
 
 </body>

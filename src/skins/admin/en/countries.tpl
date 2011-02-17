@@ -59,8 +59,8 @@ Use this section to manage the list of existing countries. This list is used in 
 <span IF="status=#updated#" class="success-message"><br /><br />&gt;&gt;&nbsp;Country(s) updated successfully&nbsp;&lt;&lt;<br /><br /></span>
 
 <form action="admin.php" method="post" name="countries_form">
-<input type="hidden" name="target" value="countries">
-<input type="hidden" name="action" value="update">
+<input type="hidden" name="target" value="countries" />
+<input type="hidden" name="action" value="update" />
 	<table class="data-table">
 		<tr>
     		<th>Code</th>
@@ -78,9 +78,9 @@ Use this section to manage the list of existing countries. This list is used in 
 		</tr>
 
 		<tr FOREACH="getCountries(),country_idx,country" class="{getRowClass(country_idx,#dialog-box#,#highlight#)}">
-		    <td align="center"><a href="admin.php?target=states&country_code={country.code}" title="Click here to view states of country" onclick="this.blur();"><u>{country.code}</u></a></td>
+		    <td align="center"><a href="admin.php?target=states&country_code={country.code}" title="Click here to view states of country" onclick="this.blur();">{country.code}</a></td>
 		    <td>
-		        <input type="text" size="34" maxlength="50" name="countries[{country.code}][country]" value="{country.country:r}">
+		        <input type="text" size="34" maxlength="50" name="countries[{country.code}][country]" value="{country.country:r}" />
 		    </td>
 		    <td align="center">
 		        <input id="country_vat_{country_idx}" type="checkbox" name="countries[{country.code}][eu_member]" value="Y" checked="{country.eu_member}" onclick="this.blur();">
@@ -100,7 +100,7 @@ Use this section to manage the list of existing countries. This list is used in 
 
     <tr>
       <td colspan="5">
-		<table border=0 width="100%">
+		<table width="100%">
 		<tr>
 			<td align="left">
         <br />
@@ -122,8 +122,8 @@ Use this section to manage the list of existing countries. This list is used in 
 
 <a name="add_section"></a>
 <form action="admin.php" method="post" name="countries_add_form">
-<input type="hidden" name="target" value="countries">
-<input type="hidden" name="action" value="add">
+<input type="hidden" name="target" value="countries" />
+<input type="hidden" name="action" value="add" />
 
 <h2>Add new country</h2>
 			
@@ -135,10 +135,10 @@ Use this section to manage the list of existing countries. This list is used in 
 					<th>Active</th>
 				</tr>
 				<tr class="dialog-box">
-					<td><input type="text" size="3" maxlength="2" name="code" value="{code}"></td>
-					<td><input type="text" size="34" maxlength="50" name="country" value="{country}"></td>
-					<td align="middle"><input type="checkbox" name="eu_member" value="Y" checked="{isSelected(eu_member,#Y#)}"></td>
-					<td align="middle"><input type="checkbox" name="enabled" value="Y" checked></td>
+					<td><input type="text" size="3" maxlength="2" name="code" value="{code}" /></td>
+					<td><input type="text" size="34" maxlength="50" name="country" value="{country}" /></td>
+					<td align="middle"><input type="checkbox" name="eu_member" value="Y" checked="{isSelected(eu_member,#Y#)}" /></td>
+					<td align="middle"><input type="checkbox" name="enabled" value="Y" checked /></td>
 				</tr>
 
 {if:!valid}
