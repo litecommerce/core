@@ -11,5 +11,8 @@
 /src/update.sh
 /src/var/addons
 /src/var/datacache
+/src/var/locale
 /src/var/log
 /src/var/run
+/src/var/images
+/src/var/tmp
