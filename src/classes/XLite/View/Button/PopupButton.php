@@ -153,7 +153,6 @@ abstract class PopupButton extends \XLite\View\Button\AButton
 
         // popup button is using several specific popup JS
         $list['js'][] = 'js/core.popup.js';
-        $list['js'][] = 'js/jquery.blockUI.js';
 
         return $list;
     }    

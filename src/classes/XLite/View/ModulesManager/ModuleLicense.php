@@ -40,6 +40,16 @@ namespace XLite\View\ModulesManager;
 class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
 {
     /**
+     * Module license widget target 
+     */
+    const MODULE_LICENSE_TARGET = 'module_installation';
+
+    /**
+     * Title to show 
+     */
+    const WIDGET_TITLE = 'Install addon';
+
+    /**
      * Return list of targets allowed for this widget
      *
      * @return array
@@ -50,7 +60,7 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-        $result[] = 'module_installation';
+        $result[] = static::MODULE_LICENSE_TARGET;
     
         return $result;
     }
@@ -81,7 +91,7 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getHead()
     {
-        return 'Install addon';
+        return $this->t(static::WIDGET_TITLE);
     }
 
     /**
