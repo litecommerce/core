@@ -31,7 +31,7 @@ var xliteConfig = {
   language: '{currentLanguage.getCode()}'
 };
   </script>
-  <script FOREACH="getJSResources(),file" type="text/javascript" src="{file}"></script>
+  <script FOREACH="getJSResources(),file" type="text/javascript" src="{file.file}"></script>
 
   {displayViewListContent(#head#)}
 </head>
