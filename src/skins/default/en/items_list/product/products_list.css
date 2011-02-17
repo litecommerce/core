@@ -11,203 +11,409 @@
  * @since     3.0.0
  */
 
-.list-header .display-modes {
-  float: left;
+.products .added-to-cart {
+  display: none;
 }
 
-.list-header ul {
-  display: inline;
-  padding: 0;
-  margin: 0;
-}
-
-.list-header ul li {
-  display: inline;
-  margin: 0;
-  padding: 0 0 0 6px;
-}
-
-/* List body and common styles */
-.list-body {
-  padding: 0px;
-}
-
-.list-body .added-to-cart {
+.product.product-added .added-to-cart
+{
   display: block;
   position: absolute;
-  left: 5px;
-  top: 0px;
+  right: 8px;
+  top: 8px;
   z-index: 20;
-  width: 19px;
-  height: 14px;
-  background: transparent url(../images/added2cart.gif) no-repeat left top;
+  width: 24px;
+  height: 24px;
+  background: transparent url(images/icon_added.png) no-repeat left top;
 }
 
-/* List type : List */
-.list-body-list {
-  list-style: none;
-  padding-top: 1.5em;
-}
-
-.list-body-list li.item {
-  list-style: none;
-  width: 100%;
-  position: relative;
-}
-
-.list-body-list a.product-thumbnail {
-  float: left;
-  position: relative;
-  display: block;
-}
-
-/* List type : Table */
-.list-body-table {
-  margin-top: 0px;
-  border-top: 0px none;
-  border-collapse: separate;
-}
-
-.list-body-table tr td.product-price-column {
-  text-align: right;
-  white-space: nowrap;
-}
-
-.list-body-table tr td.product-button-column {
-  white-space: nowrap;
-}
-
-.list-body-table tr td.product-name-column {
-  width: 100%;
-}
-
-/*
- * GRID layout based on CSS and lists
- */
-
-/*
- * Information on hacks used below is available at:
- * - http://blog.mozilla.com/webdev/2009/02/20/cross-browser-inline-block/
- * - http://foohack.com/2007/11/cross-browser-support-for-inline-block-styling/
- */
-
-ul.list-body-grid li
-{
-  padding: 0;
-  margin: 0 0.5em 1em;
-	vertical-align: top;
-	background-image: none;
-	display: -moz-inline-stack;		/* FF2 supports this instead of "inline-block" */
-	display: inline-block;
-}
-
-/* IE6 requires this in order to correctly display li as "inline-blocks */
-* html ul.list-body-grid li
-{
-  display: inline;
-}
-
-ul.list-body-grid a.product-thumbnail
-{
-  display: block;
-}
-
-ul.list-body-grid a.product-thumbnail,
-ul.list-body-grid a.product-thumbnail img
-{
-  position: relative;       /* Hack for FF2: in FF2 static "inner-blocks" are non-clickable */
-}
-
-ul.list-body-grid li div {
-  position: relative;
-}
-
-ul.list-body-grid .product-name {
-  display: block;
-}
-
-
-ul.list-body-grid-1-columns li.item
-{
-  width: 100%;
-  margin-right: 0;
-}
-
-ul.list-body-grid-2-columns li.item
-{
-  width: 47%;
-  margin-right: 2.9%;
-}
-
-ul.list-body-grid-3-columns li.item
-{
-  width: 30%;
-  margin-right: 2.9%;
-}
-
-ul.list-body-grid-4-columns li.item
-{
-  width: 23%;
-  margin-right: 1.9%;
-}
-
-ul.list-body-grid-5-columns li.item
-{
-  width: 19%;
-  margin-right: 0.9%;
-}
-
-/*
- * GRID layout based on tables
- */
-
-table.list-body-grid,
-table.list-body-grid td
+table.products-grid,
+table.products-grid td,
+table.product,
+table.product td
 {
   border-style: none;
-  padding: 0.5em;
 }
 
-table.list-body-grid-1-columns td
+table.products-grid td,
+table.product td
+{
+  vertical-align: top;
+}
+
+table.grid-1-columns td
 {
   width: 100%;
 }
-table.list-body-grid-2-columns td
+
+table.grid-2-columns td
 {
   width: 50%;
 }
-table.list-body-grid-3-columns td
+
+table.grid-3-columns td
 {
-  width: 33.3%;
+  width: 33.3333%;
 }
-table.list-body-grid-5-columns td
+
+table.grid-4-columns td
 {
   width: 25%;
 }
-table.list-body-grid-6-columns td
+
+table.grid-5-columns td
 {
-  width: 16.75%;
+  width: 20%;
 }
 
-table.list-body-grid a
+table.product td.product-photo
+{
+  width: 1px;
+}
+
+
+ul.products-grid,
+ul.products-list,
+ul.products-sidebar
+{
+  margin: 0;
+  padding: 0;
+}
+
+ul.products-grid li,
+ul.products-list li,
+ul.products-sidebar li
+{
+  background-image: none;
+  list-style: none;
+  padding-left: 0;
+}
+
+ul.products-sidebar li {
+  padding-bottom: 20px;
+}
+
+ul.products-sidebar li.last {
+  padding-bottom: 0px;
+}
+
+.products div.product,      /* Position nested elements inside a product tag */
+.products div.product-info,     /* Tables and table cells cannot be relative, so we position tags inside a wrapper in table cells */
+.products div.product-photo
+{
+  position: relative;
+}
+
+.products .product-cell .drag-n-drop-handle
+{
+  background: transparent url(images/icon_drag.png) no-repeat left center;
+  padding-left: 20px;
+  visibility: hidden;
+  cursor: move;
+}
+
+.products .product-cell .drag-n-drop-handle,
+.products .product-cell .quicklook,
+.products .product-cell:hover .ui-draggable-dragging .quicklook,
+.products .product-cell:hover .drag-owner .quicklook
+{
+  visibility: hidden;
+}
+
+.products .product-cell:hover .drag-n-drop-handle,
+.products .ui-draggable-dragging .drag-n-drop-handle,
+.products .product-cell:hover .quicklook
+{
+  visibility: visible;
+}
+
+.products .product .quicklook
+{
+  width: 100%;
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  z-index: 100;
+}
+
+.products .product .quicklook a.quicklook-link
 {
   display: block;
+  width: 53px;
+  height: 53px;
+  margin: 0 auto;
+  padding: 0px;
+}
+
+.products .product .quicklook a.quicklook-link img {
+  width: 53px;
+  height: 53px;
+  background: transparent url(images/icon_quick_look.png) no-repeat top left;
+  margin: 0px;
+  padding: 0px;
+}
+
+
+.products-grid .product-name,
+.products-grid .product-thumbnail,
+.products-grid .product-price
+{
+  display: block;
+}
+
+.products-grid a.product-thumbnail
+{
   text-align: center;
 }
 
-table.list-body-grid a span
+.products input.product-add2cart
+{
+  background: transparent url(images/bag/small.png) no-repeat;
+  width: 19px;
+  height: 24px;
+}
+
+
+.cart-tray
+{
+  position: fixed;
+  top: 5em;
+  right: 5em;
+  z-index: 200;
+  width: 158px;
+  height: 221px;
+  border-style: solid;
+  background-color: white;
+}
+
+.cart-tray .tray-area
+{
+  background-image: url(images/bag/tray.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.cart-tray,
+.cart-tray-active .progress-bar,
+.cart-tray-active .product-added,
+.cart-tray-adding .drop-here,
+.cart-tray-adding .product-added,
+.cart-tray-added .drop-here,
+.cart-tray-added .progress-bar
+{
+  display: none;
+}
+
+.cart-tray-active,
+.cart-tray-moving .drop-here,
+.cart-tray-adding .progress-bar,
+.cart-tray-added .product-added
 {
   display: block;
 }
 
-table.list-body-grid .buttons td
+.cart-tray .tray-status,
+.cart-tray .block-wait
 {
   text-align: center;
-  padding: 0.5em 0 1.5em;
+  margin: 0 auto;
 }
 
-table.list-body-grid .buttons form
+.cart-tray .tray-status
 {
-  display: inline;
-  margin-left: 1em;
+  padding: 20px;
 }
+
+
+
+/*
+{
+  border: 1px #bbc7d2 solid;
+  -moz-border-radius: 0.25em;
+  -webkit-border-radius: 0.25em;
+  border-radius: 0.25em;
+  box-shadow: 0.25em 0.25em 0.25em #bbc7d2;
+  -moz-box-shadow: 0.25em 0.25em 0.25em #bbc7d2;
+  -webkit-box-shadow: 0.25em 0.25em 0.25em #bbc7d2;
+}
+
+div.cart-tray-box.droppable {
+}
+
+div.cart-tray-box div.text {
+  text-align: center;
+  margin-top: 100%;
+}
+
+div.cart-tray-box div.text span {
+  font-weight: bold;
+  color: #7594b0;
+}
+
+div.cart-tray-box div.text span.droppable {
+  background-color: #d7e5fa;
+}
+
+*/
+
+
+
+
+/*
+
+
+
+table.list-body div.quick-look-cell div.drag-n-drop {
+  font-size: 0.9em;
+  color: #8fa8c0;
+}
+
+table.list-body-grid div.quick-look-cell div.drag-n-drop {
+  margin-left: -0.5em;
+}
+
+table.list-body-list div.quick-look-cell div.drag-n-drop {
+  margin-right: -0.5em;
+  margin-top: -0.5em;
+}
+
+
+
+table.list-body {
+  border-style: none;
+}
+
+table.list-body td {
+  padding: 1em;
+  border-style: none;
+}
+
+table.list-body td.hproduct a.product-thumbnail
+{
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  padding: 12px 0;
+}
+
+table.list-body-grid td {
+  padding-top: 0;
+}
+
+table.list-body div.quick-look-cell div.drag-n-drop {
+  font-size: 0.9em;
+  color: #8fa8c0;
+}
+
+table.list-body-grid div.quick-look-cell div.drag-n-drop {
+  margin-left: -0.5em;
+}
+
+table.list-body-list div.quick-look-cell div.drag-n-drop {
+  margin-right: -0.5em;
+  margin-top: -0.5em;
+}
+
+table.list-body div.quick-look-cell div.button {
+  text-align: center;
+  background: rgb(255, 255, 255);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+table.list-body-grid div.quick-look-cell-thumbnail div.button {
+  margin-top: 40%;
+}
+
+table.list-body-list div.quick-look-cell-thumbnail div.button {
+  margin-top: 50%;
+}
+
+
+
+table.list-body input.product-add2cart
+{
+  background: transparent url(images/bag/small.png) no-repeat;
+  width: 29px;
+  height: 26px;
+}
+
+table.list-body-list td.body {
+  width: 100%;
+}
+
+table.list-body-list div.quick-look-cell div.drag-n-drop {
+  float: right;
+}
+
+table.list-body-table th {
+  border: 0;
+  border-top: 1px #e4e4e4 solid;
+  background: #f8f8f8;
+  color: #949494;
+  text-align: left;
+  vertical-align: bottom;
+  padding: 0.8em;
+}
+
+table.list-body-table th.price {
+  text-align: right;
+}
+
+table.list-body-table td {
+  vertical-align: middle;
+  padding: 0.5em;
+  white-space: nowrap;
+  border-top: 1px #e4e4e4 solid;
+}
+
+table.list-body-table td.sku {
+  color: #4e4e4e;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+table.list-body-table td.name {
+  white-space: normal;
+  width: 100%;
+}
+
+table.list-body-table td.price {
+  padding-left: 1.5em;
+  text-align: right;
+}
+
+table.list-body-table td.qty input.product-qty {
+  width: 3em;
+  text-align: right;
+}
+
+table.list-body-grid td.hproduct:hover div.quick-look-cell div.drag-n-drop,
+table.list-body-grid td.hproduct:hover div.quick-look-cell div.button,
+table.list-body-list tr:hover div.quick-look-cell div.drag-n-drop,
+table.list-body-list tr:hover div.quick-look-cell div.button {
+  visibility: visible;
+}
+
+div.cart-tray-box {
+  position: fixed;
+  top: 5em;
+  right: 5em;
+  z-index: 200;
+  border: 1px #bbc7d2 solid;
+  width: 158px;
+  height: 221px;
+  display: none;
+  background: #fff url(images/bag/tray/regular.png) no-repeat center center;
+  -moz-border-radius: 0.25em;
+  -webkit-border-radius: 0.25em;
+  border-radius: 0.25em;
+  box-shadow: 0.25em 0.25em 0.25em #bbc7d2;
+  -moz-box-shadow: 0.25em 0.25em 0.25em #bbc7d2;
+  -webkit-box-shadow: 0.25em 0.25em 0.25em #bbc7d2;
+}
+
+div.cart-tray-box.droppable {
+  background: #fff url(images/bag/tray/droppable.png) no-repeat center center;
+}
+
+*/

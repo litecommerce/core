@@ -171,7 +171,9 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 <tr valign="middle">
     <td align="right">State</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="\XLite\View\StateSelect" field="billing_state" state="billing_state" isLinked=1 /></td>
+    <td>
+		<widget class="\XLite\View\StateSelect" field="billing_state" fieldId="billing_state_select" state="{billing_state}" isLinked=1 />
+    </td>
     <td>
         <widget class="\XLite\Validator\RequiredValidator" field="billing_state">
         <widget class="\XLite\Validator\StateValidator" field="billing_state" countryField="billing_country">
@@ -180,7 +182,8 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 <tr valign="middle">
 	<td align="right">Other state (specify)</td>
 	<td>&nbsp;</td>
-	<td><input type="text" name="billing_custom_state" value="{billing_custom_state:r}" size="32" maxlength="64" /></td>
+	<td><input type="text" name="billing_custom_state" value="{billing_custom_state:r}" size="32" maxlength="64">
+	</td>
 	<td>
 		&nbsp;
 	</td>
@@ -188,8 +191,12 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 <tr valign="middle">
     <td align="right">Country</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="\XLite\View\CountrySelect" field="billing_country" country="{billing_country}" /></td>
-    <td><widget class="\XLite\Validator\RequiredValidator" field="billing_country"></td>
+    <td>
+		<widget class="\XLite\View\CountrySelect" field="billing_country" fieldId="billing_country_select" country="{billing_country}" />
+    </td>
+    <td>
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_country">
+    </td>
 </tr>
 <tr valign="middle">
     <td align="right">Zip code</td>
@@ -213,7 +220,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
     <b>Shipping Address (leave empty if same as billing address)</b>
     <br />
     <hr size="1" noshade>
-    </td>
+    <widget class="\XLite\View\Button\Regular" label="Copy Billing Info" jsCode="copyBillingInfo(document.registration_form);" /></td>
 </tr>
 <tr valign="middle">
     <td align="right">Title</td>
@@ -294,7 +301,9 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 <tr valign="middle">
     <td align="right">State</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="\XLite\View\StateSelect" field="shipping_state" state="{shipping_state}" isLinked=1 /></td>
+    <td>
+		<widget class="\XLite\View\StateSelect" field="shipping_state" state="{shipping_state}" fieldId="shipping_state_select" isLinked=1 />
+    </td>
     <td>
         <widget class="\XLite\Validator\StateValidator" field="shipping_state" countryField="shipping_country">
     </td>
@@ -302,14 +311,20 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 <tr valign="middle">
 	<td align="right">Other state (specify)</td>
 	<td>&nbsp;</td>
-	<td><input type="text" name="shipping_custom_state" value="{shipping_custom_state:r}" size="32" maxlength="64" /></td>
-	<td>&nbsp;</td>
+	<td><input type="text" name="shipping_custom_state" value="{shipping_custom_state:r}" size="32" maxlength="64">
+	</td>
+	<td>
+		&nbsp;
+	</td>
 </tr>
 <tr valign="middle">
     <td align="right">Country</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="\XLite\View\CountrySelect" field="shipping_country" country="{shipping_country}" /></td>
-    <td>&nbsp;</td>
+    <td>
+		<widget class="\XLite\View\CountrySelect" field="shipping_country" fieldId="shipping_country_select" country="{shipping_country}" />
+    </td>
+    <td>
+    </td>
 </tr>
 <tr valign="middle">
     <td align="right">Zip code</td>

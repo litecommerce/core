@@ -54,7 +54,7 @@ jQuery(document).ready(function(){
 <table cellspacing="0" cellpadding="0" class="data-table items-list modules-list">
 
   <tr FOREACH="getPageData(),idx,module" class="{getRowClass(idx,##,#highlight#)}">
-    {displayListPart(#columns#,_ARRAY_(#module#^module))}
+    {displayInheritedViewListContent(#columns#,_ARRAY_(#module#^module))}
   </tr>
 
 </table>

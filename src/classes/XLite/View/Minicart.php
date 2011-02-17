@@ -34,6 +34,8 @@ namespace XLite\View;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="layout.header.right", weight="100")
  */
 class Minicart extends \XLite\View\SideBarBox
 {
@@ -78,7 +80,7 @@ class Minicart extends \XLite\View\SideBarBox
      */                                                
     protected function getHead()                       
     {
-        return 'Your shopping cart';
+        return '';
     }
 
     /**

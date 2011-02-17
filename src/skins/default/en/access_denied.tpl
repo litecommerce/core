@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Access denied block
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,5 +10,5 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<h3>Access denied!</h3>
-You are not allowed to access this resource!
+<h3>{t(#Access denied!#)}</h3>
+{t(#You are not allowed to access this resource!#)}

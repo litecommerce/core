@@ -68,19 +68,23 @@ class URLManager extends AUtils
     {
         $hostDetails = \Includes\Utils\ConfigParser::getOptions('host_details');
 
-        $proto = ($isSecure ? 'https' : 'http') . '://';
-        $host  = $hostDetails['http' . ($isSecure ? 's' : '') . '_host'];
+        if ($host = $hostDetails['http' . ($isSecure ? 's' : '') . '_host']) {
 
-        if ('/' != substr($url, 0, 1)) {
-            $url = $hostDetails['web_dir_wo_slash'] . '/' . $url;
+            $proto = ($isSecure ? 'https' : 'http') . '://';
+
+            if ('/' != substr($url, 0, 1)) {
+                $url = $hostDetails['web_dir_wo_slash'] . '/' . $url;
+            }
+
+            if ($isSecure) {
+                $session = \XLite\Core\Session::getInstance();
+                $url .= (false !== strpos($url, '?') ? '&' : '?') . $session->getName() . '=' . $session->getID();
+            }
+
+            $url = $proto . $host . $url;
         }
 
-        if ($isSecure) {
-            $session = \XLite\Core\Session::getInstance();
-            $url .= (false !== strpos($url, '?') ? '&' : '?') . $session->getName() . '=' . $session->getID();
-        }
-
-        return $proto . $host . $url;
+        return $url;
     }
 
     /**

@@ -262,17 +262,16 @@ abstract class AController extends \XLite\Core\Handler
         $this->locationPath = array();
 
         // Common element for all location lines
-        $this->addLocationNode('Home', $this->buildURL());
+        $this->locationPath[] = new \XLite\View\Location\Node\Home();
 
         // Ability to add part to the line
         $this->addBaseLocation();
 
         // Ability to define last element in path via short function
-        $params = (array) $this->getLocation();
+        $location = $this->getLocation();
 
-        // FIXME - check this
-        if ($params) {
-            call_user_func_array(array('static', 'addLocationNode'), $params);
+        if ($location) {
+            $this->addLocationNode($location);
         }
     }
 
@@ -376,13 +375,13 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Perform some actions before redirect
      *
-     * @param string|null $action Performed action
+     * @param string $action Performed action OPTIONAL
      *
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function actionPostprocess($action)
+    protected function actionPostprocess($action = null)
     {
         if (isset($action)) {
             $method = __FUNCTION__ . \XLite\Core\Converter::convertToCamelCase($action);
@@ -543,7 +542,28 @@ abstract class AController extends \XLite\Core\Handler
 
             $this->display404();
 
-        } elseif (!empty(\XLite\Core\Request::getInstance()->action) && $this->isValid()) {
+        } else {
+            $this->callAction();
+        }
+
+        if ($this->isRedirectNeeded()) {
+            $this->doRedirect();
+        }
+    }
+
+    /**
+     * Call controller action or special default action
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function callAction()
+    {
+        $action = null;
+
+        if (!empty(\XLite\Core\Request::getInstance()->action) && $this->isValid()) {
 
             $action = \XLite\Core\Request::getInstance()->action;
 
@@ -559,48 +579,81 @@ abstract class AController extends \XLite\Core\Handler
                 $this->$newMethodName();
             }
 
-            $this->actionPostprocess($action);
-
         } else {
             $this->doNoAction();
         }
 
-        if ($this->isRedirectNeeded()) {
-            if ($this->isAJAX()) {
+        $this->actionPostprocess($action);
+    }
 
-                foreach (\XLite\Core\TopMessage::getInstance()->getMessages() as $message) {
-                    $encodedMessage = json_encode(
-                        array(
-                            'type'    => $message[\XLite\Core\TopMessage::FIELD_TYPE],
-                            'message' => $message[\XLite\Core\TopMessage::FIELD_TEXT],
-                        )
-                    );
-                    header('event-message: ' . $encodedMessage);
-                }
-                \XLite\Core\TopMessage::getInstance()->clear();
+    /**
+     * Do redirect 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doRedirect()
+    {
+        if ($this->isAJAX()) {
+            $this->translateTopMessagesToHTTPHeaders();
+            $this->assignAJAXResponseStatus();
+        }
 
-                if (!$this->isValid()) {
+        $this->redirect();
+    }
 
-                    // AXAX-based - cancel redirect
-                    header('ajax-response-status: 0');
-                    header('not-valid: 1');
+    /**
+     * Translate top messages to HTTP headers (AJAX)
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function translateTopMessagesToHTTPHeaders()
+    {
+        foreach (\XLite\Core\TopMessage::getInstance()->getMessages() as $message) {
+            $encodedMessage = json_encode(
+                array(
+                    'type'    => $message[\XLite\Core\TopMessage::FIELD_TYPE],
+                    'message' => $message[\XLite\Core\TopMessage::FIELD_TEXT],
+                )
+            );
+            header('event-message: ' . $encodedMessage);
+        }
+        \XLite\Core\TopMessage::getInstance()->clear();
+    }
 
-                } elseif ($this->internalRedirect) {
+    /**
+     * Assign AJAX response status to HTTP header(s)
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function assignAJAXResponseStatus()
+    {
+        if (!$this->isValid()) {
 
-                    // Popup internal redirect
-                    header('ajax-response-status: 279');
+            // AXAX-based - cancel redirect
+            header('ajax-response-status: 0');
+            header('not-valid: 1');
 
-                } elseif ($this->silenceClose) {
+        } elseif ($this->internalRedirect) {
 
-                    // Popup silence close
-                    header('ajax-response-status: 277');
+            // Popup internal redirect
+            header('ajax-response-status: 279');
 
-                } else {
-                    header('ajax-response-status: 270');
-                }
-            }
+        } elseif ($this->silenceClose) {
 
-            $this->redirect();
+            // Popup silence close
+            header('ajax-response-status: 277');
+
+        } else {
+            header('ajax-response-status: 270');
         }
     }
 
@@ -706,7 +759,9 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function getViewerClass()
     {
-        return $this->isAJAXViewer() ? \XLite\Core\Request::getInstance()->widget : '\XLite\View\Controller';
+        return $this->isAJAXViewer()
+            ? \XLite\Core\Request::getInstance()->widget
+            : '\XLite\View\Controller';
     }
 
     /**
@@ -731,16 +786,46 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getViewer()
     {
-        $params = array();
-
-        // FIXME: is it really needed?
-        foreach (array(self::PARAM_SILENT, self::PARAM_DUMP_STARTED) as $name) {
-            $params[$name] = $this->get($name);
-        }
-
         $class = $this->getViewerClass();
 
-        return new $class($params, $this->getViewerTemplate());
+        return new $class($this->getViewerParams(), $this->getViewerTemplate());
+    }
+
+    /**
+     * Process request 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function processRequest()
+    {
+        $viewer = $this->getViewer();
+        $viewer->init();
+
+        if ($this->isAJAX()) {
+            $this->printAJAXOuput($viewer->getContent());
+            
+        } else {
+            $viewer->display();
+        }
+    }
+
+    /**
+     * Print AJAX request ouput 
+     * 
+     * @param string $output Output
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function printAJAXOuput($output)
+    {
+        echo '<h2 class="ajax-title-loadable">' . $this->getTitle() . '</h2>';
+        echo '<div class="ajax-container-loadable">' . $output . '</div>';
     }
 
     /**
@@ -1263,4 +1348,63 @@ abstract class AController extends \XLite\Core\Handler
     {
         return intval(\XLite\Core\Request::getInstance()->category_id) ?: $this->getRootCategoryId();
     }
+
+    /**
+     * Get viewer parameyers
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getViewerParams()
+    {
+        $params = array();
+
+        // FIXME: is it really needed?
+        foreach (array(self::PARAM_SILENT, self::PARAM_DUMP_STARTED) as $name) {
+            $params[$name] = $this->get($name);
+        }
+
+        if ($this->isAJAXViewer()) {
+            $data = \XLite\Core\Request::getInstance()->getData();
+
+            if (isset($data['target'])) {
+                unset($data['target']);
+            }
+
+            if (isset($data['action'])) {
+                unset($data['action']);
+            }
+
+            $params += $data;
+        }
+
+        return $params;
+    }
+
+    /**
+     * Get meta description
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getMetaDescription()
+    {
+        return null;
+    }
+
+    /**
+     * Get meta keywords
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getKeywords()
+    {
+        return null;
+    }
+
 }

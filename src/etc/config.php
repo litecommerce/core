@@ -146,7 +146,13 @@ developer_mode = Off
 ; Decorator options
 ;
 [decorator]
-time_limit=240
+time_limit = 240
+
+;
+; Error handlink options
+;
+[error_handling]
+page = "public/error.html"
 
 ;
 ; Other options

@@ -119,4 +119,3 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
         return \XLite\Core\CMSConnector::isCMSStarted() && $this->isWrapper();
     }
 }
-

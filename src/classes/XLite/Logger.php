@@ -120,7 +120,7 @@ class Logger extends \XLite\Base\Singleton
         );
 
         set_error_handler(array($this, 'registerPHPError'));
-        set_exception_handler(array($this, 'registerException'));
+        // set_exception_handler(array($this, 'registerException'));
 
         // Default log path
         $path = $this->getErrorLogPath();

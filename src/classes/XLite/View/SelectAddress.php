@@ -58,7 +58,7 @@ class SelectAddress extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'Pick address from address book';
+        return null;
     }
 
     /**

@@ -247,10 +247,12 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
 
         $path .= LC_DS . $this->getDomain($code) . '.mo';
         if (!file_exists($path)) {
+            $result = false;
             if ($this->getMsgFmtExecutable()) {
                 $result = $this->createIndexFileBin($path, $code);
+            }
 
-            } else {
+            if (!$result) {
                 $result = $this->createIndexFile($path, $code);
             }
         }
@@ -351,7 +353,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
         if ($fp) {
 
             foreach ($list as $k => $v) {
-                fwrite($fp, 'msgid "' . addslashes($k) . '"' . "\n" . 'msgstr "' . addslashes($v) . '"' . "\n\n");
+                fwrite($fp, 'msgid "' . addcslashes($k, '"\\') . '"' . "\n" . 'msgstr "' . addcslashes($v, '"\\') . '"' . "\n\n");
             }
 
             fclose($fp);

@@ -28,8 +28,23 @@
 
 require_once __DIR__ . '/ACustomer.php';
 
+/**
+ * XLite_Web_Customer_ProductDetails 
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 {
+    /**
+     * testStructure 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function testStructure()
     {
         $product = $this->getActiveProduct();
@@ -126,14 +141,14 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             'check price'
         );
         $this->assertElementPresent(
-            "css=form.product-details .product-details-info .product-buttons input.quantity.field-requred.field-integer.field-positive.field-non-zero[type=text][value=1]",
+            "css=form.product-details .product-details-info .product-buttons input.quantity.field-integer.field-positive.field-non-zero.wheel-ctrl[type=text][value=1]",
             'check quantity input box'
         );
 
         $this->assertElementPresent(
             "//form[@class='product-details']"
             . "/div[@class='product-details-info']"
-            . "/div[@class='product-buttons']"
+            . "/div[@class='product-buttons shade-base']"
             . "/div[@class='buttons-row']"
             . "/button[@type='submit' and @class='bright add2cart']"
             . "/span[text()='Add to Bag']",
