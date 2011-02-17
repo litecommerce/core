@@ -278,6 +278,21 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
     }
 
     /**
+     * Check - shipping rates exists or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShippingRatesExists()
+    {
+        return $this->isShippingAvailable()
+            || !\XLite\Model\Shipping::getInstance()->getDestinationAddress($this);
+    }
+
+
+    /**
      * Check if shipping enabled and available for calculation
      * 
      * @return boolean 

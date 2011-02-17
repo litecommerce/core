@@ -108,6 +108,21 @@ class Review extends \XLite\View\Checkout\Step\AStep
     }
 
     /**
+     * Get payment processor 
+     * 
+     * @return \XLite\Model\Payment\Base\Processor
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProcessor()
+    {
+        return $this->getCart()->getPaymentMethod()
+            ? $this->getCart()->getPaymentMethod()->getProcessor()
+            : null;
+    }
+
+    /**
      * Get payment template 
      * 
      * @return string|void
@@ -117,8 +132,8 @@ class Review extends \XLite\View\Checkout\Step\AStep
      */
     protected function getPaymentTemplate()
     {
-        return $this->getCart()->getPaymentMethod()
-            ? $this->getCart()->getPaymentMethod()->getProcessor()->getInputTemplate()
-            : null;
+        $processor = $this->getProcessor();
+
+        return $processor ? $processor->getInputTemplate() : null;
     }
 }
