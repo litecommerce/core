@@ -247,7 +247,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->assertJqueryNotPresent('ul.payments li input:checked', 'payment is not selected');
 
-        $this->toggleByJquery('#pmethod6', true);
+        $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
 
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',
@@ -540,7 +540,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
             'John Smith bbb'
         );
 
-        $this->toggleByJquery('#pmethod6', true);
+        $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
 
         $this->click('css=.current .button-row button');
         $this->waitForLocalCondition(
@@ -674,7 +674,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
     protected function fillPaymentStep()
     {
-        $this->toggleByJquery('#pmethod6', true);
+        $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
 
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',
