@@ -145,9 +145,9 @@ abstract class ErrorHandler
     /**
      * Show error message (page)
      * 
-     * @param integer $code    Error message
-     * @param string  $message Error code
-     * @param string  $page    Error page or message template
+     * @param mixed  $code    Error code
+     * @param string $message Error message
+     * @param string $page    Error page or message template
      *  
      * @return void
      * @access protected
