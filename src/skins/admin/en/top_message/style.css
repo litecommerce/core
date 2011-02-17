@@ -1,7 +1,7 @@
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
- * ____file_title____
+ * Top messages styles
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,7 +11,7 @@
  * @since     3.0.0
  */
 
-#top_messages {
+#status-messages {
   position: fixed;
   display: block
   top: 0px;
@@ -22,7 +22,7 @@
   background-color: #fff;
 }
 
-#top_messages a.close {
+#status-messages a.close {
   width: 13px;
   height: 13px;
   display: block;
@@ -32,7 +32,7 @@
   background: #fff url(images/remove.gif) no-repeat;
 }
 
-#top_messages ul {
+#status-messages ul {
   border-style: none solid solid solid;
   border-color: #bbc7d2;
   list-style: none;
@@ -40,7 +40,7 @@
   padding: 15px;
 }
 
-#top_messages li {
+#status-messages li {
   list-style: none;
   padding: 3px 3px 3px 25px;
   background-repeat: no-repeat;
@@ -48,17 +48,17 @@
   font-style: normal;
 }
 
-#top_messages li.info {
+#status-messages li.info {
   background-image: url(images/icon_notify_info.png);
   color: #3171ab;
 }
 
-#top_messages li.warning {
+#status-messages li.warning {
   background-image: url(images/icon_notify_warn.png);
   color: #000;
 }
 
-#top_messages li.error {
+#status-messages li.error {
   background-image: url(images/icon_notify_error.png);
   color: #cc1e1e;
 }
