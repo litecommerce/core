@@ -60,13 +60,15 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      */
     protected function getSerializedOptions()
     {
-        $result = '';
+        $list = array();
 
         foreach ($this->getOptions() as $option) {
-            $result .= '|' . $option->getActualName() . ':' . $option->getActualValue();
+            $list[] = $option->getActualName() . ':' . $option->getActualValue();
         }
 
-        return $result;
+        sort($list);
+
+        return implode('|', $list);
     }
 
     /**

@@ -11,14 +11,6 @@
  * @since     3.0.0
  */
 
-input.date-picker {
-  width: 120px;
-  padding-right: 20px;
-  background-image: url(../images/calendar.gif);
-  background-repeat: no-repeat;
-  background-position: right 1px;
-}
-
 #ui-datepicker-div {
   border: 1px solid #bbc7d2;
   background: #fff none;

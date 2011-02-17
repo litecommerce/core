@@ -87,6 +87,18 @@ class TemplateEditor extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Template editor';
+    }
+
+    /**
      * getExtraPageContent 
      * 
      * @return string|void

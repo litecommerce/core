@@ -244,7 +244,7 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
         if ($this->getShippingId() != $newShippingId) {
 
             $this->setShippingId($newShippingId);
-            $this->setShippingMethodName($rate->getMethod()->getName());
+            $this->setShippingMethodName($rate ? $rate->getMethod()->getName() : null);
 
             \XLite\Core\Database::getEM()->flush();
         }
@@ -276,6 +276,21 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
     {
         return $this->isDeliveryAvailable();
     }
+
+    /**
+     * Check - shipping rates exists or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShippingRatesExists()
+    {
+        return $this->isShippingAvailable()
+            || !\XLite\Model\Shipping::getInstance()->getDestinationAddress($this);
+    }
+
 
     /**
      * Check if shipping enabled and available for calculation

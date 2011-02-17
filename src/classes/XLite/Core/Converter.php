@@ -156,15 +156,20 @@ class Converter extends \XLite\Base\Singleton
     {
         $url = isset($interface) ? $interface : \XLite::getInstance()->getScript();
 
+        $_params = array();
+
         if ($target) {
-            $params['target'] = $target;
+            $_params['target'] = $target;
         }
 
         if ($action) {
-            $params['action'] = $action;
+            $_params['action'] = $action;
         }
 
+        $params = $_params + $params;
+
         if (!empty($params)) {
+            uksort($params, array(get_called_class(), 'sortURLParams'));
             $url .= '?' . http_build_query($params);
         }
 
@@ -401,4 +406,19 @@ class Converter extends \XLite\Base\Singleton
         return strftime($format, $base);
     }
 
+    /**
+     * Sort URL parameters (callback)
+     * 
+     * @param string $a First parameter
+     * @param string $b Second parameter
+     *  
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function sortURLParams($a, $b)
+    {
+        return ($b == 'target' || ($b == 'action' && $a != 'target')) ? 1 : 0;
+    }
 }

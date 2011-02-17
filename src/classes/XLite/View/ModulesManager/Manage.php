@@ -100,7 +100,7 @@ class Manage extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getHead()
     {
-        return 'Manage Add-ons' . $this->getUpgradableModulesFlag();
+        return null;
     }
 
     /**

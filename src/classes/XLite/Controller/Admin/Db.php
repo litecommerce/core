@@ -49,6 +49,18 @@ class Db extends \XLite\Controller\Admin\AAdmin
         return ini_get('upload_max_filesize');
     }
 
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'DB Backup/Restore';
+    }
+
 
     public $params = array('target', 'page');
     public $page = "db_backup";

@@ -51,6 +51,18 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Edit profile';
+    }
+
+    /**
      * Add part to the location nodes list
      *
      * @return void

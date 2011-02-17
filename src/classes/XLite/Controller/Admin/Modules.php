@@ -38,18 +38,18 @@ namespace XLite\Controller\Admin;
 class Modules extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Handles the request.
-     * Parses the request variables if necessary. Attempts to call the specified action function 
+     * Call controller action or special default action
      * 
      * @return void
-     * @access public
+     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest()
+    protected function callAction()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Module')->checkModules();
+        \XLite\Core\Database::getRepo('XLite\Model\Module')->checkModules();
 
-        parent::handleRequest();
+        parent::callAction();
     }
 
     /**
@@ -63,6 +63,34 @@ class Modules extends \XLite\Controller\Admin\AAdmin
     protected function getLocation()
     {
         return 'Manage add-ons';
+    }
+
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Manage add-ons' . $this->getUpgradableModulesFlag();
+    }
+
+    /**
+     * Return upgradable modules flag label:
+     * - empty string if no any
+     * - number of upgradable modules in brackets
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getUpgradableModulesFlag()
+    {
+        $upgradeables = count(\Xlite\Core\Database::getRepo('XLite\Model\Module')->findUpgradableModules());
+
+        return 0 < $upgradeables ? ' (' . $upgradeables . ')' : '';
     }
 
     /**

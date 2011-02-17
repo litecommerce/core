@@ -29,11 +29,13 @@
 namespace XLite\View;
 
 /**
- * \XLite\View\AddressBook 
+ * Address book 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="center", zone="customer")
  */
 class AddressBook extends \XLite\View\Dialog
 {

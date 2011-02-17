@@ -73,6 +73,20 @@ class ExportCatalog extends \XLite\Controller\Admin\AAdmin
         $this->addLocationNode('Import/Export', $this->buildURL('import_catalog'));
     }
 
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Import/Export';
+    }
+
     function handleRequest()
     {
         $name = "";

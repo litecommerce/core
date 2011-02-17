@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Dialog
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,13 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<br />
-
-<div class="DialogTitle">
-  {* FIXME - must use the getHead() function instead *}
-  {head:h}
-</div>
-
-<div>
-  <widget template="{body}" />
+<div class="block block-block">
+  <h2 IF="getHead()">{getHead()}</h2>
+  <div class="content"><widget template="{getBody()}" /></div>
 </div>

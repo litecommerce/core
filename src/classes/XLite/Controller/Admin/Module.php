@@ -80,6 +80,18 @@ class Module extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Add-on settings: ' . $this->module->getName() . ' (' . $this->module->getAuthor() . ')';
+    }
+
+    /**
      * Add part to the location nodes list
      *
      * @return void

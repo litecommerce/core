@@ -37,6 +37,31 @@ namespace XLite\Controller\Admin;
  */
 class ImportUsers extends \XLite\Controller\Admin\AAdmin
 {
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Import user accounts';
+    }
+
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Import user accounts';
+    }
+
     public $import_error = false;
 
     function init()
