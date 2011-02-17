@@ -15,10 +15,10 @@
   <th style="width:150px;">Date</th>
   <th>Logged as</th>
 </tr>
-<tbody IF="recentAdmins">
+{if:recentAdmins}
   <tr FOREACH="recentAdmins,recentAdmin" class="{getRowClass(idx,##,#highlight#)}">
 		<td align="center">{formatTime(recentAdmin.last_login):h}</td>
 		<td>{recentAdmin.login:h}</td>
 	</tr>
-</tbody>
+{end:}
 </table>
