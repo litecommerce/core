@@ -156,13 +156,17 @@ class Converter extends \XLite\Base\Singleton
     {
         $url = isset($interface) ? $interface : \XLite::getInstance()->getScript();
 
+        $_params = array();
+
         if ($target) {
-            $params['target'] = $target;
+            $_params['target'] = $target;
         }
 
         if ($action) {
-            $params['action'] = $action;
+            $_params['action'] = $action;
         }
+
+        $params = $_params + $params;
 
         if (!empty($params)) {
             uksort($params, array(get_called_class(), 'sortURLParams'));

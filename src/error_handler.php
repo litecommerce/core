@@ -53,7 +53,7 @@ function showErrorPage($code, $message, $page = LC_ERROR_PAGE_MESSAGE, $prefix =
         $page
     );
 
-    exit (intval($code));
+    exit (intval($code) ?: 1);
 }
 
 // Check PHP version before any other operations

@@ -78,12 +78,12 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             $this->waitForLocalCondition(
                 'jQuery(".payment-step").hasClass("current") == true',
                 10000,
-                'check swicth to review step'
+                'check swicth to payment step'
             );
         }
 
         if (0 < intval($this->getJSExpression('jQuery(".current.payment-step").length'))) {
-            $this->toggleByJquery('#pmethod6', true);
+            $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
             $this->click('css=.current .button-row button');
             $this->waitForLocalCondition(
                 'jQuery(".review-step").hasClass("current") == true',
@@ -99,7 +99,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
                 10000,
                 'check return to payment step'
             );
-            $this->toggleByJquery('#pmethod6', true);
+            $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
             $this->click('css=.current .button-row button');
             $this->waitForLocalCondition(
                 'jQuery(".review-step").hasClass("current") == true',
@@ -459,7 +459,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
 
     protected function fillPaymentStep()
     {
-        $this->toggleByJquery('#pmethod6', true);
+        $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
 
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',

@@ -11,13 +11,13 @@
  * @since     3.0.0
  *}
 
-<div id="{getBlockId()}">
+<div id="status-messages" {if:isHidden()} style="display: none;"{end:}>
 
-  <a href="#" class="close" onclick="javascript: document.getElementById('{getBlockId()}').style.display = 'none';">&nbsp;</a>
-
+  <a href="#" class="close" title="{t(#Close#)}"><img src="images/spacer.gif" alt="{t(#Close#)}" /></a>
+  
   <ul>
     <li FOREACH="getTopMessages(),data" class="{getType(data)}">
-    {getText(data)}
+      <em IF="getPrefix(data)">{getPrefix(data)}</em>{getText(data)}
     </li>
   </ul>
 

@@ -448,7 +448,13 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     public function getJSExpression($expression)
     {
-        return $this->getEval('selenium.browserbot.getCurrentWindow().' . $expression);
+        $expression = 'selenium.browserbot.getCurrentWindow().' . $expression;
+
+        if (preg_match('/jQuery/Ss', $expression)) {
+            $expression = '"undefined" != typeof(selenium.browserbot.getCurrentWindow().jQuery) ? ' . $expression . ' : null';
+        }
+
+        return $this->getEval($expression);
     }
 
     /**
@@ -619,6 +625,8 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         if (0 < count(preg_grep('/jQuery/Ss', $condition))) {
             array_unshift($condition, '"undefined" != typeof(selenium.browserbot.getCurrentWindow().jQuery)');
         }
+
+        array_unshift($condition, '"undefined" != typeof(selenium.browserbot.getCurrentWindow)');
 
         $this->waitForCondition(
             implode(' && ', $condition),
