@@ -34,6 +34,8 @@ namespace XLite\View;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="sidebar.footer", zone="customer")
  */
 class PoweredBy extends \XLite\View\AView
 {

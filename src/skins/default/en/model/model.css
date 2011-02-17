@@ -11,7 +11,18 @@
  * @since     3.0.0
  */
 
-.model-form-access-denied {
+.model-form-access-denied
+{
   color: #d00;
   font-size: 1.2em;
+}
+
+.model-form-buttons
+{
+  clear: both;
+}
+
+.profile-form .header
+{
+  padding: 3px;
 }

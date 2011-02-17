@@ -1,91 +1,119 @@
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
- * ____file_title____
+ * Common functions and classes
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version   SVN: $Id$
+ * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
 
-function parseUri (str) {
-	var	o   = parseUri.options,
-		m   = o.parser[o.strictMode ? "strict" : "loose"].exec(str),
-		uri = {},
-		i   = 14;
+function getSkinRoot()
+{
+  var re = new RegExp('js\/common\.js');
+  var list = document.getElementsByTagName('script');
+  var path = null;
+  for (var i = 0; i < list.length && null === path ; i++) {
+    if (list[i].src && list[i].src.search(re) != -1) {
+      path = list[i].src.replace(/js\/common\.js.*/, '');
+    }
+  }
 
-	while (i--) uri[o.key[i]] = m[i] || "";
+  return path;
+}
 
-	uri[o.q.name] = {};
-	uri[o.key[12]].replace(o.q.parser, function ($0, $1, $2) {
-		if ($1) uri[o.q.name][$1] = $2;
-	});
+function parseUri(str) {
+  var o   = parseUri.options,
+  m   = o.parser[o.strictMode ? "strict" : "loose"].exec(str),
+  uri = {},
+  i   = 14;
 
-	return uri;
+  while (i--) {
+    uri[o.key[i]] = m[i] || "";
+  }
+
+  uri[o.q.name] = {};
+  uri[o.key[12]].replace(
+    o.q.parser,
+    function ($0, $1, $2) {
+      if ($1) {
+        uri[o.q.name][$1] = $2;
+      }
+    }
+  );
+
+  return uri;
 };
 
 parseUri.options = {
-	strictMode: false,
-	key: ["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"],
-	q:   {
-		name:   "queryKey",
-		parser: /(?:^|&)([^&=]*)=?([^&]*)/g
-	},
-	parser: {
-		strict: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
-		loose:  /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/
-	}
+  strictMode: false,
+  key: ["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"],
+  q: {
+    name:   "queryKey",
+    parser: /(?:^|&)([^&=]*)=?([^&]*)/g
+  },
+  parser: {
+    strict: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
+    loose:  /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/
+  }
 };
+
+// Get product id from object class name
+function getProductIdFromClassName(obj)
+{
+  var result = false;
+
+  var c = jQuery(obj).attr('class');
+
+  if (c) {
+    var m = c.match(/product-([0-9]+)/);
+    if (m) {
+      result = parseInt(m[1]);
+      if (isNaN(result) || result < 1) {
+        result = false;
+      }
+    }
+  }
+
+  return result;
+}
 
 function formModify(obj, url)
 {
-	var form = obj.form;
-	if (form) {
-		var parsed = parseUri(url);
+  var form = obj.form;
+  if (form) {
+    var parsed = parseUri(url);
 
-		for (var key in parsed.queryKey) {
-			if (form[key]) {
-				form[key].value = parsed.queryKey[key];
+    for (var key in parsed.queryKey) {
+      if (form[key]) {
+        form[key].value = parsed.queryKey[key];
 
-			} else {
-				var input = document.createElement('INPUT');
-				input.type = 'hidden';
-				input.name = key;
-				input.value = parsed.queryKey[key];
+      } else {
+        var input = document.createElement('INPUT');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = parsed.queryKey[key];
 
-				form.appendChild(input);
-			}
-		}
+        form.appendChild(input);
+      }
+    }
 
-		if (
-			form.getAttribute('method')
-			&& form.getAttribute('method').toUpperCase() == 'POST'
-			&& (parsed.query || parsed.path || parsed.host)
-		) {
-			form.setAttribute('action', url);
-		}
-	}
+    if (
+      form.getAttribute('method')
+      && form.getAttribute('method').toUpperCase() == 'POST'
+      && (parsed.query || parsed.path || parsed.host)
+    ) {
+      form.setAttribute('action', url);
+    }
+  }
 
-	return true;
+  return true;
 }
 
-function eventBind(obj, e, func)
-{
-	if ($) {
-		jQuery(obj).bind(e, func);
-
-	} else if (window.addEventListener) {
-		obj.addEventListener(e, func, false);
-
-	} else if (window.attachEvent) {
-		window.attachEvent('on' + e, func);
-	}
-}
-
-
+// URL builder singleton
 var URLHandler = {
 
   mainParams: {target: true, action: true},
@@ -97,7 +125,7 @@ var URLHandler = {
   // Return query param
   getParamValue: function(name, params)
   {
-    return name + this.nameValueSeparator + params[name];
+    return name + this.nameValueSeparator + ('undefined' == typeof(params[name]) ? '' : params[name]);
   },
 
   // Get param value for the target and action params
@@ -189,18 +217,20 @@ var URLHandler = {
   }
 }
 
-
 // Check for the AJAX support
-var ajaxSupport = null;
-
 function hasAJAXSupport()
 {
-  if (null == ajaxSupport) {
-    var xhr = window.ActiveXObject ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
-    ajaxSupport = xhr ? true : false;
+  if (typeof(window.ajaxSupport) == 'undefined') {
+    window.ajaxSupport = false;
+    try {
+
+      var xhr = window.ActiveXObject ? new ActiveXObject('Microsoft.XMLHTTP') : new XMLHttpRequest();
+      window.ajaxSupport = xhr ? true : false;
+
+    } catch(e) { }
   }
 
-  return ajaxSupport;
+  return window.ajaxSupport;
 }
 
 /**
@@ -335,11 +365,11 @@ LoadableWidgetAbstract.prototype.showModalScreen = function()
       css: {
         width: '30%',
         top: '35%',
-        left: '35%',
+        left: '35%'
       },
       overlayCSS: {
         opacity: 0.1
-      },
+      }
     }
   );
 
@@ -369,4 +399,3 @@ LoadableWidgetAbstract.prototype.hideModalScreen = function()
 
   return true;
 }
-

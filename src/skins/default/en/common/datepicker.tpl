@@ -11,6 +11,9 @@
  * @since     3.0.0
  *}
 <input type="text" name="{getParam(#field#)}" value="{getValueAsString()}" class="date-picker {getClassName()}" />
+
+{* TODO restore
+
 <script type="text/javascript">
 $(document).ready(
   function() {
@@ -27,3 +30,5 @@ $(document).ready(
   }
 );
 </script>
+
+*}

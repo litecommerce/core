@@ -109,5 +109,32 @@ class Content extends \XLite\View\AView
     {
         isset(\XLite\View\Controller::$bodyContent) ? $this->echoContent() : parent::display();
     }
+
+    /**
+     * Chewck - first sidebar is visible or not
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isSidebarFirstVisible()
+    {
+        return !in_array(\XLite\Core\Request::getInstance()->target, array('cart', 'product', 'checkout'));
+    }
+
+    /**
+     * Check - second sidebar is visible or not
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isSidebarSecondVisible()
+    {
+        return false;
+    }
+
 }
 

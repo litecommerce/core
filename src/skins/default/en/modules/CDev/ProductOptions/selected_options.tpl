@@ -10,10 +10,15 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<span class="item-option" FOREACH="item.getProductOptions(),option">
-  {option.class:h}: {option.option:h}<span IF="optionArrayPointer<optionArraySize">, </span>
-</span>
+<ul class="selected-options">
+  {foreach:item.getOptions(),option}
+    <li IF="!isOptionEmpty(option)">
+      <span>{option.getActualName():h}:</span>
+      {option.getActualValue():h}{if:!optionArrayPointer=optionArraySize}, {end:}
+    </li>
+  {end:}
+</ul>
 
-<span IF="getParam(#source#)" class="item-change-options">
-  <a href="{buildUrl(#change_options#,##,_ARRAY_(#source#^getParam(#source#),#storage_id#^getParam(#storage_id#),#item_id#^getParam(#item_id#),#isPopup#^#1#))}" onclick="javascript: return changeOption.call(this);">Change options</a>
-</span>
+<div IF="getParam(#source#)" class="item-change-options">
+  <a href="{getChangeOptionsLink()}">{t(#Change options#)}</a>
+</div>

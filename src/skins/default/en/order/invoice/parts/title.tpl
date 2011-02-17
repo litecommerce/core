@@ -12,7 +12,7 @@
  * @ListChild (list="invoice.base", weight="20")
  *}
 <h2 class="invoice">Invoice #{order.getOrderId()}</h2>
-<div class="invoice-title">
-{formatTime(order.getDate())}
-<span>{t(#Grand total#)}: {order.getTotal():p}</span>
+<div class="subhead">
+  {formatTime(order.getDate())}
+  <span>{t(#Grand total#)}: {order.getTotal():p}</span>
 </div>
