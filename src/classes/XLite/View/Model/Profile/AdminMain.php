@@ -396,9 +396,8 @@ class AdminMain extends \XLite\View\Model\AModel
      */
     protected function postprocessErrorActionValidateInput()
     {
-        \XLite\Core\TopMessage::getInstance()->add(
-            $this->getErrorActionValidateInputMessage($this->getRequestData('login')),
-            \XLite\Core\TopMessage::ERROR
+        \XLite\Core\TopMessage::addError(
+            $this->getErrorActionValidateInputMessage($this->getRequestData('login'))
         );
     }
 

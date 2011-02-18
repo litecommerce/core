@@ -370,13 +370,12 @@ class Cart extends \XLite\Controller\Customer\ACustomer
             \XLite\Core\Database::getEM()->remove($item);
             $this->updateCart();
 
-            \XLite\Core\TopMessage::getInstance()->add('Item has been deleted from cart');
+            \XLite\Core\TopMessage::addInfo('Item has been deleted from cart');
 
         } else {
             $this->valid = false;
-            \XLite\Core\TopMessage::getInstance()->add(
-                'Item has not been deleted from cart',
-                \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::addError(
+                'Item has not been deleted from cart'
             );
         }
     }
@@ -461,7 +460,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
             $this->updateCart();
         }
 
-        \XLite\Core\TopMessage::getInstance()->add('Item has been deleted from cart');
+        \XLite\Core\TopMessage::addInfo('Item has been deleted from cart');
         $this->setReturnUrl($this->buildURL('cart'));
     }
 

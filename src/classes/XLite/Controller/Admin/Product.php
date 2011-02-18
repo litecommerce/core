@@ -225,14 +225,13 @@ class Product extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->persist($img);
             \XLite\Core\Database::getEM()->flush();
 
-            \XLite\Core\TopMessage::getInstance()->add(
+            \XLite\Core\TopMessage::addInfo(
                 'The detailed image has been successfully added'
             );
 
         } else {
-            \XLite\Core\TopMessage::getInstance()->add(
-                'The detailed image has not been successfully added',
-                 \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::addError(
+                'The detailed image has not been successfully added'
             );
         }
     }
@@ -255,15 +254,14 @@ class Product extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->remove($img);
             \XLite\Core\Database::getEM()->flush();
 
-            \XLite\Core\TopMessage::getInstance()->add(
+            \XLite\Core\TopMessage::getInstance()->addInfo(
                 'The detailed image has been deleted'
             );
 
         } else {
 
-            \XLite\Core\TopMessage::getInstance()->add(
-                'The detailed image has not been deleted',
-                \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::addError(
+                'The detailed image has not been deleted'
             );
         }
     }
@@ -298,7 +296,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
 
         \XLite\Core\Database::getEM()->flush();
 
-        \XLite\Core\TopMessage::getInstance()->add(
+        \XLite\Core\TopMessage::addInfo(
             'The detailed images have been successfully updated'
         );
     }
@@ -493,9 +491,8 @@ class Product extends \XLite\Controller\Admin\AAdmin
                 && !$this->checkCleanURLUnique($properties['clean_url'])
             ) {
 
-                \XLite\Core\TopMessage::getInstance()->add(
-                    'The Clean URL you specified is already in use. Please specify another Clean URL',
-                    \XLite\Core\TopMessage::ERROR
+                \XLite\Core\TopMessage::addError(
+                    'The Clean URL you specified is already in use. Please specify another Clean URL'
                 );
                 $this->set('valid', false);
                 return;

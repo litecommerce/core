@@ -102,10 +102,7 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
         \XLite\Core\Database::getEM()->persist($newMethod);
         \XLite\Core\Database::getEM()->flush();
 
-        \XLite\Core\TopMessage::getInstance()->add(
-            $this->t('Shipping method has been added'),
-            \XLite\Core\TopMessage::INFO
-        );
+        \XLite\Core\TopMessage::addInfo('Shipping method has been added');
     }
 
     /**
@@ -143,10 +140,7 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
 
             \XLite\Core\Database::getEM()->flush();
 
-            \XLite\Core\TopMessage::getInstance()->add(
-                $this->t('Shipping methods have been updated'),
-                \XLite\Core\TopMessage::INFO
-            );
+            \XLite\Core\TopMessage::addInfo('Shipping methods have been updated');
         }
     }
 
@@ -171,10 +165,7 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->flush();
             \XLite\Core\Database::getEM()->clear();
 
-            \XLite\Core\TopMessage::getInstance()->add(
-                $this->t('The selected shipping method has been deleted successfully'),
-                \XLite\Core\TopMessage::INFO
-            );
+            \XLite\Core\TopMessage::getInstance()->addInfo('The selected shipping method has been deleted successfully');
         }
     }
 }

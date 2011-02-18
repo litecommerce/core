@@ -89,16 +89,15 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
                 }
                 \XLite\Core\Database::getEM()->flush();
 
-                \XLite\Core\TopMessage::getInstance()->add(
+                \XLite\Core\TopMessage::addInfo(
                     'The product option groups have been successfully updated'
                 );
             }
         }
 
         if (!isset($options) || !$options) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                'The product option groups have not been successfully updated',
-                \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::addError(
+                'The product option groups have not been successfully updated'
             );
         }
     }
@@ -124,16 +123,15 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
 
                 \XLite\Core\Database::getEM()->flush();
 
-                \XLite\Core\TopMessage::getInstance()->add(
+                \XLite\Core\TopMessage::addInfo(
                     'The product option groups have been deleted'
                 );
             }
         }
 
         if (!isset($options) || !$options) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                'The product option groups have not been deleted',
-                \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::getInstance()->addError(
+                'The product option groups have not been deleted'
             );
         }
     }
@@ -161,39 +159,33 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
         $data = \XLite\Core\Request::getInstance()->data;
 
         if (!isset($group)) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                'The modified option group has not been found',
-                \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::addError(
+                'The modified option group has not been found'
             );
 
         } elseif (!$this->getProduct()) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                'The modified product has not been found',
-                \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::addError(
+                'The modified product has not been found'
             );
 
         } elseif (!is_array($data)) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                'The modified option group data has not been found',
-                \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::addError(
+                'The modified option group data has not been found'
             );
 
         } elseif (!isset($data['name']) || !$data['name']) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                'The modified option group must have a name',
-                \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::addError(
+                'The modified option group must have a name'
             );
 
         } elseif (!$group->setType($data['type'])) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                'The modified option group has a wrong type',
-                \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::addError(
+                'The modified option group has a wrong type'
             );
 
         } elseif (!$group->setViewType($data['view_type'])) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                'The option must have a name',
-                \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::getInstance()->addError(
+                'The option must have a name'
             );
 
         } else {
@@ -237,12 +229,12 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
                 \XLite\Core\Database::getEM()->flush();
 
                 if ('0' === \XLite\Core\Request::getInstance()->groupId) {
-                    \XLite\Core\TopMessage::getInstance()->add(
+                    \XLite\Core\TopMessage::addInfo(
                         'The product option group has been successfully added'
                     );
 
                 } else {
-                    \XLite\Core\TopMessage::getInstance()->add(
+                    \XLite\Core\TopMessage::addInfo(
                         'The product option group has been successfully updated'
                     );
                 }
@@ -274,16 +266,15 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
 
                 \XLite\Core\Database::getEM()->flush();
 
-                \XLite\Core\TopMessage::getInstance()->add(
+                \XLite\Core\TopMessage::addInfo(
                     'The options have been deleted'
                 );
             }
         }
 
         if (!isset($options) || !$options) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                'The options have not been deleted',
-                \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::addError(
+                'The options have not been deleted'
             );
         }
     }
@@ -301,9 +292,8 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
         $exceptions = \XLite\Core\Request::getInstance()->exceptions;
 
         if (!is_array($exceptions) || !$exceptions) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                'The modified exceptions data has not been found',
-                \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::getInstance()->addError(
+                'The modified exceptions data has not been found'
             );
 
         } else {
@@ -331,7 +321,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
                 \XLite\Core\Database::getEM()->flush();
             }
 
-            \XLite\Core\TopMessage::getInstance()->add(
+            \XLite\Core\TopMessage::addInfo(
                 'The exceptions have been successfully updated'
             );
 
@@ -361,14 +351,13 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
 
             \XLite\Core\Database::getEM()->flush();
 
-            \XLite\Core\TopMessage::getInstance()->add(
+            \XLite\Core\TopMessage::addInfo(
                 'The exceptions have been deleted'
             );
 
         } else {
-            \XLite\Core\TopMessage::getInstance()->add(
-                'The exceptions have not been deleted',
-                \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::addError(
+                'The exceptions have not been deleted'
             );
         }
     }
@@ -389,9 +378,8 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
         $result = false;
 
         if (!$data['name']) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                'The modified option group has a wrong display type',
-                \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::addError(
+                'The modified option group has a wrong display type'
             );
 
         } else {

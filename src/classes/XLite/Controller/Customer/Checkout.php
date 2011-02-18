@@ -355,10 +355,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
         $pm = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
             ->find(\XLite\Core\Request::getInstance()->methodId);
         if (!$pm) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                'No payment method selected',
-                \XLite\Core\TopMessage::ERROR
-            );
+            \XLite\Core\TopMessage::addError('No payment method selected');
     
         } else {
 
@@ -369,9 +366,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
             $this->updateCart();
 
             if ($this->isPaymentNeeded()) {
-                \XLite\Core\TopMessage::getInstance()->add(
-                    'The selected payment method is obsolete or invalid. Select another payment method',
-                    \XLite\Core\TopMessage::ERROR
+                \XLite\Core\TopMessage::addError(
+                    'The selected payment method is obsolete or invalid. Select another payment method'
                 );
             }
         }
