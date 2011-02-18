@@ -160,7 +160,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
             @unlink(LC_LOCAL_REPOSITORY . $result);
         }
 
-        $this->set('returnUrl', $this->buildURL('modules'));
+        $this->setReturnUrl($this->buildURL('modules'));
     }
 
     /** 

@@ -81,7 +81,7 @@ class Search extends \XLite\Controller\Customer\ACustomer
         }   
     
         $this->session->set($sessionCell, $productsSearch);
-        $this->set('returnUrl', $this->buildUrl('search', '', array('mode' => 'search')));
+        $this->setReturnUrl($this->buildUrl('search', '', array('mode' => 'search')));
 
     }
 

@@ -50,7 +50,7 @@ class CcCert extends \XLite\Controller\Admin\AAdmin
             $this->saveParam('file_name', $filename);
             $this->saveParam('cert_text', $content);
         }
-        $this->set('returnUrl', "admin.php?target=payment_method&payment_method=" . $this->get('cc_processor'));
+        $this->setReturnUrl("admin.php?target=payment_method&payment_method=" . $this->get('cc_processor'));
     }
 
     function saveParam($name, $value)
