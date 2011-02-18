@@ -130,7 +130,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
         }
 
         if (!isset($options) || !$options) {
-            \XLite\Core\TopMessage::getInstance()->addError(
+            \XLite\Core\TopMessage::addError(
                 'The product option groups have not been deleted'
             );
         }
@@ -184,7 +184,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
             );
 
         } elseif (!$group->setViewType($data['view_type'])) {
-            \XLite\Core\TopMessage::getInstance()->addError(
+            \XLite\Core\TopMessage::addError(
                 'The option must have a name'
             );
 
@@ -292,7 +292,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
         $exceptions = \XLite\Core\Request::getInstance()->exceptions;
 
         if (!is_array($exceptions) || !$exceptions) {
-            \XLite\Core\TopMessage::getInstance()->addError(
+            \XLite\Core\TopMessage::addError(
                 'The modified exceptions data has not been found'
             );
 
