@@ -172,6 +172,10 @@ class Product extends \XLite\Controller\Admin\AAdmin
                 $this->getCategoryProducts($product)
             );
 
+            \XLite\Core\TopMessage::addInfo(
+                'New product has been successfully added'
+            );
+
             // Add the ID of created product to the return URL
             $this->setReturnUrl($this->buildURL('product', '', array('product_id' => $product->getProductId())));
         }
@@ -199,6 +203,10 @@ class Product extends \XLite\Controller\Admin\AAdmin
             $product,
             $this->getCategoryProducts($product) + $this->getPostedData()
         );
+
+            \XLite\Core\TopMessage::addInfo(
+                'Product info has been successfully updated'
+            );
     }
 
     /**
