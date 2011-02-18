@@ -488,7 +488,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             if ($errors) {
                 foreach ($errors as $error) {
-                    \XLite\Core\TopMessage::getInstance()->addError($error);
+                    \XLite\Core\TopMessage::addError($error);
                 }
                 $this->redirect($this->buildURL('checkout'));
 

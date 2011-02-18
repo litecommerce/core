@@ -231,7 +231,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      */
     protected function processInvalidAmountError(\XLite\Model\Product $product, $amount)
     {
-        \XLite\Core\TopMessage::getInstance()->addWarning(
+        \XLite\Core\TopMessage::addWarning(
             'Only ' . $amount . ' items are available for the "' . $product->getName() . '" product'
         );
     }
@@ -247,7 +247,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     protected function processAddItemError()
     {
         if (\XLite\Model\Cart::NOT_VALID_ERROR == $this->getCart()->getAddItemError()) {
-            \XLite\Core\TopMessage::getInstance()->addError('Product has not been added to cart');
+            \XLite\Core\TopMessage::addError('Product has not been added to cart');
         }
     }
 
@@ -261,7 +261,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      */
     protected function processAddItemSuccess()
     {
-        \XLite\Core\TopMessage::getInstance()->addInfo('Product has been added to the cart');
+        \XLite\Core\TopMessage::addInfo('Product has been added to the cart');
     }
 
     /**

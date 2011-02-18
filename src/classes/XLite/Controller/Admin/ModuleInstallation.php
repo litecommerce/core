@@ -136,7 +136,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
 
                 $module->deploy();
 
-                \XLite\Core\TopMessage::getInstance()->addInfo(
+                \XLite\Core\TopMessage::addInfo(
                     'Module has been uploaded successfully'
                 );
 
@@ -146,7 +146,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
 
             } else {
 
-                \XLite\Core\TopMessage::getInstance()->addError(
+                \XLite\Core\TopMessage::addError(
                     'Checking procedure returns with "{{result}}" result for {{file}} file.',
                     array(
                         'result'    => $module->getStatus() . '::' . $module->getError(),

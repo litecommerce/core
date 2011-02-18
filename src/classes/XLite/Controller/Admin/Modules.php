@@ -200,7 +200,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
 
         if (!$module) {
 
-            \XLite\Core\TopMessage::getInstance()->addError('The module to uninstall has not been found');
+            \XLite\Core\TopMessage::addError('The module to uninstall has not been found');
 
         } else {
 
@@ -213,9 +213,9 @@ class Modules extends \XLite\Controller\Admin\AAdmin
             $status = $module->uninstall();
 
             if ($status) {
-                \XLite\Core\TopMessage::getInstance()->addInfo('The module has been uninstalled successfully');
+                \XLite\Core\TopMessage::addInfo('The module has been uninstalled successfully');
             } else {
-                \XLite\Core\TopMessage::getInstance()->addWarning('The module has been partially uninstalled');
+                \XLite\Core\TopMessage::addWarning('The module has been partially uninstalled');
             }
 
             if ($notes) {

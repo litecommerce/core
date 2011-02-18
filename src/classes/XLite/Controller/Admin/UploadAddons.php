@@ -88,7 +88,7 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
 
         } else {
 
-            \XLite\Core\TopMessage::getInstance()->addError(
+            \XLite\Core\TopMessage::addError(
                 'You should provide .PHAR file to use this form'
             );
         }
@@ -116,13 +116,13 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
 
             $module->deploy();
 
-            \XLite\Core\TopMessage::getInstance()->addInfo(
+            \XLite\Core\TopMessage::addInfo(
                 'Module(s) has been uploaded successfully'
             );
 
         } else {
 
-            \XLite\Core\TopMessage::getInstance()->addError(
+            \XLite\Core\TopMessage::addError(
                 'Checking procedure returns with "{{result}}" result for {{index}}: {{file}} file.',
                 array(
                     'result'    => $module->getStatus() . '::' . $module->getError(),
