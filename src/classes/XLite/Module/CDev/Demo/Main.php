@@ -138,6 +138,6 @@ abstract class Main extends \XLite\Module\AModule
             $message = 'You cannot do this in demo mode.';
         }
 
-        \XLite\Core\TopMessage::getInstance()->add($message, \XLite\Core\TopMessage::WARNING);
+        \XLite\Core\TopMessage::addWarning($message);
     }
 }

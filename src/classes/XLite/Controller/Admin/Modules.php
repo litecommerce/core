@@ -147,16 +147,14 @@ class Modules extends \XLite\Controller\Admin\AAdmin
 
             } else {
 
-                \XLite\Core\TopMessage::getInstance()
-                    ->addError('Module packaging finished with the error: "' . $packModule->getError() . '"');
+                \XLite\Core\TopMessage::addError('Module packaging finished with the error: "' . $packModule->getError() . '"');
             }
 
             $packModule->cleanUp();
 
         } else {
 
-            \XLite\Core\TopMessage::getInstance()
-                ->addError('Module packing is available in the DEVELOPER mode only. Check etc/config.php file');
+            \XLite\Core\TopMessage::addError('Module packing is available in the DEVELOPER mode only. Check etc/config.php file');
         }
     }
 
@@ -219,11 +217,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
             }
 
             if ($notes) {
-                \XLite\Core\TopMessage::getInstance()->add(
-                    $notes,
-                    \XLite\Core\TopMessage::INFO,
-                    true
-                );
+                \XLite\Core\TopMessage::addInfo($notes);
             }
         }
         
