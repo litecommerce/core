@@ -29,8 +29,6 @@
 <widget target="category" class="\XLite\View\Tabber" body="{getPageTemplate()}" switch="page" IF="getCategory()" />
 <widget target="category" class="\XLite\View\Tabber" body="{getPageTemplate()}" switch="page" IF="!getCategory()" />
 
-<widget target="categories" template="common/dialog.tpl" body="categories/delete_confirmation.tpl" head="Confirmation" mode="delete" IF="mode=#delete#" />
-
 <widget target="settings" class="\XLite\View\Tabber" body="general_settings.tpl" switch="page" />
 
 <widget template="users/search.tpl" target="users">
