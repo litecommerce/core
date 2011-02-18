@@ -119,9 +119,9 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      */
     protected function assembleReturnUrl()
     {
-        $this->set('returnUrl', $this->buildUrl(\XLite::TARGET_DEFAULT));
+        $this->setReturnUrl($this->buildUrl(\XLite::TARGET_DEFAULT));
         if (\XLite\Core\Request::getInstance()->source == 'cart') {
-            $this->set('returnUrl', $this->buildUrl('cart'));
+            $this->setReturnUrl($this->buildUrl('cart'));
         }
     }
 

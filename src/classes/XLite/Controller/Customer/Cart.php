@@ -439,7 +439,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
         $this->doActionUpdate();
 
         // switch to checkout dialog 
-        $this->set('returnUrl', $this->buildURL('checkout'));
+        $this->setReturnUrl($this->buildURL('checkout'));
     }
 
     /**

@@ -82,7 +82,7 @@ class AddonsList extends \XLite\Controller\Admin\AAdmin
         }
 
         $this->session->set(\XLite\View\ItemsList\Module\Install::getSessionCellName(), $addonsSearch);
-        $this->set('returnUrl', $this->buildUrl('addons_list', '', array('mode' => 'search')));
+        $this->setReturnUrl($this->buildUrl('addons_list', '', array('mode' => 'search')));
     }
 
     /**

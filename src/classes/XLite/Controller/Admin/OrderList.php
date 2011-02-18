@@ -162,7 +162,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
         }
         
         $this->session->set(\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName(), $ordersSearch);
-        $this->set('returnUrl', $this->buildUrl('order_list', '', array('mode' => 'search')));
+        $this->setReturnUrl($this->buildUrl('order_list', '', array('mode' => 'search')));
     }
 
     /**

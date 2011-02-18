@@ -539,6 +539,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
         }
         $product->set('name', $product->get('name') . " (CLONE)");
         $product->update();
-        $this->set('returnUrl', 'admin.php?target=product&product_id=' . $product->get('product_id'));
+        $this->setReturnUrl('admin.php?target=product&product_id=' . $product->get('product_id'));
     }*/
 }

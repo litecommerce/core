@@ -151,7 +151,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
 
         } else {
 
-            $this->set('returnUrl', \XLite\Core\Request::getInstance()->returnUrl);
+            $this->setReturnUrl(\XLite\Core\Request::getInstance()->returnUrl);
 
             if (!$this->get('returnUrl')) {
                 $this->set(

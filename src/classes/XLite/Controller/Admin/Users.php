@@ -91,7 +91,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
 
         $this->setSearchParams($postedData);
 
-        $this->set('returnUrl', $this->buildUrl('users', '', array('mode' => 'search')));
+        $this->setReturnUrl($this->buildUrl('users', '', array('mode' => 'search')));
     }
 
     /**
@@ -106,7 +106,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
     {
         $this->setSearchParams(null);
 
-        $this->set('returnUrl', $this->buildUrl('users', '', array('mode' => 'search')));
+        $this->setReturnUrl($this->buildUrl('users', '', array('mode' => 'search')));
     }
 
     /**
@@ -175,10 +175,10 @@ class Users extends \XLite\Controller\Admin\AAdmin
                 'login' => $login,
             );
 
-            $this->set('returnUrl', $this->buildUrl('order_list', '', $urlParams));
+            $this->setReturnUrl($this->buildUrl('order_list', '', $urlParams));
 
         } else {
-            $this->set('returnUrl', $this->backUrl);
+            $this->setReturnUrl($this->backUrl);
         }
     }
 

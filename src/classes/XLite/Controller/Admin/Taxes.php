@@ -583,7 +583,7 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
             );
 
             if (\XLite\Core\Request::getInstance()->add_another) {
-                $this->set('returnUrl', 'admin.php?target=taxes&page=add_rate&mode=add');
+                $this->setReturnUrl('admin.php?target=taxes&page=add_rate&mode=add');
                 $this->set('mode', 'add');
 
             } else {
