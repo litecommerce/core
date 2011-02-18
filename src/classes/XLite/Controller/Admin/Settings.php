@@ -829,7 +829,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
             );
 
         } else {
-           $this->set('returnUrl', "admin.php?target=" . $this->get('target')
+           $this->setReturnUrl("admin.php?target=" . $this->get('target')
                . "&page=" . $this->get('page') . "&ip_error=1");
         }
     }

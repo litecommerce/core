@@ -158,9 +158,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
 
                 $this->setInternalRedirect();
 
-                $this->set(
-                    'returnUrl',
-                    $this->buildUrl(
+                $this->setReturnUrl($this->buildUrl(
                         'change_options',
                         '',
                         array(
