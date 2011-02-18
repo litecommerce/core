@@ -165,7 +165,7 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->flush();
             \XLite\Core\Database::getEM()->clear();
 
-            \XLite\Core\TopMessage::getInstance()->addInfo('The selected shipping method has been deleted successfully');
+            \XLite\Core\TopMessage::addInfo('The selected shipping method has been deleted successfully');
         }
     }
 }

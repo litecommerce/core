@@ -254,7 +254,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->remove($img);
             \XLite\Core\Database::getEM()->flush();
 
-            \XLite\Core\TopMessage::getInstance()->addInfo(
+            \XLite\Core\TopMessage::addInfo(
                 'The detailed image has been deleted'
             );
 
