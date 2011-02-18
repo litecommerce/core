@@ -154,9 +154,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
             $this->setReturnUrl(\XLite\Core\Request::getInstance()->returnUrl);
 
             if (!$this->get('returnUrl')) {
-                $this->set(
-                    'returnUrl',
-                    $this->getCart()->isEmpty() ? \XLite\Core\Converter::buildURL() : \XLite\Core\Converter::buildURL('cart')
+                $this->setReturnUrl($this->getCart()->isEmpty() ? \XLite\Core\Converter::buildURL() : \XLite\Core\Converter::buildURL('cart')
                 );
             }
 

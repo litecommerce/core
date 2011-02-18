@@ -48,9 +48,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionGetLicense()
     {
-        $this->set(
-            'returnUrl', 
-            $this->buildURL(
+        $this->setReturnUrl($this->buildURL(
                 'module_installation',
                 'show_license',
                 array(
