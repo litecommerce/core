@@ -265,7 +265,7 @@ class AdminMain extends \XLite\View\Model\AModel
 
             if ($data['password'] != $data['password_conf']) {
                 $result = false;
-                \XLite\Core\TopMessage::getInstance()->addError('Password and its confirmation do not match');
+                \XLite\Core\TopMessage::addError('Password and its confirmation do not match');
             }
 
         } else {
@@ -412,7 +412,7 @@ class AdminMain extends \XLite\View\Model\AModel
      */
     protected function postprocessSuccessActionCreate()
     {
-        \XLite\Core\TopMessage::getInstance()->addInfo('Profile has been created successfully');
+        \XLite\Core\TopMessage::addInfo('Profile has been created successfully');
     }
 
     /**
@@ -425,7 +425,7 @@ class AdminMain extends \XLite\View\Model\AModel
      */
     protected function postprocessSuccessActionUpdate()
     {
-        \XLite\Core\TopMessage::getInstance()->addInfo('Profile has been updated successfully');
+        \XLite\Core\TopMessage::addInfo('Profile has been updated successfully');
     }
 
     /**
@@ -438,7 +438,7 @@ class AdminMain extends \XLite\View\Model\AModel
      */
     protected function postprocessSuccessActionModify()
     {
-        \XLite\Core\TopMessage::getInstance()->addInfo('Profile has been modified successfully');
+        \XLite\Core\TopMessage::addInfo('Profile has been modified successfully');
     }
 
     /**
@@ -451,7 +451,7 @@ class AdminMain extends \XLite\View\Model\AModel
      */
     protected function postprocessSuccessActionDelete()
     {
-        \XLite\Core\TopMessage::getInstance()->addInfo('Profile has been deleted successfully');
+        \XLite\Core\TopMessage::addInfo('Profile has been deleted successfully');
     }
 
     /**
