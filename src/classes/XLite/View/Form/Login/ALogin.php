@@ -94,7 +94,7 @@ abstract class ALogin extends \XLite\View\Form\AForm
     {
         $result = parent::getDefaultParams();
 
-        $url = $this->getReturnUrl();
+        $url = $this->getReturnURL();
         if ($url) {
             $result['returnUrl'] = $url;
         }

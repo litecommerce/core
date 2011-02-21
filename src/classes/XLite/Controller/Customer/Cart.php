@@ -276,7 +276,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     {
         if (!($url = \XLite\Core\Session::getInstance()->productListURL)) {
             $url = empty($_SERVER['HTTP_REFERER']) 
-                ? $this->buildUrl('product', '', array('product_id' => $this->getProductId()))
+                ? $this->buildURL('product', '', array('product_id' => $this->getProductId()))
                 : $_SERVER['HTTP_REFERER'];
         }
 
@@ -296,7 +296,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
         if (\XLite\Core\Config::getInstance()->General->redirect_to_cart) {
             \XLite\Core\Session::getInstance()->continueURL = $this->getURLToReturn();
         } else {
-            $this->setReturnUrl($this->getURLToReturn());
+            $this->setReturnURL($this->getURLToReturn());
         }
     }
 
@@ -439,7 +439,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
         $this->doActionUpdate();
 
         // switch to checkout dialog 
-        $this->setReturnUrl($this->buildURL('checkout'));
+        $this->setReturnURL($this->buildURL('checkout'));
     }
 
     /**
@@ -462,7 +462,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
         }
 
         \XLite\Core\TopMessage::getInstance()->add('Item has been deleted from cart');
-        $this->setReturnUrl($this->buildURL('cart'));
+        $this->setReturnURL($this->buildURL('cart'));
     }
 
     function isSecure()

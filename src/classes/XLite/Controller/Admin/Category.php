@@ -103,7 +103,7 @@ class Category extends \XLite\Controller\Admin\Catalog
 
             $this->saveImage($category->getCategoryId());
 
-            $this->setReturnUrl($this->buildURL('categories', '', array('category_id' => $category->getCategoryId())));
+            $this->setReturnURL($this->buildURL('categories', '', array('category_id' => $category->getCategoryId())));
         }
     }
 
@@ -124,7 +124,7 @@ class Category extends \XLite\Controller\Admin\Catalog
             \XLite\Core\Database::getRepo('XLite\Model\Category')
                 ->updateById($properties['category_id'], $properties);
 
-            $this->setReturnUrl($this->buildURL('categories', '', array('category_id' => $properties['category_id'])));
+            $this->setReturnURL($this->buildURL('categories', '', array('category_id' => $properties['category_id'])));
         }
     }
 

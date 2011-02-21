@@ -49,7 +49,7 @@ class AddGroup extends \XLite\View\Button\Link
         parent::defineWidgetParams();
 
         $this->widgetParams[self::PARAM_LOCATION]->setValue(
-            $this->buildUrl(
+            $this->buildURL(
                 'product',
                 '',
                 array(

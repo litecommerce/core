@@ -101,7 +101,7 @@ class Profile extends \XLite\Controller\Customer\ACustomer
             $params = array('profile_id' => $this->getModelForm()->getProfileId(false));
         }
 
-        $this->setReturnUrl($this->buildURL('profile', '', $params));
+        $this->setReturnURL($this->buildURL('profile', '', $params));
 
         return $result;
     }

@@ -172,7 +172,7 @@ abstract class AAdmin extends \XLite\Controller\AController
 
             $this->session->set('lastWorkingURL', $this->get('url'));
             $this->redirect(
-                $this->buildUrl('login')
+                $this->buildURL('login')
             );
 
         } else {

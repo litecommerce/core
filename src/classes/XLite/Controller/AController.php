@@ -158,7 +158,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function redirect($url = null)
     {
-        $location = $this->getReturnUrl();
+        $location = $this->getReturnURL();
 
         if (!isset($location)) {
             $location = isset($url) ? $url : $this->getUrl();
@@ -402,7 +402,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function isRedirectNeeded()
     {
-        return (\XLite\Core\Request::getInstance()->isPost() || $this->getReturnUrl()) && !$this->silent;
+        return (\XLite\Core\Request::getInstance()->isPost() || $this->getReturnURL()) && !$this->silent;
     }
 
     /**
@@ -486,7 +486,7 @@ abstract class AController extends \XLite\Core\Handler
      * @access public
      * @since  3.0.0
      */
-    public function getReturnUrl()
+    public function getReturnURL()
     {
         if (!isset($this->returnUrl)) {
             $this->returnUrl = \XLite\Core\Request::getInstance()->{self::RETURN_URL};
@@ -504,7 +504,7 @@ abstract class AController extends \XLite\Core\Handler
      * @access public
      * @since  3.0.0
      */
-    public function setReturnUrl($url)
+    public function setReturnURL($url)
     {
         $this->returnUrl = $url;
     }
@@ -520,7 +520,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function setReturnUrlParams(array $params)
     {
-        return $this->setReturnUrl($this->buildURL($this->getTarget(), '', $params));
+        return $this->setReturnURL($this->buildURL($this->getTarget(), '', $params));
     }
 
     /**

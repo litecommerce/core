@@ -12,5 +12,5 @@
  * @ListChild (list="order.links", weight="10")
  *}
 <li class="back">
-  <a href="{buildUrl(#order_list#)}"><strong>&larr;</strong><span>{t(#Back to order list#)}</span></a>
+  <a href="{buildURL(#order_list#)}"><strong>&larr;</strong><span>{t(#Back to order list#)}</span></a>
 </li>

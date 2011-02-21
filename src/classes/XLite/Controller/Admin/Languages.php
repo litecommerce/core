@@ -574,10 +574,10 @@ class Languages extends \XLite\Controller\Admin\AAdmin
      * @access public
      * @since  3.0.0
      */
-    public function getReturnUrl()
+    public function getReturnURL()
     {
         if (\XLite\Core\Request::getInstance()->action) {
-            $url = $this->buildUrl(
+            $url = $this->buildURL(
                 'languages',
                 '',
                 array(
