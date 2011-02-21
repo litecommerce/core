@@ -21,7 +21,7 @@
 <input type="hidden" name="target" value="order" />
 <input type="hidden" name="action" value="update" />
 <input type="hidden" name="order_id" value="{order.order_id}" />
-<input type="hidden" name="returnUrl" value="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id))}" />
+<input type="hidden" name="returnURL" value="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id))}" />
 <table>
 <tr>
 	<td>Status:</td>

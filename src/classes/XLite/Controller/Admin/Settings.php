@@ -639,9 +639,9 @@ class Settings extends \XLite\Controller\Admin\AAdmin
             return $this->_answeredVersion;
         }
 
-        $checkUrl = $this->xlite->getShopURL($this->buildURL('upgrade', 'version'));
+        $checkURL = $this->xlite->getShopURL($this->buildURL('upgrade', 'version'));
         $this->_answeredVersionError = false;
-        $response = $this->httpRequest($checkUrl);
+        $response = $this->httpRequest($checkURL);
         if ($this->get('lite_version') != $response) {
             $this->_answeredVersionError = true;
         }

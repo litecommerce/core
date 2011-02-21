@@ -19,8 +19,8 @@
     <a href="{buildURLByPageId(getPageIdByNotation(#previous#))}" class="{getLinkClassName(#previous#)}"><img src="images/spacer.gif" alt="Previous" /></a>
   </li>
 
-  <li FOREACH="getPageUrls(),num,pageUrl" class="{getPageClassName(num)}">
-    <a href="{pageUrl}" class="{getLinkClassName(num)}">{inc(num)}</a>
+  <li FOREACH="getPageURLs(),num,pageURL" class="{getPageClassName(num)}">
+    <a href="{pageURL}" class="{getLinkClassName(num)}">{inc(num)}</a>
   </li>
 
   <li class="{getBorderLinkClassName(#next#)}">

@@ -423,7 +423,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $params = array('target', 'product_id', 'page', 'backUrl');
+    public $params = array('target', 'product_id', 'page', 'backURL');
 
     /**
      * FIXME- backward compatibility

@@ -274,7 +274,7 @@ class PagerOrig extends \XLite\View\AView
      * @access protected
      * @since  3.0.0
      */
-    protected function getPageUrls()
+    protected function getPageURLs()
     {
         if (!isset($this->pageURLs)) {
             $this->pageURLs = array();

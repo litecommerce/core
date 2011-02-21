@@ -107,17 +107,17 @@ class Login extends \XLite\Controller\Admin\AAdmin
 
             $this->set('valid', false);
             \XLite\Core\TopMessage::getInstance()->add('Invalid login or password', \XLite\Core\TopMessage::ERROR);
-            $returnUrl = $this->buildURL('login');
+            $returnURL = $this->buildURL('login');
 
         } elseif (isset($this->session->lastWorkingURL)) {
-            $returnUrl = $this->xlite->session->get('lastWorkingURL');
+            $returnURL = $this->xlite->session->get('lastWorkingURL');
             $this->xlite->session->set('lastWorkingURL', null);
 
         } else {
-            $returnUrl = $this->buildURL();
+            $returnURL = $this->buildURL();
         }
 
-        $this->setReturnURL($returnUrl);
+        $this->setReturnURL($returnURL);
     }
 
     function action_logoff()

@@ -51,7 +51,7 @@ function changeVal(param)
   <input IF="!edit"type="hidden" name="action" value="add_submit">
   <input type="hidden" name="add_another" value="0" />
   <input type="hidden" name="ind" value="{ind}" />
-  <input type="hidden" name="returnUrl" value="admin.php?target=taxes&page=rates" />
+  <input type="hidden" name="returnURL" value="admin.php?target=taxes&page=rates" />
 
   <strong>Condition (optional)</strong>
 

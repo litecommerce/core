@@ -178,7 +178,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
             $this->setReturnURL($this->buildURL('order_list', '', $urlParams));
 
         } else {
-            $this->setReturnURL($this->backUrl);
+            $this->setReturnURL($this->backURL);
         }
     }
 

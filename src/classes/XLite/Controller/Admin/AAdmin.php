@@ -414,16 +414,16 @@ EOT;
     /**
      * Sanitize Clean URL 
      * 
-     * @param string $cleanUrl Clean URL
+     * @param string $cleanURL Clean URL
      *  
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function sanitizeCleanURL($cleanUrl)
+    protected function sanitizeCleanURL($cleanURL)
     {
-        return substr(trim(preg_replace('/[^a-z0-9 \/\._-]+/Sis', '', $cleanUrl)), 0, 200);
+        return substr(trim(preg_replace('/[^a-z0-9 \/\._-]+/Sis', '', $cleanURL)), 0, 200);
     }
 
     /**

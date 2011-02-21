@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 <form action="{loginURL}" method="POST" name="login_form">
-<input IF="!target=#login#" type="hidden" name="returnUrl" value="{url}"/>
+<input IF="!target=#login#" type="hidden" name="returnURL" value="{url}"/>
 <table cellpadding="2" cellspacing="0" border="0" width="100%">
 <tr>
 <td align="center">
