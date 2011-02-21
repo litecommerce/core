@@ -583,7 +583,7 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
             );
 
             if (\XLite\Core\Request::getInstance()->add_another) {
-                $this->setReturnUrl('admin.php?target=taxes&page=add_rate&mode=add');
+                $this->setReturnURL('admin.php?target=taxes&page=add_rate&mode=add');
                 $this->set('mode', 'add');
 
             } else {
@@ -661,7 +661,7 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
 
         $this->set('mode', '');
 
-        $this->setReturnUrl($this->buildUrl('taxes', '', array('page' => 'rates')));
+        $this->setReturnURL($this->buildURL('taxes', '', array('page' => 'rates')));
     }
 
     function getTaxCondParam($node, $param)

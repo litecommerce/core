@@ -143,7 +143,7 @@ class Module extends \XLite\Controller\Admin\AAdmin
             );
         }
 
-        $this->setReturnUrl($this->buildUrl('modules'));
+        $this->setReturnURL($this->buildURL('modules'));
     }
 
 }

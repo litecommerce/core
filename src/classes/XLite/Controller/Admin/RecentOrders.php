@@ -101,7 +101,7 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
                 )
             )
         );
-        $this->setReturnUrl($this->buildUrl('recent_orders', '', array('mode' => 'search')));
+        $this->setReturnURL($this->buildURL('recent_orders', '', array('mode' => 'search')));
     }
 
 }

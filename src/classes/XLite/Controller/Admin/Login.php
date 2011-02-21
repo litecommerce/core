@@ -50,7 +50,7 @@ class Login extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Auth::getInstance()->isLogged()
             && 'logoff' !== \XLite\Core\Request::getInstance()->{static::PARAM_ACTION}
         ) {
-            $this->setReturnUrl($this->buildURL());
+            $this->setReturnURL($this->buildURL());
         }
 
         return parent::handleRequest();
@@ -107,17 +107,17 @@ class Login extends \XLite\Controller\Admin\AAdmin
 
             $this->set('valid', false);
             \XLite\Core\TopMessage::getInstance()->add('Invalid login or password', \XLite\Core\TopMessage::ERROR);
-            $returnUrl = $this->buildUrl('login');
+            $returnUrl = $this->buildURL('login');
 
         } elseif (isset($this->session->lastWorkingURL)) {
             $returnUrl = $this->xlite->session->get('lastWorkingURL');
             $this->xlite->session->set('lastWorkingURL', null);
 
         } else {
-            $returnUrl = $this->buildUrl();
+            $returnUrl = $this->buildURL();
         }
 
-        $this->setReturnUrl($returnUrl);
+        $this->setReturnURL($returnUrl);
     }
 
     function action_logoff()

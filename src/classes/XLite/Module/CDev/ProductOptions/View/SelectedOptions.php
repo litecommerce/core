@@ -145,7 +145,7 @@ class SelectedOptions extends \XLite\View\AView
      */
     public function getChangeOptionsLink()
     {
-        return $this->buildUrl(
+        return $this->buildURL(
             'change_options',
             '',
             array(

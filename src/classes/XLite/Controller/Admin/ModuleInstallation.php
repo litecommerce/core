@@ -48,7 +48,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionGetLicense()
     {
-        $this->setReturnUrl($this->buildURL(
+        $this->setReturnURL($this->buildURL(
                 'module_installation',
                 'show_license',
                 array(
@@ -158,7 +158,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
             @unlink(LC_LOCAL_REPOSITORY . $result);
         }
 
-        $this->setReturnUrl($this->buildURL('modules'));
+        $this->setReturnURL($this->buildURL('modules'));
     }
 
     /** 

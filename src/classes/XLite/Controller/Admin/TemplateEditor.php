@@ -376,7 +376,7 @@ class TemplateEditor extends \XLite\Controller\Admin\AAdmin
         $file = $this->get('file');
         $file->update();
         $this->afterAdvanced();
-        $this->setReturnUrl($this->get('url') . "&mode=edit&file=" . $file->get('path'));
+        $this->setReturnURL($this->get('url') . "&mode=edit&file=" . $file->get('path'));
         if ($file->writePermitted) {
             $this->set('valid', false);
             $this->set('mode', "edit");
@@ -422,7 +422,7 @@ class TemplateEditor extends \XLite\Controller\Admin\AAdmin
             $file->set('path', $path);
         }
         $file->create();
-        $this->setReturnUrl($this->get('url') . "&mode=edit&file=" . $path);
+        $this->setReturnURL($this->get('url') . "&mode=edit&file=" . $path);
     }
 
     function action_new_dir() 
@@ -466,7 +466,7 @@ class TemplateEditor extends \XLite\Controller\Admin\AAdmin
     function afterAdvanced() 
     {
         if (!is_null($this->node) && trim($this->node) != "") {
-            $this->setReturnUrl($this->get('url') . "&node=$this->node");
+            $this->setReturnURL($this->get('url') . "&node=$this->node");
         }
     }
 
