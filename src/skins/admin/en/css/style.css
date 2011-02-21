@@ -684,7 +684,7 @@ button.invert:hover
 
 .wait-box .box
 {
-  background: transparent url(images/progress.gif) repeat-x left top;
+  background: transparent url(../images/progress.gif) repeat-x left top;
   width: 100%;
   height: 11px;
 }

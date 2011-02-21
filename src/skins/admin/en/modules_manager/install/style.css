@@ -87,15 +87,18 @@ div.top-controls div.action-buttons {
 }
 
 .addons-filters ul li {
-    -moz-border-radius: 3px 3px 3px 3px;
-    display: inline;
-    font-size: 14px;
-    margin-right: 20px;
+  -moz-border-radius: 15px 15px 15px 15px;
+  -webkit-border-radius: 15px 15px 15px 15px;
+  border-radius: 15px 15px 15px 15px;
+  display: inline;
+  font-size: 14px;
+  margin-right: 20px;
 }
 
 .addons-filters ul li a {
-    color: #3E77B8;
-    font-size: 16px;
+  color: #3E77B8;
+  border-bottom: solid #3e77b8 1px;
+  font-size: 16px;
 }
 
 .addons-filters ul li.hl {
@@ -120,9 +123,9 @@ div.top-controls div.action-buttons {
 }
 
 .module-info ul li {
-  -moz-border-radius: 3px 3px 3px 3px;
-  -webkit-border-radius: 3px 3px 3px 3px;
-  border-radius: 3px 3px 3px 3px;
+  -moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
   display: inline;
   font-size: 14px;
   margin-right: 20px;

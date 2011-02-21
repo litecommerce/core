@@ -24,7 +24,8 @@ jQuery(document).ready(
             urlParams = core.getCommentedData(button, 'url_params');
             return loadDialogByLink(
               button,
-              URLHandler.buildURL(urlParams)
+              URLHandler.buildURL(urlParams),
+              {'width' : 'auto'}
             );
           }
         );
