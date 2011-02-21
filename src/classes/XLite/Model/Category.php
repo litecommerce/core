@@ -41,7 +41,7 @@ namespace XLite\Model;
  *          @Index (name="lpos", columns={"lpos"}),
  *          @Index (name="rpos", columns={"rpos"}),
  *          @Index (name="enabled", columns={"enabled"}),
- *          @Index (name="cleanUrl", columns={"cleanUrl"})
+ *          @Index (name="cleanURL", columns={"cleanURL"})
  *      }
  * )
  */
@@ -107,7 +107,7 @@ class Category extends \XLite\Model\Base\I18n
      *
      * @Column (type="string", length="255")
      */
-    protected $cleanUrl = '';
+    protected $cleanURL = '';
 
     /**
      * Whether to display the category title, or not

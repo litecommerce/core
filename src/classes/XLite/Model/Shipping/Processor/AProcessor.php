@@ -56,7 +56,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $apiUrl = null;
+    protected $apiURL = null;
 
     /**
      * Log of request/response pairs during communitation with a shipping server 
@@ -153,7 +153,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      */
     public function getApiURL()
     {
-        return $this->apiUrl;
+        return $this->apiURL;
     }
 
     /**

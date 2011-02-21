@@ -525,7 +525,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      */
     public function getURLByCleanURL($path)
     {
-        $cleanUrl = null;
+        $cleanURL = null;
 
         // By product
 
@@ -533,7 +533,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
             ->findOneByCleanURL(preg_replace('/(?:\.html|\.htm)$/Ss', '', $path));
 
         if (isset($product)) {
-            $cleanUrl = \XLite\Core\Converter::buildURL(
+            $cleanURL = \XLite\Core\Converter::buildURL(
                 'product',
                 '',
                 array('product_id' => $product->get('product_id'))
@@ -541,7 +541,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
         }
 
         // By category
-        if (!$cleanUrl) {
+        if (!$cleanURL) {
 
             $parts = preg_split('\'/\'', $path, 2, PREG_SPLIT_NO_EMPTY);
 
@@ -564,13 +564,13 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
                 }
 
-                $cleanUrl = \XLite\Core\Converter::buildURL('category', '', $params);
+                $cleanURL = \XLite\Core\Converter::buildURL('category', '', $params);
 
             }
 
         }
 
-        return $cleanUrl;
+        return $cleanURL;
     }
 
     /**

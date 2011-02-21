@@ -38,7 +38,7 @@ function searchOrders()
   <fieldset>
     <input type="hidden" name="target" value="profile" />
     <input type="hidden" name="action" value="" />
-    <input type="hidden" name="backUrl" value="{url:r}" />
+    <input type="hidden" name="backURL" value="{url:r}" />
   </fieldset>
 
   <table width="100%" class="data-table">

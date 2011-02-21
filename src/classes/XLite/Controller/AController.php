@@ -83,14 +83,14 @@ abstract class AController extends \XLite\Core\Handler
     protected $quickLinks;
 
     /**
-     * returnUrl 
+     * returnURL 
      * 
      * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $returnUrl;
+    protected $returnURL;
 
 
     /**
@@ -488,11 +488,11 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getReturnURL()
     {
-        if (!isset($this->returnUrl)) {
-            $this->returnUrl = \XLite\Core\Request::getInstance()->{self::RETURN_URL};
+        if (!isset($this->returnURL)) {
+            $this->returnURL = \XLite\Core\Request::getInstance()->{self::RETURN_URL};
         }
 
-        return $this->returnUrl;
+        return $this->returnURL;
     }
 
     /**
@@ -506,7 +506,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function setReturnURL($url)
     {
-        $this->returnUrl = $url;
+        $this->returnURL = $url;
     }
 
     /**
