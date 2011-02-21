@@ -23,8 +23,7 @@
 
     <form action="admin.php" method="post">
       <input type="hidden" name="target" value="module_installation" />
-      <input IF="!module.getPurchased()" type="hidden" name="action" value="get_license" />
-      <input IF="module.getPurchased()" type="hidden" name="action" value="get_package" />
+      <input type="hidden" name="action" value="get_license" />
       <input type="hidden" name="module_id" value="{module.getModuleId()}" />
 
       <div class="install" IF="canInstall(module)">
@@ -33,12 +32,6 @@
 
       <div class="purchase" IF="canPurchase(module)">
         <widget class="\XLite\View\Button\Submit" label="{t(#Purchase#)}" />
-        <span class="enter-license">
-          {t(#or#)} 
-          <a href="{getEnterKeyURL(module.getModuleId())}" onclick="javascript:core.popup('{getEnterKeyURL(module.getModuleId())}')">
-            {t(#enter license key#)}
-          </a>
-        </span>
       </div>
 
     </form>
