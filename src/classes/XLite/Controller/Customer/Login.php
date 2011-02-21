@@ -153,7 +153,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
 
             $this->setReturnUrl(\XLite\Core\Request::getInstance()->returnUrl);
 
-            if (!$this->get('returnUrl')) {
+            if (!$this->getReturnUrl()) {
                 $this->setReturnUrl($this->getCart()->isEmpty() ? \XLite\Core\Converter::buildURL() : \XLite\Core\Converter::buildURL('cart')
                 );
             }
@@ -176,7 +176,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
     {
         \XLite\Core\Auth::getInstance()->logoff();
 
-        $this->returnUrl = \XLite\Core\Converter::buildURL();
+        $this->setReturnUrl(\XLite\Core\Converter::buildURL());
         if (!$this->getCart()->isEmpty()) {
         	if ('Y' == \XLite\Core\Config::getInstance()->Security->logoff_clear_cart) {
 
