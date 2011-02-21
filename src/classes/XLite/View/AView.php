@@ -143,6 +143,26 @@ abstract class AView extends \XLite\Core\Handler
     protected $viewLists = array();
 
     /**
+     * Previous skin name
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $previousSkin;
+
+    /**
+     * Previous template short path
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $previousTemplate;
+
+    /**
      * Return widget default template
      *
      * @return string
@@ -174,11 +194,11 @@ abstract class AView extends \XLite\Core\Handler
                 );
             }
 
-            $v['file'] = static::$layout->getSkinResourceFullPath(
+            $v['file'] = static::$layout->getResourceFullPath(
                 $v['file'],
                 $isCommon ? \XLite::COMMON_INTERFACE : null
             );
-            $v['url'] = static::$layout->getSkinResourceWebPath(
+            $v['url'] = static::$layout->getResourceWebPath(
                 $v['file'],
                 $isCommon ? \XLite::COMMON_INTERFACE : null
             );
@@ -211,9 +231,21 @@ abstract class AView extends \XLite\Core\Handler
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getTemplateFile($template = null)
+    protected function getTemplateFile($template = null, $previousSkin = null, $previousTemplate = null)
     {
-        return static::$layout->getSkinResourceFullPath($template ?: $this->getTemplate());
+        return static::$layout->getTemplateFullPath(
+            $template ?: $this->getTemplate(),
+            $previousSkin ?: $this->previousSkin,
+            $previousTemplate ?: $this->previousTemplate
+        );
+    }
+
+    public function setPreviousTpl($skin, $template)
+    {
+        $this->previousSkin = $skin;
+        $this->previousTemplate = $template;
+
+        return $this;
     }
 
     /**
@@ -389,9 +421,9 @@ abstract class AView extends \XLite\Core\Handler
      * @access protected
      * @since  3.0.0
      */
-    protected function includeCompiledFile($original = null)
+    protected function includeCompiledFile($original = null, $previousSkin = null, $previousTemplate = null)
     {
-        $compiled = static::$flexy->prepare($this->getTemplateFile($original));
+        $compiled = static::$flexy->prepare($this->getTemplateFile($original, $previousSkin, $previousTemplate));
 
         // Execute PHP code from compiled template
         $cnt = \XLite\View\AView::$countDeep++;
@@ -1196,7 +1228,7 @@ abstract class AView extends \XLite\Core\Handler
 
         // Prepare properties
         $properties['tpl']    = substr(
-            static::$layout->getSkinResourceFullPath($properties['tpl']),
+            static::$layout->getResourceFullPath($properties['tpl']),
             strlen(LC_SKINS_DIR)
         );
         $properties['weight'] = $weight;

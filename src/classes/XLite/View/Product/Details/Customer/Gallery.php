@@ -62,7 +62,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function getLightBoxImagesDir()
     {
-        return \XLite\Core\Layout::getInstance()->getSkinResourceWebPath(
+        return \XLite\Core\Layout::getInstance()->getResourceWebPath(
             'images/lightbox',
             \XLite\Core\Layout::WEB_PATH_OUTPUT_URL
         );

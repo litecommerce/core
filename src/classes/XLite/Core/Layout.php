@@ -241,6 +241,178 @@ class Layout extends \XLite\Base\Singleton
     }
 
     /**
+     * Get template full path 
+     * 
+     * @param string $shortPath       Template short path
+     * @param string $currentSkin     Current skin
+     * @param string $currentTemplate Current template short path
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTemplateFullPath($shortPath, $currentSkin, $currentTemplate)
+    {
+        $parts = explode(':', $shortPath, 2);
+
+        if (1 == count($parts)) {
+            if ('parent' == $shortPath) {
+                $result = $this->getResourceParentFullPath($this->currentTemplate, $currentSkin);
+
+            } else {
+                $result = $this->getResourceFullPath($shortPath);
+            }
+
+        } elseif ('parent' == $parts[0]) {
+            $result = $this->getResourceParentFullPath($parts[1], $currentSkin);
+
+        } else {
+            $result = $this->getResourceSkinFullPath($parts[1], $parts[0]);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns the resource full path
+     * 
+     * @param string $shortPath Short path
+     * @param string $interface Interface code OPTIONAL
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getResourceFullPath($shortPath, $interface = null)
+    {
+        $interface = $interface ?: $this->currentInterface;
+        $key = $interface . '.' . $shortPath;
+
+        if (!isset($this->resourcesCache[$key])) {
+            foreach ($this->getSkinPaths($interface) as $path) {
+                $fullPath = $path['fs'] . LC_DS . $shortPath;
+                if (file_exists($fullPath)) {
+                    $this->resourcesCache[$key] = $path;
+                    break;
+                }
+            }
+        }
+
+        return isset($this->resourcesCache[$key])
+            ? $this->resourcesCache[$key]['fs'] . LC_DS . $shortPath
+            : null;
+    }
+
+    /**
+     * Returns the resource full path before parent skin
+     * 
+     * @param string $shortPath  Short path
+     * @param string $parentSkin Parent skin
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getResourceParentFullPath($shortPath, $parentSkin)
+    {
+        $result = null;
+        $found = false;
+
+        foreach ($this->getSkinPaths($this->currentInterface) as $path) {
+            if ($found) {
+                $fullPath = $path['fs'] . LC_DS . $shortPath;
+                if (file_exists($fullPath)) {
+                    $result = $fullPath;
+                    break;
+                }
+            }
+
+            if ($path['name'] == $parentSkin) {
+                $found = true;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns the resource full path by skin
+     * 
+     * @param string $shortPath Short path
+     * @param string $skin      Skin name
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getResourceSkinFullPath($shortPath, $skin)
+    {
+        $result = null;
+
+        foreach ($this->getSkinPaths($this->currentInterface) as $path) {
+            if ($path['name'] == $skin) {
+                $fullPath = $path['fs'] . LC_DS . $shortPath;
+                if (file_exists($fullPath)) {
+                    $result = $fullPath;
+                }
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns the resource web path
+     * 
+     * @param string $shortPath  Short path
+     * @param string $outputType Output type OPTIONAL
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getResourceWebPath($shortPath, $outputType = self::WEB_PATH_OUTPUT_SHORT)
+    {
+        $key = $this->currentInterface . '.' . $shortPath;
+
+        if (!isset($this->resourcesCache[$key])) {
+            foreach ($this->getSkinPaths() as $path) {
+                $fullPath = $path['fs'] . LC_DS . $shortPath;
+                if (file_exists($fullPath)) {
+                    $this->resourcesCache[$key] = $path;
+                    break;
+                }
+            }
+        }
+
+        return isset($this->resourcesCache[$key])
+            ? $this->prepareResourceURL($this->resourcesCache[$key]['web'] . '/' . $shortPath, $outputType)
+            : null;
+    }
+
+    /**
+     * Save substitutonal skins data into cache
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function saveSubstitutonalSkins()
+    {
+        \XLite\Core\Database::getCacheDriver()->save(
+            get_called_class() . '.SubstitutonalSkins',
+            $this->resourcesCache
+        );
+    }
+
+    /**
      * Get skin paths (file system and web)
      * 
      * @param string  $interface Interface code OPTIONAL
@@ -264,8 +436,9 @@ class Layout extends \XLite\Base\Singleton
 
             foreach ($this->getSkins($interface) as $skin) {
                 $this->skinPaths[$interface][] = array(
-                    'fs'        => LC_SKINS_DIR . $skin . ($locale ? LC_DS . $locale : ''),
-                    'web'       => static::PATH_SKIN . '/' . $skin . ($locale ? '/' . $locale : ''),
+                    'name' => $skin,
+                    'fs'   => LC_SKINS_DIR . $skin . ($locale ? LC_DS . $locale : ''),
+                    'web'  => static::PATH_SKIN . '/' . $skin . ($locale ? '/' . $locale : ''),
                 );
             }
         }
@@ -311,94 +484,32 @@ class Layout extends \XLite\Base\Singleton
     }
 
     /**
-     * Returns the resource full path
+     * Prepare resource URL 
      * 
-     * @param string $shortPath Short path
-     * @param string $interface Interface code OPTIONAL
+     * @param string $url        URL
+     * @param string $outputType Output type
      *  
      * @return string
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getSkinResourceFullPath($shortPath, $interface = null)
+    protected function prepareResourceURL($url, $outputType)
     {
-        $interface = $interface ?: $this->currentInterface;
-        $key = $interface . '.' . $shortPath;
-
-        if (!isset($this->resourcesCache[$key])) {
-            foreach ($this->getSkinPaths($interface) as $path) {
-                $fullPath = $path['fs'] . LC_DS . $shortPath;
-                if (file_exists($fullPath)) {
-                    $this->resourcesCache[$key] = $path;
-                    break;
-                }
-            }
-        }
-
-        return isset($this->resourcesCache[$key])
-            ? $this->resourcesCache[$key]['fs'] . LC_DS . $shortPath
-            : null;
-    }
-
-    /**
-     * Returns the resource web path
-     * 
-     * @param string $shortPath Short path
-     *  
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getSkinResourceWebPath($shortPath, $outputType = self::WEB_PATH_OUTPUT_SHORT)
-    {
-        $key = $this->currentInterface . '.' . $shortPath;
-
-        if (!isset($this->resourcesCache[$key])) {
-            foreach ($this->getSkinPaths() as $path) {
-                $fullPath = $path['fs'] . LC_DS . $shortPath;
-                if (file_exists($fullPath)) {
-                    $this->resourcesCache[$key] = $path;
-                    break;
-                }
-            }
-        }
-
-        $result = isset($this->resourcesCache[$key])
-            ? $this->resourcesCache[$key]['web'] . '/' . $shortPath
-            : null;
-
-        if ($result && self::WEB_PATH_OUTPUT_SHORT != $outputType) {
+        if ($url && self::WEB_PATH_OUTPUT_SHORT != $outputType) {
             $type = self::WEB_PATH_OUTPUT_FULL == $outputType
                 ? \Includes\Utils\URLManager::URL_OUTPUT_SHORT
                 : \Includes\Utils\URLManager::URL_OUTPUT_FULL;
 
-            $result = \Includes\Utils\URLManager::getShopURL(
-                $result,
+            $url = \Includes\Utils\URLManager::getShopURL(
+                $url,
                 \XLite\Core\Request::getInstance()->isHTTPS(),
                 array(),
                 $type
             );
         }
 
-        return $result;
-    }
-
-    /**
-     * Save substitutonal skins data into cache
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function saveSubstitutonalSkins()
-    {
-        \XLite\Core\Database::getCacheDriver()->save(
-            get_called_class() . '.SubstitutonalSkins',
-            $this->resourcesCache
-        );
+        return $url;
     }
 
     /**

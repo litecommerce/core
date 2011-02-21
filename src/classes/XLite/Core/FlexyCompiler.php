@@ -679,6 +679,24 @@ class FlexyCompiler extends \XLite\Base\Singleton
         return $this->substitute();
     }
 
+    /**
+     * Get template info 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getTemplateInfo()
+    {
+        $skin = preg_replace('/^([a-x0-9_]+)[^a-x0-9_].+$/Ssi', '\1', substr($this->file, strlen(LC_SKINS_DIR)));
+        $template = 'common' == $skin
+            ? substr($this->file, strlen(LC_SKINS_DIR) + strlen($skin) + 1)
+            : substr($this->file, strlen(LC_SKINS_DIR) + strlen($skin) + 4);
+
+        return array($skin, $template);
+    }
+
     protected function unsetAttributes(array &$attrs, array $keys)
     {
         foreach ($keys as $key) {
@@ -759,12 +777,14 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
             $this->unsetAttributes($attrs, array('IF', 'FOREACH', 'class', 'mode'));
 
+            list($skin, $template) = $this->getTemplateInfo();
+
             if (empty($arguments) && (1 == count($attrs)) && isset($attrs['template'])) {
-                $result .= '$this->includeCompiledFile(' . $this->flexyAttribute($attrs['template'])  . ');';
+                $result .= '$this->includeCompiledFile(' . $this->flexyAttribute($attrs['template'])  . ', \'' . $skin . '\', \'' . $template . '\');';
             } else {
                 $result .= '$this->getWidget(' 
                     . (empty($attrs) ? (empty($arguments) ? '' : 'array()') : $this->getAttributesList($attrs)) 
-                    . (empty($arguments) ? '' : ', ' . $arguments) . ')->display();';
+                    . (empty($arguments) ? '' : ', ' . $arguments) . ')->setPreviousTpl(\'' . $skin . '\', \'' . $template . '\')->display();';
             }
 
             
@@ -835,7 +855,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      */
     protected function rewriteImageURL($url)
     {
-        return $this->layout->getSkinResourceWebPath($url, \XLite\Core\Layout::WEB_PATH_OUTPUT_URL);
+        return $this->layout->getResourceWebPath($url, \XLite\Core\Layout::WEB_PATH_OUTPUT_URL);
     }
 
     function subst($start, $end, $value)
