@@ -46,22 +46,22 @@ class Marketplace extends \XLite\Base\Singleton
     /**
      * URL of marketplace
      */
-    const MARKETPLACE_URL   = 'https://www.litecommerce.com/marketplace/';
+    const MARKETPLACE_URL = 'https://www.litecommerce.com/marketplace/';
 
-    const ADDONS_UPDATED    = 'addonsUpdated';
-    const VERSION_UPDATED   = 'versionUpdated';
-    const LAST_VERSION      = 'lastVersion';
-    const LAST_UPDATE_TTL   = 86400;
+    const ADDONS_UPDATED  = 'addonsUpdated';
+    const VERSION_UPDATED = 'versionUpdated';
+    const LAST_VERSION    = 'lastVersion';
+    const LAST_UPDATE_TTL = 86400;
 
     /**
      * Param to force update addons 
      */
-    const P_FORCE_UPDATE    = 'forceMPRequest';
+    const P_FORCE_UPDATE = 'forceMPRequest';
 
     /**
      * Error status
      */
-    const STATUS_ERROR   = 0;
+    const STATUS_ERROR = 0;
 
     /**
      * Success target
@@ -71,27 +71,32 @@ class Marketplace extends \XLite\Base\Singleton
     /**
      * Get action
      */
-    const GET_ACTION            = 'get';
+    const GET_ACTION = 'get';
 
     /**
      * License target
      */
-    const LICENSE_TARGET        = 'license';
+    const LICENSE_TARGET = 'license';
 
     /**
      * Addons list target
      */
-    const ADDONS_LIST_TARGET    = 'addons';
+    const ADDONS_LIST_TARGET = 'addons';
 
     /**
      * Addon target 
      */
-    const ADDON_TARGET          = 'addon';
+    const ADDON_TARGET = 'addon';
 
     /**
-     * Addon target 
+     * Version target 
      */
-    const VERSION_TARGET        = 'version';
+    const VERSION_TARGET = 'version';
+
+    /**
+     * Get module information by license key target
+     */
+    const INFO_BY_KEY_TARGET = 'info_by_key';
 
     /**
      * Author variable in request 
@@ -101,7 +106,7 @@ class Marketplace extends \XLite\Base\Singleton
     /**
      * Module name variable in request
      */
-    const MODULE_NAME   = 'module';
+    const MODULE_NAME = 'module';
 
 
     /**
@@ -227,6 +232,85 @@ class Marketplace extends \XLite\Base\Singleton
         return $result;
     }
 
+    /**
+     * Get last version
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLastVersion()
+    {   
+        if (static::isVersionUpdateNeeded()) {
+            $version = $this->requestMarketplace(
+                static::VERSION_TARGET,
+                static::GET_ACTION
+            );
+
+            \XLite\Core\TmpVars::getInstance()->LAST_VERSION = trim($version);
+        }
+
+        return \XLite\Core\TmpVars::getInstance()->LAST_VERSION;
+    }
+
+    /**
+     * Retrive module information by license key
+     * 
+     * @param string $key License key
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModuleInfoByKey(string $key)
+    {
+        $response = $this->requestMarketplace(
+            static::INFO_BY_KEY_TARGET,
+            static::GET_ACTION,
+            array(
+                'license_key' => $key,
+            )
+        );
+
+        $xml = new \DOMDocument();
+
+        $result = $xml->loadXML($response);
+
+        if (false === $result) {
+
+            \XLite\Logger::getInstance()->log(
+                'Bad XML response from Marketplace: '
+                . PHP_EOL . $response,
+                LOG_ERR
+            );
+
+            $result = array(
+                'error' => 'Bad response from marketplace. Check log files.',
+            );
+
+        } else {
+
+            $error = $xml->getElementsByTagName('error');
+
+            if (0 >= $error->length) {
+
+                $result = array(
+                    'module' => $xml->getElementsByTagName('module')->item(0)->nodeValue,
+                    'author' => $xml->getElementsByTagName('author')->item(0)->nodeValue,
+                );
+
+            } else {
+
+                $result = array(
+                    'error' => $error->item(0)->nodeValue,
+                );
+            }
+        }
+
+        return $result;
+    }
 
     /**
      * Get Module information for Marketplace request
@@ -290,28 +374,6 @@ class Marketplace extends \XLite\Base\Singleton
         }
 
         return $response;
-    }
-
-    /**
-     * Get last version
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getLastVersion()
-    {
-        if (static::isVersionUpdateNeeded()) {
-            $version = $this->requestMarketplace(
-                static::VERSION_TARGET,
-                static::GET_ACTION
-            );
-
-            \XLite\Core\TmpVars::getInstance()->LAST_VERSION = trim($version);
-        }
-
-        return \XLite\Core\TmpVars::getInstance()->LAST_VERSION;
     }
 
     /**

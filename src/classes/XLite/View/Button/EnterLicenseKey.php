@@ -29,20 +29,23 @@
 namespace XLite\View\Button;
 
 /**
- * Upload addons button 
+ * Enter license key popup text 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class UploadAddons extends \XLite\View\Button\APopupButton
+class EnterLicenseKey extends \XLite\View\Button\APopupButton
 {
     /**
-     *  Several specific constants
+     * Button label
      */
-    const UPLOAD_ADDONS_LABEL       = 'Upload add-ons';
-    const UPLOAD_ADDON_CSS_CLASS    = 'upload-addons';
-    const UPLOAD_ADDONS_WIDGET      = 'XLite\View\ModulesManager\UploadAddons';
+    const TEXT_LABEL = 'Enter license key';
+
+    /**
+     * Widget class to show
+     */
+    const ENTER_KEY_WIDGET = 'XLite\View\ModulesManager\AddonKey';
 
 
     /** 
@@ -55,7 +58,7 @@ class UploadAddons extends \XLite\View\Button\APopupButton
      */
     public function getButtonContent() 
     {
-        return $this->t(self::UPLOAD_ADDONS_LABEL);
+        return $this->t(static::TEXT_LABEL);
     }
 
     /** 
@@ -69,38 +72,40 @@ class UploadAddons extends \XLite\View\Button\APopupButton
     public function prepareURLParams()
     {
         return array(
-            'target' => \XLite\View\ModulesManager\UploadAddons::UPLOAD_ADDONS_TARGET,
+            'target' => 'addon_key',
             'action' => 'view',
-            'widget' => self::UPLOAD_ADDONS_WIDGET,
+            'widget' => static::ENTER_KEY_WIDGET,
         );
     }
 
     /** 
-     * Get a list of JavaScript files required to display the widget properly
-     * 
-     * @return void
+     * Register CSS files
+     *
+     * @return array
      * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {   
+        $list = parent::getCSSFiles();
+
+        return $list;
+    }   
+
+
+    /** 
+     * Register JS files
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getJSFiles()
-    {   
+    {
         $list = parent::getJSFiles();
 
-        $list[] = \XLite\View\ModulesManager\UploadAddons::JS_SCRIPT;
-
         return $list;
-    }
-
-    /** 
-     * getClass 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getClass()
-    {
-        return parent::getClass() . ' ' . self::UPLOAD_ADDON_CSS_CLASS;
-    }
-
+    }   
 }

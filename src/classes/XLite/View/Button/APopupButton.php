@@ -35,7 +35,7 @@ namespace XLite\View\Button;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class PopupButton extends \XLite\View\Button\AButton
+abstract class APopupButton extends \XLite\View\Button\AButton
 {
     /**
      * Several inner constants 
@@ -56,7 +56,7 @@ abstract class PopupButton extends \XLite\View\Button\AButton
      */
     protected function getDefaultTemplate()
     {
-        return self::TEMPLATE;
+        return static::TEMPLATE;
     }
 
     /**
@@ -90,7 +90,7 @@ abstract class PopupButton extends \XLite\View\Button\AButton
     public function getURLParams()
     {
         return array(
-            self::URLParams => $this->prepareURLParams(),
+            static::URLParams => $this->prepareURLParams(),
         );
     }
 
@@ -103,7 +103,7 @@ abstract class PopupButton extends \XLite\View\Button\AButton
      */
     protected function getClass()
     {   
-        return self::CSS_CLASS;
+        return static::CSS_CLASS;
     }   
 
     /** 
@@ -117,7 +117,7 @@ abstract class PopupButton extends \XLite\View\Button\AButton
     {   
         $list = parent::getJSFiles();
 
-        $list[] = self::JS_SCRIPT;
+        $list[] = static::JS_SCRIPT;
 
         return $list;
     }   
@@ -134,7 +134,7 @@ abstract class PopupButton extends \XLite\View\Button\AButton
     {
         $list = parent::getCSSFiles();
 
-        $list[] = self::POPUP_CSS_FILE;
+        $list[] = static::POPUP_CSS_FILE;
 
         return $list;
     }
@@ -152,7 +152,7 @@ abstract class PopupButton extends \XLite\View\Button\AButton
         $list = parent::getCommonFiles();
 
         // popup button is using several specific popup JS
-        $list['js'][] = 'js/core.popup.js';
+        $list['js'][] = 'js' . LC_DS . 'core.popup.js';
 
         return $list;
     }    
