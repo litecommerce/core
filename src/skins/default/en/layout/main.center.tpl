@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *
- * @ListChild (list="layout.main", weight="300")
+ * @ListChild (list="layout.main", weight="400")
  *}
 
 <div id="main-wrapper">

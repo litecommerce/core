@@ -134,19 +134,25 @@ class XLite_Tests_Model_Module extends XLite_Tests_Model_ModuleAbstract
     public function testGetMarketplaceURL()
     {
         $module = $this->getTestModule();
-        $this->assertEquals('https://www.litecommerce.com/marketplace/', $module::getMarketplaceURL(), 'check marketplace URL');
+        $debugOptions = \XLite::getInstance()->getOptions('debug');
+
+        $url = isset($debugOptions['marketplace_dev_url'])
+            ? $debugOptions['marketplace_dev_url']
+            : 'https://www.litecommerce.com/marketplace/';
+
+        $this->assertEquals($url, $module::getMarketplaceURL(), 'check marketplace URL');
     }
 
     public function testGetPageURL()
     {
         $module = $this->getTestModule();
-        $this->assertEquals('https://www.litecommerce.com/marketplace/module/TestAuthor/TestModule', $module->getPageURL(), 'check module URL');
+        $this->assertEquals(\XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL() . 'module/TestAuthor/TestModule', $module->getPageURL(), 'check module URL');
     }
 
     public function testGetAuthorPageURL()
     {
         $module = $this->getTestModule();
-        $this->assertEquals('https://www.litecommerce.com/marketplace/module/TestAuthor', $module->getAuthorPageURL(), 'check module author URL');
+        $this->assertEquals(\XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL() . 'module/TestAuthor', $module->getAuthorPageURL(), 'check module author URL');
     }
 
     public function testSetEnabled()
@@ -211,7 +217,11 @@ CDev\ProductOptions:
     public function testGetSettingsFormLink()
     {
         $module = $this->getEnabledModule(true, 'FeaturedProducts');
-        $this->assertEquals('admin.php?target=module&moduleId=' . $module->getModuleId(), $module->getSettingsFormLink(), 'check general settings form link');
+        $this->assertEquals(
+            \XLite\Core\Converter::buildURL('module', '', array('moduleId' => $module->getModuleId()), 'admin.php'),
+            $module->getSettingsFormLink(),
+            'check general settings form link'
+        );
         
         $module = $this->getEnabledModule(true, 'AustraliaPost');
         $this->assertEquals('admin.php?target=aupost', $module->getSettingsFormLink(), 'check custom settings form link');
@@ -265,6 +275,7 @@ CDev\ProductOptions:
     public function testIsUpdateAvailable()
     {
         $module = $this->getEnabledModule(true, 'FeaturedProducts');
+        $module->setVersion('1.0');
         $this->assertFalse($module->isUpdateAvailable(), 'check not available update');
 
         $module->setVersion($module->getVersion() . '.1');
@@ -280,9 +291,7 @@ CDev\ProductOptions:
     public function testGetCurrentVersion()
     {
         $module = $this->getEnabledModule(true, 'FeaturedProducts');
-        $oldVer = $module->getVersion();
-        $module->setVersion($module->getVersion() . '.1');
-        $this->assertEquals($oldVer, $module->getCurrentVersion(), 'check current version getter');
+        $this->assertEquals('1.0', $module->getCurrentVersion(), 'check current version getter');
     }
 
     public function testGetActualName()

@@ -213,7 +213,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
     {
         return array(
             'group' => CSS_DEFAULT,
-            'media' => isset($file['media']) ? 'all' : $file['media'],
+            'media' => isset($file['media']) ? $file['media'] : 'all',
         );
     }
 

@@ -651,12 +651,13 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
     public function testRenewPaymentMethod()
     {
         $order = $this->getTestOrder();
+        $order->getProfile()->setLastPaymentId(0);
 
         $order->setPaymentMethod(null);
-        $this->assertNull($order->getPaymentMethod(), 'empty payment method');
+        $this->assertTrue(is_null($order->getPaymentMethod()), 'empty payment method');
 
         $order->renewPaymentMethod();
-        $this->assertNull($order->getPaymentMethod(), 'empty payment method #2');
+        $this->assertTrue(is_null($order->getPaymentMethod()), 'empty payment method #2');
 
         $order->getProfile()->setLastPaymentId(1);
 
@@ -686,6 +687,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
     public function testSetPaymentMethod()
     {
         $order = $this->getTestOrder();
+        $order->getProfile()->setLastPaymentId(0);
 
         $order->setPaymentMethod(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(2));
         $this->assertEquals(
@@ -993,7 +995,8 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
     {
         $order = parent::getTestOrder();
 
-        $method = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(array('service_name' => 'PurchaseOrder'));
+        $method = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
+            ->findOneBy(array('service_name' => 'PurchaseOrder'));
         $order->setPaymentMethod($method);
 
         \XLite\Core\Database::getEM()->flush();

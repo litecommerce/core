@@ -15,7 +15,7 @@
 
 <p IF="message=#add_failed#"><font class="error-message">&gt;&gt;&nbsp;Shipping rate cannot be added&nbsp;&lt;&lt;<br />Please make sure that <b>"min weight", "min total", "min items", "shipping zone", "shipping method"</b> fields do not overlap with other shipping rates.</p>
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 <!--
 
 function visibleBox(id, status)
@@ -91,7 +91,7 @@ and cannot be edited.
   <input type="hidden" name="target" value="shipping_rates" />
   <input type="hidden" name="action" value="change" />
 
-  <table border="0">
+  <table>
 
     <tr>
       <td colspan="2">Edit charges for:</td>
@@ -99,14 +99,14 @@ and cannot be edited.
 
     <tr>
       <td>
-        <select name="methodid" onChange="document.charges_methods.submit();">
+        <select name="methodid" onchange="document.charges_methods.submit();">
           <option value="">All shipping methods</option>
           <option FOREACH="getShippingMethods(),m" value="{m.getMethodId()}" selected="{isSelected(m,#method_id#,methodid)}">{m.getName():h}</option>
         </select>
       </td>
 
       <td>
-        <select name="zoneid" onChange="document.charges_methods.submit();">
+        <select name="zoneid" onchange="document.charges_methods.submit();">
           <option value="">All shipping zones</option>
           <option FOREACH="getShippingZones(),k,zn" value="{zn.getZoneId()}" selected="{isSelected(zn,#zone_id#,zoneid)}">{zn.getZoneName()}</option>
         </select>

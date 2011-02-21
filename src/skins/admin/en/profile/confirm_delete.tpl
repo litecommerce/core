@@ -25,9 +25,9 @@
   <input type="hidden" foreach="allParams,_name,_value" name="{_name}" value="{_value}" />
   <input type="hidden" name="action" value="delete" />
 
-  <a href="javascript: void();" onclick="javascript: document.confirm_delete_profile.submit();"><img src="skins/admin/en/images/go.gif" width="13" height="13" border="0" align="absmiddle" alt="" /> Yes</a>
+  <a href="javascript: void();" onclick="javascript: document.confirm_delete_profile.submit();"><img src="skins/admin/en/images/go.gif" width="13" height="13" align="absmiddle" alt="" /> Yes</a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="javascript: history.go(-1)"><img src="skins/admin/en/images/go.gif" width="13" height="13" border="0" align="absmiddle" alt="" /> No</a>
+  <a href="javascript: history.go(-1)"><img src="skins/admin/en/images/go.gif" width="13" height="13" align="absmiddle" alt="" /> No</a>
 
 </form>
 

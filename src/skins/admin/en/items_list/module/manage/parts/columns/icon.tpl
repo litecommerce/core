@@ -11,8 +11,8 @@
  * @since     3.0.0
  * @ListChild (list="itemsList.module.manage.columns", weight="30")
  *}
-<td class="icon" width="90">
-  <a name="{module.getName()}"></a>
+<td class="icon">
+  <a id="{module.getName()}"></a>
   <div class="icon-container">
 
     <div IF="!module.getEnabled()" class="addon-disabled">
@@ -21,9 +21,9 @@
 
     <div class="module-icon">
       {if:module.hasIcon()}
-        <img src="{module.getIconURL()}" width="48" height="48" border="0" alt="" />
+        <img src="{module.getIconURL()}" width="48" height="48" alt="" />
       {else:}
-        <img src="images/addon_default.png" width="48" height="48" border="0" alt="" />
+        <img src="images/addon_default.png" width="48" height="48" alt="" />
       {end:}
     </div>
 

@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<widget template="common/dialog.tpl" head="User search" body="users/search_form.tpl" />
+<widget template="common/dialog.tpl" body="users/search_form.tpl" />
 
 <span IF="mode=#search#|mode=#list#">
   <br />

@@ -91,19 +91,23 @@ class VoteBar extends \XLite\View\AView
         $filled = false;
         $cost   = $this->getParam(self::PARAM_MAX) / $this->getParam(self::PARAM_LENGTH);
 
+        $rest   = $this->getParam(self::PARAM_RATE);
+
         for ($i = 0; $i < $this->getParam(self::PARAM_LENGTH); $i++) {
 
-            $isFull    = ($i+1)*$cost <= $this->getParam(self::PARAM_RATE);
-            $isPercent = ($i+1)*$cost < $this->getParam(self::PARAM_RATE) || $filled;
+            $isFull    = $cost <= $rest;
+            $isPercent = $rest > 0 && $cost > $rest;
 
             $stars[$i] = array(
                 'full'    => $isFull,
-                'percent' => $isPercent ? false : round(($this->getParam(self::PARAM_RATE) % $cost) / $cost * 100)
+                'percent' => $isPercent ? round($rest * 100 / $cost) : false
             );
-
+            
             if ($isPercent && !$filled) {
                 $filled = true;
             }
+         
+            $rest -= $cost;
         }
 
         return $stars;

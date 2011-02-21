@@ -448,7 +448,13 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     public function getJSExpression($expression)
     {
-        return $this->getEval('selenium.browserbot.getCurrentWindow().' . $expression);
+        $expression = 'selenium.browserbot.getCurrentWindow().' . $expression;
+
+        if (preg_match('/jQuery/Ss', $expression)) {
+            $expression = '("undefined" != typeof(selenium.browserbot.getCurrentWindow) && "undefined" != typeof(selenium.browserbot.getCurrentWindow().jQuery)) ? ' . $expression . ' : null';
+        }
+
+        return $this->getEval($expression);
     }
 
     /**
@@ -503,13 +509,13 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     public function waitInlineProgress($jqueryExpression, $message = null)
     {
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().jQuery("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length > 0',
+        $this->waitForLocalCondition(
+            'jQuery("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length > 0',
             10000,
             'check inline progress mark for ' . $jqueryExpression . ' (' . $message . ')'
         );
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().jQuery("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length == 0',
+        $this->waitForLocalCondition(
+            'jQuery("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length == 0',
             20000,
             'check GONE inline progress mark for ' . $jqueryExpression . ' (' . $message . ')'
         );
@@ -619,6 +625,8 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         if (0 < count(preg_grep('/jQuery/Ss', $condition))) {
             array_unshift($condition, '"undefined" != typeof(selenium.browserbot.getCurrentWindow().jQuery)');
         }
+
+        array_unshift($condition, '"undefined" != typeof(selenium.browserbot.getCurrentWindow)');
 
         $this->waitForCondition(
             implode(' && ', $condition),

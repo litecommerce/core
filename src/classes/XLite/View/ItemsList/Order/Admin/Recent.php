@@ -46,6 +46,6 @@ class Recent extends \XLite\View\ItemsList\Order\Admin\Search
      */
     protected function getHead()
     {
-        return 'Recent orders';
+        return null;
     }
 }

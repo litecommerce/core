@@ -27,8 +27,11 @@
   <div class="price-filter" IF="mode=#search#">
 
     <form action="admin.php" method="post" name="pricefilterform">
-      <input type="hidden" name="target" value="addons_list" />
-      <input type="hidden" name="action" value="search" />
+
+      <fieldset>
+        <input type="hidden" name="target" value="addons_list" />
+        <input type="hidden" name="action" value="search" />
+      </fieldset>
 
       <select name="priceFilter" onchange="javascript:this.form.submit();">
         <option value="all">{t(#No price filtering#)}</option>
@@ -54,7 +57,7 @@ jQuery(document).ready(function(){
 <table cellspacing="0" cellpadding="0" class="data-table items-list modules-list">
 
   <tr FOREACH="getPageData(),idx,module" class="{getRowClass(idx,##,#highlight#)}">
-    {displayNestedViewListContent(#columns#,_ARRAY_(#module#^module))}
+    {displayInheritedViewListContent(#columns#,_ARRAY_(#module#^module))}
   </tr>
 
 </table>

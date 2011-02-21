@@ -51,6 +51,18 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
     }
 
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'AustraliaPost settings';
+    }
+
+    /**
      * getOptionsCategory 
      * 
      * @return string

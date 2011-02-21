@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<a href="{href:r}">{if:img}<input type="image" src="images/{img}" border="0" align="absmiddle">{else:}<input type="image" src="images/go.gif" width="13" height="13" border="0" align="absmiddle">{end:}{if:font}<span class="{font}">{end:} {label:h}{if:font}</span>{end:}</a>
+<a href="{href:r}">{if:img}<input type="image" src="images/{img}" align="absmiddle" />{else:}<input type="image" src="images/go.gif" width="13" height="13" align="absmiddle" />{end:}{if:font}<span class="{font}">{end:} {label:h}{if:font}</span>{end:}</a>

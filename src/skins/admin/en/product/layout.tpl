@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<table border=0>
+<table>
 <tr>
     <td colspan=2>
         {if:invalid_field_order}
@@ -21,8 +21,8 @@
         {end:}
 </tr>
 {*<tr FOREACH="xlite.factory.\XLite\Model\Product.importFields,id,fields">
-    <td width=1>{id}:</td>
-    <td width=99%>
+    <td style="width:1;">{id}:</td>
+    <td style="width:99%;">
         <select name="product_layout[{id}]">
             <option FOREACH="fields,field,value" value="{field}" selected="{isOrderFieldSelected(id,field,value)}">{field}</option>
         </select>
