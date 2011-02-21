@@ -5,6 +5,7 @@ $allowedTargets = array(
 	'addon',
 	'license',
     'version',
+	'info_by_key',
 );
 
 $allowedActions = array(
@@ -39,24 +40,10 @@ if ('addons' === $_GET['target']) {
 	    $outFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'paid-modules' . DIRECTORY_SEPARATOR
     	    . basename($_GET['author']) . '_' . basename($_GET['module']) . '.phar';
 
-	    $keyFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'paid-modules' . DIRECTORY_SEPARATOR
-    	    . basename($_GET['author']) . '_' . basename($_GET['module']) . '.key';
-
-		$refundKeyFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'paid-modules' . DIRECTORY_SEPARATOR
-            . basename($_GET['author']) . '_' . basename($_GET['module']) . '.refund.key'; 
-
-		// Refund keys must be stored separately to prevent repeated use in main KEY set
-		$refundKeys = file_exists($refundKeyFile) ? file($refundKeyFile, FILE_IGNORE_NEW_LINES) : array();
-
-		$keys = file_exists($keyFile) ? file($keyFile, FILE_IGNORE_NEW_LINES) : array();
-
 		// TODO after changing to DB:
 		// Only 7 downloads in a week are allowed for one key [9 demand]
 
-	    if (
-			in_array($_GET['key'], $keys)
-			&& !in_array($_GET['key'], $refundKeys)
-		) {
+		if (true === verifyKey($_GET['key'], $_GET['author'], $_GET['module'])) {
                 
     		echo file_get_contents($outFile);
 
@@ -103,8 +90,74 @@ if ('addons' === $_GET['target']) {
         echo file_get_contents($outFile);
     }
 
+} elseif ('info_by_key' === $_GET['target']) {
+
+	$key = $_GET['license_key'];
+
+	$info = getInfoByKey($key);
+
+	$doc = new DOMDocument('1.0');
+
+	$doc->formatOutput = true;
+
+	$root = $doc->createElement('root');
+	$doc->appendChild($root);
+
+	if (false !== $info) {
+
+		$author = $doc->createElement('author', $info[0]);
+		$module = $doc->createElement('module', $info[1]);
+
+		$root->appendChild($module);
+		$root->appendChild($author);
+
+	} else {
+
+		$error = $doc->createElement('error', 'No such license key');
+
+		$root->appendChild($error);
+	}
+
+	echo $doc->saveXML();
 }
 
+
+// TODO Must be removed when DB is used!!!
+function getLicenseKeys()
+{
+	$licenseKeysFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'paid-modules' . DIRECTORY_SEPARATOR . 'License_Keys';
+
+	$keys = file($licenseKeysFile, FILE_IGNORE_NEW_LINES);
+
+	$new = array();
+
+	foreach ($keys as $key) {
+
+		$elem = explode('|', $key);
+
+		$new[$elem[0]] = array(
+			$elem[1],
+			$elem[2],
+		);
+	}
+
+	return $new;
+}
+
+function getInfoByKey($key)
+{
+	$keys = getLicenseKeys();
+
+	return isset($keys[$key]) ? $keys[$key] : false;
+}
+
+// TODO : Add forbidden key check!!!!
+function verifyKey($key, $author, $module)
+{
+	$info = getInfoByKey($key);
+
+	return false !== $info && $info[0] === $author && $info[1] === $module;
+}
 
 exit(0);
 ?>

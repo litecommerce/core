@@ -13,8 +13,7 @@
 
   <form action="admin.php" method="post" name="getAddonForm" >
     <input type="hidden" name="target" value="module_installation" />
-    <input type="hidden" name="action" value="get_package" />
-    <input type="hidden" name="module_id" value="{getModuleId()}" />
+    <input type="hidden" name="action" value="register_key" />
 
     <div class="addon-key">
       <input type="text" name="key" value="" />

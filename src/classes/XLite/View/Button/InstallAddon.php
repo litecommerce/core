@@ -35,7 +35,7 @@ namespace XLite\View\Button;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class InstallAddon extends \XLite\View\Button\PopupButton
+class InstallAddon extends \XLite\View\Button\APopupButton
 {
     /**
      * Button label
@@ -80,6 +80,51 @@ class InstallAddon extends \XLite\View\Button\PopupButton
         );
     }
 
+    /** 
+     * Register CSS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {   
+        $list = parent::getCSSFiles();
+        // TODO must be taken from LICENSE module widget!!!
+        $list[] = 'modules_manager' . LC_DS . 'license' . LC_DS . 'style.css';
+
+        return $list;
+    }   
+
+
+    /** 
+     * Register JS files
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {   
+        $list = parent::getJSFiles();
+
+        // TODO must be taken from LICENSE module widget!!!
+        $list[] = 'modules_manager' . LC_DS . 'license' . LC_DS . 'js' . LC_DS . 'switch-button.js';
+
+        return $list;
+    }   
+
+
+    /**
+     * Define widgets parameters
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function defineWidgetParams()
     {   
         parent::defineWidgetParams();
@@ -88,7 +133,4 @@ class InstallAddon extends \XLite\View\Button\PopupButton
             self::PARAM_MODULEID => new \XLite\Model\WidgetParam\String('ModuleId', '', true),
         );  
     }
-
-
-
 }

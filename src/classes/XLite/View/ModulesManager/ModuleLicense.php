@@ -83,6 +83,23 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
     }
 
     /**
+     * Register JS files
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = $this->getDir() . LC_DS . 'js' . LC_DS . 'switch-button.js';
+
+        return $list;
+    }
+
+    /**
      * Return title
      *
      * @return string

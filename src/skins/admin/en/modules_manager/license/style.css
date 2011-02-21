@@ -12,33 +12,52 @@
  */
 
 .license-block {
-  background-color: #e9f4ff;
-  border: solid #c0d6ec 1px;
-  width: 660px;
+  background-color: #f7f7f7;
+  width: 690px;
+  padding: 20px 20px 10px 20px;
 }
 
-.license-note {
-  background: url(images/arrow_down.png) 15px 11px no-repeat;
-  height: 33px;
-  padding: 20px 5px 5px 62px;
-  font-size: 16px;
-}
-
-.license-note a.agreement {
-  border-bottom: dotted #2c5fa6 1px;
+.license-block table {
+  width: 100%;
 }
 
 .license-block .license-text {
-  display: none;
-  margin: 5px 20px 20px 20px;
+  margin: 0px;
 }
 
 .license-text textarea {
-  width: 100%;
-  height: 300px;
+  width: 620px;
+  height: 130px;
 }
 
-.module-license button[type="submit"] {
-  left: 250px;
-  position: absolute;
+.module-license {
+  width: auto;
+  height: auto;
+  margin: 0px;
 }
+
+.module-license table.agree,
+  .module-license table.install-addon
+{
+  width: 100%;
+  margin-top: 15px;
+}
+
+.module-license table.agree td,
+  .module-license table.install-addon td
+{
+  text-align: center;
+}
+
+img.switch-button {
+  background: transparent url(images/switch-button.png) 0 0 no-repeat;
+  width: 23px;
+  height: 31px;
+}
+
+.license-block table td.switch-button {
+  vertical-align: bottom;
+  text-align: left;
+}
+
+
