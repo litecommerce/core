@@ -1094,11 +1094,14 @@ abstract class AController extends \XLite\Core\Handler
         $this->set('silent', true);
     }
 
-    function startDump()
+    protected function startDump()
     {
         @set_time_limit(0);
+
         $this->set('silent', true);
-        if (!isset($_REQUEST['mode']) || $_REQUEST['mode']!="cp") {
+
+        if (!isset(\XLite\Core\Request::getInstance()->mode) || 'cp' != \XLite\Core\Request::getInstance()->mode) {
+
             func_refresh_start();
             $this->dumpStarted = true;
         }

@@ -38,6 +38,16 @@ namespace XLite\Controller\Admin;
 abstract class AAdmin extends \XLite\Controller\AController
 {
     /**
+     * List of recently logged in administrators
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $recentAdmins = null;
+
+    /**
      * Check if current page is accessible
      *
      * @return boolean 
@@ -130,12 +140,15 @@ abstract class AAdmin extends \XLite\Controller\AController
         return $currentCode ? $currentCode : \XLite\Core\Translation::getCurrentLanguageCode();
     }
 
-
-
-
-    protected $recentAdmins = null;
-
-    function getCustomerZoneWarning()
+    /**
+     * Returns 'maintenance_mode' string if frontend is closed or null otherwise
+     * 
+     * @return string|null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCustomerZoneWarning()
     {
         return ('Y' == \XLite::getInstance()->config->General->shop_closed) ? 'maintenance_mode' : null;
     }
@@ -153,16 +166,16 @@ abstract class AAdmin extends \XLite\Controller\AController
         return $this->auth->getAdminAccessLevel();
     }
 
-    function handleRequest()
+    /**
+     * Handles the request to admin interface
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest()
     {
-        // auto-login request
-/*
-        if (!$this->auth->is('logged') && isset(\XLite\Core\Request::getInstance()->login) && isset(\XLite\Core\Request::getInstance()->password)) {
-            if ($this->auth->loginAdministrator(\XLite\Core\Request::getInstance()->login, \XLite\Core\Request::getInstance()->password) === \XLite\Core\Auth::RESULT_ACCESS_DENIED) {
-                die('ACCESS DENIED');
-            }
-        }
-*/
         if (
             !$this->auth->isAuthorized($this)
             && !$this->isPublicZone()
@@ -186,7 +199,7 @@ abstract class AAdmin extends \XLite\Controller\AController
     }
 
     /**
-     * Check - current place is public or not
+     * Check - is current place public or not
      * 
      * @return boolean
      * @access protected
@@ -200,7 +213,15 @@ abstract class AAdmin extends \XLite\Controller\AController
         return 'login' == $request->target;
     }
 
-    function getRecentAdmins()
+    /**
+     * Get recently logged in admins 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRecentAdmins()
     {
         if ($this->auth->isLogged() && is_null($this->recentAdmins)) {
             $this->recentAdmins = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findRecentAdmins();
@@ -208,7 +229,15 @@ abstract class AAdmin extends \XLite\Controller\AController
         return $this->recentAdmins;
     }
 
-    function startDump()
+    /**
+     * Start simplified page to display progress of some process
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function startDump()
     {
         parent::startDump();
         if (!isset(\XLite\Core\Request::getInstance()->mode) || \XLite\Core\Request::getInstance()->mode != "cp") {
@@ -216,26 +245,34 @@ abstract class AAdmin extends \XLite\Controller\AController
         }
     }
 
-    function displayPageHeader($title="", $scroll_down=false)
+    /**
+     * Display header of simplified page
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function displayPageHeader($title = '', $scrollDown = false)
     {
 ?>
-<HTML>
-<HEAD>
-<?php
-        if (!empty($title)) {
-?>  <title><?php echo $title; ?></title>
-<?php   }
-?>
+<html>
+<head>
+    <title><?php echo !empty($title) ? $title : ''; ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->get('charset'); ?>">
-    <LINK href="skins/<?php echo \XLite\Model\Layout::getInstance()->getSkin(); ?>/en/style.css"  rel=stylesheet type=text/css>
-</HEAD>
-<BODY leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0"><?php
-        if ($scroll_down) {
+    <link href="skins/<?php echo \XLite\Model\Layout::getInstance()->getSkin(); ?>/en/style.css"  rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<?php
+        if ($scrollDown) {
             $this->dumpStarted = true;
             func_refresh_start();
         }
 ?>
-<div id="ActionPageHeader" style="display:;">
+
+<div id="ActionPageHeader" style="display: block;">
 <TABLE border="0" width="100%" cellpadding="0" cellspacing="0" align="center">
 <TR>
 <TD valign=top>
@@ -258,15 +295,23 @@ abstract class AAdmin extends \XLite\Controller\AController
 </tr>
 </TABLE>
 </div>
-<div style='FONT-SIZE: 10pt;'>
+<div style='font-size: 12px;'>
 <?php
     }
 
-    function hidePageHeader()
+    /**
+     * Hide header of simplified page
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function hidePageHeader()
     {
         $this->silent = false;
 
-        $code = <<<EOT
+        print <<<EOT
 <script type="text/javascript">
 <!--
 loaded = true;
@@ -278,25 +323,45 @@ if (Element) {
 -->
 </script>
 EOT;
-        echo $code;
+
     }
 
-    function displayPageFooter()
+    /**
+     * displayPageFooter 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function displayPageFooter()
     {
-        $urls = (array)$this->get('pageReturnUrl');
+        $urls = $this->getPageReturnUrl();
 
         foreach ($urls as $url) {
-            echo "<br>".$url."<br>";
+            echo '<br />' . $url . '<br />';
         }
 ?>
 </div>
-<br>
-</BODY>
-</HTML>
+
+<br />
+
+</body>
+</html>
+
 <?php
+
     }
 
-    function getPageReturnUrl()
+    /**
+     * getPageReturnUrl 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPageReturnUrl()
     {
         return array();
     }
@@ -350,7 +415,7 @@ EOT;
     }
 
     /**
-     * Define common ingnored targets 
+     * Define common ignored targets 
      * 
      * @return array
      * @access protected
@@ -382,7 +447,7 @@ EOT;
     }
 
     /**
-     * Check - rule is exists with current targe and action or not
+     * Check - rule is exists with current target and action or not
      * 
      * @param array $rules Rules
      *  
