@@ -11,8 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="cart.panel.box", weight="10")
  *}
-{if:cart.isShippingVisible()}
-<div class="estimator">
+<div class="estimator" IF="cart.isShippingVisible()">
 
   {if:isShippingEstimate()&cart.shippingMethod}
 
@@ -27,7 +26,7 @@
 
   {else:}
 
-    {if:cart.isShippingAvailable()}
+    {if:cart.isShippingRatesExists()}
       <widget class="\XLite\View\Form\Cart\ShippingEstimator\Open" name="shippingEstimator" />
         <div class="buttons">
           <widget class="\XLite\View\Button\Submit" label="Estimate shipping cost" style="action estimate" />
@@ -42,4 +41,3 @@
   {end:}
 
 </div>
-{end:}

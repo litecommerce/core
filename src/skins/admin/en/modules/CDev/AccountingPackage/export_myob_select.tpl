@@ -28,7 +28,7 @@ To export the found orders into MYOB Accounting 2005 follow the steps below<hr /
 <p align="justify"> Before you can import transactions into MYOB you must set up an Income Account Number to which the total value of the imported transactions is allocated. Must be valid, preexisting MYOB account number, 5 characters, numeric. May (optionally) have a non-numeric separator between the first digit and the last 4 digits (for example, 1-1234). Please refer to your MYOB Manual for further assistance.
 
 <form name="order_sales_form">
-Income Account Number <span class="star">*</span> <input type="text" name="income_account_number" value="{config.ImportExport.income_account}" size=7>
+Income Account Number <span class="star">*</span> <input type="text" name="income_account_number" value="{config.ImportExport.income_account}" size=7 />
 </form>
 
 <p align="justify">Click on "Export sales transaction" button below to export the found orders and save the resulting CSV file. You can name this file as you like to suit your requirements.
@@ -55,7 +55,7 @@ function export_sales(income_account_number) {
 
 <p align="justify">Before you can import received payments into MYOB you must set up a Deposit Account to which the total value of the received payments is allocated. Must be valid, preexisting MYOB account number. 5 characters, numeric. May (optionally) have a non-numeric separator between the first digit and the last 4 digits (for example, 1-1234). Please refer to your MYOB Manual for further assistance.
 
-<form name="received_payments_form">Deposit Account Number <span class="star">*</span> <input type="text" name="deposit_account" value="{config.ImportExport.deposit_account}" size=7></form>
+<form name="received_payments_form">Deposit Account Number <span class="star">*</span> <input type="text" name="deposit_account" value="{config.ImportExport.deposit_account}" size=7 /></form>
 
 <p align="justify">Click on "Export received payments" button below to export the resulting CSV file. You can name this file as you like to suit your requirements.
 

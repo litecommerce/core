@@ -82,7 +82,7 @@ class Install extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getHead()
     {
-        return 'Install new Add-ons';
+        return null;
     }
 
     /**

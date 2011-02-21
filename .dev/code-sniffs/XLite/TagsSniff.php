@@ -672,8 +672,8 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
                 $error = 'Content missing for @version tag in file comment';
                 $this->currentFile->addError($this->getReqPrefix($this->reqCodeEmpty) . $error, $errorPos);
 
-            } else if (!preg_match('/^SVN: \$' . 'Id: [\w\d_\.]+ \d+ \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}Z [\w\d_]+ \$$/Ss', $content)) {
-                $error = "Invalid version \"$content\" in file comment; consider \"SVN: <svn_id>\" instead";
+            } else if (!preg_match('/^GIT: \$' . 'Id: [a-f\d]{40} \$$/Ss', $content)) {
+                $error = "Invalid version \"$content\" in file comment; consider \"GIT: <git_id>\" instead";
                 $this->currentFile->addWarning($this->getReqPrefix($this->getReqCode($this->reqCodesWrongFormat, 'version')) . $error, $errorPos);
             }
         }

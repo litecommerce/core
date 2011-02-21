@@ -27,6 +27,10 @@
  * @since      3.0.0
  */
 
+// No PHP warnings are allowed in LC
+error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors', true);
+
 function _do_query_upload($sqlfile) {
     global $__connection;
 

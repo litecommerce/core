@@ -59,6 +59,20 @@ class Categories extends \XLite\Controller\Admin\Catalog
 
 
     /**
+     * Return the current page title (for the content area)
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return $this->getRootCategoryId() !== $this->getCategory()->getCategoryId()
+            ? $this->getCategory()->getName()
+            : 'Manage categories';    
+    }
+
+    /**
      * __call 
      * 
      * @param string $method Method to call

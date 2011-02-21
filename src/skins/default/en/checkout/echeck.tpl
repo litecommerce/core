@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<table cellspacing="0" class="form-table">
+<table cellspacing="0" class="form-data">
 
   <tr>
     <td><label for="ch_routing_number">{t(#ABA routing number#)}:</label></td>

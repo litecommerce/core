@@ -66,6 +66,34 @@ class Modules extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Manage add-ons' . $this->getUpgradableModulesFlag();
+    }
+
+    /**
+     * Return upgradable modules flag label:
+     * - empty string if no any
+     * - number of upgradable modules in brackets
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getUpgradableModulesFlag()
+    {
+        $upgradeables = count(\Xlite\Core\Database::getRepo('XLite\Model\Module')->findUpgradableModules());
+
+        return 0 < $upgradeables ? ' (' . $upgradeables . ')' : '';
+    }
+
+    /**
      * Enable module
      *
      * @return void
