@@ -116,6 +116,26 @@ class Layout extends \XLite\Base\Singleton
      */
     protected $skinPaths = array();
 
+    /**
+     * Resources cache
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $resourcesCache = array();
+
+    /**
+     * Substutional skins cache flag
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $substutionalSkinsCache = false;
+
     // {{{ Common getters
 
     /**
@@ -244,8 +264,8 @@ class Layout extends \XLite\Base\Singleton
 
             foreach ($this->getSkins($interface) as $skin) {
                 $this->skinPaths[$interface][] = array(
-                    'fs'  => LC_SKINS_DIR . $skin . ($locale ? LC_DS . $locale : ''),
-                    'web' => static::PATH_SKIN . '/' . $skin . ($locale ? '/' . $locale : ''),
+                    'fs'        => LC_SKINS_DIR . $skin . ($locale ? LC_DS . $locale : ''),
+                    'web'       => static::PATH_SKIN . '/' . $skin . ($locale ? '/' . $locale : ''),
                 );
             }
         }
@@ -303,17 +323,22 @@ class Layout extends \XLite\Base\Singleton
      */
     public function getSkinResourceFullPath($shortPath, $interface = null)
     {
-        $result = null;
+        $interface = $interface ?: $this->currentInterface;
+        $key = $interface . '.' . $shortPath;
 
-        foreach ($this->getSkinPaths($interface) as $path) {
-            $fullPath = $path['fs'] . LC_DS . $shortPath;
-            if (file_exists($fullPath)) {
-                $result = $fullPath;
-                break;
+        if (!isset($this->resourcesCache[$key])) {
+            foreach ($this->getSkinPaths($interface) as $path) {
+                $fullPath = $path['fs'] . LC_DS . $shortPath;
+                if (file_exists($fullPath)) {
+                    $this->resourcesCache[$key] = $path;
+                    break;
+                }
             }
         }
 
-        return $result;
+        return isset($this->resourcesCache[$key])
+            ? $this->resourcesCache[$key]['fs'] . LC_DS . $shortPath
+            : null;
     }
 
     /**
@@ -328,15 +353,21 @@ class Layout extends \XLite\Base\Singleton
      */
     public function getSkinResourceWebPath($shortPath, $outputType = self::WEB_PATH_OUTPUT_SHORT)
     {
-        $result = null;
+        $key = $this->currentInterface . '.' . $shortPath;
 
-        foreach ($this->getSkinPaths() as $path) {
-            $fullPath = $path['fs'] . LC_DS . $shortPath;
-            if (file_exists($fullPath)) {
-                $result = $path['web'] . '/' . $shortPath;
-                break;
+        if (!isset($this->resourcesCache[$key])) {
+            foreach ($this->getSkinPaths() as $path) {
+                $fullPath = $path['fs'] . LC_DS . $shortPath;
+                if (file_exists($fullPath)) {
+                    $this->resourcesCache[$key] = $path;
+                    break;
+                }
             }
         }
+
+        $result = isset($this->resourcesCache[$key])
+            ? $this->resourcesCache[$key]['web'] . '/' . $shortPath
+            : null;
 
         if ($result && self::WEB_PATH_OUTPUT_SHORT != $outputType) {
             $type = self::WEB_PATH_OUTPUT_FULL == $outputType
@@ -352,6 +383,40 @@ class Layout extends \XLite\Base\Singleton
         }
 
         return $result;
+    }
+
+    /**
+     * Save substitutonal skins data into cache
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function saveSubstitutonalSkins()
+    {
+        \XLite\Core\Database::getCacheDriver()->save(
+            get_called_class() . '.SubstitutonalSkins',
+            $this->resourcesCache
+        );
+    }
+
+    /**
+     * Restore substitutonal skins data from cache
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function restoreSubstitutonalSkins()
+    {
+        $data = \XLite\Core\Database::getCacheDriver()->fetch(
+            get_called_class() . '.SubstitutonalSkins'
+        );
+        if ($data && is_array($data)) {
+            $this->resourcesCache = $data;
+        }
     }
 
     // }}}
@@ -479,6 +544,14 @@ class Layout extends \XLite\Base\Singleton
         parent::__construct();
 
         $this->setOptions();
+
+        $this->substutionalSkinsCache = (bool)\XLite::getInstance()
+            ->getOptions(array('performance', 'substutional_skins_cache'));
+
+        if ($this->substutionalSkinsCache) {
+            $this->restoreSubstitutonalSkins();
+            register_shutdown_function(array($this, 'saveSubstitutonalSkins'));
+        }
     }
 
     // }}}
