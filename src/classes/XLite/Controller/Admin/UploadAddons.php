@@ -107,7 +107,7 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
         }
 
         // Redirect admin to the modules list page
-        $this->setReturnUrl($this->buildUrl('modules'));
+        $this->setReturnURL($this->buildURL('modules'));
     }
 
 

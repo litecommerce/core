@@ -107,7 +107,7 @@ class PaymentMethod extends \XLite\Controller\Admin\AAdmin
 
             \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->update($m);
 
-            $this->setReturnUrl($this->buildUrl('payment_methods'));
+            $this->setReturnURL($this->buildURL('payment_methods'));
         }
     }
 }

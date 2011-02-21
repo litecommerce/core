@@ -177,7 +177,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * @access public
      * @since  3.0.0
      */
-    public function getReturnUrl()
+    public function getReturnURL()
     {
         if (\XLite\Core\Request::getInstance()->action) {
 
@@ -189,10 +189,10 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
 
             $params = isset($profileId) ? array('profile_id' => $profileId) : array();
 
-            $url = $this->buildUrl('address_book', '', $params);
+            $url = $this->buildURL('address_book', '', $params);
 
         } else {
-            $url = parent::getReturnUrl();
+            $url = parent::getReturnURL();
         }
 
         return $url;

@@ -103,7 +103,7 @@ class ImageFiles extends \XLite\Controller\Admin\AAdmin
         // return \XLite\Model\Image::getImageClasses();
     }
     
-    function getPageReturnUrl()
+    function getPageReturnURL()
     {
         return array('<a href="'.$this->get('url').'"><u>Return to admin zone</u></a>');
     }

@@ -49,7 +49,7 @@ class Checkout extends \XLite\View\Button\Link
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_LOCATION]->setValue($this->buildUrl('checkout'));
+        $this->widgetParams[self::PARAM_LOCATION]->setValue($this->buildURL('checkout'));
         $this->widgetParams[self::PARAM_LABEL]->setValue('Checkout');
         $this->widgetParams[self::PARAM_STYLE]->setValue('bright-button big-button checkout-button');
     }
