@@ -38,6 +38,14 @@ namespace Includes\Utils;
 class URLManager extends AUtils
 {
     /**
+     * URL output type codes
+     */
+
+    const URL_OUTPUT_SHORT = 'short';
+    const URL_OUTPUT_FULL = 'full';
+
+
+    /**
      * Remove trailing slashes from URL 
      * 
      * @param string $url URL to prepare
@@ -55,20 +63,26 @@ class URLManager extends AUtils
     /**
      * Return full URL for the resource
      * 
-     * @param string $url      url part to add
-     * @param bool   $isSecure use HTTP or HTTPS
-     * @param array  $params   optional URL params
+     * @param string $url      URL part to add OPTIONAL
+     * @param bool   $isSecure Use HTTP or HTTPS OPTIONAL
+     * @param array  $params   URL parameters OPTIONAL
+     * @param string $output   URL output type OPTIONAL
      *  
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getShopURL($url = '', $isSecure = false, array $params = array())
-    {
+    public static function getShopURL(
+        $url = '',
+        $isSecure = false,
+        array $params = array(),
+        $output = self::URL_OUTPUT_FULL
+    ) {
         $hostDetails = \Includes\Utils\ConfigParser::getOptions('host_details');
 
-        if ($host = $hostDetails['http' . ($isSecure ? 's' : '') . '_host']) {
+        $host = $hostDetails['http' . ($isSecure ? 's' : '') . '_host'];
+        if ($host) {
 
             $proto = ($isSecure ? 'https' : 'http') . '://';
 
@@ -81,7 +95,13 @@ class URLManager extends AUtils
                 $url .= (false !== strpos($url, '?') ? '&' : '?') . $session->getName() . '=' . $session->getID();
             }
 
-            $url = $proto . $host . $url;
+            foreach ($params as $name => $value) {
+                $url .= (false !== strpos($url, '?') ? '&' : '?') . $name . '=' . $value;
+            }
+
+            if (self::URL_OUTPUT_FULL == $output) {
+                $url = $proto . $host . $url;
+            }
         }
 
         return $url;

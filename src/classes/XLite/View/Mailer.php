@@ -207,7 +207,7 @@ class Mailer extends \XLite\View\AView
      */
     public function selectCustomerLayout()
     {
-        $layout = \XLite\Model\Layout::getInstance();
+        $layout = \XLite\Core\Layout::getInstance();
         $this->templatesSkin = $layout->getSkin();
         $layout->setCustomerSkin();
     }
@@ -355,7 +355,7 @@ class Mailer extends \XLite\View\AView
 
         if (isset($this->templatesSkin)) {
             // Restore layout
-            $layout = \XLite\Model\Layout::getInstance();
+            $layout = \XLite\Core\Layout::getInstance();
             $layout->setSkin($this->templatesSkin);
             $this->templatesSkin = null;
         }
@@ -378,7 +378,7 @@ class Mailer extends \XLite\View\AView
     {
         // replace layout with mailer skinned
         if ($switchLayout) {
-            $layout = \XLite\Model\Layout::getInstance();
+            $layout = \XLite\Core\Layout::getInstance();
             $skin = $layout->getSkin();
             $layout->setMailSkin();
 

@@ -55,7 +55,7 @@ class Template extends \XLite\Model\FileNode
         $this->path = $path;
 
         // FIXME -  method was removed
-        // $this->file = \XLite\Model\Layout::getInstance()->getPathCustomer() . $path;
+        // $this->file = \XLite\Core\Layout::getInstance()->getPathCustomer() . $path;
     }
 
     function setContent($content)
