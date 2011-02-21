@@ -121,4 +121,43 @@ class XLite_Web_Customer_SubstutionalSkin extends XLite_Web_Customer_ACustomer
             'test substutional template'
         );
     }
+
+    public function testInheritance()
+    {
+        copy(
+            LC_SKINS_DIR . 'test' . LC_DS . 'en' . LC_DS . 'welcome.i.tpl',
+            LC_SKINS_DIR . 'test' . LC_DS . 'en' . LC_DS . 'welcome.tpl'
+        );
+        $this->openAndWait('');
+
+        $this->assertElementPresent(
+            "//h1[@class='substitutional-test-skin' and text()='WELCOME PAGE']",
+            'test substutional template'
+        );
+
+        $this->assertElementPresent(
+            "//h3[text()='Access denied!']",
+            'test inherited template'
+        );
+    }
+
+    public function testDirectCall()
+    {
+        copy(
+            LC_SKINS_DIR . 'test' . LC_DS . 'en' . LC_DS . 'welcome.d.tpl',
+            LC_SKINS_DIR . 'test' . LC_DS . 'en' . LC_DS . 'welcome.tpl'
+        );
+        $this->openAndWait('');
+
+        $this->assertElementPresent(
+            "//h1[@class='substitutional-test-skin' and text()='WELCOME PAGE']",
+            'test substutional template'
+        );
+
+        $this->assertElementPresent(
+            "//h3[text()='Access denied!']",
+            'test direct template'
+        );
+    }
+
 }

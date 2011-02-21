@@ -185,13 +185,13 @@ class Language extends \XLite\Model\Base\I18n
      */
     public function getFlagURL()
     {
-        $path = \XLite\Core\Layout::getInstance()->getSkinResourceWebPath(
+        $path = \XLite\Core\Layout::getInstance()->getResourceWebPath(
             'images/flags/' . $this->getCode() . '.png',
             \XLite\Core\Layout::WEB_PATH_OUTPUT_URL
         );
 
         if (!$path) {
-            $path = \XLite\Core\Layout::getInstance()->getSkinResourceWebPath(
+            $path = \XLite\Core\Layout::getInstance()->getResourceWebPath(
                 'images/flags/__.png',
                 \XLite\Core\Layout::WEB_PATH_OUTPUT_URL
             );

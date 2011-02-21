@@ -235,7 +235,7 @@ class Image extends \XLite\View\AView
             $url = \XLite::getInstance()->getOptions(array('images', 'default_image'));
 
             if (!\XLite\Core\Converter::isURL($url)) {
-                $url = \XLite\Core\Layout::getInstance()->getSkinResourceWebPath(
+                $url = \XLite\Core\Layout::getInstance()->getResourceWebPath(
                     $url,
                     \XLite\Core\Layout::WEB_PATH_OUTPUT_URL
                 );
