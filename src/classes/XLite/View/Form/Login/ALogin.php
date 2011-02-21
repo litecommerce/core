@@ -111,7 +111,7 @@ abstract class ALogin extends \XLite\View\Form\AForm
      */
     protected function getFormAction()
     {
-        return $this->getShopUrl(\XLite::getInstance()->getScript(), $this->getSecuritySetting());
+        return $this->getShopURL(\XLite::getInstance()->getScript(), $this->getSecuritySetting());
     }
 }
 

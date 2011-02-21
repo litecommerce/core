@@ -21,12 +21,12 @@ Use HTML code provided in this section to create product-specific 'Add to Cart' 
 {if:product.hasThumbnail()}
 <tr>
     <td valign="top">Example:</td>
-    <td><img src="{getShopUrl(#cart.php#)}?target=image&action=product_thumbnail&product_id={product.product_id}" width="70" alt="{product.name:h}" />
+    <td><img src="{getShopURL(#cart.php#)}?target=image&action=product_thumbnail&product_id={product.product_id}" width="70" alt="{product.name:h}" />
     </td>
 </tr>    
 <tr>
     <td valign="top">HTML code:</td>
-    <td><textarea cols="80" rows="5"><img src="{getShopUrl(#cart.php#)}?target=image&action=product_thumbnail&product_id={product.product_id}" width="70" alt="{product.name:h}" /></textarea>
+    <td><textarea cols="80" rows="5"><img src="{getShopURL(#cart.php#)}?target=image&action=product_thumbnail&product_id={product.product_id}" width="70" alt="{product.name:h}" /></textarea>
     </td>
 </tr>
 {else:}
@@ -39,12 +39,12 @@ Use HTML code provided in this section to create product-specific 'Add to Cart' 
 <tr><td colspan="2">&nbsp;</td></tr>
 <tr>
     <td valign="top">Example:</td>
-    <td><a href="{getShopUrl(#cart.php#)}?target=product&action=buynow&product_id={product.product_id}&category_id={product.category.category_id}">"Add to cart"</a>
+    <td><a href="{getShopURL(#cart.php#)}?target=product&action=buynow&product_id={product.product_id}&category_id={product.category.category_id}">"Add to cart"</a>
     </td>
 </tr>
 <tr>
     <td valign="top">HTML code:</td>
-    <td><textarea cols="80" rows="5"><a href="{getShopUrl(#cart.php#)}?target=product&action=buynow&product_id={product.product_id}&category_id={product.category.category_id}">Add to cart</a></textarea>
+    <td><textarea cols="80" rows="5"><a href="{getShopURL(#cart.php#)}?target=product&action=buynow&product_id={product.product_id}&category_id={product.category.category_id}">Add to cart</a></textarea>
     </td>
 </tr>    
 <tr><td colspan="2">&nbsp;</td></tr>
@@ -55,14 +55,14 @@ Use HTML code provided in this section to create product-specific 'Add to Cart' 
 <tr>
     <td>Example:</td>
     <td>
-      <widget class="\XLite\View\Button\Regular" label="Add to cart" jsCode="document.location='{getShopUrl(#cart.php#)}?target=product&action=buynow&product_id={product.product_id}&category_id={product.category.category_id}'" />
+      <widget class="\XLite\View\Button\Regular" label="Add to cart" jsCode="document.location='{getShopURL(#cart.php#)}?target=product&action=buynow&product_id={product.product_id}&category_id={product.category.category_id}'" />
     </td>
 </tr>    
 <tr>
     <td valign="top">HTML code:</td>
     <td>
       <textarea cols="80" rows="5">
-        <widget class="\XLite\View\Button\Regular" label="Add to cart" jsCode="document.location='{getShopUrl(#cart.php#)}?target=product&action=buynow&product_id={product.product_id}&category_id={product.category.category_id}'" />
+        <widget class="\XLite\View\Button\Regular" label="Add to cart" jsCode="document.location='{getShopURL(#cart.php#)}?target=product&action=buynow&product_id={product.product_id}&category_id={product.category.category_id}'" />
       </textarea>
     </td>
 </tr>    

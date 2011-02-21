@@ -860,7 +860,7 @@ function isLiteCommerceInstalled($dbUrl = null, &$message)
                         $data = $dbUrl;
 
                     } else {
-                        $data = parseDbUrl($dbUrl);
+                        $data = parseDbURL($dbUrl);
                     }
 
                     if (!empty($data)) {
@@ -935,7 +935,7 @@ function isLiteCommerceInstalled($dbUrl = null, &$message)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function parseDbUrl($dbUrl)
+function parseDbURL($dbUrl)
 {    
     $data = array();
 

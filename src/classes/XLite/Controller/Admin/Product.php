@@ -126,7 +126,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
         $result = empty($cleanURL);
 
         if (!$result) {
-            $entity = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByCleanUrl($cleanURL);
+            $entity = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByCleanURL($cleanURL);
             $result = !isset($entity) || $entity->getProductId() === $this->getProductId();
 
             if (!$result) {

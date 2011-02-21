@@ -153,8 +153,8 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     {
         $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($id);
 
-        return (isset($category) && $category->getCleanUrl())
-            ? \Includes\Utils\URLManager::trimTrailingSlashes($category->getCleanUrl())
+        return (isset($category) && $category->getCleanURL())
+            ? \Includes\Utils\URLManager::trimTrailingSlashes($category->getCleanURL())
                 . '/' . \Includes\Utils\Converter::buildQuery($params, '-', '/')
             : null;
     }
@@ -175,8 +175,8 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
         $result = null;
 
-        if (isset($product) && $product->getCleanUrl()) {
-            $result = $product->getCleanUrl();
+        if (isset($product) && $product->getCleanURL()) {
+            $result = $product->getCleanURL();
             if (!preg_match('/\.html?$/Ss', $result)) {
                 $result .= '.html';
             }
@@ -530,7 +530,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
         // By product
 
         $product = \XLite\Core\Database::getRepo('XLite\Model\Product')
-            ->findOneByCleanUrl(preg_replace('/(?:\.html|\.htm)$/Ss', '', $path));
+            ->findOneByCleanURL(preg_replace('/(?:\.html|\.htm)$/Ss', '', $path));
 
         if (isset($product)) {
             $cleanUrl = \XLite\Core\Converter::buildURL(
@@ -546,7 +546,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
             $parts = preg_split('\'/\'', $path, 2, PREG_SPLIT_NO_EMPTY);
 
             $category = \XLite\Core\Database::getRepo('XLite\Model\Category')
-                ->findOneByCleanUrl($parts[0]);
+                ->findOneByCleanURL($parts[0]);
 
             if ($category) {
 

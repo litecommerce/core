@@ -291,7 +291,7 @@ EOT;
 
     function displayPageFooter()
     {
-        $urls = (array)$this->get('pageReturnUrl');
+        $urls = (array)$this->getPageReturnURL();
 
         foreach ($urls as $url) {
             echo "<br>".$url."<br>";
@@ -304,7 +304,7 @@ EOT;
 <?php
     }
 
-    function getPageReturnUrl()
+    function getPageReturnURL()
     {
         return array();
     }

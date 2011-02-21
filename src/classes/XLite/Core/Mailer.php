@@ -242,7 +242,7 @@ class Mailer extends \XLite\Base\Singleton
     {
         $mailer = self::getMailer();
         
-        $mailer->url = \XLite::getInstance()->getShopUrl(
+        $mailer->url = \XLite::getInstance()->getShopURL(
             'cart.php?target=recover_password&action=confirm&email=' . 
             urlencode($userLogin) . 
             '&request_id=' . 

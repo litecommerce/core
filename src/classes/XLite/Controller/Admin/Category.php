@@ -272,7 +272,7 @@ class Category extends \XLite\Controller\Admin\Catalog
      */
     protected function isCleanURLUnique($cleanURL, $categoryId = null)
     {
-        $result = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneByCleanUrl($cleanURL);
+        $result = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneByCleanURL($cleanURL);
 
         return !isset($result)
             || (!is_null($categoryId) && intval($categoryId ) == intval($result->getCategoryId()));
