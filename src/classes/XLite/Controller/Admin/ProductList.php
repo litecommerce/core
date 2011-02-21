@@ -151,4 +151,16 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
             ? $searchParams[$paramName]
             : null;
     }
+
+    /**
+     * Return the current page title (for the content area)
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Search products';
+    }
 }

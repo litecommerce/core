@@ -16,10 +16,10 @@
   <widget class="\XLite\View\EditorLanguageSelector" />
 </div>
 
-<form IF="getMemberships()" action="admin.php" method="POST" name="update_membership_form">
-  <input type="hidden" name="target" value="memberships">
-  <input type="hidden" name="action" value="update">
-  <input type="hidden" name="language" value="{language}">
+<form IF="getMemberships()" action="admin.php" method="post" name="update_membership_form">
+  <input type="hidden" name="target" value="memberships" />
+  <input type="hidden" name="action" value="update" />
+  <input type="hidden" name="language" value="{language}" />
 
   <table cellspacing="1" class="data-table">
 		<tr>
@@ -49,10 +49,10 @@
 
 <hr />
 
-<form action="admin.php" method="POST" name="add_membership_form">
-  <input type="hidden" name="target" value="memberships">
-  <input type="hidden" name="action" value="add">
-  <input type="hidden" name="language" value="{language}">
+<form action="admin.php" method="post" name="add_membership_form">
+  <input type="hidden" name="target" value="memberships" />
+  <input type="hidden" name="action" value="add" />
+  <input type="hidden" name="language" value="{language}" />
 
   <h2>Add new membership level</h2>
 

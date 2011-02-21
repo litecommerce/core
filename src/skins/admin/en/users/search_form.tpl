@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 <!--
 
 function switchMembershipDisplaying(index)
@@ -51,15 +51,15 @@ function managedate(type, status) {
 -->
 </script>
 
-<p align="justify">
-  Use this section to search and manage user accounts.
-  <hr />
-</p>
+<p>Use this section to search and manage user accounts.</p>
+<hr />
 
 <form action="admin.php" method="post" name="searchform">
 
-  <input type="hidden" name="target" value="users" />
-  <input type="hidden" name="action" value="search" />
+  <fieldset>
+    <input type="hidden" name="target" value="users" />
+    <input type="hidden" name="action" value="search" />
+  </fieldset>
 
   <table cellpadding="0" cellspacing="0" width="100%">
 
@@ -69,8 +69,8 @@ function managedate(type, status) {
       <table cellpadding="1" cellspacing="5" width="100%">
 
         <tr>
-          <td height="10" width="20%" nowrap="nowrap">Search for pattern:</td>
-          <td height="10">
+          <td style="width:20%;height:10px;" class="table-label">Search for pattern:</td>
+          <td style="height:10px;">
             <input type="text" name="posted_data[pattern]" size="30" style="width:70%" value="{getSearchParams(#pattern#)}" />
             &nbsp;
             <widget class="\XLite\View\Button\Submit" label="Search" />
@@ -93,9 +93,9 @@ function managedate(type, status) {
       <table cellpadding="1" cellspacing="5" width="100%">
 
         <tr>
-          <td height="10" width="20%" nowrap="nowrap">Search for user type:</td>
-          <td height="10">
-            <select name="posted_data[user_type]" onChange="javascript: switchMembershipDisplaying(this.selectedIndex)">
+          <td style="width:20%;height:10px;" class="table-label">Search for user type:</td>
+          <td style="height:10px;">
+            <select name="posted_data[user_type]" onchange="javascript: switchMembershipDisplaying(this.selectedIndex)">
               <option value=""{if:!getSearchParams(#user_type#)} selected="selected"{end:}>All</option>
               <option value="A"{if:getSearchParams(#user_type#)=#A#} selected="selected"{end:}>Administrator</option>
               <option value="C"{if:getSearchParams(#user_type#)=#C#} selected="selected"{end:}>Non-administrator</option>
@@ -104,8 +104,8 @@ function managedate(type, status) {
         </tr>
 
         <tr id="membership_box">
-          <td height="10" width="20%" nowrap="nowrap">Search for users with membership:</td>
-          <td height="10">
+          <td style="width:20%;height:10px;" class="table-label">Search for users with membership:</td>
+          <td style="height:10px;">
             <widget class="\XLite\View\MembershipSelect" template="common/select_membership.tpl" field="posted_data[membership]" value="{getSearchParams(#membership#)}" allOption pendingOption />
           </td>
         </tr>
@@ -115,22 +115,22 @@ function managedate(type, status) {
         </tr>
 
         <tr>
-          <td height="10" width="20%" nowrap="nowrap">Country:</td>
-          <td height="10" width="80%">
+          <td style="width:20%;height:10px;" class="table-label">Country:</td>
+          <td style="width:80%;height:10px;">
             <widget class="\XLite\View\CountrySelect" field="posted_data[country]" country="{getSearchParams(#country#)}" fieldId="country_select" />
           </td>
         </tr>
 
         <tr>
-          <td height="10" width="20%" nowrap="nowrap">State:</td>
-          <td height="10" width="80%">
+          <td style="width:20%;height:10px;" class="table-label">State:</td>
+          <td style="width:80%;height:10px;">
             <widget class="\XLite\View\StateSelect" field="posted_data[state]" state="{getSearchParams(#state#)}" fieldId="state_select" isLinked=1 />
           </td>
         </tr>
 
         <tr>
-          <td height="10" width="20%" nowrap="nowrap">Address pattern:</td>
-          <td height="10" width="80%">
+          <td style="width:20%;height:10px;" class="table-label">Address pattern:</td>
+          <td style="width:80%;height:10px;">
             <input type="text" maxlength="64" name="posted_data[address_pattern]" value="{getSearchParams(#address_pattern#)}" style="width:70%" />
           </td>
         </tr>
@@ -141,8 +141,8 @@ function managedate(type, status) {
         </tr>
 
         <tr>
-          <td height="10" width="20%" nowrap="nowrap">Phone:</td>
-          <td height="10" width="80%">
+          <td style="width:20%;height:10px;" class="table-label">Phone:</td>
+          <td style="width:80%;height:10px;">
             <input type="text" maxlength="25" name="posted_data[phone]" value="{getSearchParams(#phone#)}" style="width:70%" />
           </td>
         </tr>
@@ -152,9 +152,9 @@ function managedate(type, status) {
         </tr>
 
         <tr>
-          <td height="10">Search for users that are:</td>
-          <td height="10">
-            <select name="posted_data[date_type]" onChange="javascript: managedate('date_type')">
+          <td style="height:10px;">Search for users that are:</td>
+          <td style="height:10px;">
+            <select name="posted_data[date_type]" onchange="javascript: managedate('date_type')">
               <option value=""{if:getSearchParams(#date_type#)=##} selected="selected"{end:}>[Please select one]</option>
               <option value="R"{if:getSearchParams(#date_type#)=#R#} selected="selected"{end:}>Registered...</option>
               <option value="L"{if:getSearchParams(#date_type#)=#L#} selected="selected"{end:}>Last logged in...</option>
@@ -163,28 +163,28 @@ function managedate(type, status) {
         </tr>
 
         <tr id="date_period_box">
-          <td nowrap="nowrap">During the period:</td>
+          <td class="table-label">During the period:</td>
           <td>
 
             <table cellpadding="2" cellspacing="2">
 
               <tr>
-                <td width="5"><input type="radio" id="date_period_M" name="posted_data[date_period]" value="M"{if:getSearchParams(#date_period#)=#M#|!getSearchParams(#date_period#)} checked="checked"{end:} onclick="javascript: managedate('date',true)" /></td>
+                <td style="width:5;"><input type="radio" id="date_period_M" name="posted_data[date_period]" value="M"{if:getSearchParams(#date_period#)=#M#|!getSearchParams(#date_period#)} checked="checked"{end:} onclick="javascript: managedate('date',true)" /></td>
                 <td colspan="2" class="OptionLabel"><label for="date_period_M">This month</label></td>
               </tr>
 
               <tr>
-                <td width="5"><input type="radio" id="date_period_W" name="posted_data[date_period]" value="W"{if:getSearchParams(#date_period#)=#W#} checked="checked"{end:} onclick="javascript: managedate('date',true)" /></td>
+                <td style="width:5;"><input type="radio" id="date_period_W" name="posted_data[date_period]" value="W"{if:getSearchParams(#date_period#)=#W#} checked="checked"{end:} onclick="javascript: managedate('date',true)" /></td>
                 <td colspan="2" class="OptionLabel"><label for="date_period_W">This week</label></td>
               </tr>
 
               <tr>
-                <td width="5"><input type="radio" id="date_period_D" name="posted_data[date_period]" value="D"{if:getSearchParams(#date_period#)=#D#} checked="checked"{end:} onclick="javascript: managedate('date',true)" /></td>
+                <td style="width:5;"><input type="radio" id="date_period_D" name="posted_data[date_period]" value="D"{if:getSearchParams(#date_period#)=#D#} checked="checked"{end:} onclick="javascript: managedate('date',true)" /></td>
                 <td colspan="2" class="OptionLabel"><label for="date_period_D">Today</label></td>
               </tr>
 
               <tr>
-                <td width="5"><input type="radio" id="date_period_C" name="posted_data[date_period]" value="C"{if:getSearchParams(#date_period#)=#C#} checked="checked"{end:} onclick="javascript: managedate('date',false)" /></td>
+                <td style="width:5;"><input type="radio" id="date_period_C" name="posted_data[date_period]" value="C"{if:getSearchParams(#date_period#)=#C#} checked="checked"{end:} onclick="javascript: managedate('date',false)" /></td>
                 <td class="OptionLabel"><label for="date_period_C">From</label></td>
                 <td><widget class="\XLite\View\DatePicker" field="posted_data[startDate]" value="{getSearchParams(#startDate#)}" /></td>
               </tr>
@@ -216,32 +216,32 @@ function managedate(type, status) {
 
 </table>
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 <!--
 visibleBox('1');
 managedate('date_type');
 -->
 </script>
 
-<script type="text/javascript" language="JavaScript 1.2" IF="isAdvancedOptionSelected()|mode=#search#&!getUsersCount()">
+<script type="text/javascript" IF="isAdvancedOptionSelected()|mode=#search#&!getUsersCount()">
 <!--
 visibleBox('1');
 -->
 </script>
 
-<script type="text/javascript" language="JavaScript 1.2" IF="getSearchParams(#user_type#)=#A#">
+<script type="text/javascript" IF="getSearchParams(#user_type#)=#A#">
 <!--
 switchMembershipDisplaying(1);
 -->
 </script>
 
-<script type="text/javascript" language="JavaScript 1.2" IF="getSearchParams(#date_period#)=#C#">
+<script type="text/javascript" IF="getSearchParams(#date_period#)=#C#">
 <!--
 managedate('date', false);
 -->
 </script>
 
-<script type="text/javascript" language="JavaScript 1.2" IF="!getSearchParams(#date_period#)=#C#">
+<script type="text/javascript" IF="!getSearchParams(#date_period#)=#C#">
 <!--
 managedate('date', true);
 -->
@@ -253,5 +253,5 @@ managedate('date', true);
 
 <br />
 
-<b>Note:</b> You can also <a href="admin.php?target=profile&mode=register"><u>add a new user</u></a>.
+<b>Note:</b> You can also <a href="admin.php?target=profile&amp;mode=register">add a new user</a>.
 

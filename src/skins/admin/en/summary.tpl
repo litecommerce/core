@@ -26,7 +26,7 @@ function setVisible(element_id)
 //-->
 </script>
 
-<table cellspacing="1" cellpadding="5" border="0" class="settings-table">
+<table cellspacing="1" cellpadding="5" class="settings-table">
 
 <tr>
 	<td colspan="2">
@@ -128,7 +128,7 @@ function setVisible(element_id)
     <td colspan="4">
         &nbsp;Cannot set {dirPermissionStr} permissions for subdirectories:<br />
         {foreach:v.subdirs,sid,subdir}
-            &nbsp;&nbsp;&nbsp;<i>{subdir}</i><br />    
+            &nbsp;&nbsp;&nbsp;{subdir}<br />    
         {end:}
     </td>
 </tr>

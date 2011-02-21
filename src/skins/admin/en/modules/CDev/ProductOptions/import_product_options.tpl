@@ -19,15 +19,15 @@ This page allows you to import product options from CSV file.<hr />
 </p>
 <form action="admin.php" method=POST name=data_form enctype="multipart/form-data" >
 <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}"/>
-<input type="hidden" name="action" value="import_product_options">
+<input type="hidden" name="action" value="import_product_options" />
 
-<table border=0>
+<table>
 <tr>
     <td colspan=2><span class="admin-head">Field order:</span></td>
 </tr>
 <tr FOREACH="xlite.factory.\XLite\Module\CDev\ProductOptions\Model\ProductOption.getImportFields(#product_options_layout#),id,fields">
-    <td width=1>{id}:</td>
-    <td width=99%>
+    <td style="width:1;">{id}:</td>
+    <td style="width:99%;">
         <select name="product_options_layout[{id}]">
             <option FOREACH="fields,field,value" value="{field}" selected="value=id">{field}</option>
         </select>

@@ -47,7 +47,9 @@ class Category extends \XLite\Controller\Admin\Catalog
      */
     protected function getLocation()
     {
-        return 'Details';
+        return ('add_child' === \XLite\Core\Request::getInstance()->mode) 
+            ? 'Add category'
+            : 'Details';
     }
 
     /**
@@ -141,6 +143,19 @@ class Category extends \XLite\Controller\Admin\Catalog
             : parent::getCategory();
     }
 
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return ('add_child' === \XLite\Core\Request::getInstance()->mode) 
+            ? 'Add category'
+            : parent::getCategory()->getName();
+    }
 
 
     // FIXME - must be revised

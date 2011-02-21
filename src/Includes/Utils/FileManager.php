@@ -239,14 +239,14 @@ class FileManager extends \Includes\Utils\AUtils
             $filter = new \Includes\Utils\FileFilter($dir, null, \RecursiveIteratorIterator::CHILD_FIRST);
 
             foreach ($filter->getIterator() as $file) {
-                $file->isDir() ? rmdir($file->getRealPath()) : static::delete($file->getRealPath());
+                $file->isDir() ? static::deleteDir($file->getRealPath()) : static::delete($file->getRealPath());
             }
 
             // Unset is required to release directory 
-            // and avoid 'Permission denied' warning on rmdir() on Windoows servers
+            // and avoid 'Permission denied' warning on rmdir() on Windows servers
             unset($filter);
 
-            rmdir($dir);
+            static::deleteDir($dir);
         }
     }
 
@@ -400,6 +400,21 @@ class FileManager extends \Includes\Utils\AUtils
     public static function delete($path)
     {
         return !static::isExists($path) ?: unlink($path);
+    }
+
+    /**
+     * Delete dir
+     *
+     * @param string $dir Directory to delete
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function deleteDir($dir)
+    {
+        return !(static::isExists($dir) && static::isDir($dir)) ?: rmdir($dir);
     }
 
     /**

@@ -64,18 +64,6 @@ class TopMessage extends \XLite\View\AView
     }
 
     /**
-     * getBlockId 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getBlockId()
-    {
-        return 'top_messages';
-    }
-
-    /**
      * getTopMessages 
      * 
      * @return array
@@ -90,7 +78,7 @@ class TopMessage extends \XLite\View\AView
     }
 
     /**
-     * getText 
+     * Get message text 
      * 
      * @param array $data Message
      *  
@@ -104,7 +92,7 @@ class TopMessage extends \XLite\View\AView
     }
 
     /**
-     * getType 
+     * Get message type 
      * 
      * @param array $data Message
      *  
@@ -117,17 +105,46 @@ class TopMessage extends \XLite\View\AView
         return $data[\XLite\Core\TopMessage::FIELD_TYPE];
     }
 
-
     /**
-     * Check widget visibility
+     * Get message prefix 
      * 
-     * @return boolean 
+     * @param array $data Message
+     *  
+     * @return string|void
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isVisible()
+    protected function getPrefix(array $data)
     {
-        return parent::isVisible() && $this->getTopMessages();
+        $prefix = null;
+
+        switch ($data[\XLite\Core\TopMessage::FIELD_TYPE]) {
+            case 'error':
+                $prefix = $this->t('Error') . ':';
+                break;
+
+            case 'warning':
+                $prefix = $this->t('Warning') . ':';
+                break;
+
+            default:
+        }
+
+        return $prefix;
+    }
+
+    /**
+     * Check - box display as hidden or not
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isHidden()
+    {
+        return !$this->getTopMessages();
     }
 
     /**
@@ -140,6 +157,7 @@ class TopMessage extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
+
         $list[] = $this->getDir() . '/style.css';
 
         return $list;
@@ -155,6 +173,7 @@ class TopMessage extends \XLite\View\AView
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
+
         $list[] = $this->getDir() . '/controller.js';
 
         return $list;

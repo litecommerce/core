@@ -14,13 +14,13 @@
 This section contains the store's basic templates to be edited.
 <widget template="template_editor/notes.tpl">
 </p>
-<form action="admin.php" method="POST">
-<input type="hidden" name="target" value="template_editor">
-<input type="hidden" name="action" value="update_templates">
+<form action="admin.php" method="post">
+<input type="hidden" name="target" value="template_editor" />
+<input type="hidden" name="action" value="update_templates" />
 
 <span FOREACH="basicTemplates,temp">
 <p>
-<span IF="{temp.comment}"><b>{temp.comment}</b>, </span><i>template file: {temp.path}</i><br />
+<span IF="{temp.comment}"><b>{temp.comment}</b>, </span>template file: {temp.path}<br />
 <span IF="!temp.isExists()" class="error-message">This file does not exist. It will be created automatically after you have edited the template and saved your modifications.<br /></span>
 <span IF="temp.read_only_access" class="error-message">WARNING! File cannot be overwritten! Please check and correct file permissions.<br /></span>
 <textarea name="template[{temp.path}]" cols="81" rows="10">{temp.content}</textarea>

@@ -15,41 +15,41 @@
 
 <widget class="XLite\View\Form\Product\Modify\Single" name="modify_form" />
 
-<table border=0 cellpadding="0">
+<table cellpadding="0">
 <tr>
-  <td width="30%">&nbsp;</td>
+  <td style="width:30%;">&nbsp;</td>
   <td>&nbsp;</td>
 </tr>
 <tr>
-  <td nowrap>SKU</td>
+  <td class="table-label">SKU</td>
   <td>
-    <input type="text" name="{getNamePostedData(#sku#)}" size="20" value="{product.sku:r}">
+    <input type="text" name="{getNamePostedData(#sku#)}" size="20" value="{product.sku:r}" />
   </td>
 </tr>
 <tr>
   <td>
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-  		<td nowrap width="100%">Product Name</td>
+  		<td class="table-label" width="100%">Product Name</td>
         <td class="star">&nbsp;*&nbsp;</td>
 	</tr>
 	</table>
   </td>
   <td>
-    <input type="text" name="{getNamePostedData(#name#)}" size="45" value="{product.name:r}">
+    <input type="text" name="{getNamePostedData(#name#)}" size="45" value="{product.name:r}" />
   </td>
 </tr>  
 <tr>
 	<td>
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-  		<td nowrap width="100%">Category</td>
+  		<td class="table-label" width="100%">Category</td>
         <td class="star">&nbsp;*&nbsp;</td>
 	</tr>
 	</table>
 	</td>
 	<td> 
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <table cellpadding="0" cellspacing="0" width="100%">
       <tr><widget class="\XLite\View\FormField\Select\Categories" fieldName="{getNamePostedData(##,#category_ids#)}" fieldOnly=true value="{product.getCategories()}" /></tr>
     </table>
     </td>
@@ -57,15 +57,15 @@
 
 <tr>
   <td>
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-  		<td nowrap width="100%">Price</td>
+  		<td class="table-label" width="100%">Price</td>
         <td class="star">&nbsp;*&nbsp;</td>
 	</tr>
 	</table>
   </td>
   <td valign="middle">
-    <input type="text" name="{getNamePostedData(#price#)}" size="18" value="{product.price}">
+    <input type="text" name="{getNamePostedData(#price#)}" size="18" value="{product.price}" />
   </td>
 </tr>
 <widget module="CDev\ProductAdviser" template="modules/CDev/ProductAdviser/price_changed.tpl" IF="{priceNotifyPresent}" dialog="{dialog}">
@@ -73,22 +73,22 @@
 <tbody IF="{config.General.enable_sale_price}">
 <tr>
   <td>
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-  		<td nowrap width="100%">Market price</td>
+  		<td class="table-label" width="100%">Market price</td>
         <td>&nbsp;</td>
 	</tr>
 	</table>
   </td>
   <td valign="middle">
-    <input type="text" name="{getNamePostedData(#sale_price#)}" size="18" value="{product.sale_price}">
+    <input type="text" name="{getNamePostedData(#sale_price#)}" size="18" value="{product.sale_price}" />
   </td>
 </tr>
 </tbody>
 
 <tr>
   <td valign=middle>Tax class<br />
-    <i>You can specify tax classes in Settings/Taxes/add rate/condition dialog</i>
+    You can specify tax classes in Settings/Taxes/add rate/condition dialog
   </td>
   <td valign="middle">
     <select name="{getNamePostedData(#tax_class#)}">
@@ -101,7 +101,7 @@
 <tr>
   <td valign=middle class=Text>Weight ({config.General.weight_symbol:h})</td>
   <td valign="middle">
-    <input type="text" name="{getNamePostedData(#weight#)}" size="18" value="{product.weight}">
+    <input type="text" name="{getNamePostedData(#weight#)}" size="18" value="{product.weight}" />
   </td>
 </tr>
 <tr>
@@ -115,9 +115,9 @@
 </tr>
 <tr>
   <td>
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-  		<td nowrap width="100%">Available for sale</td>
+  		<td class="table-label" width="100%">Available for sale</td>
         <td class="star">&nbsp;*&nbsp;</td>
 	</tr>
 	</table>
@@ -137,7 +137,7 @@
 
 <tr>
     <td>Product page title </td>
-	<td><input type="text" name="{getNamePostedData(#meta_title#)}" value="{product.meta_title}" size="50"></td>
+	<td><input type="text" name="{getNamePostedData(#meta_title#)}" value="{product.meta_title}" size="50" /></td>
 </tr>
 
 <tr>
@@ -156,11 +156,11 @@
 
 <tr>
     <td>Meta keywords</td>
-    <td><input type="text" name="{getNamePostedData(#meta_tags#)}" value="{product.meta_tags}" size="50"></td>
+    <td><input type="text" name="{getNamePostedData(#meta_tags#)}" value="{product.meta_tags}" size="50" /></td>
 </tr>
 <tr>
     <td>Meta description</td>
-    <td><input type="text" name="{getNamePostedData(#meta_desc#)}" value="{product.meta_desc}" size="50"></td>
+    <td><input type="text" name="{getNamePostedData(#meta_desc#)}" value="{product.meta_desc}" size="50" /></td>
 </tr>
 <tr>
     <td>Clean URL</td>
@@ -175,7 +175,7 @@
 {* Will be revised later *}
 {*<tr>
   <td valign=middle>Pos.</td>
-  <td valign="middle"><input type="text" name="{getNamePostedData(#order_by#)}" size="5" value="{product.order_by}"></td>
+  <td valign="middle"><input type="text" name="{getNamePostedData(#order_by#)}" size="5" value="{product.order_by}" /></td>
 </tr>*}
 
 <widget module="CDev\GoogleCheckout" template="modules/CDev/GoogleCheckout/product/info.tpl">

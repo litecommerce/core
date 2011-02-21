@@ -47,7 +47,7 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return 'Memberships';
+        return 'Membership levels';
     }
 
     /**
@@ -164,5 +164,17 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->persist($membership);
             \XLite\Core\Database::getEM()->flush();
         }
+    }
+
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Membership levels';
     }
 }

@@ -92,7 +92,7 @@ class XLite_Web_Customer_Breadcrumbs extends XLite_Web_Customer_ACustomer
 
         // Forth node: "Pyramid Brain Twist" (text)
         $this->assertElementPresent(
-            $this->mainBlockLocator . '/div[contains(text(),"Pyramid Brain Twist")]',
+            $this->mainBlockLocator . '/div[@class="location-node last"]/span[@class="location-text" and contains(text(),"Pyramid Brain Twist")]',
             'check forth breadcrumb (must be "Pyramid Brain Twist", text)'
         );
 

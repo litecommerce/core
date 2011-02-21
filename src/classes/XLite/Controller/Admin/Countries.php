@@ -50,6 +50,19 @@ class Countries extends \XLite\Controller\Admin\AAdmin
         return 'Countries';
     }
 
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Countries';
+    }
+
+
     function obligatorySetStatus($status)
     {
         if (!in_array('status', $this->params)) {

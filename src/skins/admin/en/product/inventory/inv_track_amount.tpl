@@ -16,6 +16,6 @@
 <tr>
   <td>{t(#Quantity in stock#)}</td>
   <td>
-    <input type="text" name="{getNamePostedData(#amount#)}" size="18" value="{inventory.getAmount()}">
+    <input type="text" name="{getNamePostedData(#amount#)}" size="18" value="{inventory.getAmount()}" />
   </td>
 </tr>

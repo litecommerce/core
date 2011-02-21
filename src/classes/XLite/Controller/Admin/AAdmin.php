@@ -533,53 +533,6 @@ EOT;
         return $this->getRequestDataByPrefix($this->getPrefixToDelete());
     }
 
-
-
-    /**
-     * FIXME - to remove
-     * 
-     * @return boolean 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isTested()
-    {
-        return in_array(
-            get_class($this),
-            array(
-                'XLite\Controller\Admin\Login',
-                'XLite\Controller\Admin\Main',
-                'XLite\Controller\Admin\Category',
-                'XLite\Controller\Admin\Categories',
-                'XLite\Controller\Admin\Product',
-                'XLite\Controller\Admin\ProductList',
-                'XLite\Controller\Admin\Profile',
-                'XLite\Controller\Admin\Users',
-                'XLite\Controller\Admin\AddressBook',
-                'XLite\Controller\Admin\Order',
-                'XLite\Controller\Admin\OrderList',
-                'XLite\Controller\Admin\Settings',
-                'XLite\Controller\Admin\Module',
-                'XLite\Controller\Admin\Modules',
-                'XLite\Controller\Admin\PaymentMethod',
-                'XLite\Controller\Admin\PaymentMethods',
-                'XLite\Controller\Admin\ShippingSettings',
-                'XLite\Controller\Admin\ShippingMethods',
-                'XLite\Controller\Admin\ShippingRates',
-                'XLite\Controller\Admin\ShippingZones',
-                'XLite\Controller\Admin\Aupost',
-                'XLite\Controller\Admin\Taxes',
-                'XLite\Controller\Admin\States',
-                'XLite\Controller\Admin\Countries',
-                'XLite\Controller\Admin\Memberships',
-                'XLite\Controller\Admin\Languages',
-                'XLite\Controller\Admin\CacheManagement',
-                'XLite\Controller\Admin\RecentLogin',
-            )
-        );
-    }
-
     /**
      * Get last Core version
      * 

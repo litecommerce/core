@@ -15,7 +15,7 @@
   <widget class="\XLite\View\EditorLanguageSelector" />
 </div>
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 <!-- 
 
 var CheckBoxes = new Array();
@@ -72,7 +72,7 @@ Use this section to define your store's shipping methods.
 
 {foreach:getShippingProcessors(),processor}
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 <!--
 
 CheckBoxes["{processor.getProcessorId()}"] = new Array();
@@ -86,7 +86,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
   <input type="hidden" name="action" value="update" />
   <input type="hidden" name="method_id" value="" />
 
-  <table cellpadding="0" cellspacing="0" border="0" width="600">
+  <table cellpadding="0" cellspacing="0" width="600">
 
     <tr>
       <td><br />&nbsp;</td>
@@ -106,7 +106,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
         <table class="data-table">
 
           <tr>
-            <th width="90%">Shipping method</th>
+            <th style="width:90%;">Shipping method</th>
             <th>Pos.</th>
             <th>Active<br />
               <input id="enable_method_{processor.getProcessorId()}" type="checkbox" onclick="this.blur();setChecked('{processor.getProcessorId()}',this.checked);" />
@@ -155,7 +155,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
   <input type="hidden" name="target" value="shipping_methods" />
   <input type="hidden" name="action" value="add" />
 
-  <table cellpadding="0" cellspacing="0" border="0">
+  <table cellpadding="0" cellspacing="0">
     
     <tr>
       <td>&nbsp;</td>

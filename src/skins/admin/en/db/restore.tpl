@@ -33,7 +33,7 @@ Use this section to restore the database of your online store. Please note that 
 <span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>How to restore your LiteCommerce database &gt;&gt;&gt;</b></a></span>
 <span id="notes_body" style="display: none">
 <p class="adminParagraph">
-<table border=0 cellpadding=5 cellspacing=0>
+<table cellpadding="5" cellspacing="0">
     <tr>
         <td>&nbsp;&nbsp;</td>
         <td>&nbsp;&nbsp;</td>
@@ -57,18 +57,18 @@ To restore the images which are stored in the file system, you have to copy them
 <p class="adminParagraph">
 <b class="star">Warning:</b> Restore procedure is irreversible and erases all data tables from your store database. It is highly recommended that you backup your present database data before restoring one of the previous states from a backup.
 </p>
-<p class="adminParagraph"><b class="star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings"><u>General settings</u></a> page before performing restore procedure!</p>
+<p class="adminParagraph"><b class="star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings">General settings</a> page before performing restore procedure!</p>
 
 <form action="admin.php" method=post enctype="multipart/form-data">
-<input type="hidden" name="target" value="db">
-<input type="hidden" name="action" value="restore">
-<input type="hidden" name="page" value="{page}">
-<table border=0 cellpadding=0 cellspacing=0>
+<input type="hidden" name="target" value="db" />
+<input type="hidden" name="action" value="restore" />
+<input type="hidden" name="page" value="{page}" />
+<table cellpadding="0" cellspacing="0">
 <tr>
 	<td colspan="3">&nbsp;</td>
 </tr>
 <tr>
-	<td><input type=file name=userfile onChange="javascript: visibleBox('max_upload_note', true);"><widget IF="invalid_file" template="common/uploaded_file_validator.tpl" /></td>
+	<td><input type=file name=userfile onchange="javascript: visibleBox('max_upload_note', true);"><widget IF="invalid_file" template="common/uploaded_file_validator.tpl" /></td>
 	<td>&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Submit" label="Upload and restore" style="main-button" /></td>
     <td>{if:fileExists}&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Submit" name="local_file" label="Restore from server" />{end:}</td>
 </tr>

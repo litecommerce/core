@@ -21,13 +21,13 @@
 
 <p>
 <form action="admin.php" method=POST name=data_form>
-<input type="hidden" name="target" value="export_catalog">
-<input type="hidden" name="action" value="export_products">
-<input type="hidden" name="page" value="{page}">
+<input type="hidden" name="target" value="export_catalog" />
+<input type="hidden" name="action" value="export_products" />
+<input type="hidden" name="page" value="{page}" />
 
 <widget template="product/layout.tpl">
 
-<table border="0">
+<table>
 <tr>
     <td colspan=2>
     <br />
