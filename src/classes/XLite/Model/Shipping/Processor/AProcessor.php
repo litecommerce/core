@@ -151,7 +151,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getApiUrl()
+    public function getApiURL()
     {
         return $this->apiUrl;
     }

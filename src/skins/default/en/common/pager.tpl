@@ -13,10 +13,10 @@
 <ul IF="isPagerVisible()" class="pager">
 
   <li class="{getBorderLinkClassName(#first#)}">
-    <a href="{buildUrlByPageId(getPageIdByNotation(#first#))}" class="{getLinkClassName(#first#)}"><img src="images/spacer.gif" alt="First" /></a>
+    <a href="{buildURLByPageId(getPageIdByNotation(#first#))}" class="{getLinkClassName(#first#)}"><img src="images/spacer.gif" alt="First" /></a>
   </li>
   <li class="{getBorderLinkClassName(#previous#)}">
-    <a href="{buildUrlByPageId(getPageIdByNotation(#previous#))}" class="{getLinkClassName(#previous#)}"><img src="images/spacer.gif" alt="Previous" /></a>
+    <a href="{buildURLByPageId(getPageIdByNotation(#previous#))}" class="{getLinkClassName(#previous#)}"><img src="images/spacer.gif" alt="Previous" /></a>
   </li>
 
   <li FOREACH="getPageUrls(),num,pageUrl" class="{getPageClassName(num)}">
@@ -24,10 +24,10 @@
   </li>
 
   <li class="{getBorderLinkClassName(#next#)}">
-    <a href="{buildUrlByPageId(getPageIdByNotation(#next#))}" class="{getLinkClassName(#next#)}"><img src="images/spacer.gif" alt="Next" /></a>
+    <a href="{buildURLByPageId(getPageIdByNotation(#next#))}" class="{getLinkClassName(#next#)}"><img src="images/spacer.gif" alt="Next" /></a>
   </li>
   <li class="{getBorderLinkClassName(#last#)}">
-    <a href="{buildUrlByPageId(getPageIdByNotation(#last#))}" class="{getLinkClassName(#last#)}"><img src="images/spacer.gif" alt="Last" /></a>
+    <a href="{buildURLByPageId(getPageIdByNotation(#last#))}" class="{getLinkClassName(#last#)}"><img src="images/spacer.gif" alt="Last" /></a>
   </li>
 
 </ul>

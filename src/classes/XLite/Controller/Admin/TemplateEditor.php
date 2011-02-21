@@ -144,13 +144,13 @@ class TemplateEditor extends \XLite\Controller\Admin\AAdmin
         return isset($this->pageTemplates[$this->get('editor')]) ? $this->pageTemplates[$this->get('editor')] : null;
     }
     
-    function getUrl(array $params = array()) 
+    function getURL(array $params = array()) 
     {
         if ($this->get('editor') != "advanced") {
             $this->set('zone', null);
             $this->set('locale', null);
         }
-        return parent::getUrl($params);
+        return parent::getURL($params);
     }
 
     // BASIC templates editor methods {{{

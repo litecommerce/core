@@ -305,7 +305,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * @access protected
      * @since  3.0.0
      */
-    protected function buildUrlByPageId($pageId)
+    protected function buildURLByPageId($pageId)
     {
         return $this->getList()->getActionURL(array(self::PARAM_PAGE_ID => $pageId));
     }
@@ -509,7 +509,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
 
                 $this->pages[$k]['href'] = (is_null($num) || $isSelected || $isDisabled) 
                     ? null 
-                    : $this->buildUrlByPageId($num);
+                    : $this->buildURLByPageId($num);
 
                 $classes = array(
                     'item'                      => $isSpecialItem,
