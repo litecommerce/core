@@ -1233,16 +1233,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
     protected $checkTemplateStatus = true;
 
     /**
-     * Pattern to parse template paths
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $pathPattern;
-
-    /**
      * Layout 
      * 
      * @var    \XLite\Core\Layout
@@ -1251,6 +1241,16 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @since  3.0.0
      */
     protected $layout;
+
+    /**
+     * Root directory path length 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $rootDirLength;
 
     /**
      * Compile and save template
@@ -1265,7 +1265,9 @@ class FlexyCompiler extends \XLite\Base\Singleton
      */
     public function prepare($original, $force = false)
     {
-        $compiled = \Includes\Utils\FileManager::normalize(LC_COMPILE_DIR . substr($original, strlen(LC_SKINS_DIR)) . '.php');
+        $compiled = \Includes\Utils\FileManager::normalize(
+            LC_COMPILE_DIR . substr($original, $this->rootDirLength) . '.php'
+        );
         $original = \Includes\Utils\FileManager::normalize($original);
 
         if (($this->checkTemplateStatus && !$this->isTemplateValid($original, $compiled)) || $force) {
@@ -1300,21 +1302,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
     }
 
     /**
-     * Return URL for the images directory 
-     * 
-     * @param string $file Current template
-     *  
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getImagesURL($file)
-    {
-        return preg_match('/' . $this->pathPattern . '/', $file, $matches) ? str_replace(LC_DS, '/', $matches[1]) : '';
-    }
-
-    /**
      * Set new file for compile 
      * 
      * @param string $file Template to compile
@@ -1346,13 +1333,12 @@ class FlexyCompiler extends \XLite\Base\Singleton
     {
         parent::__construct();
 
-        $this->pathPattern = preg_quote(LC_ROOT_DIR, '/') . '(skins' . preg_quote(LC_DS, '/') 
-            . '\w+' . preg_quote(LC_DS, '/') . '\w+' . preg_quote(LC_DS, '/') . ').*';
-
         $this->checkTemplateStatus = LC_DEVELOPER_MODE
             || \XLite\Core\Config::getInstance()->Performance->check_templates_status;
 
         $this->layout = \XLite\Core\Layout::getInstance();
+
+        $this->rootDirLength = strlen(LC_ROOT_DIR);
     }
 }
 
