@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="itemsList.module.manage.columns", weight="50")
  *}
-<td width="40%">
+<td style="width:40%;">
   <div class="name">{getInstalledProperty(module,#moduleName#)}</div>
   <div class="author">{t(#Author#)}: {getInstalledProperty(module,#authorName#)}</div>
   <div class="version">{t(#Version#)}: {getInstalledProperty(module,#version#)}</div>

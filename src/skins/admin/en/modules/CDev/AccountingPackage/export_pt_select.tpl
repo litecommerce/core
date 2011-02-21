@@ -31,9 +31,9 @@ To export the found orders into Peachtree Accounting follow the steps below<hr /
 <p align="justify"> Before you can export sales transactions you must specify a Receivable Account number and a General Ledger Sales Account number (both should be valid account numbers from your Chart of Accounts). Please refer to your Peachtree Manual for further assistance.
 
 <form name="export_sales_form">
-<table border=0>
-<tr><td>Receivable Account number</td><td><span class="star">*</span>* <input type="text" name="receivable_account" value="{config.ImportExport.receivable_account}" size=7></td></tr>
-<tr><td>G/L Account number</td><td><span class="star">*</span>* <input type="text" name="sales_account" value="{config.ImportExport.sales_account}" size=7></td></tr>
+<table>
+<tr><td>Receivable Account number</td><td><span class="star">*</span>* <input type="text" name="receivable_account" value="{config.ImportExport.receivable_account}" size=7 /></td></tr>
+<tr><td>G/L Account number</td><td><span class="star">*</span>* <input type="text" name="sales_account" value="{config.ImportExport.sales_account}" size=7 /></td></tr>
 </table>
 </form>
 
@@ -72,7 +72,7 @@ function export_sales() {
 <p align="justify">In Peachtree: To import the sales journal, select "Select Import/Export" from the file menu. Select "Accounts Receivable / Cash Receipts Journal" and click on "Import". Click on "Options" and select the saved export file as an "Import/Export File". Check "First Row Contains Headings" as Import Option. Switch to "Fields" tab and make sure that the import fields layout confirms the cash receipts journal file format. Click on OK to import the cash receipts journal.
 
 <form name="export_payments_form">
-Cash Account number <span class="star">*</span>* <input type="text" name="cash_account" value="{config.ImportExport.cash_account}" size=7>
+Cash Account number <span class="star">*</span>* <input type="text" name="cash_account" value="{config.ImportExport.cash_account}" size=7 />
 </form>
 
 <p><widget class="\XLite\View\Button\Regular" name="export" label="Export cash receipts..." jsCode="javascript: export_payments();" />

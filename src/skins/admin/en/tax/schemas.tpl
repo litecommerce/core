@@ -33,10 +33,10 @@ To delete a tax scheme, choose it from the drop-down menu and click on the 'Dele
 <p class="adminParagraph">
 <b>Note:</b> Several predefined schemes, namely {foreach:taxes._predefinedSchemas,schema,options}&quot;{schema}&quot;, {end:} cannot be deleted.
 </p>
-<form action="admin.php" method="POST" name="reset_schema">
-<input type="hidden" name="target" value="taxes">
-<input type="hidden" name="page" value="{page}">
-<input type="hidden" name="action" value="reset">
+<form action="admin.php" method="post" name="reset_schema">
+<input type="hidden" name="target" value="taxes" />
+<input type="hidden" name="page" value="{page}" />
+<input type="hidden" name="action" value="reset" />
 <select name="schema">
 <option>-- select scheme --</option>
 <option FOREACH="taxes.predefinedSchemas,schema,options">{schema}</option>
@@ -75,10 +75,10 @@ function deleteSchema()
 <p class=admin-head>Save the current tax scheme</p>
 <p class="adminParagraph"><b>Note:</b> To save your current tax scheme choose the scheme name from the list or the ' - new name - ' option to save the scheme under a new name.</p>
 <form action="admin.php" method=POST name=save_schema_form>
-<input type="hidden" name="target" value="taxes">
-<input type="hidden" name="page" value="{page}">
-<input type="hidden" name="action" value="save">
-<input type="hidden" name="new_name" value="">
+<input type="hidden" name="target" value="taxes" />
+<input type="hidden" name="page" value="{page}" />
+<input type="hidden" name="action" value="save" />
+<input type="hidden" name="new_name" value="" />
 <select name="save_schema">
 <option value="">-- new name --</option>
 <option FOREACH="schemas,schema,options" value="{schema}">{schema}</option>
@@ -110,9 +110,9 @@ function saveSchema()
 </p>
 
 <form action="admin.php" method=POST name=export_schema_form>
-<input type="hidden" name="target" value="taxes">
-<input type="hidden" name="page" value="{page}">
-<input type="hidden" name="action" value="export">
+<input type="hidden" name="target" value="taxes" />
+<input type="hidden" name="page" value="{page}" />
+<input type="hidden" name="action" value="export" />
 
 <select name="export_schema">
 <option FOREACH="schemas,schema,options" value="{schema}">{schema}</option>
@@ -128,9 +128,9 @@ function saveSchema()
 <b>Note:</b> Locate the tax scheme file (*.tax) you want to import and click on the 'Import' button.
 </p>
 <form action="admin.php" method=POST enctype="multipart/form-data">
-<input type="hidden" name="target" value="taxes">
-<input type="hidden" name="page" value="{page}">
-<input type="hidden" name="action" value="import">
+<input type="hidden" name="target" value="taxes" />
+<input type="hidden" name="page" value="{page}" />
+<input type="hidden" name="action" value="import" />
 <input type=file name=userfile><widget IF="invalid_file" template="common/uploaded_file_validator.tpl" />&nbsp;
 <widget class="\XLite\View\Button\Submit" label=" Import " style="main-button" />
 </form>

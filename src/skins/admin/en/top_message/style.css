@@ -11,54 +11,84 @@
  * @since     3.0.0
  */
 
-#status-messages {
-  position: fixed;
-  display: block
+#status-messages
+{
+  position: fixed;  /* TODO: WARNING! IE6 doesn't support this style! Emulation is required */
   top: 0px;
-  left: 25%;
-  right: 25%;
+  left: 0;
+  right: 0;
   margin: 0px auto;
-  z-index: 20000;
-  background-color: #fff;
+  z-index: 1300000;
+  font-size: 12px;
+  width: 400px;
 }
 
-#status-messages a.close {
-  width: 13px;
-  height: 13px;
+#status-messages,
+#status-messages ul,
+#status-messages ul li:last-child
+{
+  -moz-border-radius-bottomleft: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#status-messages a.close
+{
   display: block;
   position: absolute;
   right: 8px;
   top: 5px;
-  background: #fff url(images/remove.gif) no-repeat;
+  width: 15px;
+  height: 15px;
+  padding: 0px;
 }
 
-#status-messages ul {
-  border-style: none solid solid solid;
-  border-color: #bbc7d2;
-  list-style: none;
+#status-messages a.close img
+{
+  background: transparent url(../images/icon_cross_white.png) no-repeat left top;
+  width: 15px;
+  height: 15px;
   margin: 0px;
-  padding: 15px;
+  padding: 0px;
 }
 
-#status-messages li {
+#status-messages ul
+{
+  margin: 0;
+  padding: 0;
+}
+
+#status-messages li
+{
   list-style: none;
-  padding: 3px 3px 3px 25px;
-  background-repeat: no-repeat;
-  background-position: 3px 3px;
-  font-style: normal;
+  background-image: none;
+  padding: 5px 31px 6px 1em;
 }
 
-#status-messages li.info {
-  background-image: url(images/icon_notify_info.png);
-  color: #3171ab;
+#status-messages .status
+{
 }
 
-#status-messages li.warning {
-  background-image: url(images/icon_notify_warn.png);
-  color: #000;
+#status-messages,
+#status-messages a
+{
+  background-color: #fff1a8; /*#eeede8;*/
+  color: black; /*#1b5d8e;*/
 }
 
-#status-messages li.error {
-  background-image: url(images/icon_notify_error.png);
-  color: #cc1e1e;
+#status-messages .warning,
+#status-messages .warning a
+{
+  background-color: #eedeb4;
+  color: #94572a;
+}
+
+#status-messages .error,
+#status-messages .error a
+{
+  background-color: #e65e57;
+  color: white;
 }

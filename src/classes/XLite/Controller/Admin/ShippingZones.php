@@ -51,6 +51,18 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Shipping zones';
+    }
+
+    /**
      * handleRequest 
      * 
      * @return void

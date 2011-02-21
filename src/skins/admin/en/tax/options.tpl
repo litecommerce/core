@@ -23,14 +23,14 @@ function showTaxMsg()
 -->
 </script>
 
-<form action="admin.php" method="POST" name="taxes_form">
-  <input type="hidden" name="target" value="taxes">
-  <input type="hidden" name="action" value="update_options">
+<form action="admin.php" method="post" name="taxes_form">
+  <input type="hidden" name="target" value="taxes" />
+  <input type="hidden" name="action" value="update_options" />
 
   <table cellspacing="1" cellpadding="3">
 
     <tr>
-    	<td width="30%">Address to use for tax calculations:</td>
+    	<td style="width:30%;">Address to use for tax calculations:</td>
     	<td>
         <select name="use_billing_info">
     		  <option value="N" selected="{config.Taxes.use_billing_info=0}">Shipping info</option>
@@ -105,9 +105,9 @@ showTaxMsg();
 
 </form>
 
-<form action="admin.php" method="POST" name="add_tax_form">
-  <input type="hidden" name="target" value="taxes">
-  <input type="hidden" name="action" value="add_tax">
+<form action="admin.php" method="post" name="add_tax_form">
+  <input type="hidden" name="target" value="taxes" />
+  <input type="hidden" name="action" value="add_tax" />
 
   <h2>Add new tax</h2>
 

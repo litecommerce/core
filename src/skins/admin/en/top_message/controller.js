@@ -4,12 +4,13 @@
  * Top message controller
  *
  * @author    Creative Development LLC <info@cdev.ru>
- * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
+
 var MESSAGE_INFO    = 'info';
 var MESSAGE_WARNING = 'warning';
 var MESSAGE_ERROR   = 'error';
@@ -50,20 +51,14 @@ function TopMessages(container) {
   );
 
   // Global event
-  jQuery(document).bind(
-    'message',
-    function(event, text, type) {
-      o.messageHandler(text, type);
-    }
-  );
-
-  // AJAX global event
-  jQuery(document).bind(
-    'ajaxComplete',
-    function(event, xhr, options) {
-      o.ajaxCompleteHandler(xhr, options);
-    }
-  );
+  if ('undefined' != typeof(window.core)) {
+    core.bind(
+      'message',
+      function(event, data) {
+        return o.messageHandler(data.message, data.type);
+      }
+    );
+  }
 
   // Remove dump items (W3C compatibility)
   jQuery('li.dump', this.container).remove();
@@ -109,7 +104,7 @@ function TopMessages(container) {
 TopMessages.prototype.container = null;
 TopMessages.prototype.to = null;
 
-TopMessages.prototype.ttl = 5000;
+TopMessages.prototype.ttl = 10000;
 
 /**
  * Methods
@@ -138,7 +133,7 @@ TopMessages.prototype.addRecord = function(text, type)
 {
   if (
     !type
-    || -1 == [MESSAGE_INFO, MESSAGE_WARNING, MESSAGE_ERROR].indexOf(type)
+    || (MESSAGE_INFO != type && MESSAGE_WARNING != type && MESSAGE_ERROR != type)
   ) {
     type = MESSAGE_INFO; 
   }
@@ -212,31 +207,8 @@ TopMessages.prototype.messageHandler = function(text, type)
   this.addRecord(text, type);
 }
 
-// AJAX complete request global event handler
-TopMessages.prototype.ajaxCompleteHandler = function(xhr)
-{
-  var messages = xhr.getResponseHeader('AJAX-Top-Messages');
-  if (messages) {
-    messages = messages.split(/\|/);
-    for (var i = 0; i < messages.length; i++) {
-      var message = jQuery.trim(messages[i]);
-      var m = message.match(/\[([a-z]+)\]$/);
-      var type = MESSAGE_INFO;
-      if (m) {
-        message = message.substr(0, message.length - m[0].length);
-        type = m[1];
-      }
-
-      if (message) {
-        this.addRecord(message, type);
-      }
-    }
-  }
-}
-
-// Initialize
 jQuery(document).ready(
   function () {
-    new TopMessages(jQuery('#top_messages').eq(0));
+    new TopMessages(jQuery('#status-messages'));
   }
 );

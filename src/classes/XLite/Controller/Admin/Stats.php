@@ -47,6 +47,18 @@ class Stats extends \XLite\Controller\Admin\AAdmin
     public $params = array('target');
 
     /**
+     * Return the current page title (for the content area)
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Statistics';
+    }
+
+    /**
      * getTodayDate 
      * 
      * @return integer

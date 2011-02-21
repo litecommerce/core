@@ -11,8 +11,8 @@
  * @since     3.0.0
  *}
 <form action="admin.php" method="post" name="change_language_form" class="change-language">
-  <input type="hidden" name="target" value="{getTarget()}">
-  <input type="hidden" name="action" value="change_language">
+  <input type="hidden" name="target" value="{getTarget()}" />
+  <input type="hidden" name="action" value="change_language" />
 
   <select name="language" onchange="javascript: $(this.form).submit();">
     <option FOREACH="getLanguages(),code,language" value="{code}" selected="{isLanguageSelected(code)}">{language}</option>
