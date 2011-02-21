@@ -233,7 +233,7 @@ class Layout extends \XLite\Base\Singleton
     {
         $interface = $interface ?: $this->currentInterface;
 
-        $list = isset($this->skinPaths[$interface]) ? $this->skinPaths[$interface] : array();
+        $list = isset($this->substutionalSkins[$interface]) ? $this->substutionalSkins[$interface] : array();
 
         $list[] = $this->getBaseSkinByInterface($interface);
 
