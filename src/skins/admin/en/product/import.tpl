@@ -20,13 +20,13 @@
 
 <p>
 <form action="admin.php" method=POST enctype="multipart/form-data" name=data_form>
-<input type="hidden" name="target" value="import_catalog">
-<input type="hidden" name="action" value="import_products">
-<input type="hidden" name="page" value="{page}">
+<input type="hidden" name="target" value="import_catalog" />
+<input type="hidden" name="action" value="import_products" />
+<input type="hidden" name="page" value="{page}" />
 
 <widget template="product/layout.tpl">
 
-<table border="0">
+<table>
 <tr>
     <td colspan=2>
     <br />
@@ -67,7 +67,7 @@
 </tr>
 <tr>
     <td colspan=2>
-    <b>Note:</b> If you don't specify images directory then <i><b>{getImagesDir()}</b></i> will be used as default.
+    <b>Note:</b> If you don't specify images directory then <b>{getImagesDir()}</b> will be used as default.
     </td>
 </tr>
 <tr>
@@ -81,7 +81,7 @@
     File (CSV) for upload:<br /><input type=file size=32 name=userfile><widget IF="invalid_userfile" template="common/uploaded_file_validator.tpl" state="{invalid_userfile_state}" />
     <br />
     <br />
-    <input type="checkbox" value="yes" name="delete_products" checked="{delete_products}" onclick="javascript: if (document.data_form.delete_products.checked) return confirm('Are you sure?');">Drop all products before import
+    <input type="checkbox" value="yes" name="delete_products" checked="{delete_products}" onclick="javascript: if (document.data_form.delete_products.checked) return confirm('Are you sure?');" />Drop all products before import
     <br /><br />
     <widget class="\XLite\View\Button\Submit" label="Import products" style="main-button" />
     </td>

@@ -1124,7 +1124,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
                 $this->subst(
                     $token['end'],
                     0,
-                    '<input type="hidden" name="xlite_form_id" value="' . $genFormId . '" />'
+                    '<fieldset><input type="hidden" name="xlite_form_id" value="' . $genFormId . '" /></fieldset>'
                 );
             }
 

@@ -451,7 +451,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         $expression = 'selenium.browserbot.getCurrentWindow().' . $expression;
 
         if (preg_match('/jQuery/Ss', $expression)) {
-            $expression = '"undefined" != typeof(selenium.browserbot.getCurrentWindow().jQuery) ? ' . $expression . ' : null';
+            $expression = '("undefined" != typeof(selenium.browserbot.getCurrentWindow) && "undefined" != typeof(selenium.browserbot.getCurrentWindow().jQuery)) ? ' . $expression . ' : null';
         }
 
         return $this->getEval($expression);
@@ -509,13 +509,13 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     public function waitInlineProgress($jqueryExpression, $message = null)
     {
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().jQuery("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length > 0',
+        $this->waitForLocalCondition(
+            'jQuery("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length > 0',
             10000,
             'check inline progress mark for ' . $jqueryExpression . ' (' . $message . ')'
         );
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().jQuery("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length == 0',
+        $this->waitForLocalCondition(
+            'jQuery("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length == 0',
             20000,
             'check GONE inline progress mark for ' . $jqueryExpression . ' (' . $message . ')'
         );
