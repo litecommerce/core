@@ -29,21 +29,25 @@
 namespace XLite\View\Button;
 
 /**
- * Upload addons button 
+ * Install addon popup button 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class UploadAddons extends \XLite\View\Button\APopupButton
+class InstallAddon extends \XLite\View\Button\APopupButton
 {
     /**
-     *  Several specific constants
+     * Button label
      */
-    const UPLOAD_ADDONS_LABEL       = 'Upload add-ons';
-    const UPLOAD_ADDON_CSS_CLASS    = 'upload-addons';
-    const UPLOAD_ADDONS_WIDGET      = 'XLite\View\ModulesManager\UploadAddons';
+    const INSTALL_ADDON_LABEL = 'Install';
 
+    /**
+     * Widget class to show
+     */
+    const INSTALL_ADDON_WIDGET = 'XLite\View\ModulesManager\ModuleLicense';
+
+    const PARAM_MODULEID = 'moduleId';
 
     /** 
      * Return content for popup button
@@ -55,7 +59,7 @@ class UploadAddons extends \XLite\View\Button\APopupButton
      */
     public function getButtonContent() 
     {
-        return $this->t(self::UPLOAD_ADDONS_LABEL);
+        return $this->t(self::INSTALL_ADDON_LABEL);
     }
 
     /** 
@@ -69,38 +73,64 @@ class UploadAddons extends \XLite\View\Button\APopupButton
     public function prepareURLParams()
     {
         return array(
-            'target' => \XLite\View\ModulesManager\UploadAddons::UPLOAD_ADDONS_TARGET,
-            'action' => 'view',
-            'widget' => self::UPLOAD_ADDONS_WIDGET,
+            'target'    => \XLite\View\ModulesManager\ModuleLicense::MODULE_LICENSE_TARGET,
+            'action'    => 'view',
+            'widget'    => self::INSTALL_ADDON_WIDGET,
+            'module_id' => $this->getParam(self::PARAM_MODULEID),
         );
     }
 
     /** 
-     * Get a list of JavaScript files required to display the widget properly
-     * 
-     * @return void
+     * Register CSS files
+     *
+     * @return array
      * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {   
+        $list = parent::getCSSFiles();
+        // TODO must be taken from LICENSE module widget!!!
+        $list[] = 'modules_manager' . LC_DS . 'license' . LC_DS . 'style.css';
+
+        return $list;
+    }   
+
+
+    /** 
+     * Register JS files
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getJSFiles()
     {   
         $list = parent::getJSFiles();
 
-        $list[] = \XLite\View\ModulesManager\UploadAddons::JS_SCRIPT;
+        // TODO must be taken from LICENSE module widget!!!
+        $list[] = 'modules_manager' . LC_DS . 'license' . LC_DS . 'js' . LC_DS . 'switch-button.js';
 
         return $list;
-    }
+    }   
 
-    /** 
-     * getClass 
+
+    /**
+     * Define widgets parameters
      * 
-     * @return string
+     * @return void
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getClass()
-    {
-        return parent::getClass() . ' ' . self::UPLOAD_ADDON_CSS_CLASS;
-    }
+    protected function defineWidgetParams()
+    {   
+        parent::defineWidgetParams();
 
+        $this->widgetParams += array(
+            self::PARAM_MODULEID => new \XLite\Model\WidgetParam\String('ModuleId', '', true),
+        );  
+    }
 }
