@@ -211,7 +211,7 @@ abstract class ACustomer extends \XLite\Controller\AController
 
     /**
      * Get the full URL of the page
-     * Example: getShopUrl('cart.php') = "http://domain/dir/cart.php 
+     * Example: getShopURL('cart.php') = "http://domain/dir/cart.php 
      * 
      * @param string  $url    Relative URL  
      * @param boolean $secure Flag to use HTTPS OPTIONAL
@@ -220,9 +220,9 @@ abstract class ACustomer extends \XLite\Controller\AController
      * @access public
      * @since  3.0.0
      */
-    public function getShopUrl($url = '', $secure = false)
+    public function getShopURL($url = '', $secure = false)
     {
-        return parent::getShopUrl($url, $this->config->Security->full_customer_security ?: $secure);
+        return parent::getShopURL($url, $this->config->Security->full_customer_security ?: $secure);
     }
 
     /**

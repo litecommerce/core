@@ -174,7 +174,7 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
 
             ob_start();
 
-            echo "API URL: " . $aupost->getApiUrl() . "\n\n";
+            echo "API URL: " . $aupost->getApiURL() . "\n\n";
 
             foreach ($cmLog as $log) {
                 print_r($log);

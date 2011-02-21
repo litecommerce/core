@@ -381,7 +381,7 @@ To install the selected skin, please correct the problem and start the installat
     	}
     }
 
-    function getPageReturnUrl()
+    function getPageReturnURL()
     {
         return array('<a href="'.$this->get('url').'"><u>Return to admin zone</u></a>');
     }

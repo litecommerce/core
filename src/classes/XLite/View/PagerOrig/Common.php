@@ -66,9 +66,9 @@ class Common extends \XLite\View\PagerOrig
      * @access protected
      * @since  3.0.0
      */
-    protected function buildUrlByPageId($pageId)
+    protected function buildURLByPageId($pageId)
     {
-        return parent::buildUrlByPageId($this->getPageIdByNotation($pageId));
+        return parent::buildURLByPageId($this->getPageIdByNotation($pageId));
     }
 
     /**
@@ -90,9 +90,9 @@ class Common extends \XLite\View\PagerOrig
      * @access protected
      * @since  3.0.0
      */
-    protected function definePageUrls()
+    protected function definePageURLs()
     {
-        parent::definePageUrls();
+        parent::definePageURLs();
 
         $this->pageURLs = array_slice($this->pageURLs, $this->getFrameStartPage(), $this->pagesPerFrame, true);
     }

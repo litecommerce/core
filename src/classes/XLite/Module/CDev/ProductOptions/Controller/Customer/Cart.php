@@ -124,8 +124,8 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
                 \XLite\Core\TopMessage::ERROR
             );
 
-            $this->setReturnUrl(
-                $this->buildUrl(
+            $this->setReturnURL(
+                $this->buildURL(
                     'product',
                     '',
                     array('product_id' => \XLite\Core\Request::getInstance()->product_id)

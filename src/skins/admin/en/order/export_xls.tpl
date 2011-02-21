@@ -88,7 +88,7 @@
     <Cell ss:StyleID="s28"><Data ss:Type="String">Total</Data></Cell>
    </Row>
    <Row FOREACH="orders,order">
-    <Cell ss:StyleID="s21" ss:HRef="{getShopUrl(#/admin.php?target=order#)}&amp;order_id={order.order_id}"><Data
+    <Cell ss:StyleID="s21" ss:HRef="{getShopURL(#/admin.php?target=order#)}&amp;order_id={order.order_id}"><Data
       ss:Type="Number">{order.order_id}</Data></Cell>
     <Cell><Data ss:Type="String"><widget template="common/order_status.tpl"></Data></Cell>
     <Cell ss:StyleID="s35"><Data ss:Type="String">{formatTime(order.date)}</Data></Cell>

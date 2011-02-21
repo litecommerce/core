@@ -941,7 +941,7 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
 
         // Support of Drupal 6 $db_url
         if (!is_array($data)) {
-            $data = parseDbUrl(constant('DB_URL'));
+            $data = parseDbURL(constant('DB_URL'));
         }
         
         $isConnected = dbConnect($data, $pdoErrorMsg);
@@ -2069,7 +2069,7 @@ function get_info()
 function inst_http_request_install($action_str, $url = null)
 {
     if (is_null($url)) {
-        $url = getLiteCommerceUrl();
+        $url = getLiteCommerceURL();
     }
 
     $url_request = $url . '/install.php?target=install' . (($action_str) ? '&' . $action_str : '');
@@ -2085,7 +2085,7 @@ function inst_http_request_install($action_str, $url = null)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function getLiteCommerceUrl()
+function getLiteCommerceURL()
 {
     $host = 'http://' . $_SERVER['HTTP_HOST'];
     $host = '/' == substr($host, -1) ? substr($host, 0, -1) : $host;

@@ -192,7 +192,7 @@ class Language extends \XLite\Model\Base\I18n
         }
 
         return file_exists(LC_ROOT_DIR . $path)
-            ? \XLite::getInstance()->getShopUrl($path)
+            ? \XLite::getInstance()->getShopURL($path)
             : null;
     }
 }

@@ -209,7 +209,7 @@ class Db extends \XLite\Controller\Admin\AAdmin
         exit();
     }
 
-    function getPageReturnUrl()
+    function getPageReturnURL()
     {
         $url = "";
         switch ($this->action) {
@@ -220,7 +220,7 @@ class Db extends \XLite\Controller\Admin\AAdmin
                 $url = array('<a href="admin.php?target=db&page=db_restore"><u>Return to admin interface.</u></a>');
             break;
             default:
-                $url = parent::getPageReturnUrl();
+                $url = parent::getPageReturnURL();
         }
 
         return $url;

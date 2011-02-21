@@ -12,5 +12,5 @@
  * @ListChild (list="itemsList.module.manage.columns.actions", weight="20")
  *}
 {if:!module.getEnabled()}
-  <a class="uninstall" href="{buildUrl(#modules#,#uninstall#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('uninstall', '{module.getModuleId()}');">{t(#Uninstall#)}</a>
+  <a class="uninstall" href="{buildURL(#modules#,#uninstall#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('uninstall', '{module.getModuleId()}');">{t(#Uninstall#)}</a>
 {end:}

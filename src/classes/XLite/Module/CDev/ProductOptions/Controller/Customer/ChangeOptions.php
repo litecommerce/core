@@ -105,7 +105,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
         parent::actionPostprocess($action);
 
         if ($action) {
-            $this->assembleReturnUrl();
+            $this->assembleReturnURL();
         }
     }
 
@@ -117,11 +117,11 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function assembleReturnUrl()
+    protected function assembleReturnURL()
     {
-        $this->set('returnUrl', $this->buildUrl(\XLite::TARGET_DEFAULT));
+        $this->setReturnURL($this->buildURL(\XLite::TARGET_DEFAULT));
         if (\XLite\Core\Request::getInstance()->source == 'cart') {
-            $this->set('returnUrl', $this->buildUrl('cart'));
+            $this->setReturnURL($this->buildURL('cart'));
         }
     }
 
@@ -158,9 +158,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
 
                 $this->setInternalRedirect();
 
-                $this->set(
-                    'returnUrl',
-                    $this->buildUrl(
+                $this->setReturnURL($this->buildURL(
                         'change_options',
                         '',
                         array(

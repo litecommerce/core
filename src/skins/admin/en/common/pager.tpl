@@ -14,7 +14,7 @@
 <table width="90%">
 <tr>
 <td>
-Result pages:&nbsp;{foreach:pageUrls,num,pageUrl}{if:isCurrentPage(num)}<b>[{num}]</b>{else:}<a href="{pageUrl:h}">[{num}]</a>{end:} {end:}
+Result pages:&nbsp;{foreach:pageURLs,num,pageURL}{if:isCurrentPage(num)}<b>[{num}]</b>{else:}<a href="{pageURL:h}">[{num}]</a>{end:} {end:}
 </td>
 </tr>
 </table>
