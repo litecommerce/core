@@ -29,6 +29,17 @@ jQuery(document).ready(
       return 'undefined' == typeof(params[name]) ? '' : params[name];
     }
 
+    URLHandler.getParams = function(params, toReturn)
+    {
+      var result = [];
+
+      for (var x in toReturn) {
+        result[x] = 'undefined' == typeof(params[x]) ? '' : params[x];
+      }
+
+      return result;
+    }
+
     // Extend ALoadable prototype
     if ('undefined' != typeof(window.ALoadable)) {
       var oldGetParams = ALoadable.prototype.getParams;

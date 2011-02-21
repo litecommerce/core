@@ -16,14 +16,14 @@ This section provides the capability to manually modify all templates of the Cus
 </p>
 <p align="justify">
 <b>Note:</b> You need to know HTML, CSS and JavaScript in order to modify the templates using this tool. Be careful not to alter the expressions in curly brackets, widgets and other special constructions as this may cause improper software operation.</p>
-<form name="templates_form" method="POST">
-<input type="hidden" name="target" value="template_editor">
-<input type="hidden" name="editor" value="{editor}">
-<input type="hidden" name="zone" value="{zone}">
-<input type="hidden" name="action" value="">
-<input type="hidden" name="new_name" value="">
-<input type="hidden" name="file" value="{file.path}">
-<input type="hidden" name="node" value="{file.node}">
+<form name="templates_form" method="post">
+<input type="hidden" name="target" value="template_editor" />
+<input type="hidden" name="editor" value="{editor}" />
+<input type="hidden" name="zone" value="{zone}" />
+<input type="hidden" name="action" value="" />
+<input type="hidden" name="new_name" value="" />
+<input type="hidden" name="file" value="{file.path}" />
+<input type="hidden" name="node" value="{file.node}" />
 
 <widget class="\XLite\View\Tabber" body="template_editor/advanced_tree.tpl" tabPages="getTreePages" switch="zone">
 
@@ -118,10 +118,10 @@ function func_restoreNode()
 // -->
 </script>
 
-<table border=0 cellpadding=0 cellspacing=0 width=100%>
+<table cellpadding="0" cellspacing="0" width="100%">
 <tr>
-	<td width=50%>
-        <table border=0 cellpadding=3 cellspacing=3>
+	<td style="width:50%;">
+        <table cellpadding="3" cellspacing="3">
         <tr>
         	<td><widget class="\XLite\View\Button\Regular" label="Copy" jsCode="javascript: func_copyNode()" /></td>
         	<td><widget class="\XLite\View\Button\Regular" label="Rename/Move" jsCode="javascript: func_renameNode()" /></td>
@@ -129,8 +129,8 @@ function func_restoreNode()
         </tr>
         </table>
 	</td>
-	<td width=50%>
-        <table border=0 cellpadding=3 cellspacing=3 align=right>
+	<td style="width:50%;">
+        <table cellpadding="3" cellspacing="3">
         <tr>
         	<td><widget class="\XLite\View\Button\Regular" label="New File" jsCode="javascript: func_newFile()" /></td>
         	<td><widget class="\XLite\View\Button\Regular" label="New Directory" jsCode="javascript: func_newDir()" /></td>
@@ -143,7 +143,7 @@ function func_restoreNode()
 </tr>
 <tr>
 	<td colspan=2>
-        <table border=0 cellpadding=3 cellspacing=3>
+        <table cellpadding="3" cellspacing="3">
         <tr>
         	<td><widget class="\XLite\View\Button\Regular" label="Restore" jsCode="javascript: func_restoreNode()" /></td>
         	<td>&nbsp;&nbsp;&nbsp;</td>

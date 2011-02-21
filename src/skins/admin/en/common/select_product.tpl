@@ -11,6 +11,6 @@
  * @since     3.0.0
  *}
 <span id="{name}_label">{product.name}</span>&nbsp;
-<input type="hidden" name="{formField}_id" value="{product.product_id}">
+<input type="hidden" name="{formField}_id" value="{product.product_id}" />
 <widget class="\XLite\View\Button\Regular" label="{label}" jsCode="window.open('admin.php?target=product_popup&formName={formName}&spanName={name}_label&formField={formField}','selectproduct','width=600,height=550,toolbar=no,status=no,scrollbars=yes,resizable=no,menubar=no,location=no,direction=no')">&nbsp;&nbsp;&nbsp;
 <widget class="\XLite\View\Button\Regular" label="Clear" jsCode="document.getElementById('{name}_label').innerHTML='';document.{formName}.{formField}_id.value=''" IF="removeButton&product.product_id" />

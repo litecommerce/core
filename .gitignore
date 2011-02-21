@@ -16,3 +16,5 @@
 /src/var/run
 /src/var/images
 /src/var/tmp
+/src/var/.decorator.fixtures.ini.php
+/src/var/.decorator.modules.ini.php

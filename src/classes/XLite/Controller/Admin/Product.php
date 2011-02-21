@@ -342,6 +342,18 @@ class Product extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Return the current page title (for the content area)
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return $this->getProduct()->getName();
+    }
+
+    /**
      * getInventory 
      * 
      * @return \XLite\Model\Inventory

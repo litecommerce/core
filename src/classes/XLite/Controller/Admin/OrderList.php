@@ -75,7 +75,18 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     {
         \XLite\Core\Database::getRepo('\XLite\Model\Order')->deleteInBatchById($this->getToDelete());
     }
-    
+
+    /**
+     * Return the current page title (for the content area)
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Search orders';
+    }
 
     /**
      * getDateValue 

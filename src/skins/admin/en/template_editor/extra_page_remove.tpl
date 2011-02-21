@@ -14,11 +14,11 @@ Are you sure you want to remove the page titled "{extraPage.title:h}" ({extraPag
 
 <p>
 
-<form action="admin.php" method="POST" name="page_remove">
-<input type="hidden" name="target" value="template_editor">
-<input type="hidden" name="action" value="page_remove">
-<input type="hidden" name="editor" value="extra_pages">
-<input type="hidden" name="page" value="{extraPage.page}">
+<form action="admin.php" method="post" name="page_remove">
+<input type="hidden" name="target" value="template_editor" />
+<input type="hidden" name="action" value="page_remove" />
+<input type="hidden" name="editor" value="extra_pages" />
+<input type="hidden" name="page" value="{extraPage.page}" />
 <widget class="\XLite\View\Button\Regular" label=" Yes " jsCode="document.page_remove.submit()" style="main-button" />
 &nbsp;
 &nbsp;

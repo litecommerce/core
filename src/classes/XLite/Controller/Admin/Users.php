@@ -60,7 +60,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return 'Search profiles';
+        return 'Search user profiles';
     }
 
     /**
@@ -180,6 +180,18 @@ class Users extends \XLite\Controller\Admin\AAdmin
         } else {
             $this->set('returnUrl', $this->backUrl);
         }
+    }
+
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Search user profiles';
     }
 
     /**

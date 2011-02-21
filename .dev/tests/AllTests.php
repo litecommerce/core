@@ -34,7 +34,7 @@ if (false === defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'XLite_Tests_AllTests::main');
 }
 
-ini_set('memory_limit', '256M');
+ini_set('memory_limit', '900M');
 
 // PHPUnit classes
 define('PATH_TESTS', realpath(__DIR__));
@@ -69,7 +69,15 @@ require_once PATH_TESTS . '/PHPUnit/SeleniumTestCase.php';
 
 // Start X-Lite core
 
-define('LC_DO_NOT_REBUILD_CACHE', 1);
+define('LC_DO_NOT_REBUILD_CACHE', true);
+
+if (
+    defined('INCLUDE_ONLY_TESTS')
+    && preg_match('/DEPLOY_/', constant('INCLUDE_ONLY_TESTS'))
+    && !defined('XLITE_INSTALL_MODE')
+) {
+    define('XLITE_INSTALL_MODE', true);
+}
 
 require_once PATH_SRC . '/top.inc.php';
 

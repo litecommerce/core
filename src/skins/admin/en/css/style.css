@@ -474,15 +474,6 @@ body.popup
   color: #ff0000;
 }
 
-.truncate
-{
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  -moz-binding: url(https://xcart2-530.crtdev.local/~max/xlite/src/skins/ellipsis.xml#ellipsis);
-}
-
 div.clear
 {
   clear: both;
@@ -816,7 +807,7 @@ button.invert:hover
 
 .table-label
 {
-  width: 150px;
+  min-width: 150px;
   white-space: nowrap;
 }
 
