@@ -356,25 +356,4 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         return '\XLite\View\Pager\Admin\Module\Install';
     }
 
-    /**
-     * Return URL for get package page
-     * 
-     * @param integer $moduleId Module identificator
-     *  
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getEnterKeyURL($moduleId)
-    {
-        return $this->buildURL(
-            'addon_key',
-            'enter',
-            array(
-                'module_id' => $moduleId,
-            )   
-        );
-    }
-
 }

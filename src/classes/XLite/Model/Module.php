@@ -385,25 +385,6 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * Get marketplace URL
-     * TODO: remove debug condition before release
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-
-    public static function getMarketplaceURL()
-    {
-        $debugOptions = \XLite::getInstance()->getOptions('debug');
-
-        return isset($debugOptions['marketplace_dev_url'])
-            ? $debugOptions['marketplace_dev_url']
-            : self::MARKETPLACE_URL;
-    }
-
-    /**
      * Get external page URL
      *
      * @return string

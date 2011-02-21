@@ -1,7 +1,7 @@
-/* vim: set ts=2 sw=2 sts=2 et: */
+{* vim: set ts=2 sw=2 sts=2 et: *}
 
-/**
- * ____file_title____
+{**
+ * Install addon button
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,6 +9,10 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- */
-
-
+ *}
+<button type="submit"
+{if:hasName()} name="{getName()}"{end:}
+{if:hasValue()} value="{getValue()}"{end:}
+{if:hasClass()} class="{getClass()}"{end:}
+onclick="javascript:document.location='{getURL()}';"
+><span>{getButtonLabel()}</span></button>

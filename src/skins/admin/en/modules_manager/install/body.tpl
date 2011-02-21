@@ -46,8 +46,8 @@ sForm.submit(function(e){
   </div>
 
   <div class="action-buttons">
-    <widget class="\XLite\View\Button\Submit" label="{t(#Upload add-on...#)}" />
-    <widget class="\XLite\View\Button\Submit" label="{t(#Enter license key...#)}" />
+    <widget class="\XLite\View\Button\UploadAddons" />
+    <widget class="\XLite\View\Button\EnterLicenseKey" />
   </div>
 
 </div>
