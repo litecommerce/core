@@ -221,7 +221,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
         }
 
         // Retrieve the module package from the Marketplace to Local Repository of the LC
-        $result = \XLite\RemoteModel\Marketplace::getInstance()->retriveToLocalRepository(
+        $result = \XLite\RemoteModel\Marketplace::getInstance()->retrieveToLocalRepository(
             $this->getModuleId(),
             (isset($key) && !empty($key))
                 ? array('key' => $key)
