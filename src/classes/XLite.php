@@ -51,6 +51,17 @@ class XLite extends \XLite\Base
 
 
     /**
+     * Interfaces codes
+     */
+
+    const ADMIN_INTERFACE    = 'admin';
+    const CUSTOMER_INTERFACE = 'customer';
+    const CONSOLE_INTERFACE  = 'console';
+    const MAIL_INTERFACE     = 'mail';
+    const COMMON_INTERFACE   = 'common';
+
+
+    /**
      * Current area flag
      *
      * @var    bool
@@ -402,12 +413,12 @@ class XLite extends \XLite\Base
         if (\XLite\Core\Request::getInstance()->isCLI()) {
 
             // Set skin for console interface
-            \XLite\Model\Layout::getInstance()->setConsoleSkin();
+            \XLite\Core\Layout::getInstance()->setConsoleSkin();
 
         } elseif (true === self::$adminZone) {
 
             // Set skin for admin interface
-            \XLite\Model\Layout::getInstance()->setAdminSkin();
+            \XLite\Core\Layout::getInstance()->setAdminSkin();
         }
 
         return $this;
