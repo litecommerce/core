@@ -112,12 +112,12 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepOne($pass = 1)
     {
          // Check page title
-        $this->assertTitleEquals('License agreement | Drupal', 'Checking the page title');
+        $this->assertTitleEquals('License agreements | Drupal', 'Checking the page title');
 
         // Check page header
         $this->assertElementPresent(
-            '//h1[@class="page-title" and text()="License agreement"]',
-            'Check that page header equals to text "License agreement"'
+            '//h1[@class="page-title" and text()="License agreements"]',
+            'Check that page header equals to text "License agreements"'
         );
 
         // Check logo

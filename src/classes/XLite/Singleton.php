@@ -65,7 +65,7 @@ abstract class Singleton
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public static $layout = '\XLite\Model\Layout';
+    public static $layout = '\XLite\Core\Layout';
 
     /**
      * session 

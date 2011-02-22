@@ -53,7 +53,7 @@ class Base extends \XLite\Base\Singleton
         'db'       => '\XLite\Model\Database',
         'logger'   => '\XLite\Logger',
         'config'   => '\XLite\Core\Config',
-        'layout'   => '\XLite\Model\Layout',
+        'layout'   => '\XLite\Core\Layout',
         'mailer'   => '\XLite\Core\Mailer',
     );
 

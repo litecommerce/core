@@ -100,10 +100,18 @@
   font-size: 14px;
 }
 
+#topMenu ul ul li.home > a
+{
+  background-image: url("../images/icon_home.png");
+  background-position: 11px 11px;
+  background-repeat: no-repeat;
+  padding: 0 20px;
+}
+
 #topMenu ul ul li.current > a
 {
   color: #333;
-  background: #fff;
+  background-color: #fff;
 }
 
 #topMenu ul ul :hover div
@@ -142,7 +150,7 @@
 
 #topMenu ul ul li:hover > a
 {
-  background: #e0f0ff;
+  background-color: #e0f0ff;
   color: #06528f;
 }
 

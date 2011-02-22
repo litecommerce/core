@@ -69,7 +69,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      */
     protected function getListName()
     {
-        return parent::getListName() . '.featured';
+        return 'itemsList.product.admin.featured';
     }
 
     /**

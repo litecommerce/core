@@ -270,17 +270,24 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
             $this->getAnnotatedTemplates(),
             function (\Includes\DataStructure\Cell $node) {
                 $tpl = substr($node->{constant(__CLASS__ . '::N_FILE_PATH')}, strlen(LC_SKINS_DIR));
+                $pos = strpos($tpl, LC_DS);
+                $skin = substr($tpl, 0, $pos);
+                $tpl = substr(
+                    $tpl,
+                    $pos + ('common' == $skin ? 1 : 4)
+                );
 
-                $zone = substr($tpl, 0, strpos($tpl, LC_DS));
+                switch ($skin) {
+                    case 'console':
+                        $zone = \XLite\Model\ViewList::INTERFACE_CONSOLE;
+                        break;
 
-                if ('console' == $zone) {
-                    $zone = \XLite\Model\ViewList::INTERFACE_CONSOLE;
+                    case 'admin':
+                        $zone = \XLite\Model\ViewList::INTERFACE_ADMIN;
+                        break;
 
-                } elseif ('admin' == $zone) {
-                    $zone = \XLite\Model\ViewList::INTERFACE_ADMIN;
-
-                } else {
-                    $zone = \XLite\Model\ViewList::INTERFACE_CUSTOMER;
+                    default:
+                        $zone = \XLite\Model\ViewList::INTERFACE_CUSTOMER;
                 }
 
                 return array(

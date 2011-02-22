@@ -45,7 +45,7 @@ class Mailer extends \XLite\View\Mailer implements \XLite\Base\IDecorator
         if (isset($this->templatesSkin)) {
 
             // Restore layout
-            $layout = \XLite\Model\Layout::getInstance();
+            $layout = \XLite\Core\Layout::getInstance();
             $layout->set('skin', $this->templatesSkin);
             $this->templatesSkin = null;
         }
