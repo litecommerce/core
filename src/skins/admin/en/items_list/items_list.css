@@ -26,3 +26,10 @@ table.items-list .sort-order div.part
 {
   display: inline;
 }
+
+div.list-footer {
+  text-align: right;
+  padding-top: 15px;
+  margin-top: 15px;
+  border-top: solid 1px #e5e5e5;
+}

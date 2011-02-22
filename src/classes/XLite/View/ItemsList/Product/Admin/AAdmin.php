@@ -59,7 +59,31 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getDisplayMode()
     {
-        return 'table';
+        return $this->getChangeabilityType() . '.' . $this->getDisplayStyle();
+    }
+
+    /**
+     * getDisplayStyle
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getChangeabilityType()
+    {
+        return 'modify';
+    }
+
+    /**
+     * getDisplayStyle
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDisplayStyle()
+    {
+        return 'common';
     }
 
     /**

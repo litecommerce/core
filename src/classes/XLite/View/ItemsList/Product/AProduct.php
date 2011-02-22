@@ -68,7 +68,8 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      */
     protected function getListName()
     {
-        return parent::getListName() . '.product.' . $this->getDisplayMode();
+        return parent::getListName() . '.product'
+            . (is_null($this->getDisplayMode()) ?: '.' . $this->getDisplayMode());
     }
 
     /**
@@ -95,7 +96,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      */
     protected function getPageBodyDir()
     {
-        return $this->getDisplayMode();
+        return str_replace('.', '/', $this->getDisplayMode());
     }
 
     /**
