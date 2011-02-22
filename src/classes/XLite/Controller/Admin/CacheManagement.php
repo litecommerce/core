@@ -45,7 +45,7 @@ class CacheManagement extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function action_rebuild()
+    public function doActionRebuild()
     {
         \XLite::setCleanUpCacheFlag(true);
 

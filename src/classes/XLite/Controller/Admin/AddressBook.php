@@ -38,17 +38,14 @@ namespace XLite\Controller\Admin;
 class AddressBook extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Common method to determine current location
-     *
-     * @return string
+     * address 
+     * 
+     * @var    \XLite\Model\Address
      * @access protected
-     * @see    ____func_see____
+     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected function getLocation()
-    {
-        return ($profile = $this->getModelForm()->getModelObject()->getProfile()) ? $profile->getLogin() : null;
-    }
+    protected $address = null;
 
     /**
      * Return the current page title (for the content area)
@@ -59,33 +56,8 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Edit profile';
+        return $this->t('Edit profile');
     }
-
-    /**
-     * Add part to the location nodes list
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function addBaseLocation()
-    {
-        parent::addBaseLocation();
-
-        $this->addLocationNode('Search profiles', $this->buildURL('users'));
-    }
-
-    /**
-     * address 
-     * 
-     * @var    \XLite\Model\Address
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $address = null;
 
     /**
      * getAddress 
@@ -107,6 +79,62 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
         }
 
         return $this->address;
+    }
+
+    /**
+     * Get return URL
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getReturnUrl()
+    {
+        if (\XLite\Core\Request::getInstance()->action) {
+
+            $profileId = \XLite\Core\Request::getInstance()->profile_id;
+
+            if (!isset($profileId)) {
+                $profileId = $this->getAddress()->getProfileId();
+            }
+
+            $params = isset($profileId) ? array('profile_id' => $profileId) : array();
+
+            $url = $this->buildUrl('address_book', '', $params);
+
+        } else {
+            $url = parent::getReturnUrl();
+        }
+
+        return $url;
+    }
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return ($profile = $this->getModelForm()->getModelObject()->getProfile()) ? $profile->getLogin() : null;
+    }
+
+    /**
+     * Add part to the location nodes list
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
+
+        $this->addLocationNode($this->t('Search profiles'), $this->buildURL('users'));
     }
 
     /**
@@ -169,34 +197,4 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
     {
         // Do nothing, action is needed just for redirection back
     }
-
-    /**
-     * Get return URL
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getReturnUrl()
-    {
-        if (\XLite\Core\Request::getInstance()->action) {
-
-            $profileId = \XLite\Core\Request::getInstance()->profile_id;
-
-            if (!isset($profileId)) {
-                $profileId = $this->getAddress()->getProfileId();
-            }
-
-            $params = isset($profileId) ? array('profile_id' => $profileId) : array();
-
-            $url = $this->buildUrl('address_book', '', $params);
-
-        } else {
-            $url = parent::getReturnUrl();
-        }
-
-        return $url;
-    }
-
 }
-

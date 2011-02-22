@@ -38,6 +38,19 @@ namespace XLite\Controller\Admin;
 abstract class Catalog extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Return current (or default) category object
+     *
+     * @return \XLite\Model\Category
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getCategory()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($this->getCategoryId());
+    }
+
+
+    /**
      * Return path for the current category
      * 
      * @return array
@@ -97,23 +110,14 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode('Manage categories', $this->buildURL('categories'));
+        $this->addLocationNode($this->t('Manage categories'), $this->buildURL('categories'));
 
         foreach ($this->getCategoryPath() as $category) {
-            $this->addLocationNode($category->getName(), $this->getCategoryURL($category), $this->getLocationNodeSubnodes($category));
+            $this->addLocationNode(
+                $category->getName(), 
+                $this->getCategoryURL($category), 
+                $this->getLocationNodeSubnodes($category)
+            );
         }
-    }
-
-
-    /**
-     * Return current (or default) category object
-     *
-     * @return \XLite\Model\Category
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function getCategory()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($this->getCategoryId());
     }
 }

@@ -61,43 +61,6 @@ abstract class AAdmin extends \XLite\Controller\AController
     }
 
     /**
-     * Check - form id is valid or not
-     * 
-     * @return boolean 
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isFormIdValid()
-    {
-        \XLite\Core\Database::getRepo('XLite\Model\FormId')->removeExpired();
-
-        $request = \XLite\Core\Request::getInstance();
-        $result = true;
-
-        if (\Xlite\Core\Config::getInstance()->Security->form_id_protection) {
-
-            if (!isset($request->xlite_form_id) || !$request->xlite_form_id) {
-                $result = false;
-
-            } else {
-
-                $form = \XLite\Core\Database::getRepo('XLite\Model\FormId')->findOneBy(
-                    array(
-                        'form_id'    => $request->xlite_form_id,
-                        'session_id' => \XLite\Core\Session::getInstance()->getID(),
-                    )
-                );
-                $result = isset($form);
-                if ($form) {
-                    $form->detach();
-                }
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      * This function called after template output
      *
      * @return void
@@ -143,7 +106,7 @@ abstract class AAdmin extends \XLite\Controller\AController
     /**
      * Returns 'maintenance_mode' string if frontend is closed or null otherwise
      * 
-     * @return string|null
+     * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -199,6 +162,87 @@ abstract class AAdmin extends \XLite\Controller\AController
     }
 
     /**
+     * Get recently logged in admins 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRecentAdmins()
+    {
+        if ($this->auth->isLogged() && is_null($this->recentAdmins)) {
+            $this->recentAdmins = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findRecentAdmins();
+        }
+
+        return $this->recentAdmins;
+    }
+
+    /**
+     * Get last Core version
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLastCoreVersion()
+    {
+        return \XLite\RemoteModel\Marketplace::getInstance()->getLastVersion();
+    }
+
+    /**
+     * Is core upgrade available
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isCoreUpgradeAvailable()
+    {
+        return !is_null($this->getLastCoreVersion())
+            && -1 === version_compare($this->config->Version->version, $this->getLastCoreVersion());
+    }
+
+    /**
+     * Check - form id is valid or not
+     * 
+     * @return boolean 
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isFormIdValid()
+    {
+        \XLite\Core\Database::getRepo('XLite\Model\FormId')->removeExpired();
+
+        $request = \XLite\Core\Request::getInstance();
+        $result = true;
+
+        if (\Xlite\Core\Config::getInstance()->Security->form_id_protection) {
+
+            if (!isset($request->xlite_form_id) || !$request->xlite_form_id) {
+                $result = false;
+
+            } else {
+
+                $form = \XLite\Core\Database::getRepo('XLite\Model\FormId')->findOneBy(
+                    array(
+                        'form_id'    => $request->xlite_form_id,
+                        'session_id' => \XLite\Core\Session::getInstance()->getID(),
+                    )
+                );
+                $result = isset($form);
+                if ($form) {
+                    $form->detach();
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Check - is current place public or not
      * 
      * @return boolean
@@ -214,22 +258,6 @@ abstract class AAdmin extends \XLite\Controller\AController
     }
 
     /**
-     * Get recently logged in admins 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getRecentAdmins()
-    {
-        if ($this->auth->isLogged() && is_null($this->recentAdmins)) {
-            $this->recentAdmins = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findRecentAdmins();
-        }
-        return $this->recentAdmins;
-    }
-
-    /**
      * Start simplified page to display progress of some process
      * 
      * @return void
@@ -240,7 +268,8 @@ abstract class AAdmin extends \XLite\Controller\AController
     protected function startDump()
     {
         parent::startDump();
-        if (!isset(\XLite\Core\Request::getInstance()->mode) || \XLite\Core\Request::getInstance()->mode != "cp") {
+        
+        if (!isset(\XLite\Core\Request::getInstance()->mode) || 'cp' != \XLite\Core\Request::getInstance()->mode) {
             $this->displayPageHeader();
         }
     }
@@ -255,75 +284,29 @@ abstract class AAdmin extends \XLite\Controller\AController
      */
     protected function displayPageHeader($title = '', $scrollDown = false)
     {
-?>
+        $output = <<<OUT
 <html>
 <head>
-    <title><?php echo !empty($title) ? $title : ''; ?></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->get('charset'); ?>">
-    <link href="skins/<?php echo \XLite\Model\Layout::getInstance()->getSkin(); ?>/en/style.css"  rel="stylesheet" type="text/css" />
+    <title>$title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 
 <body>
 
-<?php
+OUT;
+
         if ($scrollDown) {
             $this->dumpStarted = true;
-            func_refresh_start();
+            $output .= func_refresh_start(false);
         }
-?>
 
-<div id="ActionPageHeader" style="display: block;">
-<TABLE border="0" width="100%" cellpadding="0" cellspacing="0" align="center">
-<TR>
-<TD valign=top>
-    <TABLE border="0" width="100%" cellpadding="0" cellspacing="0" valign=top>
-    <TR class="displayPageHeader" height="18">
-        <TD align=left class="displayPageHeader" valign=middle width="50%">&nbsp;&nbsp;&nbsp;LiteCommerce</TD>
-        <TD align=right class="displayPageHeader" valign=middle width="50%">Version: <?php echo $this->config->Version->version; ?>&nbsp;&nbsp;&nbsp;</TD>
-    </TR>
-    </TABLE>
-</TD>
-</TR>
-<TR>
-<TD height="1"><TABLE height="1" border="0" cellspacing="0" cellpadding="0"><TD></TD></TABLE></TD>
-</TR>
-<TR>
-<TD class="displayPageHeader" height="1"><TABLE height="1" border="0" cellspacing="0" cellpadding="0"><TD></TD></TABLE></TD>
-</TR>
-<tr>
-    <td>&nbsp;</td>
-</tr>
-</TABLE>
-</div>
+        $output .= <<<OUT
+
 <div style='font-size: 12px;'>
-<?php
-    }
 
-    /**
-     * Hide header of simplified page
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function hidePageHeader()
-    {
-        $this->silent = false;
+OUT;
 
-        print <<<EOT
-<script type="text/javascript">
-<!--
-loaded = true;
-window.scroll(0, 0);
-var Element = document.getElementById('ActionPageHeader');
-if (Element) {
-    Element.style.display = "none";
-}
--->
-</script>
-EOT;
-
+        echo ($output);
     }
 
     /**
@@ -339,18 +322,19 @@ EOT;
         $urls = $this->getPageReturnUrl();
 
         foreach ($urls as $url) {
-            echo '<br />' . $url . '<br />';
+            echo ('<br />' . $url . '<br />');
         }
-?>
-</div>
 
-<br />
+        $output = <<<OUT
+
+</div>
 
 </body>
 </html>
 
-<?php
+OUT;
 
+        echo ($output);
     }
 
     /**
@@ -377,7 +361,7 @@ EOT;
     protected function isIgnoredTarget()
     {
         $result = false;
-                            
+
         if ($this->isRuleExists($this->defineIngnoredTargets())) {
             $result = true;
 
@@ -396,7 +380,7 @@ EOT;
                 $postLogin = $request->login;
                 $postPassword = $request->password;
 
-                if (!empty($postLogin) && !empty($postPassword)){
+                if (!empty($postLogin) && !empty($postPassword)) {
                     $postPassword = \XLite\Core\Auth::getInstance()->encryptPassword($postPassword);
                     $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
                         ->findByLoginPassword($postLogin, $postPassword, 0);
@@ -533,30 +517,4 @@ EOT;
         return $this->getRequestDataByPrefix($this->getPrefixToDelete());
     }
 
-    /**
-     * Get last Core version
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getLastCoreVersion()
-    {
-        return \XLite\RemoteModel\Marketplace::getInstance()->getLastVersion();
-    }
-
-    /**
-     * Is core upgrade available
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isCoreUpgradeAvailable()
-    {
-        return !is_null($this->getLastCoreVersion())
-            && -1 === version_compare($this->config->Version->version, $this->getLastCoreVersion());
-    }
 }
