@@ -15,6 +15,6 @@
 
 <ul class="display-modes grid-list" IF="isDisplayModeSelectorVisible()">
   <li FOREACH="displayModes,key,name" class="{getDisplayModeLinkClassName(key)}">
-    <a href="{getActionUrl(_ARRAY_(#displayMode#^key))}" class="{key}">{name}</a>
+    <a href="{getActionURL(_ARRAY_(#displayMode#^key))}" class="{key}">{name}</a>
   </li>
 </ul>

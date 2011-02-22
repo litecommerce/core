@@ -172,7 +172,7 @@ abstract class AAdmin extends \XLite\Controller\AController
 
             $this->session->set('lastWorkingURL', $this->get('url'));
             $this->redirect(
-                $this->buildUrl('login')
+                $this->buildURL('login')
             );
 
         } else {
@@ -291,7 +291,7 @@ EOT;
 
     function displayPageFooter()
     {
-        $urls = (array)$this->get('pageReturnUrl');
+        $urls = (array)$this->getPageReturnURL();
 
         foreach ($urls as $url) {
             echo "<br>".$url."<br>";
@@ -304,7 +304,7 @@ EOT;
 <?php
     }
 
-    function getPageReturnUrl()
+    function getPageReturnURL()
     {
         return array();
     }
@@ -414,16 +414,16 @@ EOT;
     /**
      * Sanitize Clean URL 
      * 
-     * @param string $cleanUrl Clean URL
+     * @param string $cleanURL Clean URL
      *  
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function sanitizeCleanURL($cleanUrl)
+    protected function sanitizeCleanURL($cleanURL)
     {
-        return substr(trim(preg_replace('/[^a-z0-9 \/\._-]+/Sis', '', $cleanUrl)), 0, 200);
+        return substr(trim(preg_replace('/[^a-z0-9 \/\._-]+/Sis', '', $cleanURL)), 0, 200);
     }
 
     /**

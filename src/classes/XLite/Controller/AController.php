@@ -83,14 +83,14 @@ abstract class AController extends \XLite\Core\Handler
     protected $quickLinks;
 
     /**
-     * returnUrl 
+     * returnURL 
      * 
      * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $returnUrl;
+    protected $returnURL;
 
 
     /**
@@ -158,10 +158,10 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function redirect($url = null)
     {
-        $location = $this->getReturnUrl();
+        $location = $this->getReturnURL();
 
         if (!isset($location)) {
-            $location = isset($url) ? $url : $this->getUrl();
+            $location = isset($url) ? $url : $this->getURL();
         }
 
         // filter xlite_form_id from redirect url
@@ -402,7 +402,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function isRedirectNeeded()
     {
-        return (\XLite\Core\Request::getInstance()->isPost() || $this->getReturnUrl()) && !$this->silent;
+        return (\XLite\Core\Request::getInstance()->isPost() || $this->getReturnURL()) && !$this->silent;
     }
 
     /**
@@ -431,7 +431,7 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Get the full URL of the page
-     * Example: getShopUrl('cart.php') = "http://domain/dir/cart.php 
+     * Example: getShopURL('cart.php') = "http://domain/dir/cart.php 
      * 
      * @param string  $url    Relative URL  
      * @param boolean $secure Flag to use HTTPS OPTIONAL
@@ -440,9 +440,9 @@ abstract class AController extends \XLite\Core\Handler
      * @access public
      * @since  3.0.0
      */
-    public function getShopUrl($url = '', $secure = false)
+    public function getShopURL($url = '', $secure = false)
     {
-        return \XLite::getInstance()->getShopUrl($url, $secure);
+        return \XLite::getInstance()->getShopURL($url, $secure);
     }
 
     /**
@@ -486,13 +486,13 @@ abstract class AController extends \XLite\Core\Handler
      * @access public
      * @since  3.0.0
      */
-    public function getReturnUrl()
+    public function getReturnURL()
     {
-        if (!isset($this->returnUrl)) {
-            $this->returnUrl = \XLite\Core\Request::getInstance()->{self::RETURN_URL};
+        if (!isset($this->returnURL)) {
+            $this->returnURL = \XLite\Core\Request::getInstance()->{self::RETURN_URL};
         }
 
-        return $this->returnUrl;
+        return $this->returnURL;
     }
 
     /**
@@ -504,9 +504,9 @@ abstract class AController extends \XLite\Core\Handler
      * @access public
      * @since  3.0.0
      */
-    public function setReturnUrl($url)
+    public function setReturnURL($url)
     {
-        $this->returnUrl = $url;
+        $this->returnURL = $url;
     }
 
     /**
@@ -518,9 +518,9 @@ abstract class AController extends \XLite\Core\Handler
      * @access public
      * @since  3.0.0
      */
-    public function setReturnUrlParams(array $params)
+    public function setReturnURLParams(array $params)
     {
-        return $this->setReturnUrl($this->buildURL($this->getTarget(), '', $params));
+        return $this->setReturnURL($this->buildURL($this->getTarget(), '', $params));
     }
 
     /**
@@ -1147,7 +1147,7 @@ abstract class AController extends \XLite\Core\Handler
         return $result;
     }
 
-    function getUrl(array $params = array())
+    function getURL(array $params = array())
     {
         $params = array_merge($this->getAllParams(), $params);
 

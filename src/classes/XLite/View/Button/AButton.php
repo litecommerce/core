@@ -220,7 +220,6 @@ abstract class AButton extends \XLite\View\AView
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = 'button/js/button.js';
 
         return $list;

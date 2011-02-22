@@ -27,7 +27,7 @@ class XLite_Tests_Model_Category extends XLite_Tests_TestCase
         'lpos'        => 100,
         'rpos'        => 200,
         'enabled'     => true,
-        'cleanUrl'   => 'testCategory',
+        'cleanURL'   => 'testCategory',
         'show_title'  => true,
     );
 

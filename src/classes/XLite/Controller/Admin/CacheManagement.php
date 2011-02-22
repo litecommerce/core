@@ -50,6 +50,6 @@ class CacheManagement extends \XLite\Controller\Admin\AAdmin
         \XLite::setCleanUpCacheFlag(true);
 
         // To avoid the infinite loop
-        $this->setReturnUrl($this->buildURL());
+        $this->setReturnURL($this->buildURL());
     }
 }

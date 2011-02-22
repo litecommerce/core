@@ -82,7 +82,7 @@ class Category extends \XLite\View\AView
     {
         return str_replace(
             $this->getWebPreprocessingTags(),
-            $this->getWebPreprocessingUrls(),
+            $this->getWebPreprocessingURLs(),
             $this->getCategory()->getDescription()
         );
     }
@@ -110,10 +110,10 @@ class Category extends \XLite\View\AView
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getWebPreprocessingUrls()
+    protected function getWebPreprocessingURLs()
     {
         return array(
-            \Xlite::getInstance()->getShopUrl(''),
+            \Xlite::getInstance()->getShopURL(''),
         );
     }
 

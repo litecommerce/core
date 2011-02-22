@@ -740,7 +740,7 @@ abstract class AItemsList extends \XLite\View\Container
      */
     public function getActionURL(array $params = array())
     {
-        return $this->getUrl($params + $this->getURLParams());
+        return $this->getURL($params + $this->getURLParams());
     }
 
     /**

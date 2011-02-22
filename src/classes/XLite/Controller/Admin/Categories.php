@@ -54,7 +54,7 @@ class Categories extends \XLite\Controller\Admin\Catalog
             (bool) \XLite\Core\Request::getInstance()->subcats
         );
 
-        $this->setReturnUrl($this->buildURL('categories', '', array('category_id' => $parentId)));
+        $this->setReturnURL($this->buildURL('categories', '', array('category_id' => $parentId)));
     }
 
 

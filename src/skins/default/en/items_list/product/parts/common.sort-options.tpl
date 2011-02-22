@@ -20,6 +20,6 @@
     <option FOREACH="sortByModes,key,name" value="{key}" selected="{isSortByModeSelected(key)}">{name}</option>
   </select>
 
-  <a href="{getActionUrl(_ARRAY_(#sortOrder#^getSortOrderToChange()))}" class="sort-order">{if:isSortOrderAsc()}&darr;{else:}&uarr;{end:}</a>
+  <a href="{getActionURL(_ARRAY_(#sortOrder#^getSortOrderToChange()))}" class="sort-order">{if:isSortOrderAsc()}&darr;{else:}&uarr;{end:}</a>
 
 </div>

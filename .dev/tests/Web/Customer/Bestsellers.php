@@ -79,7 +79,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
 
     public function testCatPage()
     {
-        $cat = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'apparel'));
+        $cat = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'apparel'));
  
         $this->open('store/category/0/category_id-' . $cat->getCategoryId());
 
@@ -95,7 +95,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
             'check bestsellers block'
         );  
 
-        $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'apparel'));
+        $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'apparel'));
         foreach ($this->findBestsellers(0, $c->getCategoryId()) as $product) {
 
             $id = $product->getProductId();

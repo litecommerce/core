@@ -117,13 +117,13 @@ class ImportUsers extends \XLite\Controller\Admin\AAdmin
         $this->change_layout($layout_name);
     }
 
-    function getPageReturnUrl()
+    function getPageReturnURL()
     {
         if ($this->action == "import") {
             $text = ($this->importError)?"Import process failed.":"Users are imported successfully.";
             return array($this->importError.'<br>'.$text.' <a href="admin.php?target=import_users"><u>Click here to return to admin interface</u></a>');
         } else {
-            return parent::getPageReturnUrl();
+            return parent::getPageReturnURL();
         }
     }
 }

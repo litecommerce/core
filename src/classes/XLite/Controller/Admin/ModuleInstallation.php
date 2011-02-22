@@ -38,6 +38,49 @@ namespace XLite\Controller\Admin;
 class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
 {
 
+    /** 
+     * Return module identificator
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModuleId()
+    {   
+        return \XLite\Core\Request::getInstance()->module_id;    
+    }   
+
+    /** 
+     * Return LICENSE text for the module
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLicense()
+    {
+        return \XLite\RemoteModel\Marketplace::getInstance()->getLicense(
+            $this->getModuleId()
+        );
+    }
+
+    /**
+     * Return title 
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        $moduleById = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->getModuleId());
+
+        return $moduleById->getModuleName() . $this->t(' License agreement');
+    }
+
     /**
      * Action of getting LICENSE text. Redirection to GET request
      * 
@@ -48,9 +91,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionGetLicense()
     {
-        $this->set(
-            'returnUrl', 
-            $this->buildURL(
+        $this->setReturnURL($this->buildURL(
                 'module_installation',
                 'show_license',
                 array(
@@ -58,6 +99,73 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
                 )
             )
         );
+    }
+
+    /**
+     * Action of license key registration 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionRegisterKey()
+    {
+        $key = \XLite\Core\Request::getInstance()->key;
+
+        $moduleInfo = \XLite\RemoteModel\Marketplace::getInstance()->getModuleInfoByKey($key);
+
+        if (!isset($moduleInfo['error'])) {
+
+            $moduleKey = \XLite\Core\Database::getRepo('\XLite\Model\ModuleKey')->findOneBy($moduleInfo);
+
+            $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy(
+                array(
+                    'name'   => $moduleInfo['module'],
+                    'author' => $moduleInfo['author'],
+                )
+            );
+
+            if (is_null($moduleKey)) {
+
+                $moduleKey = new \XLite\Model\ModuleKey();
+    
+                $moduleKey->map(
+                    $moduleInfo + array(
+                        'keyValue' => $key,
+                    )
+                );  
+
+                \XLite\Core\Database::getEM()->persist($moduleKey);
+
+            } else {
+
+                $moduleKey->setKeyValue($key);
+            }
+
+            $module->setPurchased(true);
+
+            \XLite\Core\Database::getEM()->flush();
+
+            \XLite\Core\TopMessage::getInstance()->addInfo(
+                'License key has been successfully verified for {{module}} module by {{author}} author',
+                array(
+                    'module' => $moduleInfo['module'],
+                    'author' => $moduleInfo['author'],
+                )
+            );
+
+        } else {
+
+            \XLite\Core\TopMessage::getInstance()->addError(
+                'Marketplace error: {{error}}',
+                array(
+                    'error' => $moduleInfo['error'],
+                )
+            );
+        }
+
+        $this->set('returnUrl', $this->buildURL('addons_list'));
     }
 
 
@@ -71,50 +179,47 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionGetPackage()
     {
+        $this->set('returnUrl', $this->buildURL('addons_list'));
+
+        // Checking "Agree" checkbox
+        if ('Y' !== \XLite\Core\Request::getInstance()->agree) {
+            \XLite\Core\TopMessage::getInstance()->addError(
+                'You must agree with License agreement in order to install module'
+            );
+
+            // Error return
+            return;
+        }
+
         $moduleById = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->getModuleId());
 
-        $mapFields = array(
-            'module' => $moduleById->getName(),
-            'author' => $moduleById->getAuthor(),
-        );  
+        // Check and get license key value for PAID module
+        if (!$moduleById->isFree()) {
 
-        // Register module license key for a further use
-        $moduleKey = \XLite\Core\Database::getRepo('\XLite\Model\ModuleKey')->findOneBy($mapFields);
+            $mapFields = array(
+                'module' => $moduleById->getName(),
+                'author' => $moduleById->getAuthor(),
+            );
 
-        if (!is_null(\XLite\Core\Request::getInstance()->key)) {
+            // Get module license key from DB for a further use
+            $moduleKey = \XLite\Core\Database::getRepo('\XLite\Model\ModuleKey')->findOneBy($mapFields);
 
             if (is_null($moduleKey)) {
-
-                $moduleKey = new \XLite\Model\ModuleKey();
-                
-                $moduleKey->map(
-                    $mapFields + array(
-                        'keyValue' => \XLite\Core\Request::getInstance()->key,
-                    )
+    
+                \XLite\Core\TopMessage::getInstance()->addError(
+                    'You must pay for the {{module}} module by {{author}} author using "Purchase" button',
+                    $mapFields
                 );
-
-                \XLite\Core\Database::getEM()->persist($moduleKey);
-
-            } else {
-
-                $moduleKey->setKeyValue(\XLite\Core\Request::getInstance()->key);
+    
+                // Error return
+                return;
             }
 
-            $key = \XLite\Core\Request::getInstance()->key;
-
-            \XLite\Core\Database::getEM()->flush();
-
-        } else {
-
-            // Check if there is a working license key for this module
-            if (!is_null($moduleKey)) {
-
-                $key = $moduleKey->getKeyValue();
-            }
+            $key = $moduleKey->getKeyValue();
         }
 
         // Retrieve the module package from the Marketplace to Local Repository of the LC
-        $result = \XLite\RemoteModel\Marketplace::getInstance()->retriveToLocalRepository(
+        $result = \XLite\RemoteModel\Marketplace::getInstance()->retrieveToLocalRepository(
             $this->getModuleId(),
             (isset($key) && !empty($key))
                 ? array('key' => $key)
@@ -149,8 +254,8 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
                 \XLite\Core\TopMessage::getInstance()->addError(
                     'Checking procedure returns with "{{result}}" result for {{file}} file.',
                     array(
-                        'result'    => $module->getStatus() . '::' . $module->getError(),
-                        'file'      => $result,
+                        'result' => $module->getStatus() . '::' . $module->getError(),
+                        'file'   => $result,
                     )
                 );
             }
@@ -160,35 +265,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
             @unlink(LC_LOCAL_REPOSITORY . $result);
         }
 
-        $this->set('returnUrl', $this->buildURL('modules'));
-    }
-
-    /** 
-     * Return module identificator
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getModuleId()
-    {   
-        return \XLite\Core\Request::getInstance()->module_id;    
-    }   
-
-    /**
-     * Return LICENSE text for the module
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getLicense()
-    {
-        return \XLite\RemoteModel\Marketplace::getInstance()->getLicense(
-            $this->getModuleId()
-        );
+        $this->setReturnURL($this->buildURL('modules'));
     }
 
 }

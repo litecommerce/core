@@ -37,7 +37,7 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
     
     protected $widgetClass = '';
 
-    protected $currentTestUrl = null;
+    protected $currentTestURL = null;
 
     protected $currentMode = '';
 
@@ -347,7 +347,7 @@ return;
             if ($this->testProductLinks) {
 
                 // test a link to the product page
-                $this->getJSExpression('window.location = "'.$listedProduct['nameUrl'].'";');
+                $this->getJSExpression('window.location = "'.$listedProduct['nameURL'].'";');
                 $this->waitForPageToLoad(180000);
                 $this->assertElementPresent(
                     "css=h1.fn.title",
@@ -728,8 +728,8 @@ return;
         );
 
         $this->assertEquals(
-            $product['nameUrl'],
-            $product['imgUrl'],
+            $product['nameURL'],
+            $product['imgURL'],
             "Product image and product name link to different pages (list mode)"
         );
 
@@ -770,8 +770,8 @@ return;
         );
 
         $this->assertEquals(
-            $product['nameUrl'],
-            $product['imgUrl'],
+            $product['nameURL'],
+            $product['imgURL'],
             "Product image and product name link to different pages (grid mode)"
         );
 
@@ -989,11 +989,11 @@ return;
             $nameSelector               = ($mode=='table') ? "$productSelector a.product-link" : "$productSelector h3.product-name a";
 
             $product['name']            = $this->getJSExpression("jQuery('$nameSelector').html()");
-//            $product['nameUrl']         = $this->getJSExpression("jQuery('$nameSelector')");
+//            $product['nameURL']         = $this->getJSExpression("jQuery('$nameSelector')");
             $product['sku']             = $this->getJSExpression("jQuery('$productSelector .product-sku').html()");
             $product['price']           = $this->getJSExpression("jQuery('$productSelector .product-price').html()");
             $product['parsedPrice']     = preg_replace("/^\D*(\d+\.\d+)\D*$/", "\\1", $product['price']);
-//            $product['imgUrl']          = $this->getJSExpression("jQuery('$productSelector a.product-thumbnail')");
+//            $product['imgURL']          = $this->getJSExpression("jQuery('$productSelector a.product-thumbnail')");
 //            $product['imgSrc']          = $this->getJSExpression("jQuery('$productSelector a.product-thumbnail img').attr('src')");
 //            $product['imgAlt']          = $this->getJSExpression("jQuery('$productSelector a.product-thumbnail img').attr('alt')");
 //            $product['description']     = $this->getJSExpression("jQuery('$productSelector .product-description').html()");
