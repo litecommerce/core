@@ -21,7 +21,7 @@
     </ul>
 
     <div class="link">
-      <a href="{buildUrl(#shipping_estimate#)}" class="estimate">{t(#Change method#)}</a>
+      <a href="{buildURL(#shipping_estimate#)}" class="estimate">{t(#Change method#)}</a>
     </div>
 
   {else:}

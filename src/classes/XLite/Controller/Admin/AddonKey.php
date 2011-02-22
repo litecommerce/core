@@ -37,4 +37,17 @@ namespace XLite\Controller\Admin;
  */
 class AddonKey extends \XLite\Controller\Admin\AAdmin
 {
+
+    /**
+     * Return page title
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return $this->t('Enter license key');
+    }
 }

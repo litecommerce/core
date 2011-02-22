@@ -35,7 +35,7 @@ namespace XLite\View\Button;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class UploadAddons extends \XLite\View\Button\PopupButton
+class UploadAddons extends \XLite\View\Button\APopupButton
 {
     /**
      *  Several specific constants
@@ -66,7 +66,7 @@ class UploadAddons extends \XLite\View\Button\PopupButton
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function prepareURLParams() 
+    public function prepareURLParams()
     {
         return array(
             'target' => \XLite\View\ModulesManager\UploadAddons::UPLOAD_ADDONS_TARGET,

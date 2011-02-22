@@ -12,7 +12,7 @@
  * @ListChild (list="itemsList.module.manage.columns.actions", weight="10")
  *}
 {if:module.getEnabled()}
-  <a href="{buildUrl(#modules#,#disable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('disable', '{module.getModuleId()}');">{t(#Disable#)}</a>
+  <a href="{buildURL(#modules#,#disable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('disable', '{module.getModuleId()}');">{t(#Disable#)}</a>
   {if:module.showSettingsForm()}
     <a href="{module.getSettingsFormLink()}">{t(#Settings#)}</a>
   {end:}
@@ -20,6 +20,6 @@
   {if:!canEnable(module)}
     <span class="disabled">{t(#Enable#)}</span>
   {else:}
-    <a href="{buildUrl(#modules#,#enable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('enable', '{module.getModuleId()}');">{t(#Enable#)}</a>
+    <a href="{buildURL(#modules#,#enable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('enable', '{module.getModuleId()}');">{t(#Enable#)}</a>
   {end:}
 {end:}

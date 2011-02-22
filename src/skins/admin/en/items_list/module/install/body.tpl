@@ -19,7 +19,7 @@
   <div class="features">
     <ul>
       {foreach:getSortOptions(),fltr,desc}
-        <li class="{if:fltr=getSortOption()}hl{end:}"><a href="{buildUrl(#addons_list#,##,_ARRAY_(%static::PARAM_SORT_BY%^fltr,#mode#^mode))}">{t(desc)}</a></li>
+        <li class="{if:fltr=getSortOption()}hl{end:}"><a href="{buildURL(#addons_list#,##,_ARRAY_(%static::PARAM_SORT_BY%^fltr,#mode#^mode))}">{t(desc)}</a></li>
       {end:}
     </ul>
   </div>
@@ -56,7 +56,7 @@ jQuery(document).ready(function(){
 
 <table cellspacing="0" cellpadding="0" class="data-table items-list modules-list">
 
-  <tr FOREACH="getPageData(),idx,module" class="{getRowClass(idx,##,#highlight#)}">
+  <tr FOREACH="getPageData(),idx,module">
     {displayInheritedViewListContent(#columns#,_ARRAY_(#module#^module))}
   </tr>
 

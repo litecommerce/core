@@ -45,7 +45,7 @@ function confirmNote(action, id)
 
   <div class="activity">
     {foreach:getFilters(),fltr,desc}
-      <a href="{buildUrl(#modules#,##,_ARRAY_(#filter#^fltr))}" class="upgradable{if:fltr=getFilter()} current{end:}">{t(desc)}</a><span>({getModulesCount(fltr)})</span>
+      <a href="{buildURL(#modules#,##,_ARRAY_(#filter#^fltr))}" class="upgradable{if:fltr=getFilter()} current{end:}">{t(desc)}</a><span>({getModulesCount(fltr)})</span>
     {end:}
   </div>
 
@@ -63,7 +63,7 @@ function confirmNote(action, id)
 
   <table cellspacing="0" cellpadding="0" class="data-table items-list modules-list">
 
-    <tr FOREACH="getPageData(),idx,module" class="{getRowClass(idx,##,#highlight#)}{if:!module.getEnabled()} disabled{end:}">
+    <tr FOREACH="getPageData(),idx,module" class="{if:!module.getEnabled()} disabled{end:}">
       {displayInheritedViewListContent(#columns#,_ARRAY_(#module#^module))}
     </tr>
 

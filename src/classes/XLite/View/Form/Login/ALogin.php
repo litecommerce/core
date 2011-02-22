@@ -94,9 +94,9 @@ abstract class ALogin extends \XLite\View\Form\AForm
     {
         $result = parent::getDefaultParams();
 
-        $url = $this->getReturnUrl();
+        $url = $this->getReturnURL();
         if ($url) {
-            $result['returnUrl'] = $url;
+            $result['returnURL'] = $url;
         }
 
         return $result;
@@ -111,7 +111,7 @@ abstract class ALogin extends \XLite\View\Form\AForm
      */
     protected function getFormAction()
     {
-        return $this->getShopUrl(\XLite::getInstance()->getScript(), $this->getSecuritySetting());
+        return $this->getShopURL(\XLite::getInstance()->getScript(), $this->getSecuritySetting());
     }
 }
 

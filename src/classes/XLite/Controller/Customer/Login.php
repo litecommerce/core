@@ -114,7 +114,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
         if (isset($url)) {
             \XLite\Core\CMSConnector::isCMSStarted() 
                 ? \XLite\Core\Operator::redirect($url, true) 
-                : $this->setReturnUrl($url);
+                : $this->setReturnURL($url);
         }
     }
 
@@ -151,12 +151,10 @@ class Login extends \XLite\Controller\Customer\ACustomer
 
         } else {
 
-            $this->set('returnUrl', \XLite\Core\Request::getInstance()->returnUrl);
+            $this->setReturnURL(\XLite\Core\Request::getInstance()->returnURL);
 
-            if (!$this->get('returnUrl')) {
-                $this->set(
-                    'returnUrl',
-                    $this->getCart()->isEmpty() ? \XLite\Core\Converter::buildURL() : \XLite\Core\Converter::buildURL('cart')
+            if (!$this->getReturnURL()) {
+                $this->setReturnURL($this->getCart()->isEmpty() ? \XLite\Core\Converter::buildURL() : \XLite\Core\Converter::buildURL('cart')
                 );
             }
 
@@ -178,7 +176,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
     {
         \XLite\Core\Auth::getInstance()->logoff();
 
-        $this->returnUrl = \XLite\Core\Converter::buildURL();
+        $this->setReturnURL(\XLite\Core\Converter::buildURL());
         if (!$this->getCart()->isEmpty()) {
         	if ('Y' == \XLite\Core\Config::getInstance()->Security->logoff_clear_cart) {
 
@@ -201,11 +199,11 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * @access public
      * @since  3.0.0
      */
-    public function getShopUrl($url = '', $secure = false)
+    public function getShopURL($url = '', $secure = false)
     {
         $add = (strpos($url, '?') ? '&' : '?') . 'feed=' . \XLite\Core\Request::getInstance()->action;
 
-        return parent::getShopUrl($url . $add, $secure);
+        return parent::getShopURL($url . $add, $secure);
     }
 
     /**

@@ -639,9 +639,9 @@ class Settings extends \XLite\Controller\Admin\AAdmin
             return $this->_answeredVersion;
         }
 
-        $checkUrl = $this->xlite->getShopUrl($this->buildUrl('upgrade', 'version'));
+        $checkURL = $this->xlite->getShopURL($this->buildURL('upgrade', 'version'));
         $this->_answeredVersionError = false;
-        $response = $this->httpRequest($checkUrl);
+        $response = $this->httpRequest($checkURL);
         if ($this->get('lite_version') != $response) {
             $this->_answeredVersionError = true;
         }
@@ -829,7 +829,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
             );
 
         } else {
-           $this->set('returnUrl', "admin.php?target=" . $this->get('target')
+           $this->setReturnURL("admin.php?target=" . $this->get('target')
                . "&page=" . $this->get('page') . "&ip_error=1");
         }
     }
