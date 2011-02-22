@@ -63,16 +63,28 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
     }
 
     /**
-     * Return name of the base widgets list
+     * getDisplayStyle
      *
      * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDisplayStyle()
+    {
+        return 'brief';
+    }
+
+    /**
+     * isFooterVisible
+     *
+     * @return boolean
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getListName()
+    protected function isFooterVisible()
     {
-        return parent::getListName() . '.search';
+        return true;
     }
 
     /**
@@ -87,6 +99,27 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
     {
         $result = parent::getSearchCondition();
         $result->{\XLite\Model\Repo\Product::P_LOW_INVENTORY} = true;
+
+        return $result;
+    }
+
+    /**
+     * Define view list
+     *
+     * @param string $list List name
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineViewList($list)
+    {
+        $result = parent::defineViewList($list);
+
+        if ('itemsList.admin.footer' === $list) {
+            $result[] = $this->getWidget(array('label' => 'Update'), '\XLite\View\Button\Submit');
+        }
 
         return $result;
     }

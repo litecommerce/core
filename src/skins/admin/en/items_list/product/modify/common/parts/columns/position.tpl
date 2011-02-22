@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Item category
+ * Item position
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,7 +9,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.table.admin.featured.columns", weight="40")
+ * @ListChild (list="itemsList.product.modify.common.admin.columns", weight="50")
  *}
 
-<td><a class="category" href="{buildURL(#category#,##,_ARRAY_(#category_id#^product.category.getCategoryId()))}">{product.category.getName():h}</a></td>
+<td><input type="text" class="pos" size="5" name="{getNamePostedData(#pos#,product.getProductId())}" value="{product.getOrderBy():r}" /></td>
