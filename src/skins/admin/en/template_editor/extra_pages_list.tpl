@@ -35,7 +35,7 @@
 </tr>
 <tr class="Center">
     <th align="right">URL:</th>
-    <td><a href="{xlite.getShopUrl(#cart.php#)}?page={page.page}" target="_blank">{xlite.getShopUrl(#cart.php#)}?page={page.page}</a></td>
+    <td><a href="{xlite.getShopURL(#cart.php#)}?page={page.page}" target="_blank">{xlite.getShopURL(#cart.php#)}?page={page.page}</a></td>
 </tr>
 </table>
 

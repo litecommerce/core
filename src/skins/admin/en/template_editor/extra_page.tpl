@@ -20,7 +20,7 @@
 <input type="hidden" name="action" value="update_page" />
 <input type="hidden" name="editor" value="extra_pages" />
 <input type="hidden" name="page" value="{extraPage.page}" />
-<input IF="{extraPage.page}" type="hidden" name="returnUrl" value="{url}&mode=page_edit&page={extraPage.page}&status=updated"/>
+<input IF="{extraPage.page}" type="hidden" name="returnURL" value="{url}&mode=page_edit&page={extraPage.page}&status=updated"/>
 
 <table cellpadding="2" cellspacing="2" IF="{extraPage.page}" width="430">
 <tr>

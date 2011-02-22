@@ -48,9 +48,14 @@ class Marketplace extends \XLite\Base\Singleton
      */
     const MARKETPLACE_URL = 'https://www.litecommerce.com/marketplace/';
 
+
+    /**
+     * Temporary variables names
+     */
     const ADDONS_UPDATED  = 'addonsUpdated';
     const VERSION_UPDATED = 'versionUpdated';
     const LAST_VERSION    = 'lastVersion';
+
     const LAST_UPDATE_TTL = 86400;
 
     /**
@@ -120,6 +125,39 @@ class Marketplace extends \XLite\Base\Singleton
     protected $error = null;
 
 
+    /** 
+     * Returns timestamp of the last version update
+     * from the marketplace
+     * 
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function isVersionInfoActual()
+    {
+        return \XLite\Core\TmpVars::getInstance()->{\XLite\RemoteModel\Marketplace::VERSION_UPDATED}
+            && (
+                \XLite\Core\TmpVars::getInstance()->{\XLite\RemoteModel\Marketplace::VERSION_UPDATED}
+                + \XLite\RemoteModel\Marketplace::LAST_UPDATE_TTL
+            ) > LC_START_TIME;
+    }
+
+    /** 
+     * Check if needs to retreive latest version information 
+     * from the market place
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function isVersionUpdateNeeded()
+    {
+        return !static::isVersionInfoActual()
+            || \XLite\Core\Request::getInstance()->{static::P_FORCE_UPDATE};
+    }
+
     /**
      * Return error message
      * 
@@ -143,7 +181,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-
     public function getMarketplaceURL()
     {
         $debugOptions = \XLite::getInstance()->getOptions('debug');
@@ -202,7 +239,7 @@ class Marketplace extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function retriveToLocalRepository($moduleId, $additionalData = array())
+    public function retrieveToLocalRepository($moduleId, $additionalData = array())
     {
         $moduleInfo = $this->getModuleInfo($moduleId);
 
@@ -241,7 +278,7 @@ class Marketplace extends \XLite\Base\Singleton
      * @since  3.0.0
      */
     public function getLastVersion()
-    {   
+    {
         if (static::isVersionUpdateNeeded()) {
             $version = $this->requestMarketplace(
                 static::VERSION_TARGET,
@@ -264,7 +301,7 @@ class Marketplace extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getModuleInfoByKey(string $key)
+    public function getModuleInfoByKey($key)
     {
         $response = $this->requestMarketplace(
             static::INFO_BY_KEY_TARGET,
@@ -312,6 +349,7 @@ class Marketplace extends \XLite\Base\Singleton
         return $result;
     }
 
+
     /**
      * Get Module information for Marketplace request
      * 
@@ -326,12 +364,13 @@ class Marketplace extends \XLite\Base\Singleton
     {
         $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($moduleId);
 
-        return array(
-            static::MODULE_NAME   => $module->getName(),
-            static::MODULE_AUTHOR => $module->getAuthor(),
-        );
+        return is_object($module)
+            ? array(
+                static::MODULE_NAME   => $module->getName(),
+                static::MODULE_AUTHOR => $module->getAuthor(),
+            )
+            : array();
     }
-
 
     /**
      * Request of marketplace
@@ -374,39 +413,6 @@ class Marketplace extends \XLite\Base\Singleton
         }
 
         return $response;
-    }
-
-    /**
-     * Returns timestamp of the last version update
-     * from the marketplace
-     * 
-     * @return integer
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function isVersionInfoActual()
-    {
-        return \XLite\Core\TmpVars::getInstance()->{\XLite\RemoteModel\Marketplace::VERSION_UPDATED}
-            && (
-                \XLite\Core\TmpVars::getInstance()->{\XLite\RemoteModel\Marketplace::VERSION_UPDATED}
-                + \XLite\RemoteModel\Marketplace::LAST_UPDATE_TTL
-            ) > LC_START_TIME;
-    }
-
-    /**
-     * Check if needs to retreive latest version information 
-     * from the market place
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function isVersionUpdateNeeded()
-    {
-        return !static::isVersionInfoActual()
-            || \XLite\Core\Request::getInstance()->{static::P_FORCE_UPDATE};
     }
 
 }

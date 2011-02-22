@@ -245,7 +245,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
             }
         }
 
-        $this->redirect($this->getRedirectUrl());
+        $this->redirect($this->getRedirectURL());
     }
 
     /**
@@ -282,7 +282,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
             }
         }
 
-        $this->redirect($this->getRedirectUrl());
+        $this->redirect($this->getRedirectURL());
     }
 
     /**
@@ -295,7 +295,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      */
     public function doActionChange()
     {
-        $this->redirect($this->getRedirectUrl());
+        $this->redirect($this->getRedirectURL());
     }
 
     /**
@@ -306,7 +306,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getRedirectUrl()
+    protected function getRedirectURL()
     {
         $params = array();
 

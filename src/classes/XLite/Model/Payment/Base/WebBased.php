@@ -180,8 +180,8 @@ HTML;
      */
     protected function getReturnURL($fieldName)
     {
-        return \XLite::getInstance()->getShopUrl(
-            \XLite\Core\Converter::buildUrl('payment_return', '', array('txn_id_name' => $fieldName)),
+        return \XLite::getInstance()->getShopURL(
+            \XLite\Core\Converter::buildURL('payment_return', '', array('txn_id_name' => $fieldName)),
             true
         );
     }

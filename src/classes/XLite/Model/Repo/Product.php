@@ -598,7 +598,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function findOneByCleanUrl($url)
+    public function findOneByCleanURL($url)
     {
         return $this->findOneBy(array('clean_url' => $url));
     }

@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<form action="{buildUrl(#helpdesk#,#send#)}" method="post" name="helpdesk_form" class="helpdesk" style="display: none;">
+<form action="{buildURL(#helpdesk#,#send#)}" method="post" name="helpdesk_form" class="helpdesk" style="display: none;">
   <h2>Get help</h2>
   <div>
     <label for="hd_subject">Subject:</label>

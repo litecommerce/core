@@ -20,7 +20,7 @@
 <input type="hidden" name="editor" value="mail" />
 <input type="hidden" name="path" value="{path}" />
 <input type="hidden" name="node" value="{node}" />
-<input type="hidden" name="returnUrl" value="{url}&mode=edit&path={path}&node={node}&status=updated"/>
+<input type="hidden" name="returnURL" value="{url}&mode=edit&path={path}&node={node}&status=updated"/>
 
 <table cellpadding="2" cellspacing="2" width="430">
 <tr>

@@ -359,14 +359,14 @@ class Db extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * getPageReturnUrl 
+     * getPageReturnURL 
      * 
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getPageReturnUrl()
+    protected function getPageReturnURL()
     {
         $url = array();
 
@@ -381,7 +381,7 @@ class Db extends \XLite\Controller\Admin\AAdmin
                 break;
 
             default:
-                $url = parent::getPageReturnUrl();
+                $url = parent::getPageReturnURL();
         }
 
         return $url;

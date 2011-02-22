@@ -13,8 +13,8 @@
 
 <div class="sort-order">
   {if:isSortByModeSelected(sortByColumn)}
-    <div class="part order-by"><a href="{getActionUrl(_ARRAY_(%static::PARAM_SORT_ORDER%^getSortOrderToChange()))}"><span class="selected">{title:h}</span></a>&nbsp;{if:isSortOrderAsc()}&darr;{else:}&uarr;{end:}</div>
+    <div class="part order-by"><a href="{getActionURL(_ARRAY_(%static::PARAM_SORT_ORDER%^getSortOrderToChange()))}"><span class="selected">{title:h}</span></a>&nbsp;{if:isSortOrderAsc()}&darr;{else:}&uarr;{end:}</div>
   {else:}
-    <div class="part sort-crit"><a class="{sortByColumn}" href="{getActionUrl(_ARRAY_(%static::PARAM_SORT_BY%^sortByColumn))}">{title:h}</a></div>
+    <div class="part sort-crit"><a class="{sortByColumn}" href="{getActionURL(_ARRAY_(%static::PARAM_SORT_BY%^sortByColumn))}">{title:h}</a></div>
   {end:}
 </div>

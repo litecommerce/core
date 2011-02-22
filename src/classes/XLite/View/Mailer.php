@@ -242,7 +242,7 @@ class Mailer extends \XLite\View\AView
         file_put_contents($fname, $this->get('body'));
 
         $imageParser = new \XLite\Model\MailImageParser();
-        $imageParser->webdir = $this->xlite->getShopUrl();
+        $imageParser->webdir = $this->xlite->getShopURL();
         $imageParser->parse($fname);
 
         $this->set('body', $imageParser->result);

@@ -93,7 +93,7 @@ extends XLite_Tests_Model_OrderAbstract
     {
         $processor = new XLite\Module\CDev\AustraliaPost\Model\Shipping\Processor\AustraliaPost();
 
-        $this->assertEquals('http://drc.edeliver.com.au/ratecalc.asp', $processor->getApiUrl());
+        $this->assertEquals('http://drc.edeliver.com.au/ratecalc.asp', $processor->getApiURL());
     }
 
     /**

@@ -147,7 +147,7 @@ class ModifyProductOptions extends \XLite\View\AView
      */
     public function getOptionGroupLink(\XLite\Module\CDev\ProductOptions\Model\OptionGroup $option)
     {
-        return $this->buildUrl(
+        return $this->buildURL(
             'product',
             '',
             array(

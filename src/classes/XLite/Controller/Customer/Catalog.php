@@ -73,7 +73,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
         parent::doNoAction();
 
         if (!\XLite\Core\Request::getInstance()->isAJAX()) {
-            \XLite\Core\Session::getInstance()->productListURL = $this->getUrl();
+            \XLite\Core\Session::getInstance()->productListURL = $this->getURL();
         }
     }
 

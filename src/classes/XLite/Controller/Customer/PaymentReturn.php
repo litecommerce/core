@@ -111,8 +111,8 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
             \XLite\Core\Database::getEM()->persist($txn);
             \XLite\Core\Database::getEM()->flush();
 
-            $url = \XLite::getShopUrl(
-                $this->buildUrl('checkout', 'return', array('order_id' => $txn->getOrder()->getOrderId())),
+            $url = \XLite::getShopURL(
+                $this->buildURL('checkout', 'return', array('order_id' => $txn->getOrder()->getOrderId())),
                 $this->config->Security->customer_security
             );
 
@@ -126,14 +126,14 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
                     break;
 
                 default:
-                    $this->setReturnUrl($url);
+                    $this->setReturnURL($url);
             }
 
         } else {
             // TODO - add error logging
 
-            $this->setReturnUrl(
-                $this->buildUrl('checkout')
+            $this->setReturnURL(
+                $this->buildURL('checkout')
             );
         }
 

@@ -174,7 +174,7 @@ class ImportCatalog extends \XLite\Controller\Admin\AAdmin
         );
     }
 
-    function getPageReturnUrl()
+    function getPageReturnURL()
     {
         $text = "Import process failed.";
         $url = "";
@@ -184,7 +184,7 @@ class ImportCatalog extends \XLite\Controller\Admin\AAdmin
                 $url = array($this->importError.'<br>'.$text.' <a href="admin.php?target=import_catalog"><u>Click here to return to admin interface</u></a>');
             break;
             default:
-                $url = parent::getPageReturnUrl();
+                $url = parent::getPageReturnURL();
         }
 
         return $url;

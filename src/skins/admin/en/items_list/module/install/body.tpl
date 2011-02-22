@@ -19,7 +19,7 @@
   <div class="features">
     <ul>
       {foreach:getSortOptions(),fltr,desc}
-        <li class="{if:fltr=getSortOption()}hl{end:}"><a href="{buildUrl(#addons_list#,##,_ARRAY_(%static::PARAM_SORT_BY%^fltr,#mode#^mode))}">{t(desc)}</a></li>
+        <li class="{if:fltr=getSortOption()}hl{end:}"><a href="{buildURL(#addons_list#,##,_ARRAY_(%static::PARAM_SORT_BY%^fltr,#mode#^mode))}">{t(desc)}</a></li>
       {end:}
     </ul>
   </div>

@@ -126,7 +126,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
         $result = empty($cleanURL);
 
         if (!$result) {
-            $entity = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByCleanUrl($cleanURL);
+            $entity = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByCleanURL($cleanURL);
             $result = !isset($entity) || $entity->getProductId() === $this->getProductId();
 
             if (!$result) {
@@ -173,7 +173,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
             );
 
             // Add the ID of created product to the return URL
-            $this->setReturnUrl($this->buildURL('product', '', array('product_id' => $product->getProductId())));
+            $this->setReturnURL($this->buildURL('product', '', array('product_id' => $product->getProductId())));
         }
     }
 
@@ -423,7 +423,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $params = array('target', 'product_id', 'page', 'backUrl');
+    public $params = array('target', 'product_id', 'page', 'backURL');
 
     /**
      * FIXME- backward compatibility
@@ -539,6 +539,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
         }
         $product->set('name', $product->get('name') . " (CLONE)");
         $product->update();
-        $this->set('returnUrl', 'admin.php?target=product&product_id=' . $product->get('product_id'));
+        $this->setReturnURL('admin.php?target=product&product_id=' . $product->get('product_id'));
     }*/
 }
