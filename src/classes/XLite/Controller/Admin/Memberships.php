@@ -85,25 +85,34 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
                 $m = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->find($id);
 
                 if (!$m) {
-                    // TODO - add top message
+
+                    \XLite\Core\TopMessage::addError(
+                        'Could not find membership ID#' . $id . ' record in the database'
+                    );
+
                     continue;
                 }
 
-                try {
-                    $duplicate = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->createQueryBuilder()
-                        ->andWhere('translations.name = :name', 'm.membership_id != :id')
-                        ->setParameter('name', $row['membership'])
-                        ->setParameter('id', $id)
-                        ->setMaxResults(1)
-                        ->getSingleResult();
+                $duplicate = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->createQueryBuilder()
+                   ->andWhere('translations.name = :name', 'm.membership_id != :id')
+                   ->setParameter('name', $row['membership'])
+                   ->setParameter('id', $id)
+                   ->setMaxResults(1)
+                   ->getSingleResult();
 
-                    // TODO - add top message
-                    continue;
+                if (!is_null($duplicate)) {
 
-                } catch (\Doctrine\ORM\NoResultException $exception) {
+                    \XLite\Core\TopMessage::addWarning(
+                        '"' . $row['membership'] . '" ' . ' membership name is already in use. '
+                        . 'Please specify another name for this membership level'
+                    );
+
+                } else {
+
+                    $m->getTranslation($code)->name = $row['membership'];
+
                 }
 
-                $m->getTranslation($code)->name = $row['membership'];
                 $m->orderby = intval($row['orderby']);
                 $m->active = isset($row['active']) && '1' == $row['active'];
 

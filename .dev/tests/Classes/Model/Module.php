@@ -131,18 +131,6 @@ class XLite_Tests_Model_Module extends XLite_Tests_Model_ModuleAbstract
         $this->assertFalse($module->isFree(), 'check if module is free');
     }
 
-    public function testGetMarketplaceURL()
-    {
-        $module = $this->getTestModule();
-        $debugOptions = \XLite::getInstance()->getOptions('debug');
-
-        $url = isset($debugOptions['marketplace_dev_url'])
-            ? $debugOptions['marketplace_dev_url']
-            : 'https://www.litecommerce.com/marketplace/';
-
-        $this->assertEquals($url, $module::getMarketplaceURL(), 'check marketplace URL');
-    }
-
     public function testGetPageURL()
     {
         $module = $this->getTestModule();
