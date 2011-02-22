@@ -342,6 +342,10 @@ div.noscript
   width: 170px;
 }
 
+input.input-disabled {
+  color: #8f8f8f;
+}
+
 /* Page tabs */
 
 div.page-tabs
@@ -528,9 +532,10 @@ input.orderby
   text-align: right;
 }
 
-input.price
+input.price,
+input.inventory
 {
-  width: 8em;
+  width: 50px;
   text-align: right;
 }
 

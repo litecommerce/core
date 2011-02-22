@@ -48,4 +48,24 @@ class Main extends \XLite\Controller\Admin\AAdmin
     {
         return 'Welcome to the Administrator Zone';
     }
+
+    /**
+     * doActionUpdateInventoryProducts 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     */
+    protected function doActionUpdateInventoryProducts() {
+        // Update price and other fields
+        \XLite\Core\Database::getRepo('\XLite\Model\Product')
+            ->updateInBatchById($this->getPostedData());
+        // Update inventory
+        \XLite\Core\Database::getRepo('\XLite\Model\Inventory')
+            ->updateInBatchById($this->getPostedData());
+
+        \XLite\Core\TopMessage::addInfo(
+            'Inventory has been successfully updated'
+        );
+    }
 }

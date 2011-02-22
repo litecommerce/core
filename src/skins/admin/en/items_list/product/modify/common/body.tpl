@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<table class="items-list table">
+<table class="data-table items-list">
 
   <tr>
     {displayInheritedViewListContent(#header#,_ARRAY_(#product#^product))}
@@ -21,7 +21,7 @@
     {displayInheritedViewListContent(#columns#,_ARRAY_(#product#^product))}
   </tr>
 
-  <tr FOREACH="getViewList(#itemsList.product.table.admin.items#),w">
+  <tr FOREACH="getViewList(#itemsList.product.modify.common.admin.items#),w">
     {w.display()}
   </tr>
 
