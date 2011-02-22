@@ -248,9 +248,9 @@ class PagerOrig extends \XLite\View\AView
      * @access protected
      * @since  3.0.0
      */
-    protected function buildUrlByPageId($pageId)
+    protected function buildURLByPageId($pageId)
     {
-        return $this->getUrl($this->getPageURLParams($pageId));
+        return $this->getURL($this->getPageURLParams($pageId));
     }
 
     /**
@@ -260,10 +260,10 @@ class PagerOrig extends \XLite\View\AView
      * @access protected
      * @since  3.0.0
      */
-    protected function definePageUrls()
+    protected function definePageURLs()
     {
         for ($i = 0; $i < $this->getPagesCount(); $i++) {
-            $this->pageURLs[$i] = $this->buildUrlByPageId($i);
+            $this->pageURLs[$i] = $this->buildURLByPageId($i);
         }
     }
 
@@ -274,11 +274,11 @@ class PagerOrig extends \XLite\View\AView
      * @access protected
      * @since  3.0.0
      */
-    protected function getPageUrls()
+    protected function getPageURLs()
     {
         if (!isset($this->pageURLs)) {
             $this->pageURLs = array();
-            $this->definePageUrls();
+            $this->definePageURLs();
         }
 
         return $this->pageURLs;

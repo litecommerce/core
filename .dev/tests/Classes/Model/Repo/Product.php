@@ -217,7 +217,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
      */
     public function testFindByCleanUrlExists()
     {
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findOneByCleanUrl('test');
+        $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findOneByCleanURL('test');
 
         // Certain product is found
         $this->assertNotNull($result, 'Product not found');
@@ -234,7 +234,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
      */
     public function testFindByCleanUrlNotExists()
     {
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findOneByCleanUrl('not_exists');
+        $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findOneByCleanURL('not_exists');
 
         // Product was not found
         $this->assertNull($result, 'Wrong result for the search');

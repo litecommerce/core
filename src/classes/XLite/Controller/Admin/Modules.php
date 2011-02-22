@@ -103,7 +103,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionEnable()
     {
-        $this->set('returnUrl', $this->buildURL('modules'));
+        $this->setReturnURL($this->buildURL('modules'));
 
         $id = \XLite\Core\Request::getInstance()->moduleId;
 
@@ -129,7 +129,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionPack()
     {
-        $this->set('returnUrl', $this->buildUrl('modules'));
+        $this->setReturnURL($this->buildURL('modules'));
 
         if (LC_DEVELOPER_MODE) {
 
@@ -170,7 +170,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionDisable()
     {
-        $this->set('returnUrl', $this->buildURL('modules'));
+        $this->setReturnURL($this->buildURL('modules'));
 
         $id = \XLite\Core\Request::getInstance()->moduleId;
 
@@ -227,7 +227,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
             }
         }
         
-        $this->set('returnUrl', $this->buildURL('modules'));
+        $this->setReturnURL($this->buildURL('modules'));
     }
 
 }

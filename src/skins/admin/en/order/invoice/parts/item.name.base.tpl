@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="invoice.item.name", weight="10")
  *}
-<a href="{item.getUrl()}">{item.getName()}</a>
+<a href="{item.getURL()}">{item.getName()}</a>

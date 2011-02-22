@@ -189,7 +189,7 @@ class Converter extends \XLite\Base\Singleton
      */
     public static function buildFullURL($target = '', $action = '', array $params = array())
     {
-        return \XLite::getInstance()->getShopUrl(static::buildURL($target, $action, $params));
+        return \XLite::getInstance()->getShopURL(static::buildURL($target, $action, $params));
     }
 
     /**

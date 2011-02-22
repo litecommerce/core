@@ -153,7 +153,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
         }
 
         if (!empty($params)) {
-            $this->setReturnUrl($this->buildURL('profile', '', $params));
+            $this->setReturnURL($this->buildURL('profile', '', $params));
         }
     }
 
@@ -174,7 +174,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
         // Send notification to the user
         \XLite\Core\Mailer::sendProfileDeletedAdminNotification($userLogin);
 
-        $this->setReturnUrl($this->buildURL('users', '', array('mode' => 'search')));
+        $this->setReturnURL($this->buildURL('users', '', array('mode' => 'search')));
     }
 
     /**

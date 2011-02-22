@@ -421,7 +421,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
     public function handleRequest()
     {
         if (!$this->checkCart()) {
-            $this->setReturnUrl($this->buildURL('cart'));
+            $this->setReturnURL($this->buildURL('cart'));
         }
 
         parent::handleRequest();
@@ -566,7 +566,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 );
             }
 
-            $this->setReturnUrl($this->buildURL('checkout'));
+            $this->setReturnURL($this->buildURL('checkout'));
 
         } else {
 
@@ -576,7 +576,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
             $cart->setStatus($status);
 
             $this->processSucceed();
-            $this->setReturnUrl(
+            $this->setReturnURL(
                 $this->buildURL(
                     'checkoutSuccess',
                     '',

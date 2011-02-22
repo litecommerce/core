@@ -13,6 +13,6 @@
  *}
 <widget class="\XLite\View\Form\Cart\Clear" name="clearCart" />
   <div>
-    <a href="{buildUrl(#cart#,#clear#)}" onclick="javascript: return !$(this).parents('form').eq(0).submit();" class="clear-bag">{t(#Clear bag#)}</a>
+    <a href="{buildURL(#cart#,#clear#)}" onclick="javascript: return !$(this).parents('form').eq(0).submit();" class="clear-bag">{t(#Clear bag#)}</a>
   </div>
 <widget name="clearCart" end />

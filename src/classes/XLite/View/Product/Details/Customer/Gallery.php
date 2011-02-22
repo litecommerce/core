@@ -62,7 +62,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function getLightBoxImagesDir()
     {
-        return \XLite::getInstance()->getShopUrl(\XLite\Model\Layout::getInstance()->getPath() . 'images/lightbox');
+        return \XLite::getInstance()->getShopURL(\XLite\Model\Layout::getInstance()->getPath() . 'images/lightbox');
     }
 
     /**

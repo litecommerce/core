@@ -43,7 +43,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
     {
         $list = $this->getListSelector();
 
-        $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'toys'));
+        $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'toys'));
         $this->open('store/category/0/category_id-' . $c2->getCategoryId());
 
         // Make sure there are no QuickLook buttons in the table mode
@@ -98,7 +98,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      */
     public function testProductOptions()
     {
-        $cat = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'apparel'));
+        $cat = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'apparel'));
         list($product, $selector) = $this->popupTestProduct('store/category/0/category_id-' . $cat->getCategoryId(), '00000');
         $id = $product->getProductId();
 
@@ -210,8 +210,8 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      */
     public function testGalleryAndZoomer()
     {
-        $c1 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'apparel'));
-        $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'toys'));
+        $c1 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'apparel'));
+        $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'toys'));
 
         $products = array(
             array('url' => 'store/category/0/category_id-' . $c1->getCategoryId(), 'id' => '00002'),
@@ -302,7 +302,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      */
     public function testAdd2Cart()
     {
-        $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'toys'));
+        $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'toys'));
         list($product, $selector) = $this->popupTestProduct('store/category/0/category_id-' . $c2->getCategoryId(), '00022');
         $id = $product->getProductId();
 
@@ -367,7 +367,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * Open a category page and popup a Quicklook for a product.
      * Returns a list of a product object and a CSS selector to the Quicklook popup
      * 
-     * @param string  $categoryUrl URL of a category page
+     * @param string  $categoryURL URL of a category page
      * @param integer $productId   Product ID
      *  
      * @return array
@@ -375,10 +375,10 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function popupTestProduct($categoryUrl, $productId)
+    protected function popupTestProduct($categoryURL, $productId)
     {
         $list = $this->getListSelector();
-        $this->open($categoryUrl);
+        $this->open($categoryURL);
         $this->switchDisplayMode('grid');
 
         $id = $productId;

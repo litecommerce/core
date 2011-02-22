@@ -212,7 +212,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
 
         $this->session->set('orders_search', $ordersSearch);
 
-        $this->set('returnUrl', $this->buildUrl('order_list'));
+        $this->setReturnURL($this->buildURL('order_list'));
     }
 
     /**
@@ -227,7 +227,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
     {
         $this->session->set('orders_search', \XLite\Model\Order::getDefaultSearchConditions());
 
-        $this->set('returnUrl', $this->buildUrl('order_list'));
+        $this->setReturnURL($this->buildURL('order_list'));
     }
 
     /**
