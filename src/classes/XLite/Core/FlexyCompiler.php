@@ -831,11 +831,13 @@ class FlexyCompiler extends \XLite\Base\Singleton
             $len = strlen($find);
 
             if (0 === strncmp($url, $find, $len)) {
-                $result = array(
-                    0,
-                    $len,
-                    is_callable($replace) ? call_user_func($replace, $url) : $replace
-                );
+                if (is_callable($replace)) {
+                    $result = call_user_func($replace, $url, $len);
+
+                } else {
+                    $result = array(0, $len, $replace);
+                }
+
                 break;
             }
         }
@@ -846,16 +848,19 @@ class FlexyCompiler extends \XLite\Base\Singleton
     /**
      * Rewrite image URL 
      * 
-     * @param string $url Image short URL
+     * @param string  $url    Image short URL
+     * @param integer $length Replace part length
      *  
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function rewriteImageURL($url)
+    protected function rewriteImageURL($url, $length)
     {
-        return $this->layout->getResourceWebPath($url, \XLite\Core\Layout::WEB_PATH_OUTPUT_URL);
+        $newURL = $this->layout->getResourceWebPath($url, \XLite\Core\Layout::WEB_PATH_OUTPUT_URL);
+
+        return array(0, strlen($url), $newURL);
     }
 
     function subst($start, $end, $value)
