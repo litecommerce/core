@@ -41,7 +41,7 @@ class Db extends \XLite\Controller\Admin\AAdmin
      * pages 
      * 
      * @var    array
-     * @access public
+     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
@@ -336,8 +336,8 @@ class Db extends \XLite\Controller\Admin\AAdmin
         }
 
         if (!$error) {
-            $message = 
-                $this->t('Some errors occurred during restoring the database. The database has not been restored!');
+            $message
+                = $this->t('The database has not been restored because of the errors');
 
         } else {
             $message = $this->t('Database restored successfully!');

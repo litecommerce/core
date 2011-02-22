@@ -38,6 +38,18 @@ namespace XLite\Controller\Admin;
 class Memberships extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return $this->t('Membership levels');
+    }
+
+    /**
      * Common method to determine current location
      *
      * @return string
@@ -47,7 +59,7 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return 'Membership levels';
+        return $this->t('Membership levels');
     }
 
     /**
@@ -117,7 +129,7 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
         if (is_array($ids) && $ids) {
             list($keys, $data) = \XLite\Core\Database::prepareArray($ids, 'id');
             $list = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->createQueryBuilder()
-                ->where('m.membership_id IN (' . implode(', ', $keys). ')')
+                ->where('m.membership_id IN (' . implode(', ', $keys) . ')')
                 ->setParameters($data)
                 ->getResult();
 
@@ -164,17 +176,5 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->persist($membership);
             \XLite\Core\Database::getEM()->flush();
         }
-    }
-
-    /**
-     * Return the current page title (for the content area)
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return 'Membership levels';
     }
 }

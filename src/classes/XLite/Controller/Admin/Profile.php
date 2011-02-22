@@ -38,6 +38,45 @@ namespace XLite\Controller\Admin;
 class Profile extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Return value for the "register" mode param
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getRegisterMode()
+    {
+        return 'register';
+    }
+
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Edit profile';
+    }
+
+    /**
+     * The "mode" parameter used to determine if we create new or modify existing profile
+     *
+     * @return boolean 
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isRegisterMode()
+    {
+        return self::getRegisterMode() === \XLite\Core\Request::getInstance()->mode;
+    }
+
+
+    /**
      * Common method to determine current location
      *
      * @return string
@@ -63,18 +102,6 @@ class Profile extends \XLite\Controller\Admin\AAdmin
         parent::addBaseLocation();
 
         $this->addLocationNode('Search profiles', $this->buildURL('users'));
-    }
-
-    /**
-     * Return the current page title (for the content area)
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return 'Edit profile';
     }
 
     /**
@@ -176,31 +203,4 @@ class Profile extends \XLite\Controller\Admin\AAdmin
 
         $this->setReturnURL($this->buildURL('users', '', array('mode' => 'search')));
     }
-
-    /**
-     * Return value for the "register" mode param
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getRegisterMode()
-    {
-        return 'register';
-    }
-
-    /**
-     * The "mode" parameter used to determine if we create new or modify existing profile
-     *
-     * @return boolean 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isRegisterMode()
-    {
-        return self::getRegisterMode() === \XLite\Core\Request::getInstance()->mode;
-    }
-
 }

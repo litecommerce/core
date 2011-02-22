@@ -44,7 +44,7 @@ From this page, you can build and maintain the store in a very easy way!
             <td colspan="5">&nbsp;</td>
         </tr>
         <tr>
-            <widget template="menu_item.tpl" href="admin.php?target=users&mode=search" icon="menu/icon_users.gif" text="<span class='main-menu-item-header'>Users</span><br />Manage customer and administrator accounts<br /><br /><a href='admin.php?target=profile&mode=register' style='color:blue;'>Add new user</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='admin.php?target=import_users' style='color:blue;'>Import users</a>">
+            <widget template="menu_item.tpl" href="admin.php?target=users&mode=search" icon="menu/icon_users.gif" text="<span class='main-menu-item-header'>Users</span><br />Manage customer and administrator accounts<br /><br /><a href='admin.php?target=profile&mode=register' style='color:blue;'>Add new user</a>">
             <td style="width:1%;">&nbsp;&nbsp;</td>
             <widget template="menu_item.tpl" icon="menu/icon_catalog.gif" text="<span class='main-menu-item-header'>Store Maintenance</span><br />Perform backups of your store's important data<br /><br /><a href='admin.php?target=import_catalog' style='color:blue;'>Import catalog</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='admin.php?target=export_catalog' style='color:blue;'>Export catalog</a>">
         </tr>

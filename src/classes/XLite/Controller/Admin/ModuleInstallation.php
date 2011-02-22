@@ -91,7 +91,8 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionGetLicense()
     {
-        $this->setReturnURL($this->buildURL(
+        $this->setReturnURL(
+            $this->buildURL(
                 'module_installation',
                 'show_license',
                 array(
@@ -221,9 +222,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
         // Retrieve the module package from the Marketplace to Local Repository of the LC
         $result = \XLite\RemoteModel\Marketplace::getInstance()->retrieveToLocalRepository(
             $this->getModuleId(),
-            (isset($key) && !empty($key))
-                ? array('key' => $key)
-                : array()
+            (isset($key) && !empty($key)) ? array('key' => $key) : array()
         );
 
         if (\XLite\RemoteModel\Marketplace::STATUS_ERROR !== $result) {

@@ -38,6 +38,99 @@ namespace XLite\Controller\Admin;
 class OrderList extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Return the current page title (for the content area)
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Search orders';
+    }
+
+    /**
+     * getDateValue 
+     * FIXME - to remove
+     * 
+     * @param string $fieldName Field name (prefix)
+     *  
+     * @return integer 
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDateValue($fieldName)
+    {
+        $dateValue = \XLite\Core\Request::getInstance()->$fieldName;
+
+        if (!isset($dateValue)) {
+            $nameDay   = $fieldName . 'Day';
+            $nameMonth = $fieldName . 'Month';
+            $nameYear  = $fieldName . 'Year';
+
+            if (
+                isset(\XLite\Core\Request::getInstance()->$nameMonth)
+                && isset(\XLite\Core\Request::getInstance()->$nameDay)
+                && isset(\XLite\Core\Request::getInstance()->$nameYear)
+            ) {
+                $dateValue = mktime(
+                    0, 0, 0,
+                    \XLite\Core\Request::getInstance()->$nameMonth,
+                    \XLite\Core\Request::getInstance()->$nameDay,
+                    \XLite\Core\Request::getInstance()->$nameYear
+                );
+            }
+        }
+
+        return $dateValue;
+    }
+
+    /**
+     * Get search condition parameter by name
+     * 
+     * @param string $paramName Parameter name
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCondition($paramName)
+    {
+        $searchParams = $this->getConditions();
+
+        if (isset($searchParams[$paramName])) {
+            $return = $searchParams[$paramName];
+        }
+
+        return isset($searchParams[$paramName])
+            ? $searchParams[$paramName]
+            : null;
+    }
+
+    /**
+     * Get date condition parameter (start or end)
+     * 
+     * @param boolean $start Start date flag, otherwise - end date  OPTIONAL
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDateCondition($start = true)
+    {
+        $dates = $this->getCondition(\XLite\Model\Repo\Order::P_DATE);
+        $n = (true === $start) ? 0 : 1;
+
+        return isset($dates) && isset($dates[$n])
+            ? $dates[$n]
+            : null;
+    }
+
+
+    /**
      * Common method to determine current location
      *
      * @return string
@@ -47,7 +140,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return 'Search orders';
+        return $this->t('Search orders');
     }
 
     /**
@@ -74,55 +167,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     protected function doActionDelete()
     {
         \XLite\Core\Database::getRepo('\XLite\Model\Order')->deleteInBatchById($this->getToDelete());
-    }
-
-    /**
-     * Return the current page title (for the content area)
-     * 
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return 'Search orders';
-    }
-
-    /**
-     * getDateValue 
-     * FIXME - to remove
-     * 
-     * @param string $fieldName Field name (prefix)
-     *  
-     * @return integer 
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getDateValue($fieldName)
-    {
-        $dateValue = \XLite\Core\Request::getInstance()->$fieldName;
-
-        if (!isset($dateValue)) {
-            $nameDay   = $fieldName . 'Day';
-            $nameMonth = $fieldName . 'Month';
-            $nameYear  = $fieldName . 'Year';
-
-            if (isset(\XLite\Core\Request::getInstance()->$nameMonth)
-                && isset(\XLite\Core\Request::getInstance()->$nameDay)
-                && isset(\XLite\Core\Request::getInstance()->$nameYear))
-            {
-                $dateValue = mktime(
-                    0, 0, 0,
-                    \XLite\Core\Request::getInstance()->$nameMonth,
-                    \XLite\Core\Request::getInstance()->$nameDay,
-                    \XLite\Core\Request::getInstance()->$nameYear
-                );
-            }
-        }
-
-        return $dateValue;
-
     }
 
     /**
@@ -183,102 +227,4 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
 
         return $searchParams;
     }
-
-    /**
-     * Get search condition parameter by name
-     * 
-     * @param string $paramName 
-     *  
-     * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCondition($paramName)
-    {
-        $searchParams = $this->getConditions();
-
-        if (isset($searchParams[$paramName])) {
-            $return = $searchParams[$paramName];
-        }
-
-        return isset($searchParams[$paramName])
-            ? $searchParams[$paramName]
-            : null;
-    }
-
-    /**
-     * Get date condition parameter (start or end)
-     * 
-     * @param boolean $start Start date flag, otherwise - end date  OPTIONAL
-     *  
-     * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getDateCondition($start = true)
-    {
-        $dates = $this->getCondition(\XLite\Model\Repo\Order::P_DATE);
-        $n = (true === $start) ? 0 : 1;
-
-        return isset($dates) && isset($dates[$n])
-            ? $dates[$n]
-            : null;
-    }
-
-
-    /**
-     * doActionExportXls 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-/*    protected function doActionExportXls()
-    {
-        $w = new \XLite\View\ExportXLS();
-        $w->component = $this;
-        $this->startDownload('orders.xls');
-        $this->ColumnCount = 9;
-        $this->RowCount = $this->get('count') + 2;
-        $this->endRow = $this->get('count') + 1;
-        $profile = $this->auth->get('profile');
-        $time = time();
-        $this->create_date = strftime("%Y-%m-%d", $time);
-        $this->create_time = strftime("%H:%M:%S", $time);
-        $this->author = $profile->get('billing_firstname') . " " . $profile->get('billing_lastname');
-        $w->init();
-        $w->display();
-
-        // do not output anything
-        $this->set('silent', true);
-    }
-
-    /**
-     * getExportFormats 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-/*    protected function getExportFormats()
-    {
-        return array("export_xls" => "MS Excel XP/XML");
-    }
-
-    /**
-     * getStartXML 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-/*    protected function getStartXML()
-    {
-        return '<?xml version="1.0"?>'."\n";;
-    }*/
 }

@@ -39,6 +39,42 @@ namespace XLite\Controller\Admin;
 class ProductList extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Get search condition parameter by name
+     * 
+     * @param string $paramName Parameter name
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCondition($paramName)
+    {
+        $searchParams = $this->getConditions();
+
+        if (isset($searchParams[$paramName])) {
+            $return = $searchParams[$paramName];
+        }
+
+        return isset($searchParams[$paramName])
+            ? $searchParams[$paramName]
+            : null;
+    }
+
+    /**
+     * Return the current page title (for the content area)
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Search products';
+    }
+
+
+    /**
      * Common method to determine current location
      *
      * @return string
@@ -127,40 +163,5 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
         }
 
         return $searchParams;
-    }
-
-    /**
-     * Get search condition parameter by name
-     * 
-     * @param string $paramName 
-     *  
-     * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCondition($paramName)
-    {
-        $searchParams = $this->getConditions();
-
-        if (isset($searchParams[$paramName])) {
-            $return = $searchParams[$paramName];
-        }
-
-        return isset($searchParams[$paramName])
-            ? $searchParams[$paramName]
-            : null;
-    }
-
-    /**
-     * Return the current page title (for the content area)
-     * 
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return 'Search products';
     }
 }

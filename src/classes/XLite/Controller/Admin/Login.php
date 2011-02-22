@@ -43,6 +43,7 @@ class Login extends \XLite\Controller\Admin\AAdmin
      * @return void
      * @access public
      * @see    ____func_see____
+     * @since  3.0.0
      */
     public function handleRequest()
     {
@@ -120,9 +121,16 @@ class Login extends \XLite\Controller\Admin\AAdmin
         $this->setReturnURL($returnURL);
     }
 
-    function action_logoff()
+    /**
+     * Logoff 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionLogoff()
     {
         $this->auth->logoff();
     }
-
 }

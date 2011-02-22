@@ -47,7 +47,8 @@ class PaymentMethod extends \XLite\Controller\Admin\AAdmin
      */
     protected function getPaymentMethod()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->find(\XLite\Core\Request::getInstance()->method_id);
+        return \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')
+            ->find(\XLite\Core\Request::getInstance()->method_id);
     }
     
     /**
@@ -91,7 +92,7 @@ class PaymentMethod extends \XLite\Controller\Admin\AAdmin
         $settings = \XLite\Core\Request::getInstance()->settings;
         $m = $this->getPaymentMethod();
 
-       if (!is_array($settings)) {
+        if (!is_array($settings)) {
 
             // TODO - add top message
 

@@ -48,10 +48,8 @@
 <widget class="\XLite\View\Tabber" target="taxes" body="{pageTemplate}" switch="page" />
 <widget class="\XLite\View\Tabber" target="db" body="{pageTemplate}" switch="page">
 
-<widget target="import_users" template="common/dialog.tpl" body="import_users.tpl" />
 <widget target="update_inventory" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">
 
 <widget target="template_editor" class="\XLite\View\Tabber" body="{pageTemplate}" switch="editor">
-<widget target="image_files" template="common/dialog.tpl" body="image_files.tpl" />
 
 {displayViewListContent(#admin.center#)}

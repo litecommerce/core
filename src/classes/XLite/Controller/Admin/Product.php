@@ -31,12 +31,156 @@ namespace XLite\Controller\Admin;
 /**
  * Product 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Product extends \XLite\Controller\Admin\AAdmin
 {
+    /**
+     * FIXME- backward compatibility 
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $params = array('target', 'product_id', 'page', 'backURL');
+
+    /**
+     * FIXME- backward compatibility
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $page = 'info';
+
+    /**
+     * FIXME- backward compatibility
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $pages = array(
+        'info'      => 'Product info',
+        'images'    => 'Product images',
+        'inventory' => 'Inventory tracking',
+    );
+
+    /**
+     * FIXME- backward compatibility 
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $pageTemplates = array(
+        'info'      => 'product/info.tpl',
+        'default'   => 'product/info.tpl',
+        'images'    => 'product/product_images.tpl',
+        'inventory' => 'product/inventory.tpl'
+    );
+
+
+    /**
+     * Alias
+     *
+     * @return \XLite\Model\Product
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProduct()
+    {
+        if (!$this->isNew()) {
+            $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($this->getProductId());
+        }
+
+        if (!isset($result)) {
+            $result = new \XLite\Model\Product();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return the current page title (for the content area)
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return $this->getProduct()->getName();
+    }
+
+    /**
+     * getInventory 
+     * 
+     * @return \XLite\Model\Inventory
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getInventory()
+    {
+        return $this->getProduct()->getInventory();
+    }
+
+    /**
+     * Get product category id
+     *
+     * @return integer 
+     * @access public
+     * @since  3.0.0
+     */
+    public function getCategoryId()
+    {
+        $categoryId = parent::getCategoryId();
+
+        if (empty($categoryId) && !$this->isNew()) {
+            $categoryId = $this->getProduct()->getCategoryId();
+        }
+
+        return $categoryId;
+    }
+
+    /**
+     * Return current product Id
+     * 
+     * NOTE: this function is public since it's neede for widgets
+     *
+     * @return integer 
+     * @access public
+     * @since  3.0.0
+     */
+    public function getProductId()
+    {
+        return intval(\XLite\Core\Request::getInstance()->product_id);
+    }
+
+    /**
+     * Check if we need to create new product or modify an existsing one
+     *
+     * NOTE: this function is public since it's neede for widgets
+     * 
+     * @return boolean 
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isNew()
+    {
+        return 0 >= $this->getProductId();
+    }
+
+
     /**
      * Common method to determine current location
      *
@@ -164,7 +308,9 @@ class Product extends \XLite\Controller\Admin\AAdmin
     protected function doActionAdd()
     {
         // Insert record into main table
-        if ($product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->insert($this->getPostedData())) {
+        $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->insert($this->getPostedData());
+        
+        if ($product) {
 
             // Create associations (categories and images)
             \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
@@ -232,7 +378,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
         } else {
             \XLite\Core\TopMessage::getInstance()->add(
                 'The detailed image has not been successfully added',
-                 \XLite\Core\TopMessage::ERROR
+                \XLite\Core\TopMessage::ERROR
             );
         }
     }
@@ -318,227 +464,4 @@ class Product extends \XLite\Controller\Admin\AAdmin
             $this->getPostedData()
         );
     }
-
-
-    /**
-     * Alias
-     *
-     * @return \XLite\Model\Product
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProduct()
-    {
-        if (!$this->isNew()) {
-            $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($this->getProductId());
-        }
-
-        if (!isset($result)) {
-            $result = new \XLite\Model\Product();
-        }
-
-        return $result;
-    }
-
-    /**
-     * Return the current page title (for the content area)
-     * 
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return $this->getProduct()->getName();
-    }
-
-    /**
-     * getInventory 
-     * 
-     * @return \XLite\Model\Inventory
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getInventory()
-    {
-        return $this->getProduct()->getInventory();
-    }
-
-    /**
-     * Get product category id
-     *
-     * @return integer 
-     * @access public
-     * @since  3.0.0
-     */
-    public function getCategoryId()
-    {
-        $categoryId = parent::getCategoryId();
-
-        if (empty($categoryId) && !$this->isNew()) {
-            $categoryId = $this->getProduct()->getCategoryId();
-        }
-
-        return $categoryId;
-    }
-
-    /**
-     * Return current product Id
-     * 
-     * NOTE: this function is public since it's neede for widgets
-     *
-     * @return integer 
-     * @access public
-     * @since  3.0.0
-     */
-    public function getProductId()
-    {
-        return intval(\XLite\Core\Request::getInstance()->product_id);
-    }
-
-    /**
-     * Check if we need to create new product or modify an existsing one
-     *
-     * NOTE: this function is public since it's neede for widgets
-     * 
-     * @return boolean 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isNew()
-    {
-        return 0 >= $this->getProductId();
-    }
-
-
-
-    /**
-     * FIXME- backward compatibility 
-     * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $params = array('target', 'product_id', 'page', 'backURL');
-
-    /**
-     * FIXME- backward compatibility
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $page = 'info';
-
-    /**
-     * FIXME- backward compatibility
-     * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $pages = array(
-    	'info'      => 'Product info',
-        'images'    => 'Product images',
-        'inventory' => 'Inventory tracking',
-    );
-
-    /**
-     * FIXME- backward compatibility 
-     * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $pageTemplates = array(
-    	'info'      => 'product/info.tpl',
-        'default'   => 'product/info.tpl',
-        'images'    => 'product/product_images.tpl',
-        'inventory' => 'product/inventory.tpl'
-    );
-
-
-
-
-
-
-
-    /*function getProduct()
-    {
-        if (is_null($this->product)) {
-            $this->product = new \XLite\Model\Product($this->product_id);
-        }
-
-        return $this->product;
-    }
-    
-    function action_info()
-    {
-        // update product properties
-        $product = new \XLite\Model\Product($this->product_id);
-        $properties = \XLite\Core\Request::getInstance()->getData();
-
-        // Sanitize
-        if (isset($properties['clean_url'])) {
-            $properties['clean_url'] = $this->sanitizeCleanURL($properties['clean_url']);
-            if (
-                0 < strlen($properties['clean_url'])
-                && !$this->checkCleanURLUnique($properties['clean_url'])
-            ) {
-
-                \XLite\Core\TopMessage::getInstance()->add(
-                    'The Clean URL you specified is already in use. Please specify another Clean URL',
-                    \XLite\Core\TopMessage::ERROR
-                );
-                $this->set('valid', false);
-                return;
-            }
-        }
-
-        $product->set('properties', $properties);
-        $product->update();
-        
-        // update product image and thumbnail
-        $this->action_images();
-
-        // link product category(ies)
-        if (isset($this->category_id)) {
-            $category = new \XLite\Model\Category($this->category_id);
-            $product->set('category', $category);
-        }
-    }
-
-    function action_images()
-    {
-        $tn = $this->getComplex('product.thumbnail');
-        if ($tn->handleRequest() != \XLite\Model\Image::IMAGE_OK && $tn->_shouldProcessUpload) {
-        	$this->set('valid', false);
-        	$this->set('thumbnail_read_only', true);
-        }
-
-        $img = $this->getComplex('product.image');
-        if ($img->handleRequest() != \XLite\Model\Image::IMAGE_OK && $img->_shouldProcessUpload) {
-        	$this->set('valid', false);
-        	$this->set('image_read_only', true);
-        }
-    }
-
-    function action_clone()
-    {
-        $p_product = new \XLite\Model\Product($this->product_id);
-        $product = $p_product->cloneObject();
-        foreach ($p_product->get('categories') as $category) {
-            $product->addCategory($category);
-        }
-        $product->set('name', $product->get('name') . " (CLONE)");
-        $product->update();
-        $this->setReturnURL('admin.php?target=product&product_id=' . $product->get('product_id'));
-    }*/
 }

@@ -38,6 +38,19 @@ namespace XLite\Controller\Admin;
 class Modules extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Manage add-ons' . $this->getUpgradableModulesFlag();
+    }
+    
+    
+    /**
      * Call controller action or special default action
      * 
      * @return void
@@ -63,18 +76,6 @@ class Modules extends \XLite\Controller\Admin\AAdmin
     protected function getLocation()
     {
         return 'Manage add-ons';
-    }
-
-    /**
-     * Return the current page title (for the content area)
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return 'Manage add-ons' . $this->getUpgradableModulesFlag();
     }
 
     /**
