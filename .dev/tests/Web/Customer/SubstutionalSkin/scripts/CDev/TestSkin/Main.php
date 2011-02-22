@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage XLite
+ * @subpackage Core
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,90 +26,79 @@
  * @since      3.0.0
  */
 
-namespace XLite;
+namespace XLite\Module\CDev\TestSkin;
 
 /**
- * Singleton 
+ * ____description____
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Singleton
+abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * xlite 
-     * 
+     * Author name
+     *
      * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public static $xlite = '\XLite';
-
-    /**
-     * request 
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public static $request = '\XLite\Core\Request';
-
-    /**
-     * layout 
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public static $layout = '\XLite\Core\Layout';
-
-    /**
-     * session 
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public static $session = '\XLite\Core\Session';
-
-    /**
-     * config 
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public static $config = '\XLite\Core\Config';
-
-    /**
-     * flexy 
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public static $flexy = '\XLite\Core\FlexyCompiler';
-
-
-    /**
-     * Initialize variables
-     * 
-     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
+    public static function getAuthorName()
+    {
+        return 'Creative Development LLC';
+    }
+
+    /**
+     * Module version
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getVersion()
+    {
+        return '1.0';
+    }
+
+    /**
+     * Module name
+     *
+     * @var    string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getModuleName()
+    {
+        return 'Test skin';
+    }
+
+    /**
+     * Module description
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getDescription()
+    {
+        return 'Test skin';
+    }
+
+    /**
+     * Method to initialize concrete module instance
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
     public static function init()
     {
-        foreach (get_class_vars(get_called_class()) as $name => $class) {
-            static::$$name = call_user_func(array($class, 'getInstance'));
-        }
+        \XLite\Core\Layout::getInstance()->addSubstutionalSkin('test');
     }
+
 }
