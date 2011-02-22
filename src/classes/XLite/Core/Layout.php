@@ -371,18 +371,20 @@ class Layout extends \XLite\Base\Singleton
      * 
      * @param string $shortPath  Short path
      * @param string $outputType Output type OPTIONAL
+     * @param string $interface  Interface code OPTIONAL
      *  
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getResourceWebPath($shortPath, $outputType = self::WEB_PATH_OUTPUT_SHORT)
+    public function getResourceWebPath($shortPath, $outputType = self::WEB_PATH_OUTPUT_SHORT, $interface = null)
     {
-        $key = $this->currentInterface . '.' . $shortPath;
+        $interface = $interface ?: $this->currentInterface;
+        $key = $interface . '.' . $shortPath;
 
         if (!isset($this->resourcesCache[$key])) {
-            foreach ($this->getSkinPaths() as $path) {
+            foreach ($this->getSkinPaths($interface) as $path) {
                 $fullPath = $path['fs'] . LC_DS . $shortPath;
                 if (file_exists($fullPath)) {
                     $this->resourcesCache[$key] = $path;
