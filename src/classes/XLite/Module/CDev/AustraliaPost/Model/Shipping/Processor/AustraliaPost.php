@@ -57,7 +57,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $apiUrl = 'http://drc.edeliver.com.au/ratecalc.asp';
+    protected $apiURL = 'http://drc.edeliver.com.au/ratecalc.asp';
 
     /**
      * prepareInputData 
@@ -147,12 +147,12 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
                 $postData[] = sprintf('%s=%s', $key, $value);
             }
 
-            $postUrl = $this->apiUrl . '?' . implode('&', $postData);
+            $postURL = $this->apiURL . '?' . implode('&', $postData);
 
             try {
 
                 if (!$ignoreCache) {
-                    $cachedRate = $this->getDataFromCache($postUrl);
+                    $cachedRate = $this->getDataFromCache($postURL);
                 }
 
                 if (isset($cachedRate)) {
@@ -162,14 +162,14 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
 
                     require_once (LC_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php');
 
-                    $http = new \HTTP_Request2($postUrl);
+                    $http = new \HTTP_Request2($postURL);
                     $http->setConfig('timeout', 5);
 
                     try {
                         $result = $http->send()->getBody();
 
                         // Save result in cache even if rate is failed
-                        $this->saveDataInCache($postUrl, $result);
+                        $this->saveDataInCache($postURL, $result);
 
                     } catch (\HTTP_Request2_Exception $exception) {
                         $errorMsg = $exception->getMessage();
@@ -180,7 +180,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
                 $response = $this->parseResponse($result);
 
                 $this->apiCommunicationLog[] = array(
-                    'request'  => $postUrl,
+                    'request'  => $postURL,
                     'response' => isset($response['charge']) ? $response : $result
                 );
 

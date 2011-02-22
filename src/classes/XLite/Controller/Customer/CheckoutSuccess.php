@@ -97,7 +97,7 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
             $orderId != $this->session->get('last_order_id')
             && $orderId != $this->getCart()->getOrderId()
         ) {
-            $this->redirect($this->buildUrl('cart'));
+            $this->redirect($this->buildURL('cart'));
 
         } else {
             parent::handleRequest();

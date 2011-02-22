@@ -16,7 +16,7 @@
 <select name="sortCriterion">
   <option FOREACH="getParam(#sortCriterions#),key,name" value="{key}" selected="{isSortCriterionSelected(key)}">{name}</option>
 </select>
-<a href="{getSortOrderUrl()}" class="{getSortOrderLinkClassName()}">{if:isSortOrderAsc()}&darr;{else:}&uarr;{end:}</a>
+<a href="{getSortOrderURL()}" class="{getSortOrderLinkClassName()}">{if:isSortOrderAsc()}&darr;{else:}&uarr;{end:}</a>
 
 <widget name="sort_form" end />
 <script type="text/javascript">

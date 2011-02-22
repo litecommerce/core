@@ -838,14 +838,14 @@ function func_htmlspecialchars($str) {
 /**
  * Check if LiteCommerce installed
  * 
- * @param string $dbUrl Database Url string (e.g. mysql://username:password@localhost/databasename)
+ * @param string $dbURL Database Url string (e.g. mysql://username:password@localhost/databasename)
  *  
  * @return bool
  * @access public
  * @see    ____func_see____
  * @since  3.0.0
  */
-function isLiteCommerceInstalled($dbUrl = null, &$message)
+function isLiteCommerceInstalled($dbURL = null, &$message)
 {
     // Check by template and config.php file
     $checkResult = file_exists(LC_SKINS_DIR . 'admin/en/welcome.tpl')
@@ -865,14 +865,14 @@ function isLiteCommerceInstalled($dbUrl = null, &$message)
 
             if ($checkResult) {
 
-                if (isset($dbUrl)) {
+                if (isset($dbURL)) {
 
                     // Support of Drupal 6 installation
-                    if (is_array($dbUrl)) {
-                        $data = $dbUrl;
+                    if (is_array($dbURL)) {
+                        $data = $dbURL;
 
                     } else {
-                        $data = parseDbUrl($dbUrl);
+                        $data = parseDbURL($dbURL);
                     }
 
                     if (!empty($data)) {
@@ -886,11 +886,11 @@ function isLiteCommerceInstalled($dbUrl = null, &$message)
                             && (!isset($data['mysqlsock']) || $configData['socket'] == $data['mysqlsock']);
 
                         if (!$checkResult) {
-                            $message = 'Database parameters comparison failed (config file and $dbUrl was compared)';
+                            $message = 'Database parameters comparison failed (config file and $dbURL was compared)';
                         }
 
                     } else {
-                        $message = '$dbUrl passed but hasn\'t any data or corrupted';
+                        $message = '$dbURL passed but hasn\'t any data or corrupted';
                         $checkResult = false;
                     }
 
@@ -934,7 +934,7 @@ function isLiteCommerceInstalled($dbUrl = null, &$message)
 /**
  * Parse database access string
  * 
- * @param string $dbUrl Database Url string
+ * @param string $dbURL Database Url string
  * examples:
  *   mysql://username:password@localhost/databasename
  *   mysql://username:password@localhost:3306/databasename
@@ -947,11 +947,11 @@ function isLiteCommerceInstalled($dbUrl = null, &$message)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function parseDbUrl($dbUrl)
+function parseDbURL($dbURL)
 {    
     $data = array();
 
-    $url = parse_url($dbUrl);
+    $url = parse_url($dbURL);
 
     if (is_array($url)) {
 

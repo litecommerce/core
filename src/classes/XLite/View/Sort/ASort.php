@@ -147,7 +147,7 @@ abstract class ASort extends \XLite\View\AView
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getSortOrderUrl()
+    public function getSortOrderURL()
     {
         $params = $this->getParam(self::PARAM_PARAMS);
 
@@ -168,7 +168,7 @@ abstract class ASort extends \XLite\View\AView
 
         $params['sortOrder'] = $this->isSortOrderAsc() ? 'desc' : 'asc';
 
-        return $this->buildUrl($target, $action, $params);
+        return $this->buildURL($target, $action, $params);
     }
 
     /**

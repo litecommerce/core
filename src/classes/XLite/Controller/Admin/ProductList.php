@@ -107,7 +107,7 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
         }
         
         $this->session->set($sessionCell, $productsSearch);
-        $this->setReturnURL($this->buildUrl('product_list', '', array('mode' => 'search')));
+        $this->setReturnURL($this->buildURL('product_list', '', array('mode' => 'search')));
     }
 
     /**
