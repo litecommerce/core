@@ -10,11 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-Use the menus on the left to manage every aspect of your online store.
-<br />
-From this page, you can build and maintain the store in a very easy way!
-<hr />
-
 <table width="80%" cellspacing="0" cellpadding="3">
 <tr>
   <td>
