@@ -38,65 +38,73 @@ namespace XLite\Controller\Admin;
 class Stats extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * params 
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     */
-    public $params = array('target');
-
-    /**
      * Return the current page title (for the content area)
      * 
      * @return string
      * @access public
+     * @see    ____var_see____
      * @since  3.0.0
      */
     public function getTitle()
     {
-        return 'Statistics';
+        return $this->t('Statistics');
     }
 
     /**
      * getTodayDate 
      * 
-     * @return integer
+     * @return void
+     * @access protected
      * @see    ____func_see____
+     * @since  3.0.0
      */
-    function getTodayDate()
+    protected function getTodayDate()
     {
         if (is_null($this->todayDate)) {
-            $this->todayDate = mktime(0, 0 ,0 , date('m'), date('d'), date('Y'));
+            $this->todayDate = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
         }
+
         return $this->todayDate;
     }
 
     /**
      * getWeekDate 
      * 
-     * @return int
+     * @return void
+     * @access protected
      * @see    ____func_see____
+     * @since  3.0.0
      */
-    function getWeekDate()
+    protected function getWeekDate()
     {
         if (is_null($this->weekDate)) {
-            $this->weekDate  = mktime(0, 0 ,0 , date('m'), date('d') + (((date('w') == 0) ? -7 : ( -1 * date('w'))) + 1), date('Y'));
+            $this->weekDate  = mktime(
+                0, 
+                0,
+                0, 
+                date('m'), 
+                date('d') + (((date('w') == 0) ? -7 : ( -1 * date('w'))) + 1), 
+                date('Y')
+            );
         }
+
         return $this->weekDate;
     }
 
     /**
      * getMonthDate 
      * 
-     * @return int
+     * @return void
+     * @access protected
      * @see    ____func_see____
+     * @since  3.0.0
      */
-    function getMonthDate()
+    protected function getMonthDate()
     {
         if (is_null($this->monthDate)) {
-            $this->monthDate = mktime(0, 0 ,0 , date('m'), 1, date('Y'));
+            $this->monthDate = mktime(0, 0, 0, date('m'), 1, date('Y'));
         }
+
         return $this->monthDate;
     }
 }

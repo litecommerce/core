@@ -275,7 +275,7 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
         $ptr =& $this->locateNode($this->taxes->_rates, $this->_levels[$ind_rate]);
         $tax_name = $this->getNoteTaxName($ptr);
 
-        // check expression {{{
+        // check expression
         if (($value{0} != '=') && !preg_match("/^\d+(\.\d+)?$/", $value)) {
             $this->error = "Tax value must be a number or contain '=' at its start: '$value'";
             unset($this->invalidExpressions[$ind_rate]);

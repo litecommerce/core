@@ -38,19 +38,6 @@ namespace XLite\Controller\Admin;
 class ShippingMethods extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getLocation()
-    {
-        return 'Shipping methods';
-    }
-
-    /**
      * Return the current page title (for the content area)
      *
      * @return string
@@ -176,5 +163,19 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
                 \XLite\Core\TopMessage::INFO
             );
         }
+    }
+
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return $this->t('Shipping methods');
     }
 }

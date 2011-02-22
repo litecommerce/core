@@ -38,19 +38,6 @@ namespace XLite\Controller\Admin;
 class ShippingZones extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getLocation()
-    {
-        return 'Shipping zones';
-    }
-
-    /**
      * Return the current page title (for the content area)
      *
      * @return string
@@ -80,14 +67,62 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Do action 'Delete'
+     * Add elements into the specified zone 
      * 
-     * @return void
+     * @param \XLite\Model\Zone $zone Zone object
+     * @param array             $data Array of elements: array(<elementType> => array(value1, value2, value3...))
+     *  
+     * @return \XLite\Model\Zone
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function doActionDelete()
+    public function addElements($zone, $data)
+    {
+        foreach ($data as $elementType => $elements) {
+
+            if (!is_array($elements) || empty($elements)) {
+                continue;
+            }
+
+            foreach ($elements as $elementValue) {
+
+                $newElement = new \XLite\Model\ZoneElement();
+
+                $newElement->setElementValue($elementValue);
+                $newElement->setElementType($elementType);
+                $newElement->setZone($zone);
+
+                $zone->addZoneElements($newElement);
+            }
+        }
+
+        return $zone;
+    }
+
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Shipping zones';
+    }
+
+    /**
+     * Do action 'Delete'
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDelete()
     {
         $postedData = \XLite\Core\Request::getInstance()->getData();
 
@@ -118,11 +153,11 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      * Do action 'Update'
      * 
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function doActionUpdate()
+    protected function doActionUpdate()
     {
         $postedData = \XLite\Core\Request::getInstance()->getData();
 
@@ -194,11 +229,11 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      * Do action 'Create'
      * 
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function doActionCreate()
+    protected function doActionCreate()
     {
         $postedData = \XLite\Core\Request::getInstance()->getData();
 
@@ -260,40 +295,6 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Add elements into the specified zone 
-     * 
-     * @param \XLite\Model\Zone $zone Zone object
-     * @param array             $data Array of elements: array(<elementType> => array(value1, value2, value3...))
-     *  
-     * @return \XLite\Model\Zone
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function addElements($zone, $data)
-    {
-        foreach ($data as $elementType => $elements) {
-
-            if (!is_array($elements) || empty($elements)) {
-                continue;
-            }
-
-            foreach ($elements as $elementValue) {
-
-                $newElement = new \XLite\Model\ZoneElement();
-
-                $newElement->setElementValue($elementValue);
-                $newElement->setElementType($elementType);
-                $newElement->setZone($zone);
-
-                $zone->addZoneElements($newElement);
-            }
-        }
-
-        return $zone;
-    }
-
-    /**
      * Get zone elements passed from post request
      * 
      * @param array $postedData Array of data posted via post request
@@ -338,5 +339,4 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
         return $data;
     }
-
 }
