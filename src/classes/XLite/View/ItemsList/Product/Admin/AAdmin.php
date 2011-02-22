@@ -97,4 +97,5 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
     {
         return true;
     }
+
 }

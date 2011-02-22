@@ -27,6 +27,14 @@ table.items-list .sort-order div.part
   display: inline;
 }
 
+table.items-list tr th span.currency {
+  color: #959595;
+}
+
+table.items-list tr td.checkbox-column {
+  text-align: center;
+}
+
 div.list-footer {
   text-align: right;
   padding-top: 15px;
