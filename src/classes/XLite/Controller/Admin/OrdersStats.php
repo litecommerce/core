@@ -72,7 +72,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
         );
 
         $order = new \XLite\Model\Order();
-        $date = $this->get('monthDate');
+        $date = $this->getMonthDate();
         // fetch orders for this month
 
         // FIXME - old code
@@ -92,7 +92,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      */
     protected function getLocation()
     {
-        return 'Order statistics';
+        return $this->t('Order statistics');
     }
 
     /**
@@ -107,7 +107,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode('Statistics', $this->buildURL('orders_stats'));
+        $this->addLocationNode($this->t('Statistics'), $this->buildURL('orders_stats'));
     }
 
     /**
@@ -124,14 +124,14 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      */
     protected function save($index, $order, $paid = false)
     {
-        if ($order->get('date') >= $this->get('todayDate')) {
-            $this->sum($index, 'today', $order->get('total'), $paid);
+        if ($order->getDate() >= $this->getTodayDate()) {
+            $this->sum($index, 'today', $order->getTotal(), $paid);
         }
-        if ($order->get('date') >= $this->get('weekDate')) {
-            $this->sum($index, 'week', $order->get('total'), $paid);
+        if ($order->getDate() >= $this->getWeekDate()) {
+            $this->sum($index, 'week', $order->getTotal(), $paid);
         }
-        if ($order->get('date') >= $this->get('monthDate')) {
-            $this->sum($index, 'month', $order->get('total'), $paid);
+        if ($order->getDate() >= $this->getMonthDate()) {
+            $this->sum($index, 'month', $order->getTotal(), $paid);
         }
     }
 
@@ -171,7 +171,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      */
     protected function summarize($order)
     {
-        switch ($order->get('status')) {
+        switch ($order->getStatus()) {
             case 'P':
             case 'C':
                 $this->save('processed', $order, true);

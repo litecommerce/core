@@ -38,6 +38,73 @@ namespace XLite\Controller\Admin;
 class States extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'States';
+    }
+
+    /**
+     * init 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function init()
+    {
+        if (!in_array('country_code', $this->params)) {
+            $this->params[] = 'country_code';
+        }
+
+        parent::init();
+        
+        $this->fillForm();
+    }
+
+    /**
+     * fillForm 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function fillForm()
+    {
+        if (isset(\XLite\Core\Request::getInstance()->country_code)) {
+            $this->set('country_code', \XLite\Core\Request::getInstance()->country_code);
+        } else {
+            $this->set('country_code', $this->config->General->default_country);
+        }
+    }
+    
+    /**
+     * getStates 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getStates()
+    {
+        if (is_null($this->states)) {
+            $this->states = \XLite\Core\Database::getRepo('XLite\Model\State')
+                ->findByCountryCode($this->get('country_code'));
+        }
+
+        return $this->states;
+    }
+
+
+    /**
      * Common method to determine current location
      *
      * @return string
@@ -51,57 +118,35 @@ class States extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Return the current page title (for the content area)
-     *
-     * @return string
-     * @access public
+     * setObligatoryStatus 
+     * 
+     * @param mixed $status ____param_comment____
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getTitle()
-    {
-        return 'States';
-    }
-
-
-    function init()
-    {
-        if (!in_array('country_code', $this->params)) {
-            $this->params[] = "country_code";
-        }
-        parent::init();
-        $this->fillForm();
-    }
-
-    function obligatorySetStatus($status)
+    protected function setObligatoryStatus($status)
     {
         if (!in_array('status', $this->params)) {
-            $this->params[] = "status";
+            $this->params[] = 'status';
         }
+
         $this->set('status', $status);
     }
-
-    function fillForm()
-    {
-        if (isset(\XLite\Core\Request::getInstance()->country_code)) {
-            $this->set('country_code', \XLite\Core\Request::getInstance()->country_code);
-        } else {
-            $this->set('country_code', $this->config->General->default_country);
-        }
-    }
-    
-    function getStates()
-    {
-        if (is_null($this->states)) {
-            $this->states = \XLite\Core\Database::getRepo('XLite\Model\State')->findByCountryCode($this->get('country_code'));
-        }
-
-        return $this->states;
-    }
-
-    function action_add()
+    /**
+     * doActionAdd 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionAdd()
     {
 
-        $fields = array('country_code', "code", "state");
+        $fields = array('country_code', 'code', 'state');
         $postData = \XLite\Core\Request::getInstance()->getData();
 
         foreach ($postData as $k=>$v) {
@@ -114,46 +159,53 @@ class States extends \XLite\Controller\Admin\AAdmin
 
         if (!$country) {
             $this->set('valid', false);
-            $this->obligatorySetStatus('country_code');
-            return;
-        }
-
-        if (empty($postData['code'])) {
+            $this->setObligatoryStatus('country_code');
+        
+        } elseif (empty($postData['code'])) {
             $this->set('valid', false);
-            $this->obligatorySetStatus('code');
-            return;
-        }
-
-        if (empty($postData['state'])) {
+            $this->setObligatoryStatus('code');
+        
+        } elseif (empty($postData['state'])) {
             $this->set('valid', false);
-            $this->obligatorySetStatus('state');
-            return;
-        }
+            $this->setObligatoryStatus('state');
+        
+        } else {
 
-        $found = false;
-        foreach ($country->getState() as $s) {
-            if ($s->getCode() == $postData['code'] || $s->getState() == $postData['state']) {
-                $found = true;
-                break;
+            $found = false;
+
+            foreach ($country->getState() as $s) {
+                if ($s->getCode() == $postData['code'] || $s->getState() == $postData['state']) {
+                    $found = true;
+                    break;
+                }
+            }
+
+            if ($found) {
+                $this->set('valid', false);
+                $this->setObligatoryStatus('exists');
+
+            } else {
+
+                $state = new \XLite\Model\State();
+                $state->map($postData);
+                $state->country = $country;
+                \XLite\Core\Database::getEM()->persist($state);
+                \XLite\Core\Database::getEM()->flush();
+
+                $this->setObligatoryStatus('added');
             }
         }
-
-        if ($found) {
-            $this->set('valid', false);
-            $this->obligatorySetStatus('exists');
-            return;
-        }
-
-        $state = new \XLite\Model\State();
-        $state->map($postData);
-        $state->country = $country;
-        \XLite\Core\Database::getEM()->persist($state);
-        \XLite\Core\Database::getEM()->flush();
-
-        $this->obligatorySetStatus('added');
     }
 
-    function action_update()
+    /**
+     * doActionUpdate 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdate()
     {
         $stateData = array();
         if (isset(\XLite\Core\Request::getInstance()->state_data)) {
@@ -161,30 +213,38 @@ class States extends \XLite\Controller\Admin\AAdmin
         }
 
         // use POST'ed data to modify state properties
-        foreach ($stateData as $state_id => $state_data) {
-            $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($state_id);
-            $state->map($state_data);
+        foreach ($stateData as $stateId => $stateData) {
+            $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($stateId);
+            $state->map($stateData);
             \XLite\Core\Database::getEM()->persist($state);
         }
         \XLite\Core\Database::getEM()->flush();
 
-        $this->obligatorySetStatus('updated');
+        $this->setObligatoryStatus('updated');
     }
 
-    function action_delete()
+    /**
+     * doActionDelete 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDelete()
     {
         $states = array();
         if (isset(\XLite\Core\Request::getInstance()->delete_states)) {
             $states = \XLite\Core\Request::getInstance()->delete_states;
         }
-        foreach ($states as $id => $state_id) {
-            $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $state_id);
+        foreach ($states as $id => $stateId) {
+            $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $stateId);
             if ($state) {
                 \XLite\Core\Database::getEM()->remove($state);
             }
         }
         \XLite\Core\Database::getEM()->flush();
 
-        $this->obligatorySetStatus('deleted');
+        $this->setObligatoryStatus('deleted');
     }
 }
