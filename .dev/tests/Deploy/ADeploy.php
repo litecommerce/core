@@ -33,7 +33,7 @@ abstract class XLite_Deploy_ADeploy extends XLite_Web_AWeb
 
     protected $options = null;
 
-    protected function getInstallUrl()
+    protected function getInstallURL()
     {
         $this->assertTrue(defined('SELENIUM_SOURCE_URL'), 'SELENIUM_SOURCE_URL constant is not defined');
 

@@ -229,7 +229,7 @@ class XLite extends \XLite\Base
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getShopUrl($url = '', $isSecure = false, array $params = array())
+    public function getShopURL($url = '', $isSecure = false, array $params = array())
     {
         return \Includes\Utils\URLManager::getShopURL($url, $isSecure, $params);
     }

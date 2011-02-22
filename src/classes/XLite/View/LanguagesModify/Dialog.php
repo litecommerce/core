@@ -214,7 +214,7 @@ class Dialog extends \XLite\View\Dialog
      */
     public function getPagerURL()
     {
-        return $this->buildUrl(
+        return $this->buildURL(
             'languages',
             '',
             array(
