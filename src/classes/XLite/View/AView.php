@@ -75,7 +75,7 @@ abstract class AView extends \XLite\Core\Handler
      * Object instance cache
      * FIXME[SINGLETONS] - to remove
      * 
-     * @var    \XLite\Model\Layout
+     * @var    \XLite\Core\Layout
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -143,6 +143,26 @@ abstract class AView extends \XLite\Core\Handler
     protected $viewLists = array();
 
     /**
+     * Previous skin name
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $previousSkin;
+
+    /**
+     * Previous template short path
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $previousTemplate;
+
+    /**
      * Return widget default template
      *
      * @return string
@@ -167,8 +187,6 @@ abstract class AView extends \XLite\Core\Handler
     {
         $list = array();
 
-        $method = 'get' . ($isCommon ? 'Common' : '') . 'SkinURL';
-
         foreach ($data as $v) {
             if (is_string($v)) {
                 $v = array(
@@ -176,7 +194,14 @@ abstract class AView extends \XLite\Core\Handler
                 );
             }
 
-            $v['file'] = static::$layout->$method($v['file']);
+            $v['file'] = static::$layout->getResourceFullPath(
+                $v['file'],
+                $isCommon ? \XLite::COMMON_INTERFACE : null
+            );
+            $v['url'] = static::$layout->getResourceWebPath(
+                $v['file'],
+                $isCommon ? \XLite::COMMON_INTERFACE : null
+            );
 
             $list[$v['file']] = $v;
         }
@@ -206,9 +231,21 @@ abstract class AView extends \XLite\Core\Handler
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getTemplateFile($template = null)
+    protected function getTemplateFile($template = null, $previousSkin = null, $previousTemplate = null)
     {
-        return static::$layout->getLayout($template ?: $this->getTemplate());
+        return static::$layout->getTemplateFullPath(
+            $template ?: $this->getTemplate(),
+            $previousSkin ?: $this->previousSkin,
+            $previousTemplate ?: $this->previousTemplate
+        );
+    }
+
+    public function setPreviousTpl($skin, $template)
+    {
+        $this->previousSkin = $skin;
+        $this->previousTemplate = $template;
+
+        return $this;
     }
 
     /**
@@ -384,9 +421,9 @@ abstract class AView extends \XLite\Core\Handler
      * @access protected
      * @since  3.0.0
      */
-    protected function includeCompiledFile($original = null)
+    protected function includeCompiledFile($original = null, $previousSkin = null, $previousTemplate = null)
     {
-        $compiled = static::$flexy->prepare($this->getTemplateFile($original));
+        $compiled = static::$flexy->prepare($this->getTemplateFile($original, $previousSkin, $previousTemplate));
 
         // Execute PHP code from compiled template
         $cnt = \XLite\View\AView::$countDeep++;
@@ -1190,7 +1227,10 @@ abstract class AView extends \XLite\Core\Handler
         }
 
         // Prepare properties
-        $properties['tpl']    = static::$layout->getShortPath() . $properties['tpl'];
+        $properties['tpl']    = substr(
+            static::$layout->getResourceFullPath($properties['tpl']),
+            strlen(LC_SKINS_DIR)
+        );
         $properties['weight'] = $weight;
         $properties['list']   = $node->getList();
 
@@ -1211,7 +1251,6 @@ abstract class AView extends \XLite\Core\Handler
     protected function defineViewList($list)
     {
         $widgets    = array();
-        $pathLength = strlen(static::$layout->getShortPath());
         $hash       = array();
 
         foreach ($this->getViewListChildren($list) as $widget) {
@@ -1233,17 +1272,14 @@ abstract class AView extends \XLite\Core\Handler
                     $widget->getChild()
                 );
 
-            } elseif (
-                $widget->getTpl()
-                && 0 === strncmp(static::$layout->getShortPath(), $widget->getTpl(), $pathLength)
-            ) {
+            } elseif ($widget->getTpl()) {
 
                 // List child is template
                 $w = $this->getWidget(
                     array(
                         'viewListClass' => $this->getViewListClass(),
                         'viewListName'  => $list,
-                        'template'      => substr($widget->getTpl(), $pathLength),
+                        'template'      => $widget->getTpl(),
                     )
                 );
             }
@@ -1666,7 +1702,7 @@ abstract class AView extends \XLite\Core\Handler
     public static function __constructStatic()
     {
         static::$flexy  = \XLite\Core\FlexyCompiler::getInstance();
-        static::$layout = \XLite\Model\Layout::getInstance();
+        static::$layout = \XLite\Core\Layout::getInstance();
     }
 
     /**
