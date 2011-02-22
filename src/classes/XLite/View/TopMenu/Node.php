@@ -175,4 +175,5 @@ class Node extends \XLite\View\TopMenu
 
         return trim($class);
     }
+
 }
