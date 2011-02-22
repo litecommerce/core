@@ -1675,6 +1675,19 @@ abstract class AView extends \XLite\Core\Handler
         return defined('LC_DEVELOPER_MODE') && constant('LC_DEVELOPER_MODE');
     }
 
+    /**
+     * Return currency symbol 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCurrencySymbol()
+    {
+        return \XLite::getInstance()->getCurrency()->getSymbol();
+    }
+
 
     /**
      * So called "static constructor".

@@ -9,7 +9,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.table.admin.featured.columns", weight="20")
+ * @ListChild (list="itemsList.product.modify.common.admin.columns", weight="20")
  *}
 
 <td>{product.getSku():h}</td>
