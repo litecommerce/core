@@ -64,27 +64,15 @@ class States extends \XLite\Controller\Admin\AAdmin
         }
 
         parent::init();
-        
-        $this->fillForm();
-    }
 
-    /**
-     * fillForm 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function fillForm()
-    {
         if (isset(\XLite\Core\Request::getInstance()->country_code)) {
             $this->set('country_code', \XLite\Core\Request::getInstance()->country_code);
+
         } else {
             $this->set('country_code', $this->config->General->default_country);
         }
     }
-    
+   
     /**
      * getStates 
      * 

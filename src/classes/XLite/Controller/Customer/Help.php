@@ -85,8 +85,10 @@ class Help extends \XLite\Controller\Customer\ACustomer
 
 
 
-    function fillForm()
+    public function init()
     {
+        parent::init();
+    
         if ($this->get('mode') == "contactus" ) {
             if ($this->auth->is('logged')) {
                 // fill in contact us form with default values

@@ -51,6 +51,115 @@ class Users extends \XLite\Controller\Admin\AAdmin
 
 
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Search user profiles';
+    }
+
+    /**
+     * getSearchParams 
+     * 
+     * @param string $paramName Parameter name OPTIONAL
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSearchParams($paramName = null)
+    {
+        $searchParams = $this->session->get('admin_users_search');
+
+        $searchParams = isset($searchParams) ? $searchParams : new \XLite\Core\CommonCell();
+
+        $searchParams->order_id = 0;
+
+        if (isset($paramName)) {
+
+            $result = isset($searchParams->$paramName) ? $searchParams->$paramName : null;
+
+            if (isset($result) && in_array($paramName, array('startDate', 'endDate'))) {
+                $result = strtotime($result);
+            }
+        
+        } else {
+            $result = $searchParams;
+        }
+
+        return $result;
+    }
+
+    /**
+     * isAdvancedOptionSelected 
+     * 
+     * @return boolean 
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isAdvancedOptionSelected()
+    {
+        $result = false;
+        
+        $searchParams = $this->getSearchParams();
+
+        $fields = $this->getAdvancedSearchFields();
+
+        foreach ($fields as $fieldName => $defaultValue) {
+            if (isset($searchParams->$fieldName) && $defaultValue != $searchParams->$fieldName) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get users according to the search conditions
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getUsers()
+    {
+        $mode = (isset(\XLite\Core\Request::getInstance()->mode) ? \XLite\Core\Request::getInstance()->mode : '');
+
+        $searchParams = $this->getSearchParams();
+
+        if ('search' == $mode) {
+            
+            if (!isset($this->users)) {
+                $this->users = \XLite\Core\Database::getRepo('XLite\Model\Profile')->search($searchParams);
+            }
+        }
+
+        return $this->users;
+    }
+
+    /**
+     * Get count of users found
+     * 
+     * @return integer 
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getUsersCount()
+    {
+        return count($this->getUsers());
+    }
+
+
+    /**
      * Common method to determine current location
      *
      * @return string
@@ -60,14 +169,14 @@ class Users extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return 'Search user profiles';
+        return $this->t('Search user profiles');
     }
 
     /**
      * init 
      * 
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -181,113 +290,4 @@ class Users extends \XLite\Controller\Admin\AAdmin
             $this->setReturnURL($this->backURL);
         }
     }
-
-    /**
-     * Return the current page title (for the content area)
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return 'Search user profiles';
-    }
-
-    /**
-     * getSearchParams 
-     * 
-     * @param string $paramName Parameter name OPTIONAL
-     *  
-     * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getSearchParams($paramName = null)
-    {
-        $searchParams = $this->session->get('admin_users_search');
-
-        $searchParams = isset($searchParams) ? $searchParams : new \XLite\Core\CommonCell();
-
-        $searchParams->order_id = 0;
-
-        if (isset($paramName)) {
-
-            $result = isset($searchParams->$paramName) ? $searchParams->$paramName : null;
-
-            if (isset($result) && in_array($paramName, array('startDate', 'endDate'))) {
-                $result = strtotime($result);
-            }
-        
-        } else {
-            $result = $searchParams;
-        }
-
-        return $result;
-    }
-
-    /**
-     * isAdvancedOptionSelected 
-     * 
-     * @return boolean 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isAdvancedOptionSelected()
-    {
-        $result = false;
-        
-        $searchParams = $this->getSearchParams();
-
-        $fields = $this->getAdvancedSearchFields();
-
-        foreach ($fields as $fieldName => $defaultValue) {
-            if (isset($searchParams->$fieldName) && $defaultValue != $searchParams->$fieldName) {
-                $result = true;
-                break;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get users according to the search conditions
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getUsers()
-    {
-        $mode = (isset(\XLite\Core\Request::getInstance()->mode) ? \XLite\Core\Request::getInstance()->mode : '');
-
-        $searchParams = $this->getSearchParams();
-
-        if ('search' == $mode) {
-            
-            if (!isset($this->users)) {
-                $this->users = \XLite\Core\Database::getRepo('XLite\Model\Profile')->search($searchParams);
-            }
-        }
-
-        return $this->users;
-    }
-
-    /**
-     * Get count of users found
-     * 
-     * @return integer 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getUsersCount()
-    {
-        return count($this->getUsers());
-    }
-
 }

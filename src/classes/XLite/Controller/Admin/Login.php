@@ -71,16 +71,16 @@ class Login extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * fillForm 
+     * init
      * 
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function fillForm()
+    public function init()
     {
-        parent::fillForm();
+        parent::init();
         
         $login = $this->get('login');
         

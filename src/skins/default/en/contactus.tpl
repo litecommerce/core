@@ -15,7 +15,7 @@
 
 <script type="text/javascript">
 function checkEmailAddress(field) {
-var goodEmail = field.value.match({emailValidatorRegExp});
+var goodEmail = field.value.match({getEmailValidatorRegExp()});
     
 if (goodEmail) {
     return true;
