@@ -231,7 +231,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         }
 
         // Set customer skin
-        \XLite\Model\Layout::getInstance()->setCustomerSkin();
+        \XLite\Core\Layout::getInstance()->setCustomerSkin();
 
         // Clear and restart (if need) entity manager
         \XLite\Core\Database::getEM()->clear();

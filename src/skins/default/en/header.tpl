@@ -23,7 +23,7 @@
 
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
-  <link FOREACH="getCSSResources(),file" href="{file.file}" rel="stylesheet" type="text/css" media="{file.media}" />
+  <link FOREACH="getCSSResources(),file" href="{file.url}" rel="stylesheet" type="text/css" media="{file.media}" />
 
   <script type="text/javascript">
 var xliteConfig = {
@@ -31,7 +31,7 @@ var xliteConfig = {
   language: '{currentLanguage.getCode()}'
 };
   </script>
-  <script FOREACH="getJSResources(),file" type="text/javascript" src="{file.file}"></script>
+  <script FOREACH="getJSResources(),file" type="text/javascript" src="{file.url}"></script>
 
   {displayViewListContent(#head#)}
 </head>
