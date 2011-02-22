@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Column with checkboxes
+ * Item price
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,7 +9,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.table.admin.featured.columns", weight="10")
+ * @ListChild (list="itemsList.product.modify.brief.admin.columns", weight="60")
  *}
 
-<td><input type="checkbox" class="checkbox {product.getProductId()}" value="1" name="product_ids[{product.getProductId()}]" /></td>
+<td><input type="text" class="price" size="10" value="{product.getPrice():r}" name="{getNamePostedData(#price#,product.getProductId())}" /></td>

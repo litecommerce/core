@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Item SKU
+ * Item category
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,7 +9,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.table.admin.featured.header", weight="20")
+ * @ListChild (list="itemsList.product.modify.common.admin.header", weight="40")
  *}
 
-<th class="sku"><widget template="items_list/sort.tpl" title="SKU" sortByColumn="{%static::SORT_BY_MODE_SKU%}" /></th>
+<th class="category">Category</th>
