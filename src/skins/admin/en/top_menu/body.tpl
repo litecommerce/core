@@ -27,12 +27,15 @@ jQuery(document).ready(function(){
   var menuObj = jQuery('#topMenu li.root');
   var activeItem = jQuery('li.active', menuObj);
   var selectedTab;
+    
+  var homeTab = jQuery('li.menu-item:first').addClass('current');
 
   if (activeItem.length) {
 
-    selectedTab = activeItem.parents('li').get(0);
+    selectedTab = activeItem.parents('li.menu-item:first').get(0);
 
     if (selectedTab) {
+      homeTab.removeClass('current');
       jQuery(selectedTab).addClass('current');
       jQuery('div', selectedTab).clone().attr('id','topMenuLine').appendTo('#header');
       jQuery('#content').css('margin-top', parseInt(jQuery('#content').css('margin-top')) + parseInt(jQuery('#topMenuLine').css('height')));
