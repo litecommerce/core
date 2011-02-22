@@ -46,7 +46,7 @@ class Main extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Welcome to the Administrator Zone';
+        return 'Administrator Zone';
     }
 
     /**
