@@ -78,6 +78,10 @@ class XLite_Web_Customer_SubstutionalSkin extends XLite_Web_Customer_ACustomer
         \XLite\Core\Database::getEM()->flush();
 
         \XLite\Core\Database::getCacheDriver()->deleteAll();
+        \Includes\Utils\FileManager::unlinkRecursive(
+            LC_COMPILE_DIR . 'skins'
+        );
+
     }
 
     /**
@@ -108,6 +112,9 @@ class XLite_Web_Customer_SubstutionalSkin extends XLite_Web_Customer_ACustomer
         }
 
         \XLite\Core\Database::getCacheDriver()->deleteAll();
+        \Includes\Utils\FileManager::unlinkRecursive(
+            LC_COMPILE_DIR . 'skins'
+        );
 
         parent::tearDown();
     }
@@ -120,6 +127,10 @@ class XLite_Web_Customer_SubstutionalSkin extends XLite_Web_Customer_ACustomer
             "//h1[@class='substitutional-test-skin' and text()='WELCOME PAGE']",
             'test substutional template'
         );
+
+        $length = $this->getJSExpression('jQuery("img").filter(function() { return -1 != this.src.search(/test.en.images.spacer.gif/); }).length');
+        $this->assertTrue(0 < $length, 'check spacer.gif substitute');
+
     }
 
     public function testInheritance()
