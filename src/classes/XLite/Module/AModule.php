@@ -261,21 +261,4 @@ abstract class AModule
 
         return $matches[1];
     }
-
-    /**
-     * Adds layout template file for the specified widget
-     * 
-     * @param string $widgetName   The widget name
-     * @param string $templateName The template file name
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function addLayout($widgetName, $templateName)
-    {
-        \XLite\Model\Layout::getInstance()->addLayout($widgetName, $templateName);
-    }
-
 }

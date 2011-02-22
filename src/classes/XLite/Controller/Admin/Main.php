@@ -42,10 +42,34 @@ class Main extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getTitle()
     {
         return $this->t('Administrator panel');
+    }
+
+    /**
+     * doActionUpdateInventoryProducts 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdateInventoryProducts() 
+    {
+        // Update price and other fields
+        \XLite\Core\Database::getRepo('\XLite\Model\Product')
+            ->updateInBatchById($this->getPostedData());
+        
+        // Update inventory
+        \XLite\Core\Database::getRepo('\XLite\Model\Inventory')
+            ->updateInBatchById($this->getPostedData());
+
+        \XLite\Core\TopMessage::addInfo(
+            'Inventory has been successfully updated'
+        );
     }
 }

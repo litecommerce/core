@@ -116,9 +116,13 @@ class Controller extends \XLite\View\AView
     {
         $classes = array(
             'area-' . (\XLite::isAdminZone() ? 'a' : 'c'),
-            'skin-' . \XLite\Model\Layout::getInstance()->getSkin(),
-            'target-' . (\XLite\Core\Request::getInstance()->target ?: \XLite::TARGET_DEFAULT),
         );
+
+        foreach (array_reverse(\XLite\Core\Layout::getInstance()->getSkins()) as $skin) {
+            $classes[] = 'skin-' . $skin;
+        }
+
+        $classes[] = 'target-' . (\XLite\Core\Request::getInstance()->target ?: \XLite::TARGET_DEFAULT);
 
         $first = $this->isSidebarFirstVisible();
         $second = $this->isSidebarSecondVisible();

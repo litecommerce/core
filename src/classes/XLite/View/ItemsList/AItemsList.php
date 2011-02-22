@@ -693,7 +693,6 @@ abstract class AItemsList extends \XLite\View\Container
         return false;
     }
 
-
     /**
      * Define so called "request" parameters
      *

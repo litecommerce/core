@@ -307,7 +307,7 @@ class ExtraPage extends \XLite\Base
             return $this->customerLayout;
         }
 
-        $this->customerLayout = \XLite\Model\Layout::getInstance();
+        $this->customerLayout = \XLite\Core\Layout::getInstance();
 
         // FIXME - to delete
         /*$this->xlite->set('adminZone', false);
@@ -321,7 +321,7 @@ class ExtraPage extends \XLite\Base
     function compile($template)
     {
         // replace layout with customer layout
-     	/*$layout = \XLite\Model\Layout::getInstance();
+     	/*$layout = \XLite\Core\Layout::getInstance();
         $skin = $layout->get('skin');
         $layout->set('skin', $this->customerLayout->get('skin'));*/
 
