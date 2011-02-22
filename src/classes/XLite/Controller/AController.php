@@ -934,7 +934,7 @@ abstract class AController extends \XLite\Core\Handler
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $pages = array();
+    protected $pages = array();
 
 
     protected $params = array('target');

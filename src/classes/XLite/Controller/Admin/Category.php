@@ -38,6 +38,90 @@ namespace XLite\Controller\Admin;
 class Category extends \XLite\Controller\Admin\Catalog
 {
     /**
+     * Default tabber page
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $page = 'category_modify';
+
+    /**
+     * Tabber pages titles
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $pages = array(
+        'category_modify' => 'Add/Modify category',
+    );
+
+    /**
+     * Tabber pages templates
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $pageTemplates = array(
+        'category_modify' => 'categories/add_modify_body.tpl',
+    );
+
+
+    /**
+     * Controller initialization
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function init()
+    {
+        parent::init();
+
+        if ('add' != $this->mode && 'modify' == $this->mode) {
+            $this->pages['category_modify'] = $this->t('Modify category');
+
+        } else {
+            $this->pages['category_modify'] = $this->t('Add new category');
+        }
+    }
+
+    /**
+     * Return current (or default) category object
+     *
+     * @return \XLite\Model\Category
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getCategory()
+    {
+        return ('add_child' === \XLite\Core\Request::getInstance()->mode) 
+            ? new \XLite\Model\Category()
+            : parent::getCategory();
+    }
+
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return ('add_child' === \XLite\Core\Request::getInstance()->mode) 
+            ? $this->t('Add category')
+            : parent::getCategory()->getName();
+    }
+
+
+    /**
      * Common method to determine current location 
      * 
      * @return string
@@ -48,8 +132,8 @@ class Category extends \XLite\Controller\Admin\Catalog
     protected function getLocation()
     {
         return ('add_child' === \XLite\Core\Request::getInstance()->mode) 
-            ? 'Add category'
-            : 'Details';
+            ? $this->t('Add category')
+            : $this->t('Details');
     }
 
     /**
@@ -128,62 +212,6 @@ class Category extends \XLite\Controller\Admin\Catalog
         }
     }
 
-
-    /**
-     * Return current (or default) category object
-     *
-     * @return \XLite\Model\Category
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function getCategory()
-    {
-        return ('add_child' === \XLite\Core\Request::getInstance()->mode) 
-            ? new \XLite\Model\Category()
-            : parent::getCategory();
-    }
-
-    /**
-     * Return the current page title (for the content area)
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return ('add_child' === \XLite\Core\Request::getInstance()->mode) 
-            ? 'Add category'
-            : parent::getCategory()->getName();
-    }
-
-
-    // FIXME - must be revised
-
-    public $page = "category_modify";
-
-    public $pages = array(
-        "category_modify" => "Add/Modify category",
-    );
-
-    public $pageTemplates = array(
-        "category_modify" => "categories/add_modify_body.tpl",
-    );
-
-    public $params = array('target', 'category_id', 'mode', 'message', 'page');
-    public $order_by = 0;
-
-    function init()
-    {
-        parent::init();
-
-        if ($this->mode != "add" && $this->mode == "modify") {
-            $this->pages['category_modify'] = "Modify category";
-        } else {
-            $this->pages['category_modify'] = "Add new category";
-        }
-    }
-
     /**
      * Validate values passed from the REQUEST for updating/creating category 
      * 
@@ -231,7 +259,7 @@ class Category extends \XLite\Controller\Admin\Catalog
                 if (!empty($data['clean_url']) && !$this->isCleanURLUnique($data['clean_url'], (!$isNewObject ? $data['category_id'] : null))) {
 
                     \XLite\Core\TopMessage::getInstance()->add(
-                        'The Clean URL you specified is already in use. Please specify another Clean URL',
+                        $this->t('The Clean URL you specified is already in use. Please specify another Clean URL'),
                         \XLite\Core\TopMessage::ERROR
                     );
 
@@ -244,7 +272,7 @@ class Category extends \XLite\Controller\Admin\Catalog
                 if (!isset ($data['name']) || 0 == strlen(trim($data['name']))) {
 
                     \XLite\Core\TopMessage::getInstance()->add(
-                        'Not empty category name must be specified',
+                        $this->t('Not empty category name must be specified'),
                         \XLite\Core\TopMessage::ERROR
                     );
 
@@ -276,26 +304,5 @@ class Category extends \XLite\Controller\Admin\Catalog
 
         return !isset($result)
             || (!is_null($categoryId) && intval($categoryId ) == intval($result->getCategoryId()));
-    }
-
-    function action_icon()
-    {
-        $category = $this->get('category');
-        // delete category image
-        $image = $category->get('image');
-        $image->handleRequest();
-    }
-
-    function action_add_field()
-    {
-        $_postData = \XLite\Core\Request::getInstance()->getData();
-        foreach ($_postData as $post_key => $post_value)
-        {
-            if (strcmp(substr($post_key, 0, 7), "add_ef_") == 0)
-            {
-                $_postData[substr($post_key, 7)] = $post_value;
-                unset($_postData[$post_key]);
-            }
-        }
     }
 }

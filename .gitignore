@@ -10,6 +10,7 @@
 /src/etc/config.local.php
 /src/update.sh
 /src/var/addons
+/src/var/backup
 /src/var/datacache
 /src/var/locale
 /src/var/log

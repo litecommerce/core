@@ -49,9 +49,9 @@ function xlite($restart = false)
 /**
 * Prints Javascript code to refresh the browser output page.
 */
-function func_refresh_start()
+function func_refresh_start($display = true)
 {
-    print <<<EOT
+    $output = <<<EOT
 <script typee="text/javascript">
 <!--
 var loaded = false;
@@ -61,24 +61,36 @@ function refresh() {
 
     if (loaded == false) {
         setTimeout('refresh()', 500);
-    }    
+    }
 }
 
 setTimeout('refresh()', 1000);
 -->
 </script>
 EOT;
+
+    if ($display) {
+        echo $output;
+    }
+
+    return $output;
 }
 
-function func_refresh_end()
+function func_refresh_end($display = true)
 {
-    print <<<EOT
+    $output = <<<EOT
 <script type="text/javascript">
 <!--
 var loaded = true;
 -->
 </script>
 EOT;
+
+    if ($display) {
+        echo $output;
+    }
+
+    return $output;
 }
 
 /*

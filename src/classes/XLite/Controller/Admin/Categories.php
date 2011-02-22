@@ -38,6 +38,54 @@ namespace XLite\Controller\Admin;
 class Categories extends \XLite\Controller\Admin\Catalog
 {
     /**
+     * Return the current page title (for the content area)
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return $this->getRootCategoryId() !== $this->getCategory()->getCategoryId()
+            ? $this->getCategory()->getName()
+            : $this->t('Manage categories');
+    }
+
+    /**
+     * __call 
+     * 
+     * @param string $method Method to call
+     * @param array  $args   Call arguments
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __call($method, array $args = array())
+    {
+        $repo = \XLite\Core\Database::getRepo('XLite\Model\Category');
+
+        return method_exists($repo, $method)
+            ? call_user_func_array(array($repo, $method), $args)
+            : parent::__call($method, $args);
+    }
+
+    /**
+     * Get all memberships
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMemberships()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Membership')->findAllMemberships();
+    }
+
+
+    /**
      * doActionDelete 
      * 
      * @return void
@@ -55,51 +103,5 @@ class Categories extends \XLite\Controller\Admin\Catalog
         );
 
         $this->setReturnUrl($this->buildURL('categories', '', array('category_id' => $parentId)));
-    }
-
-
-    /**
-     * Return the current page title (for the content area)
-     * 
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return $this->getRootCategoryId() !== $this->getCategory()->getCategoryId()
-            ? $this->getCategory()->getName()
-            : 'Manage categories';    
-    }
-
-    /**
-     * __call 
-     * 
-     * @param string $method Method to call
-     * @param array  $args   Call arguments
-     *  
-     * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __call($method, array $args = array())
-    {
-        return method_exists($repo = \XLite\Core\Database::getRepo('XLite\Model\Category'), $method)
-            ? call_user_func_array(array($repo, $method), $args)
-            : parent::__call($method, $args);
-    }
-
-    /**
-     * Get all memberships
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getMemberships()
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Membership')->findAllMemberships();
     }
 }
