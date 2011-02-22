@@ -38,17 +38,16 @@ namespace XLite\Controller\Admin;
 class Languages extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Common method to determine current location
-     *
-     * @return string
+     * Controller parameters
+     * FIXME: to remove
+     * 
+     * @var    string
      * @access protected
-     * @see    ____func_see____
+     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected function getLocation()
-    {
-        return 'Language labels';
-    }
+    protected $params = array('target', 'language', 'page');
+
 
     /**
      * Return the current page title (for the content area)
@@ -63,15 +62,44 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Controller parameters
-     * FIXME: to remove
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
+     * Get return URL
+     *
+     * @return string
+     * @access public
      * @since  3.0.0
      */
-    protected $params = array('target', 'language', 'page');
+    public function getReturnURL()
+    {
+        if (\XLite\Core\Request::getInstance()->action) {
+            $url = $this->buildURL(
+                'languages',
+                '',
+                array(
+                    'language' => \XLite\Core\Request::getInstance()->language,
+                    'page'     => max(1, intval(\XLite\Core\Request::getInstance()->page)),
+                )
+            );
+
+        } else {
+            $url = parent::getReturnURL();
+        }
+
+        return $url;
+    }
+
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Language labels';
+    }
 
     /**
      * Search labels
@@ -390,7 +418,9 @@ class Languages extends \XLite\Controller\Admin\AAdmin
 
         } elseif (\XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->findOneByName($name)) {
 
-            \XLite\Core\TopMessage::addError('The text label has not been added, because such a text label already exists');
+            \XLite\Core\TopMessage::addError(
+                'The text label has not been added, because such a text label already exists'
+            );
 
         } elseif (!isset($label[$codeDefault]) || !$label[$codeDefault]) {
 
@@ -565,32 +595,6 @@ class Languages extends \XLite\Controller\Admin\AAdmin
         }
 
         \XLite\Core\Database::getEM()->flush();
-    }
-
-    /**
-     * Get return URL
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getReturnURL()
-    {
-        if (\XLite\Core\Request::getInstance()->action) {
-            $url = $this->buildURL(
-                'languages',
-                '',
-                array(
-                    'language' => \XLite\Core\Request::getInstance()->language,
-                    'page'     => max(1, intval(\XLite\Core\Request::getInstance()->page)),
-                )
-            );
-
-        } else {
-            $url = parent::getReturnURL();
-        }
-
-        return $url;
     }
 }
 

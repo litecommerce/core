@@ -39,21 +39,6 @@ namespace XLite\Controller\Admin;
 class GetWidget extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * These params from AJAX request will be translated into the corresponding ones  
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getAJAXParamsTranslationTable()
-    {
-        return array(
-            self::PARAM_AJAX_TARGET => 'target',
-            self::PARAM_AJAX_ACTION => 'action',
-        );
-    }
-
-    /**
      * Handles the request. Parses the request variables if necessary. Attempts to call the specified action function 
      * 
      * @return void
@@ -75,18 +60,6 @@ class GetWidget extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * checkRequest 
-     * 
-     * @return boolean 
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function checkRequest()
-    {
-        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH'];
-    }
-    
-    /**
      * Check if current page is accessible
      * 
      * @return boolean 
@@ -98,19 +71,6 @@ class GetWidget extends \XLite\Controller\Admin\AAdmin
         return parent::checkAccess()
             && $this->checkRequest()
             && \XLite\Core\Operator::isClassExists($this->getClass());
-    }
-
-    /**
-     * Select template to use
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getViewerTemplate()
-    {
-        return 'get_widget.tpl';
     }
 
     /**
@@ -135,5 +95,46 @@ class GetWidget extends \XLite\Controller\Admin\AAdmin
     public function getClass()
     {
         return \XLite\Core\Request::getInstance()->{self::PARAM_AJAX_CLASS};
+    }
+
+
+    /**
+     * These params from AJAX request will be translated into the corresponding ones  
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getAJAXParamsTranslationTable()
+    {
+        return array(
+            self::PARAM_AJAX_TARGET => 'target',
+            self::PARAM_AJAX_ACTION => 'action',
+        );
+    }
+
+    /**
+     * checkRequest 
+     * 
+     * @return boolean 
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkRequest()
+    {
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH'];
+    }
+
+    /**
+     * Select template to use
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getViewerTemplate()
+    {
+        return 'get_widget.tpl';
     }
 }

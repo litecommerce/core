@@ -38,6 +38,51 @@ namespace XLite\Controller\Admin;
 class OrdersStats extends \XLite\Controller\Admin\Stats
 {
     /**
+     * getPageTemplate 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageTemplate()
+    {
+        return 'orders_stats.tpl';
+    }
+
+    /**
+     * handleRequest 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest()
+    {
+        // typedef
+        $statRec = array('today' => 0, 'week' => 0, 'month' => 0);
+        $this->stat = array(
+            'processed'    => $statRec,
+            'queued'       => $statRec,
+            'failed'       => $statRec,
+            'not_finished' => $statRec,
+            'total'        => $statRec,
+            'paid'         => $statRec
+        );
+
+        $order = new \XLite\Model\Order();
+        $date = $this->get('monthDate');
+        // fetch orders for this month
+
+        // FIXME - old code
+        array_map(array($this, 'summarize'), /*$order->findAll("date>=$date")*/array());
+
+        parent::handleRequest();
+    }
+
+
+    /**
      * Common method to determine current location
      *
      * @return string
@@ -65,72 +110,87 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
         $this->addLocationNode('Statistics', $this->buildURL('orders_stats'));
     }
 
-    function getPageTemplate()
-    {
-        return "orders_stats.tpl";
-    }
-
-    function handleRequest()
-    {
-        // typedef
-        $statRec = array("today" => 0, "week" => 0, "month" => 0);
-        $this->stat = array(
-                "processed" => $statRec,
-                "queued" => $statRec,
-                "failed" => $statRec,
-                "not_finished" => $statRec,
-                "total" => $statRec,
-                "paid" => $statRec);
-
-        $order = new \XLite\Model\Order();
-        $date = $this->get('monthDate');
-        // fetch orders for this month
-
-        // FIXME - old code
-        array_map(array($this, "summarize"), /*$order->findAll("date>=$date")*/array());
-
-        parent::handleRequest();
-    }
-
-    function save($index, $order, $paid = false)
+    /**
+     * save 
+     * 
+     * @param mixed $index ____param_comment____
+     * @param mixed $order ____param_comment____
+     * @param mixed $paid  ____param_comment____
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function save($index, $order, $paid = false)
     {
         if ($order->get('date') >= $this->get('todayDate')) {
-            $this->sum($index, "today", $order->get('total'), $paid);
+            $this->sum($index, 'today', $order->get('total'), $paid);
         }
         if ($order->get('date') >= $this->get('weekDate')) {
-            $this->sum($index, "week", $order->get('total'), $paid);
+            $this->sum($index, 'week', $order->get('total'), $paid);
         }
         if ($order->get('date') >= $this->get('monthDate')) {
-            $this->sum($index, "month", $order->get('total'), $paid);
+            $this->sum($index, 'month', $order->get('total'), $paid);
         }
     }
 
-    function sum($index, $period, $amount, $paid)
+    /**
+     * sum 
+     * 
+     * @param mixed $index  ____param_comment____
+     * @param mixed $period ____param_comment____
+     * @param mixed $amount ____param_comment____
+     * @param mixed $paid   ____param_comment____
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function sum($index, $period, $amount, $paid)
     {
-        $this->stat[$index][$period]++;
+        $this->stat[$index][$period] += 1;
+        
         $this->stat['total'][$period] += $amount;
+        
         if ($paid) {
             $this->stat['paid'][$period] += $amount;
         }
     }
     
-    function summarize($order)
+    /**
+     * summarize 
+     * 
+     * @param mixed $order ____param_comment____
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function summarize($order)
     {
         switch ($order->get('status')) {
-            case "P":
-            case "C":
+            case 'P':
+            case 'C':
                 $this->save('processed', $order, true);
                 break;
-            case "Q":
+
+            case 'Q':
                 $this->save('queued', $order);
                 break;
-            case "I":
+
+            case 'I':
                 $this->save('not_finished', $order);
                 break;
-            case "F":
-            case "D":
+
+            case 'F':
+            case 'D':
                 $this->save('failed', $order);
                 break;
+
+            default:
         }
     }
 }

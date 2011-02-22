@@ -63,7 +63,7 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
      */
     public function getTitle()
     {
-        return 'Recent orders';
+        return $this->t('Recent orders');
     }
 
 
@@ -77,7 +77,7 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
      */
     protected function getLocation()
     {
-        return 'Recent orders';
+        return $this->t('Recent orders');
     }
 
     /**
@@ -103,5 +103,4 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
         );
         $this->setReturnURL($this->buildURL('recent_orders', '', array('mode' => 'search')));
     }
-
 }

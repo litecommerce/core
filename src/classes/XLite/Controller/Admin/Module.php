@@ -41,12 +41,13 @@ class Module extends \XLite\Controller\Admin\AAdmin
      * Return current module options
      * 
      * @return array 
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
     public function init()
     {
-        $this->module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find(\XLite\Core\Request::getInstance()->moduleId);
+        $this->module = \XLite\Core\Database::getRepo('\XLite\Model\Module')
+            ->find(\XLite\Core\Request::getInstance()->moduleId);
 
         if (!$this->module) {
             throw new \Exception('Add-on does not exist (ID#' . \XLite\Core\Request::getInstance()->moduleId . ')');
@@ -57,7 +58,7 @@ class Module extends \XLite\Controller\Admin\AAdmin
      * Return current module options
      * 
      * @return array 
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
     public function getOptions()
@@ -70,7 +71,7 @@ class Module extends \XLite\Controller\Admin\AAdmin
      * Common method to determine current location
      *
      * @return string
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -145,5 +146,4 @@ class Module extends \XLite\Controller\Admin\AAdmin
 
         $this->setReturnURL($this->buildURL('modules'));
     }
-
 }

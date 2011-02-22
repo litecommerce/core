@@ -38,6 +38,19 @@ namespace XLite\Controller\Admin;
 class PaymentMethods extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return $this->t('Payment methods');
+    }
+
+
+    /**
      * Common method to determine current location
      *
      * @return string
@@ -47,19 +60,7 @@ class PaymentMethods extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return 'Payment methods';
-    }
-
-    /**
-     * Return the current page title (for the content area)
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return 'Payment methods';
+        return $this->t('Payment methods');
     }
 
     /**
@@ -74,7 +75,7 @@ class PaymentMethods extends \XLite\Controller\Admin\AAdmin
     {
         $data = \XLite\Core\Request::getInstance()->data;
 
-       if (!is_array($data)) {
+        if (!is_array($data)) {
 
             // TODO - add top message
 
