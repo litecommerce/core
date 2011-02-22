@@ -12,4 +12,4 @@
  * @ListChild (list="itemsList.product.modify.common.admin.columns", weight="10")
  *}
 
-<td><input type="checkbox" class="checkbox {product.getProductId()}" value="1" name="{getNameToDelete(product.getProductId())}" /></td>
+<td class="checkbox-column"><input type="checkbox" class="checkbox {product.getProductId()}" value="1" name="{getNameToDelete(product.getProductId())}" /></td>
