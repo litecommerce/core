@@ -60,19 +60,6 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
     }
 
     /**
-     * Return name of the base widgets list
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getListName()
-    {
-        return parent::getListName() . '.search';
-    }
-
-    /**
      * Define view list
      *
      * @param string $list List name
