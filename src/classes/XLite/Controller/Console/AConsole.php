@@ -68,7 +68,7 @@ abstract class AConsole extends \XLite\Controller\AController
     public function handleRequest()
     {
         if ($this->checkAccess() && \XLite\Core\Request::getInstance()->help) {
-            print $this->getHelp();
+            print ($this->getHelp());
 
         } else {
             $this->actionTime = microtime(true);
@@ -113,21 +113,6 @@ abstract class AConsole extends \XLite\Controller\AController
     }
 
     /**
-     * Check CLI key 
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function checkCLIKey()
-    {
-        $cliKey = \XLite\Core\Config::getInstance()->Security->cli_key;
-
-        return !$cliKey || \XLite\Core\Request::getInstance()->key == $cliKey;
-    }
-
-    /**
      * Return Viewer object
      * 
      * @return \XLite\View\Controller
@@ -162,6 +147,22 @@ abstract class AConsole extends \XLite\Controller\AController
         return $actions;
     }
 
+
+    /**
+     * Check CLI key 
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkCLIKey()
+    {
+        $cliKey = \XLite\Core\Config::getInstance()->Security->cli_key;
+
+        return !$cliKey || \XLite\Core\Request::getInstance()->key == $cliKey;
+    }
+
     /**
      * Get help 
      * 
@@ -178,6 +179,7 @@ abstract class AConsole extends \XLite\Controller\AController
         if ($action) {
             $method = 'getHelp' . \XLite\Core\Converter::convertToCamelCase($action);
             $help = method_exists($this, $method)
+                // Call an action-specific method
                 ? $this->$method()
                 : 'Action \'' . $action . '\' has not help note';
 
@@ -214,7 +216,7 @@ abstract class AConsole extends \XLite\Controller\AController
      */
     protected function printContent($str)
     {
-        print $str;
+        print ($str);
     }
 
     /**
@@ -250,7 +252,7 @@ abstract class AConsole extends \XLite\Controller\AController
     {
     }
 
-   /**
+    /**
      * Mark controller run thread as access denied
      *
      * @return void

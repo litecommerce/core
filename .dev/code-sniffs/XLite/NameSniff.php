@@ -38,7 +38,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
         'apply', 'translate', 'enable', 'disable', 'detach', 'attach', 'read', 'resize', 'search', 'uninstall', 'flush', 'compare',
 		'mask', 'pay', 'clone', 'login', 'logoff', 'exclude', 'restart', 'invalidate',
 		'remember', 'remind', 'link', 'concat','split', 'round', 'depack', 'upload', 'hydrate', 'unload',
-		'download', 'deploy', 'construct', 'retrieve',
+		'download', 'deploy', 'construct', 'retrieve', 'print',
 
 		// FIXME - rename later
 		'processed', 'checked', 'declined', 'queued', 'unchecked', 'checkout',
