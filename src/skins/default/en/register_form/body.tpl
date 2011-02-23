@@ -359,8 +359,6 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 </table>
 
 <br>
-<div>
-<widget template="common/spambot_arrest.tpl" id="on_register"></div>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
 <tr valign="middle">

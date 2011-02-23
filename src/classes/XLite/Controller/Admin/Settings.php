@@ -50,27 +50,9 @@ class Settings extends \XLite\Controller\Admin\AAdmin
         'Company'     => 'Company',
         'Email'       => 'Email',
         'Security'    => 'Security',
-        'Captcha'     => 'Captcha protection',
         'Environment' => 'Environment',
         'Performance'  => 'Performance',
     );
-
-    /**
-     * List of pages with captcha 
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected static function getCaptchaPages()
-    {
-        return array(
-            'on_contactus'        => '',
-            'on_register'         => '',
-            'on_add_giftcert'     => 'GiftCertificates',
-            'on_partner_register' => 'Affiliate'
-        );
-    }
 
     /**
      * Common method to determine current location
@@ -83,29 +65,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     protected function getLocation()
     {
         return 'General settings';
-    }
-
-    /**
-     * Return list of enabled captcha pages 
-     * 
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getEnabledCaptchaPages()
-    {
-        $result = array();
-
-        foreach ($this->getCaptchaPages() as $idx => $module) {
-            if (
-                empty($module)
-                || \XLite\Core\Database::getRepo('\XLite\Core\Module')->isModuleActive($module)
-            ) {
-                $result[$idx] = $module;
-            }
-        }
-
-        return $result;
     }
 
     /**
@@ -137,23 +96,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     public $_waiting_list = null;
 
     /**
-     * Denies access to Captcha category if it is disabled
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function handleRequest()
-    {
-        if ($this->get('page') == "Captcha" && ($this->config->Security->captcha_protection_system != 'Y' || !$this->isGDLibLoaded())){
-            $this->redirect('admin.php?target=settings');
-        }
-
-        parent::handleRequest();
-    }
-
-    /**
      * Get tab names 
      * 
      * @return array
@@ -164,10 +106,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     public function getTabPages()
     {
         $pages = $this->displayedCategories;
-
-        if (isset($pages['Captcha']) && !$this->isGDLibLoaded() || $this->config->Security->captcha_protection_system != 'Y') {
-            unset($pages['Captcha']);
-        }
 
         return $pages;
     }
@@ -705,13 +643,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
 
             } else {
                 $newValue = isset(\XLite\Core\Request::getInstance()->$name) ? trim(\XLite\Core\Request::getInstance()->$name) : '';
-            }
-
-            if ('captcha_length' == $name) {
-                $newValue = intval($newValue);
-                if ($newValue < 1 || $newValue > 10) {
-                    continue;
-                }
             }
 
             if ($value != $newValue) {

@@ -162,12 +162,6 @@ if (goodEmail) {
 </td>
 </tr>
 
-<tr valign="middle">
-<td colspan="3">
-<widget template="common/spambot_arrest.tpl" id="on_contactus">
-</td>    
-</tr>
-
 <tr valign=middle>
 <td>&nbsp;</td>
 <td>&nbsp;</td>

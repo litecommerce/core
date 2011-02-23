@@ -1112,27 +1112,6 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Check if captcha required on the current page
-     * 
-     * @param string $widgetId Page identifier
-     *  
-     * @return boolean 
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isActiveCaptchaPage($widgetId)
-    {
-        $result = 'Y' == $this->config->Security->captcha_protection_system;
-
-        if ($result) {
-            $pages = $this->config->Captcha->active_captcha_pages;
-            $result = isset($pages[$widgetId]);
-        }
-
-        return $result;
-    }
-
-    /**
      * Get view list 
      * 
      * @param string $list      List name
