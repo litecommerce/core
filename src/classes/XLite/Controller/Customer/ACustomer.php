@@ -56,6 +56,74 @@ abstract class ACustomer extends \XLite\Controller\AController
      */
     protected $initialCartFingerprint;
 
+
+    /**
+     * Return cart instance 
+     * 
+     * @return \XLite\Model\Order
+     * @access public
+     * @since  3.0.0
+     */
+    public function getCart()
+    {
+        return \XLite\Model\Cart::getInstance();
+    }
+
+    /**
+     * Get the full URL of the page
+     * Example: getShopURL('cart.php') = "http://domain/dir/cart.php 
+     * 
+     * @param string  $url    Relative URL  
+     * @param boolean $secure Flag to use HTTPS OPTIONAL
+     *  
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getShopURL($url = '', $secure = false)
+    {
+        return parent::getShopURL($url, $this->config->Security->full_customer_security ?: $secure);
+    }
+
+    /**
+     * Check - use secure (HTTPS) connection or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isSecure()
+    {
+        $result = parent::isSecure();
+
+        if (!is_null($this->get('feed')) && $this->get('feed') == 'login') {
+            $result = $this->config->Security->customer_security;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Handles the request 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function handleRequest()
+    {
+        if (!$this->checkStorefrontAccessability()) {
+            $this->closeStorefront();
+        }
+
+        // Save initial cart fingerprint
+        $this->initialCartFingerprint = $this->getCart()->getEventFingerprint();
+
+        return parent::handleRequest();
+    }
+
+
     /**
      * Stub for the CMS connectors
      * 
@@ -198,72 +266,6 @@ abstract class ACustomer extends \XLite\Controller\AController
     }
 
     /**
-     * Return cart instance 
-     * 
-     * @return \XLite\Model\Order
-     * @access public
-     * @since  3.0.0
-     */
-    public function getCart()
-    {
-        return \XLite\Model\Cart::getInstance();
-    }
-
-    /**
-     * Get the full URL of the page
-     * Example: getShopURL('cart.php') = "http://domain/dir/cart.php 
-     * 
-     * @param string  $url    Relative URL  
-     * @param boolean $secure Flag to use HTTPS OPTIONAL
-     *  
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getShopURL($url = '', $secure = false)
-    {
-        return parent::getShopURL($url, $this->config->Security->full_customer_security ?: $secure);
-    }
-
-    /**
-     * Check - use secure (HTTPS) connection or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isSecure()
-    {
-        $result = parent::isSecure();
-
-        if (!is_null($this->get('feed')) && $this->get('feed') == 'login') {
-            $result = $this->config->Security->customer_security;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Handles the request 
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function handleRequest()
-    {
-        if (!$this->checkStorefrontAccessability()) {
-            $this->closeStorefront();
-        }
-
-        // Save initial cart fingerprint
-        $this->initialCartFingerprint = $this->getCart()->getEventFingerprint();
-
-        return parent::handleRequest();
-    }
-
-    /**
      * Get or create cart profile 
      * 
      * @return \XLite\Model\Profile
@@ -290,6 +292,4 @@ abstract class ACustomer extends \XLite\Controller\AController
 
         return $profile;
     }
-
 }
-

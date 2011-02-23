@@ -10,7 +10,6 @@
 # @since     3.0.0
 XLite\Model\Config:
   directives: { insert: true }
-  - { name: active_captcha_pages, category: Captcha, type: serialized, orderby: 30, translations: [{ code: en, option_name: active_captcha_pages, option_comment: '' }] }
   - { name: add_on_mode, category: General, type: checkbox, orderby: 120, value: N, translations: [{ code: en, option_name: 'Checkout desk operation mode', option_comment: '' }] }
   - { name: add_on_mode_page, category: General, type: select, orderby: 125, value: 'cart.php?target=cart', translations: [{ code: en, option_name: 'Checkout desk operation mode main page', option_comment: '' }] }
   - { name: admin_ip_protection, category: Security, type: checkbox, orderby: 100, value: N, translations: [{ code: en, option_name: 'Enable admin IP protection system', option_comment: '' }] }
@@ -18,11 +17,6 @@ XLite\Model\Config:
   - { name: admin_security, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Administrator Zone', option_comment: '' }] }
   - { name: allow_admin_ip, category: SecurityIP, orderby: 40, translations: [{ code: en, option_name: 'Allow admin IP', option_comment: '' }] }
   - { name: buynow_button_enabled, category: General, type: checkbox, orderby: 240, value: Y, translations: [{ code: en, option_name: 'Enable "Buy Now" button in the product list', option_comment: '' }] }
-  - { name: captcha_length, category: Captcha, type: text, orderby: 20, value: '5', translations: [{ code: en, option_name: 'Length of string', option_comment: '' }] }
-  - { name: captcha_protection, category: Captcha, type: separator, translations: [{ code: en, option_name: 'Image generator options', option_comment: '' }] }
-  - { name: captcha_protection_system, category: Security, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Enable Captcha protection system', option_comment: '' }] }
-  - { name: captcha_separator_pages, category: Captcha, type: separator, orderby: 30, translations: [{ code: en, option_name: 'Where to display', option_comment: '' }] }
-  - { name: captcha_type, category: Captcha, type: select, orderby: 10, value: all, translations: [{ code: en, option_name: 'Type of string that should be used for the image', option_comment: '' }] }
   - { name: clear_cc_info, category: General, type: select, orderby: 500, value: N, translations: [{ code: en, option_name: 'Clear credit cards info from the database on order status change', option_comment: '' }] }
   - { name: company_address, category: Company, type: separator, orderby: 385, translations: [{ code: en, option_name: Address, option_comment: '' }] }
   - { name: company_contacts, category: Company, type: separator, orderby: 455, translations: [{ code: en, option_name: Contacts, option_comment: '' }] }

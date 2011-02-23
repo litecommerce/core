@@ -26,23 +26,11 @@
           <td style="width:50%;">
 
             {if:option.type=#checkbox#}
-              {if:option.name=#captcha_protection_system#}
-                {if:isGDLibLoaded()}
-                  <input id="{option.name}" type="checkbox" name="{option.name}" checked="{option.value=#Y#}" />
-                {else:}
-                  <input id="{option.name}" type="checkbox" name="{option.name}" checked="checked" disabled="disabled" />&nbsp;<span class="error-message">GDLib isn't detected</span>
-                {end:}
-              {else:}
-                <input id="{option.name}" type="checkbox" name="{option.name}" checked="{option.value=#Y#}" />
-              {end:}
+              <input id="{option.name}" type="checkbox" name="{option.name}" checked="{option.value=#Y#}" />
             {end:}
 
             {if:option.type=#text#}
-              {if:option.name=#captcha_length#}
-                <input id="{option.name}" type="text" name="{option.name}" value="{option.value}" size="5" />&nbsp; (more than 1 and less than 10)
-              {else:}
-                <input id="{option.name}" type="text" name="{option.name}" value="{option.value}" size="30" />
-              {end:}
+              <input id="{option.name}" type="text" name="{option.name}" value="{option.value}" size="30" />
             {end:}
 
             {if:option.type=#country#"}
@@ -147,14 +135,6 @@ function setUnitSymbol(symbol) {
               </select>
             {end:}
 
-            {if:option.name=#captcha_type#}
-              <select name="{option.name}">
-                <option value="numbers" selected="{option.value=#numbers#}">Numbers only</option>
-                <option value="letters" selected="{option.value=#letters#}">Letters only</option>
-                <option value="all" selected="{option.value=#all#}">Numbers and letters</option>
-              </select>
-            {end:}
-
             {if:option.name=#clear_cc_info#}
               <select name="{option.name}">
                 <option value="N" selected="{option.value=#N#}">No</option>    
@@ -195,16 +175,6 @@ function setUnitSymbol(symbol) {
 
       </tr>
 
-    {end:}
-
-    {if:page=#Captcha#}
-      <tr FOREACH="enabledCaptchaPages,widget_id,v">
-        {if:widget_id=#on_register#}<td align=right width="50%">On Registration page: </td>{end:}
-        {if:widget_id=#on_contactus#}<td align=right width="50%">On Contact us page: </td>{end:}
-        {if:widget_id=#on_add_giftcert#}<td align=right width="50%">On Add Gift Certificate page: </td>{end:}
-        {if:widget_id=#on_partner_register#}<td align=right width="50%">On Registration partner page: </td>{end:}
-        <td style="width:50%;"><input type="checkbox" name="active_captcha_pages[{widget_id}]" {if:isActiveCaptchaPage(widget_id)}checked="1"{end:} /></td>
-      </tr>
     {end:}
 
     {if:!page=#Environment#}
