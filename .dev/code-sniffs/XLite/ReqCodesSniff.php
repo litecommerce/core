@@ -2,9 +2,8 @@
 /**
  * @version $Id$
  */
-class XLite_ReqCodesSniff implements PHP_CodeSniffer_Sniff
+abstract class XLite_ReqCodesSniff implements PHP_CodeSniffer_Sniff
 {
-
     public function register()
     {
 		return array();
@@ -83,5 +82,17 @@ class XLite_ReqCodesSniff implements PHP_CodeSniffer_Sniff
         return $return;
     }
 
+	/**
+	 * Check - is internal project or not
+	 * 
+	 * @return boolean
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function isInternalProject()
+	{
+		return defined('IS_INTERNAL_PROJECT');
+	}
 
 }

@@ -72,7 +72,7 @@ class XLite_Sniffs_PHP_Formatting_ForbidFunctionsSniff extends XLite_ReqCodesSni
 		if (isset($this->forbidFunctions[$tokens[$stackPtr]['content']])) {
 
 	    	$phpcsFile->addError(
-           		$this->getReqPrefix('?')
+           		$this->getReqPrefix('REQ.PHP.3.18.1')
         	    . 'Использование ' . $tokens[$stackPtr]['content'] . '() запрещено (' . $this->forbidFunctions[$tokens[$stackPtr]['content']] . ')',
     	        $stackPtr
 	        );

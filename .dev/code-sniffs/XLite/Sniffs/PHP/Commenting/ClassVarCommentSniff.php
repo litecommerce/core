@@ -66,22 +66,17 @@ class XLite_Sniffs_PHP_Commenting_ClassVarCommentSniff extends XLite_TagsSniff
     	'var'    => array(
         	'required'       => true,
             'allow_multiple' => false,
-            'order_text'     => 'precedes @access',
-        ),
-        'access' => array(
-            'required'       => true,
-            'allow_multiple' => false,
-            'order_text'     => 'follows @var',
+            'order_text'     => 'precedes @see',
         ),
         'see'      => array(
-            'required'       => false,
+            'required'       => true,
             'allow_multiple' => false,
             'order_text'     => 'follows @since',
         ),
         'since'      => array(
             'required'       => true,
             'allow_multiple' => false,
-            'order_text'     => 'follows @access',
+            'order_text'     => 'follows @see',
         ),
         'Column'      => array(
             'required'       => false,
@@ -234,7 +229,7 @@ class XLite_Sniffs_PHP_Commenting_ClassVarCommentSniff extends XLite_TagsSniff
         $comment = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart + 1));
 
         try {
-            $this->commentParser = new XLite_FunctionCommentParser($comment, $phpcsFile);
+            $this->commentParser = new PHP_CodeSniffer_CommentParser_MemberCommentParser($comment, $phpcsFile);
             $this->commentParser->parse();
         } catch (PHP_CodeSniffer_CommentParser_ParserException $e) {
             $line = ($e->getLineWithinComment() + $commentStart);
@@ -248,8 +243,6 @@ class XLite_Sniffs_PHP_Commenting_ClassVarCommentSniff extends XLite_TagsSniff
             $phpcsFile->addError($this->getReqPrefix('REQ.PHP.4.6.2') . $error, $commentStart);
             return;
         }
-
-		$this->checkAccess($stackPtr, $commentStart, $commentEnd);
 
         $this->processTags($commentStart, $commentEnd);
 
