@@ -353,10 +353,9 @@ class Mailer extends \XLite\View\AView
             }
         }
 
+        // Restore layout
         if (isset($this->templatesSkin)) {
-            // Restore layout
-            $layout = \XLite\Core\Layout::getInstance();
-            $layout->setSkin($this->templatesSkin);
+            \XLite\Core\Layout::getInstance()->setSkin($this->templatesSkin);
             $this->templatesSkin = null;
         }
 

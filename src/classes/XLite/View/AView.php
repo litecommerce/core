@@ -418,8 +418,13 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Compile and display a template
      *
+     * @param string $original         Template file name
+     * @param string $previousSkin     Previous skin
+     * @param string $previousTemplate Previous template
+     *
      * @return void
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function includeCompiledFile($original = null, $previousSkin = null, $previousTemplate = null)
@@ -1720,6 +1725,4 @@ abstract class AView extends \XLite\Core\Handler
     {
         echo ('<!--' . "\r\n" . 'DATACELL' . "\r\n" . json_encode($data) . "\r\n" . '-->' . "\r\n");
     }
-
 }
-
