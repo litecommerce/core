@@ -37,6 +37,51 @@ namespace XLite\Controller\Customer;
  */
 class Cart extends \XLite\Controller\Customer\ACustomer
 {
+    /** 
+     * Initialize controller
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function init()
+    {
+        parent::init();
+
+        $this->checkItemsAmount();
+    }
+
+    /**
+     * Get page title
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return $this->getCart()->isEmpty()
+            ? $this->t('Your shopping bag is empty')
+            : $this->t('Your shopping bag - X items', array('count' => $this->getCart()->countQuantity()));
+    }
+
+    /**
+     * isSecure 
+     * TODO: check if this method is used
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isSecure()
+    {
+        return $this->is('HTTPS') ? true : parent::isSecure();
+    }
+
+
     /**
      * Common method to determine current location 
      * 
@@ -159,7 +204,8 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     protected function checkItemsAmount()
     {
         foreach ($this->getCart()->getItemsWithWrongAmounts() as $item) {
-            $this->processInvalidAmountError($product = $item->getProduct(), $this->getProductAmount($product));
+            $product = $item->getProduct();
+            $this->processInvalidAmountError($product, $this->getProductAmount($product));
         }
     }
 
@@ -274,7 +320,9 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      */
     protected function getURLToReturn()
     {
-        if (!($url = \XLite\Core\Session::getInstance()->productListURL)) {
+        $url = \XLite\Core\Session::getInstance()->productListURL;
+        
+        if (!$url) {
             $url = empty($_SERVER['HTTP_REFERER']) 
                 ? $this->buildURL('product', '', array('product_id' => $this->getProductId()))
                 : $_SERVER['HTTP_REFERER'];
@@ -318,36 +366,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
         // Set return URL
         $this->setURLToReturn();
-    }
-
-    /** 
-     * Initialize controller
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function init()
-    {
-        parent::init();
-
-        $this->checkItemsAmount();
-    }
-
-    /**
-     * Get page title
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return $this->getCart()->isEmpty()
-            ? $this->t('Your shopping bag is empty')
-            : $this->t('Your shopping bag - X items', array('count' => $this->getCart()->countQuantity()));
     }
 
 
@@ -463,10 +481,5 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
         \XLite\Core\TopMessage::getInstance()->add('Item has been deleted from cart');
         $this->setReturnURL($this->buildURL('cart'));
-    }
-
-    function isSecure()
-    {
-        return $this->is('HTTPS') ? true : parent::isSecure();
     }
 }

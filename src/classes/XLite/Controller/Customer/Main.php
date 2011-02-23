@@ -81,23 +81,6 @@ class Main extends \XLite\Controller\Customer\Category
     }
 
     /**
-     * Preprocessor for no-action ren
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function doNoAction()
-    {
-        parent::doNoAction();
-
-        if (!\XLite\Core\Request::getInstance()->isAJAX()) {
-            \XLite\Core\Session::getInstance()->productListURL = $this->getURL();
-        }
-    }
-
-    /**
      * getExtraPage 
      * 
      * @return void
@@ -117,6 +100,24 @@ class Main extends \XLite\Controller\Customer\Category
         }
 
         return $this->extraPage;
+    }
+
+
+    /**
+     * Preprocessor for no-action ren
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doNoAction()
+    {
+        parent::doNoAction();
+
+        if (!\XLite\Core\Request::getInstance()->isAJAX()) {
+            \XLite\Core\Session::getInstance()->productListURL = $this->getURL();
+        }
     }
 
     /**

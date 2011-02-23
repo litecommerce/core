@@ -47,6 +47,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     protected $params = array('target', 'product_id');
 
+
     /**
      * Check whether the title is to be displayed in the content area 
      * 
@@ -58,31 +59,6 @@ class Product extends \XLite\Controller\Customer\Catalog
     {
         return false;
     }
-
-    /**
-     * Common method to determine current location 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getLocation()
-    {
-        return $this->getProduct() ? $this->getProduct()->getName() : null;
-    }
-
-    /**
-     * Return current product Id
-     *
-     * @return integer 
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getProductId()
-    {
-        return intval(\XLite\Core\Request::getInstance()->product_id);
-    }
-
 
     /**
      * Get product category id
@@ -138,6 +114,31 @@ class Product extends \XLite\Controller\Customer\Catalog
     public function getProduct()
     {
         return \XLite\Core\Database::getRepo('XLite\Model\Product')->find($this->getProductId());
+    }
+
+
+    /**
+     * Common method to determine current location 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return $this->getProduct() ? $this->getProduct()->getName() : null;
+    }
+
+    /**
+     * Return current product Id
+     *
+     * @return integer 
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getProductId()
+    {
+        return intval(\XLite\Core\Request::getInstance()->product_id);
     }
 
     /**

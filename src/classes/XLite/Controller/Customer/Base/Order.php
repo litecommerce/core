@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Controller
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -37,7 +37,7 @@ namespace XLite\Controller\Customer\Base;
  */
 abstract class Order extends \XLite\Controller\Customer\ACustomer
 {
-	/**
+    /**
      * Order (cache)
      *
      * @var    \XLite\Model\Order
@@ -47,63 +47,63 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      */
     protected $order;
 
-	/**
-	 * Return current order ID
-	 * 
-	 * @return integer
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function getOrderId()
-	{
-		return intval(\XLite\Core\Request::getInstance()->order_id);
-	}
+    /**
+     * Return current order ID
+     * 
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getOrderId()
+    {
+        return intval(\XLite\Core\Request::getInstance()->order_id);
+    }
 
-	/**
-	 * Return current order
-	 * 
-	 * @return \XLite\Model\Order
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function getOrder()
-	{
-		if (!isset($this->order)) {
-			$this->order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($this->getOrderId());
-		}
+    /**
+     * Return current order
+     * 
+     * @return \XLite\Model\Order
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getOrder()
+    {
+        if (!isset($this->order)) {
+            $this->order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($this->getOrderId());
+        }
 
-		return $this->order;
-	}
+        return $this->order;
+    }
 
-	/**
-	 * Check if currently logged user is an admin
-	 * 
-	 * @return boolean
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function isAdmin()
-	{
-		return \XLite\Core\Auth::getInstance()->getProfile()->isAdmin();
-	}
+    /**
+     * Check if currently logged user is an admin
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isAdmin()
+    {
+        return \XLite\Core\Auth::getInstance()->getProfile()->isAdmin();
+    }
 
-	/**
-	 * Check if order corresponds to current user
-	 * 
-	 * @return boolean
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function checkOrderProfile()
-	{
-		return \XLite\Core\Auth::getInstance()->getProfileId() == $this->getOrder()->getOrigProfile()->getProfileId();
-	}
+    /**
+     * Check if order corresponds to current user
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkOrderProfile()
+    {
+        return \XLite\Core\Auth::getInstance()->getProfileId() == $this->getOrder()->getOrigProfile()->getProfileId();
+    }
 
-	/**
+    /**
      * Check order access
      *
      * @return boolean
@@ -113,10 +113,10 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      */
     protected function checkOrderAccess()
     {
-		return \XLite\Core\Auth::getInstance()->isLogged() && ($this->isAdmin() || $this->checkOrderProfile());
+        return \XLite\Core\Auth::getInstance()->isLogged() && ($this->isAdmin() || $this->checkOrderProfile());
     }
 
-	/**
+    /**
      * Check if current page is accessible
      *
      * @return boolean
@@ -128,7 +128,7 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
         return parent::checkAccess() && $this->getOrder() && $this->checkOrderAccess();
     }
 
-	/**
+    /**
      * Add the base part of the location path
      *
      * @return void

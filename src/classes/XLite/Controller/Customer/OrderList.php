@@ -47,17 +47,6 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      */
     protected $params = array('target');
 
-    /**
-     * Common method to determine current location 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getLocation()
-    {
-        return 'Search orders';
-    }
 
     /**
      * Handles the request
@@ -104,8 +93,47 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Save search conditions
+     * Setter
      * 
+     * @param string $name  Property name
+     * @param mixed  $value Property value
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function set($name, $value)
+    {
+        switch ($name) {
+            case 'startDate':
+            case 'endDate':
+                $value = intval($value);
+                break;
+
+            default:
+        }
+
+        parent::set($name, $value);
+    }
+
+
+    /**
+     * Common method to determine current location 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Search orders';
+    }
+
+    /**
+     * Save search conditions
+     * TODO: to revise 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -229,30 +257,4 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
 
         $this->setReturnURL($this->buildURL('order_list'));
     }
-
-    /**
-     * Setter
-     * 
-     * @param string $name  Property name
-     * @param mixed  $value Property value
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function set($name, $value)
-    {
-        switch ($name) {
-            case 'startDate':
-            case 'endDate':
-                $value = intval($value);
-                break;
-
-            default:
-        }
-
-        parent::set($name, $value);
-    }
-
 }

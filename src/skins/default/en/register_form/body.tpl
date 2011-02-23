@@ -364,7 +364,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 <tr valign="middle">
     <td width="160">&nbsp;</td>
     <td >
-        By clicking "SUBMIT" you agree with our <a href="cart.php?target=help&amp;mode=terms_conditions" style="TEXT-DECORATION: underline" target="_blank">Terms &amp; Conditions.</a><br>
+        By clicking "SUBMIT" you agree with our Terms &amp; Conditions.<br>
         <br>
         <widget class="\XLite\View\Button\Submit" />
         <br>

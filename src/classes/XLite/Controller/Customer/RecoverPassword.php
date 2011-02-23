@@ -38,7 +38,15 @@ namespace XLite\Controller\Customer;
  */
 class RecoverPassword extends \XLite\Controller\Customer\ACustomer
 {
-    public $params = array('target', "mode", "email", "link_mailed");
+    /**
+     * params 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $params = array('target', 'mode', 'email', 'link_mailed');
 
 
     /**
@@ -67,7 +75,15 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
         return 'Recover password';
     }
 
-    protected function action_recover_password()
+    /**
+     * action_recover_password 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionRecoverPassword()
     {
         // show recover message if email is valid
         if ($this->requestRecoverPassword($this->get('email'))) {
@@ -79,7 +95,15 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
         }
     }
 
-    protected function action_confirm()
+    /**
+     * action_confirm 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionConfirm()
     {
         if (!is_null($this->get('email')) && isset($_GET['request_id'])) {
             if ($this->recoverPassword($this->get('email'), $_GET['request_id'])) {
@@ -144,5 +168,4 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
 
         return $result;
     }
-
 }

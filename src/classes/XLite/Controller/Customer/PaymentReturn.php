@@ -38,19 +38,6 @@ namespace XLite\Controller\Customer;
 class PaymentReturn extends \XLite\Controller\Customer\ACustomer
 {
     /**
-     * This controller is always accessible
-     * TODO - check if it's really needed; remove if not
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function checkStorefrontAccessability()
-    {
-        return true;
-    }
-
-    /**
      * Handles the request
      * 
      * @return void
@@ -62,6 +49,20 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
         \XLite\Core\Request::getInstance()->action = 'return';
 
         parent::handleRequest();
+    }
+
+
+    /**
+     * This controller is always accessible
+     * TODO - check if it's really needed; remove if not
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkStorefrontAccessability()
+    {
+        return true;
     }
 
     /**

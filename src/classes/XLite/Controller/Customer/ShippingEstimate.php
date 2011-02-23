@@ -38,18 +38,6 @@ namespace XLite\Controller\Customer;
 class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
 {
     /**
-     * Common method to determine current location 
-     * 
-     * @return string
-     * @access protected 
-     * @since  3.0.0
-     */
-    protected function getLocation()
-    {
-        return $this->getTitle();
-    }
-
-    /**
      * Get page title
      * 
      * @return string
@@ -60,6 +48,19 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
     public function getTitle()
     {
         return $this->t('Estimate shipping cost');
+    }
+
+
+    /**
+     * Common method to determine current location 
+     * 
+     * @return string
+     * @access protected 
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return $this->getTitle();
     }
 
     /**
