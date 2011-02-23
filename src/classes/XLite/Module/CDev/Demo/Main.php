@@ -88,18 +88,6 @@ abstract class Main extends \XLite\Module\AModule
     }
 
     /**
-     * Perform some actions at startup
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public static function init()
-    {
-        parent::init();
-    }
-
-    /**
      * Forbid action processing
      * 
      * @param string $message Action message OPTIONAL
@@ -114,12 +102,9 @@ abstract class Main extends \XLite\Module\AModule
     {
         self::doForbidOperation($message);
 
-        if (!$url) {
-            $url = \XLite\Core\Converter::buildURL(\XLite\Core\Request::getInstance()->target);
-        }
-
-        header('Location: ' . $url);
-        exit(0);
+        \Includes\Utils\Operator::redirect(
+            $url ?: \XLite\Core\Converter::buildURL(\XLite\Core\Request::getInstance()->target)
+        );
     }
 
     /**
@@ -134,10 +119,6 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function doForbidOperation($message = null)
     {
-        if (!$message) {
-            $message = 'You cannot do this in demo mode.';
-        }
-
-        \XLite\Core\TopMessage::getInstance()->add($message, \XLite\Core\TopMessage::WARNING);
+        \XLite\Core\TopMessage::getInstance()->addWarning($message ?: 'You cannot do this in demo mode.');
     }
 }
