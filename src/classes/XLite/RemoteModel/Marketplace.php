@@ -251,9 +251,14 @@ class Marketplace extends \XLite\Base\Singleton
 
         $result = static::STATUS_ERROR;
 
-        $filename = $moduleInfo[static::MODULE_AUTHOR] . '_' . $moduleInfo[static::MODULE_NAME] . '.phar';
+        if (
+            is_array($moduleInfo)
+            && isset($moduleInfo[static::MODULE_AUTHOR])
+            && isset($moduleInfo[static::MODULE_NAME])
+            && is_null($this->getError())
+        ) {
 
-        if (is_null($this->getError())) {
+            $filename = $moduleInfo[static::MODULE_AUTHOR] . '_' . $moduleInfo[static::MODULE_NAME] . '.phar';
 
             // TODO Retrive module name first!!
             $result = file_put_contents(
@@ -313,7 +318,7 @@ class Marketplace extends \XLite\Base\Singleton
 
         $xml = new \DOMDocument();
 
-        $result = $xml->loadXML($response);
+        $result = $response ? $xml->loadXML($response) : false;
 
         if (false === $result) {
 
