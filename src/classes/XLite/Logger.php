@@ -102,6 +102,20 @@ class Logger extends \XLite\Base\Singleton
      */
     protected static $markTemplates = false;
 
+
+    /**
+     * Check - display debug templates info or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function isMarkTemplates()
+    {
+        return self::$markTemplates;
+    }
+
     /**
      * Constructor
      * 
@@ -112,7 +126,7 @@ class Logger extends \XLite\Base\Singleton
      */
     public function __construct()
     {
-        require_once LC_LIB_DIR . 'Log.php';
+        include_once LC_LIB_DIR . 'Log.php';
 
         $this->options = array_merge(
             $this->options,
@@ -218,6 +232,103 @@ class Logger extends \XLite\Base\Singleton
     }
 
     /**
+     * Register PHP error 
+     * 
+     * @param integer $errno   Error code
+     * @param string  $errstr  Error message
+     * @param string  $errfile File path
+     * @param integer $errline Line number
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function registerPHPError($errno, $errstr, $errfile, $errline)
+    {
+        $hash = $errno . ':' . $errfile . ':' . $errline;
+
+        if (
+            ini_get('error_reporting') & $errno
+            && (0 != ini_get('display_errors') || 0 != ini_get('log_errors'))
+            && 0 != error_reporting()
+            && (1 != ini_get('ignore_repeated_errors') || !isset(self::$hashErrors[$hash]))
+        ) {
+
+            $errortype = $this->getPHPErrorName($errno);
+
+            $message = $errortype . ': ' . $errstr . ' in ' . $errfile . ' on line ' . $errline;
+
+            // Display error
+            if (0 != ini_get('display_errors')) {
+                $displayMessage = $message;
+
+                if (isset($_SERVER['REQUEST_METHOD'])) {
+                    $displayMessage = '<strong>' . $errortype . '</strong>: ' . $errstr
+                        . ' in <strong>' . $errfile . '</strong> on line <strong>' . $errline . '</strong><br />';
+                }
+
+                echo ($displayMessage . PHP_EOL);
+            }
+
+            // Save to log
+            if (0 != ini_get('log_errors')) {
+                $this->log($message, $this->convertPHPErrorToLogError($errno));
+            }
+
+            // Save to cache
+            if (1 == ini_get('ignore_repeated_errors')) {
+                self::$hashErrors[$hash] = true;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Register non-catched exception 
+     * 
+     * @param \Exception $exception Exception
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function registerException(\Exception $exception)
+    {
+        if (
+            ini_get('error_reporting') & E_ERROR
+            && (0 != ini_get('display_errors') || 0 != ini_get('log_errors'))
+            && 0 != error_reporting()
+        ) {
+
+            $message = 'Exception: ' . $exception->getMessage()
+                . ' in ' . $exception->getFile() . ' on line ' . $exception->getLine();
+
+            // Display error
+            if (0 != ini_get('display_errors')) {
+
+                if (isset($_SERVER['REQUEST_METHOD'])) {
+                    $displayMessage = '<strong>Exception</strong>: ' . $exception->getMessage()
+                        . ' in <strong>' . $exception->getFile() . '</strong>'
+                        . ' on line <strong>' . $exception->getLine() . '</strong><br />';
+                } else {
+                    $displayMessage = $message;
+                }
+
+                echo ($displayMessage . PHP_EOL);
+            }
+
+            // Save to log
+            if (0 != ini_get('log_errors')) {
+                $this->log($message, PEAR_LOG_ERR, $exception->getTrace());
+            }
+        }
+    }
+
+
+    /**
      * Get log type 
      * 
      * @return mixed
@@ -312,102 +423,6 @@ class Logger extends \XLite\Base\Singleton
     protected function detectClassName($obj)
     {
         return is_object($obj) ? get_class($obj) : strval($obj);
-    }
-
-    /**
-     * Register PHP error 
-     * 
-     * @param integer $errno   Error code
-     * @param string  $errstr  Error message
-     * @param string  $errfile File path
-     * @param integer $errline Line number
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function registerPHPError($errno, $errstr, $errfile, $errline)
-    {
-        $hash = $errno . ':' . $errfile . ':' . $errline;
-
-        if (
-            ini_get('error_reporting') & $errno
-            && (0 != ini_get('display_errors') || 0 != ini_get('log_errors'))
-            && 0 != error_reporting()
-            && (1 != ini_get('ignore_repeated_errors') || !isset(self::$hashErrors[$hash]))
-        ) {
-
-            $errortype = $this->getPHPErrorName($errno);
-
-            $message = $errortype . ': ' . $errstr . ' in ' . $errfile . ' on line ' . $errline;
-
-            // Display error
-            if (0 != ini_get('display_errors')) {
-                $displayMessage = $message;
-
-                if (isset($_SERVER['REQUEST_METHOD'])) {
-                    $displayMessage = '<strong>' . $errortype . '</strong>: ' . $errstr
-                        . ' in <strong>' . $errfile . '</strong> on line <strong>' . $errline . '</strong><br />';
-                }
-
-                echo ($displayMessage . PHP_EOL);
-            }
-
-            // Save to log
-            if (0 != ini_get('log_errors')) {
-                $this->log($message, $this->convertPHPErrorToLogError($errno));
-            }
-
-            // Save to cache
-            if (1 == ini_get('ignore_repeated_errors')) {
-                self::$hashErrors[$hash] = true;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Register non-catched exception 
-     * 
-     * @param \Exception $exception Exception
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function registerException(\Exception $exception)
-    {
-        if (
-            ini_get('error_reporting') & E_ERROR
-            && (0 != ini_get('display_errors') || 0 != ini_get('log_errors'))
-            && 0 != error_reporting()
-        ) {
-
-            $message = 'Exception: ' . $exception->getMessage()
-                . ' in ' . $exception->getFile() . ' on line ' . $exception->getLine();
-
-            // Display error
-            if (0 != ini_get('display_errors')) {
-
-                if (isset($_SERVER['REQUEST_METHOD'])) {
-                    $displayMessage = '<strong>Exception</strong>: ' . $exception->getMessage()
-                        . ' in <strong>' . $exception->getFile() . '</strong>'
-                        . ' on line <strong>' . $exception->getLine() . '</strong><br />';
-                } else {
-                    $displayMessage = $message;
-                }
-
-                echo ($displayMessage . PHP_EOL);
-            }
-
-            // Save to log
-            if (0 != ini_get('log_errors')) {
-                $this->log($message, PEAR_LOG_ERR, $exception->getTrace());
-            }
-        }
     }
 
     /**
@@ -519,18 +534,5 @@ class Logger extends \XLite\Base\Singleton
         if (!file_exists($path) || $this->securityHeader > filesize($path)) {
             file_put_contents($path, $this->securityHeader . "\n");
         }
-    }
-
-    /**
-     * Check - display debug templates info or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function isMarkTemplates()
-    {
-        return self::$markTemplates;
     }
 }
