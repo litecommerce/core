@@ -8,6 +8,8 @@ set_include_path(
 	. PATH_SEPARATOR . get_include_path()
 );
 
+define('IS_INTERNAL_PROJECT', true);
+
 require_once 'PHP/CodeSniffer/CLI.php';
 
 $phpcs = new PHP_CodeSniffer_CLI();

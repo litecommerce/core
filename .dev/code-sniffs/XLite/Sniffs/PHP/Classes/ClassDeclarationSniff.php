@@ -325,7 +325,7 @@ class XLite_Sniffs_PHP_Classes_ClassDeclarationSniff extends XLite_ReqCodesSniff
 				foreach ($prev as $p) {
 					if (isset($exists[$p])) {
 						$phpcsFile->addError(
-							$this->getReqPrefix('?')
+							$this->getReqPrefix('REQ.PHP.3.4.7')
 							. 'Method \'' . $key . ' function ' . $name . '\' is place after lesser method '
 							. '\'' . $p . ' function ' . $exists[$p] . '\' : ' . $functions[$exists[$p]][2],
 							$f[3]
