@@ -59,19 +59,6 @@ class Footer extends \XLite\View\Menu\AMenu
      */
     protected function defineItems()
     {
-        return array(
-            array(
-                'url'    => $this->buildURL('help', '', array('mode' => 'contactus')),
-                'label'  => $this->t('Contact us'),
-            ),
-            array(
-                'url'    => $this->buildURL('help', '', array('mode' => 'privacy_statement')),
-                'label'  => $this->t('Privacy statement'),
-            ),
-            array(
-                'url'    => $this->buildURL('help', '', array('mode' => 'terms_conditions')),
-                'label'  => $this->t('Terms and conditions'),
-            ),
-        );
+        return array();
     }
 }

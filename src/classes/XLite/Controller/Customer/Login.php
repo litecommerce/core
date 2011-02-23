@@ -63,6 +63,43 @@ class Login extends \XLite\Controller\Customer\ACustomer
      */
     protected $profile;
 
+
+    /**
+     * Perform some actions after the "login" action
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function redirectFromLogin()
+    {
+        $url = $this->getRedirectFromLoginURL();
+
+        if (isset($url)) {
+            \XLite\Core\CMSConnector::isCMSStarted() 
+                ? \XLite\Core\Operator::redirect($url, true) 
+                : $this->setReturnURL($url);
+        }
+    }
+
+    /**
+     * Get the full URL of the page
+     * 
+     * @param string  $url    Relative URL  
+     * @param boolean $secure Flag to use HTTPS OPTIONAL
+     *  
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getShopURL($url = '', $secure = false)
+    {
+        $add = (strpos($url, '?') ? '&' : '?') . 'feed=' . \XLite\Core\Request::getInstance()->action;
+
+        return parent::getShopURL($url . $add, $secure);
+    }
+
+
     /**
      * Common method to determine current location 
      * 
@@ -75,7 +112,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
         return 'Authentication';
     }
 
-     /**
+    /**
      * Perform some actions before redirect
      *
      * @return void
@@ -97,25 +134,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
     protected function getRedirectFromLoginURL()
     {
         return null;
-    }
-
-
-    /**
-     * Perform some actions after the "login" action
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function redirectFromLogin()
-    {
-        $url = $this->getRedirectFromLoginURL();
-
-        if (isset($url)) {
-            \XLite\Core\CMSConnector::isCMSStarted() 
-                ? \XLite\Core\Operator::redirect($url, true) 
-                : $this->setReturnURL($url);
-        }
     }
 
     /**
@@ -154,7 +172,10 @@ class Login extends \XLite\Controller\Customer\ACustomer
             $this->setReturnURL(\XLite\Core\Request::getInstance()->returnURL);
 
             if (!$this->getReturnURL()) {
-                $this->setReturnURL($this->getCart()->isEmpty() ? \XLite\Core\Converter::buildURL() : \XLite\Core\Converter::buildURL('cart')
+                $this->setReturnURL(
+                    $this->getCart()->isEmpty() 
+                    ? \XLite\Core\Converter::buildURL() 
+                    : \XLite\Core\Converter::buildURL('cart')
                 );
             }
 
@@ -177,32 +198,16 @@ class Login extends \XLite\Controller\Customer\ACustomer
         \XLite\Core\Auth::getInstance()->logoff();
 
         $this->setReturnURL(\XLite\Core\Converter::buildURL());
-        if (!$this->getCart()->isEmpty()) {
-        	if ('Y' == \XLite\Core\Config::getInstance()->Security->logoff_clear_cart) {
 
+        if (!$this->getCart()->isEmpty()) {
+
+            if ('Y' == \XLite\Core\Config::getInstance()->Security->logoff_clear_cart) {
                 \XLite\Core\Database::getEM()->remove($this->getCart());
                 \XLite\Core\Database::getEM()->flush();
 
-        	} else {
+            } else {
                 $this->updateCart();
-        	}
+            }
         }
-    }
-
-    /**
-     * Get the full URL of the page
-     * 
-     * @param string  $url    Relative URL  
-     * @param boolean $secure Flag to use HTTPS OPTIONAL
-     *  
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getShopURL($url = '', $secure = false)
-    {
-        $add = (strpos($url, '?') ? '&' : '?') . 'feed=' . \XLite\Core\Request::getInstance()->action;
-
-        return parent::getShopURL($url . $add, $secure);
     }
 }

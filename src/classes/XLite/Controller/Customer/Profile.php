@@ -47,6 +47,20 @@ class Profile extends \XLite\Controller\Customer\ACustomer
 
 
     /**
+     * Return value for the "register" mode param
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getRegisterMode()
+    {
+        return 'register';
+    }
+
+
+    /**
      * Return class name of the register form 
      * 
      * @return string|void
@@ -150,18 +164,5 @@ class Profile extends \XLite\Controller\Customer\ACustomer
         }
 
         return $result;
-    }
-
-    /**
-     * Return value for the "register" mode param
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getRegisterMode()
-    {
-        return 'register';
     }
 }

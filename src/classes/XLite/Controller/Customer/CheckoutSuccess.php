@@ -57,17 +57,6 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      */
     protected $order;
 
-    /**
-     * Common method to determine current location 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */     
-    protected function getLocation()
-    {
-        return 'Checkout';
-    }
 
     /**
      * Get page title
@@ -120,5 +109,18 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
         }
 
         return $this->order;
+    }
+
+
+    /**
+     * Common method to determine current location 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */     
+    protected function getLocation()
+    {
+        return 'Checkout';
     }
 }

@@ -47,6 +47,41 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
      */
     protected $params = array('target', 'atype');
 
+
+    /**
+     * Get page title
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Pick address from address book';
+    }
+
+    /**
+     * Get current aAddress id 
+     * 
+     * @return integer|void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCurrentAddressId()
+    {
+        $address = null;
+
+        if ($this->getCart()->getProfile()) {
+            $address = \XLite\Model\Address::SHIPPING == \XLite\Core\Request::getInstance()->atype
+                ? $this->getCart()->getProfile()->getShippingAddress()
+                : $this->getCart()->getProfile()->getBillingAddress();
+        }
+
+        return $address ? $address->getAddressId() : null;
+    }
+
+
     /**
      * Common method to determine current location 
      *  
@@ -71,17 +106,6 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
         return parent::checkAccess()
             && $this->getCart()->getOrigProfile()
             && !$this->getCart()->getOrigProfile()->getOrder();
-    }
-    /**
-     * Get page title
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return 'Pick address from address book';
     }
 
     /**
@@ -170,26 +194,4 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
             }
         }
     }
-
-    /**
-     * Get current aAddress id 
-     * 
-     * @return integer|void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCurrentAddressId()
-    {
-        $address = null;
-
-        if ($this->getCart()->getProfile()) {
-            $address = \XLite\Model\Address::SHIPPING == \XLite\Core\Request::getInstance()->atype
-                ? $this->getCart()->getProfile()->getShippingAddress()
-                : $this->getCart()->getProfile()->getBillingAddress();
-        }
-
-        return $address ? $address->getAddressId() : null;
-    }
 }
-

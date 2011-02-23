@@ -37,6 +37,46 @@ namespace XLite\Controller\Customer;
  */
 class Search extends \XLite\Controller\Customer\ACustomer
 {
+    /** 
+     * Get search condition parameter by name TODO refactor with XLite\Controller\Admin\ProductList::getCondition()
+     * 
+     * @param string $paramName Name of parameter 
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCondition($paramName)
+    {
+        $searchParams = $this->getConditions();
+
+        if (isset($searchParams[$paramName])) {
+            $return = $searchParams[$paramName];
+        }   
+
+        return isset($searchParams[$paramName])
+            ? $searchParams[$paramName]
+            : null;
+    }
+
+    /** 
+     * Return 'checked' attribute for parameter.
+     * 
+     * @param string $paramName Name of parameter
+     * @param mixed  $value     Value to check with OPTIONAL
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getChecked($paramName, $value = 'Y')
+    {   
+        return $value === $this->getCondition($paramName) ? 'checked' : ''; 
+    }   
+
+
     /**
      * Common method to determine current location 
      * 
@@ -103,45 +143,4 @@ class Search extends \XLite\Controller\Customer\ACustomer
 
         return $searchParams;
     }
-
-    /** 
-     * Get search condition parameter by name TODO refactor with XLite\Controller\Admin\ProductList::getCondition()
-     * 
-     * @param string $paramName Name of parameter 
-     *  
-     * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCondition($paramName)
-    {
-        $searchParams = $this->getConditions();
-
-        if (isset($searchParams[$paramName])) {
-            $return = $searchParams[$paramName];
-        }   
-
-        return isset($searchParams[$paramName])
-            ? $searchParams[$paramName]
-            : null;
-    }
-
-    /** 
-     * Return 'checked' attribute for parameter.
-     * 
-     * @param string $paramName Name of parameter
-     * @param mixed  $value     Value to check with OPTIONAL
-     *  
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getChecked($paramName, $value = 'Y')
-    {   
-        return $value === $this->getCondition($paramName) ? 'checked' : ''; 
-    }   
-
 }
-
