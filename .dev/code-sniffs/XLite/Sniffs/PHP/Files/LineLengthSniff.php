@@ -37,13 +37,6 @@ class XLite_Sniffs_PHP_Files_LineLengthSniff extends XLite_ReqCodesSniff
 {
 
     /**
-     * The limit that the length of a line should not exceed.
-     *
-     * @var int
-     */
-    protected $lineLimit = 80;
-
-    /**
      * The limit that the length of a line must not exceed.
      *
      * Set to zero (0) to disable.
@@ -146,16 +139,22 @@ class XLite_Sniffs_PHP_Files_LineLengthSniff extends XLite_ReqCodesSniff
 
             $lineLength = strlen($lineContent);
             if ($this->absoluteLineLimit > 0 && $lineLength > $this->absoluteLineLimit) {
-				$pos = $phpcsFile->findPrevious(T_STATIC, $stackPtr);
-				if (!$pos || $tokens[$stackPtr]['line'] != $tokens[$pos]['line']) {
+				$prev = null;
+				for ($i = $stackPtr; $i > 0; $i--) {
+					if ($tokens[$i]['line'] == $tokens[$stackPtr]['line'] - 1 && $tokens[$i]['code'] == T_WHITESPACE) {
+						$prev = $i + 1;
+						break;
+					}
+				}
+
+				if (
+					!$phpcsFile->findPrevious(T_STATIC, $stackPtr, $prev)
+					&& $phpcsFile->findPrevious(array(T_WHITESPACE, T_CONSTANT_ENCAPSED_STRING, T_VARIABLE, T_EQUAL), $stackPtr, $prev, true)
+				) {
 	                $error = 'Line exceeds maximum limit of ' . $this->absoluteLineLimit . " characters; contains $lineLength characters";
     	            $phpcsFile->addError($this->getReqPrefix('REQ.PHP.2.2.1') . $error, $stackPtr);
 				}
 
-            } else if ($lineLength > $this->lineLimit) {
-				// FIXME - this warning is temporary commented
-                // $warning = 'Line exceeds '.$this->lineLimit." characters; contains $lineLength characters";
-                // $phpcsFile->addWarning($this->getReqPrefix('WRN.PHP.2.2.1') . $warning, $stackPtr);
             }
         }
 

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,9 +31,8 @@ namespace XLite\Model;
 /**
  * Module packaging model TODO: refactor with \XLite\Model\PHARModule
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class PackModule extends \XLite\Base
 {
@@ -77,10 +76,9 @@ class PackModule extends \XLite\Base
     /**
      * Temporary repository of module package
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $tempDir = null;
 
@@ -88,10 +86,9 @@ class PackModule extends \XLite\Base
     /**
      * Error message
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $error = null;
 
@@ -99,10 +96,9 @@ class PackModule extends \XLite\Base
     /**
      * Module model
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $module = null;
 
@@ -114,7 +110,6 @@ class PackModule extends \XLite\Base
      * @param integer $moduleId Module identificator
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -130,7 +125,6 @@ class PackModule extends \XLite\Base
      * Create PHAR package routine
      * 
      * @return string Status of package creation 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -175,7 +169,6 @@ class PackModule extends \XLite\Base
      * Download package routine
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -209,7 +202,6 @@ class PackModule extends \XLite\Base
      * Removes the temporary files from the temporary local repository of modules.
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -228,7 +220,6 @@ class PackModule extends \XLite\Base
      * Returns error message of .PHAR file operations
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -242,7 +233,6 @@ class PackModule extends \XLite\Base
      * Temporary storage getter
      * 
      * @return mixed
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -256,7 +246,6 @@ class PackModule extends \XLite\Base
      * Module model getter
      * 
      * @return mixed
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -270,7 +259,6 @@ class PackModule extends \XLite\Base
      * Return PHAR name of module file
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -283,7 +271,6 @@ class PackModule extends \XLite\Base
      * Return PHAR GZ name of module file
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -296,7 +283,6 @@ class PackModule extends \XLite\Base
      * Return File filter regexp
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -310,7 +296,6 @@ class PackModule extends \XLite\Base
      * Collect module classes structure into temporary classes catalog
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -336,7 +321,6 @@ class PackModule extends \XLite\Base
      * Collect module skins structure into temporary skins catalog
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -367,7 +351,6 @@ class PackModule extends \XLite\Base
      * Returns INI file path in the temporary local repository of module
      * 
      * @return string File path to the INI file
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -383,7 +366,6 @@ class PackModule extends \XLite\Base
      * Returns the classes catalog inside the temporary local repository of module
      * 
      * @return string Catalog path
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -399,7 +381,6 @@ class PackModule extends \XLite\Base
      * Return temporary skins catalog of module
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -413,7 +394,6 @@ class PackModule extends \XLite\Base
      * Module INI file creation routine
      * 
      * @return mixed
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -449,7 +429,6 @@ DATA;
      * Makes the unique temporary catalog for the temporary local repository of module
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

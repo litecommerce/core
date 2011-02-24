@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,7 +31,6 @@ namespace XLite\Model;
 /**
  * Module
  * 
- * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  *
@@ -69,7 +68,6 @@ class Module extends \XLite\Model\AEntity
      * Module id 
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -83,7 +81,6 @@ class Module extends \XLite\Model\AEntity
      * Name 
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -95,7 +92,6 @@ class Module extends \XLite\Model\AEntity
      * Author 
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -107,7 +103,6 @@ class Module extends \XLite\Model\AEntity
      * Enabled 
      * 
      * @var    boolean
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -119,7 +114,6 @@ class Module extends \XLite\Model\AEntity
      * Installed status
      * 
      * @var    boolean
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -131,7 +125,6 @@ class Module extends \XLite\Model\AEntity
      * Module data dump (YAML or SQL) installed status
      *
      * @var    boolean
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -143,7 +136,6 @@ class Module extends \XLite\Model\AEntity
      * Status
      *
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="integer")
@@ -154,7 +146,6 @@ class Module extends \XLite\Model\AEntity
      * Description
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="text")
@@ -165,7 +156,6 @@ class Module extends \XLite\Model\AEntity
      * Module name
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="string", length=255)
@@ -176,7 +166,6 @@ class Module extends \XLite\Model\AEntity
      * Author name
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="string", length=255)
@@ -187,7 +176,6 @@ class Module extends \XLite\Model\AEntity
      * Order creation timestamp
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -199,7 +187,6 @@ class Module extends \XLite\Model\AEntity
      * Version
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="string", length=32)
@@ -210,7 +197,6 @@ class Module extends \XLite\Model\AEntity
      * Changelog
      *
      * @var    array
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="array", nullable=true)
@@ -221,7 +207,6 @@ class Module extends \XLite\Model\AEntity
      * Hash
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="string", length=32)
@@ -232,7 +217,6 @@ class Module extends \XLite\Model\AEntity
      * Install pack hash
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="string", length=32)
@@ -243,7 +227,6 @@ class Module extends \XLite\Model\AEntity
      * Price
      *
      * @var    float
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="decimal", precision=14, scale=2)
@@ -254,7 +237,6 @@ class Module extends \XLite\Model\AEntity
      * Price
      *
      * @var    float
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="boolean")
@@ -265,7 +247,6 @@ class Module extends \XLite\Model\AEntity
      * Currency code
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="string", length=3)
@@ -276,7 +257,6 @@ class Module extends \XLite\Model\AEntity
      * Upload code
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="string", length=255)
@@ -287,7 +267,6 @@ class Module extends \XLite\Model\AEntity
      * Rating
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="integer")
@@ -298,7 +277,6 @@ class Module extends \XLite\Model\AEntity
      * Downloads
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="integer")
@@ -309,7 +287,6 @@ class Module extends \XLite\Model\AEntity
      * Icon URL
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="string", length=255)
@@ -320,7 +297,6 @@ class Module extends \XLite\Model\AEntity
      * Downloads
      *
      * @var    array
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="array", nullable=true)
@@ -330,30 +306,27 @@ class Module extends \XLite\Model\AEntity
     /**
      * Old-state of enabled column
      * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $oldEnabled;
 
     /**
      * Model (cache)
      *
-     * @var    \XLite\Model\Module
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Module
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $model = null;
 
     /**
      * Main class 
      * 
-     * @var    \Xite\Module\AModule
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Xite\Module\AModule
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $mainClass = null; 
 
@@ -362,7 +335,6 @@ class Module extends \XLite\Model\AEntity
      * Check if module has icon
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -375,7 +347,6 @@ class Module extends \XLite\Model\AEntity
      * Check if the module is free
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -388,7 +359,6 @@ class Module extends \XLite\Model\AEntity
      * Get external page URL
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -401,7 +371,6 @@ class Module extends \XLite\Model\AEntity
      * Get author page URL
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -416,7 +385,6 @@ class Module extends \XLite\Model\AEntity
      * @param boolean $enabled Enabled status
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -439,7 +407,6 @@ class Module extends \XLite\Model\AEntity
      * @param string $method Method name
      *  
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -456,7 +423,6 @@ class Module extends \XLite\Model\AEntity
      * Prepare entity before update 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      * @PreUpdate
@@ -474,7 +440,6 @@ class Module extends \XLite\Model\AEntity
      * Prepare entity before enable 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -496,7 +461,6 @@ class Module extends \XLite\Model\AEntity
      * Prepare entity before disable 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -515,7 +479,6 @@ class Module extends \XLite\Model\AEntity
      * Save backup 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -536,7 +499,6 @@ class Module extends \XLite\Model\AEntity
      * Restore backup 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -552,7 +514,6 @@ class Module extends \XLite\Model\AEntity
      * Get module backup path 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -565,7 +526,6 @@ class Module extends \XLite\Model\AEntity
      * Install DB data 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -603,7 +563,6 @@ class Module extends \XLite\Model\AEntity
      * Uninstall DB data 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -647,7 +606,6 @@ class Module extends \XLite\Model\AEntity
      * Install wake-up DB data 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -681,7 +639,6 @@ class Module extends \XLite\Model\AEntity
      * Install sleep DB data 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -716,7 +673,6 @@ class Module extends \XLite\Model\AEntity
      * Get translated dependencies
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -729,7 +685,6 @@ class Module extends \XLite\Model\AEntity
      * Disable module
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -754,7 +709,6 @@ class Module extends \XLite\Model\AEntity
      * Return link to settings form
      *
      * @return string
-     * @access public
      * @since  1.0
      */
     public function getSettingsFormLink()
@@ -770,7 +724,6 @@ class Module extends \XLite\Model\AEntity
      * Get module Main class
      * 
      * @return \XLite\Module\AModule
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -792,7 +745,6 @@ class Module extends \XLite\Model\AEntity
      * Get dependencies modules
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -805,7 +757,6 @@ class Module extends \XLite\Model\AEntity
      * Check - can module enable or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -844,7 +795,6 @@ class Module extends \XLite\Model\AEntity
      * Get module hash 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -875,7 +825,6 @@ class Module extends \XLite\Model\AEntity
      * @param string $author Module author (code)
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -893,7 +842,6 @@ class Module extends \XLite\Model\AEntity
      * Uninstall module
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -921,7 +869,6 @@ class Module extends \XLite\Model\AEntity
      * @param array  $args   Call arguments
      *  
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -937,7 +884,6 @@ class Module extends \XLite\Model\AEntity
      * Check if newer version exists
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -951,7 +897,6 @@ class Module extends \XLite\Model\AEntity
      * Get last version (from the database)
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -964,7 +909,6 @@ class Module extends \XLite\Model\AEntity
      * Get installed version (from the Main class)
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -977,7 +921,6 @@ class Module extends \XLite\Model\AEntity
      * Compose module actual name
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -990,7 +933,6 @@ class Module extends \XLite\Model\AEntity
      * Get module root directory 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1003,7 +945,6 @@ class Module extends \XLite\Model\AEntity
      * Return relative module path
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1018,7 +959,6 @@ class Module extends \XLite\Model\AEntity
      * @param boolean $overrideCache Ovveride internal cache OPTIONAL
      *  
      * @return \XLite\Model\Module
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1038,7 +978,6 @@ class Module extends \XLite\Model\AEntity
      * Check - can upload module or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1051,7 +990,6 @@ class Module extends \XLite\Model\AEntity
      * Upload module. TODO refactor (remove ????)
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1087,7 +1025,6 @@ class Module extends \XLite\Model\AEntity
      * @param boolean $overrideExists Override exist module OPTIONAL
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1131,7 +1068,6 @@ class Module extends \XLite\Model\AEntity
      * @param string $path Install pack path
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1151,7 +1087,6 @@ class Module extends \XLite\Model\AEntity
      * Include module Main class
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1173,7 +1108,6 @@ class Module extends \XLite\Model\AEntity
      * Get dependencies 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1189,7 +1123,6 @@ class Module extends \XLite\Model\AEntity
      * Get module Main class name 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1202,7 +1135,6 @@ class Module extends \XLite\Model\AEntity
      * Get inverted dependencies
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1230,7 +1162,6 @@ class Module extends \XLite\Model\AEntity
      * Retrieve skins list from the temporary local repository of module
      * 
      * @return array List of skins in the format: {new skin path} => {skin path from temporary local repository of module}
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1260,7 +1191,6 @@ class Module extends \XLite\Model\AEntity
      * Return file iterator for fetching skins 
      * 
      * @return \RecursiveIteratorIterator
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1281,7 +1211,6 @@ class Module extends \XLite\Model\AEntity
      * @param array                      &$registry Array for registration the skins dir
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1301,7 +1230,6 @@ class Module extends \XLite\Model\AEntity
      * @param string $dir Catalog path
      *  
      * @return string Relative path to skin
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1315,7 +1243,6 @@ class Module extends \XLite\Model\AEntity
      * Get module protected structures
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1375,7 +1302,6 @@ class Module extends \XLite\Model\AEntity
      * @param \Doctrine\ORM\Tools\SchemaTool $tool       Doctrine schema tool
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
