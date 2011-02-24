@@ -29,7 +29,7 @@
 <tr><td colspan="3">&nbsp;</td></tr>
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td><widget class="\XLite\View\Submit" href="javascript: document.recover_password.submit()" font="FormButton"></td>
+    <td><widget class="\XLite\View\Button\Submit" href="javascript: document.recover_password.submit()" font="FormButton"></td>
 </tr>
 </table>
 

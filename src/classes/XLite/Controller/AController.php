@@ -73,16 +73,6 @@ abstract class AController extends \XLite\Core\Handler
     protected $locationPath;
 
     /**
-     * Quick links 
-     * 
-     * @var    \XLite\View\QuickLinks
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $quickLinks;
-
-    /**
      * returnURL 
      * 
      * @var    string
@@ -243,23 +233,6 @@ abstract class AController extends \XLite\Core\Handler
         }
 
         return $this->locationPath;
-    }
-
-    /**
-     * Return quick links
-     *
-     * @return \XLite\View\QuickLinks
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getQuickLinks()
-    {
-        if (!isset($this->quickLinks)) {
-            $this->defineQuickLinks();
-        }
-
-        return $this->quickLinks;
     }
 
     /**
@@ -1008,36 +981,6 @@ abstract class AController extends \XLite\Core\Handler
         if ($location) {
             $this->addLocationNode($location);
         }
-    }
-
-    /**
-     * Method to create quick links
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineQuickLinks()
-    {
-        $this->quickLinks = array();
-    }
-
-    /**
-     * Add node to the quick links line
-     *
-     * @param string  $name Link title
-     * @param string  $link Link URL
-     * @param boolean $hl   Highlight flag
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function addQuickLink($name, $link, $hl = false)
-    {
-        $this->quickLinks[] = \XLite\View\QuickLinks\Link::create($name, $link, $hl);
     }
 
     /**
