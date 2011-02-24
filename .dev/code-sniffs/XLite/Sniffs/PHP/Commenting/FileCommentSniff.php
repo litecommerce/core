@@ -57,20 +57,13 @@ class XLite_Sniffs_PHP_Commenting_FileCommentSniff extends XLite_TagsSniff
                                         'allow_multiple' => false,
                                         'order_text'     => 'precedes @package',
                                        ),
-                       'package'    => array(
-                                        'required'       => true,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @category',
-                                       ),
-                       'subpackage' => array(
-                                        'required'       => false,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @package',
-                                       ),
                        'author'     => array(
                                         'required'       => true,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @subpackage (if used) or @package',
+                                        'allow_multiple' => true,
+                                        'order_text'     => 'follows @category',
+										'internal'       => array(
+											'allow_multiple' => false,
+										),
                                        ),
                        'copyright'  => array(
                                         'required'       => true,
@@ -93,12 +86,12 @@ class XLite_Sniffs_PHP_Commenting_FileCommentSniff extends XLite_TagsSniff
                                         'order_text'     => 'follows @version',
                                        ),
                        'see'        => array(
-                                        'required'       => false,
+                                        'required'       => true,
                                         'allow_multiple' => false,
                                         'order_text'     => 'follows @link',
                                        ),
                        'since'      => array(
-                                        'required'       => false,
+                                        'required'       => true,
                                         'allow_multiple' => false,
                                         'order_text'     => 'follows @see (if used) or @link',
                                        ),
@@ -304,6 +297,26 @@ class XLite_Sniffs_PHP_Commenting_FileCommentSniff extends XLite_TagsSniff
         }//end if
 
     }//end process()
+
+    /**
+     * check category tag
+     *
+     * @param   string    $content Tag content
+     * @access  protected
+     * @return  array
+     * @since   1.0.0
+     */
+    protected function checkCategory($content)
+    {
+        $result = parent::checkCategory($content);
+
+		if ($result[0] && $result[1] != 'LiteCommerce') {
+			$result = array(false, 'LiteCommerce');
+		
+		}
+
+        return $result;
+    }
 
 }//end class
 

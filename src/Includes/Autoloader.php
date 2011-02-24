@@ -109,7 +109,8 @@ abstract class Autoloader
          * 
          * May be that issue is related: http://bugs.php.net/50731
          */
-        if (0 === strpos($class = ltrim($class, '\\'), $namespace)) {
+        $class = ltrim($class, '\\');
+        if (0 === strpos($class, $namespace)) {
             include_once ($dir . str_replace('\\', LC_DS, $class) . '.php');
         }
     }

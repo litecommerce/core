@@ -78,15 +78,10 @@ class XLite_Sniffs_PHP_Commenting_FunctionCommentSniff extends XLite_TagsSniff
             'allow_multiple' => true,
             'order_text'     => 'follows @return',
         ),
-        'access' => array(
-            'required'       => false,
-            'allow_multiple' => false,
-            'order_text'     => 'follows @throws',
-        ),
 		'see'	=> array(
-            'required'       => false,
+            'required'       => true,
             'allow_multiple' => false,
-            'order_text'     => 'follows @access',
+            'order_text'     => 'follows @return',
         ),
         'since'      => array(
             'required'       => true,
@@ -202,13 +197,6 @@ class XLite_Sniffs_PHP_Commenting_FunctionCommentSniff extends XLite_TagsSniff
                 break;
             }
         }
-
-		$this->tags['access']['required'] = !is_null($this->_classToken);
-		if ($this->tags['access']['required']) {
-			$this->reqCodeRequire = array('REQ.PHP.4.5.3', 'REQ.PHP.4.5.9');
-		} else {
-			$this->reqCodeRequire = array('REQ.PHP.4.5.3');
-		}
 
         // If the first T_OPEN_TAG is right before the comment, it is probably
         // a file comment.
