@@ -325,8 +325,13 @@ abstract class AController extends \XLite\Core\Handler
 
             $this->display404();
 
-        } else {
+        } elseif (!empty(\XLite\Core\Request::getInstance()->action) && $this->isValid()) {
+
             $this->callAction();
+
+        } else {
+
+            $this->doNoAction();
         }
 
         if ($this->isRedirectNeeded()) {
@@ -1123,7 +1128,7 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Call controller action or special default action
+     * Call controller action
      * 
      * @return void
      * @access protected
@@ -1132,26 +1137,18 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function callAction()
     {
-        $action = null;
+        $action = \XLite\Core\Request::getInstance()->action;
 
-        if (!empty(\XLite\Core\Request::getInstance()->action) && $this->isValid()) {
+        $oldMethodName = 'action_' . $action;
+        $newMethodName = 'doAction' . \XLite\Core\Converter::convertToCamelCase($action);
 
-            $action = \XLite\Core\Request::getInstance()->action;
-
-            $oldMethodName = 'action_' . $action;
-            $newMethodName = 'doAction' . \XLite\Core\Converter::convertToCamelCase($action);
-
-            if (method_exists($this, $oldMethodName)) {
-                // action_{action}()
-                $this->$oldMethodName();
-
-            } elseif (method_exists($this, $newMethodName)) {
-                // doAction{Action}()
-                $this->$newMethodName();
-            }
-
-        } else {
-            $this->doNoAction();
+        if (method_exists($this, $oldMethodName)) {
+            // action_{action}()
+            // FIXME - to remove
+            $this->$oldMethodName();
+        } elseif (method_exists($this, $newMethodName)) {
+            // doAction{Action}()
+            $this->$newMethodName();
         }
 
         $this->actionPostprocess($action);

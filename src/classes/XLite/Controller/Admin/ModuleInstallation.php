@@ -78,7 +78,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
     {
         $moduleById = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->getModuleId());
 
-        return $moduleById->getModuleName() . $this->t(' License agreement');
+        return $moduleById ? ($moduleById->getModuleName() . static::t(' License agreement')) : null;
     }
 
     /**
