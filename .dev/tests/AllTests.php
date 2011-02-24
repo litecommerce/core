@@ -156,6 +156,8 @@ class XLite_Tests_AllTests
         $includes = false;
         $includeTests = array();
         $excludes = array();
+        $ds = preg_quote(LC_DS, '/');
+
         if (defined('INCLUDE_ONLY_TESTS')) {
             $includes = array_map('trim', explode(',', INCLUDE_ONLY_TESTS));
 
@@ -288,8 +290,6 @@ class XLite_Tests_AllTests
 
             $dirIterator = new RecursiveDirectoryIterator($classesDir);
             $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
-
-            $ds = preg_quote(LC_DS, '/');
 
             foreach ($iterator as $filePath => $fileObject) {
                 if (
