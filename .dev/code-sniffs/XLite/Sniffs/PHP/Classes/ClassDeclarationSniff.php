@@ -195,7 +195,15 @@ class XLite_Sniffs_PHP_Classes_ClassDeclarationSniff extends XLite_ReqCodesSniff
                             $this->getReqPrefix('REQ.PHP.3.4.6') . 'Использование определения области видимости обязательно',
                             $pos
                         );
- 					}
+
+ 					} elseif ($posPrivate) {
+                        $phpcsFile->addError(
+                            $this->getReqPrefix('REQ.PHP.3.4.8') . 'Использование области видимости private запрещено',
+                            $pos
+                        );
+
+
+					}
 
 					if ($posPublic !== false) {
                         $phpcsFile->addWarning(
