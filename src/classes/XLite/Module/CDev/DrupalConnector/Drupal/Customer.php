@@ -59,14 +59,14 @@ class Customer extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     /**
      * Return content for the "Order history" tab
      *
-     * @param stdClass $account Current user descriptor
+     * @param \stdClass $account Current user descriptor
      *
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getOrderHistoryPage(stdClass $account)
+    public function getOrderHistoryPage(\stdClass $account)
     {
         $this->getHandler()->mapRequest(array('target' => 'order_list'));
         drupal_set_title(t('Orders list'));

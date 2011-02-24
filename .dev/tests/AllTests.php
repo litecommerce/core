@@ -67,6 +67,10 @@ require_once PATH_TESTS . '/PHPUnit/TestCase.php';
 require_once PATH_TESTS . '/PHPUnit/MetricWriter.php';
 require_once PATH_TESTS . '/PHPUnit/SeleniumTestCase.php';
 
+if (!defined('MENU_LOCAL_TASK')) {
+    define('MENU_LOCAL_TASK', 0x0080 | 0x0004);
+}
+
 // Start X-Lite core
 
 define('LC_DO_NOT_REBUILD_CACHE', true);
@@ -285,6 +289,8 @@ class XLite_Tests_AllTests
             $dirIterator = new RecursiveDirectoryIterator($classesDir);
             $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
 
+            $ds = preg_quote(LC_DS, '/');
+
             foreach ($iterator as $filePath => $fileObject) {
                 if (
                     preg_match($pattern, $filePath, $matches)
@@ -292,6 +298,7 @@ class XLite_Tests_AllTests
                     && !preg_match('/\/(\w+Abstract|A[A-Z]\w+)\.php$/Ss', $filePath)
                     && (!$includes || in_array($matches[1], $includes))
                     && (!$excludes || !in_array($matches[1], $excludes))
+                    && !preg_match('/' . $ds . '(?:scripts|skins)' . $ds . '/Ss', $filePath)
                 ) {
                     $class = XLite_Tests_TestCase::CLASS_PREFIX
                         . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]);
@@ -326,6 +333,7 @@ class XLite_Tests_AllTests
                     && !preg_match('/\/(\w+Abstract|A[A-Z]\d+)\.php/Ss', $filePath)
                     && (!$includes || in_array($matches[1], $includes))
                     && (!$excludes || !in_array($matches[1], $excludes))
+                    && !preg_match('/' . $ds . '(?:scripts|skins)' . $ds . '/Ss', $filePath)
                 ) {
 
                     $classPrefix = !isset($deploy)

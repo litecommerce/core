@@ -29,7 +29,7 @@
 class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
 {
     // TODO use test marketplace URL
-    const URL = 'https://dev.qtmsoft.com/~joy/marketplace/';
+    const URL = 'https://xcart2-530.crtdev.local/~xcart/general/projects/xlite/market/';
 //  const URL = 'https://www.litecommerce.com/marketplace/';
 
     private function getFile($name)

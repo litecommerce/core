@@ -140,4 +140,12 @@ abstract class XLite_Web_Admin_AAdmin extends XLite_Web_AWeb
         $this->setBrowserUrl($this->baseURL);
     }
 
+    protected function waitForAJAXProgress()
+    {
+        $this->waitForLocalCondition(
+            'jQuery(".popup .ui-dialog-titlebar").length > 0',
+            300000
+        );
+    }
+
 }
