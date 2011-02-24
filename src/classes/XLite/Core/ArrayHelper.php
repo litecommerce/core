@@ -54,7 +54,7 @@ class ArrayHelper extends \XLite\Base\Singleton
         if (is_callable($callback) && (is_array($data) || $data instanceof \IteratorAggregate)) {
             foreach ($data as $key => $value) {
                 // Input argument
-                if (call_user_func($callback, $key, $value, $userData)) {
+                if (call_user_func($callback, $value, $userData)) {
                     $found = $value;
                     break;
                 }
