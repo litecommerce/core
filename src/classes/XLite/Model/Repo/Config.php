@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -31,49 +31,44 @@ namespace XLite\Model\Repo;
 /**
  * DB-based configuration registry
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Config extends \XLite\Model\Repo\Base\I18n
 {
     /**
      * Repository type 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $type = self::TYPE_SERVICE;
 
     /**
      * Default 'order by' field name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $defaultOrderBy = 'orderby';
 
     /**
      * List of options which are not allowed 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $disabledOptions = array();
 
     /**
      * Alternative record identifiers
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $alternativeIdentifier = array(
         array('category', 'name'),
@@ -85,7 +80,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param string $alias Table alias OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -98,7 +92,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * Get the list of options of the specified category
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -127,7 +120,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param string $category Category name
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -142,7 +134,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param boolean $force Do not use cache OPTIONAL
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -170,7 +161,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param array $data Array of options data gathered from the database
      *  
      * @return \XLite\Core\CommonCell
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -262,7 +252,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param array $data Option data in the following format
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -319,7 +308,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * Define cache cells
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -343,7 +331,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param string $name     Option name
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -359,7 +346,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param string $name     Option name
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -376,7 +362,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * Return query (and its params) which is used to filter options 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -406,7 +391,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param \Doctrine\ORM\QueryBuilder $qb Current query builder
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -425,7 +409,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param string $category Category name
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -442,7 +425,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param string $category Category name
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -458,7 +440,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * Define query builder for getAllOptions()
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -475,7 +456,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param mixed  &$value    Option value
      *  
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -490,7 +470,6 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param string $optionType Option type
      *  
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

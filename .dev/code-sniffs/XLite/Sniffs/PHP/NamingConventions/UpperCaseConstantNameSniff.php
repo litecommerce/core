@@ -103,8 +103,6 @@ class XLite_Sniffs_PHP_NamingConventions_UpperCaseConstantNameSniff extends XLit
 
             if ($tokens[$functionKeyword]['code'] === T_CONST) {
                 // This is a class constant - do not check
-				// $this->checkConstant($constName, $phpcsFile, $stackPtr);
-
                 return;
             }
 
@@ -124,9 +122,7 @@ class XLite_Sniffs_PHP_NamingConventions_UpperCaseConstantNameSniff extends XLit
             }
 
             // Is this a type hint?
-            if ($tokens[$nextPtr]['code'] === T_VARIABLE) {
-                return;
-            } else if ($phpcsFile->isReference($nextPtr) === true) {
+            if ($tokens[$nextPtr]['code'] === T_VARIABLE || $phpcsFile->isReference($nextPtr) === true) {
                 return;
             }
 

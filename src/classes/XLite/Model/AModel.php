@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -44,119 +44,107 @@ $GLOBALS['TEXT_QUALIFIERS'] = array(
 /**
  * Base class is an abstract class for all database-mapped objects
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class AModel extends \XLite\Base
 {
     /**
      * Table alias 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $alias;
 
     /**
      * Object properties (table filed => default value)
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $fields = array();
 
     /**
      * Object properties list
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $properties = array();
 
     /**
      * Primary keys names
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $primaryKey = array();
 
     /**
      * Auto-increment file name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $autoIncrement = null;
     
     /**
      * Shows whether the object data have been read from DB or not
      * 
-     * @var    boolean
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public $isRead = false;
 
     /**
      * Checks whether the object data exists in DB
      * 
-     * @var    boolean
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public $isPersistent = false;
     
     /**
      * Default order file name
      * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public $defaultOrder;
 
     /**
      * Default SQL filter (WHERE block) for findAll() method
      * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public $_range;
 
     /**
      * If set to true, findAll will fetch only primary keys (isRead = false)
      * 
-     * @var    boolean
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public $fetchKeysOnly = false;
 
     /**
      * If set to true, findAll will fetch only object' indexes
      * 
-     * @var    boolean
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public $fetchObjIdxOnly = false;
 
@@ -164,7 +152,6 @@ class AModel extends \XLite\Base
      * Update or create model object (DB record)
      * 
      * @return boolean 
-     * @access public
      * @since  3.0.0
      */
     public function modify()
@@ -177,7 +164,6 @@ class AModel extends \XLite\Base
      * property as a key. 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -274,7 +260,6 @@ class AModel extends \XLite\Base
     /**
     * Checks whether the database record exists for this object
     *
-    * @access public
     * @return boolean True if record exists for object / false otherwise
     */
     function isExists() 
@@ -290,7 +275,6 @@ class AModel extends \XLite\Base
      * Update object
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -315,7 +299,6 @@ class AModel extends \XLite\Base
     /**
     * Creates the database record for this object.
     *
-    * @access public
     */
     function create() 
     {
@@ -371,7 +354,6 @@ class AModel extends \XLite\Base
      * Deletes the database record for this object
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -395,7 +377,6 @@ class AModel extends \XLite\Base
      * Builds the SQL INSERT statement query for this object properties
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -421,7 +402,6 @@ class AModel extends \XLite\Base
     /**
     * Builds the SQL DELETE statement to delete this object database record.
     *
-    * @access private
     * @return string The SQL DELETE statement
     */
     function _buildDelete() 
@@ -440,7 +420,6 @@ class AModel extends \XLite\Base
      * Builds the SQL UPDATE statement for updating this object database record
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -472,7 +451,6 @@ class AModel extends \XLite\Base
     
     /**
     * Enables the object - sets "enabled' property to 1.
-    * @access public
     */
     function enable() 
     {
@@ -481,7 +459,6 @@ class AModel extends \XLite\Base
 
     /**
     * Disables the object - sets "enabled' property to 0.
-    * @access public
     */
     function disable() 
     {
@@ -492,7 +469,6 @@ class AModel extends \XLite\Base
     * Compares the property name specified by $prop with $val and
     * returns true if equals, false otherwise. Useful in templates.
     *
-    * @access public
     */
     function isSelected($property, $value = null, $prop = null) 
     {
@@ -505,7 +481,6 @@ class AModel extends \XLite\Base
     /**
     * Calculates MD5 hash based on the object properties.
     *
-    * @access public
     */
     function md5() 
     {
@@ -557,7 +532,6 @@ class AModel extends \XLite\Base
      * @param boolean $returnError Trigger for stopping script or returning false OPTIONAL
      *  
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -576,7 +550,6 @@ class AModel extends \XLite\Base
      * @param array $options ____param_comment____
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -672,7 +645,6 @@ class AModel extends \XLite\Base
      * @param array $layout The list of fields for importing OPTIONAL
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -766,7 +738,6 @@ class AModel extends \XLite\Base
      * @param float $price Currency value
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -786,7 +757,6 @@ class AModel extends \XLite\Base
      * @param string $field   Field to use as an index
      *  
      * @return array
-     * @access protected
      * @since  3.0
      */
     protected function _assocArray(array $objects, $field)
@@ -813,7 +783,6 @@ class AModel extends \XLite\Base
      * Checks whether the all primary keys for this object are set or not 
      * 
      * @return boolean 
-     * @access protected
      * @since  3.0
      */
     protected function _allKeysSet()
@@ -831,7 +800,6 @@ class AModel extends \XLite\Base
      * @param array $properties Property values array
      *  
      * @return void
-     * @access protected
      * @since  3.0
      */
     protected function _updateProperties(array $properties = array())
@@ -846,7 +814,6 @@ class AModel extends \XLite\Base
      * @param string $where Condition
      *  
      * @return string
-     * @access protected
      * @since  3.0
      */
     protected function _buildWhere($where)
@@ -863,7 +830,6 @@ class AModel extends \XLite\Base
      * @param mixed $limit   "limit" condition OPTIONAL
      *  
      * @return string
-     * @access protected
      * @since  3.0
      */
     protected function _buildSelect($where = null, $orderby = null, $groupby = null, $limit = null)
@@ -890,7 +856,6 @@ class AModel extends \XLite\Base
      * Builds SQL query for reading the database data for this object by primary key 
      * 
      * @return string
-     * @access protected
      * @since  3.0
      */
     protected function _buildRead()
@@ -916,7 +881,6 @@ class AModel extends \XLite\Base
      * @param string $method     Method to execute
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -935,7 +899,6 @@ class AModel extends \XLite\Base
      * If it is specified, the object is created as isPersistent, otherwise - !isPersistent 
      * 
      * @return void
-     * @access public
      * @since  3.0
      */
     public function __construct()
@@ -956,7 +919,6 @@ class AModel extends \XLite\Base
      * Returns the properties of this object. Reads the object from database if necessary 
      * 
      * @return array
-     * @access public
      * @since  3.0
      */
     public function getProperties()
@@ -974,7 +936,6 @@ class AModel extends \XLite\Base
      * @param array $properties The associative array with properties
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -989,7 +950,6 @@ class AModel extends \XLite\Base
      * @param array $properties The associative array with properties
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1004,7 +964,6 @@ class AModel extends \XLite\Base
      * @param string $property Field name
      *  
      * @return mixed
-     * @access public
      * @since  3.0
      */
     public function get($property)
@@ -1030,7 +989,6 @@ class AModel extends \XLite\Base
      * @param mixed  $value    Field value
      *  
      * @return void
-     * @access public
      * @since  3.0
      */
     public function set($property, $value)
@@ -1058,7 +1016,6 @@ class AModel extends \XLite\Base
      * @param mixed  $value    Field value OPTIONAL
      *
      * @return void
-     * @access public
      * @since  3.0
      */
     public function unsetProperty($property, $value = null)
@@ -1070,7 +1027,6 @@ class AModel extends \XLite\Base
      * Reads the database data for this object. Dies for non-persistens objects (object which are not exist in database) 
      * 
      * @return boolean True if data found / false otherwise
-     * @access public
      * @since  3.0
      */
     public function read()
@@ -1105,7 +1061,6 @@ class AModel extends \XLite\Base
      * Wrapps findAll() method with the default arguments 
      * 
      * @return array
-     * @access public
      * @since  3.0
      */
     public function readAll()
@@ -1120,7 +1075,6 @@ class AModel extends \XLite\Base
      * @param mixed $order "orderby" condition OPTIONAL
      *  
      * @return boolean 
-     * @access public
      * @since  3.0
      */
     public function find($where, $order = null)
@@ -1147,7 +1101,6 @@ class AModel extends \XLite\Base
      * @param mixed $limit   "limit" condition OPTIONAL
      *  
      * @return array
-     * @access public
      * @since  3.0
      */
     public function findAll($where = null, $orderby = null, $groupby = null, $limit = null)

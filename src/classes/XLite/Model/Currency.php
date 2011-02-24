@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,7 +31,6 @@ namespace XLite\Model;
 /**
  * Currency
  * 
- * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity
@@ -43,7 +42,6 @@ class Currency extends \XLite\Model\Base\I18n
      * Currency unique id (ISO 4217 number)
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Id
@@ -55,7 +53,6 @@ class Currency extends \XLite\Model\Base\I18n
      * Currency code (ISO 4217 alpha-3)
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="fixedstring", length="3", unique=true)
@@ -66,7 +63,6 @@ class Currency extends \XLite\Model\Base\I18n
      * Symbol
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="string", length="16")
@@ -77,7 +73,6 @@ class Currency extends \XLite\Model\Base\I18n
      * Number of digits after the decimal separator.
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="integer")
@@ -88,7 +83,6 @@ class Currency extends \XLite\Model\Base\I18n
      * Orders
      *
      * @var    \Doctrine\Common\Collections\Collection
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -103,7 +97,6 @@ class Currency extends \XLite\Model\Base\I18n
      * TODO - Doctrine is not generate setter for identifier. We must reworkt it
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -118,7 +111,6 @@ class Currency extends \XLite\Model\Base\I18n
      * @param float $value Value
      *  
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -133,7 +125,6 @@ class Currency extends \XLite\Model\Base\I18n
      * @param float $value Value
      *  
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -148,7 +139,6 @@ class Currency extends \XLite\Model\Base\I18n
      * @param integer $value Value
      *  
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -163,7 +153,6 @@ class Currency extends \XLite\Model\Base\I18n
      * @param float $value Value
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -183,7 +172,6 @@ class Currency extends \XLite\Model\Base\I18n
      * @param array $data Entity properties
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

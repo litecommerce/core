@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Shipping;
@@ -31,60 +31,53 @@ namespace XLite\Model\Shipping;
 /**
  * Shipping rate model
  * 
- * @package    XLite
- * @subpackage Model
  * @see        ____class_see____
- * @since      3.0.0
+ * @since     3.0.0
  */
 class Rate extends \XLite\Base\SuperClass
 {
     /**
      * Shipping method object
      * 
-     * @var    \XLite\Model\Shipping\Method
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Shipping\Method
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $method = null;
 
     /**
      * Shipping markup object
      * 
-     * @var    \XLite\Model\Shipping\Markup
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Shipping\Markup
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $markup = null;
 
     /**
      * Base rate value
      * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   float
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $baseRate = 0;
 
     /**
      * Markup rate value
      * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   float
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $markupRate = 0;
 
     /**
      * Rate's extra data (real-time rate calculation's details)
      * 
-     * @var    \XLite\Core\CommonCell
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Core\CommonCell
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $extraData = null;
 
@@ -92,7 +85,6 @@ class Rate extends \XLite\Base\SuperClass
      * Public class constructor
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -105,7 +97,6 @@ class Rate extends \XLite\Base\SuperClass
      * getMethod 
      * 
      * @return \XLite\Model\Shipping\Method
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -120,7 +111,6 @@ class Rate extends \XLite\Base\SuperClass
      * @param \XLite\Model\Shipping\Method $method Shipping method object
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -133,7 +123,6 @@ class Rate extends \XLite\Base\SuperClass
      * getMarkup 
      * 
      * @return \XLite\Model\Shipping\Markup
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -148,7 +137,6 @@ class Rate extends \XLite\Base\SuperClass
      * @param \XLite\Model\Shipping\Markup $markup Shipping markup object
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -161,7 +149,6 @@ class Rate extends \XLite\Base\SuperClass
      * getBaseRate 
      * 
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -176,7 +163,6 @@ class Rate extends \XLite\Base\SuperClass
      * @param float $baseRate Base rate value
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -189,7 +175,6 @@ class Rate extends \XLite\Base\SuperClass
      * getMarkupRate 
      * 
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -204,7 +189,6 @@ class Rate extends \XLite\Base\SuperClass
      * @param float $markupRate Markup rate value
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -217,7 +201,6 @@ class Rate extends \XLite\Base\SuperClass
      * getExtraData
      * 
      * @return \XLite\Core\CommonCell
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -232,7 +215,6 @@ class Rate extends \XLite\Base\SuperClass
      * @param \XLite\Core\CommonCell $extraData Rate's extra data
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -245,7 +227,6 @@ class Rate extends \XLite\Base\SuperClass
      * getTotalRate 
      * 
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -258,7 +239,6 @@ class Rate extends \XLite\Base\SuperClass
      * getMethodId 
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -273,7 +253,6 @@ class Rate extends \XLite\Base\SuperClass
      * getMethodName 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

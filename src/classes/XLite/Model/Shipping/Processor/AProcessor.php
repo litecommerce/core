@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Shipping\Processor;
@@ -31,40 +31,35 @@ namespace XLite\Model\Shipping\Processor;
 /**
  * Shipping processor model
  * 
- * @package    XLite
- * @subpackage Model
  * @see        ____class_see____
- * @since      3.0.0
+ * @since     3.0.0
  */
 abstract class AProcessor extends \XLite\Base\SuperClass
 {
     /**
      * Unique processor Id 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $processorId = null;
 
     /**
      * Url of shipping server for rates calculation
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $apiURL = null;
 
     /**
      * Log of request/response pairs during communitation with a shipping server 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $apiCommunicationLog = null;
 
@@ -72,7 +67,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * Define public constructor
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -84,7 +78,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * Returns processor name 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -97,7 +90,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * @param boolean $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -107,7 +99,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * Returns processor's shipping methods 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -121,7 +112,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * Returns processor Id 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -134,7 +124,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * Returns true if shipping methods named may be modified by admin
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -147,7 +136,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * Returns an API URL 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -160,7 +148,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * Returns an API communication log 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -175,7 +162,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * @param string $key Key of a cache cell
      *  
      * @return mixed
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -201,7 +187,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * @param mixed  $data Data object for saving in the cache
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Payment;
@@ -31,7 +31,6 @@ namespace XLite\Model\Payment;
 /**
  * Payment method
  * 
- * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  *
@@ -50,7 +49,6 @@ class Method extends \XLite\Model\Base\I18n
      * Payment method unique id
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -64,7 +62,6 @@ class Method extends \XLite\Model\Base\I18n
      * Method service name (gateway or API name)
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -76,7 +73,6 @@ class Method extends \XLite\Model\Base\I18n
      * Process class name
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -88,7 +84,6 @@ class Method extends \XLite\Model\Base\I18n
      * Position
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -100,7 +95,6 @@ class Method extends \XLite\Model\Base\I18n
      * Enabled status
      * 
      * @var    boolean
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -112,7 +106,6 @@ class Method extends \XLite\Model\Base\I18n
      * Settings
      *
      * @var    \XLite\Model\Payment\MethodSetting
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -124,7 +117,6 @@ class Method extends \XLite\Model\Base\I18n
      * Transactions
      *
      * @var    \XLite\Model\Payment\Transaction
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -136,7 +128,6 @@ class Method extends \XLite\Model\Base\I18n
      * Get processor 
      * 
      * @return \XLite\Model\Payment\Base\Processor
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -152,7 +143,6 @@ class Method extends \XLite\Model\Base\I18n
      * FIXME - must be removed
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -171,7 +161,6 @@ class Method extends \XLite\Model\Base\I18n
      * Set class 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -186,7 +175,6 @@ class Method extends \XLite\Model\Base\I18n
      * @param string $name Name
      *  
      * @return string|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -203,7 +191,6 @@ class Method extends \XLite\Model\Base\I18n
      * @param string $name Name
      *  
      * @return \XLite\Model\Payment\MethodSetting
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -228,7 +215,6 @@ class Method extends \XLite\Model\Base\I18n
      * @param string $value Value
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -253,7 +239,6 @@ class Method extends \XLite\Model\Base\I18n
      * @param array $data Entity properties
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

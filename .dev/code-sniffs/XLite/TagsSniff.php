@@ -371,9 +371,9 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
                 );
 			}
 
-			if ($g['link']['type'] && !in_array($g['link']['type'], array('M', 'C', 'T'))) {
+			if ($g['link']['type'] && !in_array($g['link']['type'], array('M', 'E', 'S', 'G'))) {
                 $this->currentFile->addError(
-                    $this->getReqPrefix('REQ.PHP.4.2.4', 'REQ.PHP.4.2.5', 'REQ.PHP.4.2.6') . 'Тип ссыли должен быть M или C или T',
+                    $this->getReqPrefix('REQ.PHP.4.2.4') . 'Тип ссыли должен быть M или E или S или G',
                     $g['begin']
                 );
 			}
@@ -388,41 +388,32 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 
 		$gotchas = array();
 
-		$idx = false;
-		for ($i = $commentStart + 1; $i < $commentEnd - 2; $i++) {
-			if (!preg_match('/\s+:([\w\d\_]+): (.+)$/S', $tokens[$i]['content'], $match)) {
-				if ($idx !== false) {
-					if (preg_match('/^[ ]* \*\s*$/S', $tokens[$i]['content'])) {
-						$gotchas[$idx]['end'] = $i - 1;
-						$idx = false;
+		$data = '';
+		for ($i = $commentStart; $i < $commentEnd; $i++) {
+			$data .= $tokens[$i]['content'];
+		}
 
-					} elseif (preg_match('/^[ ]* \*(.+)$/S', $tokens[$i]['content'], $match)) {
-						$gotchas[$idx]['text'] .= ' ' . trim($match[1]);
-					}
+		if (preg_match_all('/\s+:([A-Z\d\_]+):(\s+.+)?$/Sm', $data, $match)) {
+			foreach ($match[1] as $k => $v) {
+				$gotcha = array(
+					'name'  => $v,
+					'text'  => trim($match[2][$k]),
+					'begin' => $i,
+					'end'   => $i,
+					'link'  => array(
+						'type' => false,
+						'id'   => false,
+					),
+				);
+
+				if (preg_match('/^([\w]):([\d]+) /S', $gotcha['text'], $match)) {
+					$gotcha['link']['type'] = $match[1];
+					$gotcha['link']['id'] = $match[2];
+					$gotcha['text'] = trim(substr($gotcha['text'], strlen($match[0])));
 				}
-				
-				continue;
+
+				$gotchas[] = $gotcha;
 			}
-
-			$gotcha = array(
-				'name' => $match[1],
-				'text' => trim($match[2]),
-				'begin' => $i,
-				'end' => $i,
-				'link' => array(
-					'type' => false,
-					'id' => false
-				)
-			);
-
-			if (preg_match('/^([\w]):([\d]+) /S', $gotcha['text'], $match)) {
-				$gotcha['link']['type'] = $match[1];
-				$gotcha['link']['id'] = $match[2];
-				$gotcha['text'] = trim(substr($gotcha['text'], strlen($match[0])));
-			}
-
-			$idx = count($gotchas);
-			$gotchas[$idx] = $gotcha;
 		}
 
 		return $gotchas;
@@ -695,13 +686,13 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 
 			} elseif (
 				$this->isInternalProject()
-				&& !preg_match('/^GIT: \$' . 'Id: [a-f\d]{40} \$$/Ss', $content)
+				&& !preg_match('/^GIT: \$' . 'Id(?:: [a-f\d]{40} )?\$$/Ss', $content)
 			) {
                 $error = "Invalid version \"$content\" in file comment; consider \"GIT: <git_id>\" instead";
                 $this->currentFile->addWarning($this->getReqPrefix($this->getReqCode($this->reqCodesWrongFormat, 'version')) . $error, $errorPos);
 
             } elseif (
-				!preg_match('/^[A-Z]+: \$' . 'Id:.+ \$$/Ss', $content)
+				!preg_match('/^[A-Z]+: \$' . 'Id(?:: .+ )?\$$/Ss', $content)
 			) {
                 $error = "Invalid version \"$content\" in file comment";
                 $this->currentFile->addWarning($this->getReqPrefix($this->getReqCode($this->reqCodesWrongFormat, 'version')) . $error, $errorPos);
@@ -943,6 +934,14 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 
                         $this->currentFile->addError($this->getReqPrefix('REQ.PHP.4.1.25') . $error, $errorPos);
                     }
+
+					if (isset($realParams[($pos - 1)]['default']) && !preg_match('/ OPTIONAL$/Ss', $paramComment)) {
+                        $this->currentFile->addError(
+							$this->getReqPrefix('REQ.PHP.3.5.18') . 'Переменная "' . $paramName . '" опциональная, но служебного тэга OPTIONAL ее комментарий не имеет',
+							$errorPos
+						);
+					}
+
                 } else {
                     // We must have an extra parameter comment.
                     $error = 'Superfluous doc comment at position '.$pos;
@@ -1013,7 +1012,10 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 	{
         $types = array_map('trim', explode('|', $rawType));
         if (4 < count($types)) {
-            $this->currentFile->addError($this->getReqPrefix('?') . 'Число вариантов типов @' . $tag . ' больше 4', $errorPos);
+            $this->currentFile->addError(
+				$this->getReqPrefix('REQ.PHP.3.5.17') . 'Число вариантов типов @' . $tag . ' больше 4',
+				$errorPos
+			);
         }
 
 		$result = true;
