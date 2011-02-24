@@ -28,27 +28,25 @@
 
 namespace XLite\Module\CDev\Demo\Controller\Admin;
 
-class CacheManagement extends \XLite\Controller\Admin\CacheManagement
-implements \XLite\Base\IDecorator
+/**
+ * CacheManagement 
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
+class CacheManagement extends \XLite\Controller\Admin\CacheManagement implements \XLite\Base\IDecorator
 {
-
     /**
-     * Check if current page is accessible
+     * URL to redirect if action is forbidden
      *
-     * @return boolean 
-     * @access public
+     * @return string
+     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function checkAccess()
+    protected function getForbidInDemoModeRedirectURL()
     {
-        if (\XLite\Core\Request::getInstance()->action) {
-            \XLite\Module\CDev\Demo\Main::doForbidAction(
-                null,
-                \XLite\Core\Converter::buildURL('main')
-            );
-        }
-
-        return parent::checkAccess();
+        return \XLite\Core\Converter::buildURL('main');
     }
 }
-

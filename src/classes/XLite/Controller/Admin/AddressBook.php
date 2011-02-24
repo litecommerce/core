@@ -47,6 +47,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      */
     protected $address = null;
 
+
     /**
      * Return the current page title (for the content area)
      *
@@ -110,16 +111,29 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Common method to determine current location
-     *
-     * @return string
+     * Alias
+     * 
+     * @return \XLite\Model\Profile
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
+    protected function getProfile()
+    {
+        return $this->getModelForm()->getModelObject()->getProfile() ?: new \XLite\Model\Profile();
+    }
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected function getLocation()
     {
-        return ($profile = $this->getModelForm()->getModelObject()->getProfile()) ? $profile->getLogin() : null;
+        return $this->getProfile()->getLogin();
     }
 
     /**

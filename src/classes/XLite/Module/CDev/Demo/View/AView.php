@@ -39,14 +39,19 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 {
     /**
      * Compile and display a template
-     *
+     * 
+     * @param string $original         Template file name
+     * @param string $previousSkin     Previous skin
+     * @param string $previousTemplate Previous template
+     *  
      * @return void
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function includeCompiledFile($original = null)
+    protected function includeCompiledFile($original = null, $previousSkin = null, $previousTemplate = null)
     {
-        if (preg_match('/' . preg_quote('admin' . LC_DS . 'en' . LC_DS . 'main.tpl', '/') . '$/Ss', $this->getTemplateFile($original))) {
+        if (\XLite::isAdminZone() && 'main.tpl' === basename($this->getTemplateFile($original))) {
             echo (self::getAdditionalHeader());
         }
 
@@ -63,7 +68,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      */
     public static function getAdditionalHeader()
     {
-        return <<<HTML
+        return <<<'HTML'
 <div class="demo-header">
 This LiteCommerce Admin zone demo has been created for illustrative purposes only. No changes made in the demo will be reflected in the Customer zone
 </div>

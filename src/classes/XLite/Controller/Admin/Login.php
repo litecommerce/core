@@ -30,6 +30,7 @@ namespace XLite\Controller\Admin;
 
 /**
  * Login
+ * FIXME: must be completely refactored
  * 
  * @package XLite
  * @see     ____class_see____
