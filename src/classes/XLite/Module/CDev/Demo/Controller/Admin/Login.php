@@ -45,7 +45,7 @@ class Login extends \XLite\Controller\Admin\Login implements \XLite\Base\IDecora
 	 * @see    ____var_see____
 	 * @since  3.0.0
 	 */
-	protected static $demoLogin = 'bit-bucket@litecommerce.com';
+	protected $demoLogin = 'bit-bucket@litecommerce.com';
 
     /**
      * Demo admin password 
@@ -55,12 +55,12 @@ class Login extends \XLite\Controller\Admin\Login implements \XLite\Base\IDecora
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $demoPassword = 'master';
+    protected $demoPassword = 'master';
 
     /**
      * Handles the request.
      * Parses the request variables if necessary. Attempts to call the specified action function 
-     * FIXME - simplify
+     * FIXME - adapt after the mapping will be removed
      * 
      * @return void
      * @access public
@@ -70,10 +70,9 @@ class Login extends \XLite\Controller\Admin\Login implements \XLite\Base\IDecora
     {
 		parent::handleRequest();
 
-		$this->set('login', self::$demoLogin);
-		$this->set('password', self::$demoPassword);
-		$this->set('additional_note', '<center>(login: ' . self::$demoLogin . ', password: ' . self::$demoPassword . ')</center>');
+		$this->set('login', $this->demoLogin);
+		$this->set('password', $this->demoPassword);
+		$this->set('additional_note', '<center>(login: ' . $this->demoLogin . ', password: ' . $this->demoPassword . ')</center>');
         $this->set('additional_header', \XLite\Module\CDev\Demo\View\AView::getAdditionalHeader());
 	}
 }
-

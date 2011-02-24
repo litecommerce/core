@@ -28,24 +28,25 @@
 
 namespace XLite\Module\CDev\Demo\Controller\Admin;
 
-class ExportCatalog extends \XLite\Controller\Admin\ExportCatalog
-implements \XLite\Base\IDecorator
+/**
+ * AddressBook 
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
+class AddressBook extends \XLite\Controller\Admin\AddressBook implements \XLite\Base\IDecorator
 {
-
     /**
-     * Check if current page is accessible
+     * Check if we need to forbid current action
      *
-     * @return boolean 
-     * @access public
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function checkAccess()
+    protected function checkForDemoController()
     {
-        if (\XLite\Core\Request::getInstance()->action) {
-            \XLite\Module\CDev\Demo\Main::doForbidAction();
-        }
-
-        return parent::checkAccess();
+        return parent::checkForDemoController() && $this->getProfile()->isAdmin();
     }
 }
-

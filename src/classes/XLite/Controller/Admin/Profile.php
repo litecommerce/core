@@ -38,6 +38,20 @@ namespace XLite\Controller\Admin;
 class Profile extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Alias
+     *
+     * @return \XLite\Model\Profile
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProfile()
+    {
+        return $this->getModelForm()->getModelObject() ?: new \XLite\Model\Profile();
+    }
+
+
+    /**
      * Common method to determine current location
      *
      * @return string
@@ -47,7 +61,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return $this->getModelForm()->getModelObject()->getLogin();
+        return $this->getProfile()->getLogin();
     }
 
     /**
@@ -125,13 +139,13 @@ class Profile extends \XLite\Controller\Admin\AAdmin
             } else {
                 
                 // Send notification to the user
-                \XLite\Core\Mailer::sendProfileCreatedUserNotification($this->getModelForm()->getModelObject());
+                \XLite\Core\Mailer::sendProfileCreatedUserNotification($this->getProfile());
 
                 // Send notification to the users department
-                \XLite\Core\Mailer::sendProfileCreatedAdminNotification($this->getModelForm()->getModelObject());
+                \XLite\Core\Mailer::sendProfileCreatedAdminNotification($this->getProfile());
 
                 // Return to the created profile page
-                $params = array('profile_id' => $this->getModelForm()->getModelObject()->getProfileId());
+                $params = array('profile_id' => $this->getProfile()->getProfileId());
             }
 
         } else {
@@ -139,13 +153,13 @@ class Profile extends \XLite\Controller\Admin\AAdmin
             // Existsing profile is updated
 
             // Send notification to the user
-            \XLite\Core\Mailer::sendProfileUpdatedUserNotification($this->getModelForm()->getModelObject());
+            \XLite\Core\Mailer::sendProfileUpdatedUserNotification($this->getProfile());
 
             // Send notification to the users department
-            \XLite\Core\Mailer::sendProfileUpdatedAdminNotification($this->getModelForm()->getModelObject());
+            \XLite\Core\Mailer::sendProfileUpdatedAdminNotification($this->getProfile());
 
             // Get profile ID from modified profile model
-            $profileId = $this->getModelForm()->getModelObject()->getProfileId();
+            $profileId = $this->getProfile()->getProfileId();
 
             // Return to the profile page
             $params = array('profile_id' => $profileId);
@@ -167,7 +181,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionDelete()
     {
-        $userLogin = $this->getModelForm()->getModelObject()->getLogin();
+        $userLogin = $this->getProfile()->getLogin();
 
         $result = $this->getModelForm()->performAction('delete');
 
