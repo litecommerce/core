@@ -1,6 +1,6 @@
 #!/usr/local/bin/zsh
 #
-# $Id$
+# GIT: $Id$
 #
 # Local PHP Unit
 #

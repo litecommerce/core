@@ -1,13 +1,4 @@
 #!/usr/local/bin/zsh
-#
-# $Id$
-#
-# Local PHP Unit + HTML coverage report in 'coverage' directory
-#
-# Usage example:
-#
-# ./phpunit-report.sh
-#
 
 cd $(dirname $0)
 cd ..

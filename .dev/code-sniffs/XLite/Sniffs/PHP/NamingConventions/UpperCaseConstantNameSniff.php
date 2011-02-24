@@ -45,7 +45,8 @@ class XLite_Sniffs_PHP_NamingConventions_UpperCaseConstantNameSniff extends XLit
 		'GLOB_MARK',
 		'PREG_GREP_INVERT',
 		'ENT_NOQUOTES', 'ENT_COMPAT', 'ENT_QUOTES',
-		'LIBXML_DTDLOAD', 'LIBXML_NOERROR', 'LIBXML_NOWARNING'
+		'LIBXML_DTDLOAD', 'LIBXML_NOERROR', 'LIBXML_NOWARNING',
+		'LOG_ERR',
 	);
 
     /**
@@ -173,11 +174,9 @@ class XLite_Sniffs_PHP_NamingConventions_UpperCaseConstantNameSniff extends XLit
 			return;
 		}
 
-		if (substr($constName, 0, 3) !== 'XP_') {
-			/* TODO - rework or remove
-			$error = 'Constant ' . $constName . ' has not prefix XP_';
+		if (substr($constName, 0, 3) !== 'LC_') {
+			$error = 'Constant ' . $constName . ' has not prefix LC_';
 			$phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.6.3') . $error, $stackPtr);
-			*/
 		}
 
 		if (!preg_match('/^[A-Z0-9_]+$/Ss', $constName)) {
