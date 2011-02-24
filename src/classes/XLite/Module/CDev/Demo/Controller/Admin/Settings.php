@@ -28,26 +28,15 @@
 
 namespace XLite\Module\CDev\Demo\Controller\Admin;
 
-class Settings extends \XLite\Controller\Admin\Settings
-implements \XLite\Base\IDecorator
+/**
+ * Settings 
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
+class Settings extends \XLite\Controller\Admin\Settings implements \XLite\Base\IDecorator
 {
-
-    /**
-     * Check if current page is accessible
-     *
-     * @return boolean 
-     * @access public
-     * @since  3.0.0
-     */
-    public function checkAccess()
-    {
-        if (\XLite\Core\Request::getInstance()->action) {
-            \XLite\Module\CDev\Demo\Main::doForbidAction();
-        }
-
-        return parent::checkAccess();
-    }
-
     /**
      * Get tab names 
      * 
@@ -67,4 +56,3 @@ implements \XLite\Base\IDecorator
         return $tabs;
     }
 }
-

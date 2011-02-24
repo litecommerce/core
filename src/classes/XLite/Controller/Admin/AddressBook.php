@@ -38,6 +38,19 @@ namespace XLite\Controller\Admin;
 class AddressBook extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Alias
+     * 
+     * @return \XLite\Model\Profile
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProfile()
+    {
+        return $this->getModelForm()->getModelObject()->getProfile() ?: new \XLite\Model\Profile();
+    }
+
+    /**
      * Common method to determine current location
      *
      * @return string
@@ -47,7 +60,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return ($profile = $this->getModelForm()->getModelObject()->getProfile()) ? $profile->getLogin() : null;
+        return $this->getProfile()->getLogin();
     }
 
     /**
