@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -31,9 +31,8 @@ namespace XLite\Model\Repo;
 /**
  * Order repository
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Order extends \XLite\Model\Repo\ARepo
 {
@@ -59,10 +58,9 @@ class Order extends \XLite\Model\Repo\ARepo
     /**
      * currentSearchCnd 
      * 
-     * @var    \XLite\Core\CommonCell
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Core\CommonCell
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $currentSearchCnd = null;
 
@@ -70,7 +68,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * Return list of handling search params 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -94,7 +91,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param string $param Name of param to check
      *  
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -110,7 +106,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param integer                    $value        Condition data
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -130,7 +125,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\Profile       $value        Profile
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -150,7 +144,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param integer                    $value        Condition data
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -171,7 +164,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param string                     $value        Condition data
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -192,7 +184,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param string                     $value        Condition data
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -218,7 +209,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param array                      $value        Condition data
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -239,7 +229,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * Return order TTL
      * 
      * @return integer 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -252,7 +241,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * Define query for findAllExipredTemporaryOrders() method
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -268,7 +256,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * Find all expired temporary orders 
      * 
      * @return \Doctrine\Common\Collection\ArrayCollection
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -284,7 +271,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param boolean $placedOnly Use only orders or orders + carts OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -305,7 +291,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * Orders collect garbage 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -328,7 +313,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param array                      $value        Condition data
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -347,7 +331,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param array                      $value        Condition data
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -365,7 +348,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -389,7 +371,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *  
      * @return \Doctrine\ORM\PersistentCollection|integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

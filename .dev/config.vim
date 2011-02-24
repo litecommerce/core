@@ -31,6 +31,7 @@ function LC_PHPSettings()
 	set foldenable
 	set foldmethod=marker
     set foldmarker={{{,}}}
+    set foldlevel=99
 endfunction
 
 function LC_YAMLSettings()

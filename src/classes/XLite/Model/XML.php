@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,49 +31,44 @@ namespace XLite\Model;
 /**
  * XML parser
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class XML extends \XLite\Base
 {
     /**
      * XML parser
      * 
-     * @var    resource
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   resource
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $xml_parser = null;
 
     /**
      * XML error message
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $error = '';
 
     /**
      * Parser encode character set
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $parserEncode = 'ISO-8859-1';
 
     /**
      * Postprocessed XML with errors placeholder 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $xml = '';
 
@@ -81,7 +76,6 @@ class XML extends \XLite\Base
      * Constructor
      *
      * @return void
-     * @access public
      * @since  3.0.0
      */
     public function __construct()
@@ -95,7 +89,6 @@ class XML extends \XLite\Base
      * @param string $xml Initial XML
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -120,7 +113,6 @@ class XML extends \XLite\Base
      * @param string $xml XML
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -157,7 +149,6 @@ class XML extends \XLite\Base
      * @param integer &$i     Pointer
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -220,7 +211,6 @@ class XML extends \XLite\Base
      * @param string $xml XML
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

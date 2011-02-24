@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -31,39 +31,35 @@ namespace XLite\Model\Repo;
 /**
  * Language repository
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Language extends \XLite\Model\Repo\Base\I18n
 {
     /**
      * Repository type 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $type = self::TYPE_SERVICE;
 
     /**
      * Default 'order by' field name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $defaultOrderBy = 'code';
 
     /**
      * Global default language (cache)
      * 
-     * @var    \XLite\Model\Language
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Language
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $defaultLanguage = null;
 
@@ -71,7 +67,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * Define cache cells 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -92,7 +87,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * Find all languages
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -111,7 +105,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * Define query builder for findAllLanguages()
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -124,7 +117,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * Find all active languages
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -145,7 +137,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * @param integer $status Status key
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -160,7 +151,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * Find all added languages
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -173,7 +163,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * Define query builder for findAddedLanguages()
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -188,7 +177,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * Find all inactive languages
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -203,7 +191,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * @param string $code Code
      *  
      * @return \XLite\Model\Language|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -218,7 +205,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * @param string $code Language code
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -235,7 +221,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * Get languages query 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -253,7 +238,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * Get global default language 
      * 
      * @return string Language code
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

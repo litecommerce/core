@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,9 +31,8 @@ namespace XLite\Model;
 /**
  * Abstract caching factory 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class CachingFactory extends \XLite\Model\Factory
 {
@@ -41,7 +40,6 @@ class CachingFactory extends \XLite\Model\Factory
      * Objects cache 
      * 
      * @var    array
-     * @access protected
      * @since  3.0.0
      */
     protected static $cache = array();
@@ -53,7 +51,6 @@ class CachingFactory extends \XLite\Model\Factory
      * @param mixed $handler Variable to prepare
      *  
      * @return mixed
-     * @access protected
      * @since  3.0.0
      */
     protected static function prepareHandler($handler)
@@ -73,7 +70,6 @@ class CachingFactory extends \XLite\Model\Factory
      * @param boolean $clearCache Clear cache flag OPTIONAL
      *  
      * @return mixed
-     * @access public
      * @since  3.0.0
      */
     public static function getObjectFromCallback($signature, $handler, $method, array $args = array(), $clearCache = false)
@@ -93,7 +89,6 @@ class CachingFactory extends \XLite\Model\Factory
      * @param array  $args      Constructor arguments
      *  
      * @return \XLite\Base
-     * @access public
      * @since  3.0.0
      */
     public static function getObject($signature, $class, array $args = array())
@@ -107,7 +102,6 @@ class CachingFactory extends \XLite\Model\Factory
      * @param string $signature Cache cell key
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -120,7 +114,6 @@ class CachingFactory extends \XLite\Model\Factory
      * Clear cache 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -133,7 +126,6 @@ class CachingFactory extends \XLite\Model\Factory
      * Clean up cache
      *
      * @return void
-     * @access public
      * @since  3.0.0
      */
     public function __destruct()

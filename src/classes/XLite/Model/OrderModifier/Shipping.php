@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\OrderModifier;
@@ -31,9 +31,8 @@ namespace XLite\Model\OrderModifier;
 /**
  * Shipping order modifier
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
@@ -45,10 +44,9 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
     /**
      * shippingRate 
      * 
-     * @var    \XLite\Model\Shipping\Rate
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Shipping\Rate
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $selectedRate;
 
@@ -56,7 +54,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Define order modifiers 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -73,7 +70,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Calculate shipping 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -103,7 +99,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Get shipping cost row name 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -116,7 +111,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Calculate shipping rates 
      * 
      * @return array(\XLite\Model\Shipping\Rate)
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -141,7 +135,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * @param \XLite\Model\Shipping\Rate $b Second shipping rate
      *  
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -170,7 +163,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * TODO: add checking if rates should be recalculated else get rates from cache
      * 
      * @return array(\XLite\Model\Shipping\Rate)
-     * @access public
      * @since  3.0.0
      */
     public function getShippingRates()
@@ -182,7 +174,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Get selected shipping rate 
      * 
      * @return \XLite\Model\Shipping\Rate
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -230,7 +221,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * @param \XLite\Model\Shipping\Rate $rate Shipping rate object
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -254,7 +244,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Service method: check if shipping is visible or not at the moment of saveModifier() call
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -268,7 +257,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Method is used by isAvailable() (\XLite\Model\OrderModifier class)
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -281,7 +269,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Check - shipping rates exists or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -296,7 +283,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Check if shipping enabled and available for calculation
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -309,7 +295,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Check if shipping rate has been selected
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -322,7 +307,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Check - shipping is available for this order or not
      * 
      * @return boolean 
-     * @access public
      * @since  3.0.0
      */
     public function isDeliveryAvailable()
@@ -334,7 +318,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Get shipped items 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -355,7 +338,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Get order weight 
      * 
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -374,7 +356,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Count shipped items quantity
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -393,7 +374,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Get shipping method
      * 
      * @return \XLite\Model\Shipping\Method
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -414,7 +394,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Get shipping method name 
      * 
      * @return string|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -436,7 +415,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Returns true if any of order items are shipped 
      * 
      * @return boolean 
-     * @access public
      * @since  3.0.0
      */
     public function isShipped()
@@ -457,7 +435,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      * Get order subtotal only for shipped items
      * 
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

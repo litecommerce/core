@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage ____sub_package____
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,9 +31,8 @@ namespace XLite\Model;
 /**
  * \XLite\Model\ActionStatus 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class ActionStatus extends \XLite\Base
 {
@@ -50,7 +49,6 @@ class ActionStatus extends \XLite\Base
      * Action status 
      * 
      * @var    int
-     * @access protected
      * @since  3.0.0
      */
     protected $status = self::STATUS_UNDEFINED;
@@ -59,7 +57,6 @@ class ActionStatus extends \XLite\Base
      * Code 
      * 
      * @var    int
-     * @access protected
      * @since  3.0.0
      */
     protected $code = null;
@@ -68,7 +65,6 @@ class ActionStatus extends \XLite\Base
      * Status info
      * 
      * @var    string
-     * @access protected
      * @since  3.0.0
      */
     protected $message = null;
@@ -77,7 +73,6 @@ class ActionStatus extends \XLite\Base
      * allowedStatuses 
      * 
      * @var    array
-     * @access protected
      * @since  3.0.0
      */
     protected $allowedStatuses = array(
@@ -92,7 +87,6 @@ class ActionStatus extends \XLite\Base
      * @param mixed $status Value to check
      *  
      * @return boolean 
-     * @access protected
      * @since  3.0.0
      */
     protected function checkStatus($status)
@@ -105,7 +99,6 @@ class ActionStatus extends \XLite\Base
      * isError 
      * 
      * @return boolean 
-     * @access public
      * @since  3.0.0
      */
     public function isError()
@@ -117,7 +110,6 @@ class ActionStatus extends \XLite\Base
      * isSuccess 
      * 
      * @return boolean 
-     * @access public
      * @since  3.0.0
      */
     public function isSuccess()
@@ -129,7 +121,6 @@ class ActionStatus extends \XLite\Base
      * getStatus 
      * 
      * @return integer 
-     * @access public
      * @since  3.0.0
      */
     public function getStatus()
@@ -141,7 +132,6 @@ class ActionStatus extends \XLite\Base
      * getCode 
      * 
      * @return integer 
-     * @access public
      * @since  3.0.0
      */
     public function getCode()
@@ -153,7 +143,6 @@ class ActionStatus extends \XLite\Base
      * getMessage 
      * 
      * @return string
-     * @access public
      * @since  3.0.0
      */
     public function getMessage()
@@ -169,7 +158,6 @@ class ActionStatus extends \XLite\Base
      * @param integer    $code    Code OPTIONAL
      *  
      * @return void
-     * @access public
      * @since  3.0.0
      */
     public function __construct($status, $message = '', $code = 0)

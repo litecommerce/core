@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Base;
@@ -31,7 +31,6 @@ namespace XLite\Model\Base;
 /**
  * Object translation 
  * 
- * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  *
@@ -45,7 +44,6 @@ abstract class Translation extends \XLite\Model\AEntity
      * Label unique id 
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -59,7 +57,6 @@ abstract class Translation extends \XLite\Model\AEntity
      * Label language code 
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -71,7 +68,6 @@ abstract class Translation extends \XLite\Model\AEntity
      * Return the owner object
      * 
      * @return \XLite\Model\AEntity
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -84,7 +80,6 @@ abstract class Translation extends \XLite\Model\AEntity
       * Check cache after enity persist or remove
       * 
       * @return void
-      * @access public
       * @see    ____func_see____
       * @since  3.0.0
       */
@@ -102,7 +97,6 @@ abstract class Translation extends \XLite\Model\AEntity
      * Return list of class properties which are not translated
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

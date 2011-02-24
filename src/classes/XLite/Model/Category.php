@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,7 +31,6 @@ namespace XLite\Model;
 /**
  * Category
  * 
- * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  *
@@ -51,7 +50,6 @@ class Category extends \XLite\Model\Base\I18n
      * Node unique ID 
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -65,7 +63,6 @@ class Category extends \XLite\Model\Base\I18n
      * Node left value 
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -77,7 +74,6 @@ class Category extends \XLite\Model\Base\I18n
      * Node right value 
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -89,7 +85,6 @@ class Category extends \XLite\Model\Base\I18n
      * Node status
      * 
      * @var    boolean
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -101,7 +96,6 @@ class Category extends \XLite\Model\Base\I18n
      * Node clean (SEO-friendly) URL
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -113,7 +107,6 @@ class Category extends \XLite\Model\Base\I18n
      * Whether to display the category title, or not
      * 
      * @var    integer
-     * @access protected
      * @since  3.0.0
      *
      * @Column (type="boolean")
@@ -124,7 +117,6 @@ class Category extends \XLite\Model\Base\I18n
      * Some cached flags
      * 
      * @var    \XLite\Model\Category\QuickFlags
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * 
@@ -136,7 +128,6 @@ class Category extends \XLite\Model\Base\I18n
      * Many-to-one relation with memberships table
      * 
      * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -149,7 +140,6 @@ class Category extends \XLite\Model\Base\I18n
      * One-to-one relation with category_images table
      * 
      * @var    \XLite\Model\Image\Category\Image
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -161,7 +151,6 @@ class Category extends \XLite\Model\Base\I18n
      * Relation to a CategoryProducts entities
      * 
      * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -174,7 +163,6 @@ class Category extends \XLite\Model\Base\I18n
      * Child categories
      * 
      * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -186,7 +174,6 @@ class Category extends \XLite\Model\Base\I18n
      * Parent category
      * 
      * @var    \XLite\Model\Category
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -201,7 +188,6 @@ class Category extends \XLite\Model\Base\I18n
      * @param \XLite\Model\Category $parent Parent category
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -216,7 +202,6 @@ class Category extends \XLite\Model\Base\I18n
      * @param \XLite\Model\Image\Category\Image $image Image
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -229,7 +214,6 @@ class Category extends \XLite\Model\Base\I18n
      * Check if category has image 
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -242,7 +226,6 @@ class Category extends \XLite\Model\Base\I18n
      * Get the number of subcategories 
      * 
      * @return integer|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -259,7 +242,6 @@ class Category extends \XLite\Model\Base\I18n
      * Check if category has subcategories
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -272,7 +254,6 @@ class Category extends \XLite\Model\Base\I18n
      * Return subcategories list
      * 
      * @return \Doctrine\Common\Collections\ArrayCollection
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -285,7 +266,6 @@ class Category extends \XLite\Model\Base\I18n
      * Return siblings list
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -298,7 +278,6 @@ class Category extends \XLite\Model\Base\I18n
      * Gets full path to the category as a string: <parent category>/.../<category name>
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -319,7 +298,6 @@ class Category extends \XLite\Model\Base\I18n
      * TODO: check if result of "getProducts()" is cached by Doctrine
      * 
      * @return integer 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -335,7 +313,6 @@ class Category extends \XLite\Model\Base\I18n
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *  
      * @return array|integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -357,7 +334,6 @@ class Category extends \XLite\Model\Base\I18n
      * @param array $data Entity properties
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

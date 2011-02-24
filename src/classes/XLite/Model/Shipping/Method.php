@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Shipping;
@@ -31,10 +31,8 @@ namespace XLite\Model\Shipping;
 /**
  * Shipping method model
  * 
- * @package    XLite
- * @subpackage Model
  * @see        ____class_see____
- * @since      3.0.0
+ * @since     3.0.0
  *
  * @Entity (repositoryClass="XLite\Model\Repo\Shipping\Method")
  * @Table  (name="shipping_methods",
@@ -52,7 +50,6 @@ class Method extends \XLite\Model\Base\I18n
      * A unique ID of the method
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -66,7 +63,6 @@ class Method extends \XLite\Model\Base\I18n
      * Processor class name
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -78,7 +74,6 @@ class Method extends \XLite\Model\Base\I18n
      * Carrier of the method (for instance, "UPS" or "USPS")
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -90,7 +85,6 @@ class Method extends \XLite\Model\Base\I18n
      * Unique code of shipping method (within processor space)
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -102,7 +96,6 @@ class Method extends \XLite\Model\Base\I18n
      * Whether the method is enabled or disabled
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -114,7 +107,6 @@ class Method extends \XLite\Model\Base\I18n
      * A position of the method among other registered methods
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -126,7 +118,6 @@ class Method extends \XLite\Model\Base\I18n
      * Shipping rates (relation)
      * 
      * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -141,7 +132,6 @@ class Method extends \XLite\Model\Base\I18n
      * @param array $data Entity properties
      *                                     
      * @return void                        
-     * @access public                      
      * @see    ____func_see____            
      * @since  3.0.0                       
      */                                    

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -31,9 +31,8 @@ namespace XLite\Model\Repo;
 /**
  * Category repository class
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Category extends \XLite\Model\Repo\Base\I18n
 {
@@ -46,10 +45,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Flush unit-of-work changes after every record loading 
      * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $flushAfterLoading = true;
 
@@ -57,7 +55,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Define the Doctrine query
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -75,7 +72,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -97,7 +93,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -122,7 +117,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param \XLite\Model\Category $category Category
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -144,7 +138,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -161,7 +154,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -193,7 +185,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -210,7 +201,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $productId Product Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -232,7 +222,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $offset       Increment OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -259,7 +248,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param string                     $alias        Entity alias OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -279,7 +267,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param string                     $alias        Entity alias OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -296,7 +283,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param string                     $alias        Entity alias OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -311,7 +297,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Return maximum index in the "nested set" tree
      * 
      * @return integer 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -327,7 +312,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param \XLite\Model\Category $parent Parent category object
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -362,7 +346,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $scEnabled The "subcategories_count_enabled" flag value
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -381,7 +364,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param mixed $categoryId Category ID
      *  
      * @return integer|void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -397,7 +379,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param array                 $flags  Flags to set
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -423,7 +404,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param array $data Data to save
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -470,7 +450,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param array                $data   Data to save
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -491,7 +470,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param \XLite\Model\AEntity $entity Entity to detach
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -508,7 +486,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Return the reserved ID of root category
      *
      * @return integer 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -521,7 +498,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Return the ctegory enabled condition
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -537,7 +513,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param boolean $excludeRoot Do not include root category into the search result OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -561,7 +536,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category ID
      *  
      * @return \XLite\Model\Category
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -576,7 +550,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $rootId ID of the subtree root OPTIONAL
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -591,7 +564,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $rootId ID of the subtree root
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -606,7 +578,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param \XLite\Model\Category $category Category
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -621,7 +592,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -636,7 +606,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -651,7 +620,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      *  
      * @return integer 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -666,7 +634,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $productId Product ID
      *  
      * @return \Doctrine\ORM\PersistentCollection
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -682,7 +649,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param array $data Entity properties
      *  
      * @return \XLite\Model\Category
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -706,7 +672,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param boolean $onlySubtree Flag OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -741,7 +706,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer                    $rpos       Right position OPTIONAL
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -772,7 +736,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param array $regular Regular fields info OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -797,7 +760,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param array                $parentAssoc Entity mapped propery method
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -840,7 +802,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param array $assocs Associations info OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -857,7 +818,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Get detailed foreign keys
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

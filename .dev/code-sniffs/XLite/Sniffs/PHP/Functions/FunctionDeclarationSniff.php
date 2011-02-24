@@ -96,6 +96,12 @@ class XLite_Sniffs_PHP_Functions_FunctionDeclarationSniff extends XLite_ReqCodes
 					$this->getReqPrefix('REQ.PHP.3.5.1') . 'Методы класса должны всегда определять свою область видимости',
 					$stackPtr
 				);
+
+			} elseif ($tokens[$methodType]['code'] == T_PRIVATE) {
+                $phpcsFile->addError(
+                    $this->getReqPrefix('REQ.PHP.3.5.16') . 'Методы класса с областью видимости private запрещены',
+                    $stackPtr
+                );
 			}
 
 		} else {
