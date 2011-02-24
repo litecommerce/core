@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -31,29 +31,26 @@ namespace XLite\Model\Repo;
 /**
  * Country repository
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class State extends \XLite\Model\Repo\ARepo
 {
     /**
      * Repository type 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $type = self::TYPE_SERVICE;
 
     /**
      * Default 'order by' field name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $defaultOrderBy = 'state';
 
@@ -61,7 +58,6 @@ class State extends \XLite\Model\Repo\ARepo
      * Define cache cells 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -82,7 +78,6 @@ class State extends \XLite\Model\Repo\ARepo
      * @param string $customState Custom state name OPTIONAL
      * 
      * @return \XLite\Model\State
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -101,7 +96,6 @@ class State extends \XLite\Model\Repo\ARepo
      * @param integer $stateId State id
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -116,7 +110,6 @@ class State extends \XLite\Model\Repo\ARepo
      * @param integer $stateId State id
      *  
      * @return string|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -133,7 +126,6 @@ class State extends \XLite\Model\Repo\ARepo
      * @param integer $stateId State id
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -152,7 +144,6 @@ class State extends \XLite\Model\Repo\ARepo
      * @param string  $customState Custom state name if state is dump 'Other' state OPTIONAL
      *  
      * @return \XLite\Model\State
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -169,7 +160,6 @@ class State extends \XLite\Model\Repo\ARepo
      * @param integer $stateId State id
      *  
      * @return \XLite\Model\State
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -190,7 +180,6 @@ class State extends \XLite\Model\Repo\ARepo
      * @param integer $stateId State id
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -208,7 +197,6 @@ class State extends \XLite\Model\Repo\ARepo
      * Find all states
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -227,7 +215,6 @@ class State extends \XLite\Model\Repo\ARepo
      * Define query builder for findAllStates()
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -244,7 +231,6 @@ class State extends \XLite\Model\Repo\ARepo
      * @param string $countryCode Country code
      *  
      * @return \XLite\Model\State|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -263,7 +249,6 @@ class State extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\Country $country Country
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -281,7 +266,6 @@ class State extends \XLite\Model\Repo\ARepo
      * @param string $code        State code
      *  
      * @return \XLite\Model\State|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -297,7 +281,6 @@ class State extends \XLite\Model\Repo\ARepo
      * @param string $code        State code
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -317,7 +300,6 @@ class State extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\AEntity $parent Parent model
      *
      * @return \XLite\Model\AEntity|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

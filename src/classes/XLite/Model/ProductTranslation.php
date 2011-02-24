@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,7 +31,6 @@ namespace XLite\Model;
 /**
  * Product multilingual data
  * 
- * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity
@@ -49,7 +48,6 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      * Product name
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -61,7 +59,6 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      * Product description
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -73,7 +70,6 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      * Product brief description
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -85,7 +81,6 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      * Meta tags
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -97,7 +92,6 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      * Product meta description
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -109,7 +103,6 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      * Meta title
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *

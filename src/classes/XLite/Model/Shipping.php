@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,9 +31,8 @@ namespace XLite\Model;
 /**
  * Common shipping method
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Shipping extends \XLite\Base\Singleton
 {
@@ -41,7 +40,6 @@ class Shipping extends \XLite\Base\Singleton
      * List of registered shipping processors
      * 
      * @var    array
-     * @access protected
      * @since  3.0
      */
     protected static $registeredProcessors = array();
@@ -50,7 +48,6 @@ class Shipping extends \XLite\Base\Singleton
      * __constructor 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -66,7 +63,6 @@ class Shipping extends \XLite\Base\Singleton
      * @param string $processorClass Processor class
      *
      * @return void
-     * @access public
      * @since  3.0
      */
     public static function registerProcessor($processorClass)
@@ -88,7 +84,6 @@ class Shipping extends \XLite\Base\Singleton
      * @param \XLite\Model\Shipping\Processor\AProcessor $b Second processor
      *  
      * @return integer 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -120,7 +115,6 @@ class Shipping extends \XLite\Base\Singleton
      * @param string $processorClass Processor class
      *
      * @return void
-     * @access public
      * @since  3.0
      */
     public static function unregisterProcessor($processorClass)
@@ -134,7 +128,6 @@ class Shipping extends \XLite\Base\Singleton
      * Returns the list of registered shipping processors 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -147,7 +140,6 @@ class Shipping extends \XLite\Base\Singleton
      * Retrieves shipping methods: all or by specified processor
      * 
      * @return array
-     * @access public
      * @since  3.0
      */
     public function getShippingMethods($processorClass = null)
@@ -173,7 +165,6 @@ class Shipping extends \XLite\Base\Singleton
      * @param \XLite\Model\Order $order Order object
      *  
      * @return void
-     * @access public
      * @since  3.0
      */
     public function getRates(\XLite\Model\Order $order)
@@ -228,7 +219,6 @@ class Shipping extends \XLite\Base\Singleton
      * @param \XLite\Model\Order $order Order instance
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
