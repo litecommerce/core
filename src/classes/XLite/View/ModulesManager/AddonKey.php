@@ -81,4 +81,22 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
         return 'modules_manager' . LC_DS . 'enter_key';
     }
 
+    /** 
+     * Register CSS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {   
+        $list = parent::getCSSFiles();
+
+        $list[] = $this->getDir() . LC_DS . 'css' . LC_DS . 'style.css';
+
+        return $list;
+    }   
+
+
 }
