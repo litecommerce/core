@@ -129,7 +129,7 @@ class Address extends \XLite\View\Model\AModel
     /**
      * This object will be used if another one is not pased
      *
-     * @return \XLite\Model\AModel
+     * @return \XLite\Model\Address
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -285,7 +285,7 @@ class Address extends \XLite\View\Model\AModel
     /**
      * Return model object to use
      *
-     * @return \XLite\Model\AModel
+     * @return \XLite\Model\Address
      * @access public
      * @since  3.0.0
      */

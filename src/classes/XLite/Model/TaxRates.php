@@ -1002,13 +1002,19 @@ array("condition" => "state=District of Columbia", "action" => array(
 
     }
 
-    function formatCurrency($price)
+    /**
+     * Alias for formatCurrency 
+     * 
+     * @param float $price Price value to format
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function formatCurrency($price)
     {
-        if (!isset($this->_BaseObj)) {
-            $this->_BaseObj = new \XLite\Model\AModel();
-        }
-
-        return $this->_BaseObj->formatCurrency($price);
+        return \XLite\Core\Converter::formatCurrency($price);
     }
 
     /**
