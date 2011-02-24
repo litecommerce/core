@@ -937,7 +937,7 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 
 					if (isset($realParams[($pos - 1)]['default']) && !preg_match('/ OPTIONAL$/Ss', $paramComment)) {
                         $this->currentFile->addError(
-							$this->getReqPrefix('REQ.PHP.3.5.18') . $error,
+							$this->getReqPrefix('REQ.PHP.3.5.18') . 'Переменная "' . $paramName . '" опциональная, но служебного тэга OPTIONAL ее комментарий не имеет',
 							$errorPos
 						);
 					}
