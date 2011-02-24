@@ -114,6 +114,7 @@
 			<arg value="${buildDir}/.dev/tests/AllTests.php" />
 			<arg value="DEPLOY_DRUPAL" />
         </exec>
+		<copy file="/u/xcart/etc/config.local.php" tofile="${installDir}/modules/lc_connector/litecommerce/etc/config.local.php" />
     </target>
 
 	<target name="prepare-db">
