@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Base;
@@ -31,7 +31,6 @@ namespace XLite\Model\Base;
 /**
  * Modifier owner 
  * 
- * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  * MappedSuperclass
@@ -52,7 +51,6 @@ abstract class ModifierOwner extends \XLite\Model\AEntity
      * Total 
      * 
      * @var    float
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="decimal", precision="14", scale="4")
@@ -63,7 +61,6 @@ abstract class ModifierOwner extends \XLite\Model\AEntity
      * Subtotal 
      * 
      * @var    float
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="decimal", precision="14", scale="4")
@@ -73,10 +70,9 @@ abstract class ModifierOwner extends \XLite\Model\AEntity
     /**
      * Modifiers (cache)
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $modifiers;
 
@@ -84,7 +80,6 @@ abstract class ModifierOwner extends \XLite\Model\AEntity
      * Get modifiers 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -135,7 +130,6 @@ abstract class ModifierOwner extends \XLite\Model\AEntity
      * Define order modifiers 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -148,7 +142,6 @@ abstract class ModifierOwner extends \XLite\Model\AEntity
      * Get visible saved modifiers 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -169,7 +162,6 @@ abstract class ModifierOwner extends \XLite\Model\AEntity
      * Get summable saved modifiers list
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -192,7 +184,6 @@ abstract class ModifierOwner extends \XLite\Model\AEntity
      * @param string $code Modifier code
      *  
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -213,7 +204,6 @@ abstract class ModifierOwner extends \XLite\Model\AEntity
      * Get calculated total 
      * 
      * @return float
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -236,7 +226,6 @@ abstract class ModifierOwner extends \XLite\Model\AEntity
      * @param string $subcode Saved modifier code OPTIONAL
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -290,7 +279,6 @@ abstract class ModifierOwner extends \XLite\Model\AEntity
      * @param string $code Modifier code
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -305,7 +293,6 @@ abstract class ModifierOwner extends \XLite\Model\AEntity
      * Calculation
      * 
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -338,7 +325,6 @@ abstract class ModifierOwner extends \XLite\Model\AEntity
      * Calculate and save subtotal 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

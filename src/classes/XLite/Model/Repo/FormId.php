@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -31,19 +31,17 @@ namespace XLite\Model\Repo;
 /**
  * Form id repository
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class FormId extends \XLite\Model\Repo\ARepo
 {
     /**
      * Repository type 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $type = self::TYPE_SERVICE;
 
@@ -56,10 +54,9 @@ class FormId extends \XLite\Model\Repo\ARepo
     /**
      * Default 'order by' field name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $defaultOrderBy = array(
         'date' => false,
@@ -69,10 +66,9 @@ class FormId extends \XLite\Model\Repo\ARepo
     /**
      * Form id characters list 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $chars = array(
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -87,10 +83,9 @@ class FormId extends \XLite\Model\Repo\ARepo
     /**
      * Frontier length 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $frontierLength = 100;
 
@@ -101,7 +96,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param integer $sessionId Session id OPTIONAL
      *  
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -121,7 +115,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param integer $sessionId Session id
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -140,7 +133,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param integer $sessionId Session id OPTIONAL
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -176,7 +168,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param integer $sessionId Session id OPTIONAL OPTIONAL
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -198,7 +189,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param integer $sessionId Session id
      * 
      * @return integer|void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -214,7 +204,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param integer $sessionId Session id
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -235,7 +224,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param integer $sessionId Session id
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -255,7 +243,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param string $type   Schema type
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

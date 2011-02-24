@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,7 +31,6 @@ namespace XLite\Model;
 /**
  * Something customer can put into his cart
  * 
- * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  *
@@ -56,7 +55,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Primary key 
      * 
      * @var    int
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * 
@@ -70,7 +68,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Object (product)
      * 
      * @var    \XLite\Model\Product
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -83,7 +80,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Item name
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -95,7 +91,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Item SKU 
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -107,7 +102,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Item price
      *
      * @var    decimal
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -119,7 +113,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Item quantity 
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -131,7 +124,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Item order 
      * 
      * @var    \XLite\Model\Order
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * 
@@ -144,7 +136,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Order item saved modifiers
      *
      * @var    \XLite\Model\OrderItemModifier
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -155,10 +146,9 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
     /**
      * Dump product (deleted)
      * 
-     * @var    \XLite\Model\Product
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Product
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $dumpProduct;
 
@@ -168,7 +158,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * TODO - switch to getObject() and remove 
      * 
      * @return \XLite\Model\Product
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -186,7 +175,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Get deleted product 
      * 
      * @return \XLite\Model\Product|void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -208,7 +196,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * @param \XLite\Model\Product $product Product to set OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -223,7 +210,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * @param \XLite\Model\Base\IOrderItem $item Order item related object
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -247,7 +233,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * @param \XLite\Model\Base\IOrderItem $item Item object
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -266,7 +251,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Reset item state 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -283,7 +267,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * @param integer $amount Value to set
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -301,7 +284,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Get item weight 
      * 
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -318,7 +300,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Check if item has a image
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -331,7 +312,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Get item image URL
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -344,7 +324,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Get item image
      *
      * @return \XLite\Model\Base\Image
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -357,7 +336,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Get item description 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -370,7 +348,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Get item URL 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -383,7 +360,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Flag; is this item needs to be shipped
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -396,7 +372,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * This key is used when checking if item is unique in the cart
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -409,7 +384,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Check if item is valid
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -423,7 +397,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * TODO - rework - move to separate order item discount modifier
      * 
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -437,7 +410,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * TODO - rework - move to separate order item tax modifier
      * 
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -450,7 +422,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Calculate and save order item subtotal 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -464,7 +435,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * Get event cell base information
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -484,7 +454,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * @param float $value Subtotal
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -501,7 +470,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * @param float $value Total
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -518,7 +486,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * @param array $data Entity properties
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

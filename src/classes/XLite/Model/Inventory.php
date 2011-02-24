@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,7 +31,6 @@ namespace XLite\Model;
 /**
  * Product inventory
  *
- * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  *
@@ -58,7 +57,6 @@ class Inventory extends \XLite\Model\AEntity
      * Inventory unique ID
      *
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -72,7 +70,6 @@ class Inventory extends \XLite\Model\AEntity
      * Is inventory tracking enabled or not
      *                            
      * @var    boolean
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -84,7 +81,6 @@ class Inventory extends \XLite\Model\AEntity
      * Amount 
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -96,7 +92,6 @@ class Inventory extends \XLite\Model\AEntity
      * Is low limit notification enabled or not
      *
      * @var    boolean
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -108,7 +103,6 @@ class Inventory extends \XLite\Model\AEntity
      * Low limit amount
      *
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -120,7 +114,6 @@ class Inventory extends \XLite\Model\AEntity
      * Product (association)
      * 
      * @var    \XLite\Model\Product
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -135,7 +128,6 @@ class Inventory extends \XLite\Model\AEntity
      * @param integer $amount Value to check
      *  
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -148,7 +140,6 @@ class Inventory extends \XLite\Model\AEntity
      * Get list of cart items containing current product
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -161,7 +152,6 @@ class Inventory extends \XLite\Model\AEntity
      * Return "locked" amount: items already added to the cart
      * 
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -174,7 +164,6 @@ class Inventory extends \XLite\Model\AEntity
      * Default qty value to show to customers
      * 
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -187,7 +176,6 @@ class Inventory extends \XLite\Model\AEntity
      * Send notification to admin about product low limit
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -202,7 +190,6 @@ class Inventory extends \XLite\Model\AEntity
      * @param integer $amount Amount to set
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -217,7 +204,6 @@ class Inventory extends \XLite\Model\AEntity
      * @param integer $amount Amount to set
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -232,7 +218,6 @@ class Inventory extends \XLite\Model\AEntity
      * @param integer $delta Amount delta
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -247,7 +232,6 @@ class Inventory extends \XLite\Model\AEntity
      * Return product amount available to add to cart
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -260,7 +244,6 @@ class Inventory extends \XLite\Model\AEntity
      * Alias: is product in stock or not
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -285,7 +268,6 @@ class Inventory extends \XLite\Model\AEntity
      * Perform some actions before inventory saved
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      *

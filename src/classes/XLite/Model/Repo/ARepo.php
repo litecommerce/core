@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -31,9 +31,8 @@ namespace XLite\Model\Repo;
 /**
  * Abstract repository
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class ARepo extends \Doctrine\ORM\EntityRepository
 {
@@ -78,80 +77,72 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Cache cells (local cache)
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $cacheCells = null;
 
     /**
      * Default 'order by' field name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $defaultOrderBy;
 
     /**
      * Default model alias 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $defaultAlias;
 
     /**
      * Alternative record identifiers
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $alternativeIdentifier;
 
     /**
      * Entity properties 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $entityProperties;
 
     /**
      * Flush unit-of-work changes after every record loading 
      * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $flushAfterLoading = false;
 
     /**
      * Repository type 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $type = self::TYPE_STORE;
 
     /**
      * Query builder class 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $queryBuilderClass;
 
@@ -159,7 +150,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Get repository type 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -172,7 +162,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Define cache cells 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -187,7 +176,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param string $key Cell name OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -206,7 +194,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Restore cache cells info from cache
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -239,7 +226,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array $cacheCells Cache cells
      *  
      * @return array (cache cells & relations data)
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -302,7 +288,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array $externalCells External cells
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -331,7 +316,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Get related cache cells 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -351,7 +335,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array  $params Cache cell parameters
      *  
      * @return mixed|void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -381,7 +364,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array  $params Cache cell parameters
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -418,7 +400,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array  $params Cache parameters
      *  
      * @return string|void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -452,7 +433,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param string $suffix Cache subsection name OPTIONAL
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -467,7 +447,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param string $name Cell name
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -482,7 +461,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param string $name Cell name
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -495,7 +473,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Check - has repository any cache cells or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -510,7 +487,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param \XLite\Model\AEntity $entity Record
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -556,7 +532,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param string $name Cell name OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -572,7 +547,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param string                     $alias        Table short alias in query builder OPTIONAL
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -608,7 +582,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param \Doctrine\ORM\QueryBuilder $qb Query builder
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -626,7 +599,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param string $alias Table alias OPTIONAL
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -648,7 +620,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param string $alias Table alias OPTIONAL
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -665,7 +636,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Get query builder 
      * 
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -688,7 +658,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Get default alias 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -706,7 +675,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Count records
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -719,7 +687,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Define query for count() method
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -737,7 +704,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array $ids Id's list
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -768,7 +734,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param integer $limit Frame length OPTIONAL
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -784,7 +749,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param integer $limit Frame length
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -801,7 +765,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param integer                    $limit Frame length OPTIONAL
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -827,7 +790,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param \Doctrine\ORM\QueryBuilder $qb Query builder
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -850,7 +812,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param mixed $data Entites list
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -871,7 +832,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param mixed $id The identifier.
      *  
      * @return \XLite\Model\AEntity|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -892,7 +852,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Flushes all changes to objects that have been queued up to now to the database
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -908,7 +867,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param integer $id Entity ID
      *
      * @return \XLite\Model\AEntity
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -926,7 +884,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * getAllowedModifiers 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -939,7 +896,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Pattern to check called method names
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -954,7 +910,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array $data Data to save
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -977,7 +932,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array                $data   Data to save
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -996,7 +950,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param \XLite\Model\AEntity $entity Entity to detach
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1017,7 +970,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array  $args   Call arguments
      *  
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1075,7 +1027,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Delete all records in associated table
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1089,7 +1040,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * This method is used to determine entity persistence
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1105,7 +1055,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param \XLite\Model\AEntity $parent Parent model
      *  
      * @return \XLite\Model\AEntity|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1122,7 +1071,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array $data Record
      *  
      * @return array(mixed)|boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1160,7 +1108,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array $data Record
      *  
      * @return boolean|array(mixed)
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1200,7 +1147,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array                $parentAssoc Entity mapped propery method OPTIONAL
      *  
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1225,7 +1171,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array                $parentAssoc Entity mapped propery method OPTIONAL
      *  
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1317,7 +1262,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array $regular Regular fields info OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1337,7 +1281,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array $assocs Associations info OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1366,7 +1309,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array                $parentAssoc Entity mapped propery method
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1385,7 +1327,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Get entity properties 
      * 
      * @return array(array)
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1455,7 +1396,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array                $parentAssoc Entity mapped propery method OPTIONAL
      *  
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1481,7 +1421,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array                $parentAssoc Entity mapped propery method OPTIONAL
      *  
      * @return \XLite\Model\AEntity
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1536,7 +1475,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Get detailed foreign keys 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1552,7 +1490,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param string $type   Schema type
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1667,7 +1604,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Check - can repository table disabled into DB or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

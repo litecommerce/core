@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Base;
@@ -31,7 +31,6 @@ namespace XLite\Model\Base;
 /**
  * Image abstract store
  * 
- * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  *
@@ -44,7 +43,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Image unique id 
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -58,7 +56,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Image path (URL or file name in images storage directory)
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -70,7 +67,6 @@ abstract class Image extends \XLite\Model\AEntity
      * MIME type
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -82,7 +78,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Width
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -94,7 +89,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Height
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -106,7 +100,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Size
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -118,7 +111,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Create / modify date (UNIX timestamp)
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -130,7 +122,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Image hash
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -142,7 +133,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Get image body 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -157,7 +147,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Get image file extension 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -170,7 +159,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Get image file extension by MIME type
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -205,7 +193,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Get image URL 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -218,7 +205,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Get image URL for customer front-end
      * 
      * @return string|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -234,7 +220,6 @@ abstract class Image extends \XLite\Model\AEntity
      * @param integer $height Height limit OPTIONAL
      *  
      * @return array (new width + new height + URL)
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -285,7 +270,6 @@ abstract class Image extends \XLite\Model\AEntity
      * @param string $subkey Optional subkey OPTIONAL
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -324,7 +308,6 @@ abstract class Image extends \XLite\Model\AEntity
      * @param string $basename File name OPTIONAL
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -363,7 +346,6 @@ abstract class Image extends \XLite\Model\AEntity
      * @param boolean $copy2fs Copy image to file system or not OPTIONAL
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -394,7 +376,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Renew image parameters 
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -428,7 +409,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Check - image hash is equal data from DB or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -449,7 +429,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Check image is URL-based or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -462,7 +441,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Get image path for file-based PHP functions
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -493,7 +471,6 @@ abstract class Image extends \XLite\Model\AEntity
      * TODO - remove - old method
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -506,7 +483,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Prepare order before save data operation
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      * @PrePersist
