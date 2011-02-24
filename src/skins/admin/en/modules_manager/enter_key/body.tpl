@@ -15,11 +15,18 @@
     <input type="hidden" name="target" value="module_installation" />
     <input type="hidden" name="action" value="register_key" />
 
+    <div class="enter-key-hint">
+      {t(#If you have a license key for commercial module you may enter them here to register a purchase of the appropriate module.#)}
+    </div>
+
     <div class="addon-key">
       <input type="text" name="key" value="" />
     </div>
 
     <widget class="\XLite\View\Button\Submit" label="{t(#Validate key#)}" />
+
+    <div class="clear"></div>
+
   </form>
 
 </div>

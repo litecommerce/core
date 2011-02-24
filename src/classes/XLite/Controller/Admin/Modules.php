@@ -49,7 +49,6 @@ class Modules extends \XLite\Controller\Admin\AAdmin
         return 'Manage add-ons' . $this->getUpgradableModulesFlag();
     }
     
-    
     /**
      * Call controller action or special default action
      * 
@@ -58,11 +57,11 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function callAction()
+    public function handleRequest()
     {
         \XLite\Core\Database::getRepo('XLite\Model\Module')->checkModules();
 
-        parent::callAction();
+        parent::handleRequest();
     }
 
     /**
