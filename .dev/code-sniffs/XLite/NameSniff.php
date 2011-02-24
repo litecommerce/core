@@ -73,8 +73,20 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 	 * @since   1.0.0
 	 */
 	protected function getWordsByUnderline($name) {
-		return explode('\\', $name);
+		return explode('_', $name);
 	}
+
+    /**
+     * Get words from name (delimiter - underline symbol)
+     *
+     * @param   string  $name
+     * @access  protected
+     * @return  array
+     * @since   1.0.0
+     */
+    protected function getWordsBySlash($name) {
+        return explode('\\', $name);
+    }
 
 	/**
 	 * Get words from name (delimiter - capital letter)
@@ -165,7 +177,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 	 * @return  array
 	 * @since   1.0.0
 	 */
-	protected function checkClassPath($words) {
+	protected function checkClassPath(array $words, $namespace) {
 		$paths = explode(PATH_SEPARATOR, XP_CLASSES_ROOT);
 		
 		$fn = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $words) . '.php';

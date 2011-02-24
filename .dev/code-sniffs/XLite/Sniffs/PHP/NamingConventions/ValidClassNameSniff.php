@@ -80,7 +80,7 @@ class XLite_Sniffs_PHP_NamingConventions_ValidClassNameSniff extends XLite_NameS
 
         // Check that each new word starts with a capital as well, but don't
         // check the first word, as it is checked above.
-        $nameBits  = $this->getWordsByUnderline($name);
+        $nameBits  = $this->getWordsBySlash($name);
 		foreach ($nameBits as $bit) {
 			$res = $this->checkCamelWord($bit);
 			if ($res == -2) {
@@ -93,7 +93,7 @@ class XLite_Sniffs_PHP_NamingConventions_ValidClassNameSniff extends XLite_NameS
 			}
 		}
 
-		list($res, $paths) = $this->checkClassPath($nameBits);
+		list($res, $paths) = $this->checkClassPath($nameBits, $ns);
 		if (!$res) {
 			$error = "Пути до файла с объявлением класса '" .$name . "' не существуют (" .implode('; ', $paths). ")";
 			$phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.3.3') . $error, $stackPtr);
