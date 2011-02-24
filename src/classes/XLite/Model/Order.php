@@ -31,8 +31,8 @@ namespace XLite\Model;
 /**
  * Class represents an order
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Order")
  * @Table  (name="orders",
@@ -75,9 +75,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Order unique id
      * 
-     * @var    mixed
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -87,10 +87,10 @@ class Order extends \XLite\Model\Base\ModifierOwner
 
     /**
      * Order profile
-     * 
-     * @var    \XLite\Model\Profile
-     * @see    ____var_see____
-     * @since  3.0.0
+     *
+     * @var   \XLite\Model\Profile
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Profile", cascade={"persist"})
      * @JoinColumn (name="profile_id", referencedColumnName="profile_id")
@@ -100,9 +100,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Original profile
      * 
-     * @var    \XLite\Model\Profile
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Profile
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Profile")
      * @JoinColumn (name="orig_profile_id", referencedColumnName="profile_id")
@@ -112,9 +112,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Shipping method unique id 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -123,9 +123,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Shipping method name
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", nullable=true)
      */
@@ -133,10 +133,10 @@ class Order extends \XLite\Model\Base\ModifierOwner
 
     /**
      * Shipping tracking code
-     * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="32")
      */
@@ -145,9 +145,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Order creation timestamp
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -156,9 +156,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Status code
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="fixedstring", length="1")
      */
@@ -167,9 +167,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Customer notes 
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="65535")
      */
@@ -178,9 +178,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Taxes (serialized)
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="array")
      */
@@ -189,9 +189,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Order details
      *
-     * @var    \Doctrine\Common\Collections\Collection
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\Collection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\OrderDetail", mappedBy="order", cascade={"all"})
      * @OrderBy   ({"name" = "ASC"})
@@ -201,9 +201,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Order items
      *
-     * @var    \Doctrine\Common\Collections\Collection
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\Collection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\OrderItem", mappedBy="order", cascade={"all"})
      */
@@ -212,9 +212,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Order saved modifiers
      *
-     * @var    \Doctrine\Common\Collections\Collection
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\Collection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\OrderModifier", mappedBy="owner", cascade={"all"})
      * @OrderBy   ({"id" = "ASC"})
@@ -224,9 +224,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Payment transactions
      *
-     * @var    \Doctrine\Common\Collections\Collection
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\Collection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Payment\Transaction", mappedBy="order", cascade={"all"})
      */
@@ -235,9 +235,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Currency 
      * 
-     * @var    \XLite\Model\Currency
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Currency
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Currency", inversedBy="orders", cascade={"merge","detach"})
      * @JoinColumn (name="currency_id", referencedColumnName="currency_id")
@@ -252,6 +252,80 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @since 3.0.0
      */
     protected $addItemError;
+
+    /**
+     * List of change status handlers;
+     * top index - old status, second index - new one
+     * (<old_status> ----> <new_status>: $statusHandlers[$old][$new])
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected static $statusHandlers = array(
+
+        self::STATUS_TEMPORARY => array(
+            self::STATUS_PROCESSED  => array('checkout', 'process'),
+            self::STATUS_COMPLETED  => array('checkout', 'process'),
+            self::STATUS_QUEUED     => array('checkout'),
+            self::STATUS_DECLINED   => array('fail'),
+            self::STATUS_FAILED     => array('fail'),
+        ),
+
+        self::STATUS_INPROGRESS => array(
+            self::STATUS_PROCESSED  => array('checkout', 'process'),
+            self::STATUS_COMPLETED  => array('checkout', 'process'),
+            self::STATUS_QUEUED     => array('checkout', 'queue'),
+            self::STATUS_DECLINED   => array('fail'),
+            self::STATUS_FAILED     => array('fail'),
+        ),
+
+        self::STATUS_QUEUED => array(
+            self::STATUS_TEMPORARY  => array('uncheckout'),
+            self::STATUS_INPROGRESS => array('uncheckout'),
+            self::STATUS_PROCESSED  => array('process'),
+            self::STATUS_COMPLETED  => array('process'),
+            self::STATUS_DECLINED   => array('uncheckout', 'fail'),
+            self::STATUS_FAILED     => array('uncheckout', 'fail'),
+        ),
+
+        self::STATUS_PROCESSED => array(
+            self::STATUS_TEMPORARY  => array('decline', 'uncheckout'),
+            self::STATUS_INPROGRESS => array('decline', 'uncheckout'),
+            self::STATUS_QUEUED     => array('decline'),
+            self::STATUS_DECLINED   => array('decline', 'uncheckout', 'fail'),
+            self::STATUS_FAILED     => array('decline', 'uncheckout', 'fail'),
+        ),
+
+        self::STATUS_COMPLETED => array(
+            self::STATUS_TEMPORARY  => array('decline', 'uncheckout'),
+            self::STATUS_INPROGRESS => array('decline', 'uncheckout'),
+            self::STATUS_QUEUED     => array('decline'),
+            self::STATUS_DECLINED   => array('decline', 'uncheckout', 'fail'),
+            self::STATUS_FAILED     => array('decline', 'uncheckout', 'fail'),
+        ),
+
+        self::STATUS_DECLINED => array(
+            self::STATUS_PROCESSED  => array('checkout', 'process'),
+            self::STATUS_COMPLETED  => array('checkout', 'process'),
+            self::STATUS_QUEUED     => array('checkout'),
+        ),
+
+        self::STATUS_FAILED => array(
+            self::STATUS_PROCESSED  => array('checkout', 'process'),
+            self::STATUS_COMPLETED  => array('checkout', 'process'),
+            self::STATUS_QUEUED     => array('checkout'),
+        ),
+    );
+
+    /**
+     * Order previous status
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $oldStatus;
 
     /**
      * Return list of all aloowed order statuses
@@ -285,6 +359,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param \XLite\Model\OrderItem $newItem Item to add
      *  
      * @return boolean
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function addItem(\XLite\Model\OrderItem $newItem)
@@ -336,18 +411,11 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function getItemByItem(\XLite\Model\OrderItem $item)
     {
-        $key = $item->getKey();
-
-        $found = null;
-
-        foreach ($this->getItems() as $i) {
-            if ($i->getKey() == $key) {
-                $found = $i;
-                break;
-            }
-        }
-
-        return $found;
+        return \XLite\Core\ArrayHelper::find(
+            $this->getItems(),
+            array($this, 'checkItemKeyEqual'),
+            $item->getKey()
+        );
     }
 
     /**
@@ -361,16 +429,11 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function getItemByItemId($itemId)
     {
-        $found = null;
-
-        foreach ($this->getItems() as $i) {
-            if ($i->getItemId() == $itemId) {
-                $found = $i;
-                break;
-            }
-        }
-
-        return $found;
+        return \XLite\Core\ArrayHelper::find(
+            $this->getItems(),
+            array($this, 'checkItemIdEqual'),
+            $itemId
+        );
     }
 
     /**
@@ -384,26 +447,11 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function getItemsByProductId($productId)
     {
-        return (array) array_filter(
-            $this->getItems()->toArray(),
-            function (\XLite\Model\OrderItem $item) use ($productId) {
-                return $item->getProduct()->getProductId() == $productId;
-            }
+        return \XLite\Core\ArrayHelper::filter(
+            $this->getItems(),
+            array($this, 'isItemProductIdEqual'),
+            $productId
         );
-    }
-
-    /**
-     * Create new cart item 
-     * 
-     * @param \XLite\Model\OrderItem $item New item
-     *  
-     * @return void
-     * @since  3.0.0
-     */
-    protected function addNewItem(\XLite\Model\OrderItem $item)
-    {
-        $item->setOrder($this);
-        $this->addItems($item);
     }
 
     /**
@@ -450,6 +498,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Return items number
      * 
      * @return integer
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function countItems()
@@ -461,6 +510,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Return order items total quantity
      * 
      * @return integer
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function countQuantity()
@@ -478,6 +528,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Checks whether the shopping cart/order is empty
      * 
      * @return boolean 
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isEmpty()
@@ -489,6 +540,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Check order subtotal 
      * 
      * @return boolean 
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isMinOrderAmountError()
@@ -500,6 +552,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Check order subtotal 
      * 
      * @return boolean 
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isMaxOrderAmountError()
@@ -511,6 +564,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Check - is order processed or not
      * 
      * @return boolean 
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isProcessed()
@@ -522,6 +576,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Check - os order queued or not
      * 
      * @return boolean 
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isQueued()
@@ -551,22 +606,477 @@ class Order extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
-     * Calculate and save order subtotal 
+     * Set payment method 
+     * 
+     * @param \XLite\Model\Payment\Method $paymentMethod Payment method
+     * @param float                       $value         Payment transaction value OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setPaymentMethod($paymentMethod, $value = null)
+    {
+        if (isset($paymentMethod) && !($paymentMethod instanceof \XLite\Model\Payment\Method)) {
+            $paymentMethod = null;
+        }
+
+        if (!isset($paymentMethod) || $this->getFirstOpenPaymentTransaction()) {
+            $t = $this->getFirstOpenPaymentTransaction();
+            if ($t) {
+                $this->getPaymentTransactions()->removeElement($t);
+                $t->getPaymentMethod()->getTransactions()->removeElement($t);
+                \XLite\Core\Database::getEM()->remove($t);
+            }
+        }
+
+        if (isset($paymentMethod)) {
+            $this->addPaymentTransaction($paymentMethod, $value);
+        }
+    }
+
+    /**
+     * Get active payment transactions 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getActivePaymentTransactions()
+    {
+        $result = array();
+
+        foreach ($this->getPaymentTransactions() as $t) {
+            if (!$t->isFailed()) {
+                $result[] = $t;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get first open (not payed) payment transaction 
+     * 
+     * @return \XLite\Model\Payment\Transaction|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFirstOpenPaymentTransaction()
+    {
+        return \XLite\Core\ArrayHelper::find(
+            $this->getPaymentTransactions(),
+            array($this, 'checkPaymentTransactionStatusEqual'),
+            \XLite\Model\Payment\Transaction::STATUS_INITIALIZED
+        );
+    }
+
+    /**
+     * Get open (not-payed) total 
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getOpenTotal()
+    {
+        $total = $this->getTotal();
+
+        foreach ($this->getPaymentTransactions() as $t) {
+            $total -= $t->getChargeValueModifier();
+        }
+
+        return $total;
+    }
+
+    /**
+     * Check - order is open (has initialized transactions or has open total) or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isOpen()
+    {
+        return $this->getFirstOpenPaymentTransaction() || 0 < $this->getOpenTotal();
+    }
+
+    /**
+     * Get totally payed total 
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPayedTotal()
+    {
+        $total = $this->getTotal();
+
+        foreach ($this->getPaymentTransactions() as $t) {
+            if ($t->isCompleted()) {
+                $total -= $t->getChargeValueModifier();
+            }
+        }
+
+        return $total;
+    }
+
+    /**
+     * Check - order is payed or not
+     * Payed - order has not open total and all payment transactions are failed or completed
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isPayed()
+    {
+        return 0 >= $this->getPayedTotal();
+    }
+
+    /**
+     * Get original profile 
+     * 
+     * @return \XLite\Model\Profile
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getOrigProfile() 
+    {
+        return $this->orig_profile ?: $this->getProfile();
+    }
+
+    /**
+     * Set profile 
+     * 
+     * @param \XLite\Model\Profile $profile Profile OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setProfile(\XLite\Model\Profile $profile = null)
+    {
+        // FIXME: is it really needed?
+        if (!isset($profile) && $this->getProfile()) {
+            $this->getProfile()->setOrder(null);
+        }
+
+        $this->profile = $profile;
+    }
+
+    /**
+     * Set original profile
+     * FIXME: is it really needed?
+     *
+     * @param \XLite\Model\Profile $profile Profile OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setOrigProfile(\XLite\Model\Profile $profile = null)
+    {
+        $this->orig_profile = $profile;
+    }
+
+    /**
+     * Set profile copy 
+     * 
+     * @param \XLite\Model\Profile $profile Profile
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setProfileCopy(\XLite\Model\Profile $profile) 
+    {
+        // Set profile as original profile
+        $this->setOrigProfile($profile);
+
+        // Clone profile and set as order profile
+        $p = $profile->cloneEntity();
+        $this->setProfile($p);
+        $p->setOrder($this);
+    }
+
+    /**
+     * Get items list fingerprint 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getItemsFingerprint() 
+    {
+        $result = false;
+
+        if (!$this->isEmpty()) {
+
+            $result = array();
+            foreach ($this->getItems() as $item) {
+                $result[] = array(
+                    $item->getItemId(),
+                    $item->getKey(),
+                    $item->getAmount()
+                );
+            }
+
+            $result = md5(serialize($result));
+        }
+
+        return $result;
+    }
+
+    /**
+     * Generate a string representation of the order
+     * to send to a payment service
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDescription() 
+    {
+        $result = array();
+
+        foreach ($this->getItems() as $item) {
+            $result[] = $item->getDescription();
+        }
+
+        return implode("\n", $result);
+    }
+
+    /**
+     * Get order fingerprint for event subsystem
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getEventFingerprint()
+    {
+        $hash = array(
+            'items' => array(),
+        );
+
+        foreach ($this->getItems() as $item) {
+            $event = $item->getEventCell();
+            $event['quantity'] = $item->getAmount();
+
+            $hash['items'][] = $event;
+        }
+
+        return $hash;
+    }
+
+    /**
+     * Get detail 
+     * 
+     * @param string $name Details cell name
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDetail($name)
+    {
+        return \XLite\Core\ArrayHelper::find(
+            $this->getDetails(),
+            array($this, 'checkDetailName'),
+            $name
+        );
+    }
+
+    /**
+     * Set detail cell
+     * 
+     * @param string $name  Cell code
+     * @param mixed  $value Cell value
+     * @param string $label Cell label OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setDetail($name, $value, $label = null)
+    {
+        $detail = $this->getDetail($name);
+
+        if (!$detail) {
+            $detail = new \XLite\Model\OrderDetail();
+
+            $detail->setOrder($this);
+            $this->addDetails($detail);
+
+            $detail->setName($name);
+        }
+
+        $detail->setValue($value);
+        $detail->setLabel($label);
+    }
+
+    /**
+     * Get meaning order details 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMeaningDetails()
+    {
+        $result = array();
+
+        foreach ($this->getDetails() as $detail) {
+            if ($detail->getLabel()) {
+                $result[] = $detail;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Called when an order successfully placed by a client 
      * 
      * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function calculateSubtotal() 
+    public function processSucceed()
     {
-        $subtotal = 0;
+        // send email notification about initially placed order
+        $status = $this->getStatus();
+        $list = array(self::STATUS_PROCESSED, self::STATUS_COMPLETED, self::STATUS_INPROGRESS);
+        $send = \XLite\Core\Config::getInstance()->Email->enable_init_order_notif
+            || \XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer;
 
-        foreach ($this->getItems() as $item) {
-            $item->calculate();
-            $subtotal += $item->getTotal();
+        if (!in_array($status, $list) && $send) {
+            $mail = new \XLite\View\Mailer();
+
+            // for compatibility with dialog.order syntax in mail templates
+            $mail->order = $this;
+
+            // notify customer
+            if (\XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer) {
+                $mail->adminMail = false;
+                $mail->selectCustomerLayout();
+                $profile = $this->getProfile();
+                if ($profile) {
+                    $mail->compose(
+                        \XLite\Core\Config::getInstance()->Company->orders_department,
+                        $profile->getLogin(),
+                        'order_created'
+                    );
+                    $mail->send();
+                }
+            }
+
+            // notify admin about initially placed order
+            if (\XLite\Core\Config::getInstance()->Email->enable_init_order_notif) {
+
+                // whether or not to show CC info in mail notification
+                $mail->adminMail = true;
+                $mail->compose(
+                    \XLite\Core\Config::getInstance()->Company->site_administrator,
+                    \XLite\Core\Config::getInstance()->Company->orders_department,
+                    'order_created_admin'
+                );
+                $mail->send();
+            }
         }
 
-        $this->setSubtotal($subtotal);
+        $this->markAsOrder();
+    }
+
+    /**
+     * Mark cart as order 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function markAsOrder()
+    {
+    }
+
+    /**
+     * Check - CC info showing available or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShowCCInfo()
+    {
+        return 'CreditCard' == $this->getPaymentMethod()->get('payment_method')
+            && \XLite\Core\Config::getInstance()->Email->show_cc_info;
+    }
+
+    /**
+     * Check - e-card info showing available or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShowEcheckInfo()
+    {
+        return 'Echeck' == $this->getPaymentMethod()
+            && \XLite\Core\Config::getInstance()->Email->show_cc_info;
+    }
+
+    /**
+     * Refresh order items 
+     * TODO - rework after tax subsystem rework
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function refreshItems()
+    {
+        if (\XLite\Core\Config::getInstance()->Taxes->prices_include_tax) {
+            $changed = false;
+
+            foreach ($this->getItems() as $item) {
+                $product = $item->getProduct();
+                if ($product) {
+                    $oldPrice = $item->getPrice();
+                    $item->setProduct($item->getProduct());
+                    $item->updateAmount($item->getAmount());
+
+                    if ($item->getPrice() != $oldPrice) {
+                        $this->getItems()->removeElement($item);
+                        \XLite\Core\Database::getEM()->remove($item);
+                        $changed = true;
+                    }
+                }
+            }
+
+            if ($changed) {
+                \XLite\Core\Database::getEM()->flush();
+            }
+        }
+    }
+
+    /**
+     * Constructor
+     *
+     * @param array $data Entity properties OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $data = array())
+    {
+        $this->details              = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->items                = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->saved_modifiers      = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->payment_transactions = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
     }
 
     /**
@@ -685,7 +1195,142 @@ class Order extends \XLite\Model\Base\ModifierOwner
 
         return $t ? $t->getPaymentMethod() : null;
     }
-  
+
+    /**
+     * Check item key equal
+     *
+     * @param integer                $k   Item index
+     * @param \XLite\Model\OrderItem $i   Item
+     * @param string                 $key Key
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkItemKeyEqual($k, \XLite\Model\OrderItem $i, $key)
+    {
+        return $i->getKey() == $key;
+    }
+
+    /**
+     * Check item id equal 
+     * 
+     * @param integer                $k      Item index
+     * @param \XLite\Model\OrderItem $i      Item
+     * @param integer                $itemId Item id
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkItemIdEqual($k, \XLite\Model\OrderItem $i, $itemId)
+    {
+        return $i->getItemId() == $itemId;
+    }
+
+    /**
+     * Check order detail name
+     *
+     * @param integer                  $k    Detail index
+     * @param \XLite\Model\OrderDetail $d    Detail
+     * @param string                   $name Name
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkDetailName($k, \XLite\Model\OrderDetail $d, $name)
+    {
+        return $d->getName() == $name;
+    }
+
+    /**
+     * Check payment transaction status
+     *
+     * @param integer                          $k      Transaction index
+     * @param \XLite\Model\Payment\Transaction $t      Transaction
+     * @param string                           $status Status
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkPaymentTransactionStatusEqual($k, \XLite\Model\Payment\Transaction $t, $status)
+    {
+        return $t->getStatus() == $status;
+    }
+
+    /**
+     * Check - is item product id equal specified product id
+     *
+     * @param integer                $k         Item index
+     * @param \XLite\Model\OrderItem $item      Item
+     * @param integer                $productId Product id
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isItemProductIdEqual($k, \XLite\Model\OrderItem $item, $productId)
+    {
+        return $item->getProduct()->getProductId() == $productId;
+    }
+
+    /**
+     * Check last payment method
+     *
+     * @param integer                     $k             Payment method index
+     * @param \XLite\Model\Payment\Method $pm            Payment method
+     * @param integer                     $lastPaymentId Last selected payment method id
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkLastPaymentMethod($k, \XLite\Model\Payment\Method $pm, $lastPaymentId)
+    {
+        $result = $pm->getMethodId() == $lastPaymentId;
+        if ($result) {
+            $this->setPaymentMethod($pm);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Create new cart item
+     *
+     * @param \XLite\Model\OrderItem $item New item
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addNewItem(\XLite\Model\OrderItem $item)
+    {
+        $item->setOrder($this);
+        $this->addItems($item);
+    }
+
+    /**
+     * Calculate and save order subtotal 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function calculateSubtotal() 
+    {
+        $subtotal = 0;
+
+        foreach ($this->getItems() as $item) {
+            $item->calculate();
+            $subtotal += $item->getTotal();
+        }
+
+        $this->setSubtotal($subtotal);
+    }
+
     /**
      * Assign last used payment method 
      * 
@@ -695,69 +1340,17 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     protected function assignLastPaymentMethod()
     {
-        $found = false;
+        $found = null;
 
         if ($this->getProfile() && $this->getProfile()->getLastPaymentId()) {
-            foreach ($this->getPaymentMethods() as $pm) {
-                if ($pm->getMethodId() == $this->getProfile()->getLastPaymentId()) {
-                    $this->setPaymentMethod($pm);
-                    $found = true;
-                    break;
-                }
-            }
+            $found = \XLite\Core\ArrayHelper::find(
+                $this->getPaymentMethods(),
+                array($this, 'checkLastPaymentMethod'),
+                $this->getProfile()->getLastPaymentId()
+            );
         }
 
         return $found ? $this->getFirstOpenPaymentTransaction() : null;
-    }
-
-    /**
-     * Set payment method 
-     * 
-     * @param \XLite\Model\Payment\Method $paymentMethod Payment method
-     * @param float                       $value         Payment transaction value OPTIONAL
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setPaymentMethod($paymentMethod, $value = null)
-    {
-        if (isset($paymentMethod) && !($paymentMethod instanceof \XLite\Model\Payment\Method)) {
-            $paymentMethod = null;
-        }
-
-        if (!isset($paymentMethod) || $this->getFirstOpenPaymentTransaction()) {
-            $t = $this->getFirstOpenPaymentTransaction();
-            if ($t) {
-                $this->getPaymentTransactions()->removeElement($t);
-                $t->getPaymentMethod()->getTransactions()->removeElement($t);
-                \XLite\Core\Database::getEM()->remove($t);
-            }
-        }
-
-        if (isset($paymentMethod)) {
-            $this->addPaymentTransaction($paymentMethod, $value);
-        }
-    }
-
-    /**
-     * Get active payment transactions 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getActivePaymentTransactions()
-    {
-        $result = array();
-
-        foreach ($this->getPaymentTransactions() as $t) {
-            if (!$t->isFailed()) {
-                $result[] = $t;
-            }
-        }
-
-        return $result;
     }
 
     /**
@@ -799,363 +1392,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
         \XLite\Core\Database::getEM()->persist($transaction);
     }
 
-    /**
-     * Get first open (not payed) payment transaction 
-     * 
-     * @return \XLite\Model\Payment\Transaction|void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getFirstOpenPaymentTransaction()
-    {
-        $result = null;
-
-        foreach ($this->getPaymentTransactions() as $t) {
-            if ($t::STATUS_INITIALIZED == $t->getStatus()) {
-                $result = $t;
-                break;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get open (not-payed) total 
-     * 
-     * @return float
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getOpenTotal()
-    {
-        $total = $this->getTotal();
-
-        foreach ($this->getPaymentTransactions() as $t) {
-            $total -= $t->getChargeValueModifier();
-        }
-
-        return $total;
-    }
-
-    /**
-     * Check - order is open (has initialized transactions or has open total) or not
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isOpen()
-    {
-        return $this->getFirstOpenPaymentTransaction() || 0 < $this->getOpenTotal();
-    }
-
-    /**
-     * Get totally payed total 
-     * 
-     * @return float
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPayedTotal()
-    {
-        $total = $this->getTotal();
-
-        foreach ($this->getPaymentTransactions() as $t) {
-            if ($t->isCompleted()) {
-                $total -= $t->getChargeValueModifier();
-            }
-        }
-
-        return $total;
-    }
-
-    /**
-     * Check - order is payed or not
-     * Payed - order has not open total and all payment transactions are failed or completed
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isPayed()
-    {
-        return 0 >= $this->getPayedTotal();
-    }
-
-    /**
-     * Get original profile 
-     * 
-     * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getOrigProfile() 
-    {
-        return $this->orig_profile ?: $this->getProfile();
-    }
-
-    /**
-     * Set profile 
-     * 
-     * @param \XLite\Model\Profile $profile Profile
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setProfile(\XLite\Model\Profile $profile = null)
-    {
-        // FIXME: is it really needed?
-        if (!isset($profile) && $this->getProfile()) {
-            $this->getProfile()->setOrder(null);
-        }
-
-        $this->profile = $profile;
-    }
-
-    /**
-     * Set original profile
-     * FIXME: is it really needed?
-     *
-     * @param \XLite\Model\Profile $profile Profile
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setOrigProfile(\XLite\Model\Profile $profile = null)
-    {
-        $this->orig_profile = $profile;
-    }
-
-    /**
-     * Set profile copy 
-     * 
-     * @param \XLite\Model\Profile $profile Profile
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setProfileCopy(\XLite\Model\Profile $profile) 
-    {
-        // Set profile as original profile
-        $this->setOrigProfile($profile);
-
-        // Clone profile and set as order profile
-        $p = $profile->cloneEntity();
-        $this->setProfile($p);
-        $p->setOrder($this);
-    }
-
-    /**
-     * Get items list fingerprint 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getItemsFingerprint() 
-    {
-        $result = false;
-
-        if (!$this->isEmpty()) {
-
-            $result = array();
-            foreach ($this->getItems() as $item) {
-                $result[] = array(
-                    $item->getItemId(),
-                    $item->getKey(),
-                    $item->getAmount()
-                );
-            }
-
-            $result = md5(serialize($result));
-        }
-
-        return $result;
-    }
-
-    /**
-     * Generate a string representation of the order
-     * to send to a payment service
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getDescription() 
-    {
-        $result = array();
-
-        foreach ($this->getItems() as $item) {
-            $result[] = $item->getDescription();
-        }
-
-        return implode("\n", $result);
-    }
-
-    /**
-     * Get order fingerprint for event subsystem
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getEventFingerprint()
-    {
-        $hash = array(
-            'items' => array(),
-        );
-
-        foreach ($this->getItems() as $item) {
-            $event = $item->getEventCell();
-            $event['quantity'] = $item->getAmount();
-
-            $hash['items'][] = $event;
-        }
-
-        return $hash;
-    }
-
-    /**
-     * Get detail 
-     * 
-     * @param string $name Details cell name
-     *  
-     * @return mixed
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getDetail($name)
-    {
-        $details = $this->getDetails();
-
-        $detail = null;
-
-        foreach ($details as $d) {
-            if ($d->getName() == $name) {
-                $detail = $d;
-                break;
-            }
-        }
-
-        return $detail;
-    }
-
-    /**
-     * Set detail cell
-     * 
-     * @param string $name  Cell code
-     * @param mixed  $value Cell value
-     * @param string $label Cell label OPTIONAL
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setDetail($name, $value, $label = null)
-    {
-        $detail = $this->getDetail($name);
-
-        if (!$detail) {
-            $detail = new \XLite\Model\OrderDetail();
-
-            $detail->setOrder($this);
-            $this->addDetails($detail);
-
-            $detail->setName($name);
-        }
-
-        $detail->setValue($value);
-        $detail->setLabel($label);
-    }
-
-    /**
-     * Get meaning order details 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getMeaningDetails()
-    {
-        $result = array();
-
-        foreach ($this->getDetails() as $detail) {
-            if ($detail->getLabel()) {
-                $result[] = $detail;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Called when an order successfully placed by a client 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function processSucceed()
-    {
-        // send email notification about initially placed order
-        $status = $this->getStatus();
-        $list = array(self::STATUS_PROCESSED, self::STATUS_COMPLETED, self::STATUS_INPROGRESS);
-        $send = \XLite\Core\Config::getInstance()->Email->enable_init_order_notif
-            || \XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer;
-
-        if (!in_array($status, $list) && $send) {
-            $mail = new \XLite\View\Mailer();
-
-            // for compatibility with dialog.order syntax in mail templates
-            $mail->order = $this;
-
-            // notify customer
-            if (\XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer) {
-                $mail->adminMail = false;
-                $mail->selectCustomerLayout();
-                $profile = $this->getProfile();
-                if ($profile) {
-                    $mail->compose(
-                        \XLite\Core\Config::getInstance()->Company->orders_department,
-                        $profile->getLogin(),
-                        'order_created'
-                    );
-                    $mail->send();
-                }
-            }
-
-            // notify admin about initially placed order
-            if (\XLite\Core\Config::getInstance()->Email->enable_init_order_notif) {
-
-                // whether or not to show CC info in mail notification
-                $mail->adminMail = true;
-                $mail->compose(
-                    \XLite\Core\Config::getInstance()->Company->site_administrator,
-                    \XLite\Core\Config::getInstance()->Company->orders_department,
-                    'order_created_admin'
-                );
-                $mail->send();
-            }
-        }
-
-        $this->markAsOrder();
-    }
-
-    /**
-     * Mark cart as order 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function markAsOrder()
-    {
-    }
-    
     /**
      * Called when an order becomes processed, before saving it to the database
      * 
@@ -1220,87 +1456,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
         }
     }
 
-    /**
-     * Check - CC info showing available or not
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isShowCCInfo()
-    {
-        return 'CreditCard' == $this->getPaymentMethod()->get('payment_method')
-            && \XLite\Core\Config::getInstance()->Email->show_cc_info;
-    }
-
-    /**
-     * Check - e-card info showing available or not
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isShowEcheckInfo()
-    {
-        return 'Echeck' == $this->getPaymentMethod()
-            && \XLite\Core\Config::getInstance()->Email->show_cc_info;
-    }
-
-    /**
-     * Refresh order items 
-     * TODO - rework after tax subsystem rework
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function refreshItems()
-    {
-        if (\XLite\Core\Config::getInstance()->Taxes->prices_include_tax) {
-            $changed = false;
-
-            foreach ($this->getItems() as $item) {
-                $product = $item->getProduct();
-                if ($product) {
-                    $oldPrice = $item->getPrice();
-                    $item->setProduct($item->getProduct());
-                    $item->updateAmount($item->getAmount());
-
-                    if ($item->getPrice() != $oldPrice) {
-                        $this->getItems()->removeElement($item);
-                        \XLite\Core\Database::getEM()->remove($item);
-                        $changed = true;
-                    }
-                }
-            }
-
-            if ($changed) {
-                \XLite\Core\Database::getEM()->flush();
-            }
-        }
-    }
-
-    /**
-     * Constructor
-     *
-     * @param array $data Entity properties
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __construct(array $data = array())
-    {
-        $this->details              = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->items                = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->saved_modifiers      = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->payment_transactions = new \Doctrine\Common\Collections\ArrayCollection();
-
-        parent::__construct($data);
-    }
-
-
-    // ------------------------------ Lifecycle callbacks -
+    // {{{ Lifecycle callbacks
 
     /**
      * Prepare order before save data operation
@@ -1344,7 +1500,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function beforeCommit()
+    public function prepareEntityBeforeCommit()
     {
         if ($this->isStatusChanged()) {
             $this->changeStatusPostprocess($this->oldStatus, $this->getStatus());
@@ -1352,83 +1508,10 @@ class Order extends \XLite\Model\Base\ModifierOwner
         }
     }
 
-    // ------------------------------ Change status routines -
+    // }}}
 
-    /**
-     * List of change status handlers;
-     * top index - old status, second index - new one
-     * (<old_status> ----> <new_status>: $statusHandlers[$old][$new])
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    protected static $statusHandlers = array(
+    // {{{ Change status routine
 
-        self::STATUS_TEMPORARY => array(
-            self::STATUS_PROCESSED  => array('checkout', 'process'),
-            self::STATUS_COMPLETED  => array('checkout', 'process'),
-            self::STATUS_QUEUED     => array('checkout'),
-            self::STATUS_DECLINED   => array('fail'),
-            self::STATUS_FAILED     => array('fail'),
-        ),
-
-        self::STATUS_INPROGRESS => array(
-            self::STATUS_PROCESSED  => array('checkout', 'process'),
-            self::STATUS_COMPLETED  => array('checkout', 'process'),
-            self::STATUS_QUEUED     => array('checkout', 'queue'),
-            self::STATUS_DECLINED   => array('fail'),
-            self::STATUS_FAILED     => array('fail'),
-        ),
-
-        self::STATUS_QUEUED => array(
-            self::STATUS_TEMPORARY  => array('uncheckout'),
-            self::STATUS_INPROGRESS => array('uncheckout'),
-            self::STATUS_PROCESSED  => array('process'),
-            self::STATUS_COMPLETED  => array('process'),
-            self::STATUS_DECLINED   => array('uncheckout', 'fail'),
-            self::STATUS_FAILED     => array('uncheckout', 'fail'),
-        ),
-
-        self::STATUS_PROCESSED => array(
-            self::STATUS_TEMPORARY  => array('decline', 'uncheckout'),
-            self::STATUS_INPROGRESS => array('decline', 'uncheckout'),
-            self::STATUS_QUEUED     => array('decline'),
-            self::STATUS_DECLINED   => array('decline', 'uncheckout', 'fail'),
-            self::STATUS_FAILED     => array('decline', 'uncheckout', 'fail'),
-        ),
-
-        self::STATUS_COMPLETED => array(
-            self::STATUS_TEMPORARY  => array('decline', 'uncheckout'),
-            self::STATUS_INPROGRESS => array('decline', 'uncheckout'),
-            self::STATUS_QUEUED     => array('decline'),
-            self::STATUS_DECLINED   => array('decline', 'uncheckout', 'fail'),
-            self::STATUS_FAILED     => array('decline', 'uncheckout', 'fail'),
-        ),
-
-        self::STATUS_DECLINED => array(
-            self::STATUS_PROCESSED  => array('checkout', 'process'),
-            self::STATUS_COMPLETED  => array('checkout', 'process'),
-            self::STATUS_QUEUED     => array('checkout'),
-        ),
-
-        self::STATUS_FAILED => array(
-            self::STATUS_PROCESSED  => array('checkout', 'process'),
-            self::STATUS_COMPLETED  => array('checkout', 'process'),
-            self::STATUS_QUEUED     => array('checkout'),
-        ),
-    );
-
-    /**
-     * Order previous status
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    protected $oldStatus;
-
-    
     /**
      * Set status
      *
@@ -1468,13 +1551,15 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param string $old Old order status
      * @param string $new New order status
      *  
-     * @return string|false
+     * @return string|array
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getStatusHandlers($old, $new)
     {
-        return isset(static::$statusHandlers[$old][$new]) ? static::$statusHandlers[$old][$new] : array();
+        return isset(static::$statusHandlers[$old][$new])
+            ? static::$statusHandlers[$old][$new]
+            : array();
     }
 
     /**
@@ -1564,8 +1649,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $this->sendFailMail();
     }
 
+    // }}}
 
-    // ------------------------------ Inventory tracking -
+    // {{{ Inventory tracking
 
     /**
      * Get item inventory delta
@@ -1585,7 +1671,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Increase / decrease item products inventory
      * 
-     * @param integer $sign flag; "1" or "-1"
+     * @param integer $sign Flag; "1" or "-1"
      *  
      * @return void
      * @see    ____func_see____
@@ -1621,4 +1707,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
     {
         $this->changeItemsInventory(1);
     }
+
+    // }}}
 }
