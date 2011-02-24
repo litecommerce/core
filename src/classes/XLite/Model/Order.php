@@ -622,11 +622,11 @@ class Order extends \XLite\Model\Base\ModifierOwner
         }
 
         if (!isset($paymentMethod) || $this->getFirstOpenPaymentTransaction()) {
-            $t = $this->getFirstOpenPaymentTransaction();
-            if ($t) {
-                $this->getPaymentTransactions()->removeElement($t);
-                $t->getPaymentMethod()->getTransactions()->removeElement($t);
-                \XLite\Core\Database::getEM()->remove($t);
+            $transaction = $this->getFirstOpenPaymentTransaction();
+            if ($transaction) {
+                $this->getPaymentTransactions()->removeElement($transaction);
+                $transaction->getPaymentMethod()->getTransactions()->removeElement($transaction);
+                \XLite\Core\Database::getEM()->remove($transaction);
             }
         }
 
@@ -795,9 +795,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $this->setOrigProfile($profile);
 
         // Clone profile and set as order profile
-        $p = $profile->cloneEntity();
-        $this->setProfile($p);
-        $p->setOrder($this);
+        $clonedProfile = $profile->cloneEntity();
+        $this->setProfile($clonedProfile);
+        $clonedProfile->setOrder($this);
     }
 
     /**
@@ -1181,89 +1181,80 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function getPaymentMethod()
     {
-        $t = $this->getFirstOpenPaymentTransaction();
+        $transaction = $this->getFirstOpenPaymentTransaction();
 
-        if (!$t) {
-            if ($this->isOpen()) {
-                $t = $this->assignLastPaymentMethod();
-
-            } else {
-                $t = $this->getPaymentTransactions()->last();
-
-            }
+        if (!$transaction) {
+            $transaction = $this->isOpen()
+                ? $this->assignLastPaymentMethod()
+                : $this->getPaymentTransactions()->last();
         }
 
-        return $t ? $t->getPaymentMethod() : null;
+        return $transaction ? $transaction->getPaymentMethod() : null;
     }
 
     /**
      * Check item key equal
      *
-     * @param integer                $k   Item index
-     * @param \XLite\Model\OrderItem $i   Item
-     * @param string                 $key Key
+     * @param \XLite\Model\OrderItem $item  Item
+     * @param string                 $key   Key
      *
      * @return boolean
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function checkItemKeyEqual($k, \XLite\Model\OrderItem $i, $key)
+    public function checkItemKeyEqual(\XLite\Model\OrderItem $item, $key)
     {
-        return $i->getKey() == $key;
+        return $item->getKey() == $key;
     }
 
     /**
      * Check item id equal 
      * 
-     * @param integer                $k      Item index
-     * @param \XLite\Model\OrderItem $i      Item
+     * @param \XLite\Model\OrderItem $item   Item
      * @param integer                $itemId Item id
      *  
      * @return boolean
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function checkItemIdEqual($k, \XLite\Model\OrderItem $i, $itemId)
+    public function checkItemIdEqual(\XLite\Model\OrderItem $item, $itemId)
     {
-        return $i->getItemId() == $itemId;
+        return $item->getItemId() == $itemId;
     }
 
     /**
      * Check order detail name
      *
-     * @param integer                  $k    Detail index
-     * @param \XLite\Model\OrderDetail $d    Detail
-     * @param string                   $name Name
+     * @param \XLite\Model\OrderDetail $detail Detail
+     * @param string                   $name   Name
      *
      * @return boolean
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function checkDetailName($k, \XLite\Model\OrderDetail $d, $name)
+    public function checkDetailName(\XLite\Model\OrderDetail $detail, $name)
     {
-        return $d->getName() == $name;
+        return $detail->getName() == $name;
     }
 
     /**
      * Check payment transaction status
      *
-     * @param integer                          $k      Transaction index
-     * @param \XLite\Model\Payment\Transaction $t      Transaction
-     * @param string                           $status Status
+     * @param \XLite\Model\Payment\Transaction $transaction Transaction
+     * @param string                           $status      Status
      *
      * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function checkPaymentTransactionStatusEqual($k, \XLite\Model\Payment\Transaction $t, $status)
+    public function checkPaymentTransactionStatusEqual(\XLite\Model\Payment\Transaction $transaction, $status)
     {
-        return $t->getStatus() == $status;
+        return $transaction->getStatus() == $status;
     }
 
     /**
      * Check - is item product id equal specified product id
      *
-     * @param integer                $k         Item index
      * @param \XLite\Model\OrderItem $item      Item
      * @param integer                $productId Product id
      *
@@ -1271,7 +1262,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isItemProductIdEqual($k, \XLite\Model\OrderItem $item, $productId)
+    public function isItemProductIdEqual(\XLite\Model\OrderItem $item, $productId)
     {
         return $item->getProduct()->getProductId() == $productId;
     }
@@ -1279,19 +1270,18 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Check last payment method
      *
-     * @param integer                     $k             Payment method index
-     * @param \XLite\Model\Payment\Method $pm            Payment method
+     * @param \XLite\Model\Payment\Method $pmethod       Payment method
      * @param integer                     $lastPaymentId Last selected payment method id
      *
      * @return boolean
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function checkLastPaymentMethod($k, \XLite\Model\Payment\Method $pm, $lastPaymentId)
+    public function checkLastPaymentMethod(\XLite\Model\Payment\Method $pmethod, $lastPaymentId)
     {
-        $result = $pm->getMethodId() == $lastPaymentId;
+        $result = $pmethod->getMethodId() == $lastPaymentId;
         if ($result) {
-            $this->setPaymentMethod($pm);
+            $this->setPaymentMethod($pmethod);
         }
 
         return $result;
@@ -1357,15 +1347,14 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Add payment transaction 
      * FIXME: move logic into \XLite\Model\Payment\Transaction
      * 
-     * @param \XLite\Model\Payment\Method $method   Payment method
-     * @param float                       $value    Value OPTIONAL
-     * @param string                      $currency Currency code OPTIONAL
+     * @param \XLite\Model\Payment\Method $method Payment method
+     * @param float                       $value  Value OPTIONAL
      *  
      * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function addPaymentTransaction(\XLite\Model\Payment\Method $method, $value = null, $currency = null)
+    protected function addPaymentTransaction(\XLite\Model\Payment\Method $method, $value = null)
     {
         if (!isset($value) || 0 >= $value) {
             $value = $this->getOpenTotal();
