@@ -30,6 +30,12 @@ require_once __DIR__ . '/AAdmin.php';
 
 class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
 {
+    const BUTTON_ENTER_LICENSE_KEY = '//button[@class="popup-button"]/span[text()="Enter license key"]';
+
+    const INPUT_KEY = '//div[@class="addon-key"]/input[@type="text" and @name="key"]';
+
+    const BUTTON_KEY = '//button[@type="submit"]/span[text()="Validate key"]';
+
 
     public function testEnterLicenseKeyBlock()
     {
@@ -38,9 +44,30 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
         $this->open('admin.php?target=addons_list');
 
         $this->assertElementPresent(
-            '//button[@class="popup-button"]/span[text()="Enter license key"]',
+            self::BUTTON_ENTER_LICENSE_KEY,
             'No enter license key'
         );
 
+        $this->click(self::BUTTON_ENTER_LICENSE_KEY);
+
+        $this->waitForAJAXProgress();        
+
+        $this->assertElementPresent(
+            self::INPUT_KEY,
+            'No input for license key'
+        );
+
+        $this->assertElementPresent(
+            self::BUTTON_KEY,
+            'No validate key button'
+        );
+
+
     }
+
+    public function testEnterLicenseKeyBlockOpen()
+    {
+
+    }
+
 }
