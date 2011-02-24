@@ -29,7 +29,7 @@
 namespace XLite\View\Address;
 
 /**
- * \XLite\View\AddressBook 
+ * \XLite\View\Address\Delete 
  * 
  * @package XLite
  * @see     ____class_see____
