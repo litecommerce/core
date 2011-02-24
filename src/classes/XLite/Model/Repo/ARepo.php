@@ -920,7 +920,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
         // Since Doctrine lifecycle callbacks do not allow
         // to modify associations, we've added this method
-        $entity->beforeCommit();
+        $entity->prepareEntityBeforeCommit();
 
         return $entity;
     }
@@ -941,7 +941,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
         // Since Doctrine lifecycle callbacks do not allow
         // to modify associations, we've added this method
-        $entity->beforeCommit();
+        $entity->prepareEntityBeforeCommit();
     }
 
     /**
@@ -957,7 +957,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     {
         // Since Doctrine lifecycle callbacks do not allow
         // to modify associations, we've added this method
-        $entity->beforeCommit();
+        $entity->prepareEntityBeforeCommit();
 
         $this->getEntityManager()->remove($entity);
     }
