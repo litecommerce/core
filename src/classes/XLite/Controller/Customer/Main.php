@@ -80,28 +80,6 @@ class Main extends \XLite\Controller\Customer\Category
 
     }
 
-    /**
-     * getExtraPage 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getExtraPage()
-    {
-        if (is_null($this->extraPage)) {
-
-            $this->extraPage = new \XLite\Model\ExtraPage();
-
-            if (isset(\XLite\Core\Request::getInstance()->page) && !empty(\XLite\Core\Request::getInstance()->page)) {
-                $this->extraPage = $this->extraPage->findPage(\XLite\Core\Request::getInstance()->page);
-            }
-        }
-
-        return $this->extraPage;
-    }
-
 
     /**
      * Preprocessor for no-action ren
