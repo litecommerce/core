@@ -238,6 +238,8 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         $list = parent::getCSSFiles();
 
         $list[] = 'modules_manager' . LC_DS . 'common.css';
+        // TODO fix with enter-key license widget. It should be taken dynamically from AJAX
+        $list[] = 'modules_manager' . LC_DS . 'enter_key' . LC_DS . 'css' . LC_DS . 'style.css';
         $list[] = $this->getDir() . LC_DS . 'style.css';
 
         return $list;

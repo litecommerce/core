@@ -605,7 +605,9 @@ class Module extends \XLite\Model\Repo\ARepo
             $mainClass = $module->getMainClass();
 
             if (!$mainClass) {
+
                 $changed = true;
+
                 $this->uninstallEmergency($module);
 
             } else {
@@ -613,7 +615,9 @@ class Module extends \XLite\Model\Repo\ARepo
                 $mainClass::init();
 
                 if (false === $mainClass::check()) {
+
                     $changed = true;
+
                     $this->disableEmergency($module);
                 }
             }
@@ -637,6 +641,7 @@ class Module extends \XLite\Model\Repo\ARepo
         // Step 1: check installed modules
 
         $list = $this->findAllNames();
+
         $changed = false;
         $needRebuild = false;
 
@@ -657,13 +662,16 @@ class Module extends \XLite\Model\Repo\ARepo
                 $module = $this->findByActualName($name, $author);
 
                 if (!$module) {
+
                     $module = new \XLite\Model\Module();
+
                     $module->create($name, $author);
                 }
 
-                $module->installed = true;
+                $module->setInstalled(true);
 
                 \XLite\Core\Database::getEM()->persist($module);
+
                 $changed = true;
             }
         }
@@ -970,6 +978,8 @@ class Module extends \XLite\Model\Repo\ARepo
         );
 
         $module->setInstalled(false);
+
+        \XLite\Core\Database::getEM()->flush();
     }
 
     /**
@@ -993,6 +1003,7 @@ class Module extends \XLite\Model\Repo\ARepo
 
         $module->setEnabled(false);
         $module->disableDepended();
+
         \XLite\Core\Database::getEM()->persist($module);
     }
 
