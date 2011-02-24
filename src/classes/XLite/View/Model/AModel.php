@@ -205,7 +205,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * This object will be used if another one is not pased
      *
-     * @return \XLite\Model\AModel
+     * @return \XLite\Model\AEntity
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -1319,7 +1319,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Return model object to use
      *
-     * @return \XLite\Model\AModel
+     * @return \XLite\Model\AEntity
      * @access public
      * @since  3.0.0
      */

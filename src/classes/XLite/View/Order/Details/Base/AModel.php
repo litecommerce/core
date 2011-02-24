@@ -40,7 +40,7 @@ abstract class AModel extends \XLite\View\Model\AModel
     /**
      * This object will be used if another one is not pased
      *
-     * @return \XLite\Model\AModel
+     * @return \XLite\Model\Order
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
