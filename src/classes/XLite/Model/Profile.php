@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,7 +31,6 @@ namespace XLite\Model;
 /**
  * The "profile" model class
  * 
- * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  * 
@@ -55,7 +54,6 @@ class Profile extends \XLite\Model\AEntity
      * Profile unique ID 
      * 
      * @var    int
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -69,7 +67,6 @@ class Profile extends \XLite\Model\AEntity
      * Login (e-mail)
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -81,7 +78,6 @@ class Profile extends \XLite\Model\AEntity
      * Password
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -93,7 +89,6 @@ class Profile extends \XLite\Model\AEntity
      * Password hint
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -105,7 +100,6 @@ class Profile extends \XLite\Model\AEntity
      * Password hint answer
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -117,7 +111,6 @@ class Profile extends \XLite\Model\AEntity
      * Access level
      *
      * @var    int
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -129,7 +122,6 @@ class Profile extends \XLite\Model\AEntity
      * CMS profile Id
      *
      * @var    int
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -141,7 +133,6 @@ class Profile extends \XLite\Model\AEntity
      * CMS name
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -153,7 +144,6 @@ class Profile extends \XLite\Model\AEntity
      * Timestamp of profile creation date
      *
      * @var    int
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -165,7 +155,6 @@ class Profile extends \XLite\Model\AEntity
      * Timestamp of first login event
      *
      * @var    int
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -177,7 +166,6 @@ class Profile extends \XLite\Model\AEntity
      * Timestamp of last login event
      *
      * @var    int
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -189,7 +177,6 @@ class Profile extends \XLite\Model\AEntity
      * Profile status
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -201,7 +188,6 @@ class Profile extends \XLite\Model\AEntity
      * Referer
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -213,7 +199,6 @@ class Profile extends \XLite\Model\AEntity
      * Relation to a order
      *
      * @var    \XLite\Model\Order
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -226,7 +211,6 @@ class Profile extends \XLite\Model\AEntity
      * Language code
      *
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -238,7 +222,6 @@ class Profile extends \XLite\Model\AEntity
      * Last selected shipping id 
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -250,7 +233,6 @@ class Profile extends \XLite\Model\AEntity
      * Last selected payment id 
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -262,7 +244,6 @@ class Profile extends \XLite\Model\AEntity
      * Membership: many-to-one relation with memberships table
      * 
      * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -275,7 +256,6 @@ class Profile extends \XLite\Model\AEntity
      * Pending membership: many-to-one relation with memberships table
      * 
      * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -288,7 +268,6 @@ class Profile extends \XLite\Model\AEntity
      * Address book: one-to-many relation with address book entity
      * 
      * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -299,10 +278,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * The count of orders placed by the user 
      * 
-     * @var    int
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   int
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $orders_count = null;
 
@@ -312,7 +290,6 @@ class Profile extends \XLite\Model\AEntity
      * @param \XLite\Model\Membership $membership membership
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -327,7 +304,6 @@ class Profile extends \XLite\Model\AEntity
      * @param \XLite\Model\Membership $pendingMembership Pending membership
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -340,7 +316,6 @@ class Profile extends \XLite\Model\AEntity
      * Prepare object for its creation in the database
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -394,7 +369,6 @@ class Profile extends \XLite\Model\AEntity
      * @param string $atype Address type: b - billing, s - shipping OPTIONAL
      *  
      * @return \XLite\Model\Address
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -420,7 +394,6 @@ class Profile extends \XLite\Model\AEntity
      * Returns billing address 
      * 
      * @return \XLite\Model\Address
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -433,7 +406,6 @@ class Profile extends \XLite\Model\AEntity
      * Returns shipping address 
      * 
      * @return \XLite\Model\Address
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -446,7 +418,6 @@ class Profile extends \XLite\Model\AEntity
      * Returns the number of orders places by the user
      * 
      * @return integer 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -467,7 +438,6 @@ class Profile extends \XLite\Model\AEntity
      * Check if profile is enabled
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -480,7 +450,6 @@ class Profile extends \XLite\Model\AEntity
      * Enable user profile
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -493,7 +462,6 @@ class Profile extends \XLite\Model\AEntity
      * Disable user profile
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -506,7 +474,6 @@ class Profile extends \XLite\Model\AEntity
      * Returns true if profile has an administrator access level 
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -519,7 +486,6 @@ class Profile extends \XLite\Model\AEntity
      * Create an entity profile in the database
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -534,7 +500,6 @@ class Profile extends \XLite\Model\AEntity
      * Update an entity in the database 
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -563,7 +528,6 @@ class Profile extends \XLite\Model\AEntity
      * Delete an entity profile from the database
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -588,7 +552,6 @@ class Profile extends \XLite\Model\AEntity
      * TODO: review method after implementing at one-step-checkout
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -630,7 +593,6 @@ class Profile extends \XLite\Model\AEntity
      * Check - billing and shipping addresses are equal or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -648,7 +610,6 @@ class Profile extends \XLite\Model\AEntity
      * Clone
      *
      * @return \XLite\Model\AEntity
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -693,7 +654,6 @@ class Profile extends \XLite\Model\AEntity
      * @param array $data Entity properties
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -710,7 +670,6 @@ class Profile extends \XLite\Model\AEntity
      * @param \XLite\Model\Order $order Order
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

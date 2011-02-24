@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -31,19 +31,17 @@ namespace XLite\Model\Repo;
 /**
  * Session cell repository
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class SessionCell extends \XLite\Model\Repo\ARepo
 {
     /**
      * Repository type 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $type = self::TYPE_SERVICE;
 
@@ -53,7 +51,6 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\SessionCell $cell Cell to use
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -72,7 +69,6 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      * @param mixed   $value Data to store
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -91,7 +87,6 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\SessionCell $cell  Cell to update
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -111,7 +106,6 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      * @param mixed   $value Data to store
      *
      * @return integer 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -132,7 +126,6 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      * @param mixed                    $value Value to set
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -151,7 +144,6 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\SessionCell $cell Cell to delete
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -170,7 +162,6 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      * @param string $type   Schema type
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

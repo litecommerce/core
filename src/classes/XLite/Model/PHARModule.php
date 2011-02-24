@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,9 +31,8 @@ namespace XLite\Model;
 /**
  * Module deploying model
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class PHARModule extends \XLite\Base
 {
@@ -76,10 +75,9 @@ class PHARModule extends \XLite\Base
     /**
      * Inner \Phar object
      * 
-     * @var    \Phar
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Phar
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $phar       = null;
 
@@ -87,10 +85,9 @@ class PHARModule extends \XLite\Base
     /**
      * Module model for inner use
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $module     = null;
 
@@ -98,10 +95,9 @@ class PHARModule extends \XLite\Base
     /**
      * Inner catalog to the first temporary deploying
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $tempDir    = null;
 
@@ -109,10 +105,9 @@ class PHARModule extends \XLite\Base
     /**
      * Error message of the \Phar object
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $error      = null;
 
@@ -120,10 +115,9 @@ class PHARModule extends \XLite\Base
     /**
      * Status of last operation
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $status     = null;
 
@@ -131,10 +125,9 @@ class PHARModule extends \XLite\Base
     /**
      * Array of values from the INI file
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $iniFile    = null;
 
@@ -145,7 +138,6 @@ class PHARModule extends \XLite\Base
      * @param mixed $phar Name of the .PHAR file in the inner local repository
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -177,7 +169,6 @@ class PHARModule extends \XLite\Base
      * Checks the .PHAR file
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -212,7 +203,6 @@ class PHARModule extends \XLite\Base
      * Deploys .PHAR module file into LiteCommerce module structure
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -231,7 +221,6 @@ class PHARModule extends \XLite\Base
      * Removes the temporary files from the temporary local repository of modules.
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -247,7 +236,6 @@ class PHARModule extends \XLite\Base
      * Error message of .PHAR file operations getter
      * 
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -261,7 +249,6 @@ class PHARModule extends \XLite\Base
      * Status of last operation getter
      * 
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -275,7 +262,6 @@ class PHARModule extends \XLite\Base
      * Temporary storage getter
      * 
      * @return mixed
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -289,7 +275,6 @@ class PHARModule extends \XLite\Base
      * Module model getter
      * 
      * @return mixed
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -302,7 +287,6 @@ class PHARModule extends \XLite\Base
      * PHAR object getter
      * 
      * @return \Phar
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -316,7 +300,6 @@ class PHARModule extends \XLite\Base
      * Module model initialization
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -333,7 +316,6 @@ class PHARModule extends \XLite\Base
      * Deploys module classes structure into LiteCommerce classes catalog
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -358,7 +340,6 @@ class PHARModule extends \XLite\Base
      * Deploys module skins structure into LiteCommerce skins catalog
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -382,7 +363,6 @@ class PHARModule extends \XLite\Base
      * Retrieve skins list from the temporary local repository of module
      * 
      * @return array List of skins in the format: {new skin path} => {skin path from temporary local repository of module}
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -414,7 +394,6 @@ class PHARModule extends \XLite\Base
      * Return file iterator for fetching skins 
      * 
      * @return \RecursiveIteratorIterator
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -435,7 +414,6 @@ class PHARModule extends \XLite\Base
      * @param array                      &$registry Array for registration the skins dir
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -453,7 +431,6 @@ class PHARModule extends \XLite\Base
      * Returns INI file path in the temporary local repository of module
      * 
      * @return string File path to the INI file
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -469,7 +446,6 @@ class PHARModule extends \XLite\Base
      * Returns the classes catalog inside the temporary local repository of module
      * 
      * @return string Catalog path
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -485,7 +461,6 @@ class PHARModule extends \XLite\Base
      * Returns the skins catalog inside the temporary local repository of module
      * 
      * @return string Catalog path
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -501,7 +476,6 @@ class PHARModule extends \XLite\Base
      * Module INI file validation 
      * 
      * @return string Status of validation (use self::STATUS_* constants)
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -539,7 +513,6 @@ class PHARModule extends \XLite\Base
      * Returns required fields in the module specification section in the INI file of module.
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -557,7 +530,6 @@ class PHARModule extends \XLite\Base
      * Return author from INI file
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -571,7 +543,6 @@ class PHARModule extends \XLite\Base
      * Return module name from INI file 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -586,7 +557,6 @@ class PHARModule extends \XLite\Base
      * Currently you cannot install the module which has the same classes catalog with some already retrieved module.
      * 
      * @return string Status of validation
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -600,7 +570,6 @@ class PHARModule extends \XLite\Base
      * Validation of inner file-catalog structure of module file. It must contain INI file, Classes catalog or Skins catalog.
      * 
      * @return string Status of validation
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -621,7 +590,6 @@ class PHARModule extends \XLite\Base
      * Makes the unique temporary catalog for the temporary local repository of module
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -639,7 +607,6 @@ class PHARModule extends \XLite\Base
      * Extract the .PHAR module file content into the temporary local repository of module
      * 
      * @return string Status of deploying
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

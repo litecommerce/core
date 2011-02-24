@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\OrderModifier;
@@ -31,9 +31,8 @@ namespace XLite\Model\OrderModifier;
 /**
  * Tax order modifier
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
@@ -42,10 +41,9 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
     /**
      * Shipping taxes (cache)
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $shippingTaxes = array();
 
@@ -53,7 +51,6 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * Define order modifiers 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -70,7 +67,6 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * Calculate shipping 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -122,7 +118,6 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * @param string $subcode Subcode (tax name)
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -143,7 +138,6 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * @param string $subcode Subcode (tax name)
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -156,7 +150,6 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * Check - tax is available or not
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -171,7 +164,6 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * @param string $subcode Subcode (tax name)
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -184,7 +176,6 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * Get display taxes list
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -224,7 +215,6 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * @param string $name Tax name
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -241,7 +231,6 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * @param string $name Tax name
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -256,7 +245,6 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * Check - any tax is registered  or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -278,7 +266,6 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * Calculate and return all order taxes
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -334,7 +321,6 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * @param array $taxes New taxes
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -354,7 +340,6 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * Check - is tax defined or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

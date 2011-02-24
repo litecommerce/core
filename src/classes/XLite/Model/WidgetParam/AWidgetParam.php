@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\WidgetParam;
@@ -31,9 +31,8 @@ namespace XLite\Model\WidgetParam;
 /**
  * ____description____
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AWidgetParam extends \XLite\Base\SuperClass
 {
@@ -50,7 +49,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * Param type
      *
      * @var    string
-     * @access protected
      * @since  3.0
      */
     protected $type = null;
@@ -59,7 +57,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * Param value 
      * 
      * @var    mixed
-     * @access protected
      * @since  3.0
      */
     protected $value = null;
@@ -68,7 +65,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * Param label 
      * 
      * @var    string
-     * @access protected
      * @since  3.0
      */
     protected $label = null;
@@ -77,7 +73,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * Determines if the param will be diaplayed in CMS as widget setting
      * 
      * @var    mixed
-     * @access protected
      * @since  3.0.0
      */
     protected $isSetting = false;
@@ -89,7 +84,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param mixed $value Value to validate
      *  
      * @return array
-     * @access protected
      * @since  3.0.0
      */
     abstract protected function getValidaionSchema($value);
@@ -101,7 +95,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param array $conditions Conditions to check
      *
      * @return array
-     * @access protected
      * @since  3.0.0
      */
     protected function checkConditions(array $conditions)
@@ -129,7 +122,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param mixed $isSetting Display this setting in CMS or not OPTIONAL
      *  
      * @return void
-     * @access public
      * @since  3.0.0
      */
     public function __construct($label, $value = null, $isSetting = false)
@@ -146,7 +138,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param mixed $value Value to validate
      *  
      * @return mixed
-     * @access public
      * @since  3.0.0
      */
     public function validate($value)
@@ -162,7 +153,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param string $name Property name
      *  
      * @return mixed
-     * @access public
      * @since  3.0
      */
     public function __get($name)
@@ -176,7 +166,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param mixed $value Value to set
      *  
      * @return void
-     * @access public
      * @since  3.0.0
      */
     public function setValue($value)
@@ -190,7 +179,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param mixed $value Value to append
      *  
      * @return void
-     * @access public
      * @since  3.0.0
      */
     public function appendValue($value)
@@ -204,7 +192,6 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param boolean $isSetting Visibility flag
      *  
      * @return void
-     * @access public
      * @since  3.0.0
      */
     public function setVisibility($isSetting)

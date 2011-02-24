@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -31,9 +31,8 @@ namespace XLite\Model\Repo;
 /**
  * Module repository
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Module extends \XLite\Model\Repo\ARepo
 {
@@ -62,10 +61,9 @@ class Module extends \XLite\Model\Repo\ARepo
     /**
      * Fileds that go into update from marketplace
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $updateFields = array(
         'name',
@@ -90,30 +88,27 @@ class Module extends \XLite\Model\Repo\ARepo
     /**
      * Repository type 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $type = self::TYPE_INTERNAL;
 
     /**
      * Update error 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $updateError = null;
 
     /**
      * Default 'order by' field name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $defaultOrderBy = array(
         'enabled' => 0,
@@ -123,10 +118,9 @@ class Module extends \XLite\Model\Repo\ARepo
     /**
      * Alternative record identifiers
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $alternativeIdentifier = array(
         array('author', 'name'),
@@ -135,10 +129,9 @@ class Module extends \XLite\Model\Repo\ARepo
     /**
      * Modules enabeld list (cache)
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $modules = null;
 
@@ -148,7 +141,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\Module $module Module
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -163,7 +155,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\Module $module Module
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -185,7 +176,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * Define cache cells 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -206,7 +196,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * Return list of handling search params 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -226,7 +215,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * Return conditions parameters that are responsible for substring set of fields.
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -244,7 +232,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param string $param Name of param to check
      *  
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -260,7 +247,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param array                      $value        Condition data
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -276,7 +262,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param string|null                $value        Condition data
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -307,7 +292,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param string $value Search string
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -341,7 +325,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param string|null                $value        Condition data
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -356,7 +339,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -374,7 +356,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -394,7 +375,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param mixed                      $value        Searchable value
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -411,7 +391,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -431,7 +410,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *  
      * @return \Doctrine\ORM\PersistentCollection|integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -454,7 +432,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * Find all modules
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -473,7 +450,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * Find all disabled modules
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -486,7 +462,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * Find all upgradable modules
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -507,7 +482,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * Find all installed modules as names list
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -529,7 +503,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param array $ids Modules ids
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -546,7 +519,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param boolean $enabled Enabled flag OPTIONAL
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -568,7 +540,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param string $author Module author
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -587,7 +558,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * FIXME - remove cycle
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -609,7 +579,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param string $name Key as: {name}\{author}
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -624,7 +593,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * Initialize modules subsystem
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -661,7 +629,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * Check new modules and delete removed
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -749,7 +716,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * Define query for findInactiveModules() method
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -767,7 +733,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * from the market place
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -782,7 +747,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * from the marketplace
      * 
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -801,7 +765,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param string $xmlData XML content
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -875,7 +838,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * Update Addons List
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -910,7 +872,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * Define query builder for findAllModules()
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -925,7 +886,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * Define query builder for findAllNames()
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -942,7 +902,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param array $ids Module ids
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -961,7 +920,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param array $data Initial data
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -982,7 +940,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param boolean $enabled Enabled flag
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -999,7 +956,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\Module $module Module
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1022,7 +978,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @param \XLite\Model\Module $module Module
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,7 +31,6 @@ namespace XLite\Model;
 /**
  * Class represents an order
  * 
- * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  *
@@ -77,7 +76,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Order unique id
      * 
      * @var    mixed
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -91,7 +89,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Order profile
      * 
      * @var    \XLite\Model\Profile
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -104,7 +101,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Original profile
      * 
      * @var    \XLite\Model\Profile
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -117,7 +113,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Shipping method unique id 
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -129,7 +124,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Shipping method name
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -141,7 +135,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Shipping tracking code
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -153,7 +146,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Order creation timestamp
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -165,7 +157,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Status code
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -177,7 +168,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Customer notes 
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -189,7 +179,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Taxes (serialized)
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -201,7 +190,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Order details
      *
      * @var    \Doctrine\Common\Collections\Collection
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -214,7 +202,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Order items
      *
      * @var    \Doctrine\Common\Collections\Collection
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -226,7 +213,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Order saved modifiers
      *
      * @var    \Doctrine\Common\Collections\Collection
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -239,7 +225,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Payment transactions
      *
      * @var    \Doctrine\Common\Collections\Collection
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -251,7 +236,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Currency 
      * 
      * @var    \XLite\Model\Currency
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -263,10 +247,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * 'Add item' error code
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $addItemError;
 
@@ -276,7 +259,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param string $status Status to get OPTIONAL
      *  
      * @return array | string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -303,7 +285,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param \XLite\Model\OrderItem $newItem Item to add
      *  
      * @return boolean
-     * @access public
      * @since  3.0.0
      */
     public function addItem(\XLite\Model\OrderItem $newItem)
@@ -336,7 +317,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Get 'Add item' error code
      * 
      * @return string|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -351,7 +331,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param \XLite\Model\OrderItem $item Another item
      *  
      * @return \XLite\Model\OrderItem|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -377,7 +356,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param integer $itemId Item id
      *  
      * @return \XLite\Model\OrderItem|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -401,7 +379,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param integer $productId Product ID to use
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -421,7 +398,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param \XLite\Model\OrderItem $item New item
      *  
      * @return void
-     * @access protected
      * @since  3.0.0
      */
     protected function addNewItem(\XLite\Model\OrderItem $item)
@@ -434,7 +410,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Normalize items 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -475,7 +450,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Return items number
      * 
      * @return integer
-     * @access public
      * @since  3.0.0
      */
     public function countItems()
@@ -487,7 +461,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Return order items total quantity
      * 
      * @return integer
-     * @access public
      * @since  3.0.0
      */
     public function countQuantity()
@@ -505,7 +478,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Checks whether the shopping cart/order is empty
      * 
      * @return boolean 
-     * @access public
      * @since  3.0.0
      */
     public function isEmpty()
@@ -517,7 +489,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Check order subtotal 
      * 
      * @return boolean 
-     * @access public
      * @since  3.0.0
      */
     public function isMinOrderAmountError()
@@ -529,7 +500,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Check order subtotal 
      * 
      * @return boolean 
-     * @access public
      * @since  3.0.0
      */
     public function isMaxOrderAmountError()
@@ -541,7 +511,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Check - is order processed or not
      * 
      * @return boolean 
-     * @access public
      * @since  3.0.0
      */
     public function isProcessed()
@@ -553,7 +522,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Check - os order queued or not
      * 
      * @return boolean 
-     * @access public
      * @since  3.0.0
      */
     public function isQueued()
@@ -565,7 +533,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Check item amounts
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -587,7 +554,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Calculate and save order subtotal 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -607,7 +573,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Calculate order total 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -646,7 +611,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param float $value Subtotal
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -661,7 +625,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param float $value Total
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -676,7 +639,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Return list of available payment methods
      * 
      * @return array
-     * @access public
      * @since  3.0.0
      */
     public function getPaymentMethods()
@@ -689,7 +651,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Renew payment method 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -705,7 +666,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Get payment method 
      * 
      * @return \XLite\Model\Payment\Method|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -730,7 +690,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Assign last used payment method 
      * 
      * @return \XLite\Model\Payment\Transaction|void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -758,7 +717,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param float                       $value         Payment transaction value OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -786,7 +744,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Get active payment transactions 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -812,7 +769,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param string                      $currency Currency code OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -847,7 +803,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Get first open (not payed) payment transaction 
      * 
      * @return \XLite\Model\Payment\Transaction|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -869,7 +824,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Get open (not-payed) total 
      * 
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -888,7 +842,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Check - order is open (has initialized transactions or has open total) or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -901,7 +854,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Get totally payed total 
      * 
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -923,7 +875,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Payed - order has not open total and all payment transactions are failed or completed
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -936,7 +887,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Get original profile 
      * 
      * @return \XLite\Model\Profile
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -951,7 +901,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param \XLite\Model\Profile $profile Profile
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -972,7 +921,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param \XLite\Model\Profile $profile Profile
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -987,7 +935,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param \XLite\Model\Profile $profile Profile
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1006,7 +953,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Get items list fingerprint 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1036,7 +982,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * to send to a payment service
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1055,7 +1000,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Get order fingerprint for event subsystem
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1081,7 +1025,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param string $name Details cell name
      *  
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1109,7 +1052,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param string $label Cell label OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1134,7 +1076,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Get meaning order details 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1155,7 +1096,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Called when an order successfully placed by a client 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1209,7 +1149,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Mark cart as order 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1221,7 +1160,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Called when an order becomes processed, before saving it to the database
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1254,7 +1192,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Called when the order status changed to failed
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1287,7 +1224,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Check - CC info showing available or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1301,7 +1237,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Check - e-card info showing available or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1316,7 +1251,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * TODO - rework after tax subsystem rework
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1352,7 +1286,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param array $data Entity properties
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1373,7 +1306,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Prepare order before save data operation
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      *
@@ -1391,7 +1323,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Prepare order before remove operation
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      *
@@ -1410,7 +1341,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Since Doctrine lifecycle callbacks do not allow to modify associations, we've added this method
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1429,10 +1359,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * top index - old status, second index - new one
      * (<old_status> ----> <new_status>: $statusHandlers[$old][$new])
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $statusHandlers = array(
 
@@ -1493,10 +1422,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Order previous status
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $oldStatus;
 
@@ -1507,7 +1435,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param string $value Status code
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1527,7 +1454,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Check if order status was changed
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1543,7 +1469,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param string $new New order status
      *  
      * @return string|false
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1559,7 +1484,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param string $new New status
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1574,7 +1498,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * A "change status" handler
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1586,7 +1509,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * A "change status" handler
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1598,7 +1520,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * A "change status" handler
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1610,7 +1531,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * A "change status" handler
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1624,7 +1544,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * A "change status" handler
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1637,7 +1556,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * A "change status" handler
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1656,7 +1574,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param integer                $sign Flag; "1" or "-1"
      *
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1671,7 +1588,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @param integer $sign flag; "1" or "-1"
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1686,7 +1602,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Order processed: decrease products inventory 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1699,7 +1614,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Order declined: increase products inventory
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

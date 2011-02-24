@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Shipping;
@@ -31,10 +31,8 @@ namespace XLite\Model\Shipping;
 /**
  * Shipping markup model
  * 
- * @package    XLite
- * @subpackage Model
  * @see        ____class_see____
- * @since      3.0.0
+ * @since     3.0.0
  * @Entity (repositoryClass="XLite\Model\Repo\Shipping\Markup")
  * @Table (name="shipping_markups",
  *      indexes={
@@ -55,7 +53,6 @@ class Markup extends \XLite\Model\AEntity
      * A unique ID of the markup
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Id
@@ -68,7 +65,6 @@ class Markup extends \XLite\Model\AEntity
      * Markup condition: min weight of products in the order
      * 
      * @var    decimal
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="decimal", precision="14", scale="4")
@@ -79,7 +75,6 @@ class Markup extends \XLite\Model\AEntity
      * Markup condition: max weight of products in the order
      * 
      * @var    decimal
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="decimal", precision="14", scale="4")
@@ -90,7 +85,6 @@ class Markup extends \XLite\Model\AEntity
      * Markup condition: min order subtotal
      * 
      * @var    decimal
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="decimal", precision="14", scale="4")
@@ -101,7 +95,6 @@ class Markup extends \XLite\Model\AEntity
      * Markup condition: max order subtotal
      * 
      * @var    decimal
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="decimal", precision="14", scale="4")
@@ -112,7 +105,6 @@ class Markup extends \XLite\Model\AEntity
      * Markup condition: min product items in the order
      * 
      * @var    decimal
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="decimal", precision="14", scale="4")
@@ -123,7 +115,6 @@ class Markup extends \XLite\Model\AEntity
      * Markup condition: max product items in the order
      * 
      * @var    decimal
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="decimal", precision="14", scale="4")
@@ -134,7 +125,6 @@ class Markup extends \XLite\Model\AEntity
      * Markup value: flat rate value
      * 
      * @var    decimal
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="decimal", precision="14", scale="4")
@@ -145,7 +135,6 @@ class Markup extends \XLite\Model\AEntity
      * Markup value: percent value
      * 
      * @var    decimal
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="decimal", precision="4", scale="2")
@@ -156,7 +145,6 @@ class Markup extends \XLite\Model\AEntity
      * Markup value: flat rate value per product item
      * 
      * @var    decimal
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="decimal", precision="14", scale="4")
@@ -167,7 +155,6 @@ class Markup extends \XLite\Model\AEntity
      * Markup value: flat rate value per weight unit
      * 
      * @var    decimal
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="decimal", precision="14", scale="4")
@@ -178,7 +165,6 @@ class Markup extends \XLite\Model\AEntity
      * Shipping method (relation)
      * 
      * @var    \XLite\Model\Shipping\Method
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -191,7 +177,6 @@ class Markup extends \XLite\Model\AEntity
      * Zone (relation)
      * 
      * @var    \XLite\Model\Zone
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
@@ -203,10 +188,9 @@ class Markup extends \XLite\Model\AEntity
     /**
      * Calculated markup value 
      * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   float
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $markupValue = 0;
 
@@ -214,7 +198,6 @@ class Markup extends \XLite\Model\AEntity
      * getMarkupValue 
      * 
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -229,7 +212,6 @@ class Markup extends \XLite\Model\AEntity
      * @param integer $value Markup value
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
