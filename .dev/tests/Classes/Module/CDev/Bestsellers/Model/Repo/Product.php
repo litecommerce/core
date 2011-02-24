@@ -155,7 +155,7 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_Product extends XLite_Tests
         );  
 
         $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => self::CATEGORY));
-        $this->assertFalse(!is_null($c), 'check category');
+        $this->assertNotNull($c, 'check category');
         $best = $this->findBestsellers(1, $c->getCategoryId());
 
         $this->assertEquals(1, count($best), 'Wrong number of bestsellers was returned (1)');
