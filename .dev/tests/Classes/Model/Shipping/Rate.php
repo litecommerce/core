@@ -33,6 +33,8 @@ class XLite_Tests_Model_Shipping_Rate extends XLite_Tests_TestCase
         $methodName = $method->getName();
 
         $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->findAll();
+        $this->assertTrue(0 < count($markups), 'markups list length checking');
+
         $markup = array_shift($markups);
         $markupId = $markup->getMarkupId();
         unset($markups);
