@@ -82,6 +82,15 @@ class FlexyCompiler extends \XLite\Base\Singleton
      */
     protected $patches;
 
+    /**
+     * Image URL output type 
+     * 
+     * @var    string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $imageURLOutputType = \XLite\Core\Layout::WEB_PATH_OUTPUT_URL;
+
 
     public $substitutionStart = array();
     public $substitutionEnd = array();
@@ -858,9 +867,11 @@ class FlexyCompiler extends \XLite\Base\Singleton
      */
     protected function rewriteImageURL($url, $length)
     {
-        $newURL = $this->layout->getResourceWebPath($url, \XLite\Core\Layout::WEB_PATH_OUTPUT_URL);
+        $newURL = $this->layout->getResourceWebPath($url, $this->imageURLOutputType);
 
-        return array(0, strlen($url), $newURL);
+        return $newURL
+            ? array(0, strlen($url), $newURL)
+            : array(0, $length, $this->layout->prepareSkinURL('images', $this->imageURLOutputType));
     }
 
     function subst($start, $end, $value)

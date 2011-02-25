@@ -399,6 +399,25 @@ class Layout extends \XLite\Base\Singleton
     }
 
     /**
+     * Prepare skin URL 
+     * 
+     * @param string $shortPath  Short path
+     * @param string $outputType Output type OPTIONAL
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function prepareSkinURL($shortPath, $outputType = self::WEB_PATH_OUTPUT_SHORT)
+    {
+        $skins = $this->getSkinPaths($interface);
+        $path = array_pop($skins);
+
+        return $this->prepareResourceURL($path['web'] . '/' . $shortPath, $outputType);
+
+    }
+
+    /**
      * Save substitutonal skins data into cache
      *
      * @return void
