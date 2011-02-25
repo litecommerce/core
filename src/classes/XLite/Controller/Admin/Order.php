@@ -76,7 +76,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
      */
     protected function getRequestData()
     {
-        return \Includes\Utils\ArrayManager::filterArrayByKeys(
+        return \Includes\Utils\ArrayManager::filterByKeys(
             \XLite\Core\Request::getInstance()->getData(),
             array('status', 'notes')
         );

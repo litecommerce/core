@@ -139,33 +139,8 @@ abstract class AEntity
     }
 
     /**
-     * Get method name
-     * FIXME - to remove
-     * 
-     * @param string $name Property name
-     *  
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getMethodName($name)
-    {
-        $class = get_called_class();
-
-        if (!isset(self::$methodNames[$class])) {
-            self::$methodNames[$class] = array();
-        }
-
-        if (!isset(self::$methodNames[$class][$name])) {
-            self::$methodNames[$class][$name] = \XLite\Core\Converter::convertToCamelCase($name);
-        }
-
-        return self::$methodNames[$class][$name];
-    }
-
-    /**
-     * Get entity repository 
-     * 
+     * Get entity repository
+     *
      * @return \XLite\Model\Doctrine\Repo\AbstractRepo
      * @see    ____func_see____
      * @since  3.0.0
@@ -215,9 +190,10 @@ abstract class AEntity
      * TODO - DEVCODE - to remove!
      * 
      * @param string $method Method name
-     * @param array  $args   Call arguments
+     * @param array  $args   Call arguments OPTIONAL
      *  
      * @return mixed
+     * @throws \BadMethodCallException
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -335,7 +311,32 @@ abstract class AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function beforeCommit()
+    public function prepareEntityBeforeCommit()
     {
+    }
+
+    /**
+     * Get method name
+     * FIXME - to remove
+     * 
+     * @param string $name Property name
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMethodName($name)
+    {
+        $class = get_called_class();
+
+        if (!isset(self::$methodNames[$class])) {
+            self::$methodNames[$class] = array();
+        }
+
+        if (!isset(self::$methodNames[$class][$name])) {
+            self::$methodNames[$class][$name] = \XLite\Core\Converter::convertToCamelCase($name);
+        }
+
+        return self::$methodNames[$class][$name];
     }
 }
