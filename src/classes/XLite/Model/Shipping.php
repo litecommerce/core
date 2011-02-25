@@ -225,7 +225,7 @@ class Shipping extends \XLite\Base\Singleton
     public function getDestinationAddress(\XLite\Model\Order $order)
     {
         $address = null;
-        
+
         if ($order->getProfile() && $order->getProfile()->getShippingAddress()) {
 
             // Profile is exists
