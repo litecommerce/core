@@ -199,12 +199,14 @@ abstract class AView extends \XLite\Core\Handler
                 \XLite\Core\Layout::WEB_PATH_OUTPUT_URL,
                 $isCommon ? \XLite::COMMON_INTERFACE : null
             );
-            $v['file'] = static::$layout->getResourceFullPath(
-                $v['file'],
-                $isCommon ? \XLite::COMMON_INTERFACE : null
-            );
+            if ($v['url']) {
+                $v['file'] = static::$layout->getResourceFullPath(
+                    $v['file'],
+                    $isCommon ? \XLite::COMMON_INTERFACE : null
+                );
 
-            $list[$v['file']] = $v;
+                $list[$v['file']] = $v;
+            }
         }
 
         return $list;
