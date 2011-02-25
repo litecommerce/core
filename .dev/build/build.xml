@@ -239,6 +239,15 @@
 			<arg value="rulesets/codesize.xml,rulesets/design.xml,rulesets/naming.xml,rulesets/unusedcode.xml" />
         </exec>
 
+        <echo message="Run PHP Copy-Paste detecor" />
+        <exec executable="phpcpd" dir="${sourceDir}/src" output="${buildDir}/reports/phpcpd.txt" failonerror="false">
+            <arg value="--exclude" />
+            <arg value="var" />
+            <arg value="--exclude" />
+            <arg value="lib" />
+            <arg value="${sourceDir}/src" />
+        </exec>
+
         <echo message="Run Git stats" />
 		<mkdir dir="${buildDir}/reports/gitstat" />
 		<chmod file="${buildDir}/.dev/lib/gitstats/gitstats" perm="ugo+rx" />
