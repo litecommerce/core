@@ -19,6 +19,7 @@
 		<property name="distrDir" location="${buildDir}/output" />
 		<property name="installDir" location="${buildDir}/src" />
 		<property name="label" value="manual" />
+        <property name="lcRoot" location="${installDir}" />
 		<property name="varRunClasses" value="${installDir}/var/run/classes" />
 	</target>
 
@@ -32,6 +33,7 @@
 		<property name="srcDir" location="${sourceDir}/src" />
 		<property name="distrDir" location="${buildDir}/output" />
 		<property name="installDir" location="${buildDir}/src" />
+		<property name="lcRoot" location="${installDir}/modules/lc_connector/litecommerce" />
 		<property name="varRunClasses" value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
     </target>
 
@@ -119,8 +121,8 @@
 
 	<target name="prepare-db">
 		<!-- Replace SQL data by the demo data (for testing) -->
-		<exec executable="php" dir="${installDir}" failonerror="on">
-			<arg value="${installDir}/modules/lc_connector/litecommerce/restoredb" />
+		<exec executable="php" dir="${lcRoot}" failonerror="on">
+			<arg value="${lcRoot}/restoredb" />
 			<arg value="demo" />
 			<arg value="admin" />
 		</exec>

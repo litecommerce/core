@@ -118,7 +118,8 @@ $config['hostspec'] .= empty($config['socket'])
 $__connection = mysql_connect($config['hostspec'], $config['username'], $config['password']);
 
 if (!$__connection || !mysql_select_db($config['database'], $__connection)) {
-    die('Error of MySQL connection. Check etc/config.php file');
+    echo ('Error of MySQL connection. Check etc/config.php file');
+    die(1);
 }
 
 // Drop all tables
