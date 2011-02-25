@@ -49,6 +49,9 @@ class XLite_Tests_Module_CDev_Quantum_Model_Payment_Processor_Quantum extends XL
             array()
         );
 
+        $this->assertFalse(is_null($order->getProfile()), 'check profile');
+        $this->assertFalse(is_null($order->getProfile()->getBillingAddress()), 'check billing address');
+
         $this->assertEquals(0, $order->getOpenTotal(), 'check open total');
         $this->assertTrue($order->isOpen(), 'check open status');
 
