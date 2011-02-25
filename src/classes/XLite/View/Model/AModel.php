@@ -852,7 +852,7 @@ abstract class AModel extends \XLite\View\Dialog
 
         // TODO: check if there is more convenient way to do this
         $this->requestData = $this->prepareRequestData($data);
-        $this->requestData = \Includes\Utils\ArrayManager::filterArrayByKeys(
+        $this->requestData = \Includes\Utils\ArrayManager::filterByKeys(
             $this->requestData,
             $this->getFormFields(true)
         );
@@ -1342,7 +1342,7 @@ abstract class AModel extends \XLite\View\Dialog
     public function __construct(array $params = array(), array $sections = array())
     {
         if (!empty($sections)) {
-            $this->sections = \Includes\Utils\ArrayManager::filterArrayByKeys($this->sections, $sections);
+            $this->sections = \Includes\Utils\ArrayManager::filterByKeys($this->sections, $sections);
         }
 
         parent::__construct($params);

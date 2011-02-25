@@ -232,6 +232,11 @@ class XLite_Sniffs_PHP_Functions_FunctionDeclarationSniff extends XLite_ReqCodes
             return;
         }
 
+		if ($tokens[$stackPtr + 1]['code'] == T_WHITESPACE && $tokens[$stackPtr + 2]['code'] == T_OPEN_PARENTHESIS) {
+			// \Closure instance
+			return;
+		}
+
         $openingBrace = $tokens[$stackPtr]['scope_opener'];
 
         // The end of the function occurs at the end of the argument list. Its
