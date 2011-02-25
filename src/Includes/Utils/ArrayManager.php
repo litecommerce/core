@@ -13,27 +13,26 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
+ *
+ * PHP version 5.3.0
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Includes_Utils
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace Includes\Utils;
 
 /**
- * ArrayManager 
+ * Array manager 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class ArrayManager extends AUtils
 {
@@ -41,23 +40,22 @@ class ArrayManager extends AUtils
      * Check if passed has no duplicate elements (except of the "skip" ones)
      * TODO:  to improve
      * 
-     * @param array  $array       array to check
-     * @param string &$firstValue first duplicated value
-     * @param array  $skip        values to skip
+     * @param array  $array       Array to check
+     * @param string &$firstValue First duplicated value
+     * @param array  $skip        Values to skip OPTIONAL
      *  
-     * @return bool
-     * @access public
+     * @return boolean
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function isArrayUnique(array $array, &$firstValue, array $skip = null)
+    public static function isUnique(array $array, &$firstValue, array $skip = null)
     {
         $result = true;
 
         foreach (array_count_values($array) as $key => $value) {
             if (!isset($skip) || !in_array($key, $skip)) {
-                $result = (1 >= $value);
-                if (!$result) {
+                if (1 < $value) {
+                    $result = false;
                     $firstValue = $key;
                     break;
                 }
@@ -70,19 +68,18 @@ class ArrayManager extends AUtils
     /**
      * Return array elements having the corresponded keys
      *
-     * @param array $data   array to filter
-     * @param array $keys   keys (filter rule)
-     * @param bool  $invert flag; determines which function to use: "diff" or "intersect"
+     * @param array   $data   Array to filter
+     * @param array   $keys   Keys (filter rule)
+     * @param boolean $invert Flag; determines which function to use: "diff" or "intersect" OPTIONAL
      *
-     * @return void
-     * @access public
+     * @return array
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function filterArrayByKeys(array $data, array $keys, $invert = false)
+    public static function filterByKeys(array $data, array $keys, $invert = false)
     {
         return call_user_func_array(
-            'array_' . ($invert ? 'diff' : 'intersect') . '_key',
+            $invert ? 'array_diff_key' : 'array_intersect_key',
             array($data, array_fill_keys($keys, true))
         );
     }
@@ -92,10 +89,9 @@ class ArrayManager extends AUtils
      *
      * @param array   $array    Array to use
      * @param string  $field    Field to return
-     * @param boolean $isGetter Determines if the second param is a property name or a method
+     * @param boolean $isGetter Determines if the second param is a property name or a method OPTIONAL
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -115,10 +111,9 @@ class ArrayManager extends AUtils
      * @param array   $array    Array to search
      * @param string  $field    Field to search by
      * @param mixed   $value    Value to use for comparison
-     * @param boolean $isGetter Determines if the second param is a property name or a method
+     * @param boolean $isGetter Determines if the second param is a property name or a method OPTIONAL
      *
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -140,16 +135,17 @@ class ArrayManager extends AUtils
      * @param array   $array    Array to search
      * @param string  $field    Field to search by
      * @param mixed   $value    Value to use for comparison
-     * @param boolean $isGetter Determines if the second param is a property name or a method
+     * @param boolean $isGetter Determines if the second param is a property name or a method OPTIONAL
      *
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public static function searchInObjectsArray(array $array, $field, $value, $isGetter = false)
     {
-        return ($list = static::searchAllInObjectsArray($array, $field, $value, $isGetter)) ? reset($list) : null;
+        $list = static::searchAllInObjectsArray($array, $field, $value, $isGetter);
+
+        return $list ? reset($list) : null;
     }
 
     /**
@@ -157,10 +153,9 @@ class ArrayManager extends AUtils
      *
      * @param array   $array    Array to use
      * @param string  $field    Field to sum by
-     * @param boolean $isGetter Determines if the second param is a property name or a method
+     * @param boolean $isGetter Determines if the second param is a property name or a method OPTIONAL
      *
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -168,4 +163,60 @@ class ArrayManager extends AUtils
     {
         return array_sum(static::getObjectsArrayFieldValues($array, $field, $isGetter));
     }
+
+    /**
+     * Find item
+     * 
+     * @param mixed    &$data    Data
+     * @param callback $callback Callback
+     * @param mixed    $userData Additional data OPTIONAL
+     *  
+     * @return array|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function findValue(&$data, $callback, $userData = null)
+    {
+        $found = null;
+
+        if (is_callable($callback) && (is_array($data) || $data instanceof \IteratorAggregate)) {
+            foreach ($data as $key => $value) {
+                // Input argument
+                if (call_user_func($callback, $value, $userData)) {
+                    $found = $value;
+                    break;
+                }
+            }
+        }
+
+        return $found;
+    }
+
+    /**
+     * Filter array
+     * 
+     * @param mixed    &$data    Data
+     * @param callback $callback Callback
+     * @param mixed    $userData Additional data OPTIONAL
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function filter(&$data, $callback, $userData = null)
+    {
+        $result = array();
+
+        if (is_callable($callback) && (is_array($data) || $data instanceof \IteratorAggregate)) {
+            foreach ($data as $key => $value) {
+                // Input argument
+                if (call_user_func($callback, $value, $userData)) {
+                    $result[$key] = $value;
+                }
+            }
+        }
+
+        return $result;
+    }
+
 }
