@@ -93,6 +93,13 @@ class XLite_Sniffs_PHP_NamingConventions_ValidFunctionNameSniff extends XLite_Ab
         $className  = $phpcsFile->getDeclarationName($currScope);
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
 
+        $tokens = $phpcsFile->getTokens();
+
+		if ($tokens[$stackPtr + 1]['code'] == T_WHITESPACE && $tokens[$stackPtr + 2]['code'] == T_OPEN_PARENTHESIS) {
+			// \Closure instance
+			return;
+		}
+
         // Is this a magic method. IE. is prefixed with "__".
         if (preg_match('|^__|', $methodName) !== 0) {
             $magicPart = substr($methodName, 2);
@@ -104,48 +111,10 @@ class XLite_Sniffs_PHP_NamingConventions_ValidFunctionNameSniff extends XLite_Ab
             return;
         }
 
-        // PHP4 constructors are allowed to break our rules.
-        if ($methodName === $className) {
-            return;
-        }
-
-        // PHP4 destructors are allowed to break our rules.
-        if ($methodName === '_'.$className) {
-            return;
-        }
-
         $methodProps    = $phpcsFile->getMethodProperties($stackPtr);
         $isPublic       = ($methodProps['scope'] === 'private') ? false : true;
         $scope          = $methodProps['scope'];
         $scopeSpecified = $methodProps['scope_specified'];
-
-/* FIXME - incompatible with the "camel case" notation
-
-        // If it's a private method, it must have an underscore on the front.
-        if ($isPublic === false && $methodName{0} !== '_') {
-            $error = "Private method name \"$className::$methodName\" must be prefixed with an underscore";
-            $phpcsFile->addError($this->getReqPrefix('?') . $error, $stackPtr);
-            return;
-        }
-
-        // If it's not a private method, it must not have an underscore on the front.
-        if ($isPublic === true && $scopeSpecified === true && $methodName{0} === '_') {
-            $error = ucfirst($scope)." method name \"$className::$methodName\" must not be prefixed with an underscore";
-            $phpcsFile->addError($this->getReqPrefix('?') . $error, $stackPtr);
-            return;
-        }
-
-*/
-
-        // If the scope was specified on the method, then the method must be
-        // camel caps and an underscore should be checked for. If it wasn't
-        // specified, treat it like a public method and remove the underscore
-        // prefix if there is one because we cant determine if it is private or
-        // public.
-        $testMethodName = $methodName;
-        if ($scopeSpecified === false && $methodName{0} === '_') {
-            $testMethodName = substr($methodName, 1);
-        }
 
 		if ($this->isReserverMethodName($methodName)) {
 			return;
@@ -160,6 +129,8 @@ class XLite_Sniffs_PHP_NamingConventions_ValidFunctionNameSniff extends XLite_Ab
 		}
 
 		if (!$this->checkVerb($fBit)) {
+
+        $tokens = $phpcsFile->getTokens();
 
 			$error = ucfirst($scope)." method name \"$className::$methodName\" is not in verb form";
 			$phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.4.2') . $error, $stackPtr);
