@@ -16,9 +16,7 @@
   <a href="#" class="close" title="{t(#Close#)}"><img src="images/spacer.gif" alt="{t(#Close#)}" /></a>
 
   <ul>
-    <li FOREACH="getTopMessages(),data" class="{getType(data)}">
-      <em IF="getPrefix(data)">{getPrefix(data)} </em>{getText(data)}
-    </li>
+    <li FOREACH="getTopMessages(),data" class="{getType(data)}"><em IF="getPrefix(data)">{getPrefix(data)} </em>{getText(data)}</li>
   </ul>
 
 </div>
