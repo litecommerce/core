@@ -410,7 +410,7 @@ class Layout extends \XLite\Base\Singleton
      */
     public function prepareSkinURL($shortPath, $outputType = self::WEB_PATH_OUTPUT_SHORT)
     {
-        $skins = $this->getSkinPaths($interface);
+        $skins = $this->getSkinPaths($this->currentInterface);
         $path = array_pop($skins);
 
         return $this->prepareResourceURL($path['web'] . '/' . $shortPath, $outputType);
