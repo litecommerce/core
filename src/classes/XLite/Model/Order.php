@@ -411,7 +411,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function getItemByItem(\XLite\Model\OrderItem $item)
     {
-        return \XLite\Core\ArrayHelper::find(
+        return \Includes\Utils\ArrayManager::findValue(
             $this->getItems(),
             array($this, 'checkItemKeyEqual'),
             $item->getKey()
@@ -429,7 +429,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function getItemByItemId($itemId)
     {
-        return \XLite\Core\ArrayHelper::find(
+        return \Includes\Utils\ArrayManager::findValue(
             $this->getItems(),
             array($this, 'checkItemIdEqual'),
             $itemId
@@ -447,7 +447,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function getItemsByProductId($productId)
     {
-        return \XLite\Core\ArrayHelper::filter(
+        return \Includes\Utils\ArrayManager::filter(
             $this->getItems(),
             array($this, 'isItemProductIdEqual'),
             $productId
@@ -664,7 +664,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function getFirstOpenPaymentTransaction()
     {
-        return \XLite\Core\ArrayHelper::find(
+        return \Includes\Utils\ArrayManager::findValue(
             $this->getPaymentTransactions(),
             array($this, 'checkPaymentTransactionStatusEqual'),
             \XLite\Model\Payment\Transaction::STATUS_INITIALIZED
@@ -881,7 +881,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function getDetail($name)
     {
-        return \XLite\Core\ArrayHelper::find(
+        return \Includes\Utils\ArrayManager::findValue(
             $this->getDetails(),
             array($this, 'checkDetailName'),
             $name
@@ -1333,7 +1333,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $found = null;
 
         if ($this->getProfile() && $this->getProfile()->getLastPaymentId()) {
-            $found = \XLite\Core\ArrayHelper::find(
+            $found = \Includes\Utils\ArrayManager::findValue(
                 $this->getPaymentMethods(),
                 array($this, 'checkLastPaymentMethod'),
                 $this->getProfile()->getLastPaymentId()
