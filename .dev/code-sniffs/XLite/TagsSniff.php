@@ -104,11 +104,11 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 	protected $docBlock = 'unknown';
 
     protected $allowedParamTypes = array(
-        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'null', 'object', 'resource',
+        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'null', 'object', 'resource', 'callback',
     );
 
     protected $allowedReturnTypes = array(
-        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'void', 'object', 'resource',
+        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'void', 'object', 'resource', 'callback',
     );
 
     /**
