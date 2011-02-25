@@ -584,6 +584,26 @@ CommonElement.prototype.markAsWheelControlled = function()
       return o.updateByMouseWheel(event, delta);
     }
   );
+
+  jQuery(document.createElement('span'))
+    .addClass('wheel-mark')
+    .append(
+      jQuery(document.createElement('img'))
+        .attr({
+          'src': commonSkinPath + 'images/spacer.gif',
+          'width': 15,
+          'height': 16
+        })
+    )
+    .insertAfter(this.$element);
+
+  this.$element.focus(function(){
+    jQuery(this).addClass('focused')
+  });
+
+  this.$element.blur(function(){
+    jQuery(this).removeClass('focused')
+  });
 }
 
 // Update element by mosue wheel
@@ -613,7 +633,7 @@ CommonElement.prototype.updateByMouseWheel = function(event, delta)
     var min = jQuery(this).data('min');
     var max = jQuery(this).data('max');
 
-    value = value + delta * -1;
+    value = value + delta;
 
     if (typeof(min) != 'undefined' && min > value) {
       value = min;
