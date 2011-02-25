@@ -100,12 +100,9 @@
   font-size: 14px;
 }
 
-#topMenu ul ul li.home > a
-{
-  background-image: url("../images/icon_home.png");
-  background-position: 11px 11px;
-  background-repeat: no-repeat;
-  padding: 0 20px;
+#topMenu ul ul li.home > a img {
+  background: url("../images/icon_home.png") no-repeat left top;
+  margin-top: 11px;
 }
 
 #topMenu ul ul li.current > a
