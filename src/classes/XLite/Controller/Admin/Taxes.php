@@ -1250,36 +1250,6 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
         $tax->saveSchema($name);
     }
 
-    function action_export()
-    {
-        $name = $this->get('export_schema');
-        $tax = new \XLite\Model\TaxRates();
-        $schema = $tax->get("predefinedSchemas.$name");
-        if (!is_null($schema)) {
-            $this->set('silent', true);
-            $this->startDownload("$name.tax");
-            print serialize($schema);
-        }
-    }
-
-    function action_import()
-    {
-        if (!$this->checkUploadedFile()) {
-            $this->set('valid', false);
-            $this->set('invalid_file', true);
-            return;
-        }
-
-        $file = $this->get('uploadedFile');
-        if (is_null($file)) {
-            return;
-        }
-        $name = basename($_FILES['userfile']['name'], ".tax");
-        $schema = unserialize(file_get_contents($file));
-        $tax = new \XLite\Model\TaxRates();
-        $tax->saveSchema($name, $schema);
-    }
-
     function getEdit()
     {
         return $this->get('mode') == "edit";
