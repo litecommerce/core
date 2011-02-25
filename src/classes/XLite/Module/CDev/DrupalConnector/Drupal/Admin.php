@@ -100,7 +100,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      *
      * @param array $form Form description
      *
-     * @return void
+     * @return boolean
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0
@@ -108,6 +108,30 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     protected function isNewBlock(array $form)
     {
         return empty($form['delta']['#value']);
+    }
+
+    /**
+     * Check if block exists in "block_custom" table
+     * 
+     * @param integer $delta Block unique identifier
+     * @param string  $info  Block description
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isCustomBlock($delta, $info)
+    {
+        return (bool) db_query_range(
+            'SELECT 1 FROM {block_custom} WHERE bid = :bid AND info = :info',
+            0,
+            1,
+            array(
+                ':bid'  => $delta,
+                ':info' => $info,
+            )
+        )->fetchField();
     }
 
     /**
@@ -394,7 +418,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         $class = $data['lc_class'];
         $delta = $data['delta'];
 
-        if (!empty($data['delta'])) {
+        if ($this->isLCBlock($formState) && $this->isCustomBlock($delta, $data['info'])) {
 
             // Set LC class field for block
             db_update('block_custom')
