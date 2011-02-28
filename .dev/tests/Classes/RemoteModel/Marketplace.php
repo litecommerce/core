@@ -71,12 +71,16 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
     {
         if (empty($this->moduleId[$name])) {
 
-            $this->moduleId[$name] = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy(
+            $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy(
                 array(
                     'name'   => $name,
                     'author' => self::AUTHOR,
                 )   
-            )->getModuleId();
+            );
+
+            $this->assertTrue(is_object($module), 'There is no "' . $name . '" module');
+
+            $this->moduleId[$name] = $module->getModuleId();
         }
 
         return $this->moduleId[$name];
@@ -109,6 +113,8 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      */
     public function testGetURL()
     {
+        \XLite\Core\Database::getRepo('\XLite\Model\Module')->checkModules();
+
         $this->assertEquals(self::URL, \XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL(), 'Wrong Marketplace URL');
     }
 
