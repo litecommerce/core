@@ -29,29 +29,126 @@
 class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
 {
     // TODO use test marketplace URL
+    /**
+     * Marketplace URL (test) 
+     */
     const URL = 'https://xcart2-530.crtdev.local/~xcart/general/projects/xlite/market/';
 //  const URL = 'https://www.litecommerce.com/marketplace/';
 
+    /**
+     * Test modules names 
+     */
+    const MODULE1_NAME = 'MegaModule48';
+    const MODULE2_NAME = 'MegaModule49';
+
+    /**
+     * Test author name 
+     */
+    const AUTHOR = 'Igoryan';
+
+
+    /**
+     * Module identificators container
+     * 
+     * @var    mixed
+     * @access private
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    private $moduleId = null;
+
+    /**
+     * Return module identificator of module with specific name and 'Igoryan' author
+     * 
+     * @param mixed $name ____param_comment____
+     *  
+     * @return void
+     * @access private
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    private function getModuleId($name)
+    {
+        if (empty($this->moduleId[$name])) {
+
+            $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy(
+                array(
+                    'name'   => $name,
+                    'author' => self::AUTHOR,
+                )   
+            );
+
+            $this->assertTrue(is_object($module), 'There is no "' . $name . '" module');
+
+            $this->moduleId[$name] = $module->getModuleId();
+        }
+
+        return $this->moduleId[$name];
+    }
+
+    /**
+     * Get content of file in the 'marketplace_files' catalog (specific for test purposes)
+     * 
+     * @param string $name filename
+     *  
+     * @return string
+     * @access private
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     private function getFile($name)
     {
         $filename = dirname(__FILE__) . LC_DS . 'marketplace_files' . LC_DS . $name;
+
         return (is_file($filename) && is_readable($filename)) ? file_get_contents($filename) : false;
     }
 
+    /**
+     * Test of correct marketplace URL
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function testGetURL()
     {
+        \XLite\Core\Database::getRepo('\XLite\Model\Module')->checkModules();
+
         $this->assertEquals(self::URL, \XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL(), 'Wrong Marketplace URL');
     }
 
+    /**
+     * Test of request for LICENSE text for module
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function testLicense()
     {
         $testLicense = $this->getFile('test.license');
 
-        $this->assertEquals($testLicense, \XLite\RemoteModel\Marketplace::getInstance()->getLicense(91), 'Wrong license for 91 module');
+        $this->assertEquals(
+            $testLicense, 
+            \XLite\RemoteModel\Marketplace::getInstance()->getLicense(
+                $this->getModuleId(self::MODULE1_NAME)
+            ), 
+            'Wrong license for ' . $this->getModuleId(self::MODULE1_NAME) . ' module'
+        );
 
         $this->assertEquals('No license', \XLite\RemoteModel\Marketplace::getInstance()->getLicense(200), 'Wrong license for absent module');
     }
 
+    /**
+     * Test of request for full addons list (XML format)
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function testAddonsXML()
     {
         $testXML = $this->getFile('addons.xml');
@@ -59,9 +156,18 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
         $this->assertEquals($testXML, \XLite\RemoteModel\Marketplace::getInstance()->getAddonsXML(), 'Wrong Addons XML');
     }
 
+    /**
+     * Test of retrieving module into local repository
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function testRetrieveToLocalRepository()
     {
         $filename = 'Igoryan_MegaModule49.phar';
+
         $fullFilename = LC_LOCAL_REPOSITORY . $filename; 
 
         if (is_file($fullFilename)) {
@@ -69,7 +175,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
             @unlink($fullFilename);
         }
 
-        $result = \XLite\RemoteModel\Marketplace::getInstance()->retrieveToLocalRepository(92); 
+        $result = \XLite\RemoteModel\Marketplace::getInstance()->retrieveToLocalRepository($this->getModuleId(self::MODULE2_NAME)); 
 
         $this->assertEquals($result, $filename, 'Wrong file name');
 
@@ -78,18 +184,34 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
         @unlink($fullFilename);
     }
 
+    /**
+     * Test of request for last version of addons list
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function testLastVersion()
     {
-        $this->assertEquals(\XLite\RemoteModel\Marketplace::getInstance()->getLastVersion(), '', 'Wrong last version');
+        $this->assertEquals(\XLite\RemoteModel\Marketplace::getInstance()->getLastVersion(), 'xlite_3_0_x', 'Wrong last version');
     }
 
+    /**
+     * Test of request for module info by license key checking. 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function testModuleInfoByKey()
     {
         $this->assertEquals(
             \XLite\RemoteModel\Marketplace::getInstance()->getModuleInfoByKey('test1'),
             array(
-                'module' => 'MegaModule48',
-                'author' => 'Igoryan',
+                'module' => self::MODULE1_NAME,
+                'author' => self::AUTHOR,
             ),
             'Wrong module info for test1 key'
         );

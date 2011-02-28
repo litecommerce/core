@@ -10,7 +10,7 @@ XLITE_VERSION="3.x-dev"
 XLITE_REPO="https://github.com/litecommerce/core/tarball/master-dev"
 
 # Drupal repository URL
-DRUPAL_REPO="https://github.com/litecommerce/drupal/tarball/CVS"
+DRUPAL_REPO="https://github.com/litecommerce/drupal/tarball/7.x-master-dev"
 
 # Output directory name
 OUTPUT_DIR="output"
