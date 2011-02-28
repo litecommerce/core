@@ -69,10 +69,17 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
 
         $this->waitForPageToLoad(60000);
 
+        $moduleId = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy(
+            array(
+                'name'   => 'MegaModule48',
+                'author' => 'Igoryan',
+            )
+        )->getModuleId();
+
         // Check license key registration
         $this->assertElementPresent('//div[@id="status-messages"]/ul/li[@class="info" and text()="License key has been successfully verified for MegaModule48 module by Igoryan author"]');
 
-        $buttonInstall = '//tr[@class="module-91"]/td/div[@class="price-info"]/form[@action="admin.php" and @method="post"]/div[@class="install"]/button[@class="popup-button" and @type="button"]';
+        $buttonInstall = '//tr[@class="module-' . $moduleId . '"]/td/div[@class="price-info"]/form[@action="admin.php" and @method="post"]/div[@class="install"]/button[@class="popup-button" and @type="button"]';
 
         $this->assertElementPresent($buttonInstall, 'Install button is absent');
 
@@ -106,12 +113,12 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
         $this->waitForPageToLoad(6000);
 
         // Check module installation
-        $moduleBlock = '//table[@class="data-table items-list modules-list"]/tbody/tr[@class="module-91 disabled"]/td/div[@class="name" and text()="MegaModule 48"]';
+        $moduleBlock = '//table[@class="data-table items-list modules-list"]/tbody/tr[@class="module-' . $moduleId . ' disabled"]/td/div[@class="name" and text()="MegaModule 48"]';
 
         $this->assertElementPresent($moduleBlock, 'MegaModule48 module was not uploaded');
 
         // Try to uninstall
-        $uninstall = '//table[@class="data-table items-list modules-list"]/tbody/tr[@class="module-91 disabled"]/td/div[@class="actions"]/a[@class="uninstall" and text()="Uninstall"]';
+        $uninstall = '//table[@class="data-table items-list modules-list"]/tbody/tr[@class="module-' . $moduleId . ' disabled"]/td/div[@class="actions"]/a[@class="uninstall" and text()="Uninstall"]';
 
         $this->assertElementPresent($uninstall, 'No uninstall link!');
 
