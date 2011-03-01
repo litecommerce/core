@@ -13,17 +13,17 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ *
+ * PHP version 5.3.0 
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,19 +31,17 @@ namespace XLite\Controller\Admin;
 /**
  * ____description____
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Db extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * pages 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $pages = array(
         'db_backup'  => 'Backup database',
@@ -53,30 +51,27 @@ class Db extends \XLite\Controller\Admin\AAdmin
     /**
      * params 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $params = array('target', 'page');
 
     /**
      * page 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $page = 'db_backup';
 
     /**
      * pageTemplates 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $pageTemplates = array(
         'db_backup'  => 'db/backup.tpl',
@@ -84,21 +79,19 @@ class Db extends \XLite\Controller\Admin\AAdmin
     );
 
     /**
-     * sqldump_file 
+     * sqldumpFile 
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      */
-    protected $sqldump_file = null;
+    protected $sqldumpFile = null;
 
 
     /**
      * File size limit 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -111,7 +104,6 @@ class Db extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -124,33 +116,16 @@ class Db extends \XLite\Controller\Admin\AAdmin
      * handleRequest 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function handleRequest()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            set_time_limit(1800);
+        if (\XLite\Core\Request::getInstance()->isPost()) {
+            set_time_limit(0);
         }
 
-        $this->sqldump_file = LC_BACKUP_DIR . 'sqldump.sql.php';
-
-        if ('restore' == $this->action) {
-
-            if (
-                (!isset($this->local_file) && !$this->checkUploadedFile()) 
-                || (isset($this->local_file) && !$this->isFileExists())
-            ) {
-                $this->set('valid', false);
-                $this->set('invalid_file', true);
-            }
-        }
-
-        if ('backup' == $this->action && 0 != intval(strval($this->write_to_file)) && !$this->isFileWritable()) {
-               $this->set('valid', false);
-            $this->set('invalid_file', true);
-        }
+        $this->sqldumpFile = LC_BACKUP_DIR . 'sqldump.sql.php';
 
         parent::handleRequest();
     }
@@ -159,13 +134,12 @@ class Db extends \XLite\Controller\Admin\AAdmin
      * isFileExists 
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function isFileExists()
     {
-        return file_exists($this->sqldump_file);
+        return file_exists($this->sqldumpFile);
     }
 
 
@@ -173,7 +147,6 @@ class Db extends \XLite\Controller\Admin\AAdmin
      * Add part to the location nodes list
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -188,7 +161,6 @@ class Db extends \XLite\Controller\Admin\AAdmin
      * isDirExists 
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -209,7 +181,6 @@ class Db extends \XLite\Controller\Admin\AAdmin
      * isFileWritable 
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -219,7 +190,7 @@ class Db extends \XLite\Controller\Admin\AAdmin
             $this->isDirExists() 
             && (
                 !$this->isFileExists() 
-                || ($this->isFileExists() && is_writable($this->sqldump_file))
+                || ($this->isFileExists() && is_writable($this->sqldumpFile))
             );
     }
 
@@ -227,7 +198,6 @@ class Db extends \XLite\Controller\Admin\AAdmin
      * doActionBackup 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -236,9 +206,9 @@ class Db extends \XLite\Controller\Admin\AAdmin
         $verbose  = false;
         $destfile = null; // write to 'stdout' by default
 
-        if (isset(\XLite\Core\Request::getInstance()->write_to_file)) {
+        if (\XLite\Core\Request::getInstance()->write_to_file) {
             
-            $destfile = $this->sqldump_file;
+            $destFile = $this->sqldumpFile;
             $verbose  = true;
 
             //if (isset($this->mode) && 'cp' == $this->mode) {
@@ -246,27 +216,19 @@ class Db extends \XLite\Controller\Admin\AAdmin
             //}
 
         } else {
-            $this->startDownload('db_backup.sql.php');
+            $destFile = LC_BACKUP_DIR . sprintf('sqldump.backup.%d.sql', time());
+            $this->startDownload('db_backup.sql');
         }
 
-        $this->db->backup($destfile, $verbose);
+        // Make database backup and store it in $this->sqldumpFile file
+        $result = \XLite\Core\Database::getInstance()->exportSQLToFile($destFile, $verbose);
 
-        if (isset(\XLite\Core\Request::getInstance()->write_to_file)) {
-
-            if (isset($this->mode) && 'cp' == $this->mode) {
-                // Windows Control Panel mode. suppress "back" message.
-                die ('OK');
-
-            } else {
-
-                if (\XLite\Core\Request::getInstance()->write_to_file) {
-                    echo ('<br /><b>' . $this->t('Database backup created successfully') . '</b><br />');
-                }
-
-                $this->set('silent', true);
-            }
+        if (\XLite\Core\Request::getInstance()->write_to_file) {
+            echo ('<br /><b>' . $this->t('Database backup created successfully') . '</b><br />');
 
         } else {
+            readfile($destFile);
+            unlink($destFile);
             exit ();
         }
     }
@@ -275,94 +237,136 @@ class Db extends \XLite\Controller\Admin\AAdmin
      * doActionDelete 
      * 
      * @return void
-     * @access protected
+     * @throws
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function doActionDelete()
     {
-        if (file_exists($this->sqldump_file)) {
+        if (file_exists($this->sqldumpFile)) {
 
-            if (!@unlink($this->sqldump_file)) {
-                die ($this->t('Unable to delete file') . ' ' . $this->sqldump_file);
+            if (!@unlink($this->sqldumpFile)) {
+                throw new \Exception($this->t('Unable to delete file') . ' ' . $this->sqldumpFile);
             }
-        }
-
-        if (isset($this->mode) && 'cp' == $this->mode) {
-            die ('OK');
         }
     }
 
     /**
-     * doActionRestore 
+     * doActionRestoreFromUploadedFile 
      * 
      * @return void
-     * @access protected
+     * @throws 
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionRestore()
+    protected function doActionRestoreFromUploadedFile()
     {
-        // restore from FS by default
-        $srcfile = $this->sqldump_file;
-        $mode = 'file';
+        // Check uploaded file with SQL data 
+        if (isset($_FILES['userfile']) && !empty($_FILES['userfile']['tmp_name']) ) {
 
-        // check whether to restore from file upload
-        \Includes\Utils\FileManager::mkdirRecursive(SQL_UPLOAD_DIR);
+            $sqlFile = LC_TMP_DIR . sprintf('sqldump.uploaded.%d.sql', time());
 
-        if (!isset(\XLite\Core\Request::getInstance()->local_file)) {
+            $tmpFile = $_FILES['userfile']['tmp_name'];
 
-            $upload = new \XLite\Model\Upload($_FILES['userfile']);
-            $srcfile = SQL_UPLOAD_DIR . $upload->getName();
-            
-            if (!$upload->move($srcfile)) {
-                $this->error = $upload->getErrorMessage();
-                $this->set('valid', false);
-                
-                return;
+            if (!move_uploaded_file($tmpFile, $sqlFile)) {
+                throw new \Exception($this->t('Error of uploading file.'));
             }
-            
-            $mode = 'upload';
+
+            $this->restoreDatabase($sqlFile);
+
+            // Remove source SQL-file if it was uploaded
+            unlink($sqlFile);
         }
 
-        if ('cp' != $this->get('mode')) {
-            $this->startDump();
-        }
+        // Do not update session, etc.
+        exit ();
+    }
 
-        $error = $this->db->restore($srcfile);
+    /**
+     * doActionRestoreFromLocalFile
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionRestoreFromLocalFile()
+    {
+        $this->restoreDatabase($this->sqldumpFile);
 
-        if ('upload' == $mode) {
-            unlink($srcfile);
-        }
+        // Do not update session, etc.
+        exit ();
+    }
 
-        if (!$error) {
+    /**
+     * Common restore database method used by actions
+     * 
+     * @param mixed $sqlFile File with SQL data for loading into database
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function restoreDatabase($sqlFile)
+    {
+        $result = false;
+
+        // File to create temporary backup to be able rollback database
+        $backupSQLFile = LC_BACKUP_DIR . sprintf('sqldump.backup.%d.sql', time());
+
+        // Make the process of restoring database verbose
+        $verbose = true;
+
+        // Start
+
+        $this->startDump();
+
+        // Making the temporary backup file
+        echo ($this->t('Making backup of the current database state...'));
+
+        $result = \XLite\Core\Database::getInstance()->exportSQLToFile($backupSQLFile, $verbose);
+
+        // Loading specified SQL-file to the database
+        echo ('<br /><br />' . $this->t('Loading the database from file...'));
+
+        $result = \Includes\Utils\Database::uploadSQLFromFile($sqlFile, $verbose);
+
+        if ($result) {
+            // If file has been loaded into database successfully
+            $message = $this->t('Database restored successfully!');
+
+            // Prepare the cache rebuilding
+            \XLite::setCleanUpCacheFlag(true);
+
+        } else {
+            // If an error occured while loading file into database
             $message
                 = $this->t('The database has not been restored because of the errors');
 
-        } else {
-            $message = $this->t('Database restored successfully!');
+            // Restore database from temporary backup
+            echo ('<br /><br />' . $this->t('Restoring database from the backup...'));
+
+            \Includes\Utils\Database::uploadSQLFromFile($backupSQLFile, $verbose);
         }
 
-        echo ('<br />' . $message . '<br />');
+        // Display the result message
+        echo ('<br /><br />' . $message . '<br />');
 
-        if (isset($this->mode) && 'cp' == $this->mode) {
-            // Windows Control Panel mode. suppress "back" message.
-            echo ('OK');
+        // Display Javascript to cancel scrolling page to bottom
+        func_refresh_end();
 
-        } else {
-            $this->displayPageFooter();
-            func_refresh_end();
-        }
+        // Display the bottom HTML part
+        $this->displayPageFooter();
 
-        // do not update session, etc.
-        exit ();
+        // Remove temporary backup file
+        unlink($backupSQLFile);
+
+        return $result;
     }
 
     /**
      * getPageReturnURL 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -370,13 +374,14 @@ class Db extends \XLite\Controller\Admin\AAdmin
     {
         $url = array();
 
-        switch ($this->action) {
+        switch (\XLite\Core\Request::getInstance()->action) {
 
             case 'backup':
                 $url[] = '<a href="admin.php?target=db&page=db_backup">Return to admin interface.</a>';
                 break;
 
-            case 'restore':
+            case 'restore_from_uploaded_file':
+            case 'restore_from_local_file':
                 $url[] = '<a href="admin.php?target=db&page=db_restore">Return to admin interface.</a>';
                 break;
 

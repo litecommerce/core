@@ -403,6 +403,39 @@ class Database extends \XLite\Base\Singleton
 
     }
 
+    public function exportSQLToFile($path = null, $verbose = false)
+    {
+        if (!$path) {
+            $path = LC_VAR_DIR;
+        }
+
+        $schemaFileName = is_dir($path)
+            ? $path . LC_DS . 'schema.sql'
+            : $path;
+
+        $dbSchema = $this->getExportDBSchema();
+
+        $dbData = $this->getExportDBData();
+
+        $contentPrefix = <<<OUT
+
+-- <?php die(); ?>
+
+SET FOREIGN_KEY_CHECKS=0;
+
+OUT;
+
+        $output = 
+            $contentPrefix
+            . implode(';' . PHP_EOL, $dbSchema['create_table']) . ';'
+            . PHP_EOL . PHP_EOL . implode(';' . PHP_EOL, $dbData) . ';'
+            . PHP_EOL . PHP_EOL . implode(';' . PHP_EOL, $dbSchema['alter_table']) . ';'
+            . PHP_EOL;
+
+        file_put_contents($schemaFileName, $output);
+
+    }
+
     /**
      * Export DB schema 
      * 
@@ -413,22 +446,91 @@ class Database extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function exportDBSchema($path = null)
+    public function getExportDBSchema($path = null)
     {
-        if (!$path) {
-            $path = LC_VAR_DIR;
+        $result = array();
+
+        // Get database platform
+        $platform = self::getEM()->getConnection()->getDatabasePlatform();
+
+        // Get array of SQL queries which are described of DB schema
+        $schema = $this->getDBSchema();
+
+        // Separate schema to the different parts: create queries and alter-table queries
+        foreach ($schema as $row) {
+            if (preg_match('/^ALTER TABLE .+ ADD (CONSTRAINT|FOREIGN KEY)/', $row)) {
+                $result['alter_table'][] = $row;
+
+            } else {
+                $result['create_table'][] = $row;
+            }
         }
 
-        $metadata = $this->getAllMetadata();
+        return $result;
+    }
 
-        $tool = new \Doctrine\ORM\Tools\SchemaTool(self::$em);
-        $tool->createSchema($metadata);
-        file_put_contents($path . LC_DS . 'schema.sql');
+    /**
+     * Returns array of database data
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getExportDBData()
+    {
+        $result = array();
 
-        $cme = new \Doctrine\ORM\Tools\Export\ClassMetadataExporter();
-        $exporter = $cme->getExporter('yml', $path);
-        $exporter->setMetadata($metadata);
-        $exporter->export();
+        $tableNames = self::$em->getConnection()->getSchemaManager()->listTableNames();
+
+
+        $dbConnection = self::$em->getConnection();
+
+        $dbConnection->beginTransaction();
+
+        try {
+
+            foreach ($tableNames as $tableName) {
+                $statement = $dbConnection->query('SELECT * FROM ' . $tableName);
+                $rows = $statement->fetchAll(\PDO::FETCH_NUM);
+                $statement->closeCursor();
+                $statement = null;
+
+                $insertValues = array();
+
+                if (count($rows) > 0) {
+
+                    foreach ($rows as $row) {
+                        $insertValues[] = '(' . implode(',', array_map(array($this, 'doQuote'), $row)) . ')';
+                    }
+
+                    $result[] = 'INSERT INTO ' . $tableName . ' VALUES ' . implode(',', $insertValues);
+                }
+            }
+
+        } catch(\PDOException $e) {
+            throw new \Exception($e);
+        }
+
+        return $result;
+    }
+
+    public function doQuote($value)
+    {
+        $search  = array("\x00", "\x0a", "\x0d", "\x1a");
+        $replace = array('\0', '\n', '\r', '\Z');
+
+        if (is_null($value)) {
+            $result = 'NULL';
+
+        } elseif (is_numeric($value)) {
+            $result = $value;
+
+        } else {
+            $result = '\'' . str_replace($search, $replace, addslashes($value)) . '\'';
+        }
+        
+        return $result;
     }
 
     /**
@@ -1309,7 +1411,7 @@ class Database extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function importSQLFromFile($path)
+    public function importSQLFromFile($path, $verbose = false)
     {
         if (!file_exists($path)) {
 
@@ -1325,7 +1427,9 @@ class Database extends \XLite\Base\Singleton
 
         }
 
-        return $this->importSQL(file_get_contents($path));
+//        return uploadQuery($path);
+//        return \Includes\Utils\Database::uploadSQLFromFile($path, $verbose);
+//        return $this->importSQL(file_get_contents($path));
     }
 
     /**
