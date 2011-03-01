@@ -675,54 +675,63 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     public function __call($command, array $arguments)
     {
-        $result = null;
+        $attempt = 1;
 
-        try {
+        if (preg_match('/^open(?:AndWait)?$/Ssi', $command)) {
+            $attempt = 3;
+        }
 
-            $result = parent::__call($command, $arguments);
+        while ($attempt--) {
 
-            if (
-                preg_match('/^open(?:AndWait)?$/Ssi', $command)
-                && $this->validatePage
-            ) {
-                $url = $arguments[0];
-                if (!isset(static::$validatedPages[$url])) {
-                    static::$validatedPages[$url] = true;
-                    $this->validate();
-                }
-            }
+            $result = null;
 
-        } catch (RuntimeException $e) {
+            try {
 
-            $message = $e->getMessage();
+                $result = parent::__call($command, $arguments);
 
-            if (
-                'Could not connect to the Selenium RC server.' == $message
-                || preg_match('/^The response from the Selenium RC server is invalid: Timed out after \d+ms$/Ss', $message)
-            ) {
-                
-                if ($command == 'waitForCondition') {
-                    $this->fail(
-                        'Timeout failed (' . $arguments[1] . 'ms): '
-                        . (isset($arguments[2]) ? $arguments[2] : $arguments[0])
-                    );
-
-                } elseif (preg_match('/AndWait$/Ss', $command)) {
-                    $this->fail(
-                        'Timeout failed for ' . $command . ' command with pattern ' . $arguments[0]
-                    );
-
-                } elseif (!defined('DEPLOYMENT_TEST')) {
-                    $this->markTestSkipped($e->getMessage());
-                
-                } else {
-                    $this->fail($e->getMessage());
+                if (
+                    preg_match('/^open(?:AndWait)?$/Ssi', $command)
+                    && $this->validatePage
+                ) {
+                    $url = $arguments[0];
+                    if (!isset(static::$validatedPages[$url])) {
+                        static::$validatedPages[$url] = true;
+                        $this->validate();
+                    }
                 }
 
-            } else {
+            } catch (RuntimeException $e) {
 
-                throw $e;
+                $message = $e->getMessage();
 
+                if (
+                    'Could not connect to the Selenium RC server.' == $message
+                    || preg_match('/^The response from the Selenium RC server is invalid: Timed out after \d+ms$/Ss', $message)
+                ) {
+                
+                    if ($command == 'waitForCondition') {
+                        $this->fail(
+                            'Timeout failed (' . $arguments[1] . 'ms): '
+                            . (isset($arguments[2]) ? $arguments[2] : $arguments[0])
+                        );
+
+                    } elseif (preg_match('/AndWait$/Ss', $command)) {
+                        $this->fail(
+                            'Timeout failed for ' . $command . ' command with pattern ' . $arguments[0]
+                        );
+
+                    } elseif (!defined('DEPLOYMENT_TEST')) {
+                        $this->markTestSkipped($e->getMessage());
+                
+                    } else {
+                        $this->fail($e->getMessage());
+                    }
+
+                } elseif (!$attempt) {
+    
+                    throw $e;
+
+                }
             }
         }
 
