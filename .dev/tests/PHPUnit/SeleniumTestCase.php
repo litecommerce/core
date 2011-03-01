@@ -299,7 +299,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             }
 
             file_put_contents(
-                LC_ROOT_DIR . 'var/log/selenium.' . $location . '.' . date('Ymd-His') . '.backtrace',
+                LC_ROOT_DIR . 'var/log/selenium.' . date('Ymd-His') . '.backtrace',
                 'Exception: ' . $exception->getMessage() . ';' . PHP_EOL
                 . PHP_EOL
                 . 'Backtrace: ' . PHP_EOL
