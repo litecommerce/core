@@ -606,6 +606,24 @@ class Order extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
+     * Get taxable basis
+     *
+     * @return float
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTaxableBasis()
+    {
+        $basis = 0;
+
+        foreach ($this->getItems() as $item) {
+            $basis += $item->getTaxableBasisSubtotal();
+        }
+
+        return $basis;
+    }
+
+    /**
      * Set payment method 
      * 
      * @param \XLite\Model\Payment\Method $paymentMethod Payment method

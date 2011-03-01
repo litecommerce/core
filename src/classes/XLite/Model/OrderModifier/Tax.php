@@ -39,15 +39,6 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
     const MODIFIER_TAX = 'tax';
 
     /**
-     * Shipping taxes (cache)
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    protected $shippingTaxes = array();
-
-    /**
      * Define order modifiers 
      * 
      * @return array
@@ -72,39 +63,11 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     protected function calculateTax()
     {
-        // Base tax cost
-        $this->calculateAllTaxes();
-
-        // Shipping-based tax cost
-        $shippingTax = 0;
-
-        if ($this->isShippingSelected()) {
-            $shippingTaxes = $this->shippingTaxes;
-            if (is_array($shippingTaxes)) {
-                if (\XLite\Core\Config::getInstance()->Taxes->prices_include_tax && isset($shippingTaxes['Tax'])) {
-                    $shippingTax = $shippingTaxes['Tax'];
-
-                } else {
-                    foreach ($shippingTaxes as $name => $value) {
-                        if (
-                            isset($taxes[$name])
-                            && (\XLite\Core\Config::getInstance()->Taxes->prices_include_tax || $taxes[$name] == $value)
-                        ) {
-                            $shippingTax += $value;
-                        }
-                    }
-                }
-            }
-        }
-
-        // Save shipping tax
-        $this->saveModifier(self::MODIFIER_TAX, $shippingTax, 'shipping_tax');
-
         // Save all visible taxes
         $taxes = $this->getDisplayTaxes();
         if ($taxes) {
-            foreach ($taxes as $name => $value) {
-                $this->saveModifier(self::MODIFIER_TAX, $value, $name);
+            foreach ($taxes as $taxValue) {
+                $this->saveModifier(self::MODIFIER_TAX, $value->value, $value->code);
             }
 
         } else {
@@ -123,13 +86,7 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     protected function isTaxVisible($subcode)
     {
-        $result = true;
-
-        if ('shipping_tax' == $subcode) {
-            $result = false;
-        }
-
-        return $result;
+        return true;
     }
 
     /**

@@ -262,6 +262,32 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
+     * Get taxable basis
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTaxableBasis()
+    {
+        return $this->getProduct()
+            ? $this->getProduct()->getTaxableBasis()
+            : $this->getPrice();
+    }
+
+    /**
+     * Get taxable subtotal 
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTaxableBasisSubtotal()
+    {
+        return $this->getTaxableBasis() * $this->getAmount();
+    }
+
+    /**
      * Modified setter
      * 
      * @param integer $amount Value to set

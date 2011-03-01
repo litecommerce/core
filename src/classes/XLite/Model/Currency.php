@@ -91,6 +91,17 @@ class Currency extends \XLite\Model\Base\I18n
     protected $orders;
 
     /**
+     * Tax rates
+     *
+     * @var    \Doctrine\Common\Collections\Collection
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\Tax\Rate", mappedBy="currency")
+     */
+    protected $taxRates;
+
+    /**
      * Set currency Id 
      * 
      * @param integer $value Currency id
@@ -177,7 +188,8 @@ class Currency extends \XLite\Model\Base\I18n
      */
     public function __construct(array $data = array())
     {
-        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orders   = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->taxRates = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }

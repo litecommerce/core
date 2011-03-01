@@ -102,6 +102,28 @@ class Zone extends \XLite\Model\AEntity
     protected $shipping_markups;
 
     /**
+     * Taxes (include into price) (relation)
+     *
+     * @var    \Doctrine\Common\Collections\ArrayCollection
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\Tax", mappedBy="includeZone", cascade={"all"})
+     */
+    protected $includeTaxes;
+
+    /**
+     * Taxe rates (relation)
+     *
+     * @var    \Doctrine\Common\Collections\ArrayCollection
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\Tax\Rate", mappedBy="zone", cascade={"all"})
+     */
+    protected $taxRates;
+
+    /**
      * Get zone's countries list
      *
      * @param boolean $excluded Flag: true - get countries except zone countries OPTIONAL
@@ -452,6 +474,8 @@ class Zone extends \XLite\Model\AEntity
     {
         $this->zone_elements    = new \Doctrine\Common\Collections\ArrayCollection();
         $this->shipping_markups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->includeTaxes     = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->taxRates         = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }

@@ -350,6 +350,18 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     }
 
     /**
+     * Get product taxable basis 
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTaxableBasis()
+    {
+        return $this->getPrice();
+    }
+
+    /**
      * Return product taxed price
      * 
      * @return float
