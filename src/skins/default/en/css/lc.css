@@ -1017,6 +1017,10 @@ button.buy-more span
   padding-bottom: 4px;
 }
 
+button.add2cart-disabled span {
+  background-image: url(../images/icon_bag_small_grey.png);
+}
+
 .product-details .product-added-note
 {
   margin: 30px 0 20px;
