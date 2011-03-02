@@ -46,7 +46,7 @@ class XLite_Sniffs_PHP_NamingConventions_UpperCaseConstantNameSniff extends XLit
 		'PREG_GREP_INVERT',
 		'ENT_NOQUOTES', 'ENT_COMPAT', 'ENT_QUOTES',
 		'LIBXML_DTDLOAD', 'LIBXML_NOERROR', 'LIBXML_NOWARNING',
-		'LOG_ERR',
+		'LOG_ERR', 'PHP_EOL',
 	);
 
     /**

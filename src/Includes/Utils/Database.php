@@ -40,7 +40,7 @@ class Database extends \Includes\Utils\AUtils
     /**
      * DB handler 
      * 
-     * @var    PDO
+     * @var    \PDO
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -60,7 +60,7 @@ class Database extends \Includes\Utils\AUtils
     /**
      * Setter method for $dbOptions. Once tries to connect and return connection object
      * 
-     * @return PDO
+     * @return \PDO
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -127,7 +127,7 @@ class Database extends \Includes\Utils\AUtils
     }
 
     /**
-     * Return list of the PDO connection options 
+     * Return list of the \PDO connection options 
      * 
      * @return array
      * @access protected
@@ -146,7 +146,7 @@ class Database extends \Includes\Utils\AUtils
     /**
      * Connect to database
      *
-     * @return PDO
+     * @return \PDO
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -162,9 +162,9 @@ class Database extends \Includes\Utils\AUtils
     }
 
     /**
-     * Return PDO database handler
+     * Return \PDO database handler
      *
-     * @return PDO
+     * @return \PDO
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -232,7 +232,7 @@ class Database extends \Includes\Utils\AUtils
      * Perform SQL query (return araay of records)
      *
      * @param string  $sql   SQL query to execute
-     * @param integer $flags PDO fetch option
+     * @param integer $flags \PDO fetch option
      *
      * @return array
      * @access public
@@ -260,7 +260,7 @@ class Database extends \Includes\Utils\AUtils
     }
 
     /**
-     * Perform SQL query
+     * Perform parameterized SQL query
      *
      * @param string $sql    SQL query to execute
      * @param array  $params query params
@@ -276,6 +276,22 @@ class Database extends \Includes\Utils\AUtils
     }
 
     /**
+     * Perform SQL query
+     *
+     * @param string $sql    SQL query to execute
+     * @param array  $params query params
+     *
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function exec($sql)
+    {
+        return static::getHandler()->exec($sql);
+    }
+
+    /**
      * Get the database version
      * 
      * @return void
@@ -286,5 +302,96 @@ class Database extends \Includes\Utils\AUtils
     public static function getDbVersion()
     {
         return static::getHandler()->getAttribute(\PDO::ATTR_SERVER_VERSION);
+    }
+
+    /**
+     * Execute a set of SQL queries from file
+     * 
+     * @param string  $fileName Name of SQL-file
+     * @param boolean $verbose  Display uploading progress flag OPTIONAL
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function uploadSQLFromFile($fileName, $verbose = false)
+    {
+        $result = false;
+
+        if (false == \Includes\Utils\FileManager::isFileReadable($fileName)) {
+
+            throw new \InvalidArgumentException(
+                sprintf('SQL file \'%s\' not found or is not readable', $fileName)
+            );
+
+        } else {
+
+            $fp = fopen($fileName, 'rb');
+
+            $sql = '';
+
+            $result = true;
+
+            while ($result && !feof($fp)) {
+
+                $c = '';
+
+                // Read SQL statement from file
+                do {
+                    $c .= fgets($fp, 1024);
+                    $endPos = strlen($c) - 1;
+
+                } while (substr($c, $endPos) != PHP_EOL && !feof($fp));
+
+                $c = rtrim($c);
+
+                // Skip comments
+                if (substr($c, 0, 1) == '#' || substr($c, 0, 2) == '--') {
+                    continue;
+                }
+
+                // Parse SQL statement
+
+                $sql .= $c;
+
+                if (substr($sql, -1) == ';') {
+
+                    $sql = substr($sql, 0, strlen($sql) - 1);
+
+                    // Execute SQL query
+                    try {
+
+                        static::getHandler()->beginTransaction();
+
+                        $result = (false !== static::exec($sql));
+
+                        if ($result) {
+                            static::getHandler()->commit();
+                        
+                        } else {
+                            static::getHandler()->rollBack();
+                        }
+
+                        if ($verbose) {   
+                            echo ('.');
+                            flush();
+                        }
+
+                    } catch (\PDOException $e) {
+
+                        static::getHandler()->rollBack();
+
+                        $result = false;
+
+                        echo ('<br />' . $e->getMessage());
+                    }
+                    $sql = '';
+                }
+            }
+
+            fclose($fp);
+        }
+
+        return $result;
     }
 }
