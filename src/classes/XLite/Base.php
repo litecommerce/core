@@ -50,7 +50,6 @@ class Base extends \XLite\Base\Singleton
         'xlite'    => 'XLite',
         'auth'     => '\XLite\Core\Auth',
         'session'  => '\XLite\Core\Session',
-        'db'       => '\XLite\Model\Database',
         'logger'   => '\XLite\Logger',
         'config'   => '\XLite\Core\Config',
         'layout'   => '\XLite\Core\Layout',

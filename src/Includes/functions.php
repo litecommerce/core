@@ -1149,15 +1149,15 @@ function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
             $command = substr($command, 0, strlen($command)-1);
             $table_name = '';
 
-            if (preg_match('/^CREATE TABLE ([_a-zA-Z0-9]*)/i', $command, $matches)) {
+            if (preg_match('/^CREATE TABLE `?([_a-zA-Z0-9]*)`?/i', $command, $matches)) {
                 $table_name = $matches[1];
                 echo 'Creating table [' . $table_name . '] ... ';
             
-            } elseif (preg_match('/^ALTER TABLE ([_a-zA-Z0-9]*)/i', $command, $matches)) {
+            } elseif (preg_match('/^ALTER TABLE `?([_a-zA-Z0-9]*)`?/i', $command, $matches)) {
                 $table_name = $matches[1];
                 echo 'Altering table [' . $table_name . '] ... ';
             
-            } elseif (preg_match('/^DROP TABLE IF EXISTS ([_a-zA-Z0-9]*)/i', $command, $matches)) {
+            } elseif (preg_match('/^DROP TABLE IF EXISTS `?([_a-zA-Z0-9]*)`?/i', $command, $matches)) {
                 $table_name = $matches[1];
                 echo 'Deleting table [' . $table_name . '] ... ';
             
@@ -1167,7 +1167,7 @@ function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
 
             // Execute SQL query
             dbExecute($command, $myerr);
-    
+
             // check for errors
             if (!empty($myerr)) {
 
@@ -1180,7 +1180,7 @@ function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
             } elseif ($table_name != "") {
                 echo '<font color="green">[OK]</font><br />' . "\n";
             
-            } elseif (!($counter % 20)) {
+            } elseif (!($counter % 5)) {
                 echo '.';
             }
 
@@ -1192,8 +1192,8 @@ function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
 
     fclose($fp);
 
-    if ($counter>20) {
-        print "\n";
+    if ($counter > 20) {
+        print "<br />\n";
     }
 
     return (!$is_restore && $ignoreErrors) ? true : empty($myerr);
