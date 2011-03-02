@@ -639,7 +639,7 @@ abstract class AView extends \XLite\Core\Handler
      * @since  3.0.0
      */
     public function getCommonFiles()
-    {    
+    {
         $list = array(
             'js' => array(
                 'js/jquery.min.js',
@@ -652,10 +652,13 @@ abstract class AView extends \XLite\Core\Handler
                 'js/core.form.js',
                 'js/php.js',
                 'js/jquery.mousewheel.js',
+                'js/jquery.validationEngine-' . $this->getCurrentLanguage()->getCode() . '.js',
+                'js/jquery.validationEngine.js',
             ),
             'css' => array(
                 'ui/jquery-ui.css',
                 'css/jquery.mousewheel.css',
+                'css/validationEngine.jquery.css',
             ),
         );
 

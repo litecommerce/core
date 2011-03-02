@@ -19,19 +19,13 @@ MinicartView.prototype.postprocess = function(isSuccess)
     jQuery('a.item-options', this.base).map(
       function()
       {
-        jQuery(this).cluetip(
+        jQuery(this).hover(
+          function()
           {
-            local: true,
-            dropShadow: false,
-            showTitle: false,
-            cluezIndex: 11000,
-            width: 100,
-            positionBy: 'bottomTop',
-            topOffset: 15,
-            mouseOutClose: false,
-            onShow: function(ct, c) {
-              ct.width('auto');
-            }
+            jQuery(this).validationEngine('showPrompt', jQuery(jQuery(this).attr('rel')).text(), 'load', 'bottomLeft');
+          },
+          function(){
+            jQuery(this).validationEngine('hide');
           }
         );
       }

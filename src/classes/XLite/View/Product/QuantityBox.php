@@ -159,8 +159,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
      */
     protected function getDefaultClass()
     {
-        return 'quantity field-integer field-positive '
-            . 'field-non-zero wheel-ctrl' . ($this->isCartPage() ? ' watcher' : '');
+        return 'quantity wheel-ctrl' . ($this->isCartPage() ? ' watcher' : '');
     }
 
     /**
@@ -229,10 +228,8 @@ class QuantityBox extends \XLite\View\Product\AProduct
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-        if (!$this->isCartPage()) {
-            $list[] = $this->getDir() . '/controller.js';
-        }
-
+        $list[] = $this->getDir() . '/controller.js';
+        
         return $list;
     }
 }

@@ -9,8 +9,6 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- *
- * @ListChild (list="product.quantity-box", weight="10")
  *}
 
 <div class="product-max-qty">

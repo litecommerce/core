@@ -13,6 +13,13 @@
 .lc-minicart a.item-options {
   cursor: help;
   padding-top: 2px;
+  text-decoration: none;
+}
+
+.lc-minicart a.item-options span {
+  border: 0 none;
+  border-bottom: 1px;
+  border-style: dashed;
 }
 
 #cluetip-inner ul.item-options {
@@ -24,8 +31,8 @@
 
 #cluetip-inner ul.item-options li {
   font-size: 12px;
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
   list-style: none;
   white-space: nowrap;
   background: transparent none;
