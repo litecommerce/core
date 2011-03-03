@@ -188,7 +188,9 @@ abstract class AView extends \XLite\Core\Handler
         $list = array();
 
         foreach ($data as $v) {
+
             if (is_string($v)) {
+
                 $v = array(
                     'file' => $v,
                 );
@@ -199,10 +201,13 @@ abstract class AView extends \XLite\Core\Handler
                 \XLite\Core\Layout::WEB_PATH_OUTPUT_URL,
                 $isCommon ? \XLite::COMMON_INTERFACE : null
             );
+
             if ($v['url']) {
+
                 $v['file'] = static::$layout->getResourceFullPath(
                     $v['file'],
-                    $isCommon ? \XLite::COMMON_INTERFACE : null
+                    $isCommon ? \XLite::COMMON_INTERFACE : null,
+                    false
                 );
 
                 $list[$v['file']] = $v;
