@@ -52,7 +52,7 @@ class OrderItemModifier extends \XLite\Model\AEntity
      * 
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer")
+     * @Column         (type="uinteger")
      */
     protected $id;
 
@@ -87,7 +87,7 @@ class OrderItemModifier extends \XLite\Model\AEntity
      *
      * @Column (type="boolean")
      */
-    protected $is_visible = 0;
+    protected $is_visible = false;
 
     /**
      * Saved summable flag
@@ -98,7 +98,7 @@ class OrderItemModifier extends \XLite\Model\AEntity
      *
      * @Column (type="boolean")
      */
-    protected $is_summable = 1;
+    protected $is_summable = true;
 
     /**
      * Subcode
