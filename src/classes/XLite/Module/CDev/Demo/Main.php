@@ -119,6 +119,6 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function doForbidOperation($message = null)
     {
-        \XLite\Core\TopMessage::getInstance()->addWarning($message ?: 'You cannot do this in demo mode.');
+        \XLite\Core\TopMessage::addWarning($message ?: 'You cannot do this in demo mode.');
     }
 }

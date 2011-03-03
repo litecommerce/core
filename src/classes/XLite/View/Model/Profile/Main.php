@@ -190,7 +190,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
 
             if ($data['password'] != $data['password_conf']) {
                 $result = false;
-                \XLite\Core\TopMessage::getInstance()->addError('Password and its confirmation do not match');
+                \XLite\Core\TopMessage::addError('Password and its confirmation do not match');
             }
 
         } else {
@@ -242,9 +242,8 @@ class Main extends \XLite\View\Model\Profile\AProfile
      */
     protected function postprocessErrorActionValidateInput()
     {
-        \XLite\Core\TopMessage::getInstance()->add(
-            $this->getErrorActionValidateInputMessage($this->getRequestData('login')),
-            \XLite\Core\TopMessage::ERROR
+        \XLite\Core\TopMessage::addError(
+            $this->getErrorActionValidateInputMessage($this->getRequestData('login'))
         );
     }
 
