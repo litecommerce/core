@@ -17,10 +17,11 @@
 <!--
 jQuery(document).ready(
   function () {
-    jQuery('.popup-link').cluetip({
-      local: true,
-      showTitle: false
-    });
+    jQuery('.popup-link').map(
+      function() {
+        attachTooltip(this, jQuery('#warn-pack').html());
+      }
+    );
   }
 );
 -->

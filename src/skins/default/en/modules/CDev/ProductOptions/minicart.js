@@ -16,25 +16,8 @@ MinicartView.prototype.postprocess = function(isSuccess)
   oldPostprocess.apply(this, arguments);
 
   if (isSuccess) {
-    jQuery('a.item-options', this.base).map(
-      function()
-      {
-        jQuery(this).cluetip(
-          {
-            local: true,
-            dropShadow: false,
-            showTitle: false,
-            cluezIndex: 11000,
-            width: 100,
-            positionBy: 'bottomTop',
-            topOffset: 15,
-            mouseOutClose: false,
-            onShow: function(ct, c) {
-              ct.width('auto');
-            }
-          }
-        );
-      }
-    );
+    jQuery('a.item-options', this.base).map(function() {
+        attachTooltip(this, jQuery(jQuery(this).attr('rel')).html());
+    });
   }
 }

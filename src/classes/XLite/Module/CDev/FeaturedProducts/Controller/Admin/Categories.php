@@ -88,9 +88,8 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
                 foreach ($products as $product) {
 
                     if (in_array($product->getProductId(), $existingLinksIds)) {
-                        \XLite\Core\TopMessage::getInstance()->add(
-                            'The product SKU#"' . $product->getSku() . '" is already set as featured for the category',
-                            \XLite\Core\TopMessage::WARNING
+                        \XLite\Core\TopMessage::addWarning(
+                            'The product SKU#"' . $product->getSku() . '" is already set as featured for the category'
                         );
                         continue;
                     }

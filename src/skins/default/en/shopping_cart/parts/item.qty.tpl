@@ -12,7 +12,7 @@
  * @ListChild (list="cart.item", weight="50")
  *}
 <td class="item-qty">
-  <widget class="\XLite\View\Form\Cart\Item\Update" item="{item}" name="updateItem{item.getItemId()}" className="update-quantity" />
+  <widget class="\XLite\View\Form\Cart\Item\Update" item="{item}" name="updateItem{item.getItemId()}" className="update-quantity" validationEngine />
     <div>
       <widget class="\XLite\View\Product\QuantityBox" product="{item.getProduct()}" fieldValue="{item.getAmount()}" isCartPage="{#1#}" />
     </div>

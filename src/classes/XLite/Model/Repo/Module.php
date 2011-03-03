@@ -867,7 +867,7 @@ class Module extends \XLite\Model\Repo\ARepo
                 LOG_ERR
             );
 
-            \XLite\Core\TopMessage::getInstance()->addWarning(
+            \XLite\Core\TopMessage::addWarning(
                 'Error occured when getting addons data from the LiteCommerce Market place. '
                 . 'Check log file for details.'
             );

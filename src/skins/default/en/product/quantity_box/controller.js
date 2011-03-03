@@ -19,28 +19,26 @@ function ProductQuantityBoxController(base)
 {
   this.callSupermethod('constructor', arguments);
 
-  if (jQuery('input.quantity', this.base) && jQuery('span.product-max-qty-container', this.base)) {
+  if (this.base && this.base.length && jQuery('input.quantity', this.base).length > 0) {
 
-    this.block = jQuery('input.quantity', this.base);
-    this.errorBox = jQuery('.product-max-qty', this.base);
-    this.add2CartButton = jQuery('button.add2cart', this.base);
-    this.buyMoreButton = jQuery('button.buy-more', this.base);
+    this.block = jQuery('input.quantity', this.base.get(0));
+
+    if (!this.isCartPage) {
+
+      this.purchaseButton = jQuery(this.base)
+        .parents('div.product-buttons')
+        .find('button.add2cart, button.buy-more');
+
+    }
 
     var o = this;
 
     this.block.bind(
-      'change keyup',
+      'blur keyup',
       function (event) {
-        (parseInt(jQuery('span.product-max-qty-container', o.base).html()) < parseInt(jQuery('input.quantity', o.base).val())) 
-          ? o.showErrorBox() 
-          : o.hideErrorBox();
-      }
-    );
-
-    this.block.bind(
-      'ready',
-      function (event) {
-        o.block.data('max', parseInt(jQuery('span.product-max-qty-container', this.base).html()));
+        return !o.block.closest('form').validationEngine('validate')
+          ? o.showError()
+          : o.hideError();
       }
     );
   }
@@ -51,32 +49,54 @@ extend(ProductQuantityBoxController, AController);
 // Controller name
 ProductQuantityBoxController.prototype.name = 'ProductQuantityBoxController';
 
+// Pattern for base element
+ProductQuantityBoxController.prototype.findPattern = 'span.quantity-box-container';
+
 // Controller associated main widget
 ProductQuantityBoxController.prototype.block = null;
 
-// Maximum allowed product qty
-ProductQuantityBoxController.prototype.maxQuantity = null;
+// Controller associated main widget
+ProductQuantityBoxController.prototype.isCartPage = jQuery('div#cart').length > 0;
 
-/**
- * Show error box 
- */
-ProductQuantityBoxController.prototype.showErrorBox = function()
+// Initialize controller
+ProductQuantityBoxController.prototype.initialize = function()
 {
-  this.block.addClass('wrong-amount');
-  this.errorBox.show();
-  this.add2CartButton.attr('disabled', 'disabled');
-  this.buyMoreButton.attr('disabled', 'disabled');
+  var o = this;
+
+  this.base.bind(
+    'reload',
+    function(event, box) {
+      o.bind(box);
+    }
+  );
 }
 
 /**
- * Hide error box 
+ * Show error
  */
-ProductQuantityBoxController.prototype.hideErrorBox = function()
+ProductQuantityBoxController.prototype.showError = function()
+{
+  this.block.addClass('wrong-amount');
+
+  if (!this.isCartPage) {
+    this.purchaseButton
+      .attr('disabled', 'disabled')
+      .addClass('disabled add2cart-disabled');
+  }
+}
+
+/**
+ * Hide error
+ */
+ProductQuantityBoxController.prototype.hideError = function()
 {
   this.block.removeClass('wrong-amount');
-  this.errorBox.hide();
-  this.add2CartButton.attr('disabled', '');
-  this.buyMoreButton.attr('disabled', '');
+
+  if (!this.isCartPage) {
+    this.purchaseButton
+      .attr('disabled', '')
+      .removeClass('disabled add2cart-disabled');
+  }
 }
 
 core.autoload(ProductQuantityBoxController);

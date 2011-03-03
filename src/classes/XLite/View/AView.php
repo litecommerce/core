@@ -188,7 +188,9 @@ abstract class AView extends \XLite\Core\Handler
         $list = array();
 
         foreach ($data as $v) {
+
             if (is_string($v)) {
+
                 $v = array(
                     'file' => $v,
                 );
@@ -199,10 +201,13 @@ abstract class AView extends \XLite\Core\Handler
                 \XLite\Core\Layout::WEB_PATH_OUTPUT_URL,
                 $isCommon ? \XLite::COMMON_INTERFACE : null
             );
+
             if ($v['url']) {
+
                 $v['file'] = static::$layout->getResourceFullPath(
                     $v['file'],
-                    $isCommon ? \XLite::COMMON_INTERFACE : null
+                    $isCommon ? \XLite::COMMON_INTERFACE : null,
+                    false
                 );
 
                 $list[$v['file']] = $v;
@@ -639,7 +644,7 @@ abstract class AView extends \XLite\Core\Handler
      * @since  3.0.0
      */
     public function getCommonFiles()
-    {    
+    {
         $list = array(
             'js' => array(
                 'js/jquery.min.js',
@@ -652,10 +657,13 @@ abstract class AView extends \XLite\Core\Handler
                 'js/core.form.js',
                 'js/php.js',
                 'js/jquery.mousewheel.js',
+                'js/jquery.validationEngine-' . $this->getCurrentLanguage()->getCode() . '.js',
+                'js/jquery.validationEngine.js',
             ),
             'css' => array(
                 'ui/jquery-ui.css',
                 'css/jquery.mousewheel.css',
+                'css/validationEngine.jquery.css',
             ),
         );
 

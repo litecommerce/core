@@ -218,6 +218,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             . "/td[@class='item-qty']"
             . "/form[@method='post']"
             . "/div"
+            . "/span[@class='quantity-box-container']"
             . "/input[@type='text' and @value='1' and @name='amount']",
             'check item quantity'
         );
@@ -363,6 +364,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             "//td[@class='item-qty']"
             . "/form[@method='post']"
             . "/div"
+            . "/span[@class='quantity-box-container']"
             . "/input[@type='text']",
             '3'
         );
@@ -377,12 +379,13 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             "//td[@class='item-qty']"
             . "/form[@method='post']"
             . "/div"
+            . "/span[@class='quantity-box-container']"
             . "/input[@type='text']",
             '-3'
         );
 
         $this->waitForLocalCondition(
-            'jQuery(".item-qty .quantity").parents().eq(0).find(".error").length == 1',
+            'jQuery("div.amountformError").length == 1',
             30000,
             'check quantity update #2'
         );

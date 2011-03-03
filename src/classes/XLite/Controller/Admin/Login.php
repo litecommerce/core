@@ -108,8 +108,8 @@ class Login extends \XLite\Controller\Admin\AAdmin
         if (is_int($profile) && \XLite\Core\Auth::RESULT_ACCESS_DENIED === $profile) {
 
             $this->set('valid', false);
-            \XLite\Core\TopMessage::getInstance()->add('Invalid login or password', \XLite\Core\TopMessage::ERROR);
-            $returnURL = $this->buildURL('login');
+            \XLite\Core\TopMessage::addError('Invalid login or password');
+            $returnUrl = $this->buildUrl('login');
 
         } elseif (isset($this->session->lastWorkingURL)) {
             $returnURL = $this->xlite->session->get('lastWorkingURL');

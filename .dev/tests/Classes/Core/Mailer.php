@@ -39,6 +39,12 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
     const ADMIN_EMAIL = 'rnd_tester04@cdev.ru';
 
     /**
+     * User password 
+     */
+    const TESTER_PASSWORD = 'master';
+
+
+    /**
      * testSendProfileCreatedUserNotification 
      * 
      * @return void
@@ -222,6 +228,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
         $emails = $this->finishCheckingMail();
 
         if (empty($emails)) {
+
             $this->markTestSkipped('Email notification not found in the mail box');
         }
 
@@ -243,7 +250,28 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      */
     public function testSendRecoverPasswordRequest()
     {
-        $this->markTestIncomplete();
+        $profile = $this->getTestProfile();
+
+        \XLite\Base::getInstance()->config->Company->site_administrator = self::ADMIN_EMAIL;
+
+        $this->startCheckingMail();
+
+        \XLite\Core\Mailer::sendRecoverPasswordRequest(self::TESTER_EMAIL, self::TESTER_PASSWORD);
+
+        sleep(3);
+
+        $emails = $this->finishCheckingMail();
+
+        if (empty($emails)) {
+
+            $this->markTestSkipped('Email notification not found in the mail box');
+        }
+
+        $email = array_shift($emails);
+
+        $result = (bool)preg_match('/ you have requested to recover your forgotten/', $email['body']);
+
+        $this->assertTrue($result, 'Check if email contents keywords');
     }
 
     /**
@@ -257,7 +285,29 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      */
     public function testSendRecoverPasswordConfirmation()
     {
-        $this->markTestIncomplete();
+        $profile = $this->getTestProfile();
+
+        \XLite\Base::getInstance()->config->Company->site_administrator = self::ADMIN_EMAIL;
+
+        $this->startCheckingMail();
+
+        \XLite\Core\Mailer::sendRecoverPasswordConfirmation(self::TESTER_EMAIL, self::TESTER_PASSWORD);
+
+        sleep(3);
+
+        $emails = $this->finishCheckingMail();
+
+        if (empty($emails)) {
+
+            $this->markTestSkipped('Email notification not found in the mail box');
+        }   
+
+
+        $email = array_shift($emails);
+
+        $result = (bool)preg_match('/Your new password: ' . self::TESTER_PASSWORD  . '/', $email['body']);
+
+        $this->assertTrue($result, 'Check if email contents keywords');
     }
 
     /**
