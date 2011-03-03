@@ -947,43 +947,15 @@ class Order extends \XLite\Model\Base\ModifierOwner
     {
         // send email notification about initially placed order
         $status = $this->getStatus();
+
         $list = array(self::STATUS_PROCESSED, self::STATUS_COMPLETED, self::STATUS_INPROGRESS);
+
         $send = \XLite\Core\Config::getInstance()->Email->enable_init_order_notif
             || \XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer;
 
-        if (!in_array($status, $list) && $send) {
-            $mail = new \XLite\View\Mailer();
+        if ($send && !in_array($status, $list)) {
 
-            // for compatibility with dialog.order syntax in mail templates
-            $mail->order = $this;
-
-            // notify customer
-            if (\XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer) {
-                $mail->adminMail = false;
-                $mail->selectCustomerLayout();
-                $profile = $this->getProfile();
-                if ($profile) {
-                    $mail->compose(
-                        \XLite\Core\Config::getInstance()->Company->orders_department,
-                        $profile->getLogin(),
-                        'order_created'
-                    );
-                    $mail->send();
-                }
-            }
-
-            // notify admin about initially placed order
-            if (\XLite\Core\Config::getInstance()->Email->enable_init_order_notif) {
-
-                // whether or not to show CC info in mail notification
-                $mail->adminMail = true;
-                $mail->compose(
-                    \XLite\Core\Config::getInstance()->Company->site_administrator,
-                    \XLite\Core\Config::getInstance()->Company->orders_department,
-                    'order_created_admin'
-                );
-                $mail->send();
-            }
+            \XLite\Core\Mailer::getInstance()->sendOrderCreated($this);
         }
 
         $this->markAsOrder();
@@ -1381,70 +1353,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
         \XLite\Core\Database::getEM()->persist($transaction);
     }
 
-    /**
-     * Called when an order becomes processed, before saving it to the database
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function sendProcessMail()
-    {
-        $mail = new \XLite\View\Mailer();
-        $mail->order = $this;
-        $mail->adminMail = true;
-        $mail->compose(
-            \XLite\Core\Config::getInstance()->Company->site_administrator,
-            \XLite\Core\Config::getInstance()->Company->orders_department,
-            'order_processed'
-        );
-        $mail->send();
-
-        $mail->adminMail = false;
-        $mail->selectCustomerLayout();
-        $profile = $this->getProfile();
-        if ($profile) {
-            $mail->compose(
-                \XLite\Core\Config::getInstance()->Company->site_administrator,
-                $profile->getLogin(),
-                'order_processed'
-            );
-            $mail->send();
-        }
-    }
-
-    /**
-     * Called when the order status changed to failed
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function sendFailMail()
-    {
-        $mail = new \XLite\View\Mailer();
-        $mail->order = $this;
-        $mail->adminMail = true;
-        $mail->compose(
-            \XLite\Core\Config::getInstance()->Company->site_administrator,
-            \XLite\Core\Config::getInstance()->Company->orders_department,
-            'order_failed'
-        );
-        $mail->send();
-
-        $mail->adminMail = false;
-        $mail->selectCustomerLayout();
-        $profile = $this->getProfile();
-        if ($profile) {
-            $mail->compose(
-                \XLite\Core\Config::getInstance()->Company->orders_department,
-                $profile->getLogin(),
-                'order_failed'
-            );
-            $mail->send();
-        }
-    }
-
     // {{{ Lifecycle callbacks
 
     /**
@@ -1610,7 +1518,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     protected function processProcess()
     {
-        $this->sendProcessMail();
+        \XLite\Core\Mailer::getInstance()->sendProcessOrder($this);
         $this->decreaseInventory();
     }
 
@@ -1635,7 +1543,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     protected function processFail()
     {
-        $this->sendFailMail();
+        \XLite\Core\Mailer::getInstance()->sendFailedOrder($this);
     }
 
     // }}}
