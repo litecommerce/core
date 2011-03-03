@@ -26,9 +26,15 @@
  * @since     3.0.0
  */
 
-namespace XLite\Model\Base\Transport;
+namespace XLite\Model\Base;
 
-abstract class Transport extends \XLite\Base implements Countable, IteratorAggregate, ArrayAccess
+/**
+ * Abstract transport 
+ * 
+ * @see   ____class_see____
+ * @since 3.0.0
+ */
+abstract class Transport extends \XLite\Base implements \Countable, \IteratorAggregate, \ArrayAccess
 {
 	/**
 	 * Data storage
