@@ -138,7 +138,9 @@ class XLite_Sniffs_PHP_Commenting_FunctionCommentSniff extends XLite_TagsSniff
 		if ($tokens[$next]['code'] !== T_STRING)
 			return;
 
-		$throwExists = $phpcsFile->findNext(T_THROW, $stackPtr + 1, $tokens[$stackPtr]['scope_closer'] - 1);
+		$throwExists = isset($tokens[$stackPtr]['scope_closer'])
+			? $phpcsFile->findNext(T_THROW, $stackPtr + 1, $tokens[$stackPtr]['scope_closer'] - 1)
+			: false;
 
 		if (false === $throwExists) {
 			if (isset($this->tags['throws'])) {
