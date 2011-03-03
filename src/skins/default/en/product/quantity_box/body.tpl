@@ -10,5 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-
-{displayViewListContent(#product.quantity-box#)}
+<span class="quantity-box-container">
+  {displayViewListContent(#product.quantity-box#)}
+</span>

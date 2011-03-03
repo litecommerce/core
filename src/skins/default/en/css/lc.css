@@ -979,7 +979,7 @@ div.product-details .product-image-gallery
 .product-details input.quantity
 {
   border-width: 1px;
-  width: 19px;
+  width: 25px;
   height: 15px;
   text-align: right;
   padding: 4px 6px;
@@ -1015,6 +1015,10 @@ button.buy-more span
   padding-left: 31px;
   padding-top: 4px;
   padding-bottom: 4px;
+}
+
+button.add2cart-disabled span {
+  background-image: url(../images/icon_bag_small_grey.png);
 }
 
 .product-details .product-added-note
