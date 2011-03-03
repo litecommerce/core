@@ -286,6 +286,10 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
                         $zone = \XLite\Model\ViewList::INTERFACE_ADMIN;
                         break;
 
+                    case 'mail':
+                        $zone = \XLite\Model\ViewList::INTERFACE_MAIL;
+                        break;
+
                     default:
                         $zone = \XLite\Model\ViewList::INTERFACE_CUSTOMER;
                 }

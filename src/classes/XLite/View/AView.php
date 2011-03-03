@@ -1183,7 +1183,10 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function detectCurrentViewZone()
     {
-        if (\XLite\Core\Request::getInstance()->isCLI()) {
+        if (\XLite\View\Mailer::isComposeRunned()) {
+            $zone = \XLite\Model\ViewList::INTERFACE_MAIL;
+
+        } elseif (\XLite\Core\Request::getInstance()->isCLI()) {
             $zone = \XLite\Model\ViewList::INTERFACE_CONSOLE;
 
         } elseif (\XLite::isAdminZone()) {
