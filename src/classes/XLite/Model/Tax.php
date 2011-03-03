@@ -34,7 +34,7 @@ namespace XLite\Model;
  * @see   ____class_see____
  * @since 3.0.0
  *
- * @Entity (repositoryClass="\XLite\Model\Repo\Tax")
+ * @Entity
  * @Table  (name="taxes",
  *      uniqueConstraints={
  *          @UniqueConstraint (name="code", columns={"code"})

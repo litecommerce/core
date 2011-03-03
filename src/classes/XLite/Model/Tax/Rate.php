@@ -33,6 +33,9 @@ namespace XLite\Model\Tax;
  * 
  * @see   ____class_see____
  * @since 3.0.0
+ *
+ * @Entity
+ * @Table  (name="tax_rates")
  */
 class Rate extends \XLite\Model\AEntity
 {
