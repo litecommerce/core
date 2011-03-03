@@ -89,10 +89,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->persist($newMarkup);
             \XLite\Core\Database::getEM()->flush();
 
-            \XLite\Core\TopMessage::getInstance()->add(
-                $this->t('Shipping markup is successfully created'),
-                \XLite\Core\TopMessage::INFO
-            );
+            \XLite\Core\TopMessage::addInfo('Shipping markup is successfully created');
         }
     }
 
@@ -132,10 +129,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
 
                 \XLite\Core\Database::getEM()->flush();
 
-                \XLite\Core\TopMessage::getInstance()->add(
-                    $this->t('Shipping markups have been updated'),
-                    \XLite\Core\TopMessage::INFO
-                );
+                \XLite\Core\TopMessage::addInfo('Shipping markups have been updated');
             }
         }
 
@@ -169,10 +163,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
                 \XLite\Core\Database::getEM()->flush();
                 \XLite\Core\Database::getEM()->clear();
 
-                \XLite\Core\TopMessage::getInstance()->add(
-                    $this->t('The selected shipping markups have been deleted successfully'),
-                    \XLite\Core\TopMessage::INFO
-                );
+                \XLite\Core\TopMessage::addInfo('The selected shipping markups have been deleted successfully');
             }
         }
 

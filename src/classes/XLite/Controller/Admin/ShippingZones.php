@@ -142,10 +142,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
             \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache();
 
-            \XLite\Core\TopMessage::getInstance()->add(
-                $this->t('The selected zones have been deleted successfully'),
-                \XLite\Core\TopMessage::INFO
-            );
+            \XLite\Core\TopMessage::addInfo('The selected zones have been deleted successfully');
         }
     }
 
@@ -203,25 +200,16 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
                 \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache($zoneId);
 
-                \XLite\Core\TopMessage::getInstance()->add(
-                    $this->t('Zone details have been updated successfully'),
-                    \XLite\Core\TopMessage::INFO
-                );
+                \XLite\Core\TopMessage::addInfo('Zone details have been updated successfully');
 
             } else {
-                \XLite\Core\TopMessage::getInstance()->add(
-                    sprintf('The countries list for zone is empty. Please specify it.'),
-                    \XLite\Core\TopMessage::ERROR
-                );
+                \XLite\Core\TopMessage::addError('The countries list for zone is empty. Please specify it.');
             }
 
             $this->redirect('admin.php?target=shipping_zones&zoneid=' . $zoneId);
 
         } else {
-            \XLite\Core\TopMessage::getInstance()->add(
-                sprintf('Zone not found (%d)', $zoneId),
-                \XLite\Core\TopMessage::ERROR
-            );
+            \XLite\Core\TopMessage::addError(sprintf('Zone not found (%d)', $zoneId));
         }
     }
 
@@ -263,31 +251,23 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
                     \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache($zoneId);
 
-                    \XLite\Core\TopMessage::getInstance()->add(
-                        $this->t('New zone has been created successfully'),
-                        \XLite\Core\TopMessage::INFO
-                    );
+                    \XLite\Core\TopMessage::addInfo('New zone has been created successfully');
 
                     $this->redirect('admin.php?target=shipping_zones&zoneid=' . $zoneId);
 
                 } else {
-                    \XLite\Core\TopMessage::getInstance()->add(
-                        'New zone was not created due to internal error',
-                        \XLite\Core\TopMessage::ERROR
-                    );
+                    \XLite\Core\TopMessage::addError('New zone was not created due to internal error');
                 }
 
             } else {
-                \XLite\Core\TopMessage::getInstance()->add(
-                    'Could not create zone with empty name. Please specify it.',
-                    \XLite\Core\TopMessage::ERROR
+                \XLite\Core\TopMessage::addError(
+                    'Could not create zone with empty name. Please specify it.'
                 );
             }
 
         } else {
-            \XLite\Core\TopMessage::getInstance()->add(
-                sprintf('The countries list for zone is empty. Please specify it.'),
-                \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::addError(
+                'The countries list for zone is empty. Please specify it.'
             );
         }
 

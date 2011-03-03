@@ -50,6 +50,7 @@ abstract class AForm extends \XLite\View\AView
     const PARAM_FORM_PARAMS = 'formParams';
     const PARAM_FORM_METHOD = 'formMethod';
     const PARAM_CLASS_NAME  = 'className';
+    const PARAM_VALIDATION  = 'validationEngine';
 
 
     /**
@@ -286,6 +287,9 @@ abstract class AForm extends \XLite\View\AView
             self::PARAM_CLASS_NAME => new \XLite\Model\WidgetParam\String(
                 'Class name', $this->getDefaultClassName()
             ),
+            self::PARAM_VALIDATION => new \XLite\Model\WidgetParam\Bool(
+                'Apply validation engine', false
+            ),
         );
     }
 
@@ -312,7 +316,14 @@ abstract class AForm extends \XLite\View\AView
      */
     protected function getClassName()
     {
-        return $this->getParam(self::PARAM_CLASS_NAME);
+        $className = $this->getParam(self::PARAM_CLASS_NAME);
+
+        if ($this->isValidationEngineApplied()) {
+            $className = is_null($className) 
+                ? self::PARAM_VALIDATION
+                : $className . ' ' . self::PARAM_VALIDATION;
+        }       
+        return $className;
     }
 
     /**
@@ -376,5 +387,18 @@ abstract class AForm extends \XLite\View\AView
     {
         return \XLite\View\Model\AModel::getCurrentForm();
     }
-}
 
+    /**
+     * Apply/disable jQuery validation engine for the form fields
+     * 
+     * @return \XLite\View\Model\AModel
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isValidationEngineApplied()
+    {
+        return $this->getParam(self::PARAM_VALIDATION);
+    }
+
+}

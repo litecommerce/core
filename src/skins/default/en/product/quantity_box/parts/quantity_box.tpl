@@ -13,4 +13,4 @@
  * @ListChild (list="product.quantity-box", weight="20")
  *}
 
-<input type="text" value="{getBoxValue()}" class="{getClass()}" name="{getBoxName()}" title="{t(getBoxTitle())}" />
+<input type="text" value="{getBoxValue()}" class="{getClass()} validate[required,custom[integer],min[1],max[{getMaxQuantity()}]]" id="{getBoxName()}" name="{getBoxName()}" title="{t(getBoxTitle())}" />

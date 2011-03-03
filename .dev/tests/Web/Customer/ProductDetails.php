@@ -135,18 +135,18 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         // Main block
         $this->assertElementPresent(
-            "//form[@class='product-details']"
+            "//form[@class='product-details validationEngine']"
             . "/div[@class='product-details-info']"
             . "/div[@class='price product-price' and text()='$ " . $product->getPrice() . "']",
             'check price'
         );
         $this->assertElementPresent(
-            "css=form.product-details .product-details-info .product-buttons input.quantity.field-integer.field-positive.field-non-zero[type=text][value=1]",
+            "css=form.product-details .product-details-info .product-buttons input.quantity.wheel-ctrl[type=text][value=1]",
             'check quantity input box'
         );
 
         $this->assertElementPresent(
-            "//form[@class='product-details']"
+            "//form[@class='product-details validationEngine']"
             . "/div[@class='product-details-info']"
             . "/div[@class='product-buttons shade-base']"
             . "/div[@class='buttons-row']"
@@ -173,7 +173,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         // Tabs
         $this->assertElementPresent(
-            "//form[@class='product-details']"
+            "//form[@class='product-details validationEngine']"
             . "/div[@class='tabs']"
             . "/ul[@class='tabs primary']"
             . "/li[@class='active']"
@@ -188,14 +188,14 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         // Extra fields
         $this->assertElementPresent(
-            "//form[@class='product-details']"
+            "//form[@class='product-details validationEngine']"
             . "/ul[@class='extra-fields']"
             . "/li"
             . "/strong[text()='Weight:']",
             'check weight (label)'
         );
         $this->assertElementPresent(
-            "//form[@class='product-details']"
+            "//form[@class='product-details validationEngine']"
             . "/ul[@class='extra-fields']"
             . "/li"
             . "/span[text()='" . $product->getWeight(). " lbs']",
@@ -203,14 +203,14 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         );
 
         $this->assertElementPresent(
-            "//form[@class='product-details']"
+            "//form[@class='product-details validationEngine']"
             . "/ul[@class='extra-fields']"
             . "/li[@class='identifier product-sku']"
             . "/strong[@class='type' and text()='SKU:']",
             'check SKU (label)'
         );
         $this->assertElementPresent(
-            "//form[@class='product-details']"
+            "//form[@class='product-details validationEngine']"
             . "/ul[@class='extra-fields']"
             . "/li"
             . "/span[@class='value' and text()='" . $product->getSKU(). "']",
@@ -218,7 +218,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         );
 
         $this->assertElementPresent(
-            "//form[@class='product-details']"
+            "//form[@class='product-details validationEngine']"
             . "/div[@class='description product-description']",
             'check description'
         );

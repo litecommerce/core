@@ -45,6 +45,7 @@ class Layout extends \XLite\Base\Singleton
     const PATH_COMMON  = 'common';
     const PATH_ADMIN   = 'admin';
     const PATH_CONSOLE = 'console';
+    const PATH_MAIL    = 'mail';
 
 
     /**
@@ -89,12 +90,24 @@ class Layout extends \XLite\Base\Singleton
     /**
      * Current interface 
      * 
-     * @var    mixed
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
     protected $currentInterface = \XLite::CUSTOMER_INTERFACE;
+
+    /**
+     * Main interface of mail. 
+     * For example body.tpl of mail is inside MAIL interface 
+     * but the inner widgets and templates in this template are inside CUSTOMER or ADMIN interfaces
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $mailInterface = \XLite::CUSTOMER_INTERFACE;
 
     /**
      * Substutional skins list
@@ -277,24 +290,36 @@ class Layout extends \XLite\Base\Singleton
     /**
      * Returns the resource full path
      * 
-     * @param string $shortPath Short path
-     * @param string $interface Interface code OPTIONAL
+     * @param string  $shortPath Short path
+     * @param string  $interface Interface code OPTIONAL
+     * @param boolean $doMail    Flag to change mail interface
      *  
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getResourceFullPath($shortPath, $interface = null)
+    public function getResourceFullPath($shortPath, $interface = null, $doMail = true)
     {
         $interface = $interface ?: $this->currentInterface;
-        $key = $interface . '.' . $shortPath;
+
+        if ($doMail && \XLite::MAIL_INTERFACE === $this->currentInterface) {
+
+            $this->currentInterface = $this->mailInterface;
+        }
+
+        $key = $this->currentInterface . '.' . $interface . '.' . $shortPath;
 
         if (!isset($this->resourcesCache[$key])) {
+
             foreach ($this->getSkinPaths($interface) as $path) {
+
                 $fullPath = $path['fs'] . LC_DS . $shortPath;
+
                 if (file_exists($fullPath)) {
+
                     $this->resourcesCache[$key] = $path;
+
                     break;
                 }
             }
@@ -546,7 +571,9 @@ class Layout extends \XLite\Base\Singleton
         $data = \XLite\Core\Database::getCacheDriver()->fetch(
             get_called_class() . '.SubstitutonalSkins'
         );
+
         if ($data && is_array($data)) {
+
             $this->resourcesCache = $data;
         }
     }
@@ -566,7 +593,7 @@ class Layout extends \XLite\Base\Singleton
     public function setAdminSkin()
     {
         $this->currentInterface = \XLite::ADMIN_INTERFACE;
-        $this->setSkin(self::PATH_ADMIN);
+        $this->setSkin(static::PATH_ADMIN);
     }
 
     /**
@@ -580,20 +607,26 @@ class Layout extends \XLite\Base\Singleton
     public function setConsoleSkin()
     {
         $this->currentInterface = \XLite::CONSOLE_INTERFACE;
-        $this->setSkin(self::PATH_CONSOLE);
+        $this->setSkin(static::PATH_CONSOLE);
     }
 
     /**
      * Set current skin as the mail one
      * 
+     * @param string $interface Interface to use after MAIL one
+     *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setMailSkin()
+    public function setMailSkin($interface = \XLite::CUSTOMER_INTERFACE)
     {
-        $this->setSkin(\XLite\View\Mailer::MAIL_SKIN);
+        $this->currentInterface = \XLite::MAIL_INTERFACE;
+
+        $this->mailInterface = $interface;
+
+        $this->setSkin(static::PATH_MAIL);
     }
 
     /**
@@ -612,6 +645,7 @@ class Layout extends \XLite\Base\Singleton
 
         $this->setOptions();
     }
+
 
     /**
      * Set current skin 
