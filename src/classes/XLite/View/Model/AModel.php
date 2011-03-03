@@ -532,7 +532,7 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function postprocessSuccessActionCreate()
     {
-        \XLite\Core\TopMessage::getInstance()->addInfo('Data have been saved successfully');
+        \XLite\Core\TopMessage::addInfo('Data have been saved successfully');
     }
 
     /**
@@ -545,7 +545,7 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function postprocessSuccessActionUpdate()
     {
-        \XLite\Core\TopMessage::getInstance()->addInfo('Data have been saved successfully');
+        \XLite\Core\TopMessage::addInfo('Data have been saved successfully');
     }
 
     /**
@@ -558,7 +558,7 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function postprocessSuccessActionModify()
     {
-        \XLite\Core\TopMessage::getInstance()->addInfo('Data have been saved successfully');
+        \XLite\Core\TopMessage::addInfo('Data have been saved successfully');
     }
 
     /**
@@ -571,7 +571,7 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function postprocessSuccessActionDelete()
     {
-        \XLite\Core\TopMessage::getInstance()->addInfo('Data have been deleted successfully');
+        \XLite\Core\TopMessage::addInfo('Data have been deleted successfully');
     }
 
     /**

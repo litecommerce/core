@@ -147,16 +147,14 @@ class Modules extends \XLite\Controller\Admin\AAdmin
 
             } else {
 
-                \XLite\Core\TopMessage::getInstance()
-                    ->addError('Module packaging finished with the error: "' . $packModule->getError() . '"');
+                \XLite\Core\TopMessage::addError('Module packaging finished with the error: "' . $packModule->getError() . '"');
             }
 
             $packModule->cleanUp();
 
         } else {
 
-            \XLite\Core\TopMessage::getInstance()
-                ->addError('Module packing is available in the DEVELOPER mode only. Check etc/config.php file');
+            \XLite\Core\TopMessage::addError('Module packing is available in the DEVELOPER mode only. Check etc/config.php file');
         }
     }
 
@@ -200,7 +198,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
 
         if (!$module) {
 
-            \XLite\Core\TopMessage::getInstance()->addError('The module to uninstall has not been found');
+            \XLite\Core\TopMessage::addError('The module to uninstall has not been found');
 
         } else {
 
@@ -213,17 +211,13 @@ class Modules extends \XLite\Controller\Admin\AAdmin
             $status = $module->uninstall();
 
             if ($status) {
-                \XLite\Core\TopMessage::getInstance()->addInfo('The module has been uninstalled successfully');
+                \XLite\Core\TopMessage::addInfo('The module has been uninstalled successfully');
             } else {
-                \XLite\Core\TopMessage::getInstance()->addWarning('The module has been partially uninstalled');
+                \XLite\Core\TopMessage::addWarning('The module has been partially uninstalled');
             }
 
             if ($notes) {
-                \XLite\Core\TopMessage::getInstance()->add(
-                    $notes,
-                    \XLite\Core\TopMessage::INFO,
-                    true
-                );
+                \XLite\Core\TopMessage::addInfo($notes);
             }
         }
         

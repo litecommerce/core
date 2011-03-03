@@ -144,16 +144,15 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
                 $this->getItem()->setProductOptions($options);
                 $this->updateCart();
 
-                \XLite\Core\TopMessage::getInstance()->add('Options has been successfully changed');
+                \XLite\Core\TopMessage::addInfo('Options has been successfully changed');
 
                 $this->setSilenceClose();
 
             } else {
 
-                \XLite\Core\TopMessage::getInstance()->add(
+                \XLite\Core\TopMessage::addError(
                     'The product options you have selected are not valid or fall into an exception.'
-                    . ' Please select other product options',
-                    \XLite\Core\TopMessage::ERROR
+                    . ' Please select other product options'
                 );
 
                 $this->setInternalRedirect();

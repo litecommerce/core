@@ -167,9 +167,8 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
                 ->findZone(\XLite\Core\Request::getInstance()->zoneid);
 
             if (!isset($zone)) {
-                \XLite\Core\TopMessage::getInstance()->add(
-                    'Requested zone does not exists',
-                    \XLite\Core\TopMessage::ERROR
+                \XLite\Core\TopMessage::addError(
+                    'Requested zone does not exists'
                 );
             }
 
