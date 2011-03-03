@@ -258,9 +258,8 @@ class Category extends \XLite\Controller\Admin\Catalog
 
                 if (!empty($data['clean_url']) && !$this->isCleanURLUnique($data['clean_url'], (!$isNewObject ? $data['category_id'] : null))) {
 
-                    \XLite\Core\TopMessage::getInstance()->add(
-                        $this->t('The Clean URL you specified is already in use. Please specify another Clean URL'),
-                        \XLite\Core\TopMessage::ERROR
+                    \XLite\Core\TopMessage::addError(
+                        'The Clean URL you specified is already in use. Please specify another Clean URL',
                     );
 
                     $isValid = false;
@@ -271,9 +270,8 @@ class Category extends \XLite\Controller\Admin\Catalog
 
                 if (!isset ($data['name']) || 0 == strlen(trim($data['name']))) {
 
-                    \XLite\Core\TopMessage::getInstance()->add(
+                    \XLite\Core\TopMessage::addError(
                         $this->t('Not empty category name must be specified'),
-                        \XLite\Core\TopMessage::ERROR
                     );
 
                     $isValid = false;
