@@ -16,19 +16,8 @@ MinicartView.prototype.postprocess = function(isSuccess)
   oldPostprocess.apply(this, arguments);
 
   if (isSuccess) {
-    jQuery('a.item-options', this.base).map(
-      function()
-      {
-        jQuery(this).hover(
-          function()
-          {
-            jQuery(this).validationEngine('showPrompt', jQuery(jQuery(this).attr('rel')).text(), 'load', 'bottomLeft');
-          },
-          function(){
-            jQuery(this).validationEngine('hide');
-          }
-        );
-      }
-    );
+    jQuery('a.item-options', this.base).map(function() {
+        attachTooltip(this, jQuery(jQuery(this).attr('rel')).html());
+    });
   }
 }

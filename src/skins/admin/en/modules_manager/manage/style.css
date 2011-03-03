@@ -72,18 +72,12 @@ div.modules-filters div.tags {
   float: left;
 }
 
-div.actions a {
-  float: left;
-}
-
 div.pack-warning {
-  float: left;
-  display: inline;
   font-size: 14px;
+  margin-top: 10px;
 }
 
 div.pack-warning a {
-  float: right;
   padding-left: 10px;
   cursor: help;
 }
@@ -91,8 +85,3 @@ div.pack-warning a {
 .pack-warn-clear {
   clear: both;
 }
-
-#cluetip-inner {
-  padding: 10px;
-  background: #eeeeee;
-} 
