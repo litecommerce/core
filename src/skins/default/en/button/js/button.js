@@ -38,7 +38,7 @@ function submitForm(form, attrs)
 
 function submitFormDefault(form, action)
 {
-	var attrs = [];
+	var attrs = {};
   if (action !== null) {
   	attrs['action'] = action;
   }

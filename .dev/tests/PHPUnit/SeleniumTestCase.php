@@ -279,6 +279,33 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             } catch (\RuntimeException $e) {
             }
 
+            $backtrace = array();
+            foreach ($exception->getTrace() as $t) {
+                $b = null;
+
+                if (isset($t['file'])) {
+                    $b = $t['file'] . ' : ' . $t['line'];
+
+                } elseif (isset($t['function'])) {
+                    $b = 'function ' . $t['function'] . '()';
+                    if (isset($t['line'])) {
+                        $b .= ' : ' . $t['line'];
+                    }
+                }
+
+                if ($b) {
+                    $backtrace[] = $b;
+                }
+            }
+
+            file_put_contents(
+                LC_ROOT_DIR . 'var/log/selenium.' . date('Ymd-His') . '.backtrace',
+                'Exception: ' . $exception->getMessage() . ';' . PHP_EOL
+                . PHP_EOL
+                . 'Backtrace: ' . PHP_EOL
+                . implode(PHP_EOL, $backtrace) . PHP_EOL
+            );
+
             throw $exception;
         }
     }
@@ -648,6 +675,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     public function __call($command, array $arguments)
     {
+
         $result = null;
 
         try {
@@ -692,8 +720,11 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
                     $this->fail($e->getMessage());
                 }
 
-            } else {
+            } elseif (preg_match('/this\.getCurrentWindow is not a function/', $message)) {
+                $this->markTestSkipped('Browser down: ' . $e->getMessage());
 
+            } else {
+    
                 throw $e;
 
             }

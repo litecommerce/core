@@ -13,14 +13,3 @@
 <div class="invoice-box">
   {displayViewListContent(#invoice.base#)}
 </div>
-
-{*
-<widget module="CDev\GiftCertificates" template="modules/CDev/GiftCertificates/invoice_item.tpl">
-<widget module="CDev\Egoods" template="modules/CDev/Egoods/invoice.tpl">
-<widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/wholesaler_details.tpl" profile={order.profile}>
-<widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/invoice.tpl">
-<widget module="CDev\Promotion" template="modules/CDev/Promotion/invoice_discount.tpl">
-<widget module="CDev\Promotion" template="modules/CDev/Promotion/invoice.tpl">
-<widget module="CDev\GiftCertificates" template="modules/CDev/GiftCertificates/invoice.tpl">
-<widget module="CDev\Promotion" template="modules/CDev/Promotion/order_offers.tpl">
-*}

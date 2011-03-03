@@ -181,6 +181,13 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             . "/span[text()='Track package']"
         );
 
+
+        $this->assertEquals(
+            1, 
+            intval($this->getJSExpression('jQuery(".invoice-box").length')),
+            'check invoice box count'
+        );
+
         // Invoice header
         $this->assertElementPresent(
             "//div[@class='invoice-box']"
@@ -209,7 +216,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         $this->assertElementPresent(
             "//div[@class='invoice-box']"
             . "/div[@class='subhead']"
-            . "/span[text()='Grand total: $ " . $order->gettotal() . "']"
+            . "/span[text()='Grand total: $ " . $order->getTotal() . "']"
         );
 
         // Items

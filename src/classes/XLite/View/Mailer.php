@@ -41,6 +41,15 @@ class Mailer extends \XLite\View\AView
     const CRLF = "\r\n";
 
     /**
+     * Compose runned 
+     * 
+     * @var    boolean
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected static $composeRunned = false;
+
+    /**
      * Subject template file name
      * 
      * @var    string
@@ -151,6 +160,18 @@ class Mailer extends \XLite\View\AView
     protected $errorInfo = null;
 
 
+    /**
+     * Check - is copose procedure runned or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function isComposeRunned()
+    {
+        return static::$composeRunned;
+    }
+
     /** 
       * Get default template  
       *  
@@ -227,6 +248,8 @@ class Mailer extends \XLite\View\AView
      */
     public function compose($from, $to, $dir, $customHeaders = array())
     {
+        static::$composeRunned = true;
+
         // initialize internal properties
         $this->set('from', $from);
         $this->set('to', $to);
@@ -306,6 +329,8 @@ class Mailer extends \XLite\View\AView
         if (file_exists($fname)) {
             unlink($fname);
         }
+
+        static::$composeRunned = false;
     }
 
     /**

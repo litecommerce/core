@@ -61,7 +61,7 @@ To restore the images which are stored in the file system, you have to copy them
 
 <form action="admin.php" method="post" id="dbform" enctype="multipart/form-data">
 <input type="hidden" name="target" value="db" />
-<input type="hidden" name="action" value="restore" />
+<input type="hidden" name="action" value="" />
 <input type="hidden" name="page" value="{page}" />
 <table cellpadding="0" cellspacing="0">
 <tr>
@@ -69,8 +69,8 @@ To restore the images which are stored in the file system, you have to copy them
 </tr>
 <tr>
 	<td><input type="file" name="userfile" onchange="javascript: visibleBox('max_upload_note', true);"><widget IF="invalid_file" template="common/uploaded_file_validator.tpl" /></td>
-	<td>&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Submit" label="Upload and restore" style="main-button" /></td>
-    <td>{if:isFileExists()}&nbsp;&nbsp;&nbsp;<input type="hidden" name="local_file" value="0" /><widget class="\XLite\View\Button\Regular" name="local_file" label="Restore from server" jsCode="document.getElementById('dbform').local_file.value='1'; submitFormDefault(this.form);" />{end:}</td>
+	<td>&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" label="Upload and restore" style="main-button" jsCode="submitFormDefault(this.form, 'restore_from_uploaded_file');" /></td>
+    <td>{if:isFileExists()}&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" label="Restore from server" jsCode="submitFormDefault(this.form, 'restore_from_local_file');" />{end:}</td>
 </tr>
 </table>
 <span id="max_upload_note" style="display: none">
