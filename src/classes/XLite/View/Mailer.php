@@ -219,22 +219,6 @@ class Mailer extends \XLite\View\AView
         parent::set($name, $value);
     }
 
-    /**
-     * Swicth layout to customer interface
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function selectCustomerLayout()
-    {
-        $layout = \XLite\Core\Layout::getInstance();
-
-        $this->templatesSkin = $layout->getSkin();
-
-        $layout->setCustomerSkin();
-    }
 
     /**
      * Composes mail message.
