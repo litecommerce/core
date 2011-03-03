@@ -139,7 +139,7 @@ class Mailer extends \XLite\Base\Singleton
 
         static::compose(
             \XLite\Core\Config::getInstance()->Company->site_administrator,
-            \XLite\Core\Config::getInstance()->config->Company->users_department,
+            \XLite\Core\Config::getInstance()->Company->users_department,
             'profile_admin_modified'
         );
     }
