@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 <div class="product-details hproduct">
-  <widget class="\XLite\View\Form\Product\AddToCart" name="add_to_cart" product="{product}" className="product-details" />
+  <widget class="\XLite\View\Form\Product\AddToCart" name="add_to_cart" product="{product}" className="product-details" validationEngine />
     {displayViewListContent(#product.details.page#)}
   <widget name="add_to_cart" end />
 </div>

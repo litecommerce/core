@@ -521,9 +521,9 @@ button.bright:active
 button.disabled
 {
   background-image: none;
-  background-color: #c6c6c6;
+  background-color: #dfdfdf;
   cursor: default;
-  border-color: #c6c6c6;
+  border-color: #dfdfdf;
   color: #fff;
 }
 

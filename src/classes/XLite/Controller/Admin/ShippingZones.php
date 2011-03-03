@@ -267,7 +267,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
         } else {
             \XLite\Core\TopMessage::addError(
-                'The countries list for zone is empty. Please specify it.',
+                'The countries list for zone is empty. Please specify it.'
             );
         }
 

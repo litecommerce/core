@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 <div class="product-quicklook">
-  <widget class="\XLite\View\Form\Product\AddToCart" name="add_to_cart" product="{product}" className="product-details hproduct" />
+  <widget class="\XLite\View\Form\Product\AddToCart" name="add_to_cart" product="{product}" className="product-details hproduct" validationEngine />
     {displayViewListContent(#product.details.quicklook#)}
   <widget name="add_to_cart" end />
 

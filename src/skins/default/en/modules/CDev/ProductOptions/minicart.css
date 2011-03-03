@@ -13,19 +13,26 @@
 .lc-minicart a.item-options {
   cursor: help;
   padding-top: 2px;
+  text-decoration: none;
 }
 
-#cluetip-inner ul.item-options {
+.lc-minicart a.item-options span {
+  border: 0 none;
+  border-bottom: 1px;
+  border-style: dashed;
+}
+
+.lc-minicart ul.item-options {
   border: 0px none;
   padding: 10px;
   margin: 0px;
   list-style: none;
 }
 
-#cluetip-inner ul.item-options li {
+.lc-minicart ul.item-options li {
   font-size: 12px;
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
   list-style: none;
   white-space: nowrap;
   background: transparent none;
