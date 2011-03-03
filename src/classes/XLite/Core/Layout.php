@@ -629,6 +629,23 @@ class Layout extends \XLite\Base\Singleton
         $this->setSkin(static::PATH_MAIL);
     }
 
+    /**
+     * Set current skin as the customer one
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setCustomerSkin()
+    {
+        $this->skin = null;
+        $this->locale = null;
+        $this->currentInterface = \XLite::CUSTOMER_INTERFACE;
+
+        $this->setOptions();
+    }
+
 
     /**
      * Set current skin 
