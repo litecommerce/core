@@ -243,7 +243,7 @@ class Mailer extends \XLite\Base\Singleton
         );
 
         static::compose(
-            $this->config->Company->users_department,
+            \XLite\Core\Config::getInstance()->Company->users_department,
             $userLogin,
             'recover_recover'
         );
