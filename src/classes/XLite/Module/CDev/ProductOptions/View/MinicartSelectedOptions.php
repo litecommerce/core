@@ -129,23 +129,6 @@ class MinicartSelectedOptions extends \XLite\View\AView
         return $list;
     }
 
-    /**  
-     * Register files from common repository
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCommonFiles()
-    {
-        $list = parent::getCommonFiles();
-
-        $list['js'][] = 'js/jquery.cluetip.js';
-
-        return $list;
-    }
-
     /**
      * Register CSS files
      *

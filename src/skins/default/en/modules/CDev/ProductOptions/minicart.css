@@ -22,14 +22,14 @@
   border-style: dashed;
 }
 
-#cluetip-inner ul.item-options {
+.lc-minicart ul.item-options {
   border: 0px none;
   padding: 10px;
   margin: 0px;
   list-style: none;
 }
 
-#cluetip-inner ul.item-options li {
+.lc-minicart ul.item-options li {
   font-size: 12px;
   padding: 0;
   margin: 0;
