@@ -99,7 +99,7 @@ abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecor
             && $language instanceof \stdClass
         ) {
             $lng = \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode($language->language);
-            if ($lng) {
+            if ($lng && $lng->getStatus() == \XLite\Model\Language::ENABLED) {
                 $result = $language->language;
                 $lng->detach();
             }
