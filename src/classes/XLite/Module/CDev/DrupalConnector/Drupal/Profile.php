@@ -97,12 +97,12 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                     ? \XLite\Core\Auth::getInstance()->getAdminAccessLevel()
                     : \XLite\Core\Auth::getInstance()->getCustomerAccessLevel();
             }
+        }
 
-            // Prepare data for 'status' field
-            if (isset($edit['status'])) {
-                $fields['status'] = 'status';
-                $user->status = '1' === $edit['status'] ? 'E' : 'D';
-            }
+        // Prepare data for 'status' field
+        if (isset($edit['status'])) {
+            $fields['status'] = 'status';
+            $user->status = (1 === intval($edit['status']) ? 'E' : 'D');
         }
 
         $values = (is_array($edit) && isset($edit['values'])) ? $edit['values'] : array();
