@@ -58,7 +58,7 @@
 {
   visibility: hidden;
   position: absolute;
-  min-width: 120px;
+  min-width: 130px;
   height: 0;
 }
 
@@ -106,4 +106,9 @@
 #top-links ul ul li a.frontend-opened
 {
   color: #7bffb0;
+}
+
+#top-links ul ul li a.frontend-closed
+{
+  color: #ff0000;
 }
