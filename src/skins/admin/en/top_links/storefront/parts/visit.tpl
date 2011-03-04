@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="top_links.storefront", weight="20")
  *}
-<li><a href="{getShopURL()}">{t(#Visit storefront#)}</a></li>
+<li IF="!getCustomerZoneWarning()"><a href="{getShopURL()}">{t(#Visit storefront#)}</a></li>
