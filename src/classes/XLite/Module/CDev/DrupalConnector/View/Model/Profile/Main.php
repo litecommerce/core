@@ -86,7 +86,7 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      */
     protected function prepareFieldParamsAccessLevel(&$data)
     {
-        if (\XLite\Core\Auth::getInstance()->isAdmin()) {
+        if (\XLite\Core\Auth::getInstance()->isAdmin() && \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
             $data[\XLite\View\FormField\AFormField::PARAM_IS_ALLOWED_FOR_CUSTOMER] = true;
         }
     }
@@ -102,7 +102,7 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      */
     protected function prepareFieldParamsStatus(&$data)
     {
-        if (\XLite\Core\Auth::getInstance()->isAdmin()) {
+        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
             $data[\XLite\View\FormField\AFormField::PARAM_IS_ALLOWED_FOR_CUSTOMER] = true;
         }
     }
