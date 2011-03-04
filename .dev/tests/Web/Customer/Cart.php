@@ -360,35 +360,20 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
     {
         $product = $this->addToCart();
 
-        $this->typeKeys(
-            "//td[@class='item-qty']"
-            . "/form[@method='post']"
-            . "/div"
-            . "/span[@class='quantity-box-container']"
-            . "/input[@type='text']",
-            '3'
-        );
+        $qtySelector = 'td.item-qty form input[type=text]';
 
-        $this->waitForLocalCondition(
-            'jQuery("h1#page-title").html().search(/ 3 items/) != -1',
-            30000,
-            'check quantity update'
-        );
+        // Inventory tracking: check unallowed values
+        $this->getJSExpression('jQuery("td.item-qty form input[type=text]").val("-3").blur()');
+        $this->assertJqueryPresent('div.amountformError:visible', 'check minimal allowed quantity error');
+        $this->assertJqueryPresent('td.item-qty form input.wrong-amount', 'check minimal allowed quantity');
 
-        $this->typeKeys(
-            "//td[@class='item-qty']"
-            . "/form[@method='post']"
-            . "/div"
-            . "/span[@class='quantity-box-container']"
-            . "/input[@type='text']",
-            '-3'
-        );
+        $this->getJSExpression('jQuery("td.item-qty form input[type=text]").val("50").blur()');
+        $this->assertJqueryNotPresent('div.amountformError:visible', 'check normalized quantity error');
+        $this->assertJqueryNotPresent('td.item-qty form input.wrong-amount', 'check normalized quantity');
 
-        $this->waitForLocalCondition(
-            'jQuery("div.amountformError").length == 1',
-            30000,
-            'check quantity update #2'
-        );
+        $this->getJSExpression('jQuery("td.item-qty form input[type=text]").val("51").blur()');
+        $this->assertJqueryPresent('div.amountformError:visible', 'check maximum allowed quantity error');
+        $this->assertJqueryPresent('td.item-qty form input.wrong-amount', 'check maximum allowed quantity');
     }
 
     public function testEstimator()
