@@ -26,54 +26,17 @@
  * @since      3.0.0
  */
 
-namespace XLite\View;
+namespace XLite\Module\CDev\DrupalConnector\View;
 
 /**
- * Top-right side drop down links
+ * 'Powered by' widget
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class TopLinks extends \XLite\View\AView
+class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
 {
-    /**
-     * Return widget directory
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDir()
-    {
-        return 'top_links';
-    }
-
-    /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return $this->getDir() . LC_DS . 'top_links.tpl';
-    }
-
-    /**
-     * Check if widget is visible
-     *
-     * @return boolean 
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isVisible()
-    {
-        return \XLite\Core\Auth::getInstance()->isLogged();
-    }
-
     /**
      * Check if storefront menu section visible in the top links
      *
@@ -84,23 +47,6 @@ class TopLinks extends \XLite\View\AView
      */
     protected function isStorefrontMenuVisible()
     {
-        return true;                                     
-    }
-
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = 'top_links/style.css';
-
-        return $list;
+        return false;                                     
     }
 }
