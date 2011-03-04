@@ -183,7 +183,7 @@
 <widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/memberships/membership_product.tpl">
 <widget module="CDev\ProductAdviser" template="modules/CDev/ProductAdviser/product.tpl">
 
-{displayViewListContent(#product.modify.childs#)}
+{displayViewListContent(#product.modify.children#)}
 
 <tr><td colspan=2>&nbsp;</td></tr>
 

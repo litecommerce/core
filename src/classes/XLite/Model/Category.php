@@ -168,7 +168,7 @@ class Category extends \XLite\Model\Base\I18n
      *
      * @OneToMany (targetEntity="XLite\Model\Category", mappedBy="parent", cascade={"all"})
      */
-    protected $childs;
+    protected $children;
 
     /**
      * Parent category
@@ -177,7 +177,7 @@ class Category extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Category", inversedBy="childs")
+     * @ManyToOne  (targetEntity="XLite\Model\Category", inversedBy="children")
      * @JoinColumn (name="parent_id", referencedColumnName="category_id")
      */
     protected $parent;
@@ -259,7 +259,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getSubcategories()
     {
-        return $this->getChilds();
+        return $this->getChildren();
     }
 
     /**
@@ -340,7 +340,7 @@ class Category extends \XLite\Model\Base\I18n
     public function __construct(array $data = array())
     {
         $this->categoryProducts = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->childs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }

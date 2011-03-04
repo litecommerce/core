@@ -9,7 +9,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="order.childs", weight="10")
+ * @ListChild (list="order.children", weight="10")
  *}
 <div class="order-statuses">
   {displayViewListContent(#order.status#)}

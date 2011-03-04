@@ -52,7 +52,7 @@
         </td>
       </tr>
 
-      {displayViewListContent(#orders.search.childs#)}
+      {displayViewListContent(#orders.search.children#)}
 
       <tr>
         <td style="width:78;">&nbsp;</td>

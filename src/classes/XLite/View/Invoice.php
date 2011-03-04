@@ -34,7 +34,7 @@ namespace XLite\View;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @ListChild (list="order.childs", weight="30")
+ * @ListChild (list="order.children", weight="30")
  */
 class Invoice extends \XLite\View\AView
 {

@@ -15,6 +15,6 @@
     {displayViewListContent(#cart.panel#)}
   </div>
   <div id="shopping-cart">
-    {displayViewListContent(#cart.childs#)}
+    {displayViewListContent(#cart.children#)}
   </div>
 </div>

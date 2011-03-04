@@ -9,7 +9,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="order.childs", weight="40")
+ * @ListChild (list="order.children", weight="40")
  *}
 <div IF="order.getNotes()" class="customer-note">
   <strong>Customer note:</strong>
