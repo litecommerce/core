@@ -12,5 +12,5 @@
  * @ListChild (list="top_links.storefront", weight="10")
  *}
 {*** TODO: use actual status, when implemented ***}
-<li><a class="text frontend-opened">{t(#Store is opened#)}</a></li>
-<li IF="false"><a class="text frontend-closed">{t(#Store is closed#)}</a></li>
+<li IF="!getCustomerZoneWarning()"><a class="text frontend-opened">{t(#Store is opened#)}</a></li>
+<li IF="getCustomerZoneWarning()"><a class="text frontend-closed">{t(#Store is closed#)}</a></li>
