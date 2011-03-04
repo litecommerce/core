@@ -16,7 +16,7 @@
     <h2><a href="{buildURL(#cart#)}">Your cart</a></h2>
   </div>
 
-  {displayViewListContent(#minicart.vertical.childs#)}
+  {displayViewListContent(#minicart.vertical.children#)}
 
 </div>
 

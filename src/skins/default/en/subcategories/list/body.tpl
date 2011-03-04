@@ -14,7 +14,7 @@
   <li FOREACH="category.getSubcategories(),subcategory">
     <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^subcategory.category_id))}" class="subcategory-name">{subcategory.name}</a>
   </li>
-  <li FOREACH="getViewList(#subcategories.childs#),w">
+  <li FOREACH="getViewList(#subcategories.children#),w">
     {w.display()}
   </li>
 </ul>

@@ -9,7 +9,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="#minicart.vertical.childs", weight="20")
+ * @ListChild (list="#minicart.vertical.children", weight="20")
  *}
 <div class="cart-totals" IF="!cart.isEmpty()">
   <p class="cart-total"><span>Total: </span>{price_format(cart,#total#):h}</p>
