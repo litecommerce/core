@@ -133,6 +133,29 @@ class XLite_Web_Customer_SubstutionalSkin extends XLite_Web_Customer_ACustomer
 
     }
 
+    public function testSubstituteMultilanguage()
+    {
+        $de = \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneBy(array('code' => 'de'));
+        $de->setStatus(2);
+
+        $en = \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneBy(array('code' => 'en'));
+        $en->setStatus(0);
+
+        \XLite\Core\Database::getEM()->flush();
+
+        \XLite\Core\Database::getCacheDriver()->deleteAll();
+
+        $this->openAndWait('');
+
+        $this->assertElementPresent(
+            "//h1[@class='substitutional-test-skin' and text()='WELCOME PAGE DE']",
+            'test DE substutional template'
+        );
+
+        $de->setStatus(0);
+        $en->setStatus(2);
+    }
+
     public function testInheritance()
     {
         copy(
