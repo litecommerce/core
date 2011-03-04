@@ -476,20 +476,51 @@ class Layout extends \XLite\Base\Singleton
         if (!isset($this->skinPaths[$interface]) || $reset) {
             $this->skinPaths[$interface] = array();
 
-            $locale = \XLite::COMMON_INTERFACE == $interface
-                ? false
-                : $this->locale;
+            $locales = $this->getLocalesQuery($interface);
 
             foreach ($this->getSkins($interface) as $skin) {
-                $this->skinPaths[$interface][] = array(
-                    'name' => $skin,
-                    'fs'   => LC_SKINS_DIR . $skin . ($locale ? LC_DS . $locale : ''),
-                    'web'  => static::PATH_SKIN . '/' . $skin . ($locale ? '/' . $locale : ''),
-                );
+                foreach ($locales as $locale) {
+                    $this->skinPaths[$interface][] = array(
+                        'name' => $skin,
+                        'fs'   => LC_SKINS_DIR . $skin . ($locale ? LC_DS . $locale : ''),
+                        'web'  => static::PATH_SKIN . '/' . $skin . ($locale ? '/' . $locale : ''),
+                    );
+                }
+
+                if (1 < count($locales)) {
+                    $locales = array(array_pop($locales));
+                }
             }
         }
 
         return $this->skinPaths[$interface];
+    }
+
+    /**
+     * Get locales query 
+     * 
+     * @param string $interface Interface code
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocalesQuery($interface)
+    {
+        if (\XLite::COMMON_INTERFACE == $interface)  {
+            $result = array(false);
+
+        } else {
+
+            $result = array(
+                \XLite\Core\Session::getInstance()->getLanguage()->getCode(),
+                $this->locale,
+            );
+
+            $result = array_unique($result);
+        }
+
+        return $result;
     }
 
     /**
@@ -694,7 +725,10 @@ class Layout extends \XLite\Base\Singleton
      */
     protected function setPath()
     {
-        $this->path = self::PATH_SKIN . LC_DS . $this->skin . LC_DS . $this->locale . LC_DS;
+        $this->path = self::PATH_SKIN
+            . LC_DS . $this->skin
+            . ($this->locale ? LC_DS . $this->locale : '')
+            . LC_DS;
     }
 
     /**
