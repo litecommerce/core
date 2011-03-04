@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="top_links", weight="20")
  *}
-<li>
+<li IF="isStorefrontMenuVisible()">
   <a href="#">{t(#Storefront#)}</a>
   <div>
     <ul>

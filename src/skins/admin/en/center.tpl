@@ -18,7 +18,10 @@
 
 <widget target="access_denied" template="access_denied.tpl" />
 
+{*** TODO: will be moved to the dashboard side bar
 <widget template="common/dialog.tpl" head="Customer zone warning" body="customer_zone_warning.tpl" IF="{getCustomerZoneWarning()}" />
+***}
+
 <widget target="main" template="common/dialog.tpl" body="menu.tpl" />
 <widget target="module" template="common/dialog.tpl" body="general_settings.tpl" />
 

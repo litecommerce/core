@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage Controller
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,81 +26,58 @@
  * @since      3.0.0
  */
 
-namespace XLite\View;
+namespace XLite\Controller\Admin;
 
 /**
- * Top-right side drop down links
+ * ____description____
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class TopLinks extends \XLite\View\AView
+class Storefront extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Return widget directory
-     *
-     * @return string
+     * Close storefront 
+     * 
+     * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function getDir()
+    protected function doActionClose()
     {
-        return 'top_links';
+        return $this->changeStorefrontActivity(false);
     }
 
     /**
-     * Return widget default template
-     *
-     * @return string
+     * Open storefront 
+     * 
+     * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function getDefaultTemplate()
+    protected function doActionOpen()
     {
-        return $this->getDir() . LC_DS . 'top_links.tpl';
+        return $this->changeStorefrontActivity();
     }
 
     /**
-     * Check if widget is visible
-     *
-     * @return boolean 
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isVisible()
-    {
-        return \XLite\Core\Auth::getInstance()->isLogged();
-    }
-
-    /**
-     * Check if storefront menu section visible in the top links
-     *
-     * @return boolean 
+     * Change storefront activity
+     * 
+     * @param boolean $status Activity status
+     *  
+     * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
      */
-    protected function isStorefrontMenuVisible()
+    protected function changeStorefrontActivity($status = true)
     {
-        return true;                                     
-    }
-
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = 'top_links/style.css';
-
-        return $list;
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
+            array(
+                'category' => 'General',
+                'name'     => 'shop_closed',
+                'value'    => true === $status ? 'N' : 'Y'
+            )
+        );
     }
 }
