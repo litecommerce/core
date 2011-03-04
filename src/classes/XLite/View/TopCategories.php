@@ -263,7 +263,7 @@ class TopCategories extends \XLite\View\SideBarBox
         );
         if (
             ($count - 1) == $index
-            && $this->isViewListVisible('topCategories.childs', $listParam)
+            && $this->isViewListVisible('topCategories.children', $listParam)
         ) {
             $classes[] = 'last';
         }
@@ -312,7 +312,7 @@ class TopCategories extends \XLite\View\SideBarBox
     }
 
     /**
-     * Display item childs container class as HTML attribute
+     * Display item children container class as HTML attribute
      *
      * @param integer           $i      Item number
      * @param integer           $count  Items count
@@ -330,7 +330,7 @@ class TopCategories extends \XLite\View\SideBarBox
     }
 
     /**
-     * Assemble item childs container class name
+     * Assemble item children container class name
      *
      * @param integer           $i      Item number
      * @param integer           $count  Items count

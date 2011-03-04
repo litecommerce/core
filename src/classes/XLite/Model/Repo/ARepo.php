@@ -1449,7 +1449,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
             } elseif ($addModel) {
 
-                // Search target model into childs list
+                // Search target model into children list
                 foreach ($this->assembleAssociationsFromRecord($record, $assocs) as $name => $value) {
                     if ($assocs[$name]['many']) {
                         $result += $assocs[$name]['repo']->unloadFixtures($value, $entity, $assocs[$name]);

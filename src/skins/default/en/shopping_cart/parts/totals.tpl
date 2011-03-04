@@ -9,7 +9,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="cart.childs", weight="30")
+ * @ListChild (list="cart.children", weight="30")
  *}
 <ul class="sums">
   {displayViewListContent(#cart.totals#)}

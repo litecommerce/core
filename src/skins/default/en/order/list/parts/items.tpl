@@ -9,7 +9,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="orders.childs", weight="20")
+ * @ListChild (list="orders.children", weight="20")
  *}
 <ul IF="getPageData()" class="list">
 

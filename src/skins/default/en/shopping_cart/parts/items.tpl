@@ -9,7 +9,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="cart.childs", weight="10")
+ * @ListChild (list="cart.children", weight="10")
  * @ListChild (list="checkout.cart", weight="10")
  *}
 <table class="selected-products" cellspacing="0">

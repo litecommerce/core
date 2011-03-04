@@ -66,7 +66,7 @@
           {end:}
         </tr>
 
-        {displayViewListContent(#category.modify.childs#)}
+        {displayViewListContent(#category.modify.children#)}
 
         <tr>
           <td colspan="3">

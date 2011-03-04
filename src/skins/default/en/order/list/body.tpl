@@ -12,7 +12,7 @@
  *}
 <div class="orders-list {getClassIdentifier()}">
 
-  {displayViewListContent(#orders.childs#)}
+  {displayViewListContent(#orders.children#)}
 
 {* TODO Restore
 

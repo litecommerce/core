@@ -16,7 +16,7 @@
       <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^_category.category_id))}" {displayLinkClass(idx,_categoryArraySize,_category):h}>{_category.name}</a>
     </li>
   {end:}
-  {foreach:getViewList(#topCategories.childs#,_ARRAY_(#rootId#^getParam(#rootId#),#is_subtree#^getParam(#is_subtree#))),idx,w}
+  {foreach:getViewList(#topCategories.children#,_ARRAY_(#rootId#^getParam(#rootId#),#is_subtree#^getParam(#is_subtree#))),idx,w}
     <li {displayListItemClass(idx,wArraySize,w):h}>{w.display()}</li>
   {end:}
 </ul>
