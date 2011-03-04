@@ -9,7 +9,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="minicart.horizontal.childs", weight="5")
+ * @ListChild (list="minicart.horizontal.children", weight="5")
  *}
 <div class="minicart-items-number">{cart.countQuantity()}</div>
 <div class="minicart-items-text">{t(#items#)}</div>

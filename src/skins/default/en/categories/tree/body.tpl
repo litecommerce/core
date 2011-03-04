@@ -17,7 +17,7 @@
       <widget template="{getBody()}" rootId="{_category.getCategoryId()}" IF="_category.GetSubCategoriesCount()" is_subtree />
     </li>
   {end:}
-  {foreach:getViewList(#topCategories.childs#,_ARRAY_(#rootId#^getParam(#rootId#),#is_subtree#^getParam(#is_subtree#))),idx,w}
+  {foreach:getViewList(#topCategories.children#,_ARRAY_(#rootId#^getParam(#rootId#),#is_subtree#^getParam(#is_subtree#))),idx,w}
     <li {displayListItemClass(idx,wArraySize,w):h}>{w.display()}</li>
   {end:}
 </ul>

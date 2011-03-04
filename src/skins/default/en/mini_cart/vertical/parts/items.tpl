@@ -9,7 +9,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="#minicart.vertical.childs", weight="10")
+ * @ListChild (list="#minicart.vertical.children", weight="10")
  *}
 <div class="cart-items" IF="cart.isEmpty()">
   <p class="cart.isEmpty()">Cart is empty</p>

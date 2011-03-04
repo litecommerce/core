@@ -9,7 +9,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="#minicart.vertical.childs", weight="30")
+ * @ListChild (list="#minicart.vertical.children", weight="30")
  *}
 <div class="cart-checkout" IF="!cart.isEmpty()">
   <widget class="\XLite\View\Button\Link" label="Checkout" location="{buildURL(#checkout#)}" style="bright-button checkout-button">

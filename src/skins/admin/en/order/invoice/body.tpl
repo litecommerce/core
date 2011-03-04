@@ -9,6 +9,6 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="order.childs", weight="30")
+ * @ListChild (list="order.children", weight="30")
  *}
 {displayViewListContent(#invoice.base#)}

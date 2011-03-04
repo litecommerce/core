@@ -9,7 +9,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="cart.childs", weight="20")
+ * @ListChild (list="cart.children", weight="20")
  *}
 <div class="cart-buttons">
   {displayViewListContent(#cart.buttons#)}
