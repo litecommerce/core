@@ -34,7 +34,7 @@ function setHeaderChecked()
 </script>
 
 <a name="select_country"></a>
-<p>Use this section to manage the lists of counties, provinces, regions and states of different countries. The lists are used in shipping and tax settings and calculations, and in the registration form at the Customer Front-end.
+<p>Use this section to manage the lists of counties, provinces, regions and states of different countries. The lists are used in shipping settings and calculations, and in the registration form at the Customer Front-end.
 <hr />
 
 <span IF="status=#country_code#" class="error-message"><br /><br />&gt;&gt;&nbsp;Please, select country&nbsp;&lt;&lt;<br /><br /></span>
