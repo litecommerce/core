@@ -51,4 +51,32 @@ class ProductClass extends \XLite\Model\Base\I18n
      * @Column         (type="uinteger")
      */
     protected $id;
+
+    /**
+     * Products 
+     * 
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
+     * @ManyToMany (targetEntity="XLite\Model\Product", mappedBy="classes")
+     */
+    protected $products;
+
+    /**
+     * Constructor
+     *
+     * @param array $data Entity properties
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $data = array())
+    {
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
+    }
+
 }
