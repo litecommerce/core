@@ -15,7 +15,7 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -29,40 +29,26 @@
 namespace XLite\Model;
 
 /**
- * Tax multilingual data
+ * Product class
  * 
- * @see     ____class_see____
- * @since   3.0.0
- * @Entity
+ * @see   ____class_see____
+ * @since 3.0.0
  *
- * @Table (name="tax_translations",
- *         indexes={
- *              @Index (name="ci", columns={"code","id"}),
- *              @Index (name="id", columns={"id"})
- *         }
- * )
+ * @Entity
+ * @Table  (name="product_classes")
  */
-class TaxTranslation extends \XLite\Model\Base\Translation
+class ProductClass extends \XLite\Model\Base\I18n
 {
     /**
-     * Name
+     * ID 
+     * 
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="string", length="255")
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column         (type="uinteger")
      */
-    protected $name;
-
-    /**
-     * Description
-     *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="text")
-     */
-    protected $description = '';
+    protected $id;
 }
