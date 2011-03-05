@@ -176,17 +176,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
     protected $notes = '';
 
     /**
-     * Taxes (serialized)
-     * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 3.0.0
-     *
-     * @Column (type="array")
-     */
-    protected $taxes = array();
-
-    /**
      * Order details
      *
      * @var   \Doctrine\Common\Collections\Collection
@@ -603,24 +592,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
         }
 
         return $items;
-    }
-
-    /**
-     * Get taxable basis
-     *
-     * @return float
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTaxableBasis()
-    {
-        $basis = 0;
-
-        foreach ($this->getItems() as $item) {
-            $basis += $item->getTaxableBasisSubtotal();
-        }
-
-        return $basis;
     }
 
     /**
@@ -1054,28 +1025,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function refreshItems()
     {
-        if (\XLite\Core\Config::getInstance()->Taxes->prices_include_tax) {
-            $changed = false;
-
-            foreach ($this->getItems() as $item) {
-                $product = $item->getProduct();
-                if ($product) {
-                    $oldPrice = $item->getPrice();
-                    $item->setProduct($item->getProduct());
-                    $item->updateAmount($item->getAmount());
-
-                    if ($item->getPrice() != $oldPrice) {
-                        $this->getItems()->removeElement($item);
-                        \XLite\Core\Database::getEM()->remove($item);
-                        $changed = true;
-                    }
-                }
-            }
-
-            if ($changed) {
-                \XLite\Core\Database::getEM()->flush();
-            }
-        }
     }
 
     /**

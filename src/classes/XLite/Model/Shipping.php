@@ -239,7 +239,7 @@ class Shipping extends \XLite\Base\Singleton
             );
         }
 
-        if (!isset($address) && \XLite\Base::getInstance()->config->Shipping->def_calc_shippings_taxes) {
+        if (!isset($address)) {
 
             // Anonymous address
             $config = \XLite\Base::getInstance()->config->Shipping;

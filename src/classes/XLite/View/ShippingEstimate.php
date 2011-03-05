@@ -135,7 +135,6 @@ class ShippingEstimate extends \XLite\View\AView
 
         } elseif (
             !$address
-            && \XLite\Core\Config::getInstance()->Shipping->def_calc_shippings_taxes
             && \XLite\Core\Config::getInstance()->Shipping->anonymous_custom_state
         ) {
 
