@@ -210,7 +210,6 @@ A:active  {
 		<tr>
 			<td><b>{item.name:h}</b><BR>
 				<table>
-<widget module="CDev\Egoods" template="modules/CDev/Egoods/invoice.tpl"></table></td>
 			<td align="center">{item.sku:h}&nbsp;</td>
 			<td align="center">{item.amount:h}</td>
 			<td align="right">{price_format(item,#price#):h}</td>
@@ -219,26 +218,14 @@ A:active  {
 	</tbody>
 		<tr>
 			<td nowrap colspan="4" align="right">
-			<widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/print_invoice_discount_label.tpl" ignoreErrors>
 			<b>Subtotal</b><br>
-            <widget module="CDev\Promotion" template="modules/CDev/Promotion/print_invoice_discount_label.tpl">
             <b>Shipping cost</b><br>
-            <span FOREACH="order.getDisplayTaxes(),tax_name,tax">
-    		<b>{order.getTaxLabel(tax_name)}</b><br></span>
-            <widget module="CDev\Promotion" template="modules/CDev/Promotion/print_invoice_label.tpl">
-            <widget module="CDev\GiftCertificates" template="modules/CDev/GiftCertificates/print_invoice_label.tpl">
 			<b>TOTAL</b>
 
 			</td>
 			<td align="right">
-			<widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/print_invoice_discount.tpl" ignoreErrors>
 			{price_format(order,#subtotal#):h}<br>
-            <widget module="CDev\Promotion" template="modules/CDev/Promotion/print_invoice_discount.tpl">
 			{price_format(order,#shipping_cost#):h}<br>
-		        <span FOREACH="order.getDisplayTaxes(),tax_name,tax">
-			{price_format(tax):h}<br></span>
-            <widget module="CDev\Promotion" template="modules/CDev/Promotion/print_invoice_total.tpl">
-            <widget module="CDev\GiftCertificates" template="modules/CDev/GiftCertificates/print_invoice.tpl">
 			<b>{price_format(order,#total#):h}</b>
 
 			</td>

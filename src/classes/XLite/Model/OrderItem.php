@@ -238,9 +238,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      */
     protected function saveItemState(\XLite\Model\Base\IOrderItem $item)
     {
-        $price = \XLite\Core\Config::getInstance()->Taxes->prices_include_tax
-            ? $item->getTaxedPrice()
-            : $item->getPrice();
+        $price = $item->getPrice();
 
         $this->setPrice(\Includes\Utils\Converter::formatPrice($price));
         $this->setName($item->getName());
@@ -259,32 +257,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
         $this->price = 0;
         $this->name = '';
         $this->sku = '';
-    }
-
-    /**
-     * Get taxable basis
-     * 
-     * @return float
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTaxableBasis()
-    {
-        return $this->getProduct()
-            ? $this->getProduct()->getTaxableBasis()
-            : $this->getPrice();
-    }
-
-    /**
-     * Get taxable subtotal 
-     * 
-     * @return float
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTaxableBasisSubtotal()
-    {
-        return $this->getTaxableBasis() * $this->getAmount();
     }
 
     /**
@@ -431,19 +403,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
         return $this->getPrice();
     }   
         
-    /**
-     * Get taxable total 
-     * TODO - rework - move to separate order item tax modifier
-     * 
-     * @return float
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTaxableTotal()
-    {
-        return $this->getTotal();
-    }
-
     /**
      * Calculate and save order item subtotal 
      * 

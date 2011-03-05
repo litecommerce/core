@@ -63,16 +63,6 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     protected function calculateTax()
     {
-        // Save all visible taxes
-        $taxes = $this->getDisplayTaxes();
-        if ($taxes) {
-            foreach ($taxes as $taxValue) {
-                $this->saveModifier(self::MODIFIER_TAX, $value->value, $value->code);
-            }
-
-        } else {
-            $this->saveModifier(self::MODIFIER_TAX, 0);
-        }
     }
 
     /**
@@ -138,32 +128,7 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     public function getDisplayTaxes() 
     {
-        $taxes = array();
-
-        if (
-            !is_null($this->getProfile())
-            || \XLite\Core\Config::getInstance()->General->def_calc_shippings_taxes
-        ) {
-
-            $taxRates = new \XLite\Model\TaxRates();
-            $values = $names = $orderby = array();
-            foreach ((array)$this->getTaxes() as $name => $value) {
-                if ($taxRates->getTaxLabel($name)) {
-                    $values[] = $value;
-                    $names[] = $name;
-                    $orderby[] = $taxRates->getTaxPosition($name);
-                }
-            }
-
-            // sort taxes according to $orderby
-            array_multisort($orderby, $values, $names);
-
-            if (!empty($names)) {
-                $taxes = array_combine($names, $values);
-            }
-        }
-
-        return $taxes;
+        return array();
     }
 
     /**
@@ -177,9 +142,7 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     public function getTaxLabel($name) 
     {
-        $tax = new \XLite\Model\TaxRates();
-
-        return $tax->getTaxLabel($name);
+        return '';
     }
 
     /**
@@ -187,15 +150,13 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * 
      * @param string $name Tax name
      *  
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getRegistration($name) 
     {
-        $tax = new \XLite\Model\TaxRates();
-
-        return $tax->getRegistration($name);
+        return '';
     }
 
     /**
@@ -207,16 +168,7 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     public function isTaxRegistered()
     {
-        $result = false;
-
-        foreach ((array)$this->getTaxes() as $name => $value) {
-            if ($this->getRegistration($name) != '') {
-                $result = true;
-                break;
-            }
-        }
-
-        return $result;
+        return false;
     }
 
     /**
@@ -228,47 +180,6 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     protected function calculateAllTaxes() 
     {
-        $taxRates = new \XLite\Model\TaxRates();
-        $taxRates->set('order', $this);
-        $result = array();
-        foreach ($this->getItems() as $item) {
-            $product = $item->getProduct();
-            if (\XLite\Core\Config::getInstance()->Taxes->prices_include_tax && isset($product)) {
-                $item->setPrice($product->getPrice());
-            }
-
-            $taxRates->set('orderItem', $item);
-            $taxRates->calculateTaxes();
-
-            $result = $this->addTaxes($result, $taxRates->get('allTaxes'));
-        }
-
-        // tax on shipping
-        $pricesIncludeTax = \XLite\Core\Config::getInstance()->Taxes->prices_include_tax;
-        if (
-            $this->isShippingSelected()
-            && (!$pricesIncludeTax || ($pricesIncludeTax && $taxRates->isShippingDefined()))
-        ) {
-            $taxRates->_conditionValues['product class'] = 'shipping service';
-            $taxRates->_conditionValues['cost'] = $this->getTotalByModifier('shipping');
-            $taxRates->calculateTaxes();
-            $result = $this->addTaxes($result, $taxRates->get('allTaxes'));
-
-            // Calculate shipping taxes
-            $this->shippingTaxes = $this->addTaxes(array(), $taxRates->get('shippingTaxes'));
-
-            // Prepared shipping taxes values
-            foreach ($this->shippingTaxes as $name => $value) {
-                $this->shippingTaxes[$name] = \XLite\Core\Converter::formatCurrency($value);
-            }
-        }
-
-        // Prepared all tax values
-        foreach ($result as $name => $value) {
-            $result[$name] = \XLite\Core\Converter::formatCurrency($result[$name]);
-        }
-
-        $this->setTaxes($result);
     }
 
     /**
@@ -283,14 +194,6 @@ abstract class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     protected function addTaxes(array $acc, array $taxes) 
     {
-        foreach ($taxes as $tax => $value) {
-            if (!isset($acc[$tax])) {
-                $acc[$tax] = 0;
-            }
-            $acc[$tax] += $value;
-        }
-
-        return $acc;
     }
 
     /**

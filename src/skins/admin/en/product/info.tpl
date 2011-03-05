@@ -87,18 +87,6 @@
 </tbody>
 
 <tr>
-  <td valign=middle>Tax class<br />
-    You can specify tax classes in Settings/Taxes/add rate/condition dialog
-  </td>
-  <td valign="middle">
-    <select name="{getNamePostedData(#tax_class#)}">
-        <option value="">None</option>
-    	<option FOREACH="xlite.factory.\XLite\Model\TaxRates.productClasses,_tax_class" selected="product.tax_class=_tax_class">{_tax_class}</option>
-	</select>
-  </td>
-</tr>
-
-<tr>
   <td valign=middle class=Text>Weight ({config.General.weight_symbol:h})</td>
   <td valign="middle">
     <input type="text" name="{getNamePostedData(#weight#)}" size="18" value="{product.weight}" />
