@@ -1087,6 +1087,14 @@ class Database extends \XLite\Base\Singleton
         // Set table name prefix
         if ($this->tablePrefix && strpos($classMetadata->getTableName(), $this->tablePrefix) !== 0) {
             $classMetadata->setTableName($this->tablePrefix . $classMetadata->getTableName());
+
+            foreach ($classMetadata->associationMappings as &$mapping) {
+                if (isset($mapping['joinTable']) && $mapping['joinTable']) {
+                    if (strpos($mapping['joinTable']['name'], $this->tablePrefix) !== 0) {
+                        $mapping['joinTable']['name'] = $this->tablePrefix . $mapping['joinTable']['name'];
+                    }
+                }
+            }
         }
 
         // Set repository
