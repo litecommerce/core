@@ -180,6 +180,22 @@ class Converter extends AUtils
     }
 
     /**
+     * Get canonical form of class name
+     * 
+     * @param string  $class    Class name to prepare
+     * @param boolean $relative Flag to enclose class name with namespace separator
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function prepareClassName($class, $relative = true)
+    {
+        return ($relative ? '' : '\\') . static::trimLeadingChars($class, '\\');
+    }
+
+    /**
      * Method to safely get array element (or a whole array)
      * 
      * @param array          $data  Data array

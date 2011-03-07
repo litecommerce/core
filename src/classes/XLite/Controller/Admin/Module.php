@@ -38,58 +38,73 @@ namespace XLite\Controller\Admin;
 class Module extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Return current module options
+     * Module object
      * 
-     * @return array 
-     * @access public
+     * @var    mixed
+     * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
      */
-    public function init()
-    {
-        $this->module = \XLite\Core\Database::getRepo('\XLite\Model\Module')
-            ->find(\XLite\Core\Request::getInstance()->moduleId);
+    protected $module;
 
-        if (!$this->module) {
-            throw new \Exception('Add-on does not exist (ID#' . \XLite\Core\Request::getInstance()->moduleId . ')');
+    /**
+     * Get current module ID
+     * 
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModuleID()
+    {
+        return \XLite\Core\Request::getInstance()->moduleId;
+    }
+
+    /**
+     * Return current module object
+     * 
+     * @return \XLite\Model\Module
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModule()
+    {
+        if (!isset($this->module)) {
+            $this->module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->getModuleID());
+
+            if (!$this->module) {
+               throw new \Exception('Add-on does not exist (ID#' . $this->getModuleID() . ')');
+            }
         }
+
+        return $this->module;
     }
 
     /**
      * Return current module options
      * 
      * @return array 
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
     public function getOptions()
     {
         return \XLite\Core\Database::getRepo('\XLite\Model\Config')
-            ->getByCategory($this->module->getActualName(), true, true);
+            ->getByCategory($this->getModule()->getActualName(), true, true);
     }
  
     /**
      * Common method to determine current location
      *
      * @return string
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getLocation()
     {
-        return $this->module->getName() . ' (' . $this->module->getAuthor() . ')';
-    }
-
-    /**
-     * Return the current page title (for the content area)
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return 'Add-on settings: ' . $this->module->getName() . ' (' . $this->module->getAuthor() . ')';
+        return $this->getModule()->getName() . ' (' . $this->getModule()->getAuthor() . ')';
     }
 
     /**
@@ -117,6 +132,7 @@ class Module extends \XLite\Controller\Admin\AAdmin
     protected function doActionUpdate()
     {
         foreach ($this->getOptions() as $option) {
+
             $name  = $option->name;
             $value = \XLite\Core\Request::getInstance()->$name;
 
@@ -136,7 +152,7 @@ class Module extends \XLite\Controller\Admin\AAdmin
 
             \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
-                    'category' => $this->module->getActualName(),
+                    'category' => $this->getModule()->getActualName(),
                     'name'     => $name,
                     'value'    => $value,
                     'type'     => $type
@@ -144,6 +160,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
             );
         }
 
-        $this->setReturnURL($this->buildURL('modules'));
+        $this->setReturnUrl($this->buildUrl('modules'));
     }
 }

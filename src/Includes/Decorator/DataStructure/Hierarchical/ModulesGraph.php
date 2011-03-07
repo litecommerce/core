@@ -76,6 +76,7 @@ class ModulesGraph extends \Includes\DataStructure\Hierarchical\Graph
     protected function includeModuleFiles(\Includes\DataStructure\Node\ANode $node)
     {
         if (!\Includes\Utils\Operator::checkIfClassExists('\XLite\Module\AModule')) {
+            require_once LC_CLASSES_DIR . LC_NAMESPACE . LC_DS . 'Core' . LC_DS . 'Pack.php';
             require_once LC_MODULES_DIR . 'AModule.php';
         }
 

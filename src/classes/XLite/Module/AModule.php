@@ -35,7 +35,7 @@ namespace XLite\Module;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class AModule
+abstract class AModule extends \XLite\Core\Pack
 {
    /**
      * Method to initialize concrete module instance
@@ -85,6 +85,19 @@ abstract class AModule
     public static function getVersion()
     {
         throw new \Exception('Version is not specified for the ' . $this->getName() . ' add-on');
+    }
+
+    /**
+     * Return minimal allowed version of LC kernel
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getKernelVersion()
+    {
+        return \XLite::getInstance()->getKernelVersion();
     }
 
     /**
