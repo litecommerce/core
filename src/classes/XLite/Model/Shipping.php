@@ -162,18 +162,18 @@ class Shipping extends \XLite\Base\Singleton
     /**
      * Return shipping rates
      * 
-     * @param \XLite\Model\Order $order Order object
+     * @param \XLite\Logic\Order\Modifier\Shipping $modifier Shipping order modifier
      *  
      * @return void
      * @since  3.0
      */
-    public function getRates(\XLite\Model\Order $order)
+    public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier)
     {
         $rates = array();
 
         foreach (self::$registeredProcessors as $processor) {
             // Get rates from processors
-            $rates = array_merge($rates, $processor->getRates($order));
+            $rates = array_merge($rates, $processor->getRates($modifier));
         }
 
         if (!empty($rates)) {
@@ -192,7 +192,7 @@ class Shipping extends \XLite\Base\Singleton
 
                 if (!isset($markups[$processor])) {
                     $markups[$processor] = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')
-                        ->findMarkupsByProcessor($processor, $order);
+                        ->findMarkupsByProcessor($processor, $modifier);
                 }
 
                 // Set markup to the rate
@@ -214,22 +214,22 @@ class Shipping extends \XLite\Base\Singleton
     }
 
     /**
-     * Get destination address from the order
+     * Get destination address
      * 
-     * @param \XLite\Model\Order $order Order instance
+     * @param \XLite\Logic\Order\Modifier\Shipping $modifier Shipping order modifier
      *  
      * @return array
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getDestinationAddress(\XLite\Model\Order $order)
+    public function getDestinationAddress(\XLite\Logic\Order\Modifier\Shipping $modifier)
     {
         $address = null;
 
-        if ($order->getProfile() && $order->getProfile()->getShippingAddress()) {
+        if ($modifier->getOrder()->getProfile() && $modifier->getOrder()->getProfile()->getShippingAddress()) {
 
             // Profile is exists
-            $addressObj = $order->getProfile()->getShippingAddress();
+            $addressObj = $modifier->getOrder()->getProfile()->getShippingAddress();
             $address = array(
                 'address' => $addressObj->getStreet(),
                 'city'    => $addressObj->getCity(),

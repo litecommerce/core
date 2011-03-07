@@ -62,42 +62,37 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
     /**
      * prepareInputData 
      * 
-     * @param mixed $data Can be either \XLite\Model\Order instance or an array
+     * @param \XLite\Logic\Order\Modifier\Shipping $modifier Shipping order modifier 
      *  
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareInputData($data)
+    protected function prepareInputData(\XLite\Logic\Order\Modifier\Shipping $modifier)
     {
         $result = null;
 
-        if ($data instanceof \XLite\Model\Order) {
-            // Fill $result array by data from the order
+        // Fill $result array by data from the order
 
-            if ('AU' == \XLite\Base::getInstance()->config->Company->location_country) {
+        if ('AU' == \XLite\Base::getInstance()->config->Company->location_country) {
 
-                $result['srcAddress']['zipcode'] = \XLite\Base::getInstance()->config->Company->location_zipcode;
+            $result['srcAddress']['zipcode'] = \XLite\Base::getInstance()->config->Company->location_zipcode;
 
-                $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($data);
+            $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($modifier);
 
-                if (isset($address)) {
-                    $result['dstAddress'] = $address;
-                    $result['weight'] = \XLite\Core\Converter::convertWeightUnits(
-                        $data->getWeight(), 
-                        \XLite\Base::getInstance()->config->General->weight_unit,
-                        'g'
-                    );
+            if (isset($address)) {
+                $result['dstAddress'] = $address;
+                $result['weight'] = \XLite\Core\Converter::convertWeightUnits(
+                    $modifier->getWeight(), 
+                    \XLite\Base::getInstance()->config->General->weight_unit,
+                    'g'
+                );
 
-                } else {
-                    $result = null;
-                }
+            } else {
+
+                $result = null;
             }
-
-        } else {
-            // Suppose that data is passed for testing of rates calculation
-            $result = $data; 
         }
 
         return $result;
@@ -256,19 +251,19 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
     /**
      * Returns shipping rates 
      * 
-     * @param mixed $data        Can be either \XLite\Model\Order instance or an array
-     * @param boolean  $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
+     * @param \XLite\Logic\Order\Modifier\Shipping $modifier    Shipping order modifier
+     * @param boolean                              $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
      *  
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getRates($data, $ignoreCache = false)
+    public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier, $ignoreCache = false)
     {
         $rates = array();
 
-        $inputData = $this->prepareInputData($data);
+        $inputData = $this->prepareInputData($modifier);
 
         if (isset($inputData)) {
             $rates = $this->doQuery($inputData, $ignoreCache);

@@ -1063,6 +1063,8 @@ XLite\Model\Country:
   - { country: 'Serbia and Montenegro', code: YU }
   - { country: Zambia, code: ZM }
   - { country: Zimbabwe, code: ZW }
+XLite\Model\Order\Modifier:
+  - { class: '\XLite\Logic\Order\Modifier\Shipping' }
 XLite\Model\Zone:
   directives: { insert: true }
   - { zone_name: 'Default zone (all addresses)', is_default: true }

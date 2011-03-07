@@ -116,7 +116,7 @@ class Currency extends \XLite\Model\Base\I18n
      */
     public function roundValue($value)
     {
-        return round($value, $this->getE());
+        return \XLite\Logic\Math::getInstance()->roundByCurrency($value, $this);
     }
 
     /**
@@ -130,7 +130,7 @@ class Currency extends \XLite\Model\Base\I18n
      */
     public function roundValueAsInteger($value)
     {
-        return intval(round($this->roundValue($value) * pow(10, $this->getE())));
+        return intval(floor($this->roundValue($value) * pow(10, $this->getE())));
     }
 
     /**
@@ -158,12 +158,7 @@ class Currency extends \XLite\Model\Base\I18n
      */
     public function formatValue($value)
     {
-        return number_format(
-            $this->roundValue($value),
-            $this->getE(),
-            \XLite\Core\Config::getInstance()->General->decimal_delim,
-            \XLite\Core\Config::getInstance()->General->thousand_delim
-        );
+        return \XLite\Logic\Math::getInstance()->formatValue($value, $this);
     }
 
     /**
@@ -177,7 +172,7 @@ class Currency extends \XLite\Model\Base\I18n
      */
     public function __construct(array $data = array())
     {
-        $this->orders   = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }
