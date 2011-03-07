@@ -108,7 +108,7 @@ class Operator extends AUtils
 
     /**
      * Refresh current page
-     * 
+     *
      * @return void
      * @access public
      * @see    ____func_see____

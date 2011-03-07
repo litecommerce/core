@@ -44,21 +44,53 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
 
 
     /**
-     * Return list of the "patcher" classes
-     *
-     * @return array
+     * List of pather classes 
+     * 
+     * @var    array
      * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $pathers;
+
+
+    /**
+     * Execute certain hook handler
+     *
+     * @return void
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getPatchers()
+    public function executeHookHandlerStepThird()
     {
-        return static::getClassesTree()->findByCallback(array($this, 'filterByPatcherInterface'));
+        // Truncate old
+        $this->clearAll();
+
+        // Save pathes info in DB
+        $this->collectPatches();
+    }
+
+    /**
+     * Callback to collect patchers
+     * 
+     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkClassForPatcherInterface(\Includes\Decorator\DataStructure\Graph\Classes $node)
+    {
+        if ($node->isImplements(self::INTERFACE_PATCHER)) {
+            $this->patchers[] = $node;
+        }
     }
 
     /**
      * Remove existing lists from database
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -70,10 +102,55 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     }
 
     /**
+     * Save pathes info in DB
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function collectPatches()
+    {
+        $data = array();
+
+        // List of all "patcher" classes
+        foreach ($this->getPatchers() as $node) {
+
+            // List of patches defined in class
+            foreach (call_user_func(array($class = $node->getClass(), 'getPatches')) as $patch) {
+
+                // Prepare model class properties
+                $data[] = $this->getCommonData($patch, $class)
+                    + $this->{'get' . ucfirst($patch[$class::PATCHER_CELL_TYPE]) . 'Data'}($patch, $class);
+            }
+        }
+
+        \XLite\Core\Database::getRepo('\XLite\Model\TemplatePatch')->insertInBatch($data);
+    }
+
+    /**
+     * Return list of the "patcher" classes
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPatchers()
+    {
+        if (!isset($this->pathers)) {
+            $this->pathers = array();
+            static::getClassesTree()->walkThrough(array($this, 'checkClassForPatcherInterface'));
+        }
+
+        return $this->pathers;
+    }
+
+    /**
      * Prepare common properties
      * 
-     * @param array  $data  data describe the patch
-     * @param string $class patcher class
+     * @param array  $data  Data describe the patch
+     * @param string $class Patcher class
      *  
      * @return array
      * @access protected
@@ -89,8 +166,8 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     /**
      * Prepare properties for certain patch type
      *
-     * @param array  $data  data describe the patch
-     * @param string $class patcher class
+     * @param array  $data  Data describe the patch
+     * @param string $class Patcher class
      *
      * @return array
      * @access protected
@@ -109,8 +186,8 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     /**
      * Prepare properties for certain patch type
      *
-     * @param array  $data  data describe the patch
-     * @param string $class patcher class
+     * @param array  $data  Data describe the patch
+     * @param string $class Patcher class
      *
      * @return array
      * @access protected
@@ -128,7 +205,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     /**
      * Prepare properties for certain patch type
      *
-     * @param array $data data describe the patch
+     * @param array $data Data describe the patch
      *
      * @return array
      * @access protected
@@ -140,65 +217,5 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
         return array(
             'custom_callback' => $class . '::' . $patch[$class::CUSTOM_CELL_CALLBACK],
         );
-    }
-
-    /**
-     * Save pathes info in DB
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function collectPatches()
-    {
-        $data = array();
-
-        // List of all "patcher" classes
-        foreach ($this->getPatchers() as $node) {
-
-            // List of patches defined in class
-            foreach (call_user_func(array($class = $node->getClass(), 'getPatches')) as $patch) {
-
-                // Prepare model class properties
-                $data[] = $this->getCommonData($patch, $class) 
-                    + $this->{'get' . ucfirst($patch[$class::PATCHER_CELL_TYPE]) . 'Data'}($patch, $class);
-            }
-        }
-
-        \XLite\Core\Database::getRepo('\XLite\Model\TemplatePatch')->insertInBatch($data);
-    }
-
-
-    /**
-     * Method to filter classes by the interface
-     * 
-     * @param \Includes\Decorator\DataStructure\Node\ClassInfo $node current node
-     *  
-     * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function filterByPatcherInterface(\Includes\Decorator\DataStructure\Node\ClassInfo $node)
-    {
-        return $node->isImplements(self::INTERFACE_PATCHER);
-    }
-
-    /**
-     * Execute "run" hook handler
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function executeHookHandlerPostprocess()
-    {
-        // Truncate old
-        $this->clearAll();
-
-        // Save pathes info in DB
-        $this->collectPatches();
     }
 }

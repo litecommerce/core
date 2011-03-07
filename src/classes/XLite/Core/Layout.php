@@ -254,6 +254,24 @@ class Layout extends \XLite\Base\Singleton
     }
 
     /**
+     * Return list of all skins
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSkinsAll()
+    {
+        return array(
+            \XLite::COMMON_INTERFACE  => self::PATH_COMMON,
+            \XLite::ADMIN_INTERFACE   => self::PATH_ADMIN,
+            \XLite::CONSOLE_INTERFACE => self::PATH_CONSOLE,
+            \XLite::MAIL_INTERFACE    => self::PATH_MAIL,
+        );
+    }
+
+    /**
      * Get template full path 
      * 
      * @param string $shortPath       Template short path

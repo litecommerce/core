@@ -64,6 +64,4 @@ class PDOMySqlDriver extends \Doctrine\DBAL\Driver\PDOMySql\Driver
     {
         return new \XLite\Core\MySqlPlatform();
     }
-
 }
-

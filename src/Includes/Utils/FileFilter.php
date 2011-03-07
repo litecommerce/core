@@ -116,9 +116,9 @@ class FileFilter extends AUtils
     /**
      * Constructor
      * 
-     * @param string $dir     directory to iterate over
-     * @param string $pattern pattern to filter files
-     * @param int    $mode    filtering mode
+     * @param string $dir     Directory to iterate over
+     * @param string $pattern Pattern to filter files
+     * @param int    $mode    Filtering mode OPTIONAL
      *  
      * @return void
      * @access public

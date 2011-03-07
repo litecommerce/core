@@ -38,4 +38,3 @@ namespace XLite\Base;
 interface IDecorator
 {
 }
-

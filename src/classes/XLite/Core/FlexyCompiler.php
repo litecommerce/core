@@ -361,17 +361,18 @@ class FlexyCompiler extends \XLite\Base\Singleton
     }
 
     // html ::= ([text] tag | [text] comment | [text] flexy)* [text]
-    function html()
+    protected function html()
     {
         while ($this->phptag() || $this->tag() || $this->comment() || $this->flexyComment() || $this->flexy() || $this->anyChar()) {
         }
         return true;
     }
+
     // tag ::= open-tag | close-tag | open-close-tag
     // open-tag ::= '<' tagname (space+ attribute-definition)* space* '>'
     // open-close-tag ::= '<' tagname (space+ attribute-definition)* space* '/>'
     // close-tag ::= '</' tagname  '>'
-    function tag()
+    protected function tag()
     {
         if ($this->char('<')) {
             $this->savePosition(-1);
@@ -394,9 +395,10 @@ class FlexyCompiler extends \XLite\Base\Singleton
             return $this->commit();
         }
     }
+
     // attribute-definition ::= attributename [ '=' attribute-value ]
     // attribute-value ::= '\'' attribute-text '\'' | '"' attribute-text '"' | [^ \t\n\r/>]+
-    function attribute_definition()
+    protected function attribute_definition()
     {
         $this->savePosition();
         $i = count($this->tokens);
@@ -518,14 +520,18 @@ class FlexyCompiler extends \XLite\Base\Singleton
         }
         return $result;
     }
-    function char($c)
+
+    protected function char($c)
     {
-        if (strlen($this->source) > $this->offset && substr($this->source, $this->offset, 1) == $c) {
-            $this->offset ++;
+        if (substr($this->source, $this->offset, 1) === $c) {
+            $this->offset++;
+
             return true;
         }
+
         return false;
     }
+
     function notChars($str)
     {
         if (strpos($str, substr($this->source, $this->offset, 1)) === false) {

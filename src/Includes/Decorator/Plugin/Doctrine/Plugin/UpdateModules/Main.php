@@ -38,14 +38,14 @@ namespace Includes\Decorator\Plugin\Doctrine\Plugin\UpdateModules;
 class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 {
     /**
-     * Execute "postprocess" hook handler
+     * Execute certain hook handler
      * 
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function executeHookHandlerPostprocess()
+    public function executeHookHandlerStepThird()
     {
         \Includes\Decorator\Utils\ModulesManager::switchModules();
         \Includes\Decorator\Utils\ModulesManager::removeFile();

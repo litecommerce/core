@@ -479,17 +479,17 @@ class Database extends \XLite\Base\Singleton
     public function startEntityManager()
     {
         // Initialize DB connection and entity manager
-        self::$em = \Doctrine\ORM\EntityManager::create($this->getDSN(), $this->configuration);
+        static::$em = \Doctrine\ORM\EntityManager::create($this->getDSN(), $this->configuration);
 
         if (\XLite\Core\Profiler::getInstance()->enabled) {
-            self::$em->getConnection()->getConfiguration()->setSQLLogger(\XLite\Core\Profiler::getInstance());
+            static::$em->getConnection()->getConfiguration()->setSQLLogger(\XLite\Core\Profiler::getInstance());
         }
 
-        static::registerCustomTypes(self::$em);
+        static::registerCustomTypes(static::$em);
 
         // Bind events
         $events = array(\Doctrine\ORM\Events::loadClassMetadata);
-        if (self::$cacheDriver) {
+        if (static::$cacheDriver) {
 
             // Bind cache chekers
             $events[] = \Doctrine\ORM\Events::postPersist;
@@ -497,7 +497,7 @@ class Database extends \XLite\Base\Singleton
             $events[] = \Doctrine\ORM\Events::postRemove;
         }
 
-        self::$em->getEventManager()->addEventListener($events, $this);
+        static::$em->getEventManager()->addEventListener($events, $this);
     }
 
     // {{{ Export SQL to file
@@ -678,7 +678,7 @@ OUT;
      */
     public function isDBEmpty()
     {
-        return 0 == count(self::$em->getConnection()->getSchemaManager()->listTableNames());
+        return 0 == count(static::$em->getConnection()->getSchemaManager()->listTableNames());
     }
 
     /**
@@ -690,11 +690,9 @@ OUT;
      */
     public function updateDBSchema()
     {
-        $schema = $this->isDBEmpty()
-            ? $this->getDBSchema(self::SCHEMA_CREATE)
-            : $this->getDBSchema(self::SCHEMA_UPDATE);
-
-        return $this->executeQueries($schema);
+        return $this->executeQueries(
+            $this->getDBSchema($this->isDBEmpty() ? self::SCHEMA_CREATE : self::SCHEMA_UPDATE)
+        );
     }
 
     /**
@@ -721,7 +719,7 @@ OUT;
     public function executeQueries(array $queries)
     {
         $i = 0;
-        $connection = self::$em->getConnection();
+        $connection = static::$em->getConnection();
         foreach ($queries as $sql) {
             $connection->executeQuery($sql);
             $i++;
@@ -755,7 +753,7 @@ OUT;
      */
     public function getDBSchema($mode = self::SCHEMA_CREATE)
     {
-        $tool = new \Doctrine\ORM\Tools\SchemaTool(self::$em);
+        $tool = new \Doctrine\ORM\Tools\SchemaTool(static::$em);
         $schemas = array();
 
         $rawSchemas = null;
@@ -788,7 +786,7 @@ OUT;
                 }
             }
 
-            foreach (self::$em->getMetadataFactory()->getAllMetadata() as $cmd) {
+            foreach (static::$em->getMetadataFactory()->getAllMetadata() as $cmd) {
                 if (!$cmd->isMappedSuperclass) {
                     $schemas = static::getRepo($cmd->name)->processSchema($schemas, $mode);
                 }
@@ -938,6 +936,7 @@ OUT;
     {
         $arg->getEntity()->checkCache();
     }
+
     /**
      * postRemove event handler
      * 

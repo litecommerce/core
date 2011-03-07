@@ -38,6 +38,26 @@ namespace Includes\Decorator\Plugin\Doctrine\Plugin\ProxyGenerator;
 class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 {
     /**
+     * Execute certain hook handle
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function executeHookHandlerStepThird()
+    {
+        if (!$this->areProxiesExist()) {
+
+            // Create the proxies folder
+            \Includes\Utils\FileManager::mkdirRecursive(LC_PROXY_CACHE_DIR);
+
+            // Create model proxy classes (second step of cache generation)
+            \Includes\Decorator\Plugin\Doctrine\Utils\EntityManager::generateProxies();
+        }
+    }
+
+    /**
      * Check if proxy classes are already generated
      *
      * @return bool
@@ -48,26 +68,5 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
     protected function areProxiesExist()
     {
         return \Includes\Utils\FileManager::isDirReadable(LC_PROXY_CACHE_DIR);
-    }
-
-
-    /**
-     * Execute "postprocess" hook handler
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function executeHookHandlerPostprocess()
-    {
-        if (!$this->areProxiesExist()) {
-
-            // Create the proxies folder
-            \Includes\Utils\FileManager::mkdirRecursive(LC_PROXY_CACHE_DIR);
-
-            // Create model proxy classes (second step of cache generation)
-            \Includes\Decorator\Plugin\Doctrine\Utils\EntityManager::generateProxies();
-        }
     }
 }

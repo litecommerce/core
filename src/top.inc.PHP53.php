@@ -85,9 +85,5 @@ require_once (LC_INCLUDES_DIR . 'prepend.php');
 
 // Check and (if needed) rebuild classes cache
 if (!defined('LC_DO_NOT_REBUILD_CACHE')) {
-    try {
-        \Includes\Decorator\Utils\CacheManager::rebuildCache();
-    } catch (\Exception $e) {
-//        \Includes\NoDBStore::showStorePage();
-    }
+    \Includes\Decorator\Utils\CacheManager::rebuildCache();
 }

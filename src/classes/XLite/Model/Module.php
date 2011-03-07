@@ -1113,10 +1113,7 @@ class Module extends \XLite\Model\AEntity
      */
     public function getCalculatedDependencies()
     {
-        return array_map(
-            array('\Includes\Decorator\Utils\ModulesManager', 'composeDependency'),
-            call_user_func(array($this->getMainClass(), 'getDependencies'))
-        );
+        return call_user_func(array($this->getMainClass(), 'getDependencies'));
     }
 
     /**

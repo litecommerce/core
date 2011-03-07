@@ -85,6 +85,60 @@ class ArrayManager extends AUtils
     }
 
     /**
+     * Method to safely get array element (or a whole array)
+     *
+     * @param array          $data  Data array
+     * @param integer|string $index  Array index
+     * @param boolean        $strict Flag; return value or null in any case
+     *
+     * @return array|mixed|null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getIndex(array $data, $index = null, $strict = false)
+    {
+        return isset($index) ? (isset($data[$index]) ? $data[$index] : null) : ($strict ? null : $data);
+    }
+
+    /**
+     * Wrapper to return property from object
+     *
+     * @param object  $object   Object to get property from
+     * @param string  $field    Field to get
+     * @param boolean $isGetter Determines if the second param is a property name or a method
+     *
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getObjectField($object, $field, $isGetter = false)
+    {
+        return $isGetter ? $object->$field() : $object->$field;
+    }
+
+    /**
+     * Return some array index
+     *
+     * @param array  $array Array to use
+     * @param string $field Field to return
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getArraysArrayFieldValues(array $array, $field)
+    {
+        foreach ($array as &$element) {
+            $element = static::getIndex($element, $field, true);
+        }
+
+        return $array;
+    }
+
+    /**
      * Return some object property values
      *
      * @param array   $array    Array to use
@@ -95,14 +149,13 @@ class ArrayManager extends AUtils
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getObjectsArrayFieldValues(array $array, $field, $isGetter = false)
+    public static function getObjectsArrayFieldValues(array $array, $field, $isGetter = true)
     {
-        return array_map(
-            function ($var) use ($field, $isGetter) {
-                return \Includes\Utils\Converter::getObjectField($var, $field, $isGetter);
-            },
-            $array
-        );
+        foreach ($array as &$element) {
+            $element = static::getObjectField($element, $field, $isGetter);
+        }
+
+        return $array;
     }
 
     /**
@@ -117,16 +170,17 @@ class ArrayManager extends AUtils
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function searchAllInObjectsArray(array $array, $field, $value, $isGetter = false)
+    public static function searchAllInObjectsArray(array $array, $field, $value, $isGetter = true)
     {
-        $list = array_filter(
-            $array,
-            function ($var) use ($field, $value, $isGetter) {
-                return \Includes\Utils\Converter::getObjectField($var, $field, $isGetter) == $value;
-            }
-        );
+        $result = array();
 
-        return $list ?: array();
+        foreach ($array as $key => $element) {
+            if (static::getObjectField($element, $field, $isGetter) == $value) {
+                $result[$key] = $element;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -141,7 +195,7 @@ class ArrayManager extends AUtils
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function searchInObjectsArray(array $array, $field, $value, $isGetter = false)
+    public static function searchInObjectsArray(array $array, $field, $value, $isGetter = true)
     {
         $list = static::searchAllInObjectsArray($array, $field, $value, $isGetter);
 
@@ -159,7 +213,7 @@ class ArrayManager extends AUtils
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function sumObjectsArrayFieldValues(array $array, $field, $isGetter = false)
+    public static function sumObjectsArrayFieldValues(array $array, $field, $isGetter = true)
     {
         return array_sum(static::getObjectsArrayFieldValues($array, $field, $isGetter));
     }
@@ -218,5 +272,4 @@ class ArrayManager extends AUtils
 
         return $result;
     }
-
 }

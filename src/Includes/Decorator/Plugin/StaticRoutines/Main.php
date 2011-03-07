@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\Plugin\ModuleContollers;
+namespace Includes\Decorator\Plugin\StaticRoutines;
 
 /**
  * Main 
@@ -38,9 +38,9 @@ namespace Includes\Decorator\Plugin\ModuleContollers;
 class Main extends \Includes\Decorator\Plugin\APlugin
 {
     /**
-     * Pattern to detect/modify module contoller class name
+     * Name of the so called "static constructor" 
      */
-    const PATTERN = '/^XLite\\\(Module\\\[\w]+\\\[\w]+\\\)Controller(\\\[\w\\\]*)$/Ss';
+    const STATIC_CONSTRUCTOR_METHOD = '__constructStatic';
 
 
     // ------------------------------ Hook handlers -
@@ -53,59 +53,67 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function executeHookHandlerBeforeDecorate()
+    public function executeHookHandlerStepFirst()
     {
-        static::getClassesTree()->walkThrough(array($this, 'changeControllerClass'));
+        static::getClassesTree()->walkThrough(array($this, 'addStaticConstructorCall'));
     }
 
 
     // ------------------------------ Auxiliary methods -
 
     /**
-     * Change class name for "module controllers"
+     * Add static constructor calls
      * NOTE: method is public since it's used as a callback in external class
      *
-     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
+     * @param \Includes\Decorator\DataStructure\Graph\Classes $node   Current node
+     * @param \Includes\Decorator\DataStructure\Graph\Classes $parent Current node parent
      *
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function changeControllerClass(\Includes\Decorator\DataStructure\Graph\Classes $node)
-    {
-        if ($this->isModuleController($node)) {
-            $node->setKey($this->prepareModuleControllerClass($node));
+    public function addStaticConstructorCall(
+        \Includes\Decorator\DataStructure\Graph\Classes $node,
+        \Includes\Decorator\DataStructure\Graph\Classes $parent = null
+    ) {
+        if ($this->checkForStaticConstructor($node) && !($parent && $this->checkForStaticConstructor($parent))) {
+            $this->writeCallToSourceFile($node);
         }
     }
 
     /**
-     * Method to check class nodes in tree
-     *
+     * Check if node has the static constructor defined
+     * 
      * @param \Includes\Decorator\DataStructure\Graph\Classes $node Node to check
-     *
+     *  
      * @return boolean
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isModuleController(\Includes\Decorator\DataStructure\Graph\Classes $node)
+    protected function checkForStaticConstructor(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
-        return !$node->isDecorator() && preg_match(self::PATTERN, $node->getClass());
+        return $node->getReflection()->hasMethod(self::STATIC_CONSTRUCTOR_METHOD);
     }
 
     /**
-     * Remove the module-related part from module controller class
-     *
-     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Node to get and prepare class
-     *
+     * Modify class source
+     * 
+     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
+     *  
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareModuleControllerClass(\Includes\Decorator\DataStructure\Graph\Classes $node)
+    protected function writeCallToSourceFile(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
-        return preg_replace(self::PATTERN, 'XLite\\\\Controller$2', $node->getClass());
+        $content = \Includes\Utils\FileManager::read($path = LC_CLASSES_CACHE_DIR . $node->getPath());
+
+        $content .= PHP_EOL . '// Call static constructor' . PHP_EOL;
+        $content .= '\\' . $node->getClass() . '::' . self::STATIC_CONSTRUCTOR_METHOD . '();';
+
+        \Includes\Utils\FileManager::write($path, $content);
     }
 }

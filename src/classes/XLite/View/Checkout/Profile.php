@@ -34,6 +34,7 @@ namespace XLite\View\Checkout;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @ListChild (list="checkout.main")
  */
 class Profile extends \XLite\View\AView

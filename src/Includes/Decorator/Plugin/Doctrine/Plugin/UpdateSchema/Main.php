@@ -38,14 +38,14 @@ namespace Includes\Decorator\Plugin\Doctrine\Plugin\UpdateSchema;
 class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 {
     /**
-     * Execute "postprocess" hook handler
+     * Execute certain hook handle
      * 
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function executeHookHandlerPostprocess()
+    public function executeHookHandlerStepThird()
     {
         \XLite\Core\Database::getInstance()->updateDBSchema();
     }

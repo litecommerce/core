@@ -59,6 +59,57 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
 
 
     /**
+     * Return all classes metadata
+     *
+     * @param string $class Class name OPTIONAL
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllMetadata($class = null)
+    {
+        if (!isset(static::$metadata)) {
+
+            static::$metadata = array();
+
+            // Create hash array to quick access its elements
+            foreach (static::getMetadataFactory()->getAllMetadata() as $data) {
+                static::$metadata[$data->name] = $data;
+            }
+        }
+
+        return \Includes\Utils\ArrayManager::getIndex(static::$metadata, $class);
+    }
+
+    /**
+     * Generate models
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function generateModels()
+    {
+        static::getEntityGenerator()->generate(static::getAllMetadata(), LC_CLASSES_CACHE_DIR);
+    }
+
+    /**
+     * Generate proxies
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function generateProxies()
+    {
+        static::getProxyFactory()->generateProxyClasses(static::getAllMetadata(), LC_PROXY_CACHE_DIR);
+    }
+
+    /**
      * Retur DSN as params array
      * 
      * @return array
@@ -86,12 +137,12 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
     {
         $chain = new \Doctrine\ORM\Mapping\Driver\DriverChain();
         $chain->addDriver(
-            $config->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR),
+            $config->newDefaultAnnotationDriver(static::getClassesDir() . 'XLite' . LC_DS . 'Model'),
             'XLite\Model'
         );
 
         $iterator = new \RecursiveDirectoryIterator(
-            LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module',
+            static::getClassesDir() . 'XLite' . LC_DS . 'Module',
             \FilesystemIterator::SKIP_DOTS
         );
 
@@ -193,24 +244,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
     }
 
     /**
-     * Return all classes metadata
-     * FIXME - change to protected 
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAllMetadata()
-    {
-        if (!isset(static::$metadata)) {
-            static::$metadata = static::getMetadataFactory()->getAllMetadata();
-        }
-
-        return static::$metadata;
-    }
-
-    /**
      * Return list of callbacks to configure the EntityGenerator
      * 
      * @return array
@@ -248,32 +281,5 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
         }
 
         return $generator;
-    }
-
-
-    /**
-     * Generate models
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function generateModels()
-    {
-        static::getEntityGenerator()->generate(static::getAllMetadata(), LC_CLASSES_CACHE_DIR);
-    }
-
-    /**
-     * Generate proxies
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function generateProxies()
-    {
-        static::getProxyFactory()->generateProxyClasses(static::getAllMetadata(), LC_PROXY_CACHE_DIR);
     }
 }
