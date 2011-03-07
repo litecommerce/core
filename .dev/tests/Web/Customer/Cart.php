@@ -367,7 +367,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
         $this->assertJqueryPresent('div.amountformError:visible', 'check minimal allowed quantity error');
         $this->assertJqueryPresent('td.item-qty form input.wrong-amount', 'check minimal allowed quantity');
 
-        $this->getJSExpression('jQuery("td.item-qty form input[type=text]").val("50").blur()');
+        $this->getJSExpression('jQuery("td.item-qty form input[type=text]").val("1").blur()');
         $this->assertJqueryNotPresent('div.amountformError:visible', 'check normalized quantity error');
         $this->assertJqueryNotPresent('td.item-qty form input.wrong-amount', 'check normalized quantity');
 
