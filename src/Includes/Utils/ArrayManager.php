@@ -66,6 +66,23 @@ class ArrayManager extends AUtils
     }
 
     /**
+     * Method to safely get array element (or a whole array)
+     *
+     * @param array          $data  Data array
+     * @param integer|string $index  Array index
+     * @param boolean        $strict Flag; return value or null in any case
+     *
+     * @return array|mixed|null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getIndex(array $data, $index = null, $strict = false)
+    {
+        return isset($index) ? (isset($data[$index]) ? $data[$index] : null) : ($strict ? null : $data);
+    }
+
+    /**
      * Return array elements having the corresponded keys
      *
      * @param array   $data   Array to filter
@@ -82,23 +99,6 @@ class ArrayManager extends AUtils
             $invert ? 'array_diff_key' : 'array_intersect_key',
             array($data, array_fill_keys($keys, true))
         );
-    }
-
-    /**
-     * Method to safely get array element (or a whole array)
-     *
-     * @param array          $data  Data array
-     * @param integer|string $index  Array index
-     * @param boolean        $strict Flag; return value or null in any case
-     *
-     * @return array|mixed|null
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getIndex(array $data, $index = null, $strict = false)
-    {
-        return isset($index) ? (isset($data[$index]) ? $data[$index] : null) : ($strict ? null : $data);
     }
 
     /**
@@ -220,6 +220,9 @@ class ArrayManager extends AUtils
 
     /**
      * Find item
+     *
+     * FIXME: parameters are passed incorrectly into "call_user_func"
+     * FIXME: "userData" parameter is not used
      * 
      * @param mixed    &$data    Data
      * @param callback $callback Callback
@@ -233,13 +236,12 @@ class ArrayManager extends AUtils
     {
         $found = null;
 
-        if (is_callable($callback) && (is_array($data) || $data instanceof \IteratorAggregate)) {
-            foreach ($data as $key => $value) {
-                // Input argument
-                if (call_user_func($callback, $value, $userData)) {
-                    $found = $value;
-                    break;
-                }
+        foreach ($data as $key => $value) {
+
+            // Input argument
+            if (call_user_func($callback, $value, $userData)) {
+                $found = $value;
+                break;
             }
         }
 
@@ -248,6 +250,10 @@ class ArrayManager extends AUtils
 
     /**
      * Filter array
+     *
+     * FIXME: must use the "array_filter" function
+     * FIXME: parameters are passed incorrectly into "call_user_func"
+     * FIXME: "userData" parameter is not used
      * 
      * @param mixed    &$data    Data
      * @param callback $callback Callback
@@ -261,12 +267,10 @@ class ArrayManager extends AUtils
     {
         $result = array();
 
-        if (is_callable($callback) && (is_array($data) || $data instanceof \IteratorAggregate)) {
-            foreach ($data as $key => $value) {
-                // Input argument
-                if (call_user_func($callback, $value, $userData)) {
-                    $result[$key] = $value;
-                }
+        foreach ($data as $key => $value) {
+            // Input argument
+            if (call_user_func($callback, $value, $userData)) {
+                $result[$key] = $value;
             }
         }
 

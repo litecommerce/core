@@ -177,6 +177,39 @@ class Layout extends \XLite\Base\Singleton
         return $this->path;
     }
 
+    /**
+     * Return list of all skins
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSkinsAll()
+    {
+        return array(
+            \XLite::COMMON_INTERFACE  => self::PATH_COMMON,
+            \XLite::ADMIN_INTERFACE   => self::PATH_ADMIN,
+            \XLite::CONSOLE_INTERFACE => self::PATH_CONSOLE,
+            \XLite::MAIL_INTERFACE    => self::PATH_MAIL,
+        );
+    }
+
+    /**
+     * getSkinPathRelative 
+     * 
+     * @param string skin Interface
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSkinPathRelative($skin)
+    {
+        return $skin . LC_DS . $this->locale;
+    }
+
     // }}}
 
     // {{{ Substitutional skins routines
@@ -251,24 +284,6 @@ class Layout extends \XLite\Base\Singleton
         $list[] = $this->getBaseSkinByInterface($interface);
 
         return $list;
-    }
-
-    /**
-     * Return list of all skins
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getSkinsAll()
-    {
-        return array(
-            \XLite::COMMON_INTERFACE  => self::PATH_COMMON,
-            \XLite::ADMIN_INTERFACE   => self::PATH_ADMIN,
-            \XLite::CONSOLE_INTERFACE => self::PATH_CONSOLE,
-            \XLite::MAIL_INTERFACE    => self::PATH_MAIL,
-        );
     }
 
     /**
@@ -483,11 +498,11 @@ class Layout extends \XLite\Base\Singleton
      * @param boolean $reset     Local cache reset flag OPTIONAL
      *  
      * @return array
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getSkinPaths($interface = null, $reset = false)
+    public function getSkinPaths($interface = null, $reset = false)
     {
         $interface = $interface ?: $this->currentInterface;
 
