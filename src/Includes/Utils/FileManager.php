@@ -268,11 +268,11 @@ class FileManager extends \Includes\Utils\AUtils
             $dirFrom = static::getCanonicalDir($dirFrom);
             $dirTo   = static::getCanonicalDir($dirTo, false);
 
-            $filter = new \Includes\Utils\FileFilter($dirFrom, null, \RecursiveIteratorIterator::SELF_FIRST);
+            $filter = new \Includes\Utils\FileFilter($dirFrom, null, \RecursiveIteratorIterator::CHILD_FIRST);
 
             foreach ($filter->getIterator() as $file) {
                 $pathTo = $dirTo . static::getRelativePath($pathFrom = $file->getRealPath(), $dirFrom);
-                $file->isDir() ? static::mkdirRecursive($pathTo) : copy($pathFrom, $pathTo);
+                $file->isDir() ? static::mkdirRecursive($pathTo) : static::copy($pathFrom, $pathTo);
             }
         }
     }
@@ -415,6 +415,26 @@ class FileManager extends \Includes\Utils\AUtils
     public static function deleteDir($dir)
     {
         return !(static::isExists($dir) && static::isDir($dir)) ?: rmdir($dir);
+    }
+
+    /**
+     * Copy file
+     *
+     * @param string  $pathFrom  File path (from)
+     * @param string  $pathTo    File path (to)
+     * @param boolean $overwrite Flag
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function copy($pathFrom, $pathTo, $overwrite = true)
+    {
+        // Create directory if not exists
+        static::isDir($dir = static::getDir($pathTo)) ?: static::mkdirRecursive($dir);
+
+        return (!$overwrite && static::isExists($path)) ?: copy($pathFrom, $pathTo);
     }
 
     /**

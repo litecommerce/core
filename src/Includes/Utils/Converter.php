@@ -180,20 +180,19 @@ class Converter extends AUtils
     }
 
     /**
-     * Wrapper to return property from object
+     * Get canonical form of class name
      * 
-     * @param object  $object   Object to get property from
-     * @param string  $field    Field to get
-     * @param boolean $isGetter Determines if the second param is a property name or a method
+     * @param string  $class    Class name to prepare
+     * @param boolean $relative Flag to enclose class name with namespace separator
      *  
-     * @return mixed
+     * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getObjectField($object, $field, $isGetter = false)
+    public static function prepareClassName($class, $relative = true)
     {
-        return $isGetter ? $object->$field() : $object->$field;
+        return ($relative ? '' : '\\') . static::trimLeadingChars($class, '\\');
     }
 
     /**
