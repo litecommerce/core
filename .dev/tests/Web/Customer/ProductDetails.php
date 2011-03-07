@@ -433,6 +433,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         $cartButtonSelector = $formSelector . " .product-details-info .product-buttons button.bright.add2cart";
         $buyButtonSelector = $formSelector . " .product-details-info .product-buttons-added button.action.buy-more";
         $continueButtonSelector = $formSelector . " .product-details-info .product-buttons-added button.bright.continue";
+        $quantitySelector = $formSelector . " .product-details-info .product-buttons input.quantity"; 
     
         $this->assertElementPresent(
             $cartButtonSelector,
@@ -447,7 +448,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             10000,
             'check content reloading'
         );
-       $this->assertElementPresent(
+        $this->assertElementPresent(
             $continueButtonSelector,
             'check Continue shopping button'
         );
@@ -470,29 +471,34 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             'check content reloading #2'
         );
  
-        /* TODO - rework after Inventory tracking module is changed
-
+        // Check quantity and inventory
         $this->getJSExpression('jQuery(".product-details input.quantity").attr("value", 3)');
 
-        $this->click(
-            "//form[@class='product-details']"
-            . "/div[@class='body']"
-            . "/div[@class='buttons-row added']"
-            . "/button[@class='action buy-more']"
-        );
+        $this->click($buyButtonSelector);
 
         $qty += 3;
 
         $this->waitForLocalCondition(
-            'jQuery(".product-details input.quantity").attr("value") == 1',
-            10000,
-            'check content reloading #3'
+            'jQuery(".minicart-items-number").html() == ' . $qty,
+            30000,
+            'check quantity'
         );
 
-        $q = intval($this->getJSExpression('jQuery(".minicart-items-number").html()'));
+        // Check unallowed values (inventory tracking)
+        $this->getJSExpression('jQuery(".product-details input.quantity").val("-3").blur()');
+        $this->assertJqueryPresent('div.amountformError:visible', 'check minimal allowed quantity error');
+        $this->assertJqueryPresent('input.quantity.wrong-amount', 'check minimal allowed quantity');
+        $this->assertJqueryPresent('button.action.buy-more.disabled.add2cart-disabled', 'check disabled buy now button (min qty)');
 
-        $this->assertEquals($qty, $q, 'check quantity #3');
-        */
+        $this->getJSExpression('jQuery(".product-details input.quantity").val("45").blur()');
+        $this->assertJqueryNotPresent('div.amountformError:visible', 'check normalized quantity error');
+        $this->assertJqueryNotPresent('input.quantity.wrong-amount', 'check normalized quantity');
+        $this->assertJqueryNotPresent('button.action.buy-more.disabled.add2cart-disabled', 'check enabled buy now button');
+        
+        $this->getJSExpression('jQuery(".product-details input.quantity").val("46").blur()');
+        $this->assertJqueryPresent('div.amountformError:visible', 'check maximum allowed quantity error');
+        $this->assertJqueryPresent('input.quantity.wrong-amount', 'check maximum allowed quantity');
+        $this->assertJqueryPresent('button.action.buy-more.disabled.add2cart-disabled', 'check disabled buy now button (max qty)');
     }
 
     protected function getActiveProduct()
