@@ -26,7 +26,7 @@
  * @since     3.0.0
  */
 
-namespace XLite\Model\Base;
+namespace XLite\DataSet\Transport;
 
 /**
  * Abstract transport 
@@ -34,7 +34,7 @@ namespace XLite\Model\Base;
  * @see   ____class_see____
  * @since 3.0.0
  */
-abstract class Transport extends \XLite\Base implements \Countable, \IteratorAggregate, \ArrayAccess
+abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAggregate, \ArrayAccess
 {
 	/**
 	 * Data storage
@@ -46,13 +46,89 @@ abstract class Transport extends \XLite\Base implements \Countable, \IteratorAgg
 	protected $data = array();
 
 	/**
-	 * Storage allowed keys list
+	 * Storage allowed keys list (cache)
 	 * 
 	 * @var   array
 	 * @see   ____var_see____
 	 * @since 3.0.0
 	 */
-	protected $keys = array();
+	protected $keys;
+
+    /**
+     * Define keys 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract protected function defineKeys();
+
+	/**
+	 * Map data
+	 * 
+	 * @param array $data Data
+	 *  
+	 * @return void
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function map(array $data)
+	{
+		foreach ($data as $k => $v) {
+			$this->$k = $v;
+		}
+	}
+
+	/**
+	 * Clear 
+	 * 
+	 * @return void
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function clear()
+	{
+		$this->data = array();
+	}
+
+	/**
+	 * Check transport complexity
+	 * 
+	 * @return boolean
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function check()
+	{
+		$result = true;
+
+		foreach ($this->keys as $k) {
+			if (!isset($this->$k)) {
+				$result = false;
+				break;
+			}
+		}
+
+		return $result;
+	}
+
+    /**
+     * Get keys list
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getKeys()
+    {
+        if (!isset($this->keys)) {
+            $this->keys = $this->defineKeys();
+        }
+
+        return $this->keys;
+    }
+
+    // {{{ Magic methods
 
 	/**
 	 * Getter
@@ -142,54 +218,9 @@ abstract class Transport extends \XLite\Base implements \Countable, \IteratorAgg
 		$this->map(unserialize($serialized));
 	}
 
-	/**
-	 * Map data
-	 * 
-	 * @param array $data Data
-	 *  
-	 * @return void
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function map(array $data)
-	{
-		foreach ($data as $k => $v) {
-			$this->$k = $v;
-		}
-	}
+    // }}}
 
-	/**
-	 * Clear 
-	 * 
-	 * @return void
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function clear()
-	{
-		$this->data = array();
-	}
-
-	/**
-	 * Check transport complexity
-	 * 
-	 * @return boolean
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function check()
-	{
-		$result = true;
-
-		foreach ($this->keys as $k) {
-			if (!isset($this->$k)) {
-				$result = false;
-				break;
-			}
-		}
-
-		return $result;
-	}
+    // {{{ Countable
 
 	/**
 	 * Count 
@@ -202,6 +233,10 @@ abstract class Transport extends \XLite\Base implements \Countable, \IteratorAgg
 	{
 		return count($this->keys);
 	}
+
+    // }}}
+
+    // {{{ IteratorAggregate
 
 	/**
 	 * Get iterator 
@@ -220,6 +255,10 @@ abstract class Transport extends \XLite\Base implements \Countable, \IteratorAgg
 
 		return new ArrayIterator($list);
 	}
+
+    // }}}
+
+    // {{{ ArrayAccess
 
 	/**
 	 * Check - is offset exists or not
@@ -277,5 +316,7 @@ abstract class Transport extends \XLite\Base implements \Countable, \IteratorAgg
 	{
 		unset($this->$offset);
 	}
+
+    // }}}
 
 }

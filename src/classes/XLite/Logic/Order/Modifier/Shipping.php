@@ -15,7 +15,7 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -26,23 +26,27 @@
  * @since     3.0.0
  */
 
-namespace XLite\Model\OrderModifier;
+namespace XLite\Logic\Order\Modifier;
 
 /**
- * Shipping order modifier
+ * Shipping modifier 
  * 
  * @see   ____class_see____
  * @since 3.0.0
  */
-abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
+class Shipping extends \XLite\Logic\Order\Modifier\AModifier
 {
     /**
-     * Modifier name definition
+     * Modifier unique code 
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
-    const MODIFIER_SHIPPING = 'shipping';
+    protected $code = 'SHIPPING';
 
     /**
-     * shippingRate 
+     * Selected rate (cache)
      * 
      * @var   \XLite\Model\Shipping\Rate
      * @see   ____var_see____
@@ -51,61 +55,73 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
     protected $selectedRate;
 
     /**
-     * Define order modifiers 
+     * Check - can apply this modifier or not
      * 
-     * @return array
+     * @return boolean
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineModifiers()
+    public function canApply()
     {
-        $list = parent::defineModifiers();
-
-        $list[10] = self::MODIFIER_SHIPPING;
-
-        return $list;
+        return parent::canApply()
+            && 'Y' == \XLite\Base::getInstance()->config->Shipping->shipping_enabled;
     }
 
     /**
-     * Calculate shipping 
-     * 
+     * Calculate
+     *
      * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function calculateShipping()
+    public function calculate()
     {
-        $cost = 0;
+        $cost = null;
 
-        if (!$this->isShippingEnabled()) {
-            $this->unsetModifier(self::MODIFIER_SHIPPING);
+        if ($this->isShipped()) {
 
-        } else {
-            
-            if ($this->isShipped()) {
+            $rate = $this->getSelectedRate();
 
-                $rate = $this->getSelectedRate();
-
-                if (is_object($rate)) {
-                    $cost = $rate->getTotalRate();
-                }
+            if (isset($rate)) {
+                $cost = $this->getOrder()->getCurrency()->roundValue($rate->getTotalRate());
             }
-
-            $this->saveModifier(self::MODIFIER_SHIPPING, $cost);
         }
+
+        $this->addOrderSurcharge('SHIPPING', doubleval($cost), false, isset($cost));
     }
 
     /**
-     * Get shipping cost row name 
+     * Returns true if any of order items are shipped 
      * 
-     * @return string
-     * @see    ____func_see____
+     * @return boolean 
      * @since  3.0.0
      */
-    protected function getShippingName()
+    protected function isShipped()
     {
-        return 'Shipping cost';
+        $result = false;
+
+        foreach ($this->getItems() as $item) {
+            if ($item->isShipped()) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
     }
+
+    /**
+     * Check - shipping is available for this order or not
+     * 
+     * @return boolean 
+     * @since  3.0.0
+     */
+    protected function isAvailable()
+    {
+        return $this->isShipped() && 0 < count($this->getShippingRates());
+    }
+
+    // {{{ Shipping rates
 
     /**
      * Calculate shipping rates 
@@ -170,6 +186,10 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
         return $this->calculateShippingRates();
     }
 
+    // }}}
+
+    // {{{ Current shipping method and rate
+
     /**
      * Get selected shipping rate 
      * 
@@ -181,7 +201,7 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
     {
         if (
             !isset($this->selectedRate)
-            || $this->selectedRate->getMethodId() != $this->getShippingId()
+            || $this->selectedRate->getMethodId() != $this->order->getShippingId()
         ) {
             // Get shipping rates
             $rates = $this->getShippingRates();
@@ -190,18 +210,18 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
 
             if (!empty($rates)) {
 
-                if (!$this->getShippingId() && $this->getProfile() && $this->getProfile()->getLastShippingId()) {
+                if (!$this->getShippingId() && $this->order->getProfile() && $this->order->getProfile()->getLastShippingId()) {
 
                     // Remember last shipping id
-                    $this->setShippingId($this->getProfile()->getLastShippingId());
+                    $this->order->setShippingId($this->getProfile()->getLastShippingId());
                 }
 
-                if (0 < intval($this->getShippingId())) {
+                if (0 < intval($this->order->getShippingId())) {
                     // Set selected rate from the rates list if shipping_id is already assigned
 
                     foreach ($rates as $rate) {
 
-                        if ($this->getShippingId() == $rate->getMethodId()) {
+                        if ($this->order->getShippingId() == $rate->getMethodId()) {
                             $selectedRate = $rate;
                             break;
                         }
@@ -226,93 +246,64 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      */
     public function setSelectedRate(\XLite\Model\Shipping\Rate $rate = null)
     {
-        $newShippingId = $this->getShippingId();
+        $newShippingId = $this->order->getShippingId();
 
         $this->selectedRate = $rate;
         $newShippingId = $rate ? $rate->getMethodId() : 0;
 
-        if ($this->getShippingId() != $newShippingId) {
+        if ($this->order->getShippingId() != $newShippingId) {
 
-            $this->setShippingId($newShippingId);
-            $this->setShippingMethodName($rate ? $rate->getMethod()->getName() : null);
+            $this->order->setShippingId($newShippingId);
+            $this->order->setShippingMethodName($rate ? $rate->getMethod()->getName() : null);
 
             \XLite\Core\Database::getEM()->flush();
         }
     }
 
     /**
-     * Service method: check if shipping is visible or not at the moment of saveModifier() call
+     * Get shipping method
      * 
-     * @return boolean 
+     * @return \XLite\Model\Shipping\Method
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isShippingVisible()
+    public function getShippingMethod()
     {
-        return $this->isShippingEnabled();
+        $result = null;
+
+        $rate = $this->getSelectedRate();
+
+        if (isset($rate)) {
+            $result = $rate->getMethod();
+        }
+
+        return $result;
     }
 
     /**
-     * Service method: check if shipping rate selected and should be displayed
-     * Method is used by isAvailable() (\XLite\Model\OrderModifier class)
+     * Get shipping method name 
      * 
-     * @return boolean 
+     * @return string|void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isShippingAvailable()
+    public function getActualShippingName()
     {
-        return $this->isDeliveryAvailable();
+        $name = null;
+
+        if ($this->getShippingMethod()) {
+            $name = $this->getShippingMethod()->getName();
+
+        } elseif ($this->order->getShippingMethodName()) {
+            $name = $this->order->getShippingMethodName();
+        }
+
+        return $name;
     }
 
-    /**
-     * Check - shipping rates exists or not
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isShippingRatesExists()
-    {
-        return $this->isShippingAvailable()
-            || !\XLite\Model\Shipping::getInstance()->getDestinationAddress($this);
-    }
+    // }}}
 
-
-    /**
-     * Check if shipping enabled and available for calculation
-     * 
-     * @return boolean 
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isShippingEnabled()
-    {
-        return 'Y' == \XLite\Base::getInstance()->config->Shipping->shipping_enabled;
-    }
-
-    /**
-     * Check if shipping rate has been selected
-     * 
-     * @return boolean 
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isShippingSelected()
-    {
-        return is_object($this->getSelectedRate());
-    }
-
-    /**
-     * Check - shipping is available for this order or not
-     * 
-     * @return boolean 
-     * @since  3.0.0
-     */
-    public function isDeliveryAvailable()
-    {
-        return $this->isShippingVisible() && $this->isShipped() && 0 < count($this->getShippingRates());
-    }
+    // {{{ Shipping calculation data
 
     /**
      * Get shipped items 
@@ -325,7 +316,7 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
     {
         $result = array();
 
-        foreach ($this->getItems() as $item) {
+        foreach ($this->order->getItems() as $item) {
             if ($item->isShipped()) {
                 $result[] = $item;
             }
@@ -371,67 +362,6 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
     }
 
     /**
-     * Get shipping method
-     * 
-     * @return \XLite\Model\Shipping\Method
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getShippingMethod()
-    {
-        $result = null;
-
-        $rate = $this->getSelectedRate();
-
-        if (isset($rate)) {
-            $result = $rate->getMethod();
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get shipping method name 
-     * 
-     * @return string|void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getActualShippingName()
-    {
-        $name = null;
-
-        if ($this->getShippingMethod()) {
-            $name = $this->getShippingMethod()->getName();
-
-        } elseif ($this->getShippingMethodName()) {
-            $name = $this->getShippingMethodName();
-        }
-
-        return $name;
-    }
-
-    /**
-     * Returns true if any of order items are shipped 
-     * 
-     * @return boolean 
-     * @since  3.0.0
-     */
-    public function isShipped()
-    {
-        $result = false;
-
-        foreach ($this->getItems() as $item) {
-            if ($item->isShipped()) {
-                $result = true;
-                break;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      * Get order subtotal only for shipped items
      * 
      * @return float
@@ -440,16 +370,37 @@ abstract class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecor
      */
     public function getShippedSubtotal() 
     {
-        $this->calculateSubtotal();
-
         $subtotal = 0;
 
-        foreach ($this->getItems() as $item) {
-            if ($item->isShipped()) {
-                $subtotal += $item->getTotal();
-            }
+        foreach ($this->getShippedItems() as $item) {
+            $subtotal += $item->getTotal();
         }
 
         return $subtotal;
     }
+
+    // }}}
+
+	// {{{ Surcharge operations
+
+	/**
+	 * Get surcharge name 
+	 * 
+	 * @param \XLite\Model\Order\Surcharge $surcharge Surcharge
+	 *  
+	 * @return \XLite\DataSet\Transport\Order\Surcharge
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	public function getSurchargeInfo(\XLite\Model\Base\Surcharge $surcharge)
+    {
+        $info = new \XLite\DataSet\Transport\Order\Surcharge;
+
+        $info->name = \XLite\Core\Translation::lbl('Shipping cost');
+        $info->notAvailableReason = \XLite\Core\Translation::lbl('Shipping address is not defined');
+
+        return $info;
+    }
+
+    // }}}
 }

@@ -51,7 +51,7 @@ namespace XLite\Model;
  * @DiscriminatorColumn   (name="is_order", type="integer", length="1")
  * @DiscriminatorMap      ({"1" = "XLite\Model\Order", "0" = "XLite\Model\Cart"})
  */
-class Order extends \XLite\Model\Base\ModifierOwner
+class Order extends \XLite\Model\Base\SurchargeOwner
 {
     /**
      * Order statuses 
@@ -199,16 +199,16 @@ class Order extends \XLite\Model\Base\ModifierOwner
     protected $items;
 
     /**
-     * Order saved modifiers
+     * Order surcharges
      *
      * @var   \Doctrine\Common\Collections\Collection
      * @see   ____var_see____
      * @since 3.0.0
      *
-     * @OneToMany (targetEntity="XLite\Model\OrderModifier", mappedBy="owner", cascade={"all"})
+     * @OneToMany (targetEntity="XLite\Model\Order\Surcharge", mappedBy="owner", cascade={"all"})
      * @OrderBy   ({"id" = "ASC"})
      */
-    protected $saved_modifiers;
+    protected $surcharges;
 
     /**
      * Payment transactions
@@ -315,6 +315,15 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @since 3.0.0
      */
     protected $oldStatus;
+
+    /**
+     * Modifiers (cache)
+     * 
+     * @var   \XLite\DataSet\Collection\OrderModifier
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $modifiers;
 
     /**
      * Return list of all aloowed order statuses
@@ -592,135 +601,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
         }
 
         return $items;
-    }
-
-    /**
-     * Set payment method 
-     * 
-     * @param \XLite\Model\Payment\Method $paymentMethod Payment method
-     * @param float                       $value         Payment transaction value OPTIONAL
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setPaymentMethod($paymentMethod, $value = null)
-    {
-        if (isset($paymentMethod) && !($paymentMethod instanceof \XLite\Model\Payment\Method)) {
-            $paymentMethod = null;
-        }
-
-        if (!isset($paymentMethod) || $this->getFirstOpenPaymentTransaction()) {
-            $transaction = $this->getFirstOpenPaymentTransaction();
-            if ($transaction) {
-                $this->getPaymentTransactions()->removeElement($transaction);
-                $transaction->getPaymentMethod()->getTransactions()->removeElement($transaction);
-                \XLite\Core\Database::getEM()->remove($transaction);
-            }
-        }
-
-        if (isset($paymentMethod)) {
-            $this->addPaymentTransaction($paymentMethod, $value);
-        }
-    }
-
-    /**
-     * Get active payment transactions 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getActivePaymentTransactions()
-    {
-        $result = array();
-
-        foreach ($this->getPaymentTransactions() as $t) {
-            if (!$t->isFailed()) {
-                $result[] = $t;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get first open (not payed) payment transaction 
-     * 
-     * @return \XLite\Model\Payment\Transaction|void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getFirstOpenPaymentTransaction()
-    {
-        return \Includes\Utils\ArrayManager::findValue(
-            $this->getPaymentTransactions(),
-            array($this, 'checkPaymentTransactionStatusEqual'),
-            \XLite\Model\Payment\Transaction::STATUS_INITIALIZED
-        );
-    }
-
-    /**
-     * Get open (not-payed) total 
-     * 
-     * @return float
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getOpenTotal()
-    {
-        $total = $this->getTotal();
-
-        foreach ($this->getPaymentTransactions() as $t) {
-            $total -= $t->getChargeValueModifier();
-        }
-
-        return $total;
-    }
-
-    /**
-     * Check - order is open (has initialized transactions or has open total) or not
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isOpen()
-    {
-        return $this->getFirstOpenPaymentTransaction() || 0 < $this->getOpenTotal();
-    }
-
-    /**
-     * Get totally payed total 
-     * 
-     * @return float
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPayedTotal()
-    {
-        $total = $this->getTotal();
-
-        foreach ($this->getPaymentTransactions() as $t) {
-            if ($t->isCompleted()) {
-                $total -= $t->getChargeValueModifier();
-            }
-        }
-
-        return $total;
-    }
-
-    /**
-     * Check - order is payed or not
-     * Payed - order has not open total and all payment transactions are failed or completed
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isPayed()
-    {
-        return 0 >= $this->getPayedTotal();
     }
 
     /**
@@ -1040,76 +920,10 @@ class Order extends \XLite\Model\Base\ModifierOwner
     {
         $this->details              = new \Doctrine\Common\Collections\ArrayCollection();
         $this->items                = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->saved_modifiers      = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->surcharges           = new \Doctrine\Common\Collections\ArrayCollection();
         $this->payment_transactions = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
-    }
-
-    /**
-     * Calculate order total 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function calculate() 
-    {
-        if (0 < $this->countItems()) {
-            parent::calculate();
-
-        } else {
-            $this->setSubtotal(0);
-            $this->setTotal(0);
-        }
-    }
-
-    /* TODO - rework
-    function refresh($name) 
-    {
-        $name = "_" . $name;
-
-        if (isset($this->$name)) {
-            unset($this->$name);
-        }
-
-        $this->$name = null;
-
-        if ('shippingRates' == $name) {
-            \XLite\Model\CachingFactory::clearCacheCell(__CLASS__ . '::getShippingRates');
-        }
-
-    }
-    */
-
-    /**
-     * Set subtotal 
-     * 
-     * @param float $value Subtotal
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setSubtotal($value)
-    {
-        $this->subtotal = $this->getCurrency() ? $this->getCurrency()->roundValue($value) : $value;
-    }
-
-    /**
-     * Set total 
-     * 
-     * @param float $value Total
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setTotal($value)
-    {
-        $this->total = $this->getCurrency()
-            ? $this->getCurrency()->roundValue($value)
-            : $value;
     }
 
     /**
@@ -1269,23 +1083,135 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $this->addItems($item);
     }
 
+    // {{{ Payment method and transactions
+
     /**
-     * Calculate and save order subtotal 
+     * Set payment method 
      * 
+     * @param \XLite\Model\Payment\Method $paymentMethod Payment method
+     * @param float                       $value         Payment transaction value OPTIONAL
+     *  
      * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function calculateSubtotal() 
+    public function setPaymentMethod($paymentMethod, $value = null)
     {
-        $subtotal = 0;
-
-        foreach ($this->getItems() as $item) {
-            $item->calculate();
-            $subtotal += $item->getTotal();
+        if (isset($paymentMethod) && !($paymentMethod instanceof \XLite\Model\Payment\Method)) {
+            $paymentMethod = null;
         }
 
-        $this->setSubtotal($subtotal);
+        if (!isset($paymentMethod) || $this->getFirstOpenPaymentTransaction()) {
+            $transaction = $this->getFirstOpenPaymentTransaction();
+            if ($transaction) {
+                $this->getPaymentTransactions()->removeElement($transaction);
+                $transaction->getPaymentMethod()->getTransactions()->removeElement($transaction);
+                \XLite\Core\Database::getEM()->remove($transaction);
+            }
+        }
+
+        if (isset($paymentMethod)) {
+            $this->addPaymentTransaction($paymentMethod, $value);
+        }
+    }
+
+    /**
+     * Get active payment transactions 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getActivePaymentTransactions()
+    {
+        $result = array();
+
+        foreach ($this->getPaymentTransactions() as $t) {
+            if (!$t->isFailed()) {
+                $result[] = $t;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get first open (not payed) payment transaction 
+     * 
+     * @return \XLite\Model\Payment\Transaction|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFirstOpenPaymentTransaction()
+    {
+        return \Includes\Utils\ArrayManager::findValue(
+            $this->getPaymentTransactions(),
+            array($this, 'checkPaymentTransactionStatusEqual'),
+            \XLite\Model\Payment\Transaction::STATUS_INITIALIZED
+        );
+    }
+
+    /**
+     * Get open (not-payed) total 
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getOpenTotal()
+    {
+        $total = $this->getTotal();
+
+        foreach ($this->getPaymentTransactions() as $t) {
+            $total -= $t->getChargeValueModifier();
+        }
+
+        return $total;
+    }
+
+    /**
+     * Check - order is open (has initialized transactions or has open total) or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isOpen()
+    {
+        return $this->getFirstOpenPaymentTransaction() || 0 < $this->getOpenTotal();
+    }
+
+    /**
+     * Get totally payed total 
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPayedTotal()
+    {
+        $total = $this->getTotal();
+
+        foreach ($this->getPaymentTransactions() as $t) {
+            if ($t->isCompleted()) {
+                $total -= $t->getChargeValueModifier();
+            }
+        }
+
+        return $total;
+    }
+
+    /**
+     * Check - order is payed or not
+     * Payed - order has not open total and all payment transactions are failed or completed
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isPayed()
+    {
+        return 0 >= $this->getPayedTotal();
     }
 
     /**
@@ -1347,6 +1273,10 @@ class Order extends \XLite\Model\Base\ModifierOwner
 
         \XLite\Core\Database::getEM()->persist($transaction);
     }
+
+    // }}}
+
+    // {{{ Mail notification
 
     /**
      * Called when an order becomes processed, before saving it to the database
@@ -1411,6 +1341,217 @@ class Order extends \XLite\Model\Base\ModifierOwner
             $mail->send();
         }
     }
+
+    // }}}
+
+    // {{{ Calculation
+
+    /**
+     * Get modifiers 
+     * 
+     * @return \XLite\DataSet\Collection\OrderModifier
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModifiers()
+    {
+        if (!isset($this->modifiers)) {
+            $this->modifiers = \XLite\Core\Database::getRepo('XLite\Model\Order\Modifier')->findActive();
+
+            // Initialize
+            foreach ($this->modifiers as $modifier) {
+                $modifier->initialize($this, $this->modifiers);
+            }
+
+            // Preprocess modifiers
+            foreach ($this->modifiers as $modifier) {
+                $modifier->preprocess();
+            }
+        }
+
+        return $this->modifiers;
+    }
+
+    /**
+     * Get modifier 
+     * 
+     * @param string $type Modifier type
+     * @param string $code Modifier code
+     *  
+     * @return \XLite\Model\Order\Modifier
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModifier($type, $code)
+    {
+        $result = null;
+
+        foreach ($this->getModifiers() as $modifier) {
+            if ($this->getType() == $type && $this->getCode() == $code) {
+                $result = $modifier;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get modifiers by type 
+     * 
+     * @param string $type Modifier type
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModifiersByType($type)
+    {
+        $list = array();
+
+        foreach ($this->getModifiers() as $modifier) {
+            if ($modifier->getType() == $type) {
+                $list[] = $modifier;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Calculate order 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function calculate() 
+    {
+        $this->resetSurcharges();
+
+        $this->calculateInitialValues();
+
+        foreach ($this->getModifiers() as $modifier) {
+            $apply = $modifier->canApply();
+            if ($modifier->canApply()) {
+                $modifier->calculate();
+            }
+        }
+
+        $this->setTotal($this->getSurchargesTotal());
+    }
+
+    /**
+     * Reset surcharges list
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function resetSurcharges()
+    {
+        foreach ($this->getItems() as $item) {
+            $item->resetSurcharges();
+        }
+
+        foreach ($this->getSurcharges() as $surcharge) {
+            \XLite\Core\Database::getEM()->remove($surcharge);
+        }
+
+        $this->getSurcharges()->clear();
+    }
+
+    /**
+     * Calculate initial order values 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function calculateInitialValues()
+    {
+        $subtotal = 0;
+
+        foreach ($this->getItems() as $item) {
+            $item->calculate();
+
+            $subtotal += $item->getSubtotal();
+        }
+
+        $subtotal = $this->getCurrency()->roundValue($subtotal);
+
+        $this->setSubtotal($subtotal);
+        $this->setTotal($subtotal);
+    }
+
+    // }}}
+
+    // {{{ Surcharges
+
+    /**
+     * Get surcharges by type 
+     * 
+     * @param string $type Surcharge type
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSurchargesByType($type)
+    {
+        $list = array();
+
+        foreach ($this->getSurcharges() as $surcharge) {
+            if ($surcharge->getType() == $type) {
+                $list[] = $surcharge;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Get surcharges subtotal with specified type
+     * 
+     * @param string  $type    Surcharge type OPTIONAL
+     * @param boolean $include Surcharge include flag OPTIONAL
+     *  
+     * @return float
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSurchargesSubtotal($type = null, $include = null)
+    {
+        $surcharges = $type
+            ? $this->getSurchargesByType($type)
+            : $this->getSurcharges();
+
+        $subtotal = 0;
+
+        foreach ($surcharges as $surcharge) {
+            if ($surcharge->getAvailable() && (!isset($include) || $surcharge->getInclude() == $include)) {
+                $subtotal += $surcharge->getValue();
+            }
+        }
+
+        return $subtotal;
+    }
+
+    /**
+     * Get surcharges total with specified type
+     * 
+     * @param string $type Surcharge type OPTIONAL
+     *  
+     * @return float
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSurchargesTotal($type = null)
+    {
+        return $this->getSubtotal() + $this->getSurchargesSubtotal($type, false);
+    }
+
+    // }}}
 
     // {{{ Lifecycle callbacks
 
