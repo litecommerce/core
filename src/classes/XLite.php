@@ -203,6 +203,19 @@ class XLite extends \XLite\Base
     }
 
     /**
+     * Return current kernel version
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    final public function getKernelVersion()
+    {
+        return '1.0.0';
+    }
+
+    /**
      * Return specified (or the whole list) options 
      * 
      * @param mixed $names List (or single value) of option names OPTIONAL
@@ -419,5 +432,4 @@ class XLite extends \XLite\Base
         self::$controller = null;
         \XLite\Model\CachingFactory::clearCache();
     }
-    
 }

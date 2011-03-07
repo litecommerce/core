@@ -37,38 +37,11 @@ namespace XLite\Controller\Admin;
  */
 class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
 {
-
-    /** 
-     * Return module identificator
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getModuleId()
-    {   
-        return \XLite\Core\Request::getInstance()->module_id;    
-    }   
-
-    /** 
-     * Return LICENSE text for the module
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getLicense()
-    {
-        return \XLite\RemoteModel\Marketplace::getInstance()->getLicense(
-            $this->getModuleId()
-        );
-    }
+    // ------------------------------ Public methods for viewers -
 
     /**
-     * Return title 
-     *  
+     * Return title
+     *
      * @return string
      * @access public
      * @see    ____func_see____
@@ -76,10 +49,68 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        $moduleById = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->getModuleId());
-
-        return $moduleById ? ($moduleById->getModuleName() . static::t(' License agreement')) : null;
+        return ($module = $this->getModule()) ? ($module->getModuleName() . ' license agreement') : null;
     }
+
+    /**
+     * Return LICENSE text for the module
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLicense()
+    {
+        return \XLite\RemoteModel\Marketplace::getInstance()->getLicense($this->getModuleId());
+    }
+
+
+    // ------------------------------ Short-name methods -
+
+    /** 
+     * Return module identificator
+     * 
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModuleId()
+    {   
+        return \XLite\Core\Request::getInstance()->module_id;    
+    }
+
+    /**
+     * Search for module
+     * 
+     * @return \XLite\Model\Module|void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModule()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->getModuleId());
+    }
+
+    /**
+     * Search for module license key
+     *
+     * @param array $data Keys to search
+     * 
+     * @return \XLite\Model\ModuleKey
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModuleKey(array $data)
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\ModuleKey')->findOneBy($data);
+    }
+
+
+    // ------------------------------ "Get license" action handler -
 
     /**
      * Action of getting LICENSE text. Redirection to GET request
@@ -92,18 +123,17 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
     protected function doActionGetLicense()
     {
         $this->setReturnURL(
-            $this->buildURL(
-                'module_installation',
-                'show_license',
-                array(
-                    'module_id' => $this->getModuleId(),
-                )
-            )
+            $this->buildURL('module_installation', 'show_license', array('module_id' => $this->getModuleId()))
         );
     }
 
+
+    // ------------------------------ "Register key" action handler -
+
     /**
      * Action of license key registration 
+     *
+     * FIXME: must be completely refactored
      * 
      * @return void
      * @access protected
@@ -170,9 +200,11 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
     }
 
 
+    // ------------------------------ "Get package" action handler -
+
     /**
      * Action of getting package from marketplace
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -180,91 +212,209 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionGetPackage()
     {
-        $this->set('returnUrl', $this->buildURL('addons_list'));
+        // Assuming an error
+        $this->setReturnUrl($this->buildURL('addons_list'));
 
         // Checking "Agree" checkbox
         if ('Y' !== \XLite\Core\Request::getInstance()->agree) {
+
+            // License not accepted
             \XLite\Core\TopMessage::getInstance()->addError(
                 'You must agree with License agreement in order to install module'
             );
 
-            // Error return
-            return;
+        } elseif ($this->getModule()->isFree() || ($key = $this->checkModuleKey())) {
+
+            // Module key is checked - recieve package
+            $this->getPackage(empty($key) ? null : $key);
         }
+    }
 
-        $moduleById = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->getModuleId());
+    /**
+     * Check module license key
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkModuleKey()
+    {
+        $result = null;
 
-        // Check and get license key value for PAID module
-        if (!$moduleById->isFree()) {
-
-            $mapFields = array(
-                'module' => $moduleById->getName(),
-                'author' => $moduleById->getAuthor(),
-            );
-
-            // Get module license key from DB for a further use
-            $moduleKey = \XLite\Core\Database::getRepo('\XLite\Model\ModuleKey')->findOneBy($mapFields);
-
-            if (is_null($moduleKey)) {
-    
-                \XLite\Core\TopMessage::getInstance()->addError(
-                    'You must pay for the {{module}} module by {{author}} author using "Purchase" button',
-                    $mapFields
-                );
-    
-                // Error return
-                return;
-            }
-
-            $key = $moduleKey->getKeyValue();
-        }
-
-        // Retrieve the module package from the Marketplace to Local Repository of the LC
-        $result = \XLite\RemoteModel\Marketplace::getInstance()->retrieveToLocalRepository(
-            $this->getModuleId(),
-            (isset($key) && !empty($key)) ? array('key' => $key) : array()
+        $data = array(
+            'module' => $this->getModule()->getName(),
+            'author' => $this->getModule()->getAuthor(),
         );
 
-        if (\XLite\RemoteModel\Marketplace::STATUS_ERROR !== $result) {
+        // Search for module key
+        if (is_null($key = $this->getModuleKey($data))) {
 
-            // TODO Refactor with Upload Addons feature... 
-            // has the same functionality
-            $module = new \XLite\Model\PHARModule($result);
+            // Key not found
+            \XLite\Core\TopMessage::getInstance()->addError(
+                'You must pay for the {{module}} module by {{author}} author using "Purchase" button',
+                $data
+            );
 
-            if (\XLite\Model\PHARModule::STATUS_OK === $module->getStatus()) {
+        } else {
 
-                $module->check();
-            }
-
-            if (\XLite\Model\PHARModule::STATUS_OK === $module->getStatus()) {
-
-                $module->deploy();
-
-                \XLite\Core\TopMessage::getInstance()->addInfo(
-                    'Module has been uploaded successfully'
-                );
-
-                $moduleById->setPurchased(true);
-
-                \XLite\Core\Database::getEM()->flush();
-
-            } else {
-
-                \XLite\Core\TopMessage::getInstance()->addError(
-                    'Checking procedure returns with "{{result}}" result for {{file}} file.',
-                    array(
-                        'result' => $module->getStatus() . '::' . $module->getError(),
-                        'file'   => $result,
-                    )
-                );
-            }
-
-            $module->cleanUp();
-
-            @unlink(LC_LOCAL_REPOSITORY . $result);
+            // Retrieve key value
+            $result = $key->getKeyValue();
         }
 
+        return $result;
+    }
+
+    /**
+     * Recieve and unpack module
+     *
+     * @param string $key License key value OPTIONAL
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPackage($key = null)
+    {
+        // Trying to recieve module source
+        if (\XLite\RemoteModel\Marketplace::STATUS_ERROR !== ($status = $this->retrieveToLocalRepository($key))) {
+
+            // Check status and deploy module
+            $this->checkAndDeployPackage($status);
+
+        } else {
+
+            // An error occured
+            \XLite\Core\TopMessage::getInstance()->addError('Error while recieving the module');
+        }
+    }
+
+    /**
+     * Fetch module from marketplace
+     * 
+     * @param string $key License key value OPTIONAL
+     *  
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function retrieveToLocalRepository($key = null)
+    {
+        return \XLite\RemoteModel\Marketplace::getInstance()->retrieveToLocalRepository(
+            $this->getModuleId(),
+            $key ? array('key' => $key) : array()
+        );
+    }
+
+    /**
+     * Check status and deploy module
+     * 
+     * @param integer|string $file Result of the "retireve" action
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkAndDeployPackage($file)
+    {
+        // Create object and extract files into temp dir
+        $module = new \XLite\Model\PHARModule($file);
+
+        // If the extraction was successfull
+        if ($this->checkModuleIntegrity($module) && $this->deployModule($module)) {
+
+            // Perform some actions
+            $this->finishDeployment($module);
+
+            // Set confirmation
+            \XLite\Core\TopMessage::getInstance()->addInfo('Module has been uploaded successfully');
+
+        } else {
+
+            // An error occured
+            \XLite\Core\TopMessage::getInstance()->addError($module->getMessage());
+        }
+
+        // Clean up
+        $this->cleanUpOnDeploymentComplete($file, $module);
+    }
+
+    /**
+     * Check if module is valid and has a correct structure
+     * 
+     * @param \XLite\Model\PHARModule $module Module to check
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkModuleIntegrity(\XLite\Model\PHARModule $module)
+    {
+        return $module->isValid();
+    }
+
+    /**
+     * Copy files
+     * 
+     * @param \XLite\Model\PHARModule $module Package to deploy
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function deployModule(\XLite\Model\PHARModule $module)
+    {
+        return $module->deploy() || true;
+    }
+
+    /**
+     * Perform some actions on complete
+     *
+     * @param \XLite\Model\PHARModule $module Deployed package OPTIONAL
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function finishDeployment(\XLite\Model\PHARModule $module = null)
+    {
+        // Set flags
+        $this->getModule()->setPurchased(true);
+        $this->getModule()->setInstalled(true);
+
+        // Modify database record
+        if ($module) {
+            \XLite\Core\Database::getRepo('\XLite\Model\Module')->update($this->getModule());
+        }
+
+        // Success
         $this->setReturnURL($this->buildURL('modules'));
     }
 
+    /**
+     * Clean up procedure
+     *
+     * @param string                  $file   PHAR file 
+     * @param \XLite\Model\PHARModule $module Current module OPTIONAL
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function cleanUpOnDeploymentComplete($file, \XLite\Model\PHARModule $module = null)
+    {
+        if ($module) {
+            $module->cleanUp();
+        }
+
+        // Remove temporary file
+        \Includes\Utils\FileManager::delete($file);
+    }
 }

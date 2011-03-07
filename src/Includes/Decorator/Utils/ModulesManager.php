@@ -46,7 +46,7 @@ abstract class ModulesManager extends AUtils
     /**
      * Pattern to get module name by class name
      */
-    const CLASS_NAME_PATTERN = '/\\\XLite\\\Module\\\(\w+\\\\\w+)(\\\|$)/USs';
+    const CLASS_NAME_PATTERN = '/(?:\\\)?XLite\\\Module\\\(\w+\\\\\w+)(\\\|$)/USs';
 
 
     /**

@@ -40,13 +40,14 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
     /**
      * Name of the variable in the global $_FILES array
      */
-    const UPLOAD_NAME   = 'upload_addon';
+    const UPLOAD_NAME = 'upload_addon';
 
     /**
      * Values for the statuses of uploaded file moving 
      */
-    const MOVE_OK       = 'ok';
-    const MOVE_ERROR    = 'error';
+
+    const MOVE_OK    = 'ok';
+    const MOVE_ERROR = 'error';
 
 
     /**
