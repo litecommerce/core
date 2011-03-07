@@ -26,59 +26,58 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\Utils;
+namespace Includes\Decorator\Plugin\Doctrine\Plugin\DocBlockCorrector;
 
 /**
- * Verifier 
- * 
+ * Doctrine tags support for Decorator
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Verifier extends \Includes\Decorator\Utils\Base\Verifier
+class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 {
     /**
-     * Error for non-LC classes
-     * 
-     * @param \Includes\Decorator\DataStructure\Node\ClassInfo $node Class description
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
+     * Comment to set for decorated entities 
      */
-    protected static function fireNonLCClassError(\Includes\Decorator\DataStructure\Node\ClassInfo $node)
-    {
-        \Includes\ErrorHandler::fireError('Non-LC added to the tree: "' . $node->getClass() . '"');
-    }
+    const DOC_BLOCK = '/**
+ * @MappedSuperClass
+ */';
+
 
     /**
-     * Check if node describes a class from "XLite" namespace
-     * 
-     * @param string $class Class to check
-     *  
-     * @return boolean
+     * Execute certain hook handler
+     *
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function isLCClass($class)
+    public function executeHookHandlerStepFirst()
     {
-        return 0 === strpos(\Includes\Utils\Converter::trimLeadingChars($class, '\\'), LC_NAMESPACE);
+        static::getClassesTree()->walkThrough(array($this, 'setMappedSuperClassTag'));
     }
 
     /**
-     * Check if node is valid
+     * Check and correct (if needed) class doc block comment
      * 
-     * @param \Includes\Decorator\DataStructure\Node\ClassInfo $node node to check
+     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function checkNode(\Includes\Decorator\DataStructure\Node\ClassInfo $node)
+    public function setMappedSuperClassTag(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
-        static::isLCClass($node->getClass()) ?: static::fireNonLCClassError($node);
+        // Only perform the action if node has been decorated, and it's a Doctrine entity
+        if ($node->isLowLevelNode() && $node->getTag('Entity')) {
+
+            // Write changes to FS
+            \Includes\Utils\FileManager::write(
+                $path = LC_CLASSES_CACHE_DIR . $node->getPath(), 
+                \Includes\Decorator\Utils\Tokenizer::getSourceCode($path, null, null, null, self::DOC_BLOCK)
+            );
+        }
     }
 }

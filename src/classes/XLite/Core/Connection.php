@@ -108,4 +108,3 @@ class Connection extends \Doctrine\DBAL\Connection
         return $result;
     }
 }
-

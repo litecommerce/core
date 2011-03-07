@@ -207,7 +207,7 @@ OUT;
 
             $step = intval($_GET['step']);
 
-            if ($step <= 2) {
+            if ($step <= 3) {
                 echo xtr('Building cache: Pass #:step', array(':step' => $step)) . $jsDots;
                 echo '</body></html>';
                 echo str_repeat(' ', 10000);

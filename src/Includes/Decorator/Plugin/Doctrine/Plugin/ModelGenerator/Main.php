@@ -38,14 +38,14 @@ namespace Includes\Decorator\Plugin\Doctrine\Plugin\ModelGenerator;
 class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 {
     /**
-     * Execute "run" hook handler
+     * Execute certain hook handle
      *
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function executeHookHandlerRun()
+    public function executeHookHandlerStepSecond()
     {
         // Create model proxy classes (first step of cache generation)
         \Includes\Decorator\Plugin\Doctrine\Utils\EntityManager::generateModels();

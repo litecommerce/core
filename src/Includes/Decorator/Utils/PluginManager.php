@@ -43,21 +43,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
     /**
      * Config file name 
      */
-
     const FILE_INI = 'plugins.ini';
-
-    /**
-     * Available status values
-     */
-
-    const STATUS_ON  = 'On';
-    const STATUS_OFF = 'Off';
-
-    /**
-     * Name of the plugins common class
-     */
-
-    const CLASS_BASE = '\Includes\Decorator\Plugin\APlugin';
 
 
     /**
@@ -72,66 +58,34 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
 
 
     /**
-     * Return configuration file
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getConfigFile()
-    {
-        return LC_INCLUDES_DIR . 'Decorator' . LC_DS . self::FILE_INI;
-    }
-
-    /**
-     * Return name of the plugin class
+     * Check and execute hook handlers
      *
-     * @param string $plugin plugin name
+     * @param string $hook Hook name
      *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getPluginClass($plugin)
-    {
-        return '\Includes\Decorator\Plugin\\' . str_replace('_', '\\', $plugin) . '\Main';
-    }
-
-    /**
-     * Parse the INI file
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function parseConfigFile()
-    {
-        return parse_ini_file(static::getConfigFile(), true);
-    }
-
-    /**
-     * Check data from the config file
-     * 
-     * @param array $data data returned by the "parseConfigFile()" method
-     *  
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function checkConfigData(array $data)
+    public static function invokeHook($hook)
     {
-        // TODO: add check (if needed)
+        // Get plugins "subscribed" for the hook
+        foreach (static::getPlugins($hook) as $plugin => $instance) {
+
+            if (!isset($instance)) {
+                $class = '\Includes\Decorator\Plugin\\' . str_replace('_', '\\', $plugin) . '\Main';
+                static::$plugins[$plugin] = $instance = new $class();
+            }
+
+            $instance->{'executeHookHandler' . ucfirst(\Includes\Utils\Converter::convertToCamelCase($hook))}();
+        }
     }
 
     /**
      * Return list of registered plugins
-     * 
+     *
      * @param string $hook hook name (optional)
-     *  
+     *
      * @return array
      * @access protected
      * @see    ____func_see____
@@ -144,12 +98,8 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
             // Check config file
             if (\Includes\Utils\FileManager::isFileReadable(static::getConfigFile())) {
 
-                // Read and check retrieved data
-                $data = static::parseConfigFile();
-                static::checkConfigData($data);
-
                 // Iterate over all sections
-                foreach ($data as $section => $plugins) {
+                foreach (parse_ini_file(static::getConfigFile(), true) as $section => $plugins) {
 
                     // Set plugins order
                     $plugins = array_filter($plugins);
@@ -165,81 +115,19 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
             }
         }
 
-        return empty($hook) ? static::$plugins : static::$plugins[$hook];
+        return \Includes\Utils\ArrayManager::getIndex(static::$plugins, $hook);
     }
 
     /**
-     * Return instance of a plugin
+     * Return configuration file
      * 
-     * @param string $name plugin name
-     *  
-     * @return \Includes\Decorator\Plugin\APlugin
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getPluginInstance($name)
-    {
-        if (!isset(static::$plugins[$name])) {
-
-            if (!is_subclass_of($class = static::getPluginClass($name), self::CLASS_BASE)) {
-               \Includes\ErrorHandler::fireError('Plugin "' . $name . '" does not extend the "' . self::CLASS_BASE . '" class');
-            }
-
-            static::$plugins[$name] = \Includes\Pattern\Factory::create($class);
-        }
-
-        return static::$plugins[$name];
-    }
-
-    /**
-     * Compose hook handler method name
-     * 
-     * @param string $hook hook name
-     *  
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getHookHandlerName($hook)
+    protected static function getConfigFile()
     {
-        return 'executeHookHandler' . ucfirst($hook);
-    }
-
-    /**
-     * Run the corresponded hook handler
-     *
-     * @param string $plugin plugin name
-     * @param string $hook   hook name
-     * @param array  &$args  handler call arguments
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function executeHookHandler($plugin, $hook, array $args = array())
-    {
-        return call_user_func_array(array(static::getPluginInstance($plugin), static::getHookHandlerName($hook)), $args);
-    }
-
-
-    /**
-     * Check and execute hook handlers
-     * 
-     * @param string $hook  hook name
-     * @param array  &$args arguments of the hook handler call
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function invokeHook($hook, array $args = array())
-    {
-        foreach (static::getPlugins($hook) as $plugin => $instance) {
-            static::executeHookHandler($plugin, $hook, $args);
-        }
+        return LC_INCLUDES_DIR . 'Decorator' . LC_DS . self::FILE_INI;
     }
 }

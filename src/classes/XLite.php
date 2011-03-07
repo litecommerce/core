@@ -48,7 +48,6 @@ class XLite extends \XLite\Base
 
     const TARGET_DEFAULT = 'main';
 
-
     /**
      * Interfaces codes
      */
@@ -106,7 +105,7 @@ class XLite extends \XLite\Base
     protected $currentCurrency;
 
     /**
-     * Chec - is admin interface or not
+     * Check is admin interface
      *
      * @return boolean
      * @see    ____func_see____
@@ -419,5 +418,4 @@ class XLite extends \XLite\Base
         self::$controller = null;
         \XLite\Model\CachingFactory::clearCache();
     }
-    
 }

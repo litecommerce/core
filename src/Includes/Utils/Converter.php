@@ -180,23 +180,6 @@ class Converter extends AUtils
     }
 
     /**
-     * Method to safely get array element (or a whole array)
-     * 
-     * @param array          $data  Data array
-     * @param integer|string $index  Array index
-     * @param boolean        $strict Flag; return value or null in any case
-     *  
-     * @return array|mixed|null
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getIndex(array $data, $index = null, $strict = false)
-    {
-        return isset($index) ? (isset($data[$index]) ? $data[$index] : null) : ($strict ? null : $data);
-    }
-
-    /**
      * Wrapper to return property from object
      * 
      * @param object  $object   Object to get property from
@@ -211,5 +194,20 @@ class Converter extends AUtils
     public static function getObjectField($object, $field, $isGetter = false)
     {
         return $isGetter ? $object->$field() : $object->$field;
+    }
+
+    /**
+     * Get file name by PHP class name
+     * 
+     * @param string $class Class name
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getClassFile($class)
+    {
+        return str_replace('\\', LC_DS, static::trimLeadingChars($class, '\\')) . '.php';
     }
 }

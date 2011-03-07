@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Include_Utils
+ * @subpackage Includes
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -31,9 +31,9 @@ namespace Includes\Utils\FileFilter;
 /**
  * FilterIterator 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class FilterIterator extends \FilterIterator
 {
@@ -76,11 +76,6 @@ class FilterIterator extends \FilterIterator
      */
     public function accept()
     {
-        // It's the hack (to increase Decorator perfomance) for developers
-        if (LC_DEVELOPER_MODE && (false !== strpos($this->getPathname(), '.svn'))) {
-            return false;
-        }
-
         return !isset($this->pattern) ?: preg_match($this->pattern, $this->getPathname());
     }
 }

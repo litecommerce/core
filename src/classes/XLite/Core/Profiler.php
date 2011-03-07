@@ -253,7 +253,8 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
             && $this->isTargetAllowed()
             && !\XLite\Core\Request::getInstance()->isPost()
             && !\XLite\Core\Request::getInstance()->isCLI()
-            && !\XLite\Core\Request::getInstance()->isAJAX();
+            && !\XLite\Core\Request::getInstance()->isAJAX()
+            && !\Includes\Decorator\Utils\CacheManager::isRebuildNeeded();
     }
 
     /**

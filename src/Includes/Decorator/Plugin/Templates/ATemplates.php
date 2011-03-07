@@ -40,35 +40,100 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
     /**
      * Predefined tag names
      */
-
-    const TAG_LIST_CHILD = 'ListChild';
+    const TAG_LIST_CHILD = 'listchild';
 
 
     /**
      * List of .tpl files
      *
-     * @var    \Includes\Decorator\Plugin\Templates\Data\Templates\Collection
+     * @var    array
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $templatesCollection;
+    protected static $annotatedTemplates;
+
+    /**
+     * List of zones 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $zones = array(
+        'console' => \XLite\Model\ViewList::INTERFACE_CONSOLE,
+        'admin'   => \XLite\Model\ViewList::INTERFACE_ADMIN,
+        'mail'    => \XLite\Model\ViewList::INTERFACE_MAIL,
+    );
 
 
     /**
      * Return templates list
      *
-     * @return \Includes\Decorator\Plugin\Templates\Data\Templates\Collection
+     * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getTemplatesCollection()
+    protected function getAnnotatedTemplates()
     {
-        if (!isset(static::$templatesCollection)) {
-            static::$templatesCollection = new \Includes\Decorator\Plugin\Templates\Data\Templates\Collection();
+        if (!isset(static::$annotatedTemplates)) {
+            static::$annotatedTemplates = array();
+
+            foreach ($this->getTemplateFileIterator()->getIterator() as $path => $data) {
+
+                $data = \Includes\Decorator\Utils\Operator::getTags(
+                    \Includes\Utils\FileManager::read($path), 
+                    array(self::TAG_LIST_CHILD)
+                );
+
+                if (isset($data[self::TAG_LIST_CHILD])) {
+                    $this->addTags($data[self::TAG_LIST_CHILD], $path);
+                }
+            }
         }
 
-        return static::$templatesCollection;
+        return static::$annotatedTemplates;
+    }
+
+    /**
+     * Get iterator for template files
+     *
+     * @return \Includes\Utils\FileFilter
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getTemplateFileIterator()
+    {
+        return new \Includes\Utils\FileFilter(
+            LC_SKINS_DIR,
+            \Includes\Decorator\Utils\ModulesManager::getPathPatternForTemplates()
+        );
+    }
+
+    /**
+     * Parse template and add tags to the list
+     * 
+     * @param array  $data Tags data
+     * @param string $path Template file path
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addTags(array $data, $path)
+    {
+        foreach ($data as $tags) {
+
+            $template = \Includes\Utils\FileManager::getRelativePath($path, LC_SKINS_DIR);
+            $skin = \Includes\Utils\ArrayManager::getIndex(explode(LC_DS, $template), 0, true);
+            $zone = array_search($skin, static::$zones) ?: \XLite\Model\ViewList::INTERFACE_CUSTOMER;
+            $template = substr($template, strpos($template, LC_DS) + ('common' == $skin ? 1 : 4));
+
+            static::$annotatedTemplates[] = array('tpl' => $template, 'zone' => $zone, 'path' => $path) + $tags;
+        }
     }
 }

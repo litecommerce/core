@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Includes_Decorator_Utils
+ * @subpackage Decorator
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -31,33 +31,27 @@ namespace Includes\Decorator\Utils;
 /**
  * CacheManager 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 {
     /**
      * Text to display while working with cache 
      */
-
     const MESSAGE = 'Re-building cache, please wait...';
-
-    /**
-     * Cache building steps
-     */
-
-    const STEP_FIRST  = 'first';
-    const STEP_SECOND = 'second';
 
     /**
      * Available hooks
      */
 
-    const HOOK_INIT        = 'init';
-    const HOOK_PREPROCESS  = 'preprocess';
-    const HOOK_RUN         = 'run';
-    const HOOK_POSTPROCESS = 'postprocess';
+    const HOOK_BEFORE_CLEANUP  = 'before_cleanup';
+    const HOOK_BEFORE_DECORATE = 'before_decorate';
+    const HOOK_BEFORE_WRITE    = 'before_write';
+    const HOOK_STEP_FIRST      = 'step_first';
+    const HOOK_STEP_SECOND     = 'step_second';
+    const HOOK_STEP_THIRD      = 'step_third';
 
 
     /**
@@ -68,7 +62,11 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $steps = array(self::STEP_FIRST, self::STEP_SECOND);
+    protected static $steps = array(
+        self::STEP_FIRST,
+        self::STEP_SECOND,
+        self::STEP_THIRD,
+    );
 
     /**
      * List of cache directories 
@@ -78,8 +76,15 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $cacheDirs = array(LC_COMPILE_DIR, LC_LOCALE_DIR, LC_DATACACHE_DIR, LC_TMP_DIR);
+    protected static $cacheDirs = array(
+        LC_COMPILE_DIR,
+        LC_LOCALE_DIR,
+        LC_DATACACHE_DIR,
+        LC_TMP_DIR,
+    );
 
+
+    // ------------------------------ Dispaly message routines -
 
     /**
      * Get plain text notice block
@@ -136,6 +141,60 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     protected static function showMessage()
     {
         \Includes\Utils\Operator::flush(LC_IS_CLI_MODE ? static::getPlainMessage() : static::getHTMLMessage());
+    }
+
+
+    // ------------------------------ Cache state indicator routines -
+
+    /**
+     * Clean up the cache rebuild indicator
+     *
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function cleanupRebuildIndicator()
+    {
+        \Includes\Utils\FileManager::delete(static::getRebuildIndicatorFileName());
+    }
+
+    /**
+     * Clean up the cache validity indicators
+     *
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function cleanupCacheIndicators()
+    {
+        // "Step is completed" indicators
+        foreach (static::getCacheStateFiles() as $file) {
+            \Includes\Utils\FileManager::delete($file);
+        }
+
+        // "Step is running" indicator
+        static::cleanupRebuildIndicator();
+    }
+
+    /**
+     * Check and (if needed) remove the rebuild indicator file
+     *
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function checkRebuildIndicatorState()
+    {
+        $name    = static::getRebuildIndicatorFileName();
+        $content = \Includes\Utils\FileManager::read($name);
+
+        // Only the process created the file can delete
+        static::getRebuildIndicatorFileContent() != $content ?: \Includes\Utils\FileManager::delete($name);
+
+        return (bool) $content;
     }
 
     /**
@@ -223,6 +282,22 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
+     * Return list of cache state indicator files
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getCacheStateFiles()
+    {
+        return array_map(array('static', 'getCacheStateIndicatorFileName'), static::$steps);
+    }
+
+
+    // ------------------------------ Common routines to run step handlers -
+
+    /**
      * Step started
      *
      * @param string $step current step
@@ -234,6 +309,8 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function startStep($step)
     {
+        static::$step = $step;
+
         // Put the indicator file
         \Includes\Utils\FileManager::write(
             static::getRebuildIndicatorFileName(),
@@ -323,49 +400,13 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function runStepConditionally($step)
     {
-        !static::isRebuildNeeded($step) ?: static::runStep($step);
+        if (static::isRebuildNeeded($step)) {
+            static::runStep($step);
+        }
     }
 
-    /**
-     * Return list of cache state indicator files
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getCacheStateFiles()
-    {
-        return array_map(array('static', 'getCacheStateIndicatorFileName'), static::$steps);
-    }
 
-    /**
-     * Clean up the cache
-     *
-     * @return null
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function cleanupCache()
-    {
-        array_walk(static::$cacheDirs, array('\Includes\Utils\FileManager', 'unlinkRecursive'));
-    }
-
-    /**
-     * Check if cache rebuild is needed
-     *
-     * @param string $step current step name
-     *  
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function isRebuildNeeded($step)
-    {
-        return !\Includes\Utils\FileManager::isExists(static::getCacheStateIndicatorFileName($step));
-    }
+    // ------------------------------ Step handlers -
 
     /**
      * Run handler for the current step
@@ -381,22 +422,28 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     public static function executeStepHandlerFirst()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_INIT);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_CLEANUP);
 
         // Delete cache folders
         static::cleanupCache();
 
-        // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_PREPROCESS);
+        // Load classes from "classes" (do not use cache)
+        \Includes\Autoloader::switchLcAutoloadDir();
 
-        // Main procedure: instantiate and run Decorator here
-        \Includes\Decorator\Utils\Operator::prepareClassesTree();
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_DECORATE);
+
+        // Main procedure: build decorator chains
+        static::getClassesTree()->walkThrough(array('\Includes\Decorator\Utils\Operator', 'decorateClass'));
+
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_WRITE);
 
         // Write class files to FS
-        \Includes\Decorator\Utils\Operator::writeClassFiles();
+        static::getClassesTree()->walkThrough(array('\Includes\Decorator\Utils\Operator', 'writeClassFile'));
 
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_RUN);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_FIRST);
     }
 
     /**
@@ -413,57 +460,28 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     public static function executeStepHandlerSecond()
     {
         // Invoke plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_POSTPROCESS);
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_SECOND);
     }
 
     /**
-     * Clean up the cache rebuild indicator
+     * Run handler for the current step
+     *
+     * NOTE: method is public since it's called from
+     * \Includes\Utils\Operator::executeWithCustomMaxExecTime()
      *
      * @return null
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function cleanupRebuildIndicator()
+    public static function executeStepHandlerThird()
     {
-        \Includes\Utils\FileManager::delete(static::getRebuildIndicatorFileName());
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_STEP_THIRD);
     }
 
-    /**
-     * Clean up the cache validity indicators
-     * 
-     * @return null
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function cleanupCacheIndicators()
-    {
-        // "Step is completed" indicators
-        array_map(array('\Includes\Utils\FileManager', 'delete'), static::getCacheStateFiles());
 
-        // "Step is running" indicator
-        static::cleanupRebuildIndicator();
-    }
-
-    /**
-     * Check and (if needed) remove the rebuild indicator file
-     *
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function checkRebuildIndicatorState()
-    {
-        $name    = static::getRebuildIndicatorFileName();
-        $content = \Includes\Utils\FileManager::read($name);
-
-        // Only the process created the file can delete
-        static::getRebuildIndicatorFileContent() != $content ?: \Includes\Utils\FileManager::delete($name);
-
-        return (bool) $content;
-    }
+    // ------------------------------ Top-level methods -
 
     /**
      * Main public method: rebuild classes cache
@@ -478,5 +496,50 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         foreach (static::$steps as $step) {
             static::runStepConditionally($step);
         }
+    }
+
+    /**
+     * Return current step identifier
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getCurrentStep()
+    {
+        return static::$step;
+    }
+
+    /**
+     * Check if cache rebuild is needed
+     *
+     * @param string $step Current step name OPTIONAL
+     *
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function isRebuildNeeded($step = null)
+    {
+        if (!isset($step)) {
+            $step = static::getCurrentStep();
+        }
+
+        return $step ? !\Includes\Utils\FileManager::isExists(static::getCacheStateIndicatorFileName($step)) : false;
+    }
+
+    /**
+     * Clean up the cache
+     *
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function cleanupCache()
+    {
+        array_walk(static::$cacheDirs, array('\Includes\Utils\FileManager', 'unlinkRecursive'));
     }
 }

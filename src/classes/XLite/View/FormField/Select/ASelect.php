@@ -110,4 +110,3 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
         return self::FIELD_TYPE_SELECT;
     }
 }
-

@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\CDev\Demo\Core\Database;
+namespace XLite\Module\CDev\Demo\Core;
 
 /**
  * Database 

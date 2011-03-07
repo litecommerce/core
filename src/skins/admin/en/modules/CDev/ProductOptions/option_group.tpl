@@ -117,7 +117,7 @@
 
   <div class="buttons">
     <widget class="\XLite\View\Button\Submit" label="Update option" />
-    <widget IF="getOptions()" class="\XLite\Module\CDev\ProductOptions\View\Button\DeleteSelectedOptions" />
+    <widget module="CDev\ProductOptions" IF="getOptions()" class="\XLite\Module\CDev\ProductOptions\View\Button\DeleteSelectedOptions" />
   </div>
 
 </form>

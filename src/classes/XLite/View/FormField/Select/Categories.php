@@ -77,7 +77,8 @@ class Categories extends \XLite\View\FormField\Select\Multiple
         return (bool) \Includes\Utils\ArrayManager::searchInObjectsArray(
             $this->getValue(),
             'category_id',
-            $categoryId
+            $categoryId,
+            false
         );
     }
 
@@ -99,4 +100,3 @@ class Categories extends \XLite\View\FormField\Select\Multiple
         ) * $multiplier - 1;
     }
 }
-

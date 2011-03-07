@@ -131,5 +131,4 @@ class AdminProfile extends \XLite\View\Tabs\ATabs
 
         return $this->profile;
     }
-
 }
