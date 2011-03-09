@@ -111,7 +111,7 @@ XLite\Model\Config:
   - { name: anonymous_city, category: Shipping, type: text, orderby: 50, translations: [{ code: en, option_name: City, option_comment: '' }] }
   - { name: anonymous_country, category: Shipping, type: country, orderby: 90, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
   - { name: anonymous_custom_state, category: Shipping, type: text, orderby: 70, translations: [{ code: en, option_name: 'Other state (specify)', option_comment: '' }] }
-  - { name: anonymous_state, category: Shipping, type: state, orderby: 60, value: '34', translations: [{ code: en, option_name: State, option_comment: '' }] }
+  - { name: anonymous_state, category: Shipping, type: state, orderby: 60, value: '152', translations: [{ code: en, option_name: State, option_comment: '' }] }
   - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 80, value: '10001', translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
   - { name: shipping_enabled, category: Shipping, orderby: 10, value: Y }
   - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime', option_comment: '' }] }

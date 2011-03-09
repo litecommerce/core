@@ -79,9 +79,9 @@ class Collection extends \Doctrine\Common\Collections\ArrayCollection
      */
     protected function filterElements()
     {
-        foreach ($this->_elements as $i => $e) {
+        foreach ($this as $i => $e) {
             if (!$this->checkElement($e, $i)) {
-                unset($this->_elements[$i]);
+                unset($this[$i]);
             }
         }
     }
@@ -118,7 +118,7 @@ class Collection extends \Doctrine\Common\Collections\ArrayCollection
     {
         $previous = array();
 
-        foreach ($this->_elements as $i => $e) {
+        foreach ($this as $i => $e) {
             if ($e == $element) {
                 break;
             }
@@ -143,7 +143,7 @@ class Collection extends \Doctrine\Common\Collections\ArrayCollection
         $next = array();
         $found = false;
 
-        foreach ($this->_elements as $i => $e) {
+        foreach ($this as $i => $e) {
             if ($found) {
                 $next[$i] = $e;
             }

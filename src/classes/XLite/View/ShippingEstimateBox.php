@@ -51,7 +51,6 @@ class ShippingEstimateBox extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -64,7 +63,6 @@ class ShippingEstimateBox extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -78,13 +76,12 @@ class ShippingEstimateBox extends \XLite\View\AView
      * Check - shipping estimate or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isShippingEstimate()
     {
-        return (bool)\XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart());
+        return (bool)\XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getModifier()->getModifier());
     }
 
     /**

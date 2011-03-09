@@ -48,7 +48,7 @@ class OrderModifier extends \XLite\DataSet\Collection
      */
     protected function checkElement($element, $key)
     {
-        return parent::checkElement()
+        return parent::checkElement($element, $key)
             && $element instanceof \XLite\Model\Order\Modifier;
     }
 
