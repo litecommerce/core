@@ -83,6 +83,33 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             'cms_profile_id' => 'uid',
         );
 
+        $data['createNewUser'] = !isset($user->original);
+
+        // If current user is administrator
+        if (\XLite\Core\Auth::getInstance()->isAdmin()) {
+
+            // Prepare data for access_level field
+            if (isset($edit['roles'])) {
+
+                $fields['access_level'] = 'access_level';
+
+                $user->access_level = $this->isUserAdmin($edit['roles'])
+                    ? \XLite\Core\Auth::getInstance()->getAdminAccessLevel()
+                    : \XLite\Core\Auth::getInstance()->getCustomerAccessLevel();
+            }
+        }
+
+        // Prepare data for 'status' field
+        if (isset($edit['status'])) {
+            $fields['status'] = 'status';
+            $user->status = (1 === intval($edit['status']) ? 'E' : 'D');
+        }
+
+        // Skip password if it's no changed
+        if ($addConfirmation && isset($user->pass) && isset($user->original) && isset($user->original->pass) && 0 === strcmp($user->pass, $user->original->pass)) {
+            unset($fields['password']);
+        }
+
         $values = (is_array($edit) && isset($edit['values'])) ? $edit['values'] : array();
 
         foreach ($fields as $lcKey => $drupalKey) {
@@ -90,11 +117,38 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             $data[$lcKey] = isset($values[$drupalKey]) ? $values[$drupalKey] : $user->$drupalKey;
         }
 
-        if ($addConfirmation) {
+        if ($addConfirmation && isset($data['password'])) {
             $data['password_conf'] = $data['password'];
         }
 
         return $data;
+    }
+
+    /**
+     * Checks if user has Drupal's role with LiteCommerce administrator permissions
+     * 
+     * @param array $roles Array of user's roles in Drupal
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isUserAdmin(array $roles)
+    {
+        $role_permissions = user_role_permissions($roles);
+
+        $found = false;
+
+        foreach ($role_permissions as $rid => $perms) {
+
+            $found = isset($perms['lc admin']);
+
+            if ($found) {
+                break;
+            }
+        }
+
+        return $found;
     }
 
     /**
@@ -144,7 +198,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     public function performActionPresave(array &$edit, \stdClass $account, $category)
     {
-        return $this->runController('profile', 'validate', array('login' => $edit['mail']));
+        return $this->runController('profile', 'validate', $this->getProfileData($account, $edit));
     }
 
     /**
