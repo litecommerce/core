@@ -31,7 +31,7 @@ require_once __DIR__ . '/../AWeb.php';
 abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
 {
 
-    protected function logIn($user = 'master', $password = 'master')
+    protected function logIn($username = 'master', $password = 'master')
     {
         $this->open('user');
 
@@ -39,12 +39,12 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
             $this->logOut(true);
         }
 
-        $this->type("//input[@name='name' and @type='text']", $user);
-        $this->type("//input[@name='password' and @type='password']", $password);
+        $this->type('css=#edit-name', $username);
+        $this->type('css=#edit-pass', $password);
 
-        $this->click("//input[@id='edit-submit']");
+        $this->submitAndWait('css=#user-login');
 
-        $this->waitForPageToLoad(3000);
+        $this->assertTrue($this->isLoggedIn(), 'Check that user is logged in successfully');
     }
 
     protected function logOut($pageIsOpened = false)
@@ -56,7 +56,7 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
         if ($this->isLoggedIn()) {
             $this->click("//a[text()='Log out']");
 
-            $this->waitForPageToLoad(3000);
+            $this->waitForPageToLoad(6000);
         }
     }
 

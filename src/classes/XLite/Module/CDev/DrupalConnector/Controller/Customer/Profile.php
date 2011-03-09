@@ -56,7 +56,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      */
     protected function getModelFormPartMain()
     {
-        return array(\XLite\View\Model\Profile\Main::SECTION_MAIN);
+        return array(\XLite\View\Model\Profile\Main::SECTION_MAIN, \XLite\View\Model\Profile\Main::SECTION_ACCESS);
     }
 
     /**

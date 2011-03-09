@@ -67,6 +67,56 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
     }
 
     /**
+     * getDefaultModelObject 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultModelObject()
+    {
+        $cmsProfileId = \XLite\Core\Request::getInstance()->cms_profile_id;
+        
+        if (!is_null($cmsProfileId) && \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+
+            $obj = \XLite\Core\Database::getRepo('XLite\Model\Profile')
+                ->findOneBy(
+                    array(
+                        'cms_profile_id' => $cmsProfileId,
+                        'cms_name' => \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getCMSName()
+                    )
+                );
+        }
+
+        if (!isset($obj)) {
+            $obj = parent::getDefaultModelObject();
+        }
+
+        return $obj;
+    }
+
+   /**
+    * Return current profile ID
+    * 
+    * @return void
+    * @see    ____func_see____
+    * @since  3.0.0
+    */
+    public function getProfileId()
+    {
+        $result = parent::getProfileId();
+
+        // If current user is admin and 'createNewUser' parameter passed in request...
+        if (\XLite\Core\Request::getInstance()->createNewUser && \XLite\Core\Auth::getInstance()->isAdmin()) {
+
+            // ...then profileId for form model object should be null
+            $result = null;
+        }
+
+        return $result;
+    }
+
+    /**
      * Access denied if user is logged into Drupal but not logged into LC
      *
      * @return boolean 
