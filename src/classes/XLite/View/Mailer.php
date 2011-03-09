@@ -40,6 +40,11 @@ class Mailer extends \XLite\View\AView
     const CRLF = "\r\n";
 
     /**
+     * Mail separator symbol 
+     */
+    const MAIL_SEPARATOR = ',';
+
+    /**
      * Compose runned 
      * 
      * @var    boolean
@@ -240,7 +245,8 @@ class Mailer extends \XLite\View\AView
 
         // initialize internal properties
         $this->set('from', $from);
-        $this->set('to', $to);
+        $this->setAddress($to);
+
         $this->set('customHeaders', $customHeaders);
 
         $dir .= '/';
@@ -289,6 +295,21 @@ class Mailer extends \XLite\View\AView
     }
 
     /**
+     * Set receipients addresses
+     * 
+     * @param string $to Receipints address string
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setAddress($to)
+    {
+        $this->set('to', explode(static::MAIL_SEPARATOR, $to));
+    }
+
+    /**
      * Create alternative message body (text/plain)
      * 
      * @param string $html Message body
@@ -332,7 +353,10 @@ class Mailer extends \XLite\View\AView
         $this->mail->FromName = $this->get('from');
         $this->mail->Sender   = $this->get('from');
 
-        $this->mail->AddAddress($this->get('to'));
+        foreach ($this->to as $to) {
+
+            $this->mail->AddAddress($to);
+        }
 
         $this->mail->Subject  = $this->get('subject');
         $this->mail->AltBody  = $this->createAltBody($this->get('body'));
