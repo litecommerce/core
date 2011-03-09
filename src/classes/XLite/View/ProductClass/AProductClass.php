@@ -26,37 +26,18 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\ModulesManager;
+namespace XLite\View\ProductClass;
 
 /**
- * Enter addon key page
+ * Product class 
  *
  * @package XLite
  * @see     ____class_see____
  * @since   3.0
  *
- * @ListChild (list="admin.center", zone="admin")
  */
-class AddonKey extends \XLite\View\ModulesManager\AModulesManager
+abstract class AProductClass extends \XLite\View\Dialog
 {
-    /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-
-        $result[] = 'addon_key';
-    
-        return $result;
-    }
-
-
     /**
      * Return title
      *
@@ -66,11 +47,11 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getHead()
     {
-        return 'Enter license key';
+        return 'Product classes';
     }
 
     /**
-     * Return templates directory name
+     * Return templates directory
      *
      * @return string
      * @access protected
@@ -78,25 +59,7 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getDir()
     {
-        return 'modules_manager' . LC_DS . 'enter_key';
+        return 'product_classes';
     }
-
-    /** 
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = $this->getDir() . LC_DS . 'css' . LC_DS . 'style.css';
-
-        return $list;
-    }   
-
 
 }
