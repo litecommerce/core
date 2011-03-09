@@ -192,9 +192,6 @@ class Main extends \XLite\View\Model\Profile\AProfile
                 $result = false;
                 \XLite\Core\TopMessage::addError('Password and its confirmation do not match');
             }
-
-        } else {
-            $this->getModelObject()->setPassword('');
         }
 
         return $result;
@@ -292,6 +289,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
 
     /**
      * Perform certain action for the model object
+     * User can modify only his own profile or create a new one
      *
      * @return boolean 
      * @access protected
@@ -301,9 +299,11 @@ class Main extends \XLite\View\Model\Profile\AProfile
     {
         $result = true;
 
+        // Get profile by login (email)
         $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
             ->findByLogin($this->getModelObject()->getLogin());
 
+        // Check if found profile is the same as a modified profile object
         if (isset($profile)) {
             $result = $profile->getProfileId() === $this->getModelObject()->getProfileId();
         }
