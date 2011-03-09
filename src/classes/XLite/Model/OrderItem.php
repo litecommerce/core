@@ -414,7 +414,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function calculate()
+    public function calculate()
     {
         $subtotal = $this->getOrder()->getCurrency()->roundValue($this->getPrice() * $this->getAmount());
 

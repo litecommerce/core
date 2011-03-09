@@ -34,7 +34,7 @@ namespace XLite\Logic;
  * @see   ____class_see____
  * @since 3.0.0
  */
-class Math extends \XLite\Math\ALogic
+class Math extends \XLite\Logic\ALogic
 {
 
     // {{{ Round
