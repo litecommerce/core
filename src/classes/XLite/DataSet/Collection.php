@@ -26,7 +26,7 @@
  * @since     3.0.0
  */
 
-namespace XLite\DataSet\Collection;
+namespace XLite\DataSet;
 
 /**
  * Collection 

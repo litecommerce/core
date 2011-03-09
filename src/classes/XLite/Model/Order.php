@@ -1397,6 +1397,29 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Check - modifier is exists or not (by type)
+     * 
+     * @param string $type Type
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isModifierByType($type)
+    {
+        $result = false;
+
+        foreach ($this->getModifiers() as $modifier) {
+            if ($modifier->getType() == $type) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Get modifiers by type 
      * 
      * @param string $type Modifier type

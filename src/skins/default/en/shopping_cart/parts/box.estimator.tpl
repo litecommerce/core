@@ -9,14 +9,13 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="cart.panel.box", weight="10")
  *}
-<div class="estimator" IF="cart.isShippingVisible()">
+<div class="estimator">
 
-  {if:isShippingEstimate()&cart.shippingMethod}
+  {if:isShippingEstimate()&modifier.getShippingMethod()}
 
     <ul>
-      <li><span>{t(#Shipping#)}:</span> {cart.shippingMethod.getName():h} ({formatPrice(getShippingCost(),cart.getCurrency())})</li>
+      <li><span>{t(#Shipping#)}:</span> {modifier.shippingMethod.getName():h} ({getShippingCost()})</li>
       <li><span>{t(#Estimated for#)}:</span> {getEstimateAddress()}</li>
     </ul>
 
