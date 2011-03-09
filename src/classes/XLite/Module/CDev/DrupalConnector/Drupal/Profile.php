@@ -105,6 +105,11 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             $user->status = (1 === intval($edit['status']) ? 'E' : 'D');
         }
 
+        // Skip password if it's no changed
+        if ($addConfirmation && isset($user->pass) && isset($user->original) && isset($user->original->pass) && 0 === strcmp($user->pass, $user->original->pass)) {
+            unset($fields['password']);
+        }
+
         $values = (is_array($edit) && isset($edit['values'])) ? $edit['values'] : array();
 
         foreach ($fields as $lcKey => $drupalKey) {
@@ -112,7 +117,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             $data[$lcKey] = isset($values[$drupalKey]) ? $values[$drupalKey] : $user->$drupalKey;
         }
 
-        if ($addConfirmation) {
+        if ($addConfirmation && isset($data['password'])) {
             $data['password_conf'] = $data['password'];
         }
 

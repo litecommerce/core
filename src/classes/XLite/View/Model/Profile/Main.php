@@ -192,9 +192,6 @@ class Main extends \XLite\View\Model\Profile\AProfile
                 $result = false;
                 \XLite\Core\TopMessage::getInstance()->addError('Password and its confirmation do not match');
             }
-
-        } else {
-            $this->getModelObject()->setPassword('');
         }
 
         return $result;
