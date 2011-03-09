@@ -12,10 +12,10 @@
  *}
 <div class="estimator">
 
-  {if:isShippingEstimate()&modifier.getShippingMethod()}
+  {if:isShippingEstimate()&modifier.getMethod()}
 
     <ul>
-      <li><span>{t(#Shipping#)}:</span> {modifier.shippingMethod.getName():h} ({getShippingCost()})</li>
+      <li><span>{t(#Shipping#)}:</span> {modifier.method.getName():h} ({getShippingCost()})</li>
       <li><span>{t(#Estimated for#)}:</span> {getEstimateAddress()}</li>
     </ul>
 
@@ -25,7 +25,7 @@
 
   {else:}
 
-    {if:cart.isShippingRatesExists()}
+    {if:modifier.isRatesExists()}
       <widget class="\XLite\View\Form\Cart\ShippingEstimator\Open" name="shippingEstimator" />
         <div class="buttons">
           <widget class="\XLite\View\Button\Submit" label="Estimate shipping cost" style="action estimate" />

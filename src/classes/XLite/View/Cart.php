@@ -167,19 +167,5 @@ class Cart extends \XLite\View\Dialog
         return $result;
     }
 
-    /**
-     * Get shipping method 
-     * 
-     * @return \XLite\Model\Shipping\Method
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getShippingMethod()
-    {
-        $modifier = $this->getCart()->getModifier('shipping', 'SHIPPING')
-
-        return $modifier ? $modifier->getShippingMethod() : null;
-    }
- 
 }
 

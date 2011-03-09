@@ -102,7 +102,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
 	{
 		$result = true;
 
-		foreach ($this->keys as $k) {
+		foreach ($this->getKeys() as $k) {
 			if (!isset($this->$k)) {
 				$result = false;
 				break;
@@ -141,7 +141,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
 	 */
 	public function __get($name)
 	{
-		return in_array($name, $this->keys) && isset($this->data[$name]) ? $this->data[$name] : null;
+		return in_array($name, $this->getKeys()) && isset($this->data[$name]) ? $this->data[$name] : null;
 	}
 
 	/**
@@ -156,7 +156,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
 	 */
 	public function __set($name, $value)
 	{
-		if (in_array($name, $this->keys)) {
+		if (in_array($name, $this->getKeys())) {
 			$this->data[$name] = $value;
 		}
 	}
@@ -172,7 +172,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
 	 */
 	public function __isset($name)
 	{
-		return in_array($name, $this->keys) && isset($this->data[$name]);
+		return in_array($name, $this->getKeys()) && isset($this->data[$name]);
 	}
 
 	/**
@@ -186,7 +186,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
 	 */
 	public function __unset($name)
 	{
-		if (in_array($name, $this->keys) && isset($this->data[$name])) {
+		if (in_array($name, $this->getKeys()) && isset($this->data[$name])) {
 			unset($this->data[$name]);
 		}
 	}
@@ -231,7 +231,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
 	 */
 	public function count()
 	{
-		return count($this->keys);
+		return count($this->getKeys());
 	}
 
     // }}}
@@ -249,7 +249,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
 	{
 		$list = array();
 
-		foreach ($this->keys as $k) {
+		foreach ($this->getKeys() as $k) {
 			$list[$k] = isset($this->$k) ? $this->$k : null;
 		}
 

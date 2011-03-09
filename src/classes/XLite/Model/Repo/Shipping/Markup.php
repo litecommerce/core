@@ -80,9 +80,9 @@ class Markup extends \XLite\Model\Repo\ARepo
                     array(
                         'zoneId' => $zoneId,
                         'weight' => $modifier->getWeight(),
-                        'total'  => $modifier->getShippedSubtotal(),
-                        'items'  => $modifier->countShippedItems(),
-                        'value'  => $modifier->getShippedSubtotal(),
+                        'total'  => $modifier->getSubtotal(),
+                        'items'  => $modifier->countItems(),
+                        'value'  => $modifier->getSubtotal(),
                     )
                 )
             );

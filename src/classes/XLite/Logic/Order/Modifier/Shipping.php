@@ -34,7 +34,7 @@ namespace XLite\Logic\Order\Modifier;
  * @see   ____class_see____
  * @since 3.0.0
  */
-class Shipping extends \XLite\Logic\Order\Modifier\AModifier
+class Shipping extends \XLite\Logic\Order\Modifier\AShipping
 {
     /**
      * Modifier unique code 
@@ -118,7 +118,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AModifier
      */
     protected function isAvailable()
     {
-        return $this->isShipped() && 0 < count($this->getShippingRates());
+        return $this->isShipped() && 0 < count($this->getRates());
     }
 
     // {{{ Shipping rates
@@ -130,7 +130,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AModifier
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function calculateShippingRates() 
+    protected function calculateRates() 
     {
         $rates = array();
 
@@ -138,7 +138,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AModifier
 
             $rates = \XLite\Model\Shipping::getInstance()->getRates($this);
             
-            uasort($rates, array($this, 'compareShippingRates'));
+            uasort($rates, array($this, 'compareRates'));
         }
 
         return $rates;
@@ -154,7 +154,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AModifier
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function compareShippingRates(\XLite\Model\Shipping\Rate $a, \XLite\Model\Shipping\Rate $b)
+    protected function compareRates(\XLite\Model\Shipping\Rate $a, \XLite\Model\Shipping\Rate $b)
     {
         $result = 0;
 
@@ -181,9 +181,9 @@ class Shipping extends \XLite\Logic\Order\Modifier\AModifier
      * @return array(\XLite\Model\Shipping\Rate)
      * @since  3.0.0
      */
-    public function getShippingRates()
+    public function getRates()
     {
-        return $this->calculateShippingRates();
+        return $this->calculateRates();
     }
 
     // }}}
@@ -204,13 +204,13 @@ class Shipping extends \XLite\Logic\Order\Modifier\AModifier
             || $this->selectedRate->getMethodId() != $this->order->getShippingId()
         ) {
             // Get shipping rates
-            $rates = $this->getShippingRates();
+            $rates = $this->getRates();
             
             $selectedRate = null;
 
             if (!empty($rates)) {
 
-                if (!$this->getShippingId() && $this->order->getProfile() && $this->order->getProfile()->getLastShippingId()) {
+                if (!$this->order->getShippingId() && $this->order->getProfile() && $this->order->getProfile()->getLastShippingId()) {
 
                     // Remember last shipping id
                     $this->order->setShippingId($this->getProfile()->getLastShippingId());
@@ -261,13 +261,26 @@ class Shipping extends \XLite\Logic\Order\Modifier\AModifier
     }
 
     /**
+     * Check - shipping rates exists or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isRatesExists()
+    {
+        return $this->isAvailable()
+            || !\XLite\Model\Shipping::getInstance()->getDestinationAddress($this);
+    }
+
+    /**
      * Get shipping method
      * 
      * @return \XLite\Model\Shipping\Method
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getShippingMethod()
+    public function getMethod()
     {
         $result = null;
 
@@ -287,7 +300,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AModifier
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getActualShippingName()
+    public function getActualName()
     {
         $name = null;
 
@@ -312,7 +325,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AModifier
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getShippedItems() 
+    public function getItems() 
     {
         $result = array();
 
@@ -336,7 +349,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AModifier
     {
         $weight = 0;
 
-        foreach ($this->getShippedItems() as $item) {
+        foreach ($this->getItems() as $item) {
             $weight += $item->getWeight();
         }
 
@@ -350,11 +363,11 @@ class Shipping extends \XLite\Logic\Order\Modifier\AModifier
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function countShippedItems() 
+    public function countItems() 
     {
         $result = 0;
 
-        foreach ($this->getShippedItems() as $item) {
+        foreach ($this->getItems() as $item) {
             $result += $item->getAmount();
         }
 
@@ -368,11 +381,11 @@ class Shipping extends \XLite\Logic\Order\Modifier\AModifier
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getShippedSubtotal() 
+    public function getSubtotal() 
     {
         $subtotal = 0;
 
-        foreach ($this->getShippedItems() as $item) {
+        foreach ($this->getItems() as $item) {
             $subtotal += $item->getTotal();
         }
 

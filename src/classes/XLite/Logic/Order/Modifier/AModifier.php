@@ -237,7 +237,11 @@ abstract class AModifier extends \XLite\Logic\ALogic
         $surcharge->setValue($value);
         $surcharge->setClass(get_called_class());
 
+        $info = $this->getSurchargeInfo($surcharge);
+        $surcharge->setName($info->name);
+
 		$this->order->getSurcharges()->add($surcharge);
+        $surcharge->setOwner($this->order);
 
 		return $surcharge;
 	}

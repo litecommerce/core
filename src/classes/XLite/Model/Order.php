@@ -1144,8 +1144,10 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function getFirstOpenPaymentTransaction()
     {
+        $transactions = $this->getPaymentTransactions();
+
         return \Includes\Utils\ArrayManager::findValue(
-            $this->getPaymentTransactions(),
+            $transactions,
             array($this, 'checkPaymentTransactionStatusEqual'),
             \XLite\Model\Payment\Transaction::STATUS_INITIALIZED
         );
@@ -1387,7 +1389,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
         $result = null;
 
         foreach ($this->getModifiers() as $modifier) {
-            if ($this->getType() == $type && $this->getCode() == $code) {
+            if ($modifier->getType() == $type && $modifier->getCode() == $code) {
                 $result = $modifier;
                 break;
             }
