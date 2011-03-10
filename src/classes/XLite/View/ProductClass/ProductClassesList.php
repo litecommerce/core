@@ -26,10 +26,10 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\ModulesManager;
+namespace XLite\View\ProductClass;
 
 /**
- * Enter addon key page
+ * Product classes list 
  *
  * @package XLite
  * @see     ____class_see____
@@ -37,11 +37,11 @@ namespace XLite\View\ModulesManager;
  *
  * @ListChild (list="admin.center", zone="admin")
  */
-class AddonKey extends \XLite\View\ModulesManager\AModulesManager
+class ProductClassesList  extends AProductClass
 {
     /**
-     * Return list of targets allowed for this widget
-     *
+     * Return allowed targets
+     * 
      * @return array
      * @access public
      * @see    ____func_see____
@@ -51,52 +51,71 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
     {
         $result = parent::getAllowedTargets();
 
-        $result[] = 'addon_key';
-    
+        $result[] = 'product_classes';
+
         return $result;
     }
 
-
     /**
-     * Return title
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return 'Enter license key';
-    }
-
-    /**
-     * Return templates directory name
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDir()
-    {
-        return 'modules_manager' . LC_DS . 'enter_key';
-    }
-
-    /** 
-     * Register CSS files
-     *
+     * Return CSS files list for widget
+     *  
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getCSSFiles()
-    {
+    {   
         $list = parent::getCSSFiles();
-
+        
         $list[] = $this->getDir() . LC_DS . 'css' . LC_DS . 'style.css';
+        
+        return $list;
+    }
+
+    /**
+     * Return JS files list for widget
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = $this->getDir() . LC_DS . 'js' . LC_DS . 'script.js';
 
         return $list;
-    }   
+    }
+
+    /**
+     * Return templates catalog
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return parent::getDir() . LC_DS . 'list';
+    }
+
+
+    /**
+     * Return data 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getData()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findAll();
+    }
 
 
 }

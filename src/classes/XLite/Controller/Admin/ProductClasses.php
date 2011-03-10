@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage Controller
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,77 +26,67 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\ModulesManager;
+namespace XLite\Controller\Admin;
 
 /**
- * Enter addon key page
- *
+ * Product classes 
+ * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0
- *
- * @ListChild (list="admin.center", zone="admin")
+ * @since   3.0.0
  */
-class AddonKey extends \XLite\View\ModulesManager\AModulesManager
+class ProductClasses extends \XLite\Controller\Admin\AAdmin
 {
+
     /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @access public
+     * Field name for new 'name' value
+     */
+    const NEW_NAME = 'new_name';
+
+    /**
+     * Field name for 'name' array values 
+     */
+    const NAME = 'name';
+
+
+    /**
+     * Update action 
+     * 
+     * @return void
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getAllowedTargets()
+    protected function doActionUpdate()
     {
-        $result = parent::getAllowedTargets();
+        $newName = $this->getPostedData(static::NEW_NAME);
 
-        $result[] = 'addon_key';
-    
-        return $result;
-    }
+        if (!empty($newName)) {
 
+            $this->addClass($newName);
+        }
 
-    /**
-     * Return title
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return 'Enter license key';
+        $name = $this->getPostedData(static::NAME);
+
+        if (!empty($name)) {
+            \XLite\Core\Database::getRepo('Model\ProductClass')->update($name);
+        }
     }
 
     /**
-     * Return templates directory name
-     *
-     * @return string
+     * Add product class entry
+     * 
+     * @param string $name Name value
+     *  
+     * @return void
      * @access protected
-     * @since  3.0.0
-     */
-    protected function getDir()
-    {
-        return 'modules_manager' . LC_DS . 'enter_key';
-    }
-
-    /** 
-     * Register CSS files
-     *
-     * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCSSFiles()
+    protected function addClass($name)
     {
-        $list = parent::getCSSFiles();
-
-        $list[] = $this->getDir() . LC_DS . 'css' . LC_DS . 'style.css';
-
-        return $list;
-    }   
+        \XLite\Core\Database::getRepo('Model\ProductClass')->insert(strval($name));
+    }
 
 
 }
