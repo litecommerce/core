@@ -35,6 +35,15 @@ namespace XLite\View;
 class ShippingList extends \XLite\View\AView
 {
     /**
+     * Modifier (cache)
+     * 
+     * @var   \XLite\Model\Order\Modifier
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $modifier;
+
+    /**
      * Return widget default template
      *
      * @return string

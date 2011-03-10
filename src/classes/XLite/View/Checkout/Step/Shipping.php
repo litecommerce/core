@@ -38,6 +38,15 @@ namespace XLite\View\Checkout\Step;
 class Shipping extends \XLite\View\Checkout\Step\AStep
 {
     /**
+     * Modifier (cache)
+     * 
+     * @var   \XLite\Model\Order\Modifier
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $modifier;
+
+    /**
      * Get step name
      *
      * @return string
@@ -76,7 +85,7 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
         return $this->getCart()->getProfile()
             && $this->getCart()->getProfile()->getShippingAddress()
             && $this->getCart()->getProfile()->getShippingAddress()->isCompleted(\XLite\Model\Address::SHIPPING)
-            && (!$this->getCart()->isShippingVisible() || $this->getCart()->getShippingMethod());
+            && (!$this->getModifier() || !$this->getModifier()->canApply() || $this->getModifier()->getMethod());
     }
 
     /**
@@ -107,7 +116,7 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      */
     public function isShippingEnabled()
     {
-        return $this->getCart()->isShippingVisible();
+        return $this->getModifier() && $this->getModifier()->canApply();
     }
 
     /**
@@ -120,7 +129,7 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      */
     public function isShippingAvailable()
     {
-        return $this->getCart()->isShippingAvailable();
+        return $this->getModifier()->isRatesExists();
     }
 
     /**
@@ -151,6 +160,22 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
         return !$this->isAnonymous()
             && $this->getCart()->getProfile()
             && 0 < count($this->getCart()->getProfile()->getAddresses());
+    }
+
+    /**
+     * Get modifier 
+     * 
+     * @return \XLite\Model\Order\Modifier
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModifier()
+    {
+        if (!isset($this->modifier)) {
+            $this->modifier = $this->getCart()->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+        }
+
+        return $this->modifier;
     }
 
 }

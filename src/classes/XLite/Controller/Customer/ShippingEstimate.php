@@ -38,6 +38,15 @@ namespace XLite\Controller\Customer;
 class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
 {
     /**
+     * Modifier (cache)
+     * 
+     * @var   \XLite\Model\Order\Modifier
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $modifier;
+
+    /**
      * Get page title
      * 
      * @return string
@@ -145,6 +154,59 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
             && $this->getCart()->getShippingId() != \XLite\Core\Request::getInstance()->methodId
         ) {
             $this->getCart()->setShippingId(\XLite\Core\Request::getInstance()->methodId);
+
+            $address = $this->getCartProfile()->getShippingAddress();
+            if (!$address) {
+
+                // Default address
+                $profile = $this->getCartProfile();
+                $address = new \XLite\Model\Address;
+
+                $addr = $this->getAddress();
+
+                // Country
+                $c = 'US';
+
+                if ($addr && isset($addr['country'])) {
+                    $c = $addr['country'];
+
+                } elseif (\XLite\Core\Config::getInstance()->General->default_country) {
+                    $c = \XLite\Core\Config::getInstance()->General->default_country;
+                }
+
+                $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($c);
+                if ($country) {
+                    $address->setCountry($country);
+                }
+
+                // State
+                $state = null;
+                if ($addr && isset($addr['state']) && $addr['state']) {
+                    $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($addr['state']);
+
+                } elseif (
+                    !$addr
+                    && \XLite\Core\Config::getInstance()->Shipping->anonymous_custom_state
+                ) {
+
+                    $state = new \XLite\Model\State();
+                    $state->setState(\XLite\Core\Config::getInstance()->Shipping->anonymous_custom_state);
+
+                }
+
+                if ($state) {
+                    $address->setState($state);
+                }
+
+                // Zip code
+                $address->setZipcode(\XLite\Core\Config::getInstance()->General->default_zipcode);
+
+                $address->setProfile($profile);
+                $address->setIsShipping(true);
+                $profile->addAddresses($address);
+                \XLite\Core\Database::getEM()->persist($address);
+            }
+
             $this->updateCart();
 
             \XLite\Core\Event::updateCart(
@@ -158,5 +220,34 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
         $this->valid = true;
         $this->setSilenceClose();
     }
+
+    /**
+     * Get address 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAddress()
+    {
+        return \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getModifier()->getModifier());
+    }
+
+    /**
+     * Get modifier 
+     * 
+     * @return \XLite\Model\Order\Modifier
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModifier()
+    {
+        if (!isset($this->modifier)) {
+            $this->modifier = $this->getCart()->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+        }
+
+        return $this->modifier;
+    }
+
 }
 

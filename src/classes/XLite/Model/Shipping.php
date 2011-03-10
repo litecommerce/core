@@ -242,7 +242,7 @@ class Shipping extends \XLite\Base\Singleton
         if (!isset($address)) {
 
             // Anonymous address
-            $config = \XLite\Base::getInstance()->config->Shipping;
+            $config = \XLite\Core\Config::getInstance()->Shipping;
             $address = array(
                 'address' => $config->anonymous_address,
                 'city'    => $config->anonymous_city,
