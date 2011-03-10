@@ -55,6 +55,7 @@ define('LC_MODEL_CACHE_DIR',   LC_CLASSES_CACHE_DIR . LC_NAMESPACE . LC_DS . 'Mo
 define('LC_PROXY_CACHE_DIR',   LC_MODEL_CACHE_DIR . 'Proxy' . LC_DS);
 define('LC_LOCAL_REPOSITORY',  LC_VAR_DIR . 'addons' . LC_DS);
 define('LC_BACKUP_DIR',        LC_VAR_DIR . 'backup' . LC_DS);
+define('LC_DATA_DIR',          LC_VAR_DIR . 'data' . LC_DS);
 
 // Disabled xdebug coverage for Selenium-based tests [DEVELOPMENT PURPOSE]
 if (isset($_COOKIE) && !empty($_COOKIE['no_xdebug_coverage']) && function_exists('xdebug_stop_code_coverage')) {
@@ -76,6 +77,14 @@ define('LC_DEVELOPER_MODE', (bool) \Includes\Utils\ConfigParser::getOptions(arra
 // Fatal error and exception handlers
 register_shutdown_function(array('\Includes\ErrorHandler', 'shutdown'));
 set_exception_handler(array('\Includes\ErrorHandler', 'handleException'));
+
+// Safe mode
+if (
+    \Includes\SafeMode::isSafeModeRequested()
+    && !\Includes\SafeMode::isSafeModeStarted()
+) {
+    \Includes\SafeMode::prepare();
+}
 
 // FIXME - to remove
 require_once (LC_INCLUDES_DIR . 'prepend.php');
