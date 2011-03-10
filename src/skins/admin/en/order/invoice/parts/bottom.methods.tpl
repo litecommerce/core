@@ -20,6 +20,6 @@
 
 <td class="shipping">
   <strong>{t(#Shipping method#)}:</strong>
-  {if:order.getShippingMethod()}{order.shippingMethod.name:h}{else:}n/a{end:}
+  {if:shippingModifier}{shippingModifier.method.name}{else:}{t(#n/a#)}{end:}
 </td>
 
