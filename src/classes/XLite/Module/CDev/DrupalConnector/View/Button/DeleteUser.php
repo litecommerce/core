@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,35 +26,27 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\CDev\DrupalConnector\Controller\Admin;
+namespace XLite\Module\CDev\DrupalConnector\View\Button;
+
 
 /**
- * \XLite\Module\CDev\DrupalConnector\Controller\Admin\Profile 
+ * 'Add user' button
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Profile extends \XLite\Controller\Admin\Profile implements \XLite\Base\IDecorator
+class DeleteUser extends \XLite\View\Button\DeleteUser implements \XLite\Base\IDecorator
 {
     /**
-     * Prevent users registering by administrator
+     * Disable button 'Add user'
      * 
      * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest()
+    protected function isVisible()
     {
-        if ($this->isRegisterMode() || 'delete' === \XLite\Core\Request::getInstance()->action) {
-
-            \XLite\Core\TopMessage::addError(
-                $this->t('It is impossible to delete or create user accounts because your store currently works as an integration with Drupal and shares users with Drupal. Deleting/creating user accounts is possible via Drupal administrator interface.')
-            );
-
-            $this->markAsAccessDenied();
-        }
-
-        return parent::handleRequest();
+        return false;
     }
 }

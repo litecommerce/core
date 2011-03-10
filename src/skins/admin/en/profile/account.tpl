@@ -11,5 +11,7 @@
  * @since     3.0.0
  *}
 
+{displayViewListContent(#admin.profile.details#)}
+
 <widget class="\XLite\View\Model\Profile\AdminMain" useBodyTemplate="1" />
 
