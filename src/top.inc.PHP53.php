@@ -78,19 +78,14 @@ define('LC_DEVELOPER_MODE', (bool) \Includes\Utils\ConfigParser::getOptions(arra
 register_shutdown_function(array('\Includes\ErrorHandler', 'shutdown'));
 set_exception_handler(array('\Includes\ErrorHandler', 'handleException'));
 
-// Safe mode
-if (
-    \Includes\SafeMode::isSafeModeRequested()
-    && !\Includes\SafeMode::isSafeModeStarted()
-) {
-    \Includes\SafeMode::prepare();
-}
-
 // FIXME - to remove
 require_once (LC_INCLUDES_DIR . 'prepend.php');
 
 // TODO and FIXME: Check this feature with the installation!!
 // require_once (LC_INCLUDES_DIR . 'NoDBStore.php');
+
+// Safe mode
+\Includes\SafeMode::initialize();
 
 // Check and (if needed) rebuild classes cache
 if (!defined('LC_DO_NOT_REBUILD_CACHE')) {

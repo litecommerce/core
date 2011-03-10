@@ -87,7 +87,7 @@ abstract class SafeMode
      */
     protected static function getIndicatorFileName()
     {
-        return LC_VAR_DIR . '.safeModeStarted';
+        return LC_COMPILE_DIR . '.safeModeStarted';
     }
 
     /**
@@ -155,20 +155,30 @@ abstract class SafeMode
     }
 
     /**
-     * Prepare
+     * Initialization
      * 
      * @return void
      * @see    ____func_see____
      */
-    public static function prepare()
+    public static function initialize()
     {
-        // Safe mode indicator
+        if (
+            !\Includes\SafeMode::isSafeModeRequested()
+            || \Includes\SafeMode::isSafeModeStarted()
+        ) {
+            return;
+        }
+
+        // Put safe mode indicator
         \Includes\Utils\FileManager::write(
             static::getIndicatorFileName(),
             static::getIndicatorFileContent()
         );
-        
-        \XLite::setCleanUpCacheFlag(true);
+
+        // Clean cache indicators to force cache generation
+        \Includes\Decorator\Utils\CacheManager::cleanupCacheIndicators();
+
+        // Redirect to avoid loop
         \Includes\Utils\Operator::redirect('admin.php?target=main');
     }
 }
