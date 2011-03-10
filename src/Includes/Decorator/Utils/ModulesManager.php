@@ -144,9 +144,17 @@ abstract class ModulesManager extends AUtils
      */
     protected static function getModulesList(array $fields = array(), array $conditions = array())
     {
-        $path = static::getModulesFilePath();
+        $list = array();
 
-        if ($path) {
+        if (\Includes\SafeMode::isSafeModeStarted()) {
+
+            // Auto-disable modules in the database
+            \Includes\Utils\Database::execute(
+                'UPDATE ' . static::getTableName() . ' SET enabled = 0'
+            );
+            \Includes\SafeMode::cleanupIndicator();
+
+        } elseif ($path = static::getModulesFilePath()) {
 
             $list = array();
             foreach (parse_ini_file($path, true) as $author => $authors) {

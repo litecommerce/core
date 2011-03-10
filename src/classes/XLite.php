@@ -238,6 +238,7 @@ class XLite extends \XLite\Base
     public function __destruct()
     {
         if (static::$isNeedToCleanupCache) {
+        die('aaa');
             \Includes\Decorator\Utils\CacheManager::cleanupCacheIndicators();
         }
     }
