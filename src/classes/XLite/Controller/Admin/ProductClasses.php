@@ -59,17 +59,21 @@ class ProductClasses extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        $newName = $this->getPostedData(static::NEW_NAME);
+        $data = $this->getPostedData();
 
-        if (!empty($newName)) {
+        if (!empty($data[static::NEW_NAME])) {
 
-            $this->addClass($newName);
+            $this->addClass($data[static::NEW_NAME]);
         }
 
-        $name = $this->getPostedData(static::NAME);
+        if (isset($data[static::NEW_NAME])) {
 
-        if (!empty($name)) {
-            \XLite\Core\Database::getRepo('Model\ProductClass')->update($name);
+            unset($data[static::NEW_NAME]);
+        }
+
+        if (!empty($data)) {
+
+            \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->updateInBatchById($data);
         }
     }
 
@@ -85,7 +89,9 @@ class ProductClasses extends \XLite\Controller\Admin\AAdmin
      */
     protected function addClass($name)
     {
-        \XLite\Core\Database::getRepo('Model\ProductClass')->insert(strval($name));
+        \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->insert(
+            array(static::NAME => strval($name))
+        );
     }
 
 

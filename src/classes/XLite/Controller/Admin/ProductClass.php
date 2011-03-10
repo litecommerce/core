@@ -38,6 +38,23 @@ namespace XLite\Controller\Admin;
 class ProductClass extends \XLite\Controller\Admin\AAdmin
 {
 
+    /**
+     * Remove product class
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionRemove()
+    {
+        if (isset(\XLite\Core\Request::getInstance()->id)) {
+            \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->deleteById(
+                \XLite\Core\Request::getInstance()->id
+            );
+        }
 
+        $this->setReturnURL($this->buildURL('product_classes'));
+    }
 
 }
