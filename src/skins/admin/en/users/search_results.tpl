@@ -81,9 +81,12 @@ function searchOrders()
 
   <p align="left">
     
-    <widget class="\XLite\View\Button\Regular" name="Delete" label="Delete selected profile" jsCode="javascript: deleteProfile();" />
+    <widget class="\XLite\View\Button\DeleteUser" name="Delete" label="Delete selected profile" jsCode="deleteProfile();" />
 
   </p>
 
 </form>
+
+{displayViewListContent(#admin.users.results.bottom#)}
+
 
