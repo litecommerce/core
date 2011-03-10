@@ -11,6 +11,12 @@
  * @since     3.0.0
  */
 
+.section .header {
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 .form_field_error {
   border: 1px solid #ff0000;
 }
