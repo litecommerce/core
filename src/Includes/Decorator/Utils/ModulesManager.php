@@ -157,6 +157,7 @@ abstract class ModulesManager extends AUtils
         } elseif ($path = static::getModulesFilePath()) {
 
             $list = array();
+
             foreach (parse_ini_file($path, true) as $author => $authors) {
                 foreach ($authors as $name => $enabled) {
                     if ($enabled) {
@@ -172,7 +173,7 @@ abstract class ModulesManager extends AUtils
                         );
                     }
                 }
-            };
+            }
 
         } else {
 
