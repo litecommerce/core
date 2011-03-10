@@ -409,8 +409,10 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function getItemByItem(\XLite\Model\OrderItem $item)
     {
+        $items = $this->getItems();
+
         return \Includes\Utils\ArrayManager::findValue(
-            $this->getItems(),
+            $items,
             array($this, 'checkItemKeyEqual'),
             $item->getKey()
         );
@@ -445,8 +447,10 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function getItemsByProductId($productId)
     {
+        $items = $this->getItems();
+
         return \Includes\Utils\ArrayManager::filter(
-            $this->getItems(),
+            $items,
             array($this, 'isItemProductIdEqual'),
             $productId
         );

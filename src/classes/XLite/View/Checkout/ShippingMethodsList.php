@@ -38,6 +38,15 @@ namespace XLite\View\Checkout;
 class ShippingMethodsList extends \XLite\View\AView
 {
     /**
+     * Modifier (cache)
+     * 
+     * @var   \XLite\Model\Order\Modifier
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $modifier;
+
+    /**
      * Return widget default template
      *
      * @return string
@@ -60,7 +69,7 @@ class ShippingMethodsList extends \XLite\View\AView
      */
     public function isShippingAvailable()
     {
-        return $this->getCart()->isShippingAvailable();
+        return $this->getModifier()->isRatesExists();
     }
 
     /**
@@ -79,6 +88,22 @@ class ShippingMethodsList extends \XLite\View\AView
             && $profile->getShippingAddress()
             && $profile->getShippingAddress()
                 ->isCompleted(\XLite\Model\Address::SHIPPING);
+    }
+
+    /**
+     * Get modifier 
+     * 
+     * @return \XLite\Model\Order\Modifier
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModifier()
+    {
+        if (!isset($this->modifier)) {
+            $this->modifier = $this->getCart()->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+        }
+
+        return $this->modifier;
     }
 
 }

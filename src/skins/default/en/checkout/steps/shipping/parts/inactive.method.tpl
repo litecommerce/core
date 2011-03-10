@@ -11,8 +11,8 @@
  * @since     3.0.0
  * @ListChild (list="checkout.shipping.inactive", weight="20")
  *}
-<div class="secondary" IF="cart.isShippingVisible()">
+<div class="secondary" IF="isShippingAvailable()">
   <div class="label">{t(#Shipping method#)}:</div>
-  {cart.shippingMethod.name}
-  <span class="price">{formatPrice(getMarkup(cart.selectedRate),cart.getCurrency())}</span>
+  {modifier.method.name}
+  <span class="price">{formatPrice(getMarkup(modifier.selectedRate),cart.getCurrency())}</span>
 </div>

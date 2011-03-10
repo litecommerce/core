@@ -180,33 +180,5 @@ class ShippingEstimate extends \XLite\View\AView
         return (bool)$this->getAddress();
     }
 
-    /**
-     * Get address 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getAddress()
-    {
-        return \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getModifier()->getModifier());;
-    }
-
-    /**
-     * Get modifier 
-     * 
-     * @return \XLite\Model\Order\Modifier
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getModifier()
-    {
-        if (!isset($this->modifier)) {
-            $this->modifier = $this->getCart()->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
-        }
-
-        return $this->modifier;
-    }
-
 }
 

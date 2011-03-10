@@ -458,18 +458,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
-     * Check if we are ready to select shipping method
-     * 
-     * @return boolean 
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isShippingNeeded()
-    {
-        return !$this->getCart()->isShippingSelected();
-    }
-
-    /**
      * Common method to determine current location 
      *  
      * @return string
