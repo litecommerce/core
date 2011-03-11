@@ -238,6 +238,35 @@ class Product extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * getClasses 
+     * 
+     * @param \XLite\Model\Product $product ____param_comment____
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getClasses(\XLite\Model\Product $product)
+    {
+        $data = new \Doctrine\Common\Collections\ArrayCollection();
+
+        foreach ((array) $this->getPostedData('class_ids') as $classId) {
+
+            $class = \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findOneById($classId);
+
+            if (!$class->getProducts()->contains($product)) {
+
+                $class->getProducts()->add($product);
+            }
+
+            $data->add($class);
+        }
+
+        return array('classes' => $data);
+    }
+
+    /**
      * Set error
      * 
      * @param string $cleanURL Clean URL
@@ -340,11 +369,16 @@ class Product extends \XLite\Controller\Admin\AAdmin
             $product->getCategoryProducts()
         );
 
+        $product->getClasses()->clear();
+
+        $data = $this->getCategoryProducts($product) + $this->getClasses($product) + $this->getPostedData();
+
         // Update all data
         \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
             $product,
-            $this->getCategoryProducts($product) + $this->getPostedData()
+            $data
         );
+
     }
 
     /**

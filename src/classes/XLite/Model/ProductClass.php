@@ -63,6 +63,17 @@ class ProductClass extends \XLite\Model\Base\I18n
      */
     protected $products;
 
+    /** 
+     * Shipping methods
+     * 
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
+     * @ManyToMany (targetEntity="XLite\Model\Shipping\Method", mappedBy="classes")
+     */
+    protected $methods;
+
     /**
      * Constructor
      *

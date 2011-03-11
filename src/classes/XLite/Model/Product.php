@@ -197,14 +197,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     protected $inventory;
 
     /**
-     * @ManyToMany (targetEntity="XLite\Model\ProductClass", inversedBy="products")
-     * @JoinTable (name="product_class_links",
-     *      joinColumns={@JoinColumn(name="product_id", referencedColumnName="product_id")},
-     *      inverseJoinColumns={@JoinColumn(name="class_id", referencedColumnName="id")}
-     * )
-     */
-
-    /**
      * Product classes 
      * 
      * @var   \Doctrine\Common\Collections\ArrayCollection
