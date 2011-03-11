@@ -253,5 +253,5 @@ managedate('date', true);
 
 <br />
 
-<b>Note:</b> You can also <a href="admin.php?target=profile&amp;mode=register">add a new user</a>.
+<widget class="\XLite\View\Button\AddUser" label="Add user" jsCode="self.location = '{buildURL(#profile#,##,_ARRAY_(#mode#^#register#))}';" />
 
