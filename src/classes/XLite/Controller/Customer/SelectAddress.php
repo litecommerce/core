@@ -124,7 +124,7 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
         if (\XLite\Model\Address::SHIPPING != $atype && \XLite\Model\Address::BILLING != $atype) {
 
             $this->valid = false;
-            \XLite\Core\TopMessage::addError('Address type ahs wrong value');
+            \XLite\Core\TopMessage::addError('Address type has wrong value');
 
         } elseif (!$addressId) {
 
