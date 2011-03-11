@@ -45,6 +45,7 @@
   width: 15px;
   height: 15px;
   padding: 0px;
+  background: transparent none;
 }
 
 #status-messages a.close img
@@ -76,8 +77,8 @@
 #status-messages,
 #status-messages a
 {
-  background-color: #fff1a8; /*#eeede8;*/
-  color: black; /*#1b5d8e;*/
+  background-color: #eeede8;
+  color: #1b5d8e;
 }
 
 #status-messages .warning,
@@ -91,5 +92,5 @@
 #status-messages .error a
 {
   background-color: #e65e57;
-  color: white;
+  color: #fff;
 }
