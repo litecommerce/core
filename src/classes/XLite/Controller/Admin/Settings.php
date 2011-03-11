@@ -899,6 +899,17 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Get safe mode access key 
+     * 
+     * @return string
+     * @see    ____func_see____
+     */
+    public function getSafeModeKey()
+    {
+        return \Includes\SafeMode::getAccessKey();
+    }
+
+    /**
      * Return list of possible order statuses for inventory tracking
      * NOTE: currently not used; saved for future
      * 

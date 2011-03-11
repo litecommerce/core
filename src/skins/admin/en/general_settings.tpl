@@ -161,6 +161,10 @@ function setUnitSymbol(symbol) {
                 {end:}
               </select>
             {end:}
+            
+            {if:option.name=#safe_mode_key#}
+              <strong>{getSafeModeKey()}</strong>
+            {end:}
 
             <widget class="\XLite\View\ModulesManager\Settings" section="{page}" option="{option}" />
 
