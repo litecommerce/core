@@ -903,6 +903,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return string
      * @see    ____func_see____
+     * @since  3.0.0
      */
     public function getSafeModeKey()
     {
