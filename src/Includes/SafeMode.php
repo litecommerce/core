@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Includes
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace Includes;
@@ -31,9 +31,8 @@ namespace Includes;
 /**
  * Safe Mode
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class SafeMode
 {
@@ -50,6 +49,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
+     * @since  3.0.0
      */
     public static function isSafeModeRequested()
     {
@@ -62,6 +62,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
+     * @since  3.0.0
      */
     public static function isSafeModeStarted()
     {
@@ -69,54 +70,11 @@ abstract class SafeMode
     }
 
     /**
-     * Check Access Key 
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     */
-    protected static function checkAccessKey()
-    {
-        return static::getAccessKey() === \Includes\Utils\ArrayManager::getIndex($_GET, static::PARAM_ACCESS_KEY);
-    }
-
-    /**
-     * Get safe mode indicator file name 
-     * 
-     * @return string
-     * @see    ____func_see____
-     */
-    protected static function getIndicatorFileName()
-    {
-        return LC_VAR_DIR . '.safeModeStarted';
-    }
-
-    /**
-     * Get safe mode access key file name 
-     * 
-     * @return string
-     * @see    ____func_see____
-     */
-    protected static function getAccessKeyFileName()
-    {
-        return LC_DATA_DIR . '.safeModeAccessKey';
-    }
-
-    /**
-     * Generate Access Key 
-     * 
-     * @return string
-     * @see    ____func_see____
-     */
-    protected static function generateAccessKey()
-    {
-        return substr(md5(uniqid(rand(), true)), 1, 6);
-    }
-
-    /**
      * Get Access Key 
      * 
      * @return string
      * @see    ____func_see____
+     * @since  3.0.0
      */
     public static function getAccessKey()
     {
@@ -133,21 +91,11 @@ abstract class SafeMode
     }
 
     /**
-     * Data to write into the indicator file
-     * 
-     * @return string
-     * @see    ____func_see____
-     */
-    protected static function getIndicatorFileContent()
-    {
-        return date('r');
-    }
-
-    /**
      * Clean up the safe mode indicator
      *
      * @return void
      * @see    ____func_see____
+     * @since  3.0.0
      */
     public static function cleanupIndicator()
     {
@@ -159,6 +107,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
+     * @since  3.0.0
      */
     public static function initialize()
     {
@@ -181,4 +130,66 @@ abstract class SafeMode
         // Redirect to avoid loop
         \Includes\Utils\Operator::redirect('admin.php?target=main');
     }
+
+
+    /**
+     * Check Access Key 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function checkAccessKey()
+    {
+        return static::getAccessKey() === \Includes\Utils\ArrayManager::getIndex($_GET, static::PARAM_ACCESS_KEY);
+    }
+
+    /**
+     * Get safe mode indicator file name 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getIndicatorFileName()
+    {
+        return LC_VAR_DIR . '.safeModeStarted';
+    }
+
+    /**
+     * Get safe mode access key file name 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getAccessKeyFileName()
+    {
+        return LC_DATA_DIR . '.safeModeAccessKey';
+    }
+
+    /**
+     * Generate Access Key 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function generateAccessKey()
+    {
+        return substr(md5(uniqid(rand(), true)), 1, 6);
+    }
+
+    /**
+     * Data to write into the indicator file
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getIndicatorFileContent()
+    {
+        return date('r');
+    }
+
 }
