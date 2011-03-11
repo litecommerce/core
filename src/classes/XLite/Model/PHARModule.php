@@ -420,14 +420,13 @@ class PHARModule extends \XLite\Base
     public function getMainClass()
     {
         if (!isset($this->mainClass)) {
-
-            // Search for class declaration(s)
-            $classes = get_declared_classes();
-            require_once ($this->getMainFile());
-            $classes = array_diff(get_declared_classes(), $classes);
-
-            // Get first declared class
-            $this->mainClass = \Includes\Utils\Converter::prepareClassName(reset($classes), false);
+            $this->mainClass = \Includes\Utils\Converter::prepareClassName(
+                \Includes\Decorator\Utils\Tokenizer::getFullClassName($this->getMainFile()),
+                false
+            );
+            if (!class_exists($this->mainClass, false)) {
+                include_once $this->getMainFile();
+            }
         }
 
         return $this->mainClass;

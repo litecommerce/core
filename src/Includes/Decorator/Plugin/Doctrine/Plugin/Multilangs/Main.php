@@ -147,13 +147,13 @@ CODE;
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function executeHookHandlerStepFirst()
+    public function executeHookHandlerStepSecond()
     {
         // It's the metadata collected by Doctrine
         foreach ($this->getMetadata() as $main) {
 
             // Process only certain classes
-            if (is_subclass_of($main->name, '\XLite\Model\Base\I18n')) {
+            if (is_subclass_of($main->name, '\XLite\Model\Base\I18n') && !$main->isMappedSuperclass) {
 
                 // If the "translation" field is not added manually
                 if (!($translation = $this->getTranslationClass($main))) {
