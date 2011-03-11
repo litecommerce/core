@@ -87,7 +87,7 @@ abstract class SafeMode
      */
     protected static function getIndicatorFileName()
     {
-        return LC_COMPILE_DIR . '.safeModeStarted';
+        return LC_VAR_DIR . '.safeModeStarted';
     }
 
     /**
@@ -109,7 +109,7 @@ abstract class SafeMode
      */
     protected static function generateAccessKey()
     {
-        return md5(uniqid(rand(), true));
+        return substr(md5(uniqid(rand(), true)), 1, 6);
     }
 
     /**
@@ -118,7 +118,7 @@ abstract class SafeMode
      * @return string
      * @see    ____func_see____
      */
-    protected static function getAccessKey()
+    public static function getAccessKey()
     {
         if (!\Includes\Utils\FileManager::isExists(static::getAccessKeyFileName())) {
 
