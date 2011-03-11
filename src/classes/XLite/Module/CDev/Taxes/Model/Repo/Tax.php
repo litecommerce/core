@@ -15,7 +15,7 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -26,51 +26,41 @@
  * @since     3.0.0
  */
 
-namespace XLite\Model;
+namespace XLite\Module\CDev\Taxes\Model\Repo;
 
 /**
- * Membership
+ * Tax repository
  * 
- * @see     ____class_see____
- * @since   3.0.0
- *
- * @Entity
- * @Table (name="memberships")
+ * @see   ____class_see____
+ * @since 3.0.0
  */
-class Membership extends \XLite\Model\Base\I18n
+class Tax extends \XLite\Model\Repo\ARepo
 {
     /**
-     * Unique id 
+     * Find active taxes
      * 
-     * @var    integer
-     * @see    ____var_see____
+     * @return array
+     * @see    ____func_see____
      * @since  3.0.0
-     *
-     * @Id
-     * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="uinteger")
      */
-    protected $membership_id;
+    public function findActive()
+    {
+        return $this->defineFindActiveQuery()->getResult();
+    }
 
     /**
-     * Position
+     * Define query for findActive() method
      * 
-     * @var    integer
-     * @see    ____var_see____
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
      * @since  3.0.0
-     *
-     * @Column (type="integer")
      */
-    protected $orderby = 0;
-
-    /**
-     * Active status
-     * 
-     * @var    boolean
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="boolean")
-     */
-    protected $active = true;
+    protected function defineFindActiveQuery()
+    {
+        return $this->createQueryBuilder()
+            ->addSelect('tr')
+            ->leftJoin('t.rates', 'tr')
+            ->andWhere('t.enabled = :true AND tr IS NOT NULL')
+            ->setParameter('true', true);
+    }
 }

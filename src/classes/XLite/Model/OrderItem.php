@@ -423,6 +423,34 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
+     * Get item taxable basis 
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTaxableBasis()
+    {
+        $product = $this->getProduct();
+
+        return $product ? $product->getTaxableBasis() : null;
+    }
+
+    /**
+     * Get product classes 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProductClasses()
+    {
+        $product = $this->getProduct();
+
+        return $product ? $product->getClasses() : null;
+    }
+
+    /**
      * Get event cell base information
      * 
      * @return array

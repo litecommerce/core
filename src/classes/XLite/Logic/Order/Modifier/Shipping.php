@@ -91,9 +91,23 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
     }
 
     /**
+     * Get shipping rates 
+     * TODO: add checking if rates should be recalculated else get rates from cache
+     * 
+     * @return array(\XLite\Model\Shipping\Rate)
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRates()
+    {
+        return $this->calculateRates();
+    }
+
+    /**
      * Returns true if any of order items are shipped 
      * 
      * @return boolean 
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isShipped()
@@ -114,6 +128,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * Check - shipping is available for this order or not
      * 
      * @return boolean 
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isAvailable()
@@ -174,18 +189,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
         return $result;
     }
 
-    /**
-     * Get shipping rates 
-     * TODO: add checking if rates should be recalculated else get rates from cache
-     * 
-     * @return array(\XLite\Model\Shipping\Rate)
-     * @since  3.0.0
-     */
-    public function getRates()
-    {
-        return $this->calculateRates();
-    }
-
     // }}}
 
     // {{{ Current shipping method and rate
@@ -210,7 +213,11 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
 
             if (!empty($rates)) {
 
-                if (!$this->order->getShippingId() && $this->order->getProfile() && $this->order->getProfile()->getLastShippingId()) {
+                if (
+                    !$this->order->getShippingId()
+                    && $this->order->getProfile()
+                    && $this->order->getProfile()->getLastShippingId()
+                ) {
 
                     // Remember last shipping id
                     $this->order->setShippingId($this->getProfile()->getLastShippingId());
@@ -238,7 +245,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
     /**
      * Set shipping rate and shipping method id 
      * 
-     * @param \XLite\Model\Shipping\Rate $rate Shipping rate object
+     * @param \XLite\Model\Shipping\Rate $rate Shipping rate object OPTIONAL
      *  
      * @return void
      * @see    ____func_see____
@@ -394,18 +401,18 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
 
     // }}}
 
-	// {{{ Surcharge operations
+    // {{{ Surcharge operations
 
-	/**
-	 * Get surcharge name 
-	 * 
-	 * @param \XLite\Model\Order\Surcharge $surcharge Surcharge
-	 *  
-	 * @return \XLite\DataSet\Transport\Order\Surcharge
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getSurchargeInfo(\XLite\Model\Base\Surcharge $surcharge)
+    /**
+     * Get surcharge name 
+     * 
+     * @param \XLite\Model\Order\Surcharge $surcharge Surcharge
+     *  
+     * @return \XLite\DataSet\Transport\Order\Surcharge
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSurchargeInfo(\XLite\Model\Base\Surcharge $surcharge)
     {
         $info = new \XLite\DataSet\Transport\Order\Surcharge;
 

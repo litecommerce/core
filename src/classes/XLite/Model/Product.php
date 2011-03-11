@@ -538,4 +538,20 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
 
         parent::__construct($data);
     }
+
+    // {{{ Tax common functionaly
+
+    /**
+     * Get taxable basis 
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTaxableBasis()
+    {
+        return $this->getPrice();
+    }
+
+    // }}}
 }

@@ -15,7 +15,7 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -26,51 +26,41 @@
  * @since     3.0.0
  */
 
-namespace XLite\Model;
+namespace XLite\Module\CDev\Taxes\Model;
 
 /**
- * Membership
+ * Product class 
  * 
- * @see     ____class_see____
- * @since   3.0.0
- *
- * @Entity
- * @Table (name="memberships")
+ * @see   ____class_see____
+ * @since 3.0.0
  */
-class Membership extends \XLite\Model\Base\I18n
+abstract class ProductClass extends \XLite\Model\ProductClass implements \XLite\Base\IDecorator
 {
     /**
-     * Unique id 
+     * Tax rates (relation)
      * 
-     * @var    integer
+     * @var    \Doctrine\Common\Collections\ArrayCollection
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Id
-     * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="uinteger")
+     * @OneToMany (targetEntity="XLite\Module\CDev\Taxes\Model\Tax\Rate", mappedBy="product_class", cascade={"all"})
      */
-    protected $membership_id;
+    protected $tax_rates;
 
     /**
-     * Position
-     * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * Constructor
      *
-     * @Column (type="integer")
+     * @param array $data Entity properties
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
      */
-    protected $orderby = 0;
+    public function __construct(array $data = array())
+    {
+        $this->tax_rates = new \Doctrine\Common\Collections\ArrayCollection();
 
-    /**
-     * Active status
-     * 
-     * @var    boolean
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="boolean")
-     */
-    protected $active = true;
+        parent::__construct($data);
+    }
+
 }
