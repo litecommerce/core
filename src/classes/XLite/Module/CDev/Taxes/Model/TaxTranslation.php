@@ -26,51 +26,32 @@
  * @since     3.0.0
  */
 
-namespace XLite\Model;
+namespace XLite\Module\CDev\Taxes\Model;
 
 /**
- * Membership
+ * Tax multilingual data
  * 
  * @see     ____class_see____
  * @since   3.0.0
  *
  * @Entity
- * @Table (name="memberships")
+ * @Table (name="tax_translations",
+ *         indexes={
+ *              @Index (name="ci", columns={"code","id"}),
+ *              @Index (name="id", columns={"id"})
+ *         }
+ * )
  */
-class Membership extends \XLite\Model\Base\I18n
+class TaxTranslation extends \XLite\Model\Base\Translation
 {
     /**
-     * Unique id 
-     * 
-     * @var    integer
+     * Name
+     *
+     * @var    string
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Id
-     * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="uinteger")
+     * @Column (type="string", length="255")
      */
-    protected $membership_id;
-
-    /**
-     * Position
-     * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="integer")
-     */
-    protected $orderby = 0;
-
-    /**
-     * Active status
-     * 
-     * @var    boolean
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="boolean")
-     */
-    protected $active = true;
+    protected $name;
 }

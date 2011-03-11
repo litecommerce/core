@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\CDev\SimpleTaxes;
+namespace XLite\Module\CDev\Taxes;
 
 /**
  * Module class
@@ -73,7 +73,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getModuleName()
     {
-        return 'Simple taxes';
+        return 'Taxes';
     }
 
     /**
@@ -86,6 +86,6 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'This module enables simple taxes';
+        return 'This module enables taxes';
     }
 }
