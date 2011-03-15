@@ -12,5 +12,5 @@
  * @ListChild (list="productClasses.list.columns", weight="100")
  *}
 <td>
-<input type="text" name="{getNamePostedData(#name#,class.getId())}" />
+<input type="text" name="{getNamePostedData(#name#,class.getId())}" value="{class.getName()}" />
 </td>

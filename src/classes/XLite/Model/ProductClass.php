@@ -63,6 +63,17 @@ class ProductClass extends \XLite\Model\Base\I18n
      */
     protected $products;
 
+    /** 
+     * Shipping methods
+     * 
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
+     * @ManyToMany (targetEntity="XLite\Model\Shipping\Method", mappedBy="classes")
+     */
+    protected $methods;
+
     /**
      * Constructor
      *
@@ -78,5 +89,18 @@ class ProductClass extends \XLite\Model\Base\I18n
 
         parent::__construct($data);
     }
+
+    /** 
+     * Get name 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getName()
+    {   
+        return $this->getSoftTranslation()->getName();
+    }   
+
 
 }
