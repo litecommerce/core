@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Remove button
+ * Product element
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,9 +9,10 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="productClasses.list.columns", weight="200")
- * @ListChild (list="productClasses.list.columns.remove", weight="100")
+ * @ListChild (list="product.modify.list", weight="100")
+ * @ListChild (list="product.modify.list", weight="10000")
  *}
-<td class="remove-product-class">
-<a href="admin.php?target=product_class&amp;action=remove&amp;id={class.getId()}" onclick="javascript:"><img src="" alt="{t(#Remove#)}" /></a>
-</td>
+<tr>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+</tr>

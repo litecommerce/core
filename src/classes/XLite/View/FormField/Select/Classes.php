@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,73 +26,57 @@
  * @since      3.0.0
  */
 
-namespace XLite\Controller\Admin;
-
+namespace XLite\View\FormField\Select;
+ 
 /**
- * Product classes 
+ * Category selector
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ProductClasses extends \XLite\Controller\Admin\AAdmin
+class Classes extends \XLite\View\FormField\Select\Multiple
 {
-
     /**
-     * Field name for new 'name' value
-     */
-    const NEW_NAME = 'new_name';
-
-    /**
-     * Field name for 'name' array values 
-     */
-    const NAME = 'name';
-
-
-    /**
-     * Update action 
-     * 
-     * @return void
+     * Return field template
+     *
+     * @return string
      * @access protected
-     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionUpdate()
+    protected function getFieldTemplate()
     {
-        $data = $this->getPostedData();
-
-        if (!empty($data[static::NEW_NAME])) {
-
-            $this->addClass($data[static::NEW_NAME]);
-        }
-
-        if (isset($data[static::NEW_NAME])) {
-
-            unset($data[static::NEW_NAME]);
-        }
-
-        if (!empty($data)) {
-
-            \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->updateInBatchById($data);
-        }
+        return 'select_classes.tpl';
     }
 
     /**
-     * Add product class entry
+     * Return class list
      * 
-     * @param string $name Name value
-     *  
-     * @return void
+     * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function addClass($name)
+    protected function getDefaultOptions()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->insert(
-            array(static::NAME => strval($name))
+        return \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findAll();
+    }
+
+    /**
+     * Is class selected
+     * 
+     * @param integer $classId Class ID to check
+     *  
+     * @return boolean 
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isClassSelected($classId)
+    {
+        return $this->getValue()->contains(
+            \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findOneById($classId)
         );
     }
-
 
 }
