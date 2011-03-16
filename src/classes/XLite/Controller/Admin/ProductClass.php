@@ -38,6 +38,18 @@ namespace XLite\Controller\Admin;
 class ProductClass extends \XLite\Controller\Admin\AAdmin
 {
 
+    const STATUS_ERROR   = 'error';
+    const STATUS_INAPPLY = 'inapply';
+    const STATUS_SUCCESS = 'success';
+    const STATUS_FAILED  = 'failed';
+
+
+    protected $data = array(
+        'status' => self::STATUS_ERROR,
+        'data'   => '',
+    );
+
+
     /**
      * Remove product class
      * 
@@ -75,6 +87,49 @@ class ProductClass extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Request::getInstance()->id,
             $data
         );
+    }
+
+    /**
+     * AJAX product class adding
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionAdd()
+    {
+        $data = \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->insert(
+            array(
+                'name' => \XLite\Core\Request::getInstance()->name,
+            )
+        );
+
+        $this->data['data'] = array(
+            'id'   => $data->getId(),
+            'name' => $data->getName(),
+        );
+
+        $this->data['status'] = static::STATUS_SUCCESS;
+    }
+
+    /**
+     * Send JSON data after "ADD" action
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function actionPostprocessAdd()
+    {
+        header('Content-type: application/json');
+        $data = json_encode($this->data);
+        header('Content-Length: ' . strlen($data));
+
+        echo ($data);
+
+        exit (0);
     }
 
 }
