@@ -86,7 +86,7 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      */
     protected function prepareFieldParamsAccessLevel(&$data)
     {
-        if (\XLite\Core\Auth::getInstance()->isAdmin() && \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS() && (\XLite\Core\Auth::getInstance()->isAdmin() || defined('XLITE_INSTALL_MODE'))) {
             $data[\XLite\View\FormField\AFormField::PARAM_IS_ALLOWED_FOR_CUSTOMER] = true;
         }
     }
@@ -104,6 +104,24 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
     {
         if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
             $data[\XLite\View\FormField\AFormField::PARAM_IS_ALLOWED_FOR_CUSTOMER] = true;
+        }
+    }
+
+    /**
+     * Populate model object properties by the passed data
+     * 
+     * @param array $data Data to set up
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setModelProperties(array $data)
+    {
+        parent::setModelProperties($data);
+
+        if (isset($data['drupal_roles']) && is_array($data['drupal_roles'])) {
+            $this->getModelObject()->updateDrupalRoles($data['drupal_roles']);
         }
     }
 }
