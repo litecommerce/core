@@ -43,8 +43,8 @@ class XLite_Tests_Model_CategoryProducts extends XLite_Tests_TestCase
     {
         $this->query(file_get_contents(__DIR__ . '/Repo/sql/category/setup.sql'));
 
-        $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->find(14015);
-        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(16281);
+        $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'fruit'));
+        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => '00007'));
 
         $cp = new \XLite\Model\CategoryProducts;
         $c->addCategoryProducts($cp);

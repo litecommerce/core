@@ -36,7 +36,6 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 			'sku'           => array('test_sku', null),
 			'enabled'       => array(true, null),
 			'weight'        => array(2.88, null),
-			'tax_class'     => array('test_class', null),
 			'free_shipping' => array(true, null),
 			'clean_url'     => array('test_url', null),
 			'javascript'    => array('test_js', null),
@@ -100,8 +99,10 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 	 */
 	public function testAddCategoryProducts()
 	{
-        $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->find(14015);
-		$p = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(15090);
+        $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'fruit'));
+		$p = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => '00000'));
+
+        $this->assertNotNull($p, 'check product');
 
         $cp = new \XLite\Model\CategoryProducts();
         $cp->setCategory($c);
@@ -164,26 +165,11 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
         $this->assertEquals('test', $result->getName(), 'Invalid product name');
     }
 
-    /**
-     * testGetProductId 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-	public function testGetProductId()
+    public function testIsAvailable()
     {
-        $result = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(15090);
+        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => '00007'));
 
-        // Check entity
-        $this->assertNotNull($result, 'Product not found');
-        $this->assertEquals(15090, $result->getProductId(), 'Product ID does not match');
-    }
-
-    public function testisAvailable()
-    {
-        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(16281);
+        $this->assertNotNull($p, 'check product');
 
         $p->setEnabled(true);
         $this->assertTrue($p->isAvailable(), 'check enabled');
@@ -192,24 +178,19 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
         $this->assertTrue($p->isAvailable(), 'check disabled (is admin zone)');
     }
 
-    public function testgetTaxedPrice()
-    {
-        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(16281);
-
-        $this->assertEquals($p->getPrice(), $p->getTaxedPrice(), 'check taxed price (equals price)');
-    }
-
     public function testgetListPrice()
     {
-        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(16281);
+        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => '00007'));
 
-        $this->assertEquals($p->getTaxedPrice(), $p->getListPrice(), 'check taxed price (equals taxed price)');
+        $this->assertNotNull($p, 'check product');
+        $this->assertEquals($p->getPrice(), $p->getListPrice(), 'check taxed price (equals taxed price)');
     }
 
     public function testhasImage()
     {
-        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(15090);
+        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => '00000'));
 
+        $this->assertNotNull($p, 'check product');
         $this->assertTrue($p->hasImage(), 'check image');
 
         $p->getImages()->clear();
@@ -219,8 +200,9 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 
     public function testgetImageURL()
     {
-        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(15090);
+        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => '00000'));
 
+        $this->assertNotNull($p, 'check product');
         $this->assertRegExp('/images.product.demo_p15090\.jpeg$/Ss', $p->getImageURL(), 'check image URL');
 
         $p->getImages()->clear();
@@ -230,8 +212,10 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 
     public function testgetCategory()
     {
-        $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->find(14015);
-        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(16281);
+        $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'fruit'));
+        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => '00007'));
+
+        $this->assertNotNull($p, 'check product');
 
         $cp = new \XLite\Model\CategoryProducts();
         $cp->setCategory($c);
@@ -242,8 +226,9 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 
         \XLite\Core\Database::getEM()->clear();
 
-        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(16281);
+        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => '00007'));
 
+        $this->assertNotNull($p, 'check product #2');
         $cp = $p->getCategory(14015);
         $this->assertTrue($cp instanceof \XLite\Model\Category, 'check class');
         $this->assertEquals(14015, $cp->getCategoryId(), 'check category id');
@@ -259,16 +244,18 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 
     public function testgetOrderBy()
     {
-        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(16281);
+        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => '00007'));
 
+        $this->assertNotNull($p, 'check product');
         $this->assertEquals(10, $p->getOrderBy(14009), 'check order by of exist link');
         $this->assertEquals(0, $p->getOrderBy(999999999), 'check order by of NON exist link');
     }
 
     public function testcountImages()
     {
-        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(15090);
+        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => '00000'));
 
+        $this->assertNotNull($p, 'check product');
         $this->assertEquals(1, $p->countImages(), 'check 1 images');
 
         $p->getImages()->clear();
@@ -278,7 +265,9 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 
     public function testgetCommonDescription()
     {
-        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(16282);
+        $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => '00008'));
+
+        $this->assertNotNull($p, 'check product');
 
         $this->assertEquals(
             '<h5>Cucumber</h5>
