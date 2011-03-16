@@ -15,8 +15,6 @@ function AdvancedInputHandler()
 {
   // block initialization
   this.block = jQuery('div.advanced-input-text');
-
-  this.changeActions();
 }
 
 AdvancedInputHandler.prototype.block = null;
@@ -24,29 +22,37 @@ AdvancedInputHandler.prototype.block = null;
 /**
  * Main changing actions method. Widget is prepared and actions are added to it.
  */
-AdvancedInputHandler.prototype.changeActions = function()
+AdvancedInputHandler.prototype.changeActions = function ()
 {
   var o = this;
 
   this.block.each(
     function () {
-      var widget = {};
-
-      widget.label        = jQuery('.original-label', this);
-      widget.inputBlock   = jQuery('.original-input', this);
-      widget.cancel       = jQuery('.cancel-input', widget.inputBlock);
-      widget.input        = jQuery('input', widget.inputBlock).eq(0);
-      widget.cancelValue  = widget.input.val();
-
-      o.addActions(widget);
+      o.addActions(o.initWidget(this));
     }
   );
 }
 
 /**
+ * Initialization of widget 
+ */
+AdvancedInputHandler.prototype.initWidget = function (obj)
+{
+  var widget = {};
+
+  widget.label        = jQuery('.original-label', obj);
+  widget.inputBlock   = jQuery('.original-input', obj);
+  widget.cancel       = jQuery('.cancel-input', widget.inputBlock);
+  widget.input        = jQuery('input', widget.inputBlock).eq(0);
+  widget.cancelValue  = widget.input.val();
+
+  return widget;
+}
+
+/**
  * Adding actions to widget 
  */
-AdvancedInputHandler.prototype.addActions = function (widget) 
+AdvancedInputHandler.prototype.addActions = function (widget)
 {
   var o = this;
 
@@ -93,5 +99,7 @@ core.bind(
   'load',
   function(event) {
     var advancedInputHandler = new AdvancedInputHandler();
+
+    advancedInputHandler.changeActions();
   }
 );

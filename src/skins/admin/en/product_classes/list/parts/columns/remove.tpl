@@ -9,12 +9,11 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="productClasses.list.columns", weight="200")
- * @ListChild (list="productClasses.list.columns.remove", weight="100")
+ * @ListChild (list="product_classes.main_input", weight="200")
  *}
 <td class="remove-product-class">
 <img src="images/spacer.gif" class="separator" alt="|" />
-<a class="remove" href="admin.php?target=product_class&amp;action=remove&amp;id={class.getId()}">
+<a class="remove" href="admin.php?target=product_class&amp;action=remove&amp;id={id}">
 <img src="images/spacer.gif" class="remove" alt="{t(#Remove#)}" />
 </a>
 </td>
