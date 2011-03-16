@@ -10,12 +10,12 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div IF="!isEmpty()" class="select-classes">
+<div IF="!isListEmpty()" class="select-classes">
 <select id="{getFieldId()}" name="{getName()}"{getAttributesCode():h} />
   <option FOREACH="getOptions(),class" value="{class.getId()}" selected="{isClassSelected(class.getId())}">{class.getName()}</option>
 </select>
 </div>
-<span IF="isEmpty()" class="empty-list">
+<span IF="isListEmpty()" class="empty-list">
 <a href="{buildURL(#product_classes#)}">
 {t(#Define classes#)}
 </a>

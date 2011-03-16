@@ -26,101 +26,80 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\FormField\Select;
+namespace XLite\View\FormField\Input\Text;
 
 /**
- * Form abstract selector
+ * \XLite\View\FormField\Input\Text\Advanced
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class ASelect extends \XLite\View\FormField\AFormField
+class Advanced extends \XLite\View\FormField\Input\Text
 {
+
     /**
-     * Widget param names 
+     * Widget catalog 
      */
+    const WIDGET_DIR = '/advanced_text_input';
 
-    const PARAM_OPTIONS = 'options';
-
-    
     /**
-     * Return default options list
-     * 
+     * Register JS files
+     *
      * @return array
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    abstract protected function getDefaultOptions();
+    public function getJSFiles()
+    {   
+        $list = parent::getJSFiles();
+        $list[] = $this->getDir() . static::WIDGET_DIR . '/script.js';
 
-
-    /**
-     * Return field template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFieldTemplate()
-    {
-        return 'select.tpl';
-    }
+        return $list;
+    }   
 
     /**
-     * getOptions 
+     * getCSSFiles 
      * 
      * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getOptions()
-    {
-        return $this->getParam(self::PARAM_OPTIONS);
-    }
-
-    /**
-     * Checks if the list is empty
-     * 
-     * @return boolean
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isListEmpty()
-    {
-        return 0 >= count($this->getOptions());
-    }
+    public function getCSSFiles()
+    {   
+        $list = parent::getCSSFiles();
+        $list[] = $this->getDir() . static::WIDGET_DIR . '/style.css';
+
+        return $list;
+    }   
 
     /**
-     * Define widget params
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_OPTIONS => new \XLite\Model\WidgetParam\Collection(
-                'Options', $this->getDefaultOptions(), false
-            ),
-        );
-    }
-
-
-    /**
-     * Return field type
-     *
+     * getLabel 
+     * 
      * @return string
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getFieldType()
+    public function getLabel()
     {
-        return self::FIELD_TYPE_SELECT;
+        return $this->getValue() ?: parent::getLabel();
+    }   
+
+    /** 
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return $this->getDir() . static::WIDGET_DIR . '/input.tpl';
     }
+
+
 }
 

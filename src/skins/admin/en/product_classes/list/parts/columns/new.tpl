@@ -12,9 +12,15 @@
  * @ListChild (list="productClasses.list.columns.new", weight="100")
  *}
 <td class="new-product-class">
+
+<widget class="\XLite\View\FormField\Input\Text\Advanced" fieldName="{getNamePostedData(#new_name#)}" value="" label="{t(#New product class#)}" />
+
+
 <a href="javascript:void(0);" onclick="javascript: core.addNewProductClass(this);">
 {t(#New product class#)}
 </a>
+
 <input type="text" name="{getNamePostedData(#new_name#)}" value="" />
+
 </td>
 <td>&nbsp;</td>

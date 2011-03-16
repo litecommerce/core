@@ -39,3 +39,9 @@
   opacity: 0.1;
   cursor: wait;
 }
+
+.ajax-progress {
+  background: transparent url(../../../progress_indicator.gif) no-repeat 0px 0px; 
+  width: 18px;
+  height: 18px;
+}
