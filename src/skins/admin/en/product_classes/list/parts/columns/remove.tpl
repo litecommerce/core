@@ -13,5 +13,8 @@
  * @ListChild (list="productClasses.list.columns.remove", weight="100")
  *}
 <td class="remove-product-class">
-<a href="admin.php?target=product_class&amp;action=remove&amp;id={class.getId()}" onclick="javascript:"><img src="" alt="{t(#Remove#)}" /></a>
+<img src="images/spacer.gif" class="separator" alt="|" />
+<a class="remove" href="admin.php?target=product_class&amp;action=remove&amp;id={class.getId()}">
+<img src="images/spacer.gif" class="remove" alt="{t(#Remove#)}" />
+</a>
 </td>
