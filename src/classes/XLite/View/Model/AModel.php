@@ -523,6 +523,30 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
+     * Add top message
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addDataSavedTopMessage()
+    {
+        \XLite\Core\TopMessage::addInfo('Data have been saved successfully');
+    }
+
+    /**
+     * Add top message
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addDataDeletedTopMessage()
+    {
+        \XLite\Core\TopMessage::addInfo('Data have been deleted successfully');
+    }
+
+    /**
      * Perform some actions on success
      *
      * @return void
@@ -532,7 +556,7 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function postprocessSuccessActionCreate()
     {
-        \XLite\Core\TopMessage::addInfo('Data have been saved successfully');
+        $this->addDataSavedTopMessage();
     }
 
     /**
@@ -545,7 +569,7 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function postprocessSuccessActionUpdate()
     {
-        \XLite\Core\TopMessage::addInfo('Data have been saved successfully');
+        $this->addDataSavedTopMessage();
     }
 
     /**
@@ -558,7 +582,7 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function postprocessSuccessActionModify()
     {
-        \XLite\Core\TopMessage::addInfo('Data have been saved successfully');
+        $this->addDataSavedTopMessage();
     }
 
     /**
@@ -571,7 +595,7 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function postprocessSuccessActionDelete()
     {
-        \XLite\Core\TopMessage::addInfo('Data have been deleted successfully');
+        $this->addDataDeletedTopMessage();
     }
 
     /**
@@ -1179,15 +1203,16 @@ abstract class AModel extends \XLite\View\Dialog
         $requestData = $this->prepareDataForMapping();
 
         // Map model object with the request data
-        $this->setModelProperties($this->prepareDataForMapping());
+        $this->setModelProperties($requestData);
 
         // Do not call "callActionHandler()" method if model object is not valid
         $result = $this->isValid() && $this->callActionHandler();
 
         if ($result) {
             $this->postprocessSuccessAction();
+
         } else {
-            $this->saveFormData($this->prepareDataForMapping());
+            $this->saveFormData($requestData);
             $this->postprocessErrorAction();
         }
 

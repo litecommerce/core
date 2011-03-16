@@ -48,8 +48,28 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
             'password' => 'demo', // md5(demo) = fe01ce2a7fbac8fafaed7c982a04e229
             'email'    => 'rnd_tester05@cdev.ru',
         ),
+        // Customer
+        3 => array(
+            'login'    => 'user2012',
+            'password' => 'demo', // md5(demo) = fe01ce2a7fbac8fafaed7c982a04e229
+            'email'    => 'rnd_tester05@rrf.ru',
+        ),
+        // Customer
+        4 => array(
+            'login'    => 'user2013',
+            'password' => 'demo', // md5(demo) = fe01ce2a7fbac8fafaed7c982a04e229
+            'email'    => 'rnd_tester04@cdev.ru',
+        ),
     );
 
+    /**
+     * Role name for testing 
+     * 
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $roleName = 'test role';
 
     /**
      * Test on simple update own profile by administrator
@@ -94,11 +114,9 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         // Specify current password
         $this->type('css=#edit-current-pass', $user['password']);
 
-        // TODO: uncomment password changing after this will be fixed
-
         // Change password
-        //$this->type('css=#edit-pass-pass1', $user['password']);
-        //$this->type('css=#edit-pass-pass2', $user['password']);
+        $this->type('css=#edit-pass-pass1', $user['password']);
+        $this->type('css=#edit-pass-pass2', $user['password']);
 
         // Change email
         $this->type('css=#edit-mail', $email);
@@ -122,8 +140,8 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         // Specify current password
         $this->type('css=#edit-current-pass', $user['password']);
 
-        //$this->type('css=#edit-pass-pass1', $user['password']);
-        //$this->type('css=#edit-pass-pass2', $user['password']);
+        $this->type('css=#edit-pass-pass1', $user['password']);
+        $this->type('css=#edit-pass-pass2', $user['password']);
         $this->type('css=#edit-mail', $user['email']);
 
         $this->clickAndWait('css=#edit-submit');
@@ -148,49 +166,18 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function testCreateUser1()
+    public function testCreateUser()
     {
         $user = $this->getUser(1);
 
         $this->loginUser($user);
 
-        // Create new user with an administrator permissions and disabled status
-
-        $this->open('admin/people/create');
-
         $user2 = $this->getUser(2);
 
-        //Fill profile details form 
-        $this->type('css=#edit-name', $user2['login']);
-        $this->type('css=#edit-mail', $user2['email']);
-        $this->type('css=#edit-pass-pass1', $user2['password']);
-        $this->type('css=#edit-pass-pass2', $user2['password']);
+        // Create another user administrator
+        $userId = $this->createUser($user2, true);
 
-        $this->check('css=#edit-status-0'); // User status is blocked 
-        $this->check('css=#edit-roles-3'); // User role - administrator
-
-        $this->clickAndWait('css=#edit-submit');
-
-        if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
-            $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
-            $this->assertNull($message, 'Check for error messages #1');
-        }
-
-        $this->assertElementPresent(
-            '//div[@id="console"]/div[@class="messages status"]//descendant::a/em[text()="' . $user2['login']. '"]',
-            'Check that link to created user profile is presented'
-        );
-
-        $linkHref = $this->getJSExpression('jQuery("#console a").attr("href")');
-
-        $this->assertNotNull($linkHref, 'Check that href of link to the profile is not null');
-
-        if (preg_match('/user\/(\d+)/', $linkHref, $match)) {
-            $userId = $match[1];
-        }
-
-        $this->assertTrue(intval($userId) == $userId, 'Check that $userId value is integer (' . $userId . ')');
-
+        // Check if user profile has also been on LC side
         $newProfile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findOneBy(array('cms_profile_id' => $userId));
 
         $this->assertNotNull($newProfile, 'Check that new profile is not null');
@@ -240,11 +227,9 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         // Specify current password
         $this->type('css=#edit-current-pass', $user['password']);
 
-        // TODO: uncomment password changing after this will be fixed
-
         // Change password
-        //$this->type('css=#edit-pass-pass1', $newPassword);
-        //$this->type('css=#edit-pass-pass2', $newPassword);
+        $this->type('css=#edit-pass-pass1', $newPassword);
+        $this->type('css=#edit-pass-pass2', $newPassword);
 
         // Change email
         $this->type('css=#edit-mail', $email);
@@ -348,6 +333,235 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         $this->assertJqueryPresent('.messages.error h2', 'check errors');
     }
 
+    /**
+     * Test on user creation, then test on update this user's profile by the administrator and created user
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function testRoles()
+    {
+        $user = $this->getUser(1);
+
+        $this->loginUser($user);
+
+        // Create new role for testing
+
+        $this->open('admin/people/permissions/roles');
+
+        $this->type('css=#edit-name', $this->roleName);
+
+        $this->clickAndWait('css=#edit-add');
+
+        // Assign role Id
+        $roleId = 4;
+
+        $this->assertElementPresent('//table[@id="user-roles"]//descendant::td[contains(text(), "' . $this->roleName. '")]//following-sibling::td/a[contains(text(), "edit role")]');
+
+        $linkHref = $this->getJSExpression("jQuery('#user-roles td').filter(function() { return -1 != this.innerHTML.search(/" . $this->roleName . "/); } ).parents('tr').eq(0).find('td').eq(2).find('a').eq(0).attr('href')");
+
+        $this->assertNotNull($linkHref, 'Check that href of link to the role is not null');
+
+        if (preg_match('/people\/permissions\/roles\/edit\/(\d+)/', $linkHref, $match)) {
+            $roleId = $match[1];
+        }
+
+        $this->assertTrue(intval($roleId) == $roleId, 'Check that $roleId value is integer (' . $roleId . ')');
+
+        // Create test users
+
+        $userIds = array();
+
+        // Create user #2 - customer
+
+        $user2 = $this->getUser(3);
+
+        $userIds[] = $this->createUser($user2);
+
+        // Create user #3 - customer
+
+        $user3 = $this->getUser(4);
+
+        $userIds[] = $this->createUser($user3);
+
+        // Assign new role to the users #1 and #2 on users list page
+
+        $this->open('admin/people');
+
+        foreach ($userIds as $userId) {
+            $this->assertElementPresent('css=#edit-accounts-' . $userId, sprintf('Check box for user #%d not found (1)', $userId));
+            $this->check('css=#edit-accounts-' . $userId);
+        }
+
+        $this->select('css=#edit-operation', 'value=add_role-' . $roleId);
+
+        $this->clickAndWait('css=#edit-submit--2');
+
+        if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
+            $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
+            $this->assertNull($message, 'Check for error messages #1');
+        }
+
+        // Add permission 'lc admin' to the new role
+
+        $this->open('admin/people/permissions/' . $roleId);
+
+        $this->check('css=#edit-' . $roleId . '-lc-admin');
+
+        $this->clickAndWait('css=#edit-submit');
+
+        $this->assertChecked('css=#edit-' . $roleId . '-lc-admin', 'Permission "lc admin" is not updated');
+
+        // Check that LC profiles are admins now
+
+        foreach ($userIds as $userId) {
+
+            $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findOneBy(array('cms_profile_id' => $userId));
+
+            $this->assertNotNull($profile, sprintf('Check that profile for user #%d is not null', $userId));
+
+            $this->assertTrue($profile->isAdmin(), sprintf('Check that user #%d is LC administrator', $userId));
+
+            $profile->detach();
+        }
+
+        // Delete role
+
+        $this->open('admin/people/permissions/roles/edit/' . $roleId);
+
+        $this->clickAndWait('css=#edit-delete'); // Click 'Delete' button
+
+        $this->clickAndWait('css=#edit-submit'); // Click 'Submit' button on confirmation page
+
+        if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
+            $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
+            $this->assertNull($message, 'Check for error messages #2');
+        }
+
+        // Check that LC profile are customers now
+
+        foreach ($userIds as $userId) {
+
+            $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findOneBy(array('cms_profile_id' => $userId));
+
+            $this->assertNotNull($profile, sprintf('Check that profile for user #%d is not null', $userId));
+
+            $this->assertFalse($profile->isAdmin(), sprintf('Check that user #%d is LC customer', $userId));
+
+            $profile->detach();
+        }
+
+        // Cancel user accounts
+
+        $this->open('admin/people');
+
+        foreach ($userIds as $userId) {
+            $this->assertElementPresent('css=#edit-accounts-' . $userId, sprintf('Check box for user #%d not found (2)', $userId));
+            $this->check('css=#edit-accounts-' . $userId);
+        }
+
+        $this->select('css=#edit-operation', 'value=cancel');
+
+        $this->clickAndWait('css=#edit-submit--2'); // Click on 'Update' button in the list
+
+        $this->check('css=#edit-user-cancel-method--2'); // Select 'Disable' option
+
+        $this->clickAndWait('css=#edit-submit'); // And submit confirmation form
+
+        // Batch process 'Cancelling mode'
+
+        $counter = 400;
+
+        $percentage = null;
+        while ($counter > 0) {
+
+            sleep(1);
+
+            if ($this->isElementPresent('//div[@class="percentage"]')) {
+                $percentage = $this->getText('//div[@class="percentage"]');
+            }
+
+            if ($percentage == '100%') {
+                break;
+            }
+
+            $counter--;
+        }
+
+        $this->assertEquals('100%', $percentage, 'Percentage of batch process does not achived the value of 100% (cancel users)');
+
+        if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
+            $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
+            $this->assertNull($message, 'Check for error messages #4');
+        }
+
+        // Check that LC profiles are disabled now
+
+        foreach ($userIds as $userId) {
+
+            $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findOneBy(array('cms_profile_id' => $userId));
+
+            $this->assertNotNull($profile, sprintf('Check that profile for user #%d is not null', $userId));
+
+            $this->assertFalse($profile->isEnabled(), sprintf('Check that user #%d is disabled', $userId));
+
+            $profile->detach();
+        }
+
+        // Delete user accounts
+
+        $this->open('admin/people');
+
+        foreach ($userIds as $userId) {
+            $this->assertElementPresent('css=#edit-accounts-' . $userId, sprintf('Check box for user #%d not found (3)', $userId));
+            $this->check('css=#edit-accounts-' . $userId);
+        }
+
+        $this->select('css=#edit-operation', 'value=cancel');
+
+        $this->clickAndWait('css=#edit-submit--2'); // Click on 'Update' button in the list
+
+        $this->check('css=#edit-user-cancel-method--5'); // Select 'Delete' option
+
+        $this->clickAndWait('css=#edit-submit'); // And submit confirmation form
+
+        // Batch process 'Deleting mode'
+
+        $counter = 400;
+
+        $percentage = null;
+        while ($counter > 0) {
+
+            sleep(1);
+
+            if ($this->isElementPresent('//div[@class="percentage"]')) {
+                $percentage = $this->getText('//div[@class="percentage"]');
+            }
+
+            if ($percentage == '100%') {
+                break;
+            }
+
+            $counter--;
+        }
+
+        $this->assertEquals('100%', $percentage, 'Percentage of batch process does not achived the value of 100% (delete users)');
+
+        if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
+            $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
+            $this->assertNull($message, 'Check for error messages #5');
+        }
+
+        // Check that LC profiles are not exists now
+
+        foreach ($userIds as $userId) {
+
+            $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findOneBy(array('cms_profile_id' => $userId));
+
+            $this->assertNull($profile, sprintf('Check that profile for user #%d is not exists', $userId));
+        }
+    }
 
     /**
      * Return specified user data from an array $users
@@ -378,4 +592,57 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         // TODO: add checking if profile in Drupal is synchronized with profile in LC
     }
+
+    /**
+     * Create user and return userId in Drupal
+     * 
+     * @param array $user Cell of $users array
+     *  
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function createUser($user, $isAdmin = false)
+    {
+        // Create new user with an administrator permissions and disabled status
+
+        $this->open('admin/people/create');
+
+        //Fill profile details form 
+        $this->type('css=#edit-name', $user['login']);
+        $this->type('css=#edit-mail', $user['email']);
+        $this->type('css=#edit-pass-pass1', $user['password']);
+        $this->type('css=#edit-pass-pass2', $user['password']);
+
+        $this->check('css=#edit-status-0'); // User status is blocked
+
+        if ($isAdmin) {
+            $this->check('css=#edit-roles-3'); // User role - administrator
+        }
+
+        $this->clickAndWait('css=#edit-submit');
+
+        if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
+            $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
+            $this->assertNull($message, 'Check for error messages #1');
+        }
+
+        $this->assertElementPresent(
+            '//div[@id="console"]/div[@class="messages status"]//descendant::a/em[text()="' . $user['login']. '"]',
+            'Check that link to created user profile is presented'
+        );
+
+        $linkHref = $this->getJSExpression('jQuery("#console a").attr("href")');
+
+        $this->assertNotNull($linkHref, 'Check that href of link to the profile is not null');
+
+        if (preg_match('/user\/(\d+)/', $linkHref, $match)) {
+            $userId = $match[1];
+        }
+
+        $this->assertTrue(intval($userId) == $userId, 'Check that $userId value is integer (' . $userId . ')');
+
+        return $userId;
+    }
+
 }

@@ -39,6 +39,17 @@ namespace XLite\Module\CDev\DrupalConnector\Model;
 class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
 {
     /**
+     * User roles defined on Drupal side
+     *
+     * @var    \XLite\Module\CDev\DrupalConnector\Model\DrupalRole
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Module\CDev\DrupalConnector\Model\DrupalRole", mappedBy="profile", cascade={"all"})
+     */
+    protected $drupalRoles;
+
+    /**
      * prepareCreate 
      * 
      * @return void
@@ -70,4 +81,45 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
             : null;
     }
 
+    /**
+     * Update user's Drupal roles
+     * 
+     * @param array $newDrupalRoles Array of Drupal role IDs
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function updateDrupalRoles($newDrupalRoles)
+    {
+        $processedRoles = array();
+
+        $drupalRoles = $this->getDrupalRoles();
+
+        if ($drupalRoles) {
+
+            // Remove roles that is not in new roles array
+            foreach ($this->getDrupalRoles() as $drupalRole) {
+
+                if (!in_array($drupalRole->getDrupalRoleId(), $newDrupalRoles)) {
+                    \XLite\Core\Database::getEM()->remove($drupalRole);
+            
+                } else {
+                    $processedRoles[] = $drupalRole->getDrupalRoleId();
+                }
+            }
+        }
+
+        // Get roles to add 
+        $rolesToAdd = array_diff($newDrupalRoles, $processedRoles);
+
+        // Create new roles
+        foreach ($rolesToAdd as $roleId) {
+            $newDrupalRole = new \XLite\Module\CDev\DrupalConnector\Model\DrupalRole();
+            $newDrupalRole->setProfile($this);
+            $newDrupalRole->setDrupalRoleId($roleId);
+
+            $this->addDrupalRoles($newDrupalRole);
+        }
+    }
 }
