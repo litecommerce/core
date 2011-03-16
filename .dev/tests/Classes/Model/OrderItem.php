@@ -69,11 +69,20 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_Model_OrderAbstract
         );
 
         // Saved modifiers
-        $sm = new \XLite\Model\OrderItemModifier;
-        $item->addSavedModifiers($sm);
-        $count = count($item->getSavedModifiers());
-        $this->assertEquals($sm, $item->getSavedModifiers()->get($count - 1), 'check saved modifier');
+        $surcharge = new \XLite\Model\OrderItem\Surcharge;
+        $surcharge->setType('shipping');
+        $surcharge->setCode('ttt');
+        $surcharge->setValue(10.00);
+        $surcharge->setInclude(false);
+        $surcharge->setAvailable(true);
+        $surcharge->setClass(get_called_class());
+        $surcharge->setName('test');
 
+        $item->getSurcharges()->add($surcharge);
+        $surcharge->setOwner($item);
+
+        $count = count($item->getSurcharges());
+        $this->assertEquals($surcharge, $item->getSurcharges()->get($count - 1), 'check surcharge');
     }
 
     public function testUpdate()
@@ -208,23 +217,6 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_Model_OrderAbstract
         $this->assertEquals(9999, $item->getAmount(), 'check amount #4');
     }
 
-    public function testGetWeight()
-    {
-        $order = $this->getTestOrder();
-
-        $item = $order->getItems()->get(0);
-
-        $this->assertEquals($this->getProduct()->getWeight(), $item->getWeight(), 'check weight');
-
-        $item->setAmount(2);
-
-        $this->assertEquals(2 * $this->getProduct()->getWeight(), $item->getWeight(), 'check weight #2');
-
-        $item = new \XLite\Model\OrderItem();
-
-        $this->assertEquals(0, $item->getWeight(), 'check weight #3');
-    }
-
     public function testHasImage()
     {
         $order = $this->getTestOrder();
@@ -326,32 +318,6 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_Model_OrderAbstract
         $this->assertTrue(
             $item->isValid(),
             'check validate status'
-        );
-    }
-
-    public function testGetDiscountablePrice()
-    {
-        $order = $this->getTestOrder();
-
-        $item = $order->getItems()->get(0);
-
-        $this->assertEquals(
-            $item->getDiscountablePrice(),
-            $item->getPrice(),
-            'check discountable price'
-        );
-    }
-
-    public function testGettaxableTotal()
-    {
-        $order = $this->getTestOrder();
-
-        $item = $order->getItems()->get(0);
-
-        $this->assertEquals(
-            $item->getTaxableTotal(),
-            $item->getTotal(),
-            'check taxable total'
         );
     }
 

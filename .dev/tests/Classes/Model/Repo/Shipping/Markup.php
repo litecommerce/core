@@ -29,7 +29,8 @@ class XLite_Tests_Model_Repo_Shipping_Markup extends XLite_Tests_Model_OrderAbst
     public function testFindMarkupsByProcessor()
     {
         // Test on real profile
-        $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->findMarkupsByProcessor('offline', $this->getTestOrder());
+        $m = $this->getTestOrder()->getModifier('shipping', 'SHIPPING')->getModifier();
+        $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->findMarkupsByProcessor('offline', $m);
 
         $this->assertTrue(is_array($markups), 'findMarkupsByProcessor() must return an array');
 
@@ -38,7 +39,8 @@ class XLite_Tests_Model_Repo_Shipping_Markup extends XLite_Tests_Model_OrderAbst
         }
 
         // Test on anonymous user (no profile)
-        $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->findMarkupsByProcessor('offline', $this->getTestOrder(false));
+        $m = $this->getTestOrder(false)->getModifier('shipping', 'SHIPPING')->getModifier();
+        $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->findMarkupsByProcessor('offline', $m);
 
         $this->assertTrue(is_array($markups), 'findMarkupsByProcessor() must return an array');
 
