@@ -133,6 +133,10 @@ CartView.prototype.preprocessAction = function()
   if (!this.selfUpdated) {
     this.selfUpdated = true;
     this.shade();
+
+    // Remove validation errors from other quantity boxes
+    jQuery('form.validationEngine', this.base).validationEngine('hide');
+
     result = true;
   }
 
