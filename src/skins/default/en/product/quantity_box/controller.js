@@ -25,9 +25,13 @@ function ProductQuantityBoxController(base)
 
     if (!this.isCartPage) {
 
-      this.purchaseButton = jQuery(this.base)
+      this.actionButton = jQuery(this.base)
         .parents('div.product-buttons')
         .find('button.add2cart, button.buy-more');
+
+    } else {
+
+      this.actionButton = jQuery('ul.totals li.button button');
 
     }
 
@@ -78,11 +82,9 @@ ProductQuantityBoxController.prototype.showError = function()
 {
   this.block.addClass('wrong-amount');
 
-  if (!this.isCartPage) {
-    this.purchaseButton
-      .attr('disabled', 'disabled')
-      .addClass('disabled add2cart-disabled');
-  }
+  this.actionButton
+    .attr('disabled', 'disabled')
+    .addClass('disabled add2cart-disabled');
 }
 
 /**
@@ -90,13 +92,15 @@ ProductQuantityBoxController.prototype.showError = function()
  */
 ProductQuantityBoxController.prototype.hideError = function()
 {
+
   this.block.removeClass('wrong-amount');
 
-  if (!this.isCartPage) {
-    this.purchaseButton
-      .attr('disabled', '')
-      .removeClass('disabled add2cart-disabled');
-  }
+  if (this.isCartPage && jQuery('input.wrong-amount').length > 0)
+    return;
+
+  this.actionButton
+    .attr('disabled', '')
+    .removeClass('disabled add2cart-disabled');
 }
 
 core.autoload(ProductQuantityBoxController);

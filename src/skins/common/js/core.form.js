@@ -674,6 +674,8 @@ CommonElement.prototype.updateByMouseWheel = function(event, delta)
     if (jQuery(this.element).validationEngine('validateField', '#' + this.element.id)) {
       this.element.value = oldValue;
     }
+
+    this.$element.removeClass('wrong-amount');
   }
 
   return false;

@@ -113,6 +113,19 @@ class QuantityBox extends \XLite\View\Product\AProduct
     /**
      * Alias
      * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getBoxId()
+    {
+        return $this->getBoxName() . $this->getProduct()->getProductId();
+    }
+
+    /**
+     * Alias
+     * 
      * @return integer
      * @access protected
      * @see    ____func_see____
