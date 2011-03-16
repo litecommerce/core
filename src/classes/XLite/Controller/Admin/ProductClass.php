@@ -57,4 +57,24 @@ class ProductClass extends \XLite\Controller\Admin\AAdmin
         $this->setReturnURL($this->buildURL('product_classes'));
     }
 
+    /**
+     * AJAX product class update
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdate()
+    {
+        $data = array(
+            'name' => \XLite\Core\Request::getInstance()->name,
+        );
+
+        \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->updateById(
+            \XLite\Core\Request::getInstance()->id,
+            $data
+        );
+    }
+
 }
