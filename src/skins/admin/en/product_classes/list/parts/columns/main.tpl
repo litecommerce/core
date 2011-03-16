@@ -11,6 +11,6 @@
  * @since     3.0.0
  * @ListChild (list="productClasses.list.columns", weight="100")
  *}
-<td>
-<input type="text" name="{getNamePostedData(#name#,class.getId())}" value="{class.getName()}" />
+<td class="input-name">
+<widget class="\XLite\View\FormField\Input\Text\Advanced" fieldName="{getNamePostedData(#name#,class.getId())}" value="{class.getName()}" />
 </td>

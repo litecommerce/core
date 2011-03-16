@@ -11,7 +11,7 @@
 
 <div class="product-classes-list-form">
 
-<form method="POST" action="admin.php" >
+<form method="POST" action="admin.php" id="product-class-form" >
 
 <input type="hidden" name="target" value="product_classes" />
 <input type="hidden" name="action" value="update" />

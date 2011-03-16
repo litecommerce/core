@@ -11,3 +11,31 @@
  * @since     3.0.0
  */
 
+table.product-classes-list {
+  border-spacing: 0px;
+}
+
+table.product-classes-list td {
+  border-bottom: solid 1px #eaeaea;
+}
+
+table.product-classes-list tr:first-child td {
+  border-top: solid 1px #eaeaea;
+}
+
+table.product-classes-list td.input-name {
+  width: 530px;
+}
+
+.remove-product-class img.remove {
+  background: transparent url(../images/trash.png) 0 0 no-repeat;
+  width: 17px;
+  height: 16px;
+}
+
+.remove-product-class img.separator {
+  background: transparent url(../images/separator.png) 0 0 repeat-y;
+  width: 1px;
+  height: 15px;
+  margin-right: 10px;
+}
