@@ -148,6 +148,38 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
 
         if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
             $this->formFieldNames[] = $this->composeFieldName('cms_profile_id');
+            $this->formFieldNames[] = $this->composeFieldName('drupal_roles');
         }
     }
+
+    /**
+     * Do not add additional message when update profile via Drupal interface
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addDataSavedTopMessage()
+    {
+        if (!\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+            parent::addDataSavedTopMessage();
+        }
+    }
+
+    /**
+     * Do not add additional message when delete profile via Drupal interface
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addDataDeletedTopMessage()
+    {
+        if (!\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+            parent::addDataDeletedTopMessage();
+        }
+    }
+
 }

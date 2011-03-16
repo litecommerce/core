@@ -85,17 +85,22 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
         $data['createNewUser'] = !isset($user->original);
 
-        // If current user is administrator
-        if (\XLite\Core\Auth::getInstance()->isAdmin()) {
+        // Prepare data for access_level field
+        $roles = (isset($edit['roles']) ? $edit['roles'] : (isset($user->roles) ? $user->roles : null));
 
-            // Prepare data for access_level field
-            if (isset($edit['roles'])) {
+        if (isset($roles)) {
 
-                $fields['access_level'] = 'access_level';
+            $fields['access_level'] = 'access_level';
 
-                $user->access_level = $this->isUserAdmin($edit['roles'])
-                    ? \XLite\Core\Auth::getInstance()->getAdminAccessLevel()
-                    : \XLite\Core\Auth::getInstance()->getCustomerAccessLevel();
+            $user->access_level = $this->isRoleHasAdminPermission($roles)
+                ? \XLite\Core\Auth::getInstance()->getAdminAccessLevel()
+                : \XLite\Core\Auth::getInstance()->getCustomerAccessLevel();
+
+            // Save drupal roles for furhter processing
+            foreach ($roles as $key => $value) {
+                if (!empty($value) && '0' !== $value) {
+                    $data['drupal_roles'][] = $key;
+                }
             }
         }
 
@@ -105,16 +110,31 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             $user->status = (1 === intval($edit['status']) ? 'E' : 'D');
         }
 
-        // Skip password if it's no changed
-        if ($addConfirmation && isset($user->pass) && isset($user->original) && isset($user->original->pass) && 0 === strcmp($user->pass, $user->original->pass)) {
-            unset($fields['password']);
-        }
-
         $values = (is_array($edit) && isset($edit['values'])) ? $edit['values'] : array();
 
         foreach ($fields as $lcKey => $drupalKey) {
             // Only use data from user profile if they do not passed in request
             $data[$lcKey] = isset($values[$drupalKey]) ? $values[$drupalKey] : $user->$drupalKey;
+        }
+
+        // Skip password on update action if it wasn't changed
+        if (isset($data['password'])) {
+
+            if (
+                $addConfirmation 
+                && isset($user->pass) 
+                && isset($user->original) 
+                && isset($user->original->pass) 
+                && 0 === strcmp($user->pass, $user->original->pass)
+            ) {
+                unset($data['password']);
+            }
+        }
+
+        if (!empty($user->passwd)) {
+
+            // If $user->passwd is set then user updates his password
+            $data['password'] = $user->passwd;
         }
 
         if ($addConfirmation && isset($data['password'])) {
@@ -133,7 +153,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isUserAdmin(array $roles)
+    public static function isRoleHasAdminPermission(array $roles)
     {
         $role_permissions = user_role_permissions($roles);
 
@@ -244,6 +264,36 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @see    ____func_see____
      * @since  1.0.0
      */
+    public function performActionCancel(array &$edit, \stdClass $account, $method)
+    {
+        return $this->runController('profile', 'cancel', $this->getProfileData($account, $edit));
+    }
+
+    /**
+     * Handler for certain action
+     *
+     * @param array     $uid User profile Id on Drupal side
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function performActionDelete(array &$edit, \stdClass $account)
+    {
+        return $this->runController('profile', 'delete', $this->getProfileData($account, array()));
+    }
+
+    /**
+     * Handler for certain action
+     *
+     * @param array     $edit     The array of form values submitted by the user
+     * @param \stdClass $account  The user object on which the operation is performed
+     * @param mixed     $category The active category of user information being edited
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     public function performActionLogin(array &$edit, \stdClass $account, $category)
     {
         return $this->runController('login', 'login', $this->getProfileDataLogin($account, $edit));
@@ -263,6 +313,38 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     public function performActionLogout(array &$edit, \stdClass $account, $category)
     {
         return $this->runController('login', 'logoff');
+    }
+
+    /**
+     * Handler for certain action
+     *
+     * @param array     $edit     The array of form values submitted by the user
+     * @param \stdClass $account  The user object on which the operation is performed
+     * @param mixed     $category The active category of user information being edited
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function performActionUpdateRoles($roles)
+    {
+        return $this->runController('profile', 'update_roles', array('roles' => $roles));
+    }
+
+    /**
+     * Handler for certain action
+     *
+     * @param array     $edit     The array of form values submitted by the user
+     * @param \stdClass $account  The user object on which the operation is performed
+     * @param mixed     $category The active category of user information being edited
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function performActionDeleteRole($roles)
+    {
+        return $this->runController('profile', 'delete_role', array('roles' => $roles));
     }
 
     /**
