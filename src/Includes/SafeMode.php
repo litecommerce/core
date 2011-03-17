@@ -80,21 +80,31 @@ abstract class SafeMode
     public static function getAccessKey()
     {
         if (!\Includes\Utils\FileManager::isExists(static::getAccessKeyFileName())) {
-
-            // Put access key file
-            \Includes\Utils\FileManager::write(
-                static::getAccessKeyFileName(),
-                static::generateAccessKey()
-            );
-
-            // Send email notification
-            \XLite\Core\Mailer::sendSafeModeAccessKeyNotification(
-                \Includes\Utils\FileManager::read(static::getAccessKeyFileName())
-            );
-
+            static::regenerateAccessKey();
         }
 
         return \Includes\Utils\FileManager::read(static::getAccessKeyFileName());
+    }
+
+    /**
+     * Re-generate access key
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function regenerateAccessKey()
+    {
+        // Put access key file
+        \Includes\Utils\FileManager::write(
+            static::getAccessKeyFileName(),
+            static::generateAccessKey()
+        );
+
+        // Send email notification
+        \XLite\Core\Mailer::sendSafeModeAccessKeyNotification(
+            \Includes\Utils\FileManager::read(static::getAccessKeyFileName())
+        );
     }
 
     /**
