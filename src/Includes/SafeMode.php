@@ -42,6 +42,7 @@ abstract class SafeMode
 
     const PARAM_SAFE_MODE  = 'safe_mode';
     const PARAM_ACCESS_KEY = 'access_key';
+    const PARAM_SOFT_RESET = 'soft_reset';
 
 
     /**
@@ -85,9 +86,47 @@ abstract class SafeMode
                 static::getAccessKeyFileName(),
                 static::generateAccessKey()
             );
+
+            // Send email notification
+            \XLite\Core\Mailer::sendSafeModeAccessKeyNotification(
+                \Includes\Utils\FileManager::read(static::getAccessKeyFileName())
+            );
+
         }
 
         return \Includes\Utils\FileManager::read(static::getAccessKeyFileName());
+    }
+
+    /**
+     * Get safe mode URL
+     *
+     * @param boolean $soft Soft reset flag
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getResetURL($soft = false)
+    {
+        $params = array(
+            static::PARAM_SAFE_MODE => 1,
+            static::PARAM_ACCESS_KEY => static::getAccessKey()
+        );
+
+        if (true === $soft) {
+            $params += array(
+                static::PARAM_SOFT_RESET => 1
+            );
+        }
+
+        return \Includes\Utils\URLManager::getShopURL(
+            \XLite\Core\Converter::buildURL(
+                'main',
+                '',
+                $params,
+                \XLite::ADMIN_SELF
+            )
+        );
     }
 
     /**
