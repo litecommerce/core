@@ -18,9 +18,15 @@
     <td class="value">{formatPrice(order.getSubtotal(),order.getCurrency())}</td>
   </tr>
 
-  <tr FOREACH="order.getVisibleSavedModifiers(),modifier" class="{modifier.getCode()} {modifier.getSubcode()}">
-    <td class="title">{t(modifier.getName())}:</td>
-    <td class="value">{if:modifier.isAvailable(modifier.getSubcode())}{formatPrice(modifier.getSurcharge(),order.getCurrency())}{else:}{t(#n/a#)}{end:}</td>
+  <tr FOREACH="order.getSurcharges(),surcharge" class="{surcharge.getType()}">
+    <td class="title">{surcharge.getName()}:</td>
+    <td class="value">
+      {if:surcharge.getAvailable()}
+        {formatPrice(surcharge.getValue(),order.getCurrency())}
+      {else:}
+        {t(#n/a#)}
+      {end:}
+    </td>
   </tr>
 
   <tr class="total">

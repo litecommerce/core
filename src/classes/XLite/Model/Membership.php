@@ -48,7 +48,7 @@ class Membership extends \XLite\Model\Base\I18n
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer")
+     * @Column         (type="uinteger")
      */
     protected $membership_id;
 

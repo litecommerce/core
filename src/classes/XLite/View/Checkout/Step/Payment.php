@@ -38,6 +38,15 @@ namespace XLite\View\Checkout\Step;
 class Payment extends \XLite\View\Checkout\Step\AStep
 {
     /**
+     * Modifier (cache)
+     * 
+     * @var   \XLite\Model\Order\Modifier
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $modifier;
+
+    /**
      * Get step name
      *
      * @return string
@@ -151,4 +160,5 @@ class Payment extends \XLite\View\Checkout\Step\AStep
             && $this->getCart()->getProfile()
             && 0 < count($this->getCart()->getProfile()->getAddresses());
     }
+
 }

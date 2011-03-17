@@ -41,7 +41,6 @@ namespace XLite\Model;
  *              @Index (name="sku", columns={"sku"}),
  *              @Index (name="enabled", columns={"enabled"}),
  *              @Index (name="weight", columns={"weight"}),
- *              @Index (name="tax_class", columns={"tax_class"}),
  *              @Index (name="free_shipping", columns={"free_shipping"}),
  *              @Index (name="clean_url", columns={"clean_url"})
  *          }
@@ -116,17 +115,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @Column (type="decimal", precision=14, scale=4)
      */
     protected $weight = 0.0000;
-
-    /**
-     * Product tax class
-     *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="string", length="32", nullable=false)
-     */
-    protected $tax_class = '';
 
     /**
      * Is free shipping available for the product
@@ -207,6 +195,21 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @OneToOne (targetEntity="XLite\Model\Inventory", mappedBy="product", fetch="LAZY", cascade={"all"})
      */
     protected $inventory;
+
+    /**
+     * Product classes 
+     * 
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
+     * @ManyToMany (targetEntity="XLite\Model\ProductClass", inversedBy="products")
+     * @JoinTable (name="product_class_links",
+     *      joinColumns={@JoinColumn(name="product_id", referencedColumnName="product_id")},
+     *      inverseJoinColumns={@JoinColumn(name="class_id", referencedColumnName="id")}
+     * )
+     */
+    protected $classes;
 
     /**
      * Get object unique id 
@@ -350,18 +353,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     }
 
     /**
-     * Return product taxed price
-     * 
-     * @return float
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTaxedPrice()
-    {
-        return $this->getPrice();
-    }
-
-    /**
      * Return product list price
      *
      * @return float
@@ -370,7 +361,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     public function getListPrice()
     {
-        return $this->getTaxedPrice();
+        return $this->getPrice();
     }
 
     /**
@@ -535,7 +526,24 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
         $this->categoryProducts = new \Doctrine\Common\Collections\ArrayCollection();
         $this->images           = new \Doctrine\Common\Collections\ArrayCollection();
         $this->order_items      = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->classes          = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }
+
+    // {{{ Tax common functionaly
+
+    /**
+     * Get taxable basis 
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTaxableBasis()
+    {
+        return $this->getPrice();
+    }
+
+    // }}}
 }

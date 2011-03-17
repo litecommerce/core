@@ -14,16 +14,14 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Cart
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,17 +29,24 @@ namespace XLite\View;
 /**
  * Shipping rates list
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class ShippingList extends \XLite\View\AView
 {
     /**
+     * Modifier (cache)
+     * 
+     * @var   \XLite\Model\Order\Modifier
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $modifier;
+
+    /**
      * Return widget default template
      *
      * @return string
-     * @access protected
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
@@ -50,16 +55,28 @@ class ShippingList extends \XLite\View\AView
     }
 
     /**
-     * Get shipping rates 
-     * 
-     * @return array
-     * @access public
+     * Check if widget is visible
+     *
+     * @return boolean 
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getShippingRates()
+    protected function isVisible()
     {
-        return $this->getCart()->getShippingRates();
+        return parent::isVisible()
+            && $this->getModifier();
+    }
+
+    /**
+     * Get shipping rates 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRates()
+    {
+        return $this->getModifier()->getRates();
     }
 
     /**
@@ -68,13 +85,12 @@ class ShippingList extends \XLite\View\AView
      * @param \XLite\Model\Shipping\Rate $rate Shipping rate
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function isRateSelected(\XLite\Model\Shipping\Rate $rate)
     {
-        return $this->getCart()->getSelectedRate() == $rate;
+        return $this->getModifier()->getSelectedRate() == $rate;
     }
 
     /**
@@ -83,7 +99,6 @@ class ShippingList extends \XLite\View\AView
      * @param \XLite\Model\Shipping\Rate $rate Shipping rate
      *  
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -98,7 +113,6 @@ class ShippingList extends \XLite\View\AView
      * @param \XLite\Model\Shipping\Rate $rate Shipping rate
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -113,7 +127,6 @@ class ShippingList extends \XLite\View\AView
      * @param \XLite\Model\Shipping\Rate $rate Shipping rate
      *  
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -121,4 +134,21 @@ class ShippingList extends \XLite\View\AView
     {
         return $rate->getMarkup()->getMarkupValue();
     }
+
+    /**
+     * Get modifier 
+     * 
+     * @return \XLite\Model\Order\Modifier
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModifier()
+    {
+        if (!isset($this->modifier)) {
+            $this->modifier = $this->getCart()->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+        }
+
+        return $this->modifier;
+    }
+
 }

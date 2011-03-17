@@ -227,6 +227,9 @@ class Config extends \XLite\Model\Repo\Base\I18n
             $config->General->defaultCountry = \XLite\Core\Database::getRepo('XLite\Model\Country')
                 ->find($config->General->default_country);
 
+            $config->General->defaultState = \XLite\Core\Database::getRepo('XLite\Model\State')
+                ->findById($config->General->default_state, $config->General->default_custom_state);
+
             // Get default language object
             if (isset($config->General->default_language)) {
                 $config->General->defaultLanguage = \XLite\Core\Database::getRepo('XLite\Model\Language')

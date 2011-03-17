@@ -11,10 +11,10 @@
  * @since     3.0.0
  * @ListChild (list="cart.panel.totals", weight="20")
  *}
-<li FOREACH="cart.getVisibleSavedModifiers(),m" class="{m.getCode()}-modifier">
-  <strong>{m.getName()}:</strong>
-  {if:m.isAvailable()}
-    {formatPrice(m.getSurcharge(),cart.getCurrency())}
+<li FOREACH="cart.getSurcharges(),surcharge" class="{surcharge.getType()}-modifier">
+  <strong>{surcharge.getName()}:</strong>
+  {if:surcharge.getAvailable()}
+    {formatPrice(surcharge.getValue(),cart.getCurrency())}
   {else:}
     {t(#n/a#)}
   {end:}

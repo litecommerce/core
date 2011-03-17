@@ -48,7 +48,6 @@
 
 <widget target="countries" template="common/dialog.tpl" body="countries.tpl" head="Countries">
 <widget target="states" template="common/dialog.tpl" body="states.tpl" />
-<widget class="\XLite\View\Tabber" target="taxes" body="{pageTemplate}" switch="page" />
 <widget class="\XLite\View\Tabber" target="db" body="{pageTemplate}" switch="page">
 
 <widget target="update_inventory" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">

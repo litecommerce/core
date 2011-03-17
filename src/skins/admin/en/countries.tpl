@@ -51,7 +51,7 @@ function setDelete(form, input, check)
 </script>
 
 <p>
-Use this section to manage the list of existing countries. This list is used in the shipping and taxation settings and calculations, and in the registration form at the Customer Front-end.
+Use this section to manage the list of existing countries. This list is used in the shipping settings and calculations, and in the registration form at the Customer Front-end.
 <hr />
 
 <span IF="status=#added#" class="success-message"><br /><br />&gt;&gt;&nbsp;Country added successfully&nbsp;&lt;&lt;<br /><br /></span>
@@ -65,9 +65,6 @@ Use this section to manage the list of existing countries. This list is used in 
 		<tr>
     		<th>Code</th>
 		    <th>Country</th>
-		    <th>VAT taxable<br />
-		    	<input id="enable_countries_vat" type="checkbox" onclick="this.blur();setChecked('enable_countries_vat',this.checked);">
-		    </th>
 		    <th>Active<br />
 		    	<input id="enable_countries" type="checkbox" onclick="this.blur();setChecked('enable_countries',this.checked);">
 			</th>
@@ -81,11 +78,6 @@ Use this section to manage the list of existing countries. This list is used in 
 		    <td align="center"><a href="admin.php?target=states&country_code={country.code}" title="Click here to view states of country" onclick="this.blur();">{country.code}</a></td>
 		    <td>
 		        <input type="text" size="34" maxlength="50" name="countries[{country.code}][country]" value="{country.country:r}" />
-		    </td>
-		    <td align="center">
-		        <input id="country_vat_{country_idx}" type="checkbox" name="countries[{country.code}][eu_member]" value="Y" checked="{country.eu_member}" onclick="this.blur();">
-		        <script type="text/javascript">CountryVatEnabledCheckBoxes[CountryVatEnabledCheckBoxes.length]="country_vat_{country_idx}";</script>
-		        <script type="text/javascript" IF="country.enabled">setHeaderChecked("enable_countries_vat");</script>
 		    </td>
 		    <td align="center">
 		        <input id="country_enabled_{country_idx}" type="checkbox" name="countries[{country.code}][enabled]" value="Y" checked="{country.enabled}" onclick="this.blur();">
@@ -112,7 +104,6 @@ Use this section to manage the list of existing countries. This list is used in 
 		</tr>
 		</table>
 	</td>
-	<script type="text/javascript">CheckBoxes["enable_countries_vat"] = CountryVatEnabledCheckBoxes;</script>
 	<script type="text/javascript">CheckBoxes["enable_countries"] = CountryEnabledCheckBoxes;</script>
 </tr>
 </table>
@@ -131,7 +122,6 @@ Use this section to manage the list of existing countries. This list is used in 
 				<tr>
 					<th>Code</th>
 					<th>Country</th>
-					<th>VAT taxable</th>
 					<th>Active</th>
 				</tr>
 				<tr class="dialog-box">

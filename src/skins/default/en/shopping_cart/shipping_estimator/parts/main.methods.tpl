@@ -16,7 +16,7 @@
 
   <widget class="\XLite\View\Form\Cart\ShippingEstimator\Change" name="change" />
 
-    {if:cart.getShippingRates()}
+    {if:modifier.getRates()}
       <widget class="\XLite\View\ShippingList" />
 
       <div class="buttons main">

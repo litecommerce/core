@@ -9,14 +9,13 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="cart.panel.box", weight="10")
  *}
-<div class="estimator" IF="cart.isShippingVisible()">
+<div class="estimator">
 
-  {if:isShippingEstimate()&cart.shippingMethod}
+  {if:isShippingEstimate()&modifier.getMethod()}
 
     <ul>
-      <li><span>{t(#Shipping#)}:</span> {cart.shippingMethod.getName():h} ({formatPrice(getShippingCost(),cart.getCurrency())})</li>
+      <li><span>{t(#Shipping#)}:</span> {modifier.method.getName():h} ({getShippingCost()})</li>
       <li><span>{t(#Estimated for#)}:</span> {getEstimateAddress()}</li>
     </ul>
 
@@ -26,7 +25,7 @@
 
   {else:}
 
-    {if:cart.isShippingRatesExists()}
+    {if:modifier.isRatesExists()}
       <widget class="\XLite\View\Form\Cart\ShippingEstimator\Open" name="shippingEstimator" />
         <div class="buttons">
           <widget class="\XLite\View\Button\Submit" label="Estimate shipping cost" style="action estimate" />
