@@ -18,9 +18,7 @@
 
 <table class="product-classes-list">
 
-<tr FOREACH="getData(),idx,class">
-{displayViewListContent(#productClasses.list.columns#,_ARRAY_(#class#^class))}
-</tr>
+<widget FOREACH="getData(),idx,class" class="\XLite\View\ProductClass\MainInput" classId="{class.getId()}" className="{class.getName()}" />
 
 <tr>
 {displayViewListContent(#productClasses.list.columns.new#)}
@@ -28,9 +26,9 @@
 
 </table>
 
-
-<button type="submit">Update</button>
+<noscript>
+<button type="submit">{t(#Update#)}</button>
+</noscript>
 
 </form>
-
 </div>

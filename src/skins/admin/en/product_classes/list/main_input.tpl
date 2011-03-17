@@ -1,7 +1,5 @@
-{* vim: set ts=2 sw=2 sts=2 et: *}
-
 {**
- * Product class new element
+ * Product classes main input widget
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,9 +7,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="productClasses.list.columns.new", weight="100")
  *}
-<td class="new-product-class">
-<widget class="\XLite\View\FormField\Input\Text\Advanced" fieldName="{getNamePostedData(#new_name#)}" value="" label="{t(#New product class#)}" />
-</td>
-<td>&nbsp;</td>
+<tr>
+{displayViewListContent(#product_classes.main_input#,_ARRAY_(#name#^getParam(#className#),#id#^getParam(#classId#)))}
+</tr>
