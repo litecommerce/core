@@ -133,7 +133,7 @@ class Method extends \XLite\Model\Base\I18n
      * @see   ____var_see____
      * @since 3.0.0
      *
-     * @ManyToMany (targetEntity="XLite\Model\ProductClass", inversedBy="shipping_methods")
+     * @ManyToMany (targetEntity="XLite\Model\ProductClass", inversedBy="methods")
      * @JoinTable (name="shipping_class_links",
      *      joinColumns={@JoinColumn(name="method_id", referencedColumnName="method_id")},
      *      inverseJoinColumns={@JoinColumn(name="class_id", referencedColumnName="id")}
