@@ -273,4 +273,20 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
         return $rates;
     }
 
+    /**
+     * Returns shipping rates
+     *
+     * @param array   $modifier    Shipping order modifier
+     * @param boolean $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRatesByArray(array $inputData, $ignoreCache = false)
+    {
+        return $this->doQuery($inputData, $ignoreCache);
+    }
+
 }
