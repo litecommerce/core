@@ -89,7 +89,7 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
         $this->waitForAJAXProgress();
 
         // Check License agreement block
-        $this->assertElementPresent('//span[text()="SuperModule 48 License agreement" and @id="ui-dialog-title-2"]', 'No title for module License');
+        $this->assertElementPresent('//span[text()="SuperModule 48 license agreement" and @id="ui-dialog-title-2"]', 'No title for module License');
 
         $this->assertElementPresent('//div[@class="module-license"]', 'No License block');
 
