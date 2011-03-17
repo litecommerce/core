@@ -38,6 +38,15 @@ namespace XLite\View\Checkout;
 class BillingAddress extends \XLite\View\AView
 {
     /**
+     * Modifier (cache)
+     * 
+     * @var   \XLite\Model\Order\Modifier
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $modifier;
+
+    /**
      * Return widget default template
      *
      * @return string
@@ -82,6 +91,34 @@ class BillingAddress extends \XLite\View\AView
         }
 
         return $address;
+    }
+
+    /**
+     * Check - same address box is visible or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isSameAddressVisible()
+    {
+        return $this->getModifier() && $this->getModifier()->canApply();
+    }
+
+    /**
+     * Get modifier 
+     * 
+     * @return \XLite\Model\Order\Modifier
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModifier()
+    {
+        if (!isset($this->modifier)) {
+            $this->modifier = $this->getCart()->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+        }
+
+        return $this->modifier;
     }
 
 }

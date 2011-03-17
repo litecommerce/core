@@ -90,7 +90,7 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
      * @since  3.0.0
      */
     public function getCSSFiles()
-    {   
+    {
         $list = parent::getCSSFiles();
 
         $list[] = $this->getDir() . LC_DS . 'css' . LC_DS . 'style.css';

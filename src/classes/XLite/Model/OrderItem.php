@@ -47,7 +47,7 @@ namespace XLite\Model;
  * @DiscriminatorColumn   (name="object_type", type="string", length="16")
  * @DiscriminatorMap      ({"product" = "XLite\Model\OrderItem"})
  */
-class OrderItem extends \XLite\Model\Base\ModifierOwner
+class OrderItem extends \XLite\Model\Base\SurchargeOwner
 {
     const PRODUCT_TYPE = 'product';
 
@@ -133,15 +133,16 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
     protected $order;
 
     /**
-     * Order item saved modifiers
+     * Order item surcharges
      *
-     * @var    \XLite\Model\OrderItemModifier
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\Collection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
-     * @OneToMany (targetEntity="XLite\Model\OrderItemModifier", mappedBy="owner", cascade={"all"})
+     * @OneToMany (targetEntity="XLite\Model\OrderItem\Surcharge", mappedBy="owner", cascade={"all"})
+     * @OrderBy   ({"id" = "ASC"})
      */
-    protected $saved_modifiers;
+    protected $surcharges;
 
     /**
      * Dump product (deleted)
@@ -151,6 +152,22 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * @since 3.0.0
      */
     protected $dumpProduct;
+
+    /**
+     * Reset surcharges list
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function resetSurcharges()
+    {
+        foreach ($this->getSurcharges() as $surcharge) {
+            \XLite\Core\Database::getEM()->remove($surcharge);
+        }
+
+        $this->getSurcharges()->clear();
+    }
 
     /**
      * Wrapper. If the product was deleted,
@@ -238,9 +255,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      */
     protected function saveItemState(\XLite\Model\Base\IOrderItem $item)
     {
-        $price = \XLite\Core\Config::getInstance()->Taxes->prices_include_tax
-            ? $item->getTaxedPrice()
-            : $item->getPrice();
+        $price = $item->getPrice();
 
         $this->setPrice(\Includes\Utils\Converter::formatPrice($price));
         $this->setName($item->getName());
@@ -393,42 +408,46 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
-     * Get discountable price 
-     * TODO - rework - move to separate order item discount modifier
-     * 
-     * @return float
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getDiscountablePrice()
-    {
-        return $this->getPrice();
-    }   
-        
-    /**
-     * Get taxable total 
-     * TODO - rework - move to separate order item tax modifier
-     * 
-     * @return float
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTaxableTotal()
-    {
-        return $this->getTotal();
-    }
-
-    /**
-     * Calculate and save order item subtotal 
+     * Initial calculate order item
      * 
      * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function calculateSubtotal()
+    public function calculate()
     {
-        $subtotal = $this->getPrice() * $this->getAmount();
+        $subtotal = $this->getOrder()->getCurrency()->roundValue($this->getPrice() * $this->getAmount());
+
         $this->setSubtotal($subtotal);
+        $this->setTotal($subtotal);
+    }
+
+    /**
+     * Get item taxable basis 
+     * 
+     * @return float
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTaxableBasis()
+    {
+        $product = $this->getProduct();
+
+        return $product ? $product->getTaxableBasis() : null;
+    }
+
+    /**
+     * Get product classes 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProductClasses()
+    {
+        $product = $this->getProduct();
+
+        return $product ? $product->getClasses() : null;
     }
 
     /**
@@ -449,38 +468,6 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
-     * Set subtotal 
-     * 
-     * @param float $value Subtotal
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setSubtotal($value)
-    {
-        $this->subtotal = $this->getOrder() && $this->getOrder()->getCurrency()
-            ? $this->getOrder()->getCurrency()->roundValue($value)
-            : $value;
-    }
-
-    /**
-     * Set total 
-     * 
-     * @param float $value Total
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setTotal($value)
-    {
-        $this->total = $this->getOrder() && $this->getOrder()->getCurrency()
-            ? $this->getOrder()->getCurrency()->roundValue($value)
-            : $value;
-    }
-
-    /**
      * Constructor
      *
      * @param array $data Entity properties
@@ -491,7 +478,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      */
     public function __construct(array $data = array())
     {
-        $this->saved_modifiers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->surcharges = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }

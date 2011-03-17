@@ -54,15 +54,6 @@ interface IOrderItem
     public function getPrice();
 
     /**
-     * Get taxed price 
-     * 
-     * @return float
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTaxedPrice();
-
-    /**
      * Get weight 
      * 
      * @return float

@@ -45,6 +45,15 @@ class Invoice extends \XLite\View\AView
     const PARAM_ORDER = 'order';
 
     /**
+     * Shipping modifier (cache)
+     * 
+     * @var   \XLite\Model\Order\Modifier
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $shippingModifier;
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -116,5 +125,21 @@ class Invoice extends \XLite\View\AView
         $list[] = 'order/invoice/style.css';
 
         return $list;
+    }
+
+    /**
+     * Get shipping modifier 
+     * 
+     * @return \XLite\Model\Order\Modifier
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getShippingModifier()
+    {
+        if (!isset($this->shippingModifier)) {
+            $this->shippingModifier = $this->getOrder()->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+        }
+
+        return $this->shippingModifier;
     }
 }

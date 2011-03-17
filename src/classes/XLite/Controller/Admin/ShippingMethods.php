@@ -113,11 +113,15 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
         foreach ($methods as $method) {
 
             if (isset($postedData['methods'][$method->getMethodId()])) {
+
                 $data = $postedData['methods'][$method->getMethodId()];
 
                 $method->setPosition(intval($data['position']));
                 $method->setEnabled(isset($data['enabled']) ? 1 : 0);
                 $method->getTranslation($code)->name = $data['name'];
+
+                $method->getClasses()->clear();
+                $method->setClasses($this->getClasses($method));
 
                 \XLite\Core\Database::getEM()->persist($method);
             }
@@ -156,6 +160,36 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
         }
     }
 
+    /**
+     * getClasses
+     * 
+     * @param \XLite\Model\Shipping\Method $method ____param_comment____
+     *  
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getClasses(\XLite\Model\Shipping\Method $method)
+    {
+        $classes = new \Doctrine\Common\Collections\ArrayCollection();
+
+        $postedData = $this->getPostedData('class_ids');
+
+        foreach ((array) $postedData[$method->getMethodId()] as $classId) {
+
+            $class = \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findOneById($classId);
+
+            if (!$class->getMethods()->contains($method)) {
+
+                $class->getMethods()->add($method);
+            }
+
+            $classes->add($class);
+        }
+
+        return $classes;
+    }
 
     /**
      * Common method to determine current location

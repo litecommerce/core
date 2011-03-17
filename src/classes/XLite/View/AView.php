@@ -1642,7 +1642,23 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getNamePostedData($field, $id = null)
     {
-        return $this->getPrefixPostedData() . (isset($id) ? '[' . $id . ']' : '') . '[' . $field . ']';
+        $args = func_get_args();
+
+        $field = $args[0];
+
+        $tail = '';
+
+        if (2 <= count($args)) {
+
+            $id = $args[1];
+        }
+
+        if (2 < count($args)) {
+
+            $tail = '[' . implode('][', array_slice($args, 2)) . ']';
+        }
+
+        return $this->getPrefixPostedData() . (isset($id) ? '[' . $id . ']' : '') . '[' . $field . ']' . $tail;
     }
 
     /**

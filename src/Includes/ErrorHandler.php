@@ -72,9 +72,48 @@ abstract class ErrorHandler
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function logInfo($message, $code)
+    protected static function logInfo($message, $code, array $backtrace = array())
     {
-        // TODO
+        $backtrace = $backtrace ?: array_slice(debug_backtrace(false), 2);
+        $trace = array();
+
+        foreach ($backtrace as $l) {
+            $part = null;
+
+            if (isset($l['file'])) {
+
+                $part = $l['file'];
+
+            } elseif (isset($l['class']) && isset($l['function'])) {
+
+                $part = $l['class'] . $l['type'] . $l['function'] . '()';
+
+            } elseif (isset($l['function'])) {
+
+                $part = 'function ' . $l['function'] . '()';
+
+            }
+
+            if ($part) {
+                if (isset($l['line'])) {
+                    $part .= ' : ' . $l['line'];
+                }
+
+                $trace[] = $part;
+            }
+        }
+
+        $message = 'Error (code: ' . $code . '): ' . $message . PHP_EOL;
+        if ($trace) {
+            $message .= 'Backtrace: ' . PHP_EOL
+                . "\t" . implode(PHP_EOL . "\t", $trace) . PHP_EOL;
+        }
+
+        file_put_contents(
+            LC_VAR_DIR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php',
+            $message . PHP_EOL,
+            FILE_APPEND
+        );
     }
 
     /**
@@ -188,6 +227,7 @@ abstract class ErrorHandler
         !LC_DEVELOPER_MODE ?: \Includes\Decorator\Utils\CacheManager::checkRebuildIndicatorState();
 
         if (isset($error['type']) && E_ERROR == $error['type']) {
+            static::logInfo($error['message'], $error['type']);
             static::showErrorPage(__CLASS__ . '::ERROR_FATAL_ERROR', $error['message']);
         }
     }
@@ -204,6 +244,7 @@ abstract class ErrorHandler
      */
     public static function handleException(\Exception $exception)
     {
+        static::logInfo($exception->getMessage(), $exception->getCode(), $exception->getTrace());
         static::showErrorPage($exception->getCode(), $exception->getMessage());
     }
 

@@ -18,9 +18,13 @@
     {order.getSubtotal():p}
   </li>
 
-  <li FOREACH="order.getVisibleSavedModifiers(),modifier" class="{modifier.getCode()} {modifier.getSubcode()}">
-    <em>{t(modifier.getName())}:</em>
-    {if:modifier.isAvailable(modifier.getSubcode())}{modifier.getSurcharge():p}{else:}{t(#n/a#)}{end:}
+  <li FOREACH="order.getSurcharges(),surcharge" class="{surcharge.getType()}">
+    <em>{t(surcharge.getName())}:</em>
+    {if:surcharge.getAvailable()}
+      {formatPrice(surcharge.getValue(),order.getCurrency())}
+    {else:}
+      {t(#n/a#)}
+    {end:}
   </li>
 
   <li class="grand-total">

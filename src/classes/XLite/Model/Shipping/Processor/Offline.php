@@ -65,20 +65,20 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
     /**
      * Returns offline shipping rates 
      * 
-     * @param \XLite\Model\Order $order       Order object
-     * @param boolean            $ignoreCache Flag: if true then do not get rates from cache (not used in offline processor) OPTIONAL
+     * @param \XLite\Logic\Order\Modifier\Shipping $modifier    Shipping order modifier
+     * @param boolean                              $ignoreCache Flag: if true then do not get rates from cache (not used in offline processor) OPTIONAL
      *  
      * @return array
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getRates($order, $ignoreCache = false)
+    public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier, $ignoreCache = false)
     {
         $rates = array();
 
         // Find markups for all enabled offline shipping methods
         $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')
-            ->findMarkupsByProcessor($this->getProcessorId(), $order);
+            ->findMarkupsByProcessor($this->getProcessorId(), $modifier);
 
         if (!empty($markups)) {
 

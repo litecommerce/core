@@ -270,11 +270,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
             ->getGroup()
             ->getProduct();
 
-        // TODO - rework this
-
-        global $calcAllTaxesInside;
-
-        return $calcAllTaxesInside ? $product->getListPrice() : $product->getPrice();
+        return $product->getPrice();
     }
 
     /**

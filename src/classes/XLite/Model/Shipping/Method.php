@@ -126,6 +126,22 @@ class Method extends \XLite\Model\Base\I18n
     protected $shipping_markups;
 
 
+    /** 
+     * Shipping/Product classes
+     * 
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
+     * @ManyToMany (targetEntity="XLite\Model\ProductClass", inversedBy="methods")
+     * @JoinTable (name="shipping_class_links",
+     *      joinColumns={@JoinColumn(name="method_id", referencedColumnName="method_id")},
+     *      inverseJoinColumns={@JoinColumn(name="class_id", referencedColumnName="id")}
+     * )
+     */
+    protected $classes;
+
+
     /**
      * Constructor
      *            
@@ -138,6 +154,7 @@ class Method extends \XLite\Model\Base\I18n
     public function __construct(array $data = array())
     {                                                 
         $this->shipping_markups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->classes          = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }

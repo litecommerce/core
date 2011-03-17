@@ -39,6 +39,15 @@ namespace XLite\View\Checkout;
 class Steps extends \XLite\View\AView
 {
     /**
+     * Shipping modifier (cache)
+     * 
+     * @var   \XLite\Model\Order\Modifier
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $shippingModifier;
+
+    /**
      * Steps (cache)
      * 
      * @var    array
@@ -228,7 +237,7 @@ class Steps extends \XLite\View\AView
     {
         $steps = array();
 
-        if ($this->getCart()->isShippingVisible()) {
+        if ($this->getShippingModifier() && $this->getShippingModifier()->canApply()) {
             $steps[] = '\XLite\View\Checkout\Step\Shipping';
         }
 
@@ -237,5 +246,22 @@ class Steps extends \XLite\View\AView
     
         return $steps;
     }
+
+    /**
+     * Get modifier 
+     * 
+     * @return \XLite\Model\Order\Modifier
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getShippingModifier()
+    {
+        if (!isset($this->shippingModifier)) {
+            $this->shippingModifier = $this->getCart()->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+        }
+
+        return $this->shippingModifier;
+    }
+
 }
 

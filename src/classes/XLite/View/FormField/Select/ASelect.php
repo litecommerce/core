@@ -80,6 +80,19 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
     }
 
     /**
+     * Checks if the list is empty
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isListEmpty()
+    {
+        return 0 >= count($this->getOptions());
+    }
+
+    /**
      * Define widget params
      *
      * @return void

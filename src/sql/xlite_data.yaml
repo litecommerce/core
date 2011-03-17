@@ -37,7 +37,6 @@ XLite\Model\Config:
   - { name: default_zipcode, category: General, type: text, orderby: 320, value: '10000', translations: [{ code: en, option_name: 'Default zip/postal code in the registration form', option_comment: '' }] }
   # - { name: inventory_change_order_status, category: General, type: select, orderby: 330, value: 'Q', translations: [{ code: en, option_name: 'Decrease product inventory amount when order is', option_comment: '' }] }
   - { name: direct_product_url, category: General, type: checkbox, orderby: 255, value: N, translations: [{ code: en, option_name: 'Allow direct URL access to products from disabled categories', option_comment: '' }] }
-  - { name: discounts_after_taxes, category: Taxes, type: checkbox, orderby: 210, value: N, translations: [{ code: en, option_name: 'Discounts charged after taxes application', option_comment: '' }] }
   - { name: display_check_number, category: General, type: checkbox, orderby: 215, value: Y, translations: [{ code: en, option_name: 'Display check number for eCheck payment method', option_comment: '' }] }
   - { name: enable_anon_checkout, category: General, type: checkbox, orderby: 270, value: Y, translations: [{ code: en, option_name: 'Enable anonymous checkout', option_comment: '' }] }
   - { name: enable_categories_extra_fields, category: General, type: checkbox, orderby: 470, value: Y, translations: [{ code: en, option_name: 'Enable extra fields in the category management dialogue', option_comment: '' }] }
@@ -50,7 +49,6 @@ XLite\Model\Config:
   - { name: full_customer_security, category: Security, type: checkbox, orderby: 5, value: N, translations: [{ code: en, option_name: 'Customer Zone fully on HTTPS', option_comment: '' }] }
   - { name: htaccess_protection, category: Security, type: checkbox, orderby: 110, value: Y, translations: [{ code: en, option_name: 'Enable .htaccess verification system', option_comment: '' }] }
   - { name: httpsClient, category: Security, type: select, orderby: 20, value: autodetect, translations: [{ code: en, option_name: 'HTTPS client to use (for integration with secure payment/shipping services)', option_comment: '' }] }
-  - { name: include_tax_message, category: Taxes, type: text, translations: [{ code: en, option_name: 'Includes tax message', option_comment: '' }] }
   - { name: last_date, category: Htaccess, value: '0' }
   - { name: license, category: License, type: text }
   - { name: location_address, category: Company, type: text, orderby: 390, value: '*Your company address*', translations: [{ code: en, option_name: 'Street address', option_comment: '' }] }
@@ -72,7 +70,6 @@ XLite\Model\Config:
   - { name: params, category: XCartImport, type: serialized, value: 'a:0:{}' }
   - { name: partner_product_banner, category: Miscellaneous, type: serialized, value: 'a:11:{s:11:"link_target";s:4:"_top";s:5:"image";s:9:"thumbnail";s:6:"border";i:1;s:12:"product_name";i:1;s:11:"description";s:0:"";s:7:"message";s:8:"Buy new!";s:16:"background_color";s:6:"ffffff";s:10:"text_color";s:6:"000000";s:10:"link_color";s:6:"6633ff";s:5:"width";i:120;s:6:"height";i:240;}' }
   - { name: partner_profile, category: Miscellaneous, type: serialized, value: 'a:8:{s:17:"billing_firstname";s:2:"on";s:16:"billing_lastname";s:2:"on";s:13:"billing_phone";s:2:"on";s:15:"billing_address";s:2:"on";s:12:"billing_city";s:2:"on";s:13:"billing_state";s:2:"on";s:15:"billing_country";s:2:"on";s:15:"billing_zipcode";s:2:"on";}' }
-  - { name: prices_include_tax, category: Taxes, type: checkbox, orderby: 200, value: N, translations: [{ code: en, option_name: 'Prices include tax', option_comment: '' }] }
   - { name: price_format, category: General, type: text, orderby: 630, value: '$ %s', translations: [{ code: en, option_name: 'Currency format', option_comment: '' }] }
   - { name: products_per_page, category: General, type: text, orderby: 250, value: '10', translations: [{ code: en, option_name: 'Products per category listing page', option_comment: '' }] }
   - { name: products_per_page_admin, category: General, type: text, orderby: 410, value: '10', translations: [{ code: en, option_name: 'Products per page', option_comment: '' }] }
@@ -94,8 +91,6 @@ XLite\Model\Config:
   - { name: start_year, category: Company, type: text, orderby: 380, value: '2009', translations: [{ code: en, option_name: 'Year when store started its operation', option_comment: '' }] }
   - { name: subcategories_look, category: General, type: select, orderby: 220, value: icons, translations: [{ code: en, option_name: 'Category listings format', option_comment: '' }] }
   - { name: support_department, category: Company, type: text, orderby: 490, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'HelpDesk/Support service e-mail', option_comment: '' }] }
-  - { name: taxes, category: Taxes, type: text, value: 'a:1:{i:0;a:2:{s:4:"name";s:3:"Tax";s:13:"display_label";s:3:"Tax";}}' }
-  - { name: tax_rates, category: Taxes, orderby: 20, value: 'a:3:{i:0;s:6:"Tax:=0";i:1;a:2:{s:9:"condition";s:30:"product class=shipping service";s:6:"action";s:6:"Tax:=0";}i:2;a:2:{s:9:"condition";s:22:"product class=Tax free";s:6:"action";s:6:"Tax:=0";}}', translations: [{ code: en, option_name: 'Tax rates', option_comment: '' }] }
   - { name: thousand_delim, category: General, type: select, orderby: 640, translations: [{ code: en, option_name: 'Currency thousands delimiter', option_comment: '' }] }
   - { name: time_format, category: General, type: select, orderby: 670, value: '%H:%M', translations: [{ code: en, option_name: 'Time format', option_comment: '' }] }
   - { name: time_zone, category: General, type: select, orderby: 680, translations: [{ code: en, option_name: 'Time zone', option_comment: '' }] }
@@ -103,7 +98,6 @@ XLite\Model\Config:
   - { name: users_department, category: Company, type: text, orderby: 470, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Customer relations e-mail', option_comment: '' }] }
   - { name: users_per_page, category: General, type: text, orderby: 420, value: '30', translations: [{ code: en, option_name: 'Users per page', option_comment: '' }] }
   - { name: user_layout, category: ImportExport, type: UL, value: logi }
-  - { name: use_billing_info, category: Taxes, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Use billing info to calculate taxes', option_comment: '' }] }
   - { name: use_smtp, category: Email, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Use SMTP server', option_comment: '' }] }
   - { name: use_smtp_auth, category: Email, type: checkbox, orderby: 140, value: N, translations: [{ code: en, option_name: 'Use authentication', option_comment: '' }] }
   - { name: valid_email_domains, category: Email, type: text, orderby: 30, value: com;net;edu;mil;gov;org;biz, translations: [{ code: en, option_name: 'Valid domain names for email', option_comment: '' }] }
@@ -117,10 +111,9 @@ XLite\Model\Config:
   - { name: anonymous_city, category: Shipping, type: text, orderby: 50, translations: [{ code: en, option_name: City, option_comment: '' }] }
   - { name: anonymous_country, category: Shipping, type: country, orderby: 90, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
   - { name: anonymous_custom_state, category: Shipping, type: text, orderby: 70, translations: [{ code: en, option_name: 'Other state (specify)', option_comment: '' }] }
-  - { name: anonymous_state, category: Shipping, type: state, orderby: 60, value: '34', translations: [{ code: en, option_name: State, option_comment: '' }] }
+  - { name: anonymous_state, category: Shipping, type: state, orderby: 60, value: '152', translations: [{ code: en, option_name: State, option_comment: '' }] }
   - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 80, value: '10001', translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
   - { name: shipping_enabled, category: Shipping, orderby: 10, value: Y }
-  - { name: def_calc_shippings_taxes, category: Shipping, type: checkbox, orderby: 20, value: N, translations: [{ code: en, option_name: 'Display shipping rates to unregistered customers<br>(presuming that a customer comes from the default country)', option_comment: '' }] }
   - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime', option_comment: '' }] }
   - { name: cli_key, category: Security, orderby: 110, translations: [{ code: en, option_name: 'CLI mode key', option_comment: '' }] }
 XLite\Model\Category:
@@ -1070,6 +1063,8 @@ XLite\Model\Country:
   - { country: 'Serbia and Montenegro', code: YU }
   - { country: Zambia, code: ZM }
   - { country: Zimbabwe, code: ZW }
+XLite\Model\Order\Modifier:
+  - { class: '\XLite\Logic\Order\Modifier\Shipping' }
 XLite\Model\Zone:
   directives: { insert: true }
   - { zone_name: 'Default zone (all addresses)', is_default: true }

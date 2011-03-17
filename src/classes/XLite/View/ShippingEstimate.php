@@ -14,16 +14,14 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Cart
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,31 +29,17 @@ namespace XLite\View;
 /**
  * Shipping estimator
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @ListChild (list="center")
  */
 class ShippingEstimate extends \XLite\View\AView
 {
     /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'shopping_cart/shipping_estimator/body.tpl';
-    }
-
-    /**
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -64,19 +48,42 @@ class ShippingEstimate extends \XLite\View\AView
         $result = parent::getAllowedTargets();
 
         $result[] = 'shipping_estimate';
-    
+
         return $result;
+    }
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'shopping_cart/shipping_estimator/body.tpl';
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getModifier();
     }
 
     /**
      * Get countries list
      * 
      * @return array(\XLite\Model\Country)
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCountries()
+    protected function getCountries()
     {
         return \XLite\Core\Database::getRepo('XLite\Model\Country')
             ->findByEnabled(true);
@@ -86,13 +93,12 @@ class ShippingEstimate extends \XLite\View\AView
      * Get selected country code 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCountryCode()
+    protected function getCountryCode()
     {
-        $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart());
+        $address = $this->getAddress();
 
         $c = 'US';
 
@@ -110,13 +116,12 @@ class ShippingEstimate extends \XLite\View\AView
      * Get state 
      * 
      * @return \XLite\Model\State
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getState()
+    protected function getState()
     {
-        $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart());
+        $address = $this->getAddress();
 
         $state = null;
 
@@ -135,7 +140,6 @@ class ShippingEstimate extends \XLite\View\AView
 
         } elseif (
             !$address
-            && \XLite\Core\Config::getInstance()->Shipping->def_calc_shippings_taxes
             && \XLite\Core\Config::getInstance()->Shipping->anonymous_custom_state
         ) {
 
@@ -152,13 +156,12 @@ class ShippingEstimate extends \XLite\View\AView
      * Get ZIP code 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getZipcode()
+    protected function getZipcode()
     {
-        $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart());
+        $address = $this->getAddress();
 
         return ($address && isset($address['zipcode']))
             ? $address['zipcode']
@@ -169,13 +172,12 @@ class ShippingEstimate extends \XLite\View\AView
      * Check - shipping is estimate or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isEstimate()
+    protected function isEstimate()
     {
-        return (bool)\XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart());
+        return (bool)$this->getAddress();
     }
 
 }

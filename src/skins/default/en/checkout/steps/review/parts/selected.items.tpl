@@ -35,11 +35,11 @@
 
   <ul class="modifiers">
 
-    <li FOREACH="cart.getVisibleSavedModifiers(),m" class="{m.getCode()}-modifier">
-      {m.getName()}
+    <li FOREACH="cart.getSurcharges(),surcharge" class="{surcharge.getType()}-modifier">
+      {surcharge.getName()}
       <span>
-        {if:m.isAvailable()}
-          {formatPrice(m.getSurcharge(),cart.getCurrency())}
+        {if:surcharge.getAvailable()}
+          {formatPrice(surcharge.getValue(),cart.getCurrency())}
         {else:}
           {t(#n/a#)}
         {end:}

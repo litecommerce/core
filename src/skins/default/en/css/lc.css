@@ -47,7 +47,7 @@ select.validation-error
 
 /* Single input progress mark */
 .single-progress-mark {
-  background: transparent url(../images/progress_indicator.gif) no-repeat right top;
+  background: transparent url(../../../progress_indicator.gif) no-repeat right top;
   width: 23px;
   height: 18px;
   display: block;
