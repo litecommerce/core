@@ -130,7 +130,7 @@ class Currency extends \XLite\Model\Base\I18n
      */
     public function roundValueAsInteger($value)
     {
-        return intval(floor($this->roundValue($value) * pow(10, $this->getE())));
+        return intval(round($this->roundValue($value) * pow(10, $this->getE()), 0));
     }
 
     /**
