@@ -148,13 +148,25 @@ abstract class ModulesManager extends AUtils
 
         if (\Includes\SafeMode::isSafeModeStarted()) {
 
+            $condition = '';
+
+            // Get unsafe modules condition string
+            if (\Includes\SafeMode::isSoftResetRequested()) {
+                $condition = ' WHERE ' . \Includes\SafeMode::getUnsafeModulesSQLConditionString();
+            }
+
             // Auto-disable modules in the database
             \Includes\Utils\Database::execute(
-                'UPDATE ' . static::getTableName() . ' SET enabled = 0'
+                'UPDATE ' . static::getTableName() . ' SET enabled = 0' . $condition
             );
             \Includes\SafeMode::cleanupIndicator();
 
-        } elseif ($path = static::getModulesFilePath()) {
+        } 
+        
+        if (
+            !\Includes\SafeMode::isSafeModeStarted()
+            && $path = static::getModulesFilePath()
+        ) {
 
             $list = array();
 
