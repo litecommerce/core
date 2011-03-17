@@ -37,6 +37,41 @@ namespace XLite\View\FormField\Select;
  */
 class Classes extends \XLite\View\FormField\Select\Multiple
 {
+
+    /**
+     * getCSSFiles 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = $this->getDir() . '/select_classes.css';
+
+        return $list;
+    }
+
+    /**
+     * getJSFiles
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = $this->getDir() . '/select_classes.js';
+
+        return $list;
+    }
+
     /**
      * Return field template
      *
@@ -77,6 +112,25 @@ class Classes extends \XLite\View\FormField\Select\Multiple
         return $this->getValue()->contains(
             \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findOneById($classId)
         );
+    }
+
+    /**
+     * Return String representation of selected product classes
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSelectedClassesList()
+    {
+        $classNames = array();
+
+        foreach ($this->getValue()->toArray() as $class) {
+            $classNames[] = $class->getName();
+        }
+
+        return implode(', ', $classNames);
     }
 
 }
