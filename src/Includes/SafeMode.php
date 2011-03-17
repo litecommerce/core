@@ -58,19 +58,17 @@ abstract class SafeMode
     /**
      * Unsafe modules list file name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
-    protected static $unsafeModulesINIFile;
+    protected static $unsafeModulesIniFile;
 
 
     /**
      * Check request parameters
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -84,7 +82,6 @@ abstract class SafeMode
      * Check if the safe mode requested in the "Soft reset" variant
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -97,7 +94,6 @@ abstract class SafeMode
      * Check request parameters
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -110,7 +106,6 @@ abstract class SafeMode
      * Get Access Key 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -127,7 +122,6 @@ abstract class SafeMode
      * Re-generate access key
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -148,10 +142,9 @@ abstract class SafeMode
     /**
      * Get safe mode URL
      *
-     * @param boolean $soft Soft reset flag
+     * @param boolean $soft Soft reset flag OPTIONAL
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -182,7 +175,6 @@ abstract class SafeMode
      * Clean up the safe mode indicator
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -195,7 +187,6 @@ abstract class SafeMode
      * Initialization
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -226,7 +217,6 @@ abstract class SafeMode
      * Check Access Key 
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -239,7 +229,6 @@ abstract class SafeMode
      * Get safe mode indicator file name 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -252,7 +241,6 @@ abstract class SafeMode
      * Get safe mode access key file name 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -265,7 +253,6 @@ abstract class SafeMode
      * Generate Access Key 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -278,7 +265,6 @@ abstract class SafeMode
      * Data to write into the indicator file
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -291,13 +277,13 @@ abstract class SafeMode
         return date('r') . $softResetMark;
     }
 
-    // ------------------------------ Unsafe modules -
+
+    // {{{ Unsafe modules methods
 
     /**
      * Remove file with active modules list
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -312,7 +298,6 @@ abstract class SafeMode
      * @param array $modules Modules array
      *  
      * @return integer|boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -324,7 +309,7 @@ abstract class SafeMode
 
         $i = 0;
         foreach ($modules as $author => $names) {
-            $string .= '[' . $author. ']' . PHP_EOL;
+            $string .= '[' . $author . ']' . PHP_EOL;
             foreach ($names as $name => $enabled) {
                 $string .= $name . ' = ' . $enabled . PHP_EOL;
                 $i++;
@@ -337,28 +322,11 @@ abstract class SafeMode
     }
 
     /**
-     * Get modules list file path 
-     * 
-     * @return string|void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getUnsafeModulesFilePath()
-    {
-        if (!isset(static::$unsafeModulesINIFile)) {
-            static::$unsafeModulesINIFile = LC_VAR_DIR . static::UNSAFE_MODULES_FILE_NAME;
-        }
-
-        return static::$unsafeModulesINIFile;
-    }
-
-    /**
      * Get Unsafe Modules List 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
+     * @since  3.0.0
      */
     public static function getUnsafeModulesList()
     {
@@ -379,8 +347,8 @@ abstract class SafeMode
      * @param string $name   Module name 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
+     * @since  3.0.0
      */
     public static function markModuleAsUnsafe($author, $name)
     {
@@ -403,8 +371,8 @@ abstract class SafeMode
      * @param array $modules Modules 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
+     * @since  3.0.0
      */
     public static function markModulesAsUnsafe(array $modules)
     {
@@ -432,27 +400,44 @@ abstract class SafeMode
      * SQL string condition for unsafe modules
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
+     * @since  3.0.0
      */
     public static function getUnsafeModulesSQLConditionString()
     {
         $cnd = '';
+        $unsafeModules = static::getUnsafeModulesList();
 
-        if ($unsafeModules = static::getUnsafeModulesList()) {
+        if (!empty($unsafeModules)) {
 
             foreach ($unsafeModules as $author => $names) {
                 $disableCondition[] = 'author = \'' . $author 
                     . '\' AND name IN (\'' . implode('\',\'', array_keys($names)) . '\')';
             }
 
-            if ($disableCondition) {
-                $cnd = '(' . implode(') OR (', $disableCondition) . ')';
-            }
-
+            $cnd = '(' . implode(') OR (', $disableCondition) . ')';
         }
 
         return $cnd;
     }
+
+
+    /**
+     * Get modules list file path 
+     * 
+     * @return string|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getUnsafeModulesFilePath()
+    {
+        if (!isset(static::$unsafeModulesIniFile)) {
+            static::$unsafeModulesIniFile = LC_VAR_DIR . static::UNSAFE_MODULES_FILE_NAME;
+        }
+
+        return static::$unsafeModulesIniFile;
+    }
+
+    // }}}
 
 }

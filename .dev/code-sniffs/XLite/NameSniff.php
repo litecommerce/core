@@ -26,7 +26,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'run', 'dispatch', 'compose', 'test', 'connect', 'parse', 'throw', 'fetch', 'execute',
 		'key', 'current', 'next', 'rewind', 'valid', 'action', 'schema',
 		'redirect', 'convert', 'select', 'update', 'replace', 'delete', 'generate', 'start', 'crypt',
-		'begin', 'end', 'write', 'save', 'query', 'process', 'open', 'header', 'clear', 'clean', 'assert',
+		'begin', 'end', 'write', 'save', 'query', 'process', 'open', 'header', 'clear', 'clean', 'cleanup', 'assert',
 		'send', 'validate', 'init', 'output', 'call', 'find', 'reset', 'destroy', 'echo', 'format',
 		'encrypt', 'decrypt', 'serialize', 'unserialize', 'renew', 'define', 'collect', 'return', 'calculate',
 		'lock', 'unlock', 'can', 'walk', 'pack', 'unpack', 'initialize', 'finish', 'create', 'mark', 'unmark',
