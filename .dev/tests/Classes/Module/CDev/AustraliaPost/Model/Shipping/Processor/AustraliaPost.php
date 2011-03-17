@@ -149,12 +149,12 @@ extends XLite_Tests_Model_OrderAbstract
 
         $tmpConfig = \XLite\Base::getInstance()->config->Company;
         
-        \XLite\Base::getInstance()->config->Shipping->def_calc_shippings_taxes = true;
         \XLite\Base::getInstance()->config->Company->location_country = 'AU';
         \XLite\Base::getInstance()->config->Company->location_zipcode = '3146';
 
-        $rates = $processor->getRates($this->getTestOrder(false));
-        $ratesCached = $processor->getRates($this->getTestOrder(false));
+        $m = $this->getTestOrder(false)->getModifier('shipping', 'SHIPPING')->getModifier();
+        $rates = $processor->getRates($m);
+        $ratesCached = $processor->getRates($m);
 
         \XLite\Base::getInstance()->config->Company = $tmpConfig;
 
@@ -186,7 +186,7 @@ extends XLite_Tests_Model_OrderAbstract
             )
         );
 
-        $rates = $processor->getRates($data);
+        $rates = $processor->getRatesByArray($data);
 
         $this->assertTrue(is_array($rates), 'getRates() must return an array (#2)');
 
@@ -205,33 +205,16 @@ extends XLite_Tests_Model_OrderAbstract
         
         $tmpConfig = \XLite\Base::getInstance()->config->Company;
 
-        \XLite\Base::getInstance()->config->Shipping->def_calc_shippings_taxes = true;
         \XLite\Base::getInstance()->config->Company->location_country = 'US';
 
-        $rates = $processor->getRates($this->getTestOrder(false));
+        $m = $this->getTestOrder(false)->getModifier('shipping', 'SHIPPING')->getModifier();
+        $rates = $processor->getRates($m);
 
         \XLite\Base::getInstance()->config->Company = $tmpConfig;
 
         $this->assertTrue(is_array($rates), 'getRates() must return an array (#3)');
 
         $this->assertEquals(0, count($rates), 'Count of rates is not match with an expected value (#3)');
-
-        // Test on anonymous order and disabled default shipping rates calculation
-
-        $tmpConfig1 = \XLite\Base::getInstance()->config->Shipping;
-        $tmpConfig2 = \XLite\Base::getInstance()->config->Company;
-
-        \XLite\Base::getInstance()->config->Shipping->def_calc_shippings_taxes = false;
-        \XLite\Base::getInstance()->config->Company->location_country = 'AU';
-
-        $rates = $processor->getRates($this->getTestOrder(false));
-
-        \XLite\Base::getInstance()->config->Shipping = $tmpConfig1;
-        \XLite\Base::getInstance()->config->Company = $tmpConfig2;
-
-        $this->assertTrue(is_array($rates), 'getRates() must return an array (#4)');
-
-        $this->assertEquals(0, count($rates), 'Count of rates is not match with an expected value (#4)');
     }
 
     /**

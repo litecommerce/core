@@ -97,7 +97,8 @@ class XLite_Tests_Model_Shipping_Processor_Offline extends XLite_Tests_Model_Ord
     {
         $processor = new \XLite\Model\Shipping\Processor\Offline();
 
-        $rates = $processor->getRates($this->getTestOrder(false));
+        $m = $this->getTestOrder(false)->getModifier('shipping', 'SHIPPING')->getModifier();
+        $rates = $processor->getRates($m);
 
         $this->assertTrue(is_array($rates), 'getRates() must return an array');
 
