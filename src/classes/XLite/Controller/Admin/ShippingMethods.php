@@ -189,12 +189,15 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
 
             $class = \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findOneById($classId);
 
-            if (!$class->getMethods()->contains($method)) {
+            if ($class) {
 
-                $class->getMethods()->add($method);
+                if (!$class->getMethods()->contains($method)) {
+
+                    $class->getMethods()->add($method);
+                }
+
+                $classes->add($class);
             }
-
-            $classes->add($class);
         }
 
         return $classes;
