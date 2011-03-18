@@ -14,7 +14,7 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * PHP version 5.0.0
+ * PHP version 5.3.0
  * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
@@ -26,16 +26,14 @@
  * @since     3.0.0
  */
 
-// No PHP warnings are allowed in LC
-error_reporting(E_ALL | E_STRICT);
-ini_set('display_errors', true);
+namespace XLite\Core\Pack;
 
-// Short name
-define('LC_DS', DIRECTORY_SEPARATOR);
-
-// Modes
-define('LC_IS_CLI_MODE', 'cli' === PHP_SAPI);
-
-// Define error handling functions and check PHP version (if needed)
-require_once (dirname(__FILE__) . LC_DS . 'error_handler.php');
-require_once (dirname(__FILE__) . LC_DS . 'top.inc.PHP53.php');
+/**
+ * Module 
+ * 
+ * @see   ____class_see____
+ * @since 3.0.0
+ */
+class Module extends \XLite\Core\Pack\APack
+{
+}

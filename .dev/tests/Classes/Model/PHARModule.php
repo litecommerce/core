@@ -170,7 +170,7 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function testDeploy()
+    /*public function testDeploy()
     {
         // Deploying only classes directory module
         copy($this->getFile('test_module.phar'), LC_LOCAL_REPOSITORY . 'test_module.phar');
@@ -205,7 +205,7 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
         \Includes\Utils\FileManager::unlinkRecursive($dir);
 
         unlink(LC_LOCAL_REPOSITORY . 'test_module.phar');
-    }
+    }*/
 
     /**
      * testDeploy2 

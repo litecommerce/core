@@ -260,28 +260,6 @@ CDev\ProductOptions:
         $this->assertEquals('Creative Development LLC', $module->__call('getAuthorName'), 'check author call');
     }
     
-    public function testIsUpdateAvailable()
-    {
-        $module = $this->getEnabledModule(true, 'FeaturedProducts');
-        $module->setVersion('1.0');
-        $this->assertFalse($module->isUpdateAvailable(), 'check not available update');
-
-        $module->setVersion($module->getVersion() . '.1');
-        $this->assertTrue($module->isUpdateAvailable(), 'check available update');
-    }
-
-    public function testGetLastVersion()
-    {
-        $module = $this->getEnabledModule(true, 'FeaturedProducts');
-        $this->assertEquals($module->getVersion(), $module->getLastVersion(), 'check last version getter');
-    }
-
-    public function testGetCurrentVersion()
-    {
-        $module = $this->getEnabledModule(true, 'FeaturedProducts');
-        $this->assertEquals('1.0', $module->getCurrentVersion(), 'check current version getter');
-    }
-
     public function testGetActualName()
     {
         $module = $this->getTestModule();

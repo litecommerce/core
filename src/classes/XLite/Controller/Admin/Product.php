@@ -255,12 +255,15 @@ class Product extends \XLite\Controller\Admin\AAdmin
 
             $class = \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findOneById($classId);
 
-            if (!$class->getProducts()->contains($product)) {
+            if ($class) {
 
-                $class->getProducts()->add($product);
+                if (!$class->getProducts()->contains($product)) {
+
+                    $class->getProducts()->add($product);
+                }
+
+                $data->add($class);
             }
-
-            $data->add($class);
         }
 
         return array('classes' => $data);

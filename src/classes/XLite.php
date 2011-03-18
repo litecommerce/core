@@ -28,7 +28,9 @@
 
 /**
  * Application singleton
- * TODO[SINGLETON] - lowest priority
+ *
+ * TODO: to revise
+ * TODO[SINGLETON]: lowest priority
  * 
  * @see   ____class_see____
  * @since 3.0.0
@@ -199,19 +201,6 @@ class XLite extends \XLite\Base
     protected static function getControllerClass()
     {
         return \XLite\Core\Converter::getControllerClass(self::getTarget());
-    }
-
-    /**
-     * Return current kernel version
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    final public function getKernelVersion()
-    {
-        return '1.0.0';
     }
 
     /**
@@ -430,5 +419,63 @@ class XLite extends \XLite\Base
     {
         self::$controller = null;
         \XLite\Model\CachingFactory::clearCache();
+    }
+
+
+    // ------------------------------ Application versions -
+
+    /**
+     * Get application version
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    final public function getVersion()
+    {
+        return $this->getMajorVersion() . '.' . $this->getMinorVersion();
+    }
+
+    /**
+     * Get application major version
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    final public function getMajorVersion()
+    {
+        return '1.0';
+    }
+
+    /**
+     * Get application minor version
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    final public function getMinorVersion()
+    {
+        return '0';
+    }
+
+    /**
+     * Compare a version with the kernel version
+     * 
+     * @param string $version  Version to compare
+     * @param string $operator Comparison operator
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    final public function checkVersion($version, $operator)
+    {
+        return version_compare($this->getMajorVersion(), $version, $operator);
     }
 }
