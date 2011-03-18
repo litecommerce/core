@@ -21,7 +21,5 @@
 *}
 </div>
 <span IF="isListEmpty()" class="empty-list">
-<a href="{buildURL(#product_classes#)}">
-{t(#Define classes#)}
-</a>
+<a href="{buildURL(#product_classes#)}">{t(#Define classes#)}</a>
 </span>

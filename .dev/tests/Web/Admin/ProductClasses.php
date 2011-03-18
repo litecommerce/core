@@ -34,11 +34,21 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
 
     const NEW_PRODUCT_CLASS_INPUT = '//div[@class="advanced-input-text"]/div[@class="original-input"]/input[@type="text" and @id="posteddata-new-name" and @name="postedData[new_name]"]';
 
-    public function testAddNew()
+    const PC_PAGE = 'admin.php?target=product_classes';
+
+    /**
+     * Test of product classes modify page
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function testProductClassesModify()
     {
         $this->logIn();
 
-        $this->open('admin.php?target=product_classes');
+        $this->open(self::PC_PAGE);
 
         // ADD NEW Element
 
@@ -47,8 +57,6 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
             'No new product class label'
         );
 
-        $count = $this->getTableLength();
-
         $this->click(self::NEW_PRODUCT_CLASS_LABEL);
 
         $this->assertVisible(
@@ -56,43 +64,119 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
             'No input for new product class'
         );
 
-        $this->type(self::NEW_PRODUCT_CLASS_INPUT, 'test1');
-        $this->keyPress(self::NEW_PRODUCT_CLASS_INPUT, '\\13');
-
-        $count++;
-
-        $this->waitForLocalCondition(
-            'jQuery(".product-classes-list tr").length == ' . $count,
-            30000,
-            'check add new product class entry'
-        );
-
-        $this->type(self::NEW_PRODUCT_CLASS_INPUT, 'test2');
-        $this->keyPress(self::NEW_PRODUCT_CLASS_INPUT, '\\13');
-
-        $count++;
-
-        $this->waitForLocalCondition(
-            'jQuery(".product-classes-list tr").length == ' . $count,
-            30000,
-            'check add new product class entry'
-        );
+        $this->addNewProductClass('test1');
+        $this->addNewProductClass('test2');
 
         $this->checkAdvancedInput('test1', 'test11');
-
         $this->checkAdvancedInput('test2', 'test22');
 
-
         $this->removeInput('test11');
-
         $this->removeInput('test22');
     }
 
+
+    /**
+     * Test of product modify page (product classes only)
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function testProductPage()
+    {
+        $this->logIn();
+
+        $productPage = 'admin.php?target=product&page=info&product_id=5';
+
+        $this->open($productPage);
+
+        $this->assertElementPresent(
+            '//td/span[@class="empty-list"]/a[@href="admin.php?target=product_classes" and text()="Define classes"]',
+            'No "define classes" link'
+        );
+
+        $this->open(self::PC_PAGE);
+
+        $classes = array(
+            'test1',
+            'test2',
+            'test3',
+        );
+
+        foreach ($classes as $class) {
+
+            $this->addNewProductClass($class);
+        }
+
+        $this->open($productPage);
+
+        foreach ($classes as $class) {
+            $this->assertElementPresent(
+                '//div[@class="select-classes"]/select[@id="posteddata-class-ids-" and @name="postedData[class_ids][]" and @multiple="multiple"]/option[text()="' . $class . '"]',
+                'No "' . $class . '" class option'
+            );
+        }
+
+        $this->open(self::PC_PAGE);
+
+        foreach ($classes as $class) {
+
+            $this->removeInput($class);
+        }
+
+    }
+
+    /**
+     * Procedure to add new product class
+     * 
+     * @param string $name New product class name
+     *  
+     * @return void
+     * @access private
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    private function addNewProductClass($name)
+    {
+        $count = $this->getTableLength();
+
+        $this->type(self::NEW_PRODUCT_CLASS_INPUT, $name);
+        $this->keyPress(self::NEW_PRODUCT_CLASS_INPUT, '\\13');
+
+        $count++;
+
+        $this->waitForLocalCondition(
+            'jQuery(".product-classes-list tr").length == ' . $count,
+            30000,
+            'check add new product class entry "' . $name . '"'
+        );
+    }
+
+
+    /**
+     * Return number of rows in the product classes table
+     * 
+     * @return integer
+     * @access private
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     private function getTableLength()
     {
         return $this->getJSExpression('jQuery(".product-classes-list tr").length');
     }
 
+    /**
+     * Procedure to use remove link functionality
+     * 
+     * @param mixed $name ____param_comment____
+     *  
+     * @return void
+     * @access private
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     private function removeInput($name)
     {
         $remove = '//div[@class="advanced-input-text"]/div[@class="original-label" and text()="' . $name . '"]/../../../td[@class="remove-product-class"]/a[@class="remove"]';
@@ -111,6 +195,17 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
     }
 
 
+    /**
+     * Procedure to check main advanced input element
+     * 
+     * @param string $name    Product class name in the input 
+     * @param string $newName New product class name (if there is some). Check to update.
+     *  
+     * @return void
+     * @access private
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     private function checkAdvancedInput($name, $newName = '')
     {
         $label = '//div[@class="advanced-input-text"]/div[@class="original-label" and text()="' . $name . '"]';
