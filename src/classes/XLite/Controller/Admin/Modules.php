@@ -223,5 +223,4 @@ class Modules extends \XLite\Controller\Admin\AAdmin
         
         $this->setReturnURL($this->buildURL('modules'));
     }
-
 }

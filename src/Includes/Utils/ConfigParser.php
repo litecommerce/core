@@ -232,7 +232,7 @@ class ConfigParser extends AUtils
     /**
      * Parse both config files
      * 
-     * @param mixed $names option names tree
+     * @param array|string $names option names tree
      *  
      * @return array|mixed
      * @access public

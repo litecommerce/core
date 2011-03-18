@@ -237,9 +237,10 @@ abstract class ErrorHandler
         if (!\Includes\Utils\ConfigParser::getOptions(array('database_details', 'database'))) {
 
             $message = 'Probably LC is not installed. Try to run ';
-            $url = '<strong>install.php</strong>';
+            $url     = '<strong>install.php</strong>';
+            $link    = \Includes\Utils\URLManager::getShopURL('install.php');
 
-            if (@file_exists($link = \Includes\Utils\URLManager::getShopURL('install.php'))) {
+            if (\Includes\Utils\FileManager::isFile($link)) {
                 $url = '<a href="' . $link . '">' . $url . '</a>';
             }
 

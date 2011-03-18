@@ -85,18 +85,16 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
 
                     $module = new \XLite\Model\PHARModule($name);
 
-                    if (\XLite\Model\PHARModule::STATUS_OK === $module->getStatus()) {
+                    if ($module->isValid()) {
 
-                        $module->check();
+                        // Deploy module wrapper (Some additional text or warnings are shown)
+                        $this->deployModule($module, $index, $name);
+
+                        // Remove the temporary content and uploaded PHAR file
+                        $module->cleanUp();
+
+                        @unlink($name);
                     }
-
-                    // Deploy module wrapper (Some additional text or warnings are shown)
-                    $this->deployModule($module, $index, $name);
-
-                    // Remove the temporary content and uploaded PHAR file
-                    $module->cleanUp();
-
-                    @unlink($name);
                 }
             }
 
@@ -126,7 +124,7 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
      */
     protected function deployModule(\XLite\Model\PHARModule $module, $index, $name)
     {
-        if (\XLite\Model\PHARModule::STATUS_OK === $module->getStatus()) {
+        if ($module->isValid()) {
 
             $module->deploy();
 
@@ -139,7 +137,7 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\TopMessage::addError(
                 'Checking procedure returns with "{{result}}" result for {{index}}: {{file}} file.',
                 array(
-                    'result'    => $module->getStatus() . '::' . $module->getError(),
+                    'result'    => $module->getStatus() . ' (' . $module->getMessage() . ')',
                     'file'      => $name,
                     'index'     => $index,
                 )
