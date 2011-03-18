@@ -315,9 +315,9 @@ class PHARModule extends \XLite\Base
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getKernelVersion()
+    public function getVersion()
     {
-        return call_user_func(array($this->getMainClass(), 'getKernelVersion'));
+        return call_user_func(array($this->getMainClass(), 'getVersion'));
     }
 
     /**
@@ -333,7 +333,7 @@ class PHARModule extends \XLite\Base
         $status = null;
 
         // Three-step checking
-        if (!$this->checkKernelVersion()) {
+        if (!$this->checkVersion()) {
 
             // Must be compatible with current version
             $status = self::STATUS_KERNEL_VERSION_NOT_SUPPORTED;
@@ -360,9 +360,9 @@ class PHARModule extends \XLite\Base
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function checkKernelVersion()
+    protected function checkVersion()
     {
-        return version_compare($this->getKernelVersion(), \XLite::getInstance()->getKernelVersion(), '>=');
+        return version_compare($this->getVersion(), \XLite::getInstance()->getVersion(), '>=');
     }
 
     /**

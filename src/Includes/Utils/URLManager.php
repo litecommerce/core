@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Includes_Utils
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace Includes\Utils;
@@ -31,18 +31,17 @@ namespace Includes\Utils;
 /**
  * URLManager 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
-class URLManager extends AUtils
+abstract class URLManager extends \Includes\Utils\AUtils
 {
     /**
      * URL output type codes
      */
 
     const URL_OUTPUT_SHORT = 'short';
-    const URL_OUTPUT_FULL = 'full';
+    const URL_OUTPUT_FULL  = 'full';
 
 
     /**
