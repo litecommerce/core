@@ -220,7 +220,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
                 ) {
 
                     // Remember last shipping id
-                    $this->order->setShippingId($this->getProfile()->getLastShippingId());
+                    $this->order->setShippingId($this->order->getProfile()->getLastShippingId());
                 }
 
                 if (0 < intval($this->order->getShippingId())) {
