@@ -69,7 +69,7 @@ class ShippingMethodsList extends \XLite\View\AView
      */
     public function isShippingAvailable()
     {
-        return $this->getModifier()->isRatesExists();
+        return $this->getModifier()->isRatesExists() && $this->getCart()->getProfile();
     }
 
     /**
