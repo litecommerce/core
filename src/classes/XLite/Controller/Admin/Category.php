@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Category extends \XLite\Controller\Admin\Catalog
+class Category extends \XLite\Controller\Admin\Base\Catalog
 {
     /**
      * Default tabber page
