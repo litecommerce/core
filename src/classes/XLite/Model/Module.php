@@ -881,43 +881,6 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * Check if newer version exists
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isUpdateAvailable()
-    {
-        return !is_null($this->getCurrentVersion())
-            && -1 === version_compare($this->getCurrentVersion(), $this->getLastVersion());
-    }
-
-    /**
-     * Get last version (from the database)
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getLastVersion()
-    {
-        return $this->getVersion();
-    }
-
-    /**
-     * Get installed version (from the Main class)
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCurrentVersion()
-    {
-        return $this->callModuleStatic('getVersion');
-    }
-
-    /**
      * Compose module actual name
      *
      * @return string
@@ -1339,5 +1302,4 @@ class Module extends \XLite\Model\AEntity
         return array($table, $cols);
 
     }
-
 }

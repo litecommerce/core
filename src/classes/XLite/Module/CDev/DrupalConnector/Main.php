@@ -58,9 +58,9 @@ abstract class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getVersion()
+    public static function getMinorVersion()
     {
-        return '1.0';
+        return '0';
     }
 
     /**

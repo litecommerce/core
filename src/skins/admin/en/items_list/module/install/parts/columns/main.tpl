@@ -38,10 +38,4 @@
 
   </div>
     
-  <div IF="module.isUpdateAvailable()" class="upgrade-note">
-    {t(#You have an outdated version#)}
-    <br />
-    <widget class="\XLite\View\Button\Submit" label="{t(#Upgrade#)}" /> {t(#to v.#)}{module.getLastVersion()}
-  </div>
-
 </td>

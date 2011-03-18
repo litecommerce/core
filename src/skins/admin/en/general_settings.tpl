@@ -162,10 +162,6 @@ function setUnitSymbol(symbol) {
               </select>
             {end:}
             
-            {if:option.name=#safe_mode_key#}
-              <strong>{getSafeModeKey()}</strong>
-            {end:}
-
             <widget class="\XLite\View\ModulesManager\Settings" section="{page}" option="{option}" />
 
             {displayViewListContent(#general_settings.general.parts#,_ARRAY_(#page#^page,#option#^option))}
@@ -186,7 +182,7 @@ function setUnitSymbol(symbol) {
           <td colspan="2">&nbsp;</td>
         </tr>
         <tr>
-          <td ><widget class="\XLite\View\Button\Submit" label="Submit" /></td>
+          <td><widget class="\XLite\View\Button\Submit" label="Submit" /></td>
           <td>&nbsp;</td>
         </tr>
     {end:}
@@ -195,6 +191,27 @@ function setUnitSymbol(symbol) {
 </form>
 
 {if:page=#Security#}
+
+<h2>{t(#Safe mode#)}</h2>
+
+<table cellspacing="1" cellpadding="5" class="settings-table">
+<tr>
+  <td>{t(#Safe mode access key#)}:</td>
+  <td><strong>{getSafeModeKey()}</strong></td>
+</tr>
+<tr>
+  <td>{t(#Hard reset URL (disables all modules and runs application)#)}:</td>
+  <td>{getHardResetURL()}</td>
+</tr>
+<tr>
+  <td>{t(#Soft reset URL (disables only unsafe modules and runs application)#)}:</td>
+  <td>{getSoftResetURL()}</td>
+</tr>
+</table>
+<widget class="\XLite\View\Button\Regular" label="Re-generate access key" jsCode="self.location='{buildURL(#settings#,#safe_mode_key_regen#)}'" />
+<p>{t(#New access key will be also sent to the Site administrator email address#)}</p>
+
+<h2>{t(#HTTPS check#)}</h2>
 
 <script type="text/javascript">
 <!--
