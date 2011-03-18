@@ -26,15 +26,14 @@
  * @since      3.0.0
  */
 
+/**
+ * XLite_Tests_RemoteModel_Marketplace 
+ * 
+ * @see   ____class_see____
+ * @since 3.0.0
+ */
 class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
 {
-    // TODO use test marketplace URL
-    /**
-     * Marketplace URL (test) 
-     */
-    const URL = 'https://xcart2-530.crtdev.local/~xcart/general/projects/xlite/market/';
-//  const URL = 'https://www.litecommerce.com/marketplace/';
-
     /**
      * Test modules names 
      */
@@ -115,7 +114,11 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
     {
         \XLite\Core\Database::getRepo('\XLite\Model\Module')->checkModules();
 
-        $this->assertEquals(self::URL, \XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL(), 'Wrong Marketplace URL');
+        $this->assertEquals(
+            \XLite::getInstance()->getOptions(array('debug', 'marketplace_dev_url')),
+            \XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL(),
+            'Wrong Marketplace URL'
+        );
     }
 
     /**
