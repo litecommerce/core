@@ -113,7 +113,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'modules_manager' . LC_DS . 'common.css';
         $list[] = $this->getDir() . LC_DS . 'style.css';
 
@@ -181,7 +180,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      */
     protected static function getModules()
     {
-        if (is_null(static::$modules)) {
+        if (!isset(static::$modules)) {
 
             $method = 'find' . \XLite\Core\Converter::convertToCamelCase(static::getFilter()) . 'Modules';
 
@@ -287,5 +286,4 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
 
         return $countOnly ? count($result) : $result;
     }
-
 }
