@@ -34,7 +34,9 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
     const NEW_PRODUCT_CLASS_INPUT = '//div[@class="advanced-input-text"]/div[@class="original-input"]/input[@type="text" and @id="posteddata-new-name" and @name="postedData[new_name]"]';
     const PC_PAGE = 'admin.php?target=product_classes';
     const PRODUCT_SELECTOR = '//div[@class="select-classes"]/select[@id="posteddata-class-ids-" and @name="postedData[class_ids][]" and @multiple="multiple"]';
-    const PRODUCT_UPDATE = '//button[@type="submit"]/span[text()="Update"]';
+    const SHIPPING_SELECTOR = '//div[@class="select-classes"]/select[@id="posteddata-class-ids-1-" and @name="postedData[class_ids][1][]" and @multiple="multiple"]';
+    const PRODUCT_UPDATE  = '//button[@type="submit"]/span[text()="Update"]';
+    const SHIPPING_UPDATE = '//button[@type="submit"]/span[text()="Update"]';
 
 
     private $classes = array(
@@ -171,6 +173,25 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
     {
         $this->logIn();
 
+        $this->open('admin.php?target=shipping_methods');
+
+        foreach ($this->classes as $class) {
+
+            $this->checkProductClassOption($class, 'Shipping methods page', self::SHIPPING_SELECTOR);
+        }   
+
+        $this->select(
+            self::SHIPPING_SELECTOR,
+            'test1'
+        );
+
+        $this->clickAndWait(self::SHIPPING_UPDATE);
+
+        $this->assertElementPresent(
+            self::SHIPPING_SELECTOR . '/option[@selected="selected" and text()="test1"]',
+            'test1 is not selected. Shipping methods'
+        );
+
         $this->open(self::PC_PAGE);
 
         foreach ($this->classes as $class) {
@@ -183,18 +204,19 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
     /**
      * Check product class option part of product classes selector widget
      * 
-     * @param string $class Product class name
-     * @param string $text  Comment text 
+     * @param string $class    Product class name
+     * @param string $text     Comment text 
+     * @param string $selector Selector of product class
      *  
      * @return void
      * @access private
      * @see    ____func_see____
      * @since  3.0.0
      */
-    private function checkProductClassOption($class, $text = '')
+    private function checkProductClassOption($class, $text = '', $selector = self::PRODUCT_SELECTOR)
     {
         $this->assertElementPresent(
-            self::PRODUCT_SELECTOR . '/option[text()="' . $class . '"]', 
+            $selector . '/option[text()="' . $class . '"]', 
             'No "' . $class . '" class option' . ('' !== $text ? ' (' . $text . ')' : '')
         );
     }

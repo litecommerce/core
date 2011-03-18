@@ -182,9 +182,9 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
 
             if ($class) {
 
-                if (!$class->getMethods()->contains($method)) {
+                if (!$class->getShippingMethods()->contains($method)) {
 
-                    $class->getMethods()->add($method);
+                    $class->getShippingMethods()->add($method);
                 }
 
                 $classes->add($class);
