@@ -85,7 +85,9 @@ require_once (LC_INCLUDES_DIR . 'prepend.php');
 // require_once (LC_INCLUDES_DIR . 'NoDBStore.php');
 
 // Safe mode
-\Includes\SafeMode::initialize();
+if (!defined('XLITE_INSTALL_MODE')) {
+    \Includes\SafeMode::initialize();
+}
 
 // Check and (if needed) rebuild classes cache
 if (!defined('LC_DO_NOT_REBUILD_CACHE')) {
