@@ -1,6 +1,6 @@
-{* vim: set ts=2 sw=2 sts=2 et: *}
+/* vim: set ts=2 sw=2 sts=2 et: */
 
-{**
+/**
  * ____file_title____
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
@@ -9,13 +9,18 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- *}
+ */
 
-<div class="advanced-input-text">
-<div class="original-label">{getLabel()}</div>
-<div class="original-input">
-<widget template="{getDir()}/{getFieldTemplate()}" />
-<a class="cancel-input" href="javascript:void(0);">{t(#Cancel#)}</a>
-<img src="images/spacer.gif" class="progress" alt="" />
-</div>
-</div>
+core.bind(
+  'load',
+  function (event) {
+    jQuery('.classes-list .popup-classes').click(
+      function (event) {
+// TODO: REWORK
+
+      }
+    );
+
+  }
+);
+
