@@ -31,10 +31,19 @@ require_once __DIR__ . '/AAdmin.php';
 class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
 {
     const NEW_PRODUCT_CLASS_LABEL = '//div[@class="advanced-input-text"]/div[@class="original-label" and text()="New product class"]';
-
     const NEW_PRODUCT_CLASS_INPUT = '//div[@class="advanced-input-text"]/div[@class="original-input"]/input[@type="text" and @id="posteddata-new-name" and @name="postedData[new_name]"]';
-
     const PC_PAGE = 'admin.php?target=product_classes';
+    const PRODUCT_SELECTOR = '//div[@class="select-classes"]/select[@id="posteddata-class-ids-" and @name="postedData[class_ids][]" and @multiple="multiple"]';
+    const PRODUCT_UPDATE = '//button[@type="submit"]/span[text()="Update"]';
+
+
+    private $classes = array(
+        'test1',
+        'test2',
+        'test3',
+    );
+
+
 
     /**
      * Test of product classes modify page
@@ -98,33 +107,96 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
 
         $this->open(self::PC_PAGE);
 
-        $classes = array(
-            'test1',
-            'test2',
-            'test3',
-        );
-
-        foreach ($classes as $class) {
+        foreach ($this->classes as $class) {
 
             $this->addNewProductClass($class);
         }
 
         $this->open($productPage);
 
-        foreach ($classes as $class) {
-            $this->assertElementPresent(
-                '//div[@class="select-classes"]/select[@id="posteddata-class-ids-" and @name="postedData[class_ids][]" and @multiple="multiple"]/option[text()="' . $class . '"]',
-                'No "' . $class . '" class option'
-            );
+        foreach ($this->classes as $class) {
+
+            $this->checkProductClassOption($class, 'Product modify page');
         }
+
+        $this->select(
+            self::PRODUCT_SELECTOR,
+            'test1'
+        );
+
+        $this->clickAndWait(self::PRODUCT_UPDATE);
+
+        $this->assertElementPresent(
+            self::PRODUCT_SELECTOR . '/option[@selected="selected" and text()="test1"]',
+            'test1 is not selected'
+        );
+
+        $this->controlKeyDown();
+
+        $this->addSelection(
+            self::PRODUCT_SELECTOR,
+            'test3'
+        );
+
+        $this->addSelection(
+            self::PRODUCT_SELECTOR,
+            'test1'
+        );  
+
+        $this->controlKeyUp();
+
+        $this->clickAndWait(self::PRODUCT_UPDATE);
+
+        $this->assertElementPresent(
+            self::PRODUCT_SELECTOR . '/option[@selected="selected" and text()="test1"]',
+            'test1 is not selected'
+        );
+
+        $this->assertElementPresent(
+            self::PRODUCT_SELECTOR . '/option[@selected="selected" and text()="test3"]',
+            'test3 is not selected'
+        );
+
+    }
+
+    /**
+     * Procedure to check product classes selector widget on the shipping methods modify page
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function testShippingMethods()
+    {
+        $this->logIn();
 
         $this->open(self::PC_PAGE);
 
-        foreach ($classes as $class) {
-
+        foreach ($this->classes as $class) {
+        
             $this->removeInput($class);
-        }
+        }   
+    }
 
+
+    /**
+     * Check product class option part of product classes selector widget
+     * 
+     * @param string $class Product class name
+     * @param string $text  Comment text 
+     *  
+     * @return void
+     * @access private
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    private function checkProductClassOption($class, $text = '')
+    {
+        $this->assertElementPresent(
+            self::PRODUCT_SELECTOR . '/option[text()="' . $class . '"]', 
+            'No "' . $class . '" class option' . ('' !== $text ? ' (' . $text . ')' : '')
+        );
     }
 
     /**
