@@ -26,6 +26,7 @@
   width: 300px;
   overflow: hidden;
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .advanced-input-text .original-input,
