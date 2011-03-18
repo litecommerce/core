@@ -70,9 +70,9 @@ abstract class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getVersion()
+    public static function getMinorVersion()
     {
-        return '1.0';
+        return '0';
     }
 
     /**

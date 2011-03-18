@@ -120,10 +120,12 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
 
             $this->updateCart();
 
+            $modifier = $this->getCart()->getModifier('shipping', 'SHIPPING');
+
             \XLite\Core\Event::updateCart(
                 array(
                     'items'            => array(),
-                    'shipping_address' => \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart()),
+                    'shipping_address' => \XLite\Model\Shipping::getInstance()->getDestinationAddress($modifier),
                 )
             );
 

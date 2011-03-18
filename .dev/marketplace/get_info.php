@@ -1,5 +1,33 @@
 <?php
 
+// Request params
+/*define('PARAM_ACTION', 'Action');
+
+// Call withot an action is prohibited
+if (empty($_REQUEST[PARAM_ACTION])) {
+	exit(0);
+}
+
+// Output
+define('LAST_AVAILABLE_CORE_VERSION', '1.2.3beta');
+define('ADDONS_LIST_XML', __DIR__ . DIRECTORY_SEPARATOR . 'output' . DIRECTORY_SEPARATOR . 'Response.xml');
+
+// Perform action
+switch ($_REQUEST[PARAM_ACTION]) {
+
+	case 'get_last_core_version':
+		echo (LAST_AVAILABLE_CORE_VERSION);
+		break;
+
+	case 'get_addons_list':
+		echo (file_get_contents(ADDONS_LIST_XML));
+        break;
+
+	default:
+		// ...
+}*/
+
+
 $allowedTargets = array(
     'addons',
 	'addon',
@@ -159,5 +187,3 @@ function verifyKey($key, $author, $module)
 	return false !== $info && $info[0] === $author && $info[1] === $module;
 }
 
-exit(0);
-?>

@@ -56,6 +56,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     const PARAM_PRICE_FILTER = 'priceFilter';
     const PARAM_STATUS       = 'status';
 
+
     /**
      * Return name of the base widgets list
      *
@@ -71,7 +72,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
 
     /**
      * Get widget templates directory
-     * NOTE: do not use "$this" pointer here (see "get[CSS/JS]Files()")
      *
      * @return string
      * @access protected
@@ -153,8 +153,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function canEnable(\XLite\Model\Module $module)
     {
-        return $module->getEnabled()
-            || $module->canEnable();
+        return ($module->getEnabled() || $module->canEnable()) && $this->isVersionValid($module);
     }
 
     /**
@@ -291,4 +290,99 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
         return $this->developerMode() && '' == ini_get('phar.readonly');
     }
 
+    // {{{ Version-related checks
+
+    /**
+     * Check if module requires new core version
+     * 
+     * @param \XLite\Model\Module $module Module to check
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isCoreUpgradeNeeded(\XLite\Model\Module $module)
+    {
+        return \XLite::getInstance()->checkVersion($module->getMajorVersion(), '<');
+    }
+
+    /**
+     * Check if core requires new module version
+     *
+     * @param \XLite\Model\Module $module Module to check
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isModuleUpgradeNeeded(\XLite\Model\Module $module)
+    {
+        return \XLite::getInstance()->checkVersion($module->getMajorVersion(), '>');
+    }
+
+    /**
+     * Check if new module version is available for install
+     *
+     * TODO: it's the stub
+     *
+     * @param \XLite\Model\Module $module Module to check
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isModuleUpgradeAvailable(\XLite\Model\Module $module)
+    {
+        return $module->getEnabled() && $this->isVersionValid($module) && (bool) rand(0, 1);
+    }
+
+    /**
+     * Get max available core version for upgrade
+     *
+     * @param \XLite\Model\Module $module Current module
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMaxCoreVersion(\XLite\Model\Module $module)
+    {
+        return $module->getMajorVersion() . '.x';
+    }
+
+    /**
+     * Get max available module version for upgrade
+     *
+     * @param \XLite\Model\Module $module Current module
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMaxModuleVersion(\XLite\Model\Module $module)
+    {
+        return \XLite::getInstance()->getVersion();
+    }
+
+    /**
+     * Check if module has a correct version
+     *
+     * @param \XLite\Model\Module $module Module to check
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVersionValid(\XLite\Model\Module $module)
+    {
+        return \XLite::getInstance()->checkVersion($module->getMajorVersion(), '=');
+    }
+
+    // }}}
 }

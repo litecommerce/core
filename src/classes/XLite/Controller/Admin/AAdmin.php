@@ -179,34 +179,7 @@ abstract class AAdmin extends \XLite\Controller\AController
     }
 
     /**
-     * Get last Core version
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getLastCoreVersion()
-    {
-        return \XLite\RemoteModel\Marketplace::getInstance()->getLastVersion();
-    }
-
-    /**
-     * Is core upgrade available
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isCoreUpgradeAvailable()
-    {
-        return !is_null($this->getLastCoreVersion())
-            && -1 === version_compare($this->config->Version->version, $this->getLastCoreVersion());
-    }
-
-    /**
-     * Check - form id is valid or not
+     * Check if form id is valid or not
      * 
      * @return boolean 
      * @access protected
@@ -515,5 +488,49 @@ OUT;
     protected function getToDelete()
     {
         return $this->getRequestDataByPrefix($this->getPrefixToDelete());
+    }
+
+
+    // ------------------------------ Core upgrade support -
+
+    /**
+     * Get current core version
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCurrentCoreVersion()
+    {
+        return \XLite::getInstance()->getVersion();
+    }
+
+    /**
+     * Get last available core version
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLastCoreVersion()
+    {
+        return \XLite\RemoteModel\Marketplace::getInstance()->getLastVersion();
+    }
+
+    /**
+     * Is core upgrade available
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isCoreUpgradeAvailable()
+    {
+        $version = $this->getLastCoreVersion();
+
+        return $version && version_compare($this->getCurrentCoreVersion(), $version, '<');
     }
 }

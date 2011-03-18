@@ -311,7 +311,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
 
         // Totals
         $countTR = intval($this->getJSExpression('jQuery(".invoice-box .totals tr").length'));
-        $this->assertEquals(count($order->getVisibleSavedModifiers()) + 2, $countTR, 'Totals TR count checking');
+        $this->assertEquals(count($order->getSurcharges()) + 2, $countTR, 'Totals TR count checking');
 
         $this->assertElementPresent(
             "//div[@class='invoice-box']"
@@ -329,7 +329,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         );
 
         $i = 2;
-        foreach ($order->getVisibleSavedModifiers() as $m) {
+        foreach ($order->getSurcharges() as $m) {
             $this->assertElementPresent(
                 "//div[@class='invoice-box']"
                 . "/table[@class='totals']"
@@ -342,7 +342,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
                 . "/table[@class='totals']"
                 . "/tbody"
                 . "/tr[position()=$i]"
-                . "/td[position()=2 and text()='$" . number_format(round($m->getSurcharge(), 2), 2) . "']"
+                . "/td[position()=2 and text()='$" . number_format($m->getValue(), 2) . "']"
             );
             $i++;
         }
