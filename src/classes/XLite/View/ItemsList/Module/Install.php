@@ -340,9 +340,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function getSortOrder()
     {
-        return self::getSortOption() === self::SORT_OPT_ALPHA
-            ? self::SORT_ORDER_ASC
-            : self::SORT_ORDER_DESC;
+        return self::getSortOption() === self::SORT_OPT_ALPHA ? self::SORT_ORDER_ASC : self::SORT_ORDER_DESC;
     }
 
     /**
@@ -357,5 +355,4 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     {
         return '\XLite\View\Pager\Admin\Module\Install';
     }
-
 }

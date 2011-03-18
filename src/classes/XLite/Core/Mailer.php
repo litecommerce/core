@@ -443,6 +443,32 @@ class Mailer extends \XLite\Base\Singleton
         }   
     }
 
+    /**
+     * Send notification about generated safe mode access key
+     * 
+     * @param string $key Access key
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function sendSafeModeAccessKeyNotification($key)
+    {
+        static::setMailInterface(\XLite::ADMIN_INTERFACE);
+
+        // Register variables
+        static::register('key', $key);
+        static::register('hard_reset_url', \Includes\SafeMode::getResetURL());
+        static::register('soft_reset_url', \Includes\SafeMode::getResetURL(true));
+
+        static::compose(
+            \XLite\Core\Config::getInstance()->Company->site_administrator,
+            \XLite\Core\Config::getInstance()->Company->site_administrator,
+            'safe_mode_key_generated'
+        );
+    }
+
 
     /**
      * Set mail interface

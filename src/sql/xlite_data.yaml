@@ -77,7 +77,6 @@ XLite\Model\Config:
   - { name: proxy, category: Security, type: text, orderby: 25, translations: [{ code: en, option_name: 'HTTPS proxy', option_comment: '' }] }
   - { name: recent_orders, category: General, type: text, orderby: 440, value: '10', translations: [{ code: en, option_name: 'Amount of orders in the recent orders list', option_comment: '' }] }
   - { name: redirect_to_cart, category: General, type: checkbox, orderby: 300, value: Y, translations: [{ code: en, option_name: 'Redirect customer to cart when adding a product', option_comment: '' }] }
-  - { name: safe_mode_key, category: General, type: 'select', orderby: 130, value: '', translations: [{ code: en, option_name: 'Safe mode access key', option_comment: '' }] }
   - { name: shop_closed, category: General, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Check this to temporary close the shop', option_comment: '' }] }
   - { name: show_cc_info, category: Email, type: checkbox, orderby: 40, value: N, translations: [{ code: en, option_name: 'Include order details (credit card or eCheck information) into admin order notification message', option_comment: '' }] }
   - { name: show_thumbnails, category: General, type: checkbox, orderby: 230, value: Y, translations: [{ code: en, option_name: 'Show thumbnails in product list', option_comment: '' }] }

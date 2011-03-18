@@ -460,6 +460,8 @@ class Module extends \XLite\Model\Repo\ARepo
 
     /**
      * Find all upgradable modules
+     *
+     * :TODO: add search
      * 
      * @return array
      * @see    ____func_see____
@@ -467,15 +469,7 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     public function findUpgradableModules()
     {
-        $modules = array();
-
-        foreach ($this->findAllModules() as $m) {
-            if ($m->isUpdateAvailable()) {
-                $modules[] = $m;
-            }
-        }
-
-        return $modules;
+        return array();
     }
 
     /**

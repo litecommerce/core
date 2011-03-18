@@ -614,7 +614,31 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     {
         die(phpinfo());
     }
-    
+
+    /**
+     * Re-generate safe mode access key
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function action_safe_mode_key_regen()
+    {
+        \Includes\SafeMode::regenerateAccessKey();
+        \XLite\Core\TopMessage::addInfo('Safe mode access key has been re-generated');
+
+        $this->setReturnURL(
+            $this->buildURL(
+                $this->get('target'),
+                '',
+                array(
+                    'page' => 'Security'
+                )
+            )
+        );
+    }
+
     /**
      * action_update 
      * 
@@ -908,6 +932,30 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     public function getSafeModeKey()
     {
         return \Includes\SafeMode::getAccessKey();
+    }
+
+    /**
+     * Get Hard Reset URL 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     */
+    public function getHardResetURL()
+    {
+        return \Includes\SafeMode::getResetURL();
+    }
+
+    /**
+     * Get Soft Reset URL 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     */
+    public function getSoftResetURL()
+    {
+        return \Includes\SafeMode::getResetURL(true);
     }
 
     /**

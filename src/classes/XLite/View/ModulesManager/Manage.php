@@ -66,7 +66,6 @@ class Manage extends \XLite\View\ModulesManager\AModulesManager
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'modules_manager' . LC_DS . 'common.css';
         $list[] = $this->getDir() . LC_DS . 'style.css';
 
@@ -96,5 +95,4 @@ class Manage extends \XLite\View\ModulesManager\AModulesManager
     {
         return parent::getDir() . LC_DS . 'manage';
     }
-
 }

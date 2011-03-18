@@ -37,11 +37,32 @@ namespace Includes;
 abstract class SafeMode
 {
     /**
-     * Common params
+     * Request params
      */
 
     const PARAM_SAFE_MODE  = 'safe_mode';
     const PARAM_ACCESS_KEY = 'access_key';
+    const PARAM_SOFT_RESET = 'soft_reset';
+
+    /**
+     * Soft reset label 
+     */
+    const LABEL_SOFT_RESET = 'Soft reset';
+
+    /**
+     * Modules list file name
+     */
+    const UNSAFE_MODULES_FILE_NAME = '.decorator.unsafe_modules.ini.php';
+
+
+    /**
+     * Unsafe modules list file name
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected static $unsafeModulesIniFile;
 
 
     /**
@@ -55,6 +76,18 @@ abstract class SafeMode
     {
         return static::checkAccessKey()
             && \Includes\Utils\ArrayManager::getIndex($_GET, static::PARAM_SAFE_MODE);
+    }
+
+    /**
+     * Check if the safe mode requested in the "Soft reset" variant
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function isSoftResetRequested()
+    {
+        return strpos(\Includes\Utils\FileManager::read(static::getIndicatorFileName()), static::LABEL_SOFT_RESET) > 0;
     }
 
     /**
@@ -79,15 +112,63 @@ abstract class SafeMode
     public static function getAccessKey()
     {
         if (!\Includes\Utils\FileManager::isExists(static::getAccessKeyFileName())) {
-
-            // Put access key file
-            \Includes\Utils\FileManager::write(
-                static::getAccessKeyFileName(),
-                static::generateAccessKey()
-            );
+            static::regenerateAccessKey();
         }
 
         return \Includes\Utils\FileManager::read(static::getAccessKeyFileName());
+    }
+
+    /**
+     * Re-generate access key
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function regenerateAccessKey()
+    {
+        // Put access key file
+        \Includes\Utils\FileManager::write(
+            static::getAccessKeyFileName(),
+            static::generateAccessKey()
+        );
+
+        // Send email notification
+        \XLite\Core\Mailer::sendSafeModeAccessKeyNotification(
+            \Includes\Utils\FileManager::read(static::getAccessKeyFileName())
+        );
+    }
+
+    /**
+     * Get safe mode URL
+     *
+     * @param boolean $soft Soft reset flag OPTIONAL
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getResetURL($soft = false)
+    {
+        $params = array(
+            static::PARAM_SAFE_MODE => 1,
+            static::PARAM_ACCESS_KEY => static::getAccessKey()
+        );
+
+        if (true === $soft) {
+            $params += array(
+                static::PARAM_SOFT_RESET => 1
+            );
+        }
+
+        return \Includes\Utils\URLManager::getShopURL(
+            \XLite\Core\Converter::buildURL(
+                'main',
+                '',
+                $params,
+                \XLite::ADMIN_SELF
+            )
+        );
     }
 
     /**
@@ -177,7 +258,7 @@ abstract class SafeMode
      */
     protected static function generateAccessKey()
     {
-        return substr(md5(uniqid(rand(), true)), 1, 6);
+        return uniqid();
     }
 
     /**
@@ -189,7 +270,174 @@ abstract class SafeMode
      */
     protected static function getIndicatorFileContent()
     {
-        return date('r');
+        $softResetMark = \Includes\Utils\ArrayManager::getIndex($_GET, static::PARAM_SOFT_RESET)
+            ? ', ' . static::LABEL_SOFT_RESET
+            : '';
+            
+        return date('r') . $softResetMark;
     }
+
+
+    // {{{ Unsafe modules methods
+
+    /**
+     * Remove file with active modules list
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function clearUnsafeModules()
+    {
+        \Includes\Utils\FileManager::delete(static::getUnsafeModulesFilePath());
+    }
+
+    /**
+     * Save modules to file 
+     * 
+     * @param array $modules Modules array
+     *  
+     * @return integer|boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function saveUnsafeModulesToFile(array $modules)
+    {
+        $path = static::getUnsafeModulesFilePath(); 
+
+        $string = '; <' . '?php /*' . PHP_EOL;
+
+        $i = 0;
+        foreach ($modules as $author => $names) {
+            $string .= '[' . $author . ']' . PHP_EOL;
+            foreach ($names as $name => $enabled) {
+                $string .= $name . ' = ' . $enabled . PHP_EOL;
+                $i++;
+            }
+        }
+
+        $string .= '; */ ?' . '>';
+
+        return $i ? file_put_contents($path, $string) : false;
+    }
+
+    /**
+     * Get Unsafe Modules List 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getUnsafeModulesList()
+    {
+        $list = array();
+        $path = static::getUnsafeModulesFilePath();
+
+        if (\Includes\Utils\FileManager::isFileReadable($path)) {
+            $list = parse_ini_file($path, true);
+        }
+
+        return $list;
+    }
+
+    /**
+     * Mark module as unsafe
+     * 
+     * @param string $author Module author 
+     * @param string $name   Module name 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function markModuleAsUnsafe($author, $name)
+    {
+        $list = static::getUnsafeModulesList();
+
+        if (!\Includes\Utils\ArrayManager::getIndex($list, $author)) {
+            $list[$author] = array();
+        }
+
+        $list[$author] += array(
+            $name => 1
+        );
+
+        static::saveUnsafeModulesToFile($list);
+    }
+
+    /**
+     * Mark modules as unsafe
+     * 
+     * @param array $modules Modules 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function markModulesAsUnsafe(array $modules)
+    {
+        $list = static::getUnsafeModulesList();
+
+        foreach ($modules as $author => $names) {
+
+            foreach ($names as $name => $key) {
+
+                if (!\Includes\Utils\ArrayManager::getIndex($list, $author)) {
+                    $list[$author] = array();
+                }
+
+                $list[$author] += array(
+                    $name => 1
+                );
+
+            }
+        }
+
+        static::saveUnsafeModulesToFile($list);
+    }
+
+    /**
+     * SQL string condition for unsafe modules
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getUnsafeModulesSQLConditionString()
+    {
+        $cnd = '';
+        $unsafeModules = static::getUnsafeModulesList();
+
+        if (!empty($unsafeModules)) {
+
+            foreach ($unsafeModules as $author => $names) {
+                $disableCondition[] = 'author = \'' . $author 
+                    . '\' AND name IN (\'' . implode('\',\'', array_keys($names)) . '\')';
+            }
+
+            $cnd = '(' . implode(') OR (', $disableCondition) . ')';
+        }
+
+        return $cnd;
+    }
+
+
+    /**
+     * Get modules list file path 
+     * 
+     * @return string|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getUnsafeModulesFilePath()
+    {
+        if (!isset(static::$unsafeModulesIniFile)) {
+            static::$unsafeModulesIniFile = LC_VAR_DIR . static::UNSAFE_MODULES_FILE_NAME;
+        }
+
+        return static::$unsafeModulesIniFile;
+    }
+
+    // }}}
 
 }

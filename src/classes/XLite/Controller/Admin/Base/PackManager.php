@@ -26,27 +26,14 @@
  * @since     3.0.0
  */
 
-namespace XLite\Core;
+namespace XLite\Controller\Admin\Base;
 
 /**
- * Pack 
+ * PackManager 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
-abstract class Pack
+abstract class PackManager extends \XLite\Controller\Admin\AAdmin
 {
-    /**
-     * Return minimal allowed version of LC kernel
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getKernelVersion()
-    {
-        \Includes\ErrorHandler::fireError('Kernel version is not defined for the pack');
-    }
 }
