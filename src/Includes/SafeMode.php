@@ -134,9 +134,24 @@ abstract class SafeMode
         );
 
         // Send email notification
-        \XLite\Core\Mailer::sendSafeModeAccessKeyNotification(
-            \Includes\Utils\FileManager::read(static::getAccessKeyFileName())
-        );
+        static::sendNotification();
+    }
+
+    /**
+     * Send email notification to administrator about access key
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function sendNotification()
+    {
+        if (\Includes\Decorator\CacheManager::isRebuildNeeded(\Includes\Decorator\CacheManager::STEP_THIRD)) {
+            // Send email notification
+            \XLite\Core\Mailer::sendSafeModeAccessKeyNotification(
+                \Includes\Utils\FileManager::read(static::getAccessKeyFileName())
+            );
+        }
     }
 
     /**
