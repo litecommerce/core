@@ -489,6 +489,9 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     protected function setUp()
     {
+        // Delay before each test
+        sleep(3);
+
         // Print new line between classes
         $currentClass = get_called_class();
         if (empty(XLite_Tests_TestSuite::$currentClass) || $currentClass !== XLite_Tests_TestSuite::$currentClass) {
@@ -802,7 +805,15 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
             $message = $e->getMessage();
 
-            echo "$command() [ERROR] $message\n";
+            if (isset($arguments) && !empty($arguments)) {
+                $_arguments = $arguments;
+                $param = (string)array_shift($_arguments);
+            
+            } else {
+                $param = '';
+            }
+
+            echo "\n$command('$param') [ERROR] $message\n";
 
             if (
                 'Could not connect to the Selenium RC server.' == $message
