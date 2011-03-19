@@ -224,8 +224,9 @@
 		<exec executable="${sourceDir}/.dev/phpl.sh" dir="${installDir}/modules/lc_connector/litecommerce" failonerror="true" output="${buildDir}/reports/plint.html" />
 	</target>
 
-	<target name="analysis">
+	<target name="analysis" depends="phpdepend,phpmd,copy-paste-detect,git-stat" />
 
+	<target name="phpdepend">
         <echo message="Run PHPDepend" />
         <exec executable="php" dir="${buildDir}">
             <arg value="${sourceDir}/.dev/pdepend.php" />
@@ -233,16 +234,20 @@
             <arg value="--overview-pyramid=${buildDir}/reports/pyramid.svg" />
 			<arg value="--coderank-mode=property,inheritance,method" />
             <arg value="${varRunClasses}" />
-        </exec>
+		</exec>
+	</target>
 
+	<target namee="phpmd">
         <echo message="Run PHPMD" />
         <exec executable="php" dir="${buildDir}" output="${buildDir}/reports/phpmd.html">
             <arg value="${sourceDir}/.dev/phpmd.php" />
             <arg value="${sourceDir}/src/classes" />
 			<arg value="html" />
 			<arg value="rulesets/codesize.xml,rulesets/design.xml,rulesets/naming.xml,rulesets/unusedcode.xml" />
-        </exec>
+		</exec>
+	</target>
 
+	<target name="copy-paste-detect">
         <echo message="Run PHP Copy-Paste detecor" />
         <exec executable="phpcpd" dir="${sourceDir}/src" output="${buildDir}/reports/phpcpd.txt" failonerror="false">
             <arg value="--exclude" />
@@ -251,13 +256,15 @@
             <arg value="lib" />
             <arg value="${sourceDir}/src" />
         </exec>
+	</target>
 
+	<target name="git-stat">
         <echo message="Run Git stats" />
 		<mkdir dir="${buildDir}/reports/gitstat" />
 		<chmod file="${buildDir}/.dev/lib/gitstats/gitstats" perm="ugo+rx" />
         <exec executable="${buildDir}/.dev/lib/gitstats/gitstats" dir="${sourceDir}">
             <arg line="-c project_name=XLite -c authors_top=10 ${sourceDir} ${buildDir}/reports/gitstat" />
-        </exec>
+		</exec>
 	</target>
 
 	<target name="comparison">

@@ -6,5 +6,7 @@ define('SELENIUM_COVERAGE_URL', 'http://xcart2-530.crtdev.local/~xcart/general/p
 
 define('DRUPAL_SITE_PATH', '/u/xcart/public_html/general/projects/xlite/build/src');
 
+define('CONFIG_DIR', '~/etc');
+
 //define('SELENIUM_DISABLED', true);
 
