@@ -146,7 +146,7 @@ abstract class SafeMode
      */
     protected static function sendNotification()
     {
-        if (\Includes\Decorator\CacheManager::isRebuildNeeded(\Includes\Decorator\CacheManager::STEP_THIRD)) {
+        if (\Includes\Decorator\Utils\CacheManager::isRebuildNeeded(\Includes\Decorator\Utils\CacheManager::STEP_THIRD)) {
             // Send email notification
             \XLite\Core\Mailer::sendSafeModeAccessKeyNotification(
                 \Includes\Utils\FileManager::read(static::getAccessKeyFileName())
