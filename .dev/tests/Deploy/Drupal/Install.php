@@ -72,7 +72,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         $this->prepareHtaccess();
 
         // Start installation process
-        $this->open('install.php');
+        $this->open('install.php?lcdebug');
 
         // First step page: License agreement
         $this->stepOne();
@@ -368,7 +368,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             sprintf('Check that page header equals to text "Installing LiteCommerce" (pass %d)', $pass)
         );
 
-        $counter = 400;
+        $counter = 200;
 
         $percentage = null;
         while ($counter > 0) {
@@ -389,7 +389,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         $this->assertEquals('100%', $percentage, 'Percentage of batch process does not achived the value of 100%');
 
         $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title")[0].innerHTML.search(/Installing ' . self::PRODUCT_NAME . '/) != -1',
+            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title") != "undefined" && selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title")[0].innerHTML.search(/Installing ' . self::PRODUCT_NAME . '/) != -1',
             20000
         );
     }
@@ -413,7 +413,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             sprintf('Check that page header equals to text "Installing %s" (pass %d)', self::PRODUCT_NAME, $pass)
         );
 
-        $counter = 300;
+        $counter = 200;
 
         $percentage = null;
 
@@ -435,7 +435,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         $this->assertEquals('100%', $percentage, 'Percentage of batch process does not achived the value of 100%');
 
         $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title")[0].innerHTML.search(/Configure site/) != -1',
+            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title") != "undefined" && selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title")[0].innerHTML.search(/Configure site/) != -1',
             20000
         );
     }
