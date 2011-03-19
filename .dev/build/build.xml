@@ -237,7 +237,7 @@
 		</exec>
 	</target>
 
-	<target namee="phpmd">
+	<target name="phpmd">
         <echo message="Run PHPMD" />
         <exec executable="php" dir="${buildDir}" output="${buildDir}/reports/phpmd.html">
             <arg value="${sourceDir}/.dev/phpmd.php" />
