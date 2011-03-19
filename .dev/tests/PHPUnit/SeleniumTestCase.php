@@ -135,33 +135,40 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             'browser' => '*safari',
             'host'    => 'cormorant.crtdev.local',
             'port'    => 4444,
-            'timeout' => 10000
+            'timeout' => self::SELENIUM_TTL,
         ),
         array(
             'name'    => 'Google chrome (Windows)',
-            'browser' => '*googlechrome',
+            'browser' => '*googlechrome C:\Documents and Settings\rnd\Local Settings\Application Data\Google\Chrome\Application\chrome.exe',
             'host'    => 'cormorant.crtdev.local',
             'port'    => 4444,
-            'timeout' => 10000
+            'timeout' => self::SELENIUM_TTL,
         ),
         array(
             'name'    => 'IE 8 (Windows)',
             'browser' => '*iexplore',
             'host'    => 'cormorant.crtdev.local',
             'port'    => 4444,
-            'timeout' => 10000
+            'timeout' => self::SELENIUM_TTL,
         ),
         array(
             'name'    => 'FireFox 3 (Windows)',
             'browser' => '*firefox C:\Program Files\Mozilla Firefox 3\firefox.exe',
             'host'    => 'cormorant.crtdev.local',
             'port'    => 4444,
-            'timeout' => 10000
+            'timeout' => self::SELENIUM_TTL,
         ),
-*/
         array(
             'name'    => 'FireFox 3.5 (Windows)',
             'browser' => '*firefox C:\Program Files\Mozilla Firefox 3.5\firefox.exe',
+            'host'    => SELENIUM_SERVER,
+            'port'    => 4444,
+            'timeout' => self::SELENIUM_TTL,
+        ),
+ */
+        array(
+            'name'    => 'FireFox 3.6 (Windows)',
+            'browser' => '*firefox C:\Program Files\Mozilla Firefox-3.6.15\firefox.exe',
             'host'    => SELENIUM_SERVER,
             'port'    => 4444,
             'timeout' => self::SELENIUM_TTL,
@@ -172,14 +179,21 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             'browser' => '*opera C:\Program Files\Opera9\opera.exe',
             'host'    => 'cormorant.crtdev.local',
             'port'    => 4444,
-            'timeout' => 10000
+            'timeout' => self::SELENIUM_TTL,
         ),
          array(
             'name'    => 'Opera 10 (Windows)',
             'browser' => '*opera C:\Program Files\Opera10\opera.exe',
             'host'    => 'cormorant.crtdev.local',
             'port'    => 4444,
-            'timeout' => 10000
+            'timeout' => self::SELENIUM_TTL,
+        ),
+        array(
+            'name'    => 'Opera 11 (Windows)',
+            'browser' => '*opera C:\Program Files\Opera11\opera.exe',
+            'host'    => 'cormorant.crtdev.local',
+            'port'    => 4444,
+            'timeout' => self::SELENIUM_TTL,
         ),
 */
     );
@@ -233,6 +247,26 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         }
 
         parent::__construct($name, $data, $browser);
+
+        $this->testConfig = $this->getTestConfigOptions();
+    }
+
+    /**
+     * Get options from ini-file
+     *
+     * @return array
+     * @since  1.0.0
+     */
+    protected function getTestConfigOptions()
+    {
+        $configFile = CONFIG_DIR . '/xlite-test.config.php';
+
+        if (file_exists($configFile) && false !== ($config = parse_ini_file($configFile, true))) {
+            return $config;
+        
+        } else {
+            die('Config file not found: ' . $configFile);
+        }
     }
 
     /**
@@ -768,6 +802,8 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
             $message = $e->getMessage();
 
+            echo "$command() [ERROR] $message\n";
+
             if (
                 'Could not connect to the Selenium RC server.' == $message
                 || preg_match('/^The response from the Selenium RC server is invalid: Timed out after \d+ms$/Ss', $message)
@@ -791,8 +827,8 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
                     $this->fail($e->getMessage());
                 }
 
-            } elseif (preg_match('/this\.getCurrentWindow is not a function/', $message)) {
-                $this->markTestSkipped('Browser down: ' . $e->getMessage());
+//            } elseif (preg_match('/this\.getCurrentWindow is not a function/', $message)) {
+//                $this->markTestSkipped('Browser down: ' . $e->getMessage());
 
             } else {
     
