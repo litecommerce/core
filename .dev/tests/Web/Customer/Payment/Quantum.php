@@ -52,13 +52,12 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
             $pmethod->getSettings()->add($s);
         }
 
-        $s->setValue('xcart_arch');
+        // Set test settings
+        $s->setValue($this->testConfig['quantum_gateway']['login']);
         \XLite\Core\Database::getEM()->flush();
         
-
-        // Set test settings
+        // Enable payment method
         $pmethod->setEnabled(true);
-        $pmethod->getSettingEntity('login')->setValue('xcart_arch');
         \XLite\Core\Database::getEM()->flush();
 
         // Set no-xdebug-coverage flag
@@ -77,7 +76,7 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".product-details .product-buttons-added .buy-more").length > 0',
-            10000,
+            20000,
             'check content reloading'
         );
 
@@ -185,23 +184,15 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
         $this->clickAndWait('css=.current .button-row button');
 
         // Go to payment gateway
-        try {
-            $this->waitForLocalCondition(
-                array(
-                    'document.getElementsByTagName("form").length > 0',
-                    'document.getElementsByTagName("form")[0].ccnum',
-                ),
-                20000
-            );
-        } catch (\PHPUnit_Framework_AssertionFailedError $e) {
-            if (preg_match('/Timeout failed/Ss', $e->getMessage())) {
-                $this->markTestSkipped('Quantum gateway login is expired');
-
-            } else {
-                throw $e;
-            }
-        }
-
+        $this->waitForLocalCondition(
+            array(
+                'document.getElementsByTagName("form").length > 0',
+                'document.getElementsByTagName("form")[0].ccnum',
+            ),
+            30000,
+            'Redirect to payment gateway failed'
+        );
+        
         // Type test credit card data
         $this->type('//input[@name="ccnum"]', '4111111111111111');
         $this->select('//select[@name="ccyr"]', 'value=2011');
