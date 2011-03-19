@@ -446,7 +446,11 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
             || false === $this->mailBox
         ) {
 
-            $this->mailBox = imap_open(self::IMAP_BOX, self::IMAP_USER, self::IMAP_PASS);
+            $this->mailBox = imap_open(
+                $this->testConfig['imap']['imap_box'],
+                $this->testConfig['imap']['imap_user'],
+                $this->testConfig['imap']['imap_pass']
+            );
 
         }
     }
@@ -528,6 +532,26 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     public function __construct($name = NULL, array $data = array(), $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
+
+        $this->testConfig = $this->getTestConfigOptions();
+    }
+
+    /**
+     * Get options from ini-file
+     *
+     * @return array
+     * @since  1.0.0
+     */
+    protected function getTestConfigOptions()
+    {
+        $configFile = CONFIG_DIR . '/xlite-test.config.php';
+
+        if (file_exists($configFile) && false !== ($config = parse_ini_file($configFile, true))) {
+            return $config;
+        
+        } else {
+            die('Config file not found: ' . $configFile);
+        }
     }
 
     /**
