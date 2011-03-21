@@ -13,6 +13,6 @@
  *}
 <td class="item-remove delete-from-list">
   <widget class="\XLite\View\Form\Cart\Item\Delete" name="itemRemove{item.getItemId()}" item="{item}" />
-    <div><widget class="\XLite\View\Button\Image" label="Delete item" style="remove" /></div>
+    <div><widget class="\XLite\View\Button\Image" label="Delete item" style="remove" jsCode="return true;" /></div>
   <widget name="itemRemove{item.getItemId()}" end />
 </td>
