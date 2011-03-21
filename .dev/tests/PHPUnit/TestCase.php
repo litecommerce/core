@@ -99,7 +99,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     private function getExecTime()
     {
         $time    = number_format($this->end['time'] - $this->start['time'], 4);
-        $message = trim($this->getMessage('', get_called_class(), $this->name));
+        $message = trim($this->getMessage('', get_called_class(), $this->getName()));
 
         if (strlen($message) > self::$messageLength) {
             self::$messageLength = strlen($message) + 1;
@@ -310,7 +310,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         $trace = $trace[0];
 
         $class = get_called_class();
-        $method = $this->name;
+        $method = $this->getName();
         $class = str_replace(self::CLASS_PREFIX, '', empty($class) ? $trace['class'] : $class);
         $method = lcfirst(str_replace('test', '', empty($method) ? $trace['function'] : $method));
 
@@ -564,7 +564,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      */
     protected function runTest()
     {
-        $shortName = lcfirst(substr($this->name, 4));
+        $shortName = lcfirst(substr($this->getName(), 4));
         if (self::$testsRange && !in_array($shortName, self::$testsRange)) {
             $this->markTestSkipped();
 

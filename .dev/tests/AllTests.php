@@ -107,10 +107,10 @@ if (isset($_SERVER['argv']) && preg_match('/--log-xml\s+(\S+)\s/s', implode(' ',
 }
 
 if (!defined('INCLUDE_ONLY_TESTS') || !preg_match('/DEPLOY_/', constant('INCLUDE_ONLY_TESTS'))) {
-    PHPUnit_Util_Filter::addDirectoryToFilter(PATH_ROOT . '/.dev');
-    PHPUnit_Util_Filter::addDirectoryToFilter(PATH_SRC . '/etc');
-    PHPUnit_Util_Filter::addDirectoryToWhitelist(PATH_SRC . '/var/run/classes');
-    PHPUnit_Util_Filter::addDirectoryToFilter(PATH_SRC . '/var/run/classes/XLite/Model/Proxy');
+    PHP_CodeCoverage_Filter::getInstance()->addDirectoryToBlacklist(PATH_ROOT . '/.dev');
+    PHP_CodeCoverage_Filter::getInstance()->addDirectoryToBlacklist(PATH_SRC . '/etc');
+    PHP_CodeCoverage_Filter::getInstance()->addDirectoryToWhitelist(PATH_SRC . '/var/run/classes');
+    PHP_CodeCoverage_Filter::getInstance()->addDirectoryToBlacklist(PATH_SRC . '/var/run/classes/XLite/Model/Proxy');
 }
 
 foreach (glob(LC_ROOT_DIR . 'var/log/selenium.*.html') as $f) {
