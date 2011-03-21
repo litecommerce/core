@@ -398,8 +398,8 @@ OUT;
     protected function defineSpecialIgnoredTargets()
     {
         return array(
-            'db'      => array('backup', 'delete'),
-            'files'   => array('tar', 'tar_skins', 'untar_skins'),
+            'backup_restore' => array('backup', 'delete'),
+            'files'          => array('tar', 'tar_skins', 'untar_skins'),
         );
     }
 
