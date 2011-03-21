@@ -238,6 +238,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     public function __construct($name = NULL, array $data = array(), $dataName = '', array $browser = array())
     {
         $this->browserName = isset($browser['name']) ? $browser['name'] : 'unknown';
+
         $this->coverageScriptUrl = defined('SELENIUM_COVERAGE_URL')
             ? SELENIUM_COVERAGE_URL . '/phpunit_coverage.php'
             : SELENIUM_SOURCE_URL . '/phpunit_coverage.php';
@@ -383,13 +384,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
                 } catch (\RuntimeException $e) {
                 }
             }
-
-            try {
-                $this->stop();
-
-            } catch (\RuntimeException $e) {
-            }
-
+            
             $backtrace = array();
             foreach ($exception->getTrace() as $t) {
                 $b = null;
@@ -419,38 +414,6 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
             throw $exception;
         }
-    }
-
-    /**
-     * Get code coverage 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.2.0
-     */
-    protected function getCodeCoverage()
-    {
-        $result = array();
-
-        if (!empty($this->coverageScriptUrl)) {
-            $url = sprintf(
-              '%s?PHPUNIT_SELENIUM_TEST_ID=%s',
-              $this->coverageScriptUrl,
-              $this->testId
-            );
-
-            $buffer = @file_get_contents($url);
-
-            if ($buffer !== false) {
-                $buffer = unserialize($buffer);
-                if ($buffer !== false) {
-                    $result = $this->matchLocalAndRemotePaths($buffer);
-                }
-            }
-        }
-
-        return $result;
     }
 
     /**
@@ -529,8 +492,6 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     protected function tearDown()
     {
-        $this->stop();
-
         $message = $this->getMessage('', get_called_class(), $this->getName());
         echo (PHP_EOL . sprintf('%\'.-86s', trim($message)));
     }

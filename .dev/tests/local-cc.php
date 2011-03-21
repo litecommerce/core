@@ -11,8 +11,9 @@ define('SELENIUM_SOURCE_URL', 'http://xcart2-530.crtdev.local/~xcart/general/pro
 define('DRUPAL_SITE_PATH', '/u/xcart/public_html/general/projects/xlite/build/src');
 
 // Settings for screenshots capturing
-define('SELENIUM_SCREENSHOTS_PATH', '/u/xcart/public_html/general/projects/xlite/build/screenshots');
-define('SELENIUM_SCREENSHOTS_URL', 'http://xcart2-530.crtdev.local/~xcart/general/projects/xlite/build/screenshots');
+define('SELENIUM_SCREENSHOTS_PATH', 'C:\\Inetpub\\wwwroot\\selenium-screenshots');
+define('SELENIUM_SCREENSHOTS_URL', 'http://cormorant.crtdev.local/selenium-screenshots');
 
-define('SELENIUM_COVERAGE_URL', 'http://xcart2-530.crtdev.local/~xcart/general/projects/xlite/build');
+// Coverage script URL
+define('SELENIUM_COVERAGE_URL', 'http://xcart2-530.crtdev.local/~xcart/general/projects/xlite/build/.dev/tests/PHPUnit');
 
