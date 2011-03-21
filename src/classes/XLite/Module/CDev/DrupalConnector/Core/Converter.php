@@ -92,19 +92,20 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      * @param string $target Target OPTIONAL
      * @param string $action Action OPTIONAL
      * @param array  $params Parameters list
+     * @param string $node   Node
      *  
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function buildDrupalPath($target = '', $action = '', array $params = array())
+    public static function buildDrupalPath($target = '', $action = '', array $params = array(), $node = self::DRUPAL_ROOT_NODE)
     {
         if (empty($action) && $params) {
             $action = self::EMPTY_ACTION;
         }
 
-        $url = implode('/', $parts = array(self::DRUPAL_ROOT_NODE, $target, $action));
+        $url = implode('/', $parts = array($node, $target, $action));
 
         if ($params) {
             $url .= '/' . \Includes\Utils\Converter::buildQuery($params, '-', '/');
@@ -119,14 +120,15 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      * @param string $target Page identifier OPTIONAL
      * @param string $action Action to perform OPTIONAL
      * @param array  $params Additional params
+     * @param string $node   Node
      *
      * @return string
      * @access public
      * @since  3.0
      */
-    public static function buildDrupalURL($target = '', $action = '', array $params = array())
+    public static function buildDrupalURL($target = '', $action = '', array $params = array(), $node = self::DRUPAL_ROOT_NODE)
     {
-        return static::normalizeDrupalURL(self::buildDrupalPath($target, $action, $params));
+        return static::normalizeDrupalURL(self::buildDrupalPath($target, $action, $params, $node));
     }
 
     /**
