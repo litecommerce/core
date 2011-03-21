@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="menu.maintenance", weight="10")
  *}
-<widget class="\XLite\View\TopMenu\Node" title="DB Backup/Restore" linkTarget="db" />
+<widget class="\XLite\View\TopMenu\Node" title="Backup/Restore" linkTarget="backup_restore" />

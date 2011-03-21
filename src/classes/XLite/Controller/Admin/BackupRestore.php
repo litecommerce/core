@@ -34,7 +34,7 @@ namespace XLite\Controller\Admin;
  * @see   ____class_see____
  * @since 3.0.0
  */
-class Db extends \XLite\Controller\Admin\AAdmin
+class BackupRestore extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * pages 
@@ -45,7 +45,7 @@ class Db extends \XLite\Controller\Admin\AAdmin
      */
     protected $pages = array(
         'db_backup'  => 'Backup database',
-        'db_restore' => 'Restore database'
+        'db_restore' => 'Restore database',
     );
 
     /**
@@ -75,7 +75,7 @@ class Db extends \XLite\Controller\Admin\AAdmin
      */
     protected $pageTemplates = array(
         'db_backup'  => 'db/backup.tpl',
-        'db_restore' => 'db/restore.tpl'
+        'db_restore' => 'db/restore.tpl',
     );
 
     /**
@@ -87,6 +87,23 @@ class Db extends \XLite\Controller\Admin\AAdmin
      */
     protected $sqldumpFile = null;
 
+
+    /**
+     * Constructor
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        if (LC_DEVELOPER_MODE) {
+            $this->pages['pack_distr'] = 'Pack distr';
+        }
+    }
 
     /**
      * File size limit 
@@ -109,7 +126,7 @@ class Db extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return $this->t('DB Backup/Restore');
+        return 'Backup/Restore';
     }
 
     /**
@@ -121,11 +138,17 @@ class Db extends \XLite\Controller\Admin\AAdmin
      */
     public function handleRequest()
     {
-        if (\XLite\Core\Request::getInstance()->isPost()) {
+        $request = \XLite\Core\Request::getInstance();
+
+        if ($request->isPost()) {
             set_time_limit(0);
         }
 
         $this->sqldumpFile = LC_BACKUP_DIR . 'sqldump.sql.php';
+
+        if (LC_DEVELOPER_MODE && !isset($request->action) && 'pack_distr' === $request->page) {
+            $request->action = $request->page;
+        }
 
         parent::handleRequest();
     }
@@ -154,7 +177,7 @@ class Db extends \XLite\Controller\Admin\AAdmin
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode($this->t('DB Backup/Restore'), $this->buildURL('db'));
+        $this->addLocationNode('Backup/Restore', $this->buildURL('backup_restore'));
     }
 
     /**
@@ -298,6 +321,19 @@ class Db extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * doActionPackDistr 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionPackDistr()
+    {
+        \Includes\Utils\PHARManager::packCore(new \XLite\Core\Pack\Distr());
+    }
+
+    /**
      * Common restore database method used by actions
      * 
      * @param mixed $sqlFile File with SQL data for loading into database
@@ -377,12 +413,12 @@ class Db extends \XLite\Controller\Admin\AAdmin
         switch (\XLite\Core\Request::getInstance()->action) {
 
             case 'backup':
-                $url[] = '<a href="admin.php?target=db&page=db_backup">Return to admin interface.</a>';
+                $url[] = '<a href="admin.php?target=backup_restore&page=db_backup">Return to admin interface.</a>';
                 break;
 
             case 'restore_from_uploaded_file':
             case 'restore_from_local_file':
-                $url[] = '<a href="admin.php?target=db&page=db_restore">Return to admin interface.</a>';
+                $url[] = '<a href="admin.php?target=backup_restore&page=db_restore">Return to admin interface.</a>';
                 break;
 
             default:

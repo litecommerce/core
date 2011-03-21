@@ -264,32 +264,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
         return $module->__call('get' . \XLite\Core\Converter::convertToCamelCase($property));
     }
 
-    /** 
-     * Checks if the PHAR pack warning needs to show
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function showPackWarning()
-    {
-        return $this->developerMode() && '' !== ini_get('phar.readonly');
-    }   
-
-    /**
-     * Checks if the PHAR pack button needs to show
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function showPHARPack()
-    {
-        return $this->developerMode() && '' == ini_get('phar.readonly');
-    }
-
     // {{{ Version-related checks
 
     /**

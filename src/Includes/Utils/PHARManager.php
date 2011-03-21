@@ -36,4 +36,90 @@ namespace Includes\Utils;
  */
 abstract class PHARManager extends \Includes\Utils\AUtils
 {
+    // {{{ Public methods 
+
+    /**
+     * Create pack for LC core 
+     * 
+     * @param \XLite\Core\Pack\Distr $pack Files to pack
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function packCore(\XLite\Core\Pack\Distr $pack)
+    {
+        static::download($pack);
+    }
+
+    /**
+     * Create pack for module
+     * 
+     * @param \XLite\Core\Pack\Module $pack Files to pack
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function packModule(\XLite\Core\Pack\Module $pack)
+    {
+        static::download($pack);
+    }
+
+    // }}}
+
+    // {{{ PHAR-related routines
+
+    /**
+     * Download pack
+     * 
+     * @param \XLite\Core\Pack\APack $pack Files to pack
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function download(\XLite\Core\Pack\APack $pack)
+    {
+        $path = LC_LOCAL_REPOSITORY . $pack->getName() . '.tar';
+        $phar = static::pack($path, $pack->getDirectoryIterator(), $pack->getMetadata());
+
+        header('Content-Type: application/force-download');
+        header('Content-Disposition: attachment; filename="' . basename($path) . '"');
+        header('Content-Length: ' . filesize($path));
+
+        echo (\Includes\Utils\FileManager::read($path));
+        \Includes\Utils\FileManager::delete($path);
+        exit (0);
+    }
+
+    /**
+     * Create PHAR archive
+     * 
+     * @param string    $name     Pack name
+     * @param \Iterator $iterator Directory iterator
+     * @param array     $metadata Archive description
+     *  
+     * @return \Phar
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function pack($name, \Iterator $iterator, array $metadata = array())
+    {
+        // To prevent existsing files usage
+        \Includes\Utils\FileManager::delete($name);
+
+        $phar = new \PharData($name);
+
+        $phar->buildFromIterator($iterator, LC_ROOT_DIR);
+        $phar->setMetadata($metadata);
+
+        return $phar;
+    }
+
+    // }}}
 }

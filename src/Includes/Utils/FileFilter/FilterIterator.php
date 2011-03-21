@@ -47,6 +47,16 @@ class FilterIterator extends \FilterIterator
      */
     protected $pattern;
 
+    /**
+     * List of filtering callbacks 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $callbacks = array();
+
 
     /**
      * Constructor 
@@ -67,6 +77,25 @@ class FilterIterator extends \FilterIterator
     }
 
     /**
+     * Add callback to filter files
+     *
+     * @param array $callback Callback to register
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function registerCallback(array $callback)
+    {
+        if (!is_callable($callback)) {
+            \Includes\ErrorHandler::fireError('Filtering callback is not valid');
+        }
+
+        $this->callbacks[] = $callback;
+    }
+
+    /**
      * Check if current element of the iterator is acceptable through this filter
      *
      * @return bool
@@ -76,6 +105,19 @@ class FilterIterator extends \FilterIterator
      */
     public function accept()
     {
-        return !isset($this->pattern) ?: preg_match($this->pattern, $this->getPathname());
+        if (!($result = !isset($this->pattern))) {
+            $result = preg_match($this->pattern, $this->getPathname());
+        }
+
+        if (!empty($this->callbacks)) {
+
+            while ($result && (list(, $callback) = each($this->callbacks))) {
+                $result = call_user_func_array($callback, array($this));
+            }
+
+            reset($this->callbacks);
+        }
+
+        return $result;
     }
 }

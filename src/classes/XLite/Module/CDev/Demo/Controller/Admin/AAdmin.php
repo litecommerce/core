@@ -49,7 +49,7 @@ abstract class AAdmin extends \XLite\Controller\Admin\AAdmin implements \XLite\B
         'XLite\Controller\Admin\AddonsList',
         'XLite\Controller\Admin\AddressBook',
         'XLite\Controller\Admin\CacheManagement',
-        'XLite\Controller\Admin\Db',
+        'XLite\Controller\Admin\BackupRestore',
         'XLite\Controller\Admin\Module',
         'XLite\Controller\Admin\ModuleInstallation',
         'XLite\Controller\Admin\Modules',

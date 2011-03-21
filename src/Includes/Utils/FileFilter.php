@@ -125,7 +125,7 @@ class FileFilter extends AUtils
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct($dir, $pattern, $mode = \RecursiveIteratorIterator::LEAVES_ONLY)
+    public function __construct($dir, $pattern = null, $mode = \RecursiveIteratorIterator::LEAVES_ONLY)
     {
         if (!($this->dir = \Includes\Utils\FileManager::getCanonicalDir($dir))) {
             \Includes\ErrorHandler::fireError('Path "' . $dir . '" is not exists or is not readable.');

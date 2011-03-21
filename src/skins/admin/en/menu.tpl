@@ -41,7 +41,7 @@
         <tr>
             <widget template="menu_item.tpl" href="admin.php?target=users&mode=search" icon="menu/icon_users.gif" text="<span class='main-menu-item-header'>Users</span><br />Manage customer and administrator accounts" />
             <td style="width:1%;">&nbsp;&nbsp;</td>
-            <widget template="menu_item.tpl" href="admin.php?target=db" icon="menu/icon_catalog.gif" text="<span class='main-menu-item-header'>Store Maintenance</span><br>Perform backup of your store database" />
+            <widget template="menu_item.tpl" href="admin.php?target=backup_restore" icon="menu/icon_catalog.gif" text="<span class='main-menu-item-header'>Store Maintenance</span><br>Perform backup of your store database" />
         </tr>
 		</table>
   </td>

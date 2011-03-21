@@ -37,49 +37,42 @@ namespace XLite\Core\Pack;
 abstract class APack
 {
     /**
-     * Path to unpacked package
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * Field names in metadata
      */
-    protected $path;
-
-
-    // ------------------------------ Public methods -
+    const METADATA_FIELD_REVISION_DATE = 'RevisionDate';
 
     /**
-     * Constructor 
+     * Return pack name
      * 
-     * @param string $path Path to the unpacked PHAR archive (directory)
-     *  
-     * @return void
+     * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct($path)
-    {
-        $this->path = $path;
-    }
+    abstract public function getName();
 
     /**
-     * Check archive integrity
+     * Return iterator to walk through directories
+     * 
+     * @return \Iterator
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract public function getDirectoryIterator();
+
+    /**
+     * Return pack metadata
      * 
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function checkIntegrity()
+    public function getMetadata()
     {
-        $message = null;
-
-        if (!\Includes\Utils\FileManager::isDirReadable($this->path)) {
-            $message = 'Source dir is not readable';
-        }
-
-        return array(!isset($message), $message ?: '');
+        return array(            
+            self::METADATA_FIELD_REVISION_DATE => time(),
+        );
     }
 }

@@ -88,6 +88,19 @@ abstract class AModule
     }
 
     /**
+     * Return URL for module icon
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0
+     */
+    public static function getIconURL()
+    {
+        return null;
+    }
+
+    /**
      * Determines if we need to show settings form link
      * 
      * @return boolean 
