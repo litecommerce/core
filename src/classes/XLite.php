@@ -428,7 +428,6 @@ class XLite extends \XLite\Base
      * Get application version
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -441,7 +440,6 @@ class XLite extends \XLite\Base
      * Get application major version
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -454,7 +452,6 @@ class XLite extends \XLite\Base
      * Get application minor version
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -470,7 +467,6 @@ class XLite extends \XLite\Base
      * @param string $operator Comparison operator
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
