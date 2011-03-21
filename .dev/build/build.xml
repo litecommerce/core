@@ -189,10 +189,6 @@
             <arg value="--log-xml" />
 			<arg value="${buildDir}/logs/phpunit.xml" />
 			<!-- PHPUnit PMD and PHPUnit Metrics have been removed from PHPUnit 3.5 -->
-			<!-- arg value="--log-pmd" / -->
-			<!-- arg value="${buildDir}/logs/phpunit.pmd.xml" / -->
-			<!-- arg value="--log-metrics" / -->
-			<!-- arg value="${buildDir}/logs/phpunit.metrics.xml" / -->
 			<arg value="--coverage-xml" />
 			<arg value="${buildDir}/logs/phpunit.coverage.xml" />
 			<arg value="--coverage-html" />
