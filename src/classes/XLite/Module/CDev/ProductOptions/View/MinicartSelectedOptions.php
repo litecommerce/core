@@ -111,39 +111,5 @@ class MinicartSelectedOptions extends \XLite\View\AView
     {
         return $this->getItem()->getOptions();
     }
-
-    /**
-     * Register JS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        $list[] = 'modules/CDev/ProductOptions/minicart.js';
-
-        return $list;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'modules/CDev/ProductOptions/minicart.css';
-
-        return $list;
-    }
 }
 
