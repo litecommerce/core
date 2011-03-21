@@ -6,12 +6,23 @@
  * $Id: pear-phpunit 2805 2008-04-14 16:52:19Z sb $
  */
 
-set_include_path(get_include_path() . PATH_SEPARATOR . '/usr/local/share/pear/');
+$_files_to_include_into_path = array(
+	'dbunit',
+	'php-code-coverage',
+	'php-file-iterator',
+	'php-text-template',
+	'php-timer',
+	'php-token-stream',
+	'phpunit',
+	'phpunit-mock-objects',
+	'phpunit-selenium',
+);
+
+foreach ($_files_to_include_into_path as $_file) {
+	set_include_path(get_include_path() . PATH_SEPARATOR . sprintf('/u/xcart/lib/%s/', $_file));
+}
+
 @date_default_timezone_set(@date_default_timezone_get());
-
-require_once 'PHPUnit/Util/Filter.php';
-
-PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
 $lastParam = $_SERVER['argv'][count($_SERVER['argv']) - 1];
 
@@ -29,4 +40,5 @@ if (!preg_match('/AllTests.php$/Ss', $lastParam)) {
 	}
 }
 
-require 'PHPUnit/TextUI/Command.php';
+require 'phpunit.php';
+

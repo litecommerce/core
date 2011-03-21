@@ -34,7 +34,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
     {
         $request = parent::getRequest();
         // Except some ones, all methods are emulate the customer area
-        $request['controller'] = ('testSearchDisabledItems' === $this->name);
+        $request['controller'] = ('testSearchDisabledItems' === $this->getName());
 
         return $request;
     }

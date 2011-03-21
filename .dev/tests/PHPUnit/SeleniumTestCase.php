@@ -31,7 +31,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     /**
      * Selenioum common TTL 
      */
-    const SELENIUM_TTL = 60000;
+    const SELENIUM_TTL = 60;
 
 
     /**
@@ -235,18 +235,24 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function __construct($name = NULL, array $data = array(), array $browser = array())
+    public function __construct($name = NULL, array $data = array(), $dataName = '', array $browser = array())
     {
         $this->browserName = isset($browser['name']) ? $browser['name'] : 'unknown';
         $this->coverageScriptUrl = defined('SELENIUM_COVERAGE_URL')
             ? SELENIUM_COVERAGE_URL . '/phpunit_coverage.php'
             : SELENIUM_SOURCE_URL . '/phpunit_coverage.php';
 
+        if (defined('SELENIUM_SCREENSHOTS_PATH') && defined('SELENIUM_SCREENSHOTS_URL')) {
+            $this->captureScreenshotOnFailure = true;
+            $this->screenshotPath = SELENIUM_SCREENSHOTS_PATH;
+            $this->screenshotUrl = SELENIUM_SCREENSHOTS_URL;
+        }
+
         if (defined('W3C_VALIDATION')) {
             $this->validatePage = true;
         }
 
-        parent::__construct($name, $data, $browser);
+        parent::__construct($name, $data, $dataName, $browser);
 
         $this->testConfig = $this->getTestConfigOptions();
     }
@@ -342,7 +348,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     {
         try {
 
-            $shortName = lcfirst(substr($this->name, 4));
+            $shortName = lcfirst(substr($this->getName(), 4));
             if (self::$testsRange && !in_array($shortName, self::$testsRange)) {
                 $this->markTestSkipped();
 
@@ -525,7 +531,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     {
         $this->stop();
 
-        $message = $this->getMessage('', get_called_class(), $this->name);
+        $message = $this->getMessage('', get_called_class(), $this->getName());
         echo (PHP_EOL . sprintf('%\'.-86s', trim($message)));
     }
 
