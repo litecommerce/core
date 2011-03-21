@@ -407,6 +407,7 @@ table.data-table td
   padding: 5px 10px;
   white-space: nowrap;
   color: #333;
+  vertical-align: top;
 }
 
 table.data-table th
