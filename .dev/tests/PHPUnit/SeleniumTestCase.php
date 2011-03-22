@@ -270,6 +270,16 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         $classGroups      = PHPUnit_Util_Test::getGroups($className);
         $staticProperties = $class->getStaticProperties();
 
+        // Leave only one browser in deployment mode
+        if (defined('DEPLOYMENT_TEST') && !empty($staticProperties['browsers'])) {
+            $_browsers = array();
+            foreach ($staticProperties['browsers'] as $key => $value) {
+                $_browsers[$key] = $value;
+                break;
+            }
+            $staticProperties['browsers'] = $_browsers;
+        }
+
         // Create tests from Selenese/HTML files.
         if (isset($staticProperties['seleneseDirectory']) &&
             is_dir($staticProperties['seleneseDirectory'])) {
