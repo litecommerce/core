@@ -277,7 +277,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             . "/ul[@class='totals']"
             . "/li"
         );
-        $this->assertEquals(5, $cnt, 'check totals rows count');
+        $this->assertEquals(4, $cnt, 'check totals rows count');
 
         $this->assertElementPresent(
             "//div[@id='cart']"
@@ -295,15 +295,6 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             . "/li[@class='shipping-modifier']"
             . "/strong[text()='Shipping cost:']",
             'check Shipping cost'
-        );
-
-        $this->assertElementPresent(
-            "//div[@id='cart']"
-            . "/div[@id='cart-right']"
-            . "/ul[@class='totals']"
-            . "/li[@class='tax-modifier']"
-            . "/strong[text()='tax:']",
-            'check Tax cost'
         );
 
         $this->assertElementPresent(
@@ -378,17 +369,49 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
         );
 
         // Inventory tracking: check unallowed values
-        $this->getJSExpression('jQuery("td.item-qty form input[type=text]").val("-3").blur()');
-        $this->assertJqueryPresent('div.amountformError:visible', 'check minimal allowed quantity error');
-        $this->assertJqueryPresent('td.item-qty form input.wrong-amount', 'check minimal allowed quantity');
 
-        $this->getJSExpression('jQuery("td.item-qty form input[type=text]").val("1").blur()');
-        $this->assertJqueryNotPresent('div.amountformError:visible', 'check normalized quantity error');
-        $this->assertJqueryNotPresent('td.item-qty form input.wrong-amount', 'check normalized quantity');
+        $errorDivSelector = 'div.amount' . $product->getProductId() . 'formError:visible';
+        $errorQtySelector = 'td.item-qty form input.wrong-amount';
+        $qtyBlurOperation = 'jQuery("td.item-qty form input[type=text]").blur()';
 
-        $this->getJSExpression('jQuery("td.item-qty form input[type=text]").val("51").blur()');
-        $this->assertJqueryPresent('div.amountformError:visible', 'check maximum allowed quantity error');
-        $this->assertJqueryPresent('td.item-qty form input.wrong-amount', 'check maximum allowed quantity');
+        $this->typeKeys(
+            "//td[@class='item-qty']"
+            . "/form[@method='post']"
+            . "/div"
+            . "/span[@class='quantity-box-container']"
+            . "/input[@type='text']",
+            '-3'
+        );
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryPresent($errorDivSelector, 'check minimal allowed quantity error');
+        $this->assertJqueryPresent($errorQtySelector, 'check minimal allowed quantity');
+
+
+
+        $this->typeKeys(
+            "//td[@class='item-qty']"
+            . "/form[@method='post']"
+            . "/div"
+            . "/span[@class='quantity-box-container']"
+            . "/input[@type='text']",
+            '51'
+        );
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryPresent($errorDivSelector, 'check maximum allowed quantity error');
+        $this->assertJqueryPresent($errorQtySelector, 'check maximum allowed quantity');
+
+
+        $this->typeKeys(
+            "//td[@class='item-qty']"
+            . "/form[@method='post']"
+            . "/div"
+            . "/span[@class='quantity-box-container']"
+            . "/input[@type='text']",
+            '10'
+        );
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryNotPresent($errorDivSelector, 'check normalized quantity error');
+        $this->assertJqueryNotPresent($errorQtySelector, 'check normalized quantity');
     }
 
     public function testEstimator()
@@ -554,4 +577,5 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
 
         $this->assertEquals($product->getProductId(), $pid, 'check product id');
     }
+
 }
