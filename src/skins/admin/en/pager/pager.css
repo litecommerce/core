@@ -36,6 +36,7 @@ ul.pager li {
   text-align: center;
   vertical-align: middle;
   border: 1px solid #fff;
+  float: left;
 }
 
 ul.pager li a,
