@@ -35,6 +35,6 @@ namespace XLite\RemoteModel;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class AModel
+abstract class AModel
 {
 }
