@@ -54,7 +54,6 @@ if (defined('DRUPAL_SITE_PATH') && !defined('LOCAL_TESTS')) {
 
 set_include_path(
     get_include_path()
-    . PATH_SEPARATOR . '/usr/local/share/pear/'
     . PATH_SEPARATOR . PATH_SRC . '/classes'
     . PATH_SEPARATOR . PATH_SRC . '/var/run/classes'
 );

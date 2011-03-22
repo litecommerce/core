@@ -289,9 +289,10 @@ class XLite_Sniffs_PHP_Classes_ClassDeclarationSniff extends XLite_ReqCodesSniff
 		}
 
 		if ($outerFunctions) {
+			$maxId = max($outerFunctions);
 			$blocks[min($outerFunctions) - 1] = array(
 				'Outer methods',
-				$tokens[max($outerFunctions)]['scope_closer'] + 1
+				(isset($tokens[$maxId]['scope_closer']) ? $tokens[$maxId]['scope_closer'] + 1 : $maxId + 2),
 			);
 		}
 

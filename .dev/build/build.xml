@@ -165,7 +165,8 @@
 		</copy>
 		<mkdir dir="${buildDir}/logs/coverage" />
 		<exec executable="phpunit" dir="${buildDir}" failonerror="on" output="${buildDir}/reports/phpunit.txt">
-			<arg value="--log-xml" />
+			<arg value="--verbose" />
+			<arg value="--log-junit" />
 			<arg value="${buildDir}/logs/phpunit.xml" />
 			<arg value="--coverage-html" />
 			<arg value="${buildDir}/logs/coverage" />
@@ -186,10 +187,11 @@
 		</copy>
 		<mkdir dir="${buildDir}/coverage" />
         <exec executable="/u/xcart/bin/phpunit-xlite" dir="${buildDir}" failonerror="on">
-            <arg value="--log-xml" />
+			<arg value="--verbose" />
+			<arg value="--log-junit" />
 			<arg value="${buildDir}/logs/phpunit.xml" />
 			<!-- PHPUnit PMD and PHPUnit Metrics have been removed from PHPUnit 3.5 -->
-			<arg value="--coverage-xml" />
+			<arg value="--coverage-clover" />
 			<arg value="${buildDir}/logs/phpunit.coverage.xml" />
 			<arg value="--coverage-html" />
 			<arg value="${buildDir}/coverage" />

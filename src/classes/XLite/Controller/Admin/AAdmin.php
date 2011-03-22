@@ -507,19 +507,6 @@ OUT;
     }
 
     /**
-     * Get last available core version
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getLastCoreVersion()
-    {
-        return \XLite\RemoteModel\Marketplace::getInstance()->getLastVersion();
-    }
-
-    /**
      * Is core upgrade available
      * 
      * @return boolean
@@ -529,8 +516,6 @@ OUT;
      */
     public function isCoreUpgradeAvailable()
     {
-        $version = $this->getLastCoreVersion();
-
-        return $version && version_compare($this->getCurrentCoreVersion(), $version, '<');
+        return (bool) \XLite\Core\Marketplace::getInstance()->getCoreVersions();
     }
 }

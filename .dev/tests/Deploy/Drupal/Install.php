@@ -112,7 +112,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepOne($pass = 1)
     {
          // Check page title
-        $this->assertTitleEquals('License agreements | Drupal', 'Checking the page title');
+        $this->assertTitle('License agreements | Drupal');
 
         // Check page header
         $this->assertElementPresent(
@@ -177,7 +177,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepTwo()
     {
         // Check page title
-        $this->assertTitleEquals('Requirements problem | Drupal', 'Checking the page title');
+        $this->assertTitle('Requirements problem | Drupal');
 
         // Check page header
         $this->assertElementPresent(
@@ -216,7 +216,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepThree($pass = 1)
     {
         // Check page title
-        $this->assertTitleEquals('Database configuration | Drupal', 'Checking the page title');
+        $this->assertTitle('Database configuration | Drupal');
 
         // Check page header
         $this->assertElementPresent(
@@ -322,7 +322,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepFour($pass = 1)
     {
         // Check page title
-        $this->assertTitleEquals('Install LiteCommerce | Drupal', 'Checking the page title');
+        $this->assertTitle('Install LiteCommerce | Drupal');
 
         // Check page header
         $this->assertElementPresent(
@@ -360,7 +360,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepFive($pass = 1)
     {
         // Check page title
-        $this->assertTitleEquals('Installing LiteCommerce | Drupal', sprintf('Checking the page title (pass %d)', $pass));
+        $this->assertTitle('Installing LiteCommerce | Drupal');
 
         // Check page header
         $this->assertElementPresent(
@@ -405,7 +405,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepSix($pass = 1)
     {
         // Check page title
-        $this->assertTitleEquals('Installing ' . self::PRODUCT_NAME . ' | Drupal', sprintf('Checking the page title (pass %d)', $pass));
+        $this->assertTitle('Installing ' . self::PRODUCT_NAME . ' | Drupal');
 
         // Check page header
         $this->assertElementPresent(
@@ -451,7 +451,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepSeven($pass = 1)
     {
         // Check page title
-        $this->assertTitleEquals('Configure site | Drupal', 'Checking the page title');
+        $this->assertTitle('Configure site | Drupal');
 
         // Check page header
         $this->assertElementPresent(
@@ -561,7 +561,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepEight()
     {
          // Check page title
-        $this->assertTitleEquals(self::PRODUCT_NAME . ' installation complete | Test ' . self::PRODUCT_NAME, 'Checking the page title');
+        $this->assertTitle(self::PRODUCT_NAME . ' installation complete | Test ' . self::PRODUCT_NAME);
 
         // Check page header
         $this->assertElementPresent(
@@ -596,7 +596,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepNine()
     {
         // Check page title
-        $this->assertTitleEquals('Test ' . self::PRODUCT_NAME, 'Checking the page title');
+        $this->assertTitle('Test ' . self::PRODUCT_NAME);
 
         // Check if minicart is presented and has correct items value
         $this->assertElementPresent(

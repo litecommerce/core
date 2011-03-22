@@ -99,7 +99,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
     /**
      * Create PHAR archive
      * 
-     * @param string    $name     Pack name
+     * @param string    &$name    Pack name
      * @param \Iterator $iterator Directory iterator
      * @param array     $metadata Archive description
      *  
@@ -108,7 +108,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function pack($name, \Iterator $iterator, array $metadata = array())
+    protected static function pack(&$name, \Iterator $iterator, array $metadata = array())
     {
         // To prevent existsing files usage
         \Includes\Utils\FileManager::delete($name);
@@ -117,6 +117,12 @@ abstract class PHARManager extends \Includes\Utils\AUtils
 
         $phar->buildFromIterator($iterator, LC_ROOT_DIR);
         $phar->setMetadata($metadata);
+        if ($phar->canCompress(\Phar::GZ)) {
+            $name .= '.gz';
+            \Includes\Utils\FileManager::delete($name);
+            $ext = preg_replace('/^[^\.]+\./Ss', '.', $name);
+            $phar = $phar->compress(\Phar::GZ, $ext);
+        }
 
         return $phar;
     }
