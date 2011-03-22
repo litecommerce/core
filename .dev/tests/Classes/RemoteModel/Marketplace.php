@@ -37,13 +37,13 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
     /**
      * Test modules names 
      */
-    const MODULE1_NAME = 'MegaModule48';
+    /*const MODULE1_NAME = 'MegaModule48';
     const MODULE2_NAME = 'MegaModule49';
 
     /**
      * Test author name 
      */
-    const AUTHOR = 'Igoryan';
+    /*const AUTHOR = 'Igoryan';
 
 
     /**
@@ -54,7 +54,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @see    ____var_see____
      * @since  3.0.0
      */
-    private $moduleId = null;
+    /*private $moduleId = null;
 
     /**
      * Return module identificator of module with specific name and 'Igoryan' author
@@ -66,7 +66,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @see    ____func_see____
      * @since  3.0.0
      */
-    private function getModuleId($name)
+    /*private function getModuleId($name)
     {
         if (empty($this->moduleId[$name])) {
 
@@ -95,7 +95,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @see    ____func_see____
      * @since  3.0.0
      */
-    private function getFile($name)
+    /*private function getFile($name)
     {
         $filename = dirname(__FILE__) . LC_DS . 'marketplace_files' . LC_DS . $name;
 
@@ -110,7 +110,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function testGetURL()
+    /*public function testGetURL()
     {
         \XLite\Core\Database::getRepo('\XLite\Model\Module')->checkModules();
 
@@ -129,7 +129,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function testLicense()
+    /*public function testLicense()
     {
         $testLicense = $this->getFile('test.license');
 
@@ -152,7 +152,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function testAddonsXML()
+    /*public function testAddonsXML()
     {
         $testXML = $this->getFile('addons.xml');
 
@@ -167,7 +167,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function testRetrieveToLocalRepository()
+    /*public function testRetrieveToLocalRepository()
     {
         $filename = 'Igoryan_MegaModule49.phar';
 
@@ -195,7 +195,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function testLastVersion()
+    /*public function testLastVersion()
     {
         $this->assertEquals(\XLite\RemoteModel\Marketplace::getInstance()->getLastVersion(), 'xlite_3_0_x', 'Wrong last version');
     }
@@ -208,7 +208,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function testModuleInfoByKey()
+    /*public function testModuleInfoByKey()
     {
         $this->assertEquals(
             \XLite\RemoteModel\Marketplace::getInstance()->getModuleInfoByKey('test1'),
@@ -226,6 +226,5 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
             ),
             'Wrong module info for wrong key'
         );
-    }
-
+    }*/
 }
