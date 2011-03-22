@@ -142,15 +142,9 @@ class OptionSurcharge extends \XLite\Model\AEntity
      */
     public function getSign()
     {
-        $sign = '';
         $value = $this->getAbsoluteValue();
-        if (0 > $value) {
-            $sign = '-';
-
-        } elseif (0 < $value) {
-            $sign = '+';
-        }
-
+        $sign  = $value > 0 ? '+&#8197;' : '';
+        
         return $sign;
     }
 
@@ -181,6 +175,19 @@ class OptionSurcharge extends \XLite\Model\AEntity
 
         // methodName defined in getCalculator() method
         return $this->postprocessSurcharge($this->$methodName());
+    }
+
+    /**
+     * Get surcharge positive absolute value 
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPositiveAbsoluteValue()
+    {
+        return abs($this->getAbsoluteValue());
     }
 
     /**
@@ -317,7 +324,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
     }
 
     /**
-     * Postprocess pruice surcharge 
+     * Postprocess price surcharge 
      * 
      * @param float $surcharge Surcharge
      *  
