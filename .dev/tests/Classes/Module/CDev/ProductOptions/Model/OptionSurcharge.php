@@ -108,7 +108,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionSurcharge extends XLite
         \XLite\Core\Database::getEM()->persist($s);
         \XLite\Core\Database::getEM()->flush();
 
-        $this->assertEquals('-', $s->getSign(), '- sign');
+        $this->assertEquals('&minus;', $s->getSign(), '- sign');
 
         $s->setModifier(0);
         \XLite\Core\Database::getEM()->persist($s);
