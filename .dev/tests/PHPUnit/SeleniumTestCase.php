@@ -266,7 +266,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     protected function getTestConfigOptions()
     {
-        $configFile = CONFIG_DIR . '/xlite-test.config.php';
+        $configFile = XLITE_DEV_CONFIG_DIR . '/xlite-test.config.php';
 
         if (file_exists($configFile) && false !== ($config = parse_ini_file($configFile, true))) {
             return $config;
