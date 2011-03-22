@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-{modifier.getSign()} {price_format(modifier.getAbsoluteValue()):h}
+{modifier.getSign():h}&#8197;{formatPrice(modifier.getPositiveAbsoluteValue()):h}

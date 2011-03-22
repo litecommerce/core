@@ -18,9 +18,11 @@
 .simple-search-box {
   border: solid 1px #dfdfdf;
   height: 24px;
-  width: 232px;
+  width: 240px;
   clear: both;
   -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
 }
 
 .simple-search-box input.form-text {

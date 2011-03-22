@@ -45,6 +45,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
      * @see    ____func_see____
      * @since  3.0.0
      */
+
     public function testStructure()
     {
         $product = $this->getActiveProduct();
@@ -454,8 +455,11 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         );
 
         // This assertion requires the minicart widget to be visible on the page
-        $q = intval($this->getJSExpression('jQuery(".minicart-items-number").html()'));
-        $this->assertEquals($qty, $q, 'check quantity');
+        $this->waitForLocalCondition(
+            'jQuery(".minicart-items-number").html() == "1"',
+            10000,
+            'check quantity'
+        );
 
         $this->assertElementPresent(
             $buyButtonSelector,
@@ -485,19 +489,26 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         );
 
         // Check unallowed values (inventory tracking)
-        $this->getJSExpression('jQuery(".product-details input.quantity").val("-3").blur()');
-        $this->assertJqueryPresent('div.amountformError:visible', 'check minimal allowed quantity error');
-        $this->assertJqueryPresent('input.quantity.wrong-amount', 'check minimal allowed quantity');
+        $qtyBlurOperation = 'jQuery(".product-details input.quantity").blur()';
+        $errorDivSelector = 'div.amount' . $product->getProductId() . 'formError:visible';
+        $errorQtySelector = 'input.quantity.wrong-amount';
+
+        $this->typeKeys($quantitySelector, -3);
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryPresent($errorDivSelector, 'check minimal allowed quantity error');
+        $this->assertJqueryPresent($errorQtySelector, 'check minimal allowed quantity');
         $this->assertJqueryPresent('button.action.buy-more.disabled.add2cart-disabled', 'check disabled buy now button (min qty)');
 
-        $this->getJSExpression('jQuery(".product-details input.quantity").val("45").blur()');
-        $this->assertJqueryNotPresent('div.amountformError:visible', 'check normalized quantity error');
-        $this->assertJqueryNotPresent('input.quantity.wrong-amount', 'check normalized quantity');
+        $this->typeKeys($quantitySelector, 45);
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryNotPresent($errorDivSelector, 'check normalized quantity error');
+        $this->assertJqueryNotPresent($errorQtySelector, 'check normalized quantity');
         $this->assertJqueryNotPresent('button.action.buy-more.disabled.add2cart-disabled', 'check enabled buy now button');
-        
-        $this->getJSExpression('jQuery(".product-details input.quantity").val("46").blur()');
-        $this->assertJqueryPresent('div.amountformError:visible', 'check maximum allowed quantity error');
-        $this->assertJqueryPresent('input.quantity.wrong-amount', 'check maximum allowed quantity');
+
+        $this->typeKeys($quantitySelector, 46);
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryPresent($errorDivSelector, 'check maximum allowed quantity error');
+        $this->assertJqueryPresent($errorQtySelector, 'check maximum allowed quantity');
         $this->assertJqueryPresent('button.action.buy-more.disabled.add2cart-disabled', 'check disabled buy now button (max qty)');
     }
 

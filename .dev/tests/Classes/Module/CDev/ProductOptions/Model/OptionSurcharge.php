@@ -108,7 +108,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionSurcharge extends XLite
         \XLite\Core\Database::getEM()->persist($s);
         \XLite\Core\Database::getEM()->flush();
 
-        $this->assertEquals('-', $s->getSign(), '- sign');
+        $this->assertEquals('&minus;', $s->getSign(), '- sign');
 
         $s->setModifier(0);
         \XLite\Core\Database::getEM()->persist($s);
@@ -174,6 +174,19 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionSurcharge extends XLite
         \XLite\Core\Database::getEM()->flush();
 
         $this->assertEquals(0, $s->getAbsoluteValue(), '0 #3');
+    }
+
+    public function testGetPositiveAbsoluteValue()
+    {
+        $group = $this->getTestGroup();
+
+        $s = $group->getOptions()->get(2)->getSurcharges()->get(0);
+
+        $s->setModifier(-10);
+        \XLite\Core\Database::getEM()->persist($s);
+        \XLite\Core\Database::getEM()->flush();
+
+        $this->assertEquals(10, $s->getPositiveAbsoluteValue(), '10');
     }
 
     protected function getProduct()

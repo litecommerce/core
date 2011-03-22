@@ -26,11 +26,11 @@
 .search-form-main-part button.search-form-submit {
   width: 147px;
   height: 32px;
-  padding: 0px 0px 0px 0px;
+  padding: 0;
 }
 
 .search-form-main-part button.search-form-submit span {
-  padding: 0px 0px 0px 10px;
+  padding: 0;
   font-size: 14px;
 }
 
