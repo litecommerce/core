@@ -86,7 +86,9 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->open('user/1/edit');
 
-        $this->clickAndWait('css=#edit-submit');
+        $this->assertElementPresent('id=edit-submit', 'Check if Update button presented');
+
+        $this->clickAndWait('id=edit-submit');
 
         if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
             $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
@@ -112,16 +114,16 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         $email = 'rnd_tester' . time() . '@cdev.ru';
 
         // Specify current password
-        $this->type('css=#edit-current-pass', $user['password']);
+        $this->type('id=edit-current-pass', $user['password']);
 
         // Change password
-        $this->type('css=#edit-pass-pass1', $user['password']);
-        $this->type('css=#edit-pass-pass2', $user['password']);
+        $this->type('id=edit-pass-pass1', $user['password']);
+        $this->type('id=edit-pass-pass2', $user['password']);
 
         // Change email
-        $this->type('css=#edit-mail', $email);
+        $this->type('id=edit-mail', $email);
 
-        $this->clickAndWait('css=#edit-submit');
+        $this->clickAndWait('id=edit-submit');
 
         if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
             $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
@@ -138,13 +140,13 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         // Revert changes back
 
         // Specify current password
-        $this->type('css=#edit-current-pass', $user['password']);
+        $this->type('id=edit-current-pass', $user['password']);
 
-        $this->type('css=#edit-pass-pass1', $user['password']);
-        $this->type('css=#edit-pass-pass2', $user['password']);
-        $this->type('css=#edit-mail', $user['email']);
+        $this->type('id=edit-pass-pass1', $user['password']);
+        $this->type('id=edit-pass-pass2', $user['password']);
+        $this->type('id=edit-mail', $user['email']);
 
-        $this->clickAndWait('css=#edit-submit');
+        $this->clickAndWait('id=edit-submit');
 
         if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
             $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
@@ -192,10 +194,10 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->open('user/' . $userId . '/edit');
 
-        $this->check('css=#edit-status-1'); // User status is active 
-        $this->uncheck('css=#edit-roles-3'); // Reset user role - administrator
+        $this->check('id=edit-status-1'); // User status is active 
+        $this->uncheck('id=edit-roles-3'); // Reset user role - administrator
 
-        $this->clickAndWait('css=#edit-submit');
+        $this->clickAndWait('id=edit-submit');
 
         if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
             $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
@@ -225,16 +227,16 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         $newPassword = 'newpassword';
 
         // Specify current password
-        $this->type('css=#edit-current-pass', $user['password']);
+        $this->type('id=edit-current-pass', $user['password']);
 
         // Change password
-        $this->type('css=#edit-pass-pass1', $newPassword);
-        $this->type('css=#edit-pass-pass2', $newPassword);
+        $this->type('id=edit-pass-pass1', $newPassword);
+        $this->type('id=edit-pass-pass2', $newPassword);
 
         // Change email
-        $this->type('css=#edit-mail', $email);
+        $this->type('id=edit-mail', $email);
 
-        $this->clickAndWait('css=#edit-submit');
+        $this->clickAndWait('id=edit-submit');
 
         if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
             $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
@@ -266,7 +268,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         // Check password strength
         $this->typeKeys(
-            'css=#edit-pass-pass1',
+            'id=edit-pass-pass1',
             '123'
         );
         $this->waitForLocalCondition(
@@ -276,7 +278,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         );
 
         $this->typeKeys(
-            'css=#edit-pass-pass1',
+            'id=edit-pass-pass1',
             '123lakjsdhf'
         );
         $this->waitForLocalCondition(
@@ -286,7 +288,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         );
 
         $this->typeKeys(
-            'css=#edit-pass-pass1',
+            'id=edit-pass-pass1',
             '123lakjsdhf(*&%A'
         );
         $this->waitForLocalCondition(
@@ -297,11 +299,11 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         // Check password confirm
         $this->typeKeys(
-            'css=#edit-pass-pass1',
+            'id=edit-pass-pass1',
             'aaa'
         );
         $this->typeKeys(
-            'css=#edit-pass-pass2',
+            'id=edit-pass-pass2',
             'bbb'
         );
         $this->getJSExpression('jQuery(".form-item-pass-pass2 input").keyup()');
@@ -313,7 +315,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         );
 
         $this->typeKeys(
-            'css=#edit-pass-pass2',
+            'id=edit-pass-pass2',
             'aaa'
         );
         $this->getJSExpression('jQuery(".form-item-pass-pass2 input").keyup()');
@@ -325,10 +327,10 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         );
 
         // Submit wrong password
-        $this->type('css=#edit-pass-pass1', 'master1');
-        $this->type('css=#edit-pass-pass2', 'master2');
+        $this->type('id=edit-pass-pass1', 'master1');
+        $this->type('id=edit-pass-pass2', 'master2');
 
-        $this->clickAndWait('css=#edit-submit');
+        $this->clickAndWait('id=edit-submit');
 
         $this->assertJqueryPresent('.messages.error h2', 'check errors');
     }
@@ -350,9 +352,9 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->open('admin/people/permissions/roles');
 
-        $this->type('css=#edit-name', $this->roleName);
+        $this->type('id=edit-name', $this->roleName);
 
-        $this->clickAndWait('css=#edit-add');
+        $this->clickAndWait('id=edit-add');
 
         // Assign role Id
         $roleId = 4;
@@ -390,13 +392,13 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         $this->open('admin/people');
 
         foreach ($userIds as $userId) {
-            $this->assertElementPresent('css=#edit-accounts-' . $userId, sprintf('Check box for user #%d not found (1)', $userId));
-            $this->check('css=#edit-accounts-' . $userId);
+            $this->assertElementPresent('id=edit-accounts-' . $userId, sprintf('Check box for user #%d not found (1)', $userId));
+            $this->check('id=edit-accounts-' . $userId);
         }
 
-        $this->select('css=#edit-operation', 'value=add_role-' . $roleId);
+        $this->select('id=edit-operation', 'value=add_role-' . $roleId);
 
-        $this->clickAndWait('css=#edit-submit--2');
+        $this->clickAndWait('id=edit-submit--2');
 
         if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
             $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
@@ -407,11 +409,11 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->open('admin/people/permissions/' . $roleId);
 
-        $this->check('css=#edit-' . $roleId . '-lc-admin');
+        $this->check('id=edit-' . $roleId . '-lc-admin');
 
-        $this->clickAndWait('css=#edit-submit');
+        $this->clickAndWait('id=edit-submit');
 
-        $this->assertChecked('css=#edit-' . $roleId . '-lc-admin', 'Permission "lc admin" is not updated');
+        $this->assertChecked('id=edit-' . $roleId . '-lc-admin', 'Permission "lc admin" is not updated');
 
         // Check that LC profiles are admins now
 
@@ -430,9 +432,9 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->open('admin/people/permissions/roles/edit/' . $roleId);
 
-        $this->clickAndWait('css=#edit-delete'); // Click 'Delete' button
+        $this->clickAndWait('id=edit-delete'); // Click 'Delete' button
 
-        $this->clickAndWait('css=#edit-submit'); // Click 'Submit' button on confirmation page
+        $this->clickAndWait('id=edit-submit'); // Click 'Submit' button on confirmation page
 
         if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
             $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
@@ -457,17 +459,17 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         $this->open('admin/people');
 
         foreach ($userIds as $userId) {
-            $this->assertElementPresent('css=#edit-accounts-' . $userId, sprintf('Check box for user #%d not found (2)', $userId));
-            $this->check('css=#edit-accounts-' . $userId);
+            $this->assertElementPresent('id=edit-accounts-' . $userId, sprintf('Check box for user #%d not found (2)', $userId));
+            $this->check('id=edit-accounts-' . $userId);
         }
 
-        $this->select('css=#edit-operation', 'value=cancel');
+        $this->select('id=edit-operation', 'value=cancel');
 
-        $this->clickAndWait('css=#edit-submit--2'); // Click on 'Update' button in the list
+        $this->clickAndWait('id=edit-submit--2'); // Click on 'Update' button in the list
 
-        $this->check('css=#edit-user-cancel-method--2'); // Select 'Disable' option
+        $this->check('id=edit-user-cancel-method--2'); // Select 'Disable' option
 
-        $this->clickAndWait('css=#edit-submit'); // And submit confirmation form
+        $this->clickAndWait('id=edit-submit'); // And submit confirmation form
 
         // Batch process 'Cancelling mode'
 
@@ -514,17 +516,17 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         $this->open('admin/people');
 
         foreach ($userIds as $userId) {
-            $this->assertElementPresent('css=#edit-accounts-' . $userId, sprintf('Check box for user #%d not found (3)', $userId));
-            $this->check('css=#edit-accounts-' . $userId);
+            $this->assertElementPresent('id=edit-accounts-' . $userId, sprintf('Check box for user #%d not found (3)', $userId));
+            $this->check('id=edit-accounts-' . $userId);
         }
 
-        $this->select('css=#edit-operation', 'value=cancel');
+        $this->select('id=edit-operation', 'value=cancel');
 
-        $this->clickAndWait('css=#edit-submit--2'); // Click on 'Update' button in the list
+        $this->clickAndWait('id=edit-submit--2'); // Click on 'Update' button in the list
 
-        $this->check('css=#edit-user-cancel-method--5'); // Select 'Delete' option
+        $this->check('id=edit-user-cancel-method--5'); // Select 'Delete' option
 
-        $this->clickAndWait('css=#edit-submit'); // And submit confirmation form
+        $this->clickAndWait('id=edit-submit'); // And submit confirmation form
 
         // Batch process 'Deleting mode'
 
@@ -609,18 +611,18 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         $this->open('admin/people/create');
 
         //Fill profile details form 
-        $this->type('css=#edit-name', $user['login']);
-        $this->type('css=#edit-mail', $user['email']);
-        $this->type('css=#edit-pass-pass1', $user['password']);
-        $this->type('css=#edit-pass-pass2', $user['password']);
+        $this->type('id=edit-name', $user['login']);
+        $this->type('id=edit-mail', $user['email']);
+        $this->type('id=edit-pass-pass1', $user['password']);
+        $this->type('id=edit-pass-pass2', $user['password']);
 
-        $this->check('css=#edit-status-0'); // User status is blocked
+        $this->check('id=edit-status-0'); // User status is blocked
 
         if ($isAdmin) {
-            $this->check('css=#edit-roles-3'); // User role - administrator
+            $this->check('id=edit-roles-3'); // User role - administrator
         }
 
-        $this->clickAndWait('css=#edit-submit');
+        $this->clickAndWait('id=edit-submit');
 
         if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
             $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');

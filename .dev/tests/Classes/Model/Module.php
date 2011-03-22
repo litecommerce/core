@@ -131,7 +131,7 @@ class XLite_Tests_Model_Module extends XLite_Tests_Model_ModuleAbstract
         $this->assertFalse($module->isFree(), 'check if module is free');
     }
 
-    public function testGetPageURL()
+    /*public function testGetPageURL()
     {
         $module = $this->getTestModule();
         $this->assertEquals(\XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL() . 'module/TestAuthor/TestModule', $module->getPageURL(), 'check module URL');
@@ -141,7 +141,7 @@ class XLite_Tests_Model_Module extends XLite_Tests_Model_ModuleAbstract
     {
         $module = $this->getTestModule();
         $this->assertEquals(\XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL() . 'module/TestAuthor', $module->getAuthorPageURL(), 'check module author URL');
-    }
+    }*/
 
     public function testSetEnabled()
     {

@@ -42,6 +42,16 @@
  * @since      File available since Release 1.0.0
  */
 
+require_once dirname(__FILE__) . '/../local.php';
+
+if (!defined('XLITE_DEV_LIB_DIR')) {
+	die('Constant "XLITE_DEV_LIB_DIR" isn\'t defined in tests/local.php script. Code coverage failed.');
+}
+
+if (!defined('DRUPAL_SITE_PATH')) {
+	die('Constant "DRUPAL_SITE_PATH" isn\'t defined in tests/local.php script. Code coverage failed.');
+}
+
 $_files_to_include_into_path = array(
 	'dbunit',
 	'php-code-coverage',
@@ -55,13 +65,9 @@ $_files_to_include_into_path = array(
 );
 
 foreach ($_files_to_include_into_path as $_file) {
-	set_include_path(get_include_path() . PATH_SEPARATOR . sprintf('/u/svowl/lib/%s/', $_file));
+	set_include_path(get_include_path() . PATH_SEPARATOR . sprintf('%s/%s/', XLITE_DEV_LIB_DIR, $_file));
 }
 
-require_once dirname(__FILE__) . '/../local.php';
-
-if (!defined('DRUPAL_SITE_PATH'))
-	die('Constant "DRUPAL_SITE_PATH" isn\'t defined. Codee coverage failed.');
 
 require_once 'File/Iterator/Factory.php';
 require_once 'PHP/CodeCoverage/Filter.php';
