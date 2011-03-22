@@ -3,17 +3,15 @@
 
 /**
  * Base class for all LiteCommerce web tests
- *  
- * @category   LiteCommerce_Tests
- * @package    LiteCommerce_Tests
- * @subpackage Main
- * @author     Ruslan R. Fazliev <rrf@x-cart.com> 
- * @copyright  Copyright (c) 2009 Ruslan R. Fazliev <rrf@x-cart.com>
- * @license    http://www.x-cart.com/license.php LiteCommerce license
- * @version    GIT: $Id$
- * @link       http://www.x-cart.com/
- * @see        ____file_see____
- * @since      1.0.0
+ *
+ * @category  LiteCommerce_Tests
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
@@ -22,7 +20,6 @@ require_once dirname(__FILE__) . '/SeleniumTestCase/Driver.php';
 /**
  * Selenium test case 
  * 
- * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
@@ -137,13 +134,15 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             'port'    => 4444,
             'timeout' => self::SELENIUM_TTL,
         ),
+ */
         array(
             'name'    => 'Google chrome (Windows)',
             'browser' => '*googlechrome C:\Documents and Settings\rnd\Local Settings\Application Data\Google\Chrome\Application\chrome.exe',
-            'host'    => 'cormorant.crtdev.local',
+            'host'    => SELENIUM_SERVER,
             'port'    => 4444,
             'timeout' => self::SELENIUM_TTL,
         ),
+/*
         array(
             'name'    => 'IE 8 (Windows)',
             'browser' => '*iexplore',
@@ -256,6 +255,167 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         parent::__construct($name, $data, $dataName, $browser);
 
         $this->testConfig = $this->getTestConfigOptions();
+    }
+
+    /**
+     * @param  string $className
+     * @return PHPUnit_Framework_TestSuite
+     */
+    public static function suite($className)
+    {
+		$suite = new PHPUnit_Framework_TestSuite;
+        $suite->setName($className);
+
+        $class            = new ReflectionClass($className);
+        $classGroups      = PHPUnit_Util_Test::getGroups($className);
+        $staticProperties = $class->getStaticProperties();
+
+        // Leave only one browser in deployment mode
+        if (defined('DEPLOYMENT_TEST') && !empty($staticProperties['browsers'])) {
+            $_browsers = array();
+            foreach ($staticProperties['browsers'] as $key => $value) {
+                $_browsers[$key] = $value;
+                break;
+            }
+            $staticProperties['browsers'] = $_browsers;
+        }
+
+        // Create tests from Selenese/HTML files.
+        if (isset($staticProperties['seleneseDirectory']) &&
+            is_dir($staticProperties['seleneseDirectory'])) {
+            $files = array_merge(
+              self::getSeleneseFiles($staticProperties['seleneseDirectory'], '.htm'),
+              self::getSeleneseFiles($staticProperties['seleneseDirectory'], '.html')
+            );
+
+            // Create tests from Selenese/HTML files for multiple browsers.
+            if (!empty($staticProperties['browsers'])) {
+                foreach ($staticProperties['browsers'] as $browser) {
+                    $browserSuite = new PHPUnit_Framework_TestSuite;
+                    $browserSuite->setName($className . ': ' . $browser['name']);
+
+                    foreach ($files as $file) {
+                        $browserSuite->addTest(
+                          new $className($file, array(), '', $browser),
+                          $classGroups
+                        );
+                    }
+
+                    $suite->addTest($browserSuite);
+                }
+            }
+
+            // Create tests from Selenese/HTML files for single browser.
+            else {
+                foreach ($files as $file) {
+                    $suite->addTest(new $className($file), $classGroups);
+                }
+            }
+        }
+
+        // Create tests from test methods for multiple browsers.
+        if (!empty($staticProperties['browsers'])) {
+            foreach ($staticProperties['browsers'] as $browser) {
+				//$browserSuite = new PHPUnit_Framework_TestSuite;
+				$browserSuite = new XLite_Tests_TestSuite;
+                $browserSuite->setName($className . ': ' . $browser['name']);
+
+                foreach ($class->getMethods() as $method) {
+                    if (PHPUnit_Framework_TestSuite::isPublicTestMethod($method)) {
+                        $name   = $method->getName();
+                        $data   = PHPUnit_Util_Test::getProvidedData($className, $name);
+                        $groups = PHPUnit_Util_Test::getGroups($className, $name);
+
+                        // Test method with @dataProvider.
+                        if (is_array($data) || $data instanceof Iterator) {
+                            $dataSuite = new PHPUnit_Framework_TestSuite_DataProvider(
+                              $className . '::' . $name
+                            );
+
+                            foreach ($data as $_dataName => $_data) {
+                                $dataSuite->addTest(
+                                  new $className($name, $_data, $_dataName, $browser),
+                                  $groups
+                                );
+                            }
+
+                            $browserSuite->addTest($dataSuite);
+                        }
+
+                        // Test method with invalid @dataProvider.
+                        else if ($data === FALSE) {
+                            $browserSuite->addTest(
+                              new PHPUnit_Framework_Warning(
+                                sprintf(
+                                  'The data provider specified for %s::%s is invalid.',
+                                  $className,
+                                  $name
+                                )
+                              )
+                            );
+                        }
+
+                        // Test method without @dataProvider.
+                        else {
+                            $browserSuite->addTest(
+                              new $className($name, array(), '', $browser), $groups
+                            );
+                        }
+                    }
+                }
+
+                $suite->addTest($browserSuite);
+            }
+        }
+
+        // Create tests from test methods for single browser.
+        else {
+            foreach ($class->getMethods() as $method) {
+                if (PHPUnit_Framework_TestSuite::isPublicTestMethod($method)) {
+                    $name   = $method->getName();
+                    $data   = PHPUnit_Util_Test::getProvidedData($className, $name);
+                    $groups = PHPUnit_Util_Test::getGroups($className, $name);
+
+                    // Test method with @dataProvider.
+                    if (is_array($data) || $data instanceof Iterator) {
+                        $dataSuite = new PHPUnit_Framework_TestSuite_DataProvider(
+                          $className . '::' . $name
+                        );
+
+                        foreach ($data as $_dataName => $_data) {
+                            $dataSuite->addTest(
+                              new $className($name, $_data, $_dataName),
+                              $groups
+                            );
+                        }
+
+                        $suite->addTest($dataSuite);
+                    }
+
+                    // Test method with invalid @dataProvider.
+                    else if ($data === FALSE) {
+                        $suite->addTest(
+                          new PHPUnit_Framework_Warning(
+                            sprintf(
+                              'The data provider specified for %s::%s is invalid.',
+                              $className,
+                              $name
+                            )
+                          )
+                        );
+                    }
+
+                    // Test method without @dataProvider.
+                    else {
+                        $suite->addTest(
+                          new $className($name), $groups
+                        );
+                    }
+                }
+            }
+        }
+
+        return $suite;
     }
 
     /**
@@ -461,16 +621,6 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         // Delay before each test
         sleep(3);
 
-        // Print new line between classes
-        $currentClass = get_called_class();
-        if (empty(XLite_Tests_TestSuite::$currentClass) || $currentClass !== XLite_Tests_TestSuite::$currentClass) {
-            echo "\n";
-            XLite_Tests_TestSuite::$currentClass = $currentClass;
-            
-            // Restore Database before first test in class
-            $this->restoreDBState();
-        }
-
         $this->baseURL = rtrim(SELENIUM_SOURCE_URL, '/') . '/';
 
         $this->setBrowserUrl($this->baseURL);
@@ -497,40 +647,6 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     {
         $message = $this->getMessage('', get_called_class(), $this->getName());
         echo (PHP_EOL . sprintf('%\'.-86s', trim($message)));
-    }
-
-    /**
-     * Restore database
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function restoreDBState()
-    {
-        $path = realpath(dirname(__FILE__) . '/../dump.sql');
-        if (!file_exists($path)) {
-            return false;
-        }
-
-        echo (PHP_EOL . 'DB restore ... ');
-
-        $config = \XLite::getInstance()->getOptions('database_details');
-        $cmd = 'mysql -h' . $config['hostspec'];
-        if ($config['port']) {
-            $cmd .= ':' . $config['port'];
-        }
-
-        $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
-        if ($config['socket']) {
-            $cmd .= ' -S' . $config['socket'];
-        }
-
-        exec($cmd . ' -e"drop database ' . $config['database'] . '"');
-        exec($cmd . ' -e"create database ' . $config['database'] . '"');
-        exec($cmd . ' ' . $config['database'] . ' < ' . $path);
-
-        echo ('done' . PHP_EOL);
     }
 
     /**
@@ -819,8 +935,9 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
             echo "\n$command('$param') [ERROR] $message\n";
 
+            /*
             if (
-                'Could not connect to the Selenium RC server.' == $message
+                preg_match('/Could not connect to the Selenium RC server/', $message)
                 || preg_match('/^The response from the Selenium RC server is invalid: Timed out after \d+ms$/Ss', $message)
             ) {
                 
@@ -841,15 +958,16 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
                 } else {
                     $this->fail($e->getMessage());
                 }
+             */
 
 //            } elseif (preg_match('/this\.getCurrentWindow is not a function/', $message)) {
 //                $this->markTestSkipped('Browser down: ' . $e->getMessage());
 
-            } else {
+//            } else {
     
                 throw $e;
 
-            }
+//            }
         }
 
         return $result;
