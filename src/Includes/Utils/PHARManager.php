@@ -101,7 +101,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * 
      * @param string    &$name    Pack name
      * @param \Iterator $iterator Directory iterator
-     * @param array     $metadata Archive description
+     * @param array     $metadata Archive description OPTIONAL
      *  
      * @return \Phar
      * @access protected
