@@ -150,10 +150,17 @@ substutional_skins_cache = off
 time_limit = 240
 
 ;
-; Error handlink options
+; Error handling options
 ;
 [error_handling]
 page = "public/error.html"
+
+;
+; Marketplace
+;
+[marketplace]
+url = "https://www.litecommerce.com/marketplace/"
+api_version = "1.0"
 
 ;
 ; Other options
