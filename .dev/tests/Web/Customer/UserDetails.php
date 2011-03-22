@@ -194,6 +194,10 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->open('user/' . $userId . '/edit');
 
+        $this->assertElementPresent('id=edit-status-1', 'Check if Status radio-button is presented');
+        $this->assertElementPresent('id=edit-roles-3', 'Check if Roles checkbox is presented');
+        $this->assertElementPresent('id=edit-submit', 'Check if Submit button is presented');
+
         $this->check('id=edit-status-1'); // User status is active 
         $this->uncheck('id=edit-roles-3'); // Reset user role - administrator
 
@@ -225,6 +229,12 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $email = 'rnd_tester' . time() + 1000 . '@cdev.ru';
         $newPassword = 'newpassword';
+
+        $this->assertElementPresent('id=edit-current-pass', 'Check if Current password input field is presented');
+        $this->assertElementPresent('id=edit-pass-pass1', 'Check if Password input field is presented');
+        $this->assertElementPresent('id=edit-pass-pass2', 'Check if Confirm password input field is presented');
+        $this->assertElementPresent('id=edit-mail', 'Check if Email input field is presented');
+        $this->assertElementPresent('id=edit-submit', 'Check if Submit button is presented');
 
         // Specify current password
         $this->type('id=edit-current-pass', $user['password']);
@@ -352,6 +362,9 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->open('admin/people/permissions/roles');
 
+        $this->assertElementPresent('id=edit-name', 'Check if Role name input field is presented');
+        $this->assertElementPresent('id=edit-add', 'Check if Add button is presented');
+
         $this->type('id=edit-name', $this->roleName);
 
         $this->clickAndWait('id=edit-add');
@@ -396,6 +409,9 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
             $this->check('id=edit-accounts-' . $userId);
         }
 
+        $this->assertElementPresent('id=edit-operation', 'Check if Operation dropdown box is presented');
+        $this->assertElementPresent('id=edit-submit--2', 'Check if Submit button is presented');
+
         $this->select('id=edit-operation', 'value=add_role-' . $roleId);
 
         $this->clickAndWait('id=edit-submit--2');
@@ -408,6 +424,9 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         // Add permission 'lc admin' to the new role
 
         $this->open('admin/people/permissions/' . $roleId);
+
+        $this->assertElementPresent('id=edit-' . $roleId . '-lc-admin', 'Check if Litecommerce admin permission is presented in the permissions list');
+        $this->assertElementPresent('id=edit-submit', 'Check if Submit button is presented');
 
         $this->check('id=edit-' . $roleId . '-lc-admin');
 
@@ -432,9 +451,16 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         $this->open('admin/people/permissions/roles/edit/' . $roleId);
 
+
+        $this->assertElementPresent('id=edit-delete', 'Check if Delete role button is presented');
+
         $this->clickAndWait('id=edit-delete'); // Click 'Delete' button
 
+
+        $this->assertElementPresent('id=edit-submit', 'Check if Confirm delete role button is presented');
+
         $this->clickAndWait('id=edit-submit'); // Click 'Submit' button on confirmation page
+
 
         if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
             $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
@@ -463,9 +489,16 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
             $this->check('id=edit-accounts-' . $userId);
         }
 
+        $this->assertElementPresent('id=edit-operation', 'Check if Operation dropdown box is presented');
+        $this->assertElementPresent('id=edit-submit--2', 'Check if Submit button is presented');
+
         $this->select('id=edit-operation', 'value=cancel');
 
         $this->clickAndWait('id=edit-submit--2'); // Click on 'Update' button in the list
+
+
+        $this->assertElementPresent('id=edit-user-cancel-method--2', 'Check if Disable user account radio-button is presented');
+        $this->assertElementPresent('id=edit-submit', 'Check if Submit button is presented');
 
         $this->check('id=edit-user-cancel-method--2'); // Select 'Disable' option
 
@@ -520,9 +553,17 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
             $this->check('id=edit-accounts-' . $userId);
         }
 
+
+        $this->assertElementPresent('id=edit-operation', 'Check if Operation dropdown box is presented');
+        $this->assertElementPresent('id=edit-submit--2', 'Check if Submit button is presented');
+
         $this->select('id=edit-operation', 'value=cancel');
 
         $this->clickAndWait('id=edit-submit--2'); // Click on 'Update' button in the list
+
+
+        $this->assertElementPresent('id=edit-user-cancel-method--5', 'Check if Delete user account radio-button is presented');
+        $this->assertElementPresent('id=edit-submit', 'Check if Submit button is presented');
 
         $this->check('id=edit-user-cancel-method--5'); // Select 'Delete' option
 
@@ -609,6 +650,14 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
         // Create new user with an administrator permissions and disabled status
 
         $this->open('admin/people/create');
+
+        $this->assertElementPresent('id=edit-name', 'Check if Name input field is presented (Create user form)');
+        $this->assertElementPresent('id=edit-mail', 'Check if Email input field is presented (Create user form)');
+        $this->assertElementPresent('id=edit-pass-pass1', 'Check if Password input field is presented (Create user form)');
+        $this->assertElementPresent('id=edit-pass-pass2', 'Check if Confirm password input field is presented (Create user form)');
+        $this->assertElementPresent('id=edit-status-0', 'Check if Status radio-button is presented (Create user form)');
+        $this->assertElementPresent('id=edit-roles-3', 'Check if Role checkbox is presented (Create user form)');
+        $this->assertElementPresent('id=edit-submit', 'Check if Submit button is presented (Create user form)');
 
         //Fill profile details form 
         $this->type('id=edit-name', $user['login']);
