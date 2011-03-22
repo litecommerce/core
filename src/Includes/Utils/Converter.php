@@ -152,7 +152,7 @@ class Converter extends AUtils
     }
 
     /**
-     * Convert a string like "test_foo_bar" into the camel case (like "TestFooBar")
+     * Convert a string like "test_foo_bar" into the camel case (like "testFooBar")
      *
      * @param string $string String to convert
      *
@@ -177,6 +177,20 @@ class Converter extends AUtils
     public static function convertFromCamelCase($string)
     {
         return preg_replace('/(?!:\A)([A-Z])/e', '\'_\' . strtolower(\'\\1\')', $string);
+    }
+
+    /**
+     * Convert a string like "test_foo_bar" into the Pascal case (like "TestFooBar")
+     *
+     * @param string $string String to convert
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function convertToPascalCase($string)
+    {
+        return ucfirst(static::convertToCamelCase($string));
     }
 
     /**

@@ -266,7 +266,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     protected function getTestConfigOptions()
     {
-        $configFile = CONFIG_DIR . '/xlite-test.config.php';
+        $configFile = XLITE_DEV_CONFIG_DIR . '/xlite-test.config.php';
 
         if (file_exists($configFile) && false !== ($config = parse_ini_file($configFile, true))) {
             return $config;
@@ -466,6 +466,9 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         if (empty(XLite_Tests_TestSuite::$currentClass) || $currentClass !== XLite_Tests_TestSuite::$currentClass) {
             echo "\n";
             XLite_Tests_TestSuite::$currentClass = $currentClass;
+            
+            // Restore Database before first test in class
+            $this->restoreDBState();
         }
 
         $this->baseURL = rtrim(SELENIUM_SOURCE_URL, '/') . '/';
@@ -494,6 +497,40 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     {
         $message = $this->getMessage('', get_called_class(), $this->getName());
         echo (PHP_EOL . sprintf('%\'.-86s', trim($message)));
+    }
+
+    /**
+     * Restore database
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function restoreDBState()
+    {
+        $path = realpath(dirname(__FILE__) . '/../dump.sql');
+        if (!file_exists($path)) {
+            return false;
+        }
+
+        echo (PHP_EOL . 'DB restore ... ');
+
+        $config = \XLite::getInstance()->getOptions('database_details');
+        $cmd = 'mysql -h' . $config['hostspec'];
+        if ($config['port']) {
+            $cmd .= ':' . $config['port'];
+        }
+
+        $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
+        if ($config['socket']) {
+            $cmd .= ' -S' . $config['socket'];
+        }
+
+        exec($cmd . ' -e"drop database ' . $config['database'] . '"');
+        exec($cmd . ' -e"create database ' . $config['database'] . '"');
+        exec($cmd . ' ' . $config['database'] . ' < ' . $path);
+
+        echo ('done' . PHP_EOL);
     }
 
     /**

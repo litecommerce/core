@@ -358,17 +358,21 @@ class Module extends \XLite\Model\AEntity
     /**
      * Get external page URL
      *
+     * :TODO: [MARKETPLACE]
+     *
      * @return string
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getPageURL()
     {
-        return \XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL() . sprintf(static::MODULE_PAGE_PATH, $this->getPath());
+        return \XLite\Core\Marketplace::getInstance()->getMarketplaceURL() . sprintf(static::MODULE_PAGE_PATH, $this->getPath());
     }
 
     /**
      * Get author page URL
+     *
+     * :TODO: [MARKETPLACE]
      *
      * @return string
      * @see    ____func_see____
@@ -376,7 +380,7 @@ class Module extends \XLite\Model\AEntity
      */
     public function getAuthorPageURL()
     {
-        return \XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL() . sprintf(static::MODULE_PAGE_PATH, $this->getAuthor());
+        return \XLite\Core\Marketplace::getInstance()->getMarketplaceURL() . sprintf(static::MODULE_PAGE_PATH, $this->getAuthor());
     }
 
     /**
@@ -964,7 +968,7 @@ class Module extends \XLite\Model\AEntity
 
             $request = new \XLite\Model\HTTPS();
 
-            $request->url = \XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL()
+            $request->url = \XLite\Core\Marketplace::getInstance()->getMarketplaceURL()
                 . sprintf(self::MODULE_UPLOAD_PATH, $this->getActualName(), $this->uploadCode);
 
             $request->method = 'GET';
