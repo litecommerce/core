@@ -11,6 +11,10 @@
  * @since     3.0.0
  */
 
+.simple-search-product-form {
+  float: right;
+}
+
 .simple-search-box {
   border: solid 1px #dfdfdf;
   height: 24px;
