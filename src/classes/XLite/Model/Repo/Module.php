@@ -30,6 +30,8 @@ namespace XLite\Model\Repo;
 
 /**
  * Module repository
+ *
+ * :FIXME: must be completely refactored
  * 
  * @see   ____class_see____
  * @since 3.0.0
@@ -709,7 +711,8 @@ class Module extends \XLite\Model\Repo\ARepo
         if ($this->isUpdateNeeded()) {
             $result = $this->updateAddonsList();
             if ($result) {
-                \XLite\Core\TmpVars::getInstance()->{\XLite\RemoteModel\Marketplace::ADDONS_UPDATED} = LC_START_TIME;
+                // :FIXME: [MARKETPLACE]
+                // \XLite\Core\TmpVars::getInstance()->{\XLite\RemoteModel\Marketplace::ADDONS_UPDATED} = LC_START_TIME;
             }
         }
     }
@@ -754,11 +757,14 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     protected static function isAddonsInfoActual()
     {
-        return \XLite\Core\TmpVars::getInstance()->{\XLite\RemoteModel\Marketplace::ADDONS_UPDATED}
+        return true;
+
+        // :FIXME: [MARKETPLACE]
+        /*return \XLite\Core\TmpVars::getInstance()->{\XLite\RemoteModel\Marketplace::ADDONS_UPDATED}
             && (
                 \XLite\Core\TmpVars::getInstance()->{\XLite\RemoteModel\Marketplace::ADDONS_UPDATED} 
                 + \XLite\RemoteModel\Marketplace::LAST_UPDATE_TTL
-            ) > LC_START_TIME;
+            ) > LC_START_TIME;*/
     }
 
     /**
@@ -845,7 +851,10 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     protected function updateAddonsList()
     {
-        $xmlData = \XLite\RemoteModel\Marketplace::getInstance()->getAddonsXML();
+        return true;
+
+        // :FIXME: [MARKETPLACE]
+        /*$xmlData = \XLite\RemoteModel\Marketplace::getInstance()->getAddonsXML();
 
         $this->updateError = \XLite\RemoteModel\Marketplace::getInstance()->getError();
 
@@ -867,7 +876,7 @@ class Module extends \XLite\Model\Repo\ARepo
             );
         }
 
-        return !$this->updateError;
+        return !$this->updateError;*/
     } 
 
     /**
