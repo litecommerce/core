@@ -142,9 +142,15 @@ class OptionSurcharge extends \XLite\Model\AEntity
      */
     public function getSign()
     {
+        $sign = '';
         $value = $this->getAbsoluteValue();
-        $sign  = $value > 0 ? '+&#8197;' : '';
-        
+        if (0 > $value) {
+            $sign = '&minus;';
+
+        } elseif (0 < $value) {
+            $sign = '+';
+        }
+
         return $sign;
     }
 
