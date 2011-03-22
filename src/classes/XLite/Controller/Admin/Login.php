@@ -52,6 +52,11 @@ class Login extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Auth::getInstance()->isLogged()
             && 'logoff' !== \XLite\Core\Request::getInstance()->{static::PARAM_ACTION}
         ) {
+            
+            if (!\XLite\Core\Auth::getInstance()->isAdmin()) {
+                \XLite\Core\Auth::getInstance()->logoff();
+            }
+
             $this->setReturnURL($this->buildURL());
         }
 
@@ -83,10 +88,8 @@ class Login extends \XLite\Controller\Admin\AAdmin
     {
         parent::init();
         
-        $login = $this->get('login');
-        
-        if (empty($login)) {
-            $this->set('login', $this->auth->remindLogin());
+        if (empty(\XLite\Core\Request::getInstance()->login)) {
+            \XLite\Core\Request::getInstance()->login = $this->auth->remindLogin();
         }
     }
 

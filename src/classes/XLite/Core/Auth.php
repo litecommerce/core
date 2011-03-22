@@ -489,12 +489,15 @@ class Auth extends \XLite\Base
     {
         $profile = $this->login($login, $password);
 
-        if (
-            (is_int($profile) && self::RESULT_ACCESS_DENIED === $profile)
-            || ($profile instanceof \XLite\Model\Profile && !$this->isAdmin($profile))
-        ) {
+        if ($profile instanceof \XLite\Model\Profile && !$profile->isAdmin()) {
 
+            // Logoff user from session
+            $this->logoff();
+
+            // Reset profile object
             $profile = self::RESULT_ACCESS_DENIED;
+
+            // Send notification about failed log in attempt
             \XLite\Core\Mailer::sendFailedAdminLoginNotification(\XLite\Core\Request::getInstance()->login);
         }
 
