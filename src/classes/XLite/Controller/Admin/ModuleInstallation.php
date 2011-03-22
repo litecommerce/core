@@ -62,7 +62,8 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      */
     public function getLicense()
     {
-        return \XLite\RemoteModel\Marketplace::getInstance()->getLicense($this->getModuleId());
+        // :FIXME: [MARKETPLACE]
+        // return \XLite\RemoteModel\Marketplace::getInstance()->getLicense($this->getModuleId());
     }
 
 
@@ -144,7 +145,8 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
     {
         $key = \XLite\Core\Request::getInstance()->key;
 
-        $moduleInfo = \XLite\RemoteModel\Marketplace::getInstance()->getModuleInfoByKey($key);
+        // :FIXME: [MARKETPLACE]
+        $moduleInfo = array(); //\XLite\RemoteModel\Marketplace::getInstance()->getModuleInfoByKey($key);
 
         if (!isset($moduleInfo['error'])) {
 
@@ -277,8 +279,9 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      */
     protected function getPackage($key = null)
     {
+        // :FIXME: [MARKETPLACE]
         // Trying to recieve module source
-        if (\XLite\RemoteModel\Marketplace::STATUS_ERROR !== ($status = $this->retrieveToLocalRepository($key))) {
+        /*if (\XLite\RemoteModel\Marketplace::STATUS_ERROR !== ($status = $this->retrieveToLocalRepository($key))) {
 
             // Check status and deploy module
             $this->checkAndDeployPackage($status);
@@ -287,7 +290,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
 
             // An error occured
             \XLite\Core\TopMessage::getInstance()->addError('Error while recieving the module');
-        }
+        }*/
     }
 
     /**
@@ -302,10 +305,11 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      */
     protected function retrieveToLocalRepository($key = null)
     {
-        return \XLite\RemoteModel\Marketplace::getInstance()->retrieveToLocalRepository(
+        // :FIXME: [MARKETPLACE]
+        /*return \XLite\RemoteModel\Marketplace::getInstance()->retrieveToLocalRepository(
             $this->getModuleId(),
             $key ? array('key' => $key) : array()
-        );
+        );*/
     }
 
     /**

@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2009, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,26 +34,52 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   Testing
- * @package    PHPUnit
+ * @package    PHPUnit_Selenium
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2002-2009 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
- * @version    GIT: $Id$
  * @link       http://www.phpunit.de/
- * @since      File available since Release 3.2.10
+ * @since      File available since Release 1.0.0
  */
 
-set_include_path(get_include_path() . PATH_SEPARATOR . '/usr/local/share/pear/');
+require_once dirname(__FILE__) . '/../local.php';
 
-require_once 'PHPUnit/Util/CodeCoverage.php';
-require_once 'PHPUnit/Util/FilterIterator.php';
+if (!defined('XLITE_DEV_LIB_DIR')) {
+	die('Constant "XLITE_DEV_LIB_DIR" isn\'t defined in tests/local.php script. Code coverage failed.');
+}
+
+if (!defined('DRUPAL_SITE_PATH')) {
+	die('Constant "DRUPAL_SITE_PATH" isn\'t defined in tests/local.php script. Code coverage failed.');
+}
+
+$_files_to_include_into_path = array(
+	'dbunit',
+	'php-code-coverage',
+	'php-file-iterator',
+	'php-text-template',
+	'php-timer',
+	'php-token-stream',
+	'phpunit',
+	'phpunit-mock-objects',
+	'phpunit-selenium',
+);
+
+foreach ($_files_to_include_into_path as $_file) {
+	set_include_path(get_include_path() . PATH_SEPARATOR . sprintf('%s/%s/', XLITE_DEV_LIB_DIR, $_file));
+}
+
+
+require_once 'File/Iterator/Factory.php';
+require_once 'PHP/CodeCoverage/Filter.php';
+
+// Set this to the directory that contains the code coverage files.
+// It defaults to getcwd(). If you have configured a different directory
+// in prepend.php, you need to configure the same directory here.
+$GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'] = DRUPAL_SITE_PATH;
 
 if (isset($_GET['PHPUNIT_SELENIUM_TEST_ID'])) {
-    $files = new PHPUnit_Util_FilterIterator(
-      new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator(dirname(__FILE__))
-      ),
+    $files = File_Iterator_Factory::getFileIterator(
+      $GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'],
       $_GET['PHPUNIT_SELENIUM_TEST_ID']
     );
 
@@ -66,7 +92,7 @@ if (isset($_GET['PHPUNIT_SELENIUM_TEST_ID'])) {
         unset($filename);
 
         foreach ($data as $filename => $lines) {
-            if (PHPUnit_Util_CodeCoverage::isFile($filename)) {
+            if (PHP_CodeCoverage_Filter::isFile($filename)) {
                 if (!isset($coverage[$filename])) {
                     $coverage[$filename] = array(
                       'md5' => md5_file($filename), 'coverage' => $lines
@@ -85,4 +111,3 @@ if (isset($_GET['PHPUNIT_SELENIUM_TEST_ID'])) {
 
     print serialize($coverage);
 }
-?>

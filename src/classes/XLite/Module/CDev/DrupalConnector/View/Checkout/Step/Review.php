@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Model
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,15 +26,35 @@
  * @since      3.0.0
  */
 
-namespace XLite\RemoteModel;
+namespace XLite\Module\CDev\DrupalConnector\View\Checkout\Step;
 
 /**
- * Abstract remote model class
+ * Review checkout step
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class AModel
+class Review extends \XLite\View\Checkout\Step\Review implements \XLite\Base\IDecorator
 {
+
+    /** 
+     * Terms and conditions static page 
+     */
+    const TERMS_AND_CONDITIONS = 'terms-and-conditions.html';
+
+
+    /**
+     * Get Terms and Conditions page URL 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTermsURL()
+    {
+        return \XLite\Core\Converter::buildDrupalURL('', '', array(), '') . static::TERMS_AND_CONDITIONS;
+    }
+
 }
