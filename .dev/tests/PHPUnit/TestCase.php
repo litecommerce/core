@@ -3,17 +3,15 @@
 
 /**
  * Base class for all LiteCommerce tests
- *  
- * @category   LiteCommerce_Tests
- * @package    LiteCommerce_Tests
- * @subpackage Main
- * @author     Ruslan R. Fazliev <rrf@x-cart.com> 
- * @copyright  Copyright (c) 2009 Ruslan R. Fazliev <rrf@x-cart.com>
- * @license    http://www.x-cart.com/license.php LiteCommerce license
- * @version    GIT: $Id$
- * @link       http://www.x-cart.com/
- * @see        ____file_see____
- * @since      1.0.0
+ *
+ * @category  LiteCommerce_Tests
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
@@ -23,16 +21,11 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      */
     const CLASS_PREFIX = 'XLite_Tests_';
 
-    const IMAP_BOX  = '{mail.crtdev.local:143/imap/tls/novalidate-cert}INBOX';
-    const IMAP_USER = 'rnd_tester';
-    const IMAP_PASS = '7qnDjKzVoc6Qcb7b';
-
 
     /**
-     * Tests range 
+     * List of tests (names w/o 'test' prefix) that should be runned
      * 
      * @var    array
-     * @access public
      * @see    ____var_see____
      * @since  3.0.0
      */
@@ -42,7 +35,6 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * Message length 
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
@@ -52,7 +44,6 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * IMAP mailbox resource
      * 
      * @var    resource
-     * @access private
      * @see    ____var_see____
      * @since  1.0.0
      */
@@ -62,7 +53,6 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * last message counter in IMAP mailbox
      * 
      * @var    float
-     * @access private
      * @see    ____var_see____
      * @since  1.0.0
      */
@@ -72,7 +62,6 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * Parameters registering when test starts
      * 
      * @var    array
-     * @access protected
      * @see    ____var_see____
      * @since  1.0.0
      */
@@ -82,129 +71,44 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * Parameters registering when test ends
      *
      * @var    array
-     * @access protected
      * @see    ____var_see____
      * @since  1.0.0
      */
     protected $end = array('time' => 0, 'memory' => 0);
 
     /**
-     * Return test execution time  
+     * Array of testing options
      * 
-     * @return string
-     * @access private
-     * @see    ____func_see____
-     * @since  1.0.0
+     * @var    array
+     * @see    ____var_see____
+     * @since  3.0.0
      */
-    private function getExecTime()
+    protected $testConfig = null;
+
+
+    // {{{ Methods that are redefine the methods of a base class
+
+
+    /**
+     * Constructs a test case with the given name.
+     *
+     * @param  string $name
+     * @param  array  $data
+     * @param  string $dataName
+     */
+    public function __construct($name = NULL, array $data = array(), $dataName = '')
     {
-        $time    = number_format($this->end['time'] - $this->start['time'], 4);
-        $message = trim($this->getMessage('', get_called_class(), $this->getName()));
+        parent::__construct($name, $data, $dataName);
 
-        if (strlen($message) > self::$messageLength) {
-            self::$messageLength = strlen($message) + 1;
-        }
-
-        return sprintf('%\'.-' . self::$messageLength. 's', trim($message))
-            . ' ' . sprintf('%8s', $time) . ' sec .....';
+        // Initialize array of testing options
+        $this->testConfig = $this->getTestConfigOptions();
     }
 
     /**
-     * Return memory used by test
-     * 
-     * @return string
-     * @access private
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    private function getMemoryUsage()
-    {
-        $memory = $this->end['memory'] - $this->start['memory'];
-        if ($memory < 0) {
-            $memory = 0;
-        }
-
-        return sprintf('%8s', number_format($memory / 1024, 2)) . ' Kb .....';
-    }
-    
-    /**
-     * Check if we need to construct/destruct application singleton
-     * 
-     * @param array $request request info
-     *  
-     * @return bool
-     * @access private
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    private function needAppInit(array $request = array())
-    {
-        if (empty($request)) {
-            $request = $this->getRequest();
-        }
-
-        return $request['init_app'];
-    }
-
-    /**
-     * Return message (common method)
-     * 
-     * @param string $message custom part of message
-     * @param string $class   called class name
-     * @param string $method  called method name
-     *  
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getMessage($message, $class = '', $method = '')
-    {
-        // Full debag trace for called method
-        $trace = debug_backtrace();
-        $trace = $trace[1];
-
-        // Retrieve class and method names
-        $class = str_replace(self::CLASS_PREFIX, '', empty($class) ? $trace['class'] : $class);
-        $method = lcfirst(str_replace('test', '', empty($method) ? $trace['function'] : $method));
-
-        return $class . ' ' . '[' . $method . ']. ' . $message;
-    }
-
-    /**
-     * Return data needed to start application.
-     * Derived class can redefine this method.
-     * It's possible to detect current test using the $this->name variable
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getRequest()
-    {
-        // Default request
-        $request = array(
-            'init_app'   => true,
-            'method'     => 'GET',
-            'controller' => true, // true - admin, false - customer
-            'data'       => array(
-                'target' => \XLite::TARGET_DEFAULT,
-                'action' => '',
-            ),
-            'cookies'    => array(),
-        );
-
-        return $request;
-    }
-
-    /**
-     * PHPUnit default function.
-     * Redefine this method only if you really need to do so.
-     * In any other cases redefine the getRequest() one
+     * Sets up the fixture, for example, open a network connection.
+     * This method is called before a test is executed.
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -236,12 +140,15 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         // Clear and restart (if need) entity manager
         \XLite\Core\Database::getEM()->clear();
 
-        \XLite\Core\Database::getEM()->getConnection()->executeQuery('SET autocommit = 1');
+        $this->query('SET autocommit = 1');
 
         try {
             \XLite\Core\Database::getEM()->flush();
+
         } catch (\Doctrine\ORM\ORMException $e) {
+
             if ('The EntityManager is closed.' == $e->getMessage()) {
+
                 \XLite\Core\Database::getInstance()->startEntityManager();
                 xlite(true);
 
@@ -252,13 +159,6 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
         \XLite\Core\Session::getInstance()->restart();
 
-        // Print new line between classes
-        $currentClass = get_called_class();
-        if (empty(XLite_Tests_TestSuite::$currentClass) || $currentClass !== XLite_Tests_TestSuite::$currentClass) {
-            echo PHP_EOL;
-            XLite_Tests_TestSuite::$currentClass = $currentClass;
-        }
-
         // Memory usage
         $this->start['memory'] = memory_get_usage();
         $this->end['memory']   = 0;
@@ -268,11 +168,10 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * PHPUnit default function.
-     * It's not recommended to redefine this method
+     * Tears down the fixture, for example, close a network connection.
+     * This method is called after a test is executed.
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -297,10 +196,160 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Run test 
+     * 
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function runTest()
+    {
+        $result = null;
+
+        $shortName = lcfirst(substr($this->getName(), 4));
+        
+        if (self::$testsRange && !in_array($shortName, self::$testsRange)) {
+            $this->markTestSkipped();
+
+        } else {
+            $result = parent::runTest();
+        }
+
+        return $result;
+    }
+
+    // }}}
+
+
+    // {{{ Service methods
+
+    /**
+     * Get options from ini-file
+     *
+     * @return array
+     * @since  1.0.0
+     */
+    protected function getTestConfigOptions()
+    {
+        $configFile = XLITE_DEV_CONFIG_DIR . '/xlite-test.config.php';
+
+        if (file_exists($configFile) && false !== ($config = parse_ini_file($configFile, true))) {
+            return $config;
+        
+        } else {
+            die('Config file not found: ' . $configFile);
+        }
+    }
+
+    /**
+     * Return test execution time  
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    private function getExecTime()
+    {
+        $time    = number_format($this->end['time'] - $this->start['time'], 4);
+        $message = trim($this->getMessage('', get_called_class(), $this->getName()));
+
+        if (strlen($message) > self::$messageLength) {
+            self::$messageLength = strlen($message) + 1;
+        }
+
+        return sprintf('%\'.-' . self::$messageLength. 's', trim($message))
+            . ' ' . sprintf('%8s', $time) . ' sec .....';
+    }
+
+    /**
+     * Return memory used by test
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    private function getMemoryUsage()
+    {
+        $memory = $this->end['memory'] - $this->start['memory'];
+        if ($memory < 0) {
+            $memory = 0;
+        }
+
+        return sprintf('%8s', number_format($memory / 1024, 2)) . ' Kb .....';
+    }
+    
+    /**
+     * Check if we need to construct/destruct application singleton
+     * 
+     * @param array $request request info
+     *  
+     * @return bool
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    private function needAppInit(array $request = array())
+    {
+        if (empty($request)) {
+            $request = $this->getRequest();
+        }
+
+        return $request['init_app'];
+    }
+
+    /**
+     * Return message (common method)
+     * 
+     * @param string $message custom part of message
+     * @param string $class   called class name
+     * @param string $method  called method name
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getMessage($message, $class = '', $method = '')
+    {
+        // Full debag trace for called method
+        $trace = debug_backtrace();
+        $trace = $trace[1];
+
+        // Retrieve class and method names
+        $class = str_replace(self::CLASS_PREFIX, '', empty($class) ? $trace['class'] : $class);
+        $method = lcfirst(str_replace('test', '', empty($method) ? $trace['function'] : $method));
+
+        return $class . ' ' . '[' . $method . ']. ' . $message;
+    }
+
+    /**
+     * Return data needed to start application.
+     * Derived class can redefine this method.
+     * It's possible to detect current test using the $this->name variable
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getRequest()
+    {
+        // Default request
+        $request = array(
+            'init_app'   => true,
+            'method'     => 'GET',
+            'controller' => true, // true - admin, false - customer
+            'data'       => array(
+                'target' => \XLite::TARGET_DEFAULT,
+                'action' => '',
+            ),
+            'cookies'    => array(),
+        );
+
+        return $request;
+    }
+
+    /**
      * Write metric log 
      * 
      * @return void
-     * @access private
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -311,6 +360,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
         $class = get_called_class();
         $method = $this->getName();
+
         $class = str_replace(self::CLASS_PREFIX, '', empty($class) ? $trace['class'] : $class);
         $method = lcfirst(str_replace('test', '', empty($method) ? $trace['function'] : $method));
 
@@ -320,15 +370,21 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         XLite_Tests_MetricWriter::write($class, $method, $time, $memory);
     }
 
+    // }}}
+
+
+    // {{{ Exceptions checking method 
+
     /**
-     * Check exception code 
+     * Check exception code
+     * TODO: Review if this can be achived by native PHPUnit asserttions
+     * http://www.phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.exceptions
      * 
      * @param function $func    Function
      * @param string   $class   Exception class name
      * @param string   $message Exception message
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -347,76 +403,15 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         } 
     }
 
-    /**
-     * Check warning 
-     * 
-     * @param mixed  $func      Closure (function) or list of closures
-     * @param string $errorCode Error code
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function checkWarning($func, $errorCode)
-    {
-        if ($this->isFunction($func)) {
-            $func = array($func);
+    // }}}
 
-        } elseif (is_array($func)) {
-            foreach ($func as $k => $v) {
-                if (!$this->isFunction($v)) {
-                    unset($func[$k]);
-                }
-            }
-        }
 
-        if (!is_array($func) || count($func) == 0) {
-            $this->fail($this->getMessage('Argument $func is not valid'));
-        }
-
-        foreach ($func as $i => $f) {
-
-            try {
-
-                $f();
-
-            } catch (PHPUnit_Framework_Error_Warning $exception) {
-
-                $message = $this->getMessage('Check for the "' . $errorCode . '" exception:');
-                $this->assertEquals($errorCode, substr($exception->getMessage(), 0, strlen($errorCode)), $message);
-                continue;
-            } 
-
-            $this->fail(
-                $this->getMessage(
-                    'The "' . $errorCode . '" exception was not thrown'
-                    . (count($func) > 1 ? (' (function #' . ($i + 1) .')') : '')
-                )
-            );
-        }
-
-    }
-
-    /**
-     * Check - is fuunction (closure) or not
-     * 
-     * @param \Closure $func Function
-     *  
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isFunction($func) {
-        return is_object($func) && get_class($func) == 'Closure';
-    }
+    // {{{ E-mail box operations
 
     /**
      * Set start of emails counter
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -435,7 +430,6 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * Init mailbox
      * 
      * @return void
-     * @access private
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -459,7 +453,6 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * close IMAP mailbox
      * 
      * @return void
-     * @access private
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -474,7 +467,6 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * check if there are new emails and fetch them
      * 
      * @return array array of emails
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -507,13 +499,17 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         return $emails;
     }
 
+    // }}}
+
+
+    // {{{ XLite-specific methods
+
     /**
      * Do SQL query 
      * 
      * @param sql $sql SQL query
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -523,64 +519,32 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Constructs a test case with the given name.
-     *
-     * @param  string $name
-     * @param  array  $data
-     * @param  string $dataName
-     */
-    public function __construct($name = NULL, array $data = array(), $dataName = '')
-    {
-        parent::__construct($name, $data, $dataName);
-
-        $this->testConfig = $this->getTestConfigOptions();
-    }
-
-    /**
-     * Get options from ini-file
-     *
-     * @return array
-     * @since  1.0.0
-     */
-    protected function getTestConfigOptions()
-    {
-        $configFile = XLITE_DEV_CONFIG_DIR . '/xlite-test.config.php';
-
-        if (file_exists($configFile) && false !== ($config = parse_ini_file($configFile, true))) {
-            return $config;
-        
-        } else {
-            die('Config file not found: ' . $configFile);
-        }
-    }
-
-    /**
-     * Run test 
+     * getProduct 
      * 
-     * @return void
-     * @access protected
+     * @return \XLite\Model\Product
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function runTest()
-    {
-        $shortName = lcfirst(substr($this->getName(), 4));
-        if (self::$testsRange && !in_array($shortName, self::$testsRange)) {
-            $this->markTestSkipped();
-
-        } else {
-            parent::runTest();
-        }
-    }
-
     protected function getProduct()
     {
         return \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByEnabled(true);
     }
 
+    /**
+     * getProductBySku 
+     * 
+     * @param string $sku Product SKU
+     *  
+     * @return \XLite\Model\Product
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function getProductBySku($sku)
     {
         return \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => $sku));
     }
+
+    // }}}
+
 }
 

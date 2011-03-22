@@ -4,59 +4,36 @@
 /**
  * LiteCommerce test suite
  *
- * @category   LiteCommerce_Tests
- * @package    LiteCommerce_Tests
- * @subpackage Main
- * @author     Ruslan R. Fazliev <rrf@x-cart.com>
- * @copyright  Copyright (c) 2009 Ruslan R. Fazliev <rrf@x-cart.com>
- * @license    http://www.x-cart.com/license.php LiteCommerce license
- * @version    GIT: $Id$
- * @link       http://www.x-cart.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * @category  LiteCommerce_Tests
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 final class XLite_Tests_TestSuite extends PHPUnit_Framework_TestSuite
 {
     /**
-     * Current test class
+     * Template Method that is called after the tests
+     * of this test suite have finished running.
      *
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @since 1.0.0
      */
-    public static $currentClass = '';
-
-    /**
-     * Runs the tests and collects their result in a TestResult.
-     *
-     * @param  PHPUnit_Framework_TestResult $result
-     * @param  mixed                        $filter
-     * @param  array                        $groups
-     * @param  array                        $excludeGroups
-     * @return PHPUnit_Framework_TestResult
-     * @throws InvalidArgumentException
-     */
-    public function run(PHPUnit_Framework_TestResult $result = NULL, $filter = FALSE, array $groups = array(), array $excludeGroups = array())
+    protected function tearDown()
     {
-        $isTopSuite = true;
-        foreach ($this->tests as $t) {
-            if ($t instanceof PHPUnit_Framework_TestCase) {
-                $isTopSuite = false;
-                break;
-            }
-        }
-
-        $r = parent::run($result, $filter, $groups, $excludeGroups);
-
-        if (!$isTopSuite) {
+        if (ROOT_TEST_SUITE_NAME != $this->name) {
             $this->restoreDBState();
         }
-
-        return $r;
     }
 
+    /**
+     * Restore database from the backup
+     *
+     * @since 1.0.0
+     */
     protected function restoreDBState()
     {
         $path = realpath(dirname(__FILE__) . '/../dump.sql');
