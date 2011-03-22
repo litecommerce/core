@@ -34,6 +34,10 @@ if (false === defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'XLite_Tests_AllTests::main');
 }
 
+if (!defined('ROOT_TEST_SUITE_NAME')) {
+    define('ROOT_TEST_SUITE_NAME', 'LiteCommerce - AllTests');
+}
+
 ini_set('memory_limit', '900M');
 
 // PHPUnit classes
@@ -149,7 +153,7 @@ class XLite_Tests_AllTests
      */
     public static function suite()
     {
-        $suite = new XLite_Tests_TestSuite('LiteCommerce - AllTests');
+        $suite = new XLite_Tests_TestSuite(ROOT_TEST_SUITE_NAME);
 
         $deploy = null;
         $includes = false;
@@ -303,8 +307,10 @@ class XLite_Tests_AllTests
                         . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]);
 
                     require_once $filePath;
+
                     $suite->addTest(new XLite_Tests_TestSuite(new ReflectionClass($class)));
 
+                    // Limit test range by a specific test if it was specified in call. Example: ./phpunit-report.sh Model/Zone:create
                     if (isset($includeTests[$matches[1]])) {
                         eval($class . '::$testsRange = array($includeTests[$matches[1]]);');
                     }
@@ -329,7 +335,7 @@ class XLite_Tests_AllTests
                 if (
                     preg_match($pattern, $filePath, $matches)
                     && !empty($matches[1])
-                    && !preg_match('/\/(\w+Abstract|A[A-Z]\d+)\.php/Ss', $filePath)
+                    && !preg_match('/\/(\w+Abstract|A[A-Z]\w+)\.php/Ss', $filePath)
                     && (!$includes || in_array($matches[1], $includes))
                     && (!$excludes || !in_array($matches[1], $excludes))
                     && !preg_match('/' . $ds . '(?:scripts|skins)' . $ds . '/Ss', $filePath)
@@ -341,9 +347,13 @@ class XLite_Tests_AllTests
                     $class = $classPrefix . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]);
 
                     require_once $filePath;
-                    //$suite->addTest(new XLite_Tests_TestSuite(new ReflectionClass($class)));
-                    $suite->addTestSuite($class);
 
+                    $seleniumSuite = new PHPUnit_Framework_TestSuite();
+                    $seleniumSuite->addTestSuite($class);
+
+                    $suite->addTest($seleniumSuite);
+
+                    // Limit test range by a specific test if it was specified in call. Example: ./phpunit-report.sh Model/Zone:create
                     if (isset($includeTests[$matches[1]])) {
                         eval($class . '::$testsRange = array($includeTests[$matches[1]]);');
                     }
