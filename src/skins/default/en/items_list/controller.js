@@ -91,8 +91,10 @@ ListView.prototype.postprocess = function(isSuccess, initial)
         if (isNaN(count)) {
           //TODO We must take it from the previous widget parameters ... 
           count = 10;
-        } else if (count < 1) {
-          count = 1;
+        } else {
+          if (count < 1) {
+            count = 1;
+          }
         }
 
         if (count != jQuery(this).val()) {
