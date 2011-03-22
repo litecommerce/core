@@ -61,6 +61,24 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
     // Column switcher for 'table' display mode
     jQuery('.products-table .column-switcher', this.base).commonController('markAsColumnSwitcher');
 
+    // Must be done before any event handled on 'A' tags. IE fix
+    if (jQuery.browser.msie) {
+      jQuery(draggablePattern, this.base).find('a')
+        .each(
+          function() {
+            this.defferHref = this.href;
+            this.href = 'javascript:void(0);';
+          }   
+        )   
+        .click(
+          function() {
+            if (!o.base.hasClass('ie-link-blocker')) {
+              self.location = this.defferHref;
+            }   
+          }   
+        );
+    }
+
     // Register "Changing display mode" handler
     jQuery('.display-modes a', this.base).click(
       function() {
@@ -91,7 +109,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
             target:      'quick_look',
             action:      '',
             product_id:  core.getValueFromClass(this, 'quicklook-link'),
-            only_center: 1,
+            only_center: 1
           }), 
           'product-quicklook', 
           false, 
@@ -106,23 +124,6 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
     var countRequests = 0;
 
     cartTray.data('isProductDrag', false);
-
-    if (jQuery.browser.msie) {
-      jQuery(draggablePattern, this.base).find('a')
-        .each(
-          function() {
-            this.defferHref = this.href;
-            this.href = 'javascript:void(0);';
-          }
-        )
-        .click(
-          function() {
-            if (!o.base.hasClass('ie-link-blocker')) {
-              self.location = this.defferHref;
-            }
-          }
-        );
-    }
 
     jQuery(draggablePattern, this.base).draggable(
     {
@@ -196,7 +197,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
           );
         }
 
-      }, // stop()
+      } // stop()
     }
     ); // jQuery(draggablePattern, this.base).draggable
 
@@ -301,7 +302,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
             }
           ); // core.post()
         } // if (isProductDrag)
-      }, // drop()
+      } // drop()
     }
     ); // cartTray.droppable()
 
