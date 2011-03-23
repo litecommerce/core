@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Upload button
+ * Modules main section list
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,6 +9,6 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="modules.manage.buttons", weight="10")
+ * @ListChild (list="itemsList.module.manage.columns.module-main-section", weight="10")
  *}
-<widget class="\XLite\View\Button\UploadAddons" />
+<div class="name">{getInstalledProperty(module,#moduleName#)}</div>

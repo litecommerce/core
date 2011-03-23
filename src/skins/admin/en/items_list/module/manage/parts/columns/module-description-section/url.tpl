@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Modules list
+ * Modules main description section list
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,8 +9,8 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.module.manage.columns", weight="50")
+ * @ListChild (list="itemsList.module.manage.columns.module-description-section", weight="30")
  *}
-<td class="module-main-section">
-  {displayNestedViewListContent(#module-main-section#,_ARRAY_(#module#^module))}
-</td>
+<div class="module-url">
+  <a href="{module.getPageURL()}" target="_blank">{t(#Visit add-on's page#)}</a>
+</div>

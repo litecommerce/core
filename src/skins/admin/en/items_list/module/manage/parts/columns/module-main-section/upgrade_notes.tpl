@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Modules actions list
+ * Modules main section list
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,8 +9,9 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.module.manage.columns.actions", weight="20")
+ * @ListChild (list="itemsList.module.manage.columns.module-main-section", weight="40")
  *}
-{if:!module.getEnabled()}
-  <a class="uninstall" href="{buildURL(#modules#,#uninstall#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('uninstall', '{module.getModuleId()}');">{t(#Uninstall#)}</a>
-{end:}
+<div IF="isModuleUpgradeAvailable(module)" class="note version upgrade">
+  {t(#A new version is available#)}<br />
+  <widget class="\XLite\View\Button\Regular" label="Upgrade" /> {t(#to v.#)} {getMaxModuleVersion(module)}
+</div>

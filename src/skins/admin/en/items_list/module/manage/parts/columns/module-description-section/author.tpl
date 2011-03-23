@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Modules actions list
+ * Modules main description section list
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,7 +9,8 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.module.manage.columns.actions", weight="30")
+ * @ListChild (list="itemsList.module.manage.columns.module-description-section", weight="20")
  *}
-
-<a href="{buildURL(#modules#,#pack#,_ARRAY_(#moduleId#^module.getModuleId()))}">{t(#Pack it#)}</a>
+<div class="author">
+  {t(#Author#)}: {getInstalledProperty(module,#authorName#)}
+</div>
