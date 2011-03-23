@@ -16,14 +16,14 @@
   <div class="icon-container">
 
     <div IF="!module.getEnabled()" class="addon-disabled">
-      <img src="images/spacer.gif" width="48" height="48" alt="" />
+      <img src="images/spacer.gif" class="disabled" alt="Disabled" />
     </div>
 
     <div class="module-icon">
       {if:module.hasIcon()}
-        <img src="{module.getIconURL()}" width="48" height="48" alt="" />
+        <img src="{module.getIconURL()}" width="48" height="48" alt="{module.getName()}" />
       {else:}
-        <img src="images/addon_default.png" width="48" height="48" alt="" />
+        <img src="images/spacer.gif" class="addon-default" alt="Default" />
       {end:}
     </div>
 

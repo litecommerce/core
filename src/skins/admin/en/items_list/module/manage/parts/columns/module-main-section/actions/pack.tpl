@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Modules list
+ * Modules actions list
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,8 +9,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.module.manage.columns", weight="50")
+ * @ListChild (list="itemsList.module.manage.columns.module-main-section.actions", weight="30")
  *}
-<td class="module-main-section">
-  {displayNestedViewListContent(#module-main-section#,_ARRAY_(#module#^module))}
-</td>
+
+<a href="{buildURL(#modules#,#pack#,_ARRAY_(#moduleId#^module.getModuleId()))}">{t(#Pack it#)}</a>

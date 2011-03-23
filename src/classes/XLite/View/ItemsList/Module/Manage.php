@@ -114,7 +114,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     {
         $list = parent::getCSSFiles();
         $list[] = 'modules_manager' . LC_DS . 'common.css';
-        $list[] = $this->getDir() . LC_DS . 'style.css';
 
         return $list;
     }

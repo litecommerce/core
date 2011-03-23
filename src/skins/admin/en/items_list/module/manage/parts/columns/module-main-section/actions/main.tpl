@@ -9,17 +9,12 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.module.manage.columns.actions", weight="10")
+ * @ListChild (list="itemsList.module.manage.columns.module-main-section.actions", weight="10")
  *}
 {if:module.getEnabled()}
   <a href="{buildURL(#modules#,#disable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('disable', '{module.getModuleId()}');">{t(#Disable#)}</a>
-  {if:module.showSettingsForm()}
-    <a href="{module.getSettingsFormLink()}">{t(#Settings#)}</a>
-  {end:}
+  <a IF="{module.showSettingsForm()}" href="{module.getSettingsFormLink()}">{t(#Settings#)}</a>
 {else:}
-  {if:!canEnable(module)}
-    <span class="disabled">{t(#Enable#)}</span>
-  {else:}
-    <a href="{buildURL(#modules#,#enable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('enable', '{module.getModuleId()}');">{t(#Enable#)}</a>
-  {end:}
+  <span IF="{!canEnable(module)}" class="disabled">{t(#Enable#)}</span>
+  <a IF="{canEnable(module)}" href="{buildURL(#modules#,#enable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('enable', '{module.getModuleId()}');">{t(#Enable#)}</a>
 {end:}
