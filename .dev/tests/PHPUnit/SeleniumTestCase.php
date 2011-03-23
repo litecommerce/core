@@ -134,7 +134,6 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             'port'    => 4444,
             'timeout' => self::SELENIUM_TTL,
         ),
- */
         array(
             'name'    => 'Google chrome (Windows)',
             'browser' => '*googlechrome C:\Documents and Settings\rnd\Local Settings\Application Data\Google\Chrome\Application\chrome.exe',
@@ -142,7 +141,6 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             'port'    => 4444,
             'timeout' => self::SELENIUM_TTL,
         ),
-/*
         array(
             'name'    => 'IE 8 (Windows)',
             'browser' => '*iexplore',
@@ -238,9 +236,11 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     {
         $this->browserName = isset($browser['name']) ? $browser['name'] : 'unknown';
 
+        /*
         $this->coverageScriptUrl = defined('SELENIUM_COVERAGE_URL')
             ? SELENIUM_COVERAGE_URL . '/phpunit_coverage.php'
             : SELENIUM_SOURCE_URL . '/phpunit_coverage.php';
+        */
 
         if (defined('SELENIUM_SCREENSHOTS_PATH') && defined('SELENIUM_SCREENSHOTS_URL')) {
             $this->captureScreenshotOnFailure = true;
@@ -483,12 +483,21 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             $browser['timeout'] = 30000;
         }
 
+        if (isset($browser['sleep'])) {
+            if (!is_int($browser['sleep'])) {
+                throw new InvalidArgumentException;
+            }
+        } else {
+            $browser['sleep'] = 1;
+        }
+
         $driver = new XLite_Extensions_SeleniumTestCase_Driver;
         $driver->setName($browser['name']);
         $driver->setBrowser($browser['browser']);
         $driver->setHost($browser['host']);
         $driver->setPort($browser['port']);
         $driver->setTimeout($browser['timeout']);
+        $driver->setSleep($browser['sleep']);
         $driver->setTestCase($this);
         $driver->setTestId($this->testId);
 
