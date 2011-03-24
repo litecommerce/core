@@ -39,10 +39,6 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
             $this->logOut(true);
         }
 
-        $this->assertElementPresent('id=edit-name', 'Check login form: login field');
-        $this->assertElementPresent('id=edit-pass', 'Check login form: password field');
-        $this->assertElementPresent('id=user-login', 'Check login form: Login button');
-
         $this->type('id=edit-name', $username);
         $this->type('id=edit-pass', $password);
 
@@ -53,21 +49,14 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
 
     protected function logOut($pageIsOpened = false)
     {
-        if (!$pageIsOpened) {
-            $this->open('user');   
-        }
+        $this->open('user/logout');
 
-        if ($this->isLoggedIn()) {
-            $this->assertElementPresent('link=Log out');
-            $this->click('link=Log out');
-
-            $this->waitForPageToLoad(10000);
-        }
+        $this->assertFalse($this->isLoggedIn(), 'Check that user is logged out');
     }
 
     protected function isLoggedIn()
     {
-        return $this->isElementPresent('link=Log out');
+        return $this->isElementPresent('//a[@class="log-in" and contains(@href,"user/logout")]');
     }
 
     protected function getActiveProduct()
