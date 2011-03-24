@@ -31,11 +31,11 @@ table.modules-list div.actions a.uninstall {
 }
 
 table.modules-list div.icon-container div.addon-disabled {
-  width: 48px;
-  height: 48px;
+  width: 84px;
+  height: 84px;
   position: absolute;
-  top: 18px;
-  left: 18px;
+  top: 0px;
+  left: 0px;
   background: transparent url(../../images/addon_disabled.png) left top no-repeat;
 }
 
