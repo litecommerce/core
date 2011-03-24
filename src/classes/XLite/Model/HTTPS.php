@@ -30,6 +30,8 @@ namespace XLite\Model;
 
 /**
  * HTTPS bouncer
+ *
+ * :FIXME: must not exted the \XLite\Base
  * 
  * @see   ____class_see____
  * @since 3.0.0
@@ -311,7 +313,11 @@ class HTTPS extends \XLite\Base
      * @since 3.0.0
      */
     protected $readableProperties = array(
-        'response', 'error', 'responseHeaders', 'responseCode',
+        'response',
+        'error',
+        'responseHeaders',
+        'responseCode',
+        'curlErrorCode',
     );
 
     /**
@@ -325,6 +331,8 @@ class HTTPS extends \XLite\Base
         require_once LC_LIB_DIR . 'Net' . LC_DS . 'URL2.php';
     }
 
+    // {{{ Getters and setters
+
     /**
      * Setter
      * 
@@ -337,7 +345,7 @@ class HTTPS extends \XLite\Base
      */
     public function __set($name, $value)
     {
-        if (in_array($name, $this->writableProperties)) {
+        if ($this->isPropertyWritable($name)) {
             $this->$name = $value;
         }
     }
@@ -348,20 +356,72 @@ class HTTPS extends \XLite\Base
      * @param string $name Property name
      *
      * @return mixed
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function __get($name)
     {
-        $result = null;
-
-        if (in_array($name, $this->readableProperties)) {
-            $result = $this->$name;
-        } else {
-            $result = parent::__get($name);
-        }
-
-        return $result;
+        return $this->isPropertyReadable($name) ? $this->$name : parent::__get($name);
     }
+
+    /**
+     * Support for isset()
+     * 
+     * @param string $name Property name
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __isset($name)
+    {
+        return $this->isPropertyReadable($name) ? isset($this->$name) : false;
+    }
+
+    /**
+     * Check if property is readable from external scopes
+     * 
+     * @param string $name Property name
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isPropertyReadable($name)
+    {
+        return $this->isPropertyAccessible($name, 'readableProperties');
+    }
+
+    /**
+     * Check if property is writeable from external scopes
+     *
+     * @param string $name Property name
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isPropertyWritable($name)
+    {
+        return $this->isPropertyAccessible($name, 'writableProperties');
+    }
+
+    /**
+     * Check if property name in an array
+     * 
+     * @param string $name     Property name
+     * @param string $listName List name
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isPropertyAccessible($name, $listName)
+    {
+        return in_array($name, $this->$listName);
+    }
+
+    // }}}
 
     /**
      * Add header 

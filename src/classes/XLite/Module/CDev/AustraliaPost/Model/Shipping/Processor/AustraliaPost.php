@@ -155,19 +155,14 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
 
                 } else {
 
-                    require_once (LC_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php');
+                    $request  = new \XLite\Core\HTTP\Request($postURL);
+                    $request->requestTimeout = 5;
+                    $response = $bouncer->sendRequest();
 
-                    $http = new \HTTP_Request2($postURL);
-                    $http->setConfig('timeout', 5);
-
-                    try {
-                        $result = $http->send()->getBody();
-
-                        // Save result in cache even if rate is failed
-                        $this->saveDataInCache($postURL, $result);
-
-                    } catch (\HTTP_Request2_Exception $exception) {
-                        $errorMsg = $exception->getMessage();
+                    if (200 == $response->code) {
+                        $this->saveDataInCache($postURL, $response->body);
+                    } else {
+                        $errorMsg = 'Bouncer error';
                         break;
                     }
                 }

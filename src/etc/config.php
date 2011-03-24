@@ -160,7 +160,6 @@ page = "public/error.html"
 ;
 [marketplace]
 url = "https://www.litecommerce.com/marketplace/"
-api_version = "1.0"
 
 ;
 ; Other options

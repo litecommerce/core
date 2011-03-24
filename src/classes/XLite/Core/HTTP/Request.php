@@ -26,5 +26,14 @@
  * @since     3.0.0
  */
 
-// Check HTTPS
-echo ('enableHTTPS();');
+namespace XLite\Core\HTTP;
+
+/**
+ * Request 
+ * 
+ * @see   ____class_see____
+ * @since 3.0.0
+ */
+class Request extends \PEAR2\HTTP\Request
+{
+}
