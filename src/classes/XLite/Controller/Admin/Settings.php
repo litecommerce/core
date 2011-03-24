@@ -51,7 +51,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
         'Email'       => 'Email',
         'Security'    => 'Security',
         'Environment' => 'Environment',
-        'Performance'  => 'Performance',
+        'Performance' => 'Performance',
     );
 
     /**
@@ -124,43 +124,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
             ->findByCategoryAndVisible($this->page);
     }
     
-    /**
-     * Get HTTPS bouncer 
-     * 
-     * @param string $https_client HTTPS bouncer name
-     *  
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function check_https($https_client)    
-    {
-        $https = new \XLite\Model\HTTPS();
-        $result = false;
-
-        switch ($https_client) {
-            case 'libcurl':
-                $result = $https->detectLibCURL();
-                break;
-
-            case 'curl':
-                $result = $https->detectCURL();
-                break;
-
-            case 'openssl':
-                $result = $https->detectOpenSSL();
-                break;
-
-            default:
-                $result = $https->detectSoftware()
-                    ? \XLite\Model\HTTPS::HTTPS_SUCCESS
-                    : \XLite\Model\HTTPS::HTTPS_ERROR;
-        }
-
-        return $result;
-    }
-
     /**
      * isOpenBasedirRestriction 
      * 
@@ -258,8 +221,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
                                         $libcurlVersion = $libcurlVersion['version'];
                                     }
                                     return $libcurlVersion;
-            case 'curl'            : return $this->ext_curl_version(); break;
-            case 'openssl'        : return $this->openssl_version(); break;
             case 'check_files'  :
                                     $result = array();
                                     $files = array('cart.html');
@@ -479,127 +440,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
                 $this->checkSubdirs($fullpath, $subdir_errors);
             }
         }
-    }
-
-    /**
-     * ext_curl_version 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function ext_curl_version()
-    {
-        $curlBinary = @func_find_executable('curl');
-        @exec("$curlBinary --version", $output);
-        $version = @$output[0];
-        if (preg_match('/curl ([^ $]+)/', $version, $ver))
-                return $ver[1];
-        else 
-                return "";
-    }
-    
-    /**
-     * openssl_version 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function openssl_version()
-    {
-        $opensslBinary = @func_find_executable('openssl');
-        return @exec("$opensslBinary version");
-    }
-
-    /**
-     * httpRequest 
-     * 
-     * @param mixed $url_request ____param_comment____
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function httpRequest($url_request)
-    {
-        if (!@ini_get('allow_url_fopen')) {
-             @ini_set('allow_url_fopen', 1);
-        }
-
-        $handle = @fopen ($url_request, "r");
-
-        $response = "";
-        if ($handle) {
-            while (!feof($handle)) {
-                $response .= fread($handle, 8192);
-            }
-
-            fclose($handle);
-
-        } else {
-
-            require_once LC_LIB_DIR . 'PEAR.php';
-            require_once LC_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php';
-
-            $this->error = '';
-
-            try {
-                $http = new HTTP_Request2($url_request);
-                $http->setConfig('timeout', 5);
-                $response = $http->send()->getBody();
-
-            }  catch (Exception $e) {
-                $this->error = $e->getMessage();
-                $response = false;
-            }
-
-        }
-
-        return $response;
-    }
-
-    /**
-     * getAnsweredVersion 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getAnsweredVersion()
-    {
-        /* TODO - reworkt
-        if (isset($this->_answeredVersion)) {
-            return $this->_answeredVersion;
-        }
-
-        $checkURL = $this->xlite->getShopURL($this->buildURL('upgrade', 'version'));
-        $this->_answeredVersionError = false;
-        $response = $this->httpRequest($checkURL);
-        if ($this->get('lite_version') != $response) {
-            $this->_answeredVersionError = true;
-        }
-        $this->_answeredVersion = $response;
-
-        return $this->_answeredVersion;
-        */
-    }
-
-    /**
-     * getAnsweredVersionError 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getAnsweredVersionError()
-    {
-        return $this->_answeredVersionError;
     }
 
     /**
