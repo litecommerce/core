@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-
+{if:!getParam(%static::PARAM_FIELD_ONLY%)}
 <td nowrap="nowrap">
   <label for="{getFieldId()}">{getParam(#label#)}</label>
 </td>
@@ -18,7 +18,10 @@
   {if:getParam(#required#)}*{else:}&nbsp;{end:}
 </td>
 <td width="100%">
+{end:}
   <widget template="{getDir()}/{getFieldTemplate()}" />
+{if:!getParam(%static::PARAM_FIELD_ONLY%)}
   <div class="form-field-comment {getFieldId()}-comment">{getParam(#comment#):r}</div>
   <script IF="getInlineJSCode()" type="text/javascript">{getInlineJSCode():r}</script>
 </td>
+{end:}
