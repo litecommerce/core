@@ -28,13 +28,33 @@
   color: #0055bd;
 }
 
+table.modules-list {
+  border-top: solid 2px #e5e5e5;
+}
+
 table.modules-list tr td {
-  padding: 20px;
-  border-top: solid 1px #e5e5e5;
-  border-bottom: 0;
+  padding: 20px 0px 20px 20px;
+  border-bottom: solid 1px #e5e5e5;
+  border-top: 0;
   border-right: 0;
   border-left: 0;
   vertical-align: top;
+}
+
+table.modules-list tr td.icon {
+  width: 100px;
+}
+
+table.modules-list tr td.module-main-section {
+  width: 25%;
+}
+
+table.modules-list tr td.module-description-section {
+  width: 66%;
+}
+
+table.modules-list tr.disabled td {
+  border-top: solid 1px #ffffff;
 }
 
 table.modules-list tr.disabled td {
@@ -62,13 +82,15 @@ table.modules-list div.note
 {
   font-size: 12px;
   color: #5c88a8;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 table.modules-list div.author {
-  font-size: 12px;
-  color: #5c88a8;
-  margin-bottom: 10px;
+  font-size: 14px;
+  color: #0055BD;
+  margin-top: 10px;
+  float: left;
+  margin-right: 20px;
 }
 
 table.modules-list div.actions {
@@ -88,8 +110,9 @@ table.modules-list tr.disabled div.module-name {
 }
 
 table.modules-list div.module-url {
-  margin-top: 20px;
+  margin-top: 10px;
   font-size: 14px;
+  float: left;
 }
 
 table.modules-list div.icon-container {
@@ -101,7 +124,7 @@ table.modules-list div.icon-container {
 table.modules-list div.note
 {
   padding: 10px;
-  width: 300px;
+  width: 250px;
   white-space: normal;
 }
 
