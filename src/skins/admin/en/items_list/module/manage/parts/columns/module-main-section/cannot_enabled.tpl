@@ -12,7 +12,6 @@
  * @ListChild (list="itemsList.module.manage.columns.module-main-section", weight="30")
  *}
 <div IF="!canEnable(module)">
-  {t(#Add-on cannot be enabled.#)}
 
   <div IF="getInstalledProperty(module,#dependencies#)" class="note dependencies">
     {t(#The following add-on(s) must be enabled:#)}<br /><br />
@@ -28,7 +27,7 @@
   </div>
 
   <div IF="isCoreUpgradeNeeded(module)" class="note version error">
-    {t(#The installed module version is incompatible with your core version. Please upgrade the core#)}<br />
+    {t(#The module version is incompatible with current core version.#)}<br />
     <widget class="\XLite\View\Button\Regular" label="Upgrade core" /> {t(#to v.#)} {getMaxCoreVersion(module)}
   </div>
 
