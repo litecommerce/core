@@ -262,7 +262,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
             case 'openssl'        : return $this->openssl_version(); break;
             case 'check_files'  :
                                     $result = array();
-                                    $files = array('cart.html');
+                                    $files = array();
                                     foreach ($files as $file) {
                                         $mode = $this->getFilePermission($file);
                                         $modeStr = $this->getFilePermissionStr($file);

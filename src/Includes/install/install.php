@@ -1528,10 +1528,6 @@ function doFinishInstallation(&$params, $silentMode = false)
             $_perms[] = "chmod 644 " . LC_CONFIG_DIR . constant('LC_CONFIG_FILE');
         }
 
-        if (!@is_writable(LC_ROOT_DIR . 'cart.html')) {
-            $_perms[] = 'chmod 666 ' . LC_ROOT_DIR . 'cart.html';
-        }
-
         if (!empty($_perms)) {
             $perms = implode("<br />\n", $_perms);
             $perms = xtr('correct_permissions_text', array(':perms' => $perms));
