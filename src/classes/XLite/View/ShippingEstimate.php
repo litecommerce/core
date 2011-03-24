@@ -177,7 +177,9 @@ class ShippingEstimate extends \XLite\View\AView
      */
     protected function isEstimate()
     {
-        return (bool)$this->getAddress();
+        return $this->getAddress()
+            && $this->getCart()->getProfile()
+            && $this->getCart()->getProfile()->getShippingAddress();
     }
 
 }

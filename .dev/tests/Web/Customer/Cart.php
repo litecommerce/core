@@ -529,7 +529,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             "//div[@class='box']"
             . "/div[@class='estimator']"
             . "/ul"
-            . "/li[contains(text(),'United States, AL, 10001')]",
+            . "/li[contains(text(),'United States, CA, 10001')]",
             'check address'
         );
 
