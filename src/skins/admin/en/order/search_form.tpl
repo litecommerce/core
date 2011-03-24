@@ -32,7 +32,7 @@
       <tr>
         <td class="table-label">Order status:</td>
         <td style="height:10px;">
-          <widget class="\XLite\View\StatusSelect" field="status" allOption value="{getCondition(#status#)}" />
+          <widget class="\XLite\View\FormField\Select\OrderStatus" fieldOnly fieldName="status" value="{getCondition(#status#)}" allOption />
         </td>
       </tr>
 
