@@ -506,25 +506,14 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         // Batch process 'Cancelling mode'
 
-        $counter = 400;
+        $this->waitForCondition(
+            'selenium.isElementPresent(\'//div[@class="percentage"]\') && selenium.getText(\'//div[@class="percentage"]\') == \'100%\'',
+            10000,
+            'Percentage of batch process does not achived the value of 100% (cancel users)'
+        );
 
-        $percentage = null;
-        while ($counter > 0) {
+        $this->waitForPageToLoad(10000, 'Page is not reloaded after batch process finished (cancel users)');
 
-            sleep(1);
-
-            if ($this->isElementPresent('//div[@class="percentage"]')) {
-                $percentage = $this->getText('//div[@class="percentage"]');
-            }
-
-            if ($percentage == '100%') {
-                break;
-            }
-
-            $counter--;
-        }
-
-        $this->assertEquals('100%', $percentage, 'Percentage of batch process does not achived the value of 100% (cancel users)');
 
         if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
             $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');
@@ -571,25 +560,14 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
 
         // Batch process 'Deleting mode'
 
-        $counter = 400;
+        $this->waitForCondition(
+            'selenium.isElementPresent(\'//div[@class="percentage"]\') && selenium.getText(\'//div[@class="percentage"]\') == \'100%\'',
+            10000,
+            'Percentage of batch process does not achived the value of 100% (delete users)'
+        );
 
-        $percentage = null;
-        while ($counter > 0) {
+        $this->waitForPageToLoad(10000, 'Page is not reloaded after batch process finished (delete users)');
 
-            sleep(1);
-
-            if ($this->isElementPresent('//div[@class="percentage"]')) {
-                $percentage = $this->getText('//div[@class="percentage"]');
-            }
-
-            if ($percentage == '100%') {
-                break;
-            }
-
-            $counter--;
-        }
-
-        $this->assertEquals('100%', $percentage, 'Percentage of batch process does not achived the value of 100% (delete users)');
 
         if ($this->isElementPresent('//div[@id="console"]/div[@class="messages error"]')) {
             $message = $this->getText('//div[@id="console"]/div[@class="messages error"]');

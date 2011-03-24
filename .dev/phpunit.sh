@@ -11,4 +11,4 @@
 
 cd $(dirname $0)
 cd ..
-.dev/phpunit xliteAllTests .dev/tests/AllTests.php LOCAL_TESTS,$1
+.dev/phpunit --verbose xliteAllTests .dev/tests/AllTests.php LOCAL_TESTS,$1
