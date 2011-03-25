@@ -155,12 +155,13 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
 
                 } else {
 
-                    $request  = new \XLite\Core\HTTP\Request($postURL);
-                    $request->requestTimeout = 5;
+                    $bouncer  = new \XLite\Core\HTTP\Request($postURL);
+                    $bouncer->requestTimeout = 5;
                     $response = $bouncer->sendRequest();
 
                     if (200 == $response->code) {
-                        $this->saveDataInCache($postURL, $response->body);
+                        $result = $response->body;
+                        $this->saveDataInCache($postURL, $result);
                     } else {
                         $errorMsg = 'Bouncer error';
                         break;
