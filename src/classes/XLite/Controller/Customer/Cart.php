@@ -280,17 +280,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
         \XLite\Core\TopMessage::addWarning(
             'Only ' . $amount . ' items are available for the "' . $product->getName() . '" product'
         );
-
-        $this->setHardRedirect();
-
-        $this->setReturnURL($this->buildURL(
-            'cart',
-                '',
-                array(
-                )
-            )
-        );
-
     }
 
     /**
