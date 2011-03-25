@@ -106,7 +106,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
     protected function doActionConfirm()
     {
         if (!is_null($this->get('email')) && isset($_GET['request_id'])) {
-            if ($this->recoverPassword($this->get('email'), $_GET['request_id'])) {
+            if ($this->doPasswordRecovery($this->get('email'), $_GET['request_id'])) {
                 $this->set('mode', 'recoverMessage');
             }
         }
@@ -144,7 +144,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function recoverPassword($email, $requestID) 
+    protected function doPasswordRecovery($email, $requestID) 
     {
         $result = true;
 
