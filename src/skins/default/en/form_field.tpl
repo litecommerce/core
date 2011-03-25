@@ -10,7 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-
 <td nowrap="nowrap">
   <label for="{getFieldId()}">{getParam(#label#)}</label>
 </td>

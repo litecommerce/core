@@ -295,18 +295,26 @@ fieldset
 
 input.form-text,
 input[type="text"],
-textarea
+textarea,
+select
 {
   border-width: 1px;
   border-color: #cbcbcb #b4b4b4 #dadada;
   border-style: solid;
+  background: #fff;
+}
+
+input.form-text,
+input[type="text"],
+select
+{
+  padding: 2px 2px 2px 6px;
 }
 
 input.form-text,
 input[type="text"]
 {
   height: 17px;
-  padding: 2px 0 2px 6px;
 }
 
 label
