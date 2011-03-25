@@ -1010,5 +1010,21 @@ class Module extends \XLite\Model\Repo\ARepo
         \XLite\Core\Database::getEM()->persist($module);
     }
 
-}
 
+    // {{{ Markeplace-related routines
+
+    /**
+     * One time in session we update list of marketplace modules
+     * 
+     * @param array $data Data recieved from marketplace
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function updateMarketplaceModules(array $data)
+    {
+    }
+
+    // }}}
+}

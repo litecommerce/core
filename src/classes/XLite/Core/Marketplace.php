@@ -53,8 +53,8 @@ class Marketplace extends \XLite\Base\Singleton
     const REQUEST_FIELD_VERSION_MAJOR        = 'major';
     const REQUEST_FIELD_VERSION_MINOR        = 'minor';
     const REQUEST_FIELD_VERSION_CORE_CURRENT = 'currentCoreVersion';
-    const REQUEST_FIELD_VERSION_CORE         = 'coreVersion';
-    const REQUEST_FIELD_VERSION_MODULE       = 'moduleVersion';
+    const REQUEST_FIELD_VERSION_CORE         = 'version';
+    const REQUEST_FIELD_VERSION_MODULE       = 'version';
     const REQUEST_FIELD_IS_PACK_GZIPPED      = 'gzipped';
     const REQUEST_FIELD_MODULE_ID            = 'moduleID';
     const REQUEST_FIELD_MODULE_KEY           = 'key';
@@ -125,12 +125,11 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function getCorePack($versionMajor, $versionMinor)
     {
-        // :TODO: add check for GZ
         return $this->sendRequestToMarkeplace(
             self::ACTION_GET_CORE_PACK,
             array(
                 self::REQUEST_FIELD_VERSION_CORE    => $this->getVersionField($versionMajor, $versionMinor),
-                self::REQUEST_FIELD_IS_PACK_GZIPPED => 0,
+                self::REQUEST_FIELD_IS_PACK_GZIPPED => \Phar::canCompress(\Phar::GZ),
             )
         );
     }
@@ -350,7 +349,7 @@ class Marketplace extends \XLite\Base\Singleton
         } else {
 
             // Probably the 404 error
-            $this->setError(-1, 'Unable to access marketplace by the URL "' . $request->url . '"');
+            $this->setError(-1, 'Unable to access marketplace by the URL "' . $response->uri . '"');
         }
 
         if ($result && method_exists($this, $method = $this->getMethodToPrepareResponse($action))) {

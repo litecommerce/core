@@ -111,7 +111,8 @@ class Distr extends \XLite\Core\Pack\APack
      */
     public function getName()
     {
-        return 'LC-Distr-v' . \XLite::getInstance()->getVersion();
+        // It's the fix for PHAR::compress(): it's triming dots in file names
+        return 'LC-Distr-v' . str_replace('.', '_', \XLite::getInstance()->getVersion());
     }
 
     /**
