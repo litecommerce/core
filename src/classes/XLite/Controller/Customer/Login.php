@@ -113,18 +113,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Perform some actions before redirect
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function actionPostprocessLogin()
-    {
-        $this->redirectFromLogin();
-    }
-
-    /**
      * Return URL to redirect from login
      * 
      * @return string
@@ -209,5 +197,20 @@ class Login extends \XLite\Controller\Customer\ACustomer
                 $this->updateCart();
             }
         }
+    }
+
+    /**
+     * Perform some actions before redirect
+     *
+     * @param string $action Performed action
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function actionPostprocessLogin($action)
+    {
+        $this->updateMarketplaceDataCache();
+        $this->redirectFromLogin();
     }
 }

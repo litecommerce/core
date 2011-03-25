@@ -48,46 +48,44 @@ class Marketplace extends \XLite\Base\Singleton
     const ACTION_GET_ADDON_INFO    = 'get_addon_info';
 
     /**
-     * Protocol data fields (common)
+     * Protocol data fields - request
      */
-    const FIELD_VERSION_MAJOR        = 'major';
-    const FIELD_VERSION_MINOR        = 'minor';
-    const FIELD_VERSION_CORE_CURRENT = 'currentCoreVersion';
-    const FIELD_VERSION_API          = 'apiVersion';
+    const REQUEST_FIELD_VERSION_MAJOR        = 'major';
+    const REQUEST_FIELD_VERSION_MINOR        = 'minor';
+    const REQUEST_FIELD_VERSION_CORE_CURRENT = 'currentCoreVersion';
+    const REQUEST_FIELD_VERSION_CORE         = 'version';
+    const REQUEST_FIELD_VERSION_MODULE       = 'version';
+    const REQUEST_FIELD_IS_PACK_GZIPPED      = 'gzipped';
+    const REQUEST_FIELD_MODULE_ID            = 'moduleID';
+    const REQUEST_FIELD_MODULE_KEY           = 'key';
 
     /**
-     * Protocol data fields
+     * Protocol data fields - response
      */
-    const FIELD_VERSION_CORE    = 'coreVersion';
-    const FIELD_VERSION_MODULE  = 'moduleVersion';
-    const FIELD_IS_PACK_GZIPPED = 'gzipped';
-    const FIELD_MODULE_ID       = 'moduleID';
-    const FIELD_MODULE_KEY      = 'key';
+    const RESPONSE_FIELD_ERROR   = 'error';
+    const RESPONSE_FIELD_MESSAGE = 'message';
 
 
     /**
-     * Last HTTPS error 
+     * Error code
      * 
      * @var   integer
      * @see   ____var_see____
      * @since 3.0.0
      */
-    protected $error;
+    protected $errorCode;
+
+    /**
+     * Error message
+     *
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $errorMessage;
 
 
     // {{{ Interface: public methods (wrappers)
-
-    /**
-     * Getter
-     * 
-     * @return integer
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getError()
-    {
-        return $this->error;
-    }
 
     /**
      * Return markeplace URL
@@ -102,18 +100,6 @@ class Marketplace extends \XLite\Base\Singleton
     }
 
     /**
-     * Return marketplace API version
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getAPIVersion()
-    {
-        return \Includes\Utils\ConfigParser::getOptions(array('marketplace', 'api_version'));
-    }
-
-    /**
      * The "get_core_versions" request handler
      * 
      * @return array
@@ -122,7 +108,9 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function getCoreVersions()
     {
-        return $this->sendRequestToMarkeplace(self::ACTION_GET_CORE_VERSIONS);
+        return $this->sendRequestToMarkeplace(
+            self::ACTION_GET_CORE_VERSIONS
+        );
     }
 
     /**
@@ -140,12 +128,8 @@ class Marketplace extends \XLite\Base\Singleton
         return $this->sendRequestToMarkeplace(
             self::ACTION_GET_CORE_PACK,
             array(
-                self::FIELD_VERSION_CORE => array(
-                    self::FIELD_VERSION_MAJOR => $versionMajor,
-                    self::FIELD_VERSION_MINOR => $versionMinor,
-                ),
-                // :TODO: add check for GZ
-                self::FIELD_IS_PACK_GZIPPED => 0,
+                self::REQUEST_FIELD_VERSION_CORE    => $this->getVersionField($versionMajor, $versionMinor),
+                self::REQUEST_FIELD_IS_PACK_GZIPPED => \Phar::canCompress(\Phar::GZ),
             )
         );
     }
@@ -165,10 +149,7 @@ class Marketplace extends \XLite\Base\Singleton
         return $this->sendRequestToMarkeplace(
             self::ACTION_GET_CORE_HASH,
             array(
-                self::FIELD_VERSION_CORE => array(
-                    self::FIELD_VERSION_MAJOR => $versionMajor,
-                    self::FIELD_VERSION_MINOR => $versionMinor,
-                ),
+                self::REQUEST_FIELD_VERSION_CORE => $this->getVersionField($versionMajor, $versionMinor),
             )
         );
     }
@@ -182,7 +163,9 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function getAddonsList()
     {
-        return $this->sendRequestToMarkeplace(self::ACTION_GET_ADDONS_LIST);
+        return $this->sendRequestToMarkeplace(
+            self::ACTION_GET_ADDONS_LIST
+        );
     }
 
     /**
@@ -200,8 +183,8 @@ class Marketplace extends \XLite\Base\Singleton
         return $this->sendRequestToMarkeplace(
             self::ACTION_GET_ADDON_PACK,
             array(
-                self::FIELD_MODULE_ID  => $moduleID,
-                self::FIELD_MODULE_KEY => $key,
+                self::REQUEST_FIELD_MODULE_ID  => $moduleID,
+                self::REQUEST_FIELD_MODULE_KEY => $key,
             )
         );
     }
@@ -221,8 +204,8 @@ class Marketplace extends \XLite\Base\Singleton
         return $this->sendRequestToMarkeplace(
             self::ACTION_GET_ADDON_LICENSE,
             array(
-                self::FIELD_MODULE_ID  => $moduleID,
-                self::FIELD_MODULE_KEY => $key,
+                self::REQUEST_FIELD_MODULE_ID  => $moduleID,
+                self::REQUEST_FIELD_MODULE_KEY => $key,
             )
         );
     }
@@ -242,8 +225,8 @@ class Marketplace extends \XLite\Base\Singleton
         return $this->sendRequestToMarkeplace(
             self::ACTION_GET_ADDON_INFO,
             array(
-                self::FIELD_MODULE_ID  => $moduleID,
-                self::FIELD_MODULE_KEY => $key,
+                self::REQUEST_FIELD_MODULE_ID  => $moduleID,
+                self::REQUEST_FIELD_MODULE_KEY => $key,
             )
         );
     }
@@ -262,13 +245,10 @@ class Marketplace extends \XLite\Base\Singleton
     protected function getCommonData()
     {
         return array(
-
-            self::FIELD_VERSION_CORE_CURRENT => array(
-                self::FIELD_VERSION_MAJOR => \XLite::getInstance()->getMajorVersion(),
-                self::FIELD_VERSION_MINOR => \XLite::getInstance()->getMinorVersion(),
+            self::REQUEST_FIELD_VERSION_CORE_CURRENT => $this->getVersionField(
+                \XLite::getInstance()->getMajorVersion(),
+                \XLite::getInstance()->getMinorVersion()
             ),
-
-            self::FIELD_VERSION_API => $this->getAPIVersion(),
         );
     }
 
@@ -284,22 +264,10 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function sendRequestToMarkeplace($action, array $data = array())
     {
-        $request = $this->getRequest($action, $data);
-        $this->error = null;
+        // Prepare for request
+        $this->clearError();
 
-        // Send request to marketplace
-        if ($request::HTTPS_SUCCESS == $request->request() && $request->response) {
-
-            // Success
-            $response = $request->response;
-
-        } else {
-
-            // Error occured
-            $this->error = $request->error;
-        }
-
-        return isset($response) ? $this->prepareResponse($action, $response) : null;
+        return $this->prepareResponse($this->getRequest($action, $data)->sendRequest());
     }
 
     /**
@@ -314,11 +282,8 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function getRequest($action, array $data = array())
     {
-        $request = new \XLite\Model\HTTPS();
-
-        $request->url    = $this->getMarketplaceActionURL($action);
-        $request->method = 'POST';
-        $request->data   = $data + $this->getRequestData($action);
+        $request = new \XLite\Core\HTTP\Request($this->getMarketplaceActionURL($action));
+        $request->body = $data + $this->getRequestData($action);
 
         return $request;
     }
@@ -350,8 +315,9 @@ class Marketplace extends \XLite\Base\Singleton
     {
         $data = $this->getCommonData();
 
-        // For most actions it's not needed to add any custom data
         if (method_exists($this, $method = $this->getMethodToGetRequestData($action))) {
+
+            // For most actions it's not needed to add any custom data
             $data = $this->$method() + $data;
         }
 
@@ -361,23 +327,120 @@ class Marketplace extends \XLite\Base\Singleton
     /**
      * Prepare the marketplace response
      * 
-     * @param string $action   Action name
-     * @param string $response Response to prepare
+     * @param \PEAR2\HTTP\Request\Response $response Response to prepare
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareResponse(\PEAR2\HTTP\Request\Response $response)
+    {
+        $result = null;
+
+        if (200 == $response->code) {
+
+            // Check response format
+            if (is_null($result = json_decode($response->body, true))) {
+                $this->setError(-1, 'Marketplace response is not in JSON format');
+            } else {
+                $result = $this->parseResponse($result);
+            }
+
+        } else {
+
+            // Probably the 404 error
+            $this->setError(-1, 'Unable to access marketplace by the URL "' . $response->uri . '"');
+        }
+
+        if ($result && method_exists($this, $method = $this->getMethodToPrepareResponse($action))) {
+
+            // Since we develop the marketplace by ourselves,
+            // a full-fledged subsystem to parse responses is not needed.
+            // We can modify marketplace API instead
+            $this->$method($result);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Check request structure
+     * 
+     * @param array $data Response from marketplace
      *  
      * @return array
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareResponse($action, $response)
+    protected function parseResponse(array $data)
     {
-        // Since we develop the marketplace by ourselves,
-        // a full-fledged subsystem to parse responses is not needed.
-        // We can modify marketplace API instead
-        if (method_exists($this, $method = $this->getMethodToPrepareResponse($action))) {
-            $this->$method($response);
+        if (isset($data[self::RESPONSE_FIELD_ERROR])) {
+
+            if (!isset($data[self::RESPONSE_FIELD_MESSAGE])) {
+                $data[self::RESPONSE_FIELD_MESSAGE] = 'Unknown error';
+            }
+
+            $this->setError($data[self::RESPONSE_FIELD_ERROR], $data[self::RESPONSE_FIELD_MESSAGE]);
+            $data = null;
         }
 
-        return $response;
+        return $data;
+    }
+
+    // }}}
+
+    // {{{ Error handling
+
+    /**
+     * Check if an error occured
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkForError()
+    {
+        return isset($this->errorCode) || isset($this->errorMessage);
+    }
+
+    /**
+     * Return error info
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getError()
+    {
+        return array($this->errorCode, $this->errorMessage);
+    }
+
+    /**
+     * Unset the error-related variables
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function clearError()
+    {
+        $this->errorCode = $this->errorMessage = null;
+    }
+
+    /**
+     * Common setter
+     *
+     * @param integer $code    Error code
+     * @param string  $message Error description
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setError($code, $message)
+    {
+        $this->errorCode    = intval($code);
+        $this->errorMessage = $message;
     }
 
     // }}}
@@ -410,6 +473,24 @@ class Marketplace extends \XLite\Base\Singleton
     protected function getMethodToPrepareResponse($action)
     {
         return 'prepareResponseFor' . \Includes\Utils\Converter::convertToPascalCase($action) . 'Action';
+    }
+
+    /**
+     * The "get_core_hash" request handler
+     *
+     * @param string $versionMajor Major version of core to get
+     * @param string $versionMinor Minor version of core to get
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getVersionField($versionMajor, $versionMinor)
+    {
+        return array(
+            self::REQUEST_FIELD_VERSION_MAJOR => $versionMajor,
+            self::REQUEST_FIELD_VERSION_MINOR => $versionMinor,
+        );
     }
 
     // }}}

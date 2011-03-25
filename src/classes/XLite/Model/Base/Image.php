@@ -140,7 +140,7 @@ abstract class Image extends \XLite\Model\AEntity
     {
         return $this->isURL()
             ? \XLite\Core\Operator::getURLContent($this->path)
-            : file_get_contents($this->getRepository()->getFileSystemRoot() . $this->path);
+            : \Includes\Utils\FileManager::read($this->getRepository()->getFileSystemRoot() . $this->path);
     }
 
     /**

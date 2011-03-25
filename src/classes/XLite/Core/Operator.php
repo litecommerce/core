@@ -166,11 +166,11 @@ class Operator extends \XLite\Base\Singleton
             $result = file_get_contents($url);
 
         } else {
-            $bouncer = new \XLite\Model\HTTPS();
-            $bouncer->url = $url;
-            $bouncer->method = 'GET';
-            if (\XLite\Model\HTTPS::HTTPS_SUCCESS == $bouncer->request()) {
-                $result = $bouncer->response;
+            $request  = new \XLite\Core\HTTP\Request($url);
+            $response = $bouncer->sendRequest();
+
+            if (200 == $response->code) {
+                $result = $response->body;
             }
         }
 

@@ -30,28 +30,6 @@ function setVisible(element_id)
 
 <tr>
 	<td colspan="2">
-    <h2>Active HTTPS clients</h2>
-  </td>
-</tr>	
-<tr>
-  <td class="setting-name">LibCurl:</td>
-  <td>{if:check_https(#libcurl#)=#1#}<span class="error-message">Not detected</span>{else:}<span class="success-message">Detected ({libcurl:h})</span> {end:}</td>
-</tr>
-<tr>
-  <td class="setting-name">CURL:</td>
-  <td>{if:check_https(#curl#)=#1#}<span class="error-message">Not detected</span>{else:}<span class="success-message">Detected ({curl:h})</span> {end:}</td>
-</tr>
-<tr>
-  <td class="setting-name">OpenSSL:</td>
-  <td>{if:check_https(#openssl#)=#1#}<span class="error-message">Not detected</span>{else:}<span class="success-message">Detected ({openssl:h})</span> {end:}</td>
-</tr>
-
-<tr>
-	<td colspan="4"><b>Note:</b> if none of the above-mentioned components are present, you will not be able to use secure payment gateways (like Authorize.net, PayPal or NetBilling) which require direct SSL connection to the gateway's secure server.</td>
-</tr>	
-
-<tr>
-	<td colspan="2">
     <h2>Environment info</h2>
   </td>
 </tr>	
