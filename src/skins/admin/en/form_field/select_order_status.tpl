@@ -18,7 +18,7 @@
     {end:}
   </select>
   <a IF="isStatusWarning()" id="status_warning_{getParam(#orderId#)}" class="icon-warning popup-warning" href="#">
-    <img src="images/spacer.gif" width="24" height="24" alt="" />
+    <img src="images/spacer.gif" width="1" height="1" alt="" />
   </a>
   <div IF="isStatusWarning()" class="status-warning-content">
     {getStatusWarningContent()}
