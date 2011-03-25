@@ -20,7 +20,8 @@ div.status-warning a.icon-warning
 {
   display: inline-block;
   width: 24px;
-  height: 30px;
+  height: 24px;
+  line-height: 24px;
   margin-left: 5px;  
-  background: url(../images/icon_warning_small.png) no-repeat 0 5px;
+  background: url(../images/icon_warning_small.png) no-repeat 0 0;
 }
