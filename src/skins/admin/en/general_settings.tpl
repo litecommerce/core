@@ -71,15 +71,6 @@ function setUnitSymbol(symbol) {
               </select>
             {end:}
 
-            {if:option.name=#httpsClient#}
-              <select name="{option.name}">
-                <option value="autodetect" selected="{option.value=#autodetect#}">Autodetect</option>
-                <option value="libcurl" selected="{option.value=#libcurl#}">CURL PHP extension</option>
-                <option value="curl" selected="{option.value=#curl#}">Curl external application</option>
-                <option value="openssl" selected="{option.value=#openssl#}">OpenSSL external application</option>
-              </select>
-            {end:}
-
             {if:option.name=#subcategories_look#}
               <select name="{option.name}">
                 <option value="list" selected="{option.value=#list#}">List</option>
@@ -285,22 +276,6 @@ if (!httpsEnabled) {
 }
 -->
 </script>
-
-  <br />
-  <br />
-  <p>Trying to perform a background HTTPS request ...</p>
-  {if:check_https(config.Security.httpsClient)=#1#}
-    <p class="error-message"><b>FAILED.</b> Secure connection cannot be established.</p>
-    To fix this problem, do the following:</p>
-    <ul>
-      <li> make sure that your hosting service provider has the HTTPS client installed and configured;
-      <li> select this HTTPS client in the "HTTPS client to use" drop-down box above;
-      <li> click the "Submit" button.
-      <li IF="openBasedirRestriction">Curl or OpenSSl executable path: LiteCommerce attempted to find Curl or OpenSSL executable in your system automatically. Your hosting provider might need to remove the open_basedir restriction for this directory path.</li>
-    </ul>
-  {else:}
-    <span class="success-message">Success</span>
-  {end:}
 
 {end:}
 
