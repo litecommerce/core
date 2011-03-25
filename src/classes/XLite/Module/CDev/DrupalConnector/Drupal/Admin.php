@@ -213,10 +213,12 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         if ($settings = $this->getHandler()->getWidget($class)->getWidgetSettings()) {
 
             // To prevent some unpredictable errors related to backslashes in element IDs
-            $form[$key = 'lc_block_' . ltrim($class, '\\')] = array(
+            $key = $this->getBlockName($class) ;
+
+            $form[$key] = array(
                 '#type'       => 'fieldset',
                 '#title'      => 'Parameters',
-                '#attributes' => array('id' => str_replace('\\', '_', $key)),
+                '#attributes' => array('id' => $key),
             );
 
             // Translate native LC options into Drupal format
@@ -229,6 +231,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                 );
 
                 if ('select' === $form[$key][$name]['#type']) {
+
                     $form[$key][$name]['#options'] = $param->options;
                 }
             }
@@ -248,7 +251,9 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     protected function extractWidgetSettings($class, array $data)
     {
-        return !empty($data['lc_block_' . ($class = ltrim($class, '\\'))]) ? $data['lc_block_' . $class] : array();
+        $block = $this->getBlockName($class);
+
+        return !empty($data[$block]) ? $data[$block] : array();
     }
 
     /**
@@ -277,6 +282,21 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         }
     }
 
+    /**
+     * Return name of block in Drupal for class in LC
+     * 
+     * @param string $class Class name
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getBlockName($class)
+    {
+        return 'lc_block' . str_replace('\\', '_', $class);
+    }
+
 
     // ------------------------------ Hook handlers -
 
@@ -295,6 +315,7 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     {
         // Add fake content for LC blocks (on submit)
         if ($this->isLCBlock($formState, 'input')) {
+
             $form['settings']['body_field']['body']['#value'] = '____FROM_LC____';
         }
 
@@ -319,10 +340,14 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             ),
         );
 
-        $delta = isset($form['delta']['#value']) ? $form['delta']['#value'] : null;
+        $delta = isset($form['delta']['#value']) 
+            ? $form['delta']['#value'] 
+            : null;
+
         $form['settings']['lc_widget_details']['lc_widget'] = array('#tree' => true);
 
         foreach ($this->getHandler()->getWidgetsList() as $class => $label) {
+
             $this->addSettingsFieldset(
                 $form['settings']['lc_widget_details']['lc_widget'],
                 $class,
@@ -388,14 +413,18 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             } else {
 
                 // Check LC widget params
-                $errors = $this->getHandler()->getWidget($class)->validateAttributes(
-                    $this->extractWidgetSettings($class, $data['lc_widget'])
-                );
+                $errors = $this
+                    ->getHandler()
+                    ->getWidget($class)
+                    ->validateAttributes(
+                        $this->extractWidgetSettings($class, $data['lc_widget'])
+                    );
             }
         }
 
         // Set Drupal form errors
         foreach ($errors as $field => $error) {
+
             form_set_error($field, t($error));
         }
     }
@@ -418,7 +447,10 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         $class = $data['lc_class'];
         $delta = $data['delta'];
 
-        if ($this->isLCBlock($formState) && $this->isCustomBlock($delta, $data['info'])) {
+        if (
+            $this->isLCBlock($formState) 
+            && $this->isCustomBlock($delta, $data['info'])
+        ) {
 
             // Set LC class field for block
             db_update('block_custom')
@@ -427,7 +459,10 @@ class Admin extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
                 ->execute();
 
             // Remove old and save new settings for widget
-            $this->updateWidgetSettings($delta, $this->extractWidgetSettings($class, $data['lc_widget']));
+            $this->updateWidgetSettings(
+                $delta, 
+                $this->extractWidgetSettings($class, $data['lc_widget'])
+            );
         }
     }
 
