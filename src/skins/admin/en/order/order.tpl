@@ -25,7 +25,9 @@
 <table>
 <tr>
 	<td>Status:</td>
-	<td><widget class="\XLite\View\StatusSelect" field="status" value="{order.status}" /></td>
+	<td>
+    <widget class="\XLite\View\FormField\Select\OrderStatus" fieldOnly=true fieldName="status" value="{order.getStatus()}" orderId="{order.getOrderId()}" />
+  </td>
 </tr>
 
 <tr FOREACH="order.getMeaningDetails(),d" valign="top">
