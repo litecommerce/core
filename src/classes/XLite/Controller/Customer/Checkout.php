@@ -58,6 +58,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
     public function handleRequest()
     {
         if (!$this->checkCart()) {
+            $this->setHardRedirect();
             $this->setReturnURL($this->buildURL('cart'));
         }
 

@@ -1152,6 +1152,11 @@ abstract class AController extends \XLite\Core\Handler
             // AXAX-based - cancel redirect
             header('ajax-response-status: 0');
             header('not-valid: 1');
+        
+        } elseif ($this->hardRedirect) {
+
+            // Main page redirect
+            header('ajax-response-status: 278');
 
         } elseif ($this->internalRedirect) {
 
@@ -1227,6 +1232,23 @@ abstract class AController extends \XLite\Core\Handler
     {
         if ($this->isAJAX()) {
             $this->internalRedirect = (bool) $flag;
+        }
+    }
+
+    /**
+     * Set hard (main page redirect) redirect
+     * 
+     * @param boolean $flag Internal redirect status OPTIONAL
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setHardRedirect($flag = true)
+    {
+        if ($this->isAJAX()) {
+            $this->hardRedirect = (bool) $flag;
         }
     }
 

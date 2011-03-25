@@ -31,6 +31,8 @@ function CartView(base)
       }
     }
   );
+
+  this.validate();
 }
 
 extend(CartView, ALoadable);
@@ -58,6 +60,9 @@ CartView.prototype.widgetTarget = 'cart';
 
 // Widget class name
 CartView.prototype.widgetClass = '\\XLite\\View\\Cart';
+
+// Checkout button
+CartView.prototype.checkoutButton = jQuery('#cart ul.totals li.button button');
 
 // Widget updated status
 CartView.prototype.selfUpdated = false;
@@ -161,7 +166,7 @@ CartView.prototype.openShippingEstimator = function(event, elm)
   return false;
 }
 
-// Clse Shipping estimator popup handler
+// Close Shipping estimator popup handler
 CartView.prototype.closePopupHandler = function()
 {
   if (this.cartUpdated) {
@@ -170,6 +175,15 @@ CartView.prototype.closePopupHandler = function()
 
   this.selfUpdated = false;
   this.cartUpdated = false;
+}
+
+// Validate using validation engine plugin
+CartView.prototype.validate = function()
+{
+  if (!jQuery('form.validationEngine', this.base).validationEngine('validate')) {
+    this.checkoutButton.attr('disabled','disabled')
+      .addClass('disabled add2cart-disabled');
+  }
 }
 
 // Form POST processor
