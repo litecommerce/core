@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\FormField\Select;
@@ -31,9 +31,8 @@ namespace XLite\View\FormField\Select;
 /**
  * Order status selector
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class OrderStatus extends \XLite\View\FormField\Select\Regular
 {
@@ -47,27 +46,58 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
     /**
      * Current order
      * 
-     * @var \XLite\Model\Order
-     * @see    ____func_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Order
+     * @see   ____func_see____
+     * @since 3.0.0
      */
     protected $order = null;
 
     /**
      * Inventory warning
      * 
-     * @var boolean
+     * @var   boolean
+     * @see   ____func_see____
+     * @since 3.0.0
+     */
+    protected $inventoryWarning = null;
+
+
+    /**
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected $inventoryWarning = null;
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = $this->getDir() . '/select_order_status.css';
+
+        return $list;
+    }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = $this->getDir() . '/select_order_status.js';
+
+        return $list;
+    }
 
 
     /**
      * Define widget params
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getOrder()
@@ -84,7 +114,7 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
      * Return field template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getFieldTemplate()
@@ -93,41 +123,9 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
     }
 
     /**
-     * Get a list of CSS files required to display the widget properly
-     *
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = $this->getDir() . '/select_order_status.css';
-
-        return $list;
-    }
-
-    /**
-     * Register JS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-        $list[] = $this->getDir() . '/select_order_status.js';
-
-        return $list;
-    }
-
-    /**
      * Return default options list
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -144,7 +142,7 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
      * Define widget params
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function defineWidgetParams()
@@ -164,11 +162,11 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
     /**
      * Flag to show status change warning
      * 
-     * @param \XLite\Model\Order $order Current order
+     * @param object $order Current order
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
+     * @since  3.0.0
      */
     protected function isStatusWarning()
     {
@@ -181,8 +179,8 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
      * @param string $option Option value
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
+     * @since  3.0.0
      */
     protected function isOptionDisabled($option)
     {
@@ -194,8 +192,8 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
      * Inventory warning
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
+     * @since  3.0.0
      */
     protected function isInventoryWarning()
     {
@@ -204,12 +202,12 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
             foreach ($this->getOrder()->getItems() as $item) {
 
                 if (
-                    \XLite\Model\Order::STATUS_QUEUED === $this->getOrder()->getStatus()
+                    is_null($this->inventoryWarning)
+                    && \XLite\Model\Order::STATUS_QUEUED === $this->getOrder()->getStatus()
                     && $item->getProduct()->getInventory()->getEnabled()
                     && $item->getAmount() > $item->getProduct()->getInventory()->getAmount()
                 ) {
                     $this->inventoryWarning = true;
-                    break;
                 }
 
             }
@@ -223,8 +221,8 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
      * Get status warning content
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
+     * @since  3.0.0
      */
     protected function getStatusWarningContent()
     {
@@ -233,6 +231,7 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
         if ($this->isInventoryWarning()) {
             $content .= $this->t('Warning! There is not enough product items in stock to process the order');
         }
+
         return $content;
     }
 
