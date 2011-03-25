@@ -1041,10 +1041,13 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
             // find next #
             $pos = strpos($str, '#', 1);
+
             if (false === $pos) {
                 $this->error('No closing #');
             }
-            $result = '\'' . addslashes(substr($str, 1, $pos - 1)) . '\'';
+
+            // FIXME find the better way to prevent adding slashes to '"' character.
+            $result = '\'' . str_replace('\"', '"', addslashes(substr($str, 1, $pos - 1))) . '\'';
 
             $str = substr($str, $pos + 1);
 
