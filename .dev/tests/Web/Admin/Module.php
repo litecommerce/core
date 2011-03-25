@@ -37,6 +37,62 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
     const BUTTON_KEY = '//button[@type="submit"]/span[text()="Validate key"]';
 
 
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $testModulesDir = dirname(__FILE__) . LC_DS . '..' . LC_DS . '..' . LC_DS . '..' . LC_DS . 'test_modules' . LC_DS . 'Test';
+
+        \Includes\Utils\FileManager::copyRecursive(
+            $testModulesDir,
+            LC_MODULES_DIR . 'Test'
+        );
+    }
+
+    protected function tearDown()
+    {
+        \Includes\Utils\FileManager::unlinkRecursive(
+            LC_MODULES_DIR . 'Test'
+        );
+
+        parent::tearDown();
+    }
+
+
+    public function testModulesManage()
+    {
+        $this->logIn();
+
+        $this->open('admin.php?target=modules');
+
+        $this->assertElementPresent(
+            '//tr[@class="module-11 disabled"]/td[@class="module-main-section"]/div[@class="actions"]/span[@class="disabled" and text()="Enable"]',
+            'Enable is not a text label'
+        );
+
+        $this->assertElementPresent(
+            '//tr[@class="module-11 disabled"]/td[@class="module-main-section"]/div/div[@class="note version error"]/button/span[text()="Upgrade"]',
+            'Upgrade button error'
+        );
+
+        $this->assertElementPresent(
+            '//tr[@class="module-12 disabled"]/td[@class="module-main-section"]/div/div[@class="note version error"]/button/span[text()="Upgrade core"]',
+            'Upgrade core button error'
+        );  
+
+        $this->assertElementPresent(
+            '//tr[@class="module-13 disabled"]/td[@class="module-main-section"]/div/div[@class="note dependencies"]/ul/li/a[text()="Test module 1 (by Test)"]',
+            'test module 1 dependency is absent'
+        );
+
+        $this->assertElementPresent(
+            '//tr[@class="module-13 disabled"]/td[@class="module-main-section"]/div/div[@class="note dependencies"]/ul/li/a[text()="Test module 2 (by Test)"]',
+            'test module 2 dependency is absent'
+        );  
+
+    }
+
+
     public function testEnterLicenseKeyBlock()
     {
         $this->logIn();
