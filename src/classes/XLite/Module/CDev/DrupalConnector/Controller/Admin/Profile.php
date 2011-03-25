@@ -49,7 +49,9 @@ class Profile extends \XLite\Controller\Admin\Profile implements \XLite\Base\IDe
         if ($this->isRegisterMode() || 'delete' === \XLite\Core\Request::getInstance()->action) {
 
             \XLite\Core\TopMessage::addError(
-                $this->t('It is impossible to delete or create user accounts because your store currently works as an integration with Drupal and shares users with Drupal. Deleting/creating user accounts is possible via Drupal administrator interface.')
+                'It is impossible to delete or create user accounts because your store currently works '
+                . 'as an integration with Drupal and shares users with Drupal. Deleting/creating user '
+                . 'accounts is possible via Drupal administrator interface.'
             );
 
             $this->markAsAccessDenied();

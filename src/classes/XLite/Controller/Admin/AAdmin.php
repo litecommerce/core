@@ -38,6 +38,13 @@ namespace XLite\Controller\Admin;
 abstract class AAdmin extends \XLite\Controller\AController
 {
     /**
+     * Name of temporary variable to store time 
+     * of last request to marketplace
+     */
+    const MARKETPLACE_LAST_REQUEST_TIME = 'marketplaceLastRequestTime';
+
+
+    /**
      * List of recently logged in administrators
      * 
      * @var    array
@@ -56,8 +63,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      */
     public function checkAccess()
     {
-        return (parent::checkAccess() || $this->isPublicZone())
-            && $this->checkFormId();
+        return (parent::checkAccess() || $this->isPublicZone()) && $this->checkFormId();
     }
 
     /**
@@ -139,17 +145,11 @@ abstract class AAdmin extends \XLite\Controller\AController
      */
     public function handleRequest()
     {
-        if (
-            !$this->auth->isAuthorized($this)
-            && !$this->isPublicZone()
-        ) {
-
-            // Check - current user is logged and has right access level
+        // Check if user is logged in and has a right access level
+        if (!$this->auth->isAuthorized($this) && !$this->isPublicZone()) {
 
             $this->session->set('lastWorkingURL', $this->get('url'));
-            $this->redirect(
-                $this->buildURL('login')
-            );
+            $this->redirect($this->buildURL('login'));
 
         } else {
 
@@ -225,9 +225,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      */
     protected function isPublicZone()
     {
-        $request = \XLite\Core\Request::getInstance();
-
-        return 'login' == $request->target;
+        return 'login' == \XLite\Core\Request::getInstance()->target;
     }
 
     /**
@@ -440,6 +438,9 @@ OUT;
         return substr(trim(preg_replace('/[^a-z0-9 \/\._-]+/Sis', '', $cleanURL)), 0, 200);
     }
 
+
+    // {{{ Methods to work with the received data
+
     /**
      * getRequestDataByPrefix 
      * 
@@ -453,13 +454,7 @@ OUT;
      */
     protected function getRequestDataByPrefix($prefix, $field = null)
     {
-        $data = \XLite\Core\Request::getInstance()->$prefix;
-
-        if (!is_array($data)) {
-            $data = array();
-        }
-
-        return isset($field) ? (isset($data[$field]) ? $data[$field] : null) : $data;
+        return \Includes\Utils\ArrayManager::getIndex((array) \XLite\Core\Request::getInstance()->$prefix, $field);
     }
 
     /**
@@ -490,8 +485,9 @@ OUT;
         return $this->getRequestDataByPrefix($this->getPrefixToDelete());
     }
 
+    // }}}
 
-    // ------------------------------ Core upgrade support -
+    // {{{ Core upgrade support
 
     /**
      * Get current core version
@@ -516,6 +512,8 @@ OUT;
      */
     public function isCoreUpgradeAvailable()
     {
-        return (bool) \XLite\Core\Marketplace::getInstance()->getCoreVersions();
+        return \XLite\Core\TmpVars::getInstance()->isCoreUpgradeAvailable;
     }
+
+    // }}}
 }

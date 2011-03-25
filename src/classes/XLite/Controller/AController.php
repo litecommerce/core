@@ -38,6 +38,13 @@ namespace XLite\Controller;
 abstract class AController extends \XLite\Core\Handler
 {
     /**
+     * Name of temporary variable to store time
+     * of last request to marketplace
+     */
+    const MARKETPLACE_LAST_REQUEST_TIME = 'marketplaceLastRequestTime';
+
+
+    /**
      * Controller main params
      */
 
@@ -1053,20 +1060,18 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Perform some actions before redirect
      *
-     * @param string $action Performed action OPTIONAL
+     * @param string $action Performed action
      *
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function actionPostprocess($action = null)
+    protected function actionPostprocess($action)
     {
-        if (isset($action)) {
-            $method = __FUNCTION__ . \XLite\Core\Converter::convertToCamelCase($action);
-            if (method_exists($this, $method)) {
-                // Call action method
-                $this->$method();
-            }
+        if (method_exists($this, $method = __FUNCTION__ . \Includes\Utils\Converter::convertToPascalCase($action))) {
+
+            // Call action method
+            $this->$method();
         }
     }
 
@@ -1083,7 +1088,7 @@ abstract class AController extends \XLite\Core\Handler
         $action = \XLite\Core\Request::getInstance()->action;
 
         $oldMethodName = 'action_' . $action;
-        $newMethodName = 'doAction' . \XLite\Core\Converter::convertToCamelCase($action);
+        $newMethodName = 'doAction' . \Includes\Utils\Converter::convertToPascalCase($action);
 
         if (method_exists($this, $oldMethodName)) {
             // action_{action}()
@@ -1423,4 +1428,86 @@ abstract class AController extends \XLite\Core\Handler
 
         return $params;
     }
+
+
+    // {{{ MArketplace routines
+
+    // :TODO: after the multiple inheritance will be implemented
+    // all these methods must be moved to the \XLite\Controller\Common\Login
+
+    /**
+     * Renew marketplace data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function updateMarketplaceDataCache()
+    {
+        // Check if data is still valid
+        if (\XLite\Core\Auth::getInstance()->isAdmin() && $this->areMarketplaceCachedDataExpired()) {
+
+            // Flag for core upgrade
+            \XLite\Core\TmpVars::getInstance()->isCoreUpgradeAvailable
+                = (bool) \XLite\Core\Marketplace::getInstance()->getCoreVersions();
+
+            // Update modules list
+            \XLite\Core\Database::getRepo('\XLite\Model\Module')->updateMarketplaceModules(
+                \XLite\Core\Marketplace::getInstance()->getAddonsList()
+            );
+
+            // Set current time as the last request one
+            $this->setMarketplaceLastRequestTime();
+        }
+    }
+
+    /**
+     * Check if we need to update cached data from marketplace
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function areMarketplaceCachedDataExpired()
+    {
+        return time() > ($this->getMarketplaceLastRequestTime() + $this->getMarketplaceDataTTL());
+    }
+
+    /**
+     * Return time of merketplace last request
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMarketplaceLastRequestTime()
+    {
+        return \XLite\Core\TmpVars::getInstance()->{self::MARKETPLACE_LAST_REQUEST_TIME};
+    }
+
+    /**
+     * Set time of merketplace last request
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setMarketplaceLastRequestTime()
+    {
+        \XLite\Core\TmpVars::getInstance()->{self::MARKETPLACE_LAST_REQUEST_TIME} = time();
+    }
+
+    /**
+     * Return TTL (time-to-live, in seconds) for marketplace cached data
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMarketplaceDataTTL()
+    {
+        return 3600 * 24;
+    }
+
+    // }}}
 }

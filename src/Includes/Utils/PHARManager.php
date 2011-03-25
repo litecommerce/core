@@ -36,6 +36,22 @@ namespace Includes\Utils;
  */
 abstract class PHARManager extends \Includes\Utils\AUtils
 {
+    /**
+     * Default compression type
+     */
+    const COMPRESSION_TYPE = \Phar::GZ;
+
+
+    /**
+     * File extensions 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected static $extensions = array(\Phar::GZ => 'gz', \Phar::BZ2 => 'bz2');
+
+
     // {{{ Public methods 
 
     /**
@@ -117,14 +133,62 @@ abstract class PHARManager extends \Includes\Utils\AUtils
 
         $phar->buildFromIterator($iterator, LC_ROOT_DIR);
         $phar->setMetadata($metadata);
-        if ($phar->canCompress(\Phar::GZ)) {
-            $name .= '.gz';
+
+        return static::compress($phar, $name);
+    }
+
+    // }}}
+
+    // {{{ Compression
+
+    /**
+     * Check if compression is available
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function canCompress()
+    {
+        return \Phar::canCompress(self::COMPRESSION_TYPE);
+    }
+
+    /**
+     * Check and (if available) compress TAR arctive
+     * 
+     * @param \PharData $phar  Archive to compress
+     * @param string    &$name Archive file name
+     *  
+     * @return \PharData
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function compress(\PharData $phar, &$name)
+    {
+        if (static::canCompress()) {
+
             \Includes\Utils\FileManager::delete($name);
-            $ext = preg_replace('/^[^\.]+\./Ss', '.', $name);
-            $phar = $phar->compress(\Phar::GZ, $ext);
+
+            if ($extension = static::getExtension()) {
+                \Includes\Utils\FileManager::delete($name .= '.' . $extension);
+            }
+
+            $phar->compress(self::COMPRESSION_TYPE);
         }
 
         return $phar;
+    }
+
+    /**
+     * Return extension for the archive file
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getExtension()
+    {
+        return \Includes\Utils\ArrayManager::getIndex(static::$extensions, self::COMPRESSION_TYPE, true);
     }
 
     // }}}

@@ -84,7 +84,9 @@ class Module extends \XLite\Core\Pack\APack
      */
     public function getName()
     {
-        return str_replace('\\', '-', $this->module->getActualName()) . '-v' . $this->module->__call('getVersion');
+        // It's the fix for PHAR::compress(): it's triming dots in file names
+        return str_replace('\\', '-', $this->module->getActualName()) 
+            . '-v' . str_replace('.', '_', $this->module->__call('getVersion'));
     }
 
     /**
