@@ -67,19 +67,13 @@ class TmpVars extends \XLite\Base\Singleton
 
         if (isset($value)) {
 
-            $method = 'update';
+            $data = array('value' => serialize($value));
 
-            if (!$var) {
-                $var = new \XLite\Model\TmpVar();
-                $var->setName($name);
-                $method = 'insert';
+            if (!isset($var)) {
+                $var = $this->getRepo()->insert($data + array('name' => $name));
+            } else {
+                $this->getRepo()->update($var, $data);
             }
-
-            $var->setValue(serialize($value));
-
-            // Insert or update
-            $this->getRepo()->$method($var);
-
 
         } elseif ($var) {
 
