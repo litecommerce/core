@@ -197,7 +197,7 @@ abstract class AView extends \XLite\Core\Handler
             }
 
             $v['url'] = static::$layout->getResourceWebPath(
-                $v['file'],
+                str_replace(LC_DS, '/', $v['file']),
                 \XLite\Core\Layout::WEB_PATH_OUTPUT_URL,
                 $isCommon ? \XLite::COMMON_INTERFACE : null
             );
@@ -205,7 +205,7 @@ abstract class AView extends \XLite\Core\Handler
             if ($v['url']) {
 
                 $v['file'] = static::$layout->getResourceFullPath(
-                    $v['file'],
+                    str_replace('/', LC_DS, $v['file']),
                     $isCommon ? \XLite::COMMON_INTERFACE : null,
                     false
                 );
