@@ -210,7 +210,7 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
             'document.getElementsByTagName("form")[0].ccnum.value == "1111"',
             10000
         );
-        $this->setTimeout(self::SELENIUM_TTL);
+        $this->setTimeout(SELENIUM_TTL);
         $this->clickAndWait('//input[@type="SUBMIT"]');
 
         // Go to shop
