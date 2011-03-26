@@ -175,10 +175,12 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      */
     protected function setLocale($code)
     {
-        $locale = $this->getLocaleByCode($code);
+        if (defined(self::CATEGORY)) {
+            $locale = $this->getLocaleByCode($code);
 
-        putenv(self::CATEGORY . '=' . $locale);
-        setlocale(constant(self::CATEGORY), $locale);
+            putenv(self::CATEGORY . '=' . $locale);
+            setlocale(constant(self::CATEGORY), $locale);
+        }
     }
 
     /**
