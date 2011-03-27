@@ -25,11 +25,6 @@ require_once dirname(__FILE__) . '/SeleniumTestCase/Driver.php';
  */
 abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase
 {
-    /**
-     * Selenioum common TTL 
-     */
-    const SELENIUM_TTL = 60;
-
 
     /**
      * Prefix for all classes with test cases
@@ -118,84 +113,6 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     protected $baseURL = null;
 
     /**
-     * Browsers list
-     * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  1.0.0
-     */
-    public static $browsers = array(
-/*
-        array(
-            'name'    => 'Safari (Windows)',
-            'browser' => '*safari',
-            'host'    => 'cormorant.crtdev.local',
-            'port'    => 4444,
-            'timeout' => self::SELENIUM_TTL,
-        ),
-        array(
-            'name'    => 'Google chrome (Windows)',
-            'browser' => '*googlechrome C:\Documents and Settings\rnd\Local Settings\Application Data\Google\Chrome\Application\chrome.exe',
-            'host'    => SELENIUM_SERVER,
-            'port'    => 4444,
-            'timeout' => self::SELENIUM_TTL,
-        ),
-        array(
-            'name'    => 'IE 8 (Windows)',
-            'browser' => '*iexplore',
-            'host'    => 'cormorant.crtdev.local',
-            'port'    => 4444,
-            'timeout' => self::SELENIUM_TTL,
-        ),
-        array(
-            'name'    => 'FireFox 3 (Windows)',
-            'browser' => '*firefox C:\Program Files\Mozilla Firefox 3\firefox.exe',
-            'host'    => 'cormorant.crtdev.local',
-            'port'    => 4444,
-            'timeout' => self::SELENIUM_TTL,
-        ),
-        array(
-            'name'    => 'FireFox 3.5 (Windows)',
-            'browser' => '*firefox C:\Program Files\Mozilla Firefox 3.5\firefox.exe',
-            'host'    => SELENIUM_SERVER,
-            'port'    => 4444,
-            'timeout' => self::SELENIUM_TTL,
-        ),
- */
-        array(
-            'name'    => 'FireFox 3.6 (Windows)',
-            'browser' => '*firefox C:\Program Files\Mozilla Firefox-3.6.15\firefox.exe',
-            'host'    => SELENIUM_SERVER,
-            'port'    => 4444,
-            'timeout' => self::SELENIUM_TTL,
-        ),
-/*
-        array(
-            'name'    => 'Opera 9 (Windows)',
-            'browser' => '*opera C:\Program Files\Opera9\opera.exe',
-            'host'    => 'cormorant.crtdev.local',
-            'port'    => 4444,
-            'timeout' => self::SELENIUM_TTL,
-        ),
-         array(
-            'name'    => 'Opera 10 (Windows)',
-            'browser' => '*opera C:\Program Files\Opera10\opera.exe',
-            'host'    => 'cormorant.crtdev.local',
-            'port'    => 4444,
-            'timeout' => self::SELENIUM_TTL,
-        ),
-        array(
-            'name'    => 'Opera 11 (Windows)',
-            'browser' => '*opera C:\Program Files\Opera11\opera.exe',
-            'host'    => 'cormorant.crtdev.local',
-            'port'    => 4444,
-            'timeout' => self::SELENIUM_TTL,
-        ),
-*/
-    );
-
-    /**
      * Unknown nut allowed CSS properties list
      * 
      * @var    array
@@ -269,6 +186,10 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         $class            = new ReflectionClass($className);
         $classGroups      = PHPUnit_Util_Test::getGroups($className);
         $staticProperties = $class->getStaticProperties();
+
+        if (defined('XLITE_TEST_BROWSERS_LIST')) {
+            $staticProperties['browsers'] = unserialize(XLITE_TEST_BROWSERS_LIST);
+        }
 
         // Leave only one browser in deployment mode
         if (defined('DEPLOYMENT_TEST') && !empty($staticProperties['browsers'])) {
@@ -910,7 +831,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __call($command, array $arguments)
+    public function __call($command, $arguments)
     {
 
         $result = null;
