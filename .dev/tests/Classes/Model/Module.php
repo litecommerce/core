@@ -172,14 +172,22 @@ class XLite_Tests_Model_Module extends XLite_Tests_Model_ModuleAbstract
         $module->disableModule();
         \XLite\Core\Database::getEM()->flush();
 
+        $this->assertFileExists($path, 'check that file .disabled.structures.php exists');
+
         $etalon = "# <?php if (!defined('LC_DS')) { die(); } ?>
 
 CDev\ProductOptions:
   tables: [options, option_exceptions, option_groups, option_group_translations, option_surcharges, option_translations, order_item_options]
-  columns: {  }
-";
+  columns: {  }";
 
-        $this->assertEquals($etalon, file_get_contents($path), 'check .disabled.structures.php');
+        $subject = file($path);
+
+        $etalon = explode("\n", $etalon);
+
+        foreach ($etalon as $key => $str) {
+            $this->assertEquals(trim($subject[$key]), trim($str), 'check file content (' . $path . ')');
+        }
+        
         if (file_exists($path)) {
             unlink($path);
         }
@@ -269,7 +277,7 @@ CDev\ProductOptions:
     public function testGetPath()
     {
         $module = $this->getTestModule();
-        $this->assertEquals('TestAuthor/TestModule', $module->getPath(), 'check path');
+        $this->assertEquals('TestAuthor' . LC_DS . 'TestModule', $module->getPath(), 'check path');
     }
  
     public function testGetModel()
