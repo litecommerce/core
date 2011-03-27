@@ -44,7 +44,10 @@ final class XLite_Tests_TestSuite extends PHPUnit_Framework_TestSuite
         echo (PHP_EOL . 'DB restore ... ');
 
         $config = \XLite::getInstance()->getOptions('database_details');
-        $cmd = 'mysql -h' . $config['hostspec'];
+        
+        $cmd = defined('TEST_MYSQL_BIN') ? TEST_MYSQL_BIN : 'mysql';
+        $cmd .= ' -h' . $config['hostspec'];
+        
         if ($config['port']) {
             $cmd .= ':' . $config['port'];
         }
