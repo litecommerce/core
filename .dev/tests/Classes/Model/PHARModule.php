@@ -135,6 +135,9 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
 
         $phar->cleanUp();
 
+        // Unset is required to release file. Else this file will not be removed under Windows
+        unset($phar);
+
         unlink(LC_LOCAL_REPOSITORY . 'good.phar');
     }
 
