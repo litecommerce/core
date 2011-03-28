@@ -12,5 +12,5 @@
  * @ListChild (list="product_classes.main_input", weight="100")
  *}
 <td class="input-name">
-<widget class="\XLite\View\FormField\Input\Text\Advanced" fieldName="{getNamePostedData(#name#,id))}" value="{name}" />
+<widget class="\XLite\View\FormField\Input\Text\Advanced" fieldOnly=true fieldName="{getNamePostedData(#name#,id))}" value="{name}" />
 </td>

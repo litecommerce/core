@@ -12,6 +12,6 @@
  * @ListChild (list="productClasses.list.columns.new", weight="100")
  *}
 <td class="new-product-class">
-<widget class="\XLite\View\FormField\Input\Text\Advanced" fieldName="{getNamePostedData(#new_name#)}" value="" label="{t(#New product class#)}" />
+<widget class="\XLite\View\FormField\Input\Text\Advanced" fieldOnly=true fieldName="{getNamePostedData(#new_name#)}" value="" label="{t(#New product class#)}" />
 </td>
 <td>&nbsp;</td>
