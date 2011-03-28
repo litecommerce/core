@@ -163,7 +163,8 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function getAddonsList()
     {
-        return $this->sendRequestToMarkeplace(
+        // :FIXME: remove type casting
+        return (array) $this->sendRequestToMarkeplace(
             self::ACTION_GET_ADDONS_LIST
         );
     }
