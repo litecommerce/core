@@ -834,6 +834,32 @@ abstract class AController extends \XLite\Core\Handler
         return null;
     }
 
+    /**  
+     * Return model form object
+     * 
+     * @param array $params Form constructor params
+     *  
+     * @return \XLite\View\Model\AModel|void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModelForm(array $params = array())
+    {    
+        $result = null;
+        $class  = $this->getModelFormClass();
+
+        if (isset($class)) {
+            $result = \XLite\Model\CachingFactory::getObject(
+                __METHOD__ . $class . (empty($params) ? '' : md5(serialize($params))),
+                $class,
+                $params
+            );   
+        }    
+
+        return $result;
+    }    
+
 
     /**
      * Check if current page is accessible
@@ -1029,32 +1055,6 @@ abstract class AController extends \XLite\Core\Handler
     protected function getModelFormClass()
     {
         return null;
-    }
-
-    /**
-     * Return model form object
-     * 
-     * @param array $params Form constructor params
-     *  
-     * @return \XLite\View\Model\AModel|void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getModelForm(array $params = array())
-    {
-        $result = null;
-        $class  = $this->getModelFormClass();
-
-        if (isset($class)) {
-            $result = \XLite\Model\CachingFactory::getObject(
-                __METHOD__ . $class . (empty($params) ? '' : md5(serialize($params))),
-                $class,
-                $params
-            );
-        }
-
-        return $result;
     }
 
     /**
