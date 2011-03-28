@@ -74,7 +74,8 @@ abstract class AForm extends \XLite\View\Form\AForm
     protected function getDefaultParams()
     {
         $result = parent::getDefaultParams();
-        $result['order_id'] = static::getCurrentForm()->getOrderId();
+
+        $result['order_id'] = $this->getCurrentForm()->getOrderId();
 
         return $result;
     }
