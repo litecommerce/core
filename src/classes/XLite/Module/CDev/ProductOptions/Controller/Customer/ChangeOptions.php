@@ -93,6 +93,8 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Perform some actions before redirect
+     *
+     * :FIXME: check. Action should not be an optional param
      * 
      * @param string $action Current action
      *  

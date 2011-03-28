@@ -141,13 +141,11 @@ class Login extends \XLite\Controller\Admin\AAdmin
     /**
      * Perform some actions before redirect
      *
-     * @param string $action Performed action
-     *
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function actionPostprocessLogin($action)
+    protected function actionPostprocessLogin()
     {
         $this->updateMarketplaceDataCache();
     }
