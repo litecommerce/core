@@ -106,7 +106,7 @@ abstract class AFormField extends \XLite\View\AView
 
 
     /**
-     * Return widget template
+     * Return widget default template
      *
      * @return string
      * @access protected
@@ -114,9 +114,21 @@ abstract class AFormField extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
+        return 'form_field.tpl';
+    }
+
+    /**
+     * Return widget template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getTemplate()
+    {
         return $this->getParam(self::PARAM_FIELD_ONLY)
             ? $this->getDir() . LC_DS . $this->getFieldTemplate()
-            : 'form_field.tpl'; 
+            : 'form_field.tpl';
     }
 
     /**
