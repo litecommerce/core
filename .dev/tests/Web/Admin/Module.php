@@ -41,6 +41,8 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
     {
         parent::setUp();
 
+        $this->markTestSkipped('Awaiting for new marketplace');
+
         $testModulesDir = dirname(__FILE__) . LC_DS . '..' . LC_DS . '..' . LC_DS . '..' . LC_DS . 'test_modules' . LC_DS . 'Test';
 
         \Includes\Utils\FileManager::copyRecursive(
@@ -61,7 +63,7 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
 
     public function testModulesManage()
     {
-        /*$this->logIn();
+        $this->logIn();
 
         $this->open('admin.php?target=modules');
 
@@ -88,14 +90,14 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
         $this->assertElementPresent(
             '//tr[@class="module-13 disabled"]/td[@class="module-main-section"]/div/div[@class="note dependencies"]/ul/li/a[text()="Test module 2 (by Test)"]',
             'test module 2 dependency is absent'
-        );*/  
+        );  
 
     }
 
 
     public function testEnterLicenseKeyBlock()
     {
-        /*$this->logIn();
+        $this->logIn();
 
         $this->open('admin.php?target=addons_list');
 
@@ -184,7 +186,7 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
 
         $this->waitForPageToLoad(6000);
 
-        $this->assertElementNotPresent($moduleBlock, 'MegaModule48 module was not uninstalled');*/
+        $this->assertElementNotPresent($moduleBlock, 'MegaModule48 module was not uninstalled');
     }
 
 }
