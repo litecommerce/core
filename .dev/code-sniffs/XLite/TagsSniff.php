@@ -761,7 +761,7 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
     {
 		$since = $this->commentParser->getSince()->getContent();
 		if (!preg_match('/^\d+\.\d+\.\d+$/Ss', $since)) {
-            $error = '@since tag must contain softaware version';
+            $error = '@since tag must contain software version';
             $this->currentFile->addError($this->getReqPrefix($this->reqCodeEmpty) . $error, $errorPos);
 		}
 	}
