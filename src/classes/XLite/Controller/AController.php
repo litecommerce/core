@@ -1469,17 +1469,25 @@ abstract class AController extends \XLite\Core\Handler
         // Check if data is still valid
         if (\XLite\Core\Auth::getInstance()->isAdmin() && $this->areMarketplaceCachedDataExpired()) {
 
-            // Flag for core upgrade
-            \XLite\Core\TmpVars::getInstance()->isCoreUpgradeAvailable
-                = (bool) \XLite\Core\Marketplace::getInstance()->getCoreVersions();
+            $versions = \XLite\Core\Marketplace::getInstance()->getCoreVersions();
+            $modules  = \XLite\Core\Marketplace::getInstance()->getAddonsList();
 
-            // Update modules list
-            \XLite\Core\Database::getRepo('\XLite\Model\Module')->updateMarketplaceModules(
-                \XLite\Core\Marketplace::getInstance()->getAddonsList()
-            );
+            if (!is_array($versions) || !is_array($modules)) {
 
-            // Set current time as the last request one
-            $this->setMarketplaceLastRequestTime();
+                // Display warning to admin
+                \XLite\Core\TopMessage::getInstance()->addWarning('Error occured while connecting to marketplace');
+
+            } else {
+
+                // Flag for core upgrade
+                \XLite\Core\TmpVars::getInstance()->isCoreUpgradeAvailable = !empty($versions);
+
+                // Update modules list
+                \XLite\Core\Database::getRepo('\XLite\Model\Module')->updateMarketplaceModules($modules);
+
+                // Set current time as the last request one
+                $this->setMarketplaceLastRequestTime();
+            }
         }
     }
 
