@@ -42,6 +42,7 @@ class Base extends \XLite\Base\Singleton
      * Singletons accessible directly from each object (see the "__get" method)
      * 
      * @var   array
+     * @see   ____var_see____
      * @since 3.0.0
      */
     protected static $singletons = array(
@@ -62,6 +63,7 @@ class Base extends \XLite\Base\Singleton
      * @param string $name Property name
      *  
      * @return mixed
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function __get($name)
@@ -78,6 +80,7 @@ class Base extends \XLite\Base\Singleton
      * @param array  $args   Call arrguments OPTIONAL
      *  
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function __call($method, array $args = array())
@@ -94,6 +97,7 @@ class Base extends \XLite\Base\Singleton
      * @param string $name Property name
      *  
      * @return mixed
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function get($name)
@@ -131,6 +135,7 @@ class Base extends \XLite\Base\Singleton
      * @param mixed  $value Property value
      *  
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function set($name, $value)
@@ -167,6 +172,7 @@ class Base extends \XLite\Base\Singleton
      * @param string $name List of params delimeted by the "." (dot)
      *  
      * @return mixed
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getComplex($name)
@@ -174,7 +180,9 @@ class Base extends \XLite\Base\Singleton
         $obj = $this;
 
         foreach (explode('.', $name) as $part) {
+            
             if (is_object($obj)) {
+            
                 if ($obj instanceof \stdClass) {
                     $obj = isset($obj->$part) ? $obj->$part : null;
 
@@ -208,6 +216,7 @@ class Base extends \XLite\Base\Singleton
      * @param mixed  $value Value to set
      *  
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function setComplex($name, $value)
@@ -249,6 +258,7 @@ class Base extends \XLite\Base\Singleton
      * @param string $name List of params delimeted by the "." (dot)
      *
      * @return boolean
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isComplex($name)
@@ -262,6 +272,7 @@ class Base extends \XLite\Base\Singleton
      * @param array $assoc Array(properties) to set
      *  
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function setProperties(array $assoc)
