@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite;
@@ -31,59 +31,53 @@ namespace XLite;
 /**
  * Logger 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Logger extends \XLite\Base\Singleton
 {
     /**
      * Security file header 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $securityHeader = '<?php die(1); ?>';
 
     /**
      * Hash errors 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $hashErrors = array();
 
     /**
      * Errors translate table (PHP -> PEAR)
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $errorsTranslate = null;
 
     /**
      * PHP error names 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $errorTypes = null;
 
     /**
      * Options 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $options = array(
         'type'  => null,
@@ -95,10 +89,9 @@ class Logger extends \XLite\Base\Singleton
     /**
      * Mark templates flag
      * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $markTemplates = false;
 
@@ -107,7 +100,6 @@ class Logger extends \XLite\Base\Singleton
      * Check - display debug templates info or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -120,7 +112,6 @@ class Logger extends \XLite\Base\Singleton
      * Constructor
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -188,7 +179,6 @@ class Logger extends \XLite\Base\Singleton
      * @param array  $trace   Back trace OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -240,7 +230,6 @@ class Logger extends \XLite\Base\Singleton
      * @param integer $errline Line number
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -291,7 +280,6 @@ class Logger extends \XLite\Base\Singleton
      * @param \Exception $exception Exception
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -332,7 +320,6 @@ class Logger extends \XLite\Base\Singleton
      * Get log type 
      * 
      * @return mixed
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -345,7 +332,6 @@ class Logger extends \XLite\Base\Singleton
      * Get logger name 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -373,7 +359,6 @@ class Logger extends \XLite\Base\Singleton
      * Get logger identtificator 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -386,7 +371,6 @@ class Logger extends \XLite\Base\Singleton
      * Get back trace list
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -401,7 +385,6 @@ class Logger extends \XLite\Base\Singleton
      * @param array $trace Back trace raw data
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -416,7 +399,6 @@ class Logger extends \XLite\Base\Singleton
      * @param object $obj Object
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -431,7 +413,6 @@ class Logger extends \XLite\Base\Singleton
      * @param integer $errno PHP error code
      *  
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -470,7 +451,6 @@ class Logger extends \XLite\Base\Singleton
      * @param integer $errno PHP error code
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -506,7 +486,6 @@ class Logger extends \XLite\Base\Singleton
      * Get rrror log path 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -521,7 +500,6 @@ class Logger extends \XLite\Base\Singleton
      * @param string $path File path
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

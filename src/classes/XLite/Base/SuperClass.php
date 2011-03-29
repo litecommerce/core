@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Base
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Base;
@@ -31,26 +31,39 @@ namespace XLite\Base;
 /**
  * SuperClass 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class SuperClass
 {
+    /**
+     * Language label translation short method
+     *
+     * @param string $name      Label name
+     * @param array  $arguments Substitution arguments OPTIONAL
+     * @param string $code      Language code OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function t($name, array $arguments = array(), $code = null)
+    {
+        return \XLite\Core\Translation::getInstance()->translate($name, $arguments, $code);
+    }
+
     /**
      * Protected constructor.
      * It's not possible to instantiate a derived class (using the "new" operator) 
      * until that child class is not implemented public constructor
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function __construct()
     {
     }
-
 
     /**
      * Stop script execution
@@ -59,8 +72,8 @@ abstract class SuperClass
      * @param string $message Text to display
      *
      * @return void
-     * @access protected
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     protected function doDie($message)
     {
@@ -76,22 +89,5 @@ abstract class SuperClass
         }
 
         die ($message);
-    }
-
-    /**
-     * Language label translation short method
-     *
-     * @param string $name      Label name
-     * @param array  $arguments Substitution arguments
-     * @param string $code      Language code OPTIONAL
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function t($name, array $arguments = array(), $code = null)
-    {
-        return \XLite\Core\Translation::getInstance()->translate($name, $arguments, $code);
     }
 }
