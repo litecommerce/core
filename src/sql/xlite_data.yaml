@@ -607,7 +607,6 @@ XLite\Model\Language:
   - { code: zu, code3: zul, translations: [{ code: en, name: Zulu }] }
 XLite\Model\Payment\Method:
   directives: { insert: true }
-  - { service_name: CreditCard, class: Model\Payment\Processor\CreditCard, orderby: 10, translations: [{ code: en, name: 'Credit Card', description: Vis }] }
   - { service_name: PurchaseOrder, class: Model\Payment\Processor\PurchaseOrder, orderby: 20, translations: [{ code: en, name: 'Purchase Order', description: '' }] }
   - { service_name: PhoneOrdering, class: Model\Payment\Processor\Offline, orderby: 30, translations: [{ code: en, name: 'Phone Ordering', description: 'Phone: (555) 555-5555' }] }
   - { service_name: FaxOrdering, class: Model\Payment\Processor\Offline, orderby: 40, translations: [{ code: en, name: 'Fax Ordering', description: 'Fax: (555) 555-5555' }] }
