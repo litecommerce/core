@@ -2320,14 +2320,21 @@ form.estimator .main,
   background-image: url(../images/bottom_triangle.png);
 }
 
-.checkout-block form.place .terms .terms-box * {
-  vertical-align: middle;
-  font-size: 14px;
+.checkout-block form.place .terms label {
+  display: block;
+  padding-left: 16px;
+  text-indent: -16px;
 }
-
 .checkout-block form.place .terms input {
-  margin-top: 2px;
-  margin-bottom: 0px;
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  margin: 0;
+  margin-right: 4px;
+  vertical-align: bottom;
+  position: relative;
+  top: -1px;
+  *overflow: hidden;
 }
 
 .checkout-block form.place .button-row {
