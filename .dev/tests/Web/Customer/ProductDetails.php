@@ -331,9 +331,12 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         );
 
         // Check first image and structure
-
         $this->assertJqueryPresent('#colorbox:visible', 'check visible colorbox');
-        $this->assertJqueryPresent('#cboxPhoto:visible', 'check visible photo');
+        $this->waitForLocalCondition(
+            'jQuery("#cboxPhoto:visible").length > 0',
+            6000,
+            'check visible photo'
+        );
 
         $this->assertElementPresent(
             "//body"
@@ -430,16 +433,17 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $qty = 0;
 
-        $formSelector = "css=form.product-details";
+        $formSelector = "css=form.product-details.validationEngine";
         $cartButtonSelector = $formSelector . " .product-details-info .product-buttons button.bright.add2cart";
         $buyButtonSelector = $formSelector . " .product-details-info .product-buttons-added button.action.buy-more";
         $continueButtonSelector = $formSelector . " .product-details-info .product-buttons-added button.bright.continue";
-        $quantitySelector = $formSelector . " .product-details-info .product-buttons input.quantity"; 
+        $quantitySelector = $formSelector . " .product-details-info .product-buttons input.quantity.wheel-ctrl[type=text]"; 
     
         $this->assertElementPresent(
             $cartButtonSelector,
             "check add2cart button"
         );
+
         $this->click($cartButtonSelector);
         
         $qty++;
@@ -487,25 +491,29 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             30000,
             'check quantity'
         );
+       
+        // Reload page (selenium does not process below steps properly w/o reload)
+        // FIXME: try to avoid reloading page here
+        $this->openAndWait('store/product//product_id-' . $product->getProductId());
 
         // Check unallowed values (inventory tracking)
         $qtyBlurOperation = 'jQuery(".product-details input.quantity").blur()';
         $errorDivSelector = 'div.amount' . $product->getProductId() . 'formError:visible';
         $errorQtySelector = 'input.quantity.wrong-amount';
 
-        $this->typeKeys($quantitySelector, -3);
+        $this->typeKeys($quantitySelector, '-3');
         $this->getJSExpression($qtyBlurOperation);
         $this->assertJqueryPresent($errorDivSelector, 'check minimal allowed quantity error');
         $this->assertJqueryPresent($errorQtySelector, 'check minimal allowed quantity');
         $this->assertJqueryPresent('button.action.buy-more.disabled.add2cart-disabled', 'check disabled buy now button (min qty)');
 
-        $this->typeKeys($quantitySelector, 45);
+        $this->typeKeys($quantitySelector, '45');
         $this->getJSExpression($qtyBlurOperation);
         $this->assertJqueryNotPresent($errorDivSelector, 'check normalized quantity error');
         $this->assertJqueryNotPresent($errorQtySelector, 'check normalized quantity');
         $this->assertJqueryNotPresent('button.action.buy-more.disabled.add2cart-disabled', 'check enabled buy now button');
 
-        $this->typeKeys($quantitySelector, 46);
+        $this->typeKeys($quantitySelector, '46');
         $this->getJSExpression($qtyBlurOperation);
         $this->assertJqueryPresent($errorDivSelector, 'check maximum allowed quantity error');
         $this->assertJqueryPresent($errorQtySelector, 'check maximum allowed quantity');
