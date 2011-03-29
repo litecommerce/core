@@ -145,6 +145,26 @@ class Profile extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
+     * doActionModify 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionModify()
+    {
+        if ($this->getModelForm()->isRegisterMode()) {
+
+            $this->doActionRegister();
+
+        } else {
+
+            $this->doActionUpdate();
+        }
+    }
+
+    /**
      * doActionDelete 
      * 
      * @return void
