@@ -13,17 +13,17 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
+ *
+ * PHP version 5.3.0
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage XLite
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite;
@@ -31,69 +31,62 @@ namespace XLite;
 /**
  * Singleton 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class Singleton
 {
     /**
      * xlite 
      * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public static $xlite = '\XLite';
 
     /**
      * request 
      * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public static $request = '\XLite\Core\Request';
 
     /**
      * layout 
      * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public static $layout = '\XLite\Core\Layout';
 
     /**
      * session 
      * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public static $session = '\XLite\Core\Session';
 
     /**
      * config 
      * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public static $config = '\XLite\Core\Config';
 
     /**
      * flexy 
      * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public static $flexy = '\XLite\Core\FlexyCompiler';
 
@@ -102,7 +95,6 @@ abstract class Singleton
      * Initialize variables
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

@@ -63,14 +63,14 @@ class Address extends \XLite\View\Form\AForm
         $result['target'] = \XLite\Core\Request::getInstance()->target;
         $result['action'] = 'save';
         
-        $addressId = static::getCurrentForm()->getRequestAddressId();
+        $addressId = $this->getCurrentForm()->getRequestAddressId();
 
         if ($addressId) {
             $result['address_id'] = $addressId;
         
         } else {
 
-            $profileId = static::getCurrentForm()->getRequestProfileId();
+            $profileId = $this->getCurrentForm()->getRequestProfileId();
 
             if ($profileId) {
                 $result['profile_id'] = $profileId;

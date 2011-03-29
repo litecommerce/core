@@ -41,6 +41,8 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
     {
         parent::setUp();
 
+        $this->markTestSkipped('Awaiting for new marketplace');
+
         $testModulesDir = dirname(__FILE__) . LC_DS . '..' . LC_DS . '..' . LC_DS . '..' . LC_DS . 'test_modules' . LC_DS . 'Test';
 
         \Includes\Utils\FileManager::copyRecursive(
@@ -118,7 +120,7 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
             'No validate key button'
         );
 
-        /*$this->type(self::INPUT_KEY, 'test1');
+        $this->type(self::INPUT_KEY, 'test1');
 
         // Register License key
         $this->click(self::BUTTON_KEY);
@@ -184,7 +186,7 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
 
         $this->waitForPageToLoad(6000);
 
-        $this->assertElementNotPresent($moduleBlock, 'MegaModule48 module was not uninstalled');*/
+        $this->assertElementNotPresent($moduleBlock, 'MegaModule48 module was not uninstalled');
     }
 
 }
