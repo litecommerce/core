@@ -70,18 +70,22 @@ class XLite_Web_Admin_Orders extends XLite_Web_Admin_AAdmin
 
         $oid = $order->getOrderId();
 
-        $optionSelector    = 'select#posteddata-' . $oid . '-status option[value="P"]:disabled';
+        $optionSelector    = 'select#posteddata-' . $oid . '-status option[value=P]:disabled';
         $warnIconSelector  = 'div.status-warning a#status_warning_' . $oid;
-        $popupMesgSelector = 'div.status_warning_' . $oid . 'formError';
+        $popupMesgSelector = 'div.status_warning_' . $oid . 'formError:visible';
+        
+        // Check processed disabled status
+        $this->assertJqueryPresent($optionSelector, 'check disabled status for Processed option');
+
+        // Check warning icon
+        $this->assertJqueryPresent($warnIconSelector, 'check warning icon');
 
         // Check message
         $this->mouseOver('//a[@id="status_warning_"' . $oid . ']');
-        $this->assertJqueryPresent($popupMesgSelector':visible', 'check popup warning message');
-
-        // Check processed disabled status
-        $this->assertJqueryPresent($optionSelector, 'check disabled status for Processed option');
-        
-        // Check warning icon
-        $this->assertJqueryPresent($warnIconSelector, 'check warning icon');
+        $this->waitForLocalCondition(
+            'jQuery("' . $popupMesgSelector . '").length > 0',
+            2000,
+            'check popup warning message'
+        );
     }
 }
