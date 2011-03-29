@@ -101,6 +101,30 @@ abstract class AModule
     }
 
     /**
+     * Return link to the module author page
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAuthorPageURL()
+    {
+        return null;
+    }
+
+    /**
+     * Return link to the module page
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getPageURL()
+    {
+        return null;
+    }
+
+    /**
      * Determines if we need to show settings form link
      * 
      * @return boolean 

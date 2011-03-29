@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller;
@@ -31,9 +31,8 @@ namespace XLite\Controller;
 /**
  * Abstract controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AController extends \XLite\Core\Handler
 {
@@ -62,60 +61,54 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Object to keep action status
      * 
-     * @var    \XLite\Model\ActionError\Abstract
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\ActionError\Abstract
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $actionStatus;
 
     /**
      * Breadcrumbs 
      * 
-     * @var    \XLite\View\Location
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\View\Location
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $locationPath;
 
     /**
      * returnURL 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $returnURL;
 
     /**
      * Pages array for tabber
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $pages = array();
 
     /**
      * params 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $params = array('target');
 
     /**
      * pageTemplates 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $pageTemplates = array();
 
@@ -123,9 +116,9 @@ abstract class AController extends \XLite\Core\Handler
      * Validity flag
      * TODO - check where it's really needed
      * 
-     * @var    bool
-     * @access protected
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $valid = true;
 
@@ -134,7 +127,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get target by controller class name
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -154,8 +146,8 @@ abstract class AController extends \XLite\Core\Handler
      * @param string $exeptions Parameter keys string OPTIONAL
      *
      * @return array
-     * @access public
-     * @since  3.0.0 EE
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function getAllParams($exeptions = null)
     {
@@ -177,7 +169,7 @@ abstract class AController extends \XLite\Core\Handler
      * isRedirectNeeded
      *
      * @return boolean 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isRedirectNeeded()
@@ -189,7 +181,7 @@ abstract class AController extends \XLite\Core\Handler
      * Get target
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getTarget()
@@ -201,7 +193,7 @@ abstract class AController extends \XLite\Core\Handler
      * Get action
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getAction()
@@ -213,11 +205,11 @@ abstract class AController extends \XLite\Core\Handler
      * Get the full URL of the page
      * Example: getShopURL('cart.php') = "http://domain/dir/cart.php 
      * 
-     * @param string  $url    Relative URL  
+     * @param string  $url    Relative URL OPTIONAL
      * @param boolean $secure Flag to use HTTPS OPTIONAL
      *  
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getShopURL($url = '', $secure = false)
@@ -229,7 +221,6 @@ abstract class AController extends \XLite\Core\Handler
      * Return current location path
      *
      * @return \XLite\View\Location
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -246,7 +237,7 @@ abstract class AController extends \XLite\Core\Handler
      * Get return URL
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getReturnURL()
@@ -264,7 +255,7 @@ abstract class AController extends \XLite\Core\Handler
      * @param string $url URL to set
      *
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function setReturnURL($url)
@@ -278,7 +269,7 @@ abstract class AController extends \XLite\Core\Handler
      * @param array $params Query params to use
      *  
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function setReturnURLParams(array $params)
@@ -292,7 +283,7 @@ abstract class AController extends \XLite\Core\Handler
      * FIXME - simplify
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function handleRequest()
@@ -323,7 +314,6 @@ abstract class AController extends \XLite\Core\Handler
      * Alias: check for an AJAX request
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -336,7 +326,7 @@ abstract class AController extends \XLite\Core\Handler
      * Return Viewer object
      * 
      * @return \XLite\View\Controller
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getViewer()
@@ -350,7 +340,6 @@ abstract class AController extends \XLite\Core\Handler
      * Process request 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -373,7 +362,7 @@ abstract class AController extends \XLite\Core\Handler
      * FIXME - may be there is a better way to handle this?
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function postprocess()
@@ -384,7 +373,7 @@ abstract class AController extends \XLite\Core\Handler
      * Return the current page title (for the content area)
      * 
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getTitle()
@@ -396,7 +385,7 @@ abstract class AController extends \XLite\Core\Handler
      * Check whether the title is to be displayed in the content area 
      * 
      * @return boolean
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isTitleVisible()
@@ -408,7 +397,7 @@ abstract class AController extends \XLite\Core\Handler
      * Return the page title (for the <title> tag)
      * 
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getPageTitle()
@@ -420,7 +409,7 @@ abstract class AController extends \XLite\Core\Handler
      * Check if an error occured
      *
      * @return boolean 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isActionError()
@@ -436,7 +425,7 @@ abstract class AController extends \XLite\Core\Handler
      * @param integer $code    Status code OPTIONAL
      *  
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function setActionStatus($status, $message = '', $code = 0)
@@ -451,7 +440,7 @@ abstract class AController extends \XLite\Core\Handler
      * @param integer $code    Status code OPTIONAL
      *  
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function setActionError($message = '', $code = 0)
@@ -466,7 +455,7 @@ abstract class AController extends \XLite\Core\Handler
      * @param integer $code    Status code OPTIONAL
      *
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function setActionSuccess($message = '', $code = 0)
@@ -479,7 +468,7 @@ abstract class AController extends \XLite\Core\Handler
      * TODO - check where it's really needed
      * 
      * @return boolean 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isValid()
@@ -491,7 +480,6 @@ abstract class AController extends \XLite\Core\Handler
      * Initialize controller
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -504,7 +492,6 @@ abstract class AController extends \XLite\Core\Handler
      * Check - is secure connection or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -517,7 +504,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get access level 
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -530,7 +516,6 @@ abstract class AController extends \XLite\Core\Handler
      * getProperties 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -548,10 +533,9 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * getURL 
      * 
-     * @param array $params ____param_comment____
+     * @param array $params URL parameters OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -570,7 +554,6 @@ abstract class AController extends \XLite\Core\Handler
      * getPageTemplate 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -591,7 +574,6 @@ abstract class AController extends \XLite\Core\Handler
      * tabber is not used in customer area
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -604,7 +586,6 @@ abstract class AController extends \XLite\Core\Handler
      * getUploadedFile 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -636,7 +617,6 @@ abstract class AController extends \XLite\Core\Handler
      * checkUploadedFile 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -671,7 +651,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get controller charset 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -685,7 +664,6 @@ abstract class AController extends \XLite\Core\Handler
      * FIXME: is used in skins/default/en/contactus.tpl only
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -695,11 +673,9 @@ abstract class AController extends \XLite\Core\Handler
         $domains = split(',| |;|\||\/', $this->config->Email->valid_email_domains);
         
         foreach ((array)$domains as $key=>$val) {
-            if (!trim($val)) {
-                continue;
+            if (trim($val)) {
+                $values[$key] = '(\.' . trim($val) . ')';
             }
-
-            $values[$key] = '(\.' . trim($val) . ')';
         }
 
         if (empty($values)) {
@@ -713,7 +689,6 @@ abstract class AController extends \XLite\Core\Handler
      * isSecure 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -729,7 +704,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param string $format Time format
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -745,7 +719,6 @@ abstract class AController extends \XLite\Core\Handler
      * TODO: after the multiple inheritance should be moved to the AAdmin class
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -761,7 +734,6 @@ abstract class AController extends \XLite\Core\Handler
      * TODO: after the multiple inheritance should be moved to the AAdmin class
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -775,7 +747,6 @@ abstract class AController extends \XLite\Core\Handler
      * TODO - rework
      * 
      * @return \XLite\Model\Currency
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -788,7 +759,6 @@ abstract class AController extends \XLite\Core\Handler
      * Return the reserved ID of root category
      *
      * @return integer 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -801,7 +771,6 @@ abstract class AController extends \XLite\Core\Handler
      * Return current category Id
      *
      * @return integer 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -814,7 +783,7 @@ abstract class AController extends \XLite\Core\Handler
      * Get meta description
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getMetaDescription()
@@ -826,7 +795,7 @@ abstract class AController extends \XLite\Core\Handler
      * Get meta keywords
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getKeywords()
@@ -834,12 +803,36 @@ abstract class AController extends \XLite\Core\Handler
         return null;
     }
 
+    /**  
+     * Return model form object
+     * 
+     * @param array $params Form constructor params OPTIONAL
+     *  
+     * @return \XLite\View\Model\AModel|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModelForm(array $params = array())
+    {    
+        $result = null;
+        $class  = $this->getModelFormClass();
+
+        if (isset($class)) {
+            $result = \XLite\Model\CachingFactory::getObject(
+                __METHOD__ . $class . (empty($params) ? '' : md5(serialize($params))),
+                $class,
+                $params
+            );   
+        }    
+
+        return $result;
+    }    
+
 
     /**
      * Check if current page is accessible
      *
      * @return boolean 
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
@@ -852,7 +845,7 @@ abstract class AController extends \XLite\Core\Handler
      * Return default redirect code 
      * 
      * @return integer 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultRedirectCode()
@@ -864,7 +857,6 @@ abstract class AController extends \XLite\Core\Handler
      * Default URL to redirect
      * 
      * @return string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
@@ -879,7 +871,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param string $url Redirect URL OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
@@ -913,7 +904,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get redirect mode - force redirect or not
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -926,7 +916,6 @@ abstract class AController extends \XLite\Core\Handler
      * Common method to determine current location 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -939,7 +928,6 @@ abstract class AController extends \XLite\Core\Handler
      * Add part to the location nodes list
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -952,10 +940,9 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @param string $name     Node title
      * @param string $link     Node link OPTIONAL
-     * @param array  $subnodes Node subnodes
+     * @param array  $subnodes Node subnodes OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -968,7 +955,6 @@ abstract class AController extends \XLite\Core\Handler
      * Method to create the location line
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -994,7 +980,6 @@ abstract class AController extends \XLite\Core\Handler
      * Select template to use
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1007,7 +992,7 @@ abstract class AController extends \XLite\Core\Handler
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -1023,7 +1008,7 @@ abstract class AController extends \XLite\Core\Handler
      * Class name for the \XLite\View\Model\ form (optional)
      * 
      * @return string|void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getModelFormClass()
@@ -1032,38 +1017,12 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Return model form object
-     * 
-     * @param array $params Form constructor params
-     *  
-     * @return \XLite\View\Model\AModel|void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getModelForm(array $params = array())
-    {
-        $result = null;
-        $class  = $this->getModelFormClass();
-
-        if (isset($class)) {
-            $result = \XLite\Model\CachingFactory::getObject(
-                __METHOD__ . $class . (empty($params) ? '' : md5(serialize($params))),
-                $class,
-                $params
-            );
-        }
-
-        return $result;
-    }
-
-    /**
      * Perform some actions before redirect
      *
      * @param string $action Performed action
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function actionPostprocess($action)
@@ -1079,7 +1038,6 @@ abstract class AController extends \XLite\Core\Handler
      * Call controller action
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1106,7 +1064,6 @@ abstract class AController extends \XLite\Core\Handler
      * Do redirect 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1124,7 +1081,6 @@ abstract class AController extends \XLite\Core\Handler
      * Translate top messages to HTTP headers (AJAX)
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1146,7 +1102,6 @@ abstract class AController extends \XLite\Core\Handler
      * Assign AJAX response status to HTTP header(s)
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1182,7 +1137,6 @@ abstract class AController extends \XLite\Core\Handler
      * Preprocessor for no-action ren
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1194,7 +1148,6 @@ abstract class AController extends \XLite\Core\Handler
      * Check controller visibility
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1207,7 +1160,6 @@ abstract class AController extends \XLite\Core\Handler
      * Display 404 page
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1229,7 +1181,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param boolean $flag Internal redirect status OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1246,7 +1197,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param boolean $flag Internal redirect status OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1263,7 +1213,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param boolean $flag Silence close status OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1278,7 +1227,6 @@ abstract class AController extends \XLite\Core\Handler
      * Check if current viewer is for an AJAX request
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1291,7 +1239,6 @@ abstract class AController extends \XLite\Core\Handler
      * Return class of current viewer
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1308,7 +1255,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param string $output Output
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1322,7 +1268,6 @@ abstract class AController extends \XLite\Core\Handler
      * Mark controller run thread as access denied
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1336,11 +1281,10 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * startDownload 
      * 
-     * @param mixed  $filename    ____param_comment____
-     * @param string $contentType ____param_comment____
+     * @param string $filename    File name
+     * @param string $contentType Content type OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1355,7 +1299,6 @@ abstract class AController extends \XLite\Core\Handler
      * startImage 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1369,7 +1312,6 @@ abstract class AController extends \XLite\Core\Handler
      * startDump 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1392,7 +1334,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param mixed $url ____param_comment____
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1421,7 +1362,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get viewer parameyers
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1469,17 +1409,25 @@ abstract class AController extends \XLite\Core\Handler
         // Check if data is still valid
         if (\XLite\Core\Auth::getInstance()->isAdmin() && $this->areMarketplaceCachedDataExpired()) {
 
-            // Flag for core upgrade
-            \XLite\Core\TmpVars::getInstance()->isCoreUpgradeAvailable
-                = (bool) \XLite\Core\Marketplace::getInstance()->getCoreVersions();
+            $versions = \XLite\Core\Marketplace::getInstance()->getCoreVersions();
+            $modules  = \XLite\Core\Marketplace::getInstance()->getAddonsList();
 
-            // Update modules list
-            \XLite\Core\Database::getRepo('\XLite\Model\Module')->updateMarketplaceModules(
-                \XLite\Core\Marketplace::getInstance()->getAddonsList()
-            );
+            if (!is_array($versions) || !is_array($modules)) {
 
-            // Set current time as the last request one
-            $this->setMarketplaceLastRequestTime();
+                // Display warning to admin
+                \XLite\Core\TopMessage::getInstance()->addWarning('Error occured while connecting to marketplace');
+
+            } else {
+
+                // Flag for core upgrade
+                \XLite\Core\TmpVars::getInstance()->isCoreUpgradeAvailable = !empty($versions);
+
+                // Update modules list
+                \XLite\Core\Database::getRepo('\XLite\Model\Module')->updateMarketplaceModules($modules);
+
+                // Set current time as the last request one
+                $this->setMarketplaceLastRequestTime();
+            }
         }
     }
 

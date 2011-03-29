@@ -220,7 +220,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
     <b>Shipping Address (leave empty if same as billing address)</b>
     <br />
     <hr size="1" noshade>
-    <widget class="\XLite\View\Button\Regular" label="Copy Billing Info" jsCode="copyBillingInfo(document.registration_form);" /></td>
+    <widget class="\XLite\View\Button\Regular" label="Copy Billing Info" jsCode="copyBillingInfo(document.profile_form);" /></td>
 </tr>
 <tr valign="middle">
     <td align="right">Title</td>
@@ -336,8 +336,6 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
     </td>
 </tr>
 
-<widget module="CDev\UPSOnlineTools" template="modules/CDev/UPSOnlineTools/notice_register.tpl">
-
 <tbody IF="showMembership">
 <tr>
     <td colspan="4">&nbsp;</td>
@@ -352,9 +350,6 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 	</td>
 </tr>
 </tbody>
-
-{*extraFields*}
-<widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/profile_form.tpl">
 
 </table>
 

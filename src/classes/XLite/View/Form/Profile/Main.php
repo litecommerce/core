@@ -47,7 +47,7 @@ class Main extends \XLite\View\Form\Profile\AProfile
      */
     protected function isRegisterMode()
     {
-        return self::getCurrentForm()->isRegisterMode();
+        return $this->getCurrentForm()->isRegisterMode();
     }
 
     /**
@@ -89,7 +89,7 @@ class Main extends \XLite\View\Form\Profile\AProfile
             // Do not pass the profile ID for new profiles
             unset($result['profile_id']);
             // SEt the appropriate mode
-            $result[self::PARAM_MODE] = self::getCurrentForm()->getRegisterMode();
+            $result[self::PARAM_MODE] = $this->getCurrentForm()->getRegisterMode();
         }
 
         return $result;

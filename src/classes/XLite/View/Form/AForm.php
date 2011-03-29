@@ -383,9 +383,9 @@ abstract class AForm extends \XLite\View\AView
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getCurrentForm()
+    protected function getCurrentForm()
     {
-        return \XLite\View\Model\AModel::getCurrentForm();
+        return \XLite\View\Model\AModel::getCurrentForm() ?: $this->getModelForm();
     }
 
     /**
