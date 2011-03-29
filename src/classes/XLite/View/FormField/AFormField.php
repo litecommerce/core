@@ -128,7 +128,7 @@ abstract class AFormField extends \XLite\View\AView
     {
         return $this->getParam(self::PARAM_FIELD_ONLY)
             ? $this->getDir() . LC_DS . $this->getFieldTemplate()
-            : 'form_field.tpl';
+            : $this->getDefaultTemplate();
     }
 
     /**
@@ -531,18 +531,6 @@ abstract class AFormField extends \XLite\View\AView
     }
 
     /**
-     * Check if widget is visible
-     *
-     * @return boolean 
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible() && $this->checkFieldAccessability();
-    }
-
-    /**
      * Save current form reference and sections list, and initialize the cache
      *
      * @param array $params Widget params
@@ -560,5 +548,17 @@ abstract class AFormField extends \XLite\View\AView
 
         parent::__construct($params);
     }
-}
 
+    /** 
+     * Check if widget is visible
+     *
+     * @return boolean 
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {   
+        return parent::isVisible() && $this->checkFieldAccessability();
+    }   
+
+}
