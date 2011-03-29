@@ -92,14 +92,25 @@ class Advanced extends \XLite\View\FormField\Input\Text
      * Return widget default template
      *
      * @return string
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
-    protected function getDefaultTemplate()
+    protected function getFieldTemplate()
     {
-        return $this->getDir() . static::WIDGET_DIR . '/input.tpl';
+        return static::WIDGET_DIR . '/input.tpl';
     }
 
+    /**
+     * getParentFieldTemplate 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getParentFieldTemplate()
+    {
+        return parent::getFieldTemplate();
+    }
 
 }
-
