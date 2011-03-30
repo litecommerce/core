@@ -368,7 +368,7 @@ LoadableWidgetAbstract.prototype.showModalScreen = function()
         left: '35%'
       },
       overlayCSS: {
-        opacity: 0.1
+        opacity: 1
       }
     }
   );
