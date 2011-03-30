@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Console;
@@ -31,29 +31,26 @@ namespace XLite\Controller\Console;
 /**
  * Abstarct console-zone controller 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AConsole extends \XLite\Controller\AController
 {
     /**
      * Action time 
      * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   float
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $actionTime;
 
     /**
      * Pure output flag
      * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $pureOutput = false;
 
@@ -62,7 +59,7 @@ abstract class AConsole extends \XLite\Controller\AController
      * Parses the request variables if necessary. Attempts to call the specified action function 
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function handleRequest()
@@ -92,7 +89,7 @@ abstract class AConsole extends \XLite\Controller\AController
      * isRedirectNeeded
      *
      * @return boolean 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isRedirectNeeded()
@@ -104,7 +101,7 @@ abstract class AConsole extends \XLite\Controller\AController
      * Check if current page is accessible
      *
      * @return boolean 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function checkAccess()
@@ -116,7 +113,7 @@ abstract class AConsole extends \XLite\Controller\AController
      * Return Viewer object
      * 
      * @return \XLite\View\Controller
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getViewer()
@@ -128,7 +125,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Get allowed actions 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -152,7 +148,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Check CLI key 
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -167,7 +162,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Get help 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -194,7 +188,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Get controller help 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -210,7 +203,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * @param string $str Content
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -225,7 +217,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * @param string $error Error message
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -244,7 +235,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * @param string $url Redirect URL OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
@@ -256,7 +246,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Mark controller run thread as access denied
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -269,7 +258,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Check - script run with input stream or not
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -291,7 +279,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Open input stream 
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -311,7 +298,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Read line form input stream 
      * 
      * @return string|boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -331,7 +317,6 @@ abstract class AConsole extends \XLite\Controller\AController
      * Save input stream to temporary file
      * 
      * @return string|void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
