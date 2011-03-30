@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,19 +31,18 @@ namespace XLite\Controller\Admin;
 /**
  * Settings
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Settings extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * The list of option categories displayed on General settings page 
+     * FIXME
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $displayedCategories = array(
         'General'     => 'General',
@@ -55,23 +54,41 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     );
 
     /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
+     * params 
+     * FIXME
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
-    protected function getLocation()
-    {
-        return 'General settings';
-    }
+    public $params = array('target', 'page');
+
+    /**
+     * page 
+     * FIXME
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    public $page = 'General';
+
+    /**
+     * _waiting_list 
+     * FIXME
+     *
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    public $_waiting_list = null;
+
 
     /**
      * Return the current page title (for the content area)
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getTitle()
@@ -83,7 +100,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Check for the GDLib extension 
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isGDLibLoaded()
@@ -91,15 +108,10 @@ class Settings extends \XLite\Controller\Admin\AAdmin
         return extension_loaded('gd') && function_exists('gd_info');
     }
 
-    public $params = array('target', 'page');
-    public $page = 'General';
-    public $_waiting_list = null;
-
     /**
      * Get tab names 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -114,7 +126,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Get options for current tab (category)
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -128,14 +139,14 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * isOpenBasedirRestriction 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function isOpenBasedirRestriction()
     {
         $res = (string) @ini_get('open_basedir');
-        return ($res != '');
+        
+        return ('' != $res);
     }
     
     /**
@@ -144,175 +155,259 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * @param string $name Type of value
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function get($name) 
     {
+        $return = '';
+
         switch($name) {
+
             case 'phpversion':
-                return PHP_VERSION;
+                $return = PHP_VERSION;
                 break;
 
             case 'os_type':
-                list($os_type) = explode(' ', PHP_OS);
-                return $os_type;
+                list($osType) = explode(' ', PHP_OS);
+                $return = $osType;
                 break;
 
             case 'mysql_server':
-                return mysql_get_server_info();
+                $return = mysql_get_server_info();
                 break;
 
             case 'mysql_client':
-                return mysql_get_client_info();
+                $return = mysql_get_client_info();
                 break;
 
             case 'root_folder':
-                return getcwd();
+                $return = getcwd();
                 break;
 
             case 'web_server':
+                
                 if (isset($_SERVER['SERVER_SOFTWARE'])) {
-                    return $_SERVER['SERVER_SOFTWARE'];
+                    $return = $_SERVER['SERVER_SOFTWARE'];
+                
                 } else {
-                    return "";
+                    $return = '';
                 }
                 break;
 
             case 'xml_parser':
+
                 ob_start();
                 phpinfo(INFO_MODULES);
-                $php_info = ob_get_contents();
+                $phpInfo = ob_get_contents();
                 ob_end_clean();
-                if (preg_match('/EXPAT.+>([\.\d]+)/mi', $php_info, $m)) {
-                    return $m[1];
+                
+                if (preg_match('/EXPAT.+>([\.\d]+)/mi', $phpInfo, $m)) {
+                    $return = $m[1];
+                
+                } else {
+                    $return = function_exists('xml_parser_create') ? 'found' : '';
                 }
 
-                return function_exists('xml_parser_create')?"found":"";
                 break;
 
-            case 'gdlib'        :   
-                                    if (!$this->is('GDLibLoaded')) {
-                                        return "";
-                                    } else {
-                                        ob_start();
-                                        phpinfo(INFO_MODULES);
-                                        $php_info = ob_get_contents();
-                                        ob_end_clean();
-                                        if (preg_match('/GD.+>([\.\d]+)/mi', $php_info, $m)) {
-                                            $gdVersion = $m[1];
-                                        } else {
-                                            $gdVersion = @gd_info();
-                                            if (is_array($gdVersion) && isset($gdVersion['GD Version'])) {
-                                                $gdVersion = $gdVersion['GD Version'];
-                                            } else {
-                                                $gdVersion = "unknown";
-                                            }
-                                        }
-                                        return "found (" . $gdVersion . ")";
-                                    }
-                                    break;
+            case 'gdlib':
+
+                if (!$this->is('GDLibLoaded')) {
+                    $return = '';
+
+                } else {
+
+                    ob_start();
+
+                    phpinfo(INFO_MODULES);
+
+                    $phpInfo = ob_get_contents();
+
+                    ob_end_clean();
+
+                    if (preg_match('/GD.+>([\.\d]+)/mi', $phpInfo, $m)) {
+                        $gdVersion = $m[1];
+
+                    } else {
+
+                        $gdVersion = @gd_info();
+
+                        if (is_array($gdVersion) && isset($gdVersion['GD Version'])) {
+                            $gdVersion = $gdVersion['GD Version'];
+
+                        } else {
+                            $gdVersion = 'unknown';
+                        }
+                    }
+
+                    $return = 'found (' . $gdVersion . ')';
+                }
+
+                break;
                                   
-            case 'lite_version'    : return $this->config->Version->version; break;
-            case 'libcurl'        : 
-                                    $libcurlVersion = curl_version();
-                                    if (is_array($libcurlVersion)) {
-                                        $libcurlVersion = $libcurlVersion['version'];
-                                    }
-                                    return $libcurlVersion;
-            case 'check_files'  :
-                                    $result = array();
-                                    $files = array();
-                                    foreach ($files as $file) {
-                                        $mode = $this->getFilePermission($file);
-                                        $modeStr = $this->getFilePermissionStr($file);
-                                        $res = array("file" => $file, "error" => "");
-                                        if (!is_file($file)) {
-                                            $res['error'] = "does_not_exist";
-                                            $result[] = $res;
-                                            continue;
-                                        }
-                                        $perm = substr(sprintf('%o', @fileperms($file)), -4);
-                                        if ($perm != $modeStr){
-                                            if (!@chmod($file, $mode)){
-                                                $res['error'] = "cannot_chmod";
-                                                $result[] = $res;
-                                                continue;
-                                            }
-                                        } else {
-                                            if ($this->getComplex('xlite.suMode') != 0) {
-                                                if (!@chmod($file, $mode)){
-                                                    $res['error'] = "wrong_owner";
-                                                    $result[] = $res;
-                                                    continue;
-                                                }
-                                            }
-                                        }
-                                        $result[] = $res;
-                                    }
-                                    return $result;
-            case 'check_dirs'    :
-                                    $result = array();
-                                    $dirs = array('var/run', "var/log", "var/html", "var/backup", "var/tmp", "catalog", "images", "classes/modules", "skins/default/en/modules", "skins/admin/en/modules", "skins/default/en/images/modules", "skins/admin/en/images/modules", "skins/mail/en/modules", "skins/mail/en/images/modules");
-                                    foreach ($dirs as $dir) {
-                                        $mode = $this->getDirPermission($dir);
-                                        $modeStr = $this->getDirPermissionStr($dir);
-                                        $res = array("dir" => $dir, "error" => "", "subdirs" => array());
+            case 'lite_version':
+                $return = $this->config->Version->version; 
+                break;
 
-                                        if (!is_dir($dir)) {
-                                            $full_path = "";
-                                            $path = explode('/', $dir);
-                                            foreach ($path as $sub) {
-                                                $full_path .= $sub."/";
-                                                if (!is_dir($full_path)) {
-                                                    if (@mkdir($full_path, $mode) !== true )
-                                                        break;
-                                                }
-                                            }
-                                        }
+            case 'libcurl': 
+      
+                $libcurlVersion = curl_version();
 
-                                        if (!is_dir($dir)) {
-                                            $res['error'] = "cannot_create";
-                                            $result[] = $res;
-                                            continue;
-                                        }
+                if (is_array($libcurlVersion)) {
+                    $libcurlVersion = $libcurlVersion['version'];
+                }
 
-                                        $perm = substr(sprintf('%o', @fileperms($dir)), -4);
-                                        if ($perm != $modeStr){
-                                            if (!@chmod($dir, $mode)){
-                                                $res['error'] = "cannot_chmod";
-                                                $result[] = $res;
-                                                continue;
-                                            }
-                                        } else {
-                                            if ($this->getComplex('xlite.suMode') != 0 || strpos($dir, "var") !== false) {
-                                                if (!@chmod($dir, $mode)){
-                                                    $res['error'] = "wrong_owner";
-                                                    $result[] = $res;
-                                                    continue;
-                                                }
-                                            }
-                                        }
+                $return = $libcurlVersion;
 
-                                        $subdirs = array();
-                                        if ($dir != "catalog" && $dir != "images"){
-                                            $this->checkSubdirs($dir, $subdirs);
-                                        }
+                break;
 
-                                        if (!empty($subdirs)){
-                                            $res['error'] = "cannot_chmod_subdirs";
-                                            $res['subdirs'] = $subdirs;
-                                            $result[] = $res;
-                                            continue;
-                                        }
+            case 'check_files':
+          
+                $result = array();
+                $files = array();
 
-                                        $result[] = $res;
-                                    }
-                                    return $result;
+                foreach ($files as $file) {
+
+                    $mode = $this->getFilePermission($file);
+                    $modeStr = $this->getFilePermissionStr($file);
+                    $res = array('file' => $file, 'error' => '');
+
+                    if (!is_file($file)) {
+                        $res['error'] = 'does_not_exist';
+                        $result[] = $res;
+                        continue;
+                    }
+
+                    $perm = substr(sprintf('%o', @fileperms($file)), -4);
+
+                    if ($perm != $modeStr) {
+
+                        if (!@chmod($file, $mode)) {
+                            $res['error'] = 'cannot_chmod';
+                            $result[] = $res;
+                            continue;
+                        }
+
+                    } else {
+
+                        if ($this->getComplex('xlite.suMode') != 0) {
+
+                            if (!@chmod($file, $mode)) {
+                                $res['error'] = 'wrong_owner';
+                                $result[] = $res;
+                                continue;
+                            }
+                        }
+                    }
+
+                    $result[] = $res;
+                }
+
+                $return = $result;
+
+                break;
+
+            case 'check_dirs':
+         
+                $result = array();
+
+                $dirs = array(
+                    'var/run', 
+                    'var/log', 
+                    'var/html', 
+                    'var/backup', 
+                    'var/tmp', 
+                    'catalog', 
+                    'images', 
+                    'classes/modules', 
+                    'skins/default/en/modules', 
+                    'skins/admin/en/modules', 
+                    'skins/default/en/images/modules', 
+                    'skins/admin/en/images/modules', 
+                    'skins/mail/en/modules', 
+                    'skins/mail/en/images/modules'
+                );
+
+                foreach ($dirs as $dir) {
+
+                    $mode = $this->getDirPermission($dir);
+                    $modeStr = $this->getDirPermissionStr($dir);
+                    
+                    $res = array(
+                        'dir' => $dir, 
+                        'error' => '', 
+                        'subdirs' => array()
+                    );
+
+                    if (!is_dir($dir)) {
+
+                        $fullPath = '';
+                        $path = explode('/', $dir);
+
+                        foreach ($path as $sub) {
+
+                            $fullPath .= $sub . '/';
+
+                            if (!is_dir($fullPath) && @mkdir($fullPath, $mode) !== true) {
                                     break;
-            default             : return parent::get($name);
+                            }
+                        }
+                    }
+
+                    if (!is_dir($dir)) {
+                        $res['error'] = 'cannot_create';
+                        $result[] = $res;
+                        continue;
+                    }
+
+                    $perm = substr(sprintf('%o', @fileperms($dir)), -4);
+
+                    if ($perm != $modeStr) {
+
+                        if (!@chmod($dir, $mode)) {
+                            $res['error'] = 'cannot_chmod';
+                            $result[] = $res;
+                            continue;
+                        }
+
+                    } else {
+
+                        if ($this->getComplex('xlite.suMode') != 0 || strpos($dir, 'var') !== false) {
+
+                            if (!@chmod($dir, $mode)) {
+                                $res['error'] = 'wrong_owner';
+                                $result[] = $res;
+                                continue;
+                            }
+                        }
+                    }
+
+                    $subdirs = array();
+
+                    if ('catalog' != $dir && 'images' != $dir) {
+                        $this->checkSubdirs($dir, $subdirs);
+                    }
+
+                    if (!empty($subdirs)) {
+                        $res['error'] = 'cannot_chmod_subdirs';
+                        $res['subdirs'] = $subdirs;
+                        $result[] = $res;
+                        continue;
+                    }
+
+                    $result[] = $res;
+                }
+
+                $return = $result;
+
+                break;
+
+            default:
+                $return = parent::get($name);
         }
+
+        return $return;
     }
 
     /**
@@ -321,7 +416,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * @param string $dir Directory path
      *  
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -329,14 +423,21 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     {
         global $options;
 
-        if ($this->getComplex('xlite.suMode') == 0){
-            if (strpos($dir, "var") === false){
+        if ($this->getComplex('xlite.suMode') == 0) {
+            
+            if (strpos($dir, 'var') === false) {
                 $mode = 0777;
+
             } else {
-                $mode = isset($options['filesystem_permissions']['nonprivileged_permission_dir']) ? base_convert($options['filesystem_permissions']['nonprivileged_permission_dir'], 8, 10) : 0755;
+                $mode = isset($options['filesystem_permissions']['nonprivileged_permission_dir']) 
+                    ? base_convert($options['filesystem_permissions']['nonprivileged_permission_dir'], 8, 10) 
+                    : 0755;
             }
+
         } else {
-            $mode = isset($options['filesystem_permissions']['privileged_permission_dir']) ? base_convert($options['filesystem_permissions']['privileged_permission_dir'],8, 10) : 0711;
+            $mode = isset($options['filesystem_permissions']['privileged_permission_dir']) 
+                ? base_convert($options['filesystem_permissions']['privileged_permission_dir'], 8, 10) 
+                : 0711;
         }
 
         return $mode;
@@ -348,14 +449,14 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * @param string $dir ____param_comment____ OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getDirPermissionStr($dir = '')
     {
         $mode = (int) $this->getDirPermission($dir);
-        return (string) "0" . base_convert($mode, 10, 8);
+        
+        return (string) '0' . base_convert($mode, 10, 8);
     }
 
     /**
@@ -364,7 +465,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * @param mixed $file ____param_comment____
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -372,10 +472,15 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     {
         global $options;
 
-        if ($this->getComplex('xlite.suMode') == 0){
-            $mode = isset($options['filesystem_permissions']['nonprivileged_permission_file']) ? base_convert($options['filesystem_permissions']['nonprivileged_permission_file'], 8, 10) : 0644;
+        if ($this->getComplex('xlite.suMode') == 0) {
+            $mode = isset($options['filesystem_permissions']['nonprivileged_permission_file']) 
+                ? base_convert($options['filesystem_permissions']['nonprivileged_permission_file'], 8, 10) 
+                : 0644;
+        
         } else {
-            $mode = isset($options['filesystem_permissions']['privileged_permission_file']) ? base_convert($options['filesystem_permissions']['privileged_permission_file'],8, 10) : 0600;
+            $mode = isset($options['filesystem_permissions']['privileged_permission_file']) 
+                ? base_convert($options['filesystem_permissions']['privileged_permission_file'], 8, 10) 
+                : 0600;
         }
 
         return $mode;
@@ -387,57 +492,66 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * @param string $file ____param_comment____ OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getFilePermissionStr($file = '')
     {
         $mode = (int) $this->getFilePermission($file);
-        return (string) "0" . base_convert($mode, 10, 8);
+        
+        return (string) '0' . base_convert($mode, 10, 8);
     }
 
     /**
      * checkSubdirs 
      * 
      * @param mixed $path          ____param_comment____
-     * @param mixed $subdir_errors ____param_comment____
+     * @param mixed &$subdirErrors ____param_comment____
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function checkSubdirs($path, &$subdir_errors)
+    public function checkSubdirs($path, &$subdirErrors)
     {
-        if (!is_dir($path))
-            return;
+        if (is_dir($path)) {
 
-        $mode = $this->getDirPermission($path);
-        $modeStr = $this->getDirPermissionStr($path);
+            $mode = $this->getDirPermission($path);
+            $modeStr = $this->getDirPermissionStr($path);
 
-        $dh = @opendir($path);
-        while (($file = @readdir($dh)) !== false) {
-            if ($file == '.' || $file == '..')
-                continue;
-            $fullpath = $path . DIRECTORY_SEPARATOR . $file;
-            if (@is_dir($fullpath)) {
-                $perm = substr(sprintf('%o', @fileperms($fullpath)), -4);
-                if ($perm != $modeStr){
-                    if (!@chmod($fullpath, $mode)){
-                        $subdir_errors[] = $fullpath;
-                        continue;
-                    }
-                } else {
-                    if ($this->getComplex('xlite.suMode') != 0 || strpos($fullpath, "var") !== false) {
-                        if (!@chmod($fullpath, $mode)){
-                            $subdir_errors[] = $fullpath;
-                            continue;
+            $dh = @opendir($path);
+
+            while (($file = @readdir($dh)) !== false) {
+            
+                if ('.' != $file && '..' != $file) {
+            
+                    $fullpath = $path . DIRECTORY_SEPARATOR . $file;
+            
+                    if (@is_dir($fullpath)) {
+            
+                        $perm = substr(sprintf('%o', @fileperms($fullpath)), -4);
+            
+                        if ($perm != $modeStr) {
+            
+                            if (!@chmod($fullpath, $mode)) {
+                                $subdirErrors[] = $fullpath;
+                                continue;
+                            }
+            
+                        } else {
+            
+                            if ($this->getComplex('xlite.suMode') != 0 || strpos($fullpath, 'var') !== false) {
+            
+                                if (!@chmod($fullpath, $mode)) {
+                                    $subdirErrors[] = $fullpath;
+                                    continue;
+                                }
+                            }
                         }
+
+                        $this->checkSubdirs($fullpath, $subdirErrors);
                     }
                 }
-
-                $this->checkSubdirs($fullpath, $subdir_errors);
             }
         }
     }
@@ -446,7 +560,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * action_phpinfo 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -459,7 +572,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Re-generate safe mode access key
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -483,7 +595,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * action_update 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -534,7 +645,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * getCurrentIP 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -548,7 +658,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * TODO: remove this
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -558,37 +667,9 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * getAllowedList 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getAllowedList($fromDB = false)
-    {
-        if ($fromDB) {
-
-            $ipsListOption = \XLite\Core\Database::getRepo('\XLite\Model\Config')->findOneBy(array('category' => 'SecurityIP', 'name' => 'allow_admin_ip'));
-
-             if (!is_null($ipsListOption)) {
-                 $ipsList = unserialize($ipsListOption->value);
-             }
-
-             $result = is_array($ipsList) ? $ipsList : array();
-
-        } else {
-            $result = $this->config->SecurityIP->allow_admin_ip;
-        }
-
-        return $result;
-    }
-
-    /**
      * action_add_new_ip 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -605,8 +686,8 @@ class Settings extends \XLite\Controller\Admin\AAdmin
 
         $ipIsAlreadyListed = false;
 
-        foreach ($ipsList as $ipItem){
-            if ($ipItem['ip'] == $ip){
+        foreach ($ipsList as $ipItem) {
+            if ($ipItem['ip'] == $ip) {
                 $ipIsAlreadyListed = true;
                 break;
             }
@@ -633,7 +714,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * action_delete_allowed_ip 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -647,13 +727,13 @@ class Settings extends \XLite\Controller\Admin\AAdmin
 
             $ipsList = $this->getAllowedList(true);
 
-            foreach ($ipsList as $id => $ip){
+            foreach ($ipsList as $id => $ip) {
                 if (!in_array($id, $ids)) {
                     $newList[] = $ip;
                 }
             }
 
-            if (empty($newList)){
+            if (empty($newList)) {
                 $adminIp = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
                 $newList[] = array('ip' => $adminIp, 'comment' => 'Default admin IP');
             }
@@ -673,7 +753,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * action_update_allowed_ip 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -712,7 +791,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * isWin 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -725,7 +803,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * getTimeZonesList 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -738,7 +815,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * getCurrentTimeZone 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -753,7 +829,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * @param mixed $stateId ____param_comment____
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -778,8 +853,8 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Get Hard Reset URL 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
+     * @since  3.0.0
      */
     public function getHardResetURL()
     {
@@ -790,7 +865,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * Get Soft Reset URL 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      */
     public function getSoftResetURL()
@@ -803,7 +877,6 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * NOTE: currently not used; saved for future
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -814,5 +887,46 @@ class Settings extends \XLite\Controller\Admin\AAdmin
             \XLite\Model\Order::STATUS_PROCESSED => static::t('Processed'),
         );
     } */
+
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'General settings';
+    }
+
+    /**
+     * getAllowedList 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAllowedList($fromDB = false)
+    {
+        if ($fromDB) {
+
+            $ipsListOption = \XLite\Core\Database::getRepo('\XLite\Model\Config')->findOneBy(array('category' => 'SecurityIP', 'name' => 'allow_admin_ip'));
+
+             if (!is_null($ipsListOption)) {
+                 $ipsList = unserialize($ipsListOption->value);
+             }
+
+             $result = is_array($ipsList) ? $ipsList : array();
+
+        } else {
+            $result = $this->config->SecurityIP->allow_admin_ip;
+        }
+
+        return $result;
+    }
+
+
 }
 

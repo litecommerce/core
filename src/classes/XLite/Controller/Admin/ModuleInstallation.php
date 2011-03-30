@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,9 +31,8 @@ namespace XLite\Controller\Admin;
 /**
  * Module marketplace installation controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
 {
@@ -43,7 +42,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * Return title
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -56,7 +54,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * Return LICENSE text for the module
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -73,7 +70,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * Return module identificator
      * 
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -86,7 +82,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * Search for module
      * 
      * @return \XLite\Model\Module|void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -101,7 +96,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * @param array $data Keys to search
      * 
      * @return \XLite\Model\ModuleKey
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -117,7 +111,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * Action of getting LICENSE text. Redirection to GET request
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -137,7 +130,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * FIXME: must be completely refactored
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -208,7 +200,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * Action of getting package from marketplace
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -236,7 +227,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * Check module license key
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -273,7 +263,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * @param string $key License key value OPTIONAL
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -299,7 +288,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * @param string $key License key value OPTIONAL
      *  
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -318,7 +306,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * @param integer|string $file Result of the "retireve" action
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -352,7 +339,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * @param \XLite\Model\PHARModule $module Module to check
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -367,7 +353,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * @param \XLite\Model\PHARModule $module Package to deploy
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -382,7 +367,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * @param \XLite\Model\PHARModule $module Deployed package OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -408,7 +392,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * @param \XLite\Model\PHARModule $module Current module OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,9 +31,8 @@ namespace XLite\Controller\Admin;
 /**
  * Abstarct admin-zone controller 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AAdmin extends \XLite\Controller\AController
 {
@@ -47,10 +46,9 @@ abstract class AAdmin extends \XLite\Controller\AController
     /**
      * List of recently logged in administrators
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $recentAdmins = null;
 
@@ -58,7 +56,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Check if current page is accessible
      *
      * @return boolean 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function checkAccess()
@@ -70,7 +68,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      * This function called after template output
      *
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function postprocess()
@@ -86,7 +84,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Check form id
      * 
      * @return boolean 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function checkFormId()
@@ -98,7 +96,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Get current language code
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -113,7 +110,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Returns 'maintenance_mode' string if frontend is closed or null otherwise
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -126,7 +122,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Get access level 
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -139,7 +134,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Handles the request to admin interface
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -165,7 +159,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Get recently logged in admins 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -182,7 +175,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Check if form id is valid or not
      * 
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isFormIdValid()
@@ -219,7 +212,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Check - is current place public or not
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -232,7 +224,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Start simplified page to display progress of some process
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -249,7 +240,6 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Display header of simplified page
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -284,7 +274,6 @@ OUT;
      * displayPageFooter 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -312,7 +301,6 @@ OUT;
      * getPageReturnURL 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -325,7 +313,6 @@ OUT;
      * Check - curent target and action is ignored (form id validation is disabled) or not
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -373,7 +360,6 @@ OUT;
      * Define common ignored targets 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -389,7 +375,6 @@ OUT;
      * Define special ignored targets 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -407,7 +392,6 @@ OUT;
      * @param array $rules Rules
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -429,7 +413,6 @@ OUT;
      * @param string $cleanURL Clean URL
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -448,7 +431,6 @@ OUT;
      * @param string $field  Name of the field to retrieve OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -463,7 +445,6 @@ OUT;
      * @param string $field Name of the field to retrieve OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -476,7 +457,6 @@ OUT;
      * getToDelete 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -493,7 +473,6 @@ OUT;
      * Get current core version
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -506,7 +485,6 @@ OUT;
      * Is core upgrade available
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
