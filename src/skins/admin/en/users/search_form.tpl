@@ -61,17 +61,17 @@ function managedate(type, status) {
     <input type="hidden" name="action" value="search" />
   </fieldset>
 
-  <table cellpadding="0" cellspacing="0" width="100%">
+  <table cellpadding="0" cellspacing="0">
 
   <tr>
     <td>
 
-      <table cellpadding="1" cellspacing="5" width="100%">
+      <table cellpadding="1" cellspacing="5">
 
         <tr>
           <td style="width:20%;height:10px;" class="table-label">Search for pattern:</td>
-          <td style="height:10px;">
-            <input type="text" name="posted_data[pattern]" size="30" style="width:70%" value="{getSearchParams(#pattern#)}" />
+          <td style="height:10px;" nowrap="nowrap">
+            <input type="text" name="posted_data[pattern]" size="50" value="{getSearchParams(#pattern#)}" />
             &nbsp;
             <widget class="\XLite\View\Button\Submit" label="Search" />
           </td>

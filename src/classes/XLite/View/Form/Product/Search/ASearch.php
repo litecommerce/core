@@ -37,6 +37,20 @@ namespace XLite\View\Form\Product\Search;
  */
 abstract class ASearch extends \XLite\View\Form\Product\AProduct
 {
+
+    /** 
+     * JavaScript: this value will be returned on form submit
+     * NOTE - this function designed for AJAX easy switch on/off  
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getOnSubmitResult()
+    {   
+        return 'false';
+    }   
+
     /**
      * Return form name
      *

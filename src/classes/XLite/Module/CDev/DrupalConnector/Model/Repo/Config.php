@@ -52,6 +52,7 @@ class Config extends \XLite\Model\Repo\Config implements \XLite\Base\IDecorator
     {
         parent::__construct($em, $class);
 
+        $this->disableOption('General', 'operation_presentation');
         $this->disableOption('General', 'shop_closed');
         $this->disableOption('General', 'add_on_mode');
         $this->disableOption('General', 'add_on_mode_page');
