@@ -24,8 +24,10 @@
 
   <div class="terms">
     <div class="terms-box">
-      <input type="checkbox" name="agree" value="1" id="place_order_agree" />
-      <label for="place_order_agree">{t(#I accept Terms and Conditions#,_ARRAY_(#URL#^getTermsURL())):h}</label>
+      <label for="place_order_agree">
+        <input type="checkbox" name="agree" value="1" id="place_order_agree" />
+        {t(#I accept Terms and Conditions#,_ARRAY_(#URL#^getTermsURL())):h}
+      </label>
     </div>
     <div class="mark"></div>
   </div>

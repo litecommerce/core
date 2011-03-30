@@ -236,13 +236,14 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
         $count = $this->getTableLength();
 
         $this->type(self::NEW_PRODUCT_CLASS_INPUT, $name);
-        $this->keyPress(self::NEW_PRODUCT_CLASS_INPUT, '\\13');
+
+        $this->keyPress(self::NEW_PRODUCT_CLASS_INPUT, "\\13");
 
         $count++;
 
         $this->waitForLocalCondition(
             'jQuery(".product-classes-list tr").length == ' . $count,
-            30000,
+            3000,
             'check add new product class entry "' . $name . '"'
         );
     }
