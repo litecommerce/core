@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,39 +31,35 @@ namespace XLite\Controller\Admin;
 /**
  * Product 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Product extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * FIXME- backward compatibility 
      * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public $params = array('target', 'product_id', 'page', 'backURL');
 
     /**
      * FIXME- backward compatibility
      * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public $page = 'info';
 
     /**
      * FIXME- backward compatibility
      * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public $pages = array(
         'info'      => 'Product info',
@@ -74,10 +70,9 @@ class Product extends \XLite\Controller\Admin\AAdmin
     /**
      * FIXME- backward compatibility 
      * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public $pageTemplates = array(
         'info'      => 'product/info.tpl',
@@ -91,7 +86,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * Alias
      *
      * @return \XLite\Model\Product
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -112,7 +106,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      * 
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getTitle()
@@ -124,7 +118,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * getInventory 
      * 
      * @return \XLite\Model\Inventory
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -137,7 +130,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * Get product category id
      *
      * @return integer 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getCategoryId()
@@ -157,7 +150,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * NOTE: this function is public since it's neede for widgets
      *
      * @return integer 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getProductId()
@@ -171,7 +164,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * NOTE: this function is public since it's neede for widgets
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -185,7 +177,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * Common method to determine current location
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -198,7 +189,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * Add part to the location nodes list
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -215,7 +205,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * @param \XLite\Model\Product $product Current product
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -243,7 +232,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * @param \XLite\Model\Product $product ____param_comment____
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -275,7 +263,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * @param string $cleanURL Clean URL
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -293,7 +280,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * @param string $cleanURL Clean URL
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -318,7 +304,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * doActionModify 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -333,7 +318,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * doActionAdd 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -363,7 +347,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * doActionUpdate 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -395,7 +378,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * Add detailed image
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -430,7 +412,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * Delete detailed image
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -460,7 +441,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * Update image
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -495,7 +475,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * Update inventory 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
