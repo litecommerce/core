@@ -9,13 +9,15 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ *
  * @ListChild (list="itemsList.module.manage.columns.module-main-section", weight="1000")
  *}
+
 <script type="text/javascript">
-depends[{module.getModuleId()}] = [];
-{foreach:module.getDependedModules(),k,m}
-{if:m.getEnabled()}
-depends[{module.getModuleId()}][{k}] = '{getInstalledProperty(m,#moduleName#)} ({t(#by#)} {getInstalledProperty(m,#author#)})';
-{end:}
-{end:}
+  depends[{module.getModuleId()}] = [];
+  {foreach:module.getDependentModules(),k,m}
+    {if:m.getEnabled()}
+      depends[{module.getModuleId()}][{k}] = '{m.getModuleName()} ({t(#by#)} {m.getAuthorName()})';
+    {end:}
+  {end:}
 </script>

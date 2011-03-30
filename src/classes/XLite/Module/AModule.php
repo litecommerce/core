@@ -128,7 +128,6 @@ abstract class AModule
      * Determines if we need to show settings form link
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0
      */
@@ -138,10 +137,9 @@ abstract class AModule
     }
 
     /**
-     * Return link to settings form.
+     * Return link to settings form
      * 
-     * @return mixed
-     * @access public
+     * @return string
      * @see    ____func_see____
      * @since  3.0
      */
@@ -154,7 +152,6 @@ abstract class AModule
      * Return module dependencies
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0
      */
@@ -167,7 +164,6 @@ abstract class AModule
      * Get post-installation user notes
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -180,26 +176,12 @@ abstract class AModule
      * Get post-deinstallation user notes
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public static function getPostUninstallationNotes()
     {
         return '';
-    }
-
-    /**
-     * Check module
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function check()
-    {
-        return true;
     }
 
     /**
@@ -299,7 +281,7 @@ abstract class AModule
      */
     public static function getVersion()
     {
-        return static::getMajorVersion() . '.' . static::getMinorVersion();
+        return \Includes\Utils\Converter::composeVersion(static::getMajorVersion(), static::getMinorVersion());
     }
 
     /**

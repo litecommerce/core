@@ -36,10 +36,12 @@ define('LC_DS_OPTIONAL', '(' . LC_DS_QUOTED . '|$)');
 
 /**
  * ModulesManager 
+ *
+ * :FIXME: must be completely refactored
+ * :TODO:  move it into the Includes/Utils
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class ModulesManager extends AUtils
 {
@@ -47,7 +49,6 @@ abstract class ModulesManager extends AUtils
      * Pattern to get module name by class name
      */
     const CLASS_NAME_PATTERN = '/(?:\\\)?XLite\\\Module\\\(\w+\\\\\w+)(\\\|$)/USs';
-
 
     /**
      * Modules list file name
@@ -142,7 +143,7 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getModulesList(array $fields = array(), array $conditions = array())
+    protected static function getModulesList()
     {
         $list = array();
 
@@ -152,7 +153,7 @@ abstract class ModulesManager extends AUtils
 
             // Get unsafe modules condition string
             if (\Includes\SafeMode::isSoftResetRequested()) {
-                $condition = ' WHERE ' . \Includes\SafeMode::getUnsafeModulesSQLConditionString();
+                $condition .= ' WHERE ' . \Includes\SafeMode::getUnsafeModulesSQLConditionString();
             }
 
             // Auto-disable modules in the database
@@ -191,7 +192,9 @@ abstract class ModulesManager extends AUtils
 
             $list = \Includes\Utils\Database::fetchAll(
                 'SELECT ' . static::getModuleNameField() . static::getModuleNameField()
-                . static::getTableName() . '.* FROM ' . static::getTableName() . ' WHERE enabled = \'1\'',
+                . static::getTableName() . '.* FROM ' . static::getTableName() 
+                . ' WHERE enabled = ? AND installed = ?',
+                array(true, true),
                 \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE
             );
         }
@@ -421,7 +424,8 @@ abstract class ModulesManager extends AUtils
 
     /**
      * Set module enabled fleg fo "false"
-     * FIXME: simplify
+     *
+     * :TODO: simplify
      *
      * @param string $key module actual name (key)
      * 
@@ -429,7 +433,7 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function disableModule($key)
+    public static function disableModule($key)
     {
         if (isset(static::$activeModules[$key])) {
 
@@ -455,35 +459,38 @@ abstract class ModulesManager extends AUtils
     }
 
     /**
-     * Switch on all active modules 
+     * Switch on all active modules
+     *
+     * :TODO: try to find a more convinient way to do that; merge with the "disableModule()"
      * 
-     * @return integer
-     * @access public
+     * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
     public static function switchModules()
     {
-        $i = 0;
-
         foreach (static::getActiveModules() as $data) {
-            $row = \Includes\Utils\Database::fetchAll('SELECT COUNT(*) as cnt FROM ' . static::getTableName() . ' WHERE author = "' . addslashes($data['author']) . '" AND name = "' . addslashes($data['name']) . '"');
-            if (0 < intval($row[0]['cnt'])) {
-                \Includes\Utils\Database::execute(
-                    'UPDATE ' . static::getTableName() . ' SET enabled = ?, data_installed = ? WHERE author = ? AND name = ?',
-                    array(1, 1, $data['author'], $data['name'])
-                );
 
+            // Search for modules
+            $moduleID = \Includes\Utils\Database::fetchColumn(
+                'SELECT moduleId FROM ' . static::getTableName() . ' WHERE author = ? AND name = ? AND installed = ?',
+                array($data['author'], $data['name'], true)
+            );
+
+            // If found in DB
+            if ($moduleID) {
+                $query  = 'UPDATE ' . static::getTableName() 
+                        . ' SET enabled = ?, dataInstalled = ? WHERE moduleId = ?';
+                $params = array(true, true, $moduleID);
             } else {
-                \Includes\Utils\Database::execute(
-                    'REPLACE INTO ' . static::getTableName() . ' SET enabled = ?, data_installed = ?, installed = ?, author = ?, name = ?',
-                    array(1, 1, 1, $data['author'], $data['name'])
-                );
+                $query  = 'REPLACE INTO ' . static::getTableName() 
+                        . ' SET enabled = ?, dataInstalled = ?, installed = ?, author = ?, name = ?, dependencies = ?';
+                $params = array(true, true, true, $data['author'], $data['name'], serialize(array()));
             }
-            $i++;
-        }
 
-        return $i;
+            // Enable module
+            \Includes\Utils\Database::execute($query, $params);
+        }
     }
 
     /**
@@ -526,5 +533,20 @@ abstract class ModulesManager extends AUtils
     public static function getActualName($author, $name)
     {
         return $author . '\\' . $name;
+    }
+
+    /**
+     * Initialize active modules
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function initModules()
+    {
+        foreach (static::getActiveModules() as $module => $data) {
+            $class = static::getClassNameByModuleName($module);
+            $class::init();
+        }
     }
 }

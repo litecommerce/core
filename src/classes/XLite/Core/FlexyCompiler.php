@@ -755,10 +755,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
     {
         $result = '';
 
-        if (
-            !isset($module)
-            || \XLite\Core\Database::getRepo('\XLite\Model\Module')->isModuleActive($module)
-        ) {
+        if (\Includes\Decorator\Utils\ModulesManager::isActiveModule($module)) {
 
             $class = isset($attrs['class']) ? $this->flexyAttribute($attrs['class'], false) : null;
 

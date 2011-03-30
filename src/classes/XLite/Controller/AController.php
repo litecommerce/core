@@ -1500,6 +1500,9 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function areMarketplaceCachedDataExpired()
     {
+        // DEVCODE, to remove
+        return true;
+
         return time() > ($this->getMarketplaceLastRequestTime() + $this->getMarketplaceDataTTL());
     }
 

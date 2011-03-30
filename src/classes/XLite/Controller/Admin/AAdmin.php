@@ -516,4 +516,20 @@ OUT;
     }
 
     // }}}
+
+    // {{{ Marketplace routines; :FIXME: must be moved to the base controller for module list
+
+    /**
+     * Return marketplace URL
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMarketplaceURL()
+    {
+        return \XLite\Core\Marketplace::getInstance()->getMarketplaceURL();
+    }
+
+    // }}}
 }
