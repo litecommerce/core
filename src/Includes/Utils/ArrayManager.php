@@ -268,6 +268,7 @@ class ArrayManager extends AUtils
         $result = array();
 
         foreach ($data as $key => $value) {
+
             // Input argument
             if (call_user_func($callback, $value, $userData)) {
                 $result[$key] = $value;

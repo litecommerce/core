@@ -9,15 +9,17 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ *
  * @ListChild (list="itemsList.module.manage.columns.module-main-section", weight="30")
  *}
+
 <div IF="!canEnable(module)">
 
-  <div IF="getInstalledProperty(module,#dependencies#)" class="note dependencies">
+  <div IF="module.getDependencies()" class="note dependencies">
     {t(#The following add-on(s) must be enabled:#)}<br /><br />
     <ul>
-      <li FOREACH="module.getDependenciesModules(),depend">
-        <a href="#{depend.getName()}">{getInstalledProperty(depend,#moduleName#)} ({t(#by#)} {getInstalledProperty(depend,#author#)})</a>
+      <li FOREACH="module.getDependentModules(),depend">
+        <a href="#{depend.getName()}">{depend.getModuleName()} ({t(#by#)} {depend.getAuthorName()})</a>
         [
           <span IF="depend.getEnabled()" class="good">{t(#enabled#)}</span>
           <span IF="!depend.getEnabled()" class="none">{t(#disabled#)}</span>

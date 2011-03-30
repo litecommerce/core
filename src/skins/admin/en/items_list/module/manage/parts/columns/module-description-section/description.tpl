@@ -9,6 +9,8 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ *
  * @ListChild (list="itemsList.module.manage.columns.module-description-section", weight="10")
  *}
-<div class="description">{getInstalledProperty(module,#description#)}</div>
+
+<div class="description">{module.getDescription()}</div>

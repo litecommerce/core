@@ -59,7 +59,8 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      */
     public function handleRequest()
     {
-        \XLite\Core\Database::getRepo('XLite\Model\Module')->checkModules();
+        // :FIXME: to remove
+        // \XLite\Core\Database::getRepo('XLite\Model\Module')->checkModules();
 
         parent::handleRequest();
     }
@@ -88,9 +89,12 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      */
     protected function getUpgradableModulesFlag()
     {
-        $upgradeables = count(\Xlite\Core\Database::getRepo('XLite\Model\Module')->findUpgradableModules());
+        // :FIXME: actualize
+        /*$upgradeables = count(\Xlite\Core\Database::getRepo('XLite\Model\Module')->findUpgradableModules());
 
-        return 0 < $upgradeables ? ' (' . $upgradeables . ')' : '';
+        return 0 < $upgradeables ? ' (' . $upgradeables . ')' : '';*/
+
+        return '';
     }
 
     /**
@@ -161,15 +165,10 @@ class Modules extends \XLite\Controller\Admin\AAdmin
     protected function doActionDisable()
     {
         $this->setReturnURL($this->buildURL('modules'));
-
         $id = \XLite\Core\Request::getInstance()->moduleId;
 
-        $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id);
-
-        if ($module) {
-
-            $module->disableModule();
-
+        if ($module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id)) {
+            \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
             \XLite::setCleanUpCacheFlag(true);
         }
     }
@@ -198,7 +197,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
             $notes = $class::getPostUninstallationNotes();
 
             // Disable this and depended modules
-            $module->disableModule();
+            \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
 
             $status = $module->uninstall();
 

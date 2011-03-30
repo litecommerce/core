@@ -66,6 +66,8 @@ abstract class XLite_Tests_Model_ModuleAbstract extends XLite_Tests_TestCase
     protected function setUp()
     {
         parent::setUp();
+
+        $this->markTestSkipped('Awaiting for new marketplace');
         
         \XLite\Core\Database::getEM()->clear();
 

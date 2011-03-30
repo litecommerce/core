@@ -121,9 +121,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     protected function getSearchCondition()
     {
         $result = parent::getSearchCondition();
-
         $result->{\XLite\Model\Repo\Module::P_ORDER_BY} = array($this->getSortBy(), $this->getSortOrder());
-        $result->{self::PARAM_STATUS} = \XLite\Model\Module::EXISTS;
 
         return $result;
     }
@@ -153,11 +151,18 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function canEnable(\XLite\Model\Module $module)
     {
-        return ($module->getEnabled() || $module->canEnable()) && $this->isVersionValid($module);
+        return array_filter(
+            array_map(
+                array('\Includes\Decorator\Utils\ModulesManager', 'getActiveModules'),
+                $module->getDependencies()
+            )
+        ) && $this->isVersionValid($module);
     }
 
     /**
      * Check if the module can be installed
+     *
+     * :FIXME: actualize
      * 
      * @param \XLite\Model\Module $module Module
      *  
@@ -168,11 +173,13 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function canInstall(\XLite\Model\Module $module)
     {
-        return !$module->getInstalled() && ($module->getPurchased() || $module->isFree());
+        return !$module->getInstalled() && ($module->isPurchased() || $module->isFree());
     }
 
     /**
      * Check if the module can be installed
+     *
+     * :FIXME: actualize
      *
      * @param \XLite\Model\Module $module Module
      *
@@ -183,7 +190,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function canPurchase(\XLite\Model\Module $module)
     {
-        return !$module->getInstalled() && !$module->getPurchased() && !$module->isFree();
+        return !$module->getInstalled() && !$module->isPurchased() && !$module->isFree();
     }
 
     /**
@@ -198,11 +205,11 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     public function __construct(array $params = array())
     {
         $this->sortByModes += array(
-            self::SORT_BY_MODE_NAME      => 'Name',
-            self::SORT_BY_MODE_POPULAR   => 'Popular',
-            self::SORT_BY_MODE_RATING    => 'Most rated',
-            self::SORT_BY_MODE_DATE      => 'Newest',
-            self::SORT_BY_MODE_ENABLED   => 'Enabled',
+            self::SORT_BY_MODE_NAME    => 'Name',
+            self::SORT_BY_MODE_POPULAR => 'Popular',
+            self::SORT_BY_MODE_RATING  => 'Most rated',
+            self::SORT_BY_MODE_DATE    => 'Newest',
+            self::SORT_BY_MODE_ENABLED => 'Enabled',
         );
 
         parent::__construct($params);
@@ -220,15 +227,9 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
         parent::defineWidgetParams();
     
         $this->widgetParams += array(
-            self::PARAM_SUBSTRING    => new \XLite\Model\WidgetParam\String(
-                'Substring', ''
-            ),
-            self::PARAM_TAG          => new \XLite\Model\WidgetParam\String(
-                'Tag', ''
-            ),
-            self::PARAM_PRICE_FILTER => new \XLite\Model\WidgetParam\String(
-                'Price filter', ''
-            ),
+            self::PARAM_SUBSTRING    => new \XLite\Model\WidgetParam\String('Substring', ''),
+            self::PARAM_TAG          => new \XLite\Model\WidgetParam\String('Tag', ''),
+            self::PARAM_PRICE_FILTER => new \XLite\Model\WidgetParam\String('Price filter', ''),
         );
     }
 
@@ -247,21 +248,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     {
         return \XLite\Core\Database::getRepo('\XLite\Model\Module')
             ->search($cnd, $countOnly);
-    }
-
-    /**
-     * Return installed module property
-     *
-     * @param \XLite\Model\Module $module   Module
-     * @param string              $property Module property
-     *
-     * @return string|array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getInstalledProperty(\XLite\Model\Module $module, $property = '')
-    {
-        return $module->__call('get' . \XLite\Core\Converter::convertToCamelCase($property));
     }
 
     // {{{ Version-related checks
