@@ -14,26 +14,25 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Customer;
 
 /**
- * ____description____
+ * Login page controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Login extends \XLite\Controller\Customer\ACustomer
 {
@@ -46,20 +45,18 @@ class Login extends \XLite\Controller\Customer\ACustomer
     /**
      * Controlelr parameters 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $params = array('target', 'mode');
 
     /**
      * Profile 
      * 
-     * @var    \XLite\Model\Profile|integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Profile|integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $profile;
 
@@ -68,7 +65,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Perform some actions after the "login" action
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function redirectFromLogin()
@@ -85,11 +82,11 @@ class Login extends \XLite\Controller\Customer\ACustomer
     /**
      * Get the full URL of the page
      * 
-     * @param string  $url    Relative URL  
+     * @param string  $url    Relative URL OPTIONAL
      * @param boolean $secure Flag to use HTTPS OPTIONAL
      *  
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getShopURL($url = '', $secure = false)
@@ -104,7 +101,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Common method to determine current location 
      * 
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getLocation()
@@ -116,7 +113,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Return URL to redirect from login
      * 
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getRedirectFromLoginURL()
@@ -128,7 +125,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Log in using the login and password from request
      * 
      * @return \XLite\Model\Profile
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -144,7 +140,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Login 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -177,7 +172,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Log out 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -203,7 +197,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * Perform some actions before redirect
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function actionPostprocessLogin()

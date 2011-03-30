@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -31,29 +31,26 @@ namespace XLite\Controller\Customer;
 /**
  * Checkout success page
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Controller parameters
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $params = array('target', 'order_id');
 
     /**
      * Order (cache)
      * 
-     * @var    \XLite\Model\Order
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Order
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $order;
 
@@ -62,7 +59,7 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      * Get page title
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getTitle()
@@ -75,7 +72,7 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      * Parses the request variables if necessary. Attempts to call the specified action function 
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function handleRequest()
@@ -97,7 +94,6 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      * Get order 
      * 
      * @return \XLite\Model\Order
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -116,7 +112,7 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      * Common method to determine current location 
      * 
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */     
     protected function getLocation()
