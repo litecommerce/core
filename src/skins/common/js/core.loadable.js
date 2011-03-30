@@ -328,7 +328,7 @@ ALoadable.prototype.shade = function()
           zIndex: 16000
         },
         overlayCSS: {
-          opacity: 0.1,
+          opacity: 1,
           zIndex: 15000
         },
         centerY: true,
