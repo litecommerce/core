@@ -44,13 +44,13 @@ function searchOrders()
   <table width="100%" class="data-table">
 
     <tr>
-      <td style="width:10px;">&nbsp;</td>
-      <td class="table-label" align="left">Login/E-mail</td>
-      <td class="table-label" align="left">Username</td>
-      <td class="table-label" align="left">Access level</td>
-      <td class="table-label" align="left">Orders count</td>
-      <td class="table-label" align="left" width="110">Created</td>
-      <td class="table-label" align="left" width="110">Last login</td>
+      <th style="width:10px;">&nbsp;</td>
+      <th class="table-label" align="left">{t(#Login/E-mail#)}</th>
+      <th class="table-label" align="left">{t(#Username#)}</th>
+      <th class="table-label" align="left">{t(#Access level#)}</th>
+      <th class="table-label" align="left">{t(#Orders count#)}</th>
+      <th class="table-label" align="left" width="110">{t(#Created#)}</th>
+      <th class="table-label" align="left" width="110">{t(#Last login#)}</th>
     </tr>
 
     <tr FOREACH="namedWidgets.searchResults.pageData,id,user" class="{getRowClass(id,##,#highlight#)}">
