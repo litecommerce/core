@@ -369,7 +369,8 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     protected function defineDeleteNotInstalledModulesQuery()
     {
-        return $this->createQueryBuilder()
+        return $this->getQueryBuilder()
+            ->delete($this->_entityName, 'm')
             ->andWhere('m.installed = :installed')
             ->setParameter('installed', false);
     }
