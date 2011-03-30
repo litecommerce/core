@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -31,19 +31,17 @@ namespace XLite\Controller\Customer;
 /**
  * Orders list 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class OrderList extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Controller parameters 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $params = array('target');
 
@@ -52,7 +50,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * Handles the request
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function handleRequest()
@@ -77,7 +75,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * Check if current page is accessible
      * 
      * @return boolean 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function checkAccess()
@@ -99,7 +97,6 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * @param mixed  $value Property value
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -122,7 +119,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * Common method to determine current location 
      * 
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getLocation()
@@ -135,7 +132,6 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * TODO: to revise 
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -247,7 +243,6 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * Reset search conditions
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
