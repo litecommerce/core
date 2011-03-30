@@ -9,6 +9,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="order.children", weight="30")
  *}
-{displayViewListContent(#invoice.base#)}
+<div class="invoice-box">
+  {displayViewListContent(#invoice.base#)}
+</div>

@@ -1,0 +1,265 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * ____file_title____
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+
+.invoice-box table
+{
+  border-collapse: collapse;
+  border: 0 none;
+  width: 100%;
+}
+
+.invoice-box .totals td,
+.invoice-box .totals th,
+.invoice-box .items td,
+.invoice-box .items th
+{
+  border-width: 1px;
+  border-style: solid;
+}
+
+.invoice-box .header td
+{
+  border: 1px none;
+}
+
+.invoice-box th,
+.invoice-box thead th
+{
+  font-size: 12px;
+}
+
+.invoice-box
+{
+  width: 500px;
+}
+
+.invoice-box .header,
+.invoice-box .header td
+{
+  border: 0px none;
+  vertical-align: top;
+}
+
+.invoice-box .header .address
+{
+  color: #333333;
+  font-size: 15px;
+  padding-left: 0;
+  padding-top: 29px;
+  width: 464px;
+}
+
+.invoice-box .header .address strong
+{
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.invoice-box .header .address p
+{
+  line-height: 18px;
+  margin-bottom: 0;
+  padding-left: 2px;
+  padding-top: 9px;
+}
+
+.invoice-box .header .address p.url
+{
+  padding-top: 6px;
+}
+
+.invoice-box .header .address a
+{
+  font-weight: normal;
+}
+
+.invoice-box .header img.logo
+{
+  height: 100px;
+  margin-top: 22px;
+  width: 160px;
+}
+
+.invoice-box h2
+{
+  font-size: 40px;
+  margin-top: 11px;
+  padding-left: 3px;
+}
+
+.invoice-box .subhead
+{
+  color: #333333;
+  font-size: 20px;
+  padding-left: 3px;
+  padding-top: 1px;
+}
+
+.invoice-box .subhead span
+{
+  float: right;
+}
+
+.invoice-box .items
+{
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+.invoice-box .items,
+.invoice-box .items td,
+.invoice-box .items th,
+.invoice-box .totals,
+.invoice-box .totals td
+{
+  border-color: #C4C4C4;
+}
+
+.invoice-box table.totals
+{
+  width: 100%;
+}
+
+.invoice-box .items th
+{
+  background-image: url("../images/invoice_items_head_bg.png");
+  font-weight: normal;
+  padding: 6px 10px 5px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.invoice-box .items th.name
+{
+  text-align: left;
+}
+
+.invoice-box .items th.sku
+{
+  width: 74px;
+}
+
+.invoice-box .items th.price
+{
+  width: 44px;
+}
+
+.invoice-box .items th.qty
+{
+  width: 21px;
+}
+
+.invoice-box .items th.total
+{
+  width: 57px;
+}
+
+.invoice-box .items td,
+.invoice-box .totals td
+{
+  padding: 6px 9px;
+}
+
+.invoice-box .items td.qty
+{
+  text-align: center;
+}
+
+.invoice-box .items td.sku,
+.invoice-box .items td.price,
+.invoice-box .items td.total
+{
+  text-align: right;
+}
+
+.invoice-box .items a
+{
+  text-decoration: none;
+}
+
+.invoice-box .totals
+{
+  margin-bottom: 35px;
+}
+
+.invoice-box .totals td
+{
+  text-align: right;
+  white-space: nowrap;
+}
+
+.invoice-box .totals .value
+{
+  width: 59px;
+}
+
+.invoice-box .totals .total td
+{
+  color: #4B7797;
+}
+
+.invoice-box .addresses,
+.invoice-box .addresses td
+{
+  border: 0 none;
+  padding: 0;
+}
+
+.invoice-box .addresses td
+{
+  font-size: 15px;
+  vertical-align: top;
+  width: 50%;
+}
+
+.invoice-box .addresses strong
+{
+  color: #579ED2;
+  display: block;
+  font-size: 20px;
+  font-weight: normal;
+  padding-bottom: 6px;
+}
+
+.invoice-box .addresses .payment strong,
+.invoice-box .addresses .shipping strong
+{
+  color: #53769D;
+  font-size: 15px;
+  font-weight: normal;
+  padding-bottom: 3px;
+}
+
+.invoice-box .addresses p
+{
+  line-height: 18px;
+  margin-bottom: 0;
+  padding-top: 6px;
+}
+
+.invoice-box .addresses .payment,
+.invoice-box .addresses .shipping
+{
+  padding-top: 21px;
+}
+
+.invoice-box .thank-you
+{
+  border-bottom: 1px solid #BBC7D2;
+  color: #333333;
+  font-size: 18px;
+  padding-bottom: 36px;
+  padding-top: 26px;
+  text-align: center;
+}
+
