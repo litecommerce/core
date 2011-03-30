@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\ItemsList\Module;
@@ -31,66 +31,15 @@ namespace XLite\View\ItemsList\Module;
 /**
  * Addons search and installation widget
  *
- * @package XLite
- * @see     ____class_see____
- * @since   3.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Manage extends \XLite\View\ItemsList\Module\AModule
 {
     /**
-     * Filter name definitions
-     */
-    const FILTER_ALL        = 'all';
-    const FILTER_INACTIVE   = 'inactive';
-    const FILTER_UPGRADABLE = 'upgradable';
-
-
-    /**
-     * Modules list (cache)
-     *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $modules = null;
-
-    /**
-     * Currently applie filter (cached)
-     *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $filter = null;
-
-    /**
-     * Possible filters (cached)
-     *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $filters = null;
-
-    /**
-     * Possible filters (cached)
-     *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $modulesCount = null;
-
-
-    /**
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -106,7 +55,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * Register CSS files
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -122,7 +70,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * Return name of the base widgets list
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -135,19 +82,18 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * Return title
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getHead()
     {
-        return '';
+        return null;
     }
 
     /**
      * Return dir which contains the page body template
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -160,7 +106,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * Return class name for the list pager
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -170,102 +115,51 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     }
 
     /**
-     * Get modules list
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getModules()
-    {
-        if (!isset(static::$modules)) {
-
-            $method = 'find' . \XLite\Core\Converter::convertToCamelCase(static::getFilter()) . 'Modules';
-
-            // Call corresponding method depending on filter:
-            // find{All|Active|Upgradable}Modules()
-            static::$modules = \XLite\Core\Database::getRepo('\XLite\Model\Module')->$method();
-        }
-
-        return static::$modules;
-    }
-
-    /**
-     * Get modules count for different filters
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getModulesCount($filter = null)
-    {
-        if (is_null(static::$modulesCount)) {
-
-            $mCount = array();
-
-            foreach (array_keys(static::getFilters()) as $f) {
-
-                $method = 'find' . \XLite\Core\Converter::convertToCamelCase($f) . 'Modules';
-
-                // Call corresponding method depending on filter: find{All|Active|Upgradable}Modules()
-                $mCount[$f] = count(\XLite\Core\Database::getRepo('\XLite\Model\Module')->$method());
-            }
-            static::$modulesCount = $mCount;
-        }
-
-        return is_null($filter)
-            ? static::$modulesCount
-            : static::$modulesCount[$filter];
-    }
-
-    /**
      * Return filters array
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getFilters()
+    protected function getFilters()
     {
-        if (is_null(static::$filters)) {
-
-            static::$filters = array(
-                static::FILTER_ALL        => 'All',
-                static::FILTER_INACTIVE   => 'Inactive',
-                static::FILTER_UPGRADABLE => 'Upgradable',
-            );
-        }
-
-        return static::$filters;
+        return array(
+            ''                                     => 'All',
+            \XLite\Model\Repo\Module::P_INACTIVE   => 'Inactive',
+            \XLite\Model\Repo\Module::P_UPGRADABLE => 'Upgradable',
+        );
     }
 
     /**
-     * Return filters array
-     *
+     * Get current filter
+     * 
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getFilter()
+    protected function getFilter()
     {
         $filter = \XLite\Core\Request::getInstance()->filter;
 
-        if (
-            is_null($filter)
-            || empty($filter)
-            || !in_array($filter, array_keys(static::getFilters()))
-        ) {
-
-            static::$filter = static::FILTER_ALL;
-
-        } else {
-
-            static::$filter = $filter;
+        if (empty($filter) || !in_array($filter, array_keys($this->getFilters()))) {
+            $filter = '';
         }
 
-        return static::$filter;
+        return $filter;
+    }
+
+    /**
+     * Return number of modules with certain type
+     * 
+     * @param string $filter Filter criterion
+     *  
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModulesCount($filter)
+    {
+        return $this->getData($this->getSearchCondition(), true, $filter);
     }
 
     /**
@@ -273,16 +167,18 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      *
      * @param \XLite\Core\CommonCell $cnd       Search condition
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
+     * @param string                 $filter    Filter criterion OPTIONAL
      *
      * @return array|integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
+    protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false, $filter = null)
     {
-        $result = self::getModules();
+        if (!empty($filter) || ($filter = $this->getFilter())) {
+            $cnd->$filter = true;
+        }
 
-        return $countOnly ? count($result) : $result;
+        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->search($cnd, $countOnly);
     }
 }

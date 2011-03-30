@@ -772,7 +772,6 @@ abstract class AItemsList extends \XLite\View\Container
     public function getCommonFiles()
     {
         $list = parent::getCommonFiles();
-
         $list['js'][] = 'js/jquery.blockUI.js';
 
         return $list;
@@ -789,6 +788,7 @@ abstract class AItemsList extends \XLite\View\Container
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
+
         // Static call of the non-static function
         $list[] = self::getDir() . '/items_list.css';
 

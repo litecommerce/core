@@ -28,6 +28,13 @@
 
 class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
 {
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->markTestSkipped('Awaiting for new marketplace');
+    }
+
     /**
      * getDefaultCnd
      *

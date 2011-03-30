@@ -63,11 +63,8 @@ if ($argc > 1) {
     array_shift($params);
 
     define('R_INSTALL_DEMO', in_array('demo', $params));
-
     define('R_DISPLAY_HELP', in_array('help', $params));
-
     define('R_INSTALL_ADMIN', in_array('admin', $params));
-
     define('R_INSTALL_STANDALONE', in_array('standalone', $params));
 
 } else {

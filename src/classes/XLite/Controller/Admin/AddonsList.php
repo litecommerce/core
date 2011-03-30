@@ -137,7 +137,8 @@ class AddonsList extends \XLite\Controller\Admin\AAdmin
      */
     public function handleRequest()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Module')->checkModules();
+        // :FIXME: to remove
+        // \XLite\Core\Database::getRepo('\XLite\Model\Module')->checkModules();
 
         parent::handleRequest();
     }

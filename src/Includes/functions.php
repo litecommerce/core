@@ -1080,23 +1080,19 @@ function dbFetchAll($sql, &$errorMsg = null)
 /**
  * Execute SQL query
  * 
- * @return int
+ * @return void
  * @access public
  * @see    ____func_see____
  * @since  3.0.0
  */
 function dbExecute($sql, &$errorMsg = null)
 {
-    $result = null;
-
     try {
-        $result = \Includes\Utils\Database::execute($sql);
+        \Includes\Utils\Database::execute($sql);
 
     } catch (Exception $e) {
         $errorMsg = $e->getMessage();
     }
-
-    return $result;
 }
 
 /**

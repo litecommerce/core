@@ -53,7 +53,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function executeHookHandlerStepFirst()
+    public function executeHookHandlerStepSecond()
     {
         static::getClassesTree()->walkThrough(array($this, 'addStaticConstructorCall'));
     }
