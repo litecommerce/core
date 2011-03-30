@@ -9,11 +9,13 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ *
  * @ListChild (list="itemsList.module.manage.columns.module-main-section.actions", weight="10")
  *}
+
 {if:module.getEnabled()}
   <a href="{buildURL(#modules#,#disable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('disable', '{module.getModuleId()}');">{t(#Disable#)}</a>
-  <a IF="{module.showSettingsForm()}" href="{module.getSettingsFormLink()}">{t(#Settings#)}</a>
+  <a IF="{module.callModuleMethod(#showSettingsForm#)}" href="{module.getSettingsForm()}">{t(#Settings#)}</a>
 {else:}
   <span IF="{!canEnable(module)}" class="disabled">{t(#Enable#)}</span>
   <a IF="{canEnable(module)}" href="{buildURL(#modules#,#enable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('enable', '{module.getModuleId()}');">{t(#Enable#)}</a>

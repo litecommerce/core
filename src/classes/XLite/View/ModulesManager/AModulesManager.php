@@ -37,7 +37,6 @@ namespace XLite\View\ModulesManager;
  */
 class AModulesManager extends \XLite\View\Dialog
 {
-
     /** 
      * Return module identificator
      * 
@@ -74,17 +73,4 @@ class AModulesManager extends \XLite\View\Dialog
     {
         return 'modules_manager';
     }
-
-    /**
-     * Return marketplace URL
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getMarketPlaceURL()
-    {
-        return \XLite\Model\Module::MARKETPLACE_URL;
-    }
-
 }

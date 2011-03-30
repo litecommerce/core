@@ -86,7 +86,7 @@ class Module extends \XLite\Core\Pack\APack
     {
         // It's the fix for PHAR::compress(): it's triming dots in file names
         return str_replace('\\', '-', $this->module->getActualName()) 
-            . '-v' . str_replace('.', '_', $this->module->__call('getVersion'));
+            . '-v' . str_replace('.', '_', $this->module->callModuleMethod('getVersion'));
     }
 
     /**
@@ -119,13 +119,13 @@ class Module extends \XLite\Core\Pack\APack
     public function getMetadata()
     {
         return parent::getMetadata() + array(
-            self::METADATA_FIELD_VERSION_MAJOR => $this->module->__call('getMajorVersion'),
-            self::METADATA_FIELD_VERSION_MINOR => $this->module->__call('getMinorVersion'),
-            self::METADATA_FIELD_NAME          => $this->module->__call('getModuleName'),
-            self::METADATA_FIELD_AUTHOR        => $this->module->__call('getAuthorName'),
-            self::METADATA_FIELD_ICON_LINK     => $this->module->__call('getIconURL'),
-            self::METADATA_FIELD_DESCRIPTION   => $this->module->__call('getDescription'),
-            self::METADATA_FIELD_DEPENDENCIES  => $this->module->__call('getDependencies'),
+            self::METADATA_FIELD_VERSION_MAJOR => $this->module->callModuleMethod('getMajorVersion'),
+            self::METADATA_FIELD_VERSION_MINOR => $this->module->callModuleMethod('getMinorVersion'),
+            self::METADATA_FIELD_NAME          => $this->module->callModuleMethod('getModuleName'),
+            self::METADATA_FIELD_AUTHOR        => $this->module->callModuleMethod('getAuthorName'),
+            self::METADATA_FIELD_ICON_LINK     => $this->module->callModuleMethod('getIconURL'),
+            self::METADATA_FIELD_DESCRIPTION   => $this->module->callModuleMethod('getDescription'),
+            self::METADATA_FIELD_DEPENDENCIES  => $this->module->callModuleMethod('getDependencies'),
         );
     }
 

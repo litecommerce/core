@@ -759,7 +759,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     public function getCommonFiles()
     {
         $list = parent::getCommonFiles();
-
         $list['js'][] = 'js/cloud-zoom.min.js';
 
         return $list;

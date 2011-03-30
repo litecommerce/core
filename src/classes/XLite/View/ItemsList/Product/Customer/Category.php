@@ -213,10 +213,8 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     protected function getWidgetParameters()
     {
         $list = parent::getWidgetParameters();
-
         $list['category_id'] = \XLite\Core\Request::getInstance()->category_id;
 
         return $list;
     }
-
 }
