@@ -274,8 +274,8 @@ chmod 400 .phar/.metadata.bin
 
 # Create upgrade dir
 if [ -d ${CURRENT_DIR}/upgrades/core/$VERSION ]; then
-	mkdir -p .core-upgardes/$VERSION
-	cp ${CURRENT_DIR}/upgrades/core/$VERSION/* .core-upgardes/$VERSION/
+	mkdir -p .core-upgrades/$VERSION
+	cp ${CURRENT_DIR}/upgrades/core/$VERSION/* .core-upgrades/$VERSION/
 else
 	echo "WARNING! Upgrades scrips is not exists!"
 fi
