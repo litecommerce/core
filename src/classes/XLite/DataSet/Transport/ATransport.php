@@ -36,23 +36,23 @@ namespace XLite\DataSet\Transport;
  */
 abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAggregate, \ArrayAccess
 {
-	/**
-	 * Data storage
-	 * 
-	 * @var   array
-	 * @see   ____var_see____
-	 * @since 3.0.0
-	 */
-	protected $data = array();
+    /**
+     * Data storage
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $data = array();
 
-	/**
-	 * Storage allowed keys list (cache)
-	 * 
-	 * @var   array
-	 * @see   ____var_see____
-	 * @since 3.0.0
-	 */
-	protected $keys;
+    /**
+     * Storage allowed keys list (cache)
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $keys;
 
     /**
      * Define keys 
@@ -63,54 +63,54 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      */
     abstract protected function defineKeys();
 
-	/**
-	 * Map data
-	 * 
-	 * @param array $data Data
-	 *  
-	 * @return void
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function map(array $data)
-	{
-		foreach ($data as $k => $v) {
-			$this->$k = $v;
-		}
-	}
+    /**
+     * Map data
+     * 
+     * @param array $data Data
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function map(array $data)
+    {
+        foreach ($data as $k => $v) {
+            $this->$k = $v;
+        }
+    }
 
-	/**
-	 * Clear 
-	 * 
-	 * @return void
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function clear()
-	{
-		$this->data = array();
-	}
+    /**
+     * Clear 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function clear()
+    {
+        $this->data = array();
+    }
 
-	/**
-	 * Check transport complexity
-	 * 
-	 * @return boolean
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function check()
-	{
-		$result = true;
+    /**
+     * Check transport complexity
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function check()
+    {
+        $result = true;
 
-		foreach ($this->getKeys() as $k) {
-			if (!isset($this->$k)) {
-				$result = false;
-				break;
-			}
-		}
+        foreach ($this->getKeys() as $k) {
+            if (!isset($this->$k)) {
+                $result = false;
+                break;
+            }
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
     /**
      * Get keys list
@@ -130,192 +130,192 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
 
     // {{{ Magic methods
 
-	/**
-	 * Getter
-	 * 
-	 * @param string $name Storage cell name
-	 *  
-	 * @return mixed
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function __get($name)
-	{
-		return in_array($name, $this->getKeys()) && isset($this->data[$name]) ? $this->data[$name] : null;
-	}
+    /**
+     * Getter
+     * 
+     * @param string $name Storage cell name
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __get($name)
+    {
+        return in_array($name, $this->getKeys()) && isset($this->data[$name]) ? $this->data[$name] : null;
+    }
 
-	/**
-	 * Setter
-	 * 
-	 * @param string $name  Cell name
-	 * @param mixed  $value Value
-	 *  
-	 * @return void
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function __set($name, $value)
-	{
-		if (in_array($name, $this->getKeys())) {
-			$this->data[$name] = $value;
-		}
-	}
+    /**
+     * Setter
+     * 
+     * @param string $name  Cell name
+     * @param mixed  $value Value
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __set($name, $value)
+    {
+        if (in_array($name, $this->getKeys())) {
+            $this->data[$name] = $value;
+        }
+    }
 
-	/**
-	 * Check - cell is set or not
-	 * 
-	 * @param string $name Cell name
-	 *  
-	 * @return boolean
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function __isset($name)
-	{
-		return in_array($name, $this->getKeys()) && isset($this->data[$name]);
-	}
+    /**
+     * Check - cell is set or not
+     * 
+     * @param string $name Cell name
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __isset($name)
+    {
+        return in_array($name, $this->getKeys()) && isset($this->data[$name]);
+    }
 
-	/**
-	 * Unset cell
-	 * 
-	 * @param string $name Cell name
-	 *  
-	 * @return void
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function __unset($name)
-	{
-		if (in_array($name, $this->getKeys()) && isset($this->data[$name])) {
-			unset($this->data[$name]);
-		}
-	}
+    /**
+     * Unset cell
+     * 
+     * @param string $name Cell name
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __unset($name)
+    {
+        if (in_array($name, $this->getKeys()) && isset($this->data[$name])) {
+            unset($this->data[$name]);
+        }
+    }
 
-	/**
-	 * Sleep (serialization)
-	 * 
-	 * @return string 
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function __sleep()
-	{
-		return serialize($this->data);
-	}
+    /**
+     * Sleep (serialization)
+     * 
+     * @return string 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __sleep()
+    {
+        return serialize($this->data);
+    }
 
-	/**
-	 * Wakeup (unserialization)
-	 * 
-	 * @param string $serialized Seralized data
-	 *  
-	 * @return void
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function __wakeup($serialized)
-	{
-		$this->clear();
-		$this->map(unserialize($serialized));
-	}
+    /**
+     * Wakeup (unserialization)
+     * 
+     * @param string $serialized Seralized data
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __wakeup($serialized)
+    {
+        $this->clear();
+        $this->map(unserialize($serialized));
+    }
 
     // }}}
 
     // {{{ Countable
 
-	/**
-	 * Count 
-	 * 
-	 * @return integer
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function count()
-	{
-		return count($this->getKeys());
-	}
+    /**
+     * Count 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function count()
+    {
+        return count($this->getKeys());
+    }
 
     // }}}
 
     // {{{ IteratorAggregate
 
-	/**
-	 * Get iterator 
-	 * 
-	 * @return \Traversable
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function getIterator()
-	{
-		$list = array();
+    /**
+     * Get iterator 
+     * 
+     * @return \Traversable
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getIterator()
+    {
+        $list = array();
 
-		foreach ($this->getKeys() as $k) {
-			$list[$k] = isset($this->$k) ? $this->$k : null;
-		}
+        foreach ($this->getKeys() as $k) {
+            $list[$k] = isset($this->$k) ? $this->$k : null;
+        }
 
-		return new ArrayIterator($list);
-	}
+        return new ArrayIterator($list);
+    }
 
     // }}}
 
     // {{{ ArrayAccess
 
-	/**
-	 * Check - is offset exists or not
-	 * 
-	 * @param mixed $offset Offset
-	 *  
-	 * @return boolean
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function offsetExists($offset)
-	{
-		return isset($this->$offset);
-	}
+    /**
+     * Check - is offset exists or not
+     * 
+     * @param mixed $offset Offset
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function offsetExists($offset)
+    {
+        return isset($this->$offset);
+    }
 
-	/**
-	 * Get offset value
-	 * 
-	 * @param mixed $offset Offset
-	 *  
-	 * @return mixed
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function offsetGet($offset)
-	{
-		return $this->$offset;
-	}
+    /**
+     * Get offset value
+     * 
+     * @param mixed $offset Offset
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function offsetGet($offset)
+    {
+        return $this->$offset;
+    }
 
-	/**
-	 * Set offset value
-	 * 
-	 * @param mixed $offset Offset
-	 * @param mixed $value  Value
-	 *  
-	 * @return void
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function offsetSet($offset, $value)
-	{
-		$this->$offset = $value;
-	}
+    /**
+     * Set offset value
+     * 
+     * @param mixed $offset Offset
+     * @param mixed $value  Value
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->$offset = $value;
+    }
 
-	/**
-	 * Unset offset
-	 * 
-	 * @param mixed $offset Offset
-	 *  
-	 * @return void
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function offsetUnset($offset)
-	{
-		unset($this->$offset);
-	}
+    /**
+     * Unset offset
+     * 
+     * @param mixed $offset Offset
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function offsetUnset($offset)
+    {
+        unset($this->$offset);
+    }
 
     // }}}
 

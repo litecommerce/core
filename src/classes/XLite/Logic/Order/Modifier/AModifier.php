@@ -36,14 +36,14 @@ namespace XLite\Logic\Order\Modifier;
  */
 abstract class AModifier extends \XLite\Logic\ALogic
 {
-	/**
-	 * Modifier type (see \XLite\Model\Base\Surcharge)
-	 * 
-	 * @var   string
-	 * @see   ____var_see____
-	 * @since 3.0.0
-	 */
-	protected $type;
+    /**
+     * Modifier type (see \XLite\Model\Base\Surcharge)
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $type;
 
     /**
      * Modifier unique code 
@@ -89,6 +89,28 @@ abstract class AModifier extends \XLite\Logic\ALogic
      * @since 3.0.0
      */
     protected $identificationPattern;
+
+
+    /**
+     * Calculate
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract public function calculate();
+
+    /**
+     * Get surcharge information
+     * 
+     * @param \XLite\Model\Base\Surcharge $surcharge Surcharge
+     *  
+     * @return \XLite\DataSet\Transport\Order\Surcharge
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract public function getSurchargeInfo(\XLite\Model\Base\Surcharge $surcharge);
+
 
     /**
      * Constructor
@@ -179,16 +201,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
         return $this->order;
     }
 
-    /**
-     * Calculate
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    abstract public function calculate();
-
-	// {{{ Surcharge operations
+    // {{{ Surcharge operations
 
     /**
      * Check - modifier is specified surcharge owner or not
@@ -205,35 +218,24 @@ abstract class AModifier extends \XLite\Logic\ALogic
             || $surcharge->getCode() == $this->getCode();
     }
 
-	/**
-	 * Get surcharge information
-	 * 
-	 * @param \XLite\Model\Base\Surcharge $surcharge Surcharge
-	 *  
-	 * @return \XLite\DataSet\Transport\Order\Surcharge
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	abstract public function getSurchargeInfo(\XLite\Model\Base\Surcharge $surcharge);
-
-	/**
-	 * Add order surcharge 
-	 * 
-	 * @param string  $code      Surcharge code
-	 * @param float   $value     Value
+    /**
+     * Add order surcharge 
+     * 
+     * @param string  $code      Surcharge code
+     * @param float   $value     Value
      * @param boolean $include   Include flag OPTIONAL
      * @param boolean $available Availability flag OPTIONAL
-	 *  
-	 * @return \XLite\Model\Order\Surcharge
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function addOrderSurcharge($code, $value, $include = false, $available = true)
-	{
-		$surcharge = new \XLite\Model\Order\Surcharge;
+     *  
+     * @return \XLite\Model\Order\Surcharge
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addOrderSurcharge($code, $value, $include = false, $available = true)
+    {
+        $surcharge = new \XLite\Model\Order\Surcharge;
 
-		$surcharge->setType($this->type);
-		$surcharge->setCode($code);
+        $surcharge->setType($this->type);
+        $surcharge->setCode($code);
         $surcharge->setValue($value);
         $surcharge->setInclude($include);
         $surcharge->setAvailable($available);
@@ -242,38 +244,38 @@ abstract class AModifier extends \XLite\Logic\ALogic
         $info = $this->getSurchargeInfo($surcharge);
         $surcharge->setName($info->name);
 
-		$this->order->getSurcharges()->add($surcharge);
+        $this->order->getSurcharges()->add($surcharge);
         $surcharge->setOwner($this->order);
 
-		return $surcharge;
-	}
+        return $surcharge;
+    }
 
-	/**
-	 * Add order item surcharge 
-	 * 
+    /**
+     * Add order item surcharge 
+     * 
      * @param \XLite\Model\OrderItem $item      Order item
-	 * @param string                 $code      Surcharge code
-	 * @param float                  $value     Value
+     * @param string                 $code      Surcharge code
+     * @param float                  $value     Value
      * @param boolean                $include   Include flag OPTIONAL
      * @param boolean                $available Availability flag OPTIONAL
-	 *  
-	 * @return \XLite\Model\OrderItem\Surcharge
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function addOrderItemSurcharge(\XLite\Model\OrderItem $item, $code, $value, $include = false, $available = true)
-	{
-		$surcharge = new \XLite\Model\OrderItem\Surcharge;
+     *  
+     * @return \XLite\Model\OrderItem\Surcharge
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addOrderItemSurcharge(\XLite\Model\OrderItem $item, $code, $value, $include = false, $available = true)
+    {
+        $surcharge = new \XLite\Model\OrderItem\Surcharge;
 
-		$surcharge->setType($this->type);
-		$surcharge->setCode($code);
+        $surcharge->setType($this->type);
+        $surcharge->setCode($code);
         $surcharge->setValue($value);
         $surcharge->setClass(get_called_class());
 
-		$item->getSurcharges()->add($surcharge);
+        $item->getSurcharges()->add($surcharge);
 
-		return $surcharge;
-	}
+        return $surcharge;
+    }
 
-	// }}}
+    // }}}
 }
