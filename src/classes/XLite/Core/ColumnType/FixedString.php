@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core\ColumnType;
@@ -31,16 +31,15 @@ namespace XLite\Core\ColumnType;
 /**
  * Fixed string type
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class FixedString extends \Doctrine\DBAL\Types\StringType
 {
-	/**
-	 * Type name
-	 */
-	const FIXED_STRING = 'fixedstring';
+    /**
+     * Type name
+     */
+    const FIXED_STRING = 'fixedstring';
 
     /**
      * Get SQL declaration 
@@ -49,13 +48,12 @@ class FixedString extends \Doctrine\DBAL\Types\StringType
      * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform         Platform
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getSQLDeclaration(array $fieldDeclaration, \Doctrine\DBAL\Platforms\AbstractPlatform $platform)
     {
-		$fieldDeclaration['fixed'] = true;
+        $fieldDeclaration['fixed'] = true;
 
         return parent::getSQLDeclaration($fieldDeclaration, $platform);
     }
@@ -64,7 +62,6 @@ class FixedString extends \Doctrine\DBAL\Types\StringType
      * Get type name 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

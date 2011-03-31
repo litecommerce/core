@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core\ImageOperator;
@@ -31,118 +31,43 @@ namespace XLite\Core\ImageOperator;
 /**
  * Abstract image operator enagine
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AImageOperator extends \XLite\Base\Singleton
 {
     /**
      * MIME type 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $mimeType;
 
     /**
      * Width 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $width;
 
     /**
      * Height 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $height;
 
-    /**
-     * Check - enabled engine or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function isEnabled()
-    {
-        return true;
-    }
-
-    /**
-     * Set image 
-     * 
-     * @param \XLite\Model\Base\Image $image Image
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setImage(\XLite\Model\Base\Image $image)
-    {
-        $this->mimeType = $image->getMime();
-        $this->width = $image->getWidth();
-        $this->height = $image->getHeight();
-
-        return true;
-    }
-
-    /**
-     * Get width 
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getWidth()
-    {
-        return $this->width;
-    }
-
-    /**
-     * Get height 
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getHeight()
-    {
-        return $this->height;
-    }
-
-    /**
-     * Get MIME type 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getMimeType()
-    {
-        return $this->mimeType;
-    }
 
     /**
      * Get image content
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -155,39 +80,22 @@ abstract class AImageOperator extends \XLite\Base\Singleton
      * @param integer $height Height
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     abstract public function resize($width, $height);
 
+
     /**
-     * Resize down  by limits
+     * Check - enabled engine or not
      * 
-     * @param integer $width  Width top limit
-     * @param integer $height Height top limt
-     *  
-     * @return array New width, new height and operation result
-     * @access public
+     * @return boolean
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function resizeDown($width = null, $height = null)
+    public static function isEnabled()
     {
-        list($newWidth, $newHeight) = self::getCroppedDimensions(
-            $this->width,
-            $this->height,
-            $width,
-            $height
-        );
-
-        $result = array($newWidth, $newHeight, false);
-
-        if ($newWidth != $this->width || $newHeight != $this->height) {
-            $result[2] = $this->resize($newWidth, $newHeight);
-        }
-
-        return $result;
+        return true;
     }
 
     /**
@@ -199,7 +107,6 @@ abstract class AImageOperator extends \XLite\Base\Singleton
      * @param integer $maxh Maximum height
      *  
      * @return array (new width & height)
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -243,4 +150,86 @@ abstract class AImageOperator extends \XLite\Base\Singleton
         return array($properties['width'], $properties['height']);
     }
 
+
+    /**
+     * Set image 
+     * 
+     * @param \XLite\Model\Base\Image $image Image
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setImage(\XLite\Model\Base\Image $image)
+    {
+        $this->mimeType = $image->getMime();
+        $this->width = $image->getWidth();
+        $this->height = $image->getHeight();
+
+        return true;
+    }
+
+    /**
+     * Get width 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getWidth()
+    {
+        return $this->width;
+    }
+
+    /**
+     * Get height 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    /**
+     * Get MIME type 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMimeType()
+    {
+        return $this->mimeType;
+    }
+
+    /**
+     * Resize down  by limits
+     * 
+     * @param integer $width  Width top limit OPTIONAL
+     * @param integer $height Height top limt OPTIONAL
+     *  
+     * @return array New width, new height and operation result
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function resizeDown($width = null, $height = null)
+    {
+        list($newWidth, $newHeight) = self::getCroppedDimensions(
+            $this->width,
+            $this->height,
+            $width,
+            $height
+        );
+
+        $result = array($newWidth, $newHeight, false);
+
+        if ($newWidth != $this->width || $newHeight != $this->height) {
+            $result[2] = $this->resize($newWidth, $newHeight);
+        }
+
+        return $result;
+    }
 }

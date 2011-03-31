@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core;
@@ -31,30 +31,120 @@ namespace XLite\Core;
 /**
  * Common operations repository
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Operator extends \XLite\Base\Singleton
 {
     /**
      * Files repositories paths
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $filesRepositories = array(
         LC_COMPILE_DIR => 'compiled classes repository',
         LC_ROOT_DIR    => 'lc root',
     );
 
+
+    /**
+     * Redirect 
+     * 
+     * @param string  $location URL
+     * @param boolean $force    Check or not redirect conditions OPTIONAL
+     * @param integer $code     Operation code OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function redirect($location, $force = false, $code = 302)
+    {
+        if (static::checkRedirectStatus() || $force) {
+            static::setHeaderLocation($location, $code);
+            static::finish();
+        }
+    }
+
+    /**
+     * Check if class exists 
+     * 
+     * @param string $name Name of class to check
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function isClassExists($name)
+    {
+        return class_exists($name, false)
+            || file_exists(LC_CLASSES_CACHE_DIR . str_replace('\\', LC_DS, $name) . '.php');
+    }
+
+    /**
+     * Get URL content 
+     * 
+     * @param string $url URL
+     *  
+     * @return string|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getURLContent($url)
+    {
+        $result = null;
+
+        if (ini_get('allow_url_fopen')) {
+            $result = file_get_contents($url);
+
+        } else {
+            $request  = new \XLite\Core\HTTP\Request($url);
+            $response = $bouncer->sendRequest();
+
+            if (200 == $response->code) {
+                $result = $response->body;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Calculate pagination info
+     * 
+     * @param integer $count Items count
+     * @param integer $page  Current page index OPTIONAL
+     * @param integer $limit Page length limit OPTIONAL
+     *  
+     * @return array (pages count + current page number)
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function calculatePagination($count, $page = 1, $limit = 20)
+    {
+        $count = max(0, intval($count));
+        $limit = max(0, intval($limit));
+
+        if (0 == $limit && $count) {
+            $pages = 1;
+
+        } else {
+            $pages = 0 == $count ? 0 : ceil($count / $limit);
+        }
+
+        $page = min($pages, max(1, intval($page)));
+
+        return array($pages, $page);
+    }
+
+
     /**
      * Check if we need to perform a redirect or not 
      * 
      * @return boolean 
-     * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
      */
     protected static function checkRedirectStatus()
@@ -70,7 +160,7 @@ class Operator extends \XLite\Base\Singleton
      * @param integer $code     Operation code OPTIONAL
      *  
      * @return void
-     * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
      */
     protected static function setHeaderLocation($location, $code = 302)
@@ -103,7 +193,7 @@ class Operator extends \XLite\Base\Singleton
      * finish 
      * 
      * @return void
-     * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
      */
     protected static function finish()
@@ -113,104 +203,9 @@ class Operator extends \XLite\Base\Singleton
 
 
     /**
-     * Redirect 
-     * 
-     * @param string  $location URL
-     * @param boolean $force    Check or not redirect conditions OPTIONAL
-     * @param integer $code     Operation code OPTIONAL
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function redirect($location, $force = false, $code = 302)
-    {
-        if (static::checkRedirectStatus() || $force) {
-            static::setHeaderLocation($location, $code);
-            static::finish();
-        }
-    }
-
-    /**
-     * Check if class exists 
-     * 
-     * @param string $name Name of class to check
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function isClassExists($name)
-    {
-        return class_exists($name, false)
-            || file_exists(LC_CLASSES_CACHE_DIR . str_replace('\\', LC_DS, $name) . '.php');
-    }
-
-    /**
-     * Get URL content 
-     * 
-     * @param string $url URL
-     *  
-     * @return string|void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getURLContent($url)
-    {
-        $result = null;
-
-        if (ini_get('allow_url_fopen')) {
-            $result = file_get_contents($url);
-
-        } else {
-            $request  = new \XLite\Core\HTTP\Request($url);
-            $response = $bouncer->sendRequest();
-
-            if (200 == $response->code) {
-                $result = $response->body;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Calculate pagination info
-     * 
-     * @param integer $count Items count
-     * @param integer $page  Current page index OPTIONAL
-     * @param integer $limit Page length limit OPTIONAL
-     *  
-     * @return array (pages count + current page number)
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function calculatePagination($count, $page = 1, $limit = 20)
-    {
-        $count = max(0, intval($count));
-        $limit = max(0, intval($limit));
-
-        if (0 == $limit && $count) {
-            $pages = 1;
-
-        } else {
-            $pages = 0 == $count ? 0 : ceil($count / $limit);
-        }
-
-        $page = min($pages, max(1, intval($page)));
-
-        return array($pages, $page);
-    }
-
-    /**
      * Display 404 page
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -222,7 +217,7 @@ class Operator extends \XLite\Base\Singleton
         }
 
         echo ('404 Page not found');
-        exit(1);
+        exit (1);
     }
 
     /**
@@ -232,7 +227,6 @@ class Operator extends \XLite\Base\Singleton
      * @param integer $slice Trace slice count OPTIONAL
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -248,7 +242,6 @@ class Operator extends \XLite\Base\Singleton
      * @param integer $slice     Trace slice count OPTIONAL
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -260,38 +253,81 @@ class Operator extends \XLite\Base\Singleton
         $slice = max(0, $slice) + 1;
 
         $trace = array();
+
         foreach ($backTrace as $l) {
+
             if (0 < $slice) {
                 $slice--;
-                continue;
-            }
 
-            $parts = array();
-            if (isset($l['file'])) {
+            } else {
 
-                $parts[] = 'file ' . str_replace($patterns, $placeholders, $l['file']);
+                $parts = array();
 
-            } elseif (isset($l['class']) && isset($l['function'])) {
+                if (isset($l['file'])) {
 
-                $parts[] = 'method ' . $l['class'] . '::' . $l['function'] . $this->getBackTraceArgs($l);
+                    $parts[] = 'file ' . str_replace($patterns, $placeholders, $l['file']);
 
-            } elseif (isset($l['function'])) {
+                } elseif (isset($l['class']) && isset($l['function'])) {
 
-                $parts[] = 'function ' . $l['function'] . $this->getBackTraceArgs($l);
+                    $parts[] = 'method ' . $l['class'] . '::' . $l['function'] . $this->getBackTraceArgs($l);
 
-            }
+                } elseif (isset($l['function'])) {
 
-            if (isset($l['line'])) {
-                $parts[] = $l['line'];
-            }
+                    $parts[] = 'function ' . $l['function'] . $this->getBackTraceArgs($l);
 
-            if ($parts) {
-                $trace[] = implode(' : ', $parts);
+                }
+
+                if (isset($l['line'])) {
+                    $parts[] = $l['line'];
+                }
+
+                if ($parts) {
+                    $trace[] = implode(' : ', $parts);
+                }
             }
         }
 
         return $trace;
     }
+
+    /**
+     * Save service YAML 
+     * 
+     * @param string $path File path
+     * @param array  $data Data
+     *  
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function saveServiceYAML($path, array $data)
+    {
+        return file_put_contents(
+            $path,
+            $this->getServiceHeader() . \Symfony\Component\Yaml\Yaml::dump($data)
+        );
+    }
+
+    /**
+     * Load service YAML 
+     * 
+     * @param string $path File path
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function loadServiceYAML($path)
+    {
+        $data = null;
+
+        if (file_exists($path)) {
+            $data = \Symfony\Component\Yaml\Yaml::load($path);
+        }
+
+        return $data;
+    }
+
 
     /**
      * Get back trace function or method arguments 
@@ -300,7 +336,6 @@ class Operator extends \XLite\Base\Singleton
      * @param array $l Back trace record
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -369,7 +404,6 @@ class Operator extends \XLite\Base\Singleton
      * @param mixed $class ____param_comment____
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -379,50 +413,9 @@ class Operator extends \XLite\Base\Singleton
     }
 
     /**
-     * Save service YAML 
-     * 
-     * @param string $path File path
-     * @param array  $data Data
-     *  
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function saveServiceYAML($path, array $data)
-    {
-        return file_put_contents(
-            $path,
-            $this->getServiceHeader() . \Symfony\Component\Yaml\Yaml::dump($data)
-        );
-    }
-
-    /**
-     * Load service YAML 
-     * 
-     * @param string $path File path
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function loadServiceYAML($path)
-    {
-        $data = null;
-
-        if (file_exists($path)) {
-            $data = \Symfony\Component\Yaml\Yaml::load($path);
-        }
-
-        return $data;
-    }
-
-    /**
      * Get data storage service header 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
