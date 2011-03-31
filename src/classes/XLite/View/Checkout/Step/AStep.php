@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Checkout\Step;
@@ -31,9 +31,8 @@ namespace XLite\View\Checkout\Step;
 /**
  * Abstract checkout step widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AStep extends \XLite\View\AView
 {
@@ -46,10 +45,51 @@ abstract class AStep extends \XLite\View\AView
 
 
     /**
+     * Get step name
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract public function getStepName();
+
+    /**
+     * Get step title
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract public function getTitle();
+
+    /**
+     * Check - step is complete or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract public function isCompleted();
+
+
+    /**
+     * Check - is current step or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isCurrent()
+    {
+        return $this->getParam(self::PARAM_PARENT_WIDGET)->isCurrentStep($this);
+    }
+
+
+    /**
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -64,53 +104,9 @@ abstract class AStep extends \XLite\View\AView
     }
 
     /**
-     * Get step name
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    abstract public function getStepName();
-
-    /**
-     * Get step title
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    abstract public function getTitle();
-
-    /**
-     * Check - step is complete or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    abstract public function isCompleted();
-
-    /**
-     * Check - is current step or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isCurrent()
-    {
-        return $this->getParam(self::PARAM_PARENT_WIDGET)->isCurrentStep($this);
-    }
-
-    /**
      * Return widget default template
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -123,7 +119,7 @@ abstract class AStep extends \XLite\View\AView
      * Return current template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getTemplate()
