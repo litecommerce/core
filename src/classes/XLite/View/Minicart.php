@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * Minicart widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @ListChild (list="layout.header.right", weight="100")
  */
@@ -61,119 +60,21 @@ class Minicart extends \XLite\View\SideBarBox
     /**
      * Widget directories 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $displayModes = array(
         self::DISPLAY_MODE_VERTICAL   => 'Vertical',
         self::DISPLAY_MODE_HORIZONTAL => 'Horizontal',
     );
 
-    /**                                                
-     * Return title                                    
-     *                                                 
-     * @return string                                  
-     * @access protected                               
-     * @since  3.0.0                                
-     */                                                
-    protected function getHead()                       
-    {
-        return '';
-    }
-
-    /**
-     * Get widget templates directory
-     *                               
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDir()
-    {
-        return 'mini_cart/' . $this->getParam(self::PARAM_DISPLAY_MODE);
-    }
-
-    /**
-     * Return up to 3 items from cart
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getItemsList()
-    {
-        return array_slice(
-            $this->getCart()->getItems()->toArray(),
-            0,
-            min(self::ITEMS_TO_DISPLAY, $this->getCart()->countItems())
-        );
-    }
-
-    /**
-     * Check whether in cart there are more than 3 items
-     *
-     * @return boolean 
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isTruncated()
-    {
-        return self::ITEMS_TO_DISPLAY < $this->getCart()->countItems();
-    }
-
-    /**
-     * Return a CSS class depending on whether the minicart is empty or collapsed
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getCollapsed()
-    {
-        return $this->getCart()->isEmpty() ? 'empty' : 'collapsed';
-    }
-
-    /**
-     * Get cart total
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getTotals()
-    {
-        return array('Total' => $this->getCart()->getTotal());
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_DISPLAY_MODE => new \XLite\Model\WidgetParam\Set(
-                'Display mode', self::DISPLAY_MODE_VERTICAL, true, $this->displayModes
-            ),
-        );
-    }
 
     /**
      * Get a list of CSS files required to display the widget properly 
      * 
      * @return array
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getCSSFiles()
@@ -188,7 +89,7 @@ class Minicart extends \XLite\View\SideBarBox
      * Get a list of JavaScript files required to display the widget properly
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getJSFiles()
@@ -204,7 +105,6 @@ class Minicart extends \XLite\View\SideBarBox
      * Register files from common repository
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -217,5 +117,98 @@ class Minicart extends \XLite\View\SideBarBox
         return $list;
     }
 
-}
 
+    /**                                                
+     * Return title                                    
+     *                                                 
+     * @return string                                  
+     * @see    ____func_see____
+     * @since  3.0.0                                
+     */                                                
+    protected function getHead()                       
+    {
+        return '';
+    }
+
+    /**
+     * Get widget templates directory
+     *                               
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return 'mini_cart/' . $this->getParam(self::PARAM_DISPLAY_MODE);
+    }
+
+    /**
+     * Return up to 3 items from cart
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getItemsList()
+    {
+        return array_slice(
+            $this->getCart()->getItems()->toArray(),
+            0,
+            min(self::ITEMS_TO_DISPLAY, $this->getCart()->countItems())
+        );
+    }
+
+    /**
+     * Check whether in cart there are more than 3 items
+     *
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isTruncated()
+    {
+        return self::ITEMS_TO_DISPLAY < $this->getCart()->countItems();
+    }
+
+    /**
+     * Return a CSS class depending on whether the minicart is empty or collapsed
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCollapsed()
+    {
+        return $this->getCart()->isEmpty() ? 'empty' : 'collapsed';
+    }
+
+    /**
+     * Get cart total
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getTotals()
+    {
+        return array('Total' => $this->getCart()->getTotal());
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_DISPLAY_MODE => new \XLite\Model\WidgetParam\Set(
+                'Display mode', self::DISPLAY_MODE_VERTICAL, true, $this->displayModes
+            ),
+        );
+    }
+}

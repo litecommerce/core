@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * Orders search widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @ListChild (list="center")
  */
@@ -42,38 +41,157 @@ class OrderSearch extends \XLite\View\Dialog
     /**
      * Orders list (cache)
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $orders = null;
     /**
      * Orders total count 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $totalCount = null;
 
     /**
      * Conditions (cache)
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $conditions = null;
+
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'order_list';
+    
+        return $result;
+    }
+
+
+    /**
+     * Get condition 
+     * 
+     * @param string $name Condition name
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCondition($name)
+    {
+        return $this->getConditions()->$name;
+    }
+
+    /**
+     * Check - used conditions is default or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isDefaultConditions()
+    {
+        return false;
+    }
+
+    /**
+     * Get orders 
+     * 
+     * @return array(\XLite\Model\Order)
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getOrders()
+    {
+        if (!isset($this->orders)) {
+            $this->orders = \XLite\Core\Database::getRepo('\XLite\Model\Order')->search(
+                $this->getConditions()
+            );
+        }
+
+        return $this->orders;
+    }
+
+    /**
+     * Get orders list count 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCount()
+    {
+        return count($this->getOrders());
+    }
+
+    /**
+     * Get total count 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTotalCount()
+    {
+        if (is_null($this->totalCount)) {
+            $this->totalCount = count($this->getOrders());
+        }
+
+        return $this->totalCount;
+    }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        // TODO JS search 
+        // $list[] = 'order/search/search.js';
+
+        return $list;
+    }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'order/search/search.css';
+
+        return $list;
+    }
 
 
     /**
      * Return title
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getHead()
@@ -85,7 +203,7 @@ class OrderSearch extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDir()
@@ -97,7 +215,6 @@ class OrderSearch extends \XLite\View\Dialog
      * Get conditions 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -152,59 +269,10 @@ class OrderSearch extends \XLite\View\Dialog
         return $cnd;
     }
 
-
-    /**
-     * Get condition 
-     * 
-     * @param string $name Condition name
-     *  
-     * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCondition($name)
-    {
-        return $this->getConditions()->$name;
-    }
-
-    /**
-     * Check - used conditions is default or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isDefaultConditions()
-    {
-        return false;
-    }
-
-    /**
-     * Get orders 
-     * 
-     * @return array(\XLite\Model\Order)
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getOrders()
-    {
-        if (!isset($this->orders)) {
-            $this->orders = \XLite\Core\Database::getRepo('\XLite\Model\Order')->search(
-                $this->getConditions()
-            );
-        }
-
-        return $this->orders;
-    }
-
     /**
      * Get profile
      *
      * @return \XLite\Model\Profile
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -233,88 +301,6 @@ class OrderSearch extends \XLite\View\Dialog
             }
         }
 
-        return $result;
-    }
-
-    /**
-     * Get orders list count 
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCount()
-    {
-        return count($this->getOrders());
-    }
-
-    /**
-     * Get total count 
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTotalCount()
-    {
-        if (is_null($this->totalCount)) {
-            $this->totalCount = count($this->getOrders());
-        }
-
-        return $this->totalCount;
-    }
-
-    /**
-     * Register JS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        // TODO JS search 
-        // $list[] = 'order/search/search.js';
-
-        return $list;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'order/search/search.css';
-
-        return $list;
-    }
-
-
-    /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = 'order_list';
-    
         return $result;
     }
 }

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * Mailer 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Mailer extends \XLite\View\AView
 {
@@ -47,7 +46,7 @@ class Mailer extends \XLite\View\AView
     /**
      * Compose runned 
      * 
-     * @var    boolean
+     * @var   boolean
      * @see   ____var_see____
      * @since 3.0.0
      */
@@ -56,110 +55,99 @@ class Mailer extends \XLite\View\AView
     /**
      * Subject template file name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $subjectTemplate = 'subject.tpl';
 
     /**
      * Body template file name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $bodyTemplate = 'body.tpl';
 
     /**
      * Signature template file name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $signatureTemplate = 'signature.tpl';
 
     /**
      * Language locale (for PHPMailer)
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $langLocale = 'en';
 
     /**
      * Languages directory path (for PHPMailer)
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $langPath = 'lib/PHPMailer/language/';
 
     /**
      * PHPMailer object
      * 
-     * @var    PHPMailer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \PHPMailer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $mail = null;
 
     /**
      * Message charset 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $charset = 'UTF-8';
 
     /**
      * Saved templates skin
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $templatesSkin = null;
 
     /**
      * Current template 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $template = null;
 
     /**
      * Embedded images list
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $images = array();
 
     /**
      * Error message set by PHPMailer class 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $errorInfo = null;
 
@@ -175,20 +163,7 @@ class Mailer extends \XLite\View\AView
     {
         return static::$composeRunned;
     }
-
-    /** 
-      * Get default template  
-      *  
-      * @return string 
-      * @access protected 
-      * @see    ____func_see____ 
-      * @since  3.0.0 
-      */ 
-    protected function getDefaultTemplate() 
-    { 
-        return $this->template; 
-    }
-
+ 
     /**
      * Setter
      * 
@@ -196,7 +171,6 @@ class Mailer extends \XLite\View\AView
      * @param mixed  $value Property value
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -232,10 +206,9 @@ class Mailer extends \XLite\View\AView
      * @param string $to            The email address to send mail to
      * @param string $dir           The directiry there mail parts template located
      * @param array  $customHeaders The headers you want to add/replace to. OPTIONAL
-     * @param string $interface     Interface to use for mail
+     * @param string $interface     Interface to use for mail OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -251,9 +224,9 @@ class Mailer extends \XLite\View\AView
 
         $dir .= '/';
 
-        $this->set('subject',   $this->compile($dir . $this->get('subjectTemplate'), $interface));
+        $this->set('subject', $this->compile($dir . $this->get('subjectTemplate'), $interface));
         $this->set('signature', $this->compile($this->get('signatureTemplate'), $interface));
-        $this->set('body',      $this->compile($dir . $this->get('bodyTemplate'), $interface));
+        $this->set('body', $this->compile($dir . $this->get('bodyTemplate'), $interface));
 
         // find all images and fetch them; replace with cid:...
         $fname = tempnam(LC_COMPILE_DIR, 'mail');
@@ -266,7 +239,7 @@ class Mailer extends \XLite\View\AView
 
         $imageParser->parse($fname);
 
-        $this->set('body',   $imageParser->result);
+        $this->set('body', $imageParser->result);
         $this->set('images', $imageParser->images);
 
         ob_start();
@@ -295,12 +268,76 @@ class Mailer extends \XLite\View\AView
     }
 
     /**
+     * Send message
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function send()
+    {
+        if ('' !== $this->get('to')) {
+
+            if (!isset($this->mail)) {
+
+                $this->logger->log('Mail FAILED: not initialized inner mailer');
+            }
+
+            ob_start();
+
+            $result = $this->mail->Send();
+
+            ob_end_clean();
+
+            if (!$result) {
+
+                $this->logger->log('Mail FAILED: ' . $this->mail->ErrorInfo);
+            }
+        }
+
+        // Restore layout
+        if (isset($this->templatesSkin)) {
+
+            \XLite\Core\Layout::getInstance()->setSkin($this->templatesSkin);
+
+            $this->templatesSkin = null;
+        }
+
+        $this->errorInfo = $this->mail->ErrorInfo;
+    }
+
+
+    /**
+     * Return decription of the last occured error
+     * 
+     * @return string|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLastError()
+    {
+        return $this->errorInfo;
+    }
+
+
+    /** 
+      * Get default template  
+      *  
+      * @return string 
+      * @see    ____func_see____ 
+      * @since  3.0.0 
+      */ 
+    protected function getDefaultTemplate() 
+    { 
+        return $this->template; 
+    }
+
+    /**
      * Create alternative message body (text/plain)
      * 
      * @param string $html Message body
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -316,12 +353,10 @@ class Mailer extends \XLite\View\AView
         return preg_replace('/^\s*$/m', '', $txt);
     }
 
-
     /**
      * Inner mailer initialization from set variables
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -371,12 +406,10 @@ class Mailer extends \XLite\View\AView
         }
     }
 
-
     /**
      * Inner mailer initialization from DB configuration
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -385,7 +418,7 @@ class Mailer extends \XLite\View\AView
         if (!isset($this->mail)) {
 
             // Initialize PHPMailer
-            require_once LC_LIB_DIR . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
+            include_once LC_LIB_DIR . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
 
             $this->mail = new \PHPMailer();
 
@@ -415,53 +448,13 @@ class Mailer extends \XLite\View\AView
     }
 
     /**
-     * Send message
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function send()
-    {
-        if ('' !== $this->get('to')) {
-
-            if (!isset($this->mail)) {
-
-                $this->logger->log('Mail FAILED: not initialized inner mailer');
-            }
-
-            ob_start();
-
-            $result = $this->mail->Send();
-
-            ob_end_clean();
-
-            if (!$result) {
-
-                $this->logger->log('Mail FAILED: ' . $this->mail->ErrorInfo);
-            }
-        }
-
-        // Restore layout
-        if (isset($this->templatesSkin)) {
-
-            \XLite\Core\Layout::getInstance()->setSkin($this->templatesSkin);
-
-            $this->templatesSkin = null;
-        }
-
-        $this->errorInfo = $this->mail->ErrorInfo;
-    }
-
-    /**
      * Compile template
      * 
      * @param string  $template     Template path
+     * @param string  $interface    Interface OPTIONAL
      * @param boolean $switchLayout Switch laout flag OPTIONAL
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -498,7 +491,6 @@ class Mailer extends \XLite\View\AView
      * Get headers as string
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -512,18 +504,5 @@ class Mailer extends \XLite\View\AView
         }
 
         return $headers;
-    }
-
-    /**
-     * Return decription of the last occured error
-     * 
-     * @return string|void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getLastError()
-    {
-        return $this->errorInfo;
     }
 }

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,43 +31,17 @@ namespace XLite\View;
 /**
  * Membership modify widget
  *
- * @package XLite
- * @see     ____class_see____
- * @since   3.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
 class Memberships extends \XLite\View\Dialog
 {
     /**
-     * Return title
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return null;
-    }
-
-    /**
-     * Return templates directory name
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDir()
-    {
-        return 'memberships';
-    }
-
-    /**
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -83,7 +57,6 @@ class Memberships extends \XLite\View\Dialog
      * Get memberships 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -107,11 +80,35 @@ class Memberships extends \XLite\View\Dialog
         return $result;
     }
 
+
+    /**
+     * Return title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return null;
+    }
+
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return 'memberships';
+    }
+
     /**
      * Get current language code
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -126,7 +123,6 @@ class Memberships extends \XLite\View\Dialog
      * Get next orderby 
      * 
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

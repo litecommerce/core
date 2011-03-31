@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * Image
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Image extends \XLite\View\AView
 {
@@ -61,10 +60,9 @@ class Image extends \XLite\View\AView
     /**
      * Allowed properties names
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $allowedProperties = array(
         'className'   => 'class',
@@ -81,83 +79,21 @@ class Image extends \XLite\View\AView
     /**
      * Additioanl properties 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $properties = array();
 
     /**
      * Resized thumbnail URL 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $resizedURL = null;
 
-    /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'common/image.tpl';
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_IMAGE             => new \XLite\Model\WidgetParam\Object('Image', null, false, '\XLite\Model\Image'),
-            self::PARAM_ALT               => new \XLite\Model\WidgetParam\String('Alt. text', '', false),
-            self::PARAM_MAX_WIDTH         => new \XLite\Model\WidgetParam\Int('Max. width', 0),
-            self::PARAM_MAX_HEIGHT        => new \XLite\Model\WidgetParam\Int('Max. height', 0),
-            self::PARAM_CENTER_IMAGE      => new \XLite\Model\WidgetParam\Checkbox('Center the image after resizing', true),
-            self::PARAM_VERTICAL_ALIGN    => new \XLite\Model\WidgetParam\String('Vertical align', self::VERTICAL_ALIGN_MIDDLE),
-            self::PARAM_USE_CACHE         => new \XLite\Model\WidgetParam\Bool('Use cache', 1),
-            self::PARAM_USE_DEFAULT_IMAGE => new \XLite\Model\WidgetParam\Bool('Use default image', 1),
-        );
-    }
-
-    /**
-     * checkImage 
-     * 
-     * @return boolean 
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function checkImage()
-    {
-        return $this->getParam(self::PARAM_IMAGE) 
-            && $this->getParam(self::PARAM_IMAGE)->isExists();
-    }
-
-    /**
-     * checkDefaultImage 
-     * 
-     * @return boolean 
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function checkDefaultImage()
-    {
-        return $this->getParam(self::PARAM_USE_DEFAULT_IMAGE) 
-            && \XLite::getInstance()->getOptions(array('images', 'default_image'));
-    }
 
     /**
      * Set widget parameters
@@ -165,7 +101,7 @@ class Image extends \XLite\View\AView
      * @param array $params Widget parameters
      *
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function setWidgetParams(array $params)
@@ -181,38 +117,9 @@ class Image extends \XLite\View\AView
     }
 
     /**
-     * Check widget visibility
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isVisible()
-    {
-        $result = parent::isVisible();
-
-        if ($result) {
-
-            if ($this->checkImage()) {
-                $this->processImage();
-
-            } elseif ($this->checkDefaultImage()) {
-                $this->processDefaultImage();
-
-            } else {
-                $result = false;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      * Get image URL 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -249,7 +156,6 @@ class Image extends \XLite\View\AView
      * Get image alternative text
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -262,7 +168,6 @@ class Image extends \XLite\View\AView
      * Get properties 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -271,11 +176,99 @@ class Image extends \XLite\View\AView
         return $this->properties;
     }
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/image.tpl';
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_IMAGE             => new \XLite\Model\WidgetParam\Object('Image', null, false, '\XLite\Model\Image'),
+            self::PARAM_ALT               => new \XLite\Model\WidgetParam\String('Alt. text', '', false),
+            self::PARAM_MAX_WIDTH         => new \XLite\Model\WidgetParam\Int('Max. width', 0),
+            self::PARAM_MAX_HEIGHT        => new \XLite\Model\WidgetParam\Int('Max. height', 0),
+            self::PARAM_CENTER_IMAGE      => new \XLite\Model\WidgetParam\Checkbox('Center the image after resizing', true),
+            self::PARAM_VERTICAL_ALIGN    => new \XLite\Model\WidgetParam\String('Vertical align', self::VERTICAL_ALIGN_MIDDLE),
+            self::PARAM_USE_CACHE         => new \XLite\Model\WidgetParam\Bool('Use cache', 1),
+            self::PARAM_USE_DEFAULT_IMAGE => new \XLite\Model\WidgetParam\Bool('Use default image', 1),
+        );
+    }
+
+    /**
+     * checkImage 
+     * 
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkImage()
+    {
+        return $this->getParam(self::PARAM_IMAGE) 
+            && $this->getParam(self::PARAM_IMAGE)->isExists();
+    }
+
+    /**
+     * checkDefaultImage 
+     * 
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkDefaultImage()
+    {
+        return $this->getParam(self::PARAM_USE_DEFAULT_IMAGE) 
+            && \XLite::getInstance()->getOptions(array('images', 'default_image'));
+    }
+
+    /**
+     * Check widget visibility
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        $result = parent::isVisible();
+
+        if ($result) {
+
+            if ($this->checkImage()) {
+                $this->processImage();
+
+            } elseif ($this->checkDefaultImage()) {
+                $this->processDefaultImage();
+
+            } else {
+                $result = false;
+            }
+        }
+
+        return $result;
+    }
+
     /**
      * Return a CSS style centering the image vertically and horizontally
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -318,7 +311,6 @@ class Image extends \XLite\View\AView
      * @param string $style CSS styles to be added to the end of "style" attribute
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -337,7 +329,6 @@ class Image extends \XLite\View\AView
      * TODO: replace getResizedThumbnailURL to getResizedURL
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -367,7 +358,6 @@ class Image extends \XLite\View\AView
      * Preprocess default image 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -385,5 +375,4 @@ class Image extends \XLite\View\AView
             $this->setImagePaddings();
         }
     }
-
 }

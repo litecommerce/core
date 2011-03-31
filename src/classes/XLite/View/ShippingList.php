@@ -14,6 +14,8 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
+ * PHP version 5.3.0
+ *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -43,29 +45,6 @@ class ShippingList extends \XLite\View\AView
      */
     protected $modifier;
 
-    /**
-     * Return widget default template
-     *
-     * @return string
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'shipping_list.tpl';
-    }
-
-    /**
-     * Check if widget is visible
-     *
-     * @return boolean 
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible()
-            && $this->getModifier();
-    }
 
     /**
      * Get shipping rates 
@@ -135,6 +114,32 @@ class ShippingList extends \XLite\View\AView
         return $rate->getMarkup()->getMarkupValue();
     }
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'shipping_list.tpl';
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getModifier();
+    }
+
     /**
      * Get modifier 
      * 
@@ -150,5 +155,4 @@ class ShippingList extends \XLite\View\AView
 
         return $this->modifier;
     }
-
 }

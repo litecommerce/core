@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * Sidebar categories list
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @ListChild (list="sidebar.first", zone="customer", weight="100")
  */
@@ -59,9 +58,9 @@ class TopCategories extends \XLite\View\SideBarBox
     /**
      * Display modes (template directories)
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $displayModes = array(
         self::DISPLAY_MODE_LIST => 'List',
@@ -72,19 +71,72 @@ class TopCategories extends \XLite\View\SideBarBox
     /**
      * Current category path id list 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $pathIds;
+
+
+    /**
+     * Display item CSS class name as HTML attribute
+     *
+     * @param integer               $index    Item number
+     * @param integer               $count    Items count
+     * @param \XLite\Model\Category $category Current category
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function displayItemClass($index, $count, \XLite\Model\Category $category)
+    {
+        $className = $this->assembleItemClassName($index, $count, $category);
+
+        return $className ? ' class="' . $className . '"' : '';
+    }
+
+    /**
+     * Display item link class name as HTML attribute
+     *
+     * @param integer               $i        Item number
+     * @param integer               $count    Items count
+     * @param \XLite\Model\Category $category Current category
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function displayLinkClass($i, $count, \XLite\Model\Category $category)
+    {
+        $className = $this->assembleLinkClassName($i, $count, $category);
+
+        return $className ? ' class="' . $className . '"' : '';
+    }
+
+    /**
+     * Display item children container class as HTML attribute
+     *
+     * @param integer           $i      Item number
+     * @param integer           $count  Items count
+     * @param \XLite\View\AView $widget Current category
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function displayListItemClass($i, $count, \XLite\View\AView $widget)
+    {
+        $className = $this->assembleListItemClassName($i, $count, $widget);
+
+        return $className ? ' class="' . $className . '"' : '';
+    }
 
 
     /**
      * Get widge title
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -97,7 +149,6 @@ class TopCategories extends \XLite\View\SideBarBox
      * Get widget templates directory
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -112,7 +163,7 @@ class TopCategories extends \XLite\View\SideBarBox
      * @param integer $categoryId Category id OPTIONAL
      * 
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getCategories($categoryId = null)
@@ -128,7 +179,6 @@ class TopCategories extends \XLite\View\SideBarBox
      * ID of the default root category
      * 
      * @return integer 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -141,7 +191,6 @@ class TopCategories extends \XLite\View\SideBarBox
      * Define widget parameters
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -168,7 +217,6 @@ class TopCategories extends \XLite\View\SideBarBox
      * Checks whether it is a subtree
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -183,7 +231,6 @@ class TopCategories extends \XLite\View\SideBarBox
      * @param \XLite\Model\Category $category Category
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -212,24 +259,6 @@ class TopCategories extends \XLite\View\SideBarBox
     }
 
     /**
-     * Display item CSS class name as HTML attribute
-     *
-     * @param integer               $index    Item number
-     * @param integer               $count    Items count
-     * @param \XLite\Model\Category $category Current category
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    public function displayItemClass($index, $count, \XLite\Model\Category $category)
-    {
-        $className = $this->assembleItemClassName($index, $count, $category);
-
-        return $className ? ' class="' . $className . '"' : '';
-    }
-
-    /**
      * Assemble item CSS class name 
      * 
      * @param integer               $index    Item number
@@ -237,7 +266,7 @@ class TopCategories extends \XLite\View\SideBarBox
      * @param \XLite\Model\Category $category Current category
      *  
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function assembleItemClassName($index, $count, \XLite\Model\Category $category)
@@ -276,24 +305,6 @@ class TopCategories extends \XLite\View\SideBarBox
     }
 
     /**
-     * Display item link class name as HTML attribute
-     *
-     * @param integer               $i        Item number
-     * @param integer               $count    Items count
-     * @param \XLite\Model\Category $category Current category
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    public function displayLinkClass($i, $count, \XLite\Model\Category $category)
-    {
-        $className = $this->assembleLinkClassName($i, $count, $category);
-
-        return $className ? ' class="' . $className . '"' : '';
-    }
-
-    /**
      * Assemble list item link class name
      *
      * @param integer               $i        Item number
@@ -301,7 +312,7 @@ class TopCategories extends \XLite\View\SideBarBox
      * @param \XLite\Model\Category $category Current category
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function assembleLinkClassName($i, $count, \XLite\Model\Category $category)
@@ -312,24 +323,6 @@ class TopCategories extends \XLite\View\SideBarBox
     }
 
     /**
-     * Display item children container class as HTML attribute
-     *
-     * @param integer           $i      Item number
-     * @param integer           $count  Items count
-     * @param \XLite\View\AView $widget Current category
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    public function displayListItemClass($i, $count, \XLite\View\AView $widget)
-    {
-        $className = $this->assembleListItemClassName($i, $count, $widget);
-
-        return $className ? ' class="' . $className . '"' : '';
-    }
-
-    /**
      * Assemble item children container class name
      *
      * @param integer           $i      Item number
@@ -337,7 +330,7 @@ class TopCategories extends \XLite\View\SideBarBox
      * @param \XLite\View\AView $widget Current category FIXME! this variable is not used 
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function assembleListItemClassName($i, $count, \XLite\View\AView $widget)

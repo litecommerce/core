@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * Date selector widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Date extends \XLite\View\FormField
 {
@@ -49,30 +48,27 @@ class Date extends \XLite\View\FormField
     /**
      * Parameters for prefilling the form
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $params = array();
 
     /**
      * Lower year 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $lowerYear = 2000;
 
     /**
      * Higher year
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $higherYear = 2035;
 
@@ -81,7 +77,7 @@ class Date extends \XLite\View\FormField
      * Return widget default template
      *
      * @return string
-     * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
@@ -93,7 +89,6 @@ class Date extends \XLite\View\FormField
      * Define widget parameters
      *
      * @return void
-     * @access protected
      * @see    ____var_see____
      * @since  1.0.0
      */
@@ -112,7 +107,6 @@ class Date extends \XLite\View\FormField
      * Prefill form
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -138,7 +132,6 @@ class Date extends \XLite\View\FormField
      * Get field prefix value
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -151,7 +144,6 @@ class Date extends \XLite\View\FormField
      * Get days list
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -171,7 +163,6 @@ class Date extends \XLite\View\FormField
      * Get months list
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -190,7 +181,6 @@ class Date extends \XLite\View\FormField
      * Get years list
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -215,7 +205,6 @@ class Date extends \XLite\View\FormField
      * Get month 
      * 
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -230,7 +219,6 @@ class Date extends \XLite\View\FormField
      * @param integer $monthIndex Number of month (1..12) OPTIONAL
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -243,7 +231,6 @@ class Date extends \XLite\View\FormField
      * Get day 
      * 
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -256,7 +243,6 @@ class Date extends \XLite\View\FormField
      * Get year 
      * 
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

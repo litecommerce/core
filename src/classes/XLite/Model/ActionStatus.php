@@ -48,32 +48,36 @@ class ActionStatus extends \XLite\Base
     /**
      * Action status 
      * 
-     * @var    int
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $status = self::STATUS_UNDEFINED;
 
     /**
      * Code 
      * 
-     * @var    int
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $code = null;
 
     /**
      * Status info
      * 
-     * @var    string
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $message = null;
 
     /**
      * allowedStatuses 
      * 
-     * @var    array
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $allowedStatuses = array(
         self::STATUS_ERROR,
@@ -82,82 +86,14 @@ class ActionStatus extends \XLite\Base
 
 
     /**
-     * checkStatus 
-     * 
-     * @param mixed $status Value to check
-     *  
-     * @return boolean 
-     * @since  3.0.0
-     */
-    protected function checkStatus($status)
-    {
-        return in_array($status, $this->allowedStatuses);
-    }
-
-
-    /**
-     * isError 
-     * 
-     * @return boolean 
-     * @since  3.0.0
-     */
-    public function isError()
-    {
-        return self::STATUS_ERROR === $this->status;
-    }
-
-    /**
-     * isSuccess 
-     * 
-     * @return boolean 
-     * @since  3.0.0
-     */
-    public function isSuccess()
-    {
-        return self::STATUS_SUCCESS === $this->status;
-    }
-
-    /**
-     * getStatus 
-     * 
-     * @return integer 
-     * @since  3.0.0
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * getCode 
-     * 
-     * @return integer 
-     * @since  3.0.0
-     */
-    public function getCode()
-    {
-        return $this->code;
-    }
-
-    /**
-     * getMessage 
-     * 
-     * @return string
-     * @since  3.0.0
-     */
-    public function getMessage()
-    {
-        return $this->getMessage;
-    }
-
-    /**
      * __construct 
      * 
-     * @param integer    $status  Action status
-     * @param string $message Status info OPTIONAL
-     * @param integer    $code    Code OPTIONAL
+     * @param integer $status  Action status
+     * @param string  $message Status info OPTIONAL
+     * @param integer $code    Code OPTIONAL
      *  
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function __construct($status, $message = '', $code = 0)
@@ -171,5 +107,80 @@ class ActionStatus extends \XLite\Base
         } else {
             $this->doDie('\XLite\Model\ActionStatus::__construct(): unallowed status - "' . strval($status) . '"');
         }
+    }
+
+    /**
+     * isError 
+     * 
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isError()
+    {
+        return self::STATUS_ERROR === $this->status;
+    }
+
+    /**
+     * isSuccess 
+     * 
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isSuccess()
+    {
+        return self::STATUS_SUCCESS === $this->status;
+    }
+
+    /**
+     * getStatus 
+     * 
+     * @return integer 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * getCode 
+     * 
+     * @return integer 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * getMessage 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMessage()
+    {
+        return $this->getMessage;
+    }
+
+
+    /**
+     * checkStatus 
+     * 
+     * @param mixed $status Value to check
+     *  
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkStatus($status)
+    {
+        return in_array($status, $this->allowedStatuses);
     }
 }
