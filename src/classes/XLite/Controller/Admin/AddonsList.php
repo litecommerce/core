@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,17 +31,66 @@ namespace XLite\Controller\Admin;
 /**
  * Modules
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class AddonsList extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Install new add-ons';
+    }
+
+    /**
+     * Get search condition parameter by name
+     *
+     * @param string $paramName Parameter name
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCondition($paramName)
+    {
+        $searchParams = $this->getConditions();
+
+        if (isset($searchParams[$paramName])) {
+            $return = $searchParams[$paramName];
+        }
+
+        return isset($searchParams[$paramName])
+            ? $searchParams[$paramName]
+            : null;
+    }
+
+    /**
+     * Handles the request. Parses the request variables if necessary.
+     * Attempts to call the specified action function 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest()
+    {
+        // :FIXME: to remove
+        // \XLite\Core\Database::getRepo('\XLite\Model\Module')->checkModules();
+
+        parent::handleRequest();
+    }
+
+
+    /**
      * Common method to determine current location
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -51,22 +100,9 @@ class AddonsList extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Return the current page title (for the content area)
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return 'Install new add-ons';
-    }
-
-    /**
      * doActionSearch
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -89,7 +125,6 @@ class AddonsList extends \XLite\Controller\Admin\AAdmin
      * Get search conditions
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -103,44 +138,4 @@ class AddonsList extends \XLite\Controller\Admin\AAdmin
 
         return $searchParams;
     }
-
-    /**
-     * Get search condition parameter by name
-     *
-     * @param string $paramName Parameter name
-     *
-     * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCondition($paramName)
-    {
-        $searchParams = $this->getConditions();
-
-        if (isset($searchParams[$paramName])) {
-            $return = $searchParams[$paramName];
-        }
-
-        return isset($searchParams[$paramName])
-            ? $searchParams[$paramName]
-            : null;
-    }
-
-    /**
-     * Handles the request. Parses the request variables if necessary.
-     * Attempts to call the specified action function 
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function handleRequest()
-    {
-        // :FIXME: to remove
-        // \XLite\Core\Database::getRepo('\XLite\Model\Module')->checkModules();
-
-        parent::handleRequest();
-    }
-
 }

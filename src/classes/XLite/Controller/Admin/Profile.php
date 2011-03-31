@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,9 +31,8 @@ namespace XLite\Controller\Admin;
 /**
  * Profile management controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Profile extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,7 +40,6 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      * Return value for the "register" mode param
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -54,7 +52,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getTitle()
@@ -66,7 +64,6 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      * The "mode" parameter used to determine if we create new or modify existing profile
      *
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -80,7 +77,6 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      * Alias
      *
      * @return \XLite\Model\Profile
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -93,7 +89,6 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      * Common method to determine current location
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -106,7 +101,6 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      * Add part to the location nodes list
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -121,7 +115,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      * Class name for the \XLite\View\Model\ form
      * 
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getModelFormClass()
@@ -133,7 +127,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      * Modify profile action
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function doActionModify()
@@ -145,7 +139,6 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      * actionPostprocessModify 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -201,7 +194,6 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      * Delete profile action
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
