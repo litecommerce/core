@@ -294,7 +294,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function isModuleUpdateNeeded(\XLite\Model\Module $module)
     {
-        // TODO MARKETPLACE: ADD checking _new_ minor version
+        // TODO MARKETPLACE: ADD checking _new_ minor version (module here - is MARKETPLACE one)
         return $this->isModuleCompatible($module);
     }
 
@@ -313,6 +313,22 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     protected function isModuleUpgradeAvailable(\XLite\Model\Module $module)
     {
         return $module->getEnabled() && $this->isVersionValid($module) && (bool) rand(0, 1);
+    }
+
+    /**
+     * Check if core requires new (but the same as core major) version of module. (module is NOT marketplace one)
+     * 
+     * @param \XLite\Model\Module $module Module to check
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isModuleUpdateAvailable(\XLite\Model\Module $module)
+    {
+        // TODO MARKETPLACE: ADD checking _new_ minor version (module here - is NOT marketplace one)
+        return false && $this->isModuleCompatible($module);
     }
 
     /**
