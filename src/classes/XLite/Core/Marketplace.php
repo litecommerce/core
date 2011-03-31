@@ -561,7 +561,7 @@ class Marketplace extends \XLite\Base\Singleton
                 $result[$author . '\\' . $name] = array(
                     'name'          => $name,
                     'author'        => $author,
-                    'markteplaceID' => $this->getField($module, self::RESPONSE_FIELD_MODULE_ID),
+                    'marketplaceID' => $this->getField($module, self::RESPONSE_FIELD_MODULE_ID),
                     'rating'        => $this->getField($rating, self::RESPONSE_FIELD_MODULE_RATING_RATE),
                     'downloads'     => $this->getField($rating, self::RESPONSE_FIELD_MODULE_RATING_VOTES_COUNT),
                     'price'         => $this->getField($module, self::RESPONSE_FIELD_MODULE_PRICE),

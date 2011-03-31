@@ -95,7 +95,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @Column (type="string", length="32")
      */
-    protected $markteplaceID = '';
+    protected $marketplaceID = '';
 
     /**
      * Enabled 
