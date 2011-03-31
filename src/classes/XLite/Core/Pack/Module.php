@@ -50,10 +50,9 @@ class Module extends \XLite\Core\Pack\APack
     /**
      * Current module 
      * 
-     * @var    \XLite\Model\Module
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Module
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $module;
 
@@ -65,7 +64,6 @@ class Module extends \XLite\Core\Pack\APack
      * @param \XLite\Model\Module $module Current module
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -78,7 +76,6 @@ class Module extends \XLite\Core\Pack\APack
      * Return pack name
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -93,7 +90,6 @@ class Module extends \XLite\Core\Pack\APack
      * Return iterator to walk through directories
      *
      * @return \AppendIterator
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -112,7 +108,6 @@ class Module extends \XLite\Core\Pack\APack
      * Return pack metadata
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -137,7 +132,6 @@ class Module extends \XLite\Core\Pack\APack
      * Return list of module directories
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -150,7 +144,6 @@ class Module extends \XLite\Core\Pack\APack
      * Return list of module directories which contain class files
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -163,7 +156,6 @@ class Module extends \XLite\Core\Pack\APack
      * Return list of module directories which contain templates
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -194,7 +186,6 @@ class Module extends \XLite\Core\Pack\APack
      * @param string $dir Full directory path
      *
      * @return \RecursiveIteratorIterator
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

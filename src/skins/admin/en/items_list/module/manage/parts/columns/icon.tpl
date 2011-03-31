@@ -10,6 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  * @ListChild (list="itemsList.module.manage.columns", weight="30")
+ * @ListChild (list="itemsList.module.install.columns", weight="30")
  *}
 <td class="icon">
   <a id="{module.getName()}"></a>
@@ -19,12 +20,9 @@
       <img src="images/spacer.gif" class="disabled" alt="Disabled" />
     </div>
 
-    <div class="module-icon">
-      {if:module.hasIcon()}
-        <img src="{module.getIconURL()}" width="48" height="48" alt="{module.getName()}" />
-      {else:}
-        <img src="images/spacer.gif" class="addon-default" alt="Default" />
-      {end:}
+    <div class="addon-icon">
+        <img IF="module.hasIcon()" src="{module.getIconURL()}" class="addon-icon" alt="{module.getName()}" />
+        <img IF="!module.hasIcon()" src="images/spacer.gif" class="addon-icon addon-default-icon" alt="{module.getName()}" />
     </div>
 
  </div>

@@ -9,14 +9,20 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.module.install.columns", weight="50")
  *}
 
+{* TODO : to REMOVE it*}
+
 <td style="width:40%;" valign="top">
+
   <div class="name">{module.getModuleName()}</div>
+
   <div class="version">{t(#Version#)}: {module.getVersion()}</div>
+
   <div IF="module.getInstalled()" class="installed">{t(#Already installed#)}</div>
+
   <div class="price-info">
+
     <span class="price-value" IF="module.isFree()">{t(#Free#)}</span>
     <span class="price-value" IF="!module.isFree()">{formatPrice(module.getPrice())}</span>
     <span IF="module.isPurchased()" class="purchased">({t(#Purchased#)})</span>

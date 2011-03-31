@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -31,19 +31,17 @@ namespace XLite\Controller\Customer;
 /**
  * Checkout 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Checkout extends \XLite\Controller\Customer\Cart
 {
     /**
      * Request data 
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $requestData;
 
@@ -52,7 +50,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Go to cart view if cart is empty
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function handleRequest()
@@ -69,7 +67,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Get page title
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getTitle()
@@ -82,7 +80,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * TODO: to revise
      * 
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -96,7 +93,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * TODO: to revise
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -109,7 +105,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Get login URL 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -122,7 +117,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Check - current profile is aninymous or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -137,7 +131,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * TODO: to revise
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function doActionCheckout()
@@ -194,7 +188,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * TODO: to revise
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -233,6 +226,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
             $status = \XLite\Model\Order::STATUS_PROCESSED;
 
             foreach ($cart->getPaymentTransactions() as $t) {
+
                 if ($t::STATUS_SUCCESS != $t->getStatus()) {
                     $status = \XLite\Model\Order::STATUS_QUEUED;
                     break;
@@ -286,7 +280,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * TODO: to revise
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -333,7 +326,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * TODO: to revise
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -374,7 +366,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Save anonymous profile 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -391,7 +382,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Clone profile and move profile to original profile
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -413,7 +403,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Check for order min/max total 
      * 
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isCheckoutNotAllowed()
@@ -426,7 +416,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * (CHECKOUT_MODE_REGISTER step check)
      * 
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isRegistrationNeeded()
@@ -438,7 +428,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Check if order total is zero
      * 
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isZeroOrderTotal()
@@ -450,7 +440,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Check if we are ready to select payment method
      * 
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isPaymentNeeded()
@@ -462,7 +452,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Common method to determine current location 
      *  
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getLocation()
@@ -474,7 +464,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Check amount for all cart items
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -487,7 +476,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Update profile 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -505,7 +493,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Update profile 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -555,7 +542,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Update shipping address 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -599,7 +585,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Update profiel billing address 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -681,7 +666,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * @param array $data Address data
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -696,7 +680,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Set payment method
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -729,7 +712,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Change shipping method
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -750,7 +732,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * If we can proceed with checkout with current cart
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

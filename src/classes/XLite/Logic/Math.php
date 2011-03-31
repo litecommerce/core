@@ -43,7 +43,7 @@ class Math extends \XLite\Logic\ALogic
      * Round 
      * 
      * @param float   $value     Value
-     * @param integer $precision Precision
+     * @param integer $precision Precision OPTIONAL
      *  
      * @return float|integer
      * @see    ____func_see____
@@ -95,7 +95,7 @@ class Math extends \XLite\Logic\ALogic
      * Round up
      *
      * @param float   $value     Value
-     * @param integer $precision Precision
+     * @param integer $precision Precision OPTIONAL
      *
      * @return float|integer
      * @see    ____func_see____
@@ -112,7 +112,7 @@ class Math extends \XLite\Logic\ALogic
      * Round down
      *
      * @param float   $value     Value
-     * @param integer $precision Precision
+     * @param integer $precision Precision OPTIONAL
      *
      * @return float|integer
      * @see    ____func_see____
@@ -129,7 +129,7 @@ class Math extends \XLite\Logic\ALogic
      * Round up (ceiling)
      *
      * @param float   $value     Value
-     * @param integer $precision Precision
+     * @param integer $precision Precision OPTIONAL
      *
      * @return float|integer
      * @see    ____func_see____
@@ -146,7 +146,7 @@ class Math extends \XLite\Logic\ALogic
      * Round down (floor)
      *
      * @param float   $value     Value
-     * @param integer $precision Precision
+     * @param integer $precision Precision OPTIONAL
      *
      * @return float|integer
      * @see    ____func_see____
@@ -163,7 +163,7 @@ class Math extends \XLite\Logic\ALogic
      * Round (half up)
      *
      * @param float   $value     Value
-     * @param integer $precision Precision
+     * @param integer $precision Precision OPTIONAL
      *
      * @return float|integer
      * @see    ____func_see____
@@ -180,7 +180,7 @@ class Math extends \XLite\Logic\ALogic
      * Round (half down)
      *
      * @param float   $value     Value
-     * @param integer $precision Precision
+     * @param integer $precision Precision OPTIONAL
      *
      * @return float|integer
      * @see    ____func_see____

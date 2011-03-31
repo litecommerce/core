@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core;
@@ -31,19 +31,17 @@ namespace XLite\Core;
 /**
  * Miscelaneous convertion routines
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Converter extends \XLite\Base\Singleton
 {
     /**
      * Method name translation records
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $to = array(
         'Q', 'W', 'E', 'R', 'T',
@@ -57,10 +55,9 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Method name translation patterns
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $from = array(
         '_q', '_w', '_e', '_r', '_t',
@@ -77,8 +74,8 @@ class Converter extends \XLite\Base\Singleton
      * @param string $string String to convert
      *  
      * @return string
-     * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public static function convertToCamelCase($string)
     {
@@ -91,8 +88,8 @@ class Converter extends \XLite\Base\Singleton
      * @param string $string String to convert
      *  
      * @return string
-     * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public static function convertFromCamelCase($string)
     {
@@ -105,7 +102,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $string Underline-style string
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -120,7 +116,7 @@ class Converter extends \XLite\Base\Singleton
      * @param string $target Current target
      *  
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  1.0.0
      */
     public static function getControllerClass($target)
@@ -145,28 +141,28 @@ class Converter extends \XLite\Base\Singleton
      *
      * @param string $target    Page identifier OPTIONAL
      * @param string $action    Action to perform OPTIONAL
-     * @param array  $params    Additional params
+     * @param array  $params    Additional params OPTIONAL
      * @param string $interface Interface script OPTIONAL
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
     {
         $url = isset($interface) ? $interface : \XLite::getInstance()->getScript();
 
-        $_params = array();
+        $urlParams = array();
 
         if ($target) {
-            $_params['target'] = $target;
+            $urlParams['target'] = $target;
         }
 
         if ($action) {
-            $_params['action'] = $action;
+            $urlParams['action'] = $action;
         }
 
-        $params = $_params + $params;
+        $params = $urlParams + $params;
 
         if (!empty($params)) {
             uksort($params, array(get_called_class(), 'sortURLParams'));
@@ -181,11 +177,11 @@ class Converter extends \XLite\Base\Singleton
      *
      * @param string $target Page identifier OPTIONAL
      * @param string $action Action to perform OPTIONAL
-     * @param array  $params Additional params
+     * @param array  $params Additional params OPTIONAL
      *
      * @return string
-     * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public static function buildFullURL($target = '', $action = '', array $params = array())
     {
@@ -195,11 +191,11 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Return array schema 
      * 
-     * @param array $keys   Keys list
-     * @param array $values Values list
+     * @param array $keys   Keys list OPTIONAL
+     * @param array $values Values list OPTIONAL
      *  
      * @return array
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public static function getArraySchema(array $keys = array(), array $values = array())
@@ -214,7 +210,7 @@ class Converter extends \XLite\Base\Singleton
      * @param string $currKey Parameter for recursive calls OPTIONAL
      *  
      * @return array
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public static function convertTreeToFlatArray(array $data, $currKey = '')
@@ -233,7 +229,6 @@ class Converter extends \XLite\Base\Singleton
      * Generate random token (32 chars)
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -246,7 +241,6 @@ class Converter extends \XLite\Base\Singleton
      * Check - is GDlib enabled or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -265,7 +259,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $url URL
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -282,7 +275,6 @@ class Converter extends \XLite\Base\Singleton
      * @param \XLite_Base $obj Object to get class name from
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -297,7 +289,6 @@ class Converter extends \XLite\Base\Singleton
      * @param mixed $price Currency unformatted value
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -322,7 +313,6 @@ class Converter extends \XLite\Base\Singleton
      * @param mixed $price Price
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -347,7 +337,6 @@ class Converter extends \XLite\Base\Singleton
      * @param string $dstUnit Destination weight unit
      *  
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -369,10 +358,9 @@ class Converter extends \XLite\Base\Singleton
      * Format time 
      * 
      * @param integer $base   UNIX time stamp
-     * @param string  $format Format string
+     * @param string  $format Format string OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -390,10 +378,9 @@ class Converter extends \XLite\Base\Singleton
      * Format date 
      * 
      * @param integer $base   UNIX time stamp
-     * @param string  $format Format string
+     * @param string  $format Format string OPTIONAL
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -413,12 +400,11 @@ class Converter extends \XLite\Base\Singleton
      * @param string $b Second parameter
      *  
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected static function sortURLParams($a, $b)
     {
-        return ($b == 'target' || ($b == 'action' && $a != 'target')) ? 1 : 0;
+        return ('target' == $b || ('action' == $b && 'target' != $a)) ? 1 : 0;
     }
 }
