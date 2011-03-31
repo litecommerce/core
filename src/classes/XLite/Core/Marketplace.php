@@ -542,7 +542,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function prepareResponseForGetAddonsAction(array $data)
     {
-        $result = array();
+        $modules = $result = array();
 
         foreach ($data as $module) {
 
@@ -557,8 +557,10 @@ class Marketplace extends \XLite\Base\Singleton
                 $version = $this->getField($module, self::RESPONSE_FIELD_MODULE_VERSION) ?: array();
                 $rating  = $this->getField($module, self::RESPONSE_FIELD_MODULE_RATING)  ?: array();
 
+                $majorVersion = $this->getField($version, self::FIELD_VERSION_MAJOR);
+
                 // It's the structure of \XLite\Model\Module class data
-                $result[$author . '\\' . $name] = array(
+                $modules[$author . '\\' . $name][$majorVersion] = array(
                     'name'          => $name,
                     'author'        => $author,
                     'marketplaceID' => $this->getField($module, self::RESPONSE_FIELD_MODULE_ID),
@@ -566,7 +568,7 @@ class Marketplace extends \XLite\Base\Singleton
                     'downloads'     => $this->getField($rating, self::RESPONSE_FIELD_MODULE_RATING_VOTES_COUNT),
                     'price'         => $this->getField($module, self::RESPONSE_FIELD_MODULE_PRICE),
                     'currency'      => $this->getField($module, self::RESPONSE_FIELD_MODULE_CURRENCY),
-                    'majorVersion'  => $this->getField($version, self::FIELD_VERSION_MAJOR),
+                    'majorVersion'  => $majorVersion,
                     'minorVersion'  => $this->getField($version, self::FIELD_VERSION_MINOR),
                     'revisionDate'  => $this->getField($module, self::RESPONSE_FIELD_MODULE_REVISION_DATE),
                     'moduleName'    => $this->getField($module, self::RESPONSE_FIELD_MODULE_READABLE_NAME),
@@ -581,6 +583,22 @@ class Marketplace extends \XLite\Base\Singleton
             } else {
 
                 // :TODO: add logging here
+            }
+        }
+
+        $coreVersion = \XLite::getInstance()->getMajorVersion();
+
+        foreach ($modules as $key => $element) {
+
+            if (isset($element[$coreVersion])) {
+
+                $result[$key] = $element[$coreVersion];
+
+            } else {
+
+                ksort($element);
+
+                $result[$key] = end($element);
             }
         }
 
