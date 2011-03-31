@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Button;
@@ -31,9 +31,8 @@ namespace XLite\View\Button;
 /**
  * Abstract button
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AButton extends \XLite\View\AView
 {
@@ -52,19 +51,51 @@ abstract class AButton extends \XLite\View\AView
     /**
      * allowedJSEvents 
      * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $allowedJSEvents = array(
         'onclick' => 'One click',
     );
 
+
+    /**
+     * Get a list of CSS files required to display the widget properly 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'button/css/button.css';
+
+        return $list;
+    }
+
+    /**
+     * Get a list of JavaScript files required to display the widget properly
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = 'button/js/button.js';
+
+        return $list;
+    }
+
+
     /**
      * getDefaultLabel
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -77,7 +108,7 @@ abstract class AButton extends \XLite\View\AView
      * Return button text 
      * 
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getButtonLabel()
@@ -89,7 +120,7 @@ abstract class AButton extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -110,7 +141,6 @@ abstract class AButton extends \XLite\View\AView
      * getClass 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -123,7 +153,6 @@ abstract class AButton extends \XLite\View\AView
      * getId 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -136,7 +165,7 @@ abstract class AButton extends \XLite\View\AView
      * Return button name 
      * 
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getName()
@@ -148,7 +177,7 @@ abstract class AButton extends \XLite\View\AView
      * Return button value 
      * 
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getValue()
@@ -160,8 +189,8 @@ abstract class AButton extends \XLite\View\AView
      * hasName 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
+     * @since  3.0.0
      */
     protected function hasName()
     {
@@ -172,8 +201,8 @@ abstract class AButton extends \XLite\View\AView
      * hasValue 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
+     * @since  3.0.0
      */
     protected function hasValue()
     {
@@ -184,7 +213,6 @@ abstract class AButton extends \XLite\View\AView
      * hasClass 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -192,37 +220,4 @@ abstract class AButton extends \XLite\View\AView
     {
         return '' !== $this->getParam(self::PARAM_STYLE);
     }
-
-
-    /**
-     * Get a list of CSS files required to display the widget properly 
-     * 
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'button/css/button.css';
-
-        return $list;
-    }
-
-    /**
-     * Get a list of JavaScript files required to display the widget properly
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-        $list[] = 'button/js/button.js';
-
-        return $list;
-    }
 }
-
