@@ -13,6 +13,6 @@
  * @ListChild (list="itemsList.module.install.columns.module-description-section", weight="30")
  *}
 
-<div class="module-url">
+<div class="module-url" IF="module.getPageURL()">
   <a href="{module.getPageURL()}" target="_blank">{t(#Visit add-on's page#)}</a>
 </div>
