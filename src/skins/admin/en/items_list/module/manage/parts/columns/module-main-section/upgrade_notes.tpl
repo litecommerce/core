@@ -11,7 +11,6 @@
  * @since     3.0.0
  * @ListChild (list="itemsList.module.manage.columns.module-main-section", weight="40")
  *}
-<div IF="isModuleUpgradeAvailable(module)" class="note version upgrade">
-  {t(#A new version is available#)}<br />
-  <widget class="\XLite\View\Button\Regular" label="Upgrade" /> {t(#to v.#)} {getMaxModuleVersion(module)}
+<div IF="isModuleUpdateAvailable(module)" class="note version upgrade">
+  {t(#An update is available#)}
 </div>
