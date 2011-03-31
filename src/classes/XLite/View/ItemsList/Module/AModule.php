@@ -283,6 +283,22 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
+     * Check if core requires new (but the same as core major) version of module
+     * 
+     * @param \XLite\Model\Module $module Module to check
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isModuleUpdateNeeded(\XLite\Model\Module $module)
+    {
+        // TODO MARKETPLACE: ADD checking _new_ minor version
+        return $this->isModuleCompatible($module);
+    }
+
+    /**
      * Check if new module version is available for install
      *
      * TODO: it's the stub
@@ -298,6 +314,22 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     {
         return $module->getEnabled() && $this->isVersionValid($module) && (bool) rand(0, 1);
     }
+
+    /**
+     * Check if the module major version is the same as the core one
+     * 
+     * @param \XLite\Model\Module $module Module to check
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isModuleCompatible(\XLite\Model\Module $module)
+    {
+        return \XLite::getInstance()->checkVersion($module->getMajorVersion(), '=');
+    }
+
 
     /**
      * Get max available core version for upgrade
