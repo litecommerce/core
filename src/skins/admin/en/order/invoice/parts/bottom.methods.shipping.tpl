@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Invoice items
+ * Invoice shipping methods
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,20 +9,9 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="invoice.base", weight="30")
+ * @ListChild (list="invoice.bottom.methods", weight="10")
  *}
-<table cellspacing="0" class="items">
-
-  <tr>
-    {displayViewListContent(#invoice.items.head#)}
-  </tr>
-
-  <tr FOREACH="order.getItems(),item">
-    {displayViewListContent(#invoice.item#,_ARRAY_(#item#^item))}
-  </tr>
-
-  <tr FOREACH="getViewList(#invoice.items#),w">
-    {w.display()}
-  </tr>
-
-</table>
+<td class="shipping" IF="shippingModifier.method">
+  <strong>{t(#Shipping method#)}:</strong>
+  {shippingModifier.method.name}
+</td>

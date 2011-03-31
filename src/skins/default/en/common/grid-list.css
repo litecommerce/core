@@ -21,6 +21,7 @@ ul.grid-list,
 ul.grid-list li
 {
   padding: 0;
+  margin: 0;
 }
 
 ul.grid-list li
