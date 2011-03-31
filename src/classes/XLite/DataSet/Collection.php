@@ -41,7 +41,7 @@ class Collection extends \Doctrine\Common\Collections\ArrayCollection
     /**
      * Constructor
      * 
-     * @param array $elements Elements
+     * @param array $elements Elements OPTIONAL
      *  
      * @return void
      * @see    ____func_see____
