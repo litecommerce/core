@@ -107,4 +107,21 @@ class Model extends \XLite\View\Order\Details\Base\AModel
 
         parent::__construct($params, $sections);
     }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'order/invoice/style.css';
+
+        return $list;
+    }
 }

@@ -17,7 +17,7 @@
       {displayInheritedViewListContent(#captions#)}
     </tr>
     <tr FOREACH="getPageData(),product" class="product-cell {getProductCellClass(product)}">
-      <td FOREACH="getNestedViewList(#columns#,_ARRAY_(#product#^product)),column">{column.display()}</td>
+      <td FOREACH="getInheritedViewList(#columns#,_ARRAY_(#product#^product)),column">{column.display()}</td>
     </tr>
   </table>
 

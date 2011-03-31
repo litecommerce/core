@@ -1,18 +1,16 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Invoice title
- *
- * @author    Creative Development LLC <info@cdev.ru>
+ * Invoice : header : logo
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="invoice.base", weight="20")
+ * @ListChild (list="invoice.head", weight="20")
  *}
-<h2 class="invoice">Invoice #{order.getOrderId()}</h2>
-<div class="subhead">
-  {formatTime(order.getDate())}
-  <span>{t(#Grand total#)}: {order.getTotal():p}</span>
-</div>
+<td class="logo">
+  <img src="images/invoice_logo.png" alt="{config.Company.company_name}" class="logo" />
+</td>
