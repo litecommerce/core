@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * Image upload component.
  *
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class ImageUpload extends \XLite\View\AView
 {
@@ -48,10 +47,9 @@ class ImageUpload extends \XLite\View\AView
     /**
      * Show delete control
      * 
-     * @var    boolean
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public $showDelete = true;
 
@@ -59,7 +57,7 @@ class ImageUpload extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
@@ -71,7 +69,7 @@ class ImageUpload extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -90,7 +88,6 @@ class ImageUpload extends \XLite\View\AView
      * Check if object has image
      * 
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -115,7 +112,6 @@ class ImageUpload extends \XLite\View\AView
      * Check if image is on file system 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

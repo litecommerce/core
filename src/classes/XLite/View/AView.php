@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * Abstract widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AView extends \XLite\Core\Handler
 {
@@ -64,10 +63,9 @@ abstract class AView extends \XLite\Core\Handler
      * Object instance cache
      * FIXME[SINGLETONS] - to remove
      * 
-     * @var    \XLite\Core\FlexyCompiler
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Core\FlexyCompiler
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $flexy;
 
@@ -75,48 +73,45 @@ abstract class AView extends \XLite\Core\Handler
      * Object instance cache
      * FIXME[SINGLETONS] - to remove
      * 
-     * @var    \XLite\Core\Layout
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Core\Layout
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $layout;
 
     /**
      * Deep count
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $countDeep = 0;
 
     /**
      * Level count
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $countLevel = 0;
 
     /**
      * isCloned 
      * 
-     * @var    bool
-     * @access protected
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $isCloned = false;
 
     /**
      * Widgets resources collector
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $resources = array(
         self::RESOURCE_JS  => array(),
@@ -126,39 +121,36 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * "Named" widgets cache
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $namedWidgets = array();
 
     /**
      * View lists (cache)
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $viewLists = array();
 
     /**
      * Previous skin name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $previousSkin;
 
     /**
      * Previous template short path
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $previousTemplate;
 
@@ -166,11 +158,48 @@ abstract class AView extends \XLite\Core\Handler
      * Return widget default template
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     abstract protected function getDefaultTemplate();
+
+
+    /**
+     * Return list of all registered resources 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getRegisteredResources($type = null)
+    {
+        return isset($type) ? self::$resources[$type] : self::$resources;
+    }
+
+    /**
+     * Cleanup resources 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function cleanUpResources()
+    {
+        self::$resources = self::getResourcesSchema();
+    }
+
+    /**
+     * Return list of allowed targets
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        return array();
+    }
+
 
     /**
      * Prepare resources list
@@ -179,7 +208,6 @@ abstract class AView extends \XLite\Core\Handler
      * @param boolean $isCommon Flag to determine how to prepare URL OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -218,10 +246,330 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
+     * Common layout for the widget resources 
+     * 
+     * @param array $jsResources  List of JS resources OPTIONAL
+     * @param array $cssResources List of CSS resources OPTIONAL
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getResourcesSchema(array $jsResources = array(), array $cssResources = array())
+    {
+        return \XLite\Core\Converter::getArraySchema(array_keys(self::$resources), array($jsResources, $cssResources));
+    }
+
+
+    /**
+     * Use current controller context
+     * 
+     * @param string $name Property name
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __get($name)
+    {
+        $value = 'mm' == $name
+            ? \XLite\Core\Database::getRepo('\XLite\Model\Module')
+            : parent::__get($name);
+
+        return isset($value)
+            ? $value
+            : \XLite::getController()->$name;
+    }
+
+    /**
+     * Use current controller context
+     * 
+     * @param string $method Method name
+     * @param array  $args   Call arguments OPTIONAL
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __call($method, array $args = array())
+    {
+        return call_user_func_array(array(\XLite::getController(), $method), $args);
+    }
+
+    /**
+     * Copy widget params 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __clone()
+    {
+        foreach ($this->getWidgetParams() as $name => $param) {
+            $this->widgetParams[$name] = clone $param;
+        }
+
+        $this->isCloned = true;
+    }
+
+    /**
+     * Return list of widget resources 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getResources()
+    {
+        $common = $this->getCommonFiles();
+
+        return self::getResourcesSchema(
+            array_merge(
+                static::prepareResources($common['js'], true), // prepare common JS files
+                static::prepareResources($this->getJSFiles()) // prepare JS files specific for the skin + widget
+            ),
+            array_merge(
+                static::prepareResources($common['css'], true),
+                static::prepareResources($this->getCSSFiles())
+            )
+        );
+    }
+
+    /**
+     * Return widget object
+     *
+     * @param array  $params Widget params OPTIONAL
+     * @param string $class  Widget class OPTIONAL
+     * @param string $name   Widget class OPTIONAL
+     *
+     * @return \XLite\View\AView
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getWidget(array $params = array(), $class = null, $name = null)
+    {
+        if (isset($name)) {
+            // Save object reference in cache if it's not already saved
+            if (!isset($this->namedWidgets[$name])) {
+                $this->namedWidgets[$name] = $this->getChildWidget($class);
+            }
+            // Get cached object
+            $widget = $this->namedWidgets[$name];
+
+        } else {
+            // Create/clone current widget
+            $widget = $this->getChildWidget($class);
+        }
+
+        // Set param values
+        $widget->setWidgetParams($params);
+
+        // Initialize
+        $widget->init();
+
+        return $widget;
+    }
+
+    /**
+     * Check if widget is visible
+     * 
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkVisibility()
+    {
+        return $this->isCloned || $this->isVisible();
+    }
+
+    /**
+     * Attempts to display widget using its template 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function display()
+    {
+        if ($this->checkVisibility()) {
+            $this->isCloned ?: $this->initView();
+            $this->includeCompiledFile();
+            $this->isCloned ?: $this->closeView();
+        }
+    }
+
+    /**
+     * Return viewer output
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getContent()
+    {
+        ob_start();
+        $this->display();
+        $content = ob_get_contents();
+        ob_end_clean();
+
+        return $content;
+    }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = array(
+            'css/style.css',
+            'css/ajax.css',
+            array(
+                'file'  => 'css/print.css',
+                'media' => 'print',
+            ),
+        );
+
+        if (\XLite\Logger::isMarkTemplates()) {
+            $list[] = 'css/template_debuger.css';
+        }
+
+        return $list;
+    }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        return array();
+    }
+
+    /**  
+     * Register files from common repository
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCommonFiles()
+    {
+        $list = array(
+            'js' => array(
+                'js/jquery.min.js',
+                'js/jquery-ui.min.js',
+                'js/common.js',
+                'js/core.js',
+                'js/core.controller.js',
+                'js/core.loadable.js',
+                'js/core.popup.js',
+                'js/core.form.js',
+                'js/php.js',
+                'js/jquery.mousewheel.js',
+                'js/jquery.validationEngine-' . $this->getCurrentLanguage()->getCode() . '.js',
+                'js/jquery.validationEngine.js',
+            ),
+            'css' => array(
+                'ui/jquery-ui.css',
+                'css/jquery.mousewheel.css',
+                'css/validationEngine.jquery.css',
+            ),
+        );
+
+        if (\XLite\Logger::isMarkTemplates()) {
+            $list['js'][] = 'js/template_debuger.js';
+        }
+
+        return $list;
+    }    
+
+    /**
+     * Check for current target
+     * 
+     * @param array $targets List of allowed targets
+     *  
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isDisplayRequired(array $targets)
+    {
+        return in_array(\XLite\Core\Request::getInstance()->target, $targets);
+    }
+
+    /**
+     * Check for current mode
+     *
+     * @param array $modes List of allowed modes
+     *
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isDisplayRequiredForMode(array $modes)
+    {
+        return in_array(\XLite\Core\Request::getInstance()->mode, $modes);
+    }
+
+    /**
+     * Get current language 
+     * 
+     * @return \XLite\Model\Language
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCurrentLanguage()
+    {
+        return \XLite\Core\Session::getInstance()->getLanguage();
+    }
+
+    /**
+     * FIXME - backward compatibility
+     *
+     * @param string $name Property name
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function get($name)
+    {
+        $value = parent::get($name);
+
+        return isset($value) ? $value : \XLite::getController()->get($name);
+    }
+
+    /**
+     * setPreviousTpl 
+     * 
+     * @param string $skin     Skin name
+     * @param string $template Template name
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setPreviousTpl($skin, $template)
+    {
+        $this->previousSkin = $skin;
+        $this->previousTemplate = $template;
+
+        return $this;
+    }
+
+
+    /**
      * Return current template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getTemplate()
@@ -232,10 +580,11 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Return full template file name
      *
-     * @param string $template Template file name (optional) OPTIONAL
+     * @param string $template         Template file name OPTIONAL
+     * @param string $previousSkin     Previous skin OPTIONAL
+     * @param string $previousTemplate Previous template OPTIONAL
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -248,21 +597,13 @@ abstract class AView extends \XLite\Core\Handler
         );
     }
 
-    public function setPreviousTpl($skin, $template)
-    {
-        $this->previousSkin = $skin;
-        $this->previousTemplate = $template;
-
-        return $this;
-    }
-
     /**
      * Return instance of the child widget 
      * 
      * @param string $class Child widget class OPTIONAL
      *  
      * @return \XLite\View\AView
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getChildWidget($class = null)
@@ -274,7 +615,7 @@ abstract class AView extends \XLite\Core\Handler
      * Return list of the modes allowed by default
      * 
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultModes()
@@ -286,7 +627,7 @@ abstract class AView extends \XLite\Core\Handler
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -300,28 +641,13 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Common layout for the widget resources 
-     * 
-     * @param array $jsResources  List of JS resources
-     * @param array $cssResources List of CSS resources
-     *  
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected static function getResourcesSchema(array $jsResources = array(), array $cssResources = array())
-    {
-        return \XLite\Core\Converter::getArraySchema(array_keys(self::$resources), array($jsResources, $cssResources));
-    }
-
-    /**
      * Register resources of certain type 
      * 
      * @param string $type      Resources type
      * @param array  $resources Resources to register
      *  
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function registerResourcesType($type, array $resources)
@@ -345,7 +671,7 @@ abstract class AView extends \XLite\Core\Handler
      * Register widget resources
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function registerResources()
@@ -359,7 +685,6 @@ abstract class AView extends \XLite\Core\Handler
      * Check visibility according to the current target
      * 
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -374,7 +699,7 @@ abstract class AView extends \XLite\Core\Handler
      * Check if current mode is allowable 
      * 
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function checkMode()
@@ -388,7 +713,6 @@ abstract class AView extends \XLite\Core\Handler
      * Called before the includeCompiledFile()
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -402,7 +726,7 @@ abstract class AView extends \XLite\Core\Handler
      * Called after the includeCompiledFile()
      * 
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function closeView()
@@ -413,7 +737,6 @@ abstract class AView extends \XLite\Core\Handler
      * Check if widget is visible
      *
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -425,12 +748,11 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Compile and display a template
      *
-     * @param string $original         Template file name
-     * @param string $previousSkin     Previous skin
-     * @param string $previousTemplate Previous template
+     * @param string $original         Template file name OPTIONAL
+     * @param string $previousSkin     Previous skin OPTIONAL
+     * @param string $previousTemplate Previous template OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -482,7 +804,6 @@ abstract class AView extends \XLite\Core\Handler
      * @param string $name Param name
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -492,346 +813,96 @@ abstract class AView extends \XLite\Core\Handler
     }
 
 
+    // {{{ Routines for templates
+
+
     /**
-     * Return list of widget resources 
-     * 
+     * Constructor
+     *
      * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function getResources()
-    {
-        $common = $this->getCommonFiles();
-
-        return self::getResourcesSchema(
-            array_merge(
-                static::prepareResources($common['js'], true), // prepare common JS files
-                static::prepareResources($this->getJSFiles()) // prepare JS files specific for the skin + widget
-            ),
-            array_merge(
-                static::prepareResources($common['css'], true),
-                static::prepareResources($this->getCSSFiles())
-            )
-        );
-    }
-
-    /**
-     * Return widget object
-     *
-     * @param array  $params Widget params
-     * @param string $class  Widget class OPTIONAL
-     * @param string $name   Widget class OPTIONAL
-     *
-     * @return \XLite\View\AView
-     * @access public
-     * @since  3.0.0
-     */
-    public function getWidget(array $params = array(), $class = null, $name = null)
-    {
-        if (isset($name)) {
-            // Save object reference in cache if it's not already saved
-            if (!isset($this->namedWidgets[$name])) {
-                $this->namedWidgets[$name] = $this->getChildWidget($class);
-            }
-            // Get cached object
-            $widget = $this->namedWidgets[$name];
-
-        } else {
-            // Create/clone current widget
-            $widget = $this->getChildWidget($class);
-        }
-
-        // Set param values
-        $widget->setWidgetParams($params);
-
-        // Initialize
-        $widget->init();
-
-        return $widget;
-    }
-
-    /**
-     * Check if widget is visible
-     * 
-     * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function checkVisibility()
+    public function __construct()
     {
-        return $this->isCloned || $this->isVisible();
+        parent::__construct();
+
+        static::$flexy  = \XLite\Core\FlexyCompiler::getInstance();
+        static::$layout = \XLite\Core\Layout::getInstance();
     }
 
+
     /**
-     * Attempts to display widget using its template 
+     * Display view list content 
      * 
+     * @param string $list      List name
+     * @param array  $arguments List common arguments OPTIONAL
+     *  
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function display()
+    public function displayViewListContent($list, array $arguments = array())
     {
-        if ($this->checkVisibility()) {
-            $this->isCloned ?: $this->initView();
-            $this->includeCompiledFile();
-            $this->isCloned ?: $this->closeView();
-        }
+        echo ($this->getViewListContent($list, $arguments));
     }
 
     /**
-     * Return viewer output
-     *
+     * Display plain array as JS array
+     * 
+     * @param array $data Plain array
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function displayCommentedData(array $data)
+    {
+        echo ('<!--' . "\r\n" . 'DATACELL' . "\r\n" . json_encode($data) . "\r\n" . '-->' . "\r\n");
+    }
+
+    /**
+     * Format price 
+     * 
+     * @param float                 $value    Price
+     * @param \XLite\Model\Currency $currency Currency OPTIONAL
+     *  
      * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getContent()
-    {
-        ob_start();
-        $this->display();
-        $content = ob_get_contents();
-        ob_end_clean();
-
-        return $content;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCSSFiles()
+    public function formatPrice($value, \XLite\Model\Currency $currency = null)
     {
-        $list = array(
-            'css/style.css',
-            'css/ajax.css',
-            array(
-                'file'  => 'css/print.css',
-                'media' => 'print',
-            ),
-        );
-
-        if (\XLite\Logger::isMarkTemplates()) {
-            $list[] = 'css/template_debuger.css';
+        if (!isset($currency)) {
+            $currency = \XLite::getInstance()->getCurrency();
         }
 
-        return $list;
+        $symbol = $currency->getSymbol() ?: (strtoupper($currency->getCode()) . ' ');
+        $sign   = 0 < $value ? '' : '&minus;&#8197';
+
+        return $sign . $symbol . $currency->formatValue(abs($value));
     }
 
     /**
-     * Register JS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        return array();
-    }
-
-    /**  
-     * Register files from common repository
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCommonFiles()
-    {
-        $list = array(
-            'js' => array(
-                'js/jquery.min.js',
-                'js/jquery-ui.min.js',
-                'js/common.js',
-                'js/core.js',
-                'js/core.controller.js',
-                'js/core.loadable.js',
-                'js/core.popup.js',
-                'js/core.form.js',
-                'js/php.js',
-                'js/jquery.mousewheel.js',
-                'js/jquery.validationEngine-' . $this->getCurrentLanguage()->getCode() . '.js',
-                'js/jquery.validationEngine.js',
-            ),
-            'css' => array(
-                'ui/jquery-ui.css',
-                'css/jquery.mousewheel.css',
-                'css/validationEngine.jquery.css',
-            ),
-        );
-
-        if (\XLite\Logger::isMarkTemplates()) {
-            $list['js'][] = 'js/template_debuger.js';
-        }
-
-        return $list;
-    }    
-
-    /**
-     * Return list of all registered resources 
+     * Check - view list is visible or not
      * 
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public static function getRegisteredResources($type = null)
-    {
-        return isset($type) ? self::$resources[$type] : self::$resources;
-    }
-
-    /**
-     * Cleanup resources 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function cleanUpResources()
-    {
-        self::$resources = self::getResourcesSchema();
-    }
-
-    /**
-     * Return list of allowed targets
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        return array();
-    }
-
-    /**
-     * Check for current target
-     * 
-     * @param array $targets List of allowed targets
+     * @param string $list      List name
+     * @param array  $arguments List common arguments OPTIONAL
      *  
-     * @return boolean 
-     * @access public
+     * @return boolean
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isDisplayRequired(array $targets)
+    public function isViewListVisible($list, array $arguments = array())
     {
-        return in_array(\XLite\Core\Request::getInstance()->target, $targets);
+        return 0 < count($this->getViewList($list, $arguments));
     }
-
-    /**
-     * Check for current mode
-     *
-     * @param array $modes List of allowed modes
-     *
-     * @return boolean 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isDisplayRequiredForMode(array $modes)
-    {
-        return in_array(\XLite\Core\Request::getInstance()->mode, $modes);
-    }
-
-    /**
-     * Get current language 
-     * 
-     * @return \XLite\Model\Language
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCurrentLanguage()
-    {
-        return \XLite\Core\Session::getInstance()->getLanguage();
-    }
-
-    /**
-     * FIXME - backward compatibility
-     *
-     * @param string $name Property name
-     *
-     * @return mixed
-     * @access public
-     * @since  3.0.0
-     */
-    public function get($name)
-    {
-        $value = parent::get($name);
-
-        return isset($value) ? $value : \XLite::getController()->get($name);
-    }
-
-    /**
-     * Use current controller context
-     * 
-     * @param string $name Property name
-     *  
-     * @return mixed
-     * @access public
-     * @since  3.0.0
-     */
-    public function __get($name)
-    {
-        $value = 'mm' == $name
-            ? \XLite\Core\Database::getRepo('\XLite\Model\Module')
-            : parent::__get($name);
-
-        return isset($value)
-            ? $value
-            : \XLite::getController()->$name;
-    }
-
-    /**
-     * Use current controller context
-     * 
-     * @param string $method Method name
-     * @param array  $args   Call arguments
-     *  
-     * @return mixed
-     * @access public
-     * @since  3.0.0
-     */
-    public function __call($method, array $args = array())
-    {
-        return call_user_func_array(array(\XLite::getController(), $method), $args);
-    }
-
-    /**
-     * Copy widget params 
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function __clone()
-    {
-        foreach ($this->getWidgetParams() as $name => $param) {
-            $this->widgetParams[$name] = clone $param;
-        }
-
-        $this->isCloned = true;
-    }
-
-   
-
-    // ------------------> Routines for templates
 
 
     /**
      * concat 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -848,7 +919,7 @@ abstract class AView extends \XLite\Core\Handler
      * @param mixed $val3 Value 3 OPTIONAL
      *  
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isSelected($val1, $val2, $val3 = null)
@@ -885,7 +956,7 @@ abstract class AView extends \XLite\Core\Handler
      * @param mixed   $breakWords Word wrap flag OPTIONAL
      *  
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function truncate($base, $field, $length = 0, $etc = '...', $breakWords = false)
@@ -927,7 +998,7 @@ abstract class AView extends \XLite\Core\Handler
      * @param string $format Date format OPTIONAL
      *  
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function formatDate($base, $field = null, $format = null)
@@ -949,7 +1020,7 @@ abstract class AView extends \XLite\Core\Handler
      * @param string $format Date format OPTIONAL
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function formatTime($base, $field = null, $format = null)
@@ -973,7 +1044,7 @@ abstract class AView extends \XLite\Core\Handler
      * @param mixed  $decimalDelim  Separator for the decimal point OPTIONAL
      *  
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function price_format($base, $field = '', $thousandDelim = null, $decimalDelim = null)
@@ -1007,36 +1078,13 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Format price 
-     * 
-     * @param float                 $value    Price
-     * @param \XLite\Model\Currency $currency Currency
-     *  
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function formatPrice($value, \XLite\Model\Currency $currency = null)
-    {
-        if (!isset($currency)) {
-            $currency = \XLite::getInstance()->getCurrency();
-        }
-
-        $symbol = $currency->getSymbol() ?: (strtoupper($currency->getCode()) . ' ');
-        $sign   = 0 < $value ? '' : '&minus;&#8197';
-
-        return $sign . $symbol . $currency->formatValue(abs($value));
-    }
-
-    /**
      * Add slashes 
      * 
      * @param mixed  $base  String or object instance to get field value from
      * @param string $field Field to get value OPTIONAL
      *  
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function addSlashes($base, $field = null)
@@ -1050,7 +1098,7 @@ abstract class AView extends \XLite\Core\Handler
      * @param mixed $data Data to check
      *  
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isEmpty($data)
@@ -1065,7 +1113,7 @@ abstract class AView extends \XLite\Core\Handler
      * @param integer $count Chunks count
      *  
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function split(array $array, $count)
@@ -1091,7 +1139,7 @@ abstract class AView extends \XLite\Core\Handler
      * @param integer $inc   Increment OPTIONAL
      *  
      * @return integer
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function inc($value, $inc = 1)
@@ -1104,7 +1152,7 @@ abstract class AView extends \XLite\Core\Handler
      * TODO - rarely used function; probably, should be removed 
      * 
      * @return integer 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function rand()
@@ -1120,7 +1168,7 @@ abstract class AView extends \XLite\Core\Handler
      * @param string  $evenCSSClass Second CSS class OPTIONAL
      *  
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getRowClass($row, $oddCSSClass, $evenCSSClass = null)
@@ -1132,10 +1180,9 @@ abstract class AView extends \XLite\Core\Handler
      * Get view list 
      * 
      * @param string $list      List name
-     * @param array  $arguments List common arguments
+     * @param array  $arguments List common arguments OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1167,7 +1214,6 @@ abstract class AView extends \XLite\Core\Handler
      * @param string $list List name
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1183,7 +1229,6 @@ abstract class AView extends \XLite\Core\Handler
      * Detect current view zone 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1213,7 +1258,6 @@ abstract class AView extends \XLite\Core\Handler
      * @param integer $weight     Node position OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1244,7 +1288,6 @@ abstract class AView extends \XLite\Core\Handler
      * @param string $list List name
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1255,39 +1298,38 @@ abstract class AView extends \XLite\Core\Handler
 
         foreach ($this->getViewListChildren($list) as $widget) {
 
-            if ($widget->getTpl() && isset($hash[$widget->getTpl()])) {
-                continue;
-            }
+            if (!$widget->getTpl() || !isset($hash[$widget->getTpl()])) {
 
-            $w = false;
+                $w = false;
 
-            if ($widget->getChild()) {
+                if ($widget->getChild()) {
 
-                // List child is widget
-                $w = $this->getWidget(
-                    array(
-                        'viewListClass' => $this->getViewListClass(),
-                        'viewListName'  => $list,
-                    ),
-                    $widget->getChild()
-                );
+                    // List child is widget
+                    $w = $this->getWidget(
+                        array(
+                            'viewListClass' => $this->getViewListClass(),
+                            'viewListName'  => $list,
+                        ),
+                        $widget->getChild()
+                    );
 
-            } elseif ($widget->getTpl()) {
+                } elseif ($widget->getTpl()) {
 
-                // List child is template
-                $w = $this->getWidget(
-                    array(
-                        'viewListClass' => $this->getViewListClass(),
-                        'viewListName'  => $list,
-                        'template'      => $widget->getTpl(),
-                    )
-                );
-            }
+                    // List child is template
+                    $w = $this->getWidget(
+                        array(
+                            'viewListClass' => $this->getViewListClass(),
+                            'viewListName'  => $list,
+                            'template'      => $widget->getTpl(),
+                        )
+                    );
+                }
 
-            if ($w) {
-                $widgets[] = $w;
-                if ($widget->getTpl()) {
-                    $hash[$widget->getTpl()] = true;
+                if ($w) {
+                    $widgets[] = $w;
+                    if ($widget->getTpl()) {
+                        $hash[$widget->getTpl()] = true;
+                    }
                 }
             }
         }
@@ -1296,26 +1338,9 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Check - view list is visible or not
-     * 
-     * @param string $list      List name
-     * @param array  $arguments List common arguments
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isViewListVisible($list, array $arguments = array())
-    {
-        return 0 < count($this->getViewList($list, $arguments));
-    }
-
-    /**
      * Get view list class name
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1330,7 +1355,6 @@ abstract class AView extends \XLite\Core\Handler
      * @param string $content Content
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1345,7 +1369,6 @@ abstract class AView extends \XLite\Core\Handler
      * @param string $content Content
      *  
      * @return \DOMXPath
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1361,10 +1384,9 @@ abstract class AView extends \XLite\Core\Handler
      * Get view list content 
      * 
      * @param string $list      List name
-     * @param array  $arguments List common arguments
+     * @param array  $arguments List common arguments OPTIONAL
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1386,7 +1408,6 @@ abstract class AView extends \XLite\Core\Handler
      * @param string $list List name
      *  
      * @return \DOMNamedNodeMap|void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1411,7 +1432,6 @@ abstract class AView extends \XLite\Core\Handler
      * @param string $insertPosition Insert position code OPTIONAL
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1438,7 +1458,6 @@ abstract class AView extends \XLite\Core\Handler
      * @param string           $baseInsertType Patch insert type
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1494,7 +1513,6 @@ abstract class AView extends \XLite\Core\Handler
      * @param string $replace Replace pattern OPTIONAL
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1513,7 +1531,6 @@ abstract class AView extends \XLite\Core\Handler
      * @param string $part Suffix to be added to the parent list name
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1526,10 +1543,9 @@ abstract class AView extends \XLite\Core\Handler
      * Display a nested view list
      * 
      * @param string $part   Suffix that should be appended to the name of a parent list (will be delimited with a dot)
-     * @param array  $params Widget params
+     * @param array  $params Widget params OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1542,10 +1558,9 @@ abstract class AView extends \XLite\Core\Handler
      * Get a nested view list 
      * 
      * @param string $part      Suffix of the nested list name
-     * @param array  $arguments List common arguments
+     * @param array  $arguments List common arguments OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1558,7 +1573,6 @@ abstract class AView extends \XLite\Core\Handler
      * Return internal list name
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1573,7 +1587,6 @@ abstract class AView extends \XLite\Core\Handler
      * @param string $part Suffix to be added to the inherited list name
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1586,10 +1599,9 @@ abstract class AView extends \XLite\Core\Handler
      * Display a inherited view list
      * 
      * @param string $part   Suffix that should be appended to the name of a inherited list (will be delimited with a dot)
-     * @param array  $params Widget params
+     * @param array  $params Widget params OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1602,10 +1614,9 @@ abstract class AView extends \XLite\Core\Handler
      * Get a inherited view list 
      * 
      * @param string $part      Suffix of the inherited list name
-     * @param array  $arguments List common arguments
+     * @param array  $arguments List common arguments OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1615,29 +1626,12 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Display view list content 
-     * 
-     * @param string $list      List name
-     * @param array  $arguments List common arguments
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function displayViewListContent($list, array $arguments = array())
-    {
-        echo ($this->getViewListContent($list, $arguments));
-    }
-
-    /**
      * getNamePostedData 
      * 
      * @param string  $field Field name
      * @param integer $id    Model object ID OPTIONAL
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1668,7 +1662,6 @@ abstract class AView extends \XLite\Core\Handler
      * @param integer $id Model object ID
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1680,13 +1673,13 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Checks if specific developer mode is defined
+     * TODO: check if this method is used
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function developerMode()
+    protected function isDeveloperMode()
     {
         return defined('LC_DEVELOPER_MODE') && constant('LC_DEVELOPER_MODE');
     }
@@ -1695,7 +1688,6 @@ abstract class AView extends \XLite\Core\Handler
      * Return currency symbol 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1704,35 +1696,6 @@ abstract class AView extends \XLite\Core\Handler
         return \XLite::getInstance()->getCurrency()->getSymbol();
     }
 
+    // }}}
 
-    /**
-     * So called "static constructor".
-     *
-     * NOTE: do not call the "parent::__constructStatic()" explicitly: it will be called automatically
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function __constructStatic()
-    {
-        static::$flexy  = \XLite\Core\FlexyCompiler::getInstance();
-        static::$layout = \XLite\Core\Layout::getInstance();
-    }
-
-    /**
-     * Display plain array as JS array
-     * 
-     * @param array $data Plain array
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function displayCommentedData(array $data)
-    {
-        echo ('<!--' . "\r\n" . 'DATACELL' . "\r\n" . json_encode($data) . "\r\n" . '-->' . "\r\n");
-    }
 }

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -32,9 +32,8 @@ namespace XLite\View;
 /**
  * Category selector
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class CategorySelect extends \XLite\View\AView
 {
@@ -53,96 +52,44 @@ class CategorySelect extends \XLite\View\AView
     /**
      * categories 
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $categories = null;
 
     /**
      * field 
      * 
-     * @var    mixed
-     * @access public
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     public $field;
 
     /**
      * formName 
      * 
-     * @var    mixed
-     * @access public
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     public $formName;
 
     /**
      * selectedCategory 
      * 
-     * @var    mixed
-     * @access public
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     public $selectedCategory = null;
 
 
     /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'common/select_category.tpl';
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_ALL_OPTION           => new \XLite\Model\WidgetParam\Bool('Display All option', false),
-            self::PARAM_NONE_OPTION          => new \XLite\Model\WidgetParam\Bool('Display None option', false),
-            self::PARAM_ROOT_OPTION          => new \XLite\Model\WidgetParam\Bool('Display [Root level] option', false),
-            self::PARAM_FIELD_NAME           => new \XLite\Model\WidgetParam\String('Field name', ''),
-            self::PARAM_SELECTED_CATEGORY_ID => new \XLite\Model\WidgetParam\Int('Selected category id', 0),
-            self::PARAM_CURRENT_CATEGORY_ID  => new \XLite\Model\WidgetParam\Int('Current category id', 0),
-            self::PARAM_IGNORE_CURRENT_PATH  => new \XLite\Model\WidgetParam\Bool('Ignore current path', false),
-        );
-    }
-
-    /**
-     * Get categories condition 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getCategoriesCondition()
-    {
-        return array(null, null, null, null);
-    }
-
-    /**
      * Get categories list
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -180,7 +127,6 @@ class CategorySelect extends \XLite\View\AView
      * Check - display 'No categories' option or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -189,13 +135,59 @@ class CategorySelect extends \XLite\View\AView
         return !$this->getParam(self::PARAM_ALL_OPTION) && !$this->getCategories();
     }
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/select_category.tpl';
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_ALL_OPTION           => new \XLite\Model\WidgetParam\Bool('Display All option', false),
+            self::PARAM_NONE_OPTION          => new \XLite\Model\WidgetParam\Bool('Display None option', false),
+            self::PARAM_ROOT_OPTION          => new \XLite\Model\WidgetParam\Bool('Display [Root level] option', false),
+            self::PARAM_FIELD_NAME           => new \XLite\Model\WidgetParam\String('Field name', ''),
+            self::PARAM_SELECTED_CATEGORY_ID => new \XLite\Model\WidgetParam\Int('Selected category id', 0),
+            self::PARAM_CURRENT_CATEGORY_ID  => new \XLite\Model\WidgetParam\Int('Current category id', 0),
+            self::PARAM_IGNORE_CURRENT_PATH  => new \XLite\Model\WidgetParam\Bool('Ignore current path', false),
+        );
+    }
+
+    /**
+     * Get categories condition 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCategoriesCondition()
+    {
+        return array(null, null, null, null);
+    }
+
     /**
      * Check - specified category selected or not
      * 
      * @param \XLite\Model\Category $category Category
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -215,7 +207,6 @@ class CategorySelect extends \XLite\View\AView
      * TODO: check if we need this function
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -235,7 +226,6 @@ class CategorySelect extends \XLite\View\AView
      * @param string $name Field name
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -255,7 +245,6 @@ class CategorySelect extends \XLite\View\AView
      * @param integer               $multiplier Level's multiplier
      *  
      * @return integer 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

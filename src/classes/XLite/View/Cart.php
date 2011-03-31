@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Cart
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,57 +31,35 @@ namespace XLite\View;
 /**
  * Cart widget 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @ListChild (list="center")
  */
 class Cart extends \XLite\View\Dialog
 {
-    /**
-     * Return title
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return null;
-    }
 
     /**
-     * Return templates directory name
+     * Return list of targets allowed for this widget
      *
-     * @return string
-     * @access protected
+     * @return array
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDir()
+    public static function getAllowedTargets()
     {
-        return 'shopping_cart';
-    }
+        $result = parent::getAllowedTargets();
 
-    /**
-     * Return file name for body template
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getBodyTemplate()
-    {
-        return $this->getCart()->isEmpty()
-            ? 'empty.tpl'
-            : parent::getBodyTemplate();
+        $result[] = 'cart';
+    
+        return $result;
     }
-
+    
+    
     /**
      * Get continue URL 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -104,7 +82,7 @@ class Cart extends \XLite\View\Dialog
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getCSSFiles()
@@ -120,7 +98,6 @@ class Cart extends \XLite\View\Dialog
      * Register JS files
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -137,7 +114,6 @@ class Cart extends \XLite\View\Dialog
      * Register files from common repository
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -150,22 +126,43 @@ class Cart extends \XLite\View\Dialog
         return $list;
     }
 
+
     /**
-     * Return list of targets allowed for this widget
+     * Return title
      *
-     * @return array
-     * @access public
+     * @return string
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getAllowedTargets()
+    protected function getHead()
     {
-        $result = parent::getAllowedTargets();
-
-        $result[] = 'cart';
-    
-        return $result;
+        return null;
     }
 
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return 'shopping_cart';
+    }
+
+    /**
+     * Return file name for body template
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getBodyTemplate()
+    {
+        return $this->getCart()->isEmpty()
+            ? 'empty.tpl'
+            : parent::getBodyTemplate();
+    }
 }
 

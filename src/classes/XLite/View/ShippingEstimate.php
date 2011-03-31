@@ -14,6 +14,8 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
+ * PHP version 5.3.0
+ *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -56,6 +58,7 @@ class ShippingEstimate extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultTemplate()

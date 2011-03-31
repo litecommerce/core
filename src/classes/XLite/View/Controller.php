@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * Controller main widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Controller extends \XLite\View\AView
 {
@@ -42,17 +41,56 @@ class Controller extends \XLite\View\AView
      * NOTE: this is a text, so it's not passed by reference; do not wrap it into a getter (or pass by reference)
      * NOTE: until it's not accessing via the function, do not change its access modifier
      * 
-     * @var    string
-     * @access public
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     public static $bodyContent = null;
+
+
+    /**
+     * __construct 
+     * 
+     * @param array  $params          Widget params OPTIONAL
+     * @param string $contentTemplate Central area template OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $params = array(), $contentTemplate = null)
+    {
+        parent::__construct($params);
+
+        $this->template = $contentTemplate;
+    }
+
+    /**
+     * Show current page and, optionally, footer  
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function display()
+    {
+        if (!$this->isSilent()) {
+            $this->displayPage();
+        }
+
+        if ($this->isDumpStarted()) {
+            $this->refreshEnd();
+        }
+
+        $this->postprocess();
+    }
+
 
     /**
      * Send headers 
      * 
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function startPage()
@@ -70,7 +108,7 @@ class Controller extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
@@ -82,7 +120,6 @@ class Controller extends \XLite\View\AView
      * Check - current request is AJAX background request for page center or not
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -95,7 +132,6 @@ class Controller extends \XLite\View\AView
      * Get body classes 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -108,8 +144,7 @@ class Controller extends \XLite\View\AView
      * Define body classes list
      * 
      * @return array
-     * @access protected
-     * @see    ____func_see___
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function defineBodyClasses()
@@ -152,7 +187,6 @@ class Controller extends \XLite\View\AView
      * Chewck - first sidebar is visible or not
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -165,7 +199,6 @@ class Controller extends \XLite\View\AView
      * Check - second sidebar is visible or not
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -178,7 +211,7 @@ class Controller extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function defineWidgetParams()
@@ -195,7 +228,7 @@ class Controller extends \XLite\View\AView
      * isSilent 
      * 
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isSilent()
@@ -207,7 +240,7 @@ class Controller extends \XLite\View\AView
      * isDumpStarted 
      * 
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isDumpStarted()
@@ -219,7 +252,7 @@ class Controller extends \XLite\View\AView
      * getContentWidget 
      * 
      * @return \XLite\View\AView
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getContentWidget()
@@ -231,7 +264,7 @@ class Controller extends \XLite\View\AView
      * prepareContent 
      * 
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function prepareContent()
@@ -243,7 +276,7 @@ class Controller extends \XLite\View\AView
      * useDefaultDisplayMode 
      * 
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function useDefaultDisplayMode()
@@ -255,7 +288,7 @@ class Controller extends \XLite\View\AView
      * displayPage 
      * 
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function displayPage()
@@ -275,50 +308,11 @@ class Controller extends \XLite\View\AView
      * refreshEnd 
      * 
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function refreshEnd()
     {
         func_refresh_end();
     }
-
-
-    /**
-     * __construct 
-     * 
-     * @param array  $params          Widget params
-     * @param string $contentTemplate Central area template OPTIONAL
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function __construct(array $params = array(), $contentTemplate = null)
-    {
-        parent::__construct($params);
-
-        $this->template = $contentTemplate;
-    }
-
-    /**
-     * Show current page and, optionally, footer  
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function display()
-    {
-        if (!$this->isSilent()) {
-            $this->displayPage();
-        }
-
-        if ($this->isDumpStarted()) {
-            $this->refreshEnd();
-        }
-
-        $this->postprocess();
-    }
 }
-

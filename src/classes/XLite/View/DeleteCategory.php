@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,71 +31,17 @@ namespace XLite\View;
 /**
  * Delete category widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
 class DeleteCategory extends \XLite\View\SimpleDialog
 {
     /**
-     * Return title 
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return 'Confirmation';
-    }
-
-    /**
-     * Return file name for the center part template 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getBody()
-    {
-        return 'categories/delete_confirmation.tpl';
-    }
-
-    /**
-     * Get subcategories paameter
-     * 
-     * @return mixed
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSubcats()
-    {
-        return \XLite\Core\Request::getInstance()->subcats;
-    }
-
-    /**
-     * Check if widget is visible
-     *
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible()
-            && 'delete' == \XLite\Core\Request::getInstance()->mode;
-    }
-
-    /**
      * Return list of allowed targets
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -108,5 +54,54 @@ class DeleteCategory extends \XLite\View\SimpleDialog
         return $list;
     }
 
+
+    /**
+     * Return title 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return 'Confirmation';
+    }
+
+    /**
+     * Return file name for the center part template 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getBody()
+    {
+        return 'categories/delete_confirmation.tpl';
+    }
+
+    /**
+     * Get subcategories paameter
+     * 
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSubcats()
+    {
+        return \XLite\Core\Request::getInstance()->subcats;
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && 'delete' == \XLite\Core\Request::getInstance()->mode;
+    }
 }
 

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * Date picker widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class DatePicker extends \XLite\View\FormField
 {
@@ -49,62 +48,26 @@ class DatePicker extends \XLite\View\FormField
     /**
      * Date format (PHP)
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $phpDateFormat = '%b %d, %Y';
 
     /**
      * Date format (javascript)
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $jsDateFormat = 'M dd, yy';
-
-
-    /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'common/datepicker.tpl';
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_FIELD     => new \XLite\Model\WidgetParam\String('Name of date field prefix', 'date'),
-            self::PARAM_VALUE     => new \XLite\Model\WidgetParam\Int('Value of date field (timestamp)', null),
-            self::PARAM_HIGH_YEAR => new \XLite\Model\WidgetParam\Int('The high year', date('Y', time()) - 1),
-            self::PARAM_LOW_YEAR  => new \XLite\Model\WidgetParam\Int('The low year', 2035),
-        );
-    }
 
 
     /**
      * Get element class name 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -123,7 +86,6 @@ class DatePicker extends \XLite\View\FormField
      * Get date format (javascript)
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -136,7 +98,6 @@ class DatePicker extends \XLite\View\FormField
      * Get widget value as string 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -151,7 +112,6 @@ class DatePicker extends \XLite\View\FormField
      * Register CSS files
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -169,7 +129,6 @@ class DatePicker extends \XLite\View\FormField
      * Register JS files
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -180,5 +139,37 @@ class DatePicker extends \XLite\View\FormField
         $list[] = 'common/datepicker.js';
 
         return $list;
+    }
+
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/datepicker.tpl';
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_FIELD     => new \XLite\Model\WidgetParam\String('Name of date field prefix', 'date'),
+            self::PARAM_VALUE     => new \XLite\Model\WidgetParam\Int('Value of date field (timestamp)', null),
+            self::PARAM_HIGH_YEAR => new \XLite\Model\WidgetParam\Int('The high year', date('Y', time()) - 1),
+            self::PARAM_LOW_YEAR  => new \XLite\Model\WidgetParam\Int('The low year', 2035),
+        );
     }
 }

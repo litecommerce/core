@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * Buy now widget
  *
- * @package XLite
- * @see     ____class_see____
- * @since   3.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class BuyNow extends \XLite\View\AView
 {
@@ -45,11 +44,37 @@ class BuyNow extends \XLite\View\AView
     const PARAM_BUTTON_STYLE = 'style';
     const PARAM_SHOW_PRICE = 'showPrice';
 
+
+    /**
+     * Get product
+     * 
+     * @return \XLite\Model\Product
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProduct()
+    {
+        return $this->getParam(self::PARAM_PRODUCT);
+    }
+
+    /**
+     * Check whether the product price is to be shown as the button label
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShowPrice()
+    {
+        return $this->getParam(self::PARAM_SHOW_PRICE);
+    }
+
+
     /**
      * Return widget default template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
@@ -61,7 +86,7 @@ class BuyNow extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -75,12 +100,10 @@ class BuyNow extends \XLite\View\AView
         );
     }
 
-
     /**
      * Check visibility 
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -88,31 +111,4 @@ class BuyNow extends \XLite\View\AView
     {
         return parent::isVisible() && $this->config->General->buynow_button_enabled;
     }
-
-    /**
-     * Get product
-     * 
-     * @return \XLite\Model\Product
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProduct()
-    {
-        return $this->getParam(self::PARAM_PRODUCT);
-    }
-
-    /**
-     * Check whether the product price is to be shown as the button label
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isShowPrice()
-    {
-        return $this->getParam(self::PARAM_SHOW_PRICE);
-    }
-
 }
