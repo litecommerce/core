@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core;
@@ -31,19 +31,17 @@ namespace XLite\Core;
 /**
  * Mailer core class
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Mailer extends \XLite\Base\Singleton
 {
     /**
      * Mailer instance
      * 
-     * @var    \XLite\View\Mailer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\View\Mailer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $mailer = null;
 
@@ -51,10 +49,9 @@ class Mailer extends \XLite\Base\Singleton
     /**
      * Interface to use in mail
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $mailInterface = \XLite::CUSTOMER_INTERFACE;
 
@@ -64,7 +61,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param \XLite\Model\Profile $profile Profile object
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -87,7 +83,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param \XLite\Model\Profile $profile Profile object
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -108,7 +103,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param \XLite\Model\Profile $profile Profile object
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -129,7 +123,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param \XLite\Model\Profile $profile Profile object
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -150,7 +143,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param string $userLogin Login of deleted profile
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -171,7 +163,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param string $postedLogin Login that was used in failed login attempt
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -181,7 +172,9 @@ class Mailer extends \XLite\Base\Singleton
             array(
                 'login'                 => isset($postedLogin) ? $postedLogin : 'unknown',
                 'REMOTE_ADDR'           => isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown',
-                'HTTP_X_FORWARDED_FOR'  => isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : 'unknown',
+                'HTTP_X_FORWARDED_FOR'  => isset($_SERVER['HTTP_X_FORWARDED_FOR']) 
+                    ? $_SERVER['HTTP_X_FORWARDED_FOR'] 
+                    : 'unknown',
             )
         );
 
@@ -199,7 +192,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param string $userPassword User password
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -229,7 +221,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param string $userPassword User password (unencrypted)
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -255,7 +246,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param \XLite\Model\Order $order Order model
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -278,7 +268,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param string $login Customer email
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -297,7 +286,6 @@ class Mailer extends \XLite\Base\Singleton
      * Send created order mail to admin
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -321,7 +309,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param \XLite\Model\Order $order ____param_comment____
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -342,7 +329,6 @@ class Mailer extends \XLite\Base\Singleton
      * Send processed order mail to Admin
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -363,7 +349,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param \XLite\Model\Order $order Order model
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -384,7 +369,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param \XLite\Model\Order $order Order model
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -405,7 +389,6 @@ class Mailer extends \XLite\Base\Singleton
      * Send failed order mail to Admin
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -426,7 +409,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param \XLite\Model\Order $order Order model
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -449,7 +431,6 @@ class Mailer extends \XLite\Base\Singleton
      * @param string $key Access key
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -473,10 +454,9 @@ class Mailer extends \XLite\Base\Singleton
     /**
      * Set mail interface
      * 
-     * @param string $interface Interface to use in mail
+     * @param string $interface Interface to use in mail OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -490,7 +470,6 @@ class Mailer extends \XLite\Base\Singleton
      * Returns mailer instance
      *
      * @return \XLite\View\Mailer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -508,10 +487,9 @@ class Mailer extends \XLite\Base\Singleton
      * Register variable into mail viewer
      *
      * @param string $name  Variable name
-     * @param mixed  $value Variable value
+     * @param mixed  $value Variable value OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -533,11 +511,10 @@ class Mailer extends \XLite\Base\Singleton
      * @param string  $from          ____param_comment____
      * @param string  $to            ____param_comment____
      * @param string  $dir           ____param_comment____
-     * @param array   $customHeaders ____param_comment____
-     * @param boolean $doSend        ____param_comment____
+     * @param array   $customHeaders ____param_comment____ OPTIONAL
+     * @param boolean $doSend        ____param_comment____ OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

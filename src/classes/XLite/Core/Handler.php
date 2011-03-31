@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core;
@@ -31,9 +31,8 @@ namespace XLite\Core;
 /**
  * Abstract handler (common parent for viewer and controller) 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class Handler extends \XLite\Base
 {
@@ -62,84 +61,20 @@ abstract class Handler extends \XLite\Base
     /**
      * Widget params
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $widgetParams;
 
 
     /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        $this->widgetParams = array(
-            self::PARAM_IS_EXPORTED => new \XLite\Model\WidgetParam\Bool('Is exported', \XLite\Core\CMSConnector::isCMSStarted()),
-        );
-    }
-
-    /**
-     * Return widget param value 
-     * 
-     * @param string $param Param to fetch
-     *  
-     * @return mixed
-     * @access protected
-     * @since  3.0.0 EE
-     */
-    protected function getParam($param)
-    {
-        $param = $this->getWidgetParams($param);
-
-        return $param ? $param->value : $param;
-    }
-
-    /**
-     * isExported 
-     * 
-     * @return boolean 
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isExported()
-    {
-        return $this->getParam(self::PARAM_IS_EXPORTED);
-    }
-
-    /**
-     * getParamsHash 
-     * 
-     * @param array $params List of params to use
-     *  
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getParamsHash(array $params)
-    {
-        $result = array();
-
-        foreach ($params as $param) {
-            $result[$param] = $this->getParam($param);
-        }
-
-        return $result;
-    }
-
-
-    /**
      * Define and set handler attributes; initialize handler 
      * 
-     * @param array $params Handler params
+     * @param array $params Handler params OPTIONAL
      *  
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function __construct(array $params = array())
@@ -153,7 +88,7 @@ abstract class Handler extends \XLite\Base
      * Initialize handler
      *
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function init()
@@ -166,7 +101,7 @@ abstract class Handler extends \XLite\Base
      * @param array $params Handler params
      *
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function setWidgetParams(array $params)
@@ -192,8 +127,8 @@ abstract class Handler extends \XLite\Base
      * @param string $param Param name OPTIONAL
      *  
      * @return array
-     * @access public
-     * @since  3.0.0 EE
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function getWidgetParams($param = null)
     {
@@ -210,7 +145,7 @@ abstract class Handler extends \XLite\Base
      * getWidgetSettings 
      * 
      * @return array
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getWidgetSettings()
@@ -227,7 +162,6 @@ abstract class Handler extends \XLite\Base
      * @param \XLite\Model\WidgetParam\AWidgetParam $param Widget parameter
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -242,7 +176,7 @@ abstract class Handler extends \XLite\Base
      * @param array $attrs Attributes to check
      *
      * @return array Errors list
-     * @access public
+     * @see    ____func_see____
      * @since  1.0.0
      */
     public function validateAttributes(array $attrs)
@@ -273,11 +207,11 @@ abstract class Handler extends \XLite\Base
      *
      * @param string $target Page identifier OPTIONAL
      * @param string $action Action to perform OPTIONAL
-     * @param array  $params Additional params
+     * @param array  $params Additional params OPTIONAL
      *
      * @return string
-     * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function buildURL($target = '', $action = '', array $params = array())
     {
@@ -290,11 +224,11 @@ abstract class Handler extends \XLite\Base
      *
      * @param string $target Page identifier
      * @param string $action Action to perform OPTIONAL
-     * @param array  $params Additional params
+     * @param array  $params Additional params OPTIONAL
      *
      * @return string
-     * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function buildURLPath($target, $action = '', array $params = array())
     {
@@ -310,11 +244,11 @@ abstract class Handler extends \XLite\Base
      *
      * @param string $target Page identifier
      * @param string $action Action to perform OPTIONAL
-     * @param array  $params Additional params
+     * @param array  $params Additional params OPTIONAL
      *
      * @return array
-     * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function buildURLArguments($target, $action = '', array $params = array())
     {
@@ -328,5 +262,67 @@ abstract class Handler extends \XLite\Base
 
         return $args;
     }
-}
 
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        $this->widgetParams = array(
+            self::PARAM_IS_EXPORTED => new \XLite\Model\WidgetParam\Bool('Is exported', \XLite\Core\CMSConnector::isCMSStarted()),
+        );
+    }
+
+    /**
+     * Return widget param value 
+     * 
+     * @param string $param Param to fetch
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getParam($param)
+    {
+        $param = $this->getWidgetParams($param);
+
+        return $param ? $param->value : $param;
+    }
+
+    /**
+     * isExported 
+     * 
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isExported()
+    {
+        return $this->getParam(self::PARAM_IS_EXPORTED);
+    }
+
+    /**
+     * getParamsHash 
+     * 
+     * @param array $params List of params to use
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getParamsHash(array $params)
+    {
+        $result = array();
+
+        foreach ($params as $param) {
+            $result[$param] = $this->getParam($param);
+        }
+
+        return $result;
+    }
+}

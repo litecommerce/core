@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core;
@@ -31,47 +31,60 @@ namespace XLite\Core;
 /**
  * Quick access class
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class QuickAccess
 {
     /**
      * Entity manager (cache)
      *
-     * @var    \Doctrine\ORM\EntityManager
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\ORM\EntityManager
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $em;
 
     /**
      * Translator (cache)
      * 
-     * @var    \XLite\Core\Translation
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Core\Translation
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $translation;
 
     /**
      * Entities cache
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $entities = array();
+
+
+    /**
+     * Language label translation short method
+     *
+     * @param string $name      Label name
+     * @param array  $arguments Substitution arguments OPTIONAL
+     * @param string $code      Language code OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function t($name, array $arguments = array(), $code = null)
+    {
+        return $this->translation->translate($name, $arguments, $code);
+    }
+
 
     /**
      * Constructor
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -103,7 +116,6 @@ class QuickAccess
      * Get entity manager
      * 
      * @return \Doctrine\ORM\EntityManager
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -118,7 +130,6 @@ class QuickAccess
      * @param string $name Entity name (full - XLite\Model\Product or short - Model\Product)
      *  
      * @return \XLite\Model\Repo\ARepo
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -136,24 +147,4 @@ class QuickAccess
 
         return $this->em->getRepository($name);
     }
-
-    /**
-     * Language label translation short method
-     *
-     * @param string $name      Label name
-     * @param array  $arguments Substitution arguments
-     * @param string $code      Language code OPTIONAL
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function t($name, array $arguments = array(), $code = null)
-    {
-        return $this->translation->translate($name, $arguments, $code);
-    }
-
 }
-
-

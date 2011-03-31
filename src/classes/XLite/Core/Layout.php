@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core;
@@ -31,9 +31,8 @@ namespace XLite\Core;
 /**
  * Layout manager
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Layout extends \XLite\Base\Singleton
 {
@@ -60,40 +59,36 @@ class Layout extends \XLite\Base\Singleton
     /**
      * Current skin
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $skin;
 
     /**
      * Current locale
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $locale;
 
     /**
      * Current skin path
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $path;
 
     /**
      * Current interface 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $currentInterface = \XLite::CUSTOMER_INTERFACE;
 
@@ -102,50 +97,45 @@ class Layout extends \XLite\Base\Singleton
      * For example body.tpl of mail is inside MAIL interface 
      * but the inner widgets and templates in this template are inside CUSTOMER or ADMIN interfaces
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $mailInterface = \XLite::CUSTOMER_INTERFACE;
 
     /**
      * Substutional skins list
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $substutionalSkins = array();
 
     /**
      * Skin paths 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $skinPaths = array();
 
     /**
      * Resources cache
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $resourcesCache = array();
 
     /**
      * Substutional skins cache flag
      * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $substutionalSkinsCache = false;
 
@@ -155,7 +145,6 @@ class Layout extends \XLite\Base\Singleton
      * Return skin name
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -168,7 +157,6 @@ class Layout extends \XLite\Base\Singleton
      * Returns the layout path
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -181,7 +169,6 @@ class Layout extends \XLite\Base\Singleton
      * Return list of all skins
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -198,10 +185,9 @@ class Layout extends \XLite\Base\Singleton
     /**
      * getSkinPathRelative 
      * 
-     * @param string skin Interface
+     * @param string $skin Interface
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -218,10 +204,9 @@ class Layout extends \XLite\Base\Singleton
      * Add substutional skin 
      * 
      * @param string $name      Skin name
-     * @param string $interface Interface code OPTONAL
+     * @param string $interface Interface code OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -241,7 +226,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $interface Interface code OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -268,10 +252,9 @@ class Layout extends \XLite\Base\Singleton
     /**
      * Get skins list
      * 
-     * @param string $interface Interface code
+     * @param string $interface Interface code OPTIONAL
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -294,7 +277,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $currentTemplate Current template short path
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -325,10 +307,9 @@ class Layout extends \XLite\Base\Singleton
      * 
      * @param string  $shortPath Short path
      * @param string  $interface Interface code OPTIONAL
-     * @param boolean $doMail    Flag to change mail interface
+     * @param boolean $doMail    Flag to change mail interface OPTIONAL
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -370,7 +351,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $parentSkin Parent skin
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -403,7 +383,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $skin      Skin name
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -432,7 +411,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $interface  Interface code OPTIONAL
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -479,7 +457,6 @@ class Layout extends \XLite\Base\Singleton
      * Save substitutonal skins data into cache
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -498,7 +475,6 @@ class Layout extends \XLite\Base\Singleton
      * @param boolean $reset     Local cache reset flag OPTIONAL
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -540,7 +516,7 @@ class Layout extends \XLite\Base\Singleton
      */
     protected function getLocalesQuery($interface)
     {
-        if (\XLite::COMMON_INTERFACE == $interface)  {
+        if (\XLite::COMMON_INTERFACE == $interface) {
             $result = array(false);
 
         } else {
@@ -559,10 +535,9 @@ class Layout extends \XLite\Base\Singleton
     /**
      * Get base skin by interface code
      * 
-     * @param string $interface Interface code
+     * @param string $interface Interface code OPTIONAL
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -600,7 +575,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $outputType Output type
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -626,7 +600,6 @@ class Layout extends \XLite\Base\Singleton
      * Restore substitutonal skins data from cache
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -650,7 +623,6 @@ class Layout extends \XLite\Base\Singleton
      * Set current skin as the admin one
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -664,7 +636,6 @@ class Layout extends \XLite\Base\Singleton
      * Set current skin as the admin one
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -677,10 +648,9 @@ class Layout extends \XLite\Base\Singleton
     /**
      * Set current skin as the mail one
      * 
-     * @param string $interface Interface to use after MAIL one
+     * @param string $interface Interface to use after MAIL one OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -697,7 +667,6 @@ class Layout extends \XLite\Base\Singleton
      * Set current skin as the customer one
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -717,7 +686,6 @@ class Layout extends \XLite\Base\Singleton
      * @param string $skin New skin
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -731,7 +699,6 @@ class Layout extends \XLite\Base\Singleton
      * Set some class properties
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -752,7 +719,6 @@ class Layout extends \XLite\Base\Singleton
      * Set current skin path
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -768,7 +734,6 @@ class Layout extends \XLite\Base\Singleton
      * Constructor
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */

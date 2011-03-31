@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage RemoteModel
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\RemoteModel\Repo;
@@ -31,9 +31,8 @@ namespace XLite\RemoteModel\Repo;
 /**
  * Module repository
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Module extends \XLite\RemoteModel\Repo\ARepo
 {
@@ -52,20 +51,18 @@ class Module extends \XLite\RemoteModel\Repo\ARepo
     /**
      * Request URL for get module 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $requestURLGet = 'https://litecommerce.com/module/%1$s/info?authCode=%2$s';
 
     /**
      * Request URL for find modules 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $requestURLFind = 'https://litecommerce.com/modules/search';
 
@@ -80,7 +77,6 @@ class Module extends \XLite\RemoteModel\Repo\ARepo
      * @param string  $sortOrder  Sort direction OPTIONAL
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -114,26 +110,11 @@ class Module extends \XLite\RemoteModel\Repo\ARepo
     }
 
     /**
-     * Postprocess search operation
-     * 
-     * @param string $data Response
-     *  
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function postprocessFind($data)
-    {
-    }
-
-    /**
      * Get module 
      * 
      * @param string $name Module name
      *  
      * @return \XLite\RemoteModel\Module|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -153,11 +134,24 @@ class Module extends \XLite\RemoteModel\Repo\ARepo
         return $module;
     }
 
+
+    /**
+     * Postprocess search operation
+     * 
+     * @param string $data Response
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function postprocessFind($data)
+    {
+    }
+
     /**
      * Get application authentication code 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -173,7 +167,6 @@ class Module extends \XLite\RemoteModel\Repo\ARepo
      * @param string                    $data   Response block
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

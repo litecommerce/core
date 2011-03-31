@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core;
@@ -31,9 +31,8 @@ namespace XLite\Core;
 /**
  * Flexy compiler
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class FlexyCompiler extends \XLite\Base\Singleton
 {
@@ -48,44 +47,40 @@ class FlexyCompiler extends \XLite\Base\Singleton
     /**
      * Template source code 
      * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0
+     * @var   string
+     * @since 3.0.0
      */
     protected $source = null;
 
     /**
      * Template file name 
      * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0
+     * @var   string
+     * @since 3.0.0
      */
     protected $file = null;
 
     /**
      * List of URLs to rewrite 
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @since 3.0.0
      */
     protected $urlRewrite = array();
 
     /**
      * patches 
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $patches;
 
     /**
      * Image URL output type 
      * 
-     * @var    string
+     * @var   string
      * @see   ____var_see____
      * @since 3.0.0
      */
@@ -160,7 +155,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * Preprocess template
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -188,7 +182,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string $zone Skin name
      *  
      * @return string (admin or customer)
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -207,7 +200,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string $tpl  Relative template pathg
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -242,7 +234,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param \XLite\Model\TemplatePatch $patch Patch record
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -278,7 +269,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string          $baseInsertType Patch insert type
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -331,7 +321,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param \XLite\Model\TemplatePatch $patch Patch record
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -350,7 +339,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param \XLite\Model\TemplatePatch $patch Patch record
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -698,7 +686,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * Get template info 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -831,7 +818,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string $url Short URL
      *  
      * @return boolean|array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -864,7 +850,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param integer $length Replace part length
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1268,7 +1253,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * Flag 
      * 
      * @var    boolean
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
@@ -1278,7 +1262,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * Layout 
      * 
      * @var    \XLite\Core\Layout
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
@@ -1288,7 +1271,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * Root directory path length 
      * 
      * @var    integer
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
@@ -1301,7 +1283,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param boolean $force    Flag to force compilation OPTIONAL
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1334,7 +1315,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string $compiled Compiled one
      *  
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1349,7 +1329,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string $file Template to compile
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1367,7 +1346,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * Constructor
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
