@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core;
@@ -31,39 +31,35 @@ namespace XLite\Core;
 /**
  * Translation core rutine
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
 {
     /**
      * Current language code 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $currentLanguageCode;
 
     /**
      * Translation driver 
      * 
-     * @var    \XLite\Core\TranslationDriver\ATranslationDriver
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Core\TranslationDriver\ATranslationDriver
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $driver;
 
     /**
      * Translation drivers query 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $driversQuery = array(
         '\XLite\Core\TranslationDriver\Gettext',
@@ -74,7 +70,6 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * Get current language code
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -91,11 +86,10 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * Get translation (short static method)
      * 
      * @param string $name      Label name
-     * @param array  $arguments Substitute arguments
+     * @param array  $arguments Substitute arguments OPTIONAL
      * @param string $code      Language code OPTIONAL
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -108,7 +102,6 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * Reset driver cache
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -121,11 +114,10 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * Get translation
      * 
      * @param string $name      Label name
-     * @param array  $arguments Substitute arguments
+     * @param array  $arguments Substitute arguments OPTIONAL
      * @param string $code      Language code OPTIONAL
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -147,6 +139,41 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
         return $translated;
     }
 
+
+    /**
+     * Get REST entity names 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRESTNames()
+    {
+        return array (
+            'translation',
+        );
+    }
+
+    /**
+     * Get translation as REST 
+     * 
+     * @param string $id        Label name
+     * @param array  $arguments Arguments
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTranslationREST($id, $arguments)
+    {
+        if (!is_array($arguments) || !$arguments) {
+            $arguments = array();
+        }
+
+        return $this->translate($id, $arguments);
+    }
+
+
     /**
      * Process substitute 
      * 
@@ -154,7 +181,6 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * @param array  $args   Substitute arguments
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -174,7 +200,6 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * Get translation driver 
      * 
      * @return \XLite\Core\TranslationDriver\ATranslationDriver
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -191,7 +216,6 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * Define translation driver 
      * 
      * @return \XLite\Core\TranslationDriver\ATranslationDriver
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -228,41 +252,4 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
 
         return $driver;
     }
-
-    /**
-     * Get REST entity names 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getRESTNames()
-    {
-        return array (
-            'translation',
-        );
-    }
-
-    /**
-     * Get translation as REST 
-     * 
-     * @param string $id        Label name
-     * @param array  $arguments Arguments
-     *  
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTranslationREST($id, $arguments)
-    {
-        if (!is_array($arguments) || !$arguments) {
-            $arguments = array();
-        }
-
-        return $this->translate($id, $arguments);
-    }
-
 }
-
