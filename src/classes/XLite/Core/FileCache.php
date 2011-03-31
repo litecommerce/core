@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core;
@@ -31,49 +31,44 @@ namespace XLite\Core;
 /**
  * File system cache 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class FileCache extends \Doctrine\Common\Cache\AbstractCache
 {
     /**
      * Cache directory path 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $path = null;
 
     /**
      * File header 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $header = '<?php die(); ?>';
 
     /**
      * File header length 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $headerLength = 15;
 
     /**
      * TTL block length 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $ttlLength = 11;
 
@@ -81,7 +76,6 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * Constructor
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -96,7 +90,6 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @param string $path Path
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -117,7 +110,6 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * Get cache path 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -130,7 +122,6 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * Get cache repository ids list 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -151,7 +142,6 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * Delete all cache entries
      * 
      * @return array Array of the deleted cache ids
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -174,7 +164,6 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @param string $id CEll id
      *  
      * @return mixed
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -197,7 +186,6 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @param string $id CEll id
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -216,7 +204,6 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @param integer $lifeTime Cell TTL OPTIONAL
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -236,7 +223,6 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @param string $id Cell id
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -259,7 +245,6 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @param string $id Cell id
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -274,7 +259,6 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * @param string $path CEll file path
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

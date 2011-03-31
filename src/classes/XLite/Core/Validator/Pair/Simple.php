@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core\Validator\Pair;
@@ -31,49 +31,44 @@ namespace XLite\Core\Validator\Pair;
 /**
  * Hash array simple pair validator 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Simple extends \XLite\Core\Validator\Pair\APair
 {
     /**
      * Validation mode 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $mode = self::STRICT;
 
     /**
      * Cell name 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $name;
 
     /**
      * Cell value validator 
      * 
-     * @var    \XLite\Core\Validator\AValidator
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Core\Validator\AValidator
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $validator;
 
     /**
      * Default value 
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $defaultValue;
 
@@ -81,7 +76,6 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * Get name 
      * 
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -96,7 +90,6 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * @param string $name Name
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -109,7 +102,6 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * Get validator 
      * 
      * @return \XLite\Core\Validator\AValidator
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -124,8 +116,7 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * @param \XLite\Core\Validator\AValidator $validator Validator
      *  
      * @return void
-     * @access public
-     * @see    ____func_see____
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function setValidator(\XLite\Core\Validator\AValidator $validator)
@@ -139,7 +130,6 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * @param mixed $value Default value
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -154,7 +144,6 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * @param array $data Data
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -169,7 +158,7 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * @param mixed $data Data
      *
      * @return void
-     * @access public
+     * @throws \XLite\Core\Validator\Exception
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -207,7 +196,6 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * @param mixed $data Daa
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

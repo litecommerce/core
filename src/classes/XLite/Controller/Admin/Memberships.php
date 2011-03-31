@@ -14,26 +14,25 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
 
 /**
- * Memberships
+ * Memberships management page controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Memberships extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,7 +40,7 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getTitle()
@@ -53,7 +52,6 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      * Common method to determine current location
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -66,7 +64,6 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      * Update membership list
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -81,45 +78,52 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
         } else {
 
             $code = $this->getCurrentLanguage();
+
+            $flag = false;
+
             foreach ($data as $id => $row) {
+
                 $m = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->find($id);
 
-                if (!$m) {
+                if ($m) {
 
+                    $duplicate = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->createQueryBuilder()
+                       ->andWhere('translations.name = :name', 'm.membership_id != :id')
+                       ->setParameter('name', $row['membership'])
+                       ->setParameter('id', $id)
+                       ->setMaxResults(1)
+                       ->getSingleResult();
+
+                    if (!is_null($duplicate)) {
+
+                        \XLite\Core\TopMessage::addWarning(
+                            '"' . $row['membership'] . '" ' . ' membership name is already in use. '
+                            . 'Please specify another name for this membership level'
+                        );
+
+                    } else {
+
+                        $m->getTranslation($code)->name = $row['membership'];
+
+                    }
+
+                    $m->orderby = intval($row['orderby']);
+                    $m->active = isset($row['active']) && '1' == $row['active'];
+
+                    \XLite\Core\Database::getEM()->persist($m);
+
+                    $flag = true;
+
+                } else {
                     \XLite\Core\TopMessage::addError(
                         'Could not find membership ID#' . $id . ' record in the database'
                     );
-
-                    continue;
                 }
-
-                $duplicate = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->createQueryBuilder()
-                   ->andWhere('translations.name = :name', 'm.membership_id != :id')
-                   ->setParameter('name', $row['membership'])
-                   ->setParameter('id', $id)
-                   ->setMaxResults(1)
-                   ->getSingleResult();
-
-                if (!is_null($duplicate)) {
-
-                    \XLite\Core\TopMessage::addWarning(
-                        '"' . $row['membership'] . '" ' . ' membership name is already in use. '
-                        . 'Please specify another name for this membership level'
-                    );
-
-                } else {
-
-                    $m->getTranslation($code)->name = $row['membership'];
-
-                }
-
-                $m->orderby = intval($row['orderby']);
-                $m->active = isset($row['active']) && '1' == $row['active'];
-
-                \XLite\Core\Database::getEM()->persist($m);
             }
 
-            \XLite\Core\Database::getEM()->flush();
+            if ($flag) {
+                \XLite\Core\Database::getEM()->flush();
+            }
         }
     }
 
@@ -127,7 +131,6 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      * Delete some membership(s)
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -155,7 +158,6 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      * Add new membership
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

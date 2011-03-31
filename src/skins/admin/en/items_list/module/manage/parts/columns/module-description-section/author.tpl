@@ -11,8 +11,14 @@
  * @since     3.0.0
  *
  * @ListChild (list="itemsList.module.manage.columns.module-description-section", weight="20")
+ * @ListChild (list="itemsList.module.install.columns.module-description-section", weight="20")
  *}
 
 <div class="author">
-  {t(#Author#)}: {module.getAuthorName()}
+  {t(#Author#)}:
+  {if:module.getAuthorPageURL()}
+    <a href="{module.getAuthorPageURL()}" target="_blank">{module.getAuthorName()}</a>
+  {else:}
+    {module.getAuthorName()}
+  {end:}
 </div>

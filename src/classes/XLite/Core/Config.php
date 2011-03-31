@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core;
@@ -31,21 +31,33 @@ namespace XLite\Core;
 /**
  * DB-based configuration registry
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Config extends \XLite\Base\Singleton
 {
     /**
      * Config (cache)
      * 
-     * @var    \XLite\Core\CommonCell
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Core\CommonCell
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $config;
+
+
+    /**
+     * Method to access a singleton 
+     * 
+     * @return \XLite\Core\CommonCell
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getInstance()
+    {
+        return parent::getInstance()->readConfig();
+    }
+
 
     /**
      * Read config options
@@ -53,7 +65,6 @@ class Config extends \XLite\Base\Singleton
      * @param mixed $force ____param_comment____ OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -70,7 +81,6 @@ class Config extends \XLite\Base\Singleton
      * Update and re-read options 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -79,18 +89,5 @@ class Config extends \XLite\Base\Singleton
         parent::update();
 
         $this->readConfig(true);
-    }
-
-    /**
-     * Method to access a singleton 
-     * 
-     * @return \XLite\Core\CommonCell
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getInstance()
-    {
-        return parent::getInstance()->readConfig();
     }
 }

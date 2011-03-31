@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage RemoteModel
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\RemoteModel;
@@ -31,9 +31,8 @@ namespace XLite\RemoteModel;
 /**
  * Module 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Module extends \XLite\RemoteModel\AModel
 {
@@ -46,120 +45,108 @@ class Module extends \XLite\RemoteModel\AModel
     /**
      * Status 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $status = self::NO_EXISTS;
 
     /**
      * Name 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $name;
 
     /**
      * Description 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $description;
 
     /**
      * Version 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $version;
 
     /**
      * Changelog 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $changelog = array();
 
     /**
      * Hash 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $hash;
 
     /**
      * Install pack hash 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $packHash;
 
     /**
      * Price 
      * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   float
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $price = 0;
 
     /**
      * Currency code
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $currency = 'USD';
 
     /**
      * Upload code 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $uploadCode;
 
     /**
      * Upload URL 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $uploadURL = 'https://litecommerce.com/module/%1$s/upload?code=%2$s';
 
     /**
      * Model (cache)
      * 
-     * @var    \XLite\Model\Module
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Module
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $model = null;
 
@@ -167,7 +154,6 @@ class Module extends \XLite\RemoteModel\AModel
      * Get status 
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -180,7 +166,6 @@ class Module extends \XLite\RemoteModel\AModel
      * Get name 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -193,7 +178,6 @@ class Module extends \XLite\RemoteModel\AModel
      * Get description 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -206,7 +190,6 @@ class Module extends \XLite\RemoteModel\AModel
      * Get version 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -219,7 +202,6 @@ class Module extends \XLite\RemoteModel\AModel
      * Get changelog 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -232,7 +214,6 @@ class Module extends \XLite\RemoteModel\AModel
      * Get hash 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -245,7 +226,6 @@ class Module extends \XLite\RemoteModel\AModel
      * Get price 
      * 
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -260,7 +240,6 @@ class Module extends \XLite\RemoteModel\AModel
      * @param boolean $overrideCache Ovveride internal cache OPTIONAL
      *  
      * @return \XLite\Model\Module
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -280,7 +259,6 @@ class Module extends \XLite\RemoteModel\AModel
      * Check - can upload module or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -293,7 +271,6 @@ class Module extends \XLite\RemoteModel\AModel
      * Upload module
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -324,7 +301,6 @@ class Module extends \XLite\RemoteModel\AModel
      * @param boolean $overrideExists Ovverride exist module OPTIONAL
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -359,7 +335,6 @@ class Module extends \XLite\RemoteModel\AModel
      * @param string $path Install pack path
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

@@ -624,8 +624,8 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
         foreach ($order->getPaymentMethods() as $p) {
             $list[] = $p->getMethodId();
         }
+        $etalon = array(7, 8, 1, 2, 3, 4, 5, 6);
 
-        $etalon = array(8, 9, 1, 2, 3, 4, 5, 6, 7);
         $this->assertEquals($etalon, $list, 'check method id\'s list');
     }
 

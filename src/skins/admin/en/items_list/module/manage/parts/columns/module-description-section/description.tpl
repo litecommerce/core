@@ -11,6 +11,7 @@
  * @since     3.0.0
  *
  * @ListChild (list="itemsList.module.manage.columns.module-description-section", weight="10")
+ * @ListChild (list="itemsList.module.install.columns.module-description-section", weight="10")
  *}
 
 <div class="description">{module.getDescription()}</div>

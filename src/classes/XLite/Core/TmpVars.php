@@ -31,9 +31,8 @@ namespace XLite\Core;
 /**
  * DB-based temporary variables
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class TmpVars extends \XLite\Base\Singleton
 {

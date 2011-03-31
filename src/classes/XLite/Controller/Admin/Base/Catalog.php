@@ -40,7 +40,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * Return current (or default) category object
      *
      * @return \XLite\Model\Category
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -54,7 +53,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * Return path for the current category
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -69,7 +67,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * @param \XLite\Model\Category $category Category model object to use
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -84,7 +81,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * @param \XLite\Model\Category $category Node category
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -103,7 +99,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * Add part to the location nodes list
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

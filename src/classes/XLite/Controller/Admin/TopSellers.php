@@ -14,26 +14,25 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
 
 /**
- * ____description____
+ * Top sellers statistics page controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class TopSellers extends \XLite\Controller\Admin\Stats
 {
@@ -41,10 +40,9 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * todayItems 
      * FIXME: to refactoring
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $todayItems = array();
 
@@ -52,10 +50,9 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * weekItems
      * FIXME: to refactoring
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $weekItems = array();
 
@@ -63,10 +60,9 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * monthItems 
      * FIXME: to refactoring
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $monthItems = array();
 
@@ -74,10 +70,9 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * sort_by 
      * FIXME: to refactoring
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $sort_by = "amount";
     
@@ -85,10 +80,9 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * counter 
      * FIXME: to refactoring
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $counter = array(0,1,2,3,4,5,6,7,8,9);
 
@@ -96,10 +90,9 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * topProducts 
      * FIXME: to refactoring
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $topProducts = array();
 
@@ -108,7 +101,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * getPageTemplate 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -121,7 +113,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * handleRequest 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -160,7 +151,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * @param mixed $property ____param_comment____
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -176,7 +166,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * Common method to determine current location
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -189,7 +178,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * Add part to the location nodes list
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -206,7 +194,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * @param mixed $order ____param_comment____
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -230,7 +217,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * @param mixed $name ____param_comment____
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -242,19 +228,18 @@ class TopSellers extends \XLite\Controller\Admin\Stats
         
             $id = $item->get('product_id');
         
-            if (!$id) {
-                continue;
-            }
+            if ($id) {
 
-            if (!isset($this->topProducts[$name][$id])) {
-                $this->topProducts[$name][$id] = array(
-                    'id'     => $id,
-                    'name'   => $item->get('name'),
-                    'amount' => $item->get('amount')
-                );
+                if (!isset($this->topProducts[$name][$id])) {
+                    $this->topProducts[$name][$id] = array(
+                        'id'     => $id,
+                        'name'   => $item->get('name'),
+                        'amount' => $item->get('amount')
+                    );
 
-            } else {
-                $this->topProducts[$name][$id]['amount'] += $item->get('amount');
+                } else {
+                    $this->topProducts[$name][$id]['amount'] += $item->get('amount');
+                }
             }
         }
 
@@ -272,7 +257,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * @param mixed $p2 ____param_comment____
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

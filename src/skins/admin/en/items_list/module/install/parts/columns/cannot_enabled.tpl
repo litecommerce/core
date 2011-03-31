@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *
- * @ListChild (list="itemsList.module.manage.columns.module-main-section", weight="30")
+ * @ListChild (list="itemsList.module.install.columns.module-main-section", weight="30")
  *}
 
 <div IF="!canEnable(module)">
@@ -28,8 +28,13 @@
     </ul>
   </div>
 
-  <div IF="!isModuleCompatible(module)" class="note version error">
-    {t(#The module version is incompatible with current core version.#)}<br />
+  <div IF="isCoreUpgradeNeeded(module)" class="note version error">
+    {t(#The module version is incompatible with your core version and cannot be installed#)}<br />
+    {t(#Please#)} <widget class="\XLite\View\Button\Regular" label="Upgrade core" />
+  </div>
+
+  <div IF="isModuleUpgradeNeeded(module)" class="note version error">
+    {t(#The module is available for older core versions only#)}
   </div>
 
 </div>
