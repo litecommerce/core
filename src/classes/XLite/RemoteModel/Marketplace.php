@@ -63,7 +63,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Last error message
      * 
      * @var    string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
@@ -74,7 +73,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Getter
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -87,7 +85,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Return last available kernel version
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -100,7 +97,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Grab modules XML from the marketplace
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -116,7 +112,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array  $data   Additional data
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -144,7 +139,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Return marketplace base URL
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -158,7 +152,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Return marketplace complete URL
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -175,7 +168,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param array  $data   Additional data
      *  
      * @return \XLite\Model\HTTPS
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -196,7 +188,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $action Action name
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -293,10 +284,9 @@ class Marketplace extends \XLite\Base\Singleton
     /**
      * Error message
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $error = null;
 
@@ -306,7 +296,6 @@ class Marketplace extends \XLite\Base\Singleton
      * from the marketplace
      * 
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -324,7 +313,6 @@ class Marketplace extends \XLite\Base\Singleton
      * from the market place
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -338,7 +326,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Return error message
      * 
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -353,7 +340,6 @@ class Marketplace extends \XLite\Base\Singleton
      * TODO: remove debug condition before release
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -371,7 +357,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Grab modules XML from the marketplace
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -390,7 +375,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param integer $moduleId Identificator of module in local database
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -408,10 +392,9 @@ class Marketplace extends \XLite\Base\Singleton
      * Download module package to the Local Repository catalog
      * 
      * @param integer $moduleId       Identificator of module in local database
-     * @param array   $additionalData Some additional data for request. (key for paid module)
+     * @param array   $additionalData Some additional data for request. (key for paid module) OPTIONAL
      *  
      * @return string Status of downloading
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -449,7 +432,6 @@ class Marketplace extends \XLite\Base\Singleton
      * Get last version
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -473,7 +455,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $key License key
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -532,7 +513,6 @@ class Marketplace extends \XLite\Base\Singleton
      * @param integer $moduleId Identificator of module in local database
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -553,10 +533,9 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @param string $target         Target of request (category)
      * @param string $action         Action of request (action)
-     * @param array  $additionalData Some additional information
+     * @param array  $additionalData Some additional information OPTIONAL
      *  
      * @return string Marketplace response
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

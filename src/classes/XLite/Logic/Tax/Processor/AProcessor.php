@@ -101,7 +101,7 @@ abstract class AProcessor extends \XLite\Logic\ALogic
      * Reverse product price 
      * 
      * @param \XLite\Model\Product $product Product
-     * @param float                $amount  Currenct product price
+     * @param float                $amount  Currenct product price OPTIONAL
      *  
      * @return float
      * @see    ____func_see____
