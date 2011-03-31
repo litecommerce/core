@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Customer\Base;
@@ -31,19 +31,17 @@ namespace XLite\Controller\Customer\Base;
 /**
  * Order 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class Order extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Order (cache)
      *
-     * @var    \XLite\Model\Order
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Order
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $order;
 
@@ -51,7 +49,6 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * Return current order ID
      * 
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -64,7 +61,6 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * Return current order
      * 
      * @return \XLite\Model\Order
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -81,7 +77,6 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * Check if currently logged user is an admin
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -94,7 +89,6 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * Check if order corresponds to current user
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -107,7 +101,6 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * Check order access
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -120,7 +113,7 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * Check if current page is accessible
      *
      * @return boolean
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function checkAccess()
@@ -132,7 +125,6 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * Add the base part of the location path
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
