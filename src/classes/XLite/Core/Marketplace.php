@@ -280,7 +280,7 @@ class Marketplace extends \XLite\Base\Singleton
      * Send request to marketplace endpoint and return the response
      * 
      * @param string $action Name of the action
-     * @param array  $data   Custom data to send in request
+     * @param array  $data   Custom data to send in request OPTIONAL
      *  
      * @return string
      * @see    ____func_see____
@@ -298,7 +298,7 @@ class Marketplace extends \XLite\Base\Singleton
      * Return prepared request object
      *
      * @param string $action Action name
-     * @param array  $data   Request data
+     * @param array  $data   Request data OPTIONAL
      *
      * @return \XLite\Model\HTTPS
      * @see    ____func_see____
@@ -684,7 +684,7 @@ class Marketplace extends \XLite\Base\Singleton
     {
         // :NOTE: do not change operator to the "===":
         // "Filter" extension changes type for some variables
-        return $data == filter_var_array($data, $schema);
+        return filter_var_array($data, $schema) == $data;
     }
 
     // }}}
