@@ -15,5 +15,10 @@
  *}
 
 <div class="author">
-  {t(#Author#)}: {module.getAuthorName()}
+  {t(#Author#)}:
+  {if:module.getAuthorPageURL()}
+    <a href="{module.getAuthorPageURL()}" target="_blank">{module.getAuthorName()}</a>
+  {else:}
+    {module.getAuthorName()}
+  {end:}
 </div>
