@@ -31,13 +31,14 @@ namespace XLite\Model;
 /**
  * Module
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Module")
  * @Table  (name="modules",
  *      uniqueConstraints={
- *          @UniqueConstraint (name="an", columns={"author","name"})
+ *          @UniqueConstraint (name="moduleVersion", columns={"author","name","majorVersion","minorVersion"}),
+            @UniqueConstraint (name="moduleInstalled", columns={"author","name","installed"})
  *      },
  *      indexes={
  *          @Index (name="enabled", columns={"enabled"}),
@@ -51,21 +52,7 @@ namespace XLite\Model;
 class Module extends \XLite\Model\AEntity
 {
     /**
-     * Remote status
-     */
-    const NOT_EXIST = 0;
-    const EXISTS    = 1;
-
-    /**
-     * Common params
-     */
-    const UPLOAD_CODE_LENGTH = 32;
-    const MARKETPLACE_URL    = 'https://www.litecommerce.com/marketplace/';
-    const MODULE_UPLOAD_PATH = '%1$s/upload?code=%2$s';
-    const MODULE_PAGE_PATH   = 'module/%1$s';
-
-    /**
-     * Module id 
+     * Module ID
      * 
      * @var    integer
      * @see    ____var_see____
@@ -73,9 +60,9 @@ class Module extends \XLite\Model\AEntity
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer")
+     * @Column         (type="integer")
      */
-    protected $moduleId;
+    protected $moduleID;
 
     /**
      * Name 
@@ -86,7 +73,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @Column (type="string", length="64")
      */
-    protected $name = '';
+    protected $name;
 
     /**
      * Author 
@@ -97,7 +84,18 @@ class Module extends \XLite\Model\AEntity
      *
      * @Column (type="string", length="64")
      */
-    protected $author = '';
+    protected $author;
+
+    /**
+     * Public identifier
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length="32")
+     */
+    protected $markteplaceID = '';
 
     /**
      * Enabled 
@@ -124,53 +122,15 @@ class Module extends \XLite\Model\AEntity
     /**
      * Module data dump (YAML or SQL) installed status
      *
+     * :TODO: check if it's really needed
+     *
      * @var    boolean
      * @see    ____var_see____
      * @since  3.0.0
      *
      * @Column (type="boolean")
      */
-    protected $data_installed = false;
-
-    /**
-     * Status
-     *
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="integer")
-     */
-    protected $status = self::NOT_EXIST;
-
-    /**
-     * Description
-     *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="text")
-     */
-    protected $description = '';
-
-    /**
-     * Module name
-     *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="string", length=255)
-     */
-    protected $moduleName = '';
-
-    /**
-     * Author name
-     *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="string", length=255)
-     */
-    protected $authorName = '';
+    protected $dataInstalled = false;
 
     /**
      * Order creation timestamp
@@ -182,86 +142,6 @@ class Module extends \XLite\Model\AEntity
      * @Column (type="integer")
      */
     protected $date = 0;
-
-    /**
-     * Version
-     *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="string", length=32)
-     */
-    protected $version = '';
-
-    /**
-     * Changelog
-     *
-     * @var    array
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="array", nullable=true)
-     */
-    protected $changelog = array();
-
-    /**
-     * Hash
-     *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="string", length=32)
-     */
-    protected $hash = '';
-
-    /**
-     * Install pack hash
-     *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="string", length=32)
-     */
-    protected $packHash = '';
-
-    /**
-     * Price
-     *
-     * @var    float
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="decimal", precision=14, scale=2)
-     */
-    protected $price = 0;
-
-    /**
-     * Price
-     *
-     * @var    float
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="boolean")
-     */
-    protected $purchased = false;
-
-    /**
-     * Currency code
-     *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="string", length=3)
-     */
-    protected $currency = 'USD';
-
-    /**
-     * Upload code
-     *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="string", length=255)
-     */
-    protected $uploadCode = '';
 
     /**
      * Rating
@@ -276,7 +156,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Downloads
      *
-     * @var    string
+     * @var    integer
      * @see    ____var_see____
      * @since  3.0.0
      * @Column (type="integer")
@@ -284,63 +164,367 @@ class Module extends \XLite\Model\AEntity
     protected $downloads = 0;
 
     /**
+     * Price
+     *
+     * @var    float
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="decimal", precision=14, scale=2)
+     */
+    protected $price = 0.00;
+
+    /**
+     * Currency code
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length=3)
+     */
+    protected $currency = 'USD';
+
+    /**
+     * Major version
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length=8)
+     */
+    protected $majorVersion;
+
+    /**
+     * Minor version
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length=8)
+     */
+    protected $minorVersion;
+
+    /**
+     * Revision date
+     *
+     * @var    integer
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer")
+     */
+    protected $revisionDate = 0;
+
+    /**
+     * Module name
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length=255)
+     */
+    protected $moduleName;
+
+    /**
+     * Author name
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length=255)
+     */
+    protected $authorName;
+
+    /**
+     * Description
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="text")
+     */
+    protected $description = '';
+
+    /**
      * Icon URL
      *
      * @var    string
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length=255)
      */
     protected $iconURL = '';
 
     /**
-     * Downloads
+     * Icon URL
      *
-     * @var    array
+     * @var    string
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="array", nullable=true)
+     *
+     * @Column (type="string", length=255)
+     */
+    protected $pageURL = '';
+
+    /**
+     * Icon URL
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length=255)
+     */
+    protected $authorPageURL = '';
+
+    /**
+     * Module dependencies
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
+     * @Column (type="array")
      */
     protected $dependencies = array();
 
-    /**
-     * Old-state of enabled column
-     * 
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    protected $oldEnabled;
+
+    // {{{ Routines to access methods of (non)installed modules
 
     /**
-     * Model (cache)
+     * Getter
      *
-     * @var   \XLite\Model\Module
-     * @see   ____var_see____
-     * @since 3.0.0
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
      */
-    protected $model = null;
+    public function getMajorVersion()
+    {
+        // Do not replace the first argument by the
+        // magic constant "__FUNCTION__": their are the same "accidentally"
+        return $this->callModuleMethod('getMajorVersion', $this->majorVersion);
+    }
 
     /**
-     * Main class 
+     * Getter
      * 
-     * @var   \Xite\Module\AModule
-     * @see   ____var_see____
-     * @since 3.0.0
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
      */
-    protected $mainClass = null; 
-
+    public function getMinorVersion()
+	{
+        // Do not replace the first argument by the 
+        // magic constant "__FUNCTION__": their are the same "accidentally"
+		return $this->callModuleMethod('getMinorVersion', $this->minorVersion);
+	}
 
     /**
-     * Check if module has icon
+     * Getter
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModuleName()
+	{
+        // Do not replace the first argument by the
+        // magic constant "__FUNCTION__": their are the same "accidentally"
+		return $this->callModuleMethod('getModuleName', $this->moduleName);
+	}
+
+    /**
+     * Getter
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAuthorName()
+	{
+        // Do not replace the first argument by the
+        // magic constant "__FUNCTION__": their are the same "accidentally"
+		return $this->callModuleMethod('getAuthorName', $this->authorName);
+	}
+
+    /**
+     * Getter
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDescription()
+	{
+        // Do not replace the first argument by the
+        // magic constant "__FUNCTION__": their are the same "accidentally"
+		return $this->callModuleMethod('getDescription', $this->description);
+	}
+
+    /**
+     * Getter
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getIconURL()
+	{
+        // Do not replace the first argument by the
+        // magic constant "__FUNCTION__": their are the same "accidentally"
+		return $this->callModuleMethod('getIconURL', $this->iconURL);
+	}
+
+    /**
+     * Getter
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageURL()
+	{
+        // Do not replace the first argument by the
+        // magic constant "__FUNCTION__": their are the same "accidentally"
+		return $this->callModuleMethod('getPageURL', $this->pageURL);
+	}
+
+    /**
+     * Getter
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAuthorPageURL()
+	{
+        // Do not replace the first argument by the
+        // magic constant "__FUNCTION__": their are the same "accidentally"
+		return $this->callModuleMethod('getAuthorPageURL', $this->authorPageURL);
+	}
+
+    /**
+     * Getter
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDependencies()
+	{
+        // Do not replace the first argument by the
+        // magic constant "__FUNCTION__": their are the same "accidentally"
+		return $this->callModuleMethod('getDependencies', $this->dependencies);
+	}
+
+    /**
+     * Method to call functions from module main classes
+     * 
+     * @param string $method Method to call
+     * @param mixed  $result Method return value for the current class (model) OPTIONAL
+     * @param array  $args   Call arguments OPTIONAL
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function callModuleMethod($method, $result = null, array $args = array())
+    {
+        return $this->getInstalled() ? call_user_func_array(array($this->getMainClass(), $method), $args) : $result;
+    }
+
+    /**
+     * Return main class name for current module
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMainClass()
+    {
+        return '\XLite\Module\\' . $this->getActualName() . '\Main';
+    }
+
+    // }}}
+
+    // {{{ Some common getters and setters
+
+    /**
+     * Compose module actual name
      *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getActualName()
+    {
+        return \Includes\Decorator\Utils\ModulesManager::getActualName($this->getAuthor(), $this->getName());
+    }
+
+    /**
+     * Return module full version
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getVersion()
+    {
+        return \Includes\Utils\Converter::composeVersion($this->getMajorVersion(), $this->getMinorVersion());
+    }
+
+    /**
+     * Check if module has a custom icon
+     * 
      * @return boolean
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function hasIcon()
     {
-        return '' !== $this->getIconURL();
+        return (bool) $this->getIconURL();
+    }
+
+    /**
+     * Return link to settings form
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSettingsForm()
+    {
+        return $this->callModuleMethod('getSettingsForm')
+            ?: \XLite\Core\Converter::buildURL('module', '', array('moduleId' => $this->getModuleId()), 'admin.php');
+    }
+
+    /**
+     * Get list of dependent modules as Doctrine entities
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDependentModules()
+    {
+        $result = array();
+
+        foreach ($this->getDependencies() as $class) {
+
+            list($author, $name) = explode('\\', $class);
+
+            if ($module = $this->getRepository()->findOneByAuthorAndName($author, $name)) {
+                $result[$class] = $module;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -356,6 +540,360 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
+     * Check if module is already purchased
+     *
+     * :TODO: add code here
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isPurchased()
+    {
+        return true;
+    }
+
+    /**
+     * Get module root directory
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRootDirectory()
+    {
+        return LC_MODULES_DIR . $this->getPath() . LC_DS;
+    }
+
+    /**
+     * Return relative module path
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPath()
+    {
+        return str_replace('\\', LC_DS, $this->getActualName());
+    }
+
+    // }}}
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Remote status
+     */
+/*    const NOT_EXIST = 0;
+    const EXISTS    = 1;
+
+    /**
+     * Common params
+     */
+/*    const UPLOAD_CODE_LENGTH = 32;
+    const MARKETPLACE_URL    = 'https://www.litecommerce.com/marketplace/';
+    const MODULE_UPLOAD_PATH = '%1$s/upload?code=%2$s';
+    const MODULE_PAGE_PATH   = 'module/%1$s';
+
+    /**
+     * Module id 
+     * 
+     * @var    integer
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column (type="integer")
+     */
+//    protected $moduleId;
+
+    /**
+     * Name 
+     * 
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length="64")
+     */
+//    protected $name;
+
+    /**
+     * Author 
+     * 
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length="64")
+     */
+//    protected $author;
+
+    /**
+     * Enabled 
+     * 
+     * @var    boolean
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="boolean")
+     */
+//    protected $enabled = false;
+
+    /**
+     * Installed status
+     * 
+     * @var    boolean
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="boolean")
+     */
+//    protected $installed = false;
+
+    /**
+     * Module data dump (YAML or SQL) installed status
+     *
+     * @var    boolean
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="boolean")
+     */
+//    protected $data_installed = false;
+
+    /**
+     * Status
+     *
+     * @var    integer
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer")
+     */
+//    protected $status = self::NOT_EXIST;
+
+    /**
+     * Description
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="text")
+     */
+//    protected $description = '';
+
+    /**
+     * Module name
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length=255)
+     */
+//    protected $moduleName = '';
+
+    /**
+     * Author name
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length=255)
+     */
+//    protected $authorName = '';
+
+    /**
+     * Order creation timestamp
+     * 
+     * @var    integer
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="integer")
+     */
+//    protected $date = 0;
+
+    /**
+     * Version
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length=32)
+     */
+//    protected $version = '';
+
+    /**
+     * Changelog
+     *
+     * @var    array
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="array", nullable=true)
+     */
+//    protected $changelog = array();
+
+    /**
+     * Hash
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length=32)
+     */
+//    protected $hash = '';
+
+    /**
+     * Install pack hash
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length=32)
+     */
+//    protected $packHash = '';
+
+    /**
+     * Price
+     *
+     * @var    float
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="decimal", precision=14, scale=2)
+     */
+//    protected $price = 0;
+
+    /**
+     * Price
+     *
+     * @var    float
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="boolean")
+     */
+//    protected $purchased = false;
+
+    /**
+     * Currency code
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length=3)
+     */
+//    protected $currency = 'USD';
+
+    /**
+     * Upload code
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length=255)
+     */
+//    protected $uploadCode = '';
+
+    /**
+     * Rating
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer")
+     */
+//    protected $rating = 0;
+
+    /**
+     * Downloads
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer")
+     */
+//    protected $downloads = 0;
+
+    /**
+     * Icon URL
+     *
+     * @var    string
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length=255)
+     */
+//    protected $iconURL = '';
+
+    /**
+     * Downloads
+     *
+     * @var    array
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="array", nullable=true)
+     */
+//    protected $dependencies = array();
+
+    /**
+     * Old-state of enabled column
+     * 
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+//    protected $oldEnabled;
+
+    /**
+     * Model (cache)
+     *
+     * @var   \XLite\Model\Module
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+//    protected $model = null;
+
+    /**
+     * Main class 
+     * 
+     * @var   \Xite\Module\AModule
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+//    protected $mainClass = null; 
+
+
+    /**
+     * Check if module has icon
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+/*    public function hasIcon()
+    {
+        return '' !== $this->getIconURL();
+    }
+
+    /**
+     * Check if the module is free
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+/*    public function isFree()
+    {
+        return 0 >= $this->getPrice();
+    }
+
+    /**
      * Get external page URL
      *
      * :TODO: [MARKETPLACE]
@@ -364,7 +902,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getPageURL()
+/*    public function getPageURL()
     {
         return \XLite\Core\Marketplace::getInstance()->getMarketplaceURL() . sprintf(static::MODULE_PAGE_PATH, $this->getPath());
     }
@@ -378,7 +916,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getAuthorPageURL()
+/*    public function getAuthorPageURL()
     {
         return \XLite\Core\Marketplace::getInstance()->getMarketplaceURL() . sprintf(static::MODULE_PAGE_PATH, $this->getAuthor());
     }
@@ -392,7 +930,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setEnabled($enabled)
+/*    public function setEnabled($enabled)
     {
         $result = false;
 
@@ -414,7 +952,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function callModuleStatic($method)
+/*    public function callModuleStatic($method)
     {
         $class = $this->getMainClass();
 
@@ -431,7 +969,7 @@ class Module extends \XLite\Model\AEntity
      * @since  3.0.0
      * @PreUpdate
      */
-    public function prepareUpdate()
+/*    public function prepareUpdate()
     {
         if (isset($this->oldEnabled) && $this->oldEnabled != $this->enabled) {
             if ($this->enabled) {
@@ -447,7 +985,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareEnable()
+/*    protected function prepareEnable()
     {
         \XLite\Core\Database::getInstance()->setDisabledStructures($this->getActualName());
 
@@ -468,7 +1006,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function prepareDisable()
+/*    public function prepareDisable()
     {
         \XLite\Core\Database::getInstance()->setDisabledStructures(
             $this->getActualName(),
@@ -486,7 +1024,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function saveBackup()
+/*    protected function saveBackup()
     {
         $data = $this->callModuleStatic('getBackupData', $this);
 
@@ -506,7 +1044,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function restoreBackup()
+/*    protected function restoreBackup()
     {
         $path = $this->getBackupPath();
         if (file_exists($path)) {
@@ -521,7 +1059,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getBackupPath()
+/*    protected function getBackupPath()
     {
         return LC_VAR_DIR . 'backup' . LC_DS . $this->getAuthor() . '-' . $this->getName() . '.php';
     }
@@ -533,7 +1071,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function installDBData()
+/*    protected function installDBData()
     {
         // Install YAML fixtures
 
@@ -570,7 +1108,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function uninstallDBData()
+/*    protected function uninstallDBData()
     {
         if ($this->callModuleStatic('uninstallModule', $this)) { 
 
@@ -613,7 +1151,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function installWakeUpDBData()
+/*    protected function installWakeUpDBData()
     {
         // Install YAML fixtures
         $path = $this->getRootDirectory() . 'wakeup.yaml';
@@ -646,7 +1184,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function installSleepDBData()
+/*    protected function installSleepDBData()
     {
         // Install YAML fixtures
         $path = $this->getRootDirectory() . 'sleep.yaml';
@@ -680,7 +1218,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getDependedModules()
+/*    public function getDependedModules()
     {
         return $this->getRepository()->findAllByModuleIds($this->getDependedModuleIds());
     }
@@ -692,7 +1230,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function disableModule()
+/*    public function disableModule()
     {
         $disableIds = array_merge(array($this->getModuleId()), $this->getDependedModuleIds());
         $this->getRepository()->updateInBatchById(array_fill_keys($disableIds, array('enabled' => false)));
@@ -715,7 +1253,7 @@ class Module extends \XLite\Model\AEntity
      * @return string
      * @since  1.0
      */
-    public function getSettingsFormLink()
+/*    public function getSettingsFormLink()
     {
         $link = $this->callModuleStatic('getSettingsForm');
 
@@ -731,7 +1269,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getMainClass()
+/*    public function getMainClass()
     {
         if (!isset($this->mainClass) && $this->includeMainClass()) {
             $class = $this->getMainClassName();
@@ -752,7 +1290,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getDependenciesModules()
+/*    public function getDependenciesModules()
     {
         return $this->getRepository()->findDependenciesByModule($this);
     }
@@ -764,7 +1302,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function canEnable()
+/*    public function canEnable()
     {
         $status = true;
 
@@ -802,7 +1340,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getHash()
+/*    public function getHash()
     {
         $path = LC_CLASSES_DIR . $this->getPath() . LC_DS;
         $iterator = new \RecursiveDirectoryIterator($path);
@@ -832,7 +1370,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function create($name = null, $author = null)
+/*    public function create($name = null, $author = null)
     {
         // Set common properties
         $this->setName($name);
@@ -849,7 +1387,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function uninstall()
+/*    public function uninstall()
     {
         $status = true;
 
@@ -876,7 +1414,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __call($method, array $args = array())
+/*    public function __call($method, array $args = array())
     {
         return method_exists($this->getMainClass(), $method)
             ? call_user_func_array(array($this, 'callModuleStatic'), func_get_args())
@@ -891,7 +1429,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getActualName()
+/*    public function getActualName()
     {
         return \Includes\Decorator\Utils\ModulesManager::getActualName($this->getAuthor(), $this->getName());
     }
@@ -903,7 +1441,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getRootDirectory()
+/*    public function getRootDirectory()
     {
         return LC_MODULES_DIR . $this->getPath() . LC_DS;
     }
@@ -915,7 +1453,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getPath()
+/*    public function getPath()
     {
         return str_replace('\\', LC_DS, $this->getActualName());
     }
@@ -929,7 +1467,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getModel($overrideCache = false)
+/*    public function getModel($overrideCache = false)
     {
         if (!isset($this->model) || $overrideCache) {
             $this->model = \Xlite\Core\Database::getRepo('\XLite\Model\Module')->findByName($this->getName());
@@ -948,7 +1486,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function canUpload()
+/*    public function canUpload()
     {
         return self::UPLOAD_CODE_LENGTH == strlen($this->uploadCode);
     }
@@ -962,7 +1500,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function depack($path)
+/*    protected function depack($path)
     {
         $result = false;
 
@@ -981,7 +1519,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function includeMainClass()
+/*    protected function includeMainClass()
     {
         $class = $this->getMainClassName();
 
@@ -1002,7 +1540,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCalculatedDependencies()
+/*    public function getCalculatedDependencies()
     {
         return call_user_func(array($this->getMainClass(), 'getDependencies'));
     }
@@ -1014,7 +1552,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getMainClassName()
+/*    protected function getMainClassName()
     {
         return '\XLite\Module\\' . $this->getActualName() . '\Main';
     }
@@ -1026,7 +1564,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDependedModuleIds()
+/*    protected function getDependedModuleIds()
     {
         $dependencies = array();
 
@@ -1053,7 +1591,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function fetchSkins()
+/*    public function fetchSkins()
     {   
         $result = array();
 
@@ -1082,7 +1620,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getFetchSkinsIterator()
+/*    protected function getFetchSkinsIterator()
     {
         return new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator(LC_SKINS_DIR),
@@ -1102,7 +1640,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function registerFetchedSkin(\RecursiveIteratorIterator $iterator, &$registry)
+/*    protected function registerFetchedSkin(\RecursiveIteratorIterator $iterator, &$registry)
     {
         $subPath = $iterator->getSubPathName();
 
@@ -1121,7 +1659,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function constructSkinPath($dir)
+/*    public function constructSkinPath($dir)
     {   
         return LC_SKINS_DIR . $dir . LC_DS . 'modules' . LC_DS . $this->getPath();
     }   
@@ -1134,7 +1672,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getModuleProtectedStructures()
+/*    protected function getModuleProtectedStructures()
     {
         $tables = array();
         $columns = array();
@@ -1193,7 +1731,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getModuleProtectedColumns(\ReflectionClass $reflection, $path, \Doctrine\ORM\Tools\SchemaTool $tool)
+/*    protected function getModuleProtectedColumns(\ReflectionClass $reflection, $path, \Doctrine\ORM\Tools\SchemaTool $tool)
     {
         $cols = array();
         $table = null;
@@ -1229,5 +1767,5 @@ class Module extends \XLite\Model\AEntity
 
         return array($table, $cols);
 
-    }
+    }*/
 }

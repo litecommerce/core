@@ -14,26 +14,25 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
 
 /**
- * ____description____
+ * Zones page controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class ShippingZones extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,7 +40,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      * Return the current page title (for the content area)
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getTitle()
@@ -53,7 +52,6 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      * handleRequest 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -73,7 +71,6 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      * @param array             $data Array of elements: array(<elementType> => array(value1, value2, value3...))
      *  
      * @return \XLite\Model\Zone
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -81,19 +78,18 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
     {
         foreach ($data as $elementType => $elements) {
 
-            if (!is_array($elements) || empty($elements)) {
-                continue;
-            }
+            if (is_array($elements) && !empty($elements)) {
 
-            foreach ($elements as $elementValue) {
+                foreach ($elements as $elementValue) {
 
-                $newElement = new \XLite\Model\ZoneElement();
+                    $newElement = new \XLite\Model\ZoneElement();
 
-                $newElement->setElementValue($elementValue);
-                $newElement->setElementType($elementType);
-                $newElement->setZone($zone);
+                    $newElement->setElementValue($elementValue);
+                    $newElement->setElementType($elementType);
+                    $newElement->setZone($zone);
 
-                $zone->addZoneElements($newElement);
+                    $zone->addZoneElements($newElement);
+                }
             }
         }
 
@@ -105,7 +101,6 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      * Common method to determine current location
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -118,7 +113,6 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      * Do action 'Delete'
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -150,7 +144,6 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      * Do action 'Update'
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -217,7 +210,6 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      * Do action 'Create'
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -280,7 +272,6 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      * @param array $postedData Array of data posted via post request
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

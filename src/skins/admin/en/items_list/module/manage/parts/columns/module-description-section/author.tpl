@@ -9,8 +9,10 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ *
  * @ListChild (list="itemsList.module.manage.columns.module-description-section", weight="20")
  *}
+
 <div class="author">
-  {t(#Author#)}: {getInstalledProperty(module,#authorName#)}
+  {t(#Author#)}: {module.getAuthorName()}
 </div>

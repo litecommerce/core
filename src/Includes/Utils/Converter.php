@@ -223,4 +223,19 @@ class Converter extends AUtils
     {
         return str_replace('\\', LC_DS, static::trimLeadingChars($class, '\\')) . '.php';
     }
+
+    /**
+     * Get full version
+     * 
+     * @param string $versionMajor Major version
+     * @param string $versionMinor Minor version
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function composeVersion($versionMajor, $versionMinor)
+    {
+        return $versionMajor . '.' . $versionMinor;
+    }
 }
