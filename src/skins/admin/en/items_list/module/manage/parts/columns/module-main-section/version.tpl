@@ -9,6 +9,8 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ *
  * @ListChild (list="itemsList.module.manage.columns.module-main-section", weight="20")
  *}
-<div class="version">{t(#Version#)}: {getInstalledProperty(module,#version#)}</div>
+
+<div class="version">{t(#Version#)}: {module.getVersion()}</div>

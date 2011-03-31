@@ -19,7 +19,7 @@
   <div class="price-info">
     <span class="price-value" IF="module.isFree()">{t(#Free#)}</span>
     <span class="price-value" IF="!module.isFree()">{formatPrice(module.getPrice())}</span>
-    <span IF="module.getPurchased()" class="purchased">({t(#Purchased#)})</span>
+    <span IF="module.isPurchased()" class="purchased">({t(#Purchased#)})</span>
 
     <form action="admin.php" method="post">
       <input type="hidden" name="target" value="module_installation" />

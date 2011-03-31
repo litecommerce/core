@@ -31,8 +31,6 @@ namespace XLite\Model\Repo;
 /**
  * Module repository
  *
- * :FIXME: must be completely refactored
- * 
  * @see   ____class_see____
  * @since 3.0.0
  */
@@ -46,50 +44,19 @@ class Module extends \XLite\Model\Repo\ARepo
     const P_ORDER_BY     = 'orderBy';
     const P_LIMIT        = 'limit';
     const P_PRICE_FILTER = 'priceFilter';
-    const P_STATUS       = 'status';
+    const P_INACTIVE     = 'inactive';
+    const P_UPGRADABLE   = 'upgradabale';
 
     /**
-     * Param to force update addons 
-     */
-    const P_FORCE_UPDATE = 'updateAddons';
-
-    /**
-     * Price criteria 
+     * Price criteria
      */
     const PRICE_FREE = 'free';
     const PRICE_PAID = 'paid';
 
 
     /**
-     * Fileds that go into update from marketplace
-     * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    protected $updateFields = array(
-        'name',
-        'author',
-        'status',
-        'description',
-        'moduleName',
-        'authorName',
-        'date',
-        'version',
-        'changelog',
-        'hash',
-        'packHash',
-        'price',
-        'currency',
-        'rating',
-        'downloads',
-        'iconURL',
-        'dependencies',
-    );
-
-    /**
-     * Repository type 
-     * 
+     * Repository type
+     *
      * @var   string
      * @see   ____var_see____
      * @since 3.0.0
@@ -97,24 +64,15 @@ class Module extends \XLite\Model\Repo\ARepo
     protected $type = self::TYPE_INTERNAL;
 
     /**
-     * Update error 
-     * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    protected $updateError = null;
-
-    /**
      * Default 'order by' field name
-     * 
+     *
      * @var   string
      * @see   ____var_see____
      * @since 3.0.0
      */
     protected $defaultOrderBy = array(
-        'enabled' => 0,
-        'name'    => 1,
+        'enabled' => false,
+        'name'    => true,
     );
 
     /**
@@ -128,75 +86,71 @@ class Module extends \XLite\Model\Repo\ARepo
         array('author', 'name'),
     );
 
-    /**
-     * Modules enabeld list (cache)
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    protected $modules = null;
+
+    // {{{ The Searchable interface
 
     /**
-     * Find dependency modules by module 
-     * 
-     * @param \XLite\Model\Module $module Module
-     *  
-     * @return array
+     * Common search
+     *
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param boolean                $countOnly Return items list or only its size OPTIONAL
+     *
+     * @return \Doctrine\ORM\PersistentCollection|integer
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function findDependenciesByModule(\XLite\Model\Module $module)
+    public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        return $this->defineFindDependenciesByModuleQuery($module)->getResult();
-    }
+        $queryBuilder = $this->createQueryBuilder();
 
-    /**
-     * Define query for findDependenciesByModule() method
-     * 
-     * @param \XLite\Model\Module $module Module
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineFindDependenciesByModuleQuery(\XLite\Model\Module $module)
-    {
-        $qb = $this->createQueryBuilder()
-            ->setParameter('delimiter', '\\');;
-        $names = \XLite\Core\Database::buildInCondition($qb, $module->getCalculatedDependencies(), 'classNames');
-        $expr  = $qb->expr()->concat('m.author', $qb->expr()->concat(':delimiter', 'm.name'));
+        $this->currentSearchCnd = $cnd;
 
-        foreach ($names as $k => $dp) {
-            $qb->orWhere($qb->expr()->eq($expr, ':classNames' . $k));
+        foreach ($this->currentSearchCnd as $key => $value) {
+            $this->callSearchConditionHandler($value, $key, $queryBuilder);
         }
 
-        return $qb;
+        $result = $queryBuilder->getResult();
+
+        return $countOnly ? count($result) : $result;
     }
 
     /**
-     * Define cache cells 
-     * 
-     * @return array
+     * Call corresponded method to handle a search condition
+     *
+     * @param mixed                      $value        Condition data
+     * @param string                     $key          Condition name
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     *
+     * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineCacheCells()
+    protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder)
     {
-        $list = parent::defineCacheCells();
-
-        $list['all'] = array();
-        $list['names'] = array();
-        $list['enabled'] = array(
-            self::ATTRS_CACHE_CELL => array('enabled'),
-        );
-
-        return $list;
+        if ($this->isSearchParamHasHandler($key)) {
+            $this->{'prepareCnd' . ucfirst($key)}($queryBuilder, $value);
+        } else {
+            // TODO - add logging here
+        }
     }
 
     /**
-     * Return list of handling search params 
-     * 
+     * Check if param can be used for search
+     *
+     * @param string $param Name of param to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isSearchParamHasHandler($param)
+    {
+        return in_array($param, $this->getHandlingSearchParams());
+    }
+
+    /**
+     * Return list of handling search params
+     *
      * @return array
      * @see    ____func_see____
      * @since  3.0.0
@@ -209,7 +163,6 @@ class Module extends \XLite\Model\Repo\ARepo
             self::P_ORDER_BY,
             self::P_LIMIT,
             self::P_PRICE_FILTER,
-            self::P_STATUS,
         );
     }
 
@@ -229,17 +182,25 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Check if param can be used for search
-     * 
-     * @param string $param Name of param to check
-     *  
-     * @return boolean 
+     * Return search words for "All" and "Any" INCLUDING parameter
+     *
+     * @param string $value Search string
+     *
+     * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isSearchParamHasHandler($param)
+    protected function getSearchWords($value)
     {
-        return in_array($param, $this->getHandlingSearchParams());
+        $value  = trim($value);
+        $result = array();
+
+        if (preg_match_all('/"([^"]+)"/', $value, $match)) {
+            $result = $match[1];
+            $value = str_replace($match[0], '', $value);
+        }
+
+        return array_merge((array) $result, array_map('trim', explode(' ', $value)));
     }
 
     /**
@@ -270,6 +231,396 @@ class Module extends \XLite\Model\Repo\ARepo
     protected function prepareCndSubstring(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         $searchWords = $this->getSearchWords($value);
+        $cnd = new \Doctrine\ORM\Query\Expr\Orx();
+
+        foreach ($this->getSubstringSearchFields() as $field) {
+            foreach ($searchWords as $index => $word) {
+
+                // Collect OR expressions
+                $cnd->add($field . ' LIKE :word' . $index);
+                $queryBuilder->setParameter('word' . $index, '%' . $word . '%');
+
+            }
+        }
+
+        $queryBuilder->andWhere($cnd);
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param string|null                $value        Condition data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndTag(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+    }
+
+    /**
+     * prepareCndOrderBy
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
+     * @param array                      $value        Order by info
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
+    {
+        list($sort, $order) = $value;
+
+        if (!empty($sort)) {
+            $queryBuilder->addOrderBy($sort, $order);
+        }
+    }
+
+    /**
+     * prepareCndOrderBy
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
+     * @param mixed                      $value        Searchable value
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndPriceFilter(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        if (self::PRICE_FREE === $value) {
+            $queryBuilder->andWhere($queryBuilder->expr()->eq('m.price', 0));
+        } elseif (self::PRICE_PAID === $value) {
+            $queryBuilder->andWhere($queryBuilder->expr()->gt('m.price', 0));
+        }
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param boolean                    $value        Condition
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndInactive(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        $queryBuilder
+            ->andWhere('m.enabled = :enabled')
+            ->setParameter('enabled', false);
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param boolean                    $value        Condition
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndUpgradable(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        $cnd = \Doctrine\ORM\Query\Expr\Orx();
+        $cnd->add('m.majorVersion < m1.majorVersion');
+        $cnd->add('m.minorVersion < m1.minorVersion');
+
+        $queryBuilder
+            ->innerJoin('m', 'm1')
+            ->andWhere('m.name = m1.name')
+            ->andWhere('m.author = m1.author')
+            ->andWhere($cnd);
+    }
+
+    // }}}
+
+    // {{{ Markeplace-related routines
+
+    /**
+     * One time in session we update list of marketplace modules
+     *
+     * @param array $data Data recieved from marketplace
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function updateMarketplaceModules(array $data)
+    {
+        // Clear previously saved data
+        $this->defineDeleteNotInstalledModulesQuery()->execute();
+
+        // Save recieved data
+        $this->insertInBatch($data);
+    }
+
+    /**
+     * Define the Doctrine query
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineDeleteNotInstalledModulesQuery()
+    {
+        return $this->getQueryBuilder()
+            ->delete($this->_entityName, 'm')
+            ->andWhere('m.installed = :installed')
+            ->setParameter('installed', false);
+    }
+
+    // }}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Param to force update addons 
+     */
+//    const P_FORCE_UPDATE = 'updateAddons';
+
+    /**
+     * Price criteria 
+     */
+/*    const PRICE_FREE = 'free';
+    const PRICE_PAID = 'paid';
+
+
+    /**
+     * Fileds that go into update from marketplace
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+/*    protected $updateFields = array(
+        'name',
+        'author',
+        'status',
+        'description',
+        'moduleName',
+        'authorName',
+        'date',
+        'version',
+        'changelog',
+        'hash',
+        'packHash',
+        'price',
+        'currency',
+        'rating',
+        'downloads',
+        'iconURL',
+        'dependencies',
+    );
+
+    /**
+     * Repository type 
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+//    protected $type = self::TYPE_INTERNAL;
+
+    /**
+     * Update error 
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+//    protected $updateError = null;
+
+    /**
+     * Default 'order by' field name
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+/*    protected $defaultOrderBy = array(
+        'enabled' => 0,
+        'name'    => 1,
+    );
+
+    /**
+     * Alternative record identifiers
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+/*    protected $alternativeIdentifier = array(
+        array('author', 'name'),
+    );
+
+    /**
+     * Modules enabeld list (cache)
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+/*    protected $modules = null;
+
+    /**
+     * Find dependency modules by module 
+     * 
+     * @param \XLite\Model\Module $module Module
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+  /*  public function findDependenciesByModule(\XLite\Model\Module $module)
+    {
+        return $this->defineFindDependenciesByModuleQuery($module)->getResult();
+    }
+
+    /**
+     * Define query for findDependenciesByModule() method
+     * 
+     * @param \XLite\Model\Module $module Module
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+/*    protected function defineFindDependenciesByModuleQuery(\XLite\Model\Module $module)
+    {
+        $qb = $this->createQueryBuilder()
+            ->setParameter('delimiter', '\\');;
+        $names = \XLite\Core\Database::buildInCondition($qb, $module->getCalculatedDependencies(), 'classNames');
+        $expr  = $qb->expr()->concat('m.author', $qb->expr()->concat(':delimiter', 'm.name'));
+
+        foreach ($names as $k => $dp) {
+            $qb->orWhere($qb->expr()->eq($expr, ':classNames' . $k));
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Define cache cells 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+/*    protected function defineCacheCells()
+    {
+        $list = parent::defineCacheCells();
+
+        $list['all'] = array();
+        $list['names'] = array();
+        $list['enabled'] = array(
+            self::ATTRS_CACHE_CELL => array('enabled'),
+        );
+
+        return $list;
+    }
+
+    /**
+     * Return list of handling search params 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+/*    protected function getHandlingSearchParams()
+    {
+        return array(
+            self::P_SUBSTRING,
+            self::P_TAG,
+            self::P_ORDER_BY,
+            self::P_LIMIT,
+            self::P_PRICE_FILTER,
+            self::P_STATUS,
+        );
+    }
+
+    /**
+     * Return conditions parameters that are responsible for substring set of fields.
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+/*    protected function getSubstringSearchFields()
+    {
+        return array(
+            'm.moduleName',
+            'm.description',
+        );
+    }
+
+    /**
+     * Check if param can be used for search
+     * 
+     * @param string $param Name of param to check
+     *  
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+/*    protected function isSearchParamHasHandler($param)
+    {
+        return in_array($param, $this->getHandlingSearchParams());
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+/*    protected function prepareCndLimit(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
+    {
+        call_user_func_array(array($this, 'assignFrame'), array_merge(array($queryBuilder), $value));
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param string|null                $value        Condition data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+/*    protected function prepareCndSubstring(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        $searchWords = $this->getSearchWords($value);
 
         $cnd = new \Doctrine\ORM\Query\Expr\Orx();
 
@@ -297,7 +648,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getSearchWords($value)
+/*    protected function getSearchWords($value)
     {
         $value = trim($value);
 
@@ -330,7 +681,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareCndTag(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+/*    protected function prepareCndTag(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
     }
 
@@ -344,7 +695,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+/*    protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         list($sort, $order) = $value;
 
@@ -361,7 +712,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareCndPriceFilter(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+/*    protected function prepareCndPriceFilter(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if (self::PRICE_FREE === $value) {
             $queryBuilder->andWhere($queryBuilder->expr()->eq('m.price', 0));
@@ -380,7 +731,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareCndStatus(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+/*    protected function prepareCndStatus(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         $queryBuilder->andWhere('m.status = :status')->setParameter('status', $value);
     }
@@ -396,7 +747,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder)
+/*    protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder)
     {
         if ($this->isSearchParamHasHandler($key)) {
             $this->{'prepareCnd' . ucfirst($key)}($queryBuilder, $value);
@@ -415,7 +766,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
+/*    public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
         $queryBuilder = $this->createQueryBuilder();
 
@@ -437,7 +788,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function findAllModules()
+/*    public function findAllModules()
     {
         $data = $this->getFromCache('all');
         if (!isset($data)) {
@@ -455,7 +806,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function findInactiveModules()
+/*    public function findInactiveModules()
     {
         return $this->defineFindInactiveModulesQuery()->getResult();
     }
@@ -469,7 +820,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function findUpgradableModules()
+/*    public function findUpgradableModules()
     {
         return array();
     }
@@ -481,7 +832,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function findAllNames()
+/*    public function findAllNames()
     {
         $data = $this->getFromCache('names');
         if (!isset($data)) {
@@ -502,7 +853,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function findAllByModuleIds(array $ids)
+/*    public function findAllByModuleIds(array $ids)
     {
         return empty($ids)
             ? array()
@@ -518,7 +869,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function findAllEnabled($enabled = true)
+/*    public function findAllEnabled($enabled = true)
     {
         $data = $this->getFromCache('enabled', array('enabled' => $enabled));
         if (!isset($data)) {
@@ -539,7 +890,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function findByActualName($name, $author)
+/*    public function findByActualName($name, $author)
     {
         return $this->findOneBy(
             array(
@@ -557,7 +908,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getActiveModules()
+/*    public function getActiveModules()
     {
         if (!isset($this->modules)) {
             $this->modules = array();
@@ -578,7 +929,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isModuleActive($name)
+/*    public function isModuleActive($name)
     {
         $list = $this->getActiveModules();
 
@@ -592,7 +943,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function initialize()
+/*    public function initialize()
     {
         $changed = false;
 
@@ -632,7 +983,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function checkModules()
+/*    public function checkModules()
     {
         // Step 1: check installed modules
 
@@ -724,7 +1075,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineFindInactiveModulesQuery()
+/*    protected function defineFindInactiveModulesQuery()
     {
         return $this->createQueryBuilder()
             ->andWhere('m.enabled = :enabled')
@@ -741,7 +1092,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function isUpdateNeeded()
+/*    protected static function isUpdateNeeded()
     {
         return !static::isAddonsInfoActual()
             || \XLite\Core\Request::getInstance()->{static::P_FORCE_UPDATE};
@@ -755,7 +1106,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function isAddonsInfoActual()
+/*    protected static function isAddonsInfoActual()
     {
         return true;
 
@@ -765,7 +1116,7 @@ class Module extends \XLite\Model\Repo\ARepo
                 \XLite\Core\TmpVars::getInstance()->{\XLite\RemoteModel\Marketplace::ADDONS_UPDATED} 
                 + \XLite\RemoteModel\Marketplace::LAST_UPDATE_TTL
             ) > LC_START_TIME;*/
-    }
+    //}
 
     /**
      * Process modules XML from the market place
@@ -776,7 +1127,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function processXMLResponse($xmlData)
+/*    protected function processXMLResponse($xmlData)
     {
         $result = true;
 
@@ -849,7 +1200,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function updateAddonsList()
+/*    protected function updateAddonsList()
     {
         return true;
 
@@ -877,7 +1228,7 @@ class Module extends \XLite\Model\Repo\ARepo
         }
 
         return !$this->updateError;*/
-    } 
+//    } 
 
     /**
      * Define query builder for findAllModules()
@@ -886,7 +1237,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineAllModulesQuery()
+/*    protected function defineAllModulesQuery()
     {
         return $this->createQueryBuilder()
             ->andWhere('m.installed = :installed')
@@ -900,7 +1251,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineAllNamesQuery()
+/*    protected function defineAllNamesQuery()
     {
         return $this->createQueryBuilder()
             ->andWhere('m.installed = :installed')
@@ -916,7 +1267,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineAllByModuleIdsQuery(array $ids)
+/*    protected function defineAllByModuleIdsQuery(array $ids)
     {
         $qb = $this->createQueryBuilder();
 
@@ -934,7 +1285,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function postprocessAllNames(array $data)
+/*    protected function postprocessAllNames(array $data)
     {
         $result = array();
 
@@ -954,7 +1305,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineAllEnabledQuery($enabled)
+/*    protected function defineAllEnabledQuery($enabled)
     {
         return $this->createQueryBuilder()
             ->andWhere('m.enabled = :enabled')
@@ -970,7 +1321,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function uninstallEmergency(\XLite\Model\Module $module)
+/*    protected function uninstallEmergency(\XLite\Model\Module $module)
     {
         \XLite\Logger::getInstance()->log(
             \XLite\Core\Translation::lbl(
@@ -994,7 +1345,7 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function disableEmergency(\XLite\Model\Module $module)
+/*    protected function disableEmergency(\XLite\Model\Module $module)
     {
         \XLite\Logger::getInstance()->log(
             \XLite\Core\Translation::lbl(
@@ -1022,9 +1373,9 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function updateMarketplaceModules(array $data)
+/*    public function updateMarketplaceModules(array $data)
     {
-    }
+    }*/
 
     // }}}
 }

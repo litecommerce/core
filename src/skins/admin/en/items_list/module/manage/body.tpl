@@ -44,9 +44,11 @@ function confirmNote(action, id)
   </div>
 
   <div class="activity">
-    {foreach:getFilters(),fltr,desc}
-      <a href="{buildURL(#modules#,##,_ARRAY_(#filter#^fltr))}" class="upgradable{if:fltr=getFilter()} current{end:}">{t(desc)}</a><span>({getModulesCount(fltr)})</span>
-    {end:}
+    <tbody FOREACH="getFilters(),fltr,desc">
+      <a IF="fltr" href="{buildURL(#modules#,##,_ARRAY_(#filter#^fltr))}" class="upgradable{if:fltr=getFilter()} current{end:}">{t(desc)}</a>
+      <a IF="!fltr" href="{buildURL(#modules#)}" class="upgradable{if:fltr=getFilter()} current{end:}">{t(desc)}</a>
+      <span>({getModulesCount(fltr)})</span>
+    </tbody>
   </div>
 
   <div class="clear"></div>

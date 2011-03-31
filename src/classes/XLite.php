@@ -294,7 +294,7 @@ class XLite extends \XLite\Base
      */
     public function initModules()
     {
-        \XLite\Core\Database::getRepo('XLite\Model\Module')->initialize();
+        \Includes\Decorator\Utils\ModulesManager::initModules();
     }
 
     /**
@@ -433,7 +433,7 @@ class XLite extends \XLite\Base
      */
     final public function getVersion()
     {
-        return $this->getMajorVersion() . '.' . $this->getMinorVersion();
+        return \Includes\Utils\Converter::composeVersion($this->getMajorVersion(), $this->getMinorVersion());
     }
 
     /**

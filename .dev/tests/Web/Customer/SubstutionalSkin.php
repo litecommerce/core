@@ -63,7 +63,7 @@ class XLite_Web_Customer_SubstutionalSkin extends XLite_Web_Customer_ACustomer
             LC_SKINS_DIR
         );
 
-        $skin = \XLite\Core\Database::getRepo('XLite\Model\Module')->findByActualName('TestSkin', 'CDev');
+        $skin = \XLite\Core\Database::getRepo('XLite\Model\Module')->findOneByNameAndAuthor('TestSkin', 'CDev');
         if (!$skin) {
             $skin = new \XLite\Model\Module;
             $skin->setAuthor('CDev');
@@ -105,7 +105,7 @@ class XLite_Web_Customer_SubstutionalSkin extends XLite_Web_Customer_ACustomer
             LC_SKINS_DIR . 'test'
         );
 
-        $skin = \XLite\Core\Database::getRepo('XLite\Model\Module')->findByActualName('TestSkin', 'CDev');
+        $skin = \XLite\Core\Database::getRepo('XLite\Model\Module')->findOneByNameAndAuthor('TestSkin', 'CDev');
         if ($skin) {
             \XLite\Core\Database::getEM()->remove($skin);
             \XLite\Core\Database::getEM()->flush();

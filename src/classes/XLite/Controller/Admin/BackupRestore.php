@@ -92,7 +92,6 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * Constructor
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -324,7 +323,6 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * doActionPackDistr 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
