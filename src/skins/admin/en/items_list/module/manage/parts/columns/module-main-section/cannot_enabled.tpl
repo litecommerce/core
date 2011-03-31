@@ -11,6 +11,7 @@
  * @since     3.0.0
  *
  * @ListChild (list="itemsList.module.manage.columns.module-main-section", weight="30")
+ * @ListChild (list="itemsList.module.install.columns.module-main-section", weight="30")
  *}
 
 <div IF="!canEnable(module)">
