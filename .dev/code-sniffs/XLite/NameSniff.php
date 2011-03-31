@@ -12,7 +12,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'NVP', 'PHP', 'CURL', 'VS', 'PC', 'UTF8', 'TTL', 'SMTP', 'IP4', 'CC', 'CVV2', 'UK', 'FMF', 'CSSURL',
 		'HMACMD5', 'HMAC', 'URI', 'ID', 'JS', 'SSL', 'AVS', 'CVV', 'DB', 'HSBC', 'SOAP', 'GMT', 'HTTPS', 'CLI',
 		'CMS', 'GC', 'AJAX', 'URLAJAX', 'USPS', 'GD', 'PM', 'XPC', 'DSN', 'EM', 'QB', 'SKU', 'REST', 'FS', 'IREST',
-        'YAML', 'GZ', 'HTTP',
+        'YAML', 'GZ', 'HTTP', 'SPL',
 	);
 
 	protected $twoWordsAbbrs = array('ECard', 'ECards');
@@ -39,10 +39,10 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'mask', 'pay', 'clone', 'login', 'logoff', 'exclude', 'restart', 'invalidate',
 		'remember', 'remind', 'link', 'concat','split', 'round', 'depack', 'upload', 'hydrate', 'unload',
 		'download', 'deploy', 'construct', 'retrieve', 'print', 'increase', 'decrease', 'sum',
-		'drop',
+		'drop', 'list',
 
 		// FIXME - rename later
-		'processed', 'checked', 'declined', 'queued', 'unchecked', 'checkout',
+		'processed', 'checked', 'declined', 'queued', 'unchecked', 'checkout', 'display404',
 	);
 
 	protected $cssPseudoClasses = array(

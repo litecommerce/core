@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core;
@@ -31,9 +31,8 @@ namespace XLite\Core;
 /**
  * Current session
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Session extends \XLite\Base\Singleton
 {
@@ -45,61 +44,39 @@ class Session extends \XLite\Base\Singleton
     /**
      * Session 
      * 
-     * @var    \XLite\Model\Session
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Session
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $session;
 
     /**
      * Currently used form ID
      *
-     * @var    string
-     * @access protected
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $xliteFormId;
 
     /**
      * Language (cache)
      *
-     * @var    \XLite\Model\Language
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Language
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $language;
 
     /**
      * Last form id 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $lastFormId;
 
-    /**
-     * Constructor
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function __construct()
-    {
-        $this->clearGarbage();
-
-        if (!$this->restoreSession()) {
-
-            $this->createSession();
-        }
-
-        $this->setCookie();
-    }
 
     /**
      * Getter
@@ -107,7 +84,6 @@ class Session extends \XLite\Base\Singleton
      * @param string $name Session cell name
      *  
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -123,7 +99,6 @@ class Session extends \XLite\Base\Singleton
      * @param mixed  $value Value
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -138,7 +113,6 @@ class Session extends \XLite\Base\Singleton
      * @param string $name Session cell name
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -153,7 +127,6 @@ class Session extends \XLite\Base\Singleton
      * @param string $name Session cell name
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -169,7 +142,6 @@ class Session extends \XLite\Base\Singleton
      * @param string $name Session cell name
      *  
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -186,7 +158,6 @@ class Session extends \XLite\Base\Singleton
      * @param mixed  $value Value
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -196,23 +167,9 @@ class Session extends \XLite\Base\Singleton
     }
 
     /**
-     * Clear expired sessions and other obsolete data
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function clearGarbage()
-    {
-        \XLite\Core\Database::getRepo('XLite\Model\Session')->removeExpired();
-    }
-
-    /**
      * Restart session
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -250,10 +207,176 @@ class Session extends \XLite\Base\Singleton
     }
 
     /**
+     * Get public session id argument name 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getName()
+    {
+        return self::ARGUMENT_NAME;
+    }
+
+    /**
+     * Get public session id
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getID()
+    {
+        return $this->session->getSid();
+    }
+
+    /**
+     * Load session by public session id 
+     * 
+     * @param string $sid Public session id
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function loadBySid($sid)
+    {
+        $session = \XLite\Core\Database::getRepo('XLite\Model\Session')->findOneBy(
+            array(
+                'sid' => $sid,
+            )
+        );
+
+        $result = false;
+
+        if ($session) {
+            $result = true;
+            \XLite\Core\Database::getEM()->remove($this->session);
+            \XLite\Core\Database::getEM()->flush();
+
+            $this->session = $session;
+            $this->lastFormId = null;
+
+            $this->setCookie();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Create form id
+     *
+     * @return string Form id
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createFormId()
+    {
+        if (!isset($this->lastFormId)) {
+            $formId = new \XLite\Model\FormId;
+            $formId->setSessionId($this->session->getId());
+            \Xlite\Core\Database::getEM()->persist($formId);
+
+            $this->lastFormId = $formId->getFormId();
+        }
+
+        return $this->lastFormId;
+    }
+
+    /**
+     * Get model 
+     * 
+     * @return \XLite\Model\Session
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModel()
+    {
+        return $this->session;
+    }
+
+    /**
+     * Get language
+     * 
+     * @return \XLite\Model\Language
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLanguage()
+    {
+        if (!isset($this->language)) {
+            $this->language = \XLite\Core\Database::getRepo('XLite\Model\Language')
+                ->findOneByCode($this->getCurrentLanguage());
+
+            if ($this->language) {
+                $this->language->detach();
+            }
+        }
+
+        return $this->language;
+    }
+
+    /**
+     * Set language 
+     * 
+     * @param string $language Language code
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setLanguage($language)
+    {
+        $code = $this->session->language;
+        $zone = \XLite::isAdminZone() ? 'admin' : 'customer';
+
+        if (!is_array($code)) {
+            $code = array();
+        }
+
+        if (!isset($code[$zone]) || $code[$zone] != $language) {
+            $code[$zone] = $language;
+            $this->session->language = $code;
+            $this->language = null;
+        }
+    }
+
+
+    /**
+     * Constructor
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function __construct()
+    {
+        $this->clearGarbage();
+
+        if (!$this->restoreSession()) {
+
+            $this->createSession();
+        }
+
+        $this->setCookie();
+    }
+
+    /**
+     * Clear expired sessions and other obsolete data
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function clearGarbage()
+    {
+        \XLite\Core\Database::getRepo('XLite\Model\Session')->removeExpired();
+    }
+
+    /**
      * Restore session 
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -280,7 +403,6 @@ class Session extends \XLite\Base\Singleton
      * Detect public session id 
      * 
      * @return array (public session id and source)
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -311,7 +433,6 @@ class Session extends \XLite\Base\Singleton
      * Create session 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -330,7 +451,6 @@ class Session extends \XLite\Base\Singleton
      * Set cookie 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -368,72 +488,11 @@ class Session extends \XLite\Base\Singleton
     }
 
     /**
-     * Get public session id argument name 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getName()
-    {
-        return self::ARGUMENT_NAME;
-    }
-
-    /**
-     * Get public session id
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getID()
-    {
-        return $this->session->getSid();
-    }
-
-    /**
-     * Load session by public session id 
-     * 
-     * @param string $sid Public session id
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function loadBySid($sid)
-    {
-        $session = \XLite\Core\Database::getRepo('XLite\Model\Session')->findOneBy(
-            array(
-                'sid' => $sid,
-            )
-        );
-
-        $result = false;
-
-        if ($session) {
-            $result = true;
-            \XLite\Core\Database::getEM()->remove($this->session);
-            \XLite\Core\Database::getEM()->flush();
-
-            $this->session = $session;
-            $this->lastFormId = null;
-
-            $this->setCookie();
-        }
-
-        return $result;
-    }
-
-    /**
      * Get parsed URL for Set-Cookie
      * 
      * @param boolean $secure Secure protocol or not OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -454,7 +513,6 @@ class Session extends \XLite\Base\Singleton
      * @param boolean $secure Secure protocol or not OPTIONAL
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -471,7 +529,6 @@ class Session extends \XLite\Base\Singleton
      * @param boolean $secure Secure protocol or not OPTIONAL
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -483,92 +540,9 @@ class Session extends \XLite\Base\Singleton
     }
 
     /**
-     * Create form id
-     *
-     * @return string Form id
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function createFormId()
-    {
-        if (!isset($this->lastFormId)) {
-            $formId = new \XLite\Model\FormId;
-            $formId->setSessionId($this->session->getId());
-            \Xlite\Core\Database::getEM()->persist($formId);
-
-            $this->lastFormId = $formId->getFormId();
-        }
-
-        return $this->lastFormId;
-    }
-
-    /**
-     * Get model 
-     * 
-     * @return \XLite\Model\Session
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getModel()
-    {
-        return $this->session;
-    }
-
-    /**
-     * Get language
-     * 
-     * @return \XLite\Model\Language
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getLanguage()
-    {
-        if (!isset($this->language)) {
-            $this->language = \XLite\Core\Database::getRepo('XLite\Model\Language')
-                ->findOneByCode($this->getCurrentLanguage());
-
-            if ($this->language) {
-                $this->language->detach();
-            }
-        }
-
-        return $this->language;
-    }
-
-    /**
-     * Set language 
-     * 
-     * @param string $language Language code
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setLanguage($language)
-    {
-        $code = $this->session->language;
-        $zone = \XLite::isAdminZone() ? 'admin' : 'customer';
-
-        if (!is_array($code)) {
-            $code = array();
-        }
-
-        if (!isset($code[$zone]) || $code[$zone] != $language) {
-            $code[$zone] = $language;
-            $this->session->language = $code;
-            $this->language = null;
-        }
-    }
-
-    /**
      * Get current language 
      * 
      * @return string Language code
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -581,7 +555,7 @@ class Session extends \XLite\Base\Singleton
             $code = array();
         }
 
-        if (isset($code[$zone]) && $code[$zone])  {
+        if (isset($code[$zone]) && $code[$zone]) {
             $language = \XLite\Core\Database::getRepo('XLite\Model\Language')
                 ->findOneByCode($code[$zone]);
 
@@ -602,7 +576,6 @@ class Session extends \XLite\Base\Singleton
      * Define current language 
      * 
      * @return string Language code
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -638,5 +611,4 @@ class Session extends \XLite\Base\Singleton
 
         return $found ?: 'en';
     }
-
 }

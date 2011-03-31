@@ -37,7 +37,7 @@ class XLite_Sniffs_PHP_Formatting_StringSniff extends XLite_ReqCodesSniff
      * @return array
      */
     public function register()
-   {
+   	{
         return array(T_CONSTANT_ENCAPSED_STRING);
 
     }//end register()
@@ -61,8 +61,8 @@ class XLite_Sniffs_PHP_Formatting_StringSniff extends XLite_ReqCodesSniff
 			&& $tokens[$stackPtr + 1]['code'] !== T_CONSTANT_ENCAPSED_STRING
 		) {
 			$str = str_replace(
-				array('\n', '\r', '\t'),
-				array('','',''),
+				array('\n', '\r', '\t', '\x00', '\x0a', '\x0d', '\x1a'),
+				array('', '', '', '', '', '', ''),
 				substr($tokens[$stackPtr]['content'], 1, -1)
 			);
 

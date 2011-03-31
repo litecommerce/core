@@ -45,7 +45,6 @@ abstract class APack
      * Return pack name
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -55,7 +54,6 @@ abstract class APack
      * Return iterator to walk through directories
      * 
      * @return \Iterator
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -65,7 +63,6 @@ abstract class APack
      * Return pack metadata
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
