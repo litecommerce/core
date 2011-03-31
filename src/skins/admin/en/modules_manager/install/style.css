@@ -146,19 +146,6 @@ table.modules-list div.module-info ul li.downloads-counter {
   line-height: 20px;
 }
 
-table.modules-list div.icon-container {
-  position: relative;
-}
-
-table.modules-list div.icon-container div.addon-disabled {
-  width: 48px;
-  height: 48px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: url(../../images/addon_disabled.png) left top no-repeat;
-}
-
 div.modules-filters {
   margin: 10px 0;
 }

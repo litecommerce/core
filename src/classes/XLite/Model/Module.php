@@ -519,7 +519,15 @@ class Module extends \XLite\Model\AEntity
 
             list($author, $name) = explode('\\', $class);
 
-            if ($module = $this->getRepository()->findOneByAuthorAndName($author, $name)) {
+            $module = $this->getRepository()->findOneBy(
+                array(
+                    'author' => $author,
+                    'name'   => $name,
+                )
+            );
+
+            if ($module) {
+
                 $result[$class] = $module;
             }
         }

@@ -142,3 +142,26 @@ table.modules-list div.note.version.upgrade
   color: #466444;
   border: solid 1px #a8d6a5;
 }
+
+div.icon-container div.addon-disabled {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+div.icon-container div.addon-disabled img.disabled,
+  div.icon-container div.addon-disabled,
+  div.icon-container div.addon-icon img.addon-icon
+{
+  width: 84px;
+  height: 84px;
+}
+
+div.icon-container div.addon-disabled img.disabled {
+  background: transparent url(../images/addon_disabled.png) left top no-repeat;
+}
+
+div.icon-container div.addon-icon img.addon-default-icon {
+  background: transparent url(../images/addon_default.png) left top no-repeat;
+}
+

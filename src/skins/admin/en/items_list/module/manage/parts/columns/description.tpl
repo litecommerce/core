@@ -10,6 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  * @ListChild (list="itemsList.module.manage.columns", weight="70")
+ * @ListChild (list="itemsList.module.install.columns", weight="70")
  *}
 <td class="module-description-section">
   {displayNestedViewListContent(#module-description-section#,_ARRAY_(#module#^module))}
