@@ -163,7 +163,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         );
         $this->waitInlineProgress('#create_profile_email', 'duplicate email');
         $this->assertInputErrorPresent('#create_profile_email', 'check duplicate email error');
-        $this->assertJqueryPresent('p.username-verified:visible');
+        $this->assertJqueryPresent('p.username-verified:visible', 'username-verified note is visible');
 
         // Duplicate username
         $this->typeKeys(
@@ -179,7 +179,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         );
         $this->waitInlineProgress('#create_profile_username', 'duplicate username');
         $this->assertInputErrorPresent('#create_profile_username', 'profile username is duplicate');
-        $this->assertJqueryNotPresent('p.username-verified:visible');
+        $this->assertJqueryNotPresent('p.username-verified:visible', 'username-verified note is visible #2');
     }
 
     public function testShippingStep()
@@ -641,7 +641,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->waitInlineProgress('#create_profile_username', 'username');
         $this->assertInputErrorNotPresent('#create_profile_username', 'profile username is unique');
 
-        $this->assertJqueryPresent('p.username-verified:visible');
+        $this->assertJqueryPresent('p.username-verified:visible', 'username-verified note is visible (fill profile)');
     }
 
     protected function fillShippingAddress()
