@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    SVN: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\ItemsList\Product\Customer;
@@ -31,9 +31,8 @@ namespace XLite\View\ItemsList\Product\Customer;
 /**
  * ACustomer 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 {
@@ -98,9 +97,9 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * Widget types
      *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $widgetTypes = array(
         self::WIDGET_TYPE_SIDEBAR  => 'Sidebar',
@@ -110,9 +109,9 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * Display modes
      *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $displayModes = array(
         self::DISPLAY_MODE_GRID  => 'Grid',
@@ -121,11 +120,109 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     );
 
 
+    /** 
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = self::getWidgetTarget();
+    
+        return $result;
+    }
+
+
+    /**
+     * Initialize widget (set attributes)
+     *
+     * @param array $params Widget params
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        parent::setWidgetParams($params);
+
+        // FIXME - not a good idea, but I don't see a better way
+        if ($this->isWrapper() && $this->checkSideBarParams($params)) {
+            $this->defaultTemplate = self::TEMPLATE_SIDEBAR;
+            $this->widgetParams[self::PARAM_TEMPLATE]->setValue($this->getDefaultTemplate());
+        }
+    }
+
+    /**
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = $this->getDir() . '/quick_look.css';
+        $list[] = 'css/cloud-zoom.css';
+
+        return array_merge($list, $this->getPopupCSS());
+    }
+
+    /**
+     * Get a list of JavaScript files required to display the widget properly
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        return array_merge($list, $this->getPopupJS());
+    }
+
+    /** 
+     * Return class attribute for the product cell
+     * 
+     * @param \XLite\Model\Product $product The product to look for
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProductCellClass($product)
+    {   
+        return 'product productid-' 
+            . $product->getProductId() 
+            . ($this->isProductAdded($product) ? ' product-added' : '');
+    }   
+
+    /**
+     * Register files from common repository
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCommonFiles()
+    {
+        $list = parent::getCommonFiles();
+        $list['js'][] = 'js/cloud-zoom.min.js';
+
+        return $list;
+    }
+
+
     /**
      * Return title
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getHead()
@@ -137,7 +234,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Return name of the base widgets list
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -150,7 +246,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -204,7 +300,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Define so called "request" parameters
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -219,7 +314,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * isSideBarBox
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isSideBarBox()
@@ -233,7 +328,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * @param array $params Params to check
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function checkSideBarParams(array $params)
@@ -245,7 +340,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Return dir which contains the page body template
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -258,7 +352,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Check if pager control row is visible or not
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isPagerVisible()
@@ -272,7 +366,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * isDisplayModeSelectorVisible
      * 
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -285,7 +378,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * isSortBySelectorVisible
      * 
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -298,7 +390,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * isHeaderVisible
      *
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -312,7 +403,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * getDisplayMode
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDisplayMode()
@@ -326,7 +417,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * @param string $displayMode Value to check
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isDisplayModeSelected($displayMode)
@@ -341,7 +432,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * @param string $displayMode Display mode
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDisplayModeLinkClassName($displayMode)
@@ -369,7 +460,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Return products split into rows
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getProductRows()
@@ -390,7 +481,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get grid columns range
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getGridColumnsRange()
@@ -407,7 +498,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Check whether a CSS layout should be used for "Grid" mode
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isCSSLayout()
@@ -419,7 +510,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * getPageBodyFile
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getPageBodyFile()
@@ -435,7 +526,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * getSidebarMaxItems
      *
      * @return integer 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -448,7 +538,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get products list for sidebar widget
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -464,7 +553,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * @param integer $count List length
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -491,7 +579,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get grid item width (percent)
      *
      * @return integer
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getGridItemWidth()
@@ -503,7 +591,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Show product description or not
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isShowDescription()
@@ -515,7 +603,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * isShowThumbnail
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isShowThumbnails()
@@ -528,7 +616,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Show product price or not
      *
      * @return boolean
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isShowPrice()
@@ -542,7 +630,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * @param \XLite\Model\Product $product Product
      *
      * @return boolean
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isShowAdd2Cart(\XLite\Model\Product $product)
@@ -554,7 +642,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Return the maximal icon width
      *
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -567,7 +654,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Return the maximal icon height
      *
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -580,7 +666,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get table columns count
      *
      * @return integer 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -593,7 +678,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Check status of 'More...' link for sidebar list
      *
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -606,7 +690,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get 'More...' link URL for sidebar list
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -619,7 +702,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Get 'More...' link text for sidebar list
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -629,31 +711,10 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
-     * Initialize widget (set attributes)
-     *
-     * @param array $params Widget params
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function setWidgetParams(array $params)
-    {
-        parent::setWidgetParams($params);
-
-        // FIXME - not a good idea, but I don't see a better way
-        if ($this->isWrapper() && $this->checkSideBarParams($params)) {
-            $this->defaultTemplate = self::TEMPLATE_SIDEBAR;
-            $this->widgetParams[self::PARAM_TEMPLATE]->setValue($this->getDefaultTemplate());
-        }
-    }
-
-    /**
      * Prepare CSS files needed for popups
      * TODO: check if there is a more convinient way to do that
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -672,7 +733,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * TODO: check if there is a more convinient way to do that
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -687,96 +747,16 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
-     * Get a list of CSS files required to display the widget properly
-     *
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = $this->getDir() . '/quick_look.css';
-        $list[] = 'css/cloud-zoom.css';
-
-        return array_merge($list, $this->getPopupCSS());
-    }
-
-    /**
-     * Get a list of JavaScript files required to display the widget properly
-     *
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        return array_merge($list, $this->getPopupJS());
-    }
-
-    /**
      * Checks whether a product was added to the cart
      * 
      * @param \XLite\Model\Product $product The product to look for
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isProductAdded($product)
     {
         return $this->getCart()->isProductAdded($product->getProductId());
-    }
-
-    /** 
-     * Return class attribute for the product cell
-     * 
-     * @param \XLite\Model\Product $product The product to look for
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProductCellClass($product)
-    {   
-        return 'product productid-' 
-            . $product->getProductId() 
-            . ($this->isProductAdded($product) ? ' product-added' : '');
-    }   
-
-    /**
-     * Register files from common repository
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCommonFiles()
-    {
-        $list = parent::getCommonFiles();
-        $list['js'][] = 'js/cloud-zoom.min.js';
-
-        return $list;
-    }
-
-    /** 
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = self::getWidgetTarget();
-    
-        return $result;
     }
 }
