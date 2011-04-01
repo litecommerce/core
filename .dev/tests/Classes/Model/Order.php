@@ -672,7 +672,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
         $order->setPaymentMethod(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(2));
         $this->assertEquals(
-            'Purchase Order',
+            'Phone Ordering',
             $order->getPaymentMethod()->getName(),
             'check payment method'
         );
