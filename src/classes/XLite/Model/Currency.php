@@ -31,8 +31,9 @@ namespace XLite\Model;
 /**
  * Currency
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
  * @Entity
  * @Table (name="currencies")
  */
@@ -41,20 +42,22 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Currency unique id (ISO 4217 number)
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Id
-     * @Column         (type="uinteger")
+     * @Column (type="uinteger")
      */
     protected $currency_id;
 
     /**
      * Currency code (ISO 4217 alpha-3)
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="fixedstring", length="3", unique=true)
      */
     protected $code;
@@ -62,9 +65,10 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Symbol
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="string", length="16")
      */
     protected $symbol = '';
@@ -72,9 +76,10 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Number of digits after the decimal separator.
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="integer")
      */
     protected $e = 0;
@@ -82,13 +87,14 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Orders
      *
-     * @var    \Doctrine\Common\Collections\Collection
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\Collection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Order", mappedBy="currency")
      */
     protected $orders;
+
 
     /**
      * Set currency Id 
@@ -164,7 +170,7 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Constructor
      *
-     * @param array $data Entity properties
+     * @param array $data Entity properties OPTIONAL
      *
      * @return void
      * @see    ____func_see____
@@ -176,5 +182,4 @@ class Currency extends \XLite\Model\Base\I18n
 
         parent::__construct($data);
     }
-
 }

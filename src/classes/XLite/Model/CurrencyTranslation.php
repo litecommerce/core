@@ -31,8 +31,9 @@ namespace XLite\Model;
 /**
  * Currency multilingual data
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
  * @Entity
  * @Table (name="currency_translations",
  *      indexes={
@@ -46,9 +47,9 @@ class CurrencyTranslation extends \XLite\Model\Base\Translation
     /**
      * Currency name
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */

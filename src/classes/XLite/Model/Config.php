@@ -31,8 +31,8 @@ namespace XLite\Model;
 /**
  * DB-based configuration registry
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Config")
  * @Table  (name="config",
@@ -50,9 +50,9 @@ class Config extends \XLite\Model\Base\I18n
     /**
      * Option unique name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -63,9 +63,9 @@ class Config extends \XLite\Model\Base\I18n
     /**
      * Option name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="32")
      */
@@ -74,9 +74,9 @@ class Config extends \XLite\Model\Base\I18n
     /**
      * Option category
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="32")
      */
@@ -86,9 +86,9 @@ class Config extends \XLite\Model\Base\I18n
      * Option type
      * Allowed values:'','text','textarea','checkbox','country','state','select','serialized','separator'
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="32")
      */
@@ -97,9 +97,9 @@ class Config extends \XLite\Model\Base\I18n
     /**
      * Option position within category
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -108,9 +108,9 @@ class Config extends \XLite\Model\Base\I18n
     /**
      * Option value
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="text")
      */

@@ -31,8 +31,8 @@ namespace XLite\Model;
 /**
  * Category
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Category")
  * @Table  (name="categories",
@@ -49,9 +49,9 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Node unique ID 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -62,9 +62,9 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Node left value 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -73,9 +73,9 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Node right value 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -84,9 +84,9 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Node status
      * 
-     * @var    boolean
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="boolean")
      */
@@ -95,9 +95,9 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Node clean (SEO-friendly) URL
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -106,8 +106,9 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Whether to display the category title, or not
      * 
-     * @var    integer
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="boolean")
      */
@@ -116,9 +117,9 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Some cached flags
      * 
-     * @var    \XLite\Model\Category\QuickFlags
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Category\QuickFlags
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @OneToOne (targetEntity="XLite\Model\Category\QuickFlags", mappedBy="category", cascade={"all"})
      */
@@ -127,9 +128,9 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Many-to-one relation with memberships table
      * 
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="membership_id", referencedColumnName="membership_id")
@@ -139,9 +140,9 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * One-to-one relation with category_images table
      * 
-     * @var    \XLite\Model\Image\Category\Image
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Image\Category\Image
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToOne  (targetEntity="XLite\Model\Image\Category\Image", mappedBy="category", cascade={"all"})
      */
@@ -150,9 +151,9 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Relation to a CategoryProducts entities
      * 
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\CategoryProducts", mappedBy="category", cascade={"all"})
      * @OrderBy   ({"orderby" = "ASC"})
@@ -162,9 +163,9 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Child categories
      * 
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Category", mappedBy="parent", cascade={"all"})
      */
@@ -173,9 +174,9 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Parent category
      * 
-     * @var    \XLite\Model\Category
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Category
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Category", inversedBy="children")
      * @JoinColumn (name="parent_id", referencedColumnName="category_id")
@@ -185,7 +186,7 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Set parent 
      * 
-     * @param \XLite\Model\Category $parent Parent category
+     * @param \XLite\Model\Category $parent Parent category OPTIONAL
      *  
      * @return void
      * @see    ____func_see____
@@ -199,7 +200,7 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Set image 
      * 
-     * @param \XLite\Model\Image\Category\Image $image Image
+     * @param \XLite\Model\Image\Category\Image $image Image OPTIONAL
      *  
      * @return void
      * @see    ____func_see____
@@ -309,7 +310,7 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Return products list
      * 
-     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param \XLite\Core\CommonCell $cnd       Search condition OPTIONAL
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *  
      * @return array|integer
@@ -331,7 +332,7 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Constructor
      *
-     * @param array $data Entity properties
+     * @param array $data Entity properties OPTIONAL
      *
      * @return void
      * @see    ____func_see____

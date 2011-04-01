@@ -31,8 +31,9 @@ namespace XLite\Model;
 /**
  * Category
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
  * @Entity
  * @Table (name="category_products",
  *      uniqueConstraints={
@@ -48,9 +49,9 @@ class CategoryProducts extends \XLite\Model\AEntity
     /**
      * Primary key
      *
-     * @var    int
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -61,9 +62,9 @@ class CategoryProducts extends \XLite\Model\AEntity
     /**
      * Product position in the category
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer", length="11", nullable=false)
      */
@@ -72,9 +73,9 @@ class CategoryProducts extends \XLite\Model\AEntity
     /**
      * Relation to a category entity
      * 
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Category", inversedBy="categoryProducts")
      * @JoinColumn (name="category_id", referencedColumnName="category_id")
@@ -84,9 +85,9 @@ class CategoryProducts extends \XLite\Model\AEntity
     /**
      * Relation to a product entity
      * 
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="categoryProducts")
      * @JoinColumn (name="product_id", referencedColumnName="product_id")
