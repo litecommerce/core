@@ -817,16 +817,15 @@ abstract class AView extends \XLite\Core\Handler
 
 
     /**
-     * Constructor
+     * So called "static constructor".
+     * NOTE: do not call the "parent::__constructStatic()" explicitly: it will be called automatically
      *
      * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct()
+    public static function __constructStatic()
     {
-        parent::__construct();
-
         static::$flexy  = \XLite\Core\FlexyCompiler::getInstance();
         static::$layout = \XLite\Core\Layout::getInstance();
     }
