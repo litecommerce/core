@@ -162,8 +162,6 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
     /**
      * Flag to show status change warning
      * 
-     * @param object $order Current order
-     *  
      * @return boolean
      * @see    ____func_see____
      * @since  3.0.0
@@ -234,5 +232,4 @@ class OrderStatus extends \XLite\View\FormField\Select\Regular
 
         return $content;
     }
-
 }

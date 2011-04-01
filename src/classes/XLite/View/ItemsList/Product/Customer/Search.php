@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\ItemsList\Product\Customer;
@@ -31,9 +31,8 @@ namespace XLite\View\ItemsList\Product\Customer;
 /**
  * Search 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
 {
@@ -56,147 +55,9 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
 
     /**
-     * Return title
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return $this->getItemsCount() . ' products found';
-    }
-
-    /** 
-     * Check if head title is visible
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isHeadVisible()
-    {
-        return true;
-    }
-
-    /** 
-     * Check if header is visible
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isHeaderVisible()
-    {   
-        return 0 < $this->getItemsCount();
-    }   
-
-    /**
-     * Check if pager is visible
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isPagerVisible()
-    {
-        return 0 < $this->getItemsCount();
-    }
-
-    /**
-     * isFooterVisible
-     *
-     * @return boolean 
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isFooterVisible()
-    {
-        return true;
-    }
-
-    /**
-     * Search widget must be visible always.
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isVisible()
-    {
-        return true;
-    }
-
-    /** 
-     * Get a list of JavaScript files required to display the widget properly
-     *
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        // Static call of the non-static function
-        $list[] = parent::getDir() . '/search/controller.js';
-
-        return $list;
-    }
-
-    /** 
-     * Get a list of CSS files required to display the widget properly
-     *
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        // Static call of the non-static function
-        $list[] = parent::getDir() . '/search/search.css';
-
-        return $list;
-    }
-
-    /**
-     * Return class name for the list pager
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getPagerClass()
-    {
-        return '\XLite\View\Pager\Customer\Product\Search';
-    }
-
-    /**
-     * Get URL common parameters
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getCommonParams()
-    {
-        return parent::getCommonParams() + array('mode' => 'search');
-    }
-
-    /**
      * Return search parameters TODO refactor with XLite\View\ItemsList\Product\Admin\Search::getSearchParams() 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -212,11 +73,183 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
         );
     }
 
+    /** 
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = self::WIDGET_TARGET;
+    
+        return $result;
+    }
+
+
+    /** 
+     * Return target to retrive this widget from AJAX
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getWidgetTarget()
+    {
+        return self::WIDGET_TARGET;
+    }
+
+
+    /** 
+     * Returns CSS classes for the container element
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getListCSSClasses()
+    {
+        return parent::getListCSSClasses() . ' products-search-result';
+    }
+
+    /** 
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        // Static call of the non-static function
+        $list[] = parent::getDir() . '/search/search.css';
+
+        return $list;
+    }
+
+    /** 
+     * Get a list of JavaScript files required to display the widget properly
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        // Static call of the non-static function
+        $list[] = parent::getDir() . '/search/controller.js';
+
+        return $list;
+    }
+
+
+    /**
+     * Return title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return $this->getItemsCount() . ' products found';
+    }
+
+    /** 
+     * Check if head title is visible
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isHeadVisible()
+    {
+        return true;
+    }
+
+    /** 
+     * Check if header is visible
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isHeaderVisible()
+    {   
+        return 0 < $this->getItemsCount();
+    }   
+
+    /**
+     * Check if pager is visible
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isPagerVisible()
+    {
+        return 0 < $this->getItemsCount();
+    }
+
+    /**
+     * isFooterVisible
+     *
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isFooterVisible()
+    {
+        return true;
+    }
+
+    /**
+     * Search widget must be visible always.
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return true;
+    }
+
+    /**
+     * Return class name for the list pager
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPagerClass()
+    {
+        return '\XLite\View\Pager\Customer\Product\Search';
+    }
+
+    /**
+     * Get URL common parameters
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCommonParams()
+    {
+        return parent::getCommonParams() + array('mode' => 'search');
+    }
+
     /**
      * Define widget parameters TODO refactor with XLite\View\ItemsList\Product\Admin\Search::defineWidgetParams()
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -255,7 +288,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Define so called "request" parameters
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -273,7 +305,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return params list to use for search TODO refactor with XLite\View\ItemsList\Product\Admin\Search::getSearchCondition()
      *   
      * @return \XLite\Core\CommonCell
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -303,7 +334,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return array|integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -321,7 +351,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @param \XLite\Core\CommonCell $cnd Search condition
      *  
      * @return \XLite\Core\CommonCell
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -332,47 +361,4 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
         return $cnd;
     }
-
-    /** 
-     * Return target to retrive this widget from AJAX
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function getWidgetTarget()
-    {
-        return self::WIDGET_TARGET;
-    }
-
-    /** 
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = self::WIDGET_TARGET;
-    
-        return $result;
-    }
-
-    /** 
-     * Returns CSS classes for the container element
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getListCSSClasses()
-    {
-        return parent::getListCSSClasses() . ' products-search-result';
-    }
-
 }

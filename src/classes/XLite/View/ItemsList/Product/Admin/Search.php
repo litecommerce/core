@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\ItemsList\Product\Admin;
@@ -31,9 +31,8 @@ namespace XLite\View\ItemsList\Product\Admin;
 /**
  * Search 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
 {
@@ -48,10 +47,28 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
 
 
     /**
+     * Return search parameters
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    static public function getSearchParams()
+    {
+        return array(
+            \XLite\Model\Repo\Product::P_SUBSTRING         => self::PARAM_SUBSTRING,
+            \XLite\Model\Repo\Product::P_CATEGORY_ID       => self::PARAM_CATEGORY_ID,
+            \XLite\Model\Repo\Product::P_SKU               => self::PARAM_SKU,
+            \XLite\Model\Repo\Product::P_SEARCH_IN_SUBCATS => self::PARAM_SEARCH_IN_SUBCATS,
+        );
+    }
+
+
+    /**
      * Return title
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getHead()
@@ -65,7 +82,6 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * @param string $list List name
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -85,7 +101,6 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * isFooterVisible
      *
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -98,7 +113,7 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Return list of the modes allowed by default
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultModes()
@@ -113,7 +128,6 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Return class name for the list pager
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -126,7 +140,6 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Get URL common parameters
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -136,28 +149,10 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
     }
 
     /**
-     * Return search parameters
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    static public function getSearchParams()
-    {
-        return array(
-            \XLite\Model\Repo\Product::P_SUBSTRING         => self::PARAM_SUBSTRING,
-            \XLite\Model\Repo\Product::P_CATEGORY_ID       => self::PARAM_CATEGORY_ID,
-            \XLite\Model\Repo\Product::P_SKU               => self::PARAM_SKU,
-            \XLite\Model\Repo\Product::P_SEARCH_IN_SUBCATS => self::PARAM_SEARCH_IN_SUBCATS,
-        );
-    }
-
-    /**
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -184,7 +179,6 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Define so called "request" parameters
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -202,7 +196,6 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -229,7 +222,6 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return array|integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
