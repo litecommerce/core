@@ -914,6 +914,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Return list of available payment methods
      * 
      * @return array
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getPaymentMethods()
@@ -960,8 +961,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Check item key equal
      *
-     * @param \XLite\Model\OrderItem $item  Item
-     * @param string                 $key   Key
+     * @param \XLite\Model\OrderItem $item Item
+     * @param string                 $key  Key
      *
      * @return boolean
      * @see    ____func_see____

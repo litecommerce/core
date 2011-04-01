@@ -30,15 +30,40 @@ namespace XLite\Model;
 
 /**
  * Mail images parser
+ * TODO: full refactoring is required
  * 
  * @see   ____class_see____
  * @since 3.0.0
  */
 class MailImageParser extends \XLite\Core\FlexyCompiler
 {
+    /**
+     * webdir 
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
     public $webdir;
+    
+    /**
+     * images 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
     public $images;
+    
+    /**
+     * counter 
+     * 
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
     public $counter;
+
 
     /**
      * Constructor
@@ -53,38 +78,57 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
         parent::__construct();
     }
 
-    function flexy() { }
+    /**
+     * flexy 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function flexy()
+    {
+    }
 
-    function postprocess()
+    /**
+     * postprocess 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function postprocess()
     {
         $this->images = array();
 
         $this->counter = 1;
 
         // find images, e.g. background=..., src=..., style="...url('...')"
-        for ($i=0; $i<count($this->tokens); $i++) {
+        for ($i = 0; count($this->tokens) > $i; $i++) {
 
             $token = $this->tokens[$i];
 
-            if ($token['type'] == "attribute") {
+            if ('attribute' == $token['type']) {
 
                 $name = strtolower($token['name']);
 
-            } elseif ($token['type'] == "attribute-value") {
+            } elseif ('attribute-value' == $token['type']) {
 
                 $val = $this->getTokenText($i);
 
-                if ($name == 'style') {
+                if ('style' == $name) {
 
                     $pos = strpos($val, 'url(');
 
-                    if ($pos !== false) {
+                    if (false !== $pos) {
 
-                        $this->substImage($pos+5+$token['start'], strpos($val, ')')+$token['start'] -1 /* closing quote */);
+                        $this->substImage(
+                            $pos + 5 + $token['start'], 
+                            strpos($val, ')') + $token['start'] - 1
+                        );
 
                     }
 
-                } elseif ($name == 'background' || $name == 'src') {
+                } elseif ('background' == $name || 'src' == $name) {
 
                     $this->substImage($token['start'], $token['end']);
                 }
@@ -92,7 +136,6 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
                 $name = '';
 
             } else {
-
                 $name = '';
             }
         }
@@ -100,7 +143,17 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
         $this->result = $this->substitute();
     }
     
-    function substImage($start, $end) 
+    /**
+     * substImage 
+     * 
+     * @param mixed $start ____param_comment____
+     * @param mixed $end   ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function substImage($start, $end) 
     {
         $img = substr($this->source, $start, $end-$start);
 
@@ -112,16 +165,25 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
         $img = str_replace('&amp;', '&', $img);
         $img = str_replace(' ', '%20', $img);
 
-        $this->subst($start, $end,  $this->getImgSubstitution($img));
+        $this->subst($start, $end, $this->getImgSubstitution($img));
     }
 
-    function getImgSubstitution($img) 
+    /**
+     * getImgSubstitution 
+     * 
+     * @param mixed $img ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getImgSubstitution($img) 
     {
         if (!isset($this->images[$img])) {
 
             // fetch image
 
-            if (($fd = @fopen($img, "rb"))) {
+            if (($fd = @fopen($img, 'rb'))) {
 
                 $image = '';
 
@@ -138,7 +200,7 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
                     'name' => basename($img),
                     'data' => $image,
                     'mime' => $info['mime']
-                    );
+                );
 
                 $this->counter++;
 
@@ -147,10 +209,8 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
                 // can't fetch
                 return $img;
             }
-
         }
 
-        return 'cid:'.$this->images[$img]['name'].'@mail.lc';
+        return 'cid:' . $this->images[$img]['name'] . '@mail.lc';
     }
 }
-

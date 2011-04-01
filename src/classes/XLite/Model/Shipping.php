@@ -39,22 +39,12 @@ class Shipping extends \XLite\Base\Singleton
     /**
      * List of registered shipping processors
      * 
-     * @var    array
-     * @since  3.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $registeredProcessors = array();
 
-    /**
-     * __constructor 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __construct()
-    {
-        self::registerProcessor('\XLite\Model\Shipping\Processor\Offline');
-    }
 
     /**
      * Register new shipping processor. All processors classes must be
@@ -63,7 +53,8 @@ class Shipping extends \XLite\Base\Singleton
      * @param string $processorClass Processor class
      *
      * @return void
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public static function registerProcessor($processorClass)
     {
@@ -78,44 +69,13 @@ class Shipping extends \XLite\Base\Singleton
     }
 
     /**
-     * Sort function for sorting processors by class 
-     * 
-     * @param \XLite\Model\Shipping\Processor\AProcessor $a First processor
-     * @param \XLite\Model\Shipping\Processor\AProcessor $b Second processor
-     *  
-     * @return integer 
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function compareProcessors($a, $b)
-    {
-        $result = 0;
-
-        $bottomProcessorId = 'offline';
-
-        $a1 = $a->getProcessorId();
-        $b1 = $b->getProcessorId();
-
-        if ($a1 == $bottomProcessorId) {
-            $result = 1;
-
-        } elseif ($b1 == $bottomProcessorId) {
-            $result = -1;
-        
-        } else {
-            $result = strcasecmp($a1, $b1);
-        }
-
-        return $result;
-    }
-
-    /**
      * Unregister shipping processor.
      *
      * @param string $processorClass Processor class
      *
      * @return void
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public static function unregisterProcessor($processorClass)
     {
@@ -136,11 +96,25 @@ class Shipping extends \XLite\Base\Singleton
         return self::$registeredProcessors;
     }
 
+
+    /**
+     * __constructor 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct()
+    {
+        self::registerProcessor('\XLite\Model\Shipping\Processor\Offline');
+    }
+
     /**
      * Retrieves shipping methods: all or by specified processor
      * 
      * @return array
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function getShippingMethods($processorClass = null)
     {
@@ -165,7 +139,8 @@ class Shipping extends \XLite\Base\Singleton
      * @param \XLite\Logic\Order\Modifier\Shipping $modifier Shipping order modifier
      *  
      * @return void
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier)
     {
@@ -255,4 +230,36 @@ class Shipping extends \XLite\Base\Singleton
         return $address;
     }
 
+
+    /**
+     * Sort function for sorting processors by class 
+     * 
+     * @param \XLite\Model\Shipping\Processor\AProcessor $a First processor
+     * @param \XLite\Model\Shipping\Processor\AProcessor $b Second processor
+     *  
+     * @return integer 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function compareProcessors($a, $b)
+    {
+        $result = 0;
+
+        $bottomProcessorId = 'offline';
+
+        $a1 = $a->getProcessorId();
+        $b1 = $b->getProcessorId();
+
+        if ($a1 == $bottomProcessorId) {
+            $result = 1;
+
+        } elseif ($b1 == $bottomProcessorId) {
+            $result = -1;
+        
+        } else {
+            $result = strcasecmp($a1, $b1);
+        }
+
+        return $result;
+    }
 }

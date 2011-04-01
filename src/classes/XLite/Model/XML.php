@@ -72,39 +72,78 @@ class XML extends \XLite\Base
      */
     protected $xml = '';
 
+
+    /**
+     * Get formatted XML block
+     * 
+     * @param string $xml XML
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getFormattedXML($xml)
+    {
+        $xml = preg_replace('/>[ ' . "\t\n\r" . ']+</', '><', trim($xml));
+
+        $level = -1;
+        $i = 0;
+        $prev = 0;
+        $path = array();
+        while (preg_match('/<([\w\d_\?]+)(?: [^>]+)?' . '>/S', substr($xml, $i), $match)) {
+            $tn = $match[1];
+            $len = strlen($match[0]);
+            $i = strpos($xml, $match[0], $i);
+            $level++;
+
+            // Detect close-tags
+            if (0 < $i - $prev) {
+                $ends = substr_count(substr($xml, $prev, $i - $prev), '</');
+                if (0 < $ends) {
+                    $level -= $ends;
+                }
+            }
+
+            // Add indents
+            if (0 < $level) {
+                $xml = substr($xml, 0, $i) . str_repeat("\t", $level) . substr($xml, $i);
+                $i += $level;
+            }
+
+            // Add EOL symbol
+            $end = strpos(substr($xml, $i + $len), '</' . $tn . '>');
+            if (
+                (false !== $end && preg_match('/<[\w\d_\?]+(?: [^>]+)?' . '>/S', substr($xml, $i + $len, $end)))
+                || '?' == substr($tn, 0, 1)
+            ) {
+                $xml = substr($xml, 0, $i + $len) . "\n" . substr($xml, $i + $len);
+                $i++;
+
+                // Add indent for close-tag
+                if (0 < $level) {
+                    $end += $i + $len;
+                    $xml = substr($xml, 0, $end) . str_repeat("\t", $level) . substr($xml, $end);
+                }
+            }
+
+            $i += $len;
+            $prev = $i;
+        }
+
+        return preg_replace('/(<\/[\w\d_]+>)/', '\1' . "\n", $xml);
+    }
+
+
     /**
      * Constructor
      *
      * @return void
+     * @see    ____var_see____
      * @since  3.0.0
      */
     public function __construct()
     {
         parent::__construct();
-    }
-
-    /**
-     * Parse XML errors 
-     * 
-     * @param string $xml Initial XML
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function parseXMLErrors($xml)
-    {
-        $errorCode = xml_get_error_code($this->xml_parser);
-        $this->error = 'XML Parse Error #$errorCode:  ' .
-            xml_error_string($errorCode);
-
-        $pos = xml_get_current_byte_index($this->xml_parser);
-
-        $xml = substr($xml, 0, $pos) . '$$$' . substr($xml, $pos);
-        $xml = htmlspecialchars($xml);
-        $xml = str_replace('$$$', '<font color="red"><strong> HERE </strong></font>', $xml);
-
-        $this->xml = $xml;
     }
 
     /**
@@ -140,6 +179,31 @@ class XML extends \XLite\Base
         $i = 0;
 
         return $result ? $this->compileTree($values, $i) : array();
+    }
+
+
+    /**
+     * Parse XML errors 
+     * 
+     * @param string $xml Initial XML
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function parseXMLErrors($xml)
+    {
+        $errorCode = xml_get_error_code($this->xml_parser);
+        $this->error = 'XML Parse Error #$errorCode:  ' .
+            xml_error_string($errorCode);
+
+        $pos = xml_get_current_byte_index($this->xml_parser);
+
+        $xml = substr($xml, 0, $pos) . '$$$' . substr($xml, $pos);
+        $xml = htmlspecialchars($xml);
+        $xml = str_replace('$$$', '<font color="red"><strong> HERE </strong></font>', $xml);
+
+        $this->xml = $xml;
     }
 
     /**
@@ -203,65 +267,5 @@ class XML extends \XLite\Base
         }
 
         return $tree;
-    }
-
-    /**
-     * Get formatted XML block
-     * 
-     * @param string $xml XML
-     *  
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getFormattedXML($xml)
-    {
-        $xml = preg_replace('/>[ ' . "\t\n\r" . ']+</', '><', trim($xml));
-
-        $level = -1;
-        $i = 0;
-        $prev = 0;
-        $path = array();
-        while (preg_match('/<([\w\d_\?]+)(?: [^>]+)?' . '>/S', substr($xml, $i), $match)) {
-            $tn = $match[1];
-            $len = strlen($match[0]);
-            $i = strpos($xml, $match[0], $i);
-            $level++;
-
-            // Detect close-tags
-            if (0 < $i - $prev) {
-                $ends = substr_count(substr($xml, $prev, $i - $prev), '</');
-                if (0 < $ends) {
-                    $level -= $ends;
-                }
-            }
-
-            // Add indents
-            if (0 < $level) {
-                $xml = substr($xml, 0, $i) . str_repeat("\t", $level) . substr($xml, $i);
-                $i += $level;
-            }
-
-            // Add EOL symbol
-            $end = strpos(substr($xml, $i + $len), '</' . $tn . '>');
-            if (
-                (false !== $end && preg_match('/<[\w\d_\?]+(?: [^>]+)?' . '>/S', substr($xml, $i + $len, $end)))
-                || '?' == substr($tn, 0, 1)
-            ) {
-                $xml = substr($xml, 0, $i + $len) . "\n" . substr($xml, $i + $len);
-                $i++;
-
-                // Add indent for close-tag
-                if (0 < $level) {
-                    $end += $i + $len;
-                    $xml = substr($xml, 0, $end) . str_repeat("\t", $level) . substr($xml, $end);
-                }
-            }
-
-            $i += $len;
-            $prev = $i;
-        }
-
-        return preg_replace('/(<\/[\w\d_]+>)/', '\1' . "\n", $xml);
     }
 }

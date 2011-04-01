@@ -31,8 +31,8 @@ namespace XLite\Model;
 /**
  * The "profile" model class
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  * 
  * @Entity (repositoryClass="\XLite\Model\Repo\Profile")
  * @Table  (name="profiles",
@@ -53,9 +53,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Profile unique ID 
      * 
-     * @var    int
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -66,9 +66,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Login (e-mail)
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="128")
      */
@@ -77,9 +77,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Password
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="32")
      */
@@ -88,9 +88,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Password hint
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="128")
      */
@@ -99,9 +99,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Password hint answer
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="128")
      */
@@ -110,9 +110,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Access level
      *
-     * @var    int
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -121,9 +121,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * CMS profile Id
      *
-     * @var    int
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -132,9 +132,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * CMS name
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="32")
      */
@@ -143,9 +143,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Timestamp of profile creation date
      *
-     * @var    int
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -154,9 +154,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Timestamp of first login event
      *
-     * @var    int
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -165,9 +165,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Timestamp of last login event
      *
-     * @var    int
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -176,9 +176,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Profile status
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="fixedstring", length="1")
      */
@@ -187,9 +187,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Referer
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -198,9 +198,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Relation to a order
      *
-     * @var    \XLite\Model\Order
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Order
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToOne  (targetEntity="XLite\Model\Order")
      * @JoinColumn (name="order_id", referencedColumnName="order_id")
@@ -210,9 +210,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Language code
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="2")
      */
@@ -221,9 +221,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Last selected shipping id 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer", nullable=true)
      */
@@ -232,9 +232,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Last selected payment id 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer", nullable=true)
      */
@@ -243,9 +243,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Membership: many-to-one relation with memberships table
      * 
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="membership_id", referencedColumnName="membership_id")
@@ -255,9 +255,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Pending membership: many-to-one relation with memberships table
      * 
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="pending_membership_id", referencedColumnName="membership_id")
@@ -267,9 +267,9 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Address book: one-to-many relation with address book entity
      * 
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Address", mappedBy="profile", cascade={"all"})
      */
@@ -278,16 +278,17 @@ class Profile extends \XLite\Model\AEntity
     /**
      * The count of orders placed by the user 
      * 
-     * @var   int
+     * @var   integer
      * @see   ____var_see____
      * @since 3.0.0
      */
     protected $orders_count = null;
 
+
     /**
      * Set membership 
      * 
-     * @param \XLite\Model\Membership $membership membership
+     * @param \XLite\Model\Membership $membership Membership OPTIONAL
      *  
      * @return void
      * @see    ____func_see____
@@ -301,7 +302,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Set pending membership 
      * 
-     * @param \XLite\Model\Membership $pendingMembership Pending membership
+     * @param \XLite\Model\Membership $pendingMembership Pending membership OPTIONAL
      *  
      * @return void
      * @see    ____func_see____
@@ -310,84 +311,6 @@ class Profile extends \XLite\Model\AEntity
     public function setPendingMembership(\XLite\Model\Membership $pendingMembership = null)
     {
         $this->pending_membership = $pendingMembership;
-    }
-
-    /**
-     * Prepare object for its creation in the database
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function prepareCreate()
-    {
-        // Assign a profile creation date/time
-        $this->setAdded(time());
-
-        // Assign current language
-        $language = $this->getLanguage();
-
-        if (empty($language)) {
-            $this->setLanguage(\XLite\Core\Translation::getCurrentLanguageCode());
-        }
-
-        // Assign referer value
-        if (empty($this->referer) && isset($_SERVER['HTTP_REFERER'])) {
-
-            // TODO: move setting up cookie to the up level of application (e.g. session start method)
-            if (!isset($_COOKIE['LCReferrerCookie'])) {
-
-                $referer = $_SERVER['HTTP_REFERER'];
-
-                setcookie(
-                    'LCReferrerCookie',
-                    $referer,
-                    time() + 3600 * 24 * 180,
-                    '/',
-                    \XLite::getInstance()->getOptions(
-                        array('host_details', 'http_host')
-                    )
-                );
-
-            } else {
-                $referer = $_COOKIE['LCReferrerCookie'];
-            }
-
-            $this->setReferer($referer);
-        }
-
-        // Assign status 'Enabled' if not defined
-        if (empty($this->status)) {
-            $this->enable();
-        }
-
-    }
-
-    /**
-     * Returns address by its type (shipping or billing)
-     * 
-     * @param string $atype Address type: b - billing, s - shipping OPTIONAL
-     *  
-     * @return \XLite\Model\Address
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getAddressByType($atype = \XLite\Model\Address::BILLING)
-    {
-        $result = null;
-
-        foreach ($this->getAddresses() as $address) {
-            if (
-                (\XLite\Model\Address::BILLING == $atype && $address->getIsBilling())
-                || (\XLite\Model\Address::SHIPPING == $atype && $address->getIsShipping())
-            ) {
-                // Select address if its type is same as a requested type...
-                $result = $address;
-                break;
-            }
-        }
-
-        return $result;
     }
 
     /**
@@ -651,7 +574,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Constructor
      *
-     * @param array $data Entity properties
+     * @param array $data Entity properties OPTIONAL
      *
      * @return void
      * @see    ____func_see____
@@ -667,7 +590,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Set order 
      * 
-     * @param \XLite\Model\Order $order Order
+     * @param \XLite\Model\Order $order Order OPTIONAL
      *  
      * @return void
      * @see    ____func_see____
@@ -676,5 +599,84 @@ class Profile extends \XLite\Model\AEntity
     public function setOrder(\XLite\Model\Order $order = null)
     {
         $this->order = $order;
+    }
+
+
+    /**
+     * Prepare object for its creation in the database
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCreate()
+    {
+        // Assign a profile creation date/time
+        $this->setAdded(time());
+
+        // Assign current language
+        $language = $this->getLanguage();
+
+        if (empty($language)) {
+            $this->setLanguage(\XLite\Core\Translation::getCurrentLanguageCode());
+        }
+
+        // Assign referer value
+        if (empty($this->referer) && isset($_SERVER['HTTP_REFERER'])) {
+
+            // TODO: move setting up cookie to the up level of application (e.g. session start method)
+            if (!isset($_COOKIE['LCReferrerCookie'])) {
+
+                $referer = $_SERVER['HTTP_REFERER'];
+
+                setcookie(
+                    'LCReferrerCookie',
+                    $referer,
+                    time() + 3600 * 24 * 180,
+                    '/',
+                    \XLite::getInstance()->getOptions(
+                        array('host_details', 'http_host')
+                    )
+                );
+
+            } else {
+                $referer = $_COOKIE['LCReferrerCookie'];
+            }
+
+            $this->setReferer($referer);
+        }
+
+        // Assign status 'Enabled' if not defined
+        if (empty($this->status)) {
+            $this->enable();
+        }
+
+    }
+
+    /**
+     * Returns address by its type (shipping or billing)
+     * 
+     * @param string $atype Address type: b - billing, s - shipping OPTIONAL
+     *  
+     * @return \XLite\Model\Address
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAddressByType($atype = \XLite\Model\Address::BILLING)
+    {
+        $result = null;
+
+        foreach ($this->getAddresses() as $address) {
+            if (
+                (\XLite\Model\Address::BILLING == $atype && $address->getIsBilling())
+                || (\XLite\Model\Address::SHIPPING == $atype && $address->getIsShipping())
+            ) {
+                // Select address if its type is same as a requested type...
+                $result = $address;
+                break;
+            }
+        }
+
+        return $result;
     }
 }

@@ -31,8 +31,9 @@ namespace XLite\Model;
 /**
  * Language
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
  * @Entity
  * @Table (name="languages",
  *      uniqueConstraints={
@@ -57,9 +58,10 @@ class Language extends \XLite\Model\Base\I18n
     /**
      * Unique id 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
      * @Column (type="integer", unique=true)
@@ -69,9 +71,10 @@ class Language extends \XLite\Model\Base\I18n
     /**
      * Language alpha-2 code (ISO 639-2)
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="fixedstring", length="2", unique=true)
      */
     protected $code;
@@ -79,9 +82,10 @@ class Language extends \XLite\Model\Base\I18n
     /**
      * Language alpha-3 code (ISO 639-3)
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="fixedstring", length="3", unique=true)
      */
     protected $code3 = '';
@@ -89,9 +93,10 @@ class Language extends \XLite\Model\Base\I18n
     /**
      * Right-to-left flag
      * 
-     * @var    boolean
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="boolean")
      */
     protected $r2l = false;
@@ -99,9 +104,10 @@ class Language extends \XLite\Model\Base\I18n
     /**
      * Status
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="integer")
      */
     protected $status = self::INACTIVE;
@@ -189,4 +195,3 @@ class Language extends \XLite\Model\Base\I18n
         return $path;
     }
 }
-

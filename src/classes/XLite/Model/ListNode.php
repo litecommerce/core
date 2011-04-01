@@ -39,24 +39,27 @@ class ListNode extends \XLite\Base\SuperClass
     /**
      * Link to previous list element or null
      *
-     * @var    XLite_Model_ListNode or null
-     * @since  3.0.0
+     * @var   \XLite_Model_ListNode or null
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $prev = null;
 
     /**
      * Link to next list element or null
      *
-     * @var    XLite_Model_ListNode|null
-     * @since  3.0.0
+     * @var   \XLite_Model_ListNode|null
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $next = null;
 
     /**
      * Node identifier
      *
-     * @var    string
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $key = null;
 
@@ -67,6 +70,7 @@ class ListNode extends \XLite\Base\SuperClass
      * @param string $key Node key
      *
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function __construct($key)
@@ -78,6 +82,7 @@ class ListNode extends \XLite\Base\SuperClass
      * Return link to previous list element
      *
      * @return \XLite\Model\ListNode
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getPrev()
@@ -89,6 +94,7 @@ class ListNode extends \XLite\Base\SuperClass
      * Return link to next list element
      *
      * @return \XLite\Model\ListNode
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getNext()
@@ -99,9 +105,10 @@ class ListNode extends \XLite\Base\SuperClass
     /**
      * Set link to previous list element
      *
-     * @param \Xlite\Model\ListNode $node Node link to set
+     * @param \Xlite\Model\ListNode $node Node link to set OPTIONAL
      *
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function setPrev(\Xlite\Model\ListNode $node = null)
@@ -112,9 +119,10 @@ class ListNode extends \XLite\Base\SuperClass
     /**
      * Set link to next list element
      *
-     * @param \Xlite\Model\ListNode $node Node link to set
+     * @param \Xlite\Model\ListNode $node Node link to set OPTIONAL
      *
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function setNext(\Xlite\Model\ListNode $node = null)
@@ -126,6 +134,7 @@ class ListNode extends \XLite\Base\SuperClass
      * Return node identifier
      *
      * @return string
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getKey()
@@ -139,6 +148,7 @@ class ListNode extends \XLite\Base\SuperClass
      * @param string $key Node key
      *
      * @return boolean 
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function checkKey($key)

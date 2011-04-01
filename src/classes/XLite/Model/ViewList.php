@@ -31,8 +31,8 @@ namespace XLite\Model;
 /**
  * View list
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\ViewList")
  * @Table  (name="view_lists",
@@ -64,9 +64,9 @@ class ViewList extends \XLite\Model\AEntity
     /**
      * List id 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -77,9 +77,9 @@ class ViewList extends \XLite\Model\AEntity
     /**
      * Class name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="512")
      */
@@ -88,9 +88,9 @@ class ViewList extends \XLite\Model\AEntity
     /**
      * Class list name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -99,9 +99,9 @@ class ViewList extends \XLite\Model\AEntity
     /**
      * List interface
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="16")
      */
@@ -110,9 +110,9 @@ class ViewList extends \XLite\Model\AEntity
     /**
      * Child class name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="512")
      */
@@ -121,9 +121,9 @@ class ViewList extends \XLite\Model\AEntity
     /**
      * Child weight
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer", length="11")
      */
@@ -132,9 +132,9 @@ class ViewList extends \XLite\Model\AEntity
     /**
      * Template relative path
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="1024")
      */
