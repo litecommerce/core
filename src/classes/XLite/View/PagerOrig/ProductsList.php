@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\PagerOrig;
@@ -31,9 +31,8 @@ namespace XLite\View\PagerOrig;
 /**
  * Pager 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class ProductsList extends \XLite\View\PagerOrig
 {
@@ -49,9 +48,9 @@ class ProductsList extends \XLite\View\PagerOrig
     /**
      * pagesPerFrame 
      * 
-     * @var    int
-     * @access protected
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $pagesPerFrame = 5;
 
@@ -60,7 +59,6 @@ class ProductsList extends \XLite\View\PagerOrig
      * Define so called "request" parameters
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -77,7 +75,7 @@ class ProductsList extends \XLite\View\PagerOrig
      * @param integer $pageId Page ID
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function buildURLByPageId($pageId)
@@ -89,7 +87,7 @@ class ProductsList extends \XLite\View\PagerOrig
      * getFrameStartPage
      *
      * @return integer 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getFrameStartPage()
@@ -103,7 +101,7 @@ class ProductsList extends \XLite\View\PagerOrig
      * Define pages URLs
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function definePageURLs()
@@ -119,7 +117,7 @@ class ProductsList extends \XLite\View\PagerOrig
      * @param string $type Link type (first / previous / next / last)
      *  
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isFurthermostPage($type)
@@ -136,7 +134,7 @@ class ProductsList extends \XLite\View\PagerOrig
      * @param mixed $index Page notation
      *  
      * @return integer 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getPageIdByNotation($index)
@@ -157,7 +155,7 @@ class ProductsList extends \XLite\View\PagerOrig
      * @param mixed $index Page notation
      *  
      * @return integer 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getLinkClassName($index)
@@ -171,7 +169,7 @@ class ProductsList extends \XLite\View\PagerOrig
      * @param string $type Link type (first / previous / next / last)
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getBorderLinkClassName($type)
@@ -185,7 +183,7 @@ class ProductsList extends \XLite\View\PagerOrig
      * @param integer $pageId Current page ID
      *  
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getPageClassName($pageId)
@@ -197,7 +195,7 @@ class ProductsList extends \XLite\View\PagerOrig
      * Get page begin record number
      *
      * @return integer 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getBeginRecordNumber()
@@ -209,7 +207,7 @@ class ProductsList extends \XLite\View\PagerOrig
      * Get page end record number
      *
      * @return integer 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getEndRecordNumber()
@@ -222,7 +220,6 @@ class ProductsList extends \XLite\View\PagerOrig
      * TODO - currently this function is not used
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -231,4 +228,3 @@ class ProductsList extends \XLite\View\PagerOrig
         return '{ min: ' . self::ITEMS_PER_PAGE_MIN . ', max: ' . self::ITEMS_PER_PAGE_MAX . ' }';
     }
 }
-

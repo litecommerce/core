@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Payment;
@@ -31,45 +31,17 @@ namespace XLite\View\Payment;
 /**
  * Payment method
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
 class Method extends \XLite\View\Dialog
 {
     /**
-     * Return title
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return $this->getPaymentMethod()
-            ? $this->getPaymentMethod()->getServiceName() . ' settings'
-            : 'Payment method settings';
-    }
-
-    /**
-     * Return templates directory name
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDir()
-    {
-        return 'payment/method';
-    }
-
-    /**
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -86,7 +58,6 @@ class Method extends \XLite\View\Dialog
      * Check widget visible 
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -101,7 +72,6 @@ class Method extends \XLite\View\Dialog
      * Get payment method 
      * 
      * @return \XLite\Model\Payment\Metho
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -115,7 +85,6 @@ class Method extends \XLite\View\Dialog
      * Check - is settings widget is widget class or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -126,5 +95,31 @@ class Method extends \XLite\View\Dialog
         return 0 === strpos($widget, '\XLite\View\\')
             || 0 === strpos($widget, '\XLite\Module\\');
     }
-}
 
+    
+    /**
+     * Return title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return $this->getPaymentMethod()
+            ? $this->getPaymentMethod()->getServiceName() . ' settings'
+            : 'Payment method settings';
+    }
+
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return 'payment/method';
+    }
+}
