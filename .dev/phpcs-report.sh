@@ -20,7 +20,7 @@ done
 cd $(realpath $(dirname $0))
 
 if [ x"${files_list}" = x ]; then
-	files_list=$(realpath ../);
+	files_list=$(realpath ../src/classes);
 fi
 
 path=$(realpath ./);
@@ -29,4 +29,4 @@ standard=$path/code-sniffs/XLite
 
 echo Standard: $standard;
 
-$path/phpcs -s --report=full --standard=$standard --ignore=.dev,src/skins,src/etc,src/var $files_list
+$path/phpcs -s --report=full --standard=$standard $files_list
