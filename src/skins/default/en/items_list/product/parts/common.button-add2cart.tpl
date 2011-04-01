@@ -13,5 +13,6 @@
  * @ListChild (list="itemsList.product.table.customer.columns", weight="50")
  *}
 <widget class="\XLite\View\Form\Product\AddToCart" name="add_to_cart_{product.product_id}" product="{product}" className="add-to-cart" />
-  <widget class="\XLite\View\Button\Image" style="product-add2cart" label="Add to cart" />
+  <widget IF="!product.inventory.isOutOfStock()" class="\XLite\View\Button\Image" style="product-add2cart" label="Add to cart" />
+  <img IF="product.inventory.isOutOfStock()" src="images/spacer.gif" alt="{t(#Out of stock#)}" title="{t(#Out of stock#)}" width="1" height="1" />
 <widget name="add_to_cart_{product.product_id}" end />

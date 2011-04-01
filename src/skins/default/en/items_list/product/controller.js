@@ -119,7 +119,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
     );
 
     var cartTrayFadeOutDuration = 400;
-    var draggablePattern = '.products-grid .product, .products-list .product';
+    var draggablePattern = '.products-grid .product:not(.out-of-stock), .products-list .product:not(.out-of-stock)';
     var cartTray = jQuery('.cart-tray', this.base).eq(0);
     var countRequests = 0;
 

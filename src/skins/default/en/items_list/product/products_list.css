@@ -112,6 +112,13 @@ ul.products-sidebar li.last {
   cursor: move;
 }
 
+.products .out-of-stock .drag-n-drop-handle
+{
+  background: transparent none;
+  padding-left: 0;
+  cursor: default;
+}
+
 .products .product-cell .drag-n-drop-handle,
 .products .product-cell .quicklook,
 .products .product-cell:hover .ui-draggable-dragging .quicklook,
@@ -173,6 +180,12 @@ ul.products-sidebar li.last {
   height: 24px;
 }
 
+.products .products-table .out-of-stock img
+{
+  background: transparent url(images/bag/out.png) no-repeat;
+  width: 19px;
+  height: 24px;
+}
 
 .cart-tray
 {
