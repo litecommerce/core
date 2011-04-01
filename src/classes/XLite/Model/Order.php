@@ -737,6 +737,14 @@ class Order extends \XLite\Model\Base\SurchargeOwner
             $event = $item->getEventCell();
             $event['quantity'] = $item->getAmount();
 
+            // Inventory tracking
+            if (
+                $item->getObject()->getInventory()->getEnabled()
+                && $item->getObject()->getInventory()->getAmount() <= $item->getAmount()
+            ) {
+                $event['is_limit'] = 1;
+            }
+
             $hash['items'][] = $event;
         }
 

@@ -34,6 +34,15 @@ function ProductsListController(base)
           } else {
             jQuery(productPattern, base).removeClass('product-added');
           }
+          if (data.items[i].is_limit) {
+            jQuery(productPattern, base)
+              .addClass('out-of-stock')
+              .draggable('disable');
+          } else {
+            jQuery(productPattern, base)
+              .removeClass('out-of-stock')
+              .draggable('enable');
+          }
         }
       }
     }
