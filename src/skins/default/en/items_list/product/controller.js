@@ -28,12 +28,16 @@ function ProductsListController(base)
     function(event, data) {
       for (var i = 0; i < data.items.length; i++) {
         if (data.items[i].object_type == 'product') {
+
+          // Added mark
           productPattern = '.product.productid-' + data.items[i].object_id;
           if (data.items[i].quantity > 0) {
             jQuery(productPattern, base).addClass('product-added');
           } else {
             jQuery(productPattern, base).removeClass('product-added');
           }
+
+          // Check inventory limit
           if (data.items[i].is_limit) {
             jQuery(productPattern, base)
               .addClass('out-of-stock')
@@ -43,6 +47,7 @@ function ProductsListController(base)
               .removeClass('out-of-stock')
               .draggable('enable');
           }
+
         }
       }
     }
@@ -128,7 +133,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
     );
 
     var cartTrayFadeOutDuration = 400;
-    var draggablePattern = '.products-grid .product:not(.out-of-stock), .products-list .product:not(.out-of-stock)';
+    var draggablePattern = '.products-grid .product, .products-list .product';
     var cartTray = jQuery('.cart-tray', this.base).eq(0);
     var countRequests = 0;
 
@@ -209,6 +214,10 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
       } // stop()
     }
     ); // jQuery(draggablePattern, this.base).draggable
+
+    // Disable out-of-stock product to drag 
+    var draggableDisablePattern = '.products-grid .product.out-of-stock, .products-list .product.out-of-stock';
+    jQuery(draggableDisablePattern, this.base).draggable('disable');
 
     cartTray.droppable(
     {
