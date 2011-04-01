@@ -37,6 +37,20 @@ namespace XLite\View\Form\Product\Search\Admin;
  */
 class Main extends \XLite\View\Form\Product\Search\Admin\AAdmin
 {
+
+    /** 
+     * JavaScript: this value will be returned on form submit
+     * NOTE - this function designed for AJAX easy switch on/off  
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getOnSubmitResult()
+    {   
+        return 'true';
+    }   
+
     /**
      * getDefaultTarget
      *
