@@ -31,8 +31,9 @@ namespace XLite\Model;
 /**
  * Language label translations
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
  * @Entity
  * @Table (name="language_label_translations",
  *      indexes={
@@ -46,11 +47,11 @@ class LanguageLabelTranslation extends \XLite\Model\Base\Translation
     /**
      * Label
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="string", length="65536")
      */
     protected $label;
 }
-

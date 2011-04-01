@@ -31,8 +31,8 @@ namespace XLite\Model;
 /**
  * Module key
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\ModuleKey")
  * @Table  (name="module_keys",
@@ -49,9 +49,9 @@ class ModuleKey extends \XLite\Model\AEntity
     /**
      * Key id 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -62,9 +62,9 @@ class ModuleKey extends \XLite\Model\AEntity
     /**
      * Module name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="64")
      */
@@ -73,9 +73,9 @@ class ModuleKey extends \XLite\Model\AEntity
     /**
      * Author name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="64")
      */
@@ -85,13 +85,11 @@ class ModuleKey extends \XLite\Model\AEntity
     /**  
      * Key value
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="256")
      */
     protected $keyValue = '';
-
-
 }

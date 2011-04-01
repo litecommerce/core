@@ -31,8 +31,8 @@ namespace XLite\Model;
 /**
  * Session
  *
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\SessionCell")
  * @Table  (name="session_cells",
@@ -49,9 +49,9 @@ class SessionCell extends \XLite\Model\AEntity
     /**
      * Cell unique id 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -62,9 +62,9 @@ class SessionCell extends \XLite\Model\AEntity
     /**
      * Session id 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -73,9 +73,9 @@ class SessionCell extends \XLite\Model\AEntity
     /**
      * Name 
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -84,9 +84,9 @@ class SessionCell extends \XLite\Model\AEntity
     /**
      * Value 
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="text")
      */
@@ -95,13 +95,14 @@ class SessionCell extends \XLite\Model\AEntity
     /**
      * Value type
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="16")
      */
     protected $type;
+
 
     /**
      * Automatically get variable type
@@ -237,6 +238,7 @@ class SessionCell extends \XLite\Model\AEntity
      * @param string $type Type to set
      *  
      * @return void
+     * @throws \Exception
      * @see    ____func_see____
      * @since  3.0.0
      */

@@ -31,8 +31,9 @@ namespace XLite\Model;
 /**
  * Memebership translations
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
  * @Entity
  * @Table (name="membership_translations",
  *      indexes={
@@ -46,9 +47,10 @@ class MembershipTranslation extends \XLite\Model\Base\Translation
     /**
      * Memebership name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="string", length="128")
      */
     protected $name;

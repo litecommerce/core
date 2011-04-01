@@ -31,8 +31,8 @@ namespace XLite\Model;
 /**
  * Session
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Session")
  * @Table  (name="sessions",
@@ -56,9 +56,9 @@ class Session extends \XLite\Model\AEntity
     /**
      * Session increment id 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -69,9 +69,9 @@ class Session extends \XLite\Model\AEntity
     /**
      * Public session id
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="fixedstring", length="32")
      */
@@ -80,9 +80,9 @@ class Session extends \XLite\Model\AEntity
     /**
      * Session expiration time
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="uinteger")
      */
@@ -96,6 +96,20 @@ class Session extends \XLite\Model\AEntity
      * @since 3.0.0
      */
     protected $cache = array();
+
+
+    /**
+     * Return instance of the session cell repository
+     * 
+     * @return \XLite\Model\Repo\SessionCell
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getSessionCellRepo()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\SessionCell');
+    }
+
 
     /**
      * Set session id 
@@ -112,15 +126,74 @@ class Session extends \XLite\Model\AEntity
     }
 
     /**
-     * Return instance of the session cell repository
+     * Update expiration time
      * 
-     * @return \XLite\Model\Repo\SessionCell
+     * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getSessionCellRepo()
+    public function updateExpiry()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\SessionCell');
+        $this->setExpiry(time() + self::TTL);
+    }
+
+    /**
+     * Session cell getter
+     * 
+     * @param string $name Cell name
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __get($name)
+    {
+        $cell = $this->getCellByName($name);
+
+        return $cell ? $cell->getValue() : null;
+    }
+
+    /**
+     * Session cell setter
+     * 
+     * @param string $name  Cell name
+     * @param mixed  $value Value
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __set($name, $value)
+    {
+        $this->setCellValue($name, $value);
+    }
+
+    /**
+     * Check - set session cell with specified name or not
+     * 
+     * @param string $name Cell name
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __isset($name)
+    {
+        return !is_null($this->getCellByName($name));
+    }
+
+    /**
+     * Remove session cell 
+     * 
+     * @param string $name Cell name
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __unset($name)
+    {
+        $this->setCellValue($name, null);
     }
 
 
@@ -197,76 +270,5 @@ class Session extends \XLite\Model\AEntity
             static::getSessionCellRepo()->removeCell($cell);
             $this->invalidateCellCache($name);
         }
-    }
-
-    /**
-     * Update expiration time
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function updateExpiry()
-    {
-        $this->setExpiry(time() + self::TTL);
-    }
-
-    /**
-     * Session cell getter
-     * 
-     * @param string $name Cell name
-     *  
-     * @return mixed
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __get($name)
-    {
-        $cell = $this->getCellByName($name);
-
-        return $cell ? $cell->getValue() : null;
-    }
-
-    /**
-     * Session cell setter
-     * 
-     * @param string $name  Cell name
-     * @param mixed  $value Value
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __set($name, $value)
-    {
-        $this->setCellValue($name, $value);
-    }
-
-    /**
-     * Check - set session cell with specified name or not
-     * 
-     * @param string $name Cell name
-     *  
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __isset($name)
-    {
-        return !is_null($this->getCellByName($name));
-    }
-
-    /**
-     * Remove session cell 
-     * 
-     * @param string $name Cell name
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __unset($name)
-    {
-        $this->setCellValue($name, null);
     }
 }
