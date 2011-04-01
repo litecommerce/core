@@ -15,6 +15,6 @@
  *}
 
 <div class="drag-n-drop-handle">
-  <span IF="!product.inventory.isOutOfStock()">{t(#Drag and drop me to the bag#)}</span>
-  <span IF="product.inventory.isOutOfStock()">{t(#Product is out of stock#)}</span>
+  <span class="drag-message">{t(#Drag and drop me to the bag#)}</span>
+  <span class="out-message">{t(#Product is out of stock#)}</span>
 </div>
