@@ -199,7 +199,8 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     {   
         return 'product productid-' 
             . $product->getProductId() 
-            . ($this->isProductAdded($product) ? ' product-added' : '');
+            . ($this->isProductAdded($product) ? ' product-added' : '')
+            . ($product->getInventory()->isOutOfStock() ? ' out-of-stock' : '');
     }   
 
     /**
