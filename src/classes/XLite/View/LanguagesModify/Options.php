@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\LanguagesModify;
@@ -31,9 +31,8 @@ namespace XLite\View\LanguagesModify;
 /**
  * Language options dialog
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Options extends \XLite\View\AView
 {
@@ -46,48 +45,17 @@ class Options extends \XLite\View\AView
     /**
      * Language (cache) 
      * 
-     * @var    \XLite\Model\Language
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Language
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $editLanguage = null;
 
-    /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'languages/options.tpl';
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_LNG_ID => new \XLite\Model\WidgetParam\Int(
-                'Language id', \XLite\Core\Request::getInstance()->{self::PARAM_LNG_ID}
-            ),
-        );
-    }
 
     /**
      * Get language
      * 
      * @return \XLite\Model\Language|boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -107,23 +75,9 @@ class Options extends \XLite\View\AView
     }
 
     /**
-     * Check if widget is visible
-     *
-     * @return boolean 
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible()
-            && $this->getEditLanguage();
-    }
-
-    /**
      * Get default language (English)
      * 
      * @return \XLite\Model\Language
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -136,7 +90,6 @@ class Options extends \XLite\View\AView
      * Get default language for customer zone
      * 
      * @return \XLite\Model\Language
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -151,7 +104,6 @@ class Options extends \XLite\View\AView
      * @param \XLite\Model\Language $language Translation language
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -164,7 +116,6 @@ class Options extends \XLite\View\AView
      * Check - can language disabled / enabled or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -177,7 +128,6 @@ class Options extends \XLite\View\AView
      * Check - can language deleted or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -191,7 +141,6 @@ class Options extends \XLite\View\AView
      * Get wwicther block class 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -211,7 +160,48 @@ class Options extends \XLite\View\AView
 
         return implode(' ', $classes);
     }
+
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'languages/options.tpl';
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_LNG_ID => new \XLite\Model\WidgetParam\Int(
+                'Language id', \XLite\Core\Request::getInstance()->{self::PARAM_LNG_ID}
+            ),
+        );
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getEditLanguage();
+    }
 }
-
-
-

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\LanguagesModify;
@@ -31,9 +31,8 @@ namespace XLite\View\LanguagesModify;
 /**
  * Confirm language deletion dialog
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class ConfirmDeletion extends \XLite\View\AView
 {
@@ -44,10 +43,24 @@ class ConfirmDeletion extends \XLite\View\AView
 
 
     /**
+     * Get confirm language 
+     * 
+     * @return \XLite\Model\Language|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getConfirmLanguage()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Language')
+            ->find($this->getParam(self::PARAM_LNG_ID));
+    }
+
+
+    /**
      * Return widget default template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
@@ -59,7 +72,7 @@ class ConfirmDeletion extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -73,26 +86,10 @@ class ConfirmDeletion extends \XLite\View\AView
         );
     }
 
-
-    /**
-     * Get confirm language 
-     * 
-     * @return \XLite\Model\Language|void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getConfirmLanguage()
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Language')
-            ->find($this->getParam(self::PARAM_LNG_ID));
-    }
-
     /**
      * Check widget visibility 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -101,5 +98,4 @@ class ConfirmDeletion extends \XLite\View\AView
         return parent::isVisible()
             && $this->getConfirmLanguage();
     }
-
 }

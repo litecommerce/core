@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\LanguagesModify;
@@ -31,39 +31,25 @@ namespace XLite\View\LanguagesModify;
 /**
  * Select language dialog
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class SelectLanguage extends \XLite\View\AView
 {
     /**
      * Translate language (cache)
      * 
-     * @var    \XLite\Model\Language
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Language
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $translateLanguage = null;
 
-    /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'languages/select_language.tpl';
-    }
 
     /**
      * Get added languages 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -78,7 +64,6 @@ class SelectLanguage extends \XLite\View\AView
      * @param \XLite\Model\Language $language ____param_comment____
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -93,7 +78,6 @@ class SelectLanguage extends \XLite\View\AView
      * @param \XLite\Model\Language $language Language
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -107,7 +91,6 @@ class SelectLanguage extends \XLite\View\AView
      * Get application default language 
      * 
      * @return \XLite\Model\Language
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -122,7 +105,6 @@ class SelectLanguage extends \XLite\View\AView
      * @param \XLite\Model\Language $language Language
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -138,7 +120,6 @@ class SelectLanguage extends \XLite\View\AView
      * @param \XLite\Model\Language $language Language
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -151,10 +132,35 @@ class SelectLanguage extends \XLite\View\AView
     }
 
     /**
+     * Get inactive languages 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getInactiveLanguages()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Language')
+            ->findInactiveLanguages();
+    }
+
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'languages/select_language.tpl';
+    }
+
+    /**
      * Get translated language 
      * 
      * @return \XLite\Model\Language|boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -175,24 +181,9 @@ class SelectLanguage extends \XLite\View\AView
     }
 
     /**
-     * Get inactive languages 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getInactiveLanguages()
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Language')
-            ->findInactiveLanguages();
-    }
-
-    /**
      * Check widget visibility 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -201,5 +192,4 @@ class SelectLanguage extends \XLite\View\AView
         return parent::isVisible()
             && $this->getInactiveLanguages();
     }
-
 }
