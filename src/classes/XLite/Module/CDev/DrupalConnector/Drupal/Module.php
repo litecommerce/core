@@ -237,6 +237,14 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     {
         $menus = array(
 
+            \XLite\Module\CDev\DrupalConnector\Core\Converter::DRUPAL_ROOT_NODE => array(
+                'title'            => 'Store',
+                'title callback'   => 'lcConnectorGetControllerTitle',
+                'page callback'    => 'lcConnectorGetControllerContent',
+                'access callback'  => 'lc_connector_check_controller_access',
+                'type'             => MENU_CALLBACK,
+            ),
+
             \XLite\Module\CDev\DrupalConnector\Core\Converter::DRUPAL_ROOT_NODE . '/%' => array(
                 'title'            => 'Store',
                 'title callback'   => 'lcConnectorGetControllerTitle',
