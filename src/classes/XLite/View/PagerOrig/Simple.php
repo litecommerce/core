@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\PagerOrig;
@@ -31,9 +31,8 @@ namespace XLite\View\PagerOrig;
 /**
  * Simple pager
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Simple extends \XLite\View\AView
 {
@@ -47,10 +46,87 @@ class Simple extends \XLite\View\AView
 
 
     /**
+     * Check - link to previous page exists or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isPrevPage()
+    {
+        return 1 < $this->getParam(self::PARAM_PAGE);
+    }
+
+    /**
+     * Get URL to previous page
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPrevURL()
+    {
+        return $this->getParam(self::PARAM_URL) . '&page=' . ($this->getParam(self::PARAM_PAGE) - 1);
+    }
+
+    /**
+     * Check - link to next page is exists or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isNextPage()
+    {
+        return $this->getParam(self::PARAM_PAGES) > $this->getParam(self::PARAM_PAGE);
+    }
+
+    /**
+     * Get URL to next page
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getNextURL()
+    {
+        return $this->getParam(self::PARAM_URL) . '&page=' . ($this->getParam(self::PARAM_PAGE) + 1);
+    }
+
+    /**
+     * Get URL to last page
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLastURL()
+    {
+        return $this->getParam(self::PARAM_URL) . '&page=' . $this->getParam(self::PARAM_PAGES);
+    }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'common/simple_pager.css';
+
+        return $list;
+    }
+
+
+    /**
      * Return widget default template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
@@ -62,7 +138,7 @@ class Simple extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -80,7 +156,6 @@ class Simple extends \XLite\View\AView
      * Check widget visibility
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -90,87 +165,4 @@ class Simple extends \XLite\View\AView
             && 1 < $this->getParam(self::PARAM_PAGES)
             && $this->getParam(self::PARAM_URL);
     }
-
-    /**
-     * Check - link to previous page exists or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isPrevPage()
-    {
-        return 1 < $this->getParam(self::PARAM_PAGE);
-    }
-
-    /**
-     * Get URL to previous page
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPrevURL()
-    {
-        return $this->getParam(self::PARAM_URL) . '&page=' . ($this->getParam(self::PARAM_PAGE) - 1);
-    }
-
-    /**
-     * Check - link to next page is exists or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isNextPage()
-    {
-        return $this->getParam(self::PARAM_PAGES) > $this->getParam(self::PARAM_PAGE);
-    }
-
-    /**
-     * Get URL to next page
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getNextURL()
-    {
-        return $this->getParam(self::PARAM_URL) . '&page=' . ($this->getParam(self::PARAM_PAGE) + 1);
-    }
-
-    /**
-     * Get URL to last page
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getLastURL()
-    {
-        return $this->getParam(self::PARAM_URL) . '&page=' . $this->getParam(self::PARAM_PAGES);
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'common/simple_pager.css';
-
-        return $list;
-    }
 }
-
