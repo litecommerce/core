@@ -45,20 +45,6 @@ class Address extends \XLite\Model\Repo\ARepo
      */
     protected $type = self::TYPE_SERVICE;
 
-    /**
-     * defineFindAllCities 
-     * 
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineFindAllCities()
-    {
-        return $this->createQueryBuilder()
-            ->select('a.city')
-            ->addGroupBy('a.city')
-            ->addOrderBy('a.city');
-    }
 
     /**
      * Find the list of all cities registered in existing addresses
@@ -80,6 +66,22 @@ class Address extends \XLite\Model\Repo\ARepo
         return $cities;
     }
 
+
+    /**
+     * defineFindAllCities 
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineFindAllCities()
+    {
+        return $this->createQueryBuilder()
+            ->select('a.city')
+            ->addGroupBy('a.city')
+            ->addOrderBy('a.city');
+    }
+
     /**
      * Get detailed foreign keys
      *
@@ -98,5 +100,4 @@ class Address extends \XLite\Model\Repo\ARepo
 
         return $list;
     }
-
 }

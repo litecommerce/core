@@ -39,16 +39,18 @@ class CheckoutStep extends \XLite\Model\ListNode
     /**
      * Is checkout step passed or not 
      * 
-     * @var    bool
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $isPassed = false;
 
     /**
      * Name of the widget class for this checkout step 
      * 
-     * @var    string
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $widgetClass = null;
 
@@ -61,6 +63,7 @@ class CheckoutStep extends \XLite\Model\ListNode
      * @param boolean $isPassed    If step is passed or not
      *  
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function __construct($key, $widgetClass, $isPassed)
@@ -75,6 +78,7 @@ class CheckoutStep extends \XLite\Model\ListNode
      * isPassed 
      * 
      * @return boolean 
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isPassed()
@@ -88,6 +92,7 @@ class CheckoutStep extends \XLite\Model\ListNode
      * @param string $mode Current mode
      *  
      * @return boolean 
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function checkMode($mode)
@@ -99,6 +104,7 @@ class CheckoutStep extends \XLite\Model\ListNode
      * getWidgetClass 
      * 
      * @return string
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getWidgetClass()
@@ -110,6 +116,7 @@ class CheckoutStep extends \XLite\Model\ListNode
      * isRegularStep 
      * 
      * @return boolean 
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isRegularStep()
@@ -121,6 +128,7 @@ class CheckoutStep extends \XLite\Model\ListNode
      * getMode 
      * 
      * @return string
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getMode()
@@ -132,6 +140,7 @@ class CheckoutStep extends \XLite\Model\ListNode
      * getTopMessage 
      * 
      * @return array
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getTopMessage()

@@ -31,8 +31,8 @@ namespace XLite\Model\Base;
 /**
  * Object translation 
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @MappedSuperclass
  */
@@ -43,9 +43,9 @@ abstract class Translation extends \XLite\Model\AEntity
     /**
      * Label unique id 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -56,13 +56,27 @@ abstract class Translation extends \XLite\Model\AEntity
     /**
      * Label language code 
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="fixedstring", length="2")
      */
     protected $code = self::DEFAULT_LANGUAGE;
+
+
+    /**
+     * Return list of class properties which are not translated
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getInternalProperties()
+    {
+        return array('label_id', 'code');
+    }
+
 
     /**
      * Return the owner object
@@ -91,17 +105,5 @@ abstract class Translation extends \XLite\Model\AEntity
         if ($this->getOwner()) {
             $this->getOwner()->checkCache();
         }
-    }
-
-    /**
-     * Return list of class properties which are not translated
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getInternalProperties()
-    {
-        return array('label_id', 'code');
     }
 }

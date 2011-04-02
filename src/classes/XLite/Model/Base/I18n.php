@@ -31,8 +31,8 @@ namespace XLite\Model\Base;
 /**
  * Translation-owner abstract class
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @MappedSuperclass
  */
@@ -56,10 +56,31 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     protected $editLanguage;
 
+
+    /**
+     * Get languages query 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getLanguagesQuery()
+    {
+        if (!isset(self::$languagesQuery)) {
+            self::$languagesQuery = array_fill_keys(
+                \XLite\Core\Database::getRepo('\XLite\Model\Language')->getLanguagesQuery(),
+                false
+            );
+        }
+
+        return self::$languagesQuery;
+    }
+
+
     /**
      * Constructor
      *
-     * @param array $data Entity properties
+     * @param array $data Entity properties OPTIONAL
      *
      * @return void
      * @see    ____func_see____
@@ -70,18 +91,6 @@ abstract class I18n extends \XLite\Model\AEntity
         $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
-    }
-
-    /**
-     * Get default language code 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDefaultLanguageCode()
-    {
-        return \XLite\Core\Session::getInstance()->getLanguage()->getCode();
     }
 
     /**
@@ -267,25 +276,6 @@ abstract class I18n extends \XLite\Model\AEntity
     }
 
     /**
-     * Get languages query 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getLanguagesQuery()
-    {
-        if (!isset(self::$languagesQuery)) {
-            self::$languagesQuery = array_fill_keys(
-                \XLite\Core\Database::getRepo('\XLite\Model\Language')->getLanguagesQuery(),
-                false
-            );
-        }
-
-        return self::$languagesQuery;
-    }
-
-    /**
      * Detach self 
      * 
      * @return void
@@ -299,5 +289,18 @@ abstract class I18n extends \XLite\Model\AEntity
         foreach ($this->getTranslations() as $t) {
             $t->detach();
         }
+    }
+
+
+    /**
+     * Get default language code 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultLanguageCode()
+    {
+        return \XLite\Core\Session::getInstance()->getLanguage()->getCode();
     }
 }

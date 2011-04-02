@@ -57,6 +57,9 @@ class TemplatePatch extends \XLite\Model\Repo\ARepo
         'patch_id'   => true,
     );
 
+
+    // defineCacheCells
+
     /**
      * Define cache cells 
      * 
@@ -71,6 +74,10 @@ class TemplatePatch extends \XLite\Model\Repo\ARepo
 
         return $list;
     }
+
+    // }}}
+
+    // {{{ findAllPatches
 
     /**
      * Find all patches 
@@ -137,5 +144,6 @@ class TemplatePatch extends \XLite\Model\Repo\ARepo
 
         return $result;
     }
-}
 
+    // }}}
+}

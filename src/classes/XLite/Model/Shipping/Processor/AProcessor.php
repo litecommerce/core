@@ -31,8 +31,8 @@ namespace XLite\Model\Shipping\Processor;
 /**
  * Shipping processor model
  * 
- * @see        ____class_see____
- * @since     3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AProcessor extends \XLite\Base\SuperClass
 {
@@ -63,16 +63,6 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      */
     protected $apiCommunicationLog = null;
 
-    /**
-     * Define public constructor
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * Returns processor name 
@@ -94,6 +84,18 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * @since  3.0.0
      */
     abstract public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier, $ignoreCache = false);
+
+
+    /**
+     * Define public constructor
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct()
+    {
+    }
 
     /**
      * Returns processor's shipping methods 

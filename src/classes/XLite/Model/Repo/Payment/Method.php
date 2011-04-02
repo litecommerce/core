@@ -65,6 +65,8 @@ class Method extends \XLite\Model\Repo\Base\I18n
         array('service_name'),
     );
 
+    // {{{ findAllMethods
+
     /**
      * Find all methods
      * 
@@ -88,6 +90,10 @@ class Method extends \XLite\Model\Repo\Base\I18n
     {
         return $this->createQueryBuilder();
     }
+
+    // }}}
+
+    // {{{ findAllActive
 
     /**
      * Find all active methods
@@ -122,4 +128,6 @@ class Method extends \XLite\Model\Repo\Base\I18n
             ->andWhere('m.enabled = :true')
             ->setParameter('true', true);
     }
+
+    // }}}
 }

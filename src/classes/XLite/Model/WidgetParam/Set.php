@@ -39,8 +39,9 @@ class Set extends \XLite\Model\WidgetParam\String
     /**
      * Param type
      *
-     * @var    string
-     * @since  3.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $type = 'list';
 
@@ -53,24 +54,6 @@ class Set extends \XLite\Model\WidgetParam\String
      */
     protected $options = null;
 
-    /**
-     * Return list of conditions to check
-     *
-     * @param mixed $value Value to validate
-     *
-     * @return void
-     * @since  3.0.0
-     */
-    protected function getValidaionSchema($value)
-    {
-        return parent::getValidaionSchema($value) + array(
-            array(
-                self::ATTR_CONDITION => isset($this->options[$value]),
-                self::ATTR_MESSAGE   => ' unallowed param value - "' . $value . '"',
-            ),
-        );
-    }
-
 
     /**
      * Constructor
@@ -78,9 +61,10 @@ class Set extends \XLite\Model\WidgetParam\String
      * @param mixed $label     Param label (text)
      * @param mixed $value     Default value OPTIONAL
      * @param mixed $isSetting Display this setting in CMS or not OPTIONAL
-     * @param array $options   Options list
+     * @param array $options   Options list OPTIONAL
      *  
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function __construct($label, $value = null, $isSetting = false, array $options = array())
@@ -91,5 +75,25 @@ class Set extends \XLite\Model\WidgetParam\String
         if (!isset($this->options)) {
             $this->options = $options;
         }
+    }
+
+
+    /**
+     * Return list of conditions to check
+     *
+     * @param mixed $value Value to validate
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getValidaionSchema($value)
+    {
+        return parent::getValidaionSchema($value) + array(
+            array(
+                self::ATTR_CONDITION => isset($this->options[$value]),
+                self::ATTR_MESSAGE   => ' unallowed param value - "' . $value . '"',
+            ),
+        );
     }
 }

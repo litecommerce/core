@@ -49,6 +49,19 @@ class Check extends \XLite\Model\Payment\Processor\Offline
     }
 
     /**
+     * Check - display check number or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isDisplayNumber()
+    {
+        return $this->config->General->display_check_number;
+    }
+
+
+    /**
      * Get input data labels list
      *
      * @return array
@@ -85,17 +98,4 @@ class Check extends \XLite\Model\Payment\Processor\Offline
             'number'         => \XLite\Model\Payment\TransactionData::ACCESS_ADMIN,
         );
     }
-
-    /**
-     * Check - display check number or not
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isDisplayNumber()
-    {
-        return $this->config->General->display_check_number;
-    }
-
 }

@@ -56,6 +56,8 @@ class Zone extends \XLite\Model\Repo\ARepo
         array('zone_name'),
     );
 
+    // {{{ defineCacheCells
+
     /**
      * Define cache cells 
      * 
@@ -79,6 +81,10 @@ class Zone extends \XLite\Model\Repo\ARepo
         return $list;
     }
 
+    // }}}
+
+    // {{{ cleanCache
+
     /**
      * cleanCache 
      * 
@@ -99,6 +105,10 @@ class Zone extends \XLite\Model\Repo\ARepo
             $this->deleteCache('zone');
         }
     }
+
+    // }}}
+
+    // {{{ findAllZones
 
     /**
      * findAllZones 
@@ -135,8 +145,12 @@ class Zone extends \XLite\Model\Repo\ARepo
             ->addOrderBy('z.zone_name');
     }
 
+    // }}}
+
+    // {{{ findZone
+
     /**
-     * getZone 
+     * findZone 
      * 
      * @param integer $zoneId Zone Id
      *  
@@ -178,6 +192,10 @@ class Zone extends \XLite\Model\Repo\ARepo
             ->setParameter('zoneId', $zoneId);
     }
 
+    // }}}
+
+    // {{{ findApplicableZones
+
     /**
      * Get the zones list applicable to the specified address
      * 
@@ -217,4 +235,5 @@ class Zone extends \XLite\Model\Repo\ARepo
         return $applicableZones;
     }
 
+    // }}}
 }
