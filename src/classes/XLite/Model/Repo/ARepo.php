@@ -146,6 +146,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     protected $queryBuilderClass;
 
+
     /**
      * Get repository type 
      * 
@@ -156,130 +157,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     public function getRepoType()
     {
         return $this->type;
-    }
-
-    /**
-     * Define cache cells 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineCacheCells()
-    {
-        return array();
-    }
-
-    /**
-     * Get cache cells 
-     * 
-     * @param string $key Cell name OPTIONAL
-     *  
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getCacheCells($key = null)
-    {
-        if (!isset($this->cacheCells)) {
-            $this->cacheCells = $this->restoreCacheCells();
-        }
-
-        return $key
-            ? (isset($this->cacheCells[$key]) ? $this->cacheCells[$key] : null)
-            : $this->cacheCells;
-    }
-
-    /**
-     * Restore cache cells info from cache
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function restoreCacheCells()
-    {
-        $key = $this->getHashPrefix('cells');
-
-        $cacheCells = \XLite\Core\Database::getCacheDriver()->fetch($key);
-
-        if (!is_array($cacheCells)) {
-
-            $cacheCells = $this->defineCacheCells();
-
-            list($cacheCells, $relations) = $this->postprocessCacheCells($cacheCells);
-
-            \XLite\Core\Database::getCacheDriver()->save($key, $cacheCells, self::CACHE_DEFAULT_TTL);
-
-            // Save relations to current model cache cells from related models
-            foreach ($relations as $model => $cells) {
-                \XLite\Core\Database::getRepo($model)->addCacheRelations($cells);
-            }
-        }
-
-        return $cacheCells;
-    }
-
-    /**
-     * Postprocess cache cells info
-     * 
-     * @param array $cacheCells Cache cells
-     *  
-     * @return array (cache cells & relations data)
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function postprocessCacheCells(array $cacheCells)
-    {
-
-        $relations = array();
-
-        // Normalize cache cells
-        foreach ($cacheCells as $name => $cell) {
-
-            // Set default cell type
-            if (!isset($cell[self::KEY_TYPE_CACHE_CELL])) {
-                $cell[self::KEY_TYPE_CACHE_CELL] = self::DEFAULT_KEY_TYPE;
-            }
-
-            // Set default cell attributes list
-            if (!isset($cell[self::ATTRS_CACHE_CELL])) {
-                $cell[self::ATTRS_CACHE_CELL] = null;
-            }
-
-            // Set default cell relations list
-            if (!isset($cell[self::RELATION_CACHE_CELL])) {
-                $cell[self::RELATION_CACHE_CELL] = array();
-            }
-
-            // Collect related models
-            foreach ($cell[self::RELATION_CACHE_CELL] as $model) {
-                if (!isset($relations[$model])) {
-                    $relations[$model] = array($this->_entityName => array($name));
-
-                } elseif (!isset($relations[$model][$this->_entityName])) {
-                    $relations[$model][$this->_entityName] = array($name);
-
-                } else {
-                    $relations[$model][$this->_entityName][] = $name;
-                }
-            }
-
-            // Set cell attributes converter method name
-            $method = $this->getCacheParamsConverterName($name);
-            $cell[self::CONVERTER_CACHE_CELL] = method_exists($this, $method)
-                ? $method
-                : false;
-
-            // Set cell hash generator method name
-            if (self::CACHE_CUSTOM_KEY == $this->cacheCells[$name][self::KEY_TYPE_CACHE_CELL]) {
-                $cell[self::GENERATOR_CACHE_CELL] = $this->getCacheHashGeneratorName($name);
-            }
-
-            $cacheCells[$name] = $cell;
-        }
-
-        return array($cacheCells, $relations);
     }
 
     /**
@@ -326,147 +203,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         );
 
         return is_array($cacheCells) ? $cacheCells : array();
-    }
-
-    /**
-     * Get data from cache 
-     * 
-     * @param string $name   Cache cell name
-     * @param array  $params Cache cell parameters
-     *  
-     * @return mixed|void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getFromCache($name, array $params = array())
-    {
-        $result = null;
-
-        $cell = $this->getCacheCells($name);
-        if ($cell) {
-
-            $result = \XLite\Core\Database::getCacheDriver()->fetch(
-                $this->getCellHash($name, $cell, $params)
-            );
-
-        } else {
-            // TODO - add throw exception
-        }
-
-        return (isset($result) && false !== $result) ? $result : null;
-    }
-
-    /**
-     * Save data to cache 
-     * 
-     * @param mixed  $data   Data
-     * @param string $name   Cache cell name
-     * @param array  $params Cache cell parameters
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function saveToCache($data, $name, array $params = array())
-    {
-        $cell = $this->getCacheCells($name);
-        if ($cell) {
-
-            $hash = $this->getCellHash($name, $cell, $params);
-
-            if ($data instanceof \ArrayAccess) {
-                $this->detachList($data);
-
-            } elseif ($data instanceof \XLite\Model\AEntity) {
-                $data->detach();
-            }
-
-            \XLite\Core\Database::getCacheDriver()->save(
-                $this->getCellHash($name, $cell, $params),
-                $data,
-                self::CACHE_DEFAULT_TTL
-            );
-
-        } else {
-            // TODO - add throw exception
-        }
-    }
-
-    /**
-     * Get cell hash 
-     * 
-     * @param string $name   Cell name
-     * @param array  $cell   Cell
-     * @param array  $params Cache parameters
-     *  
-     * @return string|void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getCellHash($name, array $cell, array $params)
-    {
-        $hash = null;
-
-        if (self::CACHE_ATTR_KEY == $cell[self::KEY_TYPE_CACHE_CELL]) {
-
-            $hash = implode('.', $params);
-
-        } elseif (self::CACHE_HASH_KEY == $cell[self::KEY_TYPE_CACHE_CELL]) {
-
-            $hash = md5(implode('.', $params));
-
-        } elseif (self::CACHE_CUSTOM_KEY == $cell[self::KEY_TYPE_CACHE_CELL]) {
-
-            $hash = $this->{$cell[self::GENERATOR_CACHE_CELL]}($params);
-        }
-
-        if (isset($hash) && empty($hash)) {
-            $hash = self::EMPTY_CACHE_CELL;
-        }
-
-        return $this->getHashPrefix() . '.' . $name . '.' . $hash;
-    }
-
-    /**
-     * Get prefix for cache key
-     *
-     * @param string $suffix Cache subsection name OPTIONAL
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getHashPrefix($suffix = 'data')
-    {
-        return str_replace('\\', '_', substr($this->_entityName, 6)) . '.' . $suffix;
-    }
-
-    /**
-     * Get cell cache key generator method name 
-     * 
-     * @param string $name Cell name
-     *  
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getCacheHashGeneratorName($name)
-    {
-        return 'getCacheHash' . \XLite\Core\Converter::convertToCamelCase($name);
-    }
-
-    /**
-     * Get cell cache parameters converter method name 
-     * 
-     * @param string $name Cell name
-     *  
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getCacheParamsConverterName($name)
-    {
-        return 'convertRecordToParams' . \XLite\Core\Converter::convertToCamelCase($name);
     }
 
     /**
@@ -577,23 +313,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * Get Query builder main alias 
-     * 
-     * @param \Doctrine\ORM\QueryBuilder $qb Query builder
-     *  
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getMainAlias(\Doctrine\ORM\QueryBuilder $qb)
-    {
-        $from = $qb->getDQLPart('from');
-        $from = explode(' ', array_shift($from), 2);
-
-        return isset($from[1]) ? $from[1] : $from[0];
-    }
-
-    /**
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      * 
      * @param string $alias Table alias OPTIONAL
@@ -633,28 +352,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * Get query builder 
-     * 
-     * @return \XLite\Model\QueryBuilder\AQueryBuilder
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getQueryBuilder()
-    {
-        if (!isset($this->queryBuilderClass)) {
-            $this->queryBuilderClass = str_replace('\\Repo\\', '\\QuieryBuilder\\', get_called_class());
-
-            if (!\XLite\Core\Operator::isClassExists($this->queryBuilderClass)) {
-                $this->queryBuilderClass = '\XLite\Model\QueryBuilder\Base\Common';
-            }
-        }
-
-        $class = $this->queryBuilderClass;
-
-        return new $class($this->_em);
-    }
-
-    /**
      * Get default alias 
      * 
      * @return string
@@ -681,21 +378,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     public function count()
     {
         return intval($this->defineCountQuery()->getSingleScalarResult());
-    }
-
-    /**
-     * Define query for count() method
-     * 
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineCountQuery()
-    {
-        $qb = $this->createPureQueryBuilder();
-
-        return $qb->select('COUNT(' . implode(', ', $this->getIdentifiersList($qb)) . ')')
-            ->setMaxResults(1);
     }
 
     /**
@@ -743,90 +425,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * Define query for 'findFrame()' finder
-     * 
-     * @param integer $start Start offset
-     * @param integer $limit Frame length
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineFrameQuery($start, $limit)
-    {
-        return $this->assignFrame($this->createPureQueryBuilder(), $start, $limit);
-    }
-
-    /**
-     * Assign frame to query builder
-     * 
-     * @param \Doctrine\ORM\QueryBuilder $qb    Query builder
-     * @param integer                    $start Start offset OPTIONAL
-     * @param integer                    $limit Frame length OPTIONAL
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function assignFrame(\Doctrine\ORM\QueryBuilder $qb, $start = 0, $limit = 0)
-    {
-        $start = max(0, intval($start));
-        $limit = max(0, intval($limit));
-
-        if (0 < $start) {
-            $qb->setFirstResult($start);
-        }
-
-        if (0 < $limit) {
-            $qb->setMaxResults($limit);
-        }
-
-        return $qb;
-    }
-
-    /**
-     * Get identifiers list for specified query builder object
-     * 
-     * @param \Doctrine\ORM\QueryBuilder $qb Query builder
-     *  
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getIdentifiersList(\Doctrine\ORM\QueryBuilder $qb)
-    {
-        $alias = $this->getMainAlias($qb);
-
-        $list = array();
-
-        foreach ($this->_class->identifier as $i) {
-            $list[] = $alias . '.' . $i;
-        }
-
-        return $list;
-    }
-
-    /**
-     * Detach entities list
-     * 
-     * @param mixed $data Entites list
-     *  
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function detachList($data)
-    {
-        if (is_array($data) || $data instanceof \ArrayAccess) {
-            foreach ($data as $item) {
-                $item->detach();
-            }
-        }
-
-        return $data;
-    }
-
-    /**
      * Finds an entity by its primary key / identifier and resturn entity detached
      * 
      * @param mixed $id The identifier.
@@ -846,8 +444,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         return $entity;
     }
 
-
-
     /**
      * Flushes all changes to objects that have been queued up to now to the database
      *
@@ -858,108 +454,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     public function flushChanges()
     {
         return $this->getEntityManager()->flush();
-    }
-
-    /**
-     * Search entity by key.
-     * If it's not found, the exception will be thrown
-     *
-     * @param integer $id Entity ID
-     *
-     * @return \XLite\Model\AEntity
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getById($id)
-    {
-        $entity = $this->find($id);
-        if (!$entity) {
-            throw new \Exception(get_called_class() . '::getById() - unknow ID (' . $id . ')');
-        }
-
-        return $entity;
-    }
-
-    /**
-     * getAllowedModifiers 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getAllowedModifiers()
-    {
-        return array('insert', 'update', 'delete');
-    }
-
-    /**
-     * Pattern to check called method names
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getModifierPattern()
-    {
-        return '/(' . implode('|', $this->getAllowedModifiers()) . ')(InBatch)?(ById)?/Si';
-    }
-
-    /**
-     * Insert single entity
-     *
-     * @param array $data Data to save
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function performInsert(array $data = array())
-    {
-        $entity = new $this->_entityName($data);
-        $this->getEntityManager()->persist($entity);
-
-        // Since Doctrine lifecycle callbacks do not allow
-        // to modify associations, we've added this method
-        $entity->prepareEntityBeforeCommit();
-
-        return $entity;
-    }
-
-    /**
-     * Update single entity
-     *
-     * @param \XLite\Model\AEntity $entity Entity to use
-     * @param array                $data   Data to save
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function performUpdate(\XLite\Model\AEntity $entity, array $data = array())
-    {
-        $entity->map($data);
-
-        // Since Doctrine lifecycle callbacks do not allow
-        // to modify associations, we've added this method
-        $entity->prepareEntityBeforeCommit();
-    }
-
-    /**
-     * Delete single entity
-     *
-     * @param \XLite\Model\AEntity $entity Entity to detach
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function performDelete(\XLite\Model\AEntity $entity)
-    {
-        // Since Doctrine lifecycle callbacks do not allow
-        // to modify associations, we've added this method
-        $entity->prepareEntityBeforeCommit();
-
-        $this->getEntityManager()->remove($entity);
     }
 
     /**
@@ -1052,7 +546,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Find one by record 
      * 
      * @param array                $data   Record
-     * @param \XLite\Model\AEntity $parent Parent model
+     * @param \XLite\Model\AEntity $parent Parent model OPTIONAL
      *  
      * @return \XLite\Model\AEntity|void
      * @see    ____func_see____
@@ -1063,80 +557,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         $identifiers = $this->collectIdentifiersByRecord($data);
 
         return $identifiers ? $this->findOneBy($identifiers) : null;
-    }
-
-    /**
-     * Collect identifiers array by record 
-     * 
-     * @param array $data Record
-     *  
-     * @return array(mixed)|boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function collectIdentifiersByRecord(array $data)
-    {
-        $identifiers = array();
-        $found = false;
-
-        list($regular, $assocs, $classIdentifiers) = $this->getEntityProperties();
-        if ($classIdentifiers) {
-            $found = true;
-            foreach ($classIdentifiers as $ident) {
-                if (!isset($data[$ident])) {
-                    $found = false;
-                    break;
-                }
-
-                $identifiers[$ident] = $data[$ident];
-            }
-        }   
-
-        if (!$found) {
-            $identifiers = $this->collectAlternativeIdentifiersByRecord($data);
-            if ($identifiers) {
-                $found = true;
-            }
-        }
-
-        return $found ? $identifiers : false;
-    }
-
-    /**
-     * Collect alternative identifiers by record 
-     * 
-     * @param array $data Record
-     *  
-     * @return boolean|array(mixed)
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function collectAlternativeIdentifiersByRecord(array $data)
-    {
-        $found = false;
-        $identifiers = array();
-
-        if ($this->alternativeIdentifier) {
-
-            // Collect identifiers by alternative unqiue keys
-            foreach ($this->alternativeIdentifier as $keys) {
-                foreach ($keys as $key) {
-                    $found = true;
-                    if (!isset($data[$key])) {
-                        $found = false;
-                        break;
-                    }
-
-                    $identifiers[$key] = $data[$key];
-                }
-
-                if ($found) {
-                    break;
-                }
-            }
-        }
-
-        return $found ? $identifiers : false;
     }
 
     /**
@@ -1253,74 +673,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         }
 
         return $result;
-    }
-
-    /**
-     * Assemble regular fields from record 
-     * 
-     * @param array $record  Record
-     * @param array $regular Regular fields info OPTIONAL
-     *  
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function assembleRegularFieldsFromRecord(array $record, array $regular = array())
-    {
-        if (!$regular) {
-            list($regular, $assocs) = $this->getEntityProperties();
-        }
-
-        return array_intersect_key($record, $regular);
-    }
-
-    /**
-     * Assemble associations from record 
-     * 
-     * @param array $record Record
-     * @param array $assocs Associations info OPTIONAL
-     *  
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function assembleAssociationsFromRecord(array $record, array $assocs = array())
-    {
-        if (!$assocs) {
-            list($regular, $assocs) = $this->getEntityProperties();
-        }
-
-        $record = array_intersect_key($record, $assocs);
-        foreach ($record as $name => $value) {
-            if (!is_array($value)) {
-                unset($record[$name]);
-            }
-        }
-
-        return $record;
-
-    }
-
-    /**
-     * Link loaded entity to parent object
-     * 
-     * @param \XLite\Model\AEntity $entity      Loaded entity
-     * @param \XLite\Model\AEntity $parent      Entity parent callback
-     * @param array                $parentAssoc Entity mapped propery method
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function linkLoadedEntity(\XLite\Model\AEntity $entity, \XLite\Model\AEntity $parent, array $parentAssoc)
-    {
-        // Add entity to parent
-        $parent->$parentAssoc['setter']($entity);
-
-        // Add parent to entity
-        if ($parentAssoc['mappedSetter']) {
-            $entity->$parentAssoc['mappedSetter']($parent);
-        }
     }
 
     /**
@@ -1472,18 +824,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * Get detailed foreign keys 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDetailedForeignKeys()
-    {
-        return array();
-    }
-
-    /**
      * Process DB schema 
      * 
      * @param array  $schema Schema
@@ -1610,5 +950,666 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     public function canTableDisabled()
     {
         return true;
+    }
+
+
+    /**
+     * Define cache cells 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineCacheCells()
+    {
+        return array();
+    }
+
+    /**
+     * Get cache cells 
+     * 
+     * @param string $key Cell name OPTIONAL
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCacheCells($key = null)
+    {
+        if (!isset($this->cacheCells)) {
+            $this->cacheCells = $this->restoreCacheCells();
+        }
+
+        return $key
+            ? (isset($this->cacheCells[$key]) ? $this->cacheCells[$key] : null)
+            : $this->cacheCells;
+    }
+
+    /**
+     * Restore cache cells info from cache
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function restoreCacheCells()
+    {
+        $key = $this->getHashPrefix('cells');
+
+        $cacheCells = \XLite\Core\Database::getCacheDriver()->fetch($key);
+
+        if (!is_array($cacheCells)) {
+
+            $cacheCells = $this->defineCacheCells();
+
+            list($cacheCells, $relations) = $this->postprocessCacheCells($cacheCells);
+
+            \XLite\Core\Database::getCacheDriver()->save($key, $cacheCells, self::CACHE_DEFAULT_TTL);
+
+            // Save relations to current model cache cells from related models
+            foreach ($relations as $model => $cells) {
+                \XLite\Core\Database::getRepo($model)->addCacheRelations($cells);
+            }
+        }
+
+        return $cacheCells;
+    }
+
+    /**
+     * Postprocess cache cells info
+     * 
+     * @param array $cacheCells Cache cells
+     *  
+     * @return array (cache cells & relations data)
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function postprocessCacheCells(array $cacheCells)
+    {
+
+        $relations = array();
+
+        // Normalize cache cells
+        foreach ($cacheCells as $name => $cell) {
+
+            // Set default cell type
+            if (!isset($cell[self::KEY_TYPE_CACHE_CELL])) {
+                $cell[self::KEY_TYPE_CACHE_CELL] = self::DEFAULT_KEY_TYPE;
+            }
+
+            // Set default cell attributes list
+            if (!isset($cell[self::ATTRS_CACHE_CELL])) {
+                $cell[self::ATTRS_CACHE_CELL] = null;
+            }
+
+            // Set default cell relations list
+            if (!isset($cell[self::RELATION_CACHE_CELL])) {
+                $cell[self::RELATION_CACHE_CELL] = array();
+            }
+
+            // Collect related models
+            foreach ($cell[self::RELATION_CACHE_CELL] as $model) {
+                if (!isset($relations[$model])) {
+                    $relations[$model] = array($this->_entityName => array($name));
+
+                } elseif (!isset($relations[$model][$this->_entityName])) {
+                    $relations[$model][$this->_entityName] = array($name);
+
+                } else {
+                    $relations[$model][$this->_entityName][] = $name;
+                }
+            }
+
+            // Set cell attributes converter method name
+            $method = $this->getCacheParamsConverterName($name);
+            $cell[self::CONVERTER_CACHE_CELL] = method_exists($this, $method)
+                ? $method
+                : false;
+
+            // Set cell hash generator method name
+            if (self::CACHE_CUSTOM_KEY == $this->cacheCells[$name][self::KEY_TYPE_CACHE_CELL]) {
+                $cell[self::GENERATOR_CACHE_CELL] = $this->getCacheHashGeneratorName($name);
+            }
+
+            $cacheCells[$name] = $cell;
+        }
+
+        return array($cacheCells, $relations);
+    }
+
+    /**
+     * Get data from cache 
+     * 
+     * @param string $name   Cache cell name
+     * @param array  $params Cache cell parameters OPTIONAL
+     *  
+     * @return mixed|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getFromCache($name, array $params = array())
+    {
+        $result = null;
+
+        $cell = $this->getCacheCells($name);
+        if ($cell) {
+
+            $result = \XLite\Core\Database::getCacheDriver()->fetch(
+                $this->getCellHash($name, $cell, $params)
+            );
+
+        } else {
+            // TODO - add throw exception
+        }
+
+        return (isset($result) && false !== $result) ? $result : null;
+    }
+
+    /**
+     * Save data to cache 
+     * 
+     * @param mixed  $data   Data
+     * @param string $name   Cache cell name
+     * @param array  $params Cache cell parameters OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function saveToCache($data, $name, array $params = array())
+    {
+        $cell = $this->getCacheCells($name);
+        if ($cell) {
+
+            $hash = $this->getCellHash($name, $cell, $params);
+
+            if ($data instanceof \ArrayAccess) {
+                $this->detachList($data);
+
+            } elseif ($data instanceof \XLite\Model\AEntity) {
+                $data->detach();
+            }
+
+            \XLite\Core\Database::getCacheDriver()->save(
+                $this->getCellHash($name, $cell, $params),
+                $data,
+                self::CACHE_DEFAULT_TTL
+            );
+
+        } else {
+            // TODO - add throw exception
+        }
+    }
+
+    /**
+     * Get cell hash 
+     * 
+     * @param string $name   Cell name
+     * @param array  $cell   Cell
+     * @param array  $params Cache parameters
+     *  
+     * @return string|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCellHash($name, array $cell, array $params)
+    {
+        $hash = null;
+
+        if (self::CACHE_ATTR_KEY == $cell[self::KEY_TYPE_CACHE_CELL]) {
+
+            $hash = implode('.', $params);
+
+        } elseif (self::CACHE_HASH_KEY == $cell[self::KEY_TYPE_CACHE_CELL]) {
+
+            $hash = md5(implode('.', $params));
+
+        } elseif (self::CACHE_CUSTOM_KEY == $cell[self::KEY_TYPE_CACHE_CELL]) {
+
+            $hash = $this->{$cell[self::GENERATOR_CACHE_CELL]}($params);
+        }
+
+        if (isset($hash) && empty($hash)) {
+            $hash = self::EMPTY_CACHE_CELL;
+        }
+
+        return $this->getHashPrefix() . '.' . $name . '.' . $hash;
+    }
+
+    /**
+     * Get prefix for cache key
+     *
+     * @param string $suffix Cache subsection name OPTIONAL
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHashPrefix($suffix = 'data')
+    {
+        return str_replace('\\', '_', substr($this->_entityName, 6)) . '.' . $suffix;
+    }
+
+    /**
+     * Get cell cache key generator method name 
+     * 
+     * @param string $name Cell name
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCacheHashGeneratorName($name)
+    {
+        return 'getCacheHash' . \XLite\Core\Converter::convertToCamelCase($name);
+    }
+
+    /**
+     * Get cell cache parameters converter method name 
+     * 
+     * @param string $name Cell name
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCacheParamsConverterName($name)
+    {
+        return 'convertRecordToParams' . \XLite\Core\Converter::convertToCamelCase($name);
+    }
+
+    /**
+     * Get Query builder main alias 
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $qb Query builder
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMainAlias(\Doctrine\ORM\QueryBuilder $qb)
+    {
+        $from = $qb->getDQLPart('from');
+        $from = explode(' ', array_shift($from), 2);
+
+        return isset($from[1]) ? $from[1] : $from[0];
+    }
+
+    /**
+     * Get query builder 
+     * 
+     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getQueryBuilder()
+    {
+        if (!isset($this->queryBuilderClass)) {
+            $this->queryBuilderClass = str_replace('\\Repo\\', '\\QuieryBuilder\\', get_called_class());
+
+            if (!\XLite\Core\Operator::isClassExists($this->queryBuilderClass)) {
+                $this->queryBuilderClass = '\XLite\Model\QueryBuilder\Base\Common';
+            }
+        }
+
+        $class = $this->queryBuilderClass;
+
+        return new $class($this->_em);
+    }
+
+    /**
+     * Define query for count() method
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineCountQuery()
+    {
+        $qb = $this->createPureQueryBuilder();
+
+        return $qb->select('COUNT(' . implode(', ', $this->getIdentifiersList($qb)) . ')')
+            ->setMaxResults(1);
+    }
+
+    /**
+     * Define query for 'findFrame()' finder
+     * 
+     * @param integer $start Start offset
+     * @param integer $limit Frame length
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineFrameQuery($start, $limit)
+    {
+        return $this->assignFrame($this->createPureQueryBuilder(), $start, $limit);
+    }
+
+    /**
+     * Assign frame to query builder
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $qb    Query builder
+     * @param integer                    $start Start offset OPTIONAL
+     * @param integer                    $limit Frame length OPTIONAL
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function assignFrame(\Doctrine\ORM\QueryBuilder $qb, $start = 0, $limit = 0)
+    {
+        $start = max(0, intval($start));
+        $limit = max(0, intval($limit));
+
+        if (0 < $start) {
+            $qb->setFirstResult($start);
+        }
+
+        if (0 < $limit) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Get identifiers list for specified query builder object
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $qb Query builder
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getIdentifiersList(\Doctrine\ORM\QueryBuilder $qb)
+    {
+        $alias = $this->getMainAlias($qb);
+
+        $list = array();
+
+        foreach ($this->_class->identifier as $i) {
+            $list[] = $alias . '.' . $i;
+        }
+
+        return $list;
+    }
+
+    /**
+     * Detach entities list
+     * 
+     * @param mixed $data Entites list
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function detachList($data)
+    {
+        if (is_array($data) || $data instanceof \ArrayAccess) {
+            foreach ($data as $item) {
+                $item->detach();
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Search entity by key.
+     * If it's not found, the exception will be thrown
+     *
+     * @param integer $id Entity ID
+     *
+     * @return \XLite\Model\AEntity
+     * @throws \Exception
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getById($id)
+    {
+        $entity = $this->find($id);
+        if (!$entity) {
+            throw new \Exception(get_called_class() . '::getById() - unknow ID (' . $id . ')');
+        }
+
+        return $entity;
+    }
+
+    /**
+     * getAllowedModifiers 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAllowedModifiers()
+    {
+        return array('insert', 'update', 'delete');
+    }
+
+    /**
+     * Pattern to check called method names
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModifierPattern()
+    {
+        return '/(' . implode('|', $this->getAllowedModifiers()) . ')(InBatch)?(ById)?/Si';
+    }
+
+    /**
+     * Insert single entity
+     *
+     * @param array $data Data to save OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function performInsert(array $data = array())
+    {
+        $entity = new $this->_entityName($data);
+        $this->getEntityManager()->persist($entity);
+
+        // Since Doctrine lifecycle callbacks do not allow
+        // to modify associations, we've added this method
+        $entity->prepareEntityBeforeCommit();
+
+        return $entity;
+    }
+
+    /**
+     * Update single entity
+     *
+     * @param \XLite\Model\AEntity $entity Entity to use
+     * @param array                $data   Data to save OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function performUpdate(\XLite\Model\AEntity $entity, array $data = array())
+    {
+        $entity->map($data);
+
+        // Since Doctrine lifecycle callbacks do not allow
+        // to modify associations, we've added this method
+        $entity->prepareEntityBeforeCommit();
+    }
+
+    /**
+     * Delete single entity
+     *
+     * @param \XLite\Model\AEntity $entity Entity to detach
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function performDelete(\XLite\Model\AEntity $entity)
+    {
+        // Since Doctrine lifecycle callbacks do not allow
+        // to modify associations, we've added this method
+        $entity->prepareEntityBeforeCommit();
+
+        $this->getEntityManager()->remove($entity);
+    }
+
+    /**
+     * Collect identifiers array by record 
+     * 
+     * @param array $data Record
+     *  
+     * @return array(mixed)|boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function collectIdentifiersByRecord(array $data)
+    {
+        $identifiers = array();
+        $found = false;
+
+        list($regular, $assocs, $classIdentifiers) = $this->getEntityProperties();
+        if ($classIdentifiers) {
+            $found = true;
+            foreach ($classIdentifiers as $ident) {
+                if (!isset($data[$ident])) {
+                    $found = false;
+                    break;
+                }
+
+                $identifiers[$ident] = $data[$ident];
+            }
+        }   
+
+        if (!$found) {
+            $identifiers = $this->collectAlternativeIdentifiersByRecord($data);
+            if ($identifiers) {
+                $found = true;
+            }
+        }
+
+        return $found ? $identifiers : false;
+    }
+
+    /**
+     * Collect alternative identifiers by record 
+     * 
+     * @param array $data Record
+     *  
+     * @return boolean|array(mixed)
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function collectAlternativeIdentifiersByRecord(array $data)
+    {
+        $found = false;
+        $identifiers = array();
+
+        if ($this->alternativeIdentifier) {
+
+            // Collect identifiers by alternative unqiue keys
+            foreach ($this->alternativeIdentifier as $keys) {
+                foreach ($keys as $key) {
+                    $found = true;
+                    if (!isset($data[$key])) {
+                        $found = false;
+                        break;
+                    }
+
+                    $identifiers[$key] = $data[$key];
+                }
+
+                if ($found) {
+                    break;
+                }
+            }
+        }
+
+        return $found ? $identifiers : false;
+    }
+
+    /**
+     * Assemble regular fields from record 
+     * 
+     * @param array $record  Record
+     * @param array $regular Regular fields info OPTIONAL
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function assembleRegularFieldsFromRecord(array $record, array $regular = array())
+    {
+        if (!$regular) {
+            list($regular, $assocs) = $this->getEntityProperties();
+        }
+
+        return array_intersect_key($record, $regular);
+    }
+
+    /**
+     * Assemble associations from record 
+     * 
+     * @param array $record Record
+     * @param array $assocs Associations info OPTIONAL
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function assembleAssociationsFromRecord(array $record, array $assocs = array())
+    {
+        if (!$assocs) {
+            list($regular, $assocs) = $this->getEntityProperties();
+        }
+
+        $record = array_intersect_key($record, $assocs);
+        foreach ($record as $name => $value) {
+            if (!is_array($value)) {
+                unset($record[$name]);
+            }
+        }
+
+        return $record;
+
+    }
+
+    /**
+     * Link loaded entity to parent object
+     * 
+     * @param \XLite\Model\AEntity $entity      Loaded entity
+     * @param \XLite\Model\AEntity $parent      Entity parent callback
+     * @param array                $parentAssoc Entity mapped propery method
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function linkLoadedEntity(\XLite\Model\AEntity $entity, \XLite\Model\AEntity $parent, array $parentAssoc)
+    {
+        // Add entity to parent
+        $parent->$parentAssoc['setter']($entity);
+
+        // Add parent to entity
+        if ($parentAssoc['mappedSetter']) {
+            $entity->$parentAssoc['mappedSetter']($parent);
+        }
+    }
+
+    /**
+     * Get detailed foreign keys 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDetailedForeignKeys()
+    {
+        return array();
     }
 }

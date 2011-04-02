@@ -54,6 +54,8 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      */
     protected $defaultOrderBy = 'orderby';
 
+    // {{{ defineCacheCells
+
     /**
      * Define cache cells 
      * 
@@ -73,6 +75,10 @@ class Membership extends \XLite\Model\Repo\Base\I18n
 
         return $list;
     }
+
+    // }}}
+
+    // {{{ findAllMemberships
 
     /**
      * Find all languages
@@ -103,6 +109,10 @@ class Membership extends \XLite\Model\Repo\Base\I18n
     {
         return $this->createQueryBuilder();
     }
+
+    // }}}
+
+    // {{{ findActiveMemberships
 
     /**
      * Find all active languages
@@ -135,6 +145,10 @@ class Membership extends \XLite\Model\Repo\Base\I18n
             ->where('m.active = :true')
             ->setParameter('true', true);
     }
+
+    // }}}
+
+    // {{{ findOneByName
 
     /**
      * Find membership by name (any language)
@@ -175,5 +189,6 @@ class Membership extends \XLite\Model\Repo\Base\I18n
 
         return $qb;
     }
-}
 
+    // }}}
+}

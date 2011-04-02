@@ -255,6 +255,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param array $data Option data in the following format
      *  
      * @return void
+     * @throws \Exception
      * @see    ____func_see____
      * @since  3.0.0
      */

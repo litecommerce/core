@@ -40,7 +40,7 @@ class Translation extends \XLite\Model\Repo\ARepo
      * Find one by record 
      * 
      * @param array                $data   Record
-     * @param \XLite\Model\AEntity $parent Parent model
+     * @param \XLite\Model\AEntity $parent Parent model OPTIONAL
      *  
      * @return \XLite\Model\AEntity|void
      * @see    ____func_see____

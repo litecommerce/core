@@ -31,8 +31,9 @@ namespace XLite\Model\Payment;
 /**
  * Payment method multilingual data
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
  * @Entity
  * @Table (name="payment_method_translations",
  *      indexes={
@@ -46,9 +47,9 @@ class MethodTranslation extends \XLite\Model\Base\Translation
     /**
      * Name
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -57,9 +58,9 @@ class MethodTranslation extends \XLite\Model\Base\Translation
     /**
      * Description
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="text")
      */

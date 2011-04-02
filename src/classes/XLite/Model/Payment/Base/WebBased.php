@@ -52,6 +52,89 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
 
 
     /**
+     * Get redirect form URL 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract protected function getFormURL();
+
+    /**
+     * Get redirect form fields list
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract protected function getFormFields();
+
+
+    /**
+     * Get input template
+     *
+     * @return string|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getInputTemplate()
+    {
+        return null;
+    }
+
+    /**
+     * Get return request owner transaction or null
+     * 
+     * @return \XLite\Model\Payment\Transaction|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getReturnOwnerTransaction()
+    {
+        return null;
+    }
+
+    /**
+     * Process return
+     * 
+     * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function processReturn(\XLite\Model\Payment\Transaction $transaction)
+    {
+        $this->transaction = $transaction;
+
+        $this->logReturn(\XLite\Core\Request::getInstance()->getData());
+    }
+
+    /**
+     * Get return type 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getReturnType()
+    {
+        return self::RETURN_TYPE_HTTP_REDIRECT;
+    }
+
+    /**
+     * Do custom redirect after customer's return
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function doCustomReturnRedirect()
+    {
+    }
+
+
+    /**
      * Do initial payment 
      * 
      * @return string Status code
@@ -100,64 +183,6 @@ HTML;
     protected function getFormMethod()
     {
         return self::FORM_METHOD_POST;
-    }
-
-    /**
-     * Get redirect form URL 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    abstract protected function getFormURL();
-
-    /**
-     * Get redirect form fields list
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    abstract protected function getFormFields();
-
-    /**
-     * Get input template
-     *
-     * @return string|void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getInputTemplate()
-    {
-        return null;
-    }
-
-    /**
-     * Get return request owner transaction or null
-     * 
-     * @return \XLite\Model\Payment\Transaction|void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getReturnOwnerTransaction()
-    {
-        return null;
-    }
-
-    /**
-     * Process return
-     * 
-     * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function processReturn(\XLite\Model\Payment\Transaction $transaction)
-    {
-        $this->transaction = $transaction;
-
-        $this->logReturn(\XLite\Core\Request::getInstance()->getData());
     }
 
     /**
@@ -232,29 +257,6 @@ HTML;
         }
 
         return $result;
-    }
-
-    /**
-     * Get return type 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getReturnType()
-    {
-        return self::RETURN_TYPE_HTTP_REDIRECT;
-    }
-
-    /**
-     * Do custom redirect after customer's return
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function doCustomReturnRedirect()
-    {
     }
 
     /**

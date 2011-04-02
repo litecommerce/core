@@ -45,58 +45,6 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      */
     protected $type = self::TYPE_SERVICE;
 
-    /**
-     * Return data to indentify cell in SQL queries
-     *
-     * @param \XLite\Model\SessionCell $cell Cell to use
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getCellIdentifier(\XLite\Model\SessionCell $cell)
-    {
-        return array(
-            'cell_id' => $cell->getCellId(),
-        );
-    }
-
-    /**
-     * Prepare data for cell insert 
-     * 
-     * @param integer $id    Session ID
-     * @param string  $name  Cell name
-     * @param mixed   $value Data to store
-     *  
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function prepareDataForNewCell($id, $name, $value)
-    {
-        return array(
-            'id'    => $id,
-            'name'  => $name,
-        ) + $this->prepareDataForExistingCell($value);
-    }
-
-    /**
-     * Prepare data for cell update
-     *
-     * @param mixed                    $value Data to store
-     * @param \XLite\Model\SessionCell $cell  Cell to update
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function prepareDataForExistingCell($value, \XLite\Model\SessionCell $cell = null)
-    {
-        return array(
-            'value' => \XLite\Model\SessionCell::prepareValueForSet($value),
-            'type'  => \XLite\Model\SessionCell::getTypeByValue($value),
-        );
-    }
 
     /**
      * Insert new cell
@@ -182,4 +130,57 @@ class SessionCell extends \XLite\Model\Repo\ARepo
         return $schema;
     }
 
+
+    /**
+     * Return data to indentify cell in SQL queries
+     *
+     * @param \XLite\Model\SessionCell $cell Cell to use
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCellIdentifier(\XLite\Model\SessionCell $cell)
+    {
+        return array(
+            'cell_id' => $cell->getCellId(),
+        );
+    }
+
+    /**
+     * Prepare data for cell insert 
+     * 
+     * @param integer $id    Session ID
+     * @param string  $name  Cell name
+     * @param mixed   $value Data to store
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareDataForNewCell($id, $name, $value)
+    {
+        return array(
+            'id'    => $id,
+            'name'  => $name,
+        ) + $this->prepareDataForExistingCell($value);
+    }
+
+    /**
+     * Prepare data for cell update
+     *
+     * @param mixed                    $value Data to store
+     * @param \XLite\Model\SessionCell $cell  Cell to update OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareDataForExistingCell($value, \XLite\Model\SessionCell $cell = null)
+    {
+        return array(
+            'value' => \XLite\Model\SessionCell::prepareValueForSet($value),
+            'type'  => \XLite\Model\SessionCell::getTypeByValue($value),
+        );
+    }
 }

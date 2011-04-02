@@ -68,6 +68,9 @@ class Session extends \XLite\Model\Repo\ARepo
         'Y', 'Z',
     );
 
+
+    // {{{ removeExpired
+
     /**
      * Find cell by session id and name
      * 
@@ -94,6 +97,10 @@ class Session extends \XLite\Model\Repo\ARepo
             ->andWhere('s.expiry < :time')
             ->setParameter('time', time());
     }
+
+    // }}}
+
+    // {{{ countBySid
 
     /**
      * Count session by public session id 
@@ -125,6 +132,10 @@ class Session extends \XLite\Model\Repo\ARepo
             ->andWhere('s.sid = :sid')
             ->setParameter('sid', $sid);
     }
+
+    // }}}
+
+    // {{{
 
     /**
      * Generate public session id 
@@ -175,4 +186,6 @@ class Session extends \XLite\Model\Repo\ARepo
 
         return is_string($sid) && (bool)preg_match($regexp, $sid);
     }
+
+    // }}}
 }

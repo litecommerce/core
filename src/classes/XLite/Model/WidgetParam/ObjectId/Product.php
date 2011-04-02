@@ -40,6 +40,7 @@ class Product extends \XLite\Model\WidgetParam\ObjectId
      * Return object class name
      *
      * @return string
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getClassName()

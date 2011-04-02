@@ -42,9 +42,9 @@ class Surcharge extends \XLite\Model\Base\Surcharge
     /**
      * Surcharge owner (order item)
      *
-     * @var    \XLite\Model\OrderItem
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\OrderItem
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\OrderItem", inversedBy="surcharges")
      * @JoinColumn (name="item_id", referencedColumnName="item_id")
@@ -62,5 +62,4 @@ class Surcharge extends \XLite\Model\Base\Surcharge
     {
         return $this->getOwner()->getOrder();
     }
-
 }

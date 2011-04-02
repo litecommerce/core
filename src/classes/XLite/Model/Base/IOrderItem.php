@@ -30,8 +30,8 @@ namespace XLite\Model\Base;
 /**
  * Order item related object interface
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 interface IOrderItem
 {

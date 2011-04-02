@@ -39,8 +39,9 @@ class File extends \XLite\Model\WidgetParam\AWidgetParam
     /**
      * Param type
      *
-     * @var    string
-     * @since  3.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $type = 'string';
 
@@ -51,6 +52,7 @@ class File extends \XLite\Model\WidgetParam\AWidgetParam
      * @param mixed $value Value to validate
      *
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getValidaionSchema($value)

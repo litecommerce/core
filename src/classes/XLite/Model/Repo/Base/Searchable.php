@@ -44,7 +44,7 @@ abstract class Searchable extends \XLite\Base\SuperClass
      * 
      * @param integer                $start First item index
      * @param integer                $count Items per frame
-     * @param \XLite\Core\CommonCell $cnd   Condition object to use
+     * @param \XLite\Core\CommonCell $cnd   Condition object to use OPTIONAL
      *  
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____

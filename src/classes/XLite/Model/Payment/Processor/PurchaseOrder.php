@@ -49,23 +49,6 @@ class PurchaseOrder extends \XLite\Model\Payment\Processor\Offline
     }
 
     /**
-     * Get input data labels list
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getInputDataLabels()
-    {
-        return array(
-            'number'    => 'Purchase order number',
-            'company'   => 'Company name',
-            'purchaser' => 'Name of purchaser',
-            'position'  => 'Position',
-        );
-    }
-
-    /**
      * Get input errors
      *
      * @param array $data Input data
@@ -87,6 +70,24 @@ class PurchaseOrder extends \XLite\Model\Payment\Processor\Offline
         return $errors;
     }
 
+
+    /**
+     * Get input data labels list
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getInputDataLabels()
+    {
+        return array(
+            'number'    => 'Purchase order number',
+            'company'   => 'Company name',
+            'purchaser' => 'Name of purchaser',
+            'position'  => 'Position',
+        );
+    }
+
     /**
      * Get input data access levels list
      *
@@ -103,5 +104,4 @@ class PurchaseOrder extends \XLite\Model\Payment\Processor\Offline
             'position'  => \XLite\Model\Payment\TransactionData::ACCESS_ADMIN,
         );
     }
-
 }

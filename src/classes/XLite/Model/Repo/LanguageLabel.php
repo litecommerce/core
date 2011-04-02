@@ -56,6 +56,8 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
         array('name'),
     );  
 
+    // {{{ defineCacheCells
+
     /**
      * Define cache cells 
      * 
@@ -72,6 +74,10 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
 
         return $list;
     }
+
+    // }}}
+
+    // {{{ findLabelsByCode
 
     /**
      * Find labels by language code
@@ -132,6 +138,10 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
         return $result;
     }
 
+    // }}}
+
+    // {{{ countByName
+
     /**
      * Count labels by name 
      * 
@@ -161,6 +171,10 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
             ->andWhere('l.name LIKE :name')
             ->setParameter('name', '%' . $name . '%');
     }
+
+    // }}}
+
+    // {{{ findLikeName
 
     /**
      * Find lables by name pattern with data frame
@@ -198,6 +212,8 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
         );
     }
 
+    // }}}
+
     /**
      * Convert entity to parameters list for 'all_by_code' cache cell
      * 
@@ -212,4 +228,3 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
         return array('*');
     }
 }
-
