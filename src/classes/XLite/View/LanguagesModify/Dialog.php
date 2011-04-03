@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\LanguagesModify;
@@ -31,9 +31,8 @@ namespace XLite\View\LanguagesModify;
 /**
  * Languages and language labels modification
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -42,94 +41,53 @@ class Dialog extends \XLite\View\Dialog
     /**
      * Labels limit per page
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $limit = 20;
 
     /**
      * Founded labels with pagination (cache)
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $labels = null;
 
     /**
      * Labels count
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $labelsCount = null;
 
     /**
      * Pages count 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $pagesCount = null;
 
     /**
      * Translate language 
      * 
-     * @var    \XLite\Model\Language or false
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Language or false
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $translateLanguage = null;
 
-    /**
-     * Return default template
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'common/empty_dialog.tpl';
-    }
-
-    /**
-     * Return title
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return null;
-    }
-
-    /**
-     * Return templates directory name
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDir()
-    {
-        return 'languages';
-    }
 
     /**
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -142,26 +100,11 @@ class Dialog extends \XLite\View\Dialog
         return $result;
     }
 
-    /**
-     * Get labels 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getLabels()
-    {
-        $this->defineLabels();
-
-        return $this->labels;
-    }
 
     /**
      * Count labels 
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -176,7 +119,6 @@ class Dialog extends \XLite\View\Dialog
      * Get pages count
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -191,7 +133,6 @@ class Dialog extends \XLite\View\Dialog
      * Get page index
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -208,7 +149,6 @@ class Dialog extends \XLite\View\Dialog
      * Get URL for simple pager
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -227,7 +167,6 @@ class Dialog extends \XLite\View\Dialog
      * Get search substring 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -242,7 +181,6 @@ class Dialog extends \XLite\View\Dialog
      * Check - widget search all labels or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -257,7 +195,6 @@ class Dialog extends \XLite\View\Dialog
      * Check - search is enabled or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -270,7 +207,6 @@ class Dialog extends \XLite\View\Dialog
      * Check - application has added language withount default language or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -292,7 +228,6 @@ class Dialog extends \XLite\View\Dialog
      * Get application default language 
      * 
      * @return \XLite\Model\Language
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -305,7 +240,6 @@ class Dialog extends \XLite\View\Dialog
      * Get iterface default language 
      * 
      * @return \XLite\Model\Language
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -318,7 +252,6 @@ class Dialog extends \XLite\View\Dialog
      * Get translate language 
      * 
      * @return \XLite\Model\Language|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -344,7 +277,6 @@ class Dialog extends \XLite\View\Dialog
      * Check - is translate language selected or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -360,7 +292,6 @@ class Dialog extends \XLite\View\Dialog
      * @param \XLite\Model\LanguageLabel $label Label
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -375,7 +306,6 @@ class Dialog extends \XLite\View\Dialog
      * @param \XLite\Model\LanguageLabel $label Label
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -387,10 +317,92 @@ class Dialog extends \XLite\View\Dialog
     }
 
     /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'languages/style.css';
+
+        return $list;
+    }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'languages/controller.js';
+
+        return $list;
+    }
+
+
+    /**
+     * Return default template
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'common/empty_dialog.tpl';
+    }
+
+    /**
+     * Return title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return null;
+    }
+
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return 'languages';
+    }
+
+    /**
+     * Get labels 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLabels()
+    {
+        $this->defineLabels();
+
+        return $this->labels;
+    }
+
+    /**
      * Define (search) labels 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -441,40 +453,4 @@ class Dialog extends \XLite\View\Dialog
             }
         }
     }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'languages/style.css';
-
-        return $list;
-    }
-
-    /**
-     * Register JS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        $list[] = 'languages/controller.js';
-
-        return $list;
-    }
-
 }
-

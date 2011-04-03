@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\RequestHandler;
@@ -31,9 +31,8 @@ namespace XLite\View\RequestHandler;
 /**
  * Abstract base which can populate its params from request and session
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class ARequestHandler extends \XLite\View\AView
 {
@@ -53,30 +52,87 @@ abstract class ARequestHandler extends \XLite\View\AView
     /**
      * List of so called "request" params - which take values from request (if passed)
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $requestParams;
 
     /**
      * Request param values saved in session
      *
-     * @var    array
-     * @access protected
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $savedRequestParams;
+
+
+    /**
+     * Return target to retrive this widget from AJAX
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getWidgetTarget()
+    {
+        return '';
+    }
+
+
+    /**
+     * Return list of the "request" parameter names
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRequestParams()
+    {
+        if (!isset($this->requestParams)) {
+            $this->defineRequestParams();
+        }
+
+        return $this->requestParams;
+    }
+
+    /**
+     * Return the associative array mapped by the "request" parameter names/values
+     *
+     * @return array
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $savedRequestParams;
+    public function getRequestParamsHash()
+    {
+        return $this->getParamsHash($this->getRequestParams());
+    }
+
+    /**
+     * Set widget params
+     *
+     * @param array $params Handler params
+     *
+     * @return void
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        if ($this->checkRequestParams() && !$this->isCloned) {
+            $this->setWidgetRequestParamValues($params);
+        }
+
+        parent::setWidgetParams($params);
+    }
 
 
     /**
      * Return name of the session cell identifier
      *
      * @return string
-     * @access protected
-     * @see    ____var_see____
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getSessionCell()
@@ -88,7 +144,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * Return name of this class
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -101,7 +156,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * Get widget parameters
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -114,7 +168,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * Return data to send to JS
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -139,7 +192,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * Then only the corresponded widget will use it
      *
      * @return boolean 
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
@@ -154,7 +206,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * Check if we need to manage request params 
      * 
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -170,7 +221,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * It allows us to refresh pages without restore their default view
      *
      * @return void
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
@@ -187,7 +237,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * Define the "request" parameters
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -202,7 +251,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * @param string $param Parameter name
      *
      * @return mixed
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
@@ -230,7 +278,6 @@ abstract class ARequestHandler extends \XLite\View\AView
      * @param array &$params Param values to modify
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -255,69 +302,5 @@ abstract class ARequestHandler extends \XLite\View\AView
                 }
             }
         }
-    }
-
-
-    /**
-     * Return target to retrive this widget from AJAX
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function getWidgetTarget()
-    {
-        return '';
-    }
-
-
-    /**
-     * Return list of the "request" parameter names
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getRequestParams()
-    {
-        if (!isset($this->requestParams)) {
-            $this->defineRequestParams();
-        }
-
-        return $this->requestParams;
-    }
-
-    /**
-     * Return the associative array mapped by the "request" parameter names/values
-     *
-     * @return array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public function getRequestParamsHash()
-    {
-        return $this->getParamsHash($this->getRequestParams());
-    }
-
-    /**
-     * Set widget params
-     *
-     * @param array $params Handler params
-     *
-     * @return void
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public function setWidgetParams(array $params)
-    {
-        if ($this->checkRequestParams() && !$this->isCloned) {
-            $this->setWidgetRequestParamValues($params);
-        }
-
-        parent::setWidgetParams($params);
     }
 }

@@ -31,8 +31,9 @@ namespace XLite\Model\Shipping;
 /**
  * Shipping method multilingual data
  * 
- * @see        ____class_see____
- * @since     3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
  * @Entity
  * @Table (name="shipping_method_translations")
  *      indexes={
@@ -46,9 +47,10 @@ class MethodTranslation extends \XLite\Model\Base\Translation
     /**
      * Shipping method name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="string", length="255", nullable=false)
      */
     protected $name = '';

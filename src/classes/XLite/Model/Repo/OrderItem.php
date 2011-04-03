@@ -56,5 +56,4 @@ class OrderItem extends \XLite\Model\Repo\ARepo
 
         return $list;
     }
-
 }

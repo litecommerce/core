@@ -63,159 +63,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      */
     protected $defaultLanguage = null;
 
-    /**
-     * Define cache cells 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineCacheCells()
-    {
-        $list = parent::defineCacheCells();
-
-        $list['all'] = array();
-
-        $list['status'] = array(
-            self::ATTRS_CACHE_CELL => array('status'),
-        );
-
-        return $list;
-    }
-
-    /**
-     * Find all languages
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findAllLanguages()
-    {
-        $data = $this->getFromCache('all');
-        if (!isset($data)) {
-            $data = $this->defineAllLanguagesQuery()->getResult();
-            $this->saveToCache($data, 'all');
-        }
-
-        return $data;
-    }
-
-    /**
-     * Define query builder for findAllLanguages()
-     * 
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineAllLanguagesQuery()
-    {
-        return $this->createQueryBuilder();
-    }
-
-    /**
-     * Find all active languages
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findActiveLanguages()
-    {
-        $data = $this->getFromCache('status', array('status' => \XLite\Model\Language::ENABLED));
-        if (!isset($data)) {
-            $data = $this->defineByStatusQuery(\XLite\Model\Language::ENABLED)->getResult();
-            $this->saveToCache($data, 'status', array('status' => \XLite\Model\Language::ENABLED));
-        }
-
-        return $data;
-    }
-
-    /**
-     * Define query builder for findActiveLanguages()
-     *
-     * @param integer $status Status key
-     * 
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineByStatusQuery($status)
-    {
-        return $this->createQueryBuilder()
-            ->andWhere('l.status = :status')
-            ->setParameter('status', $status);
-    }
-
-    /**
-     * Find all added languages
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findAddedLanguages()
-    {
-        return $this->defineAddedQuery()->getResult();
-    }
-
-    /**
-     * Define query builder for findAddedLanguages()
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineAddedQuery()
-    {
-        return $this->createQueryBuilder()
-            ->andWhere('l.status != :status')
-            ->setParameter('status', \XLite\Model\Language::INACTIVE);
-    }
-
-    /**
-     * Find all inactive languages
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findInactiveLanguages()
-    {
-        return $this->defineByStatusQuery(\XLite\Model\Language::INACTIVE)->getResult();
-    }
-
-    /**
-     * Find language one by code 
-     * 
-     * @param string $code Code
-     *  
-     * @return \XLite\Model\Language|void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findOneByCode($code)
-    {
-        return $this->defineOneByCodeQuery($code)->getSingleResult();
-    }
-
-    /**
-     * Define query builder for findOneByCode()
-     *
-     * @param string $code Language code
-     * 
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineOneByCodeQuery($code)
-    {
-        return $this->createQueryBuilder()
-            ->andWhere('l.code = :code')
-            ->setParameter('code', $code)
-            ->setMaxResults(1);
-    }
-
+    // {{{
 
     /**
      * Get languages query 
@@ -254,5 +102,179 @@ class Language extends \XLite\Model\Repo\Base\I18n
 
         return $this->defaultLanguage;
     }
-}
 
+    // }}}
+
+    // {{{ defineCacheCells
+
+    /**
+     * Define cache cells 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineCacheCells()
+    {
+        $list = parent::defineCacheCells();
+
+        $list['all'] = array();
+
+        $list['status'] = array(
+            self::ATTRS_CACHE_CELL => array('status'),
+        );
+
+        return $list;
+    }
+
+    // }}}
+
+    // {{{ findAllLanguages
+
+    /**
+     * Find all languages
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findAllLanguages()
+    {
+        $data = $this->getFromCache('all');
+        if (!isset($data)) {
+            $data = $this->defineAllLanguagesQuery()->getResult();
+            $this->saveToCache($data, 'all');
+        }
+
+        return $data;
+    }
+
+    /**
+     * Define query builder for findAllLanguages()
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAllLanguagesQuery()
+    {
+        return $this->createQueryBuilder();
+    }
+
+    // }}}
+
+    // {{{ findActiveLanguages
+
+    /**
+     * Find all active languages
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findActiveLanguages()
+    {
+        $data = $this->getFromCache('status', array('status' => \XLite\Model\Language::ENABLED));
+        if (!isset($data)) {
+            $data = $this->defineByStatusQuery(\XLite\Model\Language::ENABLED)->getResult();
+            $this->saveToCache($data, 'status', array('status' => \XLite\Model\Language::ENABLED));
+        }
+
+        return $data;
+    }
+
+    /**
+     * Find all inactive languages
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findInactiveLanguages()
+    {
+        return $this->defineByStatusQuery(\XLite\Model\Language::INACTIVE)->getResult();
+    }
+
+    /**
+     * Define query builder for findActiveLanguages()
+     *
+     * @param integer $status Status key
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineByStatusQuery($status)
+    {
+        return $this->createQueryBuilder()
+            ->andWhere('l.status = :status')
+            ->setParameter('status', $status);
+    }
+
+    // }}}
+
+    // {{{ findAddedLanguages
+
+    /**
+     * Find all added languages
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findAddedLanguages()
+    {
+        return $this->defineAddedQuery()->getResult();
+    }
+
+    /**
+     * Define query builder for findAddedLanguages()
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAddedQuery()
+    {
+        return $this->createQueryBuilder()
+            ->andWhere('l.status != :status')
+            ->setParameter('status', \XLite\Model\Language::INACTIVE);
+    }
+
+    // }}}
+
+    // {{{ findOneByCode
+
+    /**
+     * Find language one by code 
+     * 
+     * @param string $code Code
+     *  
+     * @return \XLite\Model\Language|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findOneByCode($code)
+    {
+        return $this->defineOneByCodeQuery($code)->getSingleResult();
+    }
+
+    /**
+     * Define query builder for findOneByCode()
+     *
+     * @param string $code Language code
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineOneByCodeQuery($code)
+    {
+        return $this->createQueryBuilder()
+            ->andWhere('l.code = :code')
+            ->setParameter('code', $code)
+            ->setMaxResults(1);
+    }
+
+    // }}}
+}

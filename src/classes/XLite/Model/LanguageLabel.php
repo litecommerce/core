@@ -31,8 +31,9 @@ namespace XLite\Model;
 /**
  * Language label
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
  * @Entity (repositoryClass="\XLite\Model\Repo\LanguageLabel")
  * @Table (name="language_labels",
  *      indexes={
@@ -45,9 +46,10 @@ class LanguageLabel extends \XLite\Model\Base\I18n
     /**
      * Unique id
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
      * @Column (type="integer")
@@ -57,9 +59,10 @@ class LanguageLabel extends \XLite\Model\Base\I18n
     /**
      * Label name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="string", length="255")
      */
     protected $name;

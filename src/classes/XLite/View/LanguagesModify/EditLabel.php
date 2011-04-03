@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\LanguagesModify;
@@ -31,9 +31,8 @@ namespace XLite\View\LanguagesModify;
 /**
  * Edit language label 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class EditLabel extends \XLite\View\AView
 {
@@ -46,49 +45,17 @@ class EditLabel extends \XLite\View\AView
     /**
      * Label (cache) 
      * 
-     * @var    \XLite\Model\LanguageLabel
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\LanguageLabel
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $label = null;
-
-    /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'languages/edit.tpl';
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_LABEL_ID => new \XLite\Model\WidgetParam\Int(
-                'Label id', \XLite\Core\Request::getInstance()->{self::PARAM_LABEL_ID}
-            ),
-        );
-    }
 
 
     /**
      * Get label 
      * 
      * @return \XLite\Model\LanguageLabel|boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -113,7 +80,6 @@ class EditLabel extends \XLite\View\AView
      * @param string $code Language code
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -126,7 +92,6 @@ class EditLabel extends \XLite\View\AView
      * Get added languages 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -136,25 +101,11 @@ class EditLabel extends \XLite\View\AView
     }
 
     /**
-     * Check if widget is visible
-     *
-     * @return boolean 
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible()
-            && $this->getLabel();
-    }
-
-    /**
      * Check - is requried language or not
      *
      * @param \XLite\Model\Language $language Language_
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -167,7 +118,6 @@ class EditLabel extends \XLite\View\AView
      * Get default language 
      * 
      * @return \XLite\Model\Language
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -176,4 +126,47 @@ class EditLabel extends \XLite\View\AView
         return \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage();
     }
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'languages/edit.tpl';
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_LABEL_ID => new \XLite\Model\WidgetParam\Int(
+                'Label id', \XLite\Core\Request::getInstance()->{self::PARAM_LABEL_ID}
+            ),
+        );
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getLabel();
+    }
 }

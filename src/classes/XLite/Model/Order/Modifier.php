@@ -31,8 +31,8 @@ namespace XLite\Model\Order;
 /**
  * Order modifier
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity
  * @Table (name="order_modifiers")
@@ -42,9 +42,9 @@ class Modifier extends \XLite\Model\AEntity
     /**
      * ID
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -55,9 +55,9 @@ class Modifier extends \XLite\Model\AEntity
     /**
      * Logic class name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @Column (type="string", length="255")
      */
@@ -66,9 +66,9 @@ class Modifier extends \XLite\Model\AEntity
     /**
      * Weight
      *
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -87,7 +87,7 @@ class Modifier extends \XLite\Model\AEntity
      * Magic call 
      * 
      * @param string $method Method name
-     * @param array  $args   Arguments list
+     * @param array  $args   Arguments list OPTIONAL
      *  
      * @return mixed
      * @see    ____func_see____
@@ -118,5 +118,4 @@ class Modifier extends \XLite\Model\AEntity
 
         return $this->modifier;
     }
-
 }

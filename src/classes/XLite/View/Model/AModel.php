@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Model;
@@ -31,9 +31,8 @@ namespace XLite\View\Model;
 /**
  * Abstract model widget
  *
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AModel extends \XLite\View\Dialog
 {
@@ -95,9 +94,9 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Current form object
      *
-     * @var    \XLite\View\Model\AModel
-     * @access protected
-     * @since  3.0.0
+     * @var   \XLite\View\Model\AModel
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $currentForm = null;
 
@@ -105,46 +104,45 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * List of form fields
      *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $formFields = null;
 
     /**
      * Names of the form fields (hash)
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $formFieldNames = array();
 
     /**
      * Form error messages cache
      *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $errorMessages = null;
 
     /**
      * Form saved data cache
      *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $savedData = null;
 
     /**
      * Available form sections
      *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $sections = array(
         self::SECTION_DEFAULT => null,
@@ -154,20 +152,18 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Current action
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $currentAction = null;
 
     /**
      * Data from request
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $requestData = null;
 
@@ -175,30 +171,27 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * shemaDefault
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $shemaDefault = array();
 
     /**
      * schemaHidden
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $schemaHidden = array();
 
     /**
      * The list of fields (fiel names) that must be excluded from the array(data) for mapping to the object
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $excludedFields = array();
 
@@ -206,7 +199,6 @@ abstract class AModel extends \XLite\View\Dialog
      * This object will be used if another one is not pased
      *
      * @return \XLite\Model\AEntity
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -216,18 +208,205 @@ abstract class AModel extends \XLite\View\Dialog
      * Return name of web form widget class
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     abstract protected function getFormClass();
 
- 
+
+    /**
+     * Get instance to the current form object
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getCurrentForm()
+    {
+        return self::$currentForm;
+    }
+
+
+    /**
+     * Save current form reference and sections list, and initialize the cache
+     *
+     * @param array $params   Widget params OPTIONAL
+     * @param array $sections Sections list OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $params = array(), array $sections = array())
+    {
+        if (!empty($sections)) {
+            $this->sections = \Includes\Utils\ArrayManager::filterByKeys($this->sections, $sections);
+        }
+
+        parent::__construct($params);
+
+        $this->startCurrentForm();
+    }
+
+    /**
+     * Retrieve property from the request or from  model object
+     *
+     * @param string $name Field/property name
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDefaultFieldValue($name)
+    {
+        $value = $this->getSavedData($name);
+
+        if (!isset($value)) {
+            $value = $this->getRequestData($name);
+
+            if (!isset($value)) {
+                $value = $this->getModelObjectValue($name);
+            }
+        }
+
+        return $value;
+    }
+
+    /**
+     * Check for the form errors
+     *
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isValid()
+    {
+        return !((bool) $this->getErrorMessages());
+    }
+
+    /**
+     * Perform some action for the model object
+     *
+     * @param string $action Action to perform
+     * @param array  $data   Form data OPTIONAL
+     *
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function performAction($action, array $data = array())
+    {
+        // Save some data
+        $this->currentAction = $action;
+        $this->defineRequestData($data);
+
+        $requestData = $this->prepareDataForMapping();
+
+        // Map model object with the request data
+        $this->setModelProperties($requestData);
+
+        // Do not call "callActionHandler()" method if model object is not valid
+        $result = $this->isValid() && $this->callActionHandler();
+
+        if ($result) {
+            $this->postprocessSuccessAction();
+
+        } else {
+            $this->saveFormData($requestData);
+            $this->postprocessErrorAction();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = $this->getDir() . '/model.css';
+
+        return $list;
+    }
+
+    /**
+     * Return fields' saved values for current form (saved data itself)
+     *
+     * @param string $name Parameter name OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSavedData($name = null)
+    {
+        if (!isset($this->savedData)) {
+            $this->savedData = $this->getSavedForm(self::SAVED_FORM_DATA);
+        }
+
+        return isset($name)
+            ? (isset($this->savedData[$name]) ? $this->savedData[$name] : null)
+            : $this->savedData;
+    }
+
+    /**
+     * getRequestData
+     *
+     * @param string $name Index in the request data OPTIONAL
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRequestData($name = null)
+    {
+        if (!isset($this->requestData)) {
+            $this->defineRequestData(array(), $name);
+        }
+
+        return isset($name)
+            ? (isset($this->requestData[$name]) ? $this->requestData[$name] : null)
+            : $this->requestData;
+    }
+
+    /**
+     * setRequestData
+     *
+     * @param string $name  Index in the request data
+     * @param mixed  $value Value to set
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setRequestData($name, $value)
+    {
+        $this->requestData[$name] = $value;
+    }
+
+    /**
+     * Return model object to use
+     *
+     * @return \XLite\Model\AEntity
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModelObject()
+    {
+        return $this->getParam(self::PARAM_MODEL_OBJECT);
+    }
+
+
     /**
      * Check if current form is accessible
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function checkAccess()
@@ -239,7 +418,7 @@ abstract class AModel extends \XLite\View\Dialog
      * Return file name for body template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getBodyTemplate()
@@ -251,7 +430,6 @@ abstract class AModel extends \XLite\View\Dialog
      * getAccessDeniedMessage
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -264,7 +442,7 @@ abstract class AModel extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDir()
@@ -278,7 +456,6 @@ abstract class AModel extends \XLite\View\Dialog
      * @param string $template Template file basename OPTIONAL
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -293,7 +470,6 @@ abstract class AModel extends \XLite\View\Dialog
      * @param string $template Template file base name
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -308,7 +484,6 @@ abstract class AModel extends \XLite\View\Dialog
      * @param string $section Section name
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -324,7 +499,7 @@ abstract class AModel extends \XLite\View\Dialog
      * Define form field classes and values
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function defineFormFields()
@@ -348,7 +523,7 @@ abstract class AModel extends \XLite\View\Dialog
      * Return name of the current form
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getFormName()
@@ -360,7 +535,7 @@ abstract class AModel extends \XLite\View\Dialog
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -381,7 +556,6 @@ abstract class AModel extends \XLite\View\Dialog
      * useBodyTemplate 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -396,7 +570,7 @@ abstract class AModel extends \XLite\View\Dialog
      * @param string $name Name to prepare
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function composeFieldName($name)
@@ -411,7 +585,7 @@ abstract class AModel extends \XLite\View\Dialog
      * @param array  $data Field description
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getFieldSchemaArgs($name, array $data)
@@ -429,7 +603,7 @@ abstract class AModel extends \XLite\View\Dialog
      * @param array $data Data to set
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function setModelProperties(array $data)
@@ -443,7 +617,7 @@ abstract class AModel extends \XLite\View\Dialog
      * @param array $data Data to save
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function prepareFormDataToSave(array $data)
@@ -455,7 +629,7 @@ abstract class AModel extends \XLite\View\Dialog
      * Fetch saved forms data from session
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getSavedForms()
@@ -469,7 +643,7 @@ abstract class AModel extends \XLite\View\Dialog
      * @param string $field Data field to return OPTIONAL
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getSavedForm($field = null)
@@ -492,7 +666,7 @@ abstract class AModel extends \XLite\View\Dialog
      * @param mixed $data Data to save
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function saveFormData($data)
@@ -514,7 +688,7 @@ abstract class AModel extends \XLite\View\Dialog
      * Clear form fields in session
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function clearFormData()
@@ -550,7 +724,6 @@ abstract class AModel extends \XLite\View\Dialog
      * Perform some actions on success
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -563,7 +736,6 @@ abstract class AModel extends \XLite\View\Dialog
      * Perform some actions on success
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -576,7 +748,6 @@ abstract class AModel extends \XLite\View\Dialog
      * Perform some actions on success
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -589,7 +760,6 @@ abstract class AModel extends \XLite\View\Dialog
      * Perform some actions on success
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -602,7 +772,6 @@ abstract class AModel extends \XLite\View\Dialog
      * Perform some actions on success
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -622,7 +791,6 @@ abstract class AModel extends \XLite\View\Dialog
      * Perform some actions on error
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -644,7 +812,7 @@ abstract class AModel extends \XLite\View\Dialog
      * Save reference to the current form
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function startCurrentForm()
@@ -656,7 +824,7 @@ abstract class AModel extends \XLite\View\Dialog
      * Called after the includeCompiledFile()
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function closeView()
@@ -674,7 +842,6 @@ abstract class AModel extends \XLite\View\Dialog
      * @param array  $data Field description
      *
      * @return \XLite\View\FormField\AFormField
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -698,7 +865,7 @@ abstract class AModel extends \XLite\View\Dialog
      * @param array $schema Field descriptions
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getFieldsBySchema(array $schema)
@@ -716,7 +883,6 @@ abstract class AModel extends \XLite\View\Dialog
      * Remove empty sections
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -750,7 +916,6 @@ abstract class AModel extends \XLite\View\Dialog
      * @param string $name Schema short name
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -767,7 +932,6 @@ abstract class AModel extends \XLite\View\Dialog
      * @param boolean $onlyNames Flag; return objects or only the indexes OPTIONAL
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -789,7 +953,6 @@ abstract class AModel extends \XLite\View\Dialog
      * @param boolean $preprocessName Flag; prepare field name or not OPTIONAL
      *
      * @return \XLite\View\FormField\AFormField
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -813,7 +976,6 @@ abstract class AModel extends \XLite\View\Dialog
      * Return list of form fields to display
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -831,7 +993,6 @@ abstract class AModel extends \XLite\View\Dialog
      * @param string $section Name of section to check
      *
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -846,7 +1007,6 @@ abstract class AModel extends \XLite\View\Dialog
      * @param array $data Request data
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -858,11 +1018,10 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Prepare and save passed data
      *
-     * @param array       $data Passed data
+     * @param array       $data Passed data OPTIONAL
      * @param string|null $name Index in request data array (optional) OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -888,7 +1047,6 @@ abstract class AModel extends \XLite\View\Dialog
      * @param string $section Section name
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -908,7 +1066,6 @@ abstract class AModel extends \XLite\View\Dialog
      * Return list of the "Button" widgets
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -924,7 +1081,6 @@ abstract class AModel extends \XLite\View\Dialog
      * @param array  $data    Current section data
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -947,7 +1103,6 @@ abstract class AModel extends \XLite\View\Dialog
      * @param array $data Current section data
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -963,7 +1118,7 @@ abstract class AModel extends \XLite\View\Dialog
      * Return list of form error messages
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getErrorMessages()
@@ -984,10 +1139,9 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @param string $name    Error name
      * @param string $message Error message
-     * @param array  $data    Section data (optional)
+     * @param array  $data    Section data OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1000,7 +1154,6 @@ abstract class AModel extends \XLite\View\Dialog
      * Some JavaScript code to insert at the begin of form page 
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1013,7 +1166,6 @@ abstract class AModel extends \XLite\View\Dialog
      * Some JavaScript code to insert at the end of form page 
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1028,7 +1180,7 @@ abstract class AModel extends \XLite\View\Dialog
      * @param string $action Action name OPTIONAL
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function callActionHandler($action = null)
@@ -1039,12 +1191,11 @@ abstract class AModel extends \XLite\View\Dialog
         return $this->$action();
     }
 
-
     /**
      * Perform certain action for the model object
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function performActionCreate()
@@ -1056,7 +1207,7 @@ abstract class AModel extends \XLite\View\Dialog
      * Perform certain action for the model object
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function performActionUpdate()
@@ -1068,7 +1219,7 @@ abstract class AModel extends \XLite\View\Dialog
      * Perform certain action for the model object
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function performActionModify()
@@ -1089,7 +1240,7 @@ abstract class AModel extends \XLite\View\Dialog
      * Perform certain action for the model object
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function performActionDelete()
@@ -1098,42 +1249,6 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
 
-    /**
-     * Get instance to the current form object
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getCurrentForm()
-    {
-        return self::$currentForm;
-    }
-
-    /**
-     * Retrieve property from the request or from  model object
-     *
-     * @param string $name Field/property name
-     *
-     * @return mixed
-     * @access public
-     * @since  3.0.0
-     */
-    public function getDefaultFieldValue($name)
-    {
-        $value = $this->getSavedData($name);
-
-        if (!isset($value)) {
-            $value = $this->getRequestData($name);
-
-            if (!isset($value)) {
-                $value = $this->getModelObjectValue($name);
-            }
-        }
-
-        return $value;
-    }
 
     /**
      * Retrieve property from the model object
@@ -1141,7 +1256,6 @@ abstract class AModel extends \XLite\View\Dialog
      * @param mixed $name Field/property name
      *  
      * @return mixed
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1160,23 +1274,10 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Check for the form errors
-     *
-     * @return boolean 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isValid()
-    {
-        return !((bool) $this->getErrorMessages());
-    }
-
-    /**
      * Check if widget is visible
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isVisible()
@@ -1185,47 +1286,11 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Perform some action for the model object
-     *
-     * @param string $action Action to perform
-     * @param array  $data   Form data
-     *
-     * @return boolean 
-     * @access public
-     * @since  3.0.0
-     */
-    public function performAction($action, array $data = array())
-    {
-        // Save some data
-        $this->currentAction = $action;
-        $this->defineRequestData($data);
-
-        $requestData = $this->prepareDataForMapping();
-
-        // Map model object with the request data
-        $this->setModelProperties($requestData);
-
-        // Do not call "callActionHandler()" method if model object is not valid
-        $result = $this->isValid() && $this->callActionHandler();
-
-        if ($result) {
-            $this->postprocessSuccessAction();
-
-        } else {
-            $this->saveFormData($requestData);
-            $this->postprocessErrorAction();
-        }
-
-        return $result;
-    }
-
-    /**
      * Add field into the list of excluded fields
      * 
      * @param string $fieldName Field name
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1238,7 +1303,6 @@ abstract class AModel extends \XLite\View\Dialog
      * Prepare posted data for mapping to the object
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1262,116 +1326,11 @@ abstract class AModel extends \XLite\View\Dialog
      * Prepare object for mapping 
      * 
      * @return \XLite\Model\AEntity
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function prepareObjectForMapping()
     {
         return $this->getModelObject();
-    }
-
-    /**
-     * Get a list of CSS files required to display the widget properly
-     *
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = $this->getDir() . '/model.css';
-
-        return $list;
-    }
-
-    /**
-     * Return fields' saved values for current form (saved data itself)
-     *
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getSavedData($name = null)
-    {
-        if (!isset($this->savedData)) {
-            $this->savedData = $this->getSavedForm(self::SAVED_FORM_DATA);
-        }
-
-        return isset($name)
-            ? (isset($this->savedData[$name]) ? $this->savedData[$name] : null)
-            : $this->savedData;
-    }
-
-    /**
-     * getRequestData
-     *
-     * @param string $name Index in the request data OPTIONAL
-     *
-     * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getRequestData($name = null)
-    {
-        if (!isset($this->requestData)) {
-            $this->defineRequestData(array(), $name);
-        }
-
-        return isset($name)
-            ? (isset($this->requestData[$name]) ? $this->requestData[$name] : null)
-            : $this->requestData;
-    }
-
-    /**
-     * setRequestData
-     *
-     * @param string $name  Index in the request data
-     * @param mixed  $value Value to set
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setRequestData($name, $value)
-    {
-        $this->requestData[$name] = $value;
-    }
-
-    /**
-     * Return model object to use
-     *
-     * @return \XLite\Model\AEntity
-     * @access public
-     * @since  3.0.0
-     */
-    public function getModelObject()
-    {
-        return $this->getParam(self::PARAM_MODEL_OBJECT);
-    }
-
-    /**
-     * Save current form reference and sections list, and initialize the cache
-     *
-     * @param array $params   Widget params
-     * @param array $sections Sections list
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __construct(array $params = array(), array $sections = array())
-    {
-        if (!empty($sections)) {
-            $this->sections = \Includes\Utils\ArrayManager::filterByKeys($this->sections, $sections);
-        }
-
-        parent::__construct($params);
-
-        $this->startCurrentForm();
     }
 }

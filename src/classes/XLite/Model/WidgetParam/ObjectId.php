@@ -40,9 +40,25 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
      * Return object class name 
      * 
      * @return string
+     * @see    ____func_see____
      * @since  3.0.0
      */
     abstract protected function getClassName();
+
+
+    /**
+     * Return object with passed/predefined ID
+     *
+     * @param integer $id Object ID OPTIONAL
+     *
+     * @return \XLite\Model\AEntity
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getObject($id = null)
+    {
+        return \XLite\Core\Database::getRepo($this->getClassName())->find($this->getId($id));
+    }
 
 
     /**
@@ -51,6 +67,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
      * @param mixed $value Value to check
      *  
      * @return array
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getIdValidCondition($value)
@@ -67,6 +84,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
      * @param mixed $value Value to check
      *  
      * @return array
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getObjectExistsCondition($value)
@@ -83,6 +101,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
      * @param integer $id Object ID OPTIONAL
      *  
      * @return integer 
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getId($id = null)
@@ -96,6 +115,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
      * @param mixed $value Value to validate
      *
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getValidaionSchema($value)
@@ -105,19 +125,5 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
         $schema[] = $this->getObjectExistsCondition($value);
 
         return $schema;
-    }
-
-
-    /**
-     * Return object with passed/predefined ID
-     *
-     * @param integer $id Object ID OPTIONAL
-     *
-     * @return \XLite\Model\AEntity
-     * @since  3.0.0
-     */
-    public function getObject($id = null)
-    {
-        return \XLite\Core\Database::getRepo($this->getClassName())->find($this->getId($id));
     }
 }

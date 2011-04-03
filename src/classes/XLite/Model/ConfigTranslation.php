@@ -31,8 +31,8 @@ namespace XLite\Model;
 /**
  * Config multilingual data
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity
  * @Table  (name="config_translations",
@@ -47,9 +47,9 @@ class ConfigTranslation extends \XLite\Model\Base\Translation
     /**
      * Human-readable option name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -58,9 +58,9 @@ class ConfigTranslation extends \XLite\Model\Base\Translation
     /**
      * Option comment
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    SVN: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\ItemsList\Product\Customer;
@@ -31,9 +31,8 @@ namespace XLite\View\ItemsList\Product\Customer;
 /**
  * Category products list widget
  *
- * @package XLite
- * @see     ____class_see____
- * @since   3.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @ListChild (list="center.bottom", zone="customer", weight="200")
  */
@@ -54,11 +53,69 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     const WIDGET_TARGET = 'category';
 
+
+    /** 
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = self::WIDGET_TARGET;
+    
+        return $result;
+    }
+
+
+    /** 
+     * Return target to retrive this widget from AJAX
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getWidgetTarget()
+    {
+        return self::WIDGET_TARGET; 
+    }
+
+
+    /**
+     * Define and set widget attributes; initialize widget
+     *
+     * @param array $params Widget params OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $params = array())
+    {
+        $this->sortByModes = array(self::SORT_BY_MODE_DEFAULT => 'Default') + $this->sortByModes;
+
+        parent::__construct($params);
+    }
+
+    /**
+     * Returns CSS classes for the container element
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getListCSSClasses()
+    {
+        return parent::getListCSSClasses() . ' category-products';
+    }
+
+
     /**
      * Return class name for the list pager
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -71,7 +128,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * getCategory 
      * 
      * @return \XLite\Model\Category
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -84,7 +140,7 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -100,7 +156,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Define so called "request" parameters
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -115,7 +170,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * getSortByModeDefault
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -131,7 +185,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *  
      * @return array|void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -142,71 +195,10 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
         return $category ? $category->getProducts($cnd, $countOnly) : null;
     }
 
-
-    /**
-     * Define and set widget attributes; initialize widget
-     *
-     * @param array $params Widget params
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function __construct(array $params = array())
-    {
-        $this->sortByModes = array(self::SORT_BY_MODE_DEFAULT => 'Default') + $this->sortByModes;
-
-        parent::__construct($params);
-    }
-
-    /** 
-     * Return target to retrive this widget from AJAX
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function getWidgetTarget()
-    {
-        return self::WIDGET_TARGET; 
-    }
-
-    /** 
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = self::WIDGET_TARGET;
-    
-        return $result;
-    }
-
-
-    /**
-     * Returns CSS classes for the container element
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getListCSSClasses()
-    {
-        return parent::getListCSSClasses() . ' category-products';
-    }
-
     /**
      * Get widget parameters
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

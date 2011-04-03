@@ -31,8 +31,8 @@ namespace XLite\Model\Shipping;
 /**
  * Shipping method model
  * 
- * @see        ____class_see____
- * @since     3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="XLite\Model\Repo\Shipping\Method")
  * @Table  (name="shipping_methods",
@@ -49,9 +49,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * A unique ID of the method
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -62,9 +62,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Processor class name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -73,9 +73,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Carrier of the method (for instance, "UPS" or "USPS")
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -84,9 +84,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Unique code of shipping method (within processor space)
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -95,9 +95,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Whether the method is enabled or disabled
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="boolean")
      */
@@ -106,9 +106,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * A position of the method among other registered methods
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -117,9 +117,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Shipping rates (relation)
      * 
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Shipping\Markup", mappedBy="shipping_method", cascade={"all"})
      */
@@ -145,7 +145,7 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Constructor
      *            
-     * @param array $data Entity properties
+     * @param array $data Entity properties OPTIONAL
      *                                     
      * @return void                        
      * @see    ____func_see____            

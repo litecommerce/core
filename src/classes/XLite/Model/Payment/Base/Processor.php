@@ -63,11 +63,22 @@ abstract class Processor extends \XLite\Base
      */
     protected $request;
 
+
+    /**
+     * Do initial payment 
+     * 
+     * @return string Status code
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract protected function doInitialPayment();
+
+
     /**
      * Pay 
      * 
      * @param \XLite\Model\Payment\Transaction $transaction Transaction
-     * @param array                            $request     Input data request
+     * @param array                            $request     Input data request OPTIONAL
      *  
      * @return string
      * @see    ____func_see____
@@ -122,6 +133,21 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
+     * Check - payment method is configured or not
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isConfigured(\XLite\Model\Payment\Method $method)
+    {
+        return true;
+    }
+
+
+    /**
      * Get current transaction order 
      * 
      * @return \XLite\Model\Order
@@ -158,29 +184,6 @@ abstract class Processor extends \XLite\Base
     {
         return $this->transaction->getPaymentMethod()->getSetting($name);
     }
-
-    /**
-     * Check - payment method is configured or not
-     * 
-     * @param \XLite\Model\Payment\Method $method Payment method
-     *  
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isConfigured(\XLite\Model\Payment\Method $method)
-    {
-        return true;
-    }
-
-    /**
-     * Do initial payment 
-     * 
-     * @return string Status code
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    abstract protected function doInitialPayment();
 
     /**
      * Save input data 

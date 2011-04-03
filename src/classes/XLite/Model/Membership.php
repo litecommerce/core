@@ -31,8 +31,8 @@ namespace XLite\Model;
 /**
  * Membership
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity
  * @Table (name="memberships")
@@ -42,9 +42,9 @@ class Membership extends \XLite\Model\Base\I18n
     /**
      * Unique id 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -55,9 +55,9 @@ class Membership extends \XLite\Model\Base\I18n
     /**
      * Position
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -66,9 +66,9 @@ class Membership extends \XLite\Model\Base\I18n
     /**
      * Active status
      * 
-     * @var    boolean
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="boolean")
      */

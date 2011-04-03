@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\FormField\Select;
@@ -31,19 +31,17 @@ namespace XLite\View\FormField\Select;
 /**
  * \XLite\View\FormField\Select\AccessLevel 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class AccessLevel extends \XLite\View\FormField\Select\Regular
 {
     /**
      * Determines if this field is visible for customers or not 
      * 
-     * @var    bool
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $isAllowedForCustomer = false;
 
@@ -52,7 +50,7 @@ class AccessLevel extends \XLite\View\FormField\Select\Regular
      * getDefaultOptions
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultOptions()
@@ -64,7 +62,7 @@ class AccessLevel extends \XLite\View\FormField\Select\Regular
      * Check field value validity
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function checkFieldValue()
@@ -72,4 +70,3 @@ class AccessLevel extends \XLite\View\FormField\Select\Regular
         return in_array($this->getValue(), \XLite\Core\Auth::getInstance()->getAccessLevelsList());
     }
 }
-

@@ -31,8 +31,8 @@ namespace XLite\Model\Payment;
 /**
  * Payment method
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Payment\Method")
  * @Table  (name="payment_methods",
@@ -48,9 +48,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Payment method unique id
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -61,9 +61,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Method service name (gateway or API name)
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="128")
      */
@@ -72,9 +72,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Process class name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="64")
      */
@@ -83,9 +83,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Position
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -94,9 +94,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Enabled status
      * 
-     * @var    boolean
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="boolean")
      */
@@ -105,9 +105,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Settings
      *
-     * @var    \XLite\Model\Payment\MethodSetting
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Payment\MethodSetting
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Payment\MethodSetting", mappedBy="payment_method", cascade={"all"})
      */
@@ -116,9 +116,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Transactions
      *
-     * @var    \XLite\Model\Payment\Transaction
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Payment\Transaction
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Payment\Transaction", mappedBy="payment_method", cascade={"all"})
      */
@@ -236,7 +236,7 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Constructor
      *
-     * @param array $data Entity properties
+     * @param array $data Entity properties OPTIONAL
      *
      * @return void
      * @see    ____func_see____

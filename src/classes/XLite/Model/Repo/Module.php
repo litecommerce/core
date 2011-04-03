@@ -293,6 +293,7 @@ class Module extends \XLite\Model\Repo\ARepo
     {
         if (self::PRICE_FREE === $value) {
             $queryBuilder->andWhere($queryBuilder->expr()->eq('m.price', 0));
+
         } elseif (self::PRICE_PAID === $value) {
             $queryBuilder->andWhere($queryBuilder->expr()->gt('m.price', 0));
         }
@@ -310,8 +311,7 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     protected function prepareCndInactive(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $queryBuilder
-            ->andWhere('m.enabled = :enabled')
+        $queryBuilder ->andWhere('m.enabled = :enabled')
             ->setParameter('enabled', false);
     }
 
@@ -331,8 +331,7 @@ class Module extends \XLite\Model\Repo\ARepo
         $cnd->add('m.majorVersion < m1.majorVersion');
         $cnd->add('m.minorVersion < m1.minorVersion');
 
-        $queryBuilder
-            ->innerJoin('m', 'm1')
+        $queryBuilder->innerJoin('m', 'm1')
             ->andWhere('m.name = m1.name')
             ->andWhere('m.author = m1.author')
             ->andWhere($cnd);

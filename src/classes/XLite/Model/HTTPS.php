@@ -31,7 +31,7 @@ namespace XLite\Model;
 /**
  * HTTPS bouncer
  *
- * :FIXME: must not exted the \XLite\Base
+ * FIXME: must not exted the \XLite\Base
  * 
  * @see   ____class_see____
  * @since 3.0.0
@@ -320,15 +320,17 @@ class HTTPS extends \XLite\Base
         'curlErrorCode',
     );
 
+
     /**
      * Protected constructor. It's empty now
      *
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function __construct()
     {
-        require_once LC_LIB_DIR . 'Net' . LC_DS . 'URL2.php';
+        include_once LC_LIB_DIR . 'Net' . LC_DS . 'URL2.php';
     }
 
     // {{{ Getters and setters
@@ -422,6 +424,8 @@ class HTTPS extends \XLite\Base
     }
 
     // }}}
+
+    // {{{
 
     /**
      * Add header 
@@ -624,8 +628,10 @@ class HTTPS extends \XLite\Base
         
         if ($post) {
             curl_setopt($c, CURLOPT_POST, $post);
-        } elseif($get) {
+        
+        } elseif ($get) {
             curl_setopt($c, CURLOPT_HTTPGET, $get);
+
         } else {
             curl_setopt($c, CURLOPT_NOBODY, 1);
             curl_setopt($c, CURLOPT_CUSTOMREQUEST, $this->method);
@@ -1157,7 +1163,7 @@ class HTTPS extends \XLite\Base
      * cURL header callback
      * 
      * @param mixed  $curl   CURL request resource or \XLite\Model\HTTPS object
-     * @param string $header Headers string
+     * @param string $header Headers string OPTIONAL
      *  
      * @return integer
      * @see    ____func_see____
@@ -1176,6 +1182,5 @@ class HTTPS extends \XLite\Base
         return $result;
     }
 
+    // }}}
 }
-
-

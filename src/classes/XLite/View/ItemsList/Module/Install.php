@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\ItemsList\Module;
@@ -31,9 +31,8 @@ namespace XLite\View\ItemsList\Module;
 /**
  * Addons search and installation widget
  *
- * @package XLite
- * @see     ____class_see____
- * @since   3.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Install extends \XLite\View\ItemsList\Module\AModule
 {
@@ -58,20 +57,18 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     /**
      * Currently applie sortOption (cached)
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $sortOption = null;
 
     /**
      * Possible sortOptions (cached)
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $sortOptions = null;
 
@@ -79,7 +76,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Return list of targets allowed for this widget
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -92,10 +88,27 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     }
 
     /**
+     * getSearchParams
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getSearchParams()
+    {
+        return array(
+            \XLite\Model\Repo\Module::P_SUBSTRING    => self::PARAM_SUBSTRING,
+            \XLite\Model\Repo\Module::P_TAG          => self::PARAM_TAG,
+            \XLite\Model\Repo\Module::P_PRICE_FILTER => self::PARAM_PRICE_FILTER,
+        );
+    }
+
+
+    /**
      * Return sortOptions array
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected static function getSortOptions()
@@ -123,7 +136,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Return applied sortOption
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected static function getSortOption()
@@ -146,11 +159,48 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         return static::$sortOption;
     }
 
+
+    /**
+     * Register files from common repository
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCommonFiles()
+    {
+        $list = parent::getCommonFiles();
+
+        $list['js'][] = 'js/ui.selectmenu.js';
+        $list['css'][] = 'css/ui.selectmenu.css';
+
+        return $list;
+    }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'modules_manager' . LC_DS . 'common.css';
+        // TODO fix with enter-key license widget. It should be taken dynamically from AJAX
+        $list[] = 'modules_manager' . LC_DS . 'enter_key' . LC_DS . 'css' . LC_DS . 'style.css';
+        $list[] = $this->getDir() . LC_DS . 'style.css';
+
+        return $list;
+    }
+
+
     /**
      * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -173,27 +223,9 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     }
 
     /**
-     * getSearchParams
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getSearchParams()
-    {
-        return array(
-            \XLite\Model\Repo\Module::P_SUBSTRING    => self::PARAM_SUBSTRING,
-            \XLite\Model\Repo\Module::P_TAG          => self::PARAM_TAG,
-            \XLite\Model\Repo\Module::P_PRICE_FILTER => self::PARAM_PRICE_FILTER,
-        );
-    }
-
-    /**
      * Define so called "request" parameters
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -208,48 +240,9 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     }
 
     /**
-     * Register files from common repository
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCommonFiles()
-    {
-        $list = parent::getCommonFiles();
-
-        $list['js'][] = 'js/ui.selectmenu.js';
-        $list['css'][] = 'css/ui.selectmenu.css';
-
-        return $list;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'modules_manager' . LC_DS . 'common.css';
-        // TODO fix with enter-key license widget. It should be taken dynamically from AJAX
-        $list[] = 'modules_manager' . LC_DS . 'enter_key' . LC_DS . 'css' . LC_DS . 'style.css';
-        $list[] = $this->getDir() . LC_DS . 'style.css';
-
-        return $list;
-    }
-
-    /**
      * Get URL common parameters
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -266,7 +259,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Return name of the base widgets list
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -279,7 +271,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Return title
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getHead()
@@ -291,7 +283,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Return dir which contains the page body template
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -304,7 +295,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Return list of the modes allowed by default
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultModes()
@@ -321,7 +312,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * getSortByModeDefault
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -334,7 +324,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * getSortOrder
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -347,7 +336,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * Return class name for the list pager
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

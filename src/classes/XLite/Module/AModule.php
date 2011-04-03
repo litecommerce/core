@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Module;
@@ -31,18 +31,17 @@ namespace XLite\Module;
 /**
  * Module
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AModule
 {
-   /**
+    /**
      * Method to initialize concrete module instance
      *
      * @return void
-     * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public static function init()
     {
@@ -52,9 +51,9 @@ abstract class AModule
      * Return module name
      * 
      * @return string
-     * @access protected
+     * @throws \Exception
      * @see    ____func_see____
-     * @since  3.0
+     * @since  3.0.0
      */
     public static function getModuleName()
     {
@@ -65,9 +64,9 @@ abstract class AModule
      * Return author full name
      * 
      * @return string
-     * @access protected
+     * @throws \Exception
      * @see    ____func_see____
-     * @since  3.0
+     * @since  3.0.0
      */
     public static function getAuthorName()
     {
@@ -78,9 +77,9 @@ abstract class AModule
      * Return module description 
      * 
      * @return string
-     * @access public
+     * @throws \Exception
      * @see    ____func_see____
-     * @since  3.0
+     * @since  3.0.0
      */
     public static function getDescription()
     {
@@ -91,9 +90,8 @@ abstract class AModule
      * Return URL for module icon
      *
      * @return string
-     * @access public
      * @see    ____func_see____
-     * @since  3.0
+     * @since  3.0.0
      */
     public static function getIconURL()
     {
@@ -129,7 +127,7 @@ abstract class AModule
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0
+     * @since  3.0.0
      */
     public static function showSettingsForm()
     {
@@ -141,7 +139,7 @@ abstract class AModule
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0
+     * @since  3.0.0
      */
     public static function getSettingsForm()
     {
@@ -153,7 +151,7 @@ abstract class AModule
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0
+     * @since  3.0.0
      */
     public static function getDependencies()
     {
@@ -188,7 +186,6 @@ abstract class AModule
      * Custom installation routine
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -201,7 +198,6 @@ abstract class AModule
      * Custom deinstallation routine
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -214,7 +210,6 @@ abstract class AModule
      * Custom wake-up (enable) module routine
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -227,7 +222,6 @@ abstract class AModule
      * Custom sleep (disable) module routine
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -242,7 +236,6 @@ abstract class AModule
      * @param \XLite\Model\Module $module Module
      *  
      * @return array|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -251,31 +244,12 @@ abstract class AModule
         return null;
     }
 
-    /**
-     * Return module name by class name
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0
-     */
-    protected static function getModuleCode()
-    {
-        if (!preg_match('/XLite\\\Module\\\(\w+)\\\Main/S', get_called_class(), $matches)) {
-            throw new \Exception('Could not resolve base module code from the class name: ' . get_called_class());
-        }
-
-        return $matches[1];
-    }
-
-
-    // ------------------------------ Module versions -
+    // {{{ Module versions
 
     /**
      * Get module version
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -288,7 +262,6 @@ abstract class AModule
      * Get module major version
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -301,12 +274,30 @@ abstract class AModule
      * Get module minor version
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public static function getMinorVersion()
     {
         \Includes\ErrorHandler::fireError('Abstract method call: ' . __METHOD__);
+    }
+
+    // }}}
+
+    /**
+     * Return module name by class name
+     * 
+     * @return string
+     * @throws \Exception
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getModuleCode()
+    {
+        if (!preg_match('/XLite\\\Module\\\(\w+)\\\Main/S', get_called_class(), $matches)) {
+            throw new \Exception('Could not resolve base module code from the class name: ' . get_called_class());
+        }
+
+        return $matches[1];
     }
 }
