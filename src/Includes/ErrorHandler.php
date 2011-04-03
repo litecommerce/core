@@ -102,8 +102,27 @@ abstract class ErrorHandler
                 $trace[] = $part;
             }
         }
+        
+        $message = date('[d-M-Y H:i:s]') . ' Error (code: ' . $code . '): ' . $message . PHP_EOL;
 
-        $message = 'Error (code: ' . $code . '): ' . $message . PHP_EOL;
+        // Add additional info
+
+        $parts = array(
+            'Server API: ' . PHP_SAPI,
+        );
+
+        if (isset($_SERVER)) {
+            if (isset($_SERVER['REQUEST_METHOD'])) {
+                $parts[] = 'Request method: ' . $_SERVER['REQUEST_METHOD'];
+            }
+
+            if (isset($_SERVER['REQUEST_URI'])) {
+                $parts[] = 'URI: ' . $_SERVER['REQUEST_URI'];
+            }
+        }
+
+        $message .= implode(';' . PHP_EOL, $parts) . ';' . PHP_EOL;
+
         if ($trace) {
             $message .= 'Backtrace: ' . PHP_EOL
                 . "\t" . implode(PHP_EOL . "\t", $trace) . PHP_EOL;
