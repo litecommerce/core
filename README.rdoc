@@ -9,6 +9,7 @@ Learn more information at {our website}[http://www.litecommerce.com] or {find us
 == Contributions
 
 We are looking for contributors who could help us extend LiteCommerce and make it better. Translations to other languages are welcome as well.
+See the {Contribution guide}[https://github.com/litecommerce/core/wiki/Contribution-guide] for more information.
 
 == License
 
