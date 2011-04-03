@@ -47,7 +47,6 @@ class Cell
      */
     protected $properties = array();
 
-
     /**
      * Constructor 
      * 
@@ -124,7 +123,6 @@ class Cell
         unset($this->properties[$name]);
     }
 
-
     /**
      * Return all properties
      * 
@@ -150,6 +148,6 @@ class Cell
      */
     public function setData(array $data)
     {
-        $this->properties = array_replace_recursive($this->properties, $data);
+        $this->properties = $data + $this->properties;
     }
 }

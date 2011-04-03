@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Payment\Base;
@@ -31,9 +31,8 @@ namespace XLite\Model\Payment\Base;
 /**
  * Processor 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class Processor extends \XLite\Base
 {
@@ -49,31 +48,39 @@ abstract class Processor extends \XLite\Base
     /**
      * Transaction (cache)
      * 
-     * @var    \XLite\Model\Payment\Transaction
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Payment\Transaction
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $transaction;
 
     /**
      * Request cell with transaction input data
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $request;
+
+
+    /**
+     * Do initial payment 
+     * 
+     * @return string Status code
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract protected function doInitialPayment();
+
 
     /**
      * Pay 
      * 
      * @param \XLite\Model\Payment\Transaction $transaction Transaction
-     * @param array                            $request     Input data request
+     * @param array                            $request     Input data request OPTIONAL
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -91,7 +98,6 @@ abstract class Processor extends \XLite\Base
      * Get input template 
      * 
      * @return string|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -101,10 +107,23 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
+     * Get input errors 
+     * 
+     * @param array $data Input data
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getInputErrors(array $data)
+    {
+        return array();
+    }
+
+    /**
      * Get settings widget or template 
      * 
      * @return string Widget class name or template path
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -114,10 +133,24 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
+     * Check - payment method is configured or not
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isConfigured(\XLite\Model\Payment\Method $method)
+    {
+        return true;
+    }
+
+
+    /**
      * Get current transaction order 
      * 
      * @return \XLite\Model\Order
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -130,7 +163,6 @@ abstract class Processor extends \XLite\Base
      * Get current transaction order profile
      * 
      * @return \XLite\Model\Profile
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -145,7 +177,6 @@ abstract class Processor extends \XLite\Base
      * @param string $name Name
      *  
      * @return mixed
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -155,35 +186,9 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
-     * Check - payment method is configured or not
-     * 
-     * @param \XLite\Model\Payment\Method $method Payment method
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isConfigured(\XLite\Model\Payment\Method $method)
-    {
-        return true;
-    }
-
-    /**
-     * Do initial payment 
-     * 
-     * @return string Status code
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    abstract protected function doInitialPayment();
-
-    /**
      * Save input data 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -211,7 +216,6 @@ abstract class Processor extends \XLite\Base
      * @param string $label Label OPTIONAL
      *  
      * @return \XLite\Model\Payment\TransactionData
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -237,7 +241,6 @@ abstract class Processor extends \XLite\Base
      * Get input data labels list
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -250,7 +253,6 @@ abstract class Processor extends \XLite\Base
      * Get input data access levels list
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

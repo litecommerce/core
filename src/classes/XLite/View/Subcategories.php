@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,10 @@ namespace XLite\View;
 /**
  * Subcategories list
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
+ * @ListChild (list="center.bottom", zone="customer", weight="100")
  */
 class Subcategories extends \XLite\View\Dialog
 {
@@ -56,20 +57,54 @@ class Subcategories extends \XLite\View\Dialog
     /**
      *  Display modes
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $displayModes = array(
         self::DISPLAY_MODE_LIST  => 'List',
         self::DISPLAY_MODE_ICONS => 'Icons',
     );
 
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+
+        $result[] = 'main';
+        $result[] = 'category';
+    
+        return $result;
+    }
+
+    /**
+     * Return list of required CSS files
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = 'common/grid-list.css';
+
+        return $list;
+    }
+
+
     /**
      * Return title
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getHead()
@@ -81,7 +116,7 @@ class Subcategories extends \XLite\View\Dialog
      * Return templates directory name
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDir()
@@ -93,7 +128,6 @@ class Subcategories extends \XLite\View\Dialog
      * Get widget display mode 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -108,7 +142,7 @@ class Subcategories extends \XLite\View\Dialog
      * Check if widget is visible
      *
      * @return boolean
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isVisible()
@@ -117,25 +151,9 @@ class Subcategories extends \XLite\View\Dialog
     }
 
     /**
-     * Return list of required CSS files
-     * 
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = 'common/grid-list.css';
-
-        return $list;
-    }
-
-    /**
      * Widget parameters
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -160,7 +178,6 @@ class Subcategories extends \XLite\View\Dialog
      * Return the maximal icon width
      * 
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -173,7 +190,6 @@ class Subcategories extends \XLite\View\Dialog
      * Return the maximal icon height
      * 
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -186,7 +202,6 @@ class Subcategories extends \XLite\View\Dialog
      * getColumnsCount 
      * 
      * @return integer 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -199,7 +214,6 @@ class Subcategories extends \XLite\View\Dialog
      * Return subcategories split into rows
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -216,7 +230,6 @@ class Subcategories extends \XLite\View\Dialog
      * Check for subcategories
      *
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -229,32 +242,12 @@ class Subcategories extends \XLite\View\Dialog
      * Return subcategories
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getSubcategories()
     {
         return $this->getCategory() ? $this->getCategory()->getSubcategories() : array();
-    }
-
-
-    /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-
-        $result[] = 'main';
-        $result[] = 'category';
-    
-        return $result;
     }
 }
 

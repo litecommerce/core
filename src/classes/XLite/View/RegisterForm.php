@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,10 @@ namespace XLite\View;
 /**
  * Registration form widget
  *
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
+ * @ListChild (list="center")
  */
 class RegisterForm extends \XLite\View\Dialog
 {
@@ -46,10 +47,41 @@ class RegisterForm extends \XLite\View\Dialog
 
 
     /**
+     * Return list of allowed targets
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        return array(
+            'profile',
+        );
+    }
+
+
+    /**
+     * Return list of register form fields 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFormFields()
+    {
+        $result = array();
+
+        // TODO - add decalarations here
+
+        return $result;
+    }
+
+
+    /**
      * Get directory where template is located (body.tpl)
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -62,7 +94,6 @@ class RegisterForm extends \XLite\View\Dialog
      * Get dialog title
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -75,7 +106,7 @@ class RegisterForm extends \XLite\View\Dialog
      * Return current profile object 
      * 
      * @return \XLite\Model\Profile
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getProfile()
@@ -87,7 +118,7 @@ class RegisterForm extends \XLite\View\Dialog
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -96,7 +127,7 @@ class RegisterForm extends \XLite\View\Dialog
 
         $this->widgetParams += array(
             self::PARAM_HEAD => new \XLite\Model\WidgetParam\String(
-                'Title', 'Profile details'
+                'Title', 'register' == \XLite\Core\Request::getInstance()->mode ? 'New customer' : 'Modify profile'
             ),
             self::PARAM_PROFILE_ID => new \XLite\Model\WidgetParam\ObjectId\Profile(
                 'Profile Id', \XLite\Core\Request::getInstance()->profile_id
@@ -104,21 +135,16 @@ class RegisterForm extends \XLite\View\Dialog
         );
     }
 
-
     /**
-     * Return list of register form fields 
-     * 
-     * @return array
-     * @access public
+     * Check if widget is visible
+     *
+     * @return boolean 
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getFormFields()
+    protected function isVisible()
     {
-        $result = array();
-
-        // TODO - add decalarations here
-
-        return $result;
+        return parent::isVisible()
+            && in_array(\XLite\Core\Request::getInstance()->mode, array('register', 'modify'));
     }
 }
-

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\OrderList;
@@ -31,74 +31,70 @@ namespace XLite\View\OrderList;
 /**
  * Abstract order list
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AOrderList extends \XLite\View\Dialog
 {
     /**
      * Orders list (cache)
      * 
-     * @var    array(\XLite\Model\Order)
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array(\XLite\Model\Order)
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $orders = null;
 
     /**
      * Widget class name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $widgetClass = '';
 
-    /**
-     * Return title
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return 'Search result';
-    }
 
     /**
-     * Return templates directory name
-     *
-     * @return string
-     * @access protected
+     * Get orders 
+     * 
+     * @return array(\XLite\Model\Order)
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDir()
-    {
-        return 'order/list';
-    }
+    abstract public function getOrders();
+
 
     /**
-     * Check if widget is visible
-     *
-     * @return boolean 
-     * @access protected
+     * Get widget keys 
+     * 
+     * @return array
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isVisible()
+    abstract protected function getWidgetKeys();
+
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
     {
-        return parent::isVisible()
-            && $this->getOrders();
+        $list = parent::getCSSFiles();
+
+        $list[] = 'order/list/list.css';
+
+        return $list;
     }
 
     /**
      * Get class identifier as CSS class name
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -108,29 +104,9 @@ abstract class AOrderList extends \XLite\View\Dialog
     }
 
     /**
-     * Get AJAX request parameters
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getAJAXRequestParams()
-    {
-        $params = array(
-            'widgetTarget' => \XLite\Core\Request::getInstance()->target,
-            'widgetAction' => \XLite\Core\Request::getInstance()->action,
-            'widgetClass'  => $this->widgetClass,
-        );
-
-        return $params + $this->getWidgetKeys();
-    }
-
-    /**
      * Get AJAX request parameters as javascript object definition
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -155,42 +131,59 @@ abstract class AOrderList extends \XLite\View\Dialog
             . ' }';
     }
 
-    /**
-     * Get orders 
-     * 
-     * @return array(\XLite\Model\Order)
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    abstract public function getOrders();
 
     /**
-     * Get widget keys 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    abstract protected function getWidgetKeys();
-
-    /**
-     * Register CSS files
+     * Return title
      *
-     * @return array
-     * @access public
+     * @return string
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCSSFiles()
+    protected function getHead()
     {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'order/list/list.css';
-
-        return $list;
+        return 'Search result';
     }
 
-}
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return 'order/list';
+    }
 
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getOrders();
+    }
+
+    /**
+     * Get AJAX request parameters
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAJAXRequestParams()
+    {
+        $params = array(
+            'widgetTarget' => \XLite\Core\Request::getInstance()->target,
+            'widgetAction' => \XLite\Core\Request::getInstance()->action,
+            'widgetClass'  => $this->widgetClass,
+        );
+
+        return $params + $this->getWidgetKeys();
+    }
+}

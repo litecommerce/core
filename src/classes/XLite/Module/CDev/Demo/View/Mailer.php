@@ -28,10 +28,17 @@
 
 namespace XLite\Module\CDev\Demo\View;
 
+/**
+ * Mailer 
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class Mailer extends \XLite\View\Mailer implements \XLite\Base\IDecorator
 {
     /**
-     * Send message
+     * Mailer is disabled in demo mode
      * 
      * @return void
      * @access public
@@ -40,16 +47,8 @@ class Mailer extends \XLite\View\Mailer implements \XLite\Base\IDecorator
      */
     public function send()
     {
-        \XLite\Module\CDev\Demo\Main::doForbidOperation('Sending mail is disabled in demo mode');
+        $this->set('to', '');
 
-        if (isset($this->templatesSkin)) {
-
-            // Restore layout
-            $layout = \XLite\Model\Layout::getInstance();
-            $layout->set('skin', $this->templatesSkin);
-            $this->templatesSkin = null;
-        }
+        parent::send();
     }
-
 }
-

@@ -51,65 +51,57 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     
 
     /**
-     * There are some reserved words for the "weight" param of the "ListChild" tag
+     * List of PHP classes with the "ListChild" tags
      * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $annotatedPHPCLasses;
+
+
+    /**
+     *  Execute certain hook handler
+     *
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getReservedWeightValues()
+    public function executeHookHandlerStepThird()
     {
-        return array(
-            self::PARAM_TAG_LIST_CHILD_FIRST => \XLite\Model\ViewList::POSITION_FIRST,
-            self::PARAM_TAG_LIST_CHILD_LAST  => \XLite\Model\ViewList::POSITION_LAST,
-        );
+        // Truncate old
+        $this->clearAll();
+
+        // Create new
+        $this->createLists();
     }
 
     /**
-     * Common function to filter classes and templates
+     * Callback to search annotated PHP classes
      * 
-     * @param mixed $set set of entities
+     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
      *  
-     * @return array
-     * @access protected
+     * @return void
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getAnnotatedEntites($set)
+    public function checkClassForListChildTag(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
-        return $set->findByCallback(array($this, 'filterByListChildTag'));
-    }
+        if ($lists = $node->getTag(self::TAG_LIST_CHILD)) {
+            $data = array('child' => $node->getTopLevelNode()->getClass());
 
-    /**
-     * Get list of classes defined the "ListChild" tag
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getAnnotatedPHPClasses()
-    {
-        return $this->getAnnotatedEntites(static::getClassesTree());
-    }
-
-    /**
-     * Return list of templates to parse 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getAnnotatedTemplates()
-    {
-        return $this->getAnnotatedEntites(static::getTemplatesCollection());
+            foreach ($lists as $tags) {
+                $this->annotatedPHPCLasses[] = $data + $tags;
+            }
+        }
     }
 
     /**
      * Remove existing lists from database
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -122,10 +114,115 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     }
 
     /**
-     * Check the weight-related attributes
+     * Create lists
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function createLists()
+    {
+        \XLite\Core\Database::getRepo('\XLite\Model\ViewList')->insertInBatch($this->getAllListChildTags());
+    }
+
+    /**
+     * Return all defined "ListChild" tags
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAllListChildTags()
+    {
+        return array_merge($this->getListChildTagsFromPHP(), $this->getListChildTagsFromTemplates());
+    }
+
+    /**
+     * Return list of PHP classes with the "ListChild" tag
      * 
-     * @param array &$data data to prepare
-     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAnnotatedPHPCLasses()
+    {
+        if (!isset($this->annotatedPHPCLasses)) {
+            $this->annotatedPHPCLasses = array();
+            static::getClassesTree()->walkThrough(array($this, 'checkClassForListChildTag'));
+        }
+
+        return $this->annotatedPHPCLasses;
+    }
+
+    /**
+     * Return all "ListChild" tags defined in PHP classes
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getListChildTagsFromPHP()
+    {
+        return $this->getAllListChildTagAttributes($this->getAnnotatedPHPCLasses());
+    }
+
+    /**
+     * Return all "ListChild" tags defined in templates
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getListChildTagsFromTemplates()
+    {
+        return $this->getAllListChildTagAttributes($this->getAnnotatedTemplates());
+    }
+
+    /**
+     * Return all defined "ListChild" tag attributes
+     *
+     * @param array $nodes List of nodes
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAllListChildTagAttributes(array $nodes)
+    {
+        return array_map(array($this, 'prepareListChildTagData'), $nodes);
+    }
+
+    /**
+     * Prepare attributes of the "ListChild" tag
+     *
+     * @param array $data Tag attributes
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareListChildTagData(array $data)
+    {
+        // Check the weight-related attributes
+        $this->prepareWeightAttrs($data);
+
+        // Check for preprocessors
+        $this->preparePreprocessors($data);
+
+        return $data;
+    }
+
+    /**
+     * Check the weight-related attributes
+     *
+     * @param array &$data Data to prepare
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -143,6 +240,9 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
                     $data[self::PARAM_TAG_LIST_CHILD_WEIGHT] = $modelKey;
                 }
             }
+        } else {
+
+            $data[self::PARAM_TAG_LIST_CHILD_WEIGHT] = intval($data[self::PARAM_TAG_LIST_CHILD_WEIGHT]);
         }
 
         // Set default value
@@ -154,7 +254,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     /**
      * Check for so called list "preprocessors"
      *
-     * @param array &$data data to use
+     * @param array &$data Data to use
      *
      * @return void
      * @access protected
@@ -169,193 +269,18 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     }
 
     /**
-     * Check for so called list "preprocessors" in module
-     *
-     * @param array  &$data data to use
-     * @param string $name  module name
+     * There are some reserved words for the "weight" param of the "ListChild" tag
      *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareListByModule(array &$data, $name)
+    protected function getReservedWeightValues()
     {
-        $class  = \Includes\Decorator\Utils\ModulesManager::getClassNameByModuleName($name);
-        $method = 'modifyViewLists';
-
-        if (method_exists($class, $method)) {
-            $class::$method($data);
-        }
-    }
-
-    /**
-     * Prepare attributes of the "ListChild" tag
-     * 
-     * @param array $data tag attributes
-     *  
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function prepareListChildTagData(array $data)
-    {
-        // Check the weight-related attributes
-        $this->prepareWeightAttrs($data);
-
-        // Check for preprocessors
-        $this->preparePreprocessors($data);
-
-        return $data;
-    }
-
-    /**
-     * Return all defined "ListChild" tag attributes
-     *
-     * @param array $nodes    list of nodes
-     * @param array $callback callback to prepare additional data
-     *  
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getAllListChildTagAttributes(array $nodes, $callback)
-    {
-        $data = array();
-
-        // Iterate over all nodes
-        foreach ($nodes as $node) {
-
-            // It's allowed to define several tags per class
-            foreach ($node->getTag(self::TAG_LIST_CHILD) as $attrs) {
-
-                // Prepare attributes and save them into the list
-                $data[] = $this->prepareListChildTagData($attrs) + $callback($node);
-            }
-        }
-
-        return $data;
-    }
-
-    /**
-     * Return all "ListChild" tags defined in PHP classes
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getListChildTagsFromPHP()
-    {
-        return $this->getAllListChildTagAttributes(
-            $this->getAnnotatedPHPClasses(),
-            function (\Includes\DataStructure\Cell $node) {
-                return array('child' => $node->getFinalClass());
-            }
+        return array(
+            self::PARAM_TAG_LIST_CHILD_FIRST => \XLite\Model\ViewList::POSITION_FIRST,
+            self::PARAM_TAG_LIST_CHILD_LAST  => \XLite\Model\ViewList::POSITION_LAST,
         );
-    }
-
-    /**
-     * Return all "ListChild" tags defined in templates
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getListChildTagsFromTemplates()
-    {
-        return $this->getAllListChildTagAttributes(
-            $this->getAnnotatedTemplates(),
-            function (\Includes\DataStructure\Cell $node) {
-                $tpl = substr($node->{constant(__CLASS__ . '::N_FILE_PATH')}, strlen(LC_SKINS_DIR));
-
-                $zone = substr($tpl, 0, strpos($tpl, LC_DS));
-
-                if ('console' == $zone) {
-                    $zone = \XLite\Model\ViewList::INTERFACE_CONSOLE;
-
-                } elseif ('admin' == $zone) {
-                    $zone = \XLite\Model\ViewList::INTERFACE_ADMIN;
-
-                } else {
-                    $zone = \XLite\Model\ViewList::INTERFACE_CUSTOMER;
-                }
-
-                return array(
-                    'tpl'  => $tpl,
-                    'zone' => $zone,
-                );
-            }
-        );
-    }
-
-    /**
-     * Return all defined "ListChild" tags
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getAllListChildTags()
-    {
-        // Collect all "ListChild" tags
-        $data = array_merge($this->getListChildTagsFromPHP(), $this->getListChildTagsFromTemplates());
-
-        // Check modules for the list modifiers
-        // TODO: check if it's really useful
-        foreach (\Includes\Decorator\Utils\ModulesManager::getActuallyEnabledModules() as $name) {
-            $this->prepareListByModule($data, $name);
-        }
-
-        return $data;
-    }
-
-    /**
-     * Create lists
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function createLists()
-    {
-        \XLite\Core\Database::getRepo('\XLite\Model\ViewList')->insertInBatch($this->getAllListChildTags());
-    }
-
-
-    /**
-     * Method to filter classes and templates
-     *
-     * @param \Includes\DataStructure\Cell $node current node
-     *
-     * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function filterByListChildTag(\Includes\DataStructure\Cell $node)
-    {
-        return !is_null($node->getTag(self::TAG_LIST_CHILD));
-    }
-
-    /**
-     * Execute "run" hook handler
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function executeHookHandlerPostprocess()
-    {
-        // Truncate old
-        $this->clearAll();
-
-        // Create new
-        $this->createLists();
     }
 }

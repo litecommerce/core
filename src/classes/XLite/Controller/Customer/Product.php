@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -31,27 +31,26 @@ namespace XLite\Controller\Customer;
 /**
  * Product
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Product extends \XLite\Controller\Customer\Catalog
 {
     /**
      * Controller parameters list
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $params = array('target', 'product_id');
+
 
     /**
      * Check whether the title is to be displayed in the content area 
      * 
      * @return boolean
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isTitleVisible()
@@ -60,35 +59,10 @@ class Product extends \XLite\Controller\Customer\Catalog
     }
 
     /**
-     * Common method to determine current location 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getLocation()
-    {
-        return $this->getProduct() ? $this->getProduct()->getName() : null;
-    }
-
-    /**
-     * Return current product Id
-     *
-     * @return integer 
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getProductId()
-    {
-        return intval(\XLite\Core\Request::getInstance()->product_id);
-    }
-
-
-    /**
      * Get product category id
      *
      * @return integer 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getCategoryId()
@@ -106,7 +80,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      * getDescription 
      * 
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getDescription()
@@ -118,7 +92,6 @@ class Product extends \XLite\Controller\Customer\Catalog
      * Return current (or default) product object
      *
      * @return \XLite\Model\Product
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -131,7 +104,6 @@ class Product extends \XLite\Controller\Customer\Catalog
      * Alias
      *
      * @return \XLite\Model\Product
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -140,11 +112,35 @@ class Product extends \XLite\Controller\Customer\Catalog
         return \XLite\Core\Database::getRepo('XLite\Model\Product')->find($this->getProductId());
     }
 
+
+    /**
+     * Common method to determine current location 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return $this->getProduct() ? $this->getProduct()->getName() : null;
+    }
+
+    /**
+     * Return current product Id
+     *
+     * @return integer 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProductId()
+    {
+        return intval(\XLite\Core\Request::getInstance()->product_id);
+    }
+
     /**
      * Check controller visibility
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

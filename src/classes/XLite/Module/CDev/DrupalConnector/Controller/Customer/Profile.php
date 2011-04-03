@@ -56,7 +56,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      */
     protected function getModelFormPartMain()
     {
-        return array(\XLite\View\Model\Profile\Main::SECTION_MAIN);
+        return array(\XLite\View\Model\Profile\Main::SECTION_MAIN, \XLite\View\Model\Profile\Main::SECTION_ACCESS);
     }
 
     /**
@@ -127,5 +127,132 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
     protected function doActionUpdateBasic()
     {
         return $this->getModelFormPart(self::SECTIONS_MAIN)->performAction('update');
+    }
+
+    /**
+     * Cancel account (disable)
+     * 
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionCancel()
+    {
+        $profile = $this->getModelForm()->getModelObject();
+
+        $profile->disable();
+
+        \XLite\Core\Database::getEM()->persist($profile);
+
+        \XLite\Core\Database::getEM()->flush();
+    }
+
+    /**
+     * Delete an account
+     * 
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDelete()
+    {
+        return $this->getModelFormPart(self::SECTIONS_MAIN)->performAction('delete');
+    }
+
+    /**
+     * Update access level of users with drupal roles with permission 'lc admin'
+     * 
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdateRoles()
+    {
+        $this->updateAdminAccessLevels();
+    }
+
+    /**
+     * Delete roles and update access level of users with these roles
+     * 
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDeleteRole()
+    {
+        $roles = \XLite\Core\Request::getInstance()->roles;
+
+        if (is_array($roles)) {
+
+            foreach ($roles as $role) {
+
+                if (isset($role->rid)) {
+        
+                    $rolesToDelete = \XLite\Core\Database::getRepo('\XLite\Module\CDev\DrupalConnector\Model\DrupalRole')->findBy(array('drupal_role_id' => $role->rid));
+
+                    if ($rolesToDelete) {
+                        \XLite\Core\Database::getRepo('\XLite\Module\CDev\DrupalConnector\Model\DrupalRole')
+                            ->deleteInBatch($rolesToDelete);
+                    }
+                
+                    $this->updateAdminAccessLevels();
+                }
+            }
+        }
+    }
+
+    /**
+     * Find users with drupal roles with permission 'lc admin' and update access level
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function updateAdminAccessLevels()
+    {
+        // Drupal's function user_roles()
+        $roles = user_roles();
+
+        // Prepare list of roles with 'lc admin' permission
+        $adminRoles = array();
+
+        foreach ($roles as $roleId => $roleName) {
+            if (\XLite\Module\CDev\DrupalConnector\Drupal\Profile::isRoleHasAdminPermission(array($roleId => $roleName))) {
+                $adminRoles[] = $roleId;
+            }
+        }
+
+        // Find admin profiles with non-admin roles and update their access level to customer
+        $this->updateAccessLevel(
+            \XLite\Core\Database::getRepo('\XLite\Model\Profile')->findAdminsWithoutRoles($adminRoles), 
+            \XLite\Core\Auth::getInstance()->getCustomerAccessLevel()
+        );
+
+        //Find non-admin profiles with admin roles and update their access level to administrator
+        $this->updateAccessLevel(
+            \XLite\Core\Database::getRepo('\XLite\Model\Profile')->findCustomersWithRoles($adminRoles), 
+            \XLite\Core\Auth::getInstance()->getAdminAccessLevel()
+        );
+    }
+
+    /**
+     * Update access_level property of the specified profiles
+     * 
+     * @param array   $profiles    Profiles to update
+     * @param integer $accessLevel Access level
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function updateAccessLevel($profiles, $accessLevel)
+    {
+        if ($profiles) {
+            foreach ($profiles as $profile) {
+                $profile->setAccessLevel($accessLevel);
+                \XLite\Core\Database::getEM()->persist($profile);
+            }
+            \XLite\Core\Database::getEM()->flush();
+        }
     }
 }

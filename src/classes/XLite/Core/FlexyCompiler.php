@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core;
@@ -31,9 +31,8 @@ namespace XLite\Core;
 /**
  * Flexy compiler
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class FlexyCompiler extends \XLite\Base\Singleton
 {
@@ -48,39 +47,44 @@ class FlexyCompiler extends \XLite\Base\Singleton
     /**
      * Template source code 
      * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0
+     * @var   string
+     * @since 3.0.0
      */
     protected $source = null;
 
     /**
      * Template file name 
      * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0
+     * @var   string
+     * @since 3.0.0
      */
     protected $file = null;
 
     /**
      * List of URLs to rewrite 
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @since 3.0.0
      */
     protected $urlRewrite = array();
 
     /**
      * patches 
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $patches;
+
+    /**
+     * Image URL output type 
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $imageURLOutputType = \XLite\Core\Layout::WEB_PATH_OUTPUT_URL;
 
 
     public $substitutionStart = array();
@@ -151,7 +155,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * Preprocess template
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -179,7 +182,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string $zone Skin name
      *  
      * @return string (admin or customer)
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -198,7 +200,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string $tpl  Relative template pathg
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -233,7 +234,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param \XLite\Model\TemplatePatch $patch Patch record
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -269,7 +269,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string          $baseInsertType Patch insert type
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -322,7 +321,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param \XLite\Model\TemplatePatch $patch Patch record
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -341,7 +339,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param \XLite\Model\TemplatePatch $patch Patch record
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -352,17 +349,18 @@ class FlexyCompiler extends \XLite\Base\Singleton
     }
 
     // html ::= ([text] tag | [text] comment | [text] flexy)* [text]
-    function html()
+    protected function html()
     {
         while ($this->phptag() || $this->tag() || $this->comment() || $this->flexyComment() || $this->flexy() || $this->anyChar()) {
         }
         return true;
     }
+
     // tag ::= open-tag | close-tag | open-close-tag
     // open-tag ::= '<' tagname (space+ attribute-definition)* space* '>'
     // open-close-tag ::= '<' tagname (space+ attribute-definition)* space* '/>'
     // close-tag ::= '</' tagname  '>'
-    function tag()
+    protected function tag()
     {
         if ($this->char('<')) {
             $this->savePosition(-1);
@@ -385,9 +383,10 @@ class FlexyCompiler extends \XLite\Base\Singleton
             return $this->commit();
         }
     }
+
     // attribute-definition ::= attributename [ '=' attribute-value ]
     // attribute-value ::= '\'' attribute-text '\'' | '"' attribute-text '"' | [^ \t\n\r/>]+
-    function attribute_definition()
+    protected function attribute_definition()
     {
         $this->savePosition();
         $i = count($this->tokens);
@@ -509,14 +508,18 @@ class FlexyCompiler extends \XLite\Base\Singleton
         }
         return $result;
     }
-    function char($c)
+
+    protected function char($c)
     {
-        if (strlen($this->source) > $this->offset && substr($this->source, $this->offset, 1) == $c) {
-            $this->offset ++;
+        if (substr($this->source, $this->offset, 1) === $c) {
+            $this->offset++;
+
             return true;
         }
+
         return false;
     }
+
     function notChars($str)
     {
         if (strpos($str, substr($this->source, $this->offset, 1)) === false) {
@@ -648,7 +651,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
             } elseif ($token['type'] == "attribute") {
 
                 if (!strcasecmp($token['name'], 'src') || !strcasecmp($token['name'], 'background')) {
-                    $rewriteData = $this->urlRewrite($this->getTokenText($i + 1));
+                    $rewriteData = $this->rewriteURL($this->getTokenText($i + 1));
 
                     if ($rewriteData) {
                         $this->subst(
@@ -677,6 +680,23 @@ class FlexyCompiler extends \XLite\Base\Singleton
         }
 
         return $this->substitute();
+    }
+
+    /**
+     * Get template info 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getTemplateInfo()
+    {
+        $skin = preg_replace('/^([a-x0-9_]+)[^a-x0-9_].+$/Ssi', '\1', substr($this->file, strlen(LC_SKINS_DIR)));
+        $template = 'common' == $skin
+            ? substr($this->file, strlen(LC_SKINS_DIR) + strlen($skin) + 1)
+            : substr($this->file, strlen(LC_SKINS_DIR) + strlen($skin) + 4);
+
+        return array($skin, $template);
     }
 
     protected function unsetAttributes(array &$attrs, array $keys)
@@ -722,10 +742,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
     {
         $result = '';
 
-        if (
-            !isset($module)
-            || \XLite\Core\Database::getRepo('\XLite\Model\Module')->isModuleActive($module)
-        ) {
+        if (\Includes\Decorator\Utils\ModulesManager::isActiveModule($module)) {
 
             $class = isset($attrs['class']) ? $this->flexyAttribute($attrs['class'], false) : null;
 
@@ -759,12 +776,14 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
             $this->unsetAttributes($attrs, array('IF', 'FOREACH', 'class', 'mode'));
 
+            list($skin, $template) = $this->getTemplateInfo();
+
             if (empty($arguments) && (1 == count($attrs)) && isset($attrs['template'])) {
-                $result .= '$this->includeCompiledFile(' . $this->flexyAttribute($attrs['template'])  . ');';
+                $result .= '$this->includeCompiledFile(' . $this->flexyAttribute($attrs['template'])  . ', \'' . $skin . '\', \'' . $template . '\');';
             } else {
                 $result .= '$this->getWidget(' 
                     . (empty($attrs) ? (empty($arguments) ? '' : 'array()') : $this->getAttributesList($attrs)) 
-                    . (empty($arguments) ? '' : ', ' . $arguments) . ')->display();';
+                    . (empty($arguments) ? '' : ', ' . $arguments) . ')->setPreviousTpl(\'' . $skin . '\', \'' . $template . '\')->display();';
             }
 
             
@@ -793,16 +812,56 @@ class FlexyCompiler extends \XLite\Base\Singleton
         return $result;
     }
 
-    function urlRewrite($url)
+    /**
+     * Rewrite URL 
+     * 
+     * @param string $url Short URL
+     *  
+     * @return boolean|array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function rewriteURL($url)
     {
-        foreach ($this->urlRewrite as $find => $replace) {
-            if (substr($url, 0, strlen($find)) == $find) {
-                return array(0, strlen($find), $replace);
+        $result = false;
+
+        foreach ($this->urlRewrite as $find => $replace) {  
+            $len = strlen($find);
+
+            if (0 === strncmp($url, $find, $len)) {
+                if (is_callable($replace)) {
+                    $result = call_user_func($replace, $url, $len);
+
+                } else {
+                    $result = array(0, $len, $replace);
+                }
+
+                break;
             }
         }
 
-        return false;
+        return $result;
     }
+
+    /**
+     * Rewrite image URL 
+     * 
+     * @param string  $url    Image short URL
+     * @param integer $length Replace part length
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function rewriteImageURL($url, $length)
+    {
+        $newURL = $this->layout->getResourceWebPath($url, $this->imageURLOutputType);
+
+        return $newURL
+            ? array(0, strlen($url), $newURL)
+            : array(0, $length, $this->layout->prepareSkinURL('images', $this->imageURLOutputType));
+    }
+
     function subst($start, $end, $value)
     {
         if ($end==0) $end = $start;
@@ -964,10 +1023,13 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
             // find next #
             $pos = strpos($str, '#', 1);
+
             if (false === $pos) {
                 $this->error('No closing #');
             }
-            $result = '\'' . addslashes(substr($str, 1, $pos - 1)) . '\'';
+
+            // FIXME find the better way to prevent adding slashes to '"' character.
+            $result = '\'' . str_replace('\"', '"', addslashes(substr($str, 1, $pos - 1))) . '\'';
 
             $str = substr($str, $pos + 1);
 
@@ -1124,7 +1186,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
                 $this->subst(
                     $token['end'],
                     0,
-                    '<input type="hidden" name="xlite_form_id" value="' . $genFormId . '" />'
+                    '<fieldset><input type="hidden" name="xlite_form_id" value="' . $genFormId . '" /></fieldset>'
                 );
             }
 
@@ -1191,21 +1253,28 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * Flag 
      * 
      * @var    boolean
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
     protected $checkTemplateStatus = true;
 
     /**
-     * Pattern to parse template paths
+     * Layout 
      * 
-     * @var    string
-     * @access protected
+     * @var    \XLite\Core\Layout
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $pathPattern;
+    protected $layout;
+
+    /**
+     * Root directory path length 
+     * 
+     * @var    integer
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $rootDirLength;
 
     /**
      * Compile and save template
@@ -1214,14 +1283,15 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param boolean $force    Flag to force compilation OPTIONAL
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function prepare($original, $force = false)
     {
-        $compiled = \Includes\Utils\FileManager::normalize(LC_COMPILE_DIR . $original . '.php');
-        $original = \Includes\Utils\FileManager::normalize(LC_ROOT_DIR . $original);
+        $compiled = \Includes\Utils\FileManager::normalize(
+            LC_COMPILE_DIR . substr($original, $this->rootDirLength) . '.php'
+        );
+        $original = \Includes\Utils\FileManager::normalize($original);
 
         if (($this->checkTemplateStatus && !$this->isTemplateValid($original, $compiled)) || $force) {
 
@@ -1245,7 +1315,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string $compiled Compiled one
      *  
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1255,27 +1324,11 @@ class FlexyCompiler extends \XLite\Base\Singleton
     }
 
     /**
-     * Return URL for the images directory 
-     * 
-     * @param string $file Current template
-     *  
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getImagesURL($file)
-    {
-        return preg_match('/' . $this->pathPattern . '/', $file, $matches) ? str_replace(LC_DS, '/', $matches[1]) : '';
-    }
-
-    /**
      * Set new file for compile 
      * 
      * @param string $file Template to compile
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1285,7 +1338,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
         $this->source = file_get_contents($file);
 
         $this->urlRewrite = array(
-            'images' => \Includes\Utils\URLManager::getShopURL($this->getImagesURL($file) . 'images'),
+            'images' => array($this, 'rewriteImageURL'),
         );
     }
 
@@ -1293,7 +1346,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * Constructor
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1301,11 +1353,12 @@ class FlexyCompiler extends \XLite\Base\Singleton
     {
         parent::__construct();
 
-        $this->pathPattern = preg_quote(LC_ROOT_DIR, '/') . '(skins' . preg_quote(LC_DS, '/') 
-            . '\w+' . preg_quote(LC_DS, '/') . '\w+' . preg_quote(LC_DS, '/') . ').*';
-
         $this->checkTemplateStatus = LC_DEVELOPER_MODE
             || \XLite\Core\Config::getInstance()->Performance->check_templates_status;
+
+        $this->layout = \XLite\Core\Layout::getInstance();
+
+        $this->rootDirLength = strlen(LC_ROOT_DIR);
     }
 }
 

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -31,9 +31,8 @@ namespace XLite\Model\Repo;
 /**
  * Category repository class
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Category extends \XLite\Model\Repo\Base\I18n
 {
@@ -46,18 +45,265 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Flush unit-of-work changes after every record loading 
      * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $flushAfterLoading = true;
+
+
+    /**
+     * Return the reserved ID of root category
+     *
+     * @return integer 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRootCategoryId()
+    {
+        return self::CATEGORY_ID_ROOT;
+    }
+
+    /**
+     * Return the ctegory enabled condition
+     * 
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getEnabledCondition()
+    {
+        return !\XLite::isAdminZone();
+    }
+
+    /**
+     * Create a new QueryBuilder instance that is prepopulated for this entity name
+     *
+     * @param string  $alias       Table alias OPTIONAL
+     * @param boolean $excludeRoot Do not include root category into the search result OPTIONAL
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createQueryBuilder($alias = null, $excludeRoot = true)
+    {
+        $qb = parent::createQueryBuilder($alias);
+
+        $this->addEnabledCondition($qb, $alias);
+        $this->addOrderByCondition($qb, $alias);
+
+        if ($excludeRoot) {
+            $this->addExcludeRootCondition($qb, $alias);
+        }
+
+        return $qb;
+    }
+
+    /**
+     * find() with cache
+     * 
+     * @param integer $categoryId Category ID
+     *  
+     * @return \XLite\Model\Category
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCategory($categoryId)
+    {
+        return $this->find($this->prepareCategoryId($categoryId));
+    }
+
+    /**
+     * Return full list of categories
+     *
+     * @param integer $rootId ID of the subtree root OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCategories($rootId = null)
+    {
+        return $this->defineFullTreeQuery($rootId)->getResult();
+    }
+
+    /**
+     * Return list of subcategories (one level)
+     *
+     * @param integer $rootId ID of the subtree root
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSubcategories($rootId)
+    {
+        return $this->defineSubcategoriesQuery($rootId)->getResult();
+    }
+
+    /**
+     * Return list of categories on the same level
+     *
+     * @param \XLite\Model\Category $category Category
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSiblings(\XLite\Model\Category $category)
+    {
+        return $this->defineSiblingsQuery($category)->getResult();
+    }
+
+    /**
+     * Return categories subtree
+     *
+     * @param integer $categoryId Category Id
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSubtree($categoryId)
+    {
+        return $this->defineSubtreeQuery($categoryId)->getResult();
+    }
+
+    /**
+     * Get categories path from root to the specified category 
+     * 
+     * @param integer $categoryId Category Id
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCategoryPath($categoryId)
+    {
+        return $this->defineCategoryPathQuery($categoryId)->getResult();
+    }
+
+    /**
+     * Get depth of the category path
+     * 
+     * @param integer $categoryId Category Id
+     *  
+     * @return integer 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCategoryDepth($categoryId)
+    {
+        return $this->defineCategoryDepthQuery($categoryId)->getSingleScalarResult();
+    }
+
+    /**
+     * Get categories list by product ID
+     * 
+     * @param integer $productId Product ID
+     *  
+     * @return \Doctrine\ORM\PersistentCollection
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findAllByProductId($productId)
+    {
+        return $this->defineSearchByProductIdQuery($productId)->getResult();
+    }
+
+    /**
+     * Create new DB entry.
+     * This function is used to create new QuickFlags entry
+     * 
+     * @param array $data Entity properties
+     *  
+     * @return \XLite\Model\Category
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function insert(array $data)
+    {
+        $entity = parent::insert($data);
+
+        // Create new record for the QuickFlags model
+        $quickFlags = new \XLite\Model\Category\QuickFlags();
+        $quickFlags->setCategory($entity);
+        $entity->setQuickFlags($quickFlags);
+        \XLite\Core\Database::getEM()->persist($quickFlags);
+
+        return $entity;
+    }
+
+    /**
+     * Wrapper. Use this function instead of the native "delete...()"
+     * 
+     * @param integer $categoryId  ID of category to delete
+     * @param boolean $onlySubtree Flag OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function deleteCategory($categoryId, $onlySubtree = false)
+    {
+        // Find category by ID
+        $entity = $this->getCategory($categoryId);
+
+        // Save some variables
+        $right = $entity->getRpos() - ($onlySubtree ? 1 : 0);
+        $width = $right - $entity->getLpos() + ($onlySubtree ? 0 : 1);
+
+        $onlySubtree 
+            ? $this->deleteInBatch($this->getSubtree($entity->getCategoryId())) 
+            : $this->delete($entity);
+
+        // Update indexes in the nested set
+        $this->defineUpdateIndexQuery('lpos', $right, -$width)->execute();
+        $this->defineUpdateIndexQuery('rpos', $right, -$width)->execute();
+    }
+
+
+    /**
+     * Add the conditions for the current subtree
+     *
+     * NOTE: function is public since it's needed to the Product model repository
+     *
+     * @param \Doctrine\ORM\QueryBuilder $qb         Query builder to modify
+     * @param integer                    $categoryId Current category ID
+     * @param string                     $field      Name of the field to use OPTIONAL
+     * @param integer                    $lpos       Left position OPTIONAL
+     * @param integer                    $rpos       Right position OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function addSubTreeCondition(
+        \Doctrine\ORM\QueryBuilder $qb,
+        $categoryId,
+        $field = 'lpos',
+        $lpos = null,
+        $rpos = null
+    ) {
+        $category = $this->getCategory($categoryId);
+
+        if ($category) {
+
+            $lpos = $lpos ?: $category->getLpos();
+            $rpos = $rpos ?: $category->getRpos();
+
+            $qb->andWhere($qb->expr()->between('c.' . $field, $lpos, $rpos));
+        }
+
+        return isset($category);
+    }
+
 
     /**
      * Define the Doctrine query
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -75,7 +321,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -97,7 +342,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -122,7 +366,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param \XLite\Model\Category $category Category
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -144,7 +387,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -161,7 +403,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -193,7 +434,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $categoryId Category Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -210,7 +450,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $productId Product Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -232,7 +471,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $offset       Increment OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -259,7 +497,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param string                     $alias        Entity alias OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -279,7 +516,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param string                     $alias        Entity alias OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -296,7 +532,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param string                     $alias        Entity alias OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -311,7 +546,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Return maximum index in the "nested set" tree
      * 
      * @return integer 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -324,10 +558,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Prepare data for a new category node
      *
      * @param array                 $data   Category properties
-     * @param \XLite\Model\Category $parent Parent category object
+     * @param \XLite\Model\Category $parent Parent category object OPTIONAL
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -362,7 +595,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param integer $scEnabled The "subcategories_count_enabled" flag value
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -381,7 +613,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param mixed $categoryId Category ID
      *  
      * @return integer|void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -397,16 +628,17 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param array                 $flags  Flags to set
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function updateQuickFlags(\XLite\Model\Category $entity, array $flags)
     {
-        foreach ($flags as $name => $delta) {
-            $name = \XLite\Core\Converter::convertToCamelCase($name);
-            $value = $entity->getQuickFlags()->{'get' . $name}();
-            $entity->getQuickFlags()->{'set' . $name}($value + $delta);
+        if (is_object($entity->getQuickFlags())) {
+            foreach ($flags as $name => $delta) {
+                $name = \XLite\Core\Converter::convertToCamelCase($name);
+                $value = $entity->getQuickFlags()->{'get' . $name}();
+                $entity->getQuickFlags()->{'set' . $name}($value + $delta);
+            }
         }
 
         // Do not change to $this->update() or $this->performUpdate():
@@ -418,10 +650,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Insert single entity
      *
-     * @param array $data Data to save
+     * @param array $data Data to save OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -465,10 +696,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Update single entity
      *
      * @param \XLite\Model\AEntity $entity Entity to use
-     * @param array                $data   Data to save
+     * @param array                $data   Data to save OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -489,7 +719,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param \XLite\Model\AEntity $entity Entity to detach
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -501,268 +730,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
         parent::performDelete($entity);
     }
 
-
-    /**
-     * Return the reserved ID of root category
-     *
-     * @return integer 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getRootCategoryId()
-    {
-        return self::CATEGORY_ID_ROOT;
-    }
-
-    /**
-     * Return the ctegory enabled condition
-     * 
-     * @return boolean 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getEnabledCondition()
-    {
-        return !\XLite::isAdminZone();
-    }
-
-    /**
-     * Create a new QueryBuilder instance that is prepopulated for this entity name
-     *
-     * @param string  $alias       Table alias OPTIONAL
-     * @param boolean $excludeRoot Do not include root category into the search result OPTIONAL
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function createQueryBuilder($alias = null, $excludeRoot = true)
-    {
-        $qb = parent::createQueryBuilder($alias);
-
-        $this->addEnabledCondition($qb, $alias);
-        $this->addOrderByCondition($qb, $alias);
-
-        if ($excludeRoot) {
-            $this->addExcludeRootCondition($qb, $alias);
-        }
-
-        return $qb;
-    }
-
-    /**
-     * find() with cache
-     * 
-     * @param integer $categoryId Category ID
-     *  
-     * @return \XLite\Model\Category
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCategory($categoryId)
-    {
-        return $this->find($this->prepareCategoryId($categoryId));
-    }
-
-    /**
-     * Return full list of categories
-     *
-     * @param integer $rootId ID of the subtree root OPTIONAL
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCategories($rootId = null)
-    {
-        return $this->defineFullTreeQuery($rootId)->getResult();
-    }
-
-    /**
-     * Return list of subcategories (one level)
-     *
-     * @param integer $rootId ID of the subtree root
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getSubcategories($rootId)
-    {
-        return $this->defineSubcategoriesQuery($rootId)->getResult();
-    }
-
-    /**
-     * Return list of categories on the same level
-     *
-     * @param \XLite\Model\Category $category Category
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getSiblings(\XLite\Model\Category $category)
-    {
-        return $this->defineSiblingsQuery($category)->getResult();
-    }
-
-    /**
-     * Return categories subtree
-     *
-     * @param integer $categoryId Category Id
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getSubtree($categoryId)
-    {
-        return $this->defineSubtreeQuery($categoryId)->getResult();
-    }
-
-    /**
-     * Get categories path from root to the specified category 
-     * 
-     * @param integer $categoryId Category Id
-     *  
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCategoryPath($categoryId)
-    {
-        return $this->defineCategoryPathQuery($categoryId)->getResult();
-    }
-
-    /**
-     * Get depth of the category path
-     * 
-     * @param integer $categoryId Category Id
-     *  
-     * @return integer 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCategoryDepth($categoryId)
-    {
-        return $this->defineCategoryDepthQuery($categoryId)->getSingleScalarResult();
-    }
-
-    /**
-     * Get categories list by product ID
-     * 
-     * @param integer $productId Product ID
-     *  
-     * @return \Doctrine\ORM\PersistentCollection
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findAllByProductId($productId)
-    {
-        return $this->defineSearchByProductIdQuery($productId)->getResult();
-    }
-
-    /**
-     * Create new DB entry.
-     * This function is used to create new QuickFlags entry
-     * 
-     * @param array $data Entity properties
-     *  
-     * @return \XLite\Model\Category
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function insert(array $data)
-    {
-        $entity = parent::insert($data);
-
-        // Create new record for the QuickFlags model
-        $quickFlags = new \XLite\Model\Category\QuickFlags();
-        $quickFlags->setCategory($entity);
-        $entity->setQuickFlags($quickFlags);
-        \XLite\Core\Database::getEM()->persist($quickFlags);
-
-        return $entity;
-    }
-
-    /**
-     * Wrapper. Use this function instead of the native "delete...()"
-     * 
-     * @param integer $categoryId  ID of category to delete
-     * @param boolean $onlySubtree Flag OPTIONAL
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function deleteCategory($categoryId, $onlySubtree = false)
-    {
-        // Find category by ID
-        $entity = $this->getCategory($categoryId);
-
-        // Save some variables
-        $right = $entity->getRpos() - ($onlySubtree ? 1 : 0);
-        $width = $right - $entity->getLpos() + ($onlySubtree ? 0 : 1);
-
-        $onlySubtree 
-            ? $this->deleteInBatch($this->getSubtree($entity->getCategoryId())) 
-            : $this->delete($entity);
-
-        // Update indexes in the nested set
-        $this->defineUpdateIndexQuery('lpos', $right, -$width)->execute();
-        $this->defineUpdateIndexQuery('rpos', $right, -$width)->execute();
-    }
-
-
-    /**
-     * Add the conditions for the current subtree
-     *
-     * NOTE: function is public since it's needed to the Product model repository
-     *
-     * @param \Doctrine\ORM\QueryBuilder $qb         Query builder to modify
-     * @param integer                    $categoryId Current category ID
-     * @param string                     $field      Name of the field to use OPTIONAL
-     * @param integer                    $lpos       Left position OPTIONAL
-     * @param integer                    $rpos       Right position OPTIONAL
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function addSubTreeCondition(
-        \Doctrine\ORM\QueryBuilder $qb,
-        $categoryId,
-        $field = 'lpos',
-        $lpos = null,
-        $rpos = null
-    ) {
-        $category = $this->getCategory($categoryId);
-
-        if ($category) {
-
-            $lpos = $lpos ?: $category->getLpos();
-            $rpos = $rpos ?: $category->getRpos();
-
-            $qb->andWhere($qb->expr()->between('c.' . $field, $lpos, $rpos));
-        }
-
-        return isset($category);
-    }
-
     /**
      * Assemble regular fields from record 
      * 
@@ -770,7 +737,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param array $regular Regular fields info OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -795,7 +761,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param array                $parentAssoc Entity mapped propery method
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -838,7 +803,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param array $assocs Associations info OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -855,7 +819,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Get detailed foreign keys
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -872,5 +835,4 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         return $list;
     }
-
 }

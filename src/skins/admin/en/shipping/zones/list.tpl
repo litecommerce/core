@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 //<![CDATA[
 
 function visibleBox(id, status)
@@ -38,7 +38,7 @@ Use this section to define shipping zones.
 
 {if:isZonesDefined()}
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 //<![CDATA[
 
 checkboxes_form = 'zonesform';
@@ -72,7 +72,7 @@ function deleteZones()
 
     <tr>
       <td><input type="checkbox" name="to_delete[{zn.getZoneId()}]"{if:zn.getZoneId()=1} disabled="disabled"{end:}} /></td>
-      <td width="100%"><a href="admin.php?target=shipping_zones&zoneid={zn.getZoneId()}">{zn.getZoneName()}</a></td>
+      <td style="width:100%;"><a href="admin.php?target=shipping_zones&zoneid={zn.getZoneId()}">{zn.getZoneName()}</a></td>
     </tr>
 
   </tbody>
@@ -80,7 +80,7 @@ function deleteZones()
   <tr>
   <td colspan="2">
   <br />
-  <input type="button" value="Delete selected" onclick="javascript: deleteZones();" IF="isZonesDefined()" />
+  <widget class="\XLite\View\Button\Regular" IF="isZonesDefined()" label="Delete selected" jsCode="javascript: deleteZones();" />
   </td>
 </tr>
 
@@ -93,5 +93,5 @@ function deleteZones()
 <br />
 <br />
 
-<input type="button" value="Add zone" onclick="javascript: self.location='admin.php?target=shipping_zones&mode=add';" />
+<widget class="\XLite\View\Button\Regular" label="Add zone" jsCode="javascript: self.location='admin.php?target=shipping_zones&mode=add';" />
 

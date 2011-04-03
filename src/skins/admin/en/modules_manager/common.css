@@ -10,7 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
-.modules-list .dependencies,
 .modules-list .status
 {
   white-space: nowrap;
@@ -29,13 +28,33 @@
   color: #0055bd;
 }
 
+table.modules-list {
+  border-top: solid 2px #e5e5e5;
+}
+
 table.modules-list tr td {
-  padding: 20px;
-  border-top: solid 1px #e5e5e5;
-  border-bottom: 0;
+  padding: 20px 0px 20px 20px;
+  border-bottom: solid 1px #e5e5e5;
+  border-top: 0;
   border-right: 0;
   border-left: 0;
   vertical-align: top;
+}
+
+table.modules-list tr td.icon {
+  width: 100px;
+}
+
+table.modules-list tr td.module-main-section {
+  width: 25%;
+}
+
+table.modules-list tr td.module-description-section {
+  width: 66%;
+}
+
+table.modules-list tr.disabled td {
+  border-top: solid 1px #ffffff;
 }
 
 table.modules-list tr.disabled td {
@@ -58,16 +77,20 @@ table.modules-list tr.disabled div.actions span
   color: #8f8f8f;
 }
 
-table.modules-list div.version {
+table.modules-list div.version,
+table.modules-list div.note
+{
   font-size: 12px;
   color: #5c88a8;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 table.modules-list div.author {
-  font-size: 12px;
-  color: #5c88a8;
-  margin-bottom: 10px;
+  font-size: 14px;
+  color: #0055BD;
+  margin-top: 10px;
+  float: left;
+  margin-right: 20px;
 }
 
 table.modules-list div.actions {
@@ -81,40 +104,64 @@ table.modules-list div.actions span
   font-size: 14px;
 }
 
-table.modules-list div.dependencies {
-  color: #5c88a8;
-  font-size: 12px;
-  line-height: 14px;
-}
-
-table.modules-list div.dependencies ul {
-  margin: 5px 0 5px 5px;
-}
-
-table.modules-list div.dependencies ul li {
-  padding: 3px 0;
-
-}
-
 table.modules-list tr.disabled div.module-name {
   color: #a3a3a3;
   white-space: nowrap;
 }
 
-table.modules-list div.upgrade-note {
-  border: solid 1px #a8d6a5;
-  padding: 10px;
-  background: #e4f7e4;
-  margin: 0;
-  font-size: 14px;
-  width: 90%;
-}
-
 table.modules-list div.module-url {
-  margin-top: 20px;
+  margin-top: 10px;
   font-size: 14px;
+  float: left;
 }
 
 table.modules-list div.icon-container {
   position: relative;
 }
+
+/* Notes */
+
+table.modules-list div.note
+{
+  padding: 10px;
+  width: 250px;
+  white-space: normal;
+}
+
+table.modules-list div.note.dependencies,
+table.modules-list div.note.version.error
+{
+  background-color: #f7eee4;
+  color: #7a2e1d;
+  border: solid 1px #d6bda5;
+}
+
+table.modules-list div.note.version.upgrade
+{
+  background-color: #e4f7e4;
+  color: #466444;
+  border: solid 1px #a8d6a5;
+}
+
+div.icon-container div.addon-disabled {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+div.icon-container div.addon-disabled img.disabled,
+  div.icon-container div.addon-disabled,
+  div.icon-container div.addon-icon img.addon-icon
+{
+  width: 84px;
+  height: 84px;
+}
+
+div.icon-container div.addon-disabled img.disabled {
+  background: transparent url(../images/addon_disabled.png) left top no-repeat;
+}
+
+div.icon-container div.addon-icon img.addon-default-icon {
+  background: transparent url(../images/addon_default.png) left top no-repeat;
+}
+

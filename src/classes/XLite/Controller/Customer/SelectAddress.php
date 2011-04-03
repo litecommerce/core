@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -31,27 +31,59 @@ namespace XLite\Controller\Customer;
 /**
  * Select address from address book
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class SelectAddress extends \XLite\Controller\Customer\Cart
 {
     /**
      * Controller parameters
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $params = array('target', 'atype');
+
+
+    /**
+     * Get page title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Pick address from address book';
+    }
+
+    /**
+     * Get current aAddress id 
+     * 
+     * @return integer|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCurrentAddressId()
+    {
+        $address = null;
+
+        if ($this->getCart()->getProfile()) {
+            $address = \XLite\Model\Address::SHIPPING == \XLite\Core\Request::getInstance()->atype
+                ? $this->getCart()->getProfile()->getShippingAddress()
+                : $this->getCart()->getProfile()->getBillingAddress();
+        }
+
+        return $address ? $address->getAddressId() : null;
+    }
+
 
     /**
      * Common method to determine current location 
      *  
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getLocation()
@@ -63,7 +95,7 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
      * Check if current page is accessible
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function checkAccess()
@@ -72,23 +104,11 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
             && $this->getCart()->getOrigProfile()
             && !$this->getCart()->getOrigProfile()->getOrder();
     }
-    /**
-     * Get page title
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return 'Pick address from address book';
-    }
 
     /**
      * Select address
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -100,7 +120,7 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
         if (\XLite\Model\Address::SHIPPING != $atype && \XLite\Model\Address::BILLING != $atype) {
 
             $this->valid = false;
-            \XLite\Core\TopMessage::addError('Address type ahs wrong value');
+            \XLite\Core\TopMessage::addError('Address type has wrong value');
 
         } elseif (!$addressId) {
 
@@ -170,26 +190,4 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
             }
         }
     }
-
-    /**
-     * Get current aAddress id 
-     * 
-     * @return integer|void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCurrentAddressId()
-    {
-        $address = null;
-
-        if ($this->getCart()->getProfile()) {
-            $address = \XLite\Model\Address::SHIPPING == \XLite\Core\Request::getInstance()->atype
-                ? $this->getCart()->getProfile()->getShippingAddress()
-                : $this->getCart()->getProfile()->getBillingAddress();
-        }
-
-        return $address ? $address->getAddressId() : null;
-    }
 }
-

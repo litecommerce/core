@@ -14,34 +14,85 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
 
 /**
- * ____description____
+ * States management page controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class States extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'States';
+    }
+
+    /**
+     * init 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function init()
+    {
+        if (!in_array('country_code', $this->params)) {
+
+            $this->params[] = 'country_code';
+        }
+
+        parent::init();
+
+        $this->set(
+            'country_code',
+            isset(\XLite\Core\Request::getInstance()->country_code) ?: $this->config->General->default_country
+        );
+    }
+   
+    /**
+     * getStates 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getStates()
+    {
+        if (is_null($this->states)) {
+
+            $this->states = \XLite\Core\Database::getRepo('XLite\Model\State')
+                ->findByCountryCode($this->get('country_code'));
+        }
+
+        return $this->states;
+    }
+
+
+    /**
      * Common method to determine current location
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -50,49 +101,42 @@ class States extends \XLite\Controller\Admin\AAdmin
         return 'States';
     }
 
-    function init()
-    {
-        if (!in_array('country_code', $this->params)) {
-            $this->params[] = "country_code";
-        }
-        parent::init();
-        $this->fillForm();
-    }
-
-    function obligatorySetStatus($status)
+    /**
+     * setObligatoryStatus 
+     * 
+     * @param mixed $status ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setObligatoryStatus($status)
     {
         if (!in_array('status', $this->params)) {
-            $this->params[] = "status";
+
+            $this->params[] = 'status';
         }
+
         $this->set('status', $status);
     }
-
-    function fillForm()
-    {
-        if (isset(\XLite\Core\Request::getInstance()->country_code)) {
-            $this->set('country_code', \XLite\Core\Request::getInstance()->country_code);
-        } else {
-            $this->set('country_code', $this->config->General->default_country);
-        }
-    }
-    
-    function getStates()
-    {
-        if (is_null($this->states)) {
-            $this->states = \XLite\Core\Database::getRepo('XLite\Model\State')->findByCountryCode($this->get('country_code'));
-        }
-
-        return $this->states;
-    }
-
-    function action_add()
+    /**
+     * doActionAdd 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionAdd()
     {
 
-        $fields = array('country_code', "code", "state");
+        $fields = array('country_code', 'code', 'state');
+
         $postData = \XLite\Core\Request::getInstance()->getData();
 
-        foreach ($postData as $k=>$v) {
+        foreach ($postData as $k => $v) {
+
             if (in_array($k, $fields)) {
+
                 $postData[$k] = trim($v);
             }
         }
@@ -100,78 +144,118 @@ class States extends \XLite\Controller\Admin\AAdmin
         $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($postData['country_code']);
 
         if (!$country) {
-            $this->set('valid', false);
-            $this->obligatorySetStatus('country_code');
-            return;
-        }
 
-        if (empty($postData['code'])) {
             $this->set('valid', false);
-            $this->obligatorySetStatus('code');
-            return;
-        }
 
-        if (empty($postData['state'])) {
+            $this->setObligatoryStatus('country_code');
+        
+        } elseif (empty($postData['code'])) {
+
             $this->set('valid', false);
-            $this->obligatorySetStatus('state');
-            return;
-        }
 
-        $found = false;
-        foreach ($country->getState() as $s) {
-            if ($s->getCode() == $postData['code'] || $s->getState() == $postData['state']) {
-                $found = true;
-                break;
+            $this->setObligatoryStatus('code');
+        
+        } elseif (empty($postData['state'])) {
+
+            $this->set('valid', false);
+
+            $this->setObligatoryStatus('state');
+        
+        } else {
+
+            $found = false;
+
+            foreach ($country->getStates() as $s) {
+
+                if (
+                    $s->getCode() == $postData['code'] 
+                    || $s->getState() == $postData['state']
+                ) {
+                    $found = true;
+
+                    break;
+                }
+            }
+
+            if ($found) {
+
+                $this->set('valid', false);
+
+                $this->setObligatoryStatus('exists');
+
+            } else {
+
+                $state = new \XLite\Model\State();
+                $state->map($postData);
+                $state->country = $country;
+
+                \XLite\Core\Database::getEM()->persist($state);
+                \XLite\Core\Database::getEM()->flush();
+
+                $this->setObligatoryStatus('added');
             }
         }
-
-        if ($found) {
-            $this->set('valid', false);
-            $this->obligatorySetStatus('exists');
-            return;
-        }
-
-        $state = new \XLite\Model\State();
-        $state->map($postData);
-        $state->country = $country;
-        \XLite\Core\Database::getEM()->persist($state);
-        \XLite\Core\Database::getEM()->flush();
-
-        $this->obligatorySetStatus('added');
     }
 
-    function action_update()
+    /**
+     * doActionUpdate 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdate()
     {
         $stateData = array();
+
         if (isset(\XLite\Core\Request::getInstance()->state_data)) {
+
             $stateData = \XLite\Core\Request::getInstance()->state_data;
         }
 
         // use POST'ed data to modify state properties
-        foreach ($stateData as $state_id => $state_data) {
-            $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($state_id);
-            $state->map($state_data);
+        foreach ($stateData as $stateId => $stateData) {
+
+            $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($stateId);
+
+            $state->map($stateData);
+
             \XLite\Core\Database::getEM()->persist($state);
         }
+
         \XLite\Core\Database::getEM()->flush();
 
-        $this->obligatorySetStatus('updated');
+        $this->setObligatoryStatus('updated');
     }
 
-    function action_delete()
+    /**
+     * doActionDelete 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDelete()
     {
         $states = array();
+
         if (isset(\XLite\Core\Request::getInstance()->delete_states)) {
+
             $states = \XLite\Core\Request::getInstance()->delete_states;
         }
-        foreach ($states as $id => $state_id) {
-            $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $state_id);
+
+        foreach ($states as $id => $stateId) {
+
+            $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $stateId);
+
             if ($state) {
+
                 \XLite\Core\Database::getEM()->remove($state);
             }
         }
+
         \XLite\Core\Database::getEM()->flush();
 
-        $this->obligatorySetStatus('deleted');
+        $this->setObligatoryStatus('deleted');
     }
 }

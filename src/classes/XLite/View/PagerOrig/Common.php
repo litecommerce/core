@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\PagerOrig;
@@ -31,9 +31,8 @@ namespace XLite\View\PagerOrig;
 /**
  * Common pager 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Common extends \XLite\View\PagerOrig
 {
@@ -50,11 +49,24 @@ class Common extends \XLite\View\PagerOrig
     /**
      * pagesPerFrame 
      * 
-     * @var    int
-     * @access protected
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $pagesPerFrame = 5;
+
+
+    /**
+     * Check if pages row is visible or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isPagerVisible()
+    {
+        return 1 < $this->getPagesCount();
+    }
 
 
     /**
@@ -63,19 +75,19 @@ class Common extends \XLite\View\PagerOrig
      * @param integer $pageId Page ID
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function buildUrlByPageId($pageId)
+    protected function buildURLByPageId($pageId)
     {
-        return parent::buildUrlByPageId($this->getPageIdByNotation($pageId));
+        return parent::buildURLByPageId($this->getPageIdByNotation($pageId));
     }
 
     /**
      * getFrameStartPage
      *
      * @return integer 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getFrameStartPage()
@@ -87,12 +99,12 @@ class Common extends \XLite\View\PagerOrig
      * Defaint pages URLs
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function definePageUrls()
+    protected function definePageURLs()
     {
-        parent::definePageUrls();
+        parent::definePageURLs();
 
         $this->pageURLs = array_slice($this->pageURLs, $this->getFrameStartPage(), $this->pagesPerFrame, true);
     }
@@ -103,7 +115,7 @@ class Common extends \XLite\View\PagerOrig
      * @param string $type Link type (first / previous / next / last)
      *  
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isFurthermostPage($type)
@@ -120,7 +132,7 @@ class Common extends \XLite\View\PagerOrig
      * @param mixed $index Page notation
      *  
      * @return integer 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getPageIdByNotation($index)
@@ -141,7 +153,7 @@ class Common extends \XLite\View\PagerOrig
      * @param mixed $index Page notation
      *  
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getLinkClassName($index)
@@ -155,7 +167,7 @@ class Common extends \XLite\View\PagerOrig
      * @param string $type Link type (first / previous / next / last)
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getBorderLinkClassName($type)
@@ -169,7 +181,7 @@ class Common extends \XLite\View\PagerOrig
      * @param integer $pageId Current page ID
      *  
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getPageClassName($pageId)
@@ -181,7 +193,7 @@ class Common extends \XLite\View\PagerOrig
      * Get page begin record number
      *
      * @return integer 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getBeginRecordNumber()
@@ -193,26 +205,12 @@ class Common extends \XLite\View\PagerOrig
      * Get page end record number
      *
      * @return integer 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getEndRecordNumber()
     {
         return min($this->getBeginRecordNumber() + $this->getItemsPerPage() - 1, $this->getItemsTotal());
-    }
-
-
-    /**
-     * Check if pages row is visible or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isPagerVisible()
-    {
-        return 1 < $this->getPagesCount();
     }
 }
 

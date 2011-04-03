@@ -14,26 +14,25 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
 
 /**
- * \XLite\View\AddressBook 
+ * \XLite\View\Address 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Address extends \XLite\View\Dialog
 {
@@ -62,10 +61,9 @@ class Address extends \XLite\View\Dialog
     /**
      * schema 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $schema = array(
         'title' => array(
@@ -112,6 +110,11 @@ class Address extends \XLite\View\Dialog
             self::SCHEMA_LABEL    => 'Country',
             self::SCHEMA_REQUIRED => true,
         ),
+        'phone' => array(
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
+            self::SCHEMA_LABEL    => 'Phone',
+            self::SCHEMA_REQUIRED => true,
+        ),
         /*  TODO: move to the shipping module where this field is required       
         'address_type' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\AddressType',
@@ -119,68 +122,13 @@ class Address extends \XLite\View\Dialog
             self::SCHEMA_REQUIRED => true,
         ),
         */
-        'phone' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Phone',
-            self::SCHEMA_REQUIRED => true,
-        ),
     );
 
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_DISPLAY_MODE => new \XLite\Model\WidgetParam\String(
-                'Display mode', self::DISPLAY_MODE_TEXT, false
-            ),
-            self::PARAM_ADDRESS => new \XLite\Model\WidgetParam\Object(
-                'Address object', null, false
-            ),
-            self::PARAM_DISPLAY_WRAPPER => new \XLite\Model\WidgetParam\Bool(
-                'Display wrapper', false, false
-            ),
-        );
-    }
-
-    /**
-     * getDefaultTemplate 
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'address/wrapper.tpl';
-    }
-
-    /**
-     * useBodyTemplate 
-     * 
-     * @return boolean 
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function useBodyTemplate()
-    {
-        return !$this->getParam(self::PARAM_DISPLAY_WRAPPER);
-    }
 
     /**
      * getSchemaFields 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -193,10 +141,9 @@ class Address extends \XLite\View\Dialog
      * getFieldValue 
      * 
      * @param string  $fieldName    Field name
-     * @param boolean $processValue Process value flag
+     * @param boolean $processValue Process value flag OPTIONAL
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -235,7 +182,6 @@ class Address extends \XLite\View\Dialog
      * getProfileId 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -245,34 +191,10 @@ class Address extends \XLite\View\Dialog
     }
 
     /**
-     * Return title
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return 'Address';
-    }
-
-    /**
-     * Return templates directory name
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDir()
-    {
-        return 'address/' . $this->getParam(self::PARAM_DISPLAY_MODE);
-    }
-
-    /**
      * Get a list of JS files required to display the widget properly 
      * 
      * @return array
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getJSFiles()
@@ -291,7 +213,6 @@ class Address extends \XLite\View\Dialog
      * Register CSS files
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -304,4 +225,76 @@ class Address extends \XLite\View\Dialog
         return $list;
     }
 
+
+    /**
+     * Return title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return 'Address';
+    }
+
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return 'address/' . $this->getParam(self::PARAM_DISPLAY_MODE);
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_DISPLAY_MODE => new \XLite\Model\WidgetParam\String(
+                'Display mode', self::DISPLAY_MODE_TEXT, false
+            ),
+            self::PARAM_ADDRESS => new \XLite\Model\WidgetParam\Object(
+                'Address object', null, false
+            ),
+            self::PARAM_DISPLAY_WRAPPER => new \XLite\Model\WidgetParam\Bool(
+                'Display wrapper', false, false
+            ),
+        );
+    }
+
+    /**
+     * getDefaultTemplate 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'address/wrapper.tpl';
+    }
+
+    /**
+     * useBodyTemplate 
+     * 
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function useBodyTemplate()
+    {
+        return !$this->getParam(self::PARAM_DISPLAY_WRAPPER);
+    }
 }

@@ -15,7 +15,7 @@
 
 <div class="upload-addon-form">
 
-<form action="admin.php" method="POST" name="uploadAddonsForm" enctype="multipart/form-data" onsubmit="javascript:this.submit();">
+<form action="admin.php" method="post" name="uploadAddonsForm" enctype="multipart/form-data" onsubmit="javascript:this.submit();">
 
   <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}" />
 

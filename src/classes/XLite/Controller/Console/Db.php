@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Console;
@@ -31,9 +31,8 @@ namespace XLite\Controller\Console;
 /**
  * Db services controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Db extends \XLite\Controller\Console\AConsole
 {
@@ -41,7 +40,7 @@ class Db extends \XLite\Controller\Console\AConsole
      * Load fixtures from YAML file
      * 
      * @return void
-     * @access protected
+     * @throws \PDOException
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -81,7 +80,6 @@ class Db extends \XLite\Controller\Console\AConsole
      * Get help for loadFixtures action
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -94,7 +92,7 @@ class Db extends \XLite\Controller\Console\AConsole
      * Unload fixtures based on YAML file
      * 
      * @return void
-     * @access protected
+     * @throws \PDOException
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -134,7 +132,6 @@ class Db extends \XLite\Controller\Console\AConsole
      * Get help for unloadFixtures action
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -147,7 +144,6 @@ class Db extends \XLite\Controller\Console\AConsole
      * Export DB schema 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -187,7 +183,6 @@ class Db extends \XLite\Controller\Console\AConsole
      * Help for export_schema action
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -201,7 +196,6 @@ class Db extends \XLite\Controller\Console\AConsole
      * Update schema
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -215,7 +209,6 @@ class Db extends \XLite\Controller\Console\AConsole
      * Drop DB schema
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -229,7 +222,6 @@ class Db extends \XLite\Controller\Console\AConsole
      * Recreate schema
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -244,7 +236,6 @@ class Db extends \XLite\Controller\Console\AConsole
      * Truncate all data
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -31,30 +31,16 @@ namespace XLite\Controller\Customer;
 /**
  * Web-based payment method return
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class PaymentReturn extends \XLite\Controller\Customer\ACustomer
 {
     /**
-     * This controller is always accessible
-     * TODO - check if it's really needed; remove if not
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function checkStorefrontAccessability()
-    {
-        return true;
-    }
-
-    /**
      * Handles the request
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function handleRequest()
@@ -64,11 +50,24 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
         parent::handleRequest();
     }
 
+
+    /**
+     * This controller is always accessible
+     * TODO - check if it's really needed; remove if not
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkStorefrontAccessability()
+    {
+        return true;
+    }
+
     /**
      * Process return
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -94,9 +93,13 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
         if (!$txn) {
 
             $methods = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findAllActive();
+
             foreach ($methods as $method) {
+
                 if (method_exists($method->getProcessor(), 'getCallbackOwnerTransaction')) {
+
                     $txn = $method->getProcessor()->getReturnOwnerTransaction();
+                    
                     if ($txn) {
                         break;
                     }
@@ -111,8 +114,8 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
             \XLite\Core\Database::getEM()->persist($txn);
             \XLite\Core\Database::getEM()->flush();
 
-            $url = \XLite::getShopUrl(
-                $this->buildUrl('checkout', 'return', array('order_id' => $txn->getOrder()->getOrderId())),
+            $url = \XLite::getShopURL(
+                $this->buildURL('checkout', 'return', array('order_id' => $txn->getOrder()->getOrderId())),
                 $this->config->Security->customer_security
             );
 
@@ -126,14 +129,14 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
                     break;
 
                 default:
-                    $this->setReturnUrl($url);
+                    $this->setReturnURL($url);
             }
 
         } else {
             // TODO - add error logging
 
-            $this->setReturnUrl(
-                $this->buildUrl('checkout')
+            $this->setReturnURL(
+                $this->buildURL('checkout')
             );
         }
 
@@ -146,7 +149,6 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
      * @param integer $time Redirect delay OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,30 +31,76 @@ namespace XLite\Controller\Admin;
 /**
  * Profile management controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Profile extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Return value for the "register" mode param
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getRegisterMode()
+    {
+        return 'register';
+    }
+
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Edit profile';
+    }
+
+    /**
+     * The "mode" parameter used to determine if we create new or modify existing profile
+     *
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isRegisterMode()
+    {
+        return self::getRegisterMode() === \XLite\Core\Request::getInstance()->mode;
+    }
+
+
+    /**
+     * Alias
+     *
+     * @return \XLite\Model\Profile
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProfile()
+    {
+        return $this->getModelForm()->getModelObject() ?: new \XLite\Model\Profile();
+    }
+
+    /**
      * Common method to determine current location
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getLocation()
     {
-        return $this->getModelForm()->getModelObject()->getLogin();
+        return $this->getProfile()->getLogin();
     }
 
     /**
      * Add part to the location nodes list
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -69,7 +115,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      * Class name for the \XLite\View\Model\ form
      * 
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getModelFormClass()
@@ -81,7 +127,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      * Modify profile action
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function doActionModify()
@@ -93,7 +139,6 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      * actionPostprocessModify 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -113,13 +158,13 @@ class Profile extends \XLite\Controller\Admin\AAdmin
             } else {
                 
                 // Send notification to the user
-                \XLite\Core\Mailer::sendProfileCreatedUserNotification($this->getModelForm()->getModelObject());
+                \XLite\Core\Mailer::sendProfileCreatedUserNotification($this->getProfile());
 
                 // Send notification to the users department
-                \XLite\Core\Mailer::sendProfileCreatedAdminNotification($this->getModelForm()->getModelObject());
+                \XLite\Core\Mailer::sendProfileCreatedAdminNotification($this->getProfile());
 
                 // Return to the created profile page
-                $params = array('profile_id' => $this->getModelForm()->getModelObject()->getProfileId());
+                $params = array('profile_id' => $this->getProfile()->getProfileId());
             }
 
         } else {
@@ -127,13 +172,13 @@ class Profile extends \XLite\Controller\Admin\AAdmin
             // Existsing profile is updated
 
             // Send notification to the user
-            \XLite\Core\Mailer::sendProfileUpdatedUserNotification($this->getModelForm()->getModelObject());
+            \XLite\Core\Mailer::sendProfileUpdatedUserNotification($this->getProfile());
 
             // Send notification to the users department
-            \XLite\Core\Mailer::sendProfileUpdatedAdminNotification($this->getModelForm()->getModelObject());
+            \XLite\Core\Mailer::sendProfileUpdatedAdminNotification($this->getProfile());
 
             // Get profile ID from modified profile model
-            $profileId = $this->getModelForm()->getModelObject()->getProfileId();
+            $profileId = $this->getProfile()->getProfileId();
 
             // Return to the profile page
             $params = array('profile_id' => $profileId);
@@ -141,7 +186,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
         }
 
         if (!empty($params)) {
-            $this->setReturnUrl($this->buildURL('profile', '', $params));
+            $this->setReturnURL($this->buildURL('profile', '', $params));
         }
     }
 
@@ -149,46 +194,18 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      * Delete profile action
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function doActionDelete()
     {
-        $userLogin = $this->getModelForm()->getModelObject()->getLogin();
+        $userLogin = $this->getProfile()->getLogin();
 
         $result = $this->getModelForm()->performAction('delete');
 
         // Send notification to the user
         \XLite\Core\Mailer::sendProfileDeletedAdminNotification($userLogin);
 
-        $this->setReturnUrl($this->buildURL('users', '', array('mode' => 'search')));
+        $this->setReturnURL($this->buildURL('users', '', array('mode' => 'search')));
     }
-
-    /**
-     * Return value for the "register" mode param
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getRegisterMode()
-    {
-        return 'register';
-    }
-
-    /**
-     * The "mode" parameter used to determine if we create new or modify existing profile
-     *
-     * @return boolean 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isRegisterMode()
-    {
-        return self::getRegisterMode() === \XLite\Core\Request::getInstance()->mode;
-    }
-
 }

@@ -39,11 +39,12 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @see    ____func_see____
      * @since  3.0.0
      */
+
     public function testStructure()
     {
         $list = $this->getListSelector();
 
-        $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'toys'));
+        $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'toys'));
         $this->open('store/category/0/category_id-' . $c2->getCategoryId());
 
         // Make sure there are no QuickLook buttons in the table mode
@@ -96,9 +97,10 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @see    ____func_see____
      * @since  3.0.0
      */
+
     public function testProductOptions()
     {
-        $cat = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'apparel'));
+        $cat = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'apparel'));
         list($product, $selector) = $this->popupTestProduct('store/category/0/category_id-' . $cat->getCategoryId(), '00000');
         $id = $product->getProductId();
 
@@ -208,10 +210,11 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @see    ____func_see____
      * @since  3.0.0
      */
+
     public function testGalleryAndZoomer()
     {
-        $c1 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'apparel'));
-        $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'toys'));
+        $c1 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'apparel'));
+        $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'toys'));
 
         $products = array(
             array('url' => 'store/category/0/category_id-' . $c1->getCategoryId(), 'id' => '00002'),
@@ -302,7 +305,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      */
     public function testAdd2Cart()
     {
-        $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanUrl' => 'toys'));
+        $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'toys'));
         list($product, $selector) = $this->popupTestProduct('store/category/0/category_id-' . $c2->getCategoryId(), '00022');
         $id = $product->getProductId();
 
@@ -313,11 +316,40 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         $cartButtonSelector = "$formSelector .product-details-info .product-buttons button.bright.add2cart";
         $buyButtonSelector = "$formSelector .product-details-info .product-buttons-added button.action.buy-more";
         $continueButtonSelector = "$formSelector .product-details-info .product-buttons-added button.bright.continue";
+        $quantitySelector = $formSelector . " .product-details-info .product-buttons input.quantity";
 
         $this->assertElementPresent($cartButtonSelector, "Add-to-cart button is missing (#1)");
         $this->assertElementNotPresent($buyButtonSelector, "Buy-now button is visible (#1)");
         $this->assertElementNotPresent($continueButtonSelector, "Continue-button is visible (#1)");
 
+        // Inventory tracking: check unallowed values (inventory tracking, add to cart button)
+        $qtyBlurOperation = 'jQuery(".product-details input.quantity").blur()';
+        $errorDivSelector = 'div.amount' . $product->getProductId() . 'formError:visible';
+        $errorQtySelector = 'input.quantity.wrong-amount';
+
+        $this->typeKeys($quantitySelector, -3);
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryPresent($errorDivSelector, 'check minimal allowed quantity error');
+        $this->assertJqueryPresent($errorQtySelector, 'check minimal allowed quantity');
+        $this->assertJqueryPresent('button.bright.add2cart.disabled.add2cart-disabled', 'check disabled add to cart button (min qty)');
+
+        $this->typeKeys($quantitySelector, 50);
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryNotPresent($errorDivSelector, 'check normalized quantity error');
+        $this->assertJqueryNotPresent($errorQtySelector, 'check normalized quantity');
+        $this->assertJqueryNotPresent('button.bright.add2cart.disabled.add2cart-disabled', 'check enabled add to cart button');
+
+        $this->typeKeys($quantitySelector, 51);
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryPresent($errorDivSelector, 'check maximum allowed quantity error');
+        $this->assertJqueryPresent($errorQtySelector, 'check maximum allowed quantity');
+        $this->assertJqueryPresent('button.bright.add2cart.disabled.add2cart-disabled', 'check disabled add to cart button (max qty)');
+
+
+
+        // Add to cart
+        $this->typeKeys($quantitySelector, 1);
+        $this->getJSExpression($qtyBlurOperation);
         $this->click($cartButtonSelector);
 
         $qty++;
@@ -340,6 +372,28 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         $this->assertElementPresent($buyButtonSelector, "Buy-now button is missing (#2)");
         $this->assertElementPresent($continueButtonSelector, "Continue-button is missing (#2)");
 
+        // Inventory tracking: check unallowed values (inventory tracking, add to cart button)
+        $this->typeKeys($quantitySelector, -3);
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryPresent($errorDivSelector, 'check minimal allowed quantity error');
+        $this->assertJqueryPresent($errorQtySelector, 'check minimal allowed quantity');
+        $this->assertJqueryPresent('button.action.buy-more.disabled.add2cart-disabled', 'check disabled buy now button (min qty)');
+
+        $this->typeKeys($quantitySelector, 49);
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryNotPresent($errorDivSelector, 'check normalized quantity error');
+        $this->assertJqueryNotPresent($errorQtySelector, 'check normalized quantity');
+        $this->assertJqueryNotPresent('button.action.buy-more.disabled.add2cart-disabled', 'check enabled buy now button');
+
+        $this->typeKeys($quantitySelector, 50);
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryPresent($errorDivSelector, 'check maximum allowed quantity error');
+        $this->assertJqueryPresent($errorQtySelector, 'check maximum allowed quantity');
+        $this->assertJqueryPresent('button.action.buy-more.disabled.add2cart-disabled', 'check disabled buy now button (max qty)');
+
+        // Buy more
+        $this->typeKeys($quantitySelector, 1);
+        $this->getJSExpression($qtyBlurOperation);
         $this->click($buyButtonSelector);
 
         $qty++;
@@ -355,19 +409,13 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
             10000,
             "Minicart widget displays a wrong qty (#1)"
         );
-
-
-        // TODO - Continue button
-
-        // TODO - rework after Inventory tracking module is changed
-
     }
 
     /**
      * Open a category page and popup a Quicklook for a product.
      * Returns a list of a product object and a CSS selector to the Quicklook popup
      * 
-     * @param string  $categoryUrl URL of a category page
+     * @param string  $categoryURL URL of a category page
      * @param integer $productId   Product ID
      *  
      * @return array
@@ -375,10 +423,10 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function popupTestProduct($categoryUrl, $productId)
+    protected function popupTestProduct($categoryURL, $productId)
     {
         $list = $this->getListSelector();
-        $this->open($categoryUrl);
+        $this->open($categoryURL);
         $this->switchDisplayMode('grid');
 
         $id = $productId;

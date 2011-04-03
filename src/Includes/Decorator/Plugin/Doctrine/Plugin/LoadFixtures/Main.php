@@ -38,17 +38,17 @@ namespace Includes\Decorator\Plugin\Doctrine\Plugin\LoadFixtures;
 class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 {
     /**
-     * Execute "postprocess" hook handler
+     * Execute certain hook handle
      * 
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function executeHookHandlerPostprocess()
+    public function executeHookHandlerStepThird()
     {
-        foreach (\Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::getFixtures() as $p) {
-            \XLite\Core\Database::getInstance()->loadFixturesFromYaml($p);
+        foreach (\Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::getFixtures() as $fixture) {
+            \XLite\Core\Database::getInstance()->loadFixturesFromYaml($fixture);
         }
 
         \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::removeFixtures();

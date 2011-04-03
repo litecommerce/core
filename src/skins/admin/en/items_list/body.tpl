@@ -10,8 +10,8 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
+<div IF="hasResults()" class="items-list widgetclass-{getWidgetClass()} widgettarget-{getWidgetTarget()} sessioncell-{getSessionCell()}">
 
-<div class="items-list widgetclass-{getWidgetClass()} widgettarget-{getWidgetTarget()} sessioncell-{getSessionCell()}">
   <div IF="pager.isVisible()" class="list-pager">{pager.display()}</div>
 
   <div IF="isHeaderVisible()" class="list-header">{displayViewListContent(#itemsList.admin.header#)}</div>
@@ -20,6 +20,8 @@
 
   <div IF="pager.isVisible()" class="list-pager">{pager.display()}</div>
 
-  <p /><div IF="isFooterVisible()" class="list-footer">{displayViewListContent(#itemsList.admin.footer#)}</div>
+  <div IF="isFooterVisible()" class="list-footer">{displayViewListContent(#itemsList.admin.footer#)}</div>
 
 </div>
+
+<widget IF="isEmptyListTemplateVisible()" template="{getEmptyListTemplate()}" />

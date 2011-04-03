@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Model\Profile;
@@ -31,9 +31,8 @@ namespace XLite\View\Model\Profile;
 /**
  * Profile model widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AProfile extends \XLite\View\Model\AModel
 {
@@ -54,9 +53,9 @@ abstract class AProfile extends \XLite\View\Model\AModel
     /**
      * Schema of the "Billing/Shipping address" sections
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $addressSchema = array(
         'address_type' => array(
@@ -117,10 +116,149 @@ abstract class AProfile extends \XLite\View\Model\AModel
 
 
     /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'profile';
+    
+        return $result;
+    }
+
+
+    /**
+     * Save current form reference and sections list, and initialize the cache
+     *
+     * @param array $params   Widget params OPTIONAL
+     * @param array $sections Sections list OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $params = array(), array $sections = array())
+    {
+        $this->sections += $this->getProfileAddressSections();
+
+        parent::__construct($params, $sections);
+
+        $this->schemaHidden += $this->getShipAsBillSchema();
+    }
+
+    /**
+     * Return model object to use
+     *
+     * @return \XLite\Model\Profile
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModelObject()
+    {
+        $profile = parent::getModelObject();
+
+        // Reset profile if it's not valid
+        if (!\XLite\Core\Auth::getInstance()->checkProfile($profile)) {
+            $profile = \XLite\Model\CachingFactory::getObject(__METHOD__, '\XLite\Model\Profile');
+        }
+
+        return $profile;
+    }
+
+    /**
+     * Return fields list by the corresponding schema
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFormFieldsForSectionBilling()
+    {
+        $result = $this->getFieldsBySchema($this->getAddressSchema('billing'));
+
+        // For country <-> state syncronization
+        $this->setStateSelectorIds($result, 'billing');
+
+        return $result;
+    }
+
+    /**
+     * Return fields list by the corresponding schema
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFormFieldsForSectionShipping()
+    {
+        $result = $this->getFieldsBySchema($this->getAddressSchema('shipping'));
+
+        // For country <-> state syncronization
+        $this->setStateSelectorIds($result, 'shipping');
+
+        return $result;
+    }
+
+    /**
+     * Check if billing and shipping addresses are the same
+     * 
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getShipAsBillFlag()
+    {
+        return $this->isValid() && $this->getModelObject()->isSameAddress();
+    }
+    
+    /**
+     * getRequestProfileId 
+     * 
+     * @return integer|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRequestProfileId()
+    {
+        return \XLite\Core\Request::getInstance()->profile_id;
+    }
+
+    /**
+     * Return current profile ID
+     * 
+     * @return integer 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProfileId()
+    {
+        return $this->getRequestProfileId() ?: \XLite\Core\Session::getInstance()->profile_id;
+    }
+
+    /**
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = $this->getDir() . '/profile/addresses.css';
+
+        return $list;
+    }
+
+
+    /**
      * Add the checkbox to the fields list 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -135,10 +273,8 @@ abstract class AProfile extends \XLite\View\Model\AModel
 
     /**
      * Return instance of the "Ship as bill" separator field
-     * PHP_5_3
      * 
      * @return \XLite\View\FormField\Separator\ShippingAddress
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -159,7 +295,6 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * Return list of the class-specific sections
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -174,8 +309,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
     /**
      * This object will be used if another one is not pased
      *
-     * @return \XLite\Model\AModel
-     * @access protected
+     * @return \XLite\Model\Profile
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -194,7 +328,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * Return name of web form widget class
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getFormClass()
@@ -209,7 +343,6 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * @param string $section Current section
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -227,7 +360,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * @param string $name Field/property name
      *
      * @return mixed
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getModelObjectValue($name)
@@ -267,7 +400,6 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * Define form field classes and values 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -288,7 +420,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * @param string $type Address type
      *  
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getAddressSchema($type)
@@ -306,7 +438,6 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * Some JavaScript code to insert
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -319,7 +450,6 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * Return text for the "Submit" button
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -332,7 +462,6 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * Return list of the "Button" widgets
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -352,7 +481,6 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * @param array $data Request data
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -375,7 +503,6 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * prepareDataForMapping 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -437,7 +564,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * @param array $data Data to set
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function setModelProperties(array $data)
@@ -450,150 +577,5 @@ abstract class AProfile extends \XLite\View\Model\AModel
                 $this->prepareObjectForMapping()->addAddresses($address);
             }
         }
-    }
-
-
-    /**
-     * Return model object to use
-     *
-     * @return \XLite\Model\AModel
-     * @access public
-     * @since  3.0.0
-     */
-    public function getModelObject()
-    {
-        $profile = parent::getModelObject();
-
-        // Reset profile if it's not valid
-        if (!\XLite\Core\Auth::getInstance()->checkProfile($profile)) {
-            $profile = \XLite\Model\CachingFactory::getObject(__METHOD__, '\XLite\Model\Profile');
-        }
-
-        return $profile;
-    }
-
-    /**
-     * Return fields list by the corresponding schema
-     *
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getFormFieldsForSectionBilling()
-    {
-        $result = $this->getFieldsBySchema($this->getAddressSchema('billing'));
-
-        // For country <-> state syncronization
-        $this->setStateSelectorIds($result, 'billing');
-
-        return $result;
-    }
-
-    /**
-     * Return fields list by the corresponding schema
-     *
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getFormFieldsForSectionShipping()
-    {
-        $result = $this->getFieldsBySchema($this->getAddressSchema('shipping'));
-
-        // For country <-> state syncronization
-        $this->setStateSelectorIds($result, 'shipping');
-
-        return $result;
-    }
-
-    /**
-     * Check if billing and shipping addresses are the same
-     * 
-     * @return boolean 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getShipAsBillFlag()
-    {
-        return $this->isValid() && $this->getModelObject()->isSameAddress();
-    }
-    
-    /**
-     * getRequestProfileId 
-     * 
-     * @return integer|void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getRequestProfileId()
-    {
-        return \XLite\Core\Request::getInstance()->profile_id;
-    }
-
-    /**
-     * Return current profile ID
-     * 
-     * @return integer 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProfileId()
-    {
-        return $this->getRequestProfileId() ?: \XLite\Core\Session::getInstance()->profile_id;
-    }
-
-    /**
-     * Get a list of CSS files required to display the widget properly
-     *
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = $this->getDir() . '/profile/addresses.css';
-
-        return $list;
-    }
-
-    /**
-     * Save current form reference and sections list, and initialize the cache
-     *
-     * @param array $params   Widget params
-     * @param array $sections Sections list
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __construct(array $params = array(), array $sections = array())
-    {
-        $this->sections += $this->getProfileAddressSections();
-
-        parent::__construct($params, $sections);
-
-        $this->schemaHidden += $this->getShipAsBillSchema();
-    }
-
-
-    /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = 'profile';
-    
-        return $result;
     }
 }

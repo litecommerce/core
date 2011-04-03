@@ -14,34 +14,57 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
 
 /**
  * Login
+ * FIXME: must be completely refactored
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Login extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * handleRequest 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest()
+    {
+        if (
+            \XLite\Core\Auth::getInstance()->isLogged()
+            && 'logoff' !== \XLite\Core\Request::getInstance()->{static::PARAM_ACTION}
+        ) {
+            
+            if (!\XLite\Core\Auth::getInstance()->isAdmin()) {
+                \XLite\Core\Auth::getInstance()->logoff();
+            }
+
+            $this->setReturnURL($this->buildURL());
+        }
+
+        return parent::handleRequest();
+    }
+
+    /**
      * getAccessLevel 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -51,21 +74,18 @@ class Login extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * fillForm 
+     * init
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function fillForm()
+    public function init()
     {
-        parent::fillForm();
+        parent::init();
         
-        $login = $this->get('login');
-        
-        if (empty($login)) {
-            $this->set('login', $this->auth->remindLogin());
+        if (empty(\XLite\Core\Request::getInstance()->login)) {
+            \XLite\Core\Request::getInstance()->login = $this->auth->remindLogin();
         }
     }
 
@@ -73,7 +93,6 @@ class Login extends \XLite\Controller\Admin\AAdmin
      * Login 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -87,27 +106,41 @@ class Login extends \XLite\Controller\Admin\AAdmin
         if (is_int($profile) && \XLite\Core\Auth::RESULT_ACCESS_DENIED === $profile) {
 
             $this->set('valid', false);
-            \XLite\Core\TopMessage::getInstance()->add('Invalid login or password', \XLite\Core\TopMessage::ERROR);
+            \XLite\Core\TopMessage::addError('Invalid login or password');
             $returnUrl = $this->buildUrl('login');
 
         } elseif (isset($this->session->lastWorkingURL)) {
-            $returnUrl = $this->xlite->session->get('lastWorkingURL');
+            $returnURL = $this->xlite->session->get('lastWorkingURL');
             $this->xlite->session->set('lastWorkingURL', null);
 
         } else {
-            $returnUrl = $this->buildUrl();
+            $returnURL = $this->buildURL();
         }
 
-        $this->setReturnUrl($returnUrl);
+        $this->setReturnURL($returnURL);
     }
 
-    function action_logoff()
+    /**
+     * Logoff 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionLogoff()
     {
         $this->auth->logoff();
     }
 
-    function getSecure()
+    /**
+     * Perform some actions before redirect
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function actionPostprocessLogin()
     {
-        return $this->session->get('no_https') ? false : $this->config->Security->admin_security;
+        $this->updateMarketplaceDataCache();
     }
 }

@@ -10,19 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div class="order-title">
-  Order #{order.order_id}, {formatTime(order.date)}
-  <div class="status-{order.status}">
-    <widget template="common/order_status.tpl" />
-  </div>
+<div class="order-box">
+  {displayViewListContent(#order.children#,_ARRAY_(#order#^getOrder()))}
 </div>
-
-<div class="order-buttons">
-  <a href="{buildUrl(#order#,##,_ARRAY_(#order_id#^order.order_id,#printable#^#1#))}" class="printable first"><img src="images/spacer.gif" alt="" /><span>Print invoice</span></a>
-  |
-  <a href="{buildUrl(#order_list#,##,_ARRAY_(#mode#^#search#))}" class="last">Back to order list</a>
-</div>
-
-<hr class="tiny" />
-
-<widget template="common/invoice.tpl" />

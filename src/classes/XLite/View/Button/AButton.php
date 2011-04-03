@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Button;
@@ -31,9 +31,8 @@ namespace XLite\View\Button;
 /**
  * Abstract button
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AButton extends \XLite\View\AView
 {
@@ -41,6 +40,8 @@ abstract class AButton extends \XLite\View\AView
      * Widget parameter names
      */
 
+    const PARAM_NAME     = 'name';
+    const PARAM_VALUE    = 'value';
     const PARAM_LABEL    = 'label';
     const PARAM_STYLE    = 'style';
     const PARAM_DISABLED = 'disabled';
@@ -50,19 +51,51 @@ abstract class AButton extends \XLite\View\AView
     /**
      * allowedJSEvents 
      * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $allowedJSEvents = array(
         'onclick' => 'One click',
     );
 
+
+    /**
+     * Get a list of CSS files required to display the widget properly 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'button/css/button.css';
+
+        return $list;
+    }
+
+    /**
+     * Get a list of JavaScript files required to display the widget properly
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = 'button/js/button.js';
+
+        return $list;
+    }
+
+
     /**
      * getDefaultLabel
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -75,7 +108,7 @@ abstract class AButton extends \XLite\View\AView
      * Return button text 
      * 
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getButtonLabel()
@@ -87,7 +120,7 @@ abstract class AButton extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -95,6 +128,8 @@ abstract class AButton extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
+            self::PARAM_NAME     => new \XLite\Model\WidgetParam\String('Name', '', true),
+            self::PARAM_VALUE    => new \XLite\Model\WidgetParam\String('Value', '', true),
             self::PARAM_LABEL    => new \XLite\Model\WidgetParam\String('Label', $this->getDefaultLabel(), true),
             self::PARAM_STYLE    => new \XLite\Model\WidgetParam\String('Button style', ''),
             self::PARAM_DISABLED => new \XLite\Model\WidgetParam\Bool('Disabled', 0),
@@ -106,7 +141,6 @@ abstract class AButton extends \XLite\View\AView
      * getClass 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -119,7 +153,6 @@ abstract class AButton extends \XLite\View\AView
      * getId 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -128,35 +161,63 @@ abstract class AButton extends \XLite\View\AView
         return $this->getParam(self::PARAM_ID);
     }
 
-
     /**
-     * Get a list of CSS files required to display the widget properly 
+     * Return button name 
      * 
-     * @return array
-     * @access public
+     * @return string
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCSSFiles()
+    protected function getName()
     {
-        $list = parent::getCSSFiles();
-        $list[] = 'button/css/button.css';
-
-        return $list;
+        return $this->getParam(self::PARAM_NAME);
     }
 
     /**
-     * Get a list of JavaScript files required to display the widget properly
+     * Return button value 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getValue()
+    {
+        return $this->getParam(self::PARAM_VALUE);
+    }
+
+    /**
+     * hasName 
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getJSFiles()
+    protected function hasName()
     {
-        $list = parent::getJSFiles();
-        $list[] = 'button/button.js';
+        return '' !== $this->getParam(self::PARAM_NAME);
+    }
 
-        return $list;
+    /**
+     * hasValue 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function hasValue()
+    {
+        return '' !== $this->getParam(self::PARAM_VALUE);
+    }
+
+    /**
+     * hasClass 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function hasClass()
+    {
+        return '' !== $this->getParam(self::PARAM_STYLE);
     }
 }
-

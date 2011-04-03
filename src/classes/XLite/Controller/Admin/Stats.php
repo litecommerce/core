@@ -14,77 +14,92 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
 
 /**
- * ____description____
+ * Store statisics page controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Stats extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * params 
+     * Return the current page title (for the content area)
      * 
-     * @var    string
-     * @access public
+     * @return string
      * @see    ____var_see____
+     * @since  3.0.0
      */
-    public $params = array('target');
+    public function getTitle()
+    {
+        return $this->t('Statistics');
+    }
 
     /**
      * getTodayDate 
      * 
-     * @return integer
+     * @return void
      * @see    ____func_see____
+     * @since  3.0.0
      */
-    function getTodayDate()
+    protected function getTodayDate()
     {
         if (is_null($this->todayDate)) {
-            $this->todayDate = mktime(0, 0 ,0 , date('m'), date('d'), date('Y'));
+            $this->todayDate = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
         }
+
         return $this->todayDate;
     }
 
     /**
      * getWeekDate 
      * 
-     * @return int
+     * @return void
      * @see    ____func_see____
+     * @since  3.0.0
      */
-    function getWeekDate()
+    protected function getWeekDate()
     {
         if (is_null($this->weekDate)) {
-            $this->weekDate  = mktime(0, 0 ,0 , date('m'), date('d') + (((date('w') == 0) ? -7 : ( -1 * date('w'))) + 1), date('Y'));
+            $this->weekDate  = mktime(
+                0, 
+                0,
+                0, 
+                date('m'), 
+                date('d') + (((date('w') == 0) ? -7 : ( -1 * date('w'))) + 1), 
+                date('Y')
+            );
         }
+
         return $this->weekDate;
     }
 
     /**
      * getMonthDate 
      * 
-     * @return int
+     * @return void
      * @see    ____func_see____
+     * @since  3.0.0
      */
-    function getMonthDate()
+    protected function getMonthDate()
     {
         if (is_null($this->monthDate)) {
-            $this->monthDate = mktime(0, 0 ,0 , date('m'), 1, date('Y'));
+            $this->monthDate = mktime(0, 0, 0, date('m'), 1, date('Y'));
         }
+
         return $this->monthDate;
     }
 }

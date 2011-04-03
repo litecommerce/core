@@ -3,35 +3,28 @@
 
 /**
  * Base class for all LiteCommerce web tests
- *  
- * @category   LiteCommerce_Tests
- * @package    LiteCommerce_Tests
- * @subpackage Main
- * @author     Ruslan R. Fazliev <rrf@x-cart.com> 
- * @copyright  Copyright (c) 2009 Ruslan R. Fazliev <rrf@x-cart.com>
- * @license    http://www.x-cart.com/license.php LiteCommerce license
- * @version    GIT: $Id$
- * @link       http://www.x-cart.com/
- * @see        ____file_see____
- * @since      1.0.0
+ *
+ * @category  LiteCommerce_Tests
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
+require_once dirname(__FILE__) . '/SeleniumTestCase/Driver.php';
 
 /**
  * Selenium test case 
  * 
- * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
 abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase
 {
-    /**
-     * Selenioum common TTL 
-     */
-    const SELENIUM_TTL = 60000;
-
 
     /**
      * Prefix for all classes with test cases
@@ -120,70 +113,6 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     protected $baseURL = null;
 
     /**
-     * Browsers list
-     * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  1.0.0
-     */
-    public static $browsers = array(
-/*
-        array(
-            'name'    => 'Safari (Windows)',
-            'browser' => '*safari',
-            'host'    => 'cormorant.crtdev.local',
-            'port'    => 4444,
-            'timeout' => 10000
-        ),
-        array(
-            'name'    => 'Google chrome (Windows)',
-            'browser' => '*googlechrome',
-            'host'    => 'cormorant.crtdev.local',
-            'port'    => 4444,
-            'timeout' => 10000
-        ),
-        array(
-            'name'    => 'IE 8 (Windows)',
-            'browser' => '*iexplore',
-            'host'    => 'cormorant.crtdev.local',
-            'port'    => 4444,
-            'timeout' => 10000
-        ),
-        array(
-            'name'    => 'FireFox 3 (Windows)',
-            'browser' => '*firefox C:\Program Files\Mozilla Firefox 3\firefox.exe',
-            'host'    => 'cormorant.crtdev.local',
-            'port'    => 4444,
-            'timeout' => 10000
-        ),
-*/
-        array(
-            'name'    => 'FireFox 3.5 (Windows)',
-            'browser' => '*firefox C:\Program Files\Mozilla Firefox 3.5\firefox.exe',
-            'host'    => SELENIUM_SERVER,
-            'port'    => 4444,
-            'timeout' => self::SELENIUM_TTL,
-        ),
-/*
-        array(
-            'name'    => 'Opera 9 (Windows)',
-            'browser' => '*opera C:\Program Files\Opera9\opera.exe',
-            'host'    => 'cormorant.crtdev.local',
-            'port'    => 4444,
-            'timeout' => 10000
-        ),
-         array(
-            'name'    => 'Opera 10 (Windows)',
-            'browser' => '*opera C:\Program Files\Opera10\opera.exe',
-            'host'    => 'cormorant.crtdev.local',
-            'port'    => 4444,
-            'timeout' => 10000
-        ),
-*/
-    );
-
-    /**
      * Unknown nut allowed CSS properties list
      * 
      * @var    array
@@ -220,18 +149,282 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function __construct($name = NULL, array $data = array(), array $browser = array())
+    public function __construct($name = NULL, array $data = array(), $dataName = '', array $browser = array())
     {
         $this->browserName = isset($browser['name']) ? $browser['name'] : 'unknown';
+
+        /*
         $this->coverageScriptUrl = defined('SELENIUM_COVERAGE_URL')
             ? SELENIUM_COVERAGE_URL . '/phpunit_coverage.php'
             : SELENIUM_SOURCE_URL . '/phpunit_coverage.php';
+        */
+
+        if (defined('SELENIUM_SCREENSHOTS_PATH') && defined('SELENIUM_SCREENSHOTS_URL')) {
+            $this->captureScreenshotOnFailure = true;
+            $this->screenshotPath = SELENIUM_SCREENSHOTS_PATH;
+            $this->screenshotUrl = SELENIUM_SCREENSHOTS_URL;
+        }
 
         if (defined('W3C_VALIDATION')) {
             $this->validatePage = true;
         }
 
-        parent::__construct($name, $data, $browser);
+        parent::__construct($name, $data, $dataName, $browser);
+
+        $this->testConfig = $this->getTestConfigOptions();
+    }
+
+    /**
+     * @param  string $className
+     * @return PHPUnit_Framework_TestSuite
+     */
+    public static function suite($className)
+    {
+		$suite = new PHPUnit_Framework_TestSuite;
+        $suite->setName($className);
+
+        $class            = new ReflectionClass($className);
+        $classGroups      = PHPUnit_Util_Test::getGroups($className);
+        $staticProperties = $class->getStaticProperties();
+
+        if (defined('XLITE_TEST_BROWSERS_LIST')) {
+            $staticProperties['browsers'] = unserialize(XLITE_TEST_BROWSERS_LIST);
+        }
+
+        // Leave only one browser in deployment mode
+        if (defined('DEPLOYMENT_TEST') && !empty($staticProperties['browsers'])) {
+            $_browsers = array();
+            foreach ($staticProperties['browsers'] as $key => $value) {
+                $_browsers[$key] = $value;
+                break;
+            }
+            $staticProperties['browsers'] = $_browsers;
+        }
+
+        // Create tests from Selenese/HTML files.
+        if (isset($staticProperties['seleneseDirectory']) &&
+            is_dir($staticProperties['seleneseDirectory'])) {
+            $files = array_merge(
+              self::getSeleneseFiles($staticProperties['seleneseDirectory'], '.htm'),
+              self::getSeleneseFiles($staticProperties['seleneseDirectory'], '.html')
+            );
+
+            // Create tests from Selenese/HTML files for multiple browsers.
+            if (!empty($staticProperties['browsers'])) {
+                foreach ($staticProperties['browsers'] as $browser) {
+                    $browserSuite = new PHPUnit_Framework_TestSuite;
+                    $browserSuite->setName($className . ': ' . $browser['name']);
+
+                    foreach ($files as $file) {
+                        $browserSuite->addTest(
+                          new $className($file, array(), '', $browser),
+                          $classGroups
+                        );
+                    }
+
+                    $suite->addTest($browserSuite);
+                }
+            }
+
+            // Create tests from Selenese/HTML files for single browser.
+            else {
+                foreach ($files as $file) {
+                    $suite->addTest(new $className($file), $classGroups);
+                }
+            }
+        }
+
+        // Create tests from test methods for multiple browsers.
+        if (!empty($staticProperties['browsers'])) {
+            foreach ($staticProperties['browsers'] as $browser) {
+				//$browserSuite = new PHPUnit_Framework_TestSuite;
+				$browserSuite = new XLite_Tests_TestSuite;
+                $browserSuite->setName($className . ': ' . $browser['name']);
+
+                foreach ($class->getMethods() as $method) {
+                    if (PHPUnit_Framework_TestSuite::isPublicTestMethod($method)) {
+                        $name   = $method->getName();
+                        $data   = PHPUnit_Util_Test::getProvidedData($className, $name);
+                        $groups = PHPUnit_Util_Test::getGroups($className, $name);
+
+                        // Test method with @dataProvider.
+                        if (is_array($data) || $data instanceof Iterator) {
+                            $dataSuite = new PHPUnit_Framework_TestSuite_DataProvider(
+                              $className . '::' . $name
+                            );
+
+                            foreach ($data as $_dataName => $_data) {
+                                $dataSuite->addTest(
+                                  new $className($name, $_data, $_dataName, $browser),
+                                  $groups
+                                );
+                            }
+
+                            $browserSuite->addTest($dataSuite);
+                        }
+
+                        // Test method with invalid @dataProvider.
+                        else if ($data === FALSE) {
+                            $browserSuite->addTest(
+                              new PHPUnit_Framework_Warning(
+                                sprintf(
+                                  'The data provider specified for %s::%s is invalid.',
+                                  $className,
+                                  $name
+                                )
+                              )
+                            );
+                        }
+
+                        // Test method without @dataProvider.
+                        else {
+                            $browserSuite->addTest(
+                              new $className($name, array(), '', $browser), $groups
+                            );
+                        }
+                    }
+                }
+
+                $suite->addTest($browserSuite);
+            }
+        }
+
+        // Create tests from test methods for single browser.
+        else {
+            foreach ($class->getMethods() as $method) {
+                if (PHPUnit_Framework_TestSuite::isPublicTestMethod($method)) {
+                    $name   = $method->getName();
+                    $data   = PHPUnit_Util_Test::getProvidedData($className, $name);
+                    $groups = PHPUnit_Util_Test::getGroups($className, $name);
+
+                    // Test method with @dataProvider.
+                    if (is_array($data) || $data instanceof Iterator) {
+                        $dataSuite = new PHPUnit_Framework_TestSuite_DataProvider(
+                          $className . '::' . $name
+                        );
+
+                        foreach ($data as $_dataName => $_data) {
+                            $dataSuite->addTest(
+                              new $className($name, $_data, $_dataName),
+                              $groups
+                            );
+                        }
+
+                        $suite->addTest($dataSuite);
+                    }
+
+                    // Test method with invalid @dataProvider.
+                    else if ($data === FALSE) {
+                        $suite->addTest(
+                          new PHPUnit_Framework_Warning(
+                            sprintf(
+                              'The data provider specified for %s::%s is invalid.',
+                              $className,
+                              $name
+                            )
+                          )
+                        );
+                    }
+
+                    // Test method without @dataProvider.
+                    else {
+                        $suite->addTest(
+                          new $className($name), $groups
+                        );
+                    }
+                }
+            }
+        }
+
+        return $suite;
+    }
+
+    /**
+     * Get options from ini-file
+     *
+     * @return array
+     * @since  1.0.0
+     */
+    protected function getTestConfigOptions()
+    {
+        $configFile = XLITE_DEV_CONFIG_DIR . '/xlite-test.config.php';
+
+        if (file_exists($configFile) && false !== ($config = parse_ini_file($configFile, true))) {
+            return $config;
+        
+        } else {
+            die('Config file not found: ' . $configFile);
+        }
+    }
+
+    /**
+     * @param  array $browser
+     * @return XLite_Extensions_SeleniumTestCase_Driver
+     * @since  Method available since Release 3.3.0
+     */
+    protected function getDriver(array $browser)
+    {
+        if (isset($browser['name'])) {
+            if (!is_string($browser['name'])) {
+                throw new InvalidArgumentException;
+            }
+        } else {
+            $browser['name'] = '';
+        }
+
+        if (isset($browser['browser'])) {
+            if (!is_string($browser['browser'])) {
+                throw new InvalidArgumentException;
+            }
+        } else {
+            $browser['browser'] = '';
+        }
+
+        if (isset($browser['host'])) {
+            if (!is_string($browser['host'])) {
+                throw new InvalidArgumentException;
+            }
+        } else {
+            $browser['host'] = 'localhost';
+        }
+
+        if (isset($browser['port'])) {
+            if (!is_int($browser['port'])) {
+                throw new InvalidArgumentException;
+            }
+        } else {
+            $browser['port'] = 4444;
+        }
+
+        if (isset($browser['timeout'])) {
+            if (!is_int($browser['timeout'])) {
+                throw new InvalidArgumentException;
+            }
+        } else {
+            $browser['timeout'] = 30000;
+        }
+
+        if (isset($browser['sleep'])) {
+            if (!is_int($browser['sleep'])) {
+                throw new InvalidArgumentException;
+            }
+        } else {
+            $browser['sleep'] = 1;
+        }
+
+        $driver = new XLite_Extensions_SeleniumTestCase_Driver;
+        $driver->setName($browser['name']);
+        $driver->setBrowser($browser['browser']);
+        $driver->setHost($browser['host']);
+        $driver->setPort($browser['port']);
+        $driver->setTimeout($browser['timeout']);
+        $driver->setSleep($browser['sleep']);
+        $driver->setTestCase($this);
+        $driver->setTestId($this->testId);
+
+        $this->drivers[] = $driver;
+
+        return $driver;
     }
 
     /**
@@ -246,7 +439,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     {
         try {
 
-            $shortName = lcfirst(substr($this->name, 4));
+            $shortName = lcfirst(substr($this->getName(), 4));
             if (self::$testsRange && !in_array($shortName, self::$testsRange)) {
                 $this->markTestSkipped();
 
@@ -260,59 +453,57 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
         } catch (\Exception $exception) {
 
-            try {
-                $location = preg_replace('/[\/\\&\?:]/Ss', '-', $this->getLocation());
-                file_put_contents(
-                    LC_ROOT_DIR . 'var/log/selenium.' . $location . '.' . date('Ymd-His') . '.html',
-                    '<!--' . PHP_EOL
-                    . 'Exception: ' . $exception->getMessage() . ';' . PHP_EOL
-                    . (defined('DEPLOYMENT_TEST') ? '' : 'Back trace: ' . var_export(\XLite\Core\Operator::getInstance()->getBackTrace(), true) . PHP_EOL)
-                    . '-->' . PHP_EOL . $this->getHtmlSource()
-                );
+            if (isset($this->drivers[0]) && $this->drivers[0]->getSessionId()) {
+                try {
+                    $location = preg_replace('/[\/\\&\?:]/Ss', '-', $this->getLocation());
+                    $location = preg_replace('/-+/Ss', '-', $location);
+                    $html = $this->getHtmlSource();
+                    $trace = array();
+                    if (!defined('DEPLOYMENT_TEST')) {
+                        $trace = \XLite\Core\Operator::getInstance()->getBackTrace();
+                    }
+                    file_put_contents(
+                        LC_ROOT_DIR . 'var/log/selenium.' . $location . '.' . date('Ymd-His') . '.html',
+                        '<!--' . PHP_EOL
+                        . 'Exception: ' . $exception->getMessage() . ';' . PHP_EOL
+                        . ($trace ? 'Back trace: ' . var_export($trace, true) . PHP_EOL : '')
+                        . '-->' . PHP_EOL
+                        . $html
+                    );
 
-            } catch (\RuntimeException $e) {
+                } catch (\RuntimeException $e) {
+                }
+            }
+            
+            $backtrace = array();
+            foreach ($exception->getTrace() as $t) {
+                $b = null;
+
+                if (isset($t['file'])) {
+                    $b = $t['file'] . ' : ' . $t['line'];
+
+                } elseif (isset($t['function'])) {
+                    $b = 'function ' . $t['function'] . '()';
+                    if (isset($t['line'])) {
+                        $b .= ' : ' . $t['line'];
+                    }
+                }
+
+                if ($b) {
+                    $backtrace[] = $b;
+                }
             }
 
-            try {
-                $this->stop();
-
-            } catch (\RuntimeException $e) {
-            }
+            file_put_contents(
+                LC_ROOT_DIR . 'var/log/selenium.' . date('Ymd-His') . '.backtrace',
+                'Exception: ' . $exception->getMessage() . ';' . PHP_EOL
+                . PHP_EOL
+                . 'Backtrace: ' . PHP_EOL
+                . implode(PHP_EOL, $backtrace) . PHP_EOL
+            );
 
             throw $exception;
         }
-    }
-
-    /**
-     * Get code coverage 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.2.0
-     */
-    protected function getCodeCoverage()
-    {
-        $result = array();
-
-        if (!empty($this->coverageScriptUrl)) {
-            $url = sprintf(
-              '%s?PHPUNIT_SELENIUM_TEST_ID=%s',
-              $this->coverageScriptUrl,
-              $this->testId
-            );
-
-            $buffer = @file_get_contents($url);
-
-            if ($buffer !== false) {
-                $buffer = unserialize($buffer);
-                if ($buffer !== false) {
-                    $result = $this->matchLocalAndRemotePaths($buffer);
-                }
-            }
-        }
-
-        return $result;
     }
 
     /**
@@ -357,12 +548,8 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     protected function setUp()
     {
-        // Print new line between classes
-        $currentClass = get_called_class();
-        if (empty(XLite_Tests_TestSuite::$currentClass) || $currentClass !== XLite_Tests_TestSuite::$currentClass) {
-            echo "\n";
-            XLite_Tests_TestSuite::$currentClass = $currentClass;
-        }
+        // Delay before each test
+        sleep(3);
 
         $this->baseURL = rtrim(SELENIUM_SOURCE_URL, '/') . '/';
 
@@ -388,9 +575,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     protected function tearDown()
     {
-        $this->stop();
-
-        $message = $this->getMessage('', get_called_class(), $this->name);
+        $message = $this->getMessage('', get_called_class(), $this->getName());
         echo (PHP_EOL . sprintf('%\'.-86s', trim($message)));
     }
 
@@ -448,7 +633,13 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     public function getJSExpression($expression)
     {
-        return $this->getEval('selenium.browserbot.getCurrentWindow().' . $expression);
+        $expression = 'selenium.browserbot.getCurrentWindow().' . $expression;
+
+        if (preg_match('/jQuery/Ss', $expression)) {
+            $expression = '("undefined" != typeof(selenium.browserbot.getCurrentWindow) && "undefined" != typeof(selenium.browserbot.getCurrentWindow().jQuery)) ? ' . $expression . ' : null';
+        }
+
+        return $this->getEval($expression);
     }
 
     /**
@@ -503,13 +694,13 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     public function waitInlineProgress($jqueryExpression, $message = null)
     {
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().jQuery("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length > 0',
+        $this->waitForLocalCondition(
+            'jQuery("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length > 0',
             10000,
             'check inline progress mark for ' . $jqueryExpression . ' (' . $message . ')'
         );
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().jQuery("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length == 0',
+        $this->waitForLocalCondition(
+            'jQuery("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length == 0',
             20000,
             'check GONE inline progress mark for ' . $jqueryExpression . ' (' . $message . ')'
         );
@@ -620,6 +811,8 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             array_unshift($condition, '"undefined" != typeof(selenium.browserbot.getCurrentWindow().jQuery)');
         }
 
+        array_unshift($condition, '"undefined" != typeof(selenium.browserbot.getCurrentWindow)');
+
         $this->waitForCondition(
             implode(' && ', $condition),
             isset($ttl) ? $ttl : 10000,
@@ -638,8 +831,9 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __call($command, array $arguments)
+    public function __call($command, $arguments)
     {
+
         $result = null;
 
         try {
@@ -661,8 +855,19 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
             $message = $e->getMessage();
 
+            if (isset($arguments) && !empty($arguments)) {
+                $_arguments = $arguments;
+                $param = (string)array_shift($_arguments);
+            
+            } else {
+                $param = '';
+            }
+
+            echo "\n$command('$param') [ERROR] $message\n";
+
+            /*
             if (
-                'Could not connect to the Selenium RC server.' == $message
+                preg_match('/Could not connect to the Selenium RC server/', $message)
                 || preg_match('/^The response from the Selenium RC server is invalid: Timed out after \d+ms$/Ss', $message)
             ) {
                 
@@ -683,12 +888,16 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
                 } else {
                     $this->fail($e->getMessage());
                 }
+             */
 
-            } else {
+//            } elseif (preg_match('/this\.getCurrentWindow is not a function/', $message)) {
+//                $this->markTestSkipped('Browser down: ' . $e->getMessage());
 
+//            } else {
+    
                 throw $e;
 
-            }
+//            }
         }
 
         return $result;

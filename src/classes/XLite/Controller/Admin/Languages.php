@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controlle
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,17 +31,65 @@ namespace XLite\Controller\Admin;
 /**
  * Languages and language labels controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Languages extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Controller parameters
+     * FIXME: to remove
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $params = array('target', 'language', 'page');
+
+
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Language labels';
+    }
+
+    /**
+     * Get return URL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getReturnURL()
+    {
+        if (\XLite\Core\Request::getInstance()->action) {
+            $url = $this->buildURL(
+                'languages',
+                '',
+                array(
+                    'language' => \XLite\Core\Request::getInstance()->language,
+                    'page'     => max(1, intval(\XLite\Core\Request::getInstance()->page)),
+                )
+            );
+
+        } else {
+            $url = parent::getReturnURL();
+        }
+
+        return $url;
+    }
+
+
+    /**
      * Common method to determine current location
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -51,21 +99,9 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Controller parameters
-     * FIXME: to remove
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $params = array('target', 'language', 'page');
-
-    /**
      * Search labels
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -89,7 +125,6 @@ class Languages extends \XLite\Controller\Admin\AAdmin
      * Active (add) laneguage
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -128,7 +163,6 @@ class Languages extends \XLite\Controller\Admin\AAdmin
      * Inactive (delete) language
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -143,7 +177,9 @@ class Languages extends \XLite\Controller\Admin\AAdmin
                 'The language you want to delete has not been found'
             );
 
-        } elseif ($language->code == \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage()->code) {
+        } elseif (
+            $language->code == \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage()->code
+        ) {
 
             \XLite\Core\TopMessage::addError(
                 'The language you want to delete is the default application language and cannot be deleted'
@@ -173,7 +209,6 @@ class Languages extends \XLite\Controller\Admin\AAdmin
      * Switch (enable / disabled) language
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -228,7 +263,6 @@ class Languages extends \XLite\Controller\Admin\AAdmin
      * Update labels
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -293,7 +327,6 @@ class Languages extends \XLite\Controller\Admin\AAdmin
      * Delete labels 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -329,7 +362,6 @@ class Languages extends \XLite\Controller\Admin\AAdmin
      * Delete label 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -359,7 +391,6 @@ class Languages extends \XLite\Controller\Admin\AAdmin
      * Add label
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -378,7 +409,9 @@ class Languages extends \XLite\Controller\Admin\AAdmin
 
         } elseif (\XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->findOneByName($name)) {
 
-            \XLite\Core\TopMessage::addError('The text label has not been added, because such a text label already exists');
+            \XLite\Core\TopMessage::addError(
+                'The text label has not been added, because such a text label already exists'
+            );
 
         } elseif (!isset($label[$codeDefault]) || !$label[$codeDefault]) {
 
@@ -418,7 +451,6 @@ class Languages extends \XLite\Controller\Admin\AAdmin
      * Edit label
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -470,7 +502,6 @@ class Languages extends \XLite\Controller\Admin\AAdmin
      * Update language data
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -531,7 +562,6 @@ class Languages extends \XLite\Controller\Admin\AAdmin
      * @param string $code   Language code
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -553,32 +583,6 @@ class Languages extends \XLite\Controller\Admin\AAdmin
         }
 
         \XLite\Core\Database::getEM()->flush();
-    }
-
-    /**
-     * Get return URL
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getReturnUrl()
-    {
-        if (\XLite\Core\Request::getInstance()->action) {
-            $url = $this->buildUrl(
-                'languages',
-                '',
-                array(
-                    'language' => \XLite\Core\Request::getInstance()->language,
-                    'page'     => max(1, intval(\XLite\Core\Request::getInstance()->page)),
-                )
-            );
-
-        } else {
-            $url = parent::getReturnURL();
-        }
-
-        return $url;
     }
 }
 

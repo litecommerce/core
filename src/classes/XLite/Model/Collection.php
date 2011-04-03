@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,52 +31,38 @@ namespace XLite\Model;
 /**
  * Double-linked list
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Collection extends \XLite\Base\SuperClass
 {
     /**
      * Start element
      *
-     * @var    XLite_Model_ListNode
-     * @access protected
-     * @since  3.0.0
+     * @var   \XLite_Model_ListNode
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $head = null;
 
     /**
      * End element
      *
-     * @var    XLite_Model_ListNode
-     * @access protected
-     * @since  3.0.0
+     * @var   \XLite_Model_ListNode
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $tail = null;
-
-
-    /**
-     * Check if list is initialized
-     *
-     * @return boolean 
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isInitialized()
-    {
-        return isset($this->head) && isset($this->tail);
-    }
 
 
     /**
      * Search list element using a callback function
      *
      * @param string $method Some public method of the XLite_Model_ListNode class
-     * @param array  $args   Callback arguments
+     * @param array  $args   Callback arguments OPTIONAL
      *
      * @return \XLite\Model\ListNode
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function findByCallbackResult($method, array $args = array())
@@ -96,7 +82,7 @@ class Collection extends \XLite\Base\SuperClass
      * @param string $key Node identifier
      *
      * @return \XLite\Model\ListNode
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function findByKey($key)
@@ -111,7 +97,7 @@ class Collection extends \XLite\Base\SuperClass
      * @param \Xlite\Model\ListNode $node New node to insert
      *
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function insertBefore($key, \Xlite\Model\ListNode $node)
@@ -138,7 +124,7 @@ class Collection extends \XLite\Base\SuperClass
      * @param \Xlite\Model\ListNode $node New node to insert
      *
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function insertAfter($key, \Xlite\Model\ListNode $node)
@@ -164,7 +150,7 @@ class Collection extends \XLite\Base\SuperClass
      * @param \Xlite\Model\ListNode $node Node to add
      *
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function add(\Xlite\Model\ListNode $node)
@@ -180,7 +166,7 @@ class Collection extends \XLite\Base\SuperClass
      * Return first element of the list
      *
      * @return \Xlite\Model\ListNode
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getHead()
@@ -192,11 +178,24 @@ class Collection extends \XLite\Base\SuperClass
      * Return last element of the list
      *
      * @return \Xlite\Model\ListNode
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getTail()
     {
         return $this->tail;
+    }
+
+
+    /**
+     * Check if list is initialized
+     *
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isInitialized()
+    {
+        return isset($this->head) && isset($this->tail);
     }
 }

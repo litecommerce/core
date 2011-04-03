@@ -34,7 +34,11 @@ if (false === defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'XLite_Tests_AllTests::main');
 }
 
-ini_set('memory_limit', '256M');
+if (!defined('ROOT_TEST_SUITE_NAME')) {
+    define('ROOT_TEST_SUITE_NAME', 'LiteCommerce - AllTests');
+}
+
+ini_set('memory_limit', '900M');
 
 // PHPUnit classes
 define('PATH_TESTS', realpath(__DIR__));
@@ -46,7 +50,7 @@ if (file_exists(PATH_TESTS . '/local.php')) {
 }
 
 if (defined('DRUPAL_SITE_PATH') && !defined('LOCAL_TESTS')) {
-    define('PATH_SRC', realpath(DRUPAL_SITE_PATH . '/src/modules/lc_connector/litecommerce'));
+    define('PATH_SRC', realpath(DRUPAL_SITE_PATH . '/modules/lc_connector/litecommerce'));
 
 } else { 
     define('PATH_SRC', realpath(PATH_ROOT . '/src'));
@@ -54,7 +58,6 @@ if (defined('DRUPAL_SITE_PATH') && !defined('LOCAL_TESTS')) {
 
 set_include_path(
     get_include_path()
-    . PATH_SEPARATOR . '/usr/local/share/pear/'
     . PATH_SEPARATOR . PATH_SRC . '/classes'
     . PATH_SEPARATOR . PATH_SRC . '/var/run/classes'
 );
@@ -67,14 +70,26 @@ require_once PATH_TESTS . '/PHPUnit/TestCase.php';
 require_once PATH_TESTS . '/PHPUnit/MetricWriter.php';
 require_once PATH_TESTS . '/PHPUnit/SeleniumTestCase.php';
 
+if (!defined('MENU_LOCAL_TASK')) {
+    define('MENU_LOCAL_TASK', 0x0080 | 0x0004);
+}
+
 // Start X-Lite core
 
-define('LC_DO_NOT_REBUILD_CACHE', 1);
+define('LC_DO_NOT_REBUILD_CACHE', true);
+
+if (
+    defined('INCLUDE_ONLY_TESTS')
+    && preg_match('/DEPLOY_/', constant('INCLUDE_ONLY_TESTS'))
+    && !defined('XLITE_INSTALL_MODE')
+) {
+    define('XLITE_INSTALL_MODE', true);
+}
 
 require_once PATH_SRC . '/top.inc.php';
 
 if (!defined('SELENIUM_SOURCE_URL')) {
-    $arr = explode('/', realpath(__DIR__ . '/../..'));
+    $arr = explode(LC_DS, realpath(__DIR__ . LC_DS . '..' . LC_DS . '..'));
     array_shift($arr);
     array_shift($arr);
     array_shift($arr);
@@ -95,10 +110,10 @@ if (isset($_SERVER['argv']) && preg_match('/--log-xml\s+(\S+)\s/s', implode(' ',
 }
 
 if (!defined('INCLUDE_ONLY_TESTS') || !preg_match('/DEPLOY_/', constant('INCLUDE_ONLY_TESTS'))) {
-    PHPUnit_Util_Filter::addDirectoryToFilter(PATH_ROOT . '/.dev');
-    PHPUnit_Util_Filter::addDirectoryToFilter(PATH_SRC . '/etc');
-    PHPUnit_Util_Filter::addDirectoryToWhitelist(PATH_SRC . '/var/run/classes');
-    PHPUnit_Util_Filter::addDirectoryToFilter(PATH_SRC . '/var/run/classes/XLite/Model/Proxy');
+    PHP_CodeCoverage_Filter::getInstance()->addDirectoryToBlacklist(PATH_ROOT . LC_DS . '.dev');
+    PHP_CodeCoverage_Filter::getInstance()->addDirectoryToBlacklist(PATH_SRC . LC_DS . 'etc');
+    PHP_CodeCoverage_Filter::getInstance()->addDirectoryToWhitelist(PATH_SRC . LC_DS . 'var' . LC_DS . 'run' . LC_DS . 'classes');
+    PHP_CodeCoverage_Filter::getInstance()->addDirectoryToBlacklist(PATH_SRC . LC_DS . 'var' . LC_DS . 'run' . LC_DS . 'classes' . LC_DS . 'XLite' . LC_DS . 'Model' . LC_DS . 'Proxy');
 }
 
 foreach (glob(LC_ROOT_DIR . 'var/log/selenium.*.html') as $f) {
@@ -138,13 +153,17 @@ class XLite_Tests_AllTests
      */
     public static function suite()
     {
-        $suite = new XLite_Tests_TestSuite('LiteCommerce - AllTests');
+        $suite = new XLite_Tests_TestSuite(ROOT_TEST_SUITE_NAME);
 
         $deploy = null;
         $includes = false;
         $includeTests = array();
         $excludes = array();
+        $ds = preg_quote(LC_DS, '/');
+
+
         if (defined('INCLUDE_ONLY_TESTS')) {
+            
             $includes = array_map('trim', explode(',', INCLUDE_ONLY_TESTS));
 
             if (in_array('LOCAL_TESTS', $includes)) {
@@ -181,7 +200,7 @@ class XLite_Tests_AllTests
                 }
                 $k = array_search('DEPLOY_' . strtoupper($deploy), $includes);
                 if (!defined('DIR_TESTS')) {
-                    define('DIR_TESTS', 'Deploy' . DIRECTORY_SEPARATOR . $deploy);
+                    define('DIR_TESTS', 'Deploy' . LC_DS . $deploy);
                 }
                 unset($includes[$k]);
             }
@@ -216,9 +235,9 @@ class XLite_Tests_AllTests
 
         // Include abstract classes
         $classesDir  = dirname( __FILE__ );
-        $pattern     = '/^' . preg_quote($classesDir, '/') . '.*\/(?:\w*Abstract|A[A-Z][a-z]\w*)\.php$/Ss';
+        $pattern     = '/^' . preg_quote($classesDir, '/') . '.*' . $ds . '(?:\w*Abstract|A[A-Z][a-z]\w*)\.php$/Ss';
 
-        $dirIterator = new RecursiveDirectoryIterator($classesDir . DIRECTORY_SEPARATOR);
+        $dirIterator = new RecursiveDirectoryIterator($classesDir . LC_DS);
         $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
 
         foreach ($iterator as $filePath => $fileObject) {
@@ -229,10 +248,10 @@ class XLite_Tests_AllTests
 
         // Include fake classes
         if (!defined('DEPLOYMENT_TEST')) {
-            $classesDir  = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'FakeClass' . DIRECTORY_SEPARATOR;
+            $classesDir  = dirname( __FILE__ ) . LC_DS . 'FakeClass' . LC_DS;
             $pattern     = '/^' . preg_quote($classesDir, '/') . '.+\.php$/Ss';
 
-            $dirIterator = new RecursiveDirectoryIterator($classesDir . DIRECTORY_SEPARATOR);
+            $dirIterator = new RecursiveDirectoryIterator($classesDir . LC_DS);
             $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
 
             foreach ($iterator as $filePath => $fileObject) {
@@ -244,14 +263,17 @@ class XLite_Tests_AllTests
 
         // DB backup
         echo ('DB backup ... ');
-        $path = dirname(__FILE__) . '/dump.sql';
+        $path = dirname(__FILE__) . LC_DS . 'dump.sql';
         if (file_exists($path)) {
             unlink($path);
         }
 
         if (!isset($deploy) || !$deploy) {
             $config = XLite::getInstance()->getOptions('database_details');
-            $cmd = 'mysqldump --opt -h' . $config['hostspec'];
+
+            $cmd = defined('TEST_MYSQLDUMP_BIN') ? TEST_MYSQLDUMP_BIN : 'mysqldump';
+            $cmd .= ' --opt -h' . $config['hostspec'];
+            
             if ($config['port']) {
                 $cmd .= ':' . $config['port'];
             }
@@ -271,28 +293,40 @@ class XLite_Tests_AllTests
         // Classes tests
         if (!defined('UNITS_DISABLED')) {
 
-            $classesDir  = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'Classes' . DIRECTORY_SEPARATOR;
-            $pattern     = '/^' . str_replace('/', '\/', preg_quote($classesDir)) . '(.*)\.php$/';
+            $classesDir  = dirname( __FILE__ ) . LC_DS . 'Classes' . LC_DS;
+            $pattern     = '/^' . preg_quote($classesDir, '/') . '(.*)\.php$/';
 
             $dirIterator = new RecursiveDirectoryIterator($classesDir);
             $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
 
             foreach ($iterator as $filePath => $fileObject) {
+                
                 if (
-                    preg_match($pattern, $filePath, $matches)
+                    preg_match($pattern, $filePath, $matches) 
                     && !empty($matches[1])
-                    && !preg_match('/\/(\w+Abstract|A[A-Z]\w+)\.php$/Ss', $filePath)
-                    && (!$includes || in_array($matches[1], $includes))
-                    && (!$excludes || !in_array($matches[1], $excludes))
+                    && !preg_match('/' . $ds . '(\w+Abstract|A[A-Z]\w+)\.php$/Ss', $filePath)
+                    && !preg_match('/' . $ds . '(?:scripts|skins)' . $ds . '/Ss', $filePath)
                 ) {
-                    $class = XLite_Tests_TestCase::CLASS_PREFIX
-                        . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]);
 
-                    require_once $filePath;
-                    $suite->addTest(new XLite_Tests_TestSuite(new ReflectionClass($class)));
+                    $matched = str_replace(LC_DS, '/', $matches[1]);
 
-                    if (isset($includeTests[$matches[1]])) {
-                        eval($class . '::$testsRange = array($includeTests[$matches[1]]);');
+                    if (
+                        (!$includes || in_array($matched, $includes))
+                        && (!$excludes || !in_array($matched, $excludes))
+                    ) {
+                    
+                        $class = XLite_Tests_TestCase::CLASS_PREFIX
+                            . str_replace('/', '_', $matched);
+
+                        require_once $filePath;
+
+                        $suite->addTest(new XLite_Tests_TestSuite(new ReflectionClass($class)));
+
+                        // Limit test range by a specific test if it was specified in call. Example: ./phpunit-report.sh Model/Zone:create
+                        if (isset($includeTests[$matched])) {
+                            eval($class . '::$testsRange = array($includeTests[$matched]);');
+                        }
+
                     }
                 }
             }
@@ -305,32 +339,45 @@ class XLite_Tests_AllTests
                 define('DIR_TESTS', 'Web');
             }
 
-            $classesDir = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . constant('DIR_TESTS') . DIRECTORY_SEPARATOR;
-            $pattern    = '/^' . str_replace('/', '\/', preg_quote($classesDir)) . '(.*)\.php$/';
+            $classesDir = dirname( __FILE__ ) . LC_DS . constant('DIR_TESTS') . LC_DS;
+            $pattern    = '/^' . preg_quote($classesDir, '/') . '(.*)\.php$/';
 
             $dirIterator = new RecursiveDirectoryIterator($classesDir);
             $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
 
             foreach ($iterator as $filePath => $fileObject) {
+                
                 if (
                     preg_match($pattern, $filePath, $matches)
                     && !empty($matches[1])
-                    && !preg_match('/\/(\w+Abstract|A[A-Z]\d+)\.php/Ss', $filePath)
-                    && (!$includes || in_array($matches[1], $includes))
-                    && (!$excludes || !in_array($matches[1], $excludes))
+                    && !preg_match('/' . $ds . '(\w+Abstract|A[A-Z]\w+)\.php/Ss', $filePath)
+                    && !preg_match('/' . $ds . '(?:scripts|skins)' . $ds . '/Ss', $filePath)
                 ) {
+                    
+                    $matched = str_replace(LC_DS, '/', $matches[1]);
 
-                    $classPrefix = !isset($deploy)
-                        ? XLite_Tests_SeleniumTestCase::CLASS_PREFIX
-                        : 'XLite_Deploy_' . $deploy . '_';
-                    $class = $classPrefix . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]);
+                    if (
+                        (!$includes || in_array($matched, $includes))
+                        && (!$excludes || !in_array($matched, $excludes))
+                    ) {
 
-                    require_once $filePath;
-                    //$suite->addTest(new XLite_Tests_TestSuite(new ReflectionClass($class)));
-                    $suite->addTestSuite($class);
+                        $classPrefix = !isset($deploy)
+                            ? XLite_Tests_SeleniumTestCase::CLASS_PREFIX
+                            : 'XLite_Deploy_' . $deploy . '_';
+                        
+                        $class = $classPrefix . str_replace('/', '_', $matched);
 
-                    if (isset($includeTests[$matches[1]])) {
-                        eval($class . '::$testsRange = array($includeTests[$matches[1]]);');
+                        require_once $filePath;
+
+                        $seleniumSuite = new PHPUnit_Framework_TestSuite();
+                        $seleniumSuite->addTestSuite($class);
+
+                        $suite->addTest($seleniumSuite);
+
+                        // Limit test range by a specific test if it was specified in call. Example: ./phpunit-report.sh Model/Zone:create
+                        if (isset($includeTests[$matched])) {
+                            eval($class . '::$testsRange = array($includeTests[$matched]);');
+                        }
                     }
                 }
             } 

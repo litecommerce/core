@@ -34,18 +34,27 @@ class XLite_Sniffs_PHP_NamingConventions_UpperCaseConstantNameSniff extends XLit
 	protected $predefinedConstants = array(
 		'DIRECTORY_SEPARATOR',
 		'__DIR__', '__FILE__', '__CLASS__',
-		'E_ALL', 'E_STRICT',
+		'E_ALL', 'E_STRICT', 'E_ERROR', 'E_WARNING', 'E_PARSE', 'E_NOTICE', 'E_CORE_ERROR', 'E_CORE_WARNING',
+		'E_COMPILE_ERROR', 'E_COMPILE_WARNING', 'E_USER_ERROR', 'E_USER_WARNING', 'E_USER_NOTICE', 'E_RECOVERABLE_ERROR',
+		'E_DEPRECATED', 'E_USER_DEPRECATED',
 		'CURLOPT_URL', 'CURLOPT_HEADER', 'CURLOPT_HTTPHEADER', 'CURLOPT_HTTPGET', 'CURLOPT_POSTFIELDS', 'CURLOPT_RETURNTRANSFER',
 		'CURLOPT_TIMEOUT', 'CURLOPT_POST', 'CURLOPT_SSLCERT', 'CURLOPT_SSLCERTPASSWD', 'CURLOPT_SSLKEY', 'CURLOPT_SSLKEYPASSWD',
 		'CURLOPT_PROXYTYPE', 'CURLPROXY_HTTP', 'CURLOPT_PROXY', 'CURLOPT_HEADERFUNCTION', 'CURLAUTH_BASIC', 'CURLAUTH_DIGEST',
 		'CURLAUTH_GSSNEGOTIATE', 'CURLAUTH_NTLM', 'CURLAUTH_ANY', 'CURLAUTH_ANYSAFE', 'CURLOPT_HTTPAUTH', 'CURLOPT_USERPWD',
-		'CURLOPT_SSL_VERIFYPEER', 'CURLOPT_SSL_VERIFYHOST', 'CURLOPT_CAINFO',
+		'CURLOPT_SSL_VERIFYPEER', 'CURLOPT_SSL_VERIFYHOST', 'CURLOPT_CAINFO', 'CURLOPT_NOBODY', 'CURLOPT_CUSTOMREQUEST',
+		'CURLOPT_PORT', 'CURLOPT_FOLLOWLOCATION', 'CURLOPT_SSLVERSION', 'CURLOPT_REFERER',
 		'MCRYPT_RAND',
 		'XML_TEXT_NODE', 'XML_COMMENT_NODE',
 		'GLOB_MARK',
 		'PREG_GREP_INVERT',
 		'ENT_NOQUOTES', 'ENT_COMPAT', 'ENT_QUOTES',
-		'LIBXML_DTDLOAD', 'LIBXML_NOERROR', 'LIBXML_NOWARNING'
+		'LIBXML_DTDLOAD', 'LIBXML_NOERROR', 'LIBXML_NOWARNING',
+		'LOG_ERR', 'LOG_WARNING', 'LOG_DEBUG', 'PEAR_LOG_ERR', 'PEAR_LOG_WARNING', 'PEAR_LOG_NOTICE', 'PEAR_LOG_CRIT',
+		'PEAR_LOG_INFO', 'PHP_EOL', 'PHP_SAPI', 'PHP_VERSION', 'PHP_OS', 'INFO_MODULES',
+		'PREG_SPLIT_NO_EMPTY', 'XDEBUG_TRACE_COMPUTERIZED', 'FILTER_VALIDATE_EMAIL', 'FILTER_VALIDATE_IP', 'FILTER_FLAG_IPV4',
+		'FILTER_VALIDATE_REGEXP', 'FILTER_REQUIRE_ARRAY', 'FILTER_VALIDATE_INT', 'FILTER_SANITIZE_STRING',
+		'FILTER_VALIDATE_FLOAT', 'FILTER_SANITIZE_URL', 'HTML_ENTITIES',
+		'PATHINFO_EXTENSION', 'UPLOAD_ERR_OK',
 	);
 
     /**
@@ -102,8 +111,6 @@ class XLite_Sniffs_PHP_NamingConventions_UpperCaseConstantNameSniff extends XLit
 
             if ($tokens[$functionKeyword]['code'] === T_CONST) {
                 // This is a class constant - do not check
-				// $this->checkConstant($constName, $phpcsFile, $stackPtr);
-
                 return;
             }
 
@@ -123,9 +130,7 @@ class XLite_Sniffs_PHP_NamingConventions_UpperCaseConstantNameSniff extends XLit
             }
 
             // Is this a type hint?
-            if ($tokens[$nextPtr]['code'] === T_VARIABLE) {
-                return;
-            } else if ($phpcsFile->isReference($nextPtr) === true) {
+            if ($tokens[$nextPtr]['code'] === T_VARIABLE || $phpcsFile->isReference($nextPtr) === true) {
                 return;
             }
 
@@ -173,11 +178,9 @@ class XLite_Sniffs_PHP_NamingConventions_UpperCaseConstantNameSniff extends XLit
 			return;
 		}
 
-		if (substr($constName, 0, 3) !== 'XP_') {
-			/* TODO - rework or remove
-			$error = 'Constant ' . $constName . ' has not prefix XP_';
+		if (substr($constName, 0, 3) !== 'LC_') {
+			$error = 'Constant ' . $constName . ' has not prefix LC_';
 			$phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.6.3') . $error, $stackPtr);
-			*/
 		}
 
 		if (!preg_match('/^[A-Z0-9_]+$/Ss', $constName)) {

@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="invoice.item", weight="50")
  *}
-<td class="total">{item.getTotal()}</td>
+<td class="total">{formatPrice(item.getTotal(),order.getCurrency())}</td>

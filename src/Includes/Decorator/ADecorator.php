@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Includes_Decorator
+ * @subpackage Decorator
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -31,48 +31,35 @@ namespace Includes\Decorator;
 /**
  * ADecorator 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class ADecorator
 {
     /**
-     * Indexes in "classesInfo" array
-     *
-     * FIXME - to remove
+     * Cache building steps
      */
 
-    const INFO_FILE          = 'file';
-    const INFO_CLASS         = 'class';
-    const INFO_CLASS_ORIG    = 'class_orig';
-    const INFO_EXTENDS       = 'extends';
-    const INFO_EXTENDS_ORIG  = 'extends_orig';
-    const INFO_IS_DECORATOR  = 'is_decorator';
-    const INFO_IS_ROOT_CLASS = 'is_top_class';
-    const INFO_CLASS_TYPE    = 'class_type';
-    const INFO_ENTITY        = 'entity';
-    const INFO_CLASS_COMMENT = 'class_comment';
+    const STEP_FIRST  = 'first';
+    const STEP_SECOND = 'second';
+    const STEP_THIRD  = 'third';
+
 
     /**
-     * Class node field names
+     * Current step
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
      */
-
-    const N_NAMESPACE     = 'namespace';
-    const N_CLASS_COMMENT = 'comment';
-    const N_TAGS          = 'tags';
-    const N_CLASS_TYPE    = 'classType';
-    const N_CLASS         = 'class';
-    const N_PARENT_CLASS  = 'parentClass';
-    const N_INTERFACES    = 'interfaces';
-    const N_FILE_PATH     = 'filePath';
-    const N_IS_EMPTY      = 'isEmpty';
-
+    protected static $step;
 
     /**
      * Classes tree
      *
-     * @var    \Includes\Decorator\DataStructure\Hierarchical\ClassesTree
+     * @var    \Includes\Decorator\DataStructure\Graph\Classes
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -82,7 +69,7 @@ abstract class ADecorator
     /**
      * Modules graph
      * 
-     * @var    \Includes\Decorator\DataStructure\Hierarchical\ModulesGraph
+     * @var    \Includes\Decorator\DataStructure\Graph\Modules
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -91,9 +78,22 @@ abstract class ADecorator
 
 
     /**
-     * Return (and initialize, if needed) classes tree
-     *
-     * @return \Includes\Decorator\DataStructure\Hierarchical\ClassesTree
+     * Return classes repository path 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getClassesDir()
+    {
+        return (self::STEP_FIRST === static::$step) ? LC_CLASSES_DIR : LC_CLASSES_CACHE_DIR;
+    }
+
+    /**
+     * Return classes tree
+     * 
+     * @return \Includes\Decorator\DataStructure\Graph\Classes
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -101,7 +101,7 @@ abstract class ADecorator
     protected static function getClassesTree()
     {
         if (!isset(static::$classesTree)) {
-            static::$classesTree = \Includes\Decorator\Utils\DataCollector::createClassesTree();
+            static::$classesTree = \Includes\Decorator\Utils\Operator::createClassesTree();
         }
 
         return static::$classesTree;
@@ -110,7 +110,7 @@ abstract class ADecorator
     /**
      * Return modules graph
      * 
-     * @return \Includes\Decorator\DataStructure\Hierarchical\ModulesGraph
+     * @return \Includes\Decorator\DataStructure\Graph\Modules
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -118,7 +118,7 @@ abstract class ADecorator
     protected static function getModulesGraph()
     {
         if (!isset(static::$modulesGraph)) {
-            static::$modulesGraph = \Includes\Decorator\Utils\DataCollector::getModulesGraph();
+            static::$modulesGraph = \Includes\Decorator\Utils\Operator::createModulesGraph();
         }
 
         return static::$modulesGraph;

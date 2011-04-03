@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * Product price
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Price extends \XLite\View\AView
 {
@@ -46,10 +45,76 @@ class Price extends \XLite\View\AView
 
 
     /**
+     * Check - sale price is enabled or not 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isSalePriceEnabled()
+    {
+        return $this->config->General->enable_sale_price
+            && $this->getProduct()->getSalePrice() > $this->getProduct()->getListPrice();
+    }
+
+    /**
+     * Check - is save block is enabeld or not 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isSaveEnabled()
+    {
+        return ('N' !== $this->config->General->you_save) && (0 < $this->getSaveValuePercent());
+    }
+
+    /**
+     * Get save value (absolute)
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSaveValueAbsolute()
+    {
+        $product = $this->getProduct();
+
+        return $this->price_format($product->getSalePrice() - $product->getListPrice());
+    }
+
+    /**
+     * Get save value (absolute)
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSaveValuePercent()
+    {
+        $product = $this->getProduct();
+
+        return round(($product->getSalePrice() - $product->getListPrice()) / $product->getSalePrice() * 100, 0);
+    }
+
+    /**
+     * Check - display only price or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isDisplayOnlyPrice()
+    {
+        return $this->getParam(self::PARAM_DISPLAY_ONLY_PRICE);
+    }
+
+
+    /**
      * Return widget default template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
@@ -61,7 +126,7 @@ class Price extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -82,7 +147,6 @@ class Price extends \XLite\View\AView
      * getProduct 
      * 
      * @return \XLite\Model\Product
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -91,87 +155,15 @@ class Price extends \XLite\View\AView
         return $this->getParam(self::PARAM_PRODUCT);
     }
 
-
     /**
      * Check widget visibility
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isVisible()
     {
         return parent::isVisible() && $this->getProduct();
-    }
-
-    /**
-     * Check - sale price is enabled or not 
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isSalePriceEnabled()
-    {
-        return $this->config->General->enable_sale_price
-            && $this->getProduct()->getSalePrice() > $this->getProduct()->getListPrice();
-    }
-
-    /**
-     * Check - is save block is enabeld or not 
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isSaveEnabled()
-    {
-        return ('N' !== $this->config->General->you_save) && (0 < $this->getSaveValuePercent());
-    }
-
-    /**
-     * Get save value (absolute)
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getSaveValueAbsolute()
-    {
-        $product = $this->getProduct();
-
-        return $this->price_format($product->getSalePrice() - $product->getListPrice());
-    }
-
-    /**
-     * Get save value (absolute)
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getSaveValuePercent()
-    {
-        $product = $this->getProduct();
-
-        return round(($product->getSalePrice() - $product->getListPrice()) / $product->getSalePrice() * 100, 0);
-    }
-
-    /**
-     * Check - display only price or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isDisplayOnlyPrice()
-    {
-        return $this->getParam(self::PARAM_DISPLAY_ONLY_PRICE);
     }
 }

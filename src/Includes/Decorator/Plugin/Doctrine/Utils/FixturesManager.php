@@ -30,6 +30,8 @@ namespace Includes\Decorator\Plugin\Doctrine\Utils;
 
 /**
  * Fixtures manager 
+ *
+ * TODO: to revise
  * 
  * @package XLite
  * @see     ____class_see____
@@ -155,5 +157,4 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
         fwrite($fp, '; */ ?' . '>');
         fclose($fp);
     }
-
 }

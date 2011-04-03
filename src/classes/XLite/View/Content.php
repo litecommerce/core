@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * \XLite\View\Content 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Content extends \XLite\View\AView
 {
@@ -44,10 +43,22 @@ class Content extends \XLite\View\AView
 
 
     /**
+     * display
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function display()
+    {
+        isset(\XLite\View\Controller::$bodyContent) ? $this->echoContent() : parent::display();
+    }
+
+
+    /**
      * getBufferSize 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -60,7 +71,7 @@ class Content extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
@@ -74,8 +85,8 @@ class Content extends \XLite\View\AView
      * @param string &$chunk Text chunk to output
      *
      * @return void
-     * @access protected
-     * @since  3.0.0 EE
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     protected function echoChunk(&$chunk)
     {
@@ -86,7 +97,7 @@ class Content extends \XLite\View\AView
      * echoContent 
      * 
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function echoContent()
@@ -97,17 +108,27 @@ class Content extends \XLite\View\AView
         );
     }
 
+    /**
+     * Chewck - first sidebar is visible or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isSidebarFirstVisible()
+    {
+        return !in_array(\XLite\Core\Request::getInstance()->target, array('cart', 'product', 'checkout'));
+    }
 
     /**
-     * display
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0 EE
+     * Check - second sidebar is visible or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
      */
-    public function display()
+    protected function isSidebarSecondVisible()
     {
-        isset(\XLite\View\Controller::$bodyContent) ? $this->echoContent() : parent::display();
+        return false;
     }
 }
-

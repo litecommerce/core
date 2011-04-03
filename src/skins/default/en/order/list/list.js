@@ -145,16 +145,15 @@ OrdersListController.prototype.listChanged = function(xhr, s)
   }
 }
 
-// Extract widget data
-OrdersListController.prototype.extractRequestData = function(div)
-{
-  return jQuery('.orders-list', div).eq(0);
-}
-
 // Widget post processing (after new widge data placing)
 OrdersListController.prototype.postprocess = function(isSuccess)
 {
-  if (!isSuccess) {
+  if (isSuccess) {
+
+//    this.container = this.modalTarget;
+//    this.addListeners();
+
+  } else {
     // TODO - add top message
     self.location.reload();
   }
@@ -163,23 +162,9 @@ OrdersListController.prototype.postprocess = function(isSuccess)
 // Go to order page
 OrdersListController.prototype.goToOrder = function(li)
 {
-  var m = jQuery(li).attr('class').match(/order-([0-9]+)/);
-  var orderId = false;
-  if (m) {
-    orderId = parseInt(m[1]);
-    if (isNaN(orderId) || 0 > orderId) {
-      orderId = false;
-    }
-  }
-
-  if (orderId !== false) {
-    self.location = URLHandler.buildURL(
-      {
-        target:   'order',
-        action:   '',
-        order_id: orderId,
-      }
-    );
+  var href = jQuery('a.number', li).attr('href');
+  if (href) {
+    self.location = href;
 
   } else {
     // TODO - add top message

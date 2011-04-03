@@ -20,7 +20,7 @@
   <input type="hidden" name="target" value="aupost" />
   <input type="hidden" name="action" value="update" />
 
-  <table border="0" cellpadding="2" cellspacing="1">
+  <table cellpadding="2" cellspacing="1">
 
     <tr>
       <td><b>Package length (mm):</b></td>
@@ -48,7 +48,7 @@
     </tr>
 
     <tr>
-      <td colspan="2"><br /><input type="submit" value="Save" /></TD>
+      <td colspan="2"><br /><widget class="\XLite\View\Button\Submit" label="Save" /></TD>
     </tr>
 
   </table>

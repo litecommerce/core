@@ -11,5 +11,6 @@
  * @since     3.0.0
  *}
 <widget class="\XLite\View\Form\Product\AddToCart" name="add_to_cart" product="{getProduct()}" />
-  <widget class="\XLite\View\Button\Submit" label="Buy Now" />
+  <widget class="\XLite\View\Button\Submit" label="Buy now" style="{style}" IF="!isShowPrice()" />
+  <widget class="\XLite\View\Button\Submit" label="{price_format(getProduct(),#listPrice#):h}" style="{style} price-button" IF="isShowPrice()" />
 <widget name="add_to_cart" end />

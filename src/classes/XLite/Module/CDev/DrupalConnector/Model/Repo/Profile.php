@@ -99,4 +99,96 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
             ->andWhere('p.profile_id = :profileId')
             ->setParameter('profileId', $profileId);
     }
+
+    /**
+     * Find admin profiles without specified roles
+     * 
+     * @param integer $profileId    XLite profile id
+     * @param integer $cmsProfileId CMS profile id
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findAdminsWithoutRoles($roles)
+    {
+        return $this->defineAdminsWithoutRolesQuery($roles)->getResult();
+    }
+
+    /**
+     * Find non-admin profiles with specified roles
+     * 
+     * @param integer $profileId    XLite profile id
+     * @param integer $cmsProfileId CMS profile id
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findCustomersWithRoles($roles)
+    {
+        return $this->defineCustomersWithRolesQuery($roles)->getResult();
+    }
+
+    /**
+     * Define query for findAdminsWithoutRoles() method
+     * 
+     * @param array $roles Roles list
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAdminsWithoutRolesQuery($roles)
+    {
+        $qb = $this->createQueryBuilder();
+
+        $qb ->leftJoin('p.drupalRoles', 'dr')
+            ->andWhere(
+                $qb->expr()->notIn(
+                    'dr.drupal_role_id',
+                    $roles
+                )
+            )
+            ->andWhere('p.access_level = :accessLevel')
+            ->andWhere('p.cms_name = :cmsName')
+            ->andWhere('p.cms_profile_id > 0')
+            ->setParameter('accessLevel', \XLite\Core\Auth::getInstance()->getAdminAccessLevel())
+            ->setParameter('cmsName', \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getCMSName());
+
+        return $qb;
+    }
+
+    /**
+     * Define query for findCustomersWithRoles() method
+     * 
+     * @param array $roles Roles list
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineCustomersWithRolesQuery($roles)
+    {
+        $qb = $this->createQueryBuilder();
+
+        $qb ->leftJoin('p.drupalRoles', 'dr')
+            ->andWhere(
+                $qb->expr()->In(
+                    'dr.drupal_role_id',
+                    $roles
+                )
+            )
+            ->andWhere(
+                $qb->expr()->Not('p.access_level = :accessLevel')
+            )
+            ->andWhere('p.cms_name = :cmsName')
+            ->andWhere('p.cms_profile_id > 0')
+            ->setParameter('accessLevel', \XLite\Core\Auth::getInstance()->getAdminAccessLevel())
+            ->setParameter('cmsName', \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->getCMSName());
+
+        return $qb;
+    }
 }

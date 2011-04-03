@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,21 +31,19 @@ namespace XLite\Controller\Admin;
 /**
  * Shipping methods management page controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class ShippingMethods extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Common method to determine current location
+     * Return the current page title (for the content area)
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getLocation()
+    public function getTitle()
     {
         return 'Shipping methods';
     }
@@ -54,7 +52,6 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
      * handleRequest 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -71,7 +68,6 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
      * Do action 'Add'
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -90,17 +86,13 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
         \XLite\Core\Database::getEM()->persist($newMethod);
         \XLite\Core\Database::getEM()->flush();
 
-        \XLite\Core\TopMessage::getInstance()->add(
-            $this->t('Shipping method has been added'),
-            \XLite\Core\TopMessage::INFO
-        );
+        \XLite\Core\TopMessage::addInfo('Shipping method has been added');
     }
 
     /**
      * Do action 'Update'
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -117,11 +109,15 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
         foreach ($methods as $method) {
 
             if (isset($postedData['methods'][$method->getMethodId()])) {
+
                 $data = $postedData['methods'][$method->getMethodId()];
 
                 $method->setPosition(intval($data['position']));
                 $method->setEnabled(isset($data['enabled']) ? 1 : 0);
                 $method->getTranslation($code)->name = $data['name'];
+
+                $method->getClasses()->clear();
+                $method->setClasses($this->getClasses($method));
 
                 \XLite\Core\Database::getEM()->persist($method);
             }
@@ -131,10 +127,7 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
 
             \XLite\Core\Database::getEM()->flush();
 
-            \XLite\Core\TopMessage::getInstance()->add(
-                $this->t('Shipping methods have been updated'),
-                \XLite\Core\TopMessage::INFO
-            );
+            \XLite\Core\TopMessage::addInfo('Shipping methods have been updated');
         }
     }
 
@@ -142,7 +135,6 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
      * Do action 'Delete'
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -159,10 +151,52 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->flush();
             \XLite\Core\Database::getEM()->clear();
 
-            \XLite\Core\TopMessage::getInstance()->add(
-                $this->t('The selected shipping method has been deleted successfully'),
-                \XLite\Core\TopMessage::INFO
-            );
+            \XLite\Core\TopMessage::addInfo('The selected shipping method has been deleted successfully');
         }
+    }
+
+    /**
+     * getClasses
+     * 
+     * @param \XLite\Model\Shipping\Method $method ____param_comment____
+     *  
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getClasses(\XLite\Model\Shipping\Method $method)
+    {
+        $classes = new \Doctrine\Common\Collections\ArrayCollection();
+
+        $postedData = $this->getPostedData('class_ids');
+
+        foreach ((array) $postedData[$method->getMethodId()] as $classId) {
+
+            $class = \XLite\Core\Database::getRepo('\XLite\Model\ProductClass')->findOneById($classId);
+
+            if ($class) {
+
+                if (!$class->getShippingMethods()->contains($method)) {
+
+                    $class->getShippingMethods()->add($method);
+                }
+
+                $classes->add($class);
+            }
+        }
+
+        return $classes;
+    }
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return $this->t('Shipping methods');
     }
 }

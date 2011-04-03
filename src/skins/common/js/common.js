@@ -14,7 +14,7 @@ var URLHandler = {
 
   mainParams: {target: true, action: true},
 
-  baseURLPart: 'admin.php?',
+  baseURLPart: ('undefined' != typeof(window.xliteConfig) ? xliteConfig.script : 'admin.php') + '?',
   argSeparator: '&',
   nameValueSeparator: '=',
 
@@ -71,10 +71,12 @@ var URLHandler = {
   // Return some params
   getParams: function(params, toReturn)
   {
-    result = [];
+    var result = [];
 
-    for (x in toReturn) {
-      result[x] = params[x];
+    for (var x in toReturn) {
+      if ('undefined' != typeof(params[x])) {
+        result[x] = params[x];
+      }
     }
 
     return result;
@@ -83,9 +85,9 @@ var URLHandler = {
   // Unset some params
   clearParams: function(params, toClear)
   {
-    result = [];
+    var result = [];
 
-    for (x in params) {
+    for (var x in params) {
       if (!(x in toClear)) {
         result[x] = params[x];
       }
@@ -112,6 +114,11 @@ var URLHandler = {
     return this.baseURLPart + this.buildMainPart(params) + this.buildQueryPart(params);
   }
 }
+
+// Path to common skin
+var s = document.getElementsByTagName('script');
+var commonSkinPath = s[s.length-1].getAttribute('src')
+  .replace(/js\/common\.js.*/, '');
 
 /**
  * Columns selector
@@ -433,4 +440,18 @@ function visibleBox(id, skipOpenClose)
   }
 
   return true;
+}
+
+/**
+ * Attach tooltip to some element on hover action
+ */
+function attachTooltip(elm, content) {
+  jQuery(elm).hover(
+    function() {
+      jQuery(elm).validationEngine('showPrompt', content, 'load', 'bottomLeft');
+    },
+    function() {
+      jQuery(elm).validationEngine('hide');
+    }
+  );
 }

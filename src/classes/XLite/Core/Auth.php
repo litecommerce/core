@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core;
@@ -31,9 +31,8 @@ namespace XLite\Core;
 /**
  * Authorization routine
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Auth extends \XLite\Base
 {
@@ -53,14 +52,30 @@ class Auth extends \XLite\Base
     /**
      * The list of session vars that must be cleared on logoff
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $sessionVarsToClear = array(
         'profile_id',
         'anonymous',
     );
+
+
+    /**
+     * Encrypts password (calculates MD5 hash)
+     * 
+     * @param string $password Password string to encrypt
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function encryptPassword($password)
+    {
+        return md5($password);
+    }
+
 
     /**
      * Updates the specified profile on login. Saves profile to session 
@@ -68,7 +83,7 @@ class Auth extends \XLite\Base
      * @param \XLite\Model\Profile $profile Profile object
      *  
      * @return boolean 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function loginProfile(\XLite\Model\Profile $profile)
@@ -105,43 +120,12 @@ class Auth extends \XLite\Base
     }
 
     /**
-     * User can access profile only in two cases:
-     * 1) he/she is an admin
-     * 2) its the user's own account
-     * 
-     * @param \XLite\Model\Profile $profile Profile to check
-     *  
-     * @return boolean 
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function checkProfileAccessibility(\XLite\Model\Profile $profile)
-    {
-        return $this->isAdmin($this->getProfile()) || $this->getProfile()->getProfileId() == $profile->getProfileId();
-    }
-
-    /**
-     * Clear some session variables on logout 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function clearSessionVars()
-    {
-        foreach ($this->getSessionVarsToClear() as $name) {
-            unset(\XLite\Core\Session::getInstance()->$name);
-        }
-    }
-
-    /**
      * Add variable to the list of session vars that must be cleared on logoff
      * 
      * @param string $name Session variable name
      *  
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function addSessionVarToClear($name)
@@ -153,54 +137,12 @@ class Auth extends \XLite\Base
      * Returns the list of session vars that must be cleared on logoff
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getSessionVarsToClear()
     {
         return $this->sessionVarsToClear;
-    }
-
-    /**
-     * Check if passed string is equal to the hash, previously saved in session.
-     * It's the secure mechanism to login using the secret hash (e.g. login anonymous user)
-     * 
-     * @param string $hashString String to check
-     *  
-     * @return boolean 
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function checkSecureHash($hashString)
-    {
-        $result = false;
-
-        $cell = self::SESSION_SECURE_HASH_CELL;
-
-        if (!empty($hashString)) {
-            $result = \XLite\Core\Session::getInstance()->$cell === $hashString;
-        }
-
-        // Using this method, it's not possible to log in several times
-        unset(\XLite\Core\Session::getInstance()->$cell);
-
-        return $result;
-    }
-
-    /**
-     * Encrypts password (calculates MD5 hash)
-     * 
-     * @param string $password Password string to encrypt
-     *  
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public static function encryptPassword($password)
-    {
-        return md5($password);
     }
 
     /**
@@ -211,7 +153,7 @@ class Auth extends \XLite\Base
      * @param string $secureHash Secret token OPTIONAL
      *  
      * @return \XLite\Model\Profile|integer
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function login($login, $password, $secureHash = null)
@@ -257,7 +199,7 @@ class Auth extends \XLite\Base
      * Logs off the currently logged profile
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function logoff()
@@ -272,7 +214,7 @@ class Auth extends \XLite\Base
      * Checks whether user is logged 
      * 
      * @return boolean 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isLogged()
@@ -286,7 +228,7 @@ class Auth extends \XLite\Base
      * @param integer $profileId Profile Id OPTIONAL
      *  
      * @return \XLite\Model\Profile
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getProfile($profileId = null)
@@ -318,7 +260,7 @@ class Auth extends \XLite\Base
      * @param \XLite\Model\Profile $profile Profile to check
      *  
      * @return boolean 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function checkProfile(\XLite\Model\Profile $profile)
@@ -329,10 +271,10 @@ class Auth extends \XLite\Base
     /**
      * Checks whether the currently logged user is an administrator
      * 
-     * @param \XLite\Model\Profile $profile User profile
+     * @param \XLite\Model\Profile $profile User profile OPTIONAL
      *  
      * @return boolean 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isAdmin(\XLite\Model\Profile $profile = null)
@@ -350,7 +292,7 @@ class Auth extends \XLite\Base
      * @param string $type Profile type (see getUserTypes() for list of allowed values) 
      *  
      * @return integer 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getAccessLevel($type)
@@ -364,7 +306,7 @@ class Auth extends \XLite\Base
      * Gets the access level for administrator
      * 
      * @return integer 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getAdminAccessLevel()
@@ -376,7 +318,6 @@ class Auth extends \XLite\Base
      * Gets the access level for a customer
      * 
      * @return integer 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -389,7 +330,7 @@ class Auth extends \XLite\Base
      * Returns all user types configured for this system
      * 
      * @return array
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getUserTypes()
@@ -404,7 +345,7 @@ class Auth extends \XLite\Base
      * Return list of all allowed access level values (by default - array(0, 100))
      * 
      * @return array
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getAccessLevelsList()
@@ -416,7 +357,7 @@ class Auth extends \XLite\Base
      * getUserTypesRaw
      *
      * @return array
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getUserTypesRaw()
@@ -431,7 +372,6 @@ class Auth extends \XLite\Base
      * @param string $hashString Hash string to save
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -442,30 +382,9 @@ class Auth extends \XLite\Base
     }
 
     /**
-     * Remember login in cookie 
-     * 
-     * @param mixed $login User's login
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function rememberLogin($login) 
-    {
-        $options = \XLite::getInstance()->getOptions('host_details');
-        $ttl = time() + 86400 * intval($this->config->General->login_lifetime);
-
-        foreach (array($options['http_host'], $options['https_host']) as $host) {
-            @setcookie('recent_login', $login, $ttl, '/', func_parse_host($host));
-        }
-    }
-
-    /**
      * Remind recent login from cookies
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -481,7 +400,6 @@ class Auth extends \XLite\Base
      * @param string $password Administrator user password
      *  
      * @return \XLite\Model\Profile
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -489,12 +407,15 @@ class Auth extends \XLite\Base
     {
         $profile = $this->login($login, $password);
 
-        if (
-            (is_int($profile) && self::RESULT_ACCESS_DENIED === $profile)
-            || ($profile instanceof \XLite\Model\Profile && !$this->isAdmin($profile))
-        ) {
+        if ($profile instanceof \XLite\Model\Profile && !$profile->isAdmin()) {
 
+            // Logoff user from session
+            $this->logoff();
+
+            // Reset profile object
             $profile = self::RESULT_ACCESS_DENIED;
+
+            // Send notification about failed log in attempt
             \XLite\Core\Mailer::sendFailedAdminLoginNotification(\XLite\Core\Request::getInstance()->login);
         }
 
@@ -509,7 +430,6 @@ class Auth extends \XLite\Base
      * @param \XLite\Base $resource Resource
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -527,5 +447,80 @@ class Auth extends \XLite\Base
         return $currentLevel >= $resource->getAccessLevel();
     }
 
-}
 
+    /**
+     * User can access profile only in two cases:
+     * 1) he/she is an admin
+     * 2) its the user's own account
+     * 
+     * @param \XLite\Model\Profile $profile Profile to check
+     *  
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkProfileAccessibility(\XLite\Model\Profile $profile)
+    {
+        return $this->isAdmin($this->getProfile()) || $this->getProfile()->getProfileId() == $profile->getProfileId();
+    }
+
+    /**
+     * Clear some session variables on logout 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function clearSessionVars()
+    {
+        foreach ($this->getSessionVarsToClear() as $name) {
+            unset(\XLite\Core\Session::getInstance()->$name);
+        }
+    }
+
+    /**
+     * Check if passed string is equal to the hash, previously saved in session.
+     * It's the secure mechanism to login using the secret hash (e.g. login anonymous user)
+     * 
+     * @param string $hashString String to check
+     *  
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkSecureHash($hashString)
+    {
+        $result = false;
+
+        $cell = self::SESSION_SECURE_HASH_CELL;
+
+        if (!empty($hashString)) {
+            $result = \XLite\Core\Session::getInstance()->$cell === $hashString;
+        }
+
+        // Using this method, it's not possible to log in several times
+        unset(\XLite\Core\Session::getInstance()->$cell);
+
+        return $result;
+    }
+
+    /**
+     * Remember login in cookie 
+     * 
+     * @param mixed $login User's login
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function rememberLogin($login) 
+    {
+        $options = \XLite::getInstance()->getOptions('host_details');
+        $ttl = time() + 86400 * intval($this->config->General->login_lifetime);
+
+        foreach (array($options['http_host'], $options['https_host']) as $host) {
+            @setcookie('recent_login', $login, $ttl, '/', func_parse_host($host));
+        }
+    }
+
+}

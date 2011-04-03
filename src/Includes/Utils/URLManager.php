@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Includes_Utils
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace Includes\Utils;
@@ -31,12 +31,19 @@ namespace Includes\Utils;
 /**
  * URLManager 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
-class URLManager extends AUtils
+abstract class URLManager extends \Includes\Utils\AUtils
 {
+    /**
+     * URL output type codes
+     */
+
+    const URL_OUTPUT_SHORT = 'short';
+    const URL_OUTPUT_FULL  = 'full';
+
+
     /**
      * Remove trailing slashes from URL 
      * 
@@ -55,32 +62,48 @@ class URLManager extends AUtils
     /**
      * Return full URL for the resource
      * 
-     * @param string $url      url part to add
-     * @param bool   $isSecure use HTTP or HTTPS
-     * @param array  $params   optional URL params
+     * @param string $url      URL part to add OPTIONAL
+     * @param bool   $isSecure Use HTTP or HTTPS OPTIONAL
+     * @param array  $params   URL parameters OPTIONAL
+     * @param string $output   URL output type OPTIONAL
      *  
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getShopURL($url = '', $isSecure = false, array $params = array())
-    {
+    public static function getShopURL(
+        $url = '',
+        $isSecure = false,
+        array $params = array(),
+        $output = self::URL_OUTPUT_FULL
+    ) {
         $hostDetails = \Includes\Utils\ConfigParser::getOptions('host_details');
 
-        $proto = ($isSecure ? 'https' : 'http') . '://';
-        $host  = $hostDetails['http' . ($isSecure ? 's' : '') . '_host'];
+        $host = $hostDetails['http' . ($isSecure ? 's' : '') . '_host'];
+        if ($host) {
 
-        if ('/' != substr($url, 0, 1)) {
-            $url = $hostDetails['web_dir_wo_slash'] . '/' . $url;
+            $proto = ($isSecure ? 'https' : 'http') . '://';
+
+            if ('/' != substr($url, 0, 1)) {
+                $url = $hostDetails['web_dir_wo_slash'] . '/' . $url;
+            }
+
+            if ($isSecure) {
+                $session = \XLite\Core\Session::getInstance();
+                $url .= (false !== strpos($url, '?') ? '&' : '?') . $session->getName() . '=' . $session->getID();
+            }
+
+            foreach ($params as $name => $value) {
+                $url .= (false !== strpos($url, '?') ? '&' : '?') . $name . '=' . $value;
+            }
+
+            if (self::URL_OUTPUT_FULL == $output) {
+                $url = $proto . $host . $url;
+            }
         }
 
-        if ($isSecure) {
-            $session = \XLite\Core\Session::getInstance();
-            $url .= (false !== strpos($url, '?') ? '&' : '?') . $session->getName() . '=' . $session->getID();
-        }
-
-        return $proto . $host . $url;
+        return $url;
     }
 
     /**

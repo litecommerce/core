@@ -30,15 +30,6 @@ table.modules-list div.actions a.uninstall {
   color: #ae2803;
 }
 
-table.modules-list div.icon-container div.addon-disabled {
-  width: 48px;
-  height: 48px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: url(../../images/addon_disabled.png) left top no-repeat;
-}
-
 div.modules-filters {
   margin: 10px 0;
 }
@@ -72,18 +63,12 @@ div.modules-filters div.tags {
   float: left;
 }
 
-div.actions a {
-  float: left;
-}
-
 div.pack-warning {
-  float: left;
-  display: inline;
   font-size: 14px;
+  margin-top: 10px;
 }
 
 div.pack-warning a {
-  float: right;
   padding-left: 10px;
   cursor: help;
 }
@@ -91,8 +76,3 @@ div.pack-warning a {
 .pack-warn-clear {
   clear: both;
 }
-
-#cluetip-inner {
-  padding: 10px;
-  background: #eeeeee;
-} 

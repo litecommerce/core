@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * Bread crumbs widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class VoteBar extends \XLite\View\AView
 {
@@ -45,11 +44,27 @@ class VoteBar extends \XLite\View\AView
     const PARAM_RATE   = 'rate';
     const PARAM_MAX    = 'max';
 
+
+    /**
+     * Get a list of CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = 'vote_bar/vote_bar.css';
+
+        return $list;
+    }
+
+
     /**
      * Return widget default template
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -62,7 +77,6 @@ class VoteBar extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -81,7 +95,6 @@ class VoteBar extends \XLite\View\AView
      * Get stars data array
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -91,37 +104,25 @@ class VoteBar extends \XLite\View\AView
         $filled = false;
         $cost   = $this->getParam(self::PARAM_MAX) / $this->getParam(self::PARAM_LENGTH);
 
+        $rest   = $this->getParam(self::PARAM_RATE);
+
         for ($i = 0; $i < $this->getParam(self::PARAM_LENGTH); $i++) {
 
-            $isFull    = ($i+1)*$cost <= $this->getParam(self::PARAM_RATE);
-            $isPercent = ($i+1)*$cost < $this->getParam(self::PARAM_RATE) || $filled;
+            $isFull    = $cost <= $rest;
+            $isPercent = 0 < $rest && $cost > $rest;
 
             $stars[$i] = array(
                 'full'    => $isFull,
-                'percent' => $isPercent ? false : round(($this->getParam(self::PARAM_RATE) % $cost) / $cost * 100)
+                'percent' => $isPercent ? round($rest * 100 / $cost) : false
             );
-
+            
             if ($isPercent && !$filled) {
                 $filled = true;
             }
+         
+            $rest -= $cost;
         }
 
         return $stars;
-    }
-
-    /**
-     * Get a list of CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = 'vote_bar/vote_bar.css';
-
-        return $list;
     }
 }

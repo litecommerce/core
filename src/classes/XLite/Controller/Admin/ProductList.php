@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,17 +32,50 @@ namespace XLite\Controller\Admin;
 /**
  * Products list controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class ProductList extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Get search condition parameter by name
+     * 
+     * @param string $paramName Parameter name
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCondition($paramName)
+    {
+        $searchParams = $this->getConditions();
+
+        if (isset($searchParams[$paramName])) {
+            $return = $searchParams[$paramName];
+        }
+
+        return isset($searchParams[$paramName])
+            ? $searchParams[$paramName]
+            : null;
+    }
+
+    /**
+     * Return the current page title (for the content area)
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Search products';
+    }
+
+
+    /**
      * Common method to determine current location
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -55,7 +88,6 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      * doActionUpdate 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -68,7 +100,6 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      * doActionDelete 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -81,7 +112,6 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      * doActionSearch 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -107,14 +137,13 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
         }
         
         $this->session->set($sessionCell, $productsSearch);
-        $this->setReturnURL($this->buildUrl('product_list', '', array('mode' => 'search')));
+        $this->setReturnURL($this->buildURL('product_list', '', array('mode' => 'search')));
     }
 
     /**
      * Get search conditions
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -127,28 +156,5 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
         }
 
         return $searchParams;
-    }
-
-    /**
-     * Get search condition parameter by name
-     * 
-     * @param string $paramName 
-     *  
-     * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCondition($paramName)
-    {
-        $searchParams = $this->getConditions();
-
-        if (isset($searchParams[$paramName])) {
-            $return = $searchParams[$paramName];
-        }
-
-        return isset($searchParams[$paramName])
-            ? $searchParams[$paramName]
-            : null;
     }
 }

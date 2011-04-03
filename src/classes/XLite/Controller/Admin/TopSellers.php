@@ -14,59 +14,127 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
 
 /**
- * ____description____
+ * Top sellers statistics page controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class TopSellers extends \XLite\Controller\Admin\Stats
 {
-    public $todayItems = array();
-    public $weekItems = array();
-    public $monthItems = array();
-    public $sort_by = "amount";
-    public $counter = array(0,1,2,3,4,5,6,7,8,9);
+    /**
+     * todayItems 
+     * FIXME: to refactoring
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $todayItems = array();
 
+    /**
+     * weekItems
+     * FIXME: to refactoring
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $weekItems = array();
+
+    /**
+     * monthItems 
+     * FIXME: to refactoring
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $monthItems = array();
+
+    /**
+     * sort_by 
+     * FIXME: to refactoring
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $sort_by = "amount";
+    
+    /**
+     * counter 
+     * FIXME: to refactoring
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $counter = array(0,1,2,3,4,5,6,7,8,9);
+
+    /**
+     * topProducts 
+     * FIXME: to refactoring
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
     protected $topProducts = array();
 
-    function getPageTemplate()
+
+    /**
+     * getPageTemplate 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageTemplate()
     {
-        return "top_sellers.tpl";
+        return 'top_sellers.tpl';
     }
 
-    function handleRequest()
+    /**
+     * handleRequest 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest()
     {
         // typedef
-        $statRec = array("today" => 0, "week" => 0, "month" => 0);
+        $statRec = array('today' => 0, 'week' => 0, 'month' => 0);
+        
         $this->stat = array(
-                "processed" => $statRec,
-                "queued" => $statRec,
-                "failed" => $statRec,
-                "not_finished" => $statRec,
-                "total" => $statRec,
-                "paid" => $statRec);
+            'processed' => $statRec,
+            'queued' => $statRec,
+            'failed' => $statRec,
+            'not_finished' => $statRec,
+            'total' => $statRec,
+            'paid' => $statRec
+        );
 
         $order = new \XLite\Model\Order();
-        $date = $this->get('monthDate');
+        $date = $this->getMonthDate();
 
         // FIXME - old code
-        array_map(array($this, "collect"), /*$order->findAll("(status='P' OR status='C') AND date>=$date")*/ array());
+        array_map(array($this, 'collect'), /*$order->findAll("(status='P' OR status='C') AND date>=$date")*/ array());
 
         $this->sort('todayItems');
         $this->sort('weekItems');
@@ -75,12 +143,61 @@ class TopSellers extends \XLite\Controller\Admin\Stats
         parent::handleRequest();
     }
 
-    function getTopProduct($period, $pos, $property)
+    /**
+     * getTopProduct 
+     * 
+     * @param mixed $period   ____param_comment____
+     * @param mixed $pos      ____param_comment____
+     * @param mixed $property ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTopProduct($period, $pos, $property)
     {
-        return is_null($val = $this->getComplex("topProducts." . $period . "Items." . $pos . "." . $property)) ? "" : $val;
+        $val = $this->getComplex('topProducts.' . $period . 'Items.' . $pos . '.' . $property);
+    
+        return is_null($val) ? '' : $val;
     }
 
-    function collect($order)
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return $this->t('Top sellers');
+    }
+
+    /**
+     * Add part to the location nodes list
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
+
+        $this->addLocationNode('Statistics', $this->buildURL('orders_stats'));
+    }
+
+    /**
+     * collect 
+     * 
+     * @param mixed $order ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function collect($order)
     {
         $items = $order->get('items');
         if ($order->get('date') >= $this->get('todayDate')) {
@@ -94,34 +211,65 @@ class TopSellers extends \XLite\Controller\Admin\Stats
         }
     }
 
-    function sort($name)
+    /**
+     * sort 
+     * 
+     * @param mixed $name ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function sort($name)
     {
         $this->topProducts[$name] = array();
+        
         foreach ((array) $this->get($name) as $item) {
+        
             $id = $item->get('product_id');
-            if (!$id) continue;
-            if (!isset($this->topProducts[$name][$id])) {
-                $this->topProducts[$name][$id] = array(
-                        "id" => $id,
-                        "name" => $item->get('name'),
-                        "amount" => $item->get('amount')
-                        );
-            } else {
-                $this->topProducts[$name][$id]['amount'] += $item->get('amount');
+        
+            if ($id) {
+
+                if (!isset($this->topProducts[$name][$id])) {
+                    $this->topProducts[$name][$id] = array(
+                        'id'     => $id,
+                        'name'   => $item->get('name'),
+                        'amount' => $item->get('amount')
+                    );
+
+                } else {
+                    $this->topProducts[$name][$id]['amount'] += $item->get('amount');
+                }
             }
         }
-        usort($this->topProducts[$name], array($this, "cmpProducts"));
+
+        usort($this->topProducts[$name], array($this, 'compareProducts'));
+
         $topProducts = array_chunk(array_reverse($this->topProducts[$name]), 10);
+        
         $this->topProducts[$name] = isset($topProducts[0]) ? $topProducts[0] : null;
     }
 
-    function cmpProducts($p1, $p2)
+    /**
+     * compareProducts 
+     * 
+     * @param mixed $p1 ____param_comment____
+     * @param mixed $p2 ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function compareProducts($p1, $p2)
     {
+        $result = 0;
+        
         $key = $this->sort_by;
-        if ($p1[$key] == $p2[$key]) {
-            return 0;
+        
+        if ($p1[$key] != $p2[$key]) {
+            $result = ($p1[$key] < $p2[$key]) ? -1 : 1;
         }
-        return ($p1[$key] < $p2[$key]) ? -1 : 1;
-    }
 
+        return $result;
+    }
 }

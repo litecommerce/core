@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Welcome page
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,9 +10,11 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<h3 IF="!disable_head" align="center" class="WelcomeHeader">Welcome to LiteCommerce</h3>
 
-<p align="justify">This demo online store running a powerful LiteCommerce store builder engine is based on PHP4 template technology bundled with an SQL database. If you order the LiteCommerce software, you will be able to setup a web store having all of the features this demo has. To test-drive this store, you can browse categories, add/remove products and view our help pages. You can even issue a test order. Feel free to test anything you like.
-</p>
-<p align="justify"><b>This service is for demo purposes only.</b> No real products. No real prices. No real charges. This is a demonstration. Please do not submit real credit card information.
-</p>
+{*<h3 IF="!disable_head" align="center" class="WelcomeHeader">Welcome to LiteCommerce</h3>*}
+
+<div style="margin: 0 0 1em;"><img src="images/fruits_vegetables.png" width="690" height="300" alt="" /></div>
+
+<p style="text-align: justify;">This demo online store is powered by LiteCommerce v3 shopping cart software. With LiteCommerce you can setup a web store having all of the features this demo has.</p>
+
+<p style="text-align: justify;"><strong>This service is for demo purposes only.</strong> No real products. No real prices. No real charges. This is a demonstration. Please do not submit real credit card information.</p>

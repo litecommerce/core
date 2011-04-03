@@ -10,23 +10,12 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div>
-
-  <div class="name">{product.name}</div>
-
-  <div IF="product.hasImage()" class="image">
-    <img src="{product.imageURL}" alt="" />
-  </div>
-
-  <div IF="{product.sku}" class="sku">
-    <strong>SKU:</strong>
-    <span>{product.sku}</span>
-  </div>
-
-  <widget class="\XLite\View\Price" product="{product}" template="common/price_plain.tpl" />
-
-  <br />
-
-  <widget class="\XLite\View\BuyNow" product="{product}" />
-
-</div>
+<ul class="list-body list-body-grid">
+  <li class="item">
+    <span class="draggable-mark">Drag me to the cart</span>
+    <a IF="product.hasImage()" class="product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><img src="{product.getImageURL()}" alt="{product.name}" /></a>
+    <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-name">{product.name:h}</a>
+    <widget class="\XLite\View\Price" product="{product}" displayOnlyPrice="true" />
+    <widget class="\XLite\View\BuyNow" product="{product}" style="aux-button add-to-cart" />
+  </li>
+</ul>

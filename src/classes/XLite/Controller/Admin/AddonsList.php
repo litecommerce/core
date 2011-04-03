@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,65 +31,21 @@ namespace XLite\Controller\Admin;
 /**
  * Modules
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class AddonsList extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Common method to determine current location
+     * Return the current page title (for the content area)
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getLocation()
+    public function getTitle()
     {
         return 'Install new add-ons';
-    }
-
-    /**
-     * doActionSearch
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function doActionSearch()
-    {
-        $addonsSearch = array();
-        $searchParams   = \XLite\View\ItemsList\Module\Install::getSearchParams();
-
-        foreach ($searchParams as $modelParam => $requestParam) {
-            if (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
-                $addonsSearch[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
-            }
-        }
-
-        $this->session->set(\XLite\View\ItemsList\Module\Install::getSessionCellName(), $addonsSearch);
-        $this->set('returnUrl', $this->buildUrl('addons_list', '', array('mode' => 'search')));
-    }
-
-    /**
-     * Get search conditions
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getConditions()
-    {
-        $searchParams = $this->session->get(\XLite\View\ItemsList\Module\Install::getSessionCellName());
-
-        if (!is_array($searchParams)) {
-            $searchParams = array();
-        }
-
-        return $searchParams;
     }
 
     /**
@@ -98,7 +54,6 @@ class AddonsList extends \XLite\Controller\Admin\AAdmin
      * @param string $paramName Parameter name
      *
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -120,14 +75,67 @@ class AddonsList extends \XLite\Controller\Admin\AAdmin
      * Attempts to call the specified action function 
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function handleRequest()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Module')->checkModules();
+        // :FIXME: to remove
+        // \XLite\Core\Database::getRepo('\XLite\Model\Module')->checkModules();
 
         parent::handleRequest();
     }
 
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Install new add-ons';
+    }
+
+    /**
+     * doActionSearch
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionSearch()
+    {
+        $addonsSearch = array();
+        $searchParams   = \XLite\View\ItemsList\Module\Install::getSearchParams();
+
+        foreach ($searchParams as $modelParam => $requestParam) {
+            if (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
+                $addonsSearch[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
+            }
+        }
+
+        $this->session->set(\XLite\View\ItemsList\Module\Install::getSessionCellName(), $addonsSearch);
+        $this->setReturnURL($this->buildURL('addons_list', '', array('mode' => 'search')));
+    }
+
+    /**
+     * Get search conditions
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getConditions()
+    {
+        $searchParams = $this->session->get(\XLite\View\ItemsList\Module\Install::getSessionCellName());
+
+        if (!is_array($searchParams)) {
+            $searchParams = array();
+        }
+
+        return $searchParams;
+    }
 }

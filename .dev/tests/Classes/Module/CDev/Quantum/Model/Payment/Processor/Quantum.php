@@ -49,6 +49,9 @@ class XLite_Tests_Module_CDev_Quantum_Model_Payment_Processor_Quantum extends XL
             array()
         );
 
+        $this->assertFalse(is_null($order->getProfile()), 'check profile');
+        $this->assertFalse(is_null($order->getProfile()->getBillingAddress()), 'check billing address');
+
         $this->assertEquals(0, $order->getOpenTotal(), 'check open total');
         $this->assertTrue($order->isOpen(), 'check open status');
 
@@ -68,10 +71,10 @@ class XLite_Tests_Module_CDev_Quantum_Model_Payment_Processor_Quantum extends XL
         $sid = \XLite\Core\Session::getInstance()->getID();
         $amount = $t->getValue();
 
-        $urla = \XLite::getInstance()->getShopUrl('admin.php?target=payment_return&amp;txn_id_name=ID', true);
+        $urla = \XLite::getInstance()->getShopURL('admin.php?target=payment_return&amp;txn_id_name=ID', true);
         $urla = str_replace('ID&xid', 'ID&amp;xid', $urla);
 
-        $urld = \XLite::getInstance()->getShopUrl('admin.php?target=payment_return&amp;txn_id_name=ID', true);
+        $urld = \XLite::getInstance()->getShopURL('admin.php?target=payment_return&amp;txn_id_name=ID', true);
         $urld = str_replace('ID&xid', 'ID&amp;xid', $urld);
 
         $etalon = <<<HTML

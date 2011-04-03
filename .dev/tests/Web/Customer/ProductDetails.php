@@ -28,8 +28,24 @@
 
 require_once __DIR__ . '/ACustomer.php';
 
+/**
+ * XLite_Web_Customer_ProductDetails 
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 {
+    /**
+     * testStructure 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+
     public function testStructure()
     {
         $product = $this->getActiveProduct();
@@ -120,20 +136,20 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         // Main block
         $this->assertElementPresent(
-            "//form[@class='product-details']"
+            "//form[@class='product-details validationEngine']"
             . "/div[@class='product-details-info']"
             . "/div[@class='price product-price' and text()='$ " . $product->getPrice() . "']",
             'check price'
         );
         $this->assertElementPresent(
-            "css=form.product-details .product-details-info .product-buttons input.quantity.field-requred.field-integer.field-positive.field-non-zero[type=text][value=1]",
+            "css=form.product-details .product-details-info .product-buttons input.quantity.wheel-ctrl[type=text][value=1]",
             'check quantity input box'
         );
 
         $this->assertElementPresent(
-            "//form[@class='product-details']"
+            "//form[@class='product-details validationEngine']"
             . "/div[@class='product-details-info']"
-            . "/div[@class='product-buttons']"
+            . "/div[@class='product-buttons shade-base']"
             . "/div[@class='buttons-row']"
             . "/button[@type='submit' and @class='bright add2cart']"
             . "/span[text()='Add to Bag']",
@@ -158,7 +174,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         // Tabs
         $this->assertElementPresent(
-            "//form[@class='product-details']"
+            "//form[@class='product-details validationEngine']"
             . "/div[@class='tabs']"
             . "/ul[@class='tabs primary']"
             . "/li[@class='active']"
@@ -173,14 +189,14 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         // Extra fields
         $this->assertElementPresent(
-            "//form[@class='product-details']"
+            "//form[@class='product-details validationEngine']"
             . "/ul[@class='extra-fields']"
             . "/li"
             . "/strong[text()='Weight:']",
             'check weight (label)'
         );
         $this->assertElementPresent(
-            "//form[@class='product-details']"
+            "//form[@class='product-details validationEngine']"
             . "/ul[@class='extra-fields']"
             . "/li"
             . "/span[text()='" . $product->getWeight(). " lbs']",
@@ -188,14 +204,14 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         );
 
         $this->assertElementPresent(
-            "//form[@class='product-details']"
+            "//form[@class='product-details validationEngine']"
             . "/ul[@class='extra-fields']"
             . "/li[@class='identifier product-sku']"
             . "/strong[@class='type' and text()='SKU:']",
             'check SKU (label)'
         );
         $this->assertElementPresent(
-            "//form[@class='product-details']"
+            "//form[@class='product-details validationEngine']"
             . "/ul[@class='extra-fields']"
             . "/li"
             . "/span[@class='value' and text()='" . $product->getSKU(). "']",
@@ -203,7 +219,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         );
 
         $this->assertElementPresent(
-            "//form[@class='product-details']"
+            "//form[@class='product-details validationEngine']"
             . "/div[@class='description product-description']",
             'check description'
         );
@@ -315,9 +331,12 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         );
 
         // Check first image and structure
-
         $this->assertJqueryPresent('#colorbox:visible', 'check visible colorbox');
-        $this->assertJqueryPresent('#cboxPhoto:visible', 'check visible photo');
+        $this->waitForLocalCondition(
+            'jQuery("#cboxPhoto:visible").length > 0',
+            6000,
+            'check visible photo'
+        );
 
         $this->assertElementPresent(
             "//body"
@@ -414,15 +433,17 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $qty = 0;
 
-        $formSelector = "css=form.product-details";
+        $formSelector = "css=form.product-details.validationEngine";
         $cartButtonSelector = $formSelector . " .product-details-info .product-buttons button.bright.add2cart";
         $buyButtonSelector = $formSelector . " .product-details-info .product-buttons-added button.action.buy-more";
         $continueButtonSelector = $formSelector . " .product-details-info .product-buttons-added button.bright.continue";
+        $quantitySelector = $formSelector . " .product-details-info .product-buttons input.quantity.wheel-ctrl[type=text]"; 
     
         $this->assertElementPresent(
             $cartButtonSelector,
             "check add2cart button"
         );
+
         $this->click($cartButtonSelector);
         
         $qty++;
@@ -432,14 +453,17 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             10000,
             'check content reloading'
         );
-       $this->assertElementPresent(
+        $this->assertElementPresent(
             $continueButtonSelector,
             'check Continue shopping button'
         );
 
         // This assertion requires the minicart widget to be visible on the page
-        $q = intval($this->getJSExpression('jQuery(".minicart-items-number").html()'));
-        $this->assertEquals($qty, $q, 'check quantity');
+        $this->waitForLocalCondition(
+            'jQuery(".minicart-items-number").html() == "1"',
+            10000,
+            'check quantity'
+        );
 
         $this->assertElementPresent(
             $buyButtonSelector,
@@ -455,29 +479,45 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             'check content reloading #2'
         );
  
-        /* TODO - rework after Inventory tracking module is changed
-
+        // Check quantity and inventory
         $this->getJSExpression('jQuery(".product-details input.quantity").attr("value", 3)');
 
-        $this->click(
-            "//form[@class='product-details']"
-            . "/div[@class='body']"
-            . "/div[@class='buttons-row added']"
-            . "/button[@class='action buy-more']"
-        );
+        $this->click($buyButtonSelector);
 
         $qty += 3;
 
         $this->waitForLocalCondition(
-            'jQuery(".product-details input.quantity").attr("value") == 1',
-            10000,
-            'check content reloading #3'
+            'jQuery(".minicart-items-number").html() == ' . $qty,
+            30000,
+            'check quantity'
         );
+       
+        // Reload page (selenium does not process below steps properly w/o reload)
+        // FIXME: try to avoid reloading page here
+        $this->openAndWait('store/product//product_id-' . $product->getProductId());
 
-        $q = intval($this->getJSExpression('jQuery(".minicart-items-number").html()'));
+        // Check unallowed values (inventory tracking)
+        $qtyBlurOperation = 'jQuery(".product-details input.quantity").blur()';
+        $errorDivSelector = 'div.amount' . $product->getProductId() . 'formError:visible';
+        $errorQtySelector = 'input.quantity.wrong-amount';
 
-        $this->assertEquals($qty, $q, 'check quantity #3');
-        */
+        $this->typeKeys($quantitySelector, '-3');
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryPresent($errorDivSelector, 'check minimal allowed quantity error');
+        $this->assertJqueryPresent($errorQtySelector, 'check minimal allowed quantity');
+        $this->assertJqueryPresent('button.action.buy-more.disabled.add2cart-disabled', 'check disabled buy now button (min qty)');
+
+        $this->typeKeys($quantitySelector, '45');
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryNotPresent($errorDivSelector, 'check normalized quantity error');
+        $this->assertJqueryNotPresent($errorQtySelector, 'check normalized quantity');
+        $this->assertJqueryNotPresent('button.action.buy-more.disabled.add2cart-disabled', 'check enabled buy now button');
+
+        $this->typeKeys($quantitySelector, '46');
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryPresent($errorDivSelector, 'check maximum allowed quantity error');
+        $this->assertJqueryPresent($errorQtySelector, 'check maximum allowed quantity');
+        $this->assertJqueryPresent('button.action.buy-more.disabled.add2cart-disabled', 'check disabled buy now button (max qty)');
     }
 
     protected function getActiveProduct()

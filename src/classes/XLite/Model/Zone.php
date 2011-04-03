@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,9 +31,8 @@ namespace XLite\Model;
 /**
  * Zone model
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="XLite\Model\Repo\Zone")
  * @Table  (name="zones",
@@ -48,10 +47,9 @@ class Zone extends \XLite\Model\AEntity
     /**
      * Zone unique id 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -62,10 +60,9 @@ class Zone extends \XLite\Model\AEntity
     /**
      * Zone name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="64")
      */
@@ -74,10 +71,9 @@ class Zone extends \XLite\Model\AEntity
     /**
      * Zone default flag
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="boolean")
      */
@@ -86,10 +82,9 @@ class Zone extends \XLite\Model\AEntity
     /**
      * Zone elements (relation)
      * 
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\ZoneElement", mappedBy="zone", cascade={"all"})
      */
@@ -98,14 +93,63 @@ class Zone extends \XLite\Model\AEntity
     /**
      * Shipping rates (relation)
      * 
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Shipping\Markup", mappedBy="zone", cascade={"all"})
      */
     protected $shipping_markups;
+
+
+    /**
+     * Comparison states function for usort()
+     * 
+     * @param \XLite\Model\State $a First state object
+     * @param \XLite\Model\State $b Second state object
+     *  
+     * @return integer 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    static protected function sortStates($a, $b)
+    {
+        $aCountry = $a->getCountry()->getCountry();
+        $aState = $a->getState();
+
+        $bCountry = $b->getCountry()->getCountry();
+        $bState = $b->getState();
+
+        if ($aCountry == $bCountry && $aState == $bState) {
+            $result = 0;
+
+        } elseif ($aCountry == $bCountry) {
+            $result = ($aState > $bState) ? 1 : -1;
+
+        } else {
+            $result = ($aCountry > $bCountry) ? 1 : -1;
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * Constructor
+     *
+     * @param array $data Entity properties OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $data = array())
+    {
+        $this->zone_elements    = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->shipping_markups = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
+    }
 
     /**
      * Get zone's countries list
@@ -113,7 +157,6 @@ class Zone extends \XLite\Model\AEntity
      * @param boolean $excluded Flag: true - get countries except zone countries OPTIONAL
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -146,7 +189,6 @@ class Zone extends \XLite\Model\AEntity
      * @param boolean $excluded Flag: true - get states except zone states OPTIONAL
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -176,42 +218,9 @@ class Zone extends \XLite\Model\AEntity
     }
 
     /**
-     * Comparison states function for usort()
-     * 
-     * @param \XLite\Model\State $a First state object
-     * @param \XLite\Model\State $b Second state object
-     *  
-     * @return integer 
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    static protected function sortStates($a, $b)
-    {
-        $aCountry = $a->getCountry()->getCountry();
-        $aState = $a->getState();
-
-        $bCountry = $b->getCountry()->getCountry();
-        $bState = $b->getState();
-
-        if ($aCountry == $bCountry && $aState == $bState) {
-            $result = 0;
-
-        } elseif ($aCountry == $bCountry) {
-            $result = ($aState > $bState) ? 1 : -1;
-
-        } else {
-            $result = ($aCountry > $bCountry) ? 1 : -1;
-        }
-
-        return $result;
-    }
-
-    /**
      * Get zone's city masks list
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -224,7 +233,6 @@ class Zone extends \XLite\Model\AEntity
      * Get zone's zip code masks list
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -237,7 +245,6 @@ class Zone extends \XLite\Model\AEntity
      * Get zone's address masks list
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -250,7 +257,6 @@ class Zone extends \XLite\Model\AEntity
      * hasZoneElements 
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -265,7 +271,6 @@ class Zone extends \XLite\Model\AEntity
      * @param string $elementType Element type
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -291,7 +296,6 @@ class Zone extends \XLite\Model\AEntity
      * @param mixed $address ____param_comment____
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -340,7 +344,6 @@ class Zone extends \XLite\Model\AEntity
      * @param mixed $elements ____param_comment____
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -358,7 +361,6 @@ class Zone extends \XLite\Model\AEntity
      * @param mixed $elements ____param_comment____
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -379,7 +381,6 @@ class Zone extends \XLite\Model\AEntity
      * @param mixed $elements ____param_comment____
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -399,7 +400,6 @@ class Zone extends \XLite\Model\AEntity
      * @param mixed $elements ____param_comment____
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -419,7 +419,6 @@ class Zone extends \XLite\Model\AEntity
      * @param mixed $elements ____param_comment____
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -439,7 +438,6 @@ class Zone extends \XLite\Model\AEntity
      * @param mixed $masksList ____param_comment____
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -458,23 +456,5 @@ class Zone extends \XLite\Model\AEntity
         }
 
         return $found;
-    }
-
-    /**
-     * Constructor
-     *
-     * @param array $data Entity properties
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __construct(array $data = array())
-    {
-        $this->zone_elements    = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->shipping_markups = new \Doctrine\Common\Collections\ArrayCollection();
-
-        parent::__construct($data);
     }
 }

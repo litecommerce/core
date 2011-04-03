@@ -201,8 +201,21 @@ window.core = {
       );
 
       result = false;
-    }
 
+    } else if (278 == responseStatus) {
+
+      // Redirect
+      var url = xhr.getResponseHeader('AJAX-Location');
+
+      if (url) {
+        self.location = url;
+      } else {
+        self.location.reload(true);
+      }
+
+      result = false;
+    }
+    
     return result;
   },
 

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,9 +31,9 @@ namespace XLite\Model;
 /**
  * ZoneElement model
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
  * @Entity
  * @Table (name="zone_elements",
  *      indexes={
@@ -56,10 +56,10 @@ class ZoneElement extends \XLite\Model\AEntity
     /**
      * Unique zone element Id 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
      * @Column (type="integer", length="11", nullable=false)
@@ -69,10 +69,10 @@ class ZoneElement extends \XLite\Model\AEntity
     /**
      * Zone element value, e.g. 'US', 'US_NY', 'New Y%' etc
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="string", length="255")
      */
     protected $element_value;
@@ -80,10 +80,10 @@ class ZoneElement extends \XLite\Model\AEntity
     /**
      * Element type
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="fixedstring", length="1")
      */
     protected $element_type;
@@ -91,10 +91,10 @@ class ZoneElement extends \XLite\Model\AEntity
     /**
      * Zone (relation)
      * 
-     * @var    \XLite\Model\Zone
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Zone
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @ManyToOne (targetEntity="XLite\Model\Zone", inversedBy="zone_elements")
      * @JoinColumn (name="zone_id", referencedColumnName="zone_id")
      */
@@ -104,7 +104,6 @@ class ZoneElement extends \XLite\Model\AEntity
      * getElementTypesData 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -143,5 +142,4 @@ class ZoneElement extends \XLite\Model\AEntity
             )
         );
     }
-
 }

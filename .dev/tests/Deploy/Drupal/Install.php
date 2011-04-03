@@ -72,7 +72,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         $this->prepareHtaccess();
 
         // Start installation process
-        $this->open('install.php');
+        $this->open('install.php?lcdebug');
 
         // First step page: License agreement
         $this->stepOne();
@@ -112,12 +112,12 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepOne($pass = 1)
     {
          // Check page title
-        $this->assertTitleEquals('License agreement | Drupal', 'Checking the page title');
+        $this->assertTitle('License agreements | Drupal');
 
         // Check page header
         $this->assertElementPresent(
-            '//h1[@class="page-title" and text()="License agreement"]',
-            'Check that page header equals to text "License agreement"'
+            '//h1[@class="page-title" and text()="License agreements"]',
+            'Check that page header equals to text "License agreements"'
         );
 
         // Check logo
@@ -177,7 +177,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepTwo()
     {
         // Check page title
-        $this->assertTitleEquals('Requirements problem | Drupal', 'Checking the page title');
+        $this->assertTitle('Requirements problem | Drupal');
 
         // Check page header
         $this->assertElementPresent(
@@ -216,7 +216,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepThree($pass = 1)
     {
         // Check page title
-        $this->assertTitleEquals('Database configuration | Drupal', 'Checking the page title');
+        $this->assertTitle('Database configuration | Drupal');
 
         // Check page header
         $this->assertElementPresent(
@@ -278,7 +278,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
             // Check that error message is presented
             $this->assertElementPresent(
-                '//div[@id="console"]/div[@class="messages error"]/p[@class="error" and contains(text(),"Failed to connect to your database server")]',
+                '//div[@id="console"]/div[@class="messages error"]/descendant::p[@class="error" and contains(text(),"Failed to connect to your database server")]',
                 'Check that error message is presented (Database configuration step)'
             );
         }
@@ -322,7 +322,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepFour($pass = 1)
     {
         // Check page title
-        $this->assertTitleEquals('Install LiteCommerce | Drupal', 'Checking the page title');
+        $this->assertTitle('Install LiteCommerce | Drupal');
 
         // Check page header
         $this->assertElementPresent(
@@ -360,7 +360,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepFive($pass = 1)
     {
         // Check page title
-        $this->assertTitleEquals('Installing LiteCommerce | Drupal', sprintf('Checking the page title (pass %d)', $pass));
+        $this->assertTitle('Installing LiteCommerce | Drupal');
 
         // Check page header
         $this->assertElementPresent(
@@ -368,7 +368,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             sprintf('Check that page header equals to text "Installing LiteCommerce" (pass %d)', $pass)
         );
 
-        $counter = 400;
+        $counter = 200;
 
         $percentage = null;
         while ($counter > 0) {
@@ -389,7 +389,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         $this->assertEquals('100%', $percentage, 'Percentage of batch process does not achived the value of 100%');
 
         $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title")[0].innerHTML.search(/Installing ' . self::PRODUCT_NAME . '/) != -1',
+            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title") != "undefined" && selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title")[0].innerHTML.search(/Installing ' . self::PRODUCT_NAME . '/) != -1',
             20000
         );
     }
@@ -405,7 +405,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepSix($pass = 1)
     {
         // Check page title
-        $this->assertTitleEquals('Installing ' . self::PRODUCT_NAME . ' | Drupal', sprintf('Checking the page title (pass %d)', $pass));
+        $this->assertTitle('Installing ' . self::PRODUCT_NAME . ' | Drupal');
 
         // Check page header
         $this->assertElementPresent(
@@ -413,7 +413,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             sprintf('Check that page header equals to text "Installing %s" (pass %d)', self::PRODUCT_NAME, $pass)
         );
 
-        $counter = 300;
+        $counter = 200;
 
         $percentage = null;
 
@@ -435,7 +435,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         $this->assertEquals('100%', $percentage, 'Percentage of batch process does not achived the value of 100%');
 
         $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title")[0].innerHTML.search(/Configure site/) != -1',
+            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title") != "undefined" && selenium.browserbot.getCurrentWindow().document.getElementsByTagName("title")[0].innerHTML.search(/Configure site/) != -1',
             20000
         );
     }
@@ -451,7 +451,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepSeven($pass = 1)
     {
         // Check page title
-        $this->assertTitleEquals('Configure site | Drupal', 'Checking the page title');
+        $this->assertTitle('Configure site | Drupal');
 
         // Check page header
         $this->assertElementPresent(
@@ -561,7 +561,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepEight()
     {
          // Check page title
-        $this->assertTitleEquals(self::PRODUCT_NAME . ' installation complete | Test ' . self::PRODUCT_NAME, 'Checking the page title');
+        $this->assertTitle(self::PRODUCT_NAME . ' installation complete | Test ' . self::PRODUCT_NAME);
 
         // Check page header
         $this->assertElementPresent(
@@ -596,7 +596,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected function stepNine()
     {
         // Check page title
-        $this->assertTitleEquals('Test ' . self::PRODUCT_NAME, 'Checking the page title');
+        $this->assertTitle('Test ' . self::PRODUCT_NAME);
 
         // Check if minicart is presented and has correct items value
         $this->assertElementPresent(

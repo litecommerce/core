@@ -13,17 +13,17 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
+ *
+ * PHP version 5.3.0
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite;
@@ -33,27 +33,25 @@ namespace XLite;
  * FIXME - must be abstract
  * FIXME - must extends \XLite\the Base\SuperClass
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Base extends \XLite\Base\Singleton
 {
     /**
      * Singletons accessible directly from each object (see the "__get" method)
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $singletons = array(
         'xlite'    => 'XLite',
         'auth'     => '\XLite\Core\Auth',
         'session'  => '\XLite\Core\Session',
-        'db'       => '\XLite\Model\Database',
         'logger'   => '\XLite\Logger',
         'config'   => '\XLite\Core\Config',
-        'layout'   => '\XLite\Model\Layout',
+        'layout'   => '\XLite\Core\Layout',
         'mailer'   => '\XLite\Core\Mailer',
     );
 
@@ -65,8 +63,8 @@ class Base extends \XLite\Base\Singleton
      * @param string $name Property name
      *  
      * @return mixed
-     * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function __get($name)
     {
@@ -79,11 +77,11 @@ class Base extends \XLite\Base\Singleton
      * "Magic" caller. It's called when object method is not found
      * 
      * @param string $method Method to call
-     * @param array  $args   Call arrguments
+     * @param array  $args   Call arrguments OPTIONAL
      *  
      * @return void
-     * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function __call($method, array $args = array())
     {
@@ -99,8 +97,8 @@ class Base extends \XLite\Base\Singleton
      * @param string $name Property name
      *  
      * @return mixed
-     * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function get($name)
     {
@@ -137,8 +135,8 @@ class Base extends \XLite\Base\Singleton
      * @param mixed  $value Property value
      *  
      * @return void
-     * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function set($name, $value)
     {
@@ -159,7 +157,6 @@ class Base extends \XLite\Base\Singleton
      * @param mixed $name Property name
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -175,15 +172,17 @@ class Base extends \XLite\Base\Singleton
      * @param string $name List of params delimeted by the "." (dot)
      *  
      * @return mixed
-     * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function getComplex($name)
     {
         $obj = $this;
 
         foreach (explode('.', $name) as $part) {
+            
             if (is_object($obj)) {
+            
                 if ($obj instanceof \stdClass) {
                     $obj = isset($obj->$part) ? $obj->$part : null;
 
@@ -217,8 +216,8 @@ class Base extends \XLite\Base\Singleton
      * @param mixed  $value Value to set
      *  
      * @return void
-     * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function setComplex($name, $value)
     {
@@ -258,9 +257,9 @@ class Base extends \XLite\Base\Singleton
      *
      * @param string $name List of params delimeted by the "." (dot)
      *
-     * @return mixed
-     * @access public
-     * @since  3.0
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function isComplex($name)
     {
@@ -273,8 +272,8 @@ class Base extends \XLite\Base\Singleton
      * @param array $assoc Array(properties) to set
      *  
      * @return void
-     * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function setProperties(array $assoc)
     {

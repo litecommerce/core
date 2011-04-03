@@ -10,11 +10,11 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<p IF="moreThanOnePage" class="NavigationPath">
-<table border=0 width="90%">
+<p IF="moreThanOnePage" class="navigation-path">
+<table width="90%">
 <tr>
 <td>
-Result pages:&nbsp;{foreach:pageUrls,num,pageUrl}{if:isCurrentPage(num)}<b>[{num}]</b>{else:}<a href="{pageUrl:h}">[<u>{num}</u>]</a>{end:} {end:}
+Result pages:&nbsp;{foreach:pageURLs,num,pageURL}{if:isCurrentPage(num)}<b>[{num}]</b>{else:}<a href="{pageURL:h}">[{num}]</a>{end:} {end:}
 </td>
 </tr>
 </table>

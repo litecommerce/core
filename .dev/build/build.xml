@@ -5,7 +5,7 @@
 
 	<target name="build" depends="set-properties,clean,prepare,phpunit-deployment,php-documentor,analysis,create-build,tests" />
 
-	<target name="cc" depends="set-properties-cc,clean,prepare,analysis,phpunit-deployment-cc,php-documentor,comparison,create-build,tests-cc" />
+	<target name="cc" depends="set-properties-cc,clean,prepare,phpunit-deployment-cc,php-documentor,analysis,comparison,create-build,tests-cc" />
 
 	<target name="pure-build" depends="set-properties,clean,prepare,php-documentor,create-build" />
 
@@ -19,7 +19,8 @@
 		<property name="distrDir" location="${buildDir}/output" />
 		<property name="installDir" location="${buildDir}/src" />
 		<property name="label" value="manual" />
-		<property name="varRunClasses" value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
+        <property name="lcRoot" location="${installDir}" />
+		<property name="varRunClasses" value="${installDir}/var/run/classes" />
 	</target>
 
     <target name="set-properties-cc" depends="set-properties-common">
@@ -27,16 +28,19 @@
 		<property name="root" location="${basedir}" />
         <property name="buildDir" location="${root}/build" />
         <property name="sourceDir" location="${root}/source" />
+		<property name="marketDir" location="${root}/market" />
 		<property name="jmeterDir" location="/u/xcart/jakarta-jmeter-2.3.4" />
 		<property name="srcDir" location="${sourceDir}/src" />
 		<property name="distrDir" location="${buildDir}/output" />
 		<property name="installDir" location="${buildDir}/src" />
-        <property name="varRunClasses" value="${installDir}/var/run/classes" />
+		<property name="lcRoot" location="${installDir}/modules/lc_connector/litecommerce" />
+		<property name="varRunClasses" value="${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
     </target>
 
     <target name="set-properties-common">
         <property name="version" value="3.x-dev" />
 		<property name="apiUrl" value="http://xcart2-530.crtdev.local/~max/xlite/build/api" />
+		<property name="php53" value="/usr/local/php-530/bin/php" />
     </target>
 
 	<target name="clean">
@@ -46,6 +50,7 @@
         <mkdir dir="${buildDir}/logs" />
 		<mkdir dir="${buildDir}/api" />
 		<mkdir dir="${buildDir}/reports" />
+        <mkdir dir="${buildDir}/screenshots" />
     </target>
 
 	<target name="prepare">
@@ -53,8 +58,6 @@
 		<echo message="Update current source" />
 		<exec executable="git" dir="${sourceDir}">
 			<arg value="pull" />
-			<arg value="origin" />
-			<arg value="master" />
 		</exec>
 
 		<echo message="Run release builder" />
@@ -72,6 +75,12 @@
 		<mkdir dir="${buildDir}/.dev" />
         <copy todir="${buildDir}/.dev">
             <fileset dir="${sourceDir}/.dev" />
+		</copy>
+
+		<echo message="Copy market from source directory" />
+		<mkdir dir="${marketDir}" />
+		<copy todir="${marketDir}">
+			<fileset dir="${sourceDir}/.dev/marketplace" />
 		</copy>
 
 		<echo message="Prepare deployed repositories" />
@@ -108,21 +117,26 @@
 			<arg value="${buildDir}/.dev/tests/AllTests.php" />
 			<arg value="DEPLOY_DRUPAL" />
         </exec>
+		<copy file="/u/xcart/etc/config.local.php" tofile="${installDir}/modules/lc_connector/litecommerce/etc/config.local.php" />
     </target>
 
 	<target name="prepare-db">
 		<!-- Replace SQL data by the demo data (for testing) -->
-		<exec executable="php" dir="${installDir}" failonerror="on">
-			<arg value="${installDir}/modules/lc_connector/litecommerce/restoredb" />
+		<exec executable="php" dir="${lcRoot}" failonerror="on">
+			<arg value="${lcRoot}/restoredb" />
 			<arg value="demo" />
 			<arg value="admin" />
 		</exec>
 		<!-- Rebuild cache: first pass -->
-		<exec executable="php" dir="${installDir}">
+		<exec executable="${php53}" dir="${installDir}">
 			<arg value="${installDir}/modules/lc_connector/litecommerce/cart.php" />
 		</exec>
 		<!-- Rebuild cache: second pass -->
-        <exec executable="php" dir="${installDir}">
+		<exec executable="${php53}" dir="${installDir}">
+			<arg value="${installDir}/modules/lc_connector/litecommerce/cart.php" />
+		</exec>
+		<!-- Rebuild cache: third pass -->
+		<exec executable="${php53}" dir="${installDir}">
 			<arg value="${installDir}/modules/lc_connector/litecommerce/cart.php" />
         </exec>
 	</target>
@@ -151,7 +165,8 @@
 		</copy>
 		<mkdir dir="${buildDir}/logs/coverage" />
 		<exec executable="phpunit" dir="${buildDir}" failonerror="on" output="${buildDir}/reports/phpunit.txt">
-			<arg value="--log-xml" />
+			<arg value="--verbose" />
+			<arg value="--log-junit" />
 			<arg value="${buildDir}/logs/phpunit.xml" />
 			<arg value="--coverage-html" />
 			<arg value="${buildDir}/logs/coverage" />
@@ -172,13 +187,11 @@
 		</copy>
 		<mkdir dir="${buildDir}/coverage" />
         <exec executable="/u/xcart/bin/phpunit-xlite" dir="${buildDir}" failonerror="on">
-            <arg value="--log-xml" />
+			<arg value="--verbose" />
+			<arg value="--log-junit" />
 			<arg value="${buildDir}/logs/phpunit.xml" />
-			<arg value="--log-pmd" />
-			<arg value="${buildDir}/logs/phpunit.pmd.xml" />
-			<arg value="--log-metrics" />
-			<arg value="${buildDir}/logs/phpunit.metrics.xml" />
-			<arg value="--coverage-xml" />
+			<!-- PHPUnit PMD and PHPUnit Metrics have been removed from PHPUnit 3.5 -->
+			<arg value="--coverage-clover" />
 			<arg value="${buildDir}/logs/phpunit.coverage.xml" />
 			<arg value="--coverage-html" />
 			<arg value="${buildDir}/coverage" />
@@ -211,8 +224,9 @@
 		<exec executable="${sourceDir}/.dev/phpl.sh" dir="${installDir}/modules/lc_connector/litecommerce" failonerror="true" output="${buildDir}/reports/plint.html" />
 	</target>
 
-	<target name="analysis">
+	<target name="analysis" depends="phpdepend,phpmd,copy-paste-detect,git-stat" />
 
+	<target name="phpdepend">
         <echo message="Run PHPDepend" />
         <exec executable="php" dir="${buildDir}">
             <arg value="${sourceDir}/.dev/pdepend.php" />
@@ -220,22 +234,37 @@
             <arg value="--overview-pyramid=${buildDir}/reports/pyramid.svg" />
 			<arg value="--coderank-mode=property,inheritance,method" />
             <arg value="${varRunClasses}" />
-        </exec>
+		</exec>
+	</target>
 
+	<target name="phpmd">
         <echo message="Run PHPMD" />
         <exec executable="php" dir="${buildDir}" output="${buildDir}/reports/phpmd.html">
             <arg value="${sourceDir}/.dev/phpmd.php" />
             <arg value="${sourceDir}/src/classes" />
 			<arg value="html" />
 			<arg value="rulesets/codesize.xml,rulesets/design.xml,rulesets/naming.xml,rulesets/unusedcode.xml" />
-        </exec>
+		</exec>
+	</target>
 
+	<target name="copy-paste-detect">
+        <echo message="Run PHP Copy-Paste detecor" />
+        <exec executable="phpcpd" dir="${sourceDir}/src" output="${buildDir}/reports/phpcpd.txt" failonerror="false">
+            <arg value="--exclude" />
+            <arg value="var" />
+            <arg value="--exclude" />
+            <arg value="lib" />
+            <arg value="${sourceDir}/src" />
+        </exec>
+	</target>
+
+	<target name="git-stat">
         <echo message="Run Git stats" />
 		<mkdir dir="${buildDir}/reports/gitstat" />
 		<chmod file="${buildDir}/.dev/lib/gitstats/gitstats" perm="ugo+rx" />
         <exec executable="${buildDir}/.dev/lib/gitstats/gitstats" dir="${sourceDir}">
             <arg line="-c project_name=XLite -c authors_top=10 ${sourceDir} ${buildDir}/reports/gitstat" />
-        </exec>
+		</exec>
 	</target>
 
 	<target name="comparison">

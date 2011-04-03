@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller;
@@ -31,12 +31,18 @@ namespace XLite\Controller;
 /**
  * Abstract controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AController extends \XLite\Core\Handler
 {
+    /**
+     * Name of temporary variable to store time
+     * of last request to marketplace
+     */
+    const MARKETPLACE_LAST_REQUEST_TIME = 'marketplaceLastRequestTime';
+
+
     /**
      * Controller main params
      */
@@ -55,49 +61,72 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Object to keep action status
      * 
-     * @var    \XLite\Model\ActionError\Abstract
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\ActionError\Abstract
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $actionStatus;
 
     /**
      * Breadcrumbs 
      * 
-     * @var    \XLite\View\Location
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\View\Location
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $locationPath;
 
     /**
-     * Quick links 
+     * returnURL 
      * 
-     * @var    \XLite\View\QuickLinks
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
-    protected $quickLinks;
+    protected $returnURL;
 
     /**
-     * returnUrl 
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * Pages array for tabber
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
-    protected $returnUrl;
+    protected $pages = array();
+
+    /**
+     * params 
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $params = array('target');
+
+    /**
+     * pageTemplates 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $pageTemplates = array();
+
+    /**
+     * Validity flag
+     * TODO - check where it's really needed
+     * 
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $valid = true;
 
 
     /**
      * Get target by controller class name
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -108,11 +137,702 @@ abstract class AController extends \XLite\Core\Handler
         return \Includes\Utils\Converter::convertFromCamelCase(lcfirst(array_pop($parts)));
     }
 
+
+    /**
+     * Get controlelr parameters
+     * TODO - check this method
+     * FIXME - backward compatibility
+     *
+     * @param string $exeptions Parameter keys string OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAllParams($exeptions = null)
+    {
+        $result = array();
+        
+        $exeptions = isset($exeptions) ? explode(',', $exeptions) : false;
+
+        foreach ($this->get('params') as $name) {
+            $value = $this->get($name);
+            if (isset($value) && (!$exeptions || in_array($name, $exeptions))) {
+                $result[$name] = $value;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * isRedirectNeeded
+     *
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isRedirectNeeded()
+    {
+        return (\XLite\Core\Request::getInstance()->isPost() || $this->getReturnURL()) && !$this->silent;
+    }
+
+    /**
+     * Get target
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTarget()
+    {
+        return \XLite\Core\Request::getInstance()->target;
+    }
+
+    /**
+     * Get action
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAction()
+    {
+        return \XLite\Core\Request::getInstance()->action;
+    }
+
+    /**
+     * Get the full URL of the page
+     * Example: getShopURL('cart.php') = "http://domain/dir/cart.php 
+     * 
+     * @param string  $url    Relative URL OPTIONAL
+     * @param boolean $secure Flag to use HTTPS OPTIONAL
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getShopURL($url = '', $secure = false)
+    {
+        return \XLite::getInstance()->getShopURL($url, $secure);
+    }
+
+    /**
+     * Return current location path
+     *
+     * @return \XLite\View\Location
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLocationPath()
+    {
+        if (!isset($this->locationPath)) {
+            $this->defineLocationPath();
+        }
+
+        return $this->locationPath;
+    }
+
+    /**
+     * Get return URL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getReturnURL()
+    {
+        if (!isset($this->returnURL)) {
+            $this->returnURL = \XLite\Core\Request::getInstance()->{self::RETURN_URL};
+        }
+
+        return $this->returnURL;
+    }
+
+    /**
+     * Set return URL
+     *
+     * @param string $url URL to set
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setReturnURL($url)
+    {
+        $this->returnURL = $url;
+    }
+
+    /**
+     * Get current URL with additional params
+     * 
+     * @param array $params Query params to use
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setReturnURLParams(array $params)
+    {
+        return $this->setReturnURL($this->buildURL($this->getTarget(), '', $params));
+    }
+
+    /**
+     * Handles the request.
+     * Parses the request variables if necessary. Attempts to call the specified action function 
+     * FIXME - simplify
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest()
+    {
+        if (!$this->checkAccess()) {
+
+            $this->markAsAccessDenied();
+
+        } elseif (!$this->isVisible()) {
+
+            $this->display404();
+
+        } elseif (!empty(\XLite\Core\Request::getInstance()->action) && $this->isValid()) {
+
+            $this->callAction();
+
+        } else {
+
+            $this->doNoAction();
+        }
+
+        if ($this->isRedirectNeeded()) {
+            $this->doRedirect();
+        }
+    }
+
+    /**
+     * Alias: check for an AJAX request
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isAJAX()
+    {
+        return \XLite\Core\Request::getInstance()->isAJAX();
+    }
+
+    /**
+     * Return Viewer object
+     * 
+     * @return \XLite\View\Controller
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getViewer()
+    {
+        $class = $this->getViewerClass();
+
+        return new $class($this->getViewerParams(), $this->getViewerTemplate());
+    }
+
+    /**
+     * Process request 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function processRequest()
+    {
+        $viewer = $this->getViewer();
+        $viewer->init();
+
+        if ($this->isAJAX()) {
+            $this->printAJAXOuput($viewer->getContent());
+            
+        } else {
+            $viewer->display();
+        }
+    }
+
+
+    /**
+     * This function called after template output
+     * FIXME - may be there is a better way to handle this?
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function postprocess()
+    {
+    }
+
+    /**
+     * Return the current page title (for the content area)
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return null;
+    }
+
+    /**
+     * Check whether the title is to be displayed in the content area 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isTitleVisible()
+    {
+        return true;
+    }
+
+    /**
+     * Return the page title (for the <title> tag)
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageTitle()
+    {
+        return $this->getTitle();
+    }
+
+    /**
+     * Check if an error occured
+     *
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isActionError()
+    {
+        return isset($this->actionStatus) && $this->actionStatus->isError();
+    }
+
+    /**
+     * setActionStatus 
+     * 
+     * @param integer $status  Error/success
+     * @param string  $message Status info OPTIONAL
+     * @param integer $code    Status code OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setActionStatus($status, $message = '', $code = 0)
+    {
+        $this->actionStatus = new \XLite\Model\ActionStatus($status, $message, $code);
+    }
+
+    /**
+     * setActionError 
+     * 
+     * @param string  $message Status info  OPTIONAL
+     * @param integer $code    Status code OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setActionError($message = '', $code = 0)
+    {
+        $this->setActionStatus(\XLite\Model\ActionStatus::STATUS_ERROR, $message, $code);
+    }
+
+    /**
+     * setActionSuccess
+     *
+     * @param string  $message Status info OPTIONAL
+     * @param integer $code    Status code OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setActionSuccess($message = '', $code = 0)
+    {
+        $this->setActionStatus(\XLite\Model\ActionStatus::STATUS_SUCCESS, $message, $code);
+    }
+
+    /**
+     * Check if handler is valid 
+     * TODO - check where it's really needed
+     * 
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isValid()
+    {
+        return $this->valid;
+    }
+
+    /**
+     * Initialize controller
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function init()
+    {
+        parent::init();
+    }
+        
+    /**
+     * Check - is secure connection or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isHTTPS()
+    {
+        return \XLite\Core\Request::getInstance()->isHTTPS();
+    }
+
+    /**
+     * Get access level 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAccessLevel()
+    {
+        return $this->auth->getCustomerAccessLevel();
+    }
+
+    /**
+     * getProperties 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProperties()
+    {
+        $result = array();
+        
+        foreach ($_REQUEST as $name => $value) {
+            $result[$name] = $this->get($name);
+        }
+        
+        return $result;
+    }
+
+    /**
+     * getURL 
+     * 
+     * @param array $params URL parameters OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getURL(array $params = array())
+    {
+        $params = array_merge($this->getAllParams(), $params);
+
+        $target = isset($params['target']) ? $params['target'] : '';
+        
+        unset($params['target']);
+
+        return $this->buildURL($target, '', $params);
+    }
+
+    /**
+     * getPageTemplate 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageTemplate()
+    {
+        $result = null;
+        
+        if (isset($this->pageTemplates[$this->get('page')])) {
+            $result = $this->pageTemplates[$this->get('page')];
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return the array(pages) for tabber
+     * FIXME - move to the Controller/Admin/Abstract.php:
+     * tabber is not used in customer area
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTabPages()
+    {
+        return $this->pages;
+    }
+
+    /**
+     * getUploadedFile 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getUploadedFile()
+    {
+        $file = null;
+
+        if (is_uploaded_file($_FILES['userfile']['tmp_name'])) {
+            $file = $_FILES['userfile']['tmp_name'];
+        
+        } elseif (is_readable($_POST['localfile'])) {
+            $file = $_POST['localfile'];
+        
+        } else {
+            $this->doDie('FAILED: data file unspecified');
+        }
+        
+        // security check
+        $name = $_FILES['userfile']['name'];
+        
+        if (strstr($name, '../') || strstr($name, '..\\')) {
+            $this->doDie('ACCESS DENIED');
+        }
+        
+        return $file;
+    }
+
+    /**
+     * checkUploadedFile 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkUploadedFile()
+    {
+        $check = true;
+
+        if (is_uploaded_file($_FILES['userfile']['tmp_name'])) {
+            $file = $_FILES['userfile']['tmp_name'];
+        
+        } elseif (is_readable($_POST['localfile'])) {
+            $file = $_POST['localfile'];
+        
+        } else {
+            $check = false;
+        }
+
+        if ($check) {
+
+            // security check
+            $name = $_FILES['userfile']['name'];
+        
+            if (strstr($name, '../') || strstr($name, '..\\')) {
+                $check = false;
+            }
+        }
+
+        return $check;
+    }
+
+    /**
+     * Get controller charset 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCharset()
+    {
+        return 'UTF-8';
+    }
+
+    /**
+     * getEmailValidatorRegExp
+     * FIXME: is used in skins/default/en/contactus.tpl only
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getEmailValidatorRegExp()
+    {
+        $values = array();
+        $domains = split(',| |;|\||\/', $this->config->Email->valid_email_domains);
+        
+        foreach ((array)$domains as $key=>$val) {
+            if (trim($val)) {
+                $values[$key] = '(\.' . trim($val) . ')';
+            }
+        }
+
+        if (empty($values)) {
+            $values[] = '(\..{2,3})';
+        }
+
+        return '/\b(^(\S+@).+(' . implode('|', $values) . ')$)\b/gi';
+    }
+
+    /**
+     * isSecure 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isSecure()
+    {
+        return false;
+    }
+    
+    /**
+     * strftime 
+     * FIXME: is used in skins/admin/en/general_settings.tpl
+     * 
+     * @param string $format Time format
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function strftime($format)
+    {
+        return strftime($format);
+    }
+
+    /**
+     * Common prefix for editable elements in lists
+     *
+     * NOTE: this method is requered for the GetWidget and AAdmin classes
+     * TODO: after the multiple inheritance should be moved to the AAdmin class
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPrefixPostedData()
+    {
+        return 'postedData';
+    }
+
+    /**
+     * Common prefix for the "delete" checkboxes in lists
+     *
+     * NOTE: this method is requered for the GetWidget and AAdmin classes
+     * TODO: after the multiple inheritance should be moved to the AAdmin class
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPrefixToDelete()
+    {
+        return 'toDelete';
+    }
+
+    /**
+     * Get current currency 
+     * TODO - rework
+     * 
+     * @return \XLite\Model\Currency
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCurrentCurrency()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840);
+    }
+
+    /**
+     * Return the reserved ID of root category
+     *
+     * @return integer 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRootCategoryId()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getRootCategoryId();
+    }
+
+    /**
+     * Return current category Id
+     *
+     * @return integer 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCategoryId()
+    {
+        return intval(\XLite\Core\Request::getInstance()->category_id) ?: $this->getRootCategoryId();
+    }
+
+    /**
+     * Get meta description
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMetaDescription()
+    {
+        return null;
+    }
+
+    /**
+     * Get meta keywords
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getKeywords()
+    {
+        return null;
+    }
+
+    /**  
+     * Return model form object
+     * 
+     * @param array $params Form constructor params OPTIONAL
+     *  
+     * @return \XLite\View\Model\AModel|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModelForm(array $params = array())
+    {    
+        $result = null;
+        $class  = $this->getModelFormClass();
+
+        if (isset($class)) {
+            $result = \XLite\Model\CachingFactory::getObject(
+                __METHOD__ . $class . (empty($params) ? '' : md5(serialize($params))),
+                $class,
+                $params
+            );   
+        }    
+
+        return $result;
+    }    
+
+
     /**
      * Check if current page is accessible
      *
      * @return boolean 
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
@@ -125,7 +845,7 @@ abstract class AController extends \XLite\Core\Handler
      * Return default redirect code 
      * 
      * @return integer 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultRedirectCode()
@@ -137,7 +857,6 @@ abstract class AController extends \XLite\Core\Handler
      * Default URL to redirect
      * 
      * @return string
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
@@ -152,21 +871,21 @@ abstract class AController extends \XLite\Core\Handler
      * @param string $url Redirect URL OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
     protected function redirect($url = null)
     {
-        $location = $this->getReturnUrl();
+        $location = $this->getReturnURL();
 
         if (!isset($location)) {
-            $location = isset($url) ? $url : $this->getUrl();
+            $location = isset($url) ? $url : $this->getURL();
         }
 
         // filter xlite_form_id from redirect url
         // FIXME - check if it's really needed
         $action = $this->get('action');
+        
         if (empty($action)) {
             $location = $this->filterXliteFormID($location);
         }
@@ -185,7 +904,6 @@ abstract class AController extends \XLite\Core\Handler
      * Get redirect mode - force redirect or not
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -195,23 +913,9 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Get secure controller status
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSecure()
-    {
-        return false;
-    }
-
-    /**
      * Common method to determine current location 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -224,7 +928,6 @@ abstract class AController extends \XLite\Core\Handler
      * Add part to the location nodes list
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -237,10 +940,9 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @param string $name     Node title
      * @param string $link     Node link OPTIONAL
-     * @param array  $subnodes Node subnodes
+     * @param array  $subnodes Node subnodes OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -253,7 +955,6 @@ abstract class AController extends \XLite\Core\Handler
      * Method to create the location line
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -262,55 +963,23 @@ abstract class AController extends \XLite\Core\Handler
         $this->locationPath = array();
 
         // Common element for all location lines
-        $this->addLocationNode('Home', $this->buildURL());
+        $this->locationPath[] = new \XLite\View\Location\Node\Home();
 
         // Ability to add part to the line
         $this->addBaseLocation();
 
         // Ability to define last element in path via short function
-        $params = (array) $this->getLocation();
+        $location = $this->getLocation();
 
-        // FIXME - check this
-        if ($params) {
-            call_user_func_array(array('static', 'addLocationNode'), $params);
+        if ($location) {
+            $this->addLocationNode($location);
         }
-    }
-
-    /**
-     * Method to create quick links
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineQuickLinks()
-    {
-        $this->quickLinks = array();
-    }
-
-    /**
-     * Add node to the quick links line
-     *
-     * @param string  $name Link title
-     * @param string  $link Link URL
-     * @param boolean $hl   Highlight flag
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function addQuickLink($name, $link, $hl = false)
-    {
-        $this->quickLinks[] = \XLite\View\QuickLinks\Link::create($name, $link, $hl);
     }
 
     /**
      * Select template to use
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -323,7 +992,7 @@ abstract class AController extends \XLite\Core\Handler
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -339,7 +1008,7 @@ abstract class AController extends \XLite\Core\Handler
      * Class name for the \XLite\View\Model\ form (optional)
      * 
      * @return string|void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getModelFormClass()
@@ -348,259 +1017,119 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Return model form object
-     * 
-     * @param array $params Form constructor params
-     *  
-     * @return \XLite\View\Model\AModel|void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getModelForm(array $params = array())
-    {
-        $result = null;
-        $class  = $this->getModelFormClass();
-
-        if (isset($class)) {
-            $result = \XLite\Model\CachingFactory::getObject(
-                __METHOD__ . $class . (empty($params) ? '' : md5(serialize($params))),
-                $class,
-                $params
-            );
-        }
-
-        return $result;
-    }
-
-    /**
      * Perform some actions before redirect
      *
-     * @param string|null $action Performed action
+     * @param string $action Performed action
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function actionPostprocess($action)
     {
-        if (isset($action)) {
-            $method = __FUNCTION__ . \XLite\Core\Converter::convertToCamelCase($action);
-            if (method_exists($this, $method)) {
-                // Call action method
-                $this->$method();
-            }
+        if (method_exists($this, $method = __FUNCTION__ . \Includes\Utils\Converter::convertToPascalCase($action))) {
+
+            // Call action method
+            $this->$method();
         }
     }
 
-
     /**
-     * isRedirectNeeded
-     *
-     * @return boolean 
-     * @access public
-     * @since  3.0.0
-     */
-    public function isRedirectNeeded()
-    {
-        return (\XLite\Core\Request::getInstance()->isPost() || $this->getReturnUrl()) && !$this->silent;
-    }
-
-    /**
-     * Get target
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getTarget()
-    {
-        return \XLite\Core\Request::getInstance()->target;
-    }
-
-    /**
-     * Get action
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getAction()
-    {
-        return \XLite\Core\Request::getInstance()->action;
-    }
-
-    /**
-     * Get the full URL of the page
-     * Example: getShopUrl('cart.php') = "http://domain/dir/cart.php 
+     * Call controller action
      * 
-     * @param string  $url    Relative URL  
-     * @param boolean $secure Flag to use HTTPS OPTIONAL
-     *  
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getShopUrl($url = '', $secure = false)
-    {
-        return \XLite::getInstance()->getShopUrl($url, $secure);
-    }
-
-    /**
-     * Return current location path
-     *
-     * @return \XLite\View\Location
-     * @access public
+     * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getLocationPath()
+    protected function callAction()
     {
-        if (!isset($this->locationPath)) {
-            $this->defineLocationPath();
+        $action = \XLite\Core\Request::getInstance()->action;
+
+        $oldMethodName = 'action_' . $action;
+        $newMethodName = 'doAction' . \Includes\Utils\Converter::convertToPascalCase($action);
+
+        if (method_exists($this, $oldMethodName)) {
+            // action_{action}()
+            // FIXME - to remove
+            $this->$oldMethodName();
+        } elseif (method_exists($this, $newMethodName)) {
+            // doAction{Action}()
+            $this->$newMethodName();
         }
 
-        return $this->locationPath;
+        $this->actionPostprocess($action);
     }
 
     /**
-     * Return quick links
-     *
-     * @return \XLite\View\QuickLinks
-     * @access public
+     * Do redirect 
+     * 
+     * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getQuickLinks()
+    protected function doRedirect()
     {
-        if (!isset($this->quickLinks)) {
-            $this->defineQuickLinks();
+        if ($this->isAJAX()) {
+            $this->translateTopMessagesToHTTPHeaders();
+            $this->assignAJAXResponseStatus();
         }
 
-        return $this->quickLinks;
+        $this->redirect();
     }
 
     /**
-     * Get return URL
-     *
-     * @return string
-     * @access public
+     * Translate top messages to HTTP headers (AJAX)
+     * 
+     * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getReturnUrl()
+    protected function translateTopMessagesToHTTPHeaders()
     {
-        if (!isset($this->returnUrl)) {
-            $this->returnUrl = \XLite\Core\Request::getInstance()->{self::RETURN_URL};
+        foreach (\XLite\Core\TopMessage::getInstance()->getMessages() as $message) {
+            $encodedMessage = json_encode(
+                array(
+                    'type'    => $message[\XLite\Core\TopMessage::FIELD_TYPE],
+                    'message' => $message[\XLite\Core\TopMessage::FIELD_TEXT],
+                )
+            );
+            header('event-message: ' . $encodedMessage);
         }
-
-        return $this->returnUrl;
+        \XLite\Core\TopMessage::getInstance()->clear();
     }
 
     /**
-     * Set return URL
-     *
-     * @param string $url URL to set
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function setReturnUrl($url)
-    {
-        $this->returnUrl = $url;
-    }
-
-    /**
-     * Get current URL with additional params
-     * 
-     * @param array $params Query params to use
-     *  
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function setReturnUrlParams(array $params)
-    {
-        return $this->setReturnUrl($this->buildURL($this->getTarget(), '', $params));
-    }
-
-    /**
-     * Handles the request.
-     * Parses the request variables if necessary. Attempts to call the specified action function 
-     * FIXME - simplify
+     * Assign AJAX response status to HTTP header(s)
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest()
+    protected function assignAJAXResponseStatus()
     {
-        if (!$this->checkAccess()) {
+        if (!$this->isValid()) {
 
-            $this->markAsAccessDenied();
+            // AXAX-based - cancel redirect
+            header('ajax-response-status: 0');
+            header('not-valid: 1');
+        
+        } elseif ($this->hardRedirect) {
 
-        } elseif (!$this->isVisible()) {
+            // Main page redirect
+            header('ajax-response-status: 278');
 
-            $this->display404();
+        } elseif ($this->internalRedirect) {
 
-        } elseif (!empty(\XLite\Core\Request::getInstance()->action) && $this->isValid()) {
+            // Popup internal redirect
+            header('ajax-response-status: 279');
 
-            $action = \XLite\Core\Request::getInstance()->action;
+        } elseif ($this->silenceClose) {
 
-            $oldMethodName = 'action_' . $action;
-            $newMethodName = 'doAction' . \XLite\Core\Converter::convertToCamelCase($action);
-
-            if (method_exists($this, $oldMethodName)) {
-                // action_{action}()
-                $this->$oldMethodName();
-
-            } elseif (method_exists($this, $newMethodName)) {
-                // doAction{Action}()
-                $this->$newMethodName();
-            }
-
-            $this->actionPostprocess($action);
+            // Popup silence close
+            header('ajax-response-status: 277');
 
         } else {
-            $this->doNoAction();
-        }
-
-        if ($this->isRedirectNeeded()) {
-            if ($this->isAJAX()) {
-
-                foreach (\XLite\Core\TopMessage::getInstance()->getMessages() as $message) {
-                    $encodedMessage = json_encode(
-                        array(
-                            'type'    => $message[\XLite\Core\TopMessage::FIELD_TYPE],
-                            'message' => $message[\XLite\Core\TopMessage::FIELD_TEXT],
-                        )
-                    );
-                    header('event-message: ' . $encodedMessage);
-                }
-                \XLite\Core\TopMessage::getInstance()->clear();
-
-                if (!$this->isValid()) {
-
-                    // AXAX-based - cancel redirect
-                    header('ajax-response-status: 0');
-                    header('not-valid: 1');
-
-                } elseif ($this->internalRedirect) {
-
-                    // Popup internal redirect
-                    header('ajax-response-status: 279');
-
-                } elseif ($this->silenceClose) {
-
-                    // Popup silence close
-                    header('ajax-response-status: 277');
-
-                } else {
-                    header('ajax-response-status: 270');
-                }
-            }
-
-            $this->redirect();
+            header('ajax-response-status: 270');
         }
     }
 
@@ -608,7 +1137,6 @@ abstract class AController extends \XLite\Core\Handler
      * Preprocessor for no-action ren
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -620,7 +1148,6 @@ abstract class AController extends \XLite\Core\Handler
      * Check controller visibility
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -633,7 +1160,6 @@ abstract class AController extends \XLite\Core\Handler
      * Display 404 page
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -655,7 +1181,6 @@ abstract class AController extends \XLite\Core\Handler
      * @param boolean $flag Internal redirect status OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -667,12 +1192,27 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
+     * Set hard (main page redirect) redirect
+     * 
+     * @param boolean $flag Internal redirect status OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setHardRedirect($flag = true)
+    {
+        if ($this->isAJAX()) {
+            $this->hardRedirect = (bool) $flag;
+        }
+    }
+
+    /**
      * Set silence close popup
      * 
      * @param boolean $flag Silence close status OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -687,7 +1227,6 @@ abstract class AController extends \XLite\Core\Handler
      * Check if current viewer is for an AJAX request
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -700,216 +1239,35 @@ abstract class AController extends \XLite\Core\Handler
      * Return class of current viewer
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getViewerClass()
     {
-        return $this->isAJAXViewer() ? \XLite\Core\Request::getInstance()->widget : '\XLite\View\Controller';
+        return $this->isAJAXViewer()
+            ? \XLite\Core\Request::getInstance()->widget
+            : '\XLite\View\Controller';
     }
 
     /**
-     * Alias: check for an AJAX request
+     * Print AJAX request ouput 
      * 
+     * @param string $output Output
+     *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isAJAX()
+    protected function printAJAXOuput($output)
     {
-        return \XLite\Core\Request::getInstance()->isAJAX();
-    }
-
-    /**
-     * Return Viewer object
-     * 
-     * @return \XLite\View\Controller
-     * @access public
-     * @since  3.0.0
-     */
-    public function getViewer()
-    {
-        $params = array();
-
-        // FIXME: is it really needed?
-        foreach (array(self::PARAM_SILENT, self::PARAM_DUMP_STARTED) as $name) {
-            $params[$name] = $this->get($name);
-        }
-
-        $class = $this->getViewerClass();
-
-        return new $class($params, $this->getViewerTemplate());
-    }
-
-    /**
-     * This function called after template output
-     * FIXME - may be there is a better way to handle this?
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function postprocess()
-    {
-    }
-
-    /**
-     * Return the current page title (for the content area)
-     * 
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return null;
-    }
-
-    /**
-     * Check whether the title is to be displayed in the content area 
-     * 
-     * @return boolean
-     * @access public
-     * @since  3.0.0
-     */
-    public function isTitleVisible()
-    {
-        return true;
-    }
-
-    /**
-     * Return the page title (for the <title> tag)
-     * 
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getPageTitle()
-    {
-        return $this->getTitle();
-    }
-
-    /**
-     * Check if an error occured
-     *
-     * @return boolean 
-     * @access public
-     * @since  3.0.0
-     */
-    public function isActionError()
-    {
-        return isset($this->actionStatus) && $this->actionStatus->isError();
-    }
-
-    /**
-     * setActionStatus 
-     * 
-     * @param integer $status  Error/success
-     * @param string  $message Status info OPTIONAL
-     * @param integer $code    Status code OPTIONAL
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function setActionStatus($status, $message = '', $code = 0)
-    {
-        $this->actionStatus = new \XLite\Model\ActionStatus($status, $message, $code);
-    }
-
-    /**
-     * setActionError 
-     * 
-     * @param string  $message Status info  OPTIONAL
-     * @param integer $code    Status code OPTIONAL
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function setActionError($message = '', $code = 0)
-    {
-        $this->setActionStatus(\XLite\Model\ActionStatus::STATUS_ERROR, $message, $code);
-    }
-
-    /**
-     * setActionSuccess
-     *
-     * @param string  $message Status info OPTIONAL
-     * @param integer $code    Status code OPTIONAL
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function setActionSuccess($message = '', $code = 0)
-    {
-        $this->setActionStatus(\XLite\Model\ActionStatus::STATUS_SUCCESS, $message, $code);
-    }
-
-
-
-    // TODO - should be revised
-
-    /**
-     * Pages array for tabber
-     * FIXME - must be protected
-     *
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $pages = array();
-
-
-    protected $params = array('target');
-
-    protected $pageTemplates = array();
-
-    /**
-     * Validity flag
-     * TODO - check where it's really needed
-     * 
-     * @var    bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $valid = true;
-
-    /**
-     * Get controlelr parameters
-     * TODO - check this method
-     * FIXME - backward compatibility
-     *
-     * @param string $exeptions Parameter keys string OPTIONAL
-     *
-     * @return array
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function getAllParams($exeptions = null)
-    {
-        $result = array();
-        $exeptions = isset($exeptions) ? explode(",", $exeptions) : false;
-
-        foreach ($this->get('params') as $name) {
-            $value = $this->get($name);
-            if (isset($value) && (!$exeptions || in_array($name, $exeptions))) {
-                $result[$name] = $value;
-            }
-        }
-
-        return $result;
+        echo ('<h2 class="ajax-title-loadable">' . $this->getTitle() . '</h2>');
+        echo ('<div class="ajax-container-loadable">' . $output . '</div>');
     }
 
     /**
      * Mark controller run thread as access denied
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -921,346 +1279,208 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Check if handler is valid 
-     * TODO - check where it's really needed
+     * startDownload 
      * 
-     * @return boolean 
-     * @access public
-     * @since  3.0.0
-     */
-    public function isValid()
-    {
-        return $this->valid;
-    }
-
-    /**
-     * Initialize controller
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function init()
-    {
-        parent::init();
-
-        $this->fillForm();
-    }
-
-    /**
-     * FIXME - backward compatibility; to delete
-     * 
-     * @param mixed $request ____param_comment____ OPTIONAL
+     * @param string $filename    File name
+     * @param string $contentType Content type OPTIONAL
      *  
      * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function mapRequest($request = null)
-    {
-    }
-        
-    /** 
-     * FIXME - backward compatibility; to delete 
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function fillForm()
-    {
-    }
-
-    function _clear_xsid_data()
-    {
-        unset($_REQUEST[\XLite\Model\Session::SESSION_DEFAULT_NAME]);
-        $this->xlite->session->destroy();
-        $this->xlite->session->setID(SESSION_DEFAULT_ID);
-        $this->xlite->session->_initialize();
-        $this->xlite->session->_data = array();
-    }
-
-    function _pure_url_path($str)
-    {
-        $pos = strpos($str, "?");
-        if ($pos !== false) {
-            $str = substr($str, 0, $pos);
-        }
-
-        $last = strlen($str) - 1;
-        if ($last > 0 && $str{$last} == "/") {
-            $str = substr($str, 0, $last);
-        }
-
-        return $str;
-    }
-
-    /**
-     * Check - is secure connection or not
-     * 
-     * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isHTTPS()
-    {
-        return \XLite\Core\Request::getInstance()->isHTTPS();
-    }
-
-    function startDownload($filename, $contentType = 'application/force-download')
+    protected function startDownload($filename, $contentType = 'application/force-download')
     {
         @set_time_limit(0);
         header('Content-type: ' . $contentType);
         header('Content-disposition: attachment; filename=' . $filename);
     }
 
-    function startImage()
+    /**
+     * startImage 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function startImage()
     {
         header('Content-type: image/gif');
         $this->set('silent', true);
     }
 
-    function startDump()
+    /**
+     * startDump 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function startDump()
     {
         @set_time_limit(0);
+
         $this->set('silent', true);
-        if (!isset($_REQUEST['mode']) || $_REQUEST['mode']!="cp") {
+
+        if (!isset(\XLite\Core\Request::getInstance()->mode) || 'cp' != \XLite\Core\Request::getInstance()->mode) {
+
             func_refresh_start();
             $this->dumpStarted = true;
         }
     }
 
     /**
-    * Provides access to accessdenied function.
-    */
-    function accessDenied()
-    {
-    }
-
-    /**
-     * Get access level 
+     * filterXliteFormID 
      * 
-     * @return integer
-     * @access public
+     * @param mixed $url ____param_comment____
+     *  
+     * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getAccessLevel()
+    protected function filterXliteFormID($url)
     {
-        return $this->auth->getCustomerAccessLevel();
-    }
+        if (preg_match('/(\?|&)(xlite_form_id=[a-zA-Z0-9]+)(&.+)?$/', $url, $matches)) {
 
-    function getProperties()
-    {
-        $result = array();
-        foreach ($_REQUEST as $name => $value)
-        {
-            $result[$name] = $this->get($name);
-        }
-        return $result;
-    }
+            if ($matches[1] == '&') {
+                $param = $matches[1] . $matches[2];
+            
+            } elseif (empty($matches[3])) {
+                $param = $matches[1] . $matches[2];
+            
+            } else {
+                $param = $matches[2] . '&';
+            }
 
-    function getUrl(array $params = array())
-    {
-        $params = array_merge($this->getAllParams(), $params);
-
-        $target = isset($params['target']) ? $params['target'] : '';
-        unset($params['target']);
-
-        return $this->buildURL($target, '', $params);
-    }
-
-    function getPageTemplate()
-    {
-        if (isset($this->pageTemplates[$this->get('page')])) {
-            return $this->pageTemplates[$this->get('page')];
-        }
-        return null;
-    }
-
-    /**
-     * Return the array(pages) for tabber
-     * FIXME - move to the Controller/Admin/Abstract.php:
-     * tabber is not used in customer area
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTabPages()
-    {
-        return $this->pages;
-    }
-
-
-    function getUploadedFile()
-    {
-        $file = null;
-
-        if (is_uploaded_file($_FILES['userfile']['tmp_name'])) {
-            $file = $_FILES['userfile']['tmp_name'];
-        } elseif (is_readable($_POST['localfile'])) {
-            $file = $_POST['localfile'];
-        } else {
-            $this->doDie("FAILED: data file unspecified");
-        }
-        // security check
-        $name = $_FILES['userfile']['name'];
-        if (strstr($name, '../') || strstr($name, '..\\')) {
-            $this->doDie('ACCESS DENIED');
-        }
-        return $file;
-    }
-
-    function checkUploadedFile()
-    {
-        $check = true;
-
-        if (is_uploaded_file($_FILES['userfile']['tmp_name'])) {
-            $file = $_FILES['userfile']['tmp_name'];
-        } elseif (is_readable($_POST['localfile'])) {
-            $file = $_POST['localfile'];
-        } else {
-            return false;
-        }
-        // security check
-        $name = $_FILES['userfile']['name'];
-        if (strstr($name, '../') || strstr($name, '..\\')) {
-            return false;
+            $url = str_replace($param, '', $url);
         }
 
-        return $check;
-    }
-
-    /**
-     * Get controller charset 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCharset()
-    {
-        return 'UTF-8';
-    }
-
-    function getEmailValidatorRegExp()
-    {
-        $values = array();
-        $domains = split(",| |;|\||\/", $this->config->Email->valid_email_domains);
-        foreach ((array)$domains as $key=>$val) {
-            if (!trim($val))
-                continue;
-
-            $values[$key] = "(\.".trim($val).")";
-        }
-
-        if (count($values) <= 0) {
-            $values[] = "(\..{2,3})";
-        }
-
-        return "/\b(^(\S+@).+(".implode("|", $values).")$)\b/gi";
-    }
-
-    function isSecure()
-    {
-        return false;
-    }
-    
-    function strftime($format)
-    {
-        return strftime($format);
-    }
-
-    function rand()
-    {
-        return rand();
-    }
-
-    function filterXliteFormID($url)
-    {
-        if (preg_match("/(\?|&)(xlite_form_id=[a-zA-Z0-9]+)(&.+)?$/", $url, $matches)) {
-            if ($matches[1] == '&') $param = $matches[1].$matches[2];
-            elseif (empty($matches[3])) $param = $matches[1].$matches[2];
-            else $param = $matches[2]."&";
-            $url = str_replace($param, "", $url);
-        }
         return $url;
     }
 
-    /**
-     * Common prefix for editable elements in lists
-     *
-     * NOTE: this method is requered for the GetWidget and AAdmin classes
-     * TODO: after the multiple inheritance should be moved to the AAdmin class
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPrefixPostedData()
-    {
-        return 'postedData';
-    }
 
     /**
-     * Common prefix for the "delete" checkboxes in lists
-     *
-     * NOTE: this method is requered for the GetWidget and AAdmin classes
-     * TODO: after the multiple inheritance should be moved to the AAdmin class
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPrefixToDelete()
-    {
-        return 'toDelete';
-    }
-
-    /**
-     * Get current currency 
-     * TODO - rework
+     * Get viewer parameyers
      * 
-     * @return \XLite\Model\Currency
-     * @access public
+     * @return array
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCurrentCurrency()
+    protected function getViewerParams()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840);
+        $params = array();
+
+        // FIXME: is it really needed?
+        foreach (array(self::PARAM_SILENT, self::PARAM_DUMP_STARTED) as $name) {
+            $params[$name] = $this->get($name);
+        }
+
+        if ($this->isAJAXViewer()) {
+            $data = \XLite\Core\Request::getInstance()->getData();
+
+            if (isset($data['target'])) {
+                unset($data['target']);
+            }
+
+            if (isset($data['action'])) {
+                unset($data['action']);
+            }
+
+            $params += $data;
+        }
+
+        return $params;
+    }
+
+
+    // {{{ MArketplace routines
+
+    // :TODO: after the multiple inheritance will be implemented
+    // all these methods must be moved to the \XLite\Controller\Common\Login
+
+    /**
+     * Renew marketplace data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function updateMarketplaceDataCache()
+    {
+        // Check if data is still valid
+        if (\XLite\Core\Auth::getInstance()->isAdmin() && $this->areMarketplaceCachedDataExpired()) {
+
+            $versions = \XLite\Core\Marketplace::getInstance()->getCoreVersions();
+            $modules  = \XLite\Core\Marketplace::getInstance()->getAddonsList();
+
+            if (!is_array($versions) || !is_array($modules)) {
+
+                // Display warning to admin
+                \XLite\Core\TopMessage::getInstance()->addWarning('Error occured while connecting to marketplace');
+
+            } else {
+
+                // Flag for core upgrade
+                \XLite\Core\TmpVars::getInstance()->isCoreUpgradeAvailable = !empty($versions);
+
+                // Update modules list
+                \XLite\Core\Database::getRepo('\XLite\Model\Module')->updateMarketplaceModules($modules);
+
+                // Set current time as the last request one
+                $this->setMarketplaceLastRequestTime();
+            }
+        }
     }
 
     /**
-     * Return the reserved ID of root category
+     * Check if we need to update cached data from marketplace
      *
-     * @return integer 
-     * @access public
+     * @return boolean
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getRootCategoryId()
+    protected function areMarketplaceCachedDataExpired()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getRootCategoryId();
+        // DEVCODE, to remove
+        return true;
+
+        return time() > ($this->getMarketplaceLastRequestTime() + $this->getMarketplaceDataTTL());
     }
 
     /**
-     * Return current category Id
+     * Return time of merketplace last request
      *
-     * @return integer 
-     * @access public
+     * @return integer
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCategoryId()
+    protected function getMarketplaceLastRequestTime()
     {
-        return intval(\XLite\Core\Request::getInstance()->category_id) ?: $this->getRootCategoryId();
+        return \XLite\Core\TmpVars::getInstance()->{self::MARKETPLACE_LAST_REQUEST_TIME};
     }
+
+    /**
+     * Set time of merketplace last request
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setMarketplaceLastRequestTime()
+    {
+        \XLite\Core\TmpVars::getInstance()->{self::MARKETPLACE_LAST_REQUEST_TIME} = time();
+    }
+
+    /**
+     * Return TTL (time-to-live, in seconds) for marketplace cached data
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMarketplaceDataTTL()
+    {
+        return 3600 * 24;
+    }
+
+    // }}}
 }

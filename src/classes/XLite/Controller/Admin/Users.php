@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -33,153 +33,31 @@ namespace XLite\Controller\Admin;
  * TODO: Rewrite the search functionality using sessionCell and ItemsList
  * (in similar way as it was done for products). Remove hardcoded session cell admin_users_search
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Users extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * users 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $users = null;
 
 
     /**
-     * Common method to determine current location
+     * Return the current page title (for the content area)
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getLocation()
+    public function getTitle()
     {
-        return 'Search profiles';
-    }
-
-    /**
-     * init 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function doActionOrders()
-    {
-        $this->searchOrders();
-        $this->redirect();
-    }
-
-    /**
-     * Do action 'search' - save search parameters in the session
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function doActionSearch()
-    {
-        $postedData = \XLite\Core\Request::getInstance()->posted_data;
-
-        $this->setSearchParams($postedData);
-
-        $this->set('returnUrl', $this->buildUrl('users', '', array('mode' => 'search')));
-    }
-
-    /**
-     * Do action 'reset' - reset search parameters in the session
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function doActionReset()
-    {
-        $this->setSearchParams(null);
-
-        $this->set('returnUrl', $this->buildUrl('users', '', array('mode' => 'search')));
-    }
-
-    /**
-     * setSearchParams 
-     * 
-     * @param array $data Array of search parameters in format of 'fieldName' => 'fieldValue'
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function setSearchParams($data)
-    {
-        $searchParams = new \XLite\Core\CommonCell(); 
-
-        if (isset($data) && is_array($data)) {
-            foreach ($data as $key => $value) {
-                $searchParams->$key = $value;
-            }
-        }
-
-        $this->session->set('admin_users_search', $searchParams);
-    }
-
-    /**
-     * Returns the advanced search form fields in format 'fieldName' => 'defaultValue'
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getAdvancedSearchFields()
-    {
-        return array(
-            'user_type'       => '',
-            'membership'      => '%',
-            'state'           => 0,
-            'country'         => '',
-            'address_pattern' => '',
-            'phone'           => '',
-            'date_type'       => '',
-        );
-    }
-
-    /**
-     * searchOrders 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function searchOrders()
-    {
-        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
-            ->find(\XLite\Core\Request::getInstance()->profile_id);
-
-        if (isset($profile)) {
-
-            $login = $profile->getLogin();
-
-            $urlParams = array(
-                'mode'  => 'search',
-                'login' => $login,
-            );
-
-            $this->set('returnUrl', $this->buildUrl('order_list', '', $urlParams));
-
-        } else {
-            $this->set('returnUrl', $this->backUrl);
-        }
+        return 'Search user profiles';
     }
 
     /**
@@ -188,7 +66,6 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * @param string $paramName Parameter name OPTIONAL
      *  
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -219,7 +96,6 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * isAdvancedOptionSelected 
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -232,6 +108,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
         $fields = $this->getAdvancedSearchFields();
 
         foreach ($fields as $fieldName => $defaultValue) {
+
             if (isset($searchParams->$fieldName) && $defaultValue != $searchParams->$fieldName) {
                 $result = true;
                 break;
@@ -245,7 +122,6 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * Get users according to the search conditions
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -269,7 +145,6 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * Get count of users found
      * 
      * @return integer 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -278,4 +153,129 @@ class Users extends \XLite\Controller\Admin\AAdmin
         return count($this->getUsers());
     }
 
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return $this->t('Search user profiles');
+    }
+
+    /**
+     * init 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionOrders()
+    {
+        $this->searchOrders();
+        $this->redirect();
+    }
+
+    /**
+     * Do action 'search' - save search parameters in the session
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionSearch()
+    {
+        $postedData = \XLite\Core\Request::getInstance()->posted_data;
+
+        $this->setSearchParams($postedData);
+
+        $this->setReturnURL($this->buildURL('users', '', array('mode' => 'search')));
+    }
+
+    /**
+     * Do action 'reset' - reset search parameters in the session
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionReset()
+    {
+        $this->setSearchParams(null);
+
+        $this->setReturnURL($this->buildURL('users', '', array('mode' => 'search')));
+    }
+
+    /**
+     * setSearchParams 
+     * 
+     * @param array $data Array of search parameters in format of 'fieldName' => 'fieldValue'
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setSearchParams($data)
+    {
+        $searchParams = new \XLite\Core\CommonCell(); 
+
+        if (isset($data) && is_array($data)) {
+            foreach ($data as $key => $value) {
+                $searchParams->$key = $value;
+            }
+        }
+
+        $this->session->set('admin_users_search', $searchParams);
+    }
+
+    /**
+     * Returns the advanced search form fields in format 'fieldName' => 'defaultValue'
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAdvancedSearchFields()
+    {
+        return array(
+            'user_type'       => '',
+            'membership'      => '%',
+            'state'           => 0,
+            'country'         => '',
+            'address_pattern' => '',
+            'phone'           => '',
+            'date_type'       => '',
+        );
+    }
+
+    /**
+     * searchOrders 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function searchOrders()
+    {
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
+            ->find(\XLite\Core\Request::getInstance()->profile_id);
+
+        if (isset($profile)) {
+
+            $login = $profile->getLogin();
+
+            $urlParams = array(
+                'mode'  => 'search',
+                'login' => $login,
+            );
+
+            $this->setReturnURL($this->buildURL('order_list', '', $urlParams));
+
+        } else {
+            $this->setReturnURL($this->backURL);
+        }
+    }
 }

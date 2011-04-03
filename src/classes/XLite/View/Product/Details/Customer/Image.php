@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Product\Details\Customer;
@@ -31,9 +31,8 @@ namespace XLite\View\Product\Details\Customer;
 /**
  * Image
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @ListChild (list="product.details.page.image.photo", weight="10")
  * @ListChild (list="product.details.quicklook.image", weight="10")
@@ -61,18 +60,66 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
     /**
      * Product has any image to ZOOM
      *
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $isZoom;
+
+
+    /**  
+     * Register files from common repository
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCommonFiles()
+    {
+        $list = parent::getCommonFiles();
+
+        $list['js'][] = 'js/cloud-zoom.min.js';
+
+        return $list;
+    }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'css/cloud-zoom.css';
+
+        return $list;
+    }
+
+    /**
+     * Return a relative horizontal position of the zoom box 
+     * depending on whether it is a quicklook popup, or not
+     * 
+     * @return integer 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getZoomAdjustX()
+    {
+        return strpos($this->viewListName, 'quicklook')
+            ? $this->getParam(self::PARAM_ZOOM_ADJUST_X_QL)
+            : $this->getParam(self::PARAM_ZOOM_ADJUST_X_PD);
+    }
+
 
     /**
      * Return widget default template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
@@ -84,7 +131,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Return current template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getTemplate()
@@ -98,7 +145,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -119,7 +166,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Check if the product has any image to ZOOM
      *
      * @return boolean
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function hasZoomImage()
@@ -147,7 +194,6 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Get zoom image 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -160,7 +206,6 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Get zoom layer width
      *
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -169,45 +214,10 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
         return min($this->getProduct()->getImage()->getWidth(), $this->getParam(self::PARAM_ZOOM_MAX_WIDTH));
     }
 
-    /**  
-     * Register files from common repository
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCommonFiles()
-    {
-        $list = parent::getCommonFiles();
-
-        $list['js'][] = 'js/cloud-zoom.min.js';
-
-        return $list;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'css/cloud-zoom.css';
-
-        return $list;
-    }
-
     /**
      * Return the max image width depending on whether it is a quicklook popup, or not
      * 
      * @return integer 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -222,7 +232,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Get product image container max height
      *
      * @return boolean
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getWidgetMaxHeight()
@@ -243,26 +253,9 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
     }
 
     /**
-     * Return a relative horizontal position of the zoom box 
-     * depending on whether it is a quicklook popup, or not
-     * 
-     * @return integer 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getZoomAdjustX()
-    {
-        return strpos($this->viewListName, 'quicklook')
-            ? $this->getParam(self::PARAM_ZOOM_ADJUST_X_QL)
-            : $this->getParam(self::PARAM_ZOOM_ADJUST_X_PD);
-    }
-
-    /**
      * Return data to send to JS
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -272,5 +265,4 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
             'kZoom' => $this->getParam(self::PARAM_K_ZOOM)
         );
     }
-
 }

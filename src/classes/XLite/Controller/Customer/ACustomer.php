@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -31,36 +31,101 @@ namespace XLite\Controller\Customer;
 /**
  * Abstract controller for Customer interface
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class ACustomer extends \XLite\Controller\AController
 {
     /**
      * cart 
      * 
-     * @var    \XLite\Model\Cart
-     * @access protected
-     * @since  3.0.0
+     * @var   \XLite\Model\Cart
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $cart;
 
     /**
      * Initial cart fingerprint 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $initialCartFingerprint;
+
+
+    /**
+     * Return cart instance 
+     * 
+     * @return \XLite\Model\Order
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCart()
+    {
+        return \XLite\Model\Cart::getInstance();
+    }
+
+    /**
+     * Get the full URL of the page
+     * Example: getShopURL('cart.php') = "http://domain/dir/cart.php 
+     * 
+     * @param string  $url    Relative URL OPTIONAL
+     * @param boolean $secure Flag to use HTTPS OPTIONAL
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getShopURL($url = '', $secure = false)
+    {
+        return parent::getShopURL($url, $this->config->Security->full_customer_security ?: $secure);
+    }
+
+    /**
+     * Check - use secure (HTTPS) connection or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isSecure()
+    {
+        $result = parent::isSecure();
+
+        if (!is_null($this->get('feed')) && $this->get('feed') == 'login') {
+            $result = $this->config->Security->customer_security;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Handles the request 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest()
+    {
+        if (!$this->checkStorefrontAccessability()) {
+            $this->closeStorefront();
+        }
+
+        // Save initial cart fingerprint
+        $this->initialCartFingerprint = $this->getCart()->getEventFingerprint();
+
+        return parent::handleRequest();
+    }
+
 
     /**
      * Stub for the CMS connectors
      * 
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function checkStorefrontAccessability()
@@ -72,7 +137,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Perform some actions to prohibit access to storefornt 
      * 
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function closeStorefront()
@@ -85,7 +150,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Return template to use in a CMS
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -98,7 +162,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Select template to use
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -111,7 +174,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Recalculates the shopping cart
      * 
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function updateCart()
@@ -137,7 +200,6 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Assemble updateCart event 
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -151,9 +213,13 @@ abstract class ACustomer extends \XLite\Controller\AController
 
         // Assembly changed
         foreach ($new['items'] as $n => $cell) {
+
             $found = false;
+
             foreach ($old['items'] as $i => $oldCell) {
+
                 if ($cell['key'] == $oldCell['key']) {
+
                     if ($cell['quantity'] != $oldCell['quantity']) {
                         $cell['quantity_change'] = $cell['quantity'] - $oldCell['quantity'];
                         $items[] = $cell;
@@ -189,7 +255,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      * isCartProcessed 
      * 
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isCartProcessed()
@@ -198,76 +264,9 @@ abstract class ACustomer extends \XLite\Controller\AController
     }
 
     /**
-     * Return cart instance 
-     * 
-     * @return \XLite\Model\Order
-     * @access public
-     * @since  3.0.0
-     */
-    public function getCart()
-    {
-        return \XLite\Model\Cart::getInstance();
-    }
-
-    /**
-     * Get the full URL of the page
-     * Example: getShopUrl('cart.php') = "http://domain/dir/cart.php 
-     * 
-     * @param string  $url    Relative URL  
-     * @param boolean $secure Flag to use HTTPS OPTIONAL
-     *  
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getShopUrl($url = '', $secure = false)
-    {
-        return parent::getShopUrl($url, $this->config->Security->full_customer_security ?: $secure);
-    }
-
-    /**
-     * Check - use secure (HTTPS) connection or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isSecure()
-    {
-        $result = parent::isSecure();
-
-        if (!is_null($this->get('feed')) && $this->get('feed') == 'login') {
-            $result = $this->config->Security->customer_security;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Handles the request 
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function handleRequest()
-    {
-        if (!$this->checkStorefrontAccessability()) {
-            $this->closeStorefront();
-        }
-
-        // Save initial cart fingerprint
-        $this->initialCartFingerprint = $this->getCart()->getEventFingerprint();
-
-        return parent::handleRequest();
-    }
-
-    /**
      * Get or create cart profile 
      * 
      * @return \XLite\Model\Profile
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -290,6 +289,4 @@ abstract class ACustomer extends \XLite\Controller\AController
 
         return $profile;
     }
-
 }
-

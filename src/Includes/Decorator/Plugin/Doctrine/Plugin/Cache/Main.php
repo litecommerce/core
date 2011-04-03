@@ -38,6 +38,21 @@ namespace Includes\Decorator\Plugin\Doctrine\Plugin\Cache;
 class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 {
     /**
+     * Execute certain hook handler
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function executeHookHandlerStepFirst()
+    {
+        if ($driver = $this->getDoctrineCacheDriver()) {
+            $driver->deleteAll();
+        }
+    }
+
+    /**
      * Get cache driver
      *
      * @return \Doctrine\Common\Cache\AbstractCache
@@ -48,19 +63,5 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
     protected function getDoctrineCacheDriver()
     {
         return \XLite\Core\Database::getCacheDriverByOptions(\Includes\Utils\ConfigParser::getOptions('cache'));
-    }
-
-
-    /**
-     * Execute "run" hook handler
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function executeHookHandlerRun()
-    {
-        !($driver = $this->getDoctrineCacheDriver()) ?: $driver->deleteAll();
     }
 }

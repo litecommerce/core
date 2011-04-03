@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Checkout;
@@ -31,51 +31,45 @@ namespace XLite\View\Checkout;
 /**
  * Checkout steps block
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
  * @ListChild (list="checkout.main")
  */
 class Steps extends \XLite\View\AView
 {
     /**
+     * Shipping modifier (cache)
+     * 
+     * @var   \XLite\Model\Order\Modifier
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $shippingModifier;
+
+    /**
      * Steps (cache)
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $steps;
 
     /**
      * Current step 
      * 
-     * @var    \XLite\View\Checkout\Step\AStep
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\View\Checkout\Step\AStep
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $currentStep;
 
-    /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'checkout/steps.tpl';
-    }
 
     /**
      * Get steps 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -112,7 +106,6 @@ class Steps extends \XLite\View\AView
      * Get current step 
      * 
      * @return \XLite\View\Checkout\Step\AStep
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -136,7 +129,6 @@ class Steps extends \XLite\View\AView
      * @param \XLite\View\Checkout\Step\AStep $step Step
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -151,7 +143,6 @@ class Steps extends \XLite\View\AView
      * @param \XLite\View\Checkout\Step\AStep $step Step
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -164,7 +155,6 @@ class Steps extends \XLite\View\AView
      * Get current step number 
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -182,21 +172,86 @@ class Steps extends \XLite\View\AView
         return $i;
     }
 
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'checkout/steps.tpl';
+    }
+
+    /**
+     * Check - has specified step left arrow or not
+     * 
+     * @param \XLite\View\Checkout\Step\AStep $step Step
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function hasLeftArrow(\XLite\View\Checkout\Step\AStep $step)
+    {
+        $steps = $this->getSteps();
+
+        return array_shift($steps) != $step;
+    }
+
+    /**
+     * Check - has specified step right arrow or not
+     * 
+     * @param \XLite\View\Checkout\Step\AStep $step Step
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function hasRightArrow(\XLite\View\Checkout\Step\AStep $step)
+    {
+        $steps = $this->getSteps();
+
+        return array_pop($steps) != $step;
+    }
+
     /**
      * Define checkout widget steps 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function defineSteps()
     {
-        return array(
-            '\XLite\View\Checkout\Step\Shipping',
-            '\XLite\View\Checkout\Step\Payment',
-            '\XLite\View\Checkout\Step\Review',
-        );
+        $steps = array();
+
+        if ($this->getShippingModifier() && $this->getShippingModifier()->canApply()) {
+            $steps[] = '\XLite\View\Checkout\Step\Shipping';
+        }
+
+        $steps[] = '\XLite\View\Checkout\Step\Payment';
+        $steps[] = '\XLite\View\Checkout\Step\Review';
+    
+        return $steps;
+    }
+
+    /**
+     * Get modifier 
+     * 
+     * @return \XLite\Model\Order\Modifier
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getShippingModifier()
+    {
+        if (!isset($this->shippingModifier)) {
+            $this->shippingModifier 
+                = $this->getCart()->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+        }
+
+        return $this->shippingModifier;
     }
 }
-

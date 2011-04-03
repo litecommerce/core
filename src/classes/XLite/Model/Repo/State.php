@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -31,50 +31,29 @@ namespace XLite\Model\Repo;
 /**
  * Country repository
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class State extends \XLite\Model\Repo\ARepo
 {
     /**
      * Repository type 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $type = self::TYPE_SERVICE;
 
     /**
      * Default 'order by' field name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $defaultOrderBy = 'state';
 
-    /**
-     * Define cache cells 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineCacheCells()
-    {
-        $list = parent::defineCacheCells();
-
-        $list['all'] = array(
-            self::RELATION_CACHE_CELL => array('\XLite\Model\Country'),
-        );
-
-        return $list;
-    }
 
     /**
      * Get dump 'Other' state 
@@ -82,7 +61,6 @@ class State extends \XLite\Model\Repo\ARepo
      * @param string $customState Custom state name OPTIONAL
      * 
      * @return \XLite\Model\State
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -101,7 +79,6 @@ class State extends \XLite\Model\Repo\ARepo
      * @param integer $stateId State id
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -116,7 +93,6 @@ class State extends \XLite\Model\Repo\ARepo
      * @param integer $stateId State id
      *  
      * @return string|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -128,31 +104,12 @@ class State extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Define query builder for getCodeById() method
-     * 
-     * @param integer $stateId State id
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineGetCodeByIdQuery($stateId)
-    {
-        return $this->createQueryBuilder()
-            ->where('s.state_id = :id')
-            ->setMaxResults(1)
-            ->setParameter('id', $stateId);
-    }
-
-    /**
      * Find state by id (dump 'Other' state included) 
      * 
      * @param integer $stateId     State id
      * @param string  $customState Custom state name if state is dump 'Other' state OPTIONAL
      *  
      * @return \XLite\Model\State
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -169,7 +126,6 @@ class State extends \XLite\Model\Repo\ARepo
      * @param integer $stateId State id
      *  
      * @return \XLite\Model\State
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -185,30 +141,9 @@ class State extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Define query builder for findOneByStateId()
-     *
-     * @param integer $stateId State id
-     * 
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineOneByStateIdQuery($stateId)
-    {
-        return $this->createQueryBuilder()
-            ->addSelect('c')
-            ->leftJoin('s.country', 'c')
-            ->andWhere('s.state_id = :id')
-            ->setParameter('id', $stateId)
-            ->setMaxResults(1);
-    }
-
-    /**
      * Find all states
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -224,27 +159,11 @@ class State extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Define query builder for findAllStates()
-     * 
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineAllStatesQuery()
-    {
-        return $this->createQueryBuilder()
-            ->addSelect('c')
-            ->leftJoin('s.country', 'c');
-    }
-
-    /**
      * Find states by country code
      * 
      * @param string $countryCode Country code
      *  
      * @return \XLite\Model\State|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -258,12 +177,112 @@ class State extends \XLite\Model\Repo\ARepo
     }
 
     /**
+     * Find states by country code and state code
+     * 
+     * @param string $countryCode Country code
+     * @param string $code        State code
+     *  
+     * @return \XLite\Model\State|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findOneByCountryAndCode($countryCode, $code)
+    {
+        return $this->defineOneByCountryAndCodeQuery($countryCode, $code)->getSingleResult();
+    }
+
+    /**
+     * Find one by record
+     *
+     * @param array                $data   Record
+     * @param \XLite\Model\AEntity $parent Parent model OPTIONAL
+     *
+     * @return \XLite\Model\AEntity|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
+    {
+        return isset($data['country_code']) && isset($data['code'])
+            ? $this->findOneByCountryAndCode($data['country_code'], $data['code'])
+            : parent::findOneByRecord($data, $parent);
+    }
+
+
+    /**
+     * Define cache cells 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineCacheCells()
+    {
+        $list = parent::defineCacheCells();
+
+        $list['all'] = array(
+            self::RELATION_CACHE_CELL => array('\XLite\Model\Country'),
+        );
+
+        return $list;
+    }
+
+    /**
+     * Define query builder for getCodeById() method
+     * 
+     * @param integer $stateId State id
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineGetCodeByIdQuery($stateId)
+    {
+        return $this->createQueryBuilder()
+            ->where('s.state_id = :id')
+            ->setMaxResults(1)
+            ->setParameter('id', $stateId);
+    }
+
+    /**
+     * Define query builder for findOneByStateId()
+     *
+     * @param integer $stateId State id
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineOneByStateIdQuery($stateId)
+    {
+        return $this->createQueryBuilder()
+            ->addSelect('c')
+            ->leftJoin('s.country', 'c')
+            ->andWhere('s.state_id = :id')
+            ->setParameter('id', $stateId)
+            ->setMaxResults(1);
+    }
+
+    /**
+     * Define query builder for findAllStates()
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAllStatesQuery()
+    {
+        return $this->createQueryBuilder()
+            ->addSelect('c')
+            ->leftJoin('s.country', 'c');
+    }
+
+    /**
      * Define query for findByCountryCode() method
      * 
      * @param \XLite\Model\Country $country Country
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -275,29 +294,12 @@ class State extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Find states by country code and state code
-     * 
-     * @param string $countryCode Country code
-     * @param string $code        State code
-     *  
-     * @return \XLite\Model\State|void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findOneByCountryAndCode($countryCode, $code)
-    {
-        return $this->defineOneByCountryAndCodeQuery($countryCode, $code)->getSingleResult();
-    }
-
-    /**
      * Define query for findOneByCountryAndCode() method
      * 
      * @param string $countryCode Country code
      * @param string $code        State code
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -309,23 +311,4 @@ class State extends \XLite\Model\Repo\ARepo
             ->setParameter('country', $countryCode)
             ->setParameter('code', $code);
     }
-
-    /**
-     * Find one by record
-     *
-     * @param array                $data   Record
-     * @param \XLite\Model\AEntity $parent Parent model
-     *
-     * @return \XLite\Model\AEntity|void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
-    {
-        return isset($data['country_code']) && isset($data['code'])
-            ? $this->findOneByCountryAndCode($data['country_code'], $data['code'])
-            : parent::findOneByRecord($data, $parent);
-    }
-
 }

@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Subcategories list (list style)
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,19 +10,12 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<table IF="category.subcategories" cellpadding="5" cellspacing="0">
-  <tr>
-    <td valign="top" IF="category.hasImage()">
-      <img src="{category.getImageURL()}" alt="" />
-    </td>
-    <td valign="top">
-      <table FOREACH="category.subcategories,subcategory">
-        <tr>
-          <td>
-            <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^subcategory.category_id))}"><font class="ItemsList">{subcategory.name}</font></a>
-          </td>
-        </tr>    
-      </table>
-    </td>
-  </tr>
-</table>
+<ul class="subcategory-list" IF="category.getSubcategories()">
+  <li FOREACH="category.getSubcategories(),subcategory">
+    <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^subcategory.category_id))}" class="subcategory-name">{subcategory.name}</a>
+  </li>
+  <li FOREACH="getViewList(#subcategories.children#),w">
+    {w.display()}
+  </li>
+</ul>
+{displayViewListContent(#subcategories.base#)}

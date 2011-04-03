@@ -70,9 +70,9 @@ abstract class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public static function getVersion()
+    public static function getMinorVersion()
     {
-        return '1.0';
+        return '0';
     }
 
     /**
@@ -85,18 +85,6 @@ abstract class Main extends \XLite\Module\AModule
     public static function getDescription()
     {
         return 'Demo mode';
-    }
-
-    /**
-     * Perform some actions at startup
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public static function init()
-    {
-        parent::init();
     }
 
     /**
@@ -114,12 +102,9 @@ abstract class Main extends \XLite\Module\AModule
     {
         self::doForbidOperation($message);
 
-        if (!$url) {
-            $url = \XLite\Core\Converter::buildURL(\XLite\Core\Request::getInstance()->target);
-        }
-
-        header('Location: ' . $url);
-        exit(0);
+        \Includes\Utils\Operator::redirect(
+            $url ?: \XLite\Core\Converter::buildURL(\XLite\Core\Request::getInstance()->target)
+        );
     }
 
     /**
@@ -134,10 +119,6 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function doForbidOperation($message = null)
     {
-        if (!$message) {
-            $message = 'You cannot do this in demo mode.';
-        }
-
-        \XLite\Core\TopMessage::getInstance()->add($message, \XLite\Core\TopMessage::WARNING);
+        \XLite\Core\TopMessage::addWarning($message ?: 'You cannot do this in demo mode.');
     }
 }

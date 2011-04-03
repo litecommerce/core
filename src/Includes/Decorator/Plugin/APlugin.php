@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Includes
+ * @subpackage Decorator
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -30,9 +30,6 @@ namespace Includes\Decorator\Plugin;
 
 /**
  * Abstract base class for all plugins
- *
- * Available hooks:
- * - run() [the "executeHookHandlerRun()" method]
  *
  * @package XLite
  * @see     ____class_see____

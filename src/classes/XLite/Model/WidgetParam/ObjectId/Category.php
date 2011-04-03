@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\WidgetParam\ObjectId;
@@ -31,27 +31,46 @@ namespace XLite\Model\WidgetParam\ObjectId;
 /**
  * ____description____
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Category extends \XLite\Model\WidgetParam\ObjectId
 {
     /**
      * Allowed or not to  use root category id (0) 
      * 
-     * @var    boolean
-     * @access protected
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $rootIsAllowed = false;
+
+
+    /**
+     * Constructor
+     * 
+     * @param string  $label         Param label (text)
+     * @param mixed   $value         Default value OPTIONAL
+     * @param boolean $isSetting     Display this setting in CMS or not OPTIONAL
+     * @param boolean $rootIsAllowed Root category id (0) is allowed or not OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct($label, $value = null, $isSetting = false, $rootIsAllowed = false)
+    {
+        parent::__construct($label, $value, $isSetting);
+        
+        $this->rootIsAllowed = $rootIsAllowed;
+    }
 
 
     /**
      * Return object class name
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getClassName()
@@ -65,7 +84,7 @@ class Category extends \XLite\Model\WidgetParam\ObjectId
      * @param mixed $value Value to check
      *  
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getIdValidCondition($value)
@@ -88,7 +107,7 @@ class Category extends \XLite\Model\WidgetParam\ObjectId
      * @param mixed $value Value to check
      *  
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getObjectExistsCondition($value)
@@ -98,25 +117,5 @@ class Category extends \XLite\Model\WidgetParam\ObjectId
         $result[self::ATTR_CONDITION] = 0 < $value && $result[self::ATTR_CONDITION];
 
         return $result;
-    }
-
-
-    /**
-     * Constructor
-     * 
-     * @param string  $label         Param label (text)
-     * @param mixed   $value         Default value OPTIONAL
-     * @param boolean $isSetting     Display this setting in CMS or not OPTIONAL
-     * @param boolean $rootIsAllowed Root category id (0) is allowed or not OPTIONAL
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function __construct($label, $value = null, $isSetting = false, $rootIsAllowed = false)
-    {
-        parent::__construct($label, $value, $isSetting);
-        
-        $this->rootIsAllowed = $rootIsAllowed;
     }
 }

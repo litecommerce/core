@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,10 +31,10 @@ namespace XLite\View;
 /**
  * Invoice widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
- * @ListChild (list="order.childs", weight="30")
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
+ * @ListChild (list="order.children", weight="30")
  */
 class Invoice extends \XLite\View\AView
 {
@@ -45,10 +45,49 @@ class Invoice extends \XLite\View\AView
     const PARAM_ORDER = 'order';
 
     /**
+     * Shipping modifier (cache)
+     * 
+     * @var   \XLite\Model\Order\Modifier
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $shippingModifier;
+
+
+    /**
+     * Get order 
+     * 
+     * @return \XLite\Model\Order
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getOrder()
+    {
+        return $this->getParam(self::PARAM_ORDER);
+    }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'order/invoice/style.css';
+
+        return $list;
+    }
+
+
+    /**
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -66,7 +105,7 @@ class Invoice extends \XLite\View\AView
      * Return default template
      * 
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
@@ -75,23 +114,9 @@ class Invoice extends \XLite\View\AView
     }
 
     /**
-     * Get order 
-     * 
-     * @return \XLite\Model\Order
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getOrder()
-    {
-        return $this->getParam(self::PARAM_ORDER);
-    }
-
-    /**
      * Check widget visibility
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -102,19 +127,19 @@ class Invoice extends \XLite\View\AView
     }
 
     /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
+     * Get shipping modifier 
+     * 
+     * @return \XLite\Model\Order\Modifier
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCSSFiles()
+    protected function getShippingModifier()
     {
-        $list = parent::getCSSFiles();
+        if (!isset($this->shippingModifier)) {
+            $this->shippingModifier 
+                = $this->getOrder()->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+        }
 
-        $list[] = 'order/invoice/style.css';
-
-        return $list;
+        return $this->shippingModifier;
     }
 }

@@ -55,4 +55,73 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
             parent::postprocessErrorActionValidateInput();
         }
     }
+
+    /**
+     * Perform certain action for the model object
+     *
+     * @return boolean 
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function performActionValidateInput()
+    {
+        $result = parent::performActionValidateInput();
+
+        // Success validation if controller is launched from Drupal context by an administrator
+        if (!$result && \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+            $result = \XLite\Core\Auth::getInstance()->isAdmin();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Make 'Access level' field available when administrator modifies other user's profile
+     * 
+     * @param array &$data Widget params
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareFieldParamsAccessLevel(&$data)
+    {
+        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS() && (\XLite\Core\Auth::getInstance()->isAdmin() || defined('XLITE_INSTALL_MODE'))) {
+            $data[\XLite\View\FormField\AFormField::PARAM_IS_ALLOWED_FOR_CUSTOMER] = true;
+        }
+    }
+
+    /**
+     * Make 'Status' field available when administrator modifies other user's profile
+     * 
+     * @param array &$data Widget params
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareFieldParamsStatus(&$data)
+    {
+        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+            $data[\XLite\View\FormField\AFormField::PARAM_IS_ALLOWED_FOR_CUSTOMER] = true;
+        }
+    }
+
+    /**
+     * Populate model object properties by the passed data
+     * 
+     * @param array $data Data to set up
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setModelProperties(array $data)
+    {
+        parent::setModelProperties($data);
+
+        if (isset($data['drupal_roles']) && is_array($data['drupal_roles'])) {
+            $this->getModelObject()->updateDrupalRoles($data['drupal_roles']);
+        }
+    }
 }

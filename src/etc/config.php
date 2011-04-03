@@ -129,14 +129,6 @@ default_image_height = 140
 unsharp_mask_filter_on_resize = off
 
 ;
-; ----------------------
-;  PHP settings
-; ----------------------
-;
-[php_settings]
-memory_limit = "32M"
-
-;
 ; Installer authcode.
 ; A person who do not know the auth code can not access the installation script.
 ; Installation authcode is created authomatically and stored in this section.
@@ -149,6 +141,25 @@ auth_code = ""
 ;
 [performance]
 developer_mode = Off
+substutional_skins_cache = off
+
+;
+; Decorator options
+;
+[decorator]
+time_limit = 240
+
+;
+; Error handling options
+;
+[error_handling]
+page = "public/error.html"
+
+;
+; Marketplace
+;
+[marketplace]
+url = "https://www.litecommerce.com/marketplace/"
 
 ;
 ; Other options

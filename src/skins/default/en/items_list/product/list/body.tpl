@@ -10,18 +10,29 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<ul class="list-body list-body-list">
 
-  <li FOREACH="getPageData(),product" class="hproduct item">
-    {displayListPart(#body#,_ARRAY_(#product#^product))}
-  </li>
+{displayViewListContent(#itemsList.product.cart#)}
 
-  <li FOREACH="getViewList(#itemsList.product.list.customer.items#),w" class="item additional-item">
-    {w.display()}
-  </li>
+<div class="products">
 
-  <li IF="isShowMoreLink()">
-    <a class="link" href="{getMoreLinkURL()}">{getMoreLinkText()}</a>
-  </li>
+  <ul class="products-list" IF="getPageData()">
+    <li FOREACH="getPageData(),product" class="product-cell">
+      {*
+       * Unfortunately, here we can use neither regular ul/li (because we don't know the image width),
+       * nor table-cell (becase it is not supported by IE6/IE7),
+       * nor a single table with border-spacing and negative margins (because we need borders around two cells)
+       *}
+      <table class="{getProductCellClass(product)}">
+        <tr>
+          {*
+           * Since there is no way to make a TD having a relative position, we need a container
+           * in order to position Absolute and Relative elements in nested lists 
+           *}
+          <td class="product-photo"><div class="product-photo">{displayInheritedViewListContent(#photo#,_ARRAY_(#product#^product))}</div></td>
+          <td class="product-info"><div class="product-info">{displayInheritedViewListContent(#info#,_ARRAY_(#product#^product))}</div></td>
+        </tr>
+      </table>
+    </li>
+  </ul>
 
-</ul>
+</div>

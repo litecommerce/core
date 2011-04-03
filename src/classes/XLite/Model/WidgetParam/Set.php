@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\WidgetParam;
@@ -31,49 +31,28 @@ namespace XLite\Model\WidgetParam;
 /**
  * Set
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Set extends \XLite\Model\WidgetParam\String
 {
     /**
      * Param type
      *
-     * @var    string
-     * @access protected
-     * @since  3.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $type = 'list';
 
     /**
      * Options 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $options = null;
-
-    /**
-     * Return list of conditions to check
-     *
-     * @param mixed $value Value to validate
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getValidaionSchema($value)
-    {
-        return parent::getValidaionSchema($value) + array(
-            array(
-                self::ATTR_CONDITION => isset($this->options[$value]),
-                self::ATTR_MESSAGE   => ' unallowed param value - "' . $value . '"',
-            ),
-        );
-    }
 
 
     /**
@@ -82,10 +61,10 @@ class Set extends \XLite\Model\WidgetParam\String
      * @param mixed $label     Param label (text)
      * @param mixed $value     Default value OPTIONAL
      * @param mixed $isSetting Display this setting in CMS or not OPTIONAL
-     * @param array $options   Options list
+     * @param array $options   Options list OPTIONAL
      *  
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function __construct($label, $value = null, $isSetting = false, array $options = array())
@@ -96,5 +75,25 @@ class Set extends \XLite\Model\WidgetParam\String
         if (!isset($this->options)) {
             $this->options = $options;
         }
+    }
+
+
+    /**
+     * Return list of conditions to check
+     *
+     * @param mixed $value Value to validate
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getValidaionSchema($value)
+    {
+        return parent::getValidaionSchema($value) + array(
+            array(
+                self::ATTR_CONDITION => isset($this->options[$value]),
+                self::ATTR_MESSAGE   => ' unallowed param value - "' . $value . '"',
+            ),
+        );
     }
 }

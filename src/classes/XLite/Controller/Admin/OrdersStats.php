@@ -14,97 +14,175 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
 
 /**
- * ____description____
+ * Orders statistics page controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class OrdersStats extends \XLite\Controller\Admin\Stats
 {
-    protected $stats = array();
-
-    function getPageTemplate()
+    /**
+     * getPageTemplate 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageTemplate()
     {
-        return "orders_stats.tpl";
+        return 'orders_stats.tpl';
     }
 
-    function handleRequest()
+    /**
+     * handleRequest 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest()
     {
         // typedef
-        $statRec = array("today" => 0, "week" => 0, "month" => 0);
+        $statRec = array('today' => 0, 'week' => 0, 'month' => 0);
         $this->stat = array(
-                "processed" => $statRec,
-                "queued" => $statRec,
-                "failed" => $statRec,
-                "not_finished" => $statRec,
-                "total" => $statRec,
-                "paid" => $statRec);
+            'processed'    => $statRec,
+            'queued'       => $statRec,
+            'failed'       => $statRec,
+            'not_finished' => $statRec,
+            'total'        => $statRec,
+            'paid'         => $statRec
+        );
 
         $order = new \XLite\Model\Order();
-        $date = $this->get('monthDate');
+        $date = $this->getMonthDate();
         // fetch orders for this month
 
         // FIXME - old code
-        array_map(array($this, "summarize"), /*$order->findAll("date>=$date")*/array());
+        array_map(array($this, 'summarize'), /*$order->findAll("date>=$date")*/array());
 
         parent::handleRequest();
     }
 
-    function save($index, $order, $paid = false)
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
     {
-        if ($order->get('date') >= $this->get('todayDate')) {
-            $this->sum($index, "today", $order->get('total'), $paid);
+        return $this->t('Order statistics');
+    }
+
+    /**
+     * Add part to the location nodes list
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
+
+        $this->addLocationNode($this->t('Statistics'), $this->buildURL('orders_stats'));
+    }
+
+    /**
+     * save 
+     * 
+     * @param mixed $index ____param_comment____
+     * @param mixed $order ____param_comment____
+     * @param mixed $paid  ____param_comment____ OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function save($index, $order, $paid = false)
+    {
+        if ($order->getDate() >= $this->getTodayDate()) {
+            $this->sum($index, 'today', $order->getTotal(), $paid);
         }
-        if ($order->get('date') >= $this->get('weekDate')) {
-            $this->sum($index, "week", $order->get('total'), $paid);
+        if ($order->getDate() >= $this->getWeekDate()) {
+            $this->sum($index, 'week', $order->getTotal(), $paid);
         }
-        if ($order->get('date') >= $this->get('monthDate')) {
-            $this->sum($index, "month", $order->get('total'), $paid);
+        if ($order->getDate() >= $this->getMonthDate()) {
+            $this->sum($index, 'month', $order->getTotal(), $paid);
         }
     }
 
-    function sum($index, $period, $amount, $paid)
+    /**
+     * sum 
+     * 
+     * @param mixed $index  ____param_comment____
+     * @param mixed $period ____param_comment____
+     * @param mixed $amount ____param_comment____
+     * @param mixed $paid   ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function sum($index, $period, $amount, $paid)
     {
-        $this->stat[$index][$period]++;
+        $this->stat[$index][$period] += 1;
+        
         $this->stat['total'][$period] += $amount;
+        
         if ($paid) {
             $this->stat['paid'][$period] += $amount;
         }
     }
     
-    function summarize($order)
+    /**
+     * summarize 
+     * 
+     * @param mixed $order ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function summarize($order)
     {
-        switch ($order->get('status')) {
-            case "P":
-            case "C":
+        switch ($order->getStatus()) {
+            case 'P':
+            case 'C':
                 $this->save('processed', $order, true);
                 break;
-            case "Q":
+
+            case 'Q':
                 $this->save('queued', $order);
                 break;
-            case "I":
+
+            case 'I':
                 $this->save('not_finished', $order);
                 break;
-            case "F":
-            case "D":
+
+            case 'F':
+            case 'D':
                 $this->save('failed', $order);
                 break;
+
+            default:
         }
     }
 }

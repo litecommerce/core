@@ -1,14 +1,18 @@
-#!/usr/local/php-530/bin/php
+#!/usr/local/bin/php
 <?php
+
+@date_default_timezone_set(@date_default_timezone_get());
 ini_set('memory_limit', '256M');
 error_reporting(E_ALL | E_STRICT);
 
 set_include_path(
-	realpath(dirname(realpath(__FILE__)) . '/lib/PEAR')
+	'/usr/local/share/pear'
 	. PATH_SEPARATOR . get_include_path()
 );
 
-require_once 'lib/PEAR/PHP/CodeSniffer/CLI.php';
+define('IS_INTERNAL_PROJECT', true);
+
+require_once 'PHP/CodeSniffer/CLI.php';
 
 $phpcs = new PHP_CodeSniffer_CLI();
 $phpcs->checkRequirements();

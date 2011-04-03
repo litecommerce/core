@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,23 +31,34 @@ namespace XLite\Controller\Admin;
 /**
  * Modules
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Modules extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Handles the request.
-     * Parses the request variables if necessary. Attempts to call the specified action function 
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Manage add-ons' . $this->getUpgradableModulesFlag();
+    }
+    
+    /**
+     * Call controller action or special default action
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function handleRequest()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Module')->checkModules();
+        // :FIXME: to remove
+        // \XLite\Core\Database::getRepo('XLite\Model\Module')->checkModules();
 
         parent::handleRequest();
     }
@@ -56,7 +67,6 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      * Common method to determine current location
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -66,23 +76,45 @@ class Modules extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Return upgradable modules flag label:
+     * - empty string if no any
+     * - number of upgradable modules in brackets
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getUpgradableModulesFlag()
+    {
+        // :FIXME: actualize
+        /*$upgradeables = count(\Xlite\Core\Database::getRepo('XLite\Model\Module')->findUpgradableModules());
+
+        return 0 < $upgradeables ? ' (' . $upgradeables . ')' : '';*/
+
+        return '';
+    }
+
+    /**
      * Enable module
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function doActionEnable()
     {
-        $this->set('returnUrl', $this->buildURL('modules'));
+        $this->setReturnURL($this->buildURL('modules'));
 
         $id = \XLite\Core\Request::getInstance()->moduleId;
+
         $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id);
 
         if ($module) {
+
             $module->setEnabled(true);
+
             \XLite\Core\Database::getEM()->flush();
+
             \XLite::setCleanUpCacheFlag(true);
         }
     }
@@ -91,40 +123,29 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      * Pack module into PHAR module file
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function doActionPack()
     {
-        $this->set('returnUrl', $this->buildUrl('modules'));
+        $this->setReturnURL($this->buildURL('modules'));
 
         if (LC_DEVELOPER_MODE) {
 
-            $id = \XLite\Core\Request::getInstance()->moduleId;
+            $moduleId = \XLite\Core\Request::getInstance()->moduleId;
+            $module   = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($moduleId);
 
-            $packModule = new \XLite\Model\PackModule($id);
-
-            if (\XLite\Model\PackModule::STATUS_OK === $packModule->createPackage()) {
-
-                $packModule->downloadPackage();
-
-                $packModule->cleanUp();
-
-                exit (0);
-
+            if ($module) {
+                \Includes\Utils\PHARManager::packModule(new \XLite\Core\Pack\Module($module));
             } else {
-
-                \XLite\Core\TopMessage::getInstance()
-                    ->addError('Module packaging finished with the error: "' . $packModule->getError() . '"');
+                \XLite\Core\TopMessage::addError('Module with ID "' . $moduleId . '" is not found');
             }
-
-            $packModule->cleanUp();
 
         } else {
 
-            \XLite\Core\TopMessage::getInstance()
-                ->addError('Module packing is available in the DEVELOPER mode only. Check etc/config.php file');
+            \XLite\Core\TopMessage::addError(
+                'Module packing is available in the DEVELOPER mode only. Check etc/config.php file'
+            );
         }
     }
 
@@ -132,19 +153,16 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      * Disable module
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function doActionDisable()
     {
-        $this->set('returnUrl', $this->buildURL('modules'));
-
+        $this->setReturnURL($this->buildURL('modules'));
         $id = \XLite\Core\Request::getInstance()->moduleId;
-        $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id);
 
-        if ($module) {
-            $module->disableModule();
+        if ($module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id)) {
+            \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
             \XLite::setCleanUpCacheFlag(true);
         }
     }
@@ -153,7 +171,6 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      * Uninstall module
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -165,7 +182,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
 
         if (!$module) {
 
-            \XLite\Core\TopMessage::getInstance()->addError('The module to uninstall has not been found');
+            \XLite\Core\TopMessage::addError('The module to uninstall has not been found');
 
         } else {
 
@@ -173,32 +190,21 @@ class Modules extends \XLite\Controller\Admin\AAdmin
             $notes = $class::getPostUninstallationNotes();
 
             // Disable this and depended modules
-            $module->disableModule();
-
-            \XLite::setCleanUpCacheFlag(true);
+            \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
 
             $status = $module->uninstall();
 
-            \XLite\Core\Database::getEM()->remove($module);
-            \XLite\Core\Database::getEM()->flush();
-
             if ($status) {
-                \XLite\Core\TopMessage::getInstance()->addInfo('The module has been uninstalled successfully');
-
+                \XLite\Core\TopMessage::addInfo('The module has been uninstalled successfully');
             } else {
-                \XLite\Core\TopMessage::getInstance()->addWarning('The module has been partially uninstalled');
+                \XLite\Core\TopMessage::addWarning('The module has been partially uninstalled');
             }
 
             if ($notes) {
-                \XLite\Core\TopMessage::getInstance()->add(
-                    $notes,
-                    \XLite\Core\TopMessage::INFO,
-                    true
-                );
+                \XLite\Core\TopMessage::addInfo($notes);
             }
         }
         
-        $this->set('returnUrl', $this->buildURL('modules'));
+        $this->setReturnURL($this->buildURL('modules'));
     }
-
 }

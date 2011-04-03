@@ -29,7 +29,7 @@
 namespace Includes\Decorator\Plugin\Templates\Plugin\Compiler;
 
 /**
- * Decorator plugin to patch templates
+ * Decorator plugin to compile templates
  *
  * @package XLite
  * @see     ____class_see____
@@ -45,26 +45,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $flexy;
-
-
-    /**
-     * Static templates compilation
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function createTemplatesCache()
-    {
-        foreach (static::getTemplatesCollection()->getList() as $template) {
-            static::$flexy->prepare(
-                \Includes\Utils\FileManager::getRelativePath($template->__get(self::N_FILE_PATH), LC_ROOT_DIR),
-                true
-            );
-        }
-    }
+    protected $flexy;
 
 
     /**
@@ -75,7 +56,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function executeHookHandlerPostprocess()
+    public function executeHookHandlerStepThird()
     {
         LC_DEVELOPER_MODE ?: $this->createTemplatesCache();
     }
@@ -90,6 +71,21 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      */
     public function __construct()
     {
-        static::$flexy = \Xlite\Core\FlexyCompiler::getInstance();
+        $this->flexy = \Xlite\Core\FlexyCompiler::getInstance();
+    }
+
+    /**
+     * Static templates compilation
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function createTemplatesCache()
+    {
+        foreach ($this->getAnnotatedTemplates() as $data) {
+            $this->flexy->prepare($data['path'], true);
+        }
     }
 }

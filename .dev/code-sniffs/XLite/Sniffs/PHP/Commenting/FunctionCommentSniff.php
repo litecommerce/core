@@ -73,20 +73,10 @@ class XLite_Sniffs_PHP_Commenting_FunctionCommentSniff extends XLite_TagsSniff
             'allow_multiple' => false,
             'order_text'     => 'follows @param',
         ),
-        'throws'        => array(
-            'required'       => false,
-            'allow_multiple' => true,
-            'order_text'     => 'follows @return',
-        ),
-        'access' => array(
-            'required'       => false,
-            'allow_multiple' => false,
-            'order_text'     => 'follows @throws',
-        ),
 		'see'	=> array(
-            'required'       => false,
+            'required'       => true,
             'allow_multiple' => false,
-            'order_text'     => 'follows @access',
+            'order_text'     => 'follows @return',
         ),
         'since'      => array(
             'required'       => true,
@@ -148,6 +138,26 @@ class XLite_Sniffs_PHP_Commenting_FunctionCommentSniff extends XLite_TagsSniff
 		if ($tokens[$next]['code'] !== T_STRING)
 			return;
 
+		$throwExists = isset($tokens[$stackPtr]['scope_closer'])
+			? $phpcsFile->findNext(T_THROW, $stackPtr + 1, $tokens[$stackPtr]['scope_closer'] - 1)
+			: false;
+
+		if (false === $throwExists) {
+			if (isset($this->tags['throws'])) {
+				unset($this->tags['throws']);
+			}
+
+		} else {
+			$tags = $this->tags;
+			$this->tags = array_slice($tags, 0, 2);
+			$this->tags['throws'] = array(
+        	    'required'       => true,
+            	'allow_multiple' => true,
+	            'order_text'     => 'follows @return',
+    	    );
+			$this->tags += array_slice($tags, 2);
+		}
+
         $find = array(
                  T_COMMENT,
                  T_DOC_COMMENT,
@@ -163,7 +173,6 @@ class XLite_Sniffs_PHP_Commenting_FunctionCommentSniff extends XLite_TagsSniff
         }
 
         $this->currentFile = $phpcsFile;
-        $tokens            = $phpcsFile->getTokens();
 
         // If the token that we found was a class or a function, then this
         // function has no doc comment.
@@ -202,13 +211,6 @@ class XLite_Sniffs_PHP_Commenting_FunctionCommentSniff extends XLite_TagsSniff
                 break;
             }
         }
-
-		$this->tags['access']['required'] = !is_null($this->_classToken);
-		if ($this->tags['access']['required']) {
-			$this->reqCodeRequire = array('REQ.PHP.4.5.3', 'REQ.PHP.4.5.9');
-		} else {
-			$this->reqCodeRequire = array('REQ.PHP.4.5.3');
-		}
 
         // If the first T_OPEN_TAG is right before the comment, it is probably
         // a file comment.

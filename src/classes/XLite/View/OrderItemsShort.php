@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * Order items list (short version)
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class OrderItemsShort extends \XLite\View\AView
 {
@@ -48,73 +47,26 @@ class OrderItemsShort extends \XLite\View\AView
     /**
      * Order items list maximunm length 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $orderItemsMax = 3;
 
     /**
      * Order (cache)
      * 
-     * @var    \XLite\Model\Order
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Order
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $order = null;
 
 
     /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'order/list/items.tpl';
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_ORDER    => new \XLite\Model\WidgetParam\Object('Order', null, false, '\XLite\Model\Order'),
-            self::PARAM_ORDER_ID => new \XLite\Model\WidgetParam\Int('Order id', null, false),
-            self::PARAM_FULL     => new \XLite\Model\WidgetParam\Bool('Display full list', false),
-        );
-    }
-
-
-    /**
-     * Check widget visibility
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible() && $this->getOrder();
-    }
-
-    /**
      * Get order 
      * 
      * @return \XLite\Model\Order
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -147,7 +99,6 @@ class OrderItemsShort extends \XLite\View\AView
      * Get order id 
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -160,7 +111,6 @@ class OrderItemsShort extends \XLite\View\AView
      * Get order items 
      * 
      * @return array(\XLite\Model\OrderItem)
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -175,7 +125,6 @@ class OrderItemsShort extends \XLite\View\AView
      * Check - link to full items list is visible or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -188,7 +137,6 @@ class OrderItemsShort extends \XLite\View\AView
      * Get list to full items list class name 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -201,7 +149,6 @@ class OrderItemsShort extends \XLite\View\AView
      * Register JS files
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -215,5 +162,46 @@ class OrderItemsShort extends \XLite\View\AView
         return $list;
     }
 
-}
 
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'order/list/items.tpl';
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_ORDER    => new \XLite\Model\WidgetParam\Object('Order', null, false, '\XLite\Model\Order'),
+            self::PARAM_ORDER_ID => new \XLite\Model\WidgetParam\Int('Order id', null, false),
+            self::PARAM_FULL     => new \XLite\Model\WidgetParam\Bool('Display full list', false),
+        );
+    }
+
+    /**
+     * Check widget visibility
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible() && $this->getOrder();
+    }
+}

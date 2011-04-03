@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Tabs;
@@ -31,10 +31,8 @@ namespace XLite\View\Tabs;
 /**
  * Tabs related to shipping settings
  * 
- * @package    XLite
- * @subpackage View
- * @see        ____class_see____
- * @since      3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -44,10 +42,9 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     /**
      * Description of tabs related to shipping settings and their targets
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $tabs = array(
         'shipping_settings' => array(
@@ -72,20 +69,18 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     /**
      * Zones 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $zones = null;
 
     /**
      * Markups 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $markups = null;
 
@@ -93,7 +88,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * Widget initialization
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -116,7 +110,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * Returns a list of shipping processors
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -129,7 +122,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * Returns a list of shipping methods
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -142,7 +134,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * Check if zone details page should be displayed
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -156,7 +147,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * getZone 
      * 
      * @return \XLite\Model\Zone
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -167,9 +157,8 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
                 ->findZone(\XLite\Core\Request::getInstance()->zoneid);
 
             if (!isset($zone)) {
-                \XLite\Core\TopMessage::getInstance()->add(
-                    'Requested zone does not exists',
-                    \XLite\Core\TopMessage::ERROR
+                \XLite\Core\TopMessage::addError(
+                    'Requested zone does not exists'
                 );
             }
 
@@ -184,7 +173,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * getShippingZones 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -201,7 +189,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * isZonesDefined 
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -214,7 +201,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * hasShippingMarkups 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -227,7 +213,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * getShippingMarkups 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -268,7 +253,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * getPreparedShippingMarkups 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -276,6 +260,23 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     {
         return $this->prepareMarkups($this->getShippingMarkups());
     }
+
+    /**
+     * Service method for usage in the markups list template
+     * Returns true if current markup number is lesser than count of markups of current method
+     * 
+     * @param integer $id    Current index of markup
+     * @param array   $array Array of markups
+     *  
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShowMarkupsSeparator($id, array $array)
+    {
+        return (count($array) - 1 > $id);
+    }
+
 
     /**
      * Prepares markups array for displaying on admin page. Result array has the following format:
@@ -300,7 +301,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * @param mixed $markups ____param_comment____
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -354,22 +354,4 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
 
         return $result;
     }
-
-    /**
-     * Service method for usage in the markups list template
-     * Returns true if current markup number is lesser than count of markups of current method
-     * 
-     * @param integer $id    Current index of markup
-     * @param array   $array Array of markups
-     *  
-     * @return boolean 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isShowMarkupsSeparator($id, array $array)
-    {
-        return (count($array) - 1 > $id);
-    }
-
 }

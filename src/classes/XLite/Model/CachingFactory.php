@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,49 +31,32 @@ namespace XLite\Model;
 /**
  * Abstract caching factory 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class CachingFactory extends \XLite\Model\Factory
 {
     /**
      * Objects cache 
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $cache = array();
 
     
-    /**
-     * Get handler object (or pseudo-constant)
-     * 
-     * @param mixed $handler Variable to prepare
-     *  
-     * @return mixed
-     * @access protected
-     * @since  3.0.0
-     */
-    protected static function prepareHandler($handler)
-    {
-        return (!is_object($handler) && !in_array($handler, array('self', 'parent', 'static')))
-            ? new $handler()
-            : $handler;
-    }
-
     /**
      * Cache and return a result of object method call 
      * 
      * @param string  $signature  Result key in cache
      * @param mixed   $handler    Callback object
      * @param string  $method     Method to call
-     * @param array   $args       Callback arguments
+     * @param array   $args       Callback arguments OPTIONAL
      * @param boolean $clearCache Clear cache flag OPTIONAL
      *  
      * @return mixed
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public static function getObjectFromCallback($signature, $handler, $method, array $args = array(), $clearCache = false)
@@ -90,10 +73,10 @@ class CachingFactory extends \XLite\Model\Factory
      * 
      * @param string $signature Result key in cache
      * @param string $class     Object class name
-     * @param array  $args      Constructor arguments
+     * @param array  $args      Constructor arguments OPTIONAL
      *  
      * @return \XLite\Base
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public static function getObject($signature, $class, array $args = array())
@@ -107,7 +90,6 @@ class CachingFactory extends \XLite\Model\Factory
      * @param string $signature Cache cell key
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -120,7 +102,6 @@ class CachingFactory extends \XLite\Model\Factory
      * Clear cache 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -129,11 +110,29 @@ class CachingFactory extends \XLite\Model\Factory
         self::$cache = null;
     }
 
+
+    /**
+     * Get handler object (or pseudo-constant)
+     * 
+     * @param mixed $handler Variable to prepare
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function prepareHandler($handler)
+    {
+        return (!is_object($handler) && !in_array($handler, array('self', 'parent', 'static')))
+            ? new $handler()
+            : $handler;
+    }
+
+
     /**
      * Clean up cache
      *
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function __destruct()
@@ -141,4 +140,3 @@ class CachingFactory extends \XLite\Model\Factory
         self::clearCache();
     }
 }
-

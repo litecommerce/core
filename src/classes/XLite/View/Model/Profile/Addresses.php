@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View_Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Model\Profile;
@@ -31,10 +31,8 @@ namespace XLite\View\Model\Profile;
 /**
  * \XLite\View\Model\Profile\Addresses 
  * 
- * @package    XLite
- * @subpackage View_Model
- * @see        ____class_see____
- * @since      3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Addresses extends \XLite\View\Model\Profile\AProfile
 {
@@ -43,11 +41,28 @@ class Addresses extends \XLite\View\Model\Profile\AProfile
      */
     const PARAM_USE_BODY_TEMPLATE = 'useBodyTemplate';
 
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'address_book';
+    
+        return $result;
+    }
+
+
     /**
      * Return name of web form widget class
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getFormClass()
@@ -59,7 +74,7 @@ class Addresses extends \XLite\View\Model\Profile\AProfile
      * Return title
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getHead()
@@ -71,7 +86,7 @@ class Addresses extends \XLite\View\Model\Profile\AProfile
      * Check if current form is accessible
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function checkAccess()
@@ -83,7 +98,6 @@ class Addresses extends \XLite\View\Model\Profile\AProfile
      * Return text for the "Submit" button
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -96,7 +110,6 @@ class Addresses extends \XLite\View\Model\Profile\AProfile
      * Define widget parameters
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -115,7 +128,6 @@ class Addresses extends \XLite\View\Model\Profile\AProfile
      * Determines if need to display only a widget body
      * 
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -127,22 +139,6 @@ class Addresses extends \XLite\View\Model\Profile\AProfile
             $result = parent::useBodyTemplate();
         }
 
-        return $result;
-    }
-
-    /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = 'address_book';
-    
         return $result;
     }
 }

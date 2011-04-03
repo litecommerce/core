@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Order\Details\Admin;
@@ -31,19 +31,17 @@ namespace XLite\View\Order\Details\Admin;
 /**
  * Model 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Model extends \XLite\View\Order\Details\Base\AModel
 {
     /**
      * Main order info
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $schemaMain = array(
         'order_id' => array(
@@ -62,10 +60,43 @@ class Model extends \XLite\View\Order\Details\Base\AModel
 
 
     /**
+     * Save current form reference and sections list, and initialize the cache
+     *
+     * @param array $params   Widget params OPTIONAL
+     * @param array $sections Sections list OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $params = array(), array $sections = array())
+    {
+        $this->sections['main'] = 'Info';
+
+        parent::__construct($params, $sections);
+    }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'order/invoice/style.css';
+
+        return $list;
+    }
+
+
+    /**
      * Alias
      * 
      * @return \XLite\Model\Order
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -80,31 +111,11 @@ class Model extends \XLite\View\Order\Details\Base\AModel
      * @param array &$data Widget params
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function prepareFieldParamsDate(array &$data)
     {
         $data[self::SCHEMA_VALUE] = $this->time_format($this->getModelObject()->getDate());
-    }
-
-
-    /**
-     * Save current form reference and sections list, and initialize the cache
-     *
-     * @param array $params   Widget params
-     * @param array $sections Sections list
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __construct(array $params = array(), array $sections = array())
-    {
-        $this->sections['main'] = 'Info';
-
-        parent::__construct($params, $sections);
     }
 }

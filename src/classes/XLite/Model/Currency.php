@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,9 +31,9 @@ namespace XLite\Model;
 /**
  * Currency
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
  * @Entity
  * @Table (name="currencies")
  */
@@ -42,22 +42,22 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Currency unique id (ISO 4217 number)
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Id
-     * @Column         (type="uinteger")
+     * @Column (type="uinteger")
      */
     protected $currency_id;
 
     /**
      * Currency code (ISO 4217 alpha-3)
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="fixedstring", length="3", unique=true)
      */
     protected $code;
@@ -65,10 +65,10 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Symbol
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="string", length="16")
      */
     protected $symbol = '';
@@ -76,10 +76,10 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Number of digits after the decimal separator.
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="integer")
      */
     protected $e = 0;
@@ -87,14 +87,14 @@ class Currency extends \XLite\Model\Base\I18n
     /**
      * Orders
      *
-     * @var    \Doctrine\Common\Collections\Collection
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\Collection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Order", mappedBy="currency")
      */
     protected $orders;
+
 
     /**
      * Set currency Id 
@@ -103,7 +103,6 @@ class Currency extends \XLite\Model\Base\I18n
      * TODO - Doctrine is not generate setter for identifier. We must reworkt it
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -118,13 +117,12 @@ class Currency extends \XLite\Model\Base\I18n
      * @param float $value Value
      *  
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function roundValue($value)
     {
-        return round($value, $this->getE());
+        return \XLite\Logic\Math::getInstance()->roundByCurrency($value, $this);
     }
 
     /**
@@ -133,13 +131,12 @@ class Currency extends \XLite\Model\Base\I18n
      * @param float $value Value
      *  
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function roundValueAsInteger($value)
     {
-        return intval(round($this->roundValue($value) * pow(10, $this->getE())));
+        return intval(round($this->roundValue($value) * pow(10, $this->getE()), 0));
     }
 
     /**
@@ -148,7 +145,6 @@ class Currency extends \XLite\Model\Base\I18n
      * @param integer $value Value
      *  
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -163,27 +159,20 @@ class Currency extends \XLite\Model\Base\I18n
      * @param float $value Value
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function formatValue($value)
     {
-        return number_format(
-            $this->roundValue($value),
-            $this->getE(),
-            \XLite\Core\Config::getInstance()->General->decimal_delim,
-            \XLite\Core\Config::getInstance()->General->thousand_delim
-        );
+        return \XLite\Logic\Math::getInstance()->formatValue($value, $this);
     }
 
     /**
      * Constructor
      *
-     * @param array $data Entity properties
+     * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -193,5 +182,4 @@ class Currency extends \XLite\Model\Base\I18n
 
         parent::__construct($data);
     }
-
 }

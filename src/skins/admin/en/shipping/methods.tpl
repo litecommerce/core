@@ -15,7 +15,7 @@
   <widget class="\XLite\View\EditorLanguageSelector" />
 </div>
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 <!-- 
 
 var CheckBoxes = new Array();
@@ -72,7 +72,7 @@ Use this section to define your store's shipping methods.
 
 {foreach:getShippingProcessors(),processor}
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 <!--
 
 CheckBoxes["{processor.getProcessorId()}"] = new Array();
@@ -86,7 +86,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
   <input type="hidden" name="action" value="update" />
   <input type="hidden" name="method_id" value="" />
 
-  <table cellpadding="0" cellspacing="0" border="0" width="600">
+  <table cellpadding="0" cellspacing="0" width="600">
 
     <tr>
       <td><br />&nbsp;</td>
@@ -106,31 +106,38 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
         <table class="data-table">
 
           <tr>
-            <th width="90%">Shipping method</th>
+            <th style="width:90%;">Shipping method</th>
             <th>Pos.</th>
+            <th>Assigned classes</th>
             <th>Active<br />
-              <input id="enable_method_{processor.getProcessorId()}" type="checkbox" onClick="this.blur();setChecked('{processor.getProcessorId()}',this.checked);" />
+              <input id="enable_method_{processor.getProcessorId()}" type="checkbox" onclick="this.blur();setChecked('{processor.getProcessorId()}',this.checked);" />
             </th>
             <th valign="top">&nbsp;</th>
           </tr>
 
           <tr FOREACH="processor.getShippingMethods(),shipping_idx,method" class="{getRowClass(shipping_idx,#dialog-box#,#highlight#)}">
+
             <td>
               <input type="text" name="methods[{method.getMethodId()}][name]" size="50" value="{method.getName()}" IF="processor.isMethodNamesAdjustable()" />
               <span IF="!processor.isMethodNamesAdjustable()">{method.getName()}</span>
             </td>
+
             <td><input type="text" name="methods[{method.getMethodId()}][position]" size="4" value="{method.getPosition()}" /></td>
-            <td align="center">
-              <input id="shipping_enabled_{method.getMethodId()}" type="checkbox" name="methods[{method.getMethodId()}][enabled]" checked="{method.getEnabled()}" onClick="this.blur();" />
-              <script language="Javascript">populateChecked("{processor.getProcessorId()}", "shipping_enabled_{method.getMethodId()}");</script>
-              <script language="Javascript" IF="method.getEnabled()">setHeaderChecked("{processor.getProcessorId()}");</script>
-            </td>
+
             <td>
-              <input type="button" name="delete" value="Delete" onclick="javascript: onDeleteButton('{method.getMethodId()}');" />
+            <widget class="\XLite\View\FormField\Select\Classes" fieldName="{getNamePostedData(method.getMethodId(),#class_ids#,##)}" fieldOnly=true value="{method.getClasses()}" />
+            </td>
+
+            <td align="center">
+              <input id="shipping_enabled_{method.getMethodId()}" type="checkbox" name="methods[{method.getMethodId()}][enabled]" checked="{method.getEnabled()}" onclick="this.blur();" />
+              <script type="text/javascript">populateChecked("{processor.getProcessorId()}", "shipping_enabled_{method.getMethodId()}");</script>
+              <script type="text/javascript" IF="method.getEnabled()">setHeaderChecked("{processor.getProcessorId()}");</script>
+            </td>
+
+            <td>
+              <widget class="\XLite\View\Button\Regular" name="delete" label="Delete" jsCode="javascript: onDeleteButton('{method.getMethodId()}');" />
             </td>
           </tr>
-
-          <widget module="CDev\UPSOnlineTools" template="modules/CDev/UPSOnlineTools/settings_disclaimer.tpl" IF="processor.getProcessorId()=#ups#"/>
 
         </table>
 
@@ -140,7 +147,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
     <tr>
       <td colspan="4">
         <br />
-        <input type="submit" value="Update" class="DialogMainButton" />
+        <widget class="\XLite\View\Button\Submit" label="Update" style="main-button" />
       </td>
     </tr>
 
@@ -155,7 +162,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
   <input type="hidden" name="target" value="shipping_methods" />
   <input type="hidden" name="action" value="add" />
 
-  <table cellpadding="0" cellspacing="0" border="0">
+  <table cellpadding="0" cellspacing="0">
     
     <tr>
       <td>&nbsp;</td>
@@ -194,7 +201,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
     </tr>
 
     <tr>
-      <td colspan="5"><br /><input type="submit" value="Add" /></td>
+      <td colspan="5"><br /><widget class="\XLite\View\Button\Submit" label="Add" /></td>
     </tr>
 
     <tr IF="!moduleArrayPointer=moduleArraySize">

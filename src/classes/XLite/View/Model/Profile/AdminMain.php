@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Model\Profile;
@@ -31,9 +31,8 @@ namespace XLite\View\Model\Profile;
 /**
  * \XLite\View\Model\Profile\Main 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class AdminMain extends \XLite\View\Model\AModel
 {
@@ -44,12 +43,13 @@ class AdminMain extends \XLite\View\Model\AModel
     const SECTION_MAIN     = 'main';
     const SECTION_ACCESS   = 'access';
 
+
     /**
      * Schema of the "Account summary" section
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $summarySchema = array(
         'referer' => array(
@@ -82,9 +82,9 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Schema of the "E-mail & Password" section
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $mainSchema = array(
         'login' => array( 
@@ -107,9 +107,9 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Schema of the "User access" section
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $accessSchema = array(
         'access_level' => array(
@@ -134,194 +134,101 @@ class AdminMain extends \XLite\View\Model\AModel
         ),
     );
 
+
     /**
-     * This object will be used if another one is not pased
+     * Return value for the "register" mode param
      *
-     * @return \XLite\Model\AModel
-     * @access protected
+     * @return string
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultModelObject()
+    public static function getRegisterMode()
     {
-        if ($this->isRegisterMode()) {
-            $obj = new \XLite\Model\Profile();
-        
-        } else {
-            $obj = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($this->getProfileId());
-        }
-
-        return $obj;
+        return \XLite\Controller\Admin\Profile::getRegisterMode();
     }
 
+
     /**
-     * Return name of web form widget class
+     * Save current form reference and initialize the cache
      *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFormClass()
-    {
-        return '\XLite\View\Form\Profile\Main';
-    }
-
-    /**
-     * Return title
+     * @param array $params   Widget params OPTIONAL
+     * @param array $sections Sections list OPTIONAL
      *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return 'Profile details';
-    }
-
-    /**
-     * Return fields list by the corresponding schema
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFormFieldsForSectionMain()
-    {
-        // Create new profile - password is required
-        if (!$this->getModelObject()->isPersistent()) {
-            foreach (array('password', 'password_conf') as $field) {
-                if (isset($this->mainSchema[$field])) {
-                    $this->mainSchema[$field][self::SCHEMA_REQUIRED] = true;
-                }
-            }
-        }
-
-        return $this->getFieldsBySchema($this->mainSchema);
-    }
-
-    /**
-     * Return fields list by the corresponding schema
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFormFieldsForSectionAccess()
-    {
-        if ($this->isRegisterMode()) {
-            unset($this->accessSchema['pending_membership_id']);
-        }
-
-        return $this->getFieldsBySchema($this->accessSchema);
-    }
-
-    /**
-     * Return fields list by the corresponding schema
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFormFieldsForSectionSummary()
-    {
-        return !$this->isRegisterMode() ? $this->getFieldsBySchema($this->summarySchema) : array();
-    }
-
-    /**
-     * Populate model object properties by the passed data
-     * 
-     * @param array $data Data to set
-     *  
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function setModelProperties(array $data)
+    public function __construct(array $params = array(), array $sections = array())
     {
-        if (isset($data['password'])) {
-            $data['password'] = \XLite\Core\Auth::encryptPassword($data['password']);
-        }
+        $this->sections = $this->getProfileMainSections() + $this->sections;
 
-        parent::setModelProperties($data);
+        parent::__construct($params, $sections);
     }
 
     /**
-     * Check password and its confirmation
-     * TODO: simplify
+     * The "mode" parameter used to determine if we create new or modify existing profile
+     *
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isRegisterMode()
+    {
+        return \XLite\Controller\Admin\Profile::getInstance()->isRegisterMode();
+    }
+
+    /**
+     * Return current profile ID
+     *
+     * @param boolean $checkMode Check mode or not OPTIONAL
+     *
+     * @return integer 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProfileId($checkMode = true)
+    {
+        return ($this->isRegisterMode() && $checkMode) ?:
+            ($this->getRequestProfileId()) ?: \XLite\Core\Session::getInstance()->get('profile_id');
+    }
+
+    /**
+     * getRequestProfileId 
+     * 
+     * @return integer|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRequestProfileId()
+    {
+        return \XLite\Core\Request::getInstance()->profile_id;
+    }
+
+    /**
+     * Check for the form errors 
      * 
      * @return boolean 
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function checkPassword()
-    {
-        $result = true;
-        $data = $this->getRequestData();
-
-        if (
-            isset($this->sections[self::SECTION_MAIN]) 
-            && (!empty($data['password']) || !empty($data['password_conf']))
-        ) {
-
-            if ($data['password'] != $data['password_conf']) {
-                $result = false;
-                \XLite\Core\TopMessage::getInstance()->addError('Password and its confirmation do not match');
-            }
-
-        } else {
-            $this->excludeField('password');
-            $this->excludeField('password_conf');
-        }
-
-        return $result;
-    }
-
-    /**
-     * Check profile data 
-     * 
-     * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function checkProfileData()
+    public function isValid()
     {
-        $result = $this->checkPassword();
-
-        if ($result) {
-            // Check if profile with specified login is already exists
-            $sameProfile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
-                ->findUserWithSameLogin($this->getModelObject());
-            
-            if (isset($sameProfile)) {
-                $formFields = $this->getFormFields();
-                $this->addErrorMessage(
-                    'login',
-                    'User with specified email is already registered',
-                    $formFields[self::SECTION_MAIN]
-                );
-                $result = false;
-            }
-        }
-
-        return $result;
+        return ('validateInput' === $this->currentAction) ?: parent::isValid();
     }
 
     /**
-     * Return list of the class-specific sections 
-     * 
+     * Get a list of CSS files required to display the widget properly
+     *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getProfileMainSections()
+    public function getCSSFiles()
     {
-        return array(
-            self::SECTION_SUMMARY => 'Account summary',
-            self::SECTION_MAIN    => 'Email &amp; password',
-            self::SECTION_ACCESS  => 'Access information',
-        );
+        $list = parent::getCSSFiles();
+        $list[] = $this->getDir() . '/profile/main.css';
+
+        return $list;
     }
 
     /**
@@ -330,7 +237,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * @param string $name Field name
      *  
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -370,13 +276,200 @@ class AdminMain extends \XLite\View\Model\AModel
         return $value;
     }
 
+
+    /**
+     * This object will be used if another one is not pased
+     *
+     * @return \XLite\Model\Profile
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultModelObject()
+    {
+        if ($this->isRegisterMode()) {
+            $obj = new \XLite\Model\Profile();
+        
+        } else {
+            $obj = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($this->getProfileId());
+        }
+
+        return $obj;
+    }
+
+    /**
+     * Return name of web form widget class
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getFormClass()
+    {
+        return '\XLite\View\Form\Profile\Main';
+    }
+
+    /**
+     * Return title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return 'Profile details';
+    }
+
+    /**
+     * Return fields list by the corresponding schema
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getFormFieldsForSectionMain()
+    {
+        // Create new profile - password is required
+        if (!$this->getModelObject()->isPersistent()) {
+            foreach (array('password', 'password_conf') as $field) {
+                if (isset($this->mainSchema[$field])) {
+                    $this->mainSchema[$field][self::SCHEMA_REQUIRED] = true;
+                }
+            }
+        }
+
+        return $this->getFieldsBySchema($this->mainSchema);
+    }
+
+    /**
+     * Return fields list by the corresponding schema
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getFormFieldsForSectionAccess()
+    {
+        if ($this->isRegisterMode()) {
+            unset($this->accessSchema['pending_membership_id']);
+        }
+
+        return $this->getFieldsBySchema($this->accessSchema);
+    }
+
+    /**
+     * Return fields list by the corresponding schema
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getFormFieldsForSectionSummary()
+    {
+        return !$this->isRegisterMode() ? $this->getFieldsBySchema($this->summarySchema) : array();
+    }
+
+    /**
+     * Populate model object properties by the passed data
+     * 
+     * @param array $data Data to set
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setModelProperties(array $data)
+    {
+        if (isset($data['password'])) {
+            $data['password'] = \XLite\Core\Auth::encryptPassword($data['password']);
+        }
+
+        parent::setModelProperties($data);
+    }
+
+    /**
+     * Check password and its confirmation
+     * TODO: simplify
+     * 
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkPassword()
+    {
+        $result = true;
+        $data = $this->getRequestData();
+
+        if (
+            isset($this->sections[self::SECTION_MAIN]) 
+            && (!empty($data['password']) || !empty($data['password_conf']))
+        ) {
+
+            if ($data['password'] != $data['password_conf']) {
+                $result = false;
+                \XLite\Core\TopMessage::addError('Password and its confirmation do not match');
+            }
+
+        } else {
+            $this->excludeField('password');
+            $this->excludeField('password_conf');
+        }
+
+        return $result;
+    }
+
+    /**
+     * Check profile data 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkProfileData()
+    {
+        $result = $this->checkPassword();
+
+        if ($result) {
+            // Check if profile with specified login is already exists
+            $sameProfile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
+                ->findUserWithSameLogin($this->getModelObject());
+            
+            if (isset($sameProfile)) {
+                $formFields = $this->getFormFields();
+                $this->addErrorMessage(
+                    'login',
+                    'User with specified email is already registered',
+                    $formFields[self::SECTION_MAIN]
+                );
+                $result = false;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return list of the class-specific sections 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProfileMainSections()
+    {
+        return array(
+            self::SECTION_SUMMARY => 'Account summary',
+            self::SECTION_MAIN    => 'Email &amp; password',
+            self::SECTION_ACCESS  => 'Access information',
+        );
+    }
+
     /**
      * Return error message for the "validateInput" action
      * 
      * @param string $login Profile login
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -390,15 +483,13 @@ class AdminMain extends \XLite\View\Model\AModel
      * Process the errors occured during the "validateInput" action
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function postprocessErrorActionValidateInput()
     {
-        \XLite\Core\TopMessage::getInstance()->add(
-            $this->getErrorActionValidateInputMessage($this->getRequestData('login')),
-            \XLite\Core\TopMessage::ERROR
+        \XLite\Core\TopMessage::addError(
+            $this->getErrorActionValidateInputMessage($this->getRequestData('login'))
         );
     }
 
@@ -406,59 +497,55 @@ class AdminMain extends \XLite\View\Model\AModel
      * Perform some actions on success
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function postprocessSuccessActionCreate()
     {
-        \XLite\Core\TopMessage::getInstance()->addInfo('Profile has been created successfully');
+        \XLite\Core\TopMessage::addInfo('Profile has been created successfully');
     }
 
     /**
      * Perform some actions on success
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function postprocessSuccessActionUpdate()
     {
-        \XLite\Core\TopMessage::getInstance()->addInfo('Profile has been updated successfully');
+        \XLite\Core\TopMessage::addInfo('Profile has been updated successfully');
     }
 
     /**
      * Perform some actions on success
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function postprocessSuccessActionModify()
     {
-        \XLite\Core\TopMessage::getInstance()->addInfo('Profile has been modified successfully');
+        \XLite\Core\TopMessage::addInfo('Profile has been modified successfully');
     }
 
     /**
      * Perform some actions on success
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function postprocessSuccessActionDelete()
     {
-        \XLite\Core\TopMessage::getInstance()->addInfo('Profile has been deleted successfully');
+        \XLite\Core\TopMessage::addInfo('Profile has been deleted successfully');
     }
 
     /**
      * Create profile 
      * 
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function performActionCreate()
@@ -470,7 +557,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * Update profile 
      * 
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function performActionUpdate()
@@ -482,7 +569,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * Perform certain action for the model object
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function performActionDelete()
@@ -494,7 +581,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * Perform certain action for the model object
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function performActionValidateInput()
@@ -505,93 +592,9 @@ class AdminMain extends \XLite\View\Model\AModel
     }
 
     /**
-     * Return value for the "register" mode param
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getRegisterMode()
-    {
-        return \XLite\Controller\Admin\Profile::getRegisterMode();
-    }
-
-    /**
-     * The "mode" parameter used to determine if we create new or modify existing profile
-     *
-     * @return boolean 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isRegisterMode()
-    {
-        return \XLite\Controller\Admin\Profile::getInstance()->isRegisterMode();
-    }
-
-    /**
-     * Return current profile ID
-     *
-     * @param boolean $checkMode Check mode or not OPTIONAL
-     *
-     * @return integer 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProfileId($checkMode = true)
-    {
-        return ($this->isRegisterMode() && $checkMode) ?:
-            ($this->getRequestProfileId()) ?: \XLite\Core\Session::getInstance()->get('profile_id');
-    }
-
-    /**
-     * getRequestProfileId 
-     * 
-     * @return integer|void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getRequestProfileId()
-    {
-        return \XLite\Core\Request::getInstance()->profile_id;
-    }
-
-    /**
-     * Check for the form errors 
-     * 
-     * @return boolean 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isValid()
-    {
-        return ('validateInput' === $this->currentAction) ?: parent::isValid();
-    }
-
-    /**
-     * Get a list of CSS files required to display the widget properly
-     *
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = $this->getDir() . '/profile/main.css';
-
-        return $list;
-    }
-
-    /**
      * Return text for the "Submit" button
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -604,7 +607,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Return text for the "Submit" button
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -617,7 +619,6 @@ class AdminMain extends \XLite\View\Model\AModel
      * Return list of the "Button" widgets
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -632,22 +633,5 @@ class AdminMain extends \XLite\View\Model\AModel
         );
 
         return $result;
-    }
-
-    /**
-     * Save current form reference and initialize the cache
-     *
-     * @param array $params   Widget params
-     * @param array $sections Sections list
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function __construct(array $params = array(), array $sections = array())
-    {
-        $this->sections = $this->getProfileMainSections() + $this->sections;
-
-        parent::__construct($params, $sections);
     }
 }

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -31,22 +31,11 @@ namespace XLite\Model\Repo;
 /**
  * Form id repository
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class FormId extends \XLite\Model\Repo\ARepo
 {
-    /**
-     * Repository type 
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $type = self::TYPE_SERVICE;
-
     /**
      * Form id length
      */
@@ -54,12 +43,20 @@ class FormId extends \XLite\Model\Repo\ARepo
 
 
     /**
+     * Repository type 
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $type = self::TYPE_SERVICE;
+
+    /**
      * Default 'order by' field name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $defaultOrderBy = array(
         'date' => false,
@@ -69,10 +66,9 @@ class FormId extends \XLite\Model\Repo\ARepo
     /**
      * Form id characters list 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $chars = array(
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -87,10 +83,9 @@ class FormId extends \XLite\Model\Repo\ARepo
     /**
      * Frontier length 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $frontierLength = 100;
 
@@ -101,7 +96,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param integer $sessionId Session id OPTIONAL
      *  
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -115,32 +109,11 @@ class FormId extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Define query for countByFormIdAndSessionId) method
-     *
-     * @param string  $formId    Form id
-     * @param integer $sessionId Session id
-     * 
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineByFormIdAndSessionIdQuery($formId, $sessionId)
-    {
-        return $this->createQueryBuilder('f')
-            ->select('COUNT(f)')
-            ->andWhere('f.session_id = :sid AND f.form_id = :fid')
-            ->setParameter('sid', $sessionId)
-            ->setParameter('fid', $formId);
-    }
-
-    /**
      * Generate public session id 
      * 
      * @param integer $sessionId Session id OPTIONAL
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -176,7 +149,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @param integer $sessionId Session id OPTIONAL OPTIONAL
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -193,69 +165,12 @@ class FormId extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Get frontier date 
-     * 
-     * @param integer $sessionId Session id
-     * 
-     * @return integer|void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getFrontierId($sessionId)
-    {
-        return $this->defineGetFrontierQuery($this->frontierLength, $sessionId)->getSingleScalarResult() ?: null;
-    }
-
-    /**
-     * Define query for getFrontierId() method
-     * 
-     * @param integer $frontier  Frontier length
-     * @param integer $sessionId Session id
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineGetFrontierQuery($frontier, $sessionId)
-    {
-        return $this->createQueryBuilder('f')
-            ->select('f.id')
-            ->andWhere('f.session_id = :sid')
-            ->setFirstResult($frontier)
-            ->setMaxResults(1)
-            ->setParameter('sid', $sessionId);
-    }
-
-    /**
-     * Define query for removeExpired() method
-     * 
-     * @param integer $id        Frontier id
-     * @param integer $sessionId Session id
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineRemoveExpiredQuery($id, $sessionId)
-    {
-        return $this->getQueryBuilder()
-            ->delete($this->_entityName, 'f')
-            ->andWhere('f.id < :id AND f.session_id = :sid')
-            ->setParameter('id', $id)
-            ->setParameter('sid', $sessionId);
-    }
-
-    /**
      * Process DB schema 
      * 
      * @param array  $schema Schema
      * @param string $type   Schema type
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -276,4 +191,76 @@ class FormId extends \XLite\Model\Repo\ARepo
         return $schema;
     }
 
+
+    /**
+     * Define query for countByFormIdAndSessionId) method
+     *
+     * @param string  $formId    Form id
+     * @param integer $sessionId Session id
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineByFormIdAndSessionIdQuery($formId, $sessionId)
+    {
+        return $this->createQueryBuilder('f')
+            ->select('COUNT(f)')
+            ->andWhere('f.session_id = :sid AND f.form_id = :fid')
+            ->setParameter('sid', $sessionId)
+            ->setParameter('fid', $formId);
+    }
+
+    /**
+     * Get frontier date 
+     * 
+     * @param integer $sessionId Session id
+     * 
+     * @return integer|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getFrontierId($sessionId)
+    {
+        return $this->defineGetFrontierQuery($this->frontierLength, $sessionId)->getSingleScalarResult() ?: null;
+    }
+
+    /**
+     * Define query for getFrontierId() method
+     * 
+     * @param integer $frontier  Frontier length
+     * @param integer $sessionId Session id
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineGetFrontierQuery($frontier, $sessionId)
+    {
+        return $this->createQueryBuilder('f')
+            ->select('f.id')
+            ->andWhere('f.session_id = :sid')
+            ->setFirstResult($frontier)
+            ->setMaxResults(1)
+            ->setParameter('sid', $sessionId);
+    }
+
+    /**
+     * Define query for removeExpired() method
+     * 
+     * @param integer $id        Frontier id
+     * @param integer $sessionId Session id
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineRemoveExpiredQuery($id, $sessionId)
+    {
+        return $this->getQueryBuilder()
+            ->delete($this->_entityName, 'f')
+            ->andWhere('f.id < :id AND f.session_id = :sid')
+            ->setParameter('id', $id)
+            ->setParameter('sid', $sessionId);
+    }
 }

@@ -31,6 +31,7 @@ function LC_PHPSettings()
 	set foldenable
 	set foldmethod=marker
     set foldmarker={{{,}}}
+    set foldlevel=99
 endfunction
 
 function LC_YAMLSettings()
@@ -68,7 +69,6 @@ let g:pdv_cfg_VarSee     = "____var_see____"
 let g:pdv_cfg_FuncSee    = "____func_see____"
 
 let g:pdv_cfg_FileTitle  = "____file_title____"
-let g:pdv_cfg_SubPackage = "____sub_package____"
 let g:pdv_cfg_ParamComm  = "____param_comment____"
 
 let g:pdv_cfg_vimOpts    = "// vim: set ts=4 sw=4 sts=4 et:"
@@ -250,16 +250,16 @@ func! LC_PhpDocFile()
   	exe l:txtBOL . g:pdv_cfg_Commentn . "obtain it through the world-wide-web, please send an email" . g:pdv_cfg_EOL
   	exe l:txtBOL . g:pdv_cfg_Commentn . "to licensing@litecommerce.com so we can send you a copy immediately." . g:pdv_cfg_EOL
     exe l:txtBOL . g:pdv_cfg_Commentn . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@category   " . g:pdv_cfg_Category . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@package    " . g:pdv_cfg_Package . g:pdv_cfg_EOL
-    exe l:txtBOL . g:pdv_cfg_Commentn . "@subpackage " . g:pdv_cfg_SubPackage . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@author     " . g:pdv_cfg_Author g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@copyright  " . g:pdv_cfg_Copyright . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@license    " . g:pdv_cfg_License . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@version    " . g:pdv_cfg_Version . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@link       " . g:pdv_cfg_Link . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@see        " . g:pdv_cfg_FileSee . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@since      " . g:pdv_cfg_Since . g:pdv_cfg_EOL
+    exe l:txtBOL . g:pdv_cfg_Commentn . "PHP version 5.3.0" . g:pdv_cfg_EOL
+    exe l:txtBOL . g:pdv_cfg_Commentn . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@category  " . g:pdv_cfg_Category . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@author    " . g:pdv_cfg_Author g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@copyright " . g:pdv_cfg_Copyright . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@license   " . g:pdv_cfg_License . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@version   " . g:pdv_cfg_Version . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@link      " . g:pdv_cfg_Link . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@see       " . g:pdv_cfg_FileSee . g:pdv_cfg_EOL
+	exe l:txtBOL . g:pdv_cfg_Commentn . "@since     " . g:pdv_cfg_Since . g:pdv_cfg_EOL
 
     " Close the comment block.
     exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL

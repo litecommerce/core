@@ -27,6 +27,10 @@
  * @since      3.0.0
  */
 
+// No PHP warnings are allowed in LC
+error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors', true);
+
 function _do_query_upload($sqlfile) {
     global $__connection;
 
@@ -59,11 +63,8 @@ if ($argc > 1) {
     array_shift($params);
 
     define('R_INSTALL_DEMO', in_array('demo', $params));
-
     define('R_DISPLAY_HELP', in_array('help', $params));
-
     define('R_INSTALL_ADMIN', in_array('admin', $params));
-
     define('R_INSTALL_STANDALONE', in_array('standalone', $params));
 
 } else {
@@ -101,11 +102,10 @@ require_once './top.inc.php';
 set_time_limit(0);
 error_reporting(E_ALL ^ E_NOTICE);
 
+$config = parse_ini_file('etc/config.php');
+
 if (file_exists('etc/config.local.php')) {
-    $config = parse_ini_file('etc/config.local.php');
- 
-} else {
-    $config = parse_ini_file('etc/config.php');
+    $config = array_merge($config, parse_ini_file('etc/config.local.php'));
 }
  
 $config['hostspec'] .= empty($config['socket'])
@@ -114,7 +114,8 @@ $config['hostspec'] .= empty($config['socket'])
 $__connection = mysql_connect($config['hostspec'], $config['username'], $config['password']);
 
 if (!$__connection || !mysql_select_db($config['database'], $__connection)) {
-    die('Error of MySQL connection. Check etc/config.php file');
+    echo ('Error of MySQL connection. Check etc/config.php file');
+    die(1);
 }
 
 // Drop all tables

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,20 +32,26 @@ namespace XLite\Controller\Customer;
  * Password recovery controller
  * TODO: full refactoring is needed
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class RecoverPassword extends \XLite\Controller\Customer\ACustomer
 {
-    public $params = array('target', "mode", "email", "link_mailed");
+    /**
+     * params 
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $params = array('target', 'mode', 'email', 'link_mailed');
 
 
     /**
      * Add the base part of the location path
      * 
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function addBaseLocation()
@@ -59,7 +65,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * Common method to determine current location 
      * 
      * @return array
-     * @access protected 
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getLocation()
@@ -67,7 +73,14 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
         return 'Recover password';
     }
 
-    protected function action_recover_password()
+    /**
+     * action_recover_password 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionRecoverPassword()
     {
         // show recover message if email is valid
         if ($this->requestRecoverPassword($this->get('email'))) {
@@ -79,10 +92,17 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
         }
     }
 
-    protected function action_confirm()
+    /**
+     * action_confirm 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionConfirm()
     {
         if (!is_null($this->get('email')) && isset($_GET['request_id'])) {
-            if ($this->recoverPassword($this->get('email'), $_GET['request_id'])) {
+            if ($this->doPasswordRecovery($this->get('email'), $_GET['request_id'])) {
                 $this->set('mode', 'recoverMessage');
             }
         }
@@ -94,7 +114,6 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * @param mixed $email ____param_comment____
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -116,11 +135,10 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * @param mixed $requestID ____param_comment____
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function recoverPassword($email, $requestID) 
+    protected function doPasswordRecovery($email, $requestID) 
     {
         $result = true;
 
@@ -144,5 +162,4 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
 
         return $result;
     }
-
 }

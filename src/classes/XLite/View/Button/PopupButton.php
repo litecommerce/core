@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Button;
@@ -31,9 +31,8 @@ namespace XLite\View\Button;
 /**
  * Button to use with popup
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class PopupButton extends \XLite\View\Button\AButton
 {
@@ -48,22 +47,9 @@ abstract class PopupButton extends \XLite\View\Button\AButton
 
 
     /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return self::TEMPLATE;
-    }
-
-    /**
      * Return content for popup button
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -73,7 +59,6 @@ abstract class PopupButton extends \XLite\View\Button\AButton
      * Return URL parameters to use in AJAX popup
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -83,7 +68,6 @@ abstract class PopupButton extends \XLite\View\Button\AButton
      * Return array of URL params for JS 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -95,22 +79,10 @@ abstract class PopupButton extends \XLite\View\Button\AButton
     }
 
     /** 
-     * getClass 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getClass()
-    {   
-        return self::CSS_CLASS;
-    }   
-
-    /** 
      * Get a list of JavaScript files required to display the widget properly
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getJSFiles()
@@ -126,7 +98,6 @@ abstract class PopupButton extends \XLite\View\Button\AButton
      * Return CSS files list
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -143,7 +114,6 @@ abstract class PopupButton extends \XLite\View\Button\AButton
      * Register files from common repository
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -153,8 +123,32 @@ abstract class PopupButton extends \XLite\View\Button\AButton
 
         // popup button is using several specific popup JS
         $list['js'][] = 'js/core.popup.js';
-        $list['js'][] = 'js/jquery.blockUI.js';
 
         return $list;
-    }    
+    }
+
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return self::TEMPLATE;
+    }
+
+    /** 
+     * getClass 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getClass()
+    {   
+        return self::CSS_CLASS;
+    }   
 }

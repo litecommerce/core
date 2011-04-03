@@ -49,9 +49,9 @@ function xlite($restart = false)
 /**
 * Prints Javascript code to refresh the browser output page.
 */
-function func_refresh_start()
+function func_refresh_start($display = true)
 {
-    print <<<EOT
+    $output = <<<EOT
 <script typee="text/javascript">
 <!--
 var loaded = false;
@@ -61,24 +61,36 @@ function refresh() {
 
     if (loaded == false) {
         setTimeout('refresh()', 500);
-    }    
+    }
 }
 
 setTimeout('refresh()', 1000);
 -->
 </script>
 EOT;
+
+    if ($display) {
+        echo $output;
+    }
+
+    return $output;
 }
 
-function func_refresh_end()
+function func_refresh_end($display = true)
 {
-    print <<<EOT
+    $output = <<<EOT
 <script type="text/javascript">
 <!--
 var loaded = true;
 -->
 </script>
 EOT;
+
+    if ($display) {
+        echo $output;
+    }
+
+    return $output;
 }
 
 /*
@@ -826,14 +838,14 @@ function func_htmlspecialchars($str) {
 /**
  * Check if LiteCommerce installed
  * 
- * @param string $dbUrl Database Url string (e.g. mysql://username:password@localhost/databasename)
+ * @param string $dbURL Database Url string (e.g. mysql://username:password@localhost/databasename)
  *  
  * @return bool
  * @access public
  * @see    ____func_see____
  * @since  3.0.0
  */
-function isLiteCommerceInstalled($dbUrl = null, &$message)
+function isLiteCommerceInstalled($dbURL = null, &$message)
 {
     // Check by template and config.php file
     $checkResult = file_exists(LC_SKINS_DIR . 'admin/en/welcome.tpl')
@@ -853,14 +865,14 @@ function isLiteCommerceInstalled($dbUrl = null, &$message)
 
             if ($checkResult) {
 
-                if (isset($dbUrl)) {
+                if (isset($dbURL)) {
 
                     // Support of Drupal 6 installation
-                    if (is_array($dbUrl)) {
-                        $data = $dbUrl;
+                    if (is_array($dbURL)) {
+                        $data = $dbURL;
 
                     } else {
-                        $data = parseDbUrl($dbUrl);
+                        $data = parseDbURL($dbURL);
                     }
 
                     if (!empty($data)) {
@@ -874,11 +886,11 @@ function isLiteCommerceInstalled($dbUrl = null, &$message)
                             && (!isset($data['mysqlsock']) || $configData['socket'] == $data['mysqlsock']);
 
                         if (!$checkResult) {
-                            $message = 'Database parameters comparison failed (config file and $dbUrl was compared)';
+                            $message = 'Database parameters comparison failed (config file and $dbURL was compared)';
                         }
 
                     } else {
-                        $message = '$dbUrl passed but hasn\'t any data or corrupted';
+                        $message = '$dbURL passed but hasn\'t any data or corrupted';
                         $checkResult = false;
                     }
 
@@ -922,7 +934,7 @@ function isLiteCommerceInstalled($dbUrl = null, &$message)
 /**
  * Parse database access string
  * 
- * @param string $dbUrl Database Url string
+ * @param string $dbURL Database Url string
  * examples:
  *   mysql://username:password@localhost/databasename
  *   mysql://username:password@localhost:3306/databasename
@@ -935,11 +947,11 @@ function isLiteCommerceInstalled($dbUrl = null, &$message)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function parseDbUrl($dbUrl)
+function parseDbURL($dbURL)
 {    
     $data = array();
 
-    $url = parse_url($dbUrl);
+    $url = parse_url($dbURL);
 
     if (is_array($url)) {
 
@@ -1068,23 +1080,19 @@ function dbFetchAll($sql, &$errorMsg = null)
 /**
  * Execute SQL query
  * 
- * @return int
+ * @return void
  * @access public
  * @see    ____func_see____
  * @since  3.0.0
  */
 function dbExecute($sql, &$errorMsg = null)
 {
-    $result = null;
-
     try {
-        $result = \Includes\Utils\Database::execute($sql);
+        \Includes\Utils\Database::execute($sql);
 
     } catch (Exception $e) {
         $errorMsg = $e->getMessage();
     }
-
-    return $result;
 }
 
 /**
@@ -1137,15 +1145,15 @@ function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
             $command = substr($command, 0, strlen($command)-1);
             $table_name = '';
 
-            if (preg_match('/^CREATE TABLE ([_a-zA-Z0-9]*)/i', $command, $matches)) {
+            if (preg_match('/^CREATE TABLE `?([_a-zA-Z0-9]*)`?/i', $command, $matches)) {
                 $table_name = $matches[1];
                 echo 'Creating table [' . $table_name . '] ... ';
             
-            } elseif (preg_match('/^ALTER TABLE ([_a-zA-Z0-9]*)/i', $command, $matches)) {
+            } elseif (preg_match('/^ALTER TABLE `?([_a-zA-Z0-9]*)`?/i', $command, $matches)) {
                 $table_name = $matches[1];
                 echo 'Altering table [' . $table_name . '] ... ';
             
-            } elseif (preg_match('/^DROP TABLE IF EXISTS ([_a-zA-Z0-9]*)/i', $command, $matches)) {
+            } elseif (preg_match('/^DROP TABLE IF EXISTS `?([_a-zA-Z0-9]*)`?/i', $command, $matches)) {
                 $table_name = $matches[1];
                 echo 'Deleting table [' . $table_name . '] ... ';
             
@@ -1155,7 +1163,7 @@ function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
 
             // Execute SQL query
             dbExecute($command, $myerr);
-    
+
             // check for errors
             if (!empty($myerr)) {
 
@@ -1168,7 +1176,7 @@ function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
             } elseif ($table_name != "") {
                 echo '<font color="green">[OK]</font><br />' . "\n";
             
-            } elseif (!($counter % 20)) {
+            } elseif (!($counter % 5)) {
                 echo '.';
             }
 
@@ -1180,8 +1188,8 @@ function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
 
     fclose($fp);
 
-    if ($counter>20) {
-        print "\n";
+    if ($counter > 20) {
+        print "<br />\n";
     }
 
     return (!$is_restore && $ignoreErrors) ? true : empty($myerr);

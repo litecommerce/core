@@ -31,7 +31,7 @@ require_once __DIR__ . '/../AWeb.php';
 abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
 {
 
-    protected function logIn($user = 'master', $password = 'master')
+    protected function logIn($username = 'master', $password = 'master')
     {
         $this->open('user');
 
@@ -39,30 +39,24 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
             $this->logOut(true);
         }
 
-        $this->type("//input[@name='name' and @type='text']", $user);
-        $this->type("//input[@name='password' and @type='password']", $password);
+        $this->type('id=edit-name', $username);
+        $this->type('id=edit-pass', $password);
 
-        $this->click("//input[@id='edit-submit']");
+        $this->submitAndWait('id=user-login');
 
-        $this->waitForPageToLoad(3000);
+        $this->assertTrue($this->isLoggedIn(), 'Check that user is logged in successfully');
     }
 
     protected function logOut($pageIsOpened = false)
     {
-        if (!$pageIsOpened) {
-            $this->open('user');   
-        }
+        $this->open('user/logout');
 
-        if ($this->isLoggedIn()) {
-            $this->click("//a[text()='Log out']");
-
-            $this->waitForPageToLoad(3000);
-        }
+        $this->assertFalse($this->isLoggedIn(), 'Check that user is logged out');
     }
 
     protected function isLoggedIn()
     {
-        return $this->isElementPresent("//a[text()='Log out']");
+        return $this->isElementPresent('//a[@class="log-in" and contains(@href,"user/logout")]');
     }
 
     protected function getActiveProduct()
@@ -161,4 +155,24 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
         $this->start();
     }
 
+    /**
+     * Get payment method id by name 
+     * 
+     * @param string $name Payment method name
+     *  
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPaymentMethodIdByName($name)
+    {
+        $pmethod = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(array('service_name' => $name));
+        $pid = $pmethod->getmethodId();
+        if (!$pmethod) {
+            $this->fail($name . ' payment method is not found');
+        }
+
+        return $pid;
+    }
 }

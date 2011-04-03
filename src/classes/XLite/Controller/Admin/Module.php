@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,59 +31,84 @@ namespace XLite\Controller\Admin;
 /**
  * Module settings
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Module extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Return current module options
+     * Module object
      * 
-     * @return array 
-     * @access protected
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      */
-    public function init()
-    {
-        $this->module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find(\XLite\Core\Request::getInstance()->moduleId);
+    protected $module;
 
-        if (!$this->module) {
-            throw new \Exception('Add-on does not exist (ID#' . \XLite\Core\Request::getInstance()->moduleId . ')');
-        }
-    }
 
     /**
      * Return current module options
      * 
      * @return array 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getOptions()
     {
         return \XLite\Core\Database::getRepo('\XLite\Model\Config')
-            ->getByCategory($this->module->getActualName(), true, true);
+            ->getByCategory($this->getModule()->getActualName(), true, true);
     }
  
     /**
      * Common method to determine current location
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getLocation()
     {
-        return $this->module->getName() . ' (' . $this->module->getAuthor() . ')';
+        return $this->getModule()->getName() . ' (' . $this->getModule()->getAuthor() . ')';
+    }
+
+
+    /**
+     * Get current module ID
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModuleID()
+    {
+        return \XLite\Core\Request::getInstance()->moduleId;
+    }
+
+    /**
+     * Return current module object
+     * 
+     * @return \XLite\Model\Module
+     * @throws \Exception
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModule()
+    {
+        if (!isset($this->module)) {
+            $this->module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->getModuleID());
+
+            if (!$this->module) {
+                throw new \Exception('Add-on does not exist (ID#' . $this->getModuleID() . ')');
+            }
+        }
+
+        return $this->module;
     }
 
     /**
      * Add part to the location nodes list
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -98,12 +123,13 @@ class Module extends \XLite\Controller\Admin\AAdmin
      * Update module settings 
      * 
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function doActionUpdate()
     {
         foreach ($this->getOptions() as $option) {
+
             $name  = $option->name;
             $value = \XLite\Core\Request::getInstance()->$name;
 
@@ -123,7 +149,7 @@ class Module extends \XLite\Controller\Admin\AAdmin
 
             \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
-                    'category' => $this->module->getActualName(),
+                    'category' => $this->getModule()->getActualName(),
                     'name'     => $name,
                     'value'    => $value,
                     'type'     => $type
@@ -131,7 +157,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
             );
         }
 
-        $this->set('returnUrl', $this->buildUrl('modules'));
+        $this->setReturnUrl($this->buildUrl('modules'));
     }
-
 }

@@ -14,25 +14,24 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 namespace XLite\Model\Base;
 
 /**
  * Order item related object interface
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 interface IOrderItem
 {
@@ -40,7 +39,6 @@ interface IOrderItem
      * Get unique id 
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -50,27 +48,15 @@ interface IOrderItem
      * Get price 
      * 
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getPrice();
 
     /**
-     * Get taxed price 
-     * 
-     * @return float
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTaxedPrice();
-
-    /**
      * Get weight 
      * 
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -80,7 +66,6 @@ interface IOrderItem
      * Get purchase limit (minimum)
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -90,7 +75,6 @@ interface IOrderItem
      * Get purchase limit (maximum)
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -100,7 +84,6 @@ interface IOrderItem
      * Get name 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -110,7 +93,6 @@ interface IOrderItem
      * Get SKU
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -120,7 +102,6 @@ interface IOrderItem
      * Get image 
      * 
      * @return \XLite\Model\Base\Image|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -130,7 +111,6 @@ interface IOrderItem
      * Get free shipping 
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -140,7 +120,6 @@ interface IOrderItem
      * Get URL 
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

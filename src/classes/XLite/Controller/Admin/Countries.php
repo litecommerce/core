@@ -14,51 +14,91 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
 
 /**
- * ____description____
+ * Countries management page controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Countries extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return $this->t('Countries');
+    }
+
+    /**
+     * Get all countries 
+     * TODO - move to widget
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCountries()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Country')->findAllCountries();
+    }
+
+
+    /**
      * Common method to determine current location
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getLocation()
     {
-        return 'Countries';
+        return $this->t('Countries');
     }
 
-    function obligatorySetStatus($status)
+    /**
+     * setObligatoryStatus 
+     * 
+     * @param mixed $status ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setObligatoryStatus($status)
     {
         if (!in_array('status', $this->params)) {
-            $this->params[] = "status";
+            $this->params[] = 'status';
         }
         $this->set('status', $status);
     }
 
-    function action_update()
+    /**
+     * action 'update'
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdate()
     {
         $update = false;
 
@@ -75,44 +115,62 @@ class Countries extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->flush();
         }
 
-        $this->obligatorySetStatus('updated');
+        $this->setObligatoryStatus('updated');
     }
 
-    function action_add()
+    /**
+     * action 'add'
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionAdd()
     {
-        if ( empty(\XLite\Core\Request::getInstance()->code) ) {
+        if (empty(\XLite\Core\Request::getInstance()->code)) {
             $this->set('valid', false);
-            $this->obligatorySetStatus('code');
-            return;
+            $this->setObligatoryStatus('code');
+
+        } else {
+
+            $country = \XLite\Core\Database::getRepo('XLite\Model\Country')
+                ->find(\XLite\Core\Request::getInstance()->code);
+
+            if ($country) {
+                $this->set('valid', false);
+                $this->setObligatoryStatus('exists');
+
+            } else {
+
+                if (empty(\XLite\Core\Request::getInstance()->country)) {
+                    $this->set('valid', false);
+                    $this->setObligatoryStatus('country');
+
+                } else {
+
+                    $country = new \XLite\Model\Country();
+
+                    $country->map(\XLite\Core\Request::getInstance()->getData());
+                    $country->eu_member = isset(\XLite\Core\Request::getInstance()->eu_member);
+                    $country->enabled = isset(\XLite\Core\Request::getInstance()->enabled);
+
+                    \XLite\Core\Database::getEM()->persist($country);
+                    \XLite\Core\Database::getEM()->flush();
+
+                    $this->setObligatoryStatus('added');
+                }
+            }
         }
-
-        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')
-            ->find(\XLite\Core\Request::getInstance()->code);
-        if ($country) {
-            $this->set('valid', false);
-            $this->obligatorySetStatus('exists');
-            return;
-        }
-
-        if (empty(\XLite\Core\Request::getInstance()->country)) {
-            $this->set('valid', false);
-            $this->obligatorySetStatus('country');
-            return;
-        }
-
-        $country = new \XLite\Model\Country();
-
-        $country->map(\XLite\Core\Request::getInstance()->getData());
-        $country->eu_member = isset(\XLite\Core\Request::getInstance()->eu_member);
-        $country->enabled = isset(\XLite\Core\Request::getInstance()->enabled);
-
-        \XLite\Core\Database::getEM()->persist($country);
-        \XLite\Core\Database::getEM()->flush();
-
-        $this->obligatorySetStatus('added');
     }
 
-    function action_delete()
+    /**
+     * action 'delete'
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDelete()
     {
         $countries = \XLite\Core\Request::getInstance()->delete_countries;
 
@@ -126,20 +184,6 @@ class Countries extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Database::getEM()->flush();
         }
 
-        $this->obligatorySetStatus('deleted');
-    }
-
-    /**
-     * Get all countries 
-     * TODO - move to widget
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCountries()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Country')->findAllCountries();
+        $this->setObligatoryStatus('deleted');
     }
 }

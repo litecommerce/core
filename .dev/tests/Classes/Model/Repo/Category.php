@@ -116,7 +116,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
     {
         $qb = $this->getRepo()->createQueryBuilder();
 
-        $this->assertType(
+        $this->assertInstanceOf(
             '\Doctrine\ORM\QueryBuilder',
             $qb,
             'Wrong type of returned object'
@@ -175,7 +175,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
 
             $tree = $this->getRepo()->getCategories($rootId);
 
-            $this->assertType(
+            $this->assertInternalType(
                 'array',
                 $tree,
                 'List of categories must be of the "array" type'
@@ -202,7 +202,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
         $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->find(14017);
         $list = $this->getRepo()->getSiblings($c);
 
-        $this->assertType(
+        $this->assertInternalType(
             'array',
             $list,
             'List of categories must be of the "array" type'
@@ -230,7 +230,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
             list($rootId, $count) = $data;
             $tree = $this->getRepo()->getSubcategories($rootId);
 
-            $this->assertType(
+            $this->assertInternalType(
                 'array',
                 $tree,
                 'List of subcategories must be of the "array" type (case ' . ($index + 1) . ')'
@@ -257,7 +257,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
         $categoryId = 14018;
         $path = $this->getRepo()->getCategoryPath($categoryId);
 
-        $this->assertType(
+        $this->assertInternalType(
            'array',
             $path,
            'Category path must be of the "array" type'
@@ -312,7 +312,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
         $productId = 15090;
         $categories = $this->getRepo()->findAllByProductId($productId);
 
-        $this->assertType(
+        $this->assertInternalType(
            'array',
             $categories,
            'List of product categories must be of the "array" type'
@@ -338,12 +338,12 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
         $data = array(
             'enabled'   => false,
             'name'      => 'Test category',
-            'cleanUrl'  => 'test_cat',
+            'cleanURL'  => 'test_cat',
         );
         $entity = $this->getRepo()->insert($data);
         $entity->setParent($this->getRepo()->find(14016));
 
-        $this->assertType(
+        $this->assertInstanceOf(
             '\XLite\Model\Category',
             $entity,
             'Created entity must be of the "\XLite\Model\Category" type'

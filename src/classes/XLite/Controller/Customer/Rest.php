@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -31,9 +31,8 @@ namespace XLite\Controller\Customer;
 /**
  * REST services end-point
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Rest extends \XLite\Controller\Customer\ACustomer
 {
@@ -49,40 +48,36 @@ class Rest extends \XLite\Controller\Customer\ACustomer
     /**
      * REST actions 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $restActions = array('get', 'post', 'put', 'delete');
 
     /**
      * REST repository classes 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $restClasses;
 
     /**
      * Current REST repository
      * 
-     * @var    object
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   object
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $currentRepo;
 
     /**
      * Response data 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $data = array(
         'status' => self::STATUS_ERROR,
@@ -94,7 +89,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * Parses the request variables if necessary. Attempts to call the specified action function 
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function handleRequest()
@@ -119,13 +114,15 @@ class Rest extends \XLite\Controller\Customer\ACustomer
     /**
      * Perform some actions before redirect
      *
-     * @param string|null $action Performed action
+     * FIXME: check. Action should not be an optional param
+     *
+     * @param string|null $action Performed action OPTIONAL
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function actionPostprocess($action)
+    protected function actionPostprocess($action = null)
     {
         parent::actionPostprocess($action);
 
@@ -142,7 +139,6 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * Get REST repository classes 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -182,7 +178,6 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * Define REST repository classes 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -201,7 +196,6 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * @param string $type Operation type name OPTIONAL
      *  
      * @return object|void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -222,7 +216,6 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * Get 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -240,7 +233,6 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * Post 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -262,7 +254,6 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * Put 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -283,7 +274,6 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * Delete 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

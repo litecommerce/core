@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core;
@@ -31,9 +31,8 @@ namespace XLite\Core;
 /**
  * Profiler
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\SQLLogger
 {
@@ -50,118 +49,108 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     /**
      * List of executed queries 
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $queries = array();
 
     /**
      * List of memory measuring points 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $memoryPoints = array();
 
     /**
      * Templates profiling enabled flag
      * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $templatesProfilingEnabled = false;
 
     /**
      * Enabled flag
      * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $enabled = false;
 
     /**
      * Start time
      * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   float
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $start_time = null;
 
     /**
      * Stop time 
      * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   float
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $stop_time = null;
 
     /**
      * Included files list
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $includedFiles = array();
 
     /**
      * Included files total size
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $includedFilesTotal = 0;
 
     /**
      * Included files count 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $includedFilesCount = 0;
 
     /**
      * Last time 
      * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   float
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $lastTime = 0;
 
     /**
      * Time points 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $points = array();
 
     /**
      * Profiler should not start on these targets 
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $disallowedTargets = array(
         'image',
@@ -170,20 +159,18 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     /**
      * Use xdebug stack trace 
      * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $useXdebugStackTrace = false;
 
     /**
      * Current query 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $currentQuery;
 
@@ -191,7 +178,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * Check - templates profiling mode is enabled or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -200,16 +186,29 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
         return self::$templatesProfilingEnabled;
     }
 
+
     /**
-     * There are some targets which are not require profiler
+     * Constructor
      * 
-     * @return boolean 
-     * @access protected
+     * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isTargetAllowed()
+    public function __construct()
     {
-        return !in_array(\XLite\Core\Request::getInstance()->target, $this->disallowedTargets);
+        $this->start($this->getStartupFlag());
+    }
+
+    /**
+     * Destructor
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __destruct()
+    {
+        $this->stop();
     }
 
     /**
@@ -218,7 +217,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * @param string $name Peroperty name
      *  
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -241,43 +239,127 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     }
 
     /**
-     * getStartupFlag 
+     * Included files statistics sorting callback
      * 
-     * @return boolean 
-     * @access protected
+     * @param array $a File info 1
+     * @param array $b File info 2
+     *  
+     * @return integer
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getStartupFlag()
+    public function sortCallback($a, $b)
     {
-        return \XLite::getInstance()->getOptions(array('profiler_details', 'enabled'))
-            && $this->isTargetAllowed()
-            && !\XLite\Core\Request::getInstance()->isPost()
-            && !\XLite\Core\Request::getInstance()->isCLI()
-            && !\XLite\Core\Request::getInstance()->isAJAX();
+        $result = 0;
+
+        if ($a['size'] != $b['size']) {
+            $result = $a['size'] < $b['size'] ? 1 : -1;
+        }
+
+        return $result;
     }
 
     /**
-     * Constructor
+     * Log SQL queries
      * 
+     * @param string $sql    Query
+     * @param array  $params Query arguments OPTIONAL
+     *  
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct()
+    public function logSQL($sql, array $params = null)
     {
-        $this->start($this->getStartupFlag());
+        $this->addQuery($sql);
     }
 
     /**
-     * Destructor
-     *
+     * Add query to log
+     * 
+     * @param string $query Query
+     *  
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __destruct()
+    public function addQuery($query)
     {
-        $this->stop();
+        $this->lastTime = microtime(true);
+
+        // Uncomment if you want to truncate queries
+        /* if (strlen($query)>300) {
+            $query = substr($query, 0, 300) . ' ...';
+            
+        } */
+
+        if (!isset(self::$queries[$query])) {
+            self::$queries[$query] = array(
+                'time' => array(),
+                'trace' => $this->getBackTrace(),
+            );
+            $this->addMemoryPoint();
+        }
+    }
+
+    /**
+     * Set query time 
+     * 
+     * @param string $query Query
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setQueryTime($query)
+    {
+        if (isset(self::$queries[$query])) {
+            self::$queries[$query]['time'][] = microtime(true) - $this->lastTime;
+        }
+    }
+
+    /**
+     * Add memory measure point 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function addMemoryPoint()
+    {
+        self::$memoryPoints[] = array(
+            'memory' => memory_get_usage(),
+            'trace' => $this->getBackTrace(),
+        );
+    }
+
+    /**
+     * Logs a SQL statement somewhere
+     * 
+     * @param string $sql    The SQL to be executed
+     * @param array  $params The SQL parameter OPTIONAL
+     * @param array  $types  The SQL parameter types OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function startQuery($sql, array $params = null, array $types = null)
+    {
+        $this->addQuery($sql);
+        $this->currentQuery = $sql;
+    }
+
+    /**
+     * Mark the last started query as stopped. This can be used for timing of queries 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function stopQuery()
+    {
+        $this->setQueryTime($this->currentQuery);
     }
 
     /**
@@ -287,7 +369,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * @param boolean $additional Additional metric flag OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -336,13 +417,42 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
         }
     }
     
+
+    /**
+     * There are some targets which are not require profiler
+     * 
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isTargetAllowed()
+    {
+        return !in_array(\XLite\Core\Request::getInstance()->target, $this->disallowedTargets);
+    }
+
+    /**
+     * getStartupFlag 
+     * 
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getStartupFlag()
+    {
+        return \XLite::getInstance()->getOptions(array('profiler_details', 'enabled'))
+            && $this->isTargetAllowed()
+            && !\XLite\Core\Request::getInstance()->isPost()
+            && !\XLite\Core\Request::getInstance()->isCLI()
+            && !\XLite\Core\Request::getInstance()->isAJAX()
+            && !\Includes\Decorator\Utils\CacheManager::isRebuildNeeded();
+    }
+
     /**
      * Start profiler
      * 
      * @param boolean $start Enable flag
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -361,7 +471,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * Stop profiler
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -394,7 +503,6 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * Display profiler report
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -553,110 +661,9 @@ HTML;
     }
 
     /**
-     * Included files statistics sorting callback
-     * 
-     * @param array $a File info 1
-     * @param array $b File info 2
-     *  
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function sortCallback($a, $b)
-    {
-        $result = 0;
-
-        if ($a['size'] != $b['size']) {
-            $result = $a['size'] < $b['size'] ? 1 : -1;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Log SQL queries
-     * 
-     * @param string $sql    Query
-     * @param array  $params Query arguments
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function logSQL($sql, array $params = null)
-    {
-        $this->addQuery($sql);
-    }
-
-    /**
-     * Add query to log
-     * 
-     * @param string $query Query
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function addQuery($query)
-    {
-        $this->lastTime = microtime(true);
-
-        // Uncomment if you want to truncate queries
-        /* if (strlen($query)>300) {
-            $query = substr($query, 0, 300) . ' ...';
-            
-        } */
-
-        if (!isset(self::$queries[$query])) {
-            self::$queries[$query] = array(
-                'time' => array(),
-                'trace' => $this->getBackTrace(),
-            );
-            $this->addMemoryPoint();
-        }
-    }
-
-    /**
-     * Set query time 
-     * 
-     * @param string $query Query
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setQueryTime($query)
-    {
-        if (isset(self::$queries[$query])) {
-            self::$queries[$query]['time'][] = microtime(true) - $this->lastTime;
-        }
-    }
-
-    /**
-     * Add memory measure point 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function addMemoryPoint()
-    {
-        self::$memoryPoints[] = array(
-            'memory' => memory_get_usage(),
-            'trace' => $this->getBackTrace(),
-        );
-    }
-
-    /**
      * Get back trace 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -678,36 +685,5 @@ HTML;
         }
 
         return array_slice($trace, self::TRACE_BEGIN, self::TRACE_LENGTH);
-    }
-
-    /**
-     * Logs a SQL statement somewhere
-     * 
-     * @param string $sql    The SQL to be executed
-     * @param array  $params The SQL parameter
-     * @param array  $types  The SQL parameter types
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function startQuery($sql, array $params = null, array $types = null)
-    {
-        $this->addQuery($sql);
-        $this->currentQuery = $sql;
-    }
-
-    /**
-     * Mark the last started query as stopped. This can be used for timing of queries 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function stopQuery()
-    {
-        $this->setQueryTime($this->currentQuery);
     }
 }

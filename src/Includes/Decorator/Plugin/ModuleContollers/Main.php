@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Includes
+ * @subpackage Decorator
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -40,65 +40,72 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     /**
      * Pattern to detect/modify module contoller class name
      */
-    const PATTERN = '/\\\XLite\\\(Module\\\[\w]+\\\[\w]+\\\)Controller(\\\[\w\\\]*)/Ss';
+    const PATTERN = '/^XLite\\\(Module\\\[\w]+\\\[\w]+\\\)Controller(\\\[\w\\\]*)$/Ss';
 
 
-    /**
-     * Find all module controllers
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getModuleControllersList()
-    {
-        return static::getClassesTree()->findByCallback(array($this, 'isModuleController'));
-    }
+    // ------------------------------ Hook handlers -
 
     /**
-     * Remove the module-related part from module controller class
-     *
-     * @param \Includes\Decorator\DataStructure\Node\ClassInfo $node node to prepare
-     *
-     * @return string
-     * @access protected
-     * @since  3.0
-     */
-    protected function prepareModuleControllerClass(\Includes\Decorator\DataStructure\Node\ClassInfo $node)
-    {
-        return preg_replace(self::PATTERN, '\\\\XLite\\\\Controller$2', $node->getClass());
-    }
-
-
-    /**
-     * Execute "preprocess" hook handler
+     * Execute certain hook handler
      *
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function executeHookHandlerPreprocess()
+    public function executeHookHandlerBeforeDecorate()
     {
-        foreach ($this->getModuleControllersList() as $node) {
-            static::getClassesTree()->changeNodeKey($node, $this->prepareModuleControllerClass($node));
-        }
+        static::getClassesTree()->walkThrough(array($this, 'changeControllerClass'));
     }
 
 
+    // ------------------------------ Auxiliary methods -
+
     /**
-     * Method to check class nodes in tree
-     * 
-     * @param \Includes\Decorator\DataStructure\Node\ClassInfo $node node to check
-     *  
-     * @return bool
+     * Change class name for "module controllers"
+     * NOTE: method is public since it's used as a callback in external class
+     *
+     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Current node
+     *
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isModuleController(\Includes\Decorator\DataStructure\Node\ClassInfo $node)
+    public function changeControllerClass(\Includes\Decorator\DataStructure\Graph\Classes $node)
+    {
+        if ($this->isModuleController($node)) {
+            $node->setKey($this->prepareModuleControllerClass($node));
+        }
+    }
+
+    /**
+     * Method to check class nodes in tree
+     *
+     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Node to check
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isModuleController(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
         return !$node->isDecorator() && preg_match(self::PATTERN, $node->getClass());
+    }
+
+    /**
+     * Remove the module-related part from module controller class
+     *
+     * @param \Includes\Decorator\DataStructure\Graph\Classes $node Node to get and prepare class
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareModuleControllerClass(\Includes\Decorator\DataStructure\Graph\Classes $node)
+    {
+        return preg_replace(self::PATTERN, 'XLite\\\\Controller$2', $node->getClass());
     }
 }

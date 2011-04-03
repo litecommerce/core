@@ -14,38 +14,36 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
 
 /**
- * ____description____
+ * Zones page controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class ShippingZones extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Common method to determine current location
+     * Return the current page title (for the content area)
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getLocation()
+    public function getTitle()
     {
         return 'Shipping zones';
     }
@@ -54,7 +52,6 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      * handleRequest 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -68,14 +65,58 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Do action 'Delete'
+     * Add elements into the specified zone 
      * 
-     * @return void
-     * @access public
+     * @param \XLite\Model\Zone $zone Zone object
+     * @param array             $data Array of elements: array(<elementType> => array(value1, value2, value3...))
+     *  
+     * @return \XLite\Model\Zone
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function doActionDelete()
+    public function addElements($zone, $data)
+    {
+        foreach ($data as $elementType => $elements) {
+
+            if (is_array($elements) && !empty($elements)) {
+
+                foreach ($elements as $elementValue) {
+
+                    $newElement = new \XLite\Model\ZoneElement();
+
+                    $newElement->setElementValue($elementValue);
+                    $newElement->setElementType($elementType);
+                    $newElement->setZone($zone);
+
+                    $zone->addZoneElements($newElement);
+                }
+            }
+        }
+
+        return $zone;
+    }
+
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Shipping zones';
+    }
+
+    /**
+     * Do action 'Delete'
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDelete()
     {
         $postedData = \XLite\Core\Request::getInstance()->getData();
 
@@ -95,10 +136,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
             \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache();
 
-            \XLite\Core\TopMessage::getInstance()->add(
-                $this->t('The selected zones have been deleted successfully'),
-                \XLite\Core\TopMessage::INFO
-            );
+            \XLite\Core\TopMessage::addInfo('The selected zones have been deleted successfully');
         }
     }
 
@@ -106,11 +144,10 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      * Do action 'Update'
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function doActionUpdate()
+    protected function doActionUpdate()
     {
         $postedData = \XLite\Core\Request::getInstance()->getData();
 
@@ -156,25 +193,16 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
                 \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache($zoneId);
 
-                \XLite\Core\TopMessage::getInstance()->add(
-                    $this->t('Zone details have been updated successfully'),
-                    \XLite\Core\TopMessage::INFO
-                );
+                \XLite\Core\TopMessage::addInfo('Zone details have been updated successfully');
 
             } else {
-                \XLite\Core\TopMessage::getInstance()->add(
-                    sprintf('The countries list for zone is empty. Please specify it.'),
-                    \XLite\Core\TopMessage::ERROR
-                );
+                \XLite\Core\TopMessage::addError('The countries list for zone is empty. Please specify it.');
             }
 
             $this->redirect('admin.php?target=shipping_zones&zoneid=' . $zoneId);
 
         } else {
-            \XLite\Core\TopMessage::getInstance()->add(
-                sprintf('Zone not found (%d)', $zoneId),
-                \XLite\Core\TopMessage::ERROR
-            );
+            \XLite\Core\TopMessage::addError(sprintf('Zone not found (%d)', $zoneId));
         }
     }
 
@@ -182,11 +210,10 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      * Do action 'Create'
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function doActionCreate()
+    protected function doActionCreate()
     {
         $postedData = \XLite\Core\Request::getInstance()->getData();
 
@@ -216,69 +243,27 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
                     \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache($zoneId);
 
-                    \XLite\Core\TopMessage::getInstance()->add(
-                        $this->t('New zone has been created successfully'),
-                        \XLite\Core\TopMessage::INFO
-                    );
+                    \XLite\Core\TopMessage::addInfo('New zone has been created successfully');
 
                     $this->redirect('admin.php?target=shipping_zones&zoneid=' . $zoneId);
 
                 } else {
-                    \XLite\Core\TopMessage::getInstance()->add(
-                        'New zone was not created due to internal error',
-                        \XLite\Core\TopMessage::ERROR
-                    );
+                    \XLite\Core\TopMessage::addError('New zone was not created due to internal error');
                 }
 
             } else {
-                \XLite\Core\TopMessage::getInstance()->add(
-                    'Could not create zone with empty name. Please specify it.',
-                    \XLite\Core\TopMessage::ERROR
+                \XLite\Core\TopMessage::addError(
+                    'Could not create zone with empty name. Please specify it.'
                 );
             }
 
         } else {
-            \XLite\Core\TopMessage::getInstance()->add(
-                sprintf('The countries list for zone is empty. Please specify it.'),
-                \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::addError(
+                'The countries list for zone is empty. Please specify it.'
             );
         }
 
         $this->redirect('admin.php?target=shipping_zones&mode=add');
-    }
-
-    /**
-     * Add elements into the specified zone 
-     * 
-     * @param \XLite\Model\Zone $zone Zone object
-     * @param array             $data Array of elements: array(<elementType> => array(value1, value2, value3...))
-     *  
-     * @return \XLite\Model\Zone
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function addElements($zone, $data)
-    {
-        foreach ($data as $elementType => $elements) {
-
-            if (!is_array($elements) || empty($elements)) {
-                continue;
-            }
-
-            foreach ($elements as $elementValue) {
-
-                $newElement = new \XLite\Model\ZoneElement();
-
-                $newElement->setElementValue($elementValue);
-                $newElement->setElementType($elementType);
-                $newElement->setZone($zone);
-
-                $zone->addZoneElements($newElement);
-            }
-        }
-
-        return $zone;
     }
 
     /**
@@ -287,7 +272,6 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      * @param array $postedData Array of data posted via post request
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -326,5 +310,4 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
         return $data;
     }
-
 }

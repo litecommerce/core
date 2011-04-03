@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Location;
@@ -31,9 +31,8 @@ namespace XLite\View\Location;
 /**
  * Node 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Node extends \XLite\View\AView
 {
@@ -44,45 +43,7 @@ class Node extends \XLite\View\AView
     const PARAM_NAME     = 'name';
     const PARAM_LINK     = 'list';
     const PARAM_SUBNODES = 'subnodes';
-
-
-    /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'location/node.tpl';
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_NAME => new \XLite\Model\WidgetParam\String(
-                'Name', ''
-            ),
-            self::PARAM_LINK => new \XLite\Model\WidgetParam\String(
-                'Link', ''
-            ),
-            self::PARAM_SUBNODES => new \XLite\Model\WidgetParam\Collection(
-                'Subnodes', array()               
-            ),
-        );
-    }
+    const PARAM_IS_LAST  = 'last';
 
 
     /**
@@ -90,10 +51,9 @@ class Node extends \XLite\View\AView
      * 
      * @param string $name     Node title
      * @param string $link     Node link OPTIONAL
-     * @param array  $subnodes Node subnodes
+     * @param array  $subnodes Node subnodes OPTIONAL
      *
      * @return object
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -106,5 +66,93 @@ class Node extends \XLite\View\AView
                 self::PARAM_SUBNODES => $subnodes,
             )
         );
+    }
+
+
+    /**
+     * Check - node is last in nodes list or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isLast()
+    {
+        return $this->getParam(self::PARAM_IS_LAST);
+    }
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'location/node.tpl';
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_NAME     => new \XLite\Model\WidgetParam\String(
+                'Name', ''
+            ),
+            self::PARAM_LINK     => new \XLite\Model\WidgetParam\String(
+                'Link', ''
+            ),
+            self::PARAM_SUBNODES => new \XLite\Model\WidgetParam\Collection(
+                'Subnodes', array()               
+            ),
+            self::PARAM_IS_LAST  => new \XLite\Model\WidgetParam\Bool(
+                'Is last?', false
+            ),
+        );
+    }
+
+    /**
+     * Get node name
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getName()
+    {
+        return $this->getParam(self::PARAM_NAME);
+    }
+
+    /**
+     * Get link URL
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLink()
+    {
+        return $this->getParam(self::PARAM_LINK);
+    }
+
+    /**
+     * Get subnodes
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSubnodes()
+    {
+        return $this->getParam(self::PARAM_SUBNODES);
     }
 }

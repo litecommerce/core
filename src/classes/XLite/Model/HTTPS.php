@@ -14,26 +14,27 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
 
 /**
  * HTTPS bouncer
+ *
+ * FIXME: must not exted the \XLite\Base
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class HTTPS extends \XLite\Base
 {
@@ -45,200 +46,180 @@ class HTTPS extends \XLite\Base
     /**
      * Request method 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $method = 'POST';
 
     /**
      * Request URL 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $url = '';
 
     /**
      * Request data 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $data = array();
 
     /**
      * Request content type
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $conttype = 'application/x-www-form-urlencoded';
 
     /**
      * PEM certificate file
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $cert = null;
 
     /**
      * SSL private key file
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $kcert = null;
 
     /**
      * Force use SSL 3
      * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $use_ssl3 = false;
 
     /**
      * Timeout (seconds)
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $timeout = null;
 
     /**
      * Request user name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $user = null;
 
     /**
      * Request password 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $password = null;
 
     /**
      * Response HTTP code 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $responseCode = null;
 
     /**
      * Request response 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $response = null;
 
     /**
      * Response error message
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $error = '';
 
     /**
      * Raw response headers 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $rawHeaders = null;
 
     /**
      * Response headers 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $responseHeaders = array();
 
     /**
      * Path to curl executable file
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $curlBinary = null;
 
     /**
      * CURL error code 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $curlErrorCode = 0;
 
     /**
      * Urlencoded data or not
      * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $urlencoded = false;
 
     /**
      * Request headers 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $headers = array();
 
     /**
      * CURL error codes
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $curlErrors = array(
         '1' => 'Unsupported protocol "PROTO". This build of curl has no support for this protocol.',
@@ -306,10 +287,9 @@ class HTTPS extends \XLite\Base
     /**
      * Writable properties names
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $writableProperties = array(
         'url',
@@ -328,26 +308,32 @@ class HTTPS extends \XLite\Base
     /**
      * Readable properties names
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $readableProperties = array(
-        'response', 'error', 'responseHeaders', 'responseCode',
+        'response',
+        'error',
+        'responseHeaders',
+        'responseCode',
+        'curlErrorCode',
     );
+
 
     /**
      * Protected constructor. It's empty now
      *
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function __construct()
     {
-        require_once LC_LIB_DIR . 'Net' . LC_DS . 'URL2.php';
+        include_once LC_LIB_DIR . 'Net' . LC_DS . 'URL2.php';
     }
+
+    // {{{ Getters and setters
 
     /**
      * Setter
@@ -356,13 +342,12 @@ class HTTPS extends \XLite\Base
      * @param mixed  $value Property value
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function __set($name, $value)
     {
-        if (in_array($name, $this->writableProperties)) {
+        if ($this->isPropertyWritable($name)) {
             $this->$name = $value;
         }
     }
@@ -373,21 +358,74 @@ class HTTPS extends \XLite\Base
      * @param string $name Property name
      *
      * @return mixed
-     * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function __get($name)
     {
-        $result = null;
-
-        if (in_array($name, $this->readableProperties)) {
-            $result = $this->$name;
-        } else {
-            $result = parent::__get($name);
-        }
-
-        return $result;
+        return $this->isPropertyReadable($name) ? $this->$name : parent::__get($name);
     }
+
+    /**
+     * Support for isset()
+     * 
+     * @param string $name Property name
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __isset($name)
+    {
+        return $this->isPropertyReadable($name) ? isset($this->$name) : false;
+    }
+
+    /**
+     * Check if property is readable from external scopes
+     * 
+     * @param string $name Property name
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isPropertyReadable($name)
+    {
+        return $this->isPropertyAccessible($name, 'readableProperties');
+    }
+
+    /**
+     * Check if property is writeable from external scopes
+     *
+     * @param string $name Property name
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isPropertyWritable($name)
+    {
+        return $this->isPropertyAccessible($name, 'writableProperties');
+    }
+
+    /**
+     * Check if property name in an array
+     * 
+     * @param string $name     Property name
+     * @param string $listName List name
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isPropertyAccessible($name, $listName)
+    {
+        return in_array($name, $this->$listName);
+    }
+
+    // }}}
+
+    // {{{
 
     /**
      * Add header 
@@ -396,7 +434,6 @@ class HTTPS extends \XLite\Base
      * @param string $value Header value OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -416,7 +453,6 @@ class HTTPS extends \XLite\Base
      * @param boolean $slashed Slashed flag OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -441,7 +477,6 @@ class HTTPS extends \XLite\Base
      * @param string $software HTTPS engine name OPTIONAL
      * 
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -488,7 +523,6 @@ class HTTPS extends \XLite\Base
      * Get post raw data
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -521,7 +555,6 @@ class HTTPS extends \XLite\Base
      * Detect software 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -546,7 +579,6 @@ class HTTPS extends \XLite\Base
      * Detect libcurl 
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -575,7 +607,6 @@ class HTTPS extends \XLite\Base
      * Initialize libcurl resource
      * 
      * @return resource
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -597,8 +628,10 @@ class HTTPS extends \XLite\Base
         
         if ($post) {
             curl_setopt($c, CURLOPT_POST, $post);
-        } elseif($get) {
+        
+        } elseif ($get) {
             curl_setopt($c, CURLOPT_HTTPGET, $get);
+
         } else {
             curl_setopt($c, CURLOPT_NOBODY, 1);
             curl_setopt($c, CURLOPT_CUSTOMREQUEST, $this->method);
@@ -682,7 +715,6 @@ class HTTPS extends \XLite\Base
      * @param string $string Headers string
      *  
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -697,7 +729,6 @@ class HTTPS extends \XLite\Base
      * Rrequest with libcurl
      * 
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -732,7 +763,6 @@ class HTTPS extends \XLite\Base
      * Detect external curl 
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -767,7 +797,6 @@ class HTTPS extends \XLite\Base
      * Request with external CURL 
      * 
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -828,7 +857,6 @@ class HTTPS extends \XLite\Base
      * Get CURL command line and headers file
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -898,7 +926,6 @@ class HTTPS extends \XLite\Base
      * Detect OpenSSL bouncer availability
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -918,7 +945,6 @@ class HTTPS extends \XLite\Base
      * Request with OpenSSL 
      * 
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -962,7 +988,6 @@ class HTTPS extends \XLite\Base
      * Get OpenSSL command line 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -998,7 +1023,6 @@ class HTTPS extends \XLite\Base
      * @param array $pipes Process pipes array
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1066,7 +1090,6 @@ class HTTPS extends \XLite\Base
      * Check and preprocess data for redirect request
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1096,7 +1119,6 @@ class HTTPS extends \XLite\Base
      * @param string $rawHeaders Response headers
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1122,7 +1144,6 @@ class HTTPS extends \XLite\Base
      * @param string $name File prefix OPTIONAL
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -1142,7 +1163,7 @@ class HTTPS extends \XLite\Base
      * cURL header callback
      * 
      * @param mixed  $curl   CURL request resource or \XLite\Model\HTTPS object
-     * @param string $header Headers string
+     * @param string $header Headers string OPTIONAL
      *  
      * @return integer
      * @see    ____func_see____
@@ -1161,6 +1182,5 @@ class HTTPS extends \XLite\Base
         return $result;
     }
 
+    // }}}
 }
-
-

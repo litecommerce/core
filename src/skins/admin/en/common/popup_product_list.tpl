@@ -25,18 +25,18 @@ function selectProduct(product_id, name)
 // -->
 </script>
 <widget class="\XLite\View\PagerOrig" data="{products}" name="pager" itemsPerPage="{xlite.config.General.products_per_page_admin}" />
-<table border="0">
-<tr class="TableHead">
+<table>
+<tr>
     <td>Sku</td>
     <td>Product</td>
-    <td nowrap>Price</td>
+    <td class="table-label">Price</td>
 </tr>
 <tr FOREACH="pager.pageData,product">
-    <td width=1%><a href="javascript: selectProduct({product.product_id},'{addSlashes(product,#name#):r}')">{product.sku}</a></td>
-    <td width="70%">
-        <a href="javascript: selectProduct({product.product_id},'{addSlashes(product.name):r}')"><font class="ItemsList">{product.name}</font></a>
+    <td style="width:1%;"><a href="javascript: selectProduct({product.product_id},'{addSlashes(product,#name#):r}')">{product.sku}</a></td>
+    <td style="width:70%;">
+        <a href="javascript: selectProduct({product.product_id},'{addSlashes(product.name):r}')">{product.name}</a>
     </td>
-    <td nowrap align="right">
+    <td class="table-label" align="right">
         <a href="javascript: selectProduct({product.product_id},'{addSlashes(product.name):r}')">{price_format(product.price):h}</a>
     </td>
 </tr>

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -31,9 +31,8 @@ namespace XLite\Model\Repo;
 /**
  * Order repository
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Order extends \XLite\Model\Repo\ARepo
 {
@@ -59,213 +58,17 @@ class Order extends \XLite\Model\Repo\ARepo
     /**
      * currentSearchCnd 
      * 
-     * @var    \XLite\Core\CommonCell
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Core\CommonCell
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $currentSearchCnd = null;
 
-    /**
-     * Return list of handling search params 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getHandlingSearchParams()
-    {
-        return array(
-            self::P_ORDER_ID,
-            self::P_PROFILE_ID,
-            self::P_PROFILE,
-            self::P_EMAIL,
-            self::P_STATUS,
-            self::P_DATE,
-            self::P_ORDER_BY,
-            self::P_LIMIT,
-        );
-    }
-
-    /**
-     * Check if param can be used for search
-     * 
-     * @param string $param Name of param to check
-     *  
-     * @return boolean 
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isSearchParamHasHandler($param)
-    {
-        return in_array($param, $this->getHandlingSearchParams());
-    }
-
-    /**
-     * Prepare certain search condition
-     *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     * @param integer                    $value        Condition data
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function prepareCndOrderId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
-    {
-        if (!empty($value)) {
-            $queryBuilder
-                ->andWhere('o.order_id = :order_id')
-                ->setParameter('order_id', $value);
-        }
-    }
-
-    /**
-     * Prepare certain search condition
-     *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     * @param \XLite\Model\Profile       $value        Profile
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function prepareCndProfile(\Doctrine\ORM\QueryBuilder $queryBuilder, \XLite\Model\Profile $value)
-    {
-        if (!empty($value)) {
-            $queryBuilder
-                ->andWhere('o.orig_profile = :orig_profile')
-                ->setParameter('orig_profile', $value);
-        }
-    }
-
-    /**
-     * Prepare certain search condition
-     *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     * @param integer                    $value        Condition data
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function prepareCndProfileId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
-    {
-        if (!empty($value)) {
-            $value = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($value);
-            $queryBuilder
-                ->andWhere('o.orig_profile = :orig_profile')
-                ->setParameter('orig_profile', $value);
-        }
-    }
-
-    /**
-     * Prepare certain search condition
-     *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     * @param string                     $value        Condition data
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function prepareCndEmail(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
-    {
-        if (!empty($value)) {
-            $queryBuilder
-                ->innerJoin('o.profile', 'p')
-                ->andWhere('p.login = :email')
-                ->setParameter('email', $value);
-        }
-    }
-
-    /**
-     * Prepare certain search condition
-     *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     * @param string                     $value        Condition data
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function prepareCndStatus(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
-    {
-        if (!is_null(\XLite\Model\Order::getAllowedStatuses($value))) {
-            $queryBuilder
-                ->andWhere('o.status = :status')
-                ->setParameter('status', $value);
-
-        } else {
-            // TODO - add throw exception
-        }
-    }
-
-    /**
-     * Prepare certain search condition
-     *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     * @param array                      $value        Condition data
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function prepareCndDate(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value = null)
-    {
-        if (2 == count($value)) {
-            list($start, $end) = $value;
-
-            $queryBuilder
-                ->andWhere('o.date >= :start')
-                ->andWhere('o.date <= :end')
-                ->setParameter('start', $start)
-                ->setParameter('end', $end);
-        }
-    }
-
-    /**
-     * Return order TTL
-     * 
-     * @return integer 
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getOrderTTL()
-    {
-        return self::ORDER_TTL;
-    }
-
-    /**     
-     * Define query for findAllExipredTemporaryOrders() method
-     * 
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineAllExpiredTemporaryOrdersQuery()
-    {
-        return $this->createQueryBuilder(null, false)
-            ->andWhere('o.status = :tempStatus AND o.date < :time')
-            ->setParameter('tempStatus', \XLite\Model\Order::STATUS_TEMPORARY)
-            ->setParameter('time', time() - $this->getOrderTTL());
-    }
 
     /**
      * Find all expired temporary orders 
      * 
      * @return \Doctrine\Common\Collection\ArrayCollection
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -281,7 +84,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param boolean $placedOnly Use only orders or orders + carts OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -290,8 +92,7 @@ class Order extends \XLite\Model\Repo\ARepo
         $result = parent::createQueryBuilder($alias);
 
         if ($placedOnly) {
-            $result
-                ->andWhere('o.status != :tempStatus')
+            $result->andWhere('o.status != :tempStatus')
                 ->setParameter('tempStatus', \XLite\Model\Order::STATUS_TEMPORARY);
         }
 
@@ -302,7 +103,6 @@ class Order extends \XLite\Model\Repo\ARepo
      * Orders collect garbage 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -319,74 +119,12 @@ class Order extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Prepare certain search condition
-     *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     * @param array                      $value        Condition data
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
-    {
-        list($sort, $order) = $value;
-
-        $queryBuilder
-            ->addOrderBy($sort, $order);
-    }
-
-    /**
-     * Prepare certain search condition
-     *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     * @param array                      $value        Condition data
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function prepareCndLimit(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
-    {
-        array_unshift($value, $queryBuilder);
-        call_user_func_array(array($this, 'assignFrame'), $value);
-    }
-
-    /**
-     * Call corresponded method to handle a serch condition
-     * 
-     * @param mixed                      $value        Condition data
-     * @param string                     $key          Condition name
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder)
-    {
-        if ($this->isSearchParamHasHandler($key)) {
-            $methodName = 'prepareCnd' . ucfirst($key);
-            // $methodName is assembled from 'prepareCnd' + key
-            $this->$methodName($queryBuilder, $value);
-
-        } else {
-            // TODO - add logging here
-        }
-    }
-
-
-    /**
      * Common search
      * 
      * @param \XLite\Core\CommonCell $cnd       Search condition
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *  
      * @return \Doctrine\ORM\PersistentCollection|integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -410,5 +148,245 @@ class Order extends \XLite\Model\Repo\ARepo
         }
 
         return $result;
+    }
+
+
+    /**
+     * Return list of handling search params 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHandlingSearchParams()
+    {
+        return array(
+            self::P_ORDER_ID,
+            self::P_PROFILE_ID,
+            self::P_PROFILE,
+            self::P_EMAIL,
+            self::P_STATUS,
+            self::P_DATE,
+            self::P_ORDER_BY,
+            self::P_LIMIT,
+        );
+    }
+
+    /**
+     * Check if param can be used for search
+     * 
+     * @param string $param Name of param to check
+     *  
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isSearchParamHasHandler($param)
+    {
+        return in_array($param, $this->getHandlingSearchParams());
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param integer                    $value        Condition data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndOrderId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        if (!empty($value)) {
+            $queryBuilder->andWhere('o.order_id = :order_id')
+                ->setParameter('order_id', $value);
+        }
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param \XLite\Model\Profile       $value        Profile
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndProfile(\Doctrine\ORM\QueryBuilder $queryBuilder, \XLite\Model\Profile $value)
+    {
+        if (!empty($value)) {
+            $queryBuilder->andWhere('o.orig_profile = :orig_profile')
+                ->setParameter('orig_profile', $value);
+        }
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param integer                    $value        Condition data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndProfileId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        if (!empty($value)) {
+            $value = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($value);
+            $queryBuilder->andWhere('o.orig_profile = :orig_profile')
+                ->setParameter('orig_profile', $value);
+        }
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param string                     $value        Condition data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndEmail(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        if (!empty($value)) {
+            $queryBuilder->innerJoin('o.profile', 'p')
+                ->andWhere('p.login = :email')
+                ->setParameter('email', $value);
+        }
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param string                     $value        Condition data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndStatus(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        if (
+            !empty($value)
+            && !is_null(\XLite\Model\Order::getAllowedStatuses($value))
+        ) {
+            $queryBuilder->andWhere('o.status = :status')
+                ->setParameter('status', $value);
+
+        } else {
+            // TODO - add throw exception
+        }
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndDate(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value = null)
+    {
+        if (2 == count($value)) {
+            list($start, $end) = $value;
+
+            $queryBuilder->andWhere('o.date >= :start')
+                ->andWhere('o.date <= :end')
+                ->setParameter('start', $start)
+                ->setParameter('end', $end);
+        }
+    }
+
+    /**
+     * Return order TTL
+     * 
+     * @return integer 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getOrderTTL()
+    {
+        return self::ORDER_TTL;
+    }
+
+    /**     
+     * Define query for findAllExipredTemporaryOrders() method
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAllExpiredTemporaryOrdersQuery()
+    {
+        return $this->createQueryBuilder(null, false)
+            ->andWhere('o.status = :tempStatus AND o.date < :time')
+            ->setParameter('tempStatus', \XLite\Model\Order::STATUS_TEMPORARY)
+            ->setParameter('time', time() - $this->getOrderTTL());
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
+    {
+        list($sort, $order) = $value;
+
+        $queryBuilder
+            ->addOrderBy($sort, $order);
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndLimit(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
+    {
+        array_unshift($value, $queryBuilder);
+        call_user_func_array(array($this, 'assignFrame'), $value);
+    }
+
+    /**
+     * Call corresponded method to handle a serch condition
+     * 
+     * @param mixed                      $value        Condition data
+     * @param string                     $key          Condition name
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder)
+    {
+        if ($this->isSearchParamHasHandler($key)) {
+            $methodName = 'prepareCnd' . ucfirst($key);
+            // $methodName is assembled from 'prepareCnd' + key
+            $this->$methodName($queryBuilder, $value);
+
+        } else {
+            // TODO - add logging here
+        }
     }
 }

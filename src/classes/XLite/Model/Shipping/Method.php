@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Shipping;
@@ -31,10 +31,8 @@ namespace XLite\Model\Shipping;
 /**
  * Shipping method model
  * 
- * @package    XLite
- * @subpackage Model
- * @see        ____class_see____
- * @since      3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="XLite\Model\Repo\Shipping\Method")
  * @Table  (name="shipping_methods",
@@ -51,10 +49,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * A unique ID of the method
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -65,10 +62,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Processor class name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -77,10 +73,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Carrier of the method (for instance, "UPS" or "USPS")
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -89,10 +84,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Unique code of shipping method (within processor space)
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -101,10 +95,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Whether the method is enabled or disabled
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="boolean")
      */
@@ -113,10 +106,9 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * A position of the method among other registered methods
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -125,29 +117,44 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Shipping rates (relation)
      * 
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Shipping\Markup", mappedBy="shipping_method", cascade={"all"})
      */
     protected $shipping_markups;
 
 
+    /** 
+     * Shipping/Product classes
+     * 
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
+     * @ManyToMany (targetEntity="XLite\Model\ProductClass", inversedBy="methods")
+     * @JoinTable (name="shipping_class_links",
+     *      joinColumns={@JoinColumn(name="method_id", referencedColumnName="method_id")},
+     *      inverseJoinColumns={@JoinColumn(name="class_id", referencedColumnName="id")}
+     * )
+     */
+    protected $classes;
+
+
     /**
      * Constructor
      *            
-     * @param array $data Entity properties
+     * @param array $data Entity properties OPTIONAL
      *                                     
      * @return void                        
-     * @access public                      
      * @see    ____func_see____            
      * @since  3.0.0                       
      */                                    
     public function __construct(array $data = array())
     {                                                 
         $this->shipping_markups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->classes          = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
     }

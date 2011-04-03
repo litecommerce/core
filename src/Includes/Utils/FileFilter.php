@@ -116,16 +116,16 @@ class FileFilter extends AUtils
     /**
      * Constructor
      * 
-     * @param string $dir     directory to iterate over
-     * @param string $pattern pattern to filter files
-     * @param int    $mode    filtering mode
+     * @param string $dir     Directory to iterate over
+     * @param string $pattern Pattern to filter files
+     * @param int    $mode    Filtering mode OPTIONAL
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct($dir, $pattern, $mode = \RecursiveIteratorIterator::LEAVES_ONLY)
+    public function __construct($dir, $pattern = null, $mode = \RecursiveIteratorIterator::LEAVES_ONLY)
     {
         if (!($this->dir = \Includes\Utils\FileManager::getCanonicalDir($dir))) {
             \Includes\ErrorHandler::fireError('Path "' . $dir . '" is not exists or is not readable.');

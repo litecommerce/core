@@ -14,7 +14,7 @@
  *}
 
 <tr>
-  <td class="FormButton" nowrap="nowrap" height="10">Product Title</td>
-  <td width="10" height="10"></td>
-  <td height="10"><input type="text" size="30" name="substring" value="{getCondition(#substring#):r}"></td>
+  <td class="table-label">Product Title</td>
+  <td style="width:10px;height:10px;"></td>
+  <td style="height:10px;"><input type="text" size="30" name="substring" value="{getCondition(#substring#):r}" /></td>
 </tr>

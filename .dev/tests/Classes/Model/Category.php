@@ -27,7 +27,7 @@ class XLite_Tests_Model_Category extends XLite_Tests_TestCase
         'lpos'        => 100,
         'rpos'        => 200,
         'enabled'     => true,
-        'cleanUrl'   => 'testCategory',
+        'cleanURL'   => 'testCategory',
         'show_title'  => true,
     );
 
@@ -70,10 +70,10 @@ class XLite_Tests_Model_Category extends XLite_Tests_TestCase
         $this->assertEquals(1, count($c->getCategoryProducts()), 'check category products length');
 
         $child = new \XLite\Model\Category;
-        $c->addChilds($child);
+        $c->addChildren($child);
         $child->setParent($c);
-        $this->assertEquals($child, $c->getChilds()->get(0), 'check childs');
-        $this->assertEquals(1, count($c->getChilds()), 'check childs length');
+        $this->assertEquals($child, $c->getChildren()->get(0), 'check childs');
+        $this->assertEquals(1, count($c->getChildren()), 'check childs length');
         $this->assertEquals($c, $child->getParent(), 'check parent');
     }
 
@@ -83,7 +83,7 @@ class XLite_Tests_Model_Category extends XLite_Tests_TestCase
         $c->map($this->categoryData);
 
         $child = new \XLite\Model\Category;
-        $c->addChilds($child);
+        $c->addChildren($child);
         $child->setParent($c);
 
         $this->assertEquals($c, $child->getParent(), 'check parent');
@@ -133,7 +133,7 @@ class XLite_Tests_Model_Category extends XLite_Tests_TestCase
         $this->assertFalse($c->hasSubcategories(), 'check childs #1');
 
         $child = new \XLite\Model\Category;
-        $c->addChilds($child);
+        $c->addChildren($child);
         $child->setParent($c);
 
         $this->assertFalse($c->hasSubcategories(), 'check childs #2');
@@ -157,7 +157,7 @@ class XLite_Tests_Model_Category extends XLite_Tests_TestCase
         $this->assertEquals(0, count($c->getSubcategories()), 'check empty childs');
 
         $child = new \XLite\Model\Category;
-        $c->addChilds($child);
+        $c->addChildren($child);
         $child->setParent($c);
 
         $this->assertEquals(1, count($c->getSubcategories()), 'check childs length');
@@ -169,11 +169,11 @@ class XLite_Tests_Model_Category extends XLite_Tests_TestCase
 
         $c1 = new \XLite\Model\Category();
         $c1->map($this->categoryData);
-        $p->addChilds($c1);
+        $p->addChildren($c1);
 
         $c2 = new \XLite\Model\Category();
         $c2->map($this->categoryData);
-        $p->addChilds($c2);
+        $p->addChildren($c2);
 
         \XLite\Core\Database::getEM()->flush();
 
@@ -191,7 +191,7 @@ class XLite_Tests_Model_Category extends XLite_Tests_TestCase
     {
         $this->query(file_get_contents(__DIR__ . '/Repo/sql/category/setup.sql'));
 
-        $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->find(14016);
+        $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'fruit_1'));
         $this->assertEquals('Fruit/Fruit 2', $c->getStringPath());
     }
 
@@ -200,9 +200,9 @@ class XLite_Tests_Model_Category extends XLite_Tests_TestCase
         $this->query(file_get_contents(__DIR__ . '/Repo/sql/category/setup.sql'));
         \XLite\Core\Database::getEM()->flush();
 
-        $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->find(14015);
+        $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'fruit'));
 
-        $this->assertEquals(6, $c->getProductsCount(), 'check products count (#14015)');
+        $this->assertEquals(6, $c->getProductsCount(), 'check products count (fruit)');
     }
 
     public function testGetProducts()
@@ -210,7 +210,7 @@ class XLite_Tests_Model_Category extends XLite_Tests_TestCase
         $this->query(file_get_contents(__DIR__ . '/Repo/sql/category/setup.sql'));
         \XLite\Core\Database::getEM()->flush();
 
-        $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->find(14015);
+        $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'fruit'));
 
         $list = $c->getProducts();
 

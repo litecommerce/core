@@ -10,13 +10,8 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  * @ListChild (list="itemsList.module.manage.columns", weight="70")
+ * @ListChild (list="itemsList.module.install.columns", weight="70")
  *}
-<td width="60%">
-  <div class="description">
-    {getInstalledProperty(module,#description#)}
-  </div>
-  <div class="module-url">
-    <a href="{module.getPageURL()}" target="_blank">{t(#Visit add-on's page#)}</a>
-  </div>
+<td class="module-description-section">
+  {displayNestedViewListContent(#module-description-section#,_ARRAY_(#module#^module))}
 </td>
-

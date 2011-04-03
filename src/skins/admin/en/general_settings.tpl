@@ -10,11 +10,11 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<form action="admin.php" name="options_form" method="POST" IF="!page=#Environment#">
-  <input type="hidden" name="target" value="{target}">
-  <input type="hidden" name="action" value="update">
-  <input type="hidden" name="page" value="{page}">
-  <input type="hidden" name="moduleId" value="{moduleId}" IF="moduleId">
+<form action="admin.php" name="options_form" method="post" IF="!page=#Environment#">
+  <input type="hidden" name="target" value="{target}" />
+  <input type="hidden" name="action" value="update" />
+  <input type="hidden" name="page" value="{page}" />
+  <input type="hidden" name="moduleId" value="{moduleId}" IF="moduleId" />
 
   <table cellspacing="1" cellpadding="5" class="settings-table">
     {foreach:getOptions(),option}
@@ -23,26 +23,14 @@
           {if:!option.type=#serialized#}
             <td class="setting-name" width="50%">{option.option_name:h}: </td>
           {end:}
-          <td width="50%">
+          <td style="width:50%;">
 
             {if:option.type=#checkbox#}
-              {if:option.name=#captcha_protection_system#}
-                {if:isGDLibLoaded()}
-                  <input id="{option.name}" type="checkbox" name="{option.name}" checked="{option.value=#Y#}" />
-                {else:}
-                  <input id="{option.name}" type="checkbox" name="{option.name}" checked="checked" disabled="disabled" />&nbsp;<font class="ErrorMessage">GDLib isn't detected</font>
-                {end:}
-              {else:}
-                <input id="{option.name}" type="checkbox" name="{option.name}" checked="{option.value=#Y#}" />
-              {end:}
+              <input id="{option.name}" type="checkbox" name="{option.name}" checked="{option.value=#Y#}" />
             {end:}
 
             {if:option.type=#text#}
-              {if:option.name=#captcha_length#}
-                <input id="{option.name}" type="text" name="{option.name}" value="{option.value}" size="5" />&nbsp; (more than 1 and less than 10)
-              {else:}
-                <input id="{option.name}" type="text" name="{option.name}" value="{option.value}" size="30" />
-              {end:}
+              <input id="{option.name}" type="text" name="{option.name}" value="{option.value}" size="30" />
             {end:}
 
             {if:option.type=#country#"}
@@ -80,15 +68,6 @@ function setUnitSymbol(symbol) {
                 <option value="oz" selected="{option.value=#oz#}">OZ</option>
                 <option value="kg" selected="{option.value=#kg#}">KG</option>
                 <option value="g" selected="{option.value=#g#}">G</option>
-              </select>
-            {end:}
-
-            {if:option.name=#httpsClient#}
-              <select name="{option.name}">
-                <option value="autodetect" selected="{option.value=#autodetect#}">Autodetect</option>
-                <option value="libcurl" selected="{option.value=#libcurl#}">CURL PHP extension</option>
-                <option value="curl" selected="{option.value=#curl#}">Curl external application</option>
-                <option value="openssl" selected="{option.value=#openssl#}">OpenSSL external application</option>
               </select>
             {end:}
 
@@ -147,14 +126,6 @@ function setUnitSymbol(symbol) {
               </select>
             {end:}
 
-            {if:option.name=#captcha_type#}
-              <select name="{option.name}">
-                <option value="numbers" selected="{option.value=#numbers#}">Numbers only</option>
-                <option value="letters" selected="{option.value=#letters#}">Letters only</option>
-                <option value="all" selected="{option.value=#all#}">Numbers and letters</option>
-              </select>
-            {end:}
-
             {if:option.name=#clear_cc_info#}
               <select name="{option.name}">
                 <option value="N" selected="{option.value=#N#}">No</option>    
@@ -181,7 +152,7 @@ function setUnitSymbol(symbol) {
                 {end:}
               </select>
             {end:}
-
+            
             <widget class="\XLite\View\ModulesManager\Settings" section="{page}" option="{option}" />
 
             {displayViewListContent(#general_settings.general.parts#,_ARRAY_(#page#^page,#option#^option))}
@@ -197,22 +168,12 @@ function setUnitSymbol(symbol) {
 
     {end:}
 
-    {if:page=#Captcha#}
-      <tr FOREACH="enabledCaptchaPages,widget_id,v">
-        {if:widget_id=#on_register#}<td align=right width="50%">On Registration page: </td>{end:}
-        {if:widget_id=#on_contactus#}<td align=right width="50%">On Contact us page: </td>{end:}
-        {if:widget_id=#on_add_giftcert#}<td align=right width="50%">On Add Gift Certificate page: </td>{end:}
-        {if:widget_id=#on_partner_register#}<td align=right width="50%">On Registration partner page: </td>{end:}
-        <td width="50%"><input type="checkbox" name="active_captcha_pages[{widget_id}]" {if:isActiveCaptchaPage(widget_id)}checked="1"{end:} /></td>
-      </tr>
-    {end:}
-
     {if:!page=#Environment#}
         <tr>
           <td colspan="2">&nbsp;</td>
         </tr>
         <tr>
-          <td ><input type="submit" value="Submit" /></td>
+          <td><widget class="\XLite\View\Button\Submit" label="Submit" /></td>
           <td>&nbsp;</td>
         </tr>
     {end:}
@@ -221,6 +182,27 @@ function setUnitSymbol(symbol) {
 </form>
 
 {if:page=#Security#}
+
+<h2>{t(#Safe mode#)}</h2>
+
+<table cellspacing="1" cellpadding="5" class="settings-table">
+<tr>
+  <td>{t(#Safe mode access key#)}:</td>
+  <td><strong>{getSafeModeKey()}</strong></td>
+</tr>
+<tr>
+  <td>{t(#Hard reset URL (disables all modules and runs application)#)}:</td>
+  <td>{getHardResetURL()}</td>
+</tr>
+<tr>
+  <td>{t(#Soft reset URL (disables only unsafe modules and runs application)#)}:</td>
+  <td>{getSoftResetURL()}</td>
+</tr>
+</table>
+<widget class="\XLite\View\Button\Regular" label="Re-generate access key" jsCode="self.location='{buildURL(#settings#,#safe_mode_key_regen#)}'" />
+<p>{t(#New access key will be also sent to the Site administrator email address#)}</p>
+
+<h2>{t(#HTTPS check#)}</h2>
 
 <script type="text/javascript">
 <!--
@@ -236,7 +218,7 @@ function https_checkbox_click()
         document.options_form.customer_security.checked = false;
         document.options_form.full_customer_security.disabled = true;
         document.options_form.admin_security.checked = false;
-        document.getElementById("httpsErrorMessage").style.cssText = "";
+        document.getElementById("httpserror-message").style.cssText = "";
         alert("No HTTPS is available. See the red message below.");
     }
     if (document.options_form.customer_security.checked == false) {
@@ -260,8 +242,8 @@ function enableHTTPS()
     document.options_form.full_customer_security.checked = full_customer_security_value;
     document.options_form.admin_security.checked = admin_security_value;
 
-    document.getElementById("httpsErrorMessage").style.cssText = "";
-    document.getElementById("httpsErrorMessage").innerHTML = "<font class='SuccessMessage'>Success</font>";
+    document.getElementById("httpserror-message").style.cssText = "";
+    document.getElementById("httpserror-message").innerHTML = "<span class='success-message'>Success</span>";
 }
 
 document.options_form.customer_security.checked = false;
@@ -275,9 +257,9 @@ document.options_form.admin_security.onclick = https_checkbox_click;
 </script>
 
   {* Check if https is available *}
-  Trying to access the shop at <a href="{getShopUrl(#cart.php#,#1#)}">{getShopUrl(#cart.php#,#1#)}</a> ...
-  <span id="httpsErrorMessage" style="visibility:hidden">
-    <p class="ErrorMessage"><b>FAILED.</b> Secure connection cannot be established.</p>
+  Trying to access the shop at <a href="{getShopURL(#cart.php#,#1#)}">{getShopURL(#cart.php#,#1#)}</a> ...
+  <span id="httpserror-message" style="visibility:hidden">
+    <p class="error-message"><b>FAILED.</b> Secure connection cannot be established.</p>
     To fix this problem, do the following:
     <ul>
       <li> make sure that your hosting service provider has HTTPS protocol enabled;
@@ -286,30 +268,14 @@ document.options_form.admin_security.onclick = https_checkbox_click;
     </ul>
   </span>
 
-  <script type="text/javascript" src="{getShopUrl(#https_check.php#,#1#)}"></script>
+  <script type="text/javascript" src="{getShopURL(#https_check.php#,#1#)}"></script>
 <script>
 <!--
 if (!httpsEnabled) {
-    document.getElementById("httpsErrorMessage").style.cssText = "";
+    document.getElementById("httpserror-message").style.cssText = "";
 }
 -->
 </script>
-
-  <br />
-  <br />
-  <p>Trying to perform a background HTTPS request ...</p>
-  {if:check_https(config.Security.httpsClient)=#1#}
-    <p class="ErrorMessage"><b>FAILED.</b> Secure connection cannot be established.</p>
-    To fix this problem, do the following:</p>
-    <ul>
-      <li> make sure that your hosting service provider has the HTTPS client installed and configured;
-      <li> select this HTTPS client in the "HTTPS client to use" drop-down box above;
-      <li> click the "Submit" button.
-      <li IF="openBasedirRestriction">Curl or OpenSSl executable path: LiteCommerce attempted to find Curl or OpenSSL executable in your system automatically. Your hosting provider might need to remove the open_basedir restriction for this directory path.</li>
-    </ul>
-  {else:}
-    <font class='SuccessMessage'>Success</font>
-  {end:}
 
 {end:}
 

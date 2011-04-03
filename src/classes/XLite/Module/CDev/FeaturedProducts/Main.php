@@ -60,9 +60,9 @@ abstract class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getVersion()
+    public static function getMinorVersion()
     {
-        return '1.0';
+        return '0';
     }
 
     /**
@@ -114,6 +114,8 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getPostInstallationNotes()
     {
-        return '<b>Tip:</b> To create featured products, go to <a href="admin.php?target=categories&category_id=0">Catalog > Categories</a> menu and add featured product in the bottom form.';
+        return '<b>Tip:</b> To create featured products, '
+            . 'go to <a href="admin.php?target=categories">Catalog > '
+            . 'Categories</a> menu and add featured product in the bottom form.';
     }
 }

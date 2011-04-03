@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core;
@@ -31,9 +31,8 @@ namespace XLite\Core;
 /**
  * Top message
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class TopMessage extends \XLite\Base\Singleton
 {
@@ -56,10 +55,9 @@ class TopMessage extends \XLite\Base\Singleton
     /**
      * Types list
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $types = array(
         self::INFO,
@@ -70,25 +68,61 @@ class TopMessage extends \XLite\Base\Singleton
     /**
      * Current messages 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $messages = array();
 
+
     /**
-     * Constructor
+     * Add information-type message with additional translation arguments
      * 
-     * @return void
-     * @access protected
+     * @param string $text      Label name
+     * @param array  $arguments Substitution arguments OPTIONAL
+     * @param string $code      Language code OPTIONAL
+     *  
+     * @return boolean
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function __construct()
+    public static function addInfo($text, array $arguments = array(), $code = null)
     {
-        $this->messages = $this->getMessages();
+        static::getInstance()->add(static::t($text, $arguments, $code), self::INFO, true);
     }
+
+    /**
+     * Add warning-type message with additional translation arguments
+     * 
+     * @param string $text      Label name
+     * @param array  $arguments Substitution arguments OPTIONAL
+     * @param string $code      Language code OPTIONAL
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function addWarning($text, array $arguments = array(), $code = null)
+    {
+        static::getInstance()->add(static::t($text, $arguments, $code), self::WARNING, true);
+    }
+
+    /**
+     * Add error-type message with additional translation arguments
+     * 
+     * @param string $text      Label name
+     * @param array  $arguments Substitution arguments OPTIONAL
+     * @param string $code      Language code OPTIONAL
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function addError($text, array $arguments = array(), $code = null)
+    {
+        static::getInstance()->add(static::t($text, $arguments, $code), self::ERROR, true);
+    }
+
 
     /**
      * Add message
@@ -98,7 +132,6 @@ class TopMessage extends \XLite\Base\Singleton
      * @param boolean $rawText Preprocessing text flag OPTIONAL
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -136,64 +169,12 @@ class TopMessage extends \XLite\Base\Singleton
     }
 
     /**
-     * Add information-type message with additional translation arguments
-     * 
-     * @param string $text      Label name
-     * @param array  $arguments Substitution arguments
-     * @param string $code      Language code OPTIONAL
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function addInfo($text, array $arguments = array(), $code = null)
-    {
-        static::getInstance()->add(static::t($text, $arguments, $code), self::INFO, true);
-    }
-
-    /**
-     * Add warning-type message with additional translation arguments
-     * 
-     * @param string $text      Label name
-     * @param array  $arguments Substitution arguments
-     * @param string $code      Language code OPTIONAL
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function addWarning($text, array $arguments = array(), $code = null)
-    {
-        static::getInstance()->add(static::t($text, $arguments, $code), self::WARNING, true);
-    }
-
-    /**
-     * Add error-type message with additional translation arguments
-     * 
-     * @param string $text      Label name
-     * @param array  $arguments Substitution arguments
-     * @param string $code      Language code OPTIONAL
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function addError($text, array $arguments = array(), $code = null)
-    {
-        static::getInstance()->add(static::t($text, $arguments, $code), self::ERROR, true);
-    }
-
-    /**
      * Add messages
      * 
      * @param array  $messages Message texts
      * @param string $type     Message type OPTIONAL
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -212,7 +193,6 @@ class TopMessage extends \XLite\Base\Singleton
      * Get messages 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -231,7 +211,6 @@ class TopMessage extends \XLite\Base\Singleton
      * Get previous messages 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -244,7 +223,6 @@ class TopMessage extends \XLite\Base\Singleton
      * Unload previous messages 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -261,12 +239,24 @@ class TopMessage extends \XLite\Base\Singleton
      * Clear list
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function clear()
     {
         \XLite\Core\Session::getInstance()->topMessages = array();
+    }
+
+
+    /**
+     * Constructor
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function __construct()
+    {
+        $this->messages = $this->getMessages();
     }
 }

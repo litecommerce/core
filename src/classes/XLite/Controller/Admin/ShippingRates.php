@@ -14,47 +14,44 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
 
 /**
- * ____description____
+ * Shipping rates page controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class ShippingRates extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Common method to determine current location
+     * Return the current page title (for the content area)
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getLocation()
+    public function getTitle()
     {
-        return 'Shipping rates';
+        return $this->t('Shipping rates');
     }
 
     /**
      * handleRequest 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -68,13 +65,138 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Do action 'Add'
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionAdd()
+    {
+        $postedData = \XLite\Core\Request::getInstance()->getData();
+
+        $data = $this->prepareData($postedData['new'], true);
+
+        if (is_array($data)) {
+
+            $newMarkup = new \XLite\Model\Shipping\Markup();
+
+            $newMarkup->map($data);
+
+            \XLite\Core\Database::getEM()->persist($newMarkup);
+            \XLite\Core\Database::getEM()->flush();
+
+            \XLite\Core\TopMessage::addInfo('Shipping markup is successfully created');
+        }
+    }
+
+    /**
+     * doActionUpdate 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdate()
+    {
+        $postedData = \XLite\Core\Request::getInstance()->getData();
+
+        if (isset($postedData['posted_data']) && is_array($postedData['posted_data'])) {
+
+            foreach ($postedData['posted_data'] as $markupId => $values) {
+
+                $values = $this->prepareData($values);
+
+                if (is_array($values)) {
+                    $data[$markupId] = $values;
+                }
+            }
+
+            $markupIds = array_keys($data);
+
+            $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->findMarkupsByIds($markupIds);
+
+            if (!empty($markups)) {
+
+                foreach ($markups as $markup) {
+                    $markup->map($data[$markup->getMarkupId()]);
+                    \XLite\Core\Database::getEM()->persist($markup);
+                }
+
+                \XLite\Core\Database::getEM()->flush();
+
+                \XLite\Core\TopMessage::addInfo('Shipping markups have been updated');
+            }
+        }
+
+        $this->redirect($this->getRedirectURL());
+    }
+
+    /**
+     * doActionDelete 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDelete()
+    {
+        $postedData = \XLite\Core\Request::getInstance()->getData();
+
+        if (isset($postedData['to_delete']) && is_array($postedData['to_delete'])) {
+
+            $markupIds = array_keys($postedData['to_delete']);
+
+            $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->findMarkupsByIds($markupIds);
+
+            if (!empty($markups)) {
+
+                foreach ($markups as $markup) {
+                    \XLite\Core\Database::getEM()->remove($markup);
+                }
+
+                \XLite\Core\Database::getEM()->flush();
+                \XLite\Core\Database::getEM()->clear();
+
+                \XLite\Core\TopMessage::addInfo('The selected shipping markups have been deleted successfully');
+            }
+        }
+
+        $this->redirect($this->getRedirectURL());
+    }
+
+    /**
+     * Do action 'change'
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionChange()
+    {
+        $this->redirect($this->getRedirectURL());
+    }
+
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Shipping rates';
+    }
+
+    /**
      * Validates and prepares posted data for markup objects
      * 
-     * @param array $data  Array of posted data
-     * @param boolean  $isNew If true then prepares data for creating a new markup  OPTIONAL
+     * @param array   $data  Array of posted data
+     * @param boolean $isNew If true then prepares data for creating a new markup  OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -161,140 +283,13 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Do action 'Add'
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function doActionAdd()
-    {
-        $postedData = \XLite\Core\Request::getInstance()->getData();
-
-        $data = $this->prepareData($postedData['new'], true);
-
-        if (is_array($data)) {
-
-            $newMarkup = new \XLite\Model\Shipping\Markup();
-
-            $newMarkup->map($data);
-
-            \XLite\Core\Database::getEM()->persist($newMarkup);
-            \XLite\Core\Database::getEM()->flush();
-
-            \XLite\Core\TopMessage::getInstance()->add(
-                $this->t('Shipping markup is successfully created'),
-                \XLite\Core\TopMessage::INFO
-            );
-        }
-    }
-
-    /**
-     * doActionUpdate 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function doActionUpdate()
-    {
-        $postedData = \XLite\Core\Request::getInstance()->getData();
-
-        if (isset($postedData['posted_data']) && is_array($postedData['posted_data'])) {
-
-            foreach ($postedData['posted_data'] as $markupId => $values) {
-
-                $values = $this->prepareData($values);
-
-                if (is_array($values)) {
-                    $data[$markupId] = $values;
-                }
-            }
-
-            $markupIds = array_keys($data);
-
-            $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->findMarkupsByIds($markupIds);
-
-            if (!empty($markups)) {
-
-                foreach ($markups as $markup) {
-                    $markup->map($data[$markup->getMarkupId()]);
-                    \XLite\Core\Database::getEM()->persist($markup);
-                }
-
-                \XLite\Core\Database::getEM()->flush();
-
-                \XLite\Core\TopMessage::getInstance()->add(
-                    $this->t('Shipping markups have been updated'),
-                    \XLite\Core\TopMessage::INFO
-                );
-            }
-        }
-
-        $this->redirect($this->getRedirectUrl());
-    }
-
-    /**
-     * doActionDelete 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function doActionDelete()
-    {
-        $postedData = \XLite\Core\Request::getInstance()->getData();
-
-        if (isset($postedData['to_delete']) && is_array($postedData['to_delete'])) {
-
-            $markupIds = array_keys($postedData['to_delete']);
-
-            $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->findMarkupsByIds($markupIds);
-
-            if (!empty($markups)) {
-
-                foreach ($markups as $markup) {
-                    \XLite\Core\Database::getEM()->remove($markup);
-                }
-
-                \XLite\Core\Database::getEM()->flush();
-                \XLite\Core\Database::getEM()->clear();
-
-                \XLite\Core\TopMessage::getInstance()->add(
-                    $this->t('The selected shipping markups have been deleted successfully'),
-                    \XLite\Core\TopMessage::INFO
-                );
-            }
-        }
-
-        $this->redirect($this->getRedirectUrl());
-    }
-
-    /**
-     * Do action 'change'
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function doActionChange()
-    {
-        $this->redirect($this->getRedirectUrl());
-    }
-
-    /**
      * Generates redirect Url 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getRedirectUrl()
+    protected function getRedirectURL()
     {
         $params = array();
 
@@ -316,5 +311,4 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
 
         return $redirect;
     }
-
 }

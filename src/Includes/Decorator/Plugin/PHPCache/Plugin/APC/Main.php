@@ -38,15 +38,17 @@ namespace Includes\Decorator\Plugin\PHPCache\Plugin\APC;
 class Main extends \Includes\Decorator\Plugin\PHPCache\Plugin\APlugin
 {
     /**
-     * Execute "run" hook handler
+     * Execute certain hook handle
      * 
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function executeHookHandlerRun()
+    public function executeHookHandlerStepSecond()
     {
-        !function_exists('apc_clear_cache') ?: apc_clear_cache();
+        if (function_exists('apc_clear_cache')) {
+            apc_clear_cache();
+        }
     }
 }

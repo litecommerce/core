@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite;
@@ -31,59 +31,53 @@ namespace XLite;
 /**
  * Logger 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Logger extends \XLite\Base\Singleton
 {
     /**
      * Security file header 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $securityHeader = '<?php die(1); ?>';
 
     /**
      * Hash errors 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $hashErrors = array();
 
     /**
      * Errors translate table (PHP -> PEAR)
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $errorsTranslate = null;
 
     /**
      * PHP error names 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $errorTypes = null;
 
     /**
      * Options 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $options = array(
         'type'  => null,
@@ -95,24 +89,35 @@ class Logger extends \XLite\Base\Singleton
     /**
      * Mark templates flag
      * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $markTemplates = false;
+
+
+    /**
+     * Check - display debug templates info or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function isMarkTemplates()
+    {
+        return self::$markTemplates;
+    }
 
     /**
      * Constructor
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function __construct()
     {
-        require_once LC_LIB_DIR . 'Log.php';
+        include_once LC_LIB_DIR . 'Log.php';
 
         $this->options = array_merge(
             $this->options,
@@ -120,7 +125,7 @@ class Logger extends \XLite\Base\Singleton
         );
 
         set_error_handler(array($this, 'registerPHPError'));
-        set_exception_handler(array($this, 'registerException'));
+        // set_exception_handler(array($this, 'registerException'));
 
         // Default log path
         $path = $this->getErrorLogPath();
@@ -174,7 +179,6 @@ class Logger extends \XLite\Base\Singleton
      * @param array  $trace   Back trace OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -218,103 +222,6 @@ class Logger extends \XLite\Base\Singleton
     }
 
     /**
-     * Get log type 
-     * 
-     * @return mixed
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getType()
-    {
-        return $this->options['type'];
-    }
-
-    /**
-     * Get logger name 
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getName()
-    {
-        $result = $this->options['name'];
-
-        if ('file' == $this->getType()) {
-            $dir = dirname($result);
-            $file = basename($result);
-            $parts = explode('.', $file);
-            array_splice($parts, count($parts) - 1, 0, date('Y-m-d'));
-            $result = $dir . LC_DS . implode('.', $parts);
-            if (!preg_match('/\.php$/Ss', $result)) {
-                $result .= '.php';
-            }
-
-            $this->checkLogSecurityHeader($result);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get logger identtificator 
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getIdent()
-    {
-        return $this->options['ident'];
-    }
-
-    /**
-     * Get back trace list
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getBackTrace()
-    {
-        return \XLite\Core\Operator::getInstance()->getBackTrace(2);
-    }
-
-    /**
-     * Prepare back trace 
-     * 
-     * @param array $trace Back trace raw data
-     *  
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function prepareBackTrace(array $trace)
-    {
-        return \XLite\Core\Operator::getInstance()->prepareBackTrace($trace);
-    }
-
-    /**
-     * Detect class name by object
-     * 
-     * @param object $obj Object
-     *  
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function detectClassName($obj)
-    {
-        return is_object($obj) ? get_class($obj) : strval($obj);
-    }
-
-    /**
      * Register PHP error 
      * 
      * @param integer $errno   Error code
@@ -323,7 +230,6 @@ class Logger extends \XLite\Base\Singleton
      * @param integer $errline Line number
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -374,7 +280,6 @@ class Logger extends \XLite\Base\Singleton
      * @param \Exception $exception Exception
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -410,13 +315,104 @@ class Logger extends \XLite\Base\Singleton
         }
     }
 
+
+    /**
+     * Get log type 
+     * 
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getType()
+    {
+        return $this->options['type'];
+    }
+
+    /**
+     * Get logger name 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getName()
+    {
+        $result = $this->options['name'];
+
+        if ('file' == $this->getType()) {
+            $dir = dirname($result);
+            $file = basename($result);
+            $parts = explode('.', $file);
+            array_splice($parts, count($parts) - 1, 0, date('Y-m-d'));
+            $result = $dir . LC_DS . implode('.', $parts);
+            if (!preg_match('/\.php$/Ss', $result)) {
+                $result .= '.php';
+            }
+
+            $this->checkLogSecurityHeader($result);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get logger identtificator 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getIdent()
+    {
+        return $this->options['ident'];
+    }
+
+    /**
+     * Get back trace list
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getBackTrace()
+    {
+        return \XLite\Core\Operator::getInstance()->getBackTrace(2);
+    }
+
+    /**
+     * Prepare back trace 
+     * 
+     * @param array $trace Back trace raw data
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareBackTrace(array $trace)
+    {
+        return \XLite\Core\Operator::getInstance()->prepareBackTrace($trace);
+    }
+
+    /**
+     * Detect class name by object
+     * 
+     * @param object $obj Object
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function detectClassName($obj)
+    {
+        return is_object($obj) ? get_class($obj) : strval($obj);
+    }
+
     /**
      * Convert PHP error code to PEAR error code
      * 
      * @param integer $errno PHP error code
      *  
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -455,7 +451,6 @@ class Logger extends \XLite\Base\Singleton
      * @param integer $errno PHP error code
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -491,7 +486,6 @@ class Logger extends \XLite\Base\Singleton
      * Get rrror log path 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -506,7 +500,6 @@ class Logger extends \XLite\Base\Singleton
      * @param string $path File path
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -519,18 +512,5 @@ class Logger extends \XLite\Base\Singleton
         if (!file_exists($path) || $this->securityHeader > filesize($path)) {
             file_put_contents($path, $this->securityHeader . "\n");
         }
-    }
-
-    /**
-     * Check - display debug templates info or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function isMarkTemplates()
-    {
-        return self::$markTemplates;
     }
 }

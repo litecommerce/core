@@ -14,40 +14,123 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
 
 /**
- * ____description____
+ * Category page controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
-class Category extends \XLite\Controller\Admin\Catalog
+class Category extends \XLite\Controller\Admin\Base\Catalog
 {
+    /**
+     * Default tabber page
+     * TODO: make it protected
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    public $page = 'category_modify';
+
+    /**
+     * Tabber pages titles
+     * TODO: make it protected
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    public $pages = array(
+        'category_modify' => 'Add/Modify category',
+    );
+
+    /**
+     * Tabber pages templates
+     * TODO: make it protected
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    public $pageTemplates = array(
+        'category_modify' => 'categories/add_modify_body.tpl',
+    );
+
+
+    /**
+     * Controller initialization
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function init()
+    {
+        parent::init();
+
+        if ('add' != $this->mode && 'modify' == $this->mode) {
+            $this->pages['category_modify'] = $this->t('Modify category');
+
+        } else {
+            $this->pages['category_modify'] = $this->t('Add new category');
+        }
+    }
+
+    /**
+     * Return current (or default) category object
+     *
+     * @return \XLite\Model\Category
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCategory()
+    {
+        return ('add_child' === \XLite\Core\Request::getInstance()->mode) 
+            ? new \XLite\Model\Category()
+            : parent::getCategory();
+    }
+
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return ('add_child' === \XLite\Core\Request::getInstance()->mode) 
+            ? $this->t('Add category')
+            : parent::getCategory()->getName();
+    }
+
+
     /**
      * Common method to determine current location 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getLocation()
     {
-        return 'Details';
+        return ('add_child' === \XLite\Core\Request::getInstance()->mode) 
+            ? $this->t('Add category')
+            : $this->t('Details');
     }
 
     /**
@@ -56,7 +139,6 @@ class Category extends \XLite\Controller\Admin\Catalog
      * @param integer $categoryId Image category ID OPTIONAL
      *
      * @return \XLite\Model\Image\Category\Image
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -75,7 +157,7 @@ class Category extends \XLite\Controller\Admin\Catalog
         }   
 
         if ($img->loadFromRequest('postedData', 'image')) {
-            if (!$img->getCategory())  {
+            if (!$img->getCategory()) {
                 $img->setCategory($category);
                 $category->setImage($img);
                 \XLite\Core\Database::getEM()->persist($img);
@@ -89,7 +171,6 @@ class Category extends \XLite\Controller\Admin\Catalog
      * doActionAddChild 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -101,7 +182,7 @@ class Category extends \XLite\Controller\Admin\Catalog
 
             $this->saveImage($category->getCategoryId());
 
-            $this->setReturnUrl($this->buildURL('categories', '', array('category_id' => $category->getCategoryId())));
+            $this->setReturnURL($this->buildURL('categories', '', array('category_id' => $category->getCategoryId())));
         }
     }
 
@@ -109,7 +190,6 @@ class Category extends \XLite\Controller\Admin\Catalog
      * doActionModify 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -122,50 +202,7 @@ class Category extends \XLite\Controller\Admin\Catalog
             \XLite\Core\Database::getRepo('XLite\Model\Category')
                 ->updateById($properties['category_id'], $properties);
 
-            $this->setReturnUrl($this->buildURL('categories', '', array('category_id' => $properties['category_id'])));
-        }
-    }
-
-
-    /**
-     * Return current (or default) category object
-     *
-     * @return \XLite\Model\Category
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function getCategory()
-    {
-        return ('add_child' === \XLite\Core\Request::getInstance()->mode) 
-            ? new \XLite\Model\Category()
-            : parent::getCategory();
-    }
-
-
-
-    // FIXME - must be revised
-
-    public $page = "category_modify";
-
-    public $pages = array(
-        "category_modify" => "Add/Modify category",
-    );
-
-    public $pageTemplates = array(
-        "category_modify" => "categories/add_modify_body.tpl",
-    );
-
-    public $params = array('target', 'category_id', 'mode', 'message', 'page');
-    public $order_by = 0;
-
-    function init()
-    {
-        parent::init();
-
-        if ($this->mode != "add" && $this->mode == "modify") {
-            $this->pages['category_modify'] = "Modify category";
-        } else {
-            $this->pages['category_modify'] = "Add new category";
+            $this->setReturnURL($this->buildURL('categories', '', array('category_id' => $properties['category_id'])));
         }
     }
 
@@ -175,7 +212,6 @@ class Category extends \XLite\Controller\Admin\Catalog
      * @param boolean $isNewObject Flag - is a data for a new category or for updaing existing category OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -213,32 +249,33 @@ class Category extends \XLite\Controller\Admin\Catalog
 
                 $data['clean_url'] = $this->sanitizeCleanURL($data['clean_url']);
 
-                if (!empty($data['clean_url']) && !$this->isCleanURLUnique($data['clean_url'], (!$isNewObject ? $data['category_id'] : null))) {
+                if (
+                    !empty($data['clean_url']) 
+                    && !$this->isCleanURLUnique($data['clean_url'], (!$isNewObject ? $data['category_id'] : null))
+                ) {
 
-                    \XLite\Core\TopMessage::getInstance()->add(
-                        'The Clean URL you specified is already in use. Please specify another Clean URL',
-                        \XLite\Core\TopMessage::ERROR
+                    \XLite\Core\TopMessage::addError(
+                        'The Clean URL you specified is already in use. Please specify another Clean URL'
                     );
 
                     $isValid = false;
                 }
 
-            // 'Name' is a mandatory field
             } elseif ('name' === $field) {
+                // 'Name' is a mandatory field
 
                 if (!isset ($data['name']) || 0 == strlen(trim($data['name']))) {
 
-                    \XLite\Core\TopMessage::getInstance()->add(
-                        'Not empty category name must be specified',
-                        \XLite\Core\TopMessage::ERROR
+                    \XLite\Core\TopMessage::addError(
+                        'Not empty category name must be specified'
                     );
 
                     $isValid = false;
                 }
 
-            // 'Enabled' field value must be either 0 or 1
             } elseif ('enabled' === $field) {
-                $data['enabled'] = isset($data['enabled']) && $data['enabled'] == '1' ? 1 : 0;
+                // 'Enabled' field value must be either 0 or 1
+                $data['enabled'] = ((isset($data['enabled']) && $data['enabled'] == '1') ? 1 : 0);
             }
         }
 
@@ -248,38 +285,18 @@ class Category extends \XLite\Controller\Admin\Catalog
     /**
      * Check - specified clean URL unique or not
      * 
-     * @param string $cleanURL Clean URL
+     * @param string  $cleanURL   Clean URL
+     * @param integer $categoryId Category Id OPTIONAL
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isCleanURLUnique($cleanURL, $categoryId = null)
     {
-        $result = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneByCleanUrl($cleanURL);
+        $result = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneByCleanURL($cleanURL);
 
-        return !isset($result) || (!is_null($categoryId) && intval($categoryId ) == intval($result->getCategoryId()));
-    }
-
-    function action_icon()
-    {
-        $category = $this->get('category');
-        // delete category image
-        $image = $category->get('image');
-        $image->handleRequest();
-    }
-
-    function action_add_field()
-    {
-        $_postData = \XLite\Core\Request::getInstance()->getData();
-        foreach ($_postData as $post_key => $post_value)
-        {
-            if (strcmp(substr($post_key, 0, 7), "add_ef_") == 0)
-            {
-                $_postData[substr($post_key, 7)] = $post_value;
-                unset($_postData[$post_key]);
-            }
-        }
+        return !isset($result)
+            || (!is_null($categoryId) && intval($categoryId) == intval($result->getCategoryId()));
     }
 }

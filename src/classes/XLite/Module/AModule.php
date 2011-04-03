@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Module;
@@ -31,18 +31,17 @@ namespace XLite\Module;
 /**
  * Module
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AModule
 {
-   /**
+    /**
      * Method to initialize concrete module instance
      *
      * @return void
-     * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public static function init()
     {
@@ -52,9 +51,9 @@ abstract class AModule
      * Return module name
      * 
      * @return string
-     * @access protected
+     * @throws \Exception
      * @see    ____func_see____
-     * @since  3.0
+     * @since  3.0.0
      */
     public static function getModuleName()
     {
@@ -65,9 +64,9 @@ abstract class AModule
      * Return author full name
      * 
      * @return string
-     * @access protected
+     * @throws \Exception
      * @see    ____func_see____
-     * @since  3.0
+     * @since  3.0.0
      */
     public static function getAuthorName()
     {
@@ -75,25 +74,12 @@ abstract class AModule
     }
 
     /**
-     * Return module version
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0
-     */
-    public static function getVersion()
-    {
-        throw new \Exception('Version is not specified for the ' . $this->getName() . ' add-on');
-    }
-
-    /**
      * Return module description 
      * 
      * @return string
-     * @access public
+     * @throws \Exception
      * @see    ____func_see____
-     * @since  3.0
+     * @since  3.0.0
      */
     public static function getDescription()
     {
@@ -101,12 +87,47 @@ abstract class AModule
     }
 
     /**
+     * Return URL for module icon
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getIconURL()
+    {
+        return null;
+    }
+
+    /**
+     * Return link to the module author page
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAuthorPageURL()
+    {
+        return null;
+    }
+
+    /**
+     * Return link to the module page
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getPageURL()
+    {
+        return null;
+    }
+
+    /**
      * Determines if we need to show settings form link
      * 
      * @return boolean 
-     * @access public
      * @see    ____func_see____
-     * @since  3.0
+     * @since  3.0.0
      */
     public static function showSettingsForm()
     {
@@ -114,12 +135,11 @@ abstract class AModule
     }
 
     /**
-     * Return link to settings form.
+     * Return link to settings form
      * 
-     * @return mixed
-     * @access public
+     * @return string
      * @see    ____func_see____
-     * @since  3.0
+     * @since  3.0.0
      */
     public static function getSettingsForm()
     {
@@ -130,9 +150,8 @@ abstract class AModule
      * Return module dependencies
      *
      * @return array
-     * @access public
      * @see    ____func_see____
-     * @since  3.0
+     * @since  3.0.0
      */
     public static function getDependencies()
     {
@@ -143,7 +162,6 @@ abstract class AModule
      * Get post-installation user notes
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -156,7 +174,6 @@ abstract class AModule
      * Get post-deinstallation user notes
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -166,23 +183,9 @@ abstract class AModule
     }
 
     /**
-     * Check module
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function check()
-    {
-        return true;
-    }
-
-    /**
      * Custom installation routine
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -195,7 +198,6 @@ abstract class AModule
      * Custom deinstallation routine
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -208,7 +210,6 @@ abstract class AModule
      * Custom wake-up (enable) module routine
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -221,7 +222,6 @@ abstract class AModule
      * Custom sleep (disable) module routine
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -236,7 +236,6 @@ abstract class AModule
      * @param \XLite\Model\Module $module Module
      *  
      * @return array|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -245,13 +244,53 @@ abstract class AModule
         return null;
     }
 
+    // {{{ Module versions
+
+    /**
+     * Get module version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getVersion()
+    {
+        return \Includes\Utils\Converter::composeVersion(static::getMajorVersion(), static::getMinorVersion());
+    }
+
+    /**
+     * Get module major version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getMajorVersion()
+    {
+        return \XLite::getInstance()->getMajorVersion();
+    }
+
+    /**
+     * Get module minor version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getMinorVersion()
+    {
+        \Includes\ErrorHandler::fireError('Abstract method call: ' . __METHOD__);
+    }
+
+    // }}}
+
     /**
      * Return module name by class name
      * 
      * @return string
-     * @access protected
+     * @throws \Exception
      * @see    ____func_see____
-     * @since  3.0
+     * @since  3.0.0
      */
     protected static function getModuleCode()
     {
@@ -261,21 +300,4 @@ abstract class AModule
 
         return $matches[1];
     }
-
-    /**
-     * Adds layout template file for the specified widget
-     * 
-     * @param string $widgetName   The widget name
-     * @param string $templateName The template file name
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function addLayout($widgetName, $templateName)
-    {
-        \XLite\Model\Layout::getInstance()->addLayout($widgetName, $templateName);
-    }
-
 }

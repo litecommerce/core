@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -33,20 +33,37 @@ namespace XLite\Model;
  * TODO[SINGLETON] - must extends the Base\Singleton
  * NOTE - check the "factory.<name>" tags in templates
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Factory extends \XLite\Base
 {
     /**
+     * Create object instance and pass arguments to it contructor (if needed)
+     * 
+     * @param string $class Class name
+     * @param array  $args  Constructor arguments OPTIONAL
+     *  
+     * @return \XLite\Base
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function create($class, array $args = array())
+    {
+        $handler = new \ReflectionClass($class);
+
+        return self::isSingleton($handler) ? self::getSingleton($class) : self::createObject($handler, $args);
+    }
+    
+    
+    /**
      * Check if class is a singleton 
      * FIXME - must be revised or removed
      * 
-     * @param ReflectionClass $handler Class descriptor
+     * @param \ReflectionClass $handler Class descriptor
      *  
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected static function isSingleton(\ReflectionClass $handler)
@@ -60,7 +77,7 @@ class Factory extends \XLite\Base
      * @param string $class Class name
      *
      * @return \XLite\Base
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected static function getSingleton($class)
@@ -71,11 +88,11 @@ class Factory extends \XLite\Base
     /**
      * Create new object
      * 
-     * @param ReflectionClass $handler Class descriptor
-     * @param array           $args    Constructor params
+     * @param \ReflectionClass $handler Class descriptor
+     * @param array            $args    Constructor params OPTIONAL
      *  
      * @return \XLite\Base
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected static function createObject(\ReflectionClass $handler, array $args = array())
@@ -90,28 +107,11 @@ class Factory extends \XLite\Base
      * @param string $name Class name
      *  
      * @return \XLite\Base
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function __get($name)
     {
         return self::create($name);
-    }
-
-    /**
-     * Create object instance and pass arguments to it contructor (if needed)
-     * 
-     * @param string $class Class name
-     * @param array  $args  Constructor arguments
-     *  
-     * @return \XLite\Base
-     * @access public
-     * @since  3.0.0
-     */
-    public static function create($class, array $args = array())
-    {
-        $handler = new \ReflectionClass($class);
-
-        return self::isSingleton($handler) ? self::getSingleton($class) : self::createObject($handler, $args);
     }
 }

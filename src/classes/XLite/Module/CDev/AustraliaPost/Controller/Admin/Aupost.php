@@ -51,6 +51,18 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
     }
 
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'AustraliaPost settings';
+    }
+
+    /**
      * getOptionsCategory 
      * 
      * @return string
@@ -125,7 +137,7 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
 
             $startTime = microtime(true);
 
-            $rates = $aupost->getRates($data, true);
+            $rates = $aupost->getRatesByArray($data, true);
 
             $proceedTime = microtime(true) - $startTime;
 
@@ -162,7 +174,7 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
 
             ob_start();
 
-            echo "API URL: " . $aupost->getApiUrl() . "\n\n";
+            echo "API URL: " . $aupost->getApiURL() . "\n\n";
 
             foreach ($cmLog as $log) {
                 print_r($log);

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Base;
@@ -31,9 +31,8 @@ namespace XLite\Model\Base;
 /**
  * Image abstract store
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @MappedSuperclass
  * @HasLifecycleCallbacks
@@ -43,10 +42,9 @@ abstract class Image extends \XLite\Model\AEntity
     /**
      * Image unique id 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -57,10 +55,9 @@ abstract class Image extends \XLite\Model\AEntity
     /**
      * Image path (URL or file name in images storage directory)
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="512", nullable=false)
      */
@@ -69,10 +66,9 @@ abstract class Image extends \XLite\Model\AEntity
     /**
      * MIME type
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="64", nullable=false)
      */
@@ -81,10 +77,9 @@ abstract class Image extends \XLite\Model\AEntity
     /**
      * Width
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -93,10 +88,9 @@ abstract class Image extends \XLite\Model\AEntity
     /**
      * Height
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -105,10 +99,9 @@ abstract class Image extends \XLite\Model\AEntity
     /**
      * Size
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -117,10 +110,9 @@ abstract class Image extends \XLite\Model\AEntity
     /**
      * Create / modify date (UNIX timestamp)
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -129,10 +121,9 @@ abstract class Image extends \XLite\Model\AEntity
     /**
      * Image hash
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="fixedstring", length="32")
      */
@@ -142,7 +133,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Get image body 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -150,14 +140,13 @@ abstract class Image extends \XLite\Model\AEntity
     {
         return $this->isURL()
             ? \XLite\Core\Operator::getURLContent($this->path)
-            : file_get_contents($this->getRepository()->getFileSystemRoot() . $this->path);
+            : \Includes\Utils\FileManager::read($this->getRepository()->getFileSystemRoot() . $this->path);
     }
 
     /**
      * Get image file extension 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -170,7 +159,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Get image file extension by MIME type
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -205,7 +193,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Get image URL 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -218,7 +205,6 @@ abstract class Image extends \XLite\Model\AEntity
      * Get image URL for customer front-end
      * 
      * @return string|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -234,7 +220,6 @@ abstract class Image extends \XLite\Model\AEntity
      * @param integer $height Height limit OPTIONAL
      *  
      * @return array (new width + new height + URL)
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -252,7 +237,7 @@ abstract class Image extends \XLite\Model\AEntity
         if (file_exists($path . $fn)) {
 
             // File is exists
-            $result = \XLite\Core\Converter::getCroppedDimensions(
+            $result = \XLite\Core\ImageOperator::getCroppedDimensions(
                 $this->width,
                 $this->height,
                 $width,
@@ -264,8 +249,9 @@ abstract class Image extends \XLite\Model\AEntity
         } else {
 
             // File is not exists
-            $result = \XLite\Core\Converter::resizeImageSoft($this, $width, $height);
-            $result[2] = (!$result[2] || !file_put_contents($path . $fn, $result[2]))
+            $operator = new \XLite\Core\ImageOperator($this);
+            $result = $operator->resizeDown($width, $height);
+            $result[2] = (!$result[2] || !file_put_contents($path . $fn, $operator->getImage()))
                 ? $this->getURL()
                 : $this->getRepository()->getWebCacheRoot($sizeName) . '/' . $fn;
 
@@ -284,7 +270,6 @@ abstract class Image extends \XLite\Model\AEntity
      * @param string $subkey Optional subkey OPTIONAL
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -323,7 +308,6 @@ abstract class Image extends \XLite\Model\AEntity
      * @param string $basename File name OPTIONAL
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -362,7 +346,6 @@ abstract class Image extends \XLite\Model\AEntity
      * @param boolean $copy2fs Copy image to file system or not OPTIONAL
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -390,10 +373,71 @@ abstract class Image extends \XLite\Model\AEntity
     }
 
     /**
+     * Check - image hash is equal data from DB or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkImageHash()
+    {
+        list($path, $isTempFile) = $this->getImagePath();
+
+        $hash = md5_file($path);
+
+        if ($isTempFile) {
+            unlink($path);
+        }
+
+        return $this->hash == $hash;
+    }
+
+    /**
+     * Check image is URL-based or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isURL()
+    {
+        return (bool)preg_match('/^https?:\/\//Ss', $this->path);
+    }
+
+    /**
+     * Check - image is exists in DB or not
+     * TODO - remove - old method
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isExists()
+    {
+        return !is_null($this->getImageId());
+    }
+
+    /**
+     * Prepare order before save data operation
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     * @PrePersist
+     * @PreUpdate
+     */
+    public function prepareBeforeSave()
+    {
+        if (!$this->getDate()) {
+            $this->setDate(time());
+        }
+    }
+
+
+    /**
      * Renew image parameters 
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -424,44 +468,9 @@ abstract class Image extends \XLite\Model\AEntity
     }
 
     /**
-     * Check - image hash is equal data from DB or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function checkImageHash()
-    {
-        list($path, $isTempFile) = $this->getImagePath();
-
-        $hash = md5_file($path);
-
-        if ($isTempFile) {
-            unlink($path);
-        }
-
-        return $this->hash == $hash;
-    }
-
-    /**
-     * Check image is URL-based or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isURL()
-    {
-        return (bool)preg_match('/^https?:\/\//Ss', $this->path);
-    }
-
-    /**
      * Get image path for file-based PHP functions
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -485,36 +494,5 @@ abstract class Image extends \XLite\Model\AEntity
         }
 
         return array($path, $isTempFile);
-    }
-
-    /**
-     * Check - image is exists in DB or not
-     * TODO - remove - old method
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isExists()
-    {
-        return !is_null($this->getImageId());
-    }
-
-    /**
-     * Prepare order before save data operation
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     * @PrePersist
-     * @PreUpdate
-     */
-    public function prepareBeforeSave()
-    {
-        if (!$this->getDate()) {
-            $this->setDate(time());
-        }
     }
 }

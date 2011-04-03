@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core\TranslationDriver;
@@ -31,9 +31,8 @@ namespace XLite\Core\TranslationDriver;
 /**
  * gettext-based driver
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
 {
@@ -46,30 +45,27 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
     /**
      * Dynamic domains list
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $domains = array();
 
     /**
      * Last language code
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $lastLanguage = null;
 
     /**
      * msgfmt script path (cache)
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $msgfmtPath = null;
  
@@ -80,7 +76,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * @param string $code Language code
      *  
      * @return string|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -102,7 +97,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * Check - valid driver or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -136,7 +130,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * Reset language driver
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -154,7 +147,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * @param string $code Language code
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -169,16 +161,17 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * @param string $code Language code
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function setLocale($code)
     {
-        $locale = $this->getLocaleByCode($code);
+        if (defined(self::CATEGORY)) {
+            $locale = $this->getLocaleByCode($code);
 
-        putenv(self::CATEGORY . '=' . $locale);
-        setlocale(constant(self::CATEGORY), $locale);
+            putenv(self::CATEGORY . '=' . $locale);
+            setlocale(constant(self::CATEGORY), $locale);
+        }
     }
 
     /**
@@ -187,7 +180,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * @param string $code Language code
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -202,7 +194,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * @param string $code Language code
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -232,7 +223,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * @param string $code Language code
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -247,10 +237,12 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
 
         $path .= LC_DS . $this->getDomain($code) . '.mo';
         if (!file_exists($path)) {
+            $result = false;
             if ($this->getMsgFmtExecutable()) {
                 $result = $this->createIndexFileBin($path, $code);
+            }
 
-            } else {
+            if (!$result) {
                 $result = $this->createIndexFile($path, $code);
             }
         }
@@ -265,7 +257,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * @param string $code Language code
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -332,7 +323,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * @param string $code Language code
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -351,7 +341,10 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
         if ($fp) {
 
             foreach ($list as $k => $v) {
-                fwrite($fp, 'msgid "' . addslashes($k) . '"' . "\n" . 'msgstr "' . addslashes($v) . '"' . "\n\n");
+                fwrite(
+                    $fp, 
+                    'msgid "' . addcslashes($k, '"\\') . '"' . "\n" . 'msgstr "' . addcslashes($v, '"\\') . '"' . "\n\n"
+                );
             }
 
             fclose($fp);
@@ -373,7 +366,6 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * Get msgfmt script path
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

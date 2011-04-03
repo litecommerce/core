@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\WidgetParam;
@@ -31,20 +31,43 @@ namespace XLite\Model\WidgetParam;
 /**
  * ____description____
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Object extends \XLite\Model\WidgetParam\AWidgetParam
 {
     /**
      * class 
      * 
-     * @var    mixed
-     * @access protected
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $class = null;
+
+
+    /**
+     * Constructor
+     *
+     * @param mixed  $label     Param label (text)
+     * @param mixed  $value     Default value OPTIONAL
+     * @param mixed  $isSetting Display this setting in CMS or not OPTIONAL
+     * @param string $class     Object class OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct($label, $value = null, $isSetting = false, $class = null)
+    {
+        parent::__construct($label, $value, $isSetting);
+
+        // TODO - check if there are more convinient way to extend this class
+        if (!isset($this->class)) {
+            $this->class = $class;
+        }
+    }
+
 
     /**
      * Return list of conditions to check
@@ -52,7 +75,7 @@ class Object extends \XLite\Model\WidgetParam\AWidgetParam
      * @param mixed $value Value to validate
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getValidaionSchema($value)
@@ -67,27 +90,5 @@ class Object extends \XLite\Model\WidgetParam\AWidgetParam
                 self::ATTR_MESSAGE   => ' parameter class is undefined or passed object is not an instance of the param class',
             ),
         );
-    }
-
-    /**
-     * Constructor
-     *
-     * @param mixed  $label     Param label (text)
-     * @param mixed  $value     Default value OPTIONAL
-     * @param mixed  $isSetting Display this setting in CMS or not OPTIONAL
-     * @param string $class     Object class OPTIONAL
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function __construct($label, $value = null, $isSetting = false, $class = null)
-    {
-        parent::__construct($label, $value, $isSetting);
-
-        // TODO - check if there are more convinient way to extend this class
-        if (!isset($this->class)) {
-            $this->class = $class;
-        }
     }
 }

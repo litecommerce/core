@@ -81,7 +81,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
             'check date'
         );
 
-        $shippingCost = $order->getTotalByModifier('shipping');
+        $shippingCost = $order->getSurchargeSumByType('shipping');
 
         $this->assertEquals(1, $order->getItems()->get(0)->getAmount(), 'check quantity');
         $this->assertEquals($this->getProduct()->getPrice(), $order->getItems()->get(0)->getPrice(), 'check price');
@@ -103,10 +103,20 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
         $this->assertEquals($pm, $order->getPaymentMethod(), 'check payment method');
 
         // Saved modifiers
-        $sm = new \XLite\Model\OrderModifier;
-        $order->addSavedModifiers($sm);
-        $count = count($order->getSavedModifiers());
-        $this->assertEquals($sm, $order->getSavedModifiers()->get($count - 1), 'check save modifier');
+        $surcharge = new \XLite\Model\Order\Surcharge;
+        $surcharge->setType('shipping');
+        $surcharge->setCode('ttt');
+        $surcharge->setValue(10.00);
+        $surcharge->setInclude(false);
+        $surcharge->setAvailable(true);
+        $surcharge->setClass(get_called_class());
+        $surcharge->setName('test');
+
+        $order->getSurcharges()->add($surcharge);
+        $surcharge->setOwner($order);
+
+        $count = count($order->getSurcharges());
+        $this->assertEquals($surcharge, $order->getSurcharges()->get($count - 1), 'check surcharge');
     }
 
     public function testUpdate()
@@ -141,7 +151,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
         $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($order->getOrderId());
 
-        $shippingCost = $order->getTotalByModifier('shipping');
+        $shippingCost = $order->getSurchargeSumByType('shipping');
 
         $this->assertEquals(2, $order->getItems()->get(0)->getAmount(), 'check quantity');
         $this->assertEquals($this->getProduct()->getPrice(), $order->getItems()->get(0)->getPrice(), 'check price');
@@ -542,7 +552,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
 
         $order->calculate();
 
-        $shippingCost = $order->getTotalByModifier('shipping');
+        $shippingCost = $order->getSurchargeSumByType('shipping');
 
         $this->assertEquals(
             round($shippingCost + $this->getProduct()->getPrice(), 2),
@@ -553,7 +563,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
         $order->getItems()->get(0)->setAmount(2);
         $order->calculate();
 
-        $shippingCost = $order->getTotalByModifier('shipping');
+        $shippingCost = $order->getSurchargeSumByType('shipping');
 
         $this->assertEquals(
             round($shippingCost + 2 * $this->getProduct()->getPrice(), 2),
@@ -568,35 +578,6 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
             0,
             $order->getTotal(),
             'check total (empty)'
-        );
-    }
-
-    public function testGetWeight()
-    {
-        $order = $this->getTestOrder();
-
-        $order->getItems()->get(0)->getObject()->setFreeShipping(false);
-
-        $this->assertEquals(
-            $this->getProduct()->getWeight(),
-            $order->getWeight(),
-            'check weight'
-        );
-
-        $order->getItems()->get(0)->setAmount(2);
-
-        $this->assertEquals(
-            2 * $this->getProduct()->getWeight(),
-            $order->getWeight(),
-            'check weight #2'
-        );
-
-        $order->getItems()->get(0)->getObject()->setFreeShipping(true);
-
-        $this->assertEquals(
-            0,
-            $order->getWeight(),
-            'check weight (empty)'
         );
     }
 
@@ -643,20 +624,21 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
         foreach ($order->getPaymentMethods() as $p) {
             $list[] = $p->getMethodId();
         }
+        $etalon = array(7, 8, 1, 2, 3, 4, 5, 6);
 
-        $etalon = array(8, 9, 1, 2, 3, 4, 5, 6, 7);
         $this->assertEquals($etalon, $list, 'check method id\'s list');
     }
 
     public function testRenewPaymentMethod()
     {
         $order = $this->getTestOrder();
+        $order->getProfile()->setLastPaymentId(0);
 
         $order->setPaymentMethod(null);
-        $this->assertNull($order->getPaymentMethod(), 'empty payment method');
+        $this->assertTrue(is_null($order->getPaymentMethod()), 'empty payment method');
 
         $order->renewPaymentMethod();
-        $this->assertNull($order->getPaymentMethod(), 'empty payment method #2');
+        $this->assertTrue(is_null($order->getPaymentMethod()), 'empty payment method #2');
 
         $order->getProfile()->setLastPaymentId(1);
 
@@ -686,10 +668,11 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
     public function testSetPaymentMethod()
     {
         $order = $this->getTestOrder();
+        $order->getProfile()->setLastPaymentId(0);
 
         $order->setPaymentMethod(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(2));
         $this->assertEquals(
-            'Purchase Order',
+            'Phone Ordering',
             $order->getPaymentMethod()->getName(),
             'check payment method'
         );
@@ -993,7 +976,8 @@ class XLite_Tests_Model_Order extends XLite_Tests_Model_OrderAbstract
     {
         $order = parent::getTestOrder();
 
-        $method = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(array('service_name' => 'PurchaseOrder'));
+        $method = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
+            ->findOneBy(array('service_name' => 'PurchaseOrder'));
         $order->setPaymentMethod($method);
 
         \XLite\Core\Database::getEM()->flush();

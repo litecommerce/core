@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,64 +31,35 @@ namespace XLite\Controller\Admin;
 /**
  * Orders list controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class OrderList extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Common method to determine current location
-     *
+     * Return the current page title (for the content area)
+     * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getLocation()
+    public function getTitle()
     {
         return 'Search orders';
     }
 
     /**
-     * doActionUpdate 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function doActionUpdate()
-    {
-        \XLite\Core\Database::getRepo('\XLite\Model\Order')->updateInBatchById($this->getPostedData());
-    }
-
-    /**
-     * doActionDelete 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function doActionDelete()
-    {
-        \XLite\Core\Database::getRepo('\XLite\Model\Order')->deleteInBatchById($this->getToDelete());
-    }
-    
-
-    /**
      * getDateValue 
      * FIXME - to remove
      * 
-     * @param string $fieldName Field name (prefix)
+     * @param string  $fieldName Field name (prefix)
+     * @param boolean $isEndDate End date flag OPTIONAL
      *  
      * @return integer 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getDateValue($fieldName)
+    public function getDateValue($fieldName, $isEndDate = false)
     {
         $dateValue = \XLite\Core\Request::getInstance()->$fieldName;
 
@@ -97,12 +68,15 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
             $nameMonth = $fieldName . 'Month';
             $nameYear  = $fieldName . 'Year';
 
-            if (isset(\XLite\Core\Request::getInstance()->$nameMonth)
+            if (
+                isset(\XLite\Core\Request::getInstance()->$nameMonth)
                 && isset(\XLite\Core\Request::getInstance()->$nameDay)
-                && isset(\XLite\Core\Request::getInstance()->$nameYear))
-            {
+                && isset(\XLite\Core\Request::getInstance()->$nameYear)
+            ) {
                 $dateValue = mktime(
-                    0, 0, 0,
+                    $isEndDate ? 23 : 0,
+                    $isEndDate ? 59 : 0,
+                    $isEndDate ? 59 : 0,
                     \XLite\Core\Request::getInstance()->$nameMonth,
                     \XLite\Core\Request::getInstance()->$nameDay,
                     \XLite\Core\Request::getInstance()->$nameYear
@@ -111,75 +85,14 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
         }
 
         return $dateValue;
-
-    }
-
-    /**
-     * doActionSearch 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function doActionSearch()
-    {
-        $ordersSearch = array();
-        $searchParams   = \XLite\View\ItemsList\Order\Admin\Search::getSearchParams();
-
-        // Prepare dates
-
-        $this->startDate = $this->getDateValue('startDate');
-        $this->endDate   = $this->getDateValue('endDate');
-
-        if (
-            0 === $this->startDate
-            || 0 === $this->endDate
-            || $this->startDate > $this->endDate
-        ) {
-            $date = getdate(time());
-            $this->startDate = mktime(0, 0, 0, $date['mon'], 1, $date['year']);
-            $this->endDate   = mktime(0, 0, 0, $date['mon'], $date['mday'], $date['year']);
-        }
-        
-        foreach ($searchParams as $modelParam => $requestParam) {
-            if (\XLite\Model\Repo\Order::P_DATE === $requestParam) {
-                $ordersSearch[$requestParam] = array($this->startDate, $this->endDate);
-            } elseif (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
-                $ordersSearch[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
-            }
-        }
-        
-        $this->session->set(\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName(), $ordersSearch);
-        $this->set('returnUrl', $this->buildUrl('order_list', '', array('mode' => 'search')));
-    }
-
-    /**
-     * Get search conditions
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getConditions()
-    {
-        $searchParams = $this->session->get(\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName());
-
-        if (!is_array($searchParams)) {
-            $searchParams = array();
-        }
-
-        return $searchParams;
     }
 
     /**
      * Get search condition parameter by name
      * 
-     * @param string $paramName 
+     * @param string $paramName Parameter name
      *  
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -202,7 +115,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @param boolean $start Start date flag, otherwise - end date  OPTIONAL
      *  
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -218,56 +130,95 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
 
 
     /**
-     * doActionExportXls 
-     * 
-     * @return void
-     * @access protected
+     * Common method to determine current location
+     *
+     * @return string
      * @see    ____func_see____
      * @since  3.0.0
      */
-/*    protected function doActionExportXls()
+    protected function getLocation()
     {
-        $w = new \XLite\View\ExportXLS();
-        $w->component = $this;
-        $this->startDownload('orders.xls');
-        $this->ColumnCount = 9;
-        $this->RowCount = $this->get('count') + 2;
-        $this->endRow = $this->get('count') + 1;
-        $profile = $this->auth->get('profile');
-        $time = time();
-        $this->create_date = strftime("%Y-%m-%d", $time);
-        $this->create_time = strftime("%H:%M:%S", $time);
-        $this->author = $profile->get('billing_firstname') . " " . $profile->get('billing_lastname');
-        $w->init();
-        $w->display();
-
-        // do not output anything
-        $this->set('silent', true);
+        return $this->t('Search orders');
     }
 
     /**
-     * getExportFormats 
+     * doActionUpdate 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-/*    protected function getExportFormats()
+    protected function doActionUpdate()
     {
-        return array("export_xls" => "MS Excel XP/XML");
+        \XLite\Core\Database::getRepo('\XLite\Model\Order')->updateInBatchById($this->getPostedData());
     }
 
     /**
-     * getStartXML 
+     * doActionDelete 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-/*    protected function getStartXML()
+    protected function doActionDelete()
     {
-        return '<?xml version="1.0"?>'."\n";;
-    }*/
+        \XLite\Core\Database::getRepo('\XLite\Model\Order')->deleteInBatchById($this->getToDelete());
+    }
+
+    /**
+     * doActionSearch 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionSearch()
+    {
+        $ordersSearch = array();
+        $searchParams   = \XLite\View\ItemsList\Order\Admin\Search::getSearchParams();
+
+        // Prepare dates
+
+        $this->startDate = $this->getDateValue('startDate');
+        $this->endDate   = $this->getDateValue('endDate', true);
+
+        if (
+            0 === $this->startDate
+            || 0 === $this->endDate
+            || $this->startDate > $this->endDate
+        ) {
+            $date = getdate(time());
+            $this->startDate = mktime(0, 0, 0, $date['mon'], 1, $date['year']);
+            $this->endDate   = mktime(0, 0, 0, $date['mon'], $date['mday'], $date['year']);
+        }
+        
+        foreach ($searchParams as $modelParam => $requestParam) {
+            if (\XLite\Model\Repo\Order::P_DATE === $requestParam) {
+                $ordersSearch[$requestParam] = array($this->startDate, $this->endDate);
+            } elseif (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
+                $ordersSearch[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
+            }
+        }
+        
+        $this->session->set(\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName(), $ordersSearch);
+        $this->setReturnURL($this->buildURL('order_list', '', array('mode' => 'search')));
+    }
+
+    /**
+     * Get search conditions
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getConditions()
+    {
+        $searchParams = $this->session->get(\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName());
+
+        if (!is_array($searchParams)) {
+            $searchParams = array();
+        }
+
+        return $searchParams;
+    }
 }

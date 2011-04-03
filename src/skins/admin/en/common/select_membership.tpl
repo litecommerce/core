@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<select {if:!nonFixed}class="FixedSelect"{end:} name="{getParam(#field#)}">
+<select {if:!nonFixed}class="fixed-select"{end:} name="{getParam(#field#)}">
   <option value="%" IF="{getParam(#allOption#)}" selected="{isSelected(#%#,value)}">All memberships</option>
   <option value="" selected="{isSelected(##,value)}">No membership</option>
   <option value="pending_membership" IF="{getParam(#pendingOption#)}" selected="{isSelected(#pending_membership#,getParam(#value#))}">Pending membership</option>

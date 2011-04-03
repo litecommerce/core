@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 <form action="{loginURL}" method="POST" name="login_form">
-<input IF="!target=#login#" type="hidden" name="returnUrl" value="{url}"/>
+<input IF="!target=#login#" type="hidden" name="returnURL" value="{url}"/>
 <table cellpadding="2" cellspacing="0" border="0" width="100%">
 <tr>
 <td align="center">
@@ -31,13 +31,13 @@
     <td>
 		<table cellpadding="0" cellspacing="0" border="0">
 		<tr>
-		    <td><widget class="\XLite\View\Button\Submit" label="Log in" /></td>
+		    <td><widget template="common/button2.tpl" href="javascript: document.login_form.submit()" label="Log in&nbsp;&nbsp;&nbsp;&nbsp;" img="btn2_arrows.gif"></td>
 		</tr>
 		<tr>
 			<td><IMG src="images/spacer.gif" width="1" height="5" alt=""></td>
 		</tr>
 		<tr>
-			<td><widget class="\XLite\View\Button\Link" location="cart.php?target=profile&mode=register" label="Register" /></td>
+			<td><widget template="common/button2.tpl" href="cart.php?target=profile&mode=register" label="Register" img="btn2_arrows.gif"></td>
 		</tr>
 		</table>
     </td>

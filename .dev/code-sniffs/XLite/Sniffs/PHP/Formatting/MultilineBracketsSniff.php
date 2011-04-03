@@ -132,7 +132,14 @@ class XLite_Sniffs_PHP_Formatting_MultilineBracketsSniff extends XLite_ReqCodesS
 						T_INLINE_THEN
 					)
 				)
-				&& $tokens[$prevNE]['code'] !== T_COMMA
+				&& !in_array(
+					$tokens[$prevNE]['code'],
+					array(
+						T_COMMA,
+						T_OPEN_CURLY_BRACKET,
+						T_SEMICOLON,
+					)
+				)
 			) {
 
 	            $phpcsFile->addError(

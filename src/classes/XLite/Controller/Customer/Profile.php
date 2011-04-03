@@ -14,26 +14,25 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Customer;
 
 /**
- * ____description____
+ * User profile page controller
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Profile extends \XLite\Controller\Customer\ACustomer
 {
@@ -47,10 +46,23 @@ class Profile extends \XLite\Controller\Customer\ACustomer
 
 
     /**
+     * Return value for the "register" mode param
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getRegisterMode()
+    {
+        return 'register';
+    }
+
+
+    /**
      * Return class name of the register form 
      * 
      * @return string|void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getModelFormClass()
@@ -62,7 +74,6 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      * Check if profile is not exists
      * 
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -75,7 +86,6 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      * doActionRegister 
      * 
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -101,7 +111,7 @@ class Profile extends \XLite\Controller\Customer\ACustomer
             $params = array('profile_id' => $this->getModelForm()->getProfileId(false));
         }
 
-        $this->setReturnUrl($this->buildURL('profile', '', $params));
+        $this->setReturnURL($this->buildURL('profile', '', $params));
 
         return $result;
     }
@@ -110,7 +120,6 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      * doActionUpdate
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -131,10 +140,28 @@ class Profile extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
+     * doActionModify 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionModify()
+    {
+        if ($this->getModelForm()->isRegisterMode()) {
+
+            $this->doActionRegister();
+
+        } else {
+
+            $this->doActionUpdate();
+        }
+    }
+
+    /**
      * doActionDelete 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -150,18 +177,5 @@ class Profile extends \XLite\Controller\Customer\ACustomer
         }
 
         return $result;
-    }
-
-    /**
-     * Return value for the "register" mode param
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getRegisterMode()
-    {
-        return 'register';
     }
 }

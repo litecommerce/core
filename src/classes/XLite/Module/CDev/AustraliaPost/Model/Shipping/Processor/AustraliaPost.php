@@ -57,47 +57,42 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $apiUrl = 'http://drc.edeliver.com.au/ratecalc.asp';
+    protected $apiURL = 'http://drc.edeliver.com.au/ratecalc.asp';
 
     /**
      * prepareInputData 
      * 
-     * @param mixed $data Can be either \XLite\Model\Order instance or an array
+     * @param \XLite\Logic\Order\Modifier\Shipping $modifier Shipping order modifier 
      *  
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareInputData($data)
+    protected function prepareInputData(\XLite\Logic\Order\Modifier\Shipping $modifier)
     {
         $result = null;
 
-        if ($data instanceof \XLite\Model\Order) {
-            // Fill $result array by data from the order
+        // Fill $result array by data from the order
 
-            if ('AU' == \XLite\Base::getInstance()->config->Company->location_country) {
+        if ('AU' == \XLite\Base::getInstance()->config->Company->location_country) {
 
-                $result['srcAddress']['zipcode'] = \XLite\Base::getInstance()->config->Company->location_zipcode;
+            $result['srcAddress']['zipcode'] = \XLite\Base::getInstance()->config->Company->location_zipcode;
 
-                $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($data);
+            $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($modifier);
 
-                if (isset($address)) {
-                    $result['dstAddress'] = $address;
-                    $result['weight'] = \XLite\Core\Converter::convertWeightUnits(
-                        $data->getWeight(), 
-                        \XLite\Base::getInstance()->config->General->weight_unit,
-                        'g'
-                    );
+            if (isset($address)) {
+                $result['dstAddress'] = $address;
+                $result['weight'] = \XLite\Core\Converter::convertWeightUnits(
+                    $modifier->getWeight(), 
+                    \XLite\Base::getInstance()->config->General->weight_unit,
+                    'g'
+                );
 
-                } else {
-                    $result = null;
-                }
+            } else {
+
+                $result = null;
             }
-
-        } else {
-            // Suppose that data is passed for testing of rates calculation
-            $result = $data; 
         }
 
         return $result;
@@ -147,12 +142,12 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
                 $postData[] = sprintf('%s=%s', $key, $value);
             }
 
-            $postUrl = $this->apiUrl . '?' . implode('&', $postData);
+            $postURL = $this->apiURL . '?' . implode('&', $postData);
 
             try {
 
                 if (!$ignoreCache) {
-                    $cachedRate = $this->getDataFromCache($postUrl);
+                    $cachedRate = $this->getDataFromCache($postURL);
                 }
 
                 if (isset($cachedRate)) {
@@ -160,19 +155,15 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
 
                 } else {
 
-                    require_once (LC_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php');
+                    $bouncer  = new \XLite\Core\HTTP\Request($postURL);
+                    $bouncer->requestTimeout = 5;
+                    $response = $bouncer->sendRequest();
 
-                    $http = new \HTTP_Request2($postUrl);
-                    $http->setConfig('timeout', 5);
-
-                    try {
-                        $result = $http->send()->getBody();
-
-                        // Save result in cache even if rate is failed
-                        $this->saveDataInCache($postUrl, $result);
-
-                    } catch (\HTTP_Request2_Exception $exception) {
-                        $errorMsg = $exception->getMessage();
+                    if (200 == $response->code) {
+                        $result = $response->body;
+                        $this->saveDataInCache($postURL, $result);
+                    } else {
+                        $errorMsg = 'Bouncer error';
                         break;
                     }
                 }
@@ -180,7 +171,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
                 $response = $this->parseResponse($result);
 
                 $this->apiCommunicationLog[] = array(
-                    'request'  => $postUrl,
+                    'request'  => $postURL,
                     'response' => isset($response['charge']) ? $response : $result
                 );
 
@@ -256,19 +247,19 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
     /**
      * Returns shipping rates 
      * 
-     * @param mixed $data        Can be either \XLite\Model\Order instance or an array
-     * @param boolean  $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
+     * @param \XLite\Logic\Order\Modifier\Shipping $modifier    Shipping order modifier
+     * @param boolean                              $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
      *  
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getRates($data, $ignoreCache = false)
+    public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier, $ignoreCache = false)
     {
         $rates = array();
 
-        $inputData = $this->prepareInputData($data);
+        $inputData = $this->prepareInputData($modifier);
 
         if (isset($inputData)) {
             $rates = $this->doQuery($inputData, $ignoreCache);
@@ -276,6 +267,22 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
 
         // Return shipping rates list
         return $rates;
+    }
+
+    /**
+     * Returns shipping rates
+     *
+     * @param array   $modifier    Shipping order modifier
+     * @param boolean $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRatesByArray(array $inputData, $ignoreCache = false)
+    {
+        return $this->doQuery($inputData, $ignoreCache);
     }
 
 }

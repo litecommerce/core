@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage ____sub_package____
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    SVN: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Product;
@@ -31,9 +31,8 @@ namespace XLite\View\Product;
 /**
  * QuantityBox 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class QuantityBox extends \XLite\View\Product\AProduct
 {
@@ -50,10 +49,40 @@ class QuantityBox extends \XLite\View\Product\AProduct
 
 
     /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = $this->getDir() . '/quantity_box.css';
+
+        return $list;
+    }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = $this->getDir() . '/controller.js';
+        
+        return $list;
+    }
+
+
+    /**
      * Return directory contains the template
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -66,7 +95,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Define widget parameters
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -88,7 +116,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Alias
      * 
      * @return \XLite\Model\Product
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -101,7 +128,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Alias
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -113,8 +139,19 @@ class QuantityBox extends \XLite\View\Product\AProduct
     /**
      * Alias
      * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getBoxId()
+    {
+        return $this->getBoxName() . $this->getProduct()->getProductId();
+    }
+
+    /**
+     * Alias
+     * 
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -127,7 +164,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Alias
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -140,7 +176,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Alias
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -153,21 +188,18 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Default CSS classes
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultClass()
     {
-        return 'quantity field-integer field-positive '
-            . 'field-non-zero wheel-ctrl' . ($this->isCartPage() ? ' watcher' : '');
+        return 'quantity wheel-ctrl' . ($this->isCartPage() ? ' watcher' : '');
     }
 
     /**
      * CSS class
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -180,7 +212,6 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Return name of the \XLite\Model\Inventory model to get max available quantity
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -193,46 +224,11 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * Return maximum allowed quantity
      *
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getMaxQuantity()
     {
         return $this->getProduct()->getInventory()->{$this->getMaxQuantityMethod()}();
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = $this->getDir() . '/quantity_box.css';
-
-        return $list;
-    }
-
-    /**
-     * Register JS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-        if (!$this->isCartPage()) {
-            $list[] = $this->getDir() . '/controller.js';
-        }
-
-        return $list;
     }
 }

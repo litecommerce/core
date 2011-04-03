@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,30 +31,151 @@ namespace XLite\Controller\Admin;
 /**
  * Abstarct admin-zone controller 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AAdmin extends \XLite\Controller\AController
 {
     /**
+     * Name of temporary variable to store time 
+     * of last request to marketplace
+     */
+    const MARKETPLACE_LAST_REQUEST_TIME = 'marketplaceLastRequestTime';
+
+
+    /**
+     * List of recently logged in administrators
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $recentAdmins = null;
+
+    /**
      * Check if current page is accessible
      *
      * @return boolean 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function checkAccess()
     {
-        return (parent::checkAccess() || $this->isPublicZone())
-            && $this->checkFormId();
+        return (parent::checkAccess() || $this->isPublicZone()) && $this->checkFormId();
     }
 
     /**
-     * Check - form id is valid or not
+     * This function called after template output
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function postprocess()
+    {
+        parent::postprocess();
+
+        if ($this->dumpStarted) {
+            $this->displayPageFooter();
+        }
+    }
+
+    /**
+     * Check form id
      * 
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkFormId()
+    {
+        return $this->getTarget() || $this->isIgnoredTarget() || $this->isFormIdValid();
+    }
+
+    /**
+     * Get current language code
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCurrentLanguage()
+    {
+        $currentCode = \XLite\Core\Request::getInstance()->language;
+
+        return $currentCode ? $currentCode : \XLite\Core\Translation::getCurrentLanguageCode();
+    }
+
+    /**
+     * Returns 'maintenance_mode' string if frontend is closed or null otherwise
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCustomerZoneWarning()
+    {
+        return ('Y' == \XLite::getInstance()->config->General->shop_closed) ? 'maintenance_mode' : null;
+    }
+
+    /**
+     * Get access level 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAccessLevel()
+    {
+        return $this->auth->getAdminAccessLevel();
+    }
+
+    /**
+     * Handles the request to admin interface
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest()
+    {
+        // Check if user is logged in and has a right access level
+        if (!$this->auth->isAuthorized($this) && !$this->isPublicZone()) {
+
+            $this->session->set('lastWorkingURL', $this->get('url'));
+            $this->redirect($this->buildURL('login'));
+
+        } else {
+
+            if (isset(\XLite\Core\Request::getInstance()->no_https)) {
+                $this->session->set('no_https', true);
+            }
+
+            parent::handleRequest();
+        }
+    }
+
+    /**
+     * Get recently logged in admins 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRecentAdmins()
+    {
+        if ($this->auth->isLogged() && is_null($this->recentAdmins)) {
+            $this->recentAdmins = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findRecentAdmins();
+        }
+
+        return $this->recentAdmins;
+    }
+
+    /**
+     * Check if form id is valid or not
+     * 
+     * @return boolean 
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isFormIdValid()
@@ -88,223 +209,102 @@ abstract class AAdmin extends \XLite\Controller\AController
     }
 
     /**
-     * This function called after template output
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function postprocess()
-    {
-        parent::postprocess();
-
-        if ($this->dumpStarted) {
-            $this->displayPageFooter();
-        }
-    }
-
-    /**
-     * Check form id
-     * 
-     * @return boolean 
-     * @access public
-     * @since  3.0.0
-     */
-    public function checkFormId()
-    {
-        return $this->getTarget() || $this->isIgnoredTarget() || $this->isFormIdValid();
-    }
-
-    /**
-     * Get current language code
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCurrentLanguage()
-    {
-        $currentCode = \XLite\Core\Request::getInstance()->language;
-
-        return $currentCode ? $currentCode : \XLite\Core\Translation::getCurrentLanguageCode();
-    }
-
-
-
-
-    protected $recentAdmins = null;
-
-    function getCustomerZoneWarning()
-    {
-        return ('Y' == \XLite::getInstance()->config->General->shop_closed) ? 'maintenance_mode' : null;
-    }
-
-    /**
-     * Get access level 
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getAccessLevel()
-    {
-        return $this->auth->getAdminAccessLevel();
-    }
-
-    function handleRequest()
-    {
-        // auto-login request
-/*
-        if (!$this->auth->is('logged') && isset(\XLite\Core\Request::getInstance()->login) && isset(\XLite\Core\Request::getInstance()->password)) {
-            if ($this->auth->loginAdministrator(\XLite\Core\Request::getInstance()->login, \XLite\Core\Request::getInstance()->password) === \XLite\Core\Auth::RESULT_ACCESS_DENIED) {
-                die('ACCESS DENIED');
-            }
-        }
-*/
-        if (
-            !$this->auth->isAuthorized($this)
-            && !$this->isPublicZone()
-        ) {
-
-            // Check - current user is logged and has right access level
-
-            $this->session->set('lastWorkingURL', $this->get('url'));
-            $this->redirect(
-                $this->buildUrl('login')
-            );
-
-        } else {
-
-            if (isset(\XLite\Core\Request::getInstance()->no_https)) {
-                $this->session->set('no_https', true);
-            }
-
-            parent::handleRequest();
-        }
-    }
-
-    /**
-     * Check - current place is public or not
+     * Check - is current place public or not
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isPublicZone()
     {
-        $request = \XLite\Core\Request::getInstance();
-
-        return 'login' == $request->target;
+        return 'login' == \XLite\Core\Request::getInstance()->target;
     }
 
-    function getSecure()
-    {
-        if ($this->session->get('no_https')) {
-            return false;
-        }
-        return $this->config->Security->admin_security;
-    }
-
-    function getRecentAdmins()
-    {
-        if ($this->auth->isLogged() && is_null($this->recentAdmins)) {
-            $this->recentAdmins = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findRecentAdmins();
-        }
-        return $this->recentAdmins;
-    }
-
-    function startDump()
+    /**
+     * Start simplified page to display progress of some process
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function startDump()
     {
         parent::startDump();
-        if (!isset(\XLite\Core\Request::getInstance()->mode) || \XLite\Core\Request::getInstance()->mode != "cp") {
+        
+        if (!isset(\XLite\Core\Request::getInstance()->mode) || 'cp' != \XLite\Core\Request::getInstance()->mode) {
             $this->displayPageHeader();
         }
     }
 
-    function displayPageHeader($title="", $scroll_down=false)
+    /**
+     * Display header of simplified page
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function displayPageHeader($title = '', $scrollDown = false)
     {
-?>
-<HTML>
-<HEAD>
-<?php
-        if (!empty($title)) {
-?>  <title><?php echo $title; ?></title>
-<?php   }
-?>
-    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->get('charset'); ?>">
-    <LINK href="skins/<?php echo \XLite\Model\Layout::getInstance()->getSkin(); ?>/en/style.css"  rel=stylesheet type=text/css>
-</HEAD>
-<BODY leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0"><?php
-        if ($scroll_down) {
+        $output = <<<OUT
+<html>
+<head>
+    <title>$title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+
+OUT;
+
+        if ($scrollDown) {
             $this->dumpStarted = true;
-            func_refresh_start();
+            $output .= func_refresh_start(false);
         }
-?>
-<div id="ActionPageHeader" style="display:;">
-<TABLE border="0" width="100%" cellpadding="0" cellspacing="0" align="center">
-<TR>
-<TD valign=top>
-    <TABLE border="0" width="100%" cellpadding="0" cellspacing="0" valign=top>
-    <TR class="displayPageHeader" height="18">
-        <TD align=left class="displayPageHeader" valign=middle width="50%">&nbsp;&nbsp;&nbsp;LiteCommerce</TD>
-        <TD align=right class="displayPageHeader" valign=middle width="50%">Version: <?php echo $this->config->Version->version; ?>&nbsp;&nbsp;&nbsp;</TD>
-    </TR>
-    </TABLE>
-</TD>
-</TR>
-<TR>
-<TD height="1"><TABLE height="1" border="0" cellspacing="0" cellpadding="0"><TD></TD></TABLE></TD>
-</TR>
-<TR>
-<TD class="displayPageHeader" height="1"><TABLE height="1" border="0" cellspacing="0" cellpadding="0"><TD></TD></TABLE></TD>
-</TR>
-<tr>
-    <td>&nbsp;</td>
-</tr>
-</TABLE>
-</div>
-<div style='FONT-SIZE: 10pt;'>
-<?php
+
+        $output .= <<<OUT
+
+<div style='font-size: 12px;'>
+
+OUT;
+
+        echo ($output);
     }
 
-    function hidePageHeader()
+    /**
+     * displayPageFooter 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function displayPageFooter()
     {
-        $this->silent = false;
-
-        $code = <<<EOT
-<script type="text/javascript">
-<!--
-loaded = true;
-window.scroll(0, 0);
-var Element = document.getElementById('ActionPageHeader');
-if (Element) {
-    Element.style.display = "none";
-}
--->
-</script>
-EOT;
-        echo $code;
-    }
-
-    function displayPageFooter()
-    {
-        $urls = (array)$this->get('pageReturnUrl');
+        $urls = (array)$this->getPageReturnURL();
 
         foreach ($urls as $url) {
-            echo "<br>".$url."<br>";
+            echo ('<br />' . $url . '<br />');
         }
-?>
+
+        $output = <<<OUT
+
 </div>
-<br>
-</BODY>
-</HTML>
-<?php
+
+</body>
+</html>
+
+OUT;
+
+        echo ($output);
     }
 
-    function getPageReturnUrl()
+    /**
+     * getPageReturnURL 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPageReturnURL()
     {
         return array();
     }
@@ -313,14 +313,13 @@ EOT;
      * Check - curent target and action is ignored (form id validation is disabled) or not
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isIgnoredTarget()
     {
         $result = false;
-                            
+
         if ($this->isRuleExists($this->defineIngnoredTargets())) {
             $result = true;
 
@@ -339,7 +338,7 @@ EOT;
                 $postLogin = $request->login;
                 $postPassword = $request->password;
 
-                if (!empty($postLogin) && !empty($postPassword)){
+                if (!empty($postLogin) && !empty($postPassword)) {
                     $postPassword = \XLite\Core\Auth::getInstance()->encryptPassword($postPassword);
                     $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
                         ->findByLoginPassword($postLogin, $postPassword, 0);
@@ -358,10 +357,9 @@ EOT;
     }
 
     /**
-     * Define common ingnored targets 
+     * Define common ignored targets 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -377,25 +375,23 @@ EOT;
      * Define special ignored targets 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function defineSpecialIgnoredTargets()
     {
         return array(
-            'db'      => array('backup', 'delete'),
-            'files'   => array('tar', 'tar_skins', 'untar_skins'),
+            'backup_restore' => array('backup', 'delete'),
+            'files'          => array('tar', 'tar_skins', 'untar_skins'),
         );
     }
 
     /**
-     * Check - rule is exists with current targe and action or not
+     * Check - rule is exists with current target and action or not
      * 
      * @param array $rules Rules
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -414,17 +410,19 @@ EOT;
     /**
      * Sanitize Clean URL 
      * 
-     * @param string $cleanUrl Clean URL
+     * @param string $cleanURL Clean URL
      *  
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function sanitizeCleanURL($cleanUrl)
+    protected function sanitizeCleanURL($cleanURL)
     {
-        return substr(trim(preg_replace('/[^a-z0-9 \/\._-]+/Sis', '', $cleanUrl)), 0, 200);
+        return substr(trim(preg_replace('/[^a-z0-9 \/\._-]+/Sis', '', $cleanURL)), 0, 200);
     }
+
+
+    // {{{ Methods to work with the received data
 
     /**
      * getRequestDataByPrefix 
@@ -433,19 +431,12 @@ EOT;
      * @param string $field  Name of the field to retrieve OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getRequestDataByPrefix($prefix, $field = null)
     {
-        $data = \XLite\Core\Request::getInstance()->$prefix;
-
-        if (!is_array($data)) {
-            $data = array();
-        }
-
-        return isset($field) ? (isset($data[$field]) ? $data[$field] : null) : $data;
+        return \Includes\Utils\ArrayManager::getIndex((array) \XLite\Core\Request::getInstance()->$prefix, $field);
     }
 
     /**
@@ -454,7 +445,6 @@ EOT;
      * @param string $field Name of the field to retrieve OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -467,7 +457,6 @@ EOT;
      * getToDelete 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -476,50 +465,49 @@ EOT;
         return $this->getRequestDataByPrefix($this->getPrefixToDelete());
     }
 
+    // }}}
 
+    // {{{ Core upgrade support
 
     /**
-     * FIXME - to remove
+     * Get current core version
      * 
-     * @return boolean 
-     * @access public
+     * @return string
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isTested()
+    public function getCurrentCoreVersion()
     {
-        return in_array(
-            get_class($this),
-            array(
-                'XLite\Controller\Admin\Login',
-                'XLite\Controller\Admin\Main',
-                'XLite\Controller\Admin\Category',
-                'XLite\Controller\Admin\Categories',
-                'XLite\Controller\Admin\Product',
-                'XLite\Controller\Admin\ProductList',
-                'XLite\Controller\Admin\Profile',
-                'XLite\Controller\Admin\Users',
-                'XLite\Controller\Admin\AddressBook',
-                'XLite\Controller\Admin\Order',
-                'XLite\Controller\Admin\OrderList',
-                'XLite\Controller\Admin\Settings',
-                'XLite\Controller\Admin\Module',
-                'XLite\Controller\Admin\Modules',
-                'XLite\Controller\Admin\PaymentMethod',
-                'XLite\Controller\Admin\PaymentMethods',
-                'XLite\Controller\Admin\ShippingSettings',
-                'XLite\Controller\Admin\ShippingMethods',
-                'XLite\Controller\Admin\ShippingRates',
-                'XLite\Controller\Admin\ShippingZones',
-                'XLite\Controller\Admin\Aupost',
-                'XLite\Controller\Admin\Taxes',
-                'XLite\Controller\Admin\States',
-                'XLite\Controller\Admin\Countries',
-                'XLite\Controller\Admin\Memberships',
-                'XLite\Controller\Admin\Languages',
-                'XLite\Controller\Admin\CacheManagement',
-                'XLite\Controller\Admin\RecentLogin',
-            )
-        );
+        return \XLite::getInstance()->getVersion();
     }
+
+    /**
+     * Is core upgrade available
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isCoreUpgradeAvailable()
+    {
+        return \XLite\Core\TmpVars::getInstance()->isCoreUpgradeAvailable;
+    }
+
+    // }}}
+
+    // {{{ Marketplace routines; :FIXME: must be moved to the base controller for module list
+
+    /**
+     * Return marketplace URL
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMarketplaceURL()
+    {
+        return \XLite\Core\Marketplace::getInstance()->getMarketplaceURL();
+    }
+
+    // }}}
 }

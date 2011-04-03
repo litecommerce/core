@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -31,9 +31,8 @@ namespace XLite\Controller\Customer;
 /**
  * ____description____
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class Catalog extends \XLite\Controller\Customer\ACustomer
 {
@@ -41,17 +40,106 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * getModelObject
      *
      * @return \XLite\Model\AEntity
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     abstract protected function getModelObject();
 
 
     /**
+     * Return current (or default) category object
+     *
+     * @return \XLite\Model\Category
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCategory()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($this->getCategoryId());
+    }
+
+    /**
+     * Returns the page title (for the content area)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        $model = $this->getModelObject();
+
+        return ($model && $model->getName()) ? $model->getName() : parent::getTitle();
+    }
+
+    /**
+     * Returns the page title (for the <title> tag)
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageTitle()
+    {
+        $model = $this->getModelObject();
+
+        return ($model && $model->getMetaTitle()) ? $model->getMetaTitle() : $this->getTitle();
+    }
+
+    /**
+     * getDescription
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDescription()
+    {
+        $model = $this->getModelObject();
+
+        return $model ? $model->getDescription() : null;
+    }
+
+    /**
+     * Get meta description
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMetaDescription()
+    {
+        $model = $this->getModelObject();
+
+        if ($model) {
+            $description = $model->getMetaDesc() ? $model->getMetaDesc() : $this->getDescription();
+
+        } else {
+            $description = parent::getMetaDescription();
+        }
+
+        return $description;
+    }
+
+    /**
+     * Get meta keywords
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getKeywords()
+    {
+        $model = $this->getModelObject();
+
+        return $model ? $model->getMetaTags() : parent::getKeywords();
+    }
+
+
+    /**
      * Return path for the current category
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -64,7 +152,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * Preprocessor for no-action ren
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -73,7 +160,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
         parent::doNoAction();
 
         if (!\XLite\Core\Request::getInstance()->isAJAX()) {
-            \XLite\Core\Session::getInstance()->productListURL = $this->getUrl();
+            \XLite\Core\Session::getInstance()->productListURL = $this->getURL();
         }
     }
 
@@ -83,7 +170,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * @param \XLite\Model\Category $category Category model object to use
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getCategoryURL(\XLite\Model\Category $category)
@@ -97,7 +184,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * @param \XLite\Model\Category $category Node category
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -119,7 +205,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * Add part to the location nodes list
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -134,87 +219,5 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
                 $this->getLocationNodeSubnodes($category)
             );
         }
-    }
-
-    /**
-     * Return current (or default) category object
-     *
-     * @return \XLite\Model\Category
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function getCategory()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($this->getCategoryId());
-    }
-
-    /**
-     * Returns the page title (for the content area)
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        $model = $this->getModelObject();
-
-        return ($model && $model->getName()) ? $model->getName() : parent::getTitle();
-    }
-
-    /**
-     * Returns the page title (for the <title> tag)
-     * 
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getPageTitle()
-    {
-        $model = $this->getModelObject();
-
-        return ($model && $model->getMetaTitle()) ? $model->getMetaTitle() : $this->getTitle();
-    }
-
-    /**
-     * getDescription
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getDescription()
-    {
-        $model = $this->getModelObject();
-
-        return $model ? $model->getDescription() : null;
-    }
-
-    /**
-     * getMetaDescription
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getMetaDescription()
-    {
-        $model = $this->getModelObject();
-
-        return $model && $model->getMetaDesc() ? $model->getMetaDesc() : $this->getDescription();
-    }
-
-    /**
-     * getKeywords
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getKeywords()
-    {
-        $model = $this->getModelObject();
-
-        return $model ? $model->getMetaTags() : null;
     }
 }

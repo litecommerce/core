@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Repo\Shipping;
@@ -31,36 +31,106 @@ namespace XLite\Model\Repo\Shipping;
 /**
  * Shipping method model
  * 
- * @package    XLite
- * @subpackage Model
- * @see        ____class_see____
- * @since      3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Markup extends \XLite\Model\Repo\ARepo
 {
     /**
      * Repository type 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $type = self::TYPE_SECONDARY;
+
+
+    /**
+     * Returns shipping markups for order modifier by specified processor
+     * 
+     * @param string                               $processor Processor class name
+     * @param \XLite\Logic\Order\Modifier\Shipping $modifier  Shipping order modifier
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findMarkupsByProcessor($processor, \XLite\Logic\Order\Modifier\Shipping $modifier)
+    {
+        $result = array();
+
+        $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($modifier);
+
+        $customerZones = array();
+
+        if (isset($address)) {
+            // Get customer zone sorted out by weight
+            $customerZones = \XLite\Core\Database::getRepo('XLite\Model\Zone')
+                ->findApplicableZones($address);
+        }
+
+        // Iterate through zones and generate markups list
+        foreach ($customerZones as $zone) {
+
+            $markups = $this->defineFindMarkupsByProcessorQuery($processor, $modifier, $zone->getZoneId())->getResult();
+
+            foreach ($markups as $markupData) {
+
+                $markup = $markupData[0];
+
+                if ($markup->getShippingMethod() && !isset($result[$markup->getShippingMethod()->getMethodId()])) {
+                    $markup->setMarkupValue($markupData['markup_value']);
+                    $result[$markup->getShippingMethod()->getMethodId()] = $markup;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * findMarkupsByZoneAndMethod 
+     * 
+     * @param integer $zoneId   Zone Id OPTIONAL
+     * @param integer $methodId Method Id OPTIONAL
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findMarkupsByZoneAndMethod($zoneId = null, $methodId = null)
+    {
+        return $this->defineFindMarkupsByZoneAndMethodQuery($zoneId, $methodId)->getResult();
+    }
+
+    /**
+     * Get markups by specified set of its id 
+     * 
+     * @param array $ids Array of markup Id
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findMarkupsByIds($ids)
+    {
+        return $this->defineFindMarkupsByIdsQuery($ids)->getResult();
+    }
+
 
     /**
      * Adds markup condition to the query builder object
      * 
-     * @param \Doctrine\ORM\QueryBuilder $qb     Query builder object
-     * @param \XLite\Model\Order         $order  Order object
-     * @param integer                    $zoneId Zone Id
+     * @param \Doctrine\ORM\QueryBuilder           $qb       Query builder object
+     * @param \XLite\Logic\Order\Modifier\Shipping $modifier Shipping order modifier
+     * @param integer                              $zoneId   Zone Id
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function addMarkupCondition($qb, $order, $zoneId)
+    protected function addMarkupCondition(\Doctrine\ORM\QueryBuilder $qb, \XLite\Logic\Order\Modifier\Shipping $modifier, $zoneId)
     {
         $prepareSum = array(
             'm.markup_flat',
@@ -83,10 +153,10 @@ class Markup extends \XLite\Model\Repo\ARepo
                     $qb->getParameters(),
                     array(
                         'zoneId' => $zoneId,
-                        'weight' => $order->getWeight(),
-                        'total'  => $order->getShippedSubtotal(),
-                        'items'  => $order->countShippedItems(),
-                        'value'  => $order->getShippedSubtotal(),
+                        'weight' => $modifier->getWeight(),
+                        'total'  => $modifier->getSubtotal(),
+                        'items'  => $modifier->countItems(),
+                        'value'  => $modifier->getSubtotal(),
                     )
                 )
             );
@@ -95,16 +165,15 @@ class Markup extends \XLite\Model\Repo\ARepo
     /**
      * Define query builder object for findMarkupsByProcessor()
      * 
-     * @param string             $processor Processor class name
-     * @param \XLite\Model\Order $order     Order or cart object
-     * @param integer            $zoneId    Zone Id
+     * @param string                               $processor Processor class name
+     * @param \XLite\Logic\Order\Modifier\Shipping $modifier  Shipping order modifier
+     * @param integer                              $zoneId    Zone Id
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineFindMarkupsByProcessorQuery($processor, $order, $zoneId)
+    protected function defineFindMarkupsByProcessorQuery($processor, \XLite\Logic\Order\Modifier\Shipping $modifier, $zoneId)
     {
         $qb = $this->createQueryBuilder('m')
             ->addSelect('sm')
@@ -117,7 +186,7 @@ class Markup extends \XLite\Model\Repo\ARepo
                 )
             );
 
-        return $this->addMarkupCondition($qb, $order, $zoneId);
+        return $this->addMarkupCondition($qb, $modifier, $zoneId);
     }
 
     /**
@@ -127,7 +196,6 @@ class Markup extends \XLite\Model\Repo\ARepo
      * @param integer $methodId Method Id
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -159,7 +227,6 @@ class Markup extends \XLite\Model\Repo\ARepo
      * @param array $ids Array of markup id
      *  
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -169,80 +236,4 @@ class Markup extends \XLite\Model\Repo\ARepo
 
         return $qb->andWhere($qb->expr()->in('m.markup_id', $ids));
     }
-
-    /**
-     * Returns shipping markups for order by specified processor
-     * 
-     * @param string             $processor Processor class name
-     * @param \XLite\Model\Order $order     Order object
-     *  
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findMarkupsByProcessor($processor, $order)
-    {
-        $result = array();
-
-        $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($order);
-
-        $customerZones = array();
-
-        if (isset($address)) {
-            // Get customer zone sorted out by weight
-            $customerZones = \XLite\Core\Database::getRepo('XLite\Model\Zone')
-                ->findApplicableZones($address);
-        }
-
-        // Iterate through zones and generate markups list
-        foreach ($customerZones as $zone) {
-
-            $markups = $this->defineFindMarkupsByProcessorQuery($processor, $order, $zone->getZoneId())->getResult();
-
-            foreach ($markups as $markupData) {
-
-                $markup = $markupData[0];
-
-                if ($markup->getShippingMethod() && !isset($result[$markup->getShippingMethod()->getMethodId()])) {
-                    $markup->setMarkupValue($markupData['markup_value']);
-                    $result[$markup->getShippingMethod()->getMethodId()] = $markup;
-                }
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * findMarkupsByZoneAndMethod 
-     * 
-     * @param integer $zoneId   Zone Id OPTIONAL
-     * @param integer $methodId Method Id OPTIONAL
-     *  
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findMarkupsByZoneAndMethod($zoneId = null, $methodId = null)
-    {
-        return $this->defineFindMarkupsByZoneAndMethodQuery($zoneId, $methodId)->getResult();
-    }
-
-    /**
-     * Get markups by specified set of its id 
-     * 
-     * @param array $ids Array of markup Id
-     *  
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findMarkupsByIds($ids)
-    {
-        return $this->defineFindMarkupsByIdsQuery($ids)->getResult();
-    }
-
 }

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,9 +31,8 @@ namespace XLite\Model;
 /**
  * Session
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Session")
  * @Table  (name="sessions",
@@ -57,10 +56,9 @@ class Session extends \XLite\Model\AEntity
     /**
      * Session increment id 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -71,10 +69,9 @@ class Session extends \XLite\Model\AEntity
     /**
      * Public session id
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="fixedstring", length="32")
      */
@@ -83,10 +80,9 @@ class Session extends \XLite\Model\AEntity
     /**
      * Session expiration time
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="uinteger")
      */
@@ -95,33 +91,17 @@ class Session extends \XLite\Model\AEntity
     /**
      * Cells cache 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $cache = array();
 
-    /**
-     * Set session id 
-     * 
-     * @param string $value Session id
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setSid($value)
-    {
-        $this->sid = $value;
-    }
 
     /**
      * Return instance of the session cell repository
      * 
      * @return \XLite\Model\Repo\SessionCell
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -132,12 +112,97 @@ class Session extends \XLite\Model\AEntity
 
 
     /**
+     * Set session id 
+     * 
+     * @param string $value Session id
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setSid($value)
+    {
+        $this->sid = $value;
+    }
+
+    /**
+     * Update expiration time
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function updateExpiry()
+    {
+        $this->setExpiry(time() + self::TTL);
+    }
+
+    /**
+     * Session cell getter
+     * 
+     * @param string $name Cell name
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __get($name)
+    {
+        $cell = $this->getCellByName($name);
+
+        return $cell ? $cell->getValue() : null;
+    }
+
+    /**
+     * Session cell setter
+     * 
+     * @param string $name  Cell name
+     * @param mixed  $value Value
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __set($name, $value)
+    {
+        $this->setCellValue($name, $value);
+    }
+
+    /**
+     * Check - set session cell with specified name or not
+     * 
+     * @param string $name Cell name
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __isset($name)
+    {
+        return !is_null($this->getCellByName($name));
+    }
+
+    /**
+     * Remove session cell 
+     * 
+     * @param string $name Cell name
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __unset($name)
+    {
+        $this->setCellValue($name, null);
+    }
+
+
+    /**
      * Get session cell by name
      *
      * @param string $name Cell name
      *
      * @return \XLite\Model\SessionCell|void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -159,7 +224,6 @@ class Session extends \XLite\Model\AEntity
      * @param string $name Cell name
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -178,7 +242,6 @@ class Session extends \XLite\Model\AEntity
      * @param mixed  $value Value to set
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -207,81 +270,5 @@ class Session extends \XLite\Model\AEntity
             static::getSessionCellRepo()->removeCell($cell);
             $this->invalidateCellCache($name);
         }
-    }
-
-    /**
-     * Update expiration time
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function updateExpiry()
-    {
-        $this->setExpiry(time() + self::TTL);
-    }
-
-    /**
-     * Session cell getter
-     * 
-     * @param string $name Cell name
-     *  
-     * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __get($name)
-    {
-        $cell = $this->getCellByName($name);
-
-        return $cell ? $cell->getValue() : null;
-    }
-
-    /**
-     * Session cell setter
-     * 
-     * @param string $name  Cell name
-     * @param mixed  $value Value
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __set($name, $value)
-    {
-        $this->setCellValue($name, $value);
-    }
-
-    /**
-     * Check - set session cell with specified name or not
-     * 
-     * @param string $name Cell name
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __isset($name)
-    {
-        return !is_null($this->getCellByName($name));
-    }
-
-    /**
-     * Remove session cell 
-     * 
-     * @param string $name Cell name
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __unset($name)
-    {
-        $this->setCellValue($name, null);
     }
 }

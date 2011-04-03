@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Include_Utils
+ * @subpackage Includes
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -31,9 +31,9 @@ namespace Includes\Utils\FileFilter;
 /**
  * FilterIterator 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class FilterIterator extends \FilterIterator
 {
@@ -46,6 +46,16 @@ class FilterIterator extends \FilterIterator
      * @since  3.0.0
      */
     protected $pattern;
+
+    /**
+     * List of filtering callbacks 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $callbacks = array();
 
 
     /**
@@ -67,6 +77,25 @@ class FilterIterator extends \FilterIterator
     }
 
     /**
+     * Add callback to filter files
+     *
+     * @param array $callback Callback to register
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function registerCallback(array $callback)
+    {
+        if (!is_callable($callback)) {
+            \Includes\ErrorHandler::fireError('Filtering callback is not valid');
+        }
+
+        $this->callbacks[] = $callback;
+    }
+
+    /**
      * Check if current element of the iterator is acceptable through this filter
      *
      * @return bool
@@ -76,11 +105,19 @@ class FilterIterator extends \FilterIterator
      */
     public function accept()
     {
-        // It's the hack (to increase Decorator perfomance) for developers
-        if (LC_DEVELOPER_MODE && (false !== strpos($this->getPathname(), '.svn'))) {
-            return false;
+        if (!($result = !isset($this->pattern))) {
+            $result = preg_match($this->pattern, $this->getPathname());
         }
 
-        return !isset($this->pattern) ?: preg_match($this->pattern, $this->getPathname());
+        if (!empty($this->callbacks)) {
+
+            while ($result && (list(, $callback) = each($this->callbacks))) {
+                $result = call_user_func_array($callback, array($this));
+            }
+
+            reset($this->callbacks);
+        }
+
+        return $result;
     }
 }

@@ -65,6 +65,43 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         return $product;
     }
 
+    public function testLowInventory()
+    {
+        $product = \XLite\Core\Database::getRepo('XLite\Model\Product')
+            ->createQueryBuilder()
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult();
+
+        $this->skipCoverage();
+
+        $this->openAndWait('store/product//product_id-' . $product->getProductId());
+
+        $this->click("//button[@class='bright add2cart']");
+
+        $this->waitForLocalCondition(
+            'jQuery(".product-details .product-buttons-added .buy-more").length > 0',
+            10000,
+            'check content reloading'
+        );
+
+        $inv = $product->getInventory();
+
+        $inv->setEnabled(true);
+        $inv->setAmount(0);
+        \XLite\Core\Database::getEM()->flush();
+
+        $this->openAndWait('store/checkout');
+        $this->waitForLocalCondition(
+            'jQuery(location).attr("pathname").match(/store\/cart/)',
+            3000,
+            'check redirect to cart'
+        );
+        
+        $inv->setAmount(50);
+        \XLite\Core\Database::getEM()->flush();
+    }
+
     public function testStructure()
     {
         $product = $this->addToCart();
@@ -247,7 +284,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->assertJqueryNotPresent('ul.payments li input:checked', 'payment is not selected');
 
-        $this->toggleByJquery('#pmethod6', true);
+        $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
 
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',
@@ -540,7 +577,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
             'John Smith bbb'
         );
 
-        $this->toggleByJquery('#pmethod6', true);
+        $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
 
         $this->click('css=.current .button-row button');
         $this->waitForLocalCondition(
@@ -667,14 +704,14 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->waitForLocalCondition(
             'jQuery(".payment-step.current").length == 1',
             10000,
-            'check swicth to next step'
+            'check switch to next step'
         );
 
     }
 
     protected function fillPaymentStep()
     {
-        $this->toggleByJquery('#pmethod6', true);
+        $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
 
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',

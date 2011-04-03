@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -31,39 +31,26 @@ namespace XLite\Controller\Customer;
 /**
  * Orders list 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class OrderList extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Controller parameters 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $params = array('target');
 
-    /**
-     * Common method to determine current location 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getLocation()
-    {
-        return 'Search orders';
-    }
 
     /**
      * Handles the request
      * 
      * @return void
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function handleRequest()
@@ -88,7 +75,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * Check if current page is accessible
      * 
      * @return boolean 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function checkAccess()
@@ -104,10 +91,47 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Save search conditions
+     * Setter
      * 
+     * @param string $name  Property name
+     * @param mixed  $value Property value
+     *  
      * @return void
-     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function set($name, $value)
+    {
+        switch ($name) {
+            case 'startDate':
+            case 'endDate':
+                $value = intval($value);
+                break;
+
+            default:
+        }
+
+        parent::set($name, $value);
+    }
+
+
+    /**
+     * Common method to determine current location 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Search orders';
+    }
+
+    /**
+     * Save search conditions
+     * TODO: to revise 
+     *
+     * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -212,14 +236,13 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
 
         $this->session->set('orders_search', $ordersSearch);
 
-        $this->set('returnUrl', $this->buildUrl('order_list'));
+        $this->setReturnURL($this->buildURL('order_list'));
     }
 
     /**
      * Reset search conditions
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -227,32 +250,6 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
     {
         $this->session->set('orders_search', \XLite\Model\Order::getDefaultSearchConditions());
 
-        $this->set('returnUrl', $this->buildUrl('order_list'));
+        $this->setReturnURL($this->buildURL('order_list'));
     }
-
-    /**
-     * Setter
-     * 
-     * @param string $name  Property name
-     * @param mixed  $value Property value
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function set($name, $value)
-    {
-        switch ($name) {
-            case 'startDate':
-            case 'endDate':
-                $value = intval($value);
-                break;
-
-            default:
-        }
-
-        parent::set($name, $value);
-    }
-
 }

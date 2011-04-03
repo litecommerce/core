@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Checkout\Step;
@@ -31,9 +31,8 @@ namespace XLite\View\Checkout\Step;
 /**
  * Review checkout step
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Review extends \XLite\View\Checkout\Step\AStep
 {
@@ -41,7 +40,6 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * Get step name
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -54,7 +52,6 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * Get step title
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -67,7 +64,6 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * Check - step is complete or not
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -80,7 +76,6 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * Get Terms and Conditions page URL 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -93,7 +88,6 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * Get Place button title 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -105,5 +99,33 @@ class Review extends \XLite\View\Checkout\Step\AStep
                 'total' => $this->formatPrice($this->getCart()->getTotal(), $this->getCart()->getCurrency()),
             )
         );
+    }
+
+    /**
+     * Get payment processor 
+     * 
+     * @return \XLite\Model\Payment\Base\Processor
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProcessor()
+    {
+        return $this->getCart()->getPaymentMethod()
+            ? $this->getCart()->getPaymentMethod()->getProcessor()
+            : null;
+    }
+
+    /**
+     * Get payment template 
+     * 
+     * @return string|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPaymentTemplate()
+    {
+        $processor = $this->getProcessor();
+
+        return $processor ? $processor->getInputTemplate() : null;
     }
 }

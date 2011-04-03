@@ -6,12 +6,19 @@
  * $Id: pear-phpunit 2805 2008-04-14 16:52:19Z sb $
  */
 
-set_include_path(get_include_path() . PATH_SEPARATOR . '/usr/local/share/pear/');
+require_once dirname(__FILE__) . '/tests/local.php';
+
+
+if (!defined('XLITE_DEV_PHPUNIT_PATH')) {
+	    die('Constant "XLITE_DEV_PHPUNIT_PATH" isn\'t defined in tests/local.php script.');
+}
+
+$set_include_path = XLITE_DEV_PHPUNIT_PATH . PATH_SEPARATOR . get_include_path();
+
+set_include_path(ltrim($set_include_path, PATH_SEPARATOR));
+
+
 @date_default_timezone_set(@date_default_timezone_get());
-
-require_once 'PHPUnit/Util/Filter.php';
-
-PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
 $lastParam = $_SERVER['argv'][count($_SERVER['argv']) - 1];
 
@@ -29,4 +36,5 @@ if (!preg_match('/AllTests.php$/Ss', $lastParam)) {
 	}
 }
 
-require 'PHPUnit/TextUI/Command.php';
+require 'phpunit.php';
+

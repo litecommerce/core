@@ -195,7 +195,15 @@ class XLite_Sniffs_PHP_Classes_ClassDeclarationSniff extends XLite_ReqCodesSniff
                             $this->getReqPrefix('REQ.PHP.3.4.6') . 'Использование определения области видимости обязательно',
                             $pos
                         );
- 					}
+
+ 					} elseif ($posPrivate) {
+                        $phpcsFile->addError(
+                            $this->getReqPrefix('REQ.PHP.3.4.8') . 'Использование области видимости private запрещено',
+                            $pos
+                        );
+
+
+					}
 
 					if ($posPublic !== false) {
                         $phpcsFile->addWarning(
@@ -281,9 +289,10 @@ class XLite_Sniffs_PHP_Classes_ClassDeclarationSniff extends XLite_ReqCodesSniff
 		}
 
 		if ($outerFunctions) {
+			$maxId = max($outerFunctions);
 			$blocks[min($outerFunctions) - 1] = array(
 				'Outer methods',
-				$tokens[max($outerFunctions)]['scope_closer'] + 1
+				(isset($tokens[$maxId]['scope_closer']) ? $tokens[$maxId]['scope_closer'] + 1 : $maxId + 2),
 			);
 		}
 
@@ -325,7 +334,7 @@ class XLite_Sniffs_PHP_Classes_ClassDeclarationSniff extends XLite_ReqCodesSniff
 				foreach ($prev as $p) {
 					if (isset($exists[$p])) {
 						$phpcsFile->addError(
-							$this->getReqPrefix('?')
+							$this->getReqPrefix('REQ.PHP.3.4.7')
 							. 'Method \'' . $key . ' function ' . $name . '\' is place after lesser method '
 							. '\'' . $p . ' function ' . $exists[$p] . '\' : ' . $functions[$exists[$p]][2],
 							$f[3]

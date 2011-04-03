@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 <p>
-<table border="0">
+<table>
 <tr>
     <td colspan="2"><b>Selected options:</b></td>
 </tr>

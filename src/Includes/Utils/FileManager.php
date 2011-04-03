@@ -239,14 +239,14 @@ class FileManager extends \Includes\Utils\AUtils
             $filter = new \Includes\Utils\FileFilter($dir, null, \RecursiveIteratorIterator::CHILD_FIRST);
 
             foreach ($filter->getIterator() as $file) {
-                $file->isDir() ? rmdir($file->getRealPath()) : static::delete($file->getRealPath());
+                $file->isDir() ? static::deleteDir($file->getRealPath()) : static::delete($file->getRealPath());
             }
 
             // Unset is required to release directory 
-            // and avoid 'Permission denied' warning on rmdir() on Windoows servers
+            // and avoid 'Permission denied' warning on rmdir() on Windows servers
             unset($filter);
 
-            rmdir($dir);
+            static::deleteDir($dir);
         }
     }
 
@@ -268,11 +268,11 @@ class FileManager extends \Includes\Utils\AUtils
             $dirFrom = static::getCanonicalDir($dirFrom);
             $dirTo   = static::getCanonicalDir($dirTo, false);
 
-            $filter = new \Includes\Utils\FileFilter($dirFrom, null, \RecursiveIteratorIterator::SELF_FIRST);
+            $filter = new \Includes\Utils\FileFilter($dirFrom, null, \RecursiveIteratorIterator::CHILD_FIRST);
 
             foreach ($filter->getIterator() as $file) {
                 $pathTo = $dirTo . static::getRelativePath($pathFrom = $file->getRealPath(), $dirFrom);
-                $file->isDir() ? static::mkdirRecursive($pathTo) : copy($pathFrom, $pathTo);
+                $file->isDir() ? static::mkdirRecursive($pathTo) : static::copy($pathFrom, $pathTo);
             }
         }
     }
@@ -400,6 +400,83 @@ class FileManager extends \Includes\Utils\AUtils
     public static function delete($path)
     {
         return !static::isExists($path) ?: unlink($path);
+    }
+
+    /**
+     * Delete dir
+     *
+     * @param string $dir Directory to delete
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function deleteDir($dir)
+    {
+        return !(static::isExists($dir) && static::isDir($dir)) ?: rmdir($dir);
+    }
+
+    /**
+     * Copy file
+     *
+     * @param string  $pathFrom  File path (from)
+     * @param string  $pathTo    File path (to)
+     * @param boolean $overwrite Flag
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function copy($pathFrom, $pathTo, $overwrite = true)
+    {
+        // Create directory if not exists
+        static::isDir($dir = static::getDir($pathTo)) ?: static::mkdirRecursive($dir);
+
+        return (!$overwrite && static::isExists($path)) ?: copy($pathFrom, $pathTo);
+    }
+
+    /**
+     * Find executable file
+     * 
+     * @param string $filename File name
+     *  
+     * @return string|void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function findExecutable($filename)
+    {
+        $pathSeparator = LC_OS_IS_WIN ? ';' : ':';
+
+        $directories = explode($pathSeparator, @getenv('PATH'));
+
+        if (!LC_OS_IS_WIN) {
+            array_unshift($directories, '/usr/bin', '/usr/local/bin');
+        }
+
+        $result = null;
+
+        foreach ($directories as $dir) {
+
+            $file = $dir . LC_DS . $filename;
+
+            if (LC_OS_IS_WIN) {
+                if (is_executable($file . '.exe')) {
+                    $result = $file . '.exe';
+                    break;
+                }
+
+            } elseif (is_executable($file)) {
+                $result = $file;
+                break;
+            }
+
+        }
+
+        return $result;
     }
 
     /**

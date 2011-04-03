@@ -44,9 +44,11 @@ function confirmNote(action, id)
   </div>
 
   <div class="activity">
-    {foreach:getFilters(),fltr,desc}
-      <a href="{buildUrl(#modules#,##,_ARRAY_(#filter#^fltr))}" class="upgradable{if:fltr=getFilter()} current{end:}">{t(desc)}</a><span>({getModulesCount(fltr)})</span>
-    {end:}
+    <tbody FOREACH="getFilters(),fltr,desc">
+      <a IF="fltr" href="{buildURL(#modules#,##,_ARRAY_(#filter#^fltr))}" class="upgradable{if:fltr=getFilter()} current{end:}">{t(desc)}</a>
+      <a IF="!fltr" href="{buildURL(#modules#)}" class="upgradable{if:fltr=getFilter()} current{end:}">{t(desc)}</a>
+      <span>({getModulesCount(fltr)})</span>
+    </tbody>
   </div>
 
   <div class="clear"></div>
@@ -54,17 +56,18 @@ function confirmNote(action, id)
 </div>
 
 <form action="admin.php" method="post" name="modules_form_{key}" class="modules-list">
-  <input type="hidden" name="target" value="modules" />
-  <input type="hidden" name="action" value="update" />
-  <input type="hidden" name="module_type" value="{key}" />
+
+  <fieldset>
+    <input type="hidden" name="target" value="modules" />
+    <input type="hidden" name="action" value="update" />
+    <input type="hidden" name="module_type" value="{key}" />
+  </fieldset>
 
   <table cellspacing="0" cellpadding="0" class="data-table items-list modules-list">
 
-    <tr FOREACH="getPageData(),idx,module" class="{getRowClass(idx,##,#highlight#)}{if:!module.getEnabled()} disabled{end:}">
-      {displayListPart(#columns#,_ARRAY_(#module#^module))}
+    <tr FOREACH="getPageData(),idx,module" class="module-{module.getModuleId()}{if:!module.getEnabled()} disabled{end:}">
+      {displayInheritedViewListContent(#columns#,_ARRAY_(#module#^module))}
     </tr>
 
   </table>
 </form>
-
-<widget IF="showPackWarning()" template="items_list/module/manage/parts/columns/actions/pack_warn.tpl" />

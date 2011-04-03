@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core;
@@ -31,9 +31,8 @@ namespace XLite\Core;
 /**
  * CMS connector 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class CMSConnector extends \XLite\Base\Singleton
 {
@@ -46,9 +45,9 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Current CMS name
      * 
-     * @var    booln
-     * @access protected
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $currentCMS = null;
 
@@ -56,9 +55,9 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * List of widgets which can be exported
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $widgetsList = array(
         '\XLite\View\TopCategories' => 'Categories list',
@@ -75,9 +74,9 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Page types 
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $pageTypes = array(
         'category'   => 'Category page',
@@ -89,108 +88,10 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
 
     /**
-     * Get profiled DB condition fields list
-     * 
-     * @param integer $cmsUserId CMS user Id
-     *  
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getProfileDBFields($cmsUserId)
-    {
-        return array(
-            'cms_profile_id' => intval($cmsUserId),
-            'cms_name'       => $this->getCMSName(),
-        );
-    }
-
-    /**
-     * getProfileWhereCondition 
-     * TODO: remove this method
-     *
-     * @param integer $cmsUserId CMS user Id
-     *  
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getProfileWhereCondition($cmsUserId)
-    {
-        return \Includes\Utils\Converter::buildQuery(
-            $this->getProfileDBFields($cmsUserId), '=', ' AND ', '\''
-        ) . ' AND order_id = \'0\'';
-    }
-
-    /**
-     * getCleanURLTargets 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getCleanURLTargets()
-    {
-        return array(
-            'category',
-            'product',
-        );
-    }
-
-    /**
-     * Get category clean URL by category id
-     * 
-     * @param integer $id     Category ID
-     * @param array   $params URL params
-     *  
-     * @return string|void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getCategoryCleanURL($id, array $params = array())
-    {
-        $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($id);
-
-        return (isset($category) && $category->getCleanUrl())
-            ? \Includes\Utils\URLManager::trimTrailingSlashes($category->getCleanUrl())
-                . '/' . \Includes\Utils\Converter::buildQuery($params, '-', '/')
-            : null;
-    }
-
-    /**
-     * Get product Clean URL by product id
-     * 
-     * @param integer $productId Product ID
-     *  
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getProductCleanURL($productId)
-    {
-        $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($productId);
-
-        $result = null;
-
-        if (isset($product) && $product->getCleanUrl()) {
-            $result = $product->getCleanUrl();
-            if (!preg_match('/\.html?$/Ss', $result)) {
-                $result .= '.html';
-            }
-        }
-
-        return $result;
-    }
-
-
-    /**
      * Return currently used CMS name
      *
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     abstract public function getCMSName();
@@ -200,7 +101,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * Determines if we export content into a CMS
      *
      * @return boolean 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public static function isCMSStarted()
@@ -214,7 +115,6 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * @param array $request Params to map
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -227,7 +127,6 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * Initialization
      *
      * @return void
-     * @access public                                           
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -240,7 +139,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * Check if a widget requested from certain CMS
      *
      * @return boolean 
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function checkCurrentCMS()
@@ -254,7 +153,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * @param string $name Widget name OPTIONAL
      *
      * @return array|string|null
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getWidgetsList($name = null)
@@ -266,7 +165,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * Get page types
      *
      * @return array
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getPageTypes()
@@ -280,7 +179,6 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * @param string $applicationId Cache key OPTIONAL
      *  
      * @return \XLite
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -297,7 +195,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * @param string $applicationId Cache key OPTIONAL
      *
      * @return \XLite\View\Controller
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getViewer($applicationId = null)
@@ -313,7 +211,6 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * @param string $applicationId Cache key OPTIONAL
      * 
      * @return \XLite\Controller\AController
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -330,7 +227,6 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * @param string $applicationId Cache key OPTIONAL
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -345,11 +241,11 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * Return widget
      * 
      * @param string  $class  Widget class name
-     * @param array   $params Widget params
+     * @param array   $params Widget params OPTIONAL
      * @param integer $delta  Drupal-specific param - so called "delta" OPTIONAL
      *  
      * @return \XLite\Core\WidgetDataTransport
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getWidget($class, array $params = array(), $delta = 0)
@@ -363,10 +259,10 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * Return controller for current page
      *
      * @param string $target Controller target
-     * @param array  $params Controller params
+     * @param array  $params Controller params OPTIONAL
      *
      * @return \XLite\Core\WidgetDataTransport
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getPageInstance($target, array $params = array())
@@ -385,7 +281,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * @param array   $data      Data to prepare
      *  
      * @return array
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function prepareProfileData($cmsUserId, array $data)
@@ -399,7 +295,6 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * @param integer $cmsUserId CMS profile ID
      *
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -417,7 +312,6 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * @param integer $lcUserId LC profile ID
      *
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -435,7 +329,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * @param integer $cmsUserId Internal user ID in CMS
      *  
      * @return \XLite\Model\Profile
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getProfile($cmsUserId)
@@ -453,7 +347,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * TODO  - code must be refactored
      *
      * @return boolean
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isAllowed()
@@ -483,7 +377,6 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * @param array $args Arguments
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -519,21 +412,20 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * @param string $path Clean url
      *  
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getURLByCleanURL($path)
     {
-        $cleanUrl = null;
+        $cleanURL = null;
 
         // By product
 
-        $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')
-            ->findByCleanUrl(preg_replace('/(?:\.html|\.htm)$/Ss', '', $path));
+        $product = \XLite\Core\Database::getRepo('XLite\Model\Product')
+            ->findOneByCleanURL(preg_replace('/(?:\.html|\.htm)$/Ss', '', $path));
 
         if (isset($product)) {
-            $cleanUrl = \XLite\Core\Converter::buildURL(
+            $cleanURL = \XLite\Core\Converter::buildURL(
                 'product',
                 '',
                 array('product_id' => $product->get('product_id'))
@@ -541,11 +433,12 @@ abstract class CMSConnector extends \XLite\Base\Singleton
         }
 
         // By category
-        if (!$cleanUrl) {
+        if (!$cleanURL) {
 
             $parts = preg_split('\'/\'', $path, 2, PREG_SPLIT_NO_EMPTY);
 
-            $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->findOneByCleanUrl($parts[0]);
+            $category = \XLite\Core\Database::getRepo('XLite\Model\Category')
+                ->findOneByCleanURL($parts[0]);
 
             if ($category) {
 
@@ -563,20 +456,19 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
                 }
 
-                $cleanUrl = \XLite\Core\Converter::buildURL('category', '', $params);
+                $cleanURL = \XLite\Core\Converter::buildURL('category', '', $params);
 
             }
 
         }
 
-        return $cleanUrl;
+        return $cleanURL;
     }
 
     /**
      * Get session TTL (in seconds) 
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -584,5 +476,99 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     {
         return \XLite\Model\Session::TTL;
     }
-}
 
+
+    /**
+     * Get profiled DB condition fields list
+     * 
+     * @param integer $cmsUserId CMS user Id
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProfileDBFields($cmsUserId)
+    {
+        return array(
+            'cms_profile_id' => intval($cmsUserId),
+            'cms_name'       => $this->getCMSName(),
+        );
+    }
+
+    /**
+     * getProfileWhereCondition 
+     * TODO: remove this method
+     *
+     * @param integer $cmsUserId CMS user Id
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProfileWhereCondition($cmsUserId)
+    {
+        return \Includes\Utils\Converter::buildQuery(
+            $this->getProfileDBFields($cmsUserId), '=', ' AND ', '\''
+        ) . ' AND order_id = \'0\'';
+    }
+
+    /**
+     * getCleanURLTargets 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCleanURLTargets()
+    {
+        return array(
+            'category',
+            'product',
+        );
+    }
+
+    /**
+     * Get category clean URL by category id
+     * 
+     * @param integer $id     Category ID
+     * @param array   $params URL params OPTIONAL
+     *  
+     * @return string|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCategoryCleanURL($id, array $params = array())
+    {
+        $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($id);
+
+        return (isset($category) && $category->getCleanURL())
+            ? \Includes\Utils\URLManager::trimTrailingSlashes($category->getCleanURL())
+                . '/' . \Includes\Utils\Converter::buildQuery($params, '-', '/')
+            : null;
+    }
+
+    /**
+     * Get product Clean URL by product id
+     * 
+     * @param integer $productId Product ID
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProductCleanURL($productId)
+    {
+        $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($productId);
+
+        $result = null;
+
+        if (isset($product) && $product->getCleanURL()) {
+            $result = $product->getCleanURL();
+            if (!preg_match('/\.html?$/Ss', $result)) {
+                $result .= '.html';
+            }
+        }
+
+        return $result;
+    }
+}

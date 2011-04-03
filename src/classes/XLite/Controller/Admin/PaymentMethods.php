@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -31,30 +31,40 @@ namespace XLite\Controller\Admin;
 /**
  * Payment methods
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class PaymentMethods extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return $this->t('Payment methods');
+    }
+
+
+    /**
      * Common method to determine current location
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getLocation()
     {
-        return 'Payment methods';
+        return $this->t('Payment methods');
     }
 
     /**
      * Update payment methods
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -62,29 +72,39 @@ class PaymentMethods extends \XLite\Controller\Admin\AAdmin
     {
         $data = \XLite\Core\Request::getInstance()->data;
 
-       if (!is_array($data)) {
+        if (!is_array($data)) {
 
             // TODO - add top message
 
         } else {
+
             $code = $this->getCurrentLanguage();
+
+            $flag = false;
+
             foreach ($data as $id => $row) {
+            
                 $m = \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->find($id);
 
-                if (!$m) {
+                if ($m) {
+
+                    $m->getTranslation($code)->setName($row['name']);
+                    $m->getTranslation($code)->setDescription($row['description']);
+                    $m->setOrderby(intval($row['orderby']));
+                    $m->setEnabled(isset($row['enabled']) && '1' == $row['enabled']);
+
+                    \XLite\Core\Database::getEM()->persist($m);
+
+                    $flag = true;
+                
+                } else {
                     // TODO - add top message
-                    continue;
                 }
-
-                $m->getTranslation($code)->setName($row['name']);
-                $m->getTranslation($code)->setDescription($row['description']);
-                $m->setOrderby(intval($row['orderby']));
-                $m->setEnabled(isset($row['enabled']) && '1' == $row['enabled']);
-
-                \XLite\Core\Database::getEM()->persist($m);
             }
 
-            \XLite\Core\Database::getEM()->flush();
+            if ($flag) {
+                \XLite\Core\Database::getEM()->flush();
+            }
         }
     }
 }

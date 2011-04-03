@@ -11,6 +11,5 @@
  * @since     3.0.0
  * @ListChild (list="top_links.storefront", weight="30")
  *}
-{*** TODO: use actual status and URLs, when implemented ***}
-<li><a class="close-storefront-link" href="#">{t(#Close storefront#)}</a></li>
-<li IF="false"><a class="open-storefront-link" href="#">{t(#Open storefront#)}</a></li>
+<li IF="!getCustomerZoneWarning()"><a class="close-storefront-link" href="{buildURL(#storefront#,#close#,_ARRAY_(#returnURL#^getURL()))}">{t(#Close storefront#)}</a></li>
+<li IF="getCustomerZoneWarning()"><a class="open-storefront-link" href="{buildURL(#storefront#,#open#,_ARRAY_(#returnURL#^getURL()))}">{t(#Open storefront#)}</a></li>

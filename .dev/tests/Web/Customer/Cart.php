@@ -218,6 +218,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             . "/td[@class='item-qty']"
             . "/form[@method='post']"
             . "/div"
+            . "/span[@class='quantity-box-container']"
             . "/input[@type='text' and @value='1' and @name='amount']",
             'check item quantity'
         );
@@ -276,7 +277,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             . "/ul[@class='totals']"
             . "/li"
         );
-        $this->assertEquals(5, $cnt, 'check totals rows count');
+        $this->assertEquals(4, $cnt, 'check totals rows count');
 
         $this->assertElementPresent(
             "//div[@id='cart']"
@@ -294,15 +295,6 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             . "/li[@class='shipping-modifier']"
             . "/strong[text()='Shipping cost:']",
             'check Shipping cost'
-        );
-
-        $this->assertElementPresent(
-            "//div[@id='cart']"
-            . "/div[@id='cart-right']"
-            . "/ul[@class='totals']"
-            . "/li[@class='tax-modifier']"
-            . "/strong[text()='tax:']",
-            'check Tax cost'
         );
 
         $this->assertElementPresent(
@@ -359,10 +351,13 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
     {
         $product = $this->addToCart();
 
+        $qtySelector = 'td.item-qty form input[type=text]';
+
         $this->typeKeys(
             "//td[@class='item-qty']"
             . "/form[@method='post']"
             . "/div"
+            . "/span[@class='quantity-box-container']"
             . "/input[@type='text']",
             '3'
         );
@@ -373,19 +368,50 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             'check quantity update'
         );
 
+        // Inventory tracking: check unallowed values
+
+        $errorDivSelector = 'div.amount' . $product->getProductId() . 'formError:visible';
+        $errorQtySelector = 'td.item-qty form input.wrong-amount';
+        $qtyBlurOperation = 'jQuery("td.item-qty form input[type=text]").blur()';
+
         $this->typeKeys(
             "//td[@class='item-qty']"
             . "/form[@method='post']"
             . "/div"
+            . "/span[@class='quantity-box-container']"
             . "/input[@type='text']",
             '-3'
         );
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryPresent($errorDivSelector, 'check minimal allowed quantity error');
+        $this->assertJqueryPresent($errorQtySelector, 'check minimal allowed quantity');
 
-        $this->waitForLocalCondition(
-            'jQuery(".item-qty .quantity").parents().eq(0).find(".error").length == 1',
-            30000,
-            'check quantity update #2'
+
+
+        $this->typeKeys(
+            "//td[@class='item-qty']"
+            . "/form[@method='post']"
+            . "/div"
+            . "/span[@class='quantity-box-container']"
+            . "/input[@type='text']",
+            '51'
         );
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryPresent($errorDivSelector, 'check maximum allowed quantity error');
+        $this->assertJqueryPresent($errorQtySelector, 'check maximum allowed quantity');
+
+
+        $this->typeKeys(
+            "//td[@class='item-qty']"
+            . "/form[@method='post']"
+            . "/div"
+            . "/span[@class='quantity-box-container']"
+            . "/input[@type='text']",
+            '10'
+        );
+        $this->getJSExpression($qtyBlurOperation);
+        $this->assertJqueryNotPresent($errorDivSelector, 'check normalized quantity error');
+        $this->assertJqueryNotPresent($errorQtySelector, 'check normalized quantity');
     }
 
     public function testEstimator()
@@ -503,7 +529,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             "//div[@class='box']"
             . "/div[@class='estimator']"
             . "/ul"
-            . "/li[contains(text(),'United States, AL, 10001')]",
+            . "/li[contains(text(),'United States, CA, 10001')]",
             'check address'
         );
 
@@ -551,4 +577,5 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
 
         $this->assertEquals($product->getProductId(), $pid, 'check product id');
     }
+
 }

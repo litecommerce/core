@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,9 +31,8 @@ namespace XLite\Model;
 /**
  * Product inventory
  *
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity
  * @Table  (name="inventory",
@@ -57,10 +56,9 @@ class Inventory extends \XLite\Model\AEntity
     /**
      * Inventory unique ID
      *
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -71,10 +69,9 @@ class Inventory extends \XLite\Model\AEntity
     /**
      * Is inventory tracking enabled or not
      *                            
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="boolean")
      */
@@ -83,10 +80,9 @@ class Inventory extends \XLite\Model\AEntity
     /**
      * Amount 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="uinteger")
      */
@@ -95,10 +91,9 @@ class Inventory extends \XLite\Model\AEntity
     /**
      * Is low limit notification enabled or not
      *
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="boolean")
      */
@@ -107,10 +102,9 @@ class Inventory extends \XLite\Model\AEntity
     /**
      * Low limit amount
      *
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="uinteger")
      */
@@ -119,82 +113,15 @@ class Inventory extends \XLite\Model\AEntity
     /**
      * Product (association)
      * 
-     * @var    \XLite\Model\Product
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Product
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToOne   (targetEntity="XLite\Model\Product", inversedBy="inventory")
      * @JoinColumn (name="id", referencedColumnName="product_id")
      */
     protected $product;
 
-    /**
-     * Check and (if needed) correct amount value
-     * 
-     * @param integer $amount Value to check
-     *  
-     * @return integer
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function correctAmount($amount)
-    {
-        return max(0, intval($amount));
-    }
-
-    /**
-     * Get list of cart items containing current product
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getLockedItems()
-    {
-        return \XLite\Model\Cart::getInstance()->getItemsByProductId($this->getProduct()->getProductId());
-    }
-
-    /**
-     * Return "locked" amount: items already added to the cart
-     * 
-     * @return integer
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getLockedAmount()
-    {
-        return \Includes\Utils\ArrayManager::sumObjectsArrayFieldValues($this->getLockedItems(), 'getAmount', true);
-    }
-
-    /**
-     * Default qty value to show to customers
-     * 
-     * @return integer
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDefaultAmount()
-    {
-        return self::AMOUNT_DEFAULT_INV_TRACK;
-    }
-
-    /**
-     * Send notification to admin about product low limit
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function sendLowLimitNotification()
-    {
-        // TODO: add code after the Mailer will be refactored
-    }
 
     /**
      * Setter
@@ -202,7 +129,6 @@ class Inventory extends \XLite\Model\AEntity
      * @param integer $amount Amount to set
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -217,7 +143,6 @@ class Inventory extends \XLite\Model\AEntity
      * @param integer $amount Amount to set
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -232,7 +157,6 @@ class Inventory extends \XLite\Model\AEntity
      * @param integer $delta Amount delta
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -247,7 +171,6 @@ class Inventory extends \XLite\Model\AEntity
      * Return product amount available to add to cart
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -260,7 +183,6 @@ class Inventory extends \XLite\Model\AEntity
      * Alias: is product in stock or not
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -285,7 +207,6 @@ class Inventory extends \XLite\Model\AEntity
      * Perform some actions before inventory saved
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      *
@@ -296,5 +217,68 @@ class Inventory extends \XLite\Model\AEntity
         if ($this->isLowLimitReached()) {
             $this->sendLowLimitNotification();
         }
+    }
+
+
+    /**
+     * Check and (if needed) correct amount value
+     * 
+     * @param integer $amount Value to check
+     *  
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function correctAmount($amount)
+    {
+        return max(0, intval($amount));
+    }
+
+    /**
+     * Get list of cart items containing current product
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLockedItems()
+    {
+        return \XLite\Model\Cart::getInstance()->getItemsByProductId($this->getProduct()->getProductId());
+    }
+
+    /**
+     * Return "locked" amount: items already added to the cart
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLockedAmount()
+    {
+        return \Includes\Utils\ArrayManager::sumObjectsArrayFieldValues($this->getLockedItems(), 'getAmount', true);
+    }
+
+    /**
+     * Default qty value to show to customers
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultAmount()
+    {
+        return self::AMOUNT_DEFAULT_INV_TRACK;
+    }
+
+    /**
+     * Send notification to admin about product low limit
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function sendLowLimitNotification()
+    {
+        // TODO: add code after the Mailer will be refactored
     }
 }

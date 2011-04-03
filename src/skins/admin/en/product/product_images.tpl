@@ -11,19 +11,19 @@
  * @since     3.0.0
  *}
 
-<p class="ErrorMessage" IF="!product.getImages()">There are no images loaded for this product</p>
+<p class="error-message" IF="!product.getImages()">There are no images loaded for this product</p>
 
 <br />
 
-<form IF="product.getImages()" action="admin.php" name="images_form" method="POST">
+<form IF="product.getImages()" action="admin.php" name="images_form" method="post">
 
   <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}" />
   <input type="hidden" name="action" value="update_images" />
   <input type="hidden" name="image_id" value="" />
 
-  <div FOREACH="product.getImages(),id,image" class="Text">
+  <div FOREACH="product.getImages(),id,image">
     <p>
-      <font class="admin-head">Image #{inc(id)}</font><br />
+      <span class="admin-head">Image #{inc(id)}</span><br />
       <strong>Note:</strong> Image border will not be displayed in customer's frontend
     </p>
     <img src="{image.getURL()}" style="border: 1px solid #b2b2b3;" alt="" />
@@ -45,9 +45,9 @@
         <tr>
 	        <td>&nbsp;</td>
         	<td>
-            <input type="submit" value="Update">
+            <widget class="\XLite\View\Button\Submit" label="Update" />
             &nbsp;
-		        <input type="button" value="Delete the image" onclick="images_form.image_id.value='{image.getImageId()}'; images_form.action.value='delete_image'; images_form.submit()">
+		        <widget class="\XLite\View\Button\Regular" label="Delete the image" jsCode="images_form.image_id.value='{image.getImageId()}'; images_form.action.value='delete_image'; images_form.submit()" />
 	        </td>
         </tr>
 
@@ -62,7 +62,7 @@
 <br />
 <br />
 
-<form action="admin.php" method="POST" name="imageForm" enctype="multipart/form-data">
+<form action="admin.php" method="post" name="imageForm" enctype="multipart/form-data">
 
   <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}" />
   <input type="hidden" name="action" value="add_image" />
@@ -95,7 +95,7 @@
     </tr>
 
     <tr>
-    	<td colspan="2"><input type="submit" value="Add" /></td>
+    	<td colspan="2"><widget class="\XLite\View\Button\Submit" label="Add" /></td>
     </tr>	
 
   </table>

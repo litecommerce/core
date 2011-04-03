@@ -14,254 +14,142 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
 
 /**
- * Module deploying model
+ * PHAR package model
+ *
+ * FIXME: move all actions into controllers
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class PHARModule extends \XLite\Base
 {
-
     /**
-     * Values of the statuses
+     * Object statuses 
      */
-    const STATUS_OK                     = 'ok';
-    const STATUS_ERROR                  = 'error';
-    const STATUS_WRONG_SPECIFICATION    = 'wrong_specification';
-    const STATUS_INI_CORRUPTED          = 'ini_corrupted';
-    const STATUS_WRONG_STRUCTURE        = 'wrong_structure';
-    const STATUS_WRONG_INSTALL          = 'wrong_install';
 
-
-    /**
-     * .PHAR file structure specific values
-     */
-    const MODULE_INI    = 'module.ini';
-    const CLASSES_DIR   = 'classes';
-    const SKINS_DIR     = 'skins';
-
-
-    /**
-     * Main section name in the INI file inside of .PHAR file 
-     */
-    const MODULE_SPECIFICATION  = 'module_specification';
-
-
-    /**
-     * Section variables in the INI file inside of .PHAR file 
-     */
-    const MODULE            = 'module';
-    const MODULE_DIR        = 'module_dir';
-    const MODULE_AUTHOR     = 'module_author';
-    const MODULE_VERSION    = 'module_version';
-
+    const STATUS_OK                           = 0;
+    const STATUS_EXCEPTION                    = 1;
+    const STATUS_FILE_NOT_EXISTS              = 2;
+    const STATUS_UNABLE_TO_EXTRACT            = 3;
+    const STATUS_UNABLE_TO_CREATE_TMP         = 4;
+    const STATUS_MAIN_FILE_NOT_EXISTS         = 5;
+    const STATUS_ROOT_DIR_EXISTS              = 6;
+    const STATUS_KERNEL_VERSION_NOT_SUPPORTED = 7;
 
 
     /**
      * Inner \Phar object
-     * 
-     * @var    \Phar
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     *
+     * @var   \Phar
+     * @see   ____var_see____
+     * @since 3.0.0
      */
-    protected $phar       = null;
-
+    protected $phar;
 
     /**
-     * Module model for inner use
+     * Temp dir to unpack
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
-    protected $module     = null;
-
-
-    /**
-     * Inner catalog to the first temporary deploying
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $tempDir    = null;
-
-
-    /**
-     * Error message of the \Phar object
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $error      = null;
-
+    protected $tempDir;
 
     /**
      * Status of last operation
-     * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
-    protected $status     = null;
-
+    protected $status = self::STATUS_OK;
 
     /**
-     * Array of values from the INI file
+     * Package main class name
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
-    protected $iniFile    = null;
-
+    protected $mainClass;
 
     /**
-     * Constructor of the class. 
-     * 
-     * @param mixed $phar Name of the .PHAR file in the inner local repository
-     *  
+     * <Status, Message> pairs
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $errorMessages = array(
+        self::STATUS_OK                   => 'No errors',
+        self::STATUS_EXCEPTION            => 'Phar class Exception',
+        self::STATUS_FILE_NOT_EXISTS      => 'PHAR file not exists in local repository',
+        self::STATUS_UNABLE_TO_EXTRACT    => 'Unable to extract PHAR package',
+        self::STATUS_UNABLE_TO_CREATE_TMP => 'Unable to create temp dir for PHAR package',
+        self::STATUS_MAIN_FILE_NOT_EXISTS => 'Main.php does not exist in package or is not readable',
+        self::STATUS_ROOT_DIR_EXISTS      => 'Package root dir is already exists',
+    );
+
+
+    // {{{ Constructor
+
+    /**
+     * Constructor
+     *
+     * @param string $name Name of the .PHAR file in the inner local repository
+     *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct($phar)
+    public function __construct($name)
     {
-        $result = self::STATUS_ERROR;
-
-        $this->makeTempDir();
-
-        if (is_file(LC_LOCAL_REPOSITORY . $phar)) {
+        // The "addons" directory must contain the corresonding PHAR archive
+        if (\Includes\Utils\FileManager::isReadable($name = LC_LOCAL_REPOSITORY . $name)) {
 
             try {
+                $this->phar = new \Phar($name);
+                $status = $this->deployToTemp();
 
-                $this->phar = new \Phar(LC_LOCAL_REPOSITORY . $phar);
+            } catch (\UnexpectedValueException $exception) {
 
-                $result = $this->deployToTemp();
-
-            } catch (\UnexpectedValueException $e) {
-
-                $this->error = $e->getMessage();
+                $status  = self::STATUS_EXCEPTION;
+                $message = $exception->getMessage();
             }
+
+        } else {
+
+            $status = self::STATUS_FILE_NOT_EXISTS;
         }
 
-        $this->status = $result;
-    }
-
-
-    /**
-     * Checks the .PHAR file
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function check()
-    {
-        $result = self::STATUS_ERROR;
-
-        if (
-            !is_null($this->getPhar())
-            && !is_null($this->getTempDir())
-        ) {
-            $result = $this->checkFileStructure();
-
-            if (self::STATUS_OK === $result) {
-
-                $result = $this->checkIniFile();
-
-                if (self::STATUS_OK === $result) {
-
-                    $this->initModule();
-
-                    $result = $this->checkInstall();
-                }
-            }
-        }
-
-        $this->status = $result;
-    }
-
-
-    /**
-     * Deploys .PHAR module file into LiteCommerce module structure
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function deploy()
-    {
-        if (!is_null($this->getModule())) {
-
-            $this->deployClasses();
-
-            $this->deploySkins();
+        if (isset($status)) {
+            $this->setStatus($status, empty($message) ? null : $message);
         }
     }
 
+    // }}}
+
+    // {{{  Status and message
 
     /**
-     * Removes the temporary files from the temporary local repository of modules.
+     * Getter
      * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function cleanUp()
-    {
-        if (!is_null($this->getTempDir())) {
-            \Includes\Utils\FileManager::unlinkRecursive($this->getTempDir());
-        }
-    }
-
-
-    /**
-     * Error message of .PHAR file operations getter
-     * 
-     * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getError()
-    {
-        return $this->error;
-    }
-
-
-    /**
-     * Status of last operation getter
-     * 
-     * @return mixed
-     * @access public
+     * @return integer
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -270,384 +158,365 @@ class PHARModule extends \XLite\Base
         return $this->status;
     }
 
-
     /**
-     * Temporary storage getter
-     * 
-     * @return mixed
-     * @access protected
+     * Getter
+     *
+     * @return string
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getTempDir()
+    public function getMessage()
     {
-        return $this->tempDir;
-    }
-
-
-    /**
-     * Module model getter
-     * 
-     * @return mixed
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getModule()
-    {
-        return $this->module;
+        return $this->errorMessages[$this->getStatus()];
     }
 
     /**
-     * PHAR object getter
+     * Set message and status
      * 
-     * @return \Phar
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getPhar()
-    {
-        return $this->phar;
-    }
-
-
-    /**
-     * Module model initialization
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function initModule()
-    {
-        $this->module = new \XLite\Model\Module();
-
-        $this->getModule()->setName($this->getModuleName());
-        $this->getModule()->setAuthor($this->getAuthor());
-    }
-
-
-    /**
-     * Deploys module classes structure into LiteCommerce classes catalog
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function deployClasses()
-    {
-        $classesTempDir = $this->getClassesTempDir();
-        $classesDir     = $this->getModule()->getRootDirectory();
-
-        if (is_dir($classesTempDir)) {
-
-            \Includes\Utils\FileManager::mkdirRecursive($classesDir);
-
-            \Includes\Utils\FileManager::copyRecursive(
-                $classesTempDir,
-                $classesDir
-            );
-        }
-    }
-
-
-    /**
-     * Deploys module skins structure into LiteCommerce skins catalog
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function deploySkins()
-    {
-        if (is_dir($this->getSkinsTempDir())) {
-
-            $skins = $this->fetchSkins();
-
-            foreach ($skins as $skinDir => $skinTempDir) {
-
-                \Includes\Utils\FileManager::mkdirRecursive($skinDir);
-
-                \Includes\Utils\FileManager::copyRecursive($skinTempDir, $skinDir);
-            }
-        }
-    }
-
-
-    /**
-     * Retrieve skins list from the temporary local repository of module
-     * 
-     * @return array List of skins in the format: {new skin path} => {skin path from temporary local repository of module}
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function fetchSkins()
-    {
-        $result = array();
-
-        $iterator = $this->getFetchSkinsIterator();
-
-        $iterator->setMaxDepth(2);
-
-        while ($iterator->valid()) {
-
-            if (
-                $iterator->isDir() 
-                && 1 == $iterator->getDepth()
-            ) {
-                $this->registerFetchedSkin($iterator, $result);
-            }
-
-            $iterator->next();
-        }
-
-        return $result;
-    }
-
-
-    /**
-     * Return file iterator for fetching skins 
-     * 
-     * @return \RecursiveIteratorIterator
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getFetchSkinsIterator()
-    {
-        return new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($this->getSkinsTempDir()),
-            \RecursiveIteratorIterator::SELF_FIRST,
-            \FilesystemIterator::SKIP_DOTS
-        );
-    }
-
-
-    /**
-     * Register specific modules skins catalogs from file iterator. 
-     * 
-     * @param \RecursiveIteratorIterator $iterator  File iterator
-     * @param array                      &$registry Array for registration the skins dir
+     * @param integer $status  Status to set
+     * @param string  $message Message to set OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function registerFetchedSkin(\RecursiveIteratorIterator $iterator, &$registry)
+    protected function setStatus($status, $message = null)
     {
-        $subPath = $iterator->getSubPathName();
+        $this->status = $status;
 
-        $dir = $this->getModule()->constructSkinPath($subPath);
-
-        $registry[$dir] = $this->getSkinsTempDir() . LC_DS . $subPath;
-    }
-
-
-    /**
-     * Returns INI file path in the temporary local repository of module
-     * 
-     * @return string File path to the INI file
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getIniFile()
-    {
-        return !is_null($this->getTempDir())
-            ? $this->getTempDir() . self::MODULE_INI
-            : null;
-    }
-
-
-    /**
-     * Returns the classes catalog inside the temporary local repository of module
-     * 
-     * @return string Catalog path
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getClassesTempDir()
-    {
-        return !is_null($this->getTempDir())
-            ? $this->getTempDir() . self::CLASSES_DIR
-            : null;
-    }
-    
-
-    /**
-     * Returns the skins catalog inside the temporary local repository of module
-     * 
-     * @return string Catalog path
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSkinsTempDir()
-    {
-        return !is_null($this->getTempDir())
-            ? $this->getTempDir() . self::SKINS_DIR
-            : null;
-    }
-
-
-    /**
-     * Module INI file validation 
-     * 
-     * @return string Status of validation (use self::STATUS_* constants)
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function checkIniFile()
-    {
-        $this->iniFile = parse_ini_file($this->getIniFile(), true);
-
-        $result = self::STATUS_INI_CORRUPTED;
-
-        if (
-            is_array($this->iniFile)
-            && isset($this->iniFile[self::MODULE_SPECIFICATION])
-            && !empty($this->iniFile[self::MODULE_SPECIFICATION])
-        ) {
-
-            $specification = $this->iniFile[self::MODULE_SPECIFICATION];
-
-            $result = self::STATUS_OK;
-
-            foreach ($this->getRequiredFields() as $field) {
-                if (
-                    !isset($specification[$field])
-                    || empty($specification[$field])
-                ) {
-                    $result = self::STATUS_WRONG_SPECIFICATION;
-                }
-            }
+        if (isset($message)) {
+            $this->errorMessages[$status] = $message;
         }
-
-        return $result;
     }
 
+    // }}}
+
+    // {{{ Deployment-related methods
 
     /**
-     * Returns required fields in the module specification section in the INI file of module.
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getRequiredFields()
-    {
-        return array(
-            self::MODULE,
-            self::MODULE_DIR,
-            self::MODULE_AUTHOR,
-        );
-    }
-
-
-    /**
-     * Return author from INI file
-     * 
+     * Extract the .PHAR package file content into the temporary local repository
+     *
      * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getAuthor()
-    {
-        return $this->iniFile[self::MODULE_SPECIFICATION][self::MODULE_AUTHOR];
-    }
-
-
-    /**
-     * Return module name from INI file 
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getModuleName()
-    {
-        return $this->iniFile[self::MODULE_SPECIFICATION][self::MODULE_DIR];
-    }
-
-
-    /**
-     * Validation of Install availability. 
-     * Currently you cannot install the module which has the same classes catalog with some already retrieved module.
-     * 
-     * @return string Status of validation
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function checkInstall()
-    {
-        return is_dir($this->getModule()->getRootDirectory()) ? self::STATUS_WRONG_INSTALL : self::STATUS_OK;
-    }
-
-
-    /**
-     * Validation of inner file-catalog structure of module file. It must contain INI file, Classes catalog or Skins catalog.
-     * 
-     * @return string Status of validation
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function  checkFileStructure()
-    {
-        // Check primary file/catalog structure
-        return (
-            is_file($this->getIniFile())
-            && (
-                is_dir($this->getClassesTempDir())
-                || is_dir($this->getSkinsTempDir())
-            )   
-        ) ? self::STATUS_OK : self::STATUS_WRONG_STRUCTURE;
-    }
-
-
-    /**
-     * Makes the unique temporary catalog for the temporary local repository of module
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function makeTempDir()
-    {
-        $fn = @tempnam(LC_TMP_DIR, 'phar_module');
-
-        @unlink($fn);
-
-        $this->tempDir = \Includes\Utils\FileManager::mkdirRecursive($fn) ? $fn . LC_DS : null;
-    }
-
-
-    /**
-     * Extract the .PHAR module file content into the temporary local repository of module
-     * 
-     * @return string Status of deploying
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function deployToTemp()
     {
-        return (
-            !is_null($this->getTempDir()) 
-            && $this->getPhar()->extractTo($this->getTempDir())
-        ) ? self::STATUS_OK : self::STATUS_ERROR;
+        // Trying to create temp dir
+        if ($this->getTempDir()) {
+
+            // Extract files from archive and check package integrity
+            $status = $this->extractPHAR() ? $this->checkIntegrity() : self::STATUS_UNABLE_TO_EXTRACT;
+
+        } else {
+
+            // By some reason temporary dir was not created
+            $status = self::STATUS_UNABLE_TO_CREATE_TMP;
+        }
+
+        return $status;
     }
+
+    /**
+     * Extract files from archive
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function extractPHAR()
+    {
+        return $this->phar->extractTo($this->getTempDir());
+    }
+
+    /**
+     * Return temporary dir name (to deploy packs there)
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getTempDir()
+    {
+        if (!isset($this->tempDir)) {
+            $this->tempDir = $this->makeTempDir();
+        }
+
+        return $this->tempDir;
+    }
+
+    /**
+     * Create temporary dir and return it's name
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function makeTempDir()
+    {
+        // Get unique file name
+        if ($name = $this->getTempDirSuffix()) {
+
+            // We do not need a file, but the dir with unique name
+            \Includes\Utils\FileManager::delete($name);
+
+            // Create such dir
+            $result = \Includes\Utils\FileManager::mkdirRecursive($name);
+        }
+
+        return empty($result) ? null : $name . LC_DS;
+    }
+
+    /**
+     * Get basename for temp dir
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getTempDirSuffix()
+    {
+        return tempnam(LC_TMP_DIR, 'phar_package');
+    }
+
+    // }}}
+
+    // {{{ Integrity check
+
+    /**
+     * Check status
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isValid()
+    {
+        return self::STATUS_OK === $this->getStatus();
+    }
+
+    /**
+     * Return minimal allowed version of LC kernel
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getVersion()
+    {
+        return call_user_func(array($this->getMainClass(), 'getVersion'));
+    }
+
+    /**
+     * Check file structure
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkIntegrity()
+    {
+        $status = null;
+
+        // Three-step checking
+        if (!$this->checkVersion()) {
+
+            // Must be compatible with current version
+            $status = self::STATUS_KERNEL_VERSION_NOT_SUPPORTED;
+
+        } elseif (!$this->isMainFileExists()) {
+
+            // Package must contain the Main.php file
+            $status = self::STATUS_MAIN_FILE_NOT_EXISTS;
+
+        } elseif ($this->isRootDirExists()) {
+
+            // Package dir is already exists
+            $status = self::STATUS_ROOT_DIR_EXISTS;
+        }
+
+        return $status;
+    }
+
+    /**
+     * Check for LC kernel version
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkVersion()
+    {
+        return version_compare($this->getVersion(), \XLite::getInstance()->getVersion(), '>=');
+    }
+
+    /**
+     * Check if Main.php exists
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isMainFileExists()
+    {
+        return \Includes\Utils\FileManager::isFileReadable($this->getMainFile());
+    }
+
+    /**
+     * Check if package dir already exists
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isRootDirExists()
+    {
+        return \Includes\Utils\FileManager::isDir($this->getRootDirFull());
+    }
+
+    // }}}
+
+    // {{{ Classes, files and dirs
+
+    /**
+     * Return name of the main class file
+     *
+     * FIXME: move Main.php to the root directory
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMainFile()
+    {
+        return $this->getTempDir() . 'classes' . LC_DS . 'Main.php';
+    }
+
+    /**
+     * Return name of package main class
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMainClass()
+    {
+        if (!isset($this->mainClass)) {
+            $this->mainClass = \Includes\Utils\Converter::prepareClassName(
+                \Includes\Decorator\Utils\Tokenizer::getFullClassName($this->getMainFile()),
+                false
+            );
+            if (!class_exists($this->mainClass, false)) {
+                include_once $this->getMainFile();
+            }
+        }
+
+        return $this->mainClass;
+    }
+
+    /**
+     * Return module name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModuleName()
+    {
+        return \Includes\Decorator\Utils\ModulesManager::getModuleNameByClassName($this->getMainClass());
+    }
+
+    /**
+     * Get module root directory
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getRootDirFull()
+    {
+        return LC_MODULES_DIR . $this->getRootDirRelative();
+    }
+
+    /**
+     * Get module root directory
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getRootDirRelative()
+    {
+        return str_replace('\\', LC_DS, $this->getModuleName());
+    }
+    
+    // }}}
+
+    // {{{ Deploy and cleanup
+
+    /**
+     * Deploy 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function deploy()
+    {
+        if ($this->isValid()) {
+            $this->deployClasses();
+            $this->deploySkins();
+        }
+    }
+
+    /**
+     * Clean up
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function cleanUp()
+    {
+        if ($dir = $this->getTempDir()) {
+            \Includes\Utils\FileManager::unlinkRecursive($dir);
+        }
+    }
+
+    /**
+     * Copy classes
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function deployClasses()
+    {
+        \Includes\Utils\FileManager::copyRecursive($this->getTempDir() . 'classes', $this->getRootDirFull());
+    }
+
+    /**
+     * Copy skins
+     *
+     * TODO: decompose
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function deploySkins()
+    {
+        foreach (\XLite\Core\Layout::getInstance()->getSkinsAll() as $skin) {
+
+            $paths = \XLite\Core\Layout::getInstance()->getSkinPaths($skin);
+            $data  = reset($paths);
+
+            \Includes\Utils\FileManager::copyRecursive(
+                $this->getTempDir() . 'skins' . LC_DS . \XLite\Core\Layout::getInstance()->getSkinPathRelative($skin),
+                $data['fs'] . LC_DS . 'modules' . LC_DS . $this->getRootDirRelative()
+            );
+        }
+    }
+
+    // }}}
 }

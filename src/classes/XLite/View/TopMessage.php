@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,17 +31,51 @@ namespace XLite\View;
 /**
  * Top message
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
+ * @ListChild (list="layout.main", weight="100")
  */
 class TopMessage extends \XLite\View\AView
 {
     /**
+     * Get a list of CSS files required to display the widget properly 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = $this->getDir() . '/style.css';
+
+        return $list;
+    }
+
+    /**
+     * Get a list of JS files required to display the widget properly 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = $this->getDir() . '/controller.js';
+
+        return $list;
+    }
+
+
+    /**
      * getDir 
      * 
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDir()
@@ -53,7 +87,7 @@ class TopMessage extends \XLite\View\AView
      * Return widget default template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
@@ -62,22 +96,10 @@ class TopMessage extends \XLite\View\AView
     }
 
     /**
-     * getBlockId 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getBlockId()
-    {
-        return 'top_messages';
-    }
-
-    /**
      * getTopMessages 
      * 
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getTopMessages()
@@ -88,12 +110,12 @@ class TopMessage extends \XLite\View\AView
     }
 
     /**
-     * getText 
+     * Get message text 
      * 
      * @param array $data Message
      *  
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getText(array $data)
@@ -102,12 +124,12 @@ class TopMessage extends \XLite\View\AView
     }
 
     /**
-     * getType 
+     * Get message type 
      * 
      * @param array $data Message
      *  
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getType(array $data)
@@ -115,47 +137,43 @@ class TopMessage extends \XLite\View\AView
         return $data[\XLite\Core\TopMessage::FIELD_TYPE];
     }
 
-
     /**
-     * Check widget visibility
+     * Get message prefix 
      * 
-     * @return boolean 
-     * @access protected
+     * @param array $data Message
+     *  
+     * @return string|void
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isVisible()
+    protected function getPrefix(array $data)
     {
-        return parent::isVisible() && $this->getTopMessages();
+        $prefix = null;
+
+        switch ($data[\XLite\Core\TopMessage::FIELD_TYPE]) {
+            case 'error':
+                $prefix = $this->t('Error') . ':';
+                break;
+
+            case 'warning':
+                $prefix = $this->t('Warning') . ':';
+                break;
+
+            default:
+        }
+
+        return $prefix;
     }
 
     /**
-     * Get a list of CSS files required to display the widget properly 
+     * Check - box display as hidden or not
      * 
-     * @return array
-     * @access public
+     * @return boolean
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCSSFiles()
+    protected function isHidden()
     {
-        $list = parent::getCSSFiles();
-        $list[] = $this->getDir() . '/style.css';
-
-        return $list;
+        return !$this->getTopMessages();
     }
-
-    /**
-     * Get a list of JS files required to display the widget properly 
-     * 
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-        $list[] = $this->getDir() . '/controller.js';
-
-        return $list;
-    }
-
 }

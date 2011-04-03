@@ -16,14 +16,14 @@
 <p align=justify>
 To create a customer account complete the form below and click on the 'Submit' button.
 <br>
-If you are a registered customer, you can <a href="{buildURL(#profile#,##,_ARRAY_(#mode#^#login#,#returnUrl#^backUrl:u))}"><u>login here</u></a>.
+If you are a registered customer, you can <a href="{buildURL(#profile#,##,_ARRAY_(#mode#^#login#,#returnURL#^backURL:u))}"><u>login here</u></a>.
 </p>
 </div>
 <div IF="target=#checkout#">
 <p align=justify>
 In order to perform the checkout we need to know your e-mail address and billing and shipping information. Complete the form below and click on the 'Submit' button to proceed. <span  IF="allowAnonymous">If you would like to create a customer account at our store, do not omit the password fields.</span>
 <br>
-If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_(#mode#^#login#,#returnUrl#^backUrl:u))}"><u>log into your account</u></a> before you proceed with the checkout process.
+If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_(#mode#^#login#,#returnURL#^backURL:u))}"><u>log into your account</u></a> before you proceed with the checkout process.
 </p>
 </div>
 
@@ -171,7 +171,9 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 <tr valign="middle">
     <td align="right">State</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="\XLite\View\StateSelect" field="billing_state" state="billing_state" isLinked=1 /></td>
+    <td>
+		<widget class="\XLite\View\StateSelect" field="billing_state" fieldId="billing_state_select" state="{billing_state}" isLinked=1 />
+    </td>
     <td>
         <widget class="\XLite\Validator\RequiredValidator" field="billing_state">
         <widget class="\XLite\Validator\StateValidator" field="billing_state" countryField="billing_country">
@@ -180,7 +182,8 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 <tr valign="middle">
 	<td align="right">Other state (specify)</td>
 	<td>&nbsp;</td>
-	<td><input type="text" name="billing_custom_state" value="{billing_custom_state:r}" size="32" maxlength="64" /></td>
+	<td><input type="text" name="billing_custom_state" value="{billing_custom_state:r}" size="32" maxlength="64">
+	</td>
 	<td>
 		&nbsp;
 	</td>
@@ -188,8 +191,12 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 <tr valign="middle">
     <td align="right">Country</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="\XLite\View\CountrySelect" field="billing_country" country="{billing_country}" /></td>
-    <td><widget class="\XLite\Validator\RequiredValidator" field="billing_country"></td>
+    <td>
+		<widget class="\XLite\View\CountrySelect" field="billing_country" fieldId="billing_country_select" country="{billing_country}" />
+    </td>
+    <td>
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_country">
+    </td>
 </tr>
 <tr valign="middle">
     <td align="right">Zip code</td>
@@ -213,7 +220,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
     <b>Shipping Address (leave empty if same as billing address)</b>
     <br />
     <hr size="1" noshade>
-    </td>
+    <widget class="\XLite\View\Button\Regular" label="Copy Billing Info" jsCode="copyBillingInfo(document.profile_form);" /></td>
 </tr>
 <tr valign="middle">
     <td align="right">Title</td>
@@ -294,7 +301,9 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 <tr valign="middle">
     <td align="right">State</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="\XLite\View\StateSelect" field="shipping_state" state="{shipping_state}" isLinked=1 /></td>
+    <td>
+		<widget class="\XLite\View\StateSelect" field="shipping_state" state="{shipping_state}" fieldId="shipping_state_select" isLinked=1 />
+    </td>
     <td>
         <widget class="\XLite\Validator\StateValidator" field="shipping_state" countryField="shipping_country">
     </td>
@@ -302,14 +311,20 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 <tr valign="middle">
 	<td align="right">Other state (specify)</td>
 	<td>&nbsp;</td>
-	<td><input type="text" name="shipping_custom_state" value="{shipping_custom_state:r}" size="32" maxlength="64" /></td>
-	<td>&nbsp;</td>
+	<td><input type="text" name="shipping_custom_state" value="{shipping_custom_state:r}" size="32" maxlength="64">
+	</td>
+	<td>
+		&nbsp;
+	</td>
 </tr>
 <tr valign="middle">
     <td align="right">Country</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="\XLite\View\CountrySelect" field="shipping_country" country="{shipping_country}" /></td>
-    <td>&nbsp;</td>
+    <td>
+		<widget class="\XLite\View\CountrySelect" field="shipping_country" fieldId="shipping_country_select" country="{shipping_country}" />
+    </td>
+    <td>
+    </td>
 </tr>
 <tr valign="middle">
     <td align="right">Zip code</td>
@@ -320,8 +335,6 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
     <td>
     </td>
 </tr>
-
-<widget module="CDev\UPSOnlineTools" template="modules/CDev/UPSOnlineTools/notice_register.tpl">
 
 <tbody IF="showMembership">
 <tr>
@@ -338,20 +351,15 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 </tr>
 </tbody>
 
-{*extraFields*}
-<widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/profile_form.tpl">
-
 </table>
 
 <br>
-<div>
-<widget template="common/spambot_arrest.tpl" id="on_register"></div>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
 <tr valign="middle">
     <td width="160">&nbsp;</td>
     <td >
-        By clicking "SUBMIT" you agree with our <a href="cart.php?target=help&amp;mode=terms_conditions" style="TEXT-DECORATION: underline" target="_blank">Terms &amp; Conditions.</a><br>
+        By clicking "SUBMIT" you agree with our Terms &amp; Conditions.<br>
         <br>
         <widget class="\XLite\View\Button\Submit" />
         <br>

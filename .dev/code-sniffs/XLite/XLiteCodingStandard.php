@@ -35,8 +35,12 @@ if (class_exists('PHP_CodeSniffer_Standards_CodingStandard', true) === false) {
  */
 
 if (!defined('XP_CLASSES_ROOT')) {
-	define('XP_CLASSES_ROOT', realpath(dirname(__FILE__) . '/../../../src/classes'));
-	define('XP_SKIN_ROOT', realpath(dirname(__FILE__) . '/../../../src/skins/drupal/en'));
+	define(
+		'XP_CLASSES_ROOT',
+		realpath(dirname(__FILE__) . '/../../../src/classes') . PATH_SEPARATOR
+		. realpath(dirname(__FILE__) . '/../../../src')
+	);
+	define('XP_SKIN_ROOT', realpath(dirname(__FILE__) . '/../../../src/skins/default/en'));
 }
 
 class PHP_CodeSniffer_Standards_XLite_XLiteCodingStandard extends PHP_CodeSniffer_Standards_CodingStandard

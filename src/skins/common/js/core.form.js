@@ -56,6 +56,11 @@ function CommonForm(form)
 
       var result = this.validate();
 
+      // Validation using validationEngine plugin
+      if (result && jQuery(this).validationEngine) {
+        result = jQuery(this).validationEngine('validate');
+      }
+
       if (result && o.submitOnlyChanged && !o.isChanged(true)) {
         result = false;
       }
@@ -70,6 +75,14 @@ function CommonForm(form)
       }
 
       return result;
+    }
+  );
+
+  // Attach validation engine
+  form.filter('.validationEngine').validationEngine(
+    {
+      promptPosition: 'topLeft',
+      scroll: false
     }
   );
 
@@ -584,6 +597,34 @@ CommonElement.prototype.markAsWheelControlled = function()
       return o.updateByMouseWheel(event, delta);
     }
   );
+
+  // Pull min and max value from the validationEndine class
+  if (this.$element.attr('class').match(/min\[(\d+)\].*max\[(\d+)\]/)) {
+    this.$element.mousewheel.options = {
+      'min': RegExp.$1,
+      'max': RegExp.$2
+    }
+  }
+
+  jQuery(document.createElement('span'))
+    .addClass('wheel-mark')
+    .append(
+      jQuery(document.createElement('img'))
+        .attr({
+          'src': commonSkinPath + 'images/spacer.gif',
+          'width': 15,
+          'height': 16
+        })
+    )
+    .insertAfter(this.$element);
+
+  this.$element.focus(function(){
+    jQuery(this).addClass('focused')
+  });
+
+  this.$element.blur(function(){
+    jQuery(this).removeClass('focused')
+  });
 }
 
 // Update element by mosue wheel
@@ -610,10 +651,10 @@ CommonElement.prototype.updateByMouseWheel = function(event, delta)
   }
 
   if (value !== false) {
-    var min = jQuery(this).data('min');
-    var max = jQuery(this).data('max');
+    var min = jQuery(this).mousewheel.options.min;
+    var max = jQuery(this).mousewheel.options.max;
 
-    value = value + delta * -1;
+    value = value + delta;
 
     if (typeof(min) != 'undefined' && min > value) {
       value = min;
@@ -630,9 +671,11 @@ CommonElement.prototype.updateByMouseWheel = function(event, delta)
     var oldValue = this.element.value;
     this.element.value = value;
 
-    if (!this.validate(true)) {
+    if (jQuery(this.element).validationEngine('validateField', '#' + this.element.id)) {
       this.element.value = oldValue;
     }
+
+    this.$element.removeClass('wrong-amount');
   }
 
   return false;

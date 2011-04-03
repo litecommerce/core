@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<script language="Javascript">
+<script type="text/javascript">
 function visibleBox(id, status)
 {
         var Element = document.getElementById(id);
@@ -31,13 +31,13 @@ function ShowNotes()
 </style>
 Use this section to backup the database of your online store. Please note
 that database backup procedure can take up to several minutes.
-<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="NavigationPath" onClick="this.blur()"><b>How to backup your store database &gt;&gt;&gt;</b></a></span>
+<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="navigation-path" onclick="this.blur()"><b>How to backup your store database &gt;&gt;&gt;</b></a></span>
 <span id="notes_body" style="display: none">
 <p class="adminParagraph">
-<table border=0 cellpadding=5 cellspacing=0>
+<table cellpadding="5" cellspacing="0">
     <tr>
         <td>&nbsp;&nbsp;</td>
-        <td class="TableHead">&nbsp;&nbsp;</td>
+        <td>&nbsp;&nbsp;</td>
         <td>&nbsp;</td>
         <td>
 You can choose to download your database data (SQL dump) directly to your local
@@ -52,27 +52,27 @@ file from the server later on and delete it from the server by clicking on the
 </p>
 </span>
 
-<hr>
-<p class="adminParagraph"><b class="Star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings"><u>General settings</u></a> page before performing backup procedure!</p>
+<hr />
+<p class="adminParagraph"><b class="star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings">General settings</a> page before performing backup procedure!</p>
 
 <form action="admin.php" method="post" name="backup_form">
-<input type="hidden" name="target" value="db">
-<input type="hidden" name="action" value="backup">
-<input type="hidden" name="write_to_file" value="0">
-<table border=0 cellpadding=0 cellspacing=0>
+<input type="hidden" name="target" value="backup_restore" />
+<input type="hidden" name="action" value="backup" />
+<input type="hidden" name="write_to_file" value="0" />
+<table cellpadding="0" cellspacing="0">
     <tr>
         <td colspan='3'>&nbsp;</td>
     </tr>
 	<tr>
-        <td><input type=submit value="Download SQL file" class="DialogMainButton"></td>
+        <td><widget class="\XLite\View\Button\Submit" label="Download SQL file" style="main-button" /></td>
 		<td>
-		{if:fileWritable}&nbsp;&nbsp;&nbsp;<input type=button value="Create SQL file" onClick="document.backup_form.write_to_file.value = '1'; document.backup_form.submit();">
+		{if:fileWritable}&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" label="Create SQL file" jsCode="document.backup_form.write_to_file.value = '1'; document.backup_form.submit();" />
 		{else:}
-		<table border=0 cellpadding=2 cellspacing=2>
+		<table cellpadding="2" cellspacing="2">
 		<tr>
 		<td valign=top>&nbsp;&nbsp;&nbsp;<b>Note:</b></td>
 		<td>
-		You cannot save database data to a file on the web server ('var/backup/sqldump.sql.php').<br>
+		You cannot save database data to a file on the web server ('var/backup/sqldump.sql.php').<br />
 		{if:!dirExists}
 		The directory 'var/backup/' does not exist or is not writable.
 		{else:}
@@ -83,7 +83,7 @@ file from the server later on and delete it from the server by clicking on the
 		</table>
 		{end:}
 		</td>
-		<td>{if:fileExists}&nbsp;&nbsp;&nbsp;<input type="button" "delete" value="Delete SQL file" onclick="document.backup_form.action.value='delete'; document.backup_form.submit();">{end:}</td>
+		<td IF="fileExists">&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" value="delete" label="Delete SQL file" jsCode="document.backup_form.action.value='delete'; document.backup_form.submit();" /></td>
 	</tr>
 	<tr>
 		<td colspan='3'>&nbsp;</td>

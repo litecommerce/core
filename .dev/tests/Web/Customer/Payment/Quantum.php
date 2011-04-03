@@ -40,14 +40,24 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
     public function testPay()
     {
         $pmethod = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(array('service_name' => 'QuantumGateway'));
-        $pid = $pmethod->getmethodId();
+        $pid = $pmethod->getMethodId();
         if (!$pmethod) {
             $this->fail('Quantum payment method is not found');
         }
 
+        $s = $pmethod->getSettingEntity('login');
+        if (!$s) {
+            $s = new \XLite\Model\Payment\MethodSetting;
+            $s->setName('login');
+            $pmethod->getSettings()->add($s);
+        }
+
         // Set test settings
+        $s->setValue($this->testConfig['quantum_gateway']['login']);
+        \XLite\Core\Database::getEM()->flush();
+        
+        // Enable payment method
         $pmethod->setEnabled(true);
-        $pmethod->getSettingEntity('login')->setValue('xcart_arch');
         \XLite\Core\Database::getEM()->flush();
 
         // Set no-xdebug-coverage flag
@@ -66,7 +76,7 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
 
         $this->waitForLocalCondition(
             'jQuery(".product-details .product-buttons-added .buy-more").length > 0',
-            10000,
+            20000,
             'check content reloading'
         );
 
@@ -173,13 +183,18 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
 
         $this->clickAndWait('css=.current .button-row button');
 
-        // Go to payment gateway
-        $this->waitForLocalCondition(
-            array(
-                'document.getElementsByTagName("form").length > 0',
-                'document.getElementsByTagName("form")[0].ccnum',
-            ),
-            20000
+        // Redirect to QuantumGateway server
+        $this->waitForCondition(
+            'selenium.getLocation() == "https://secure.quantumgateway.com/cgi/qgwdbe.php"',
+            30000,
+            'Redirect to payment gateway failed'
+        );
+
+        // Wait when payment form will appear
+        $this->waitForCondition(
+            'selenium.isElementPresent(\'//form/descendant::input[@name="ccnum"]\')',
+            30000,
+            'ccnum input field not found'
         );
 
         // Type test credit card data
@@ -195,7 +210,7 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
             'document.getElementsByTagName("form")[0].ccnum.value == "1111"',
             10000
         );
-        $this->setTimeout(self::SELENIUM_TTL);
+        $this->setTimeout(SELENIUM_TTL);
         $this->clickAndWait('//input[@type="SUBMIT"]');
 
         // Go to shop

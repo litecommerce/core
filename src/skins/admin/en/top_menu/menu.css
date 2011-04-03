@@ -26,16 +26,20 @@
   left 0;
 }
 
-#topMenu ul
+#topMenu ul,
+#topMenuLine ul
 {
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
-#topMenu ul ul li
+#topMenu ul ul li,
+#topMenuLine ul li
 {
   float: left;
+  position: relative;
+  display: inline-block;
 }
 
 #topMenu ul ul li a
@@ -47,9 +51,13 @@
 #topMenu ul ul div
 {
   position: absolute;
-  left: -9999px;
   overflow: hidden;
-  width: 100%;
+  display: none;
+  top: 36px;
+  text-align: left;
+  min-width: 170px;
+  left: 0;
+  background: #fff;
 }
 
 #topMenu ul#menuOuter
@@ -61,7 +69,6 @@
 #topMenu ul#menuOuter li.root
 {
   display: inline-block;
-  height: 66px;
 }
 
 #topMenu ul ul li a
@@ -71,7 +78,7 @@
     font-size: 16px;
     height: 36px;
     line-height: 36px;
-    margin-right: 5px;
+    margin: 0 5px 0 0;
     padding: 0 15px;
     text-decoration: none;
     -moz-border-radius: 10px 10px 0 0;
@@ -83,65 +90,98 @@
 {
   background: #106bac;
   color: #d0e9ff;
+  font-size: 14px;
 }
 
-#topMenu ul ul li a:hover
+#topMenu ul ul li.addons > a
 {
+  background: #e57c32;
+  color: #fff;
+  font-size: 14px;
 }
 
-#topMenu ul ul li:hover > a
-{
+#topMenu ul ul li.home > a img {
+  background: url("../images/icon_home.png") no-repeat left top;
+  margin-top: 11px;
 }
 
 #topMenu ul ul li.current > a
 {
   color: #333;
-  background: #fff;
-}
-
-#topMenu ul ul li.current div
-{
-  left: 0;
-  top: 36px;
-  text-align: left;
+  background-color: #fff;
 }
 
 #topMenu ul ul :hover div
 {
-  left: 0;
-  top: 36px;
-  text-align: left;
+  display: block;
 }
 
 #topMenu ul ul li div ul
 {
-  display: inline-block;
-  margin-left: 20px;
+  border: solid 1px #cadce8;
+  margin-top: 1px;
 }
 
 #topMenu ul ul li div ul li
 {
-  display: inline-block;
-  display: inline;
-  margin: 10px 0;
+  margin: 0;
+  float: none;
 }
 
-#topMenu ul ul div li a
+#topMenu ul ul div li > a
 {
   font-size: 14px;
-  height: 30px;
-  line-height: 30px;
+  height: 32px;
+  line-height: 32px;
   padding: 0 15px;
   color: #06528F;
   background: 0 none; 
+  float: none;
+  display: block;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  width: 170px;
+  margin: 0;
+}
+
+#topMenu ul ul li:hover > a
+{
+  background-color: #e0f0ff;
+  color: #06528f;
 }
 
 #topMenu ul ul div li a:hover
 {
-  background: 0 none !important;
+  background: #eff8fe;
 }
 
-#topMenu ul ul li div ul li.active a
+#topMenuLine
+{
+  height: 55px;
+  left: 0;
+  position: absolute;
+  top: 76px;
+  width: 100%;
+}
+
+#topMenuLine ul
+{
+  margin: 10px 0 10px 10px;
+}
+
+#topMenuLine ul li a
+{
+    color: #06528f;
+    font-size: 14px;
+    height: 36px;
+    line-height: 36px;
+    margin: 0 5px 0 0;
+    padding: 5px 15px;
+    text-decoration: none;
+}
+
+#topMenuLine ul li.active a
 {
   -moz-border-radius: 15px;
   -webkit-border-radius: 15px;
@@ -151,43 +191,7 @@
   cursor: default;
 }
 
-#topMenu ul ul div a:hover
+#topMenuLine ul li a:hover
 {
-}
-
-#topMenu ul#menuOuter li.root a:hover
-{
-  background: #e0f0ff;
-  color: #06528f;
-}
-
-#topMenu ul#menuOuter li.root:hover ul li.current div
-{
-  left: -9999px;
-}
-
-#topMenu ul#menuOuter li.root a:hover ul li.current div
-{
-  left: -9999px;
-}
-
-#topMenu ul#menuOuter li.root:hover ul li.current:hover div
-{
-  left: 0;
-}
-
-#topMenu ul#menuOuter li.root a:hover ul li.current a:hover div
-{
-  left: 0;
-}
-
-#topMenu ul#menuOuter li.root:hover ul li.current a
-{
-}
-
-#topMenu ul#menuOuter li.root a:hover ul li.current a
-{
-  background-image:none;
-  color:#fff;
-  line-height: 30px;
+  color: #69a4c9;
 }

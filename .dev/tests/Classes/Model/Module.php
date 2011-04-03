@@ -131,23 +131,17 @@ class XLite_Tests_Model_Module extends XLite_Tests_Model_ModuleAbstract
         $this->assertFalse($module->isFree(), 'check if module is free');
     }
 
-    public function testGetMarketplaceURL()
+    /*public function testGetPageURL()
     {
         $module = $this->getTestModule();
-        $this->assertEquals('https://www.litecommerce.com/marketplace/', $module::getMarketplaceURL(), 'check marketplace URL');
-    }
-
-    public function testGetPageURL()
-    {
-        $module = $this->getTestModule();
-        $this->assertEquals('https://www.litecommerce.com/marketplace/module/TestAuthor/TestModule', $module->getPageURL(), 'check module URL');
+        $this->assertEquals(\XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL() . 'module/TestAuthor/TestModule', $module->getPageURL(), 'check module URL');
     }
 
     public function testGetAuthorPageURL()
     {
         $module = $this->getTestModule();
-        $this->assertEquals('https://www.litecommerce.com/marketplace/module/TestAuthor', $module->getAuthorPageURL(), 'check module author URL');
-    }
+        $this->assertEquals(\XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL() . 'module/TestAuthor', $module->getAuthorPageURL(), 'check module author URL');
+    }*/
 
     public function testSetEnabled()
     {
@@ -178,14 +172,22 @@ class XLite_Tests_Model_Module extends XLite_Tests_Model_ModuleAbstract
         $module->disableModule();
         \XLite\Core\Database::getEM()->flush();
 
+        $this->assertFileExists($path, 'check that file .disabled.structures.php exists');
+
         $etalon = "# <?php if (!defined('LC_DS')) { die(); } ?>
 
 CDev\ProductOptions:
   tables: [options, option_exceptions, option_groups, option_group_translations, option_surcharges, option_translations, order_item_options]
-  columns: {  }
-";
+  columns: {  }";
 
-        $this->assertEquals($etalon, file_get_contents($path), 'check .disabled.structures.php');
+        $subject = file($path);
+
+        $etalon = explode("\n", $etalon);
+
+        foreach ($etalon as $key => $str) {
+            $this->assertEquals(trim($subject[$key]), trim($str), 'check file content (' . $path . ')');
+        }
+        
         if (file_exists($path)) {
             unlink($path);
         }
@@ -211,7 +213,11 @@ CDev\ProductOptions:
     public function testGetSettingsFormLink()
     {
         $module = $this->getEnabledModule(true, 'FeaturedProducts');
-        $this->assertEquals('admin.php?target=module&moduleId=' . $module->getModuleId(), $module->getSettingsFormLink(), 'check general settings form link');
+        $this->assertEquals(
+            \XLite\Core\Converter::buildURL('module', '', array('moduleId' => $module->getModuleId()), 'admin.php'),
+            $module->getSettingsFormLink(),
+            'check general settings form link'
+        );
         
         $module = $this->getEnabledModule(true, 'AustraliaPost');
         $this->assertEquals('admin.php?target=aupost', $module->getSettingsFormLink(), 'check custom settings form link');
@@ -262,29 +268,6 @@ CDev\ProductOptions:
         $this->assertEquals('Creative Development LLC', $module->__call('getAuthorName'), 'check author call');
     }
     
-    public function testIsUpdateAvailable()
-    {
-        $module = $this->getEnabledModule(true, 'FeaturedProducts');
-        $this->assertFalse($module->isUpdateAvailable(), 'check not available update');
-
-        $module->setVersion($module->getVersion() . '.1');
-        $this->assertTrue($module->isUpdateAvailable(), 'check available update');
-    }
-
-    public function testGetLastVersion()
-    {
-        $module = $this->getEnabledModule(true, 'FeaturedProducts');
-        $this->assertEquals($module->getVersion(), $module->getLastVersion(), 'check last version getter');
-    }
-
-    public function testGetCurrentVersion()
-    {
-        $module = $this->getEnabledModule(true, 'FeaturedProducts');
-        $oldVer = $module->getVersion();
-        $module->setVersion($module->getVersion() . '.1');
-        $this->assertEquals($oldVer, $module->getCurrentVersion(), 'check current version getter');
-    }
-
     public function testGetActualName()
     {
         $module = $this->getTestModule();
@@ -294,7 +277,7 @@ CDev\ProductOptions:
     public function testGetPath()
     {
         $module = $this->getTestModule();
-        $this->assertEquals('TestAuthor/TestModule', $module->getPath(), 'check path');
+        $this->assertEquals('TestAuthor' . LC_DS . 'TestModule', $module->getPath(), 'check path');
     }
  
     public function testGetModel()

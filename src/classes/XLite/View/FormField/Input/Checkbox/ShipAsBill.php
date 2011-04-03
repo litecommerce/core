@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\FormField\Input\Checkbox;
@@ -31,69 +31,15 @@ namespace XLite\View\FormField\Input\Checkbox;
 /**
  * \XLite\View\FormField\Input\Checkbox\ShipAsBill 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
 {
     /**
-     * getDefaultValue
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDefaultValue()
-    {
-        return true;
-    }
-
-    /**
-     * getDefaultLabel
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDefaultLabel()
-    {
-        return 'The same as billing';
-    }
-
-    /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return $this->getDir() . '/ship_as_bill.tpl';
-    }
-
-    /**
-     * Determines if checkbox is checked
-     *
-     * @return boolean 
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isChecked()
-    {
-        return parent::isChecked() || $this->callFormMethod('getShipAsBillFlag');
-    }
-
-
-    /**
      * Return a value for the "id" attribute of the field input tag
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -106,7 +52,6 @@ class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
      * Register JS files
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -117,5 +62,53 @@ class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
 
         return $list;
     }
-}
 
+    
+    /**
+     * getDefaultValue
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultValue()
+    {
+        return true;
+    }
+
+    /**
+     * getDefaultLabel
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultLabel()
+    {
+        return 'The same as billing';
+    }
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return $this->getDir() . '/ship_as_bill.tpl';
+    }
+
+    /**
+     * Determines if checkbox is checked
+     *
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isChecked()
+    {
+        return parent::isChecked() || $this->callFormMethod('getShipAsBillFlag');
+    }
+}

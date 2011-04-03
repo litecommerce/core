@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * Bread crumbs widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Location extends \XLite\View\AView
 {
@@ -45,10 +44,47 @@ class Location extends \XLite\View\AView
 
 
     /**
+     * Return breadcrumbs 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getNodes()
+    {
+        $list = array_values($this->getParam(self::PARAM_NODES));
+
+        $list[count($list) - 1]->setWidgetParams(
+            array(
+                \XLite\View\Location\Node::PARAM_IS_LAST => true,
+            )
+        );
+
+        return $list;
+    }
+
+
+    /**
+     * Get a list of CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'location/location.css';
+
+        return $list;
+    }
+
+
+    /**
      * Return widget default template
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -58,23 +94,9 @@ class Location extends \XLite\View\AView
     }
 
     /**
-     * Check if widget is visible
-     *
-     * @return boolean 
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isVisible()
-    {
-        return \XLite\Core\Auth::getInstance()->isLogged();
-    }
-
-    /**
      * Define widget parameters
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -89,34 +111,16 @@ class Location extends \XLite\View\AView
         );
     }
 
-
     /**
-     * Return breadcrumbs 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getNodes()
-    {
-        return $this->getParam(self::PARAM_NODES);
-    }
-
-
-    /**
-     * Get a list of CSS files
+     * Check if widget is visible
      *
-     * @return array
-     * @access public
+     * @return boolean 
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCSSFiles()
+    protected function isVisible()
     {
-        $list = parent::getCSSFiles();
-        $list[] = 'location/location.css';
-
-        return $list;
+        return parent::isVisible()
+            && 1 < count($this->getNodes());
     }
 }

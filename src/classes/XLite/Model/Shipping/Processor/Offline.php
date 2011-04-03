@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Shipping\Processor;
@@ -31,10 +31,8 @@ namespace XLite\Model\Shipping\Processor;
 /**
  * Shipping processor model
  * 
- * @package    XLite
- * @subpackage Model
- * @see        ____class_see____
- * @since      3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Offline extends \XLite\Model\Shipping\Processor\AProcessor
 {
@@ -46,10 +44,9 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
     /**
      * Unique processor Id
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $processorId = 'offline';
 
@@ -57,7 +54,6 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
      * getProcessorName 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -69,21 +65,20 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
     /**
      * Returns offline shipping rates 
      * 
-     * @param \XLite\Model\Order $order       Order object
-     * @param boolean            $ignoreCache Flag: if true then do not get rates from cache (not used in offline processor) OPTIONAL
+     * @param \XLite\Logic\Order\Modifier\Shipping $modifier    Shipping order modifier
+     * @param boolean                              $ignoreCache Flag: if true then do not get rates from cache (not used in offline processor) OPTIONAL
      *  
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getRates($order, $ignoreCache = false)
+    public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier, $ignoreCache = false)
     {
         $rates = array();
 
         // Find markups for all enabled offline shipping methods
         $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')
-            ->findMarkupsByProcessor($this->getProcessorId(), $order);
+            ->findMarkupsByProcessor($this->getProcessorId(), $modifier);
 
         if (!empty($markups)) {
 
@@ -106,7 +101,6 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
      * Returns true if shipping methods named may be modified by admin
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

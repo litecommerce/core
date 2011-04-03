@@ -80,7 +80,7 @@ if ((!file_exists($path) || 16 > filesize($path)) && is_writable(dirname($path))
     ini_set('error_log', $path);
 }
 
-ini_set('log_errors', 1);
+ini_set('log_errors', true);
 
 unset($path);
 

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,33 +31,20 @@ namespace XLite\Model;
 /**
  * Common shipping method
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Shipping extends \XLite\Base\Singleton
 {
     /**
      * List of registered shipping processors
      * 
-     * @var    array
-     * @access protected
-     * @since  3.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $registeredProcessors = array();
 
-    /**
-     * __constructor 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __construct()
-    {
-        self::registerProcessor('\XLite\Model\Shipping\Processor\Offline');
-    }
 
     /**
      * Register new shipping processor. All processors classes must be
@@ -66,8 +53,8 @@ class Shipping extends \XLite\Base\Singleton
      * @param string $processorClass Processor class
      *
      * @return void
-     * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public static function registerProcessor($processorClass)
     {
@@ -82,13 +69,175 @@ class Shipping extends \XLite\Base\Singleton
     }
 
     /**
+     * Unregister shipping processor.
+     *
+     * @param string $processorClass Processor class
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function unregisterProcessor($processorClass)
+    {
+        if (isset(self::$registeredProcessors[$processorClass])) {
+            unset(self::$registeredProcessors[$processorClass]);
+        }
+    }
+
+    /**
+     * Returns the list of registered shipping processors 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getProcessors()
+    {
+        return self::$registeredProcessors;
+    }
+
+
+    /**
+     * __constructor 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct()
+    {
+        self::registerProcessor('\XLite\Model\Shipping\Processor\Offline');
+    }
+
+    /**
+     * Retrieves shipping methods: all or by specified processor
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getShippingMethods($processorClass = null)
+    {
+        $methods = array();
+
+        if (isset($processorClass) && isset(self::$registeredProcessors[$processorClass])) {
+            $methods = self::$registeredProcessors[$processorClass]->getShippingMethods();
+
+        } else {
+
+            foreach (self::$registeredProcessors as $processor) {
+                $methods = array_merge($processor->getShippingMethods());
+            }
+        }
+
+        return $methods;
+    }
+    
+    /**
+     * Return shipping rates
+     * 
+     * @param \XLite\Logic\Order\Modifier\Shipping $modifier Shipping order modifier
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier)
+    {
+        $rates = array();
+
+        foreach (self::$registeredProcessors as $processor) {
+            // Get rates from processors
+            $rates = array_merge($rates, $processor->getRates($modifier));
+        }
+
+        if (!empty($rates)) {
+
+            $markups = array();
+
+            // Calculate markups
+            foreach ($rates as $id => $rate) {
+
+                // If markup has already been calculated for rate then continue iteration
+                if (null !== $rate->getMarkup()) {
+                    continue;
+                }
+
+                $processor = $rate->getMethod()->getProcessor();
+
+                if (!isset($markups[$processor])) {
+                    $markups[$processor] = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')
+                        ->findMarkupsByProcessor($processor, $modifier);
+                }
+
+                // Set markup to the rate
+                if (isset($markups[$processor])) {
+
+                    foreach ($markups[$processor] as $method) {
+
+                        if ($method->getMethodId() == $rate->getMethodId()) {
+                            $rate->setMarkup($markup);
+                            $rate->setMarkupRate($markup->getMarkupValue());
+                            $rates[$id] = $rate;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $rates;
+    }
+
+    /**
+     * Get destination address
+     * 
+     * @param \XLite\Logic\Order\Modifier\Shipping $modifier Shipping order modifier
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDestinationAddress(\XLite\Logic\Order\Modifier\Shipping $modifier)
+    {
+        $address = null;
+
+        if ($modifier->getOrder()->getProfile() && $modifier->getOrder()->getProfile()->getShippingAddress()) {
+
+            // Profile is exists
+            $addressObj = $modifier->getOrder()->getProfile()->getShippingAddress();
+            $address = array(
+                'address' => $addressObj->getStreet(),
+                'city'    => $addressObj->getCity(),
+                'state'   => $addressObj->getState()->getStateId(),
+                'zipcode' => $addressObj->getZipcode(),
+                'country' => $addressObj->getCountry() ? $addressObj->getCountry()->getCode() : '',
+            );
+        }
+
+        if (!isset($address)) {
+
+            // Anonymous address
+            $config = \XLite\Core\Config::getInstance()->Shipping;
+            $address = array(
+                'address' => $config->anonymous_address,
+                'city'    => $config->anonymous_city,
+                'state'   => $config->anonymous_state,
+                'zipcode' => $config->anonymous_zipcode,
+                'country' => $config->anonymous_country,
+            );
+        }
+
+        return $address;
+    }
+
+
+    /**
      * Sort function for sorting processors by class 
      * 
      * @param \XLite\Model\Shipping\Processor\AProcessor $a First processor
      * @param \XLite\Model\Shipping\Processor\AProcessor $b Second processor
      *  
      * @return integer 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -113,156 +262,4 @@ class Shipping extends \XLite\Base\Singleton
 
         return $result;
     }
-
-    /**
-     * Unregister shipping processor.
-     *
-     * @param string $processorClass Processor class
-     *
-     * @return void
-     * @access public
-     * @since  3.0
-     */
-    public static function unregisterProcessor($processorClass)
-    {
-        if (isset(self::$registeredProcessors[$processorClass])) {
-            unset(self::$registeredProcessors[$processorClass]);
-        }
-    }
-
-    /**
-     * Returns the list of registered shipping processors 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getProcessors()
-    {
-        return self::$registeredProcessors;
-    }
-
-    /**
-     * Retrieves shipping methods: all or by specified processor
-     * 
-     * @return array
-     * @access public
-     * @since  3.0
-     */
-    public function getShippingMethods($processorClass = null)
-    {
-        $methods = array();
-
-        if (isset($processorClass) && isset(self::$registeredProcessors[$processorClass])) {
-            $methods = self::$registeredProcessors[$processorClass]->getShippingMethods();
-
-        } else {
-
-            foreach (self::$registeredProcessors as $processor) {
-                $methods = array_merge($processor->getShippingMethods());
-            }
-        }
-
-        return $methods;
-    }
-    
-    /**
-     * Return shipping rates
-     * 
-     * @param \XLite\Model\Order $order Order object
-     *  
-     * @return void
-     * @access public
-     * @since  3.0
-     */
-    public function getRates(\XLite\Model\Order $order)
-    {
-        $rates = array();
-
-        foreach (self::$registeredProcessors as $processor) {
-            // Get rates from processors
-            $rates = array_merge($rates, $processor->getRates($order));
-        }
-
-        if (!empty($rates)) {
-
-            $markups = array();
-
-            // Calculate markups
-            foreach ($rates as $id => $rate) {
-
-                // If markup has already been calculated for rate then continue iteration
-                if (null !== $rate->getMarkup()) {
-                    continue;
-                }
-
-                $processor = $rate->getMethod()->getProcessor();
-
-                if (!isset($markups[$processor])) {
-                    $markups[$processor] = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')
-                        ->findMarkupsByProcessor($processor, $order);
-                }
-
-                // Set markup to the rate
-                if (isset($markups[$processor])) {
-
-                    foreach ($markups[$processor] as $method) {
-
-                        if ($method->getMethodId() == $rate->getMethodId()) {
-                            $rate->setMarkup($markup);
-                            $rate->setMarkupRate($markup->getMarkupValue());
-                            $rates[$id] = $rate;
-                        }
-                    }
-                }
-            }
-        }
-
-        return $rates;
-    }
-
-    /**
-     * Get destination address from the order
-     * 
-     * @param \XLite\Model\Order $order Order instance
-     *  
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getDestinationAddress(\XLite\Model\Order $order)
-    {
-        $address = null;
-        
-        if ($order->getProfile() && $order->getProfile()->getShippingAddress()) {
-
-            // Profile is exists
-            $addressObj = $order->getProfile()->getShippingAddress();
-            $address = array(
-                'address' => $addressObj->getStreet(),
-                'city'    => $addressObj->getCity(),
-                'state'   => $addressObj->getState()->getStateId(),
-                'zipcode' => $addressObj->getZipcode(),
-                'country' => $addressObj->getCountry() ? $addressObj->getCountry()->getCode() : '',
-            );
-        }
-
-        if (!isset($address) && \XLite\Base::getInstance()->config->Shipping->def_calc_shippings_taxes) {
-
-            // Anonymous address
-            $config = \XLite\Base::getInstance()->config->Shipping;
-            $address = array(
-                'address' => $config->anonymous_address,
-                'city'    => $config->anonymous_city,
-                'state'   => $config->anonymous_state,
-                'zipcode' => $config->anonymous_zipcode,
-                'country' => $config->anonymous_country,
-            );
-        }
-
-        return $address;
-    }
-
 }

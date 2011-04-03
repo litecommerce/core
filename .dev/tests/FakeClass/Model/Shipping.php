@@ -56,15 +56,15 @@ class FakeShippingProcessor extends \XLite\Model\Shipping\Processor\AProcessor
     /**
      * getRates 
      * 
-     * @param \XLite\Model\Order $order       Order instance
-     * @param bool               $ignoreCache Ignore cache flag
+     * @param \XLite\Logic\Order\Modifier\Shipping $modifier    Shipping order modifier
+     * @param bool                                 $ignoreCache Ignore cache flag
      *  
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getRates($order, $ignoreCache = false)
+    public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier, $ignoreCache = false)
     {
         return array();
     }

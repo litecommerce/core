@@ -90,7 +90,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
                 }
             }
 
-            self::$drupalRelativePath = str_repeat('../', $basePathSize - $i) . join('/', $xlitePath) . '/';
+            self::$drupalRelativePath = str_repeat('..' . LC_DS, $basePathSize - $i) . join(LC_DS, $xlitePath) . LC_DS;
         }
 
         return self::$drupalRelativePath;
@@ -108,7 +108,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
     protected static function modifyResourcePaths(array $data)
     {
         foreach ($data as &$file) {
-            $file = static::getDrupalRelativePath() . $file;
+            $file['file'] = str_replace(LC_DS, '/', static::getDrupalRelativePath() . str_replace(LC_ROOT_DIR, '', $file['file']));
         }
 
         return $data;
@@ -165,6 +165,33 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
         }
 
         return $result;
+    }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        if (\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+
+            $filter = array('css/style.css', 'css/print.css');
+
+            foreach ($list as $k => $v) {
+                $fn = is_string($v) ? $v : $v['file'];
+                if (in_array($fn, $filter)) {
+                    unset($list[$k]);
+                }
+            }
+        }
+
+        return $list;
     }
 
     /**  

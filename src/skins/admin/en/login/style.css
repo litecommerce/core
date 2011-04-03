@@ -38,6 +38,7 @@ div.login-page h1 {
 div.login-page #content {
   background: transparent none;
   border-top: 0 none;
+  margin-top: 135px;
 }
 
 div.login-box-wrapper {
@@ -49,6 +50,7 @@ div.login-box {
   margin: 0 auto;
   padding-right: 110px;
   width: 470px;
+  min-height: 200px;
 }
 
 div.login-box h2 {

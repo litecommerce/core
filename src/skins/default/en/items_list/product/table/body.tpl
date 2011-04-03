@@ -10,18 +10,17 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<table class="list-body list-body-table" cellspacing="0">
+<div class="products">
 
-  <tr FOREACH="getPageData(),product" class="hproduct item">
-    {displayListPart(#info#,_ARRAY_(#product#^product))}
-  </tr>
+  <table class="products-table" cellspacing="0" IF="getPageData()">
+    <tr>
+      {displayInheritedViewListContent(#captions#)}
+    </tr>
+    <tr FOREACH="getPageData(),product" class="product-cell {getProductCellClass(product)}">
+      <td FOREACH="getInheritedViewList(#columns#,_ARRAY_(#product#^product)),column">{column.display()}</td>
+    </tr>
+  </table>
 
-  <tr FOREACH="getViewList(#itemsList.product.table.customer.items#),w">
-    {w.display()}
-  </tr>
+  {displayNestedViewListContent(#buttons#)}
 
-  <tr IF="isShowMoreLink()">
-    <td colspan="{getTableColumnsCount()}"><a class="link" href="{getMoreLinkURL()}">{getMoreLinkText()}</a></td>
-  </tr>
-
-</table>
+</div>

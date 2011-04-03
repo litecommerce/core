@@ -1,6 +1,6 @@
 #!/usr/local/bin/zsh
 #
-# $Id$
+# GIT: $Id$
 #
 # Local PHP Unit
 #
@@ -11,4 +11,4 @@
 
 cd $(dirname $0)
 cd ..
-phpunit xliteAllTests .dev/tests/AllTests.php LOCAL_TESTS,$1
+.dev/phpunit --verbose xliteAllTests .dev/tests/AllTests.php LOCAL_TESTS,$1

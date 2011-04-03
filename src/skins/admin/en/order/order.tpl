@@ -12,20 +12,24 @@
  *}
 <widget template="order/invoice/page.tpl" />
 
-<p>
-<b><a href="admin.php?target=order&mode=invoice&order_id={order.order_id}" target="_blank"><input type="image" src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Print invoice</a></b>
+<br />
+<a href="admin.php?target=order&mode=invoice&order_id={order.order_id}" target="_blank"><input type="image" src="images/go.gif" width="13" height="13" align="absmiddle" /> Print invoice</a></b>
+<br />
+<br />
 <widget module="CDev\UPSOnlineTools" template="modules/CDev/UPSOnlineTools/show_container_details.tpl">
 
 <P>
-<form action="admin.php" method="POST">
-<input type="hidden" name="target" value="order">
-<input type="hidden" name="action" value="update">
-<input type="hidden" name="order_id" value="{order.order_id}">
-<input type="hidden" name="returnUrl" value="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id))}">
-<table border=0>
+<form action="admin.php" method="post">
+<input type="hidden" name="target" value="order" />
+<input type="hidden" name="action" value="update" />
+<input type="hidden" name="order_id" value="{order.order_id}" />
+<input type="hidden" name="returnURL" value="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id))}" />
+<table>
 <tr>
 	<td>Status:</td>
-	<td><widget class="\XLite\View\StatusSelect" field="status" value="{order.status}" /></td>
+	<td>
+    <widget class="\XLite\View\FormField\Select\OrderStatus" fieldOnly=true fieldName="status" value="{order.getStatus()}" orderId="{order.getOrderId()}" />
+  </td>
 </tr>
 
 <tr FOREACH="order.getMeaningDetails(),d" valign="top">
@@ -42,7 +46,7 @@
 
 <tr valign="top">
 	<td></td>
-	<td><input type="submit" value=" Submit"></td>
+	<td><widget class="\XLite\View\Button\Submit" label=" Submit" /></td>
 </tr>
 </table>
 </form>

@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Category;
@@ -31,9 +31,8 @@ namespace XLite\Model\Category;
 /**
  * Category quick flags
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Category\QuickFlags")
  * @Table  (name="category_quick_flags")
@@ -43,10 +42,9 @@ class QuickFlags extends \XLite\Model\AEntity
     /**
      * Doctrine ID 
      * 
-     * @var    int
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -57,10 +55,9 @@ class QuickFlags extends \XLite\Model\AEntity
     /**
      * Total number of subcategories
      * 
-     * @var    int
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -69,10 +66,9 @@ class QuickFlags extends \XLite\Model\AEntity
     /**
      * Number of enabled subcategories
      *
-     * @var    int
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -81,10 +77,9 @@ class QuickFlags extends \XLite\Model\AEntity
     /**
      * Relation to a category entity
      *
-     * @var    \XLite\Model\Category
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Category
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToOne  (targetEntity="XLite\Model\Category", inversedBy="quickFlags")
      * @JoinColumn (name="category_id", referencedColumnName="category_id")

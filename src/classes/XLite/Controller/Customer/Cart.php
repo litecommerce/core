@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Controller
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -31,17 +31,58 @@ namespace XLite\Controller\Customer;
 /**
  * \XLite\Controller\Customer\Cart 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Cart extends \XLite\Controller\Customer\ACustomer
 {
+    /** 
+     * Initialize controller
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function init()
+    {
+        parent::init();
+
+        $this->checkItemsAmount();
+    }
+
+    /**
+     * Get page title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return $this->getCart()->isEmpty()
+            ? $this->t('Your shopping bag is empty')
+            : $this->t('Your shopping bag - X items', array('count' => $this->getCart()->countQuantity()));
+    }
+
+    /**
+     * isSecure 
+     * TODO: check if this method is used
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isSecure()
+    {
+        return $this->is('HTTPS') ? true : parent::isSecure();
+    }
+
+
     /**
      * Common method to determine current location 
      * 
      * @return string
-     * @access protected 
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getLocation()
@@ -53,7 +94,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * Return current product Id
      *
      * @return integer
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getProductId()
@@ -65,7 +106,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * Return product amount
      *
      * @return integer
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getAmount()
@@ -77,7 +118,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * Alias
      *
      * @return \XLite\Model\Product
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -92,7 +132,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * @param \XLite\Model\Product $product Product to add
      *
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -107,7 +146,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * @param \XLite\Model\Product $product Product to check
      *
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -123,7 +161,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * @param integer              $amount  Amount to check OPTIONAL
      *
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -138,7 +175,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * @param \XLite\Model\Product $product Product to add
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -152,14 +188,14 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * Check amount for all cart items
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function checkItemsAmount()
     {
         foreach ($this->getCart()->getItemsWithWrongAmounts() as $item) {
-            $this->processInvalidAmountError($product = $item->getProduct(), $this->getProductAmount($product));
+            $product = $item->getProduct();
+            $this->processInvalidAmountError($product, $this->getProductAmount($product));
         }
     }
 
@@ -169,7 +205,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * @param \XLite\Model\Product $product Product to add
      *  
      * @return integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -191,7 +226,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * @param \XLite\Model\Product $product Product to add
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -209,7 +243,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * Add product to the cart
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -225,13 +258,12 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * @param integer              $amount  Available amount
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function processInvalidAmountError(\XLite\Model\Product $product, $amount)
     {
-        \XLite\Core\TopMessage::getInstance()->addWarning(
+        \XLite\Core\TopMessage::addWarning(
             'Only ' . $amount . ' items are available for the "' . $product->getName() . '" product'
         );
     }
@@ -240,14 +272,13 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * Process 'Add item' error
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function processAddItemError()
     {
         if (\XLite\Model\Cart::NOT_VALID_ERROR == $this->getCart()->getAddItemError()) {
-            \XLite\Core\TopMessage::getInstance()->addError('Product has not been added to cart');
+            \XLite\Core\TopMessage::addError('Product has not been added to cart');
         }
     }
 
@@ -255,28 +286,28 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * Process 'Add item' success
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function processAddItemSuccess()
     {
-        \XLite\Core\TopMessage::getInstance()->addInfo('Product has been added to the cart');
+        \XLite\Core\TopMessage::addInfo('Product has been added to the cart');
     }
 
     /**
      * URL to return after product is added
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getURLToReturn()
     {
-        if (!($url = \XLite\Core\Session::getInstance()->productListURL)) {
+        $url = \XLite\Core\Session::getInstance()->productListURL;
+        
+        if (!$url) {
             $url = empty($_SERVER['HTTP_REFERER']) 
-                ? $this->buildUrl('product', '', array('product_id' => $this->getProductId()))
+                ? $this->buildURL('product', '', array('product_id' => $this->getProductId()))
                 : $_SERVER['HTTP_REFERER'];
         }
 
@@ -287,7 +318,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * URL to return after product is added
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -296,7 +326,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
         if (\XLite\Core\Config::getInstance()->General->redirect_to_cart) {
             \XLite\Core\Session::getInstance()->continueURL = $this->getURLToReturn();
         } else {
-            $this->setReturnUrl($this->getURLToReturn());
+            $this->setReturnURL($this->getURLToReturn());
         }
     }
 
@@ -304,7 +334,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * Add product to cart
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -320,36 +349,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
         $this->setURLToReturn();
     }
 
-    /** 
-     * Initialize controller
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function init()
-    {
-        parent::init();
-
-        $this->checkItemsAmount();
-    }
-
-    /**
-     * Get page title
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return $this->getCart()->isEmpty()
-            ? $this->t('Your shopping bag is empty')
-            : $this->t('Your shopping bag - X items', array('count' => $this->getCart()->countQuantity()));
-    }
-
 
     // TODO: refactoring
 
@@ -357,7 +356,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * 'delete' action
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -370,13 +368,12 @@ class Cart extends \XLite\Controller\Customer\ACustomer
             \XLite\Core\Database::getEM()->remove($item);
             $this->updateCart();
 
-            \XLite\Core\TopMessage::getInstance()->add('Item has been deleted from cart');
+            \XLite\Core\TopMessage::addInfo('Item has been deleted from cart');
 
         } else {
             $this->valid = false;
-            \XLite\Core\TopMessage::getInstance()->add(
-                'Item has not been deleted from cart',
-                \XLite\Core\TopMessage::ERROR
+            \XLite\Core\TopMessage::addError(
+                'Item has not been deleted from cart'
             );
         }
     }
@@ -385,7 +382,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * Update cart
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -430,7 +426,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * 'checkout' action
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -439,14 +434,13 @@ class Cart extends \XLite\Controller\Customer\ACustomer
         $this->doActionUpdate();
 
         // switch to checkout dialog 
-        $this->set('returnUrl', $this->buildURL('checkout'));
+        $this->setReturnURL($this->buildURL('checkout'));
     }
 
     /**
      * Clear cart
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -461,12 +455,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
             $this->updateCart();
         }
 
-        \XLite\Core\TopMessage::getInstance()->add('Item has been deleted from cart');
+        \XLite\Core\TopMessage::addInfo('Item has been deleted from cart');
         $this->setReturnUrl($this->buildURL('cart'));
-    }
-
-    function isSecure()
-    {
-        return $this->is('HTTPS') ? true : parent::isSecure();
     }
 }

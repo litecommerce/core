@@ -26,25 +26,31 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\CDev\Demo\Core\Database;
+namespace XLite\Module\CDev\Demo\Core;
 
+/**
+ * Database 
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class Database extends \XLite\Core\Database implements \XLite\Base\IDecorator
 {
-
     /**
-     * connect
-     *
-     * @return boolean 
+     * Connect 
+     * 
+     * @return void
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function connect()
     {
-        if (\XLite::getInstance()->isAdminZone()) {
+        if (\XLite::isAdminZone()) {
             \Includes\Utils\ConfigParser::registerConfigFile('config.demo.php');
         }
 
         parent::connect();
     }
 }
-

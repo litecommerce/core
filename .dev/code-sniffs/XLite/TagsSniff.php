@@ -3,7 +3,7 @@
  * @version $Id$
  */
 
-class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sniff
+abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 {
 
     /**
@@ -104,11 +104,11 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
 	protected $docBlock = 'unknown';
 
     protected $allowedParamTypes = array(
-        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'null', 'object', 'resource',
+        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'null', 'object', 'resource', 'callback',
     );
 
     protected $allowedReturnTypes = array(
-        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'void', 'object', 'resource',
+        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'void', 'object', 'resource', 'callback',
     );
 
     /**
@@ -146,9 +146,16 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
      */
     protected function processPHPVersion($commentStart, $commentEnd, $commentText)
     {
-        if ($this->reqCodePHPVersion && preg_match('/PHP version \d+\.\d+\.\d+$/Sm', $commentText) === false) {
-            $error = 'PHP version not specified';
-            $this->currentFile->addError($this->getReqPrefix($this->reqCodePHPVersion) . $error, $commentEnd);
+        if ($this->reqCodePHPVersion) {
+			if (!preg_match('/PHP version (\d+\.\d+\.\d+)$/Sm', $commentText, $match)) {
+	            $error = 'PHP version not specified';
+    	        $this->currentFile->addError($this->getReqPrefix($this->reqCodePHPVersion) . $error, $commentEnd);
+
+			} elseif (0 > version_compare($match[1], '5.3.0')) {
+                $error = 'PHP version less 5.3.0';
+                $this->currentFile->addError($this->getReqPrefix($this->reqCodePHPVersion) . $error, $commentEnd);
+				
+			}
         }
 
     }//end processPHPVersion()
@@ -183,7 +190,11 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
         foreach ($this->tags as $tag => $info) {
 
             // Required tag missing.
-            if ($info['required'] === true && in_array($tag, $foundTags) === false && $this->reqCodeRequire) {
+            if (
+				$this->getTagRule($info, 'required')
+				&& in_array($tag, $foundTags) === false
+				&& $this->reqCodeRequire
+			) {
                 $error = "Missing @$tag tag in " .$this->docBlock . " comment";
                 $this->currentFile->addError($this->getReqPrefix($this->reqCodeRequire) . $error, $commentEnd);
                 continue;
@@ -200,8 +211,9 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
 				$getMethod .= 's';
 			}
 
-			if (!method_exists($this->commentParser, $getMethod))
+			if (!method_exists($this->commentParser, $getMethod)) {
 				continue;
+			}
 
 	        $tagElement = $this->commentParser->$getMethod();
     	    if (is_null($tagElement) === true || empty($tagElement) === true) {
@@ -220,7 +232,7 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
 
             if (count($foundIndexes) > 1) {
                 // Multiple occurance not allowed.
-                if ($info['allow_multiple'] === false) {
+                if (!$this->getTagRule($info, 'allow_multiple')) {
 					if ($this->reqCodeOnlyOne) {
 	                    $error = "Only 1 @$tag tag is allowed in a " . $this->docBlock ." comment";
     	                $this->currentFile->addError($this->getReqPrefix($this->reqCodeOnlyOne) . $error, $errorPos);
@@ -271,10 +283,15 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
                 );
             }
 
-            $method = 'process' . $tagName;
-            if (method_exists($this, $method) === true) {
+            $method1 = 'process' . ucfirst($tag);
+			$method2 = 'process' . ucfirst($tag) . 's';
+            if (method_exists($this, $method1) === true) {
                 // Process each tag if a method is defined.
-                call_user_func(array($this, $method), $errorPos, $commentEnd, $tagElements);
+                call_user_func(array($this, $method1), $errorPos, $commentEnd, $tagElements);
+
+            } elseif (method_exists($this, $method2) === true) {
+                // Process each tag if a method is defined.
+                call_user_func(array($this, $method2), $errorPos, $commentEnd, $tagElements);
 
             } else {
                 foreach ($tagElements as $key => $element) {
@@ -354,9 +371,9 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
                 );
 			}
 
-			if ($g['link']['type'] && !in_array($g['link']['type'], array('M', 'C', 'T'))) {
+			if ($g['link']['type'] && !in_array($g['link']['type'], array('M', 'E', 'S', 'G'))) {
                 $this->currentFile->addError(
-                    $this->getReqPrefix('REQ.PHP.4.2.4', 'REQ.PHP.4.2.5', 'REQ.PHP.4.2.6') . 'Тип ссыли должен быть M или C или T',
+                    $this->getReqPrefix('REQ.PHP.4.2.4') . 'Тип ссыли должен быть M или E или S или G',
                     $g['begin']
                 );
 			}
@@ -371,41 +388,32 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
 
 		$gotchas = array();
 
-		$idx = false;
-		for ($i = $commentStart + 1; $i < $commentEnd - 2; $i++) {
-			if (!preg_match('/\s+:([\w\d\_]+): (.+)$/S', $tokens[$i]['content'], $match)) {
-				if ($idx !== false) {
-					if (preg_match('/^[ ]* \*\s*$/S', $tokens[$i]['content'])) {
-						$gotchas[$idx]['end'] = $i - 1;
-						$idx = false;
+		$data = '';
+		for ($i = $commentStart; $i < $commentEnd; $i++) {
+			$data .= $tokens[$i]['content'];
+		}
 
-					} elseif (preg_match('/^[ ]* \*(.+)$/S', $tokens[$i]['content'], $match)) {
-						$gotchas[$idx]['text'] .= ' ' . trim($match[1]);
-					}
+		if (preg_match_all('/\s+:([A-Z\d\_]+):(\s+.+)?$/Sm', $data, $match)) {
+			foreach ($match[1] as $k => $v) {
+				$gotcha = array(
+					'name'  => $v,
+					'text'  => trim($match[2][$k]),
+					'begin' => $i,
+					'end'   => $i,
+					'link'  => array(
+						'type' => false,
+						'id'   => false,
+					),
+				);
+
+				if (preg_match('/^([\w]):([\d]+) /S', $gotcha['text'], $match)) {
+					$gotcha['link']['type'] = $match[1];
+					$gotcha['link']['id'] = $match[2];
+					$gotcha['text'] = trim(substr($gotcha['text'], strlen($match[0])));
 				}
-				
-				continue;
+
+				$gotchas[] = $gotcha;
 			}
-
-			$gotcha = array(
-				'name' => $match[1],
-				'text' => trim($match[2]),
-				'begin' => $i,
-				'end' => $i,
-				'link' => array(
-					'type' => false,
-					'id' => false
-				)
-			);
-
-			if (preg_match('/^([\w]):([\d]+) /S', $gotcha['text'], $match)) {
-				$gotcha['link']['type'] = $match[1];
-				$gotcha['link']['id'] = $match[2];
-				$gotcha['text'] = trim(substr($gotcha['text'], strlen($match[0])));
-			}
-
-			$idx = count($gotchas);
-			$gotchas[$idx] = $gotcha;
 		}
 
 		return $gotchas;
@@ -483,6 +491,7 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
        	            $error = "Category name \"$content\" is not valid; consider \"$validName\" instead";
            	        $this->currentFile->addError($this->getReqPrefix($this->getReqCode($this->reqCodesWrongFormat, 'category')) . $error, $errorPos);
                	}
+
              } else {
                 $error = '@category tag must contain a name';
                 $this->currentFile->addError($this->getReqPrefix($this->reqCodeEmpty) . $error, $errorPos);
@@ -600,26 +609,26 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
 		return $result;
 	}
 
-    protected function processAuthors($commentStart)
+    protected function processAuthor($commentStart)
     {
-         $authors = $this->commentParser->getAuthors();
+        $authors = $this->commentParser->getAuthors();
         // Report missing return.
         if (empty($authors) === false) {
             foreach ($authors as $author) {
                 $errorPos = ($commentStart + $author->getLine());
                 $content  = $author->getContent();
-                if ($content !== 'Ruslan R. Fazliev <rrf@x-cart.com>') {
-                    $error = 'Content of the @author tag must be in the form "Ruslan R. Fazliev <rrf@x-cart.com>"';
+                if ($this->isInternalProject() && $content !== 'Creative Development LLC <info@cdev.ru>') {
+                    $error = 'Content of the @author tag must be in the form "Creative Development LLC <info@cdev.ru>"';
                     $this->currentFile->addError($this->getReqPrefix($this->getReqCode($this->reqCodesWrongFormat, 'author')) . $error, $errorPos);
 
-                } else {
+                } elseif (!$content)  {
                     $error = "Content missing for @author tag in " . $this->docBlock ." comment";
                     $this->currentFile->addError($this->getReqPrefix($this->reqCodeEmpty) . ' ' . $error, $errorPos);
                 }
             }
         }
 
-    }//end processAuthors()
+    }
 
     protected function processCopyrights($commentStart)
     {
@@ -627,14 +636,17 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
         foreach ($copyrights as $copyright) {
             $errorPos = ($commentStart + $copyright->getLine());
             $content  = $copyright->getContent();
-			if (empty($content)) {
-	            $bYear = '2009';
-    	        $eYear = date('Y');
-        	    $text = 'Copyright (c) ' . (($bYear == $eYear) ? $bYear : $bYear . '-' . $eYear) . ' Ruslan R. Fazliev <rrf@x-cart.com>';
-            	if ($content !== $text) {
-                	$error = 'Content of the @copyright tag must be in the form "' . $text . '"';
-	                $this->currentFile->addError($this->getReqPrefix($this->getReqCode($this->reqCodesWrongFormat, 'copyright')) . $error, $errorPos);
-    	        }//end if
+			if (!empty($content)) {
+				if ($this->isInternalProject()) {
+		            $bYear = '2011';
+    		        $eYear = @date('Y');
+        		    $text = 'Copyright (c) ' . (($bYear == $eYear) ? $bYear : $bYear . '-' . $eYear) . ' Creative Development LLC <info@cdev.ru>. All rights reserved';
+            		if ($content !== $text) {
+                		$error = 'Content of the @copyright tag must be in the form "' . $text . '"';
+	                	$this->currentFile->addError($this->getReqPrefix($this->getReqCode($this->reqCodesWrongFormat, 'copyright')) . $error, $errorPos);
+	    	        }
+				}
+
 			} else {
                 $error = "Content missing for @copyright tag in " . $this->docBlock ." comment";
                 $this->currentFile->addError($this->getReqPrefix($this->reqCodeEmpty) . ' ' . $error, $errorPos);
@@ -672,8 +684,17 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
                 $error = 'Content missing for @version tag in file comment';
                 $this->currentFile->addError($this->getReqPrefix($this->reqCodeEmpty) . $error, $errorPos);
 
-            } else if (!preg_match('/^SVN: \$' . 'Id: [\w\d_\.]+ \d+ \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}Z [\w\d_]+ \$$/Ss', $content)) {
-                $error = "Invalid version \"$content\" in file comment; consider \"SVN: <svn_id>\" instead";
+			} elseif (
+				$this->isInternalProject()
+				&& !preg_match('/^GIT: \$' . 'Id(?:: [a-f\d]{40} )?\$$/Ss', $content)
+			) {
+                $error = "Invalid version \"$content\" in file comment; consider \"GIT: <git_id>\" instead";
+                $this->currentFile->addWarning($this->getReqPrefix($this->getReqCode($this->reqCodesWrongFormat, 'version')) . $error, $errorPos);
+
+            } elseif (
+				!preg_match('/^[A-Z]+: \$' . 'Id(?:: .+ )?\$$/Ss', $content)
+			) {
+                $error = "Invalid version \"$content\" in file comment";
                 $this->currentFile->addWarning($this->getReqPrefix($this->getReqCode($this->reqCodesWrongFormat, 'version')) . $error, $errorPos);
             }
         }
@@ -700,6 +721,62 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
 
     }
 
+    protected function processLink($errorPos)
+    {
+        foreach ($this->commentParser->getLinks() as $link) {
+			$content = @parse_url($link->getContent());
+			if (
+				!is_array($content)
+				|| !isset($content['scheme']) || !$content['scheme']
+				|| !isset($content['host']) || !$content['host']
+			) {
+				$error = '@link tag must contain URL';
+				$this->currentFile->addError($this->getReqPrefix($this->reqCodeEmpty) . $error, $errorPos);
+
+			} elseif ($this->isInternalProject() && 'http://www.litecommerce.com/' != $link->getContent()) {
+                $error = '@link tag must contain http://www.litecommerce.com/';
+                $this->currentFile->addError($this->getReqPrefix($this->reqCodeEmpty) . $error, $errorPos);
+			}
+		}
+	}
+
+    protected function processSee($errorPos)
+    {
+        foreach ($this->commentParser->getSees() as $see) {
+            $content = @parse_url($see->getContent());
+			$isURL = is_array($content)
+                && isset($content['scheme']) && $content['scheme']
+                && isset($content['host']) && $content['host'];
+            if (
+				!$isURL
+				&& !preg_match('/^____\w+_see____$/Ss', $see->getContent())
+            ) {
+                $error = '@see tag must contain URL or special placeholder';
+                $this->currentFile->addError($this->getReqPrefix($this->reqCodeEmpty) . $error, $errorPos);
+            }
+        }
+    }
+
+    protected function processSince($errorPos)
+    {
+		$since = $this->commentParser->getSince()->getContent();
+		if (!preg_match('/^\d+\.\d+\.\d+$/Ss', $since)) {
+            $error = '@since tag must contain software version';
+            $this->currentFile->addError($this->getReqPrefix($this->reqCodeEmpty) . $error, $errorPos);
+		}
+	}
+
+    protected function processVar($errorPos)
+    {
+        $var = $this->commentParser->getVar()->getContent();
+
+         // Check type
+         $r = $this->checkType($var, $this->allowedParamTypes, 'var');
+         if (true !== $r) {
+	         $this->currentFile->addError($this->getReqPrefix('REQ.PHP.3.5.15') . $r, $errorPos);
+         }
+	}
+
     /**
      * Process the return comment of this function comment.
      *
@@ -724,7 +801,7 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
 		if ($this->commentParser->getReturn()) {
             $r = $this->checkType($this->commentParser->getReturn()->getValue(), $this->allowedReturnTypes, 'return');
             if (true !== $r) {
-                $this->currentFile->addError($this->getReqPrefix('?') . $r, $commentStart + $this->commentParser->getReturn()->getLine());
+                $this->currentFile->addError($this->getReqPrefix('REQ.PHP.3.5.15') . $r, $commentStart + $this->commentParser->getReturn()->getLine());
             }
 		}
 
@@ -797,7 +874,7 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
 				// Check type
 				$r = $this->checkType($param->getType(), $this->allowedParamTypes, 'param');
 				if (true !== $r) {
-	            	$this->currentFile->addError($this->getReqPrefix('?') . $r, $errorPos);
+	            	$this->currentFile->addError($this->getReqPrefix('REQ.PHP.3.5.15') . $r, $errorPos);
 				}
 
                 // Make sure that there is only one space before the var type.
@@ -857,6 +934,14 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
 
                         $this->currentFile->addError($this->getReqPrefix('REQ.PHP.4.1.25') . $error, $errorPos);
                     }
+
+					if (isset($realParams[($pos - 1)]['default']) && !preg_match('/ OPTIONAL$/Ss', $paramComment)) {
+                        $this->currentFile->addError(
+							$this->getReqPrefix('REQ.PHP.3.5.18') . 'Переменная "' . $paramName . '" опциональная, но служебного тэга OPTIONAL ее комментарий не имеет',
+							$errorPos
+						);
+					}
+
                 } else {
                     // We must have an extra parameter comment.
                     $error = 'Superfluous doc comment at position '.$pos;
@@ -879,7 +964,7 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
 
 				} elseif (preg_match('/^[a-z]/Ss', trim($paramComment))) {
                     $error = 'Комментарий параметра "' . $paramName . '" начинается с маленькой буквы';
-                    $this->currentFile->addError($this->getReqPrefix('?') . $error, $errorPos);
+                    $this->currentFile->addError($this->getReqPrefix('REQ.PHP.4.5.8') . $error, $errorPos);
 
 				}
 
@@ -927,7 +1012,10 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
 	{
         $types = array_map('trim', explode('|', $rawType));
         if (4 < count($types)) {
-            $this->currentFile->addError($this->getReqPrefix('?') . 'Число вариантов типов @' . $tag . ' больше 4', $errorPos);
+            $this->currentFile->addError(
+				$this->getReqPrefix('REQ.PHP.3.5.17') . 'Число вариантов типов @' . $tag . ' больше 4',
+				$errorPos
+			);
         }
 
 		$result = true;
@@ -1008,5 +1096,11 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
         return trim($newName, '_');
     }
 
+	protected function getTagRule(array $tagInfo, $name)
+	{
+		return $this->isInternalProject() && isset($tagInfo['internal']) && isset($tagInfo['internal'][$name])
+			? $tagInfo['internal'][$name]
+			: $tagInfo[$name];
+	}
 }
 

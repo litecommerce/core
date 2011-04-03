@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\OrderList;
@@ -31,9 +31,9 @@ namespace XLite\View\OrderList;
 /**
  * Orders search widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
  * @ListChild (list="orders.search.base", weight="30")
  */
 class Search extends \XLite\View\OrderList\AOrderList
@@ -41,28 +41,26 @@ class Search extends \XLite\View\OrderList\AOrderList
     /**
      * Widget class name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $widgetClass = '\XLite\View\OrderList\Search';
 
     /**
      * Search conditions (cache)
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $conditions = null;
+
 
     /**
      * Get orders 
      * 
      * @return array(\XLite\Model\Order)
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -81,7 +79,6 @@ class Search extends \XLite\View\OrderList\AOrderList
      * Get page data 
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -99,10 +96,22 @@ class Search extends \XLite\View\OrderList\AOrderList
     }
 
     /**
+     * Get page id 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageId()
+    {
+        return abs(intval($this->getConditions()->pageId));
+    }
+
+
+    /**
      * Get profile 
      * 
      * @return \XLite\Model\Profile
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -115,7 +124,6 @@ class Search extends \XLite\View\OrderList\AOrderList
      * Get widget keys 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -130,7 +138,6 @@ class Search extends \XLite\View\OrderList\AOrderList
      * Get conditions 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -182,19 +189,6 @@ class Search extends \XLite\View\OrderList\AOrderList
         }
 
         return $cnd;
-    }
-
-    /**
-     * Get page id 
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPageId()
-    {
-        return abs(intval($this->getConditions()->pageId));
     }
 }
 

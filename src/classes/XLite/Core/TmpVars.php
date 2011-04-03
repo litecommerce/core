@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Core;
@@ -31,9 +31,8 @@ namespace XLite\Core;
 /**
  * DB-based temporary variables
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class TmpVars extends \XLite\Base\Singleton
 {
@@ -43,15 +42,12 @@ class TmpVars extends \XLite\Base\Singleton
      * @param string $name Name
      *  
      * @return mixed
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function __get($name)
     {
-        $var = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->findOneBy(array('name' => $name));
-
-        return $var ? unserialize($var->getValue()) : null;
+        return ($var = $this->getVar($name)) ? unserialize($var->getValue()) : null;
     }
 
     /**
@@ -61,29 +57,52 @@ class TmpVars extends \XLite\Base\Singleton
      * @param mixed  $value Value
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function __set($name, $value)
     {
-        $var = \XLite\Core\Database::getRepo('XLite\Model\TmpVar')->findOneBy(array('name' => $name));
+        $var = $this->getVar($name);
 
-        if (!$var) {
-        
-            if (isset($value)) {
-                $var = new \XLite\Model\TmpVar;
-                $var->setName($name);
-                $var->setValue(serialize($value));
+        if (isset($value)) {
 
-                \XLite\Core\Database::getEM()->persist($var);
-                \XLite\Core\Database::getEM()->flush();
+            $data = array('value' => serialize($value));
+
+            if (!isset($var)) {
+                $var = $this->getRepo()->insert($data + array('name' => $name));
+            } else {
+                $this->getRepo()->update($var, $data);
             }
 
-        } elseif (isset($value)) {
-            $var->setValue(serialize($value));
-            \XLite\Core\Database::getEM()->flush();
+        } elseif ($var) {
 
+            $this->getRepo()->delete($var);
         }
+    }
+
+    /**
+     * Search var in DB table
+     * 
+     * @param string $name Var name
+     *  
+     * @return \XLite\Model\TmpVar
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getVar($name)
+    {
+        return $this->getRepo()->findOneBy(array('name' => $name));
+    }
+
+    /**
+     * Return the Doctrine repository
+     * 
+     * @return \XLite\Model\Repo\TmpVar
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getRepo()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\TmpVar');
     }
 }

@@ -13,17 +13,17 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
+ *
+ * PHP version 5.3.0
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,9 +31,8 @@ namespace XLite\Model;
 /**
  * Cart 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Cart")
  * @HasLifecycleCallbacks
@@ -43,10 +42,9 @@ class Cart extends \XLite\Model\Order
     /**
      * Array of instances for all derived classes
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected static $instances = array();
 
@@ -54,7 +52,6 @@ class Cart extends \XLite\Model\Order
      * Method to access a singleton
      *
      * @return \XLite\Model\Cart
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -88,7 +85,10 @@ class Cart extends \XLite\Model\Order
             $auth = \XLite\Core\Auth::getInstance();
 
             if ($auth->isLogged()) {
-                if (!$cart->getProfile() || $auth->getProfile()->getProfileId() != $cart->getProfile()->getProfileId()) {
+                if (
+                    !$cart->getProfile()
+                    || $auth->getProfile()->getProfileId() != $cart->getProfile()->getProfileId()
+                ) {
                     $cart->setProfile($auth->getProfile());
                     $cart->setOrigProfile($auth->getProfile());
                     $cart->calculate();
@@ -115,7 +115,6 @@ class Cart extends \XLite\Model\Order
      * @param \XLite\Model\Cart $cart Cart
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -130,7 +129,6 @@ class Cart extends \XLite\Model\Order
      * Prepare order before save data operation
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      * @PrePersist
@@ -148,7 +146,6 @@ class Cart extends \XLite\Model\Order
      * Clear cart
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -170,7 +167,6 @@ class Cart extends \XLite\Model\Order
      * @param integer $productId ID of the product to look for
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -194,7 +190,6 @@ class Cart extends \XLite\Model\Order
      * Prepare order before remove operation
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      * @PreRemove
@@ -210,7 +205,6 @@ class Cart extends \XLite\Model\Order
      * Mark cart as order 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

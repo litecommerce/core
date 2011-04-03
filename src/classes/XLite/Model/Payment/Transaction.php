@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Payment;
@@ -31,9 +31,8 @@ namespace XLite\Model\Payment;
 /**
  * Payment transaction
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Payment\Transaction")
  * @Table  (name="payment_transactions",
@@ -68,10 +67,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Primary key 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -82,10 +80,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Payment method name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @Column (type="string", length="128")
      */
@@ -94,10 +91,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Payment method localized name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @Column (type="string", length="255")
      */
@@ -106,10 +102,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Status
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @Column (type="fixedstring", length="1")
      */
@@ -118,10 +113,10 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Transaction value
      * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   float
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="decimal", precision="14", scale="4")
      */
     protected $value = 0.0000;
@@ -129,10 +124,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Customer message
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -141,10 +135,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Transaction type
      *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="8")
      */
@@ -153,10 +146,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Order
      * 
-     * @var    \XLite\Model\Order
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Order
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @ManyToOne  (targetEntity="XLite\Model\Order", inversedBy="payment_transactions")
      * @JoinColumn (name="order_id", referencedColumnName="order_id")
@@ -166,10 +158,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Payment method 
      * 
-     * @var    \XLite\Model\Payment\Method
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Payment\Method
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @ManyToOne  (targetEntity="XLite\Model\Payment\Method", inversedBy="transactions")
      * @JoinColumn (name="method_id", referencedColumnName="method_id")
@@ -179,10 +170,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Transaction data
      *
-     * @var    \XLite\Model\Payment\TransactionData
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Payment\TransactionData
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Payment\TransactionData", mappedBy="transaction", cascade={"all"})
      */
@@ -192,7 +182,6 @@ class Transaction extends \XLite\Model\AEntity
      * Process checkout action 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -232,7 +221,6 @@ class Transaction extends \XLite\Model\AEntity
      * Get charge value modifier 
      * 
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -251,7 +239,6 @@ class Transaction extends \XLite\Model\AEntity
      * Check - transaction is failed or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -264,7 +251,6 @@ class Transaction extends \XLite\Model\AEntity
      * Check - order is completed or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -276,10 +262,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Constructor
      *
-     * @param array $data Entity properties
+     * @param array $data Entity properties OPTIONAL
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

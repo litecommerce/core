@@ -12,7 +12,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'NVP', 'PHP', 'CURL', 'VS', 'PC', 'UTF8', 'TTL', 'SMTP', 'IP4', 'CC', 'CVV2', 'UK', 'FMF', 'CSSURL',
 		'HMACMD5', 'HMAC', 'URI', 'ID', 'JS', 'SSL', 'AVS', 'CVV', 'DB', 'HSBC', 'SOAP', 'GMT', 'HTTPS', 'CLI',
 		'CMS', 'GC', 'AJAX', 'URLAJAX', 'USPS', 'GD', 'PM', 'XPC', 'DSN', 'EM', 'QB', 'SKU', 'REST', 'FS', 'IREST',
-        'YAML', 'GZ',
+        'YAML', 'GZ', 'HTTP', 'SPL', 'PHAR',
 	);
 
 	protected $twoWordsAbbrs = array('ECard', 'ECards');
@@ -26,7 +26,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'run', 'dispatch', 'compose', 'test', 'connect', 'parse', 'throw', 'fetch', 'execute',
 		'key', 'current', 'next', 'rewind', 'valid', 'action', 'schema',
 		'redirect', 'convert', 'select', 'update', 'replace', 'delete', 'generate', 'start', 'crypt',
-		'begin', 'end', 'write', 'save', 'query', 'process', 'open', 'header', 'clear', 'clean', 'assert',
+		'begin', 'end', 'write', 'save', 'query', 'process', 'open', 'header', 'clear', 'clean', 'cleanup', 'assert',
 		'send', 'validate', 'init', 'output', 'call', 'find', 'reset', 'destroy', 'echo', 'format',
 		'encrypt', 'decrypt', 'serialize', 'unserialize', 'renew', 'define', 'collect', 'return', 'calculate',
 		'lock', 'unlock', 'can', 'walk', 'pack', 'unpack', 'initialize', 'finish', 'create', 'mark', 'unmark',
@@ -38,10 +38,13 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
         'apply', 'translate', 'enable', 'disable', 'detach', 'attach', 'read', 'resize', 'search', 'uninstall', 'flush', 'compare',
 		'mask', 'pay', 'clone', 'login', 'logoff', 'exclude', 'restart', 'invalidate',
 		'remember', 'remind', 'link', 'concat','split', 'round', 'depack', 'upload', 'hydrate', 'unload',
-		'download', 'deploy', 'construct',
+		'download', 'deploy', 'construct', 'retrieve', 'print', 'increase', 'decrease', 'sum',
+		'drop', 'list', 'reverse', 'rand', 'extract', 'wake', 'sleep',
 
 		// FIXME - rename later
-		'processed', 'checked', 'declined', 'queued', 'unchecked', 'checkout',
+		'processed', 'checked', 'declined', 'queued', 'unchecked', 'checkout', 'display404',
+		// Method offsetSet() defined in Doctrine
+		'offset',
 	);
 
 	protected $cssPseudoClasses = array(
@@ -73,8 +76,20 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 	 * @since   1.0.0
 	 */
 	protected function getWordsByUnderline($name) {
-		return explode('\\', $name);
+		return explode('_', $name);
 	}
+
+    /**
+     * Get words from name (delimiter - underline symbol)
+     *
+     * @param   string  $name
+     * @access  protected
+     * @return  array
+     * @since   1.0.0
+     */
+    protected function getWordsBySlash($name) {
+        return explode('\\', $name);
+    }
 
 	/**
 	 * Get words from name (delimiter - capital letter)
@@ -165,7 +180,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 	 * @return  array
 	 * @since   1.0.0
 	 */
-	protected function checkClassPath($words) {
+	protected function checkClassPath(array $words, $namespace) {
 		$paths = explode(PATH_SEPARATOR, XP_CLASSES_ROOT);
 		
 		$fn = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $words) . '.php';

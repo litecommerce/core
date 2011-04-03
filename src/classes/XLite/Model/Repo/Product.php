@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -34,9 +34,8 @@ namespace XLite\Model\Repo;
 /**
  * The "product" model repository
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
 {
@@ -68,30 +67,139 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     /**
      * currentSearchCnd 
      * 
-     * @var    \XLite\Core\CommonCell
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Core\CommonCell
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $currentSearchCnd = null;
 
     /**
      * Alternative record identifiers
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $alternativeIdentifier = array(
         array('sku'),
     );
 
+
+    /**
+     * Common search
+     * 
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param boolean                $countOnly Return items list or only its size OPTIONAL
+     *  
+     * @return \Doctrine\ORM\PersistentCollection|integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
+    {
+        $queryBuilder = $this->createQueryBuilder();
+
+        $this->currentSearchCnd = $cnd;
+
+        foreach ($this->currentSearchCnd as $key => $value) {
+            $this->callSearchConditionHandler($value, $key, $queryBuilder);
+        }
+
+        if ($countOnly) {
+            $queryBuilder->select('COUNT(p.product_id)');
+        }
+
+        $result = $queryBuilder->getResult();
+
+        return $countOnly ? count($result) : $result;
+    }
+
+    /**
+     * Create a new QueryBuilder instance that is prepopulated for this entity name
+     *
+     * @param string $alias Table alias OPTIONAL
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createQueryBuilder($alias = null)
+    {
+        $result = parent::createQueryBuilder($alias);
+        $this->addEnabledCondition($result, $alias);
+
+        if (!\XLite::isAdminZone()) {
+            $result->andWhere('p.enabled = :enabled')->setParameter('enabled', true);
+        }
+
+        $result->groupBy('p.product_id');
+
+        return $result;
+    }
+
+    /**
+     * Find product by clean URL
+     * TODO - to revise
+     * 
+     * @param string $url Clean URL
+     *  
+     * @return \XLite_Model_Product
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findOneByCleanURL($url)
+    {
+        return $this->findOneBy(array('clean_url' => $url));
+    }
+
+    /**
+     * Get REST entity names 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRESTNames()
+    {
+        return array (
+            'product',
+        );
+    }
+
+    /**
+     * Get product data as REST 
+     * 
+     * @param integer $id Product id
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProductREST($id)
+    {
+        $product = $this->find($id);
+
+        $data = null;
+
+        if ($product) {
+            foreach ($this->_class->fieldNames as $name) {
+                $mname = 'get' . \XLite\Core\Converter::convertToCamelCase($name);
+                // $maname assebmled from 'get' + \XLite\Core\Converter::convertToCamelCase() method
+                $data[$name] = $product->$mname();
+            }
+
+            $data['name'] = $product->getName();
+            $data['description'] = $product->getDescription();
+        }
+
+        return $data;
+    }
+
+
     /**
      * Return list of handling search params 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -113,7 +221,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * @param string $param Name of param to check
      *  
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -126,7 +233,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * List of fields to use in search by substring TODO !REFACTOR!
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -167,7 +273,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * Return conditions parameters that are responsible for substring set of fields.
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -184,7 +289,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * Return fields set for title search
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -199,7 +303,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * Return fields set for description search
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -215,7 +318,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * Return fields set for SKU search
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -233,14 +335,12 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * @param mixed                      $value        Condition data
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function prepareCndSKU(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $queryBuilder
-            ->andWhere('p.sku LIKE :sku')
+        $queryBuilder->andWhere('p.sku LIKE :sku')
             ->setParameter('sku', '%' . $value . '%');
     }
 
@@ -251,20 +351,17 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * @param mixed                      $value        Condition data
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function prepareCndCategoryId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $queryBuilder
-            ->innerJoin('p.categoryProducts', 'cp')
+        $queryBuilder->innerJoin('p.categoryProducts', 'cp')
             ->innerJoin('cp.category', 'c')
             ->addOrderBy('cp.orderby');
 
         if (empty($this->currentSearchCnd->{self::P_SEARCH_IN_SUBCATS})) {
-            $queryBuilder
-                ->andWhere('c.category_id = :categoryId')
+            $queryBuilder->andWhere('c.category_id = :categoryId')
                 ->setParameter('categoryId', $value);
 
         } elseif (!\XLite\Core\Database::getRepo('XLite\Model\Category')->addSubTreeCondition($queryBuilder, $value)) {
@@ -279,7 +376,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * @param string                     $value        Condition data
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -305,7 +401,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * @param string                     $value        Condition data
      *  
      * @return \Doctrine\ORM\Query\Expr\Base Condition class
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -330,7 +425,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * @param string                     $value        Condition data
      *  
      * @return \Doctrine\ORM\Query\Expr\Base Condition class
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -372,7 +466,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * @param string                     $value        Condition data
      *  
      * @return \Doctrine\ORM\Query\Expr\Base Condition class
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -403,7 +496,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * @param string $value Search string
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -436,14 +528,12 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function prepareCndLowInventory(\Doctrine\ORM\QueryBuilder $queryBuilder)
     {
-        $queryBuilder
-            ->innerJoin('p.inventory', 'i')
+        $queryBuilder->innerJoin('p.inventory', 'i')
             ->andWhere('i.enabled = :enabled')
             ->setParameter('enabled', true)
             ->andWhere('i.lowLimitEnabled = :lowLimitEnabled')
@@ -458,7 +548,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * @param array                      $value        Condition data
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -481,7 +570,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * @param array                      $value        Condition data
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -498,7 +586,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -518,133 +605,14 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * @param string                     $alias        Entity alias OPTIONAL
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function addEnabledCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
         if (!\XLite::isAdminZone()) {
-            $queryBuilder
-                ->andWhere(($alias ?: $queryBuilder->getRootAlias()) . '.enabled = :enabled')
+            $queryBuilder->andWhere(($alias ?: $queryBuilder->getRootAlias()) . '.enabled = :enabled')
                 ->setParameter('enabled', true);
         }
-    }
-
-
-    /**
-     * Common search
-     * 
-     * @param \XLite\Core\CommonCell $cnd       Search condition
-     * @param boolean                $countOnly Return items list or only its size OPTIONAL
-     *  
-     * @return \Doctrine\ORM\PersistentCollection|integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
-    {
-        $queryBuilder = $this->createQueryBuilder();
-
-        $this->currentSearchCnd = $cnd;
-
-        foreach ($this->currentSearchCnd as $key => $value) {
-            $this->callSearchConditionHandler($value, $key, $queryBuilder);
-        }
-
-        if ($countOnly) {
-            $queryBuilder->select('COUNT(p.product_id)');
-        }
-
-        $result = $queryBuilder->getResult();
-
-        return $countOnly ? count($result) : $result;
-    }
-
-
-    /**
-     * Create a new QueryBuilder instance that is prepopulated for this entity name
-     *
-     * @param string $alias Table alias OPTIONAL
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function createQueryBuilder($alias = null)
-    {
-        $result = parent::createQueryBuilder($alias);
-        $this->addEnabledCondition($result, $alias);
-
-        if (!\XLite::isAdminZone()) {
-            $result->andWhere('p.enabled = :enabled')->setParameter('enabled', true);
-        }
-
-        $result->groupBy('p.product_id');
-
-        return $result;
-    }
-
-    /**
-     * Find product by clean URL
-     * TODO - to revise
-     * 
-     * @param string $url Clean URL
-     *  
-     * @return \XLite_Model_Product
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findByCleanUrl($url)
-    {
-        return $this->findOneBy(array('clean_url' => $url));
-    }
-
-    /**
-     * Get REST entity names 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getRESTNames()
-    {
-        return array (
-            'product',
-        );
-    }
-
-    /**
-     * Get product data as REST 
-     * 
-     * @param integer $id Product id
-     *  
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProductREST($id)
-    {
-        $product = $this->find($id);
-
-        $data = null;
-
-        if ($product) {
-            foreach ($this->_class->fieldNames as $name) {
-                $mname = 'get' . \XLite\Core\Converter::convertToCamelCase($name);
-                // $maname assebmled from 'get' + \XLite\Core\Converter::convertToCamelCase() method
-                $data[$name] = $product->$mname();
-            }
-
-            $data['name'] = $product->getName();
-            $data['description'] = $product->getDescription();
-        }
-
-        return $data;
     }
 }

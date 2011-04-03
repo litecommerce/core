@@ -13,7 +13,7 @@
 
 <div IF="hasShippingMarkups()">
 
-<script type="text/javascript" language="JavaScript 1.2">
+<script type="text/javascript">
 
 checkboxes_form = 'shippingratesform';
 checkboxes = new Array(
@@ -46,56 +46,35 @@ function submitForm(formName, action)
   <input type="hidden" name="methodid" value="{methodid}" />
   <input type="hidden" name="deleted_markup" />
 
-  <table cellpadding="0" cellspacing="1" width="100%">
+  <table class="data-table">
 
   {foreach:getPreparedShippingMarkups(),zid,zn}
 
     <tr>
       <td>
-
-        <br /><br />
-
-        <table cellspacing="0" class="SubHeaderBlack">
-
-          <tr>
-            <td class="SubHeaderBlack">{zn.zone.getZoneName()}</td>
-          </tr>
-
-          <tr>
-            <td class="SubHeaderBlackLine"><img src="images/spacer.gif" class="Spc" alt="" /><br /></td>
-          </tr>
-        </table>
-
+        <h3>{zn.zone.getZoneName()}</h3>
       </td>
     </tr>
 
     <tbody FOREACH="zn.methods,sid,method">
 
       <tr>
-        <td class="SubHeaderGreyLine"><img src="images/spacer.gif" class="Spc" alt="" /></td>
-      </tr>
-
-      <tr class="TableSubHead">
         <td>
 
           <table cellpadding="2" cellspacing="0" width="100%">
 
-            <script type="text/javascript" language="JavaScript 1.2">
+            <script type="text/javascript">
               checkboxes{zn.zone.getZoneId()}_{method.method.getMethodId()} = new Array({foreach:method.markups,k,markup}{if:!k=0},{end:}'to_delete[{markup.getMarkupId()}]'{end:});
             </script> 
 
             <tr>
-              <td><input type="checkbox" id="sm_{zn.zone.getZoneId()}_{method.method.getMethodId()}" name="sm_{zn.zone.getZoneId()}_{method.method.getMethodId()}" onclick="javascript:change_all(this.checked, checkboxes_form, checkboxes{zn.zone.getZoneId()}_{method.method.getMethodId()});" /></td>
-              <td width="100%"><b><label for="sm_{zn.zone.getZoneId()}_{method.method.getMethodId()}">{method.method.getName()}</label></b></td>
+              <th><input type="checkbox" id="sm_{zn.zone.getZoneId()}_{method.method.getMethodId()}" name="sm_{zn.zone.getZoneId()}_{method.method.getMethodId()}" onclick="javascript:change_all(this.checked, checkboxes_form, checkboxes{zn.zone.getZoneId()}_{method.method.getMethodId()});" /></th>
+              <th style="width:100%;"><label for="sm_{zn.zone.getZoneId()}_{method.method.getMethodId()}">{method.method.getName()}</label></th>
             </tr>
 
           </table>
 
         </td>
-      </tr>
-
-      <tr>
-        <td class="SubHeaderGreyLine"><img src="images/spacer.gif" class="Spc" alt="" /></td>
       </tr>
 
       <tr>
@@ -106,35 +85,35 @@ function submitForm(formName, action)
             <tbody FOREACH="method.markups,mid,markup">
 
               <tr>
-                <td rowspan="3" nowrap="nowrap"><img src="images/spacer.gif" width="10" height="1" alt="" /><input type="checkbox" name="to_delete[{markup.getMarkupId()}]" /></td>
+                <td rowspan="3" class="table-label"><img src="images/spacer.gif" width="10" height="1" alt="" /><input type="checkbox" name="to_delete[{markup.getMarkupId()}]" /></td>
                 <td>Weight range:</td>
-                <td nowrap="nowrap">
+                <td class="table-label">
                   <input type="text" name="posted_data[{markup.getMarkupId()}][min_weight]" size="9" value="{markup.getMinWeight()}" />
                   -
                   <input type="text" name="posted_data[{markup.getMarkupId()}][max_weight]" size="9" value="{markup.getMaxWeight()}" />
                 </td>
                 <td>Flat markup ($):</td>
-                <td nowrap="nowrap"><input type="text" name="posted_data[{markup.getMarkupId()}][markup_flat]" size="5" value="{markup.getMarkupFlat()}" /></td>
+                <td class="table-label"><input type="text" name="posted_data[{markup.getMarkupId()}][markup_flat]" size="5" value="{markup.getMarkupFlat()}" /></td>
                 <td>Percent markup:</td>
                 <td><input type="text" name="posted_data[{markup.getMarkupId()}][markup_percent]" size="5" value="{markup.getMarkupPercent()}" /></td>
               </tr>
 
               <tr>
                 <td>Subtotal range:</td>
-                <td nowrap="nowrap">
+                <td class="table-label">
                   <input type="text" name="posted_data[{markup.getMarkupId()}][min_total]" size="9" value="{markup.getMinTotal()}" />
                   -
                   <input type="text" name="posted_data[{markup.getMarkupId()}][max_total]" size="9" value="{markup.getMaxTotal()}" />
                 </td>
                 <td>Per item markup ($):</td>
-                <td nowrap="nowrap"><input type="text" name="posted_data[{markup.getMarkupId()}][markup_per_item]" size="5" value="{markup.getMarkupPerItem()}" /></td>
+                <td class="table-label"><input type="text" name="posted_data[{markup.getMarkupId()}][markup_per_item]" size="5" value="{markup.getMarkupPerItem()}" /></td>
                 <td>Per weight unit markup ($):</td>
-                <td nowrap="nowrap"><input type="text" name="posted_data[{markup.getMarkupId()}][markup_per_weight]" size="5" value="{markup.getMarkupPerWeight()}" /></td>
+                <td class="table-label"><input type="text" name="posted_data[{markup.getMarkupId()}][markup_per_weight]" size="5" value="{markup.getMarkupPerWeight()}" /></td>
               </tr>
 
               <tr>
                 <td>Items range:</td>
-                <td nowrap="nowrap">
+                <td class="table-label">
                   <input type="text" name="posted_data[{markup.getMarkupId()}][min_items]" size="9" value="{markup.getMinItems()}" />
                   -
                   <input type="text" name="posted_data[{markup.getMarkupId()}][max_items]" size="9" value="{markup.getMaxItems()}" />
@@ -143,7 +122,7 @@ function submitForm(formName, action)
               </tr>
 
               <tr IF="isShowMarkupsSeparator(mid,method.markups)">
-                <td colspan="7" class="SubHeaderGreyLine"><img src="images/spacer.gif" class="Spc" alt="" /></td>
+                <td colspan="7" class="separator">&nbsp;</td>
               </tr>
 
             </tbody>  {* FOREACH="methods.markups,markup" *}
@@ -159,9 +138,9 @@ function submitForm(formName, action)
 
     <tr>
       <td>
-        <input type="button" value="Delete selected" onclick="javascript: if (checkMarks(this.form, new RegExp('to_delete\\[[0-9]+\\]', 'gi'))) submitForm('shippingratesform', 'delete');" />
+        <widget class="\XLite\View\Button\Regular" label="Delete selected" jsCode="javascript: if (checkMarks(this.form, new RegExp('to_delete\\[[0-9]+\\]', 'gi'))) submitForm('shippingratesform', 'delete');" />
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="submit" value="Update" />
+        <widget class="\XLite\View\Button\Submit" label="Update" />
       </td>
     </tr>
 
@@ -171,6 +150,8 @@ function submitForm(formName, action)
 
 </div>
 
+<br /><br /><br />
+
 <form name="addshippingrate" action="admin.php" method="post" IF="getShippingMethods()">
 
   <input type="hidden" name="target" value="shipping_rates" />
@@ -178,7 +159,6 @@ function submitForm(formName, action)
   <input type="hidden" name="zoneid" value="{zoneid}" />
   <input type="hidden" name="methodid" value="{methodid}" />
 
-  <br /><br /><br />
 
   <a name="addmarkup"></a>
 
@@ -186,10 +166,10 @@ function submitForm(formName, action)
 
   <br /><br />
 
-  <table cellpadding="0" cellspacing="3">
+  <table class="data-table">
 
     <tr>
-      <td><b>Shipping method:</b></td>
+      <td>Shipping method:</td>
       <td>&nbsp;</td>
       <td>
         <select name="new[method_id]">
@@ -200,7 +180,7 @@ function submitForm(formName, action)
     </tr>
 
     <tr>
-      <td><b>Destination zone:</b></td>
+      <td>Destination zone:</td>
       <td>&nbsp;</td>
       <td>
         <select name="new[zone_id]">
@@ -211,37 +191,37 @@ function submitForm(formName, action)
 
   </table>
 
-  <table cellpadding="0" cellspacing="3" width="100%">
+  <table class="data-table">
 
     <tr>
-      <td><b>Weight range:</b></td>
-      <td nowrap="nowrap">
+      <td>Weight range:</td>
+      <td class="table-label">
         <input type="text" name="new[min_weight]" size="9" value="0" />
         -
         <input type="text" name="new[max_weight]" size="9" value="9999999" />
       </td>
-      <td><b>Flat markup ($):</b></td>
-      <td nowrap="nowrap"><input type="text" name="new[markup_flat]" size="5" value="0" /></td>
-      <td><b>Percent markup:</b></td>
+      <td>Flat markup ($):</td>
+      <td class="table-label"><input type="text" name="new[markup_flat]" size="5" value="0" /></td>
+      <td>Percent markup:</td>
       <td><input type="text" name="new[markup_percent]" size="5" value="0" /></td>
     </tr>
 
     <tr>
-      <td><b>Subtotal range:</b></td>
-      <td nowrap="nowrap">
+      <td>Subtotal range:</td>
+      <td class="table-label">
         <input type="text" name="new[min_total]" size="9" value="0" />
         -
         <input type="text" name="new[max_total]" size="9" value="9999999" />
       </td>
-      <td><b>Markup per item ($):</b></td>
-      <td nowrap="nowrap"><input type="text" name="new[markup_per_item]" size="5" value="0" /></td>
-      <td><b>Markup per weight unit ($):</b></td>
-      <td nowrap="nowrap"><input type="text" name="new[markup_per_weight]" size="5" value="0" /></td>
+      <td>Markup per item ($):</td>
+      <td class="table-label"><input type="text" name="new[markup_per_item]" size="5" value="0" /></td>
+      <td>Markup per weight unit ($):</td>
+      <td class="table-label"><input type="text" name="new[markup_per_weight]" size="5" value="0" /></td>
     </tr>
 
     <tr>
-      <td><b>Items range:</b></td>
-      <td nowrap="nowrap">
+      <td>Items range:</td>
+      <td class="table-label">
         <input type="text" name="new[min_items]" size="9" value="0" />
         -
         <input type="text" name="new[max_items]" size="9" value="9999999" />
@@ -252,7 +232,7 @@ function submitForm(formName, action)
   </table>
 
   <br />
-  <input type="submit" value="Add" />
+  <widget class="\XLite\View\Button\Submit" label="Add" />
 
 </form>
 

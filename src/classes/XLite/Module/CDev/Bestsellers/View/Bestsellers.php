@@ -34,6 +34,9 @@ namespace XLite\Module\CDev\Bestsellers\View;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="center.bottom", zone="customer", weight="400")
+ * @ListChild (list="sidebar.first", zone="customer", weight="150")
  */
 class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
 {
@@ -215,10 +218,52 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
+
         $result[] = 'main';
         $result[] = 'category';
     
         return $result;
     }
 
+    /**
+     * Return template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getTemplate()
+    {
+        $template = parent::getTemplate();
+
+        if ($template == $this->getDefaultTemplate() && self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)) {
+            $template = 'common/sidebar_box.tpl';
+        }
+
+        return $template;
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean 
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        $result = parent::isVisible();
+
+        if (!\XLite\Core\CMSConnector::isCMSStarted()) {
+            if (self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)) {
+                $result = $result && 'sidebar.first' == $this->viewListName;
+
+            } else {
+                $result = $result && 'center.bottom' == $this->viewListName;
+            }
+        }
+
+        return $result;
+    }
 }

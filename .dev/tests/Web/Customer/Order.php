@@ -78,12 +78,12 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             $this->waitForLocalCondition(
                 'jQuery(".payment-step").hasClass("current") == true',
                 10000,
-                'check swicth to review step'
+                'check swicth to payment step'
             );
         }
 
         if (0 < intval($this->getJSExpression('jQuery(".current.payment-step").length'))) {
-            $this->toggleByJquery('#pmethod6', true);
+            $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
             $this->click('css=.current .button-row button');
             $this->waitForLocalCondition(
                 'jQuery(".review-step").hasClass("current") == true',
@@ -99,7 +99,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
                 10000,
                 'check return to payment step'
             );
-            $this->toggleByJquery('#pmethod6', true);
+            $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
             $this->click('css=.current .button-row button');
             $this->waitForLocalCondition(
                 'jQuery(".review-step").hasClass("current") == true',
@@ -181,6 +181,13 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             . "/span[text()='Track package']"
         );
 
+
+        $this->assertEquals(
+            1, 
+            intval($this->getJSExpression('jQuery(".invoice-box").length')),
+            'check invoice box count'
+        );
+
         // Invoice header
         $this->assertElementPresent(
             "//div[@class='invoice-box']"
@@ -209,7 +216,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         $this->assertElementPresent(
             "//div[@class='invoice-box']"
             . "/div[@class='subhead']"
-            . "/span[text()='Grand total: $ " . $order->gettotal() . "']"
+            . "/span[text()='Grand total: $ " . $order->getTotal() . "']"
         );
 
         // Items
@@ -304,7 +311,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
 
         // Totals
         $countTR = intval($this->getJSExpression('jQuery(".invoice-box .totals tr").length'));
-        $this->assertEquals(count($order->getVisibleSavedModifiers()) + 2, $countTR, 'Totals TR count checking');
+        $this->assertEquals(count($order->getSurcharges()) + 2, $countTR, 'Totals TR count checking');
 
         $this->assertElementPresent(
             "//div[@class='invoice-box']"
@@ -322,7 +329,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         );
 
         $i = 2;
-        foreach ($order->getVisibleSavedModifiers() as $m) {
+        foreach ($order->getSurcharges() as $m) {
             $this->assertElementPresent(
                 "//div[@class='invoice-box']"
                 . "/table[@class='totals']"
@@ -335,7 +342,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
                 . "/table[@class='totals']"
                 . "/tbody"
                 . "/tr[position()=$i]"
-                . "/td[position()=2 and text()='$" . number_format(round($m->getSurcharge(), 2), 2) . "']"
+                . "/td[position()=2 and text()='$" . number_format($m->getValue(), 2) . "']"
             );
             $i++;
         }
@@ -459,7 +466,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
 
     protected function fillPaymentStep()
     {
-        $this->toggleByJquery('#pmethod6', true);
+        $this->toggleByJquery('#pmethod' . $this->getPaymentMethodIdByName('MoneyOrdering'), true);
 
         $this->waitForLocalCondition(
             'jQuery(".current .button-row button.disabled").length == 0',

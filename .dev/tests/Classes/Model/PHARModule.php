@@ -26,9 +26,23 @@
  * @since      3.0.0
  */
 
+/**
+ * XLite_Tests_Model_PHARModule 
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
 {
-
+    /**
+     * setUp 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function setUp()
     {
         parent::setUp();
@@ -36,38 +50,71 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
         \Includes\Utils\FileManager::mkdirRecursive(LC_LOCAL_REPOSITORY);
     }
 
+    /**
+     * getFile 
+     * 
+     * @param mixed $file ____param_comment____
+     *  
+     * @return void
+     * @access private
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     private function getFile($file)
     {
-        return dirname(__FILE__) . LC_DS . 'phars' . LC_DS . $file;
+        return __DIR__ . LC_DS . 'phars' . LC_DS . $file;
     }
 
 
+    /**
+     * testBadConstruct 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function testBadConstruct()
     {
-        \Includes\Utils\FileManager::mkdirRecursive(LC_LOCAL_REPOSITORY);
-
-        @copy($this->getFile('bad.phar'), LC_LOCAL_REPOSITORY . 'bad.phar');
+        copy($this->getFile('bad.phar'), LC_LOCAL_REPOSITORY . 'bad.phar');
 
         $phar = new \XLite\Model\PHARModule('bad.phar');
-
-        $message = $phar->getError();
-
         $this->assertEquals(
-            $message,
-            'internal corruption of phar "' . LC_LOCAL_REPOSITORY . 'bad.phar' . '" (truncated entry)',
+            $phar->getStatus(),
+            \XLite\Model\PHARModule::STATUS_EXCEPTION,
             'must be corrupted PHAR'
         );
 
-        @unlink(LC_LOCAL_REPOSITORY . 'bad.phar');
+        $this->assertEquals(
+            $phar->getMessage(),
+            'internal corruption of phar "' . LC_LOCAL_REPOSITORY . 'bad.phar" (truncated entry)',
+            'Invalid message for the corrupted PHAR exception'
+        );
+        
+        unlink(LC_LOCAL_REPOSITORY . 'bad.phar');
 
         $phar = new \XLite\Model\PHARModule('bad-bad-bad-name.phar');
 
-        $message = $phar->getError();
-        $status  = $phar->getStatus();
-
-        $this->assertTrue(is_null($message) && 'error' === $status, 'Wrong error when addons catalog/file does not exist');
+        $this->assertEquals(
+            $phar->getStatus(),
+            \XLite\Model\PHARModule::STATUS_FILE_NOT_EXISTS,
+            'Wrong error when addons catalog/file does not exist'
+        );
+        $this->assertEquals(
+            $phar->getMessage(),
+            'PHAR file not exists in local repository',
+            'Wrong error when addons catalog/file does not exist'
+        );
     }
 
+    /**
+     * testGoodConstruct 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function testGoodConstruct()
     {
         copy($this->getFile('good.phar'), LC_LOCAL_REPOSITORY . 'good.phar');
@@ -78,7 +125,7 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
 
             $phar = new \XLite\Model\PHARModule('good.phar');
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 
             $message = $e->getMessage();
         }
@@ -88,72 +135,56 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
 
         $phar->cleanUp();
 
+        // Unset is required to release file. Else this file will not be removed under Windows
+        unset($phar);
+
         unlink(LC_LOCAL_REPOSITORY . 'good.phar');
     }
 
+    /**
+     * testCheck 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function testCheck()
     {
-        // NO ini file checking
-        copy($this->getFile('no_ini.phar'), LC_LOCAL_REPOSITORY . 'no_ini.phar');
-        $phar = new \XLite\Model\PHARModule('no_ini.phar');
-        $phar->check();
-
-        $this->assertEquals($phar->getStatus(), 'wrong_structure', 'Wrong status for no INI file');
-
-        $phar->cleanUp();
-        unlink(LC_LOCAL_REPOSITORY . 'no_ini.phar');
-
-        // NO catalogs checking
-        copy($this->getFile('no_dir.phar'), LC_LOCAL_REPOSITORY . 'no_dir.phar');
-        $phar = new \XLite\Model\PHARModule('no_dir.phar');
-        $phar->check();
-
-        $this->assertEquals($phar->getStatus(), 'wrong_structure', 'Wrong status for no DIR file');
-
-        $phar->cleanUp();
-        unlink(LC_LOCAL_REPOSITORY . 'no_dir.phar');
-
-        // Corrupted INI checking
-        copy($this->getFile('corrupted_ini.phar'), LC_LOCAL_REPOSITORY . 'corrupted_ini.phar');
-        $phar = new \XLite\Model\PHARModule('corrupted_ini.phar');
-        $phar->check();
-
-        $this->assertEquals($phar->getStatus(), 'ini_corrupted', 'Wrong status for corrupted INI file');
-
-        $phar->cleanUp();
-        unlink(LC_LOCAL_REPOSITORY . 'corrupted_ini.phar');
-
-        // Wrong INI checking
-        copy($this->getFile('wrong_ini.phar'), LC_LOCAL_REPOSITORY . 'wrong_ini.phar');
-        $phar = new \XLite\Model\PHARModule('wrong_ini.phar');
-        $phar->check();
-
-        $this->assertEquals($phar->getStatus(), 'wrong_specification', 'Wrong status for wrong INI file');
-
-        $phar->cleanUp();
-        unlink(LC_LOCAL_REPOSITORY . 'wrong_ini.phar');
-
         // Already installed module checking
-        copy($this->getFile('already.phar'), LC_LOCAL_REPOSITORY . 'already.phar');
+        /*copy($this->getFile('already.phar'), LC_LOCAL_REPOSITORY . 'already.phar');
         $phar = new \XLite\Model\PHARModule('already.phar');
-        $phar->check();
 
-        $this->assertEquals($phar->getStatus(), 'wrong_install', 'Wrong status for already installed module');
+        $this->assertEquals(
+            $phar->getStatus(),
+            \XLite\Model\PHARModule::STATUS_ROOT_DIR_EXISTS,
+            'Wrong status for already installed module'
+        );
 
         $phar->cleanUp();
-        unlink(LC_LOCAL_REPOSITORY . 'already.phar');
+        unlink(LC_LOCAL_REPOSITORY . 'already.phar');*/
     }
 
-    public function testDeploy()
+    /**
+     * testDeploy 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    /*public function testDeploy()
     {
         // Deploying only classes directory module
         copy($this->getFile('test_module.phar'), LC_LOCAL_REPOSITORY . 'test_module.phar');
 
         $phar = new \XLite\Model\PHARModule('test_module.phar');
 
-        $phar->check();
-
-        $this->assertEquals('ok', $phar->getStatus(), 'Good module must be validated');
+        $this->assertEquals(
+            $phar->getStatus(),
+            \XLite\Model\PHARModule::STATUS_OK,
+            'Good module must be validated'
+        );
 
         $phar->deploy();
 
@@ -177,18 +208,28 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
         \Includes\Utils\FileManager::unlinkRecursive($dir);
 
         unlink(LC_LOCAL_REPOSITORY . 'test_module.phar');
-    }
+    }*/
 
+    /**
+     * testDeploy2 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function testDeploy2()
     {
         // Deploying classes and skins directories module
-        copy($this->getFile('test_module2.phar'), LC_LOCAL_REPOSITORY . 'test_module2.phar');
+        /*copy($this->getFile('test_module2.phar'), LC_LOCAL_REPOSITORY . 'test_module2.phar');
 
         $phar = new \XLite\Model\PHARModule('test_module2.phar');
 
-        $phar->check();
-
-        $this->assertEquals('ok', $phar->getStatus(), 'new Bestsellers module must be validated');
+        $this->assertEquals(
+            $phar->getStatus(),
+            \XLite\Model\PHARModule::STATUS_OK,
+            'new Bestsellers module must be validated'
+        );
 
         $phar->deploy();
 
@@ -213,14 +254,19 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
             \Includes\Utils\FileManager::unlinkRecursive($skin);
         }
 
-        unlink(LC_LOCAL_REPOSITORY . 'test_module2.phar');
+        unlink(LC_LOCAL_REPOSITORY . 'test_module2.phar');*/
     }
 
 
+    /**
+     * testCleanUp 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function testCleanUp()
     {
-
-
     }
-
 }

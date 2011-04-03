@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * Form field widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class FormField extends \XLite\View\AView
 {
@@ -44,10 +43,24 @@ class FormField extends \XLite\View\AView
 
 
     /**
+     * Used in form field components to display a form field according to the 'field' property
+     * FIXME - to check
+     * 
+     * @return mixed
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getValue()
+    {
+        return $this->getParam(self::PARAM_FIELD);
+    }
+
+
+    /**
      * Return widget default template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
@@ -59,7 +72,7 @@ class FormField extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -69,19 +82,6 @@ class FormField extends \XLite\View\AView
         $this->widgetParams += array(
             self::PARAM_FIELD => new \XLite\Model\WidgetParam\String('Field', null),
         );
-    }
-
-    /**
-     * Used in form field components to display a form field according to the 'field' property
-     * FIXME - to check
-     * 
-     * @return mixed
-     * @access public
-     * @since  3.0
-     */
-    public function getValue()
-    {
-        return $this->getParam(self::PARAM_FIELD);
     }
 }
 

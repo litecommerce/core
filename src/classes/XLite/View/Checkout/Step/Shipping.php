@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Checkout\Step;
@@ -31,17 +31,24 @@ namespace XLite\View\Checkout\Step;
 /**
  * Shipping step
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Shipping extends \XLite\View\Checkout\Step\AStep
 {
     /**
+     * Modifier (cache)
+     * 
+     * @var   \XLite\Model\Order\Modifier
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected $modifier;
+
+    /**
      * Get step name
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -54,7 +61,6 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      * Get step title
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -67,7 +73,6 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      * Check - step is complete or not
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -76,14 +81,13 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
         return $this->getCart()->getProfile()
             && $this->getCart()->getProfile()->getShippingAddress()
             && $this->getCart()->getProfile()->getShippingAddress()->isCompleted(\XLite\Model\Address::SHIPPING)
-            && $this->getCart()->getShippingMethod();
+            && (!$this->getModifier() || !$this->getModifier()->canApply() || $this->getModifier()->getMethod());
     }
 
     /**
      * Check - shipping address is completed or not
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -101,26 +105,24 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      * Check - shipping system is enabled or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function isShippingEnabled()
     {
-        return $this->getCart()->isShippingVisible();
+        return $this->getModifier() && $this->getModifier()->canApply();
     }
 
     /**
      * Check - shipping rates is available or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function isShippingAvailable()
     {
-        return $this->getCart()->isShippingAvailable();
+        return $this->getModifier()->isRatesExists();
     }
 
     /**
@@ -129,7 +131,6 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      * @param \XLite\Model\Shipping\Rate $rate Shipping rate
      *  
      * @return float
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -142,7 +143,6 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      * Check - display Address book button or not
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -153,4 +153,19 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
             && 0 < count($this->getCart()->getProfile()->getAddresses());
     }
 
+    /**
+     * Get modifier 
+     * 
+     * @return \XLite\Model\Order\Modifier
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModifier()
+    {
+        if (!isset($this->modifier)) {
+            $this->modifier = $this->getCart()->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+        }
+
+        return $this->modifier;
+    }
 }

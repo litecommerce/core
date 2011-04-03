@@ -13,7 +13,7 @@
 
 <widget class="\XLite\View\Form\Product\Search\Admin\Main" name="search_form" />
 
-  <table border="0">
+  <table>
 
       {displayViewListContent(#product.search.conditions#)}
 
@@ -31,5 +31,5 @@
 
 <br />
 
-<b>Note:</b> You can also <a href="admin.php?target=product"><u>add a new product</u></a>.
+<b>Note:</b> You can also <a href="admin.php?target=product">add a new product</a>.
 

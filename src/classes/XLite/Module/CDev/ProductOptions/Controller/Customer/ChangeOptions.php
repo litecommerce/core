@@ -93,6 +93,8 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
 
     /**
      * Perform some actions before redirect
+     *
+     * :FIXME: check. Action should not be an optional param
      * 
      * @param string $action Current action
      *  
@@ -100,11 +102,13 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * @access protected
      * @since  3.0.0
      */
-    protected function actionPostprocess($action)
+    protected function actionPostprocess($action = null)
     {
         parent::actionPostprocess($action);
 
-        $this->assembleReturnUrl();
+        if ($action) {
+            $this->assembleReturnURL();
+        }
     }
 
     /**
@@ -115,11 +119,11 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function assembleReturnUrl()
+    protected function assembleReturnURL()
     {
-        $this->set('returnUrl', $this->buildUrl(\XLite::TARGET_DEFAULT));
+        $this->setReturnURL($this->buildURL(\XLite::TARGET_DEFAULT));
         if (\XLite\Core\Request::getInstance()->source == 'cart') {
-            $this->set('returnUrl', $this->buildUrl('cart'));
+            $this->setReturnURL($this->buildURL('cart'));
         }
     }
 
@@ -142,23 +146,20 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
                 $this->getItem()->setProductOptions($options);
                 $this->updateCart();
 
-                \XLite\Core\TopMessage::getInstance()->add('Options has been successfully changed');
+                \XLite\Core\TopMessage::addInfo('Options has been successfully changed');
 
                 $this->setSilenceClose();
 
             } else {
 
-                \XLite\Core\TopMessage::getInstance()->add(
+                \XLite\Core\TopMessage::addError(
                     'The product options you have selected are not valid or fall into an exception.'
-                    . ' Please select other product options',
-                    \XLite\Core\TopMessage::ERROR
+                    . ' Please select other product options'
                 );
 
                 $this->setInternalRedirect();
 
-                $this->set(
-                    'returnUrl',
-                    $this->buildUrl(
+                $this->setReturnURL($this->buildURL(
                         'change_options',
                         '',
                         array(

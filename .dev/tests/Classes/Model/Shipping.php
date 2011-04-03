@@ -101,7 +101,8 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
      */
     public function testGetRates()
     {
-        $rates = \XLite\Model\Shipping::getInstance()->getRates($this->getTestOrder());
+        $m = $this->getTestOrder()->getModifier('shipping', 'SHIPPING')->getModifier();
+        $rates = \XLite\Model\Shipping::getInstance()->getRates($m);
 
         $this->assertTrue(is_array($rates), 'getRates() must return an array');
 
@@ -123,7 +124,8 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
     {
         $order = $this->getTestOrder(true);
 
-        $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($order);
+        $m = $order->getModifier('shipping', 'SHIPPING')->getModifier();
+        $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($m);
 
         $this->assertTrue(is_array($address), 'getDestinationAddress() must return an array');
         $this->assertArrayHasKey('address', $address, 'Address must contain "address" key');
@@ -133,10 +135,9 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
         $this->assertArrayHasKey('zipcode', $address, 'Address must contain "zipcode" key');
 
         $order = $this->getTestOrder(false);
+        $m = $order->getModifier('shipping', 'SHIPPING')->getModifier();
 
-        \XLite\Base::getInstance()->config->Shipping->def_calc_shippings_taxes = true;
-
-        $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($order);
+        $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($m);
 
         $this->assertTrue(is_array($address), 'getDestinationAddress() must return an array');
         $this->assertArrayHasKey('address', $address, 'Address must contain "address" key');
@@ -151,13 +152,6 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
         $this->assertEquals(\XLite\Base::getInstance()->config->Shipping->anonymous_city, $address['city'], 'city does not match');
         $this->assertEquals(\XLite\Base::getInstance()->config->Shipping->anonymous_address, $address['address'], 'address does not match');
 
-        \XLite\Base::getInstance()->config->Shipping->def_calc_shippings_taxes = false;
-
-        $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($order);
-
-        $this->assertNull($address, 'getDestinationAddress() must return null');
-
-        \XLite\Base::getInstance()->config->Shipping->def_calc_shippings_taxes = true;
     }
 
     /**

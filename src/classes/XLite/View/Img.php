@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View;
@@ -31,9 +31,8 @@ namespace XLite\View;
 /**
  * Image
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Img extends \XLite\View\AView
 {
@@ -52,10 +51,9 @@ class Img extends \XLite\View\AView
     /**
      * Allowed properties names
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $allowedProperties = array(
         'className'   => 'class',
@@ -72,28 +70,109 @@ class Img extends \XLite\View\AView
     /**
      * Additioanl properties 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $properties = array();
 
     /**
      * Resized thumbnail URL 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $resizedURL = null;
+
+
+    /**
+     * Set widget parameters
+     *
+     * @param array $params Widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        parent::setWidgetParams($params);
+
+        // Save additional parameters
+        foreach ($params as $name => $value) {
+            if (isset($this->allowedProperties[$name])) {
+                $this->properties[$this->allowedProperties[$name]] = $value;
+            }
+        }
+    }
+
+    /**
+     * Get image URL 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getURL()
+    {
+        $url = false;
+
+        if ($this->getParam(self::PARAM_IMAGE)) {
+
+            // Specified image
+
+            $url = $this->getParam(self::PARAM_USE_CACHE)
+                ? $this->resizedURL
+                : $this->getParam(self::PARAM_IMAGE)->getFrontURL();
+
+        } elseif ($this->getParam(self::PARAM_USE_DEFAULT_IMAGE)) {
+
+            // Defualt image
+
+            $url = \XLite::getInstance()->getOptions(array('images', 'default_image'));
+
+            if (!\XLite\Core\Converter::isURL($url)) {
+                $url = \XLite\Core\Layout::getInstance()->getResourceWebPath(
+                    $url,
+                    \XLite\Core\Layout::WEB_PATH_OUTPUT_URL
+                );
+            }
+        }
+
+        return $url;
+    }
+
+    /**
+     * Get image alternative text
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAlt()
+    {
+        return $this->getParam(self::PARAM_ALT);
+    }
+
+    /**
+     * Get properties 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProperties()
+    {
+        return $this->properties;
+    }
+
 
     /**
      * Return widget default template
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
@@ -105,7 +184,7 @@ class Img extends \XLite\View\AView
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -127,7 +206,7 @@ class Img extends \XLite\View\AView
      * checkImage 
      * 
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function checkImage()
@@ -139,7 +218,7 @@ class Img extends \XLite\View\AView
      * checkDefaultImage 
      * 
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function checkDefaultImage()
@@ -149,31 +228,9 @@ class Img extends \XLite\View\AView
     }
 
     /**
-     * Set widget parameters
-     *
-     * @param array $params Widget parameters
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function setWidgetParams(array $params)
-    {
-        parent::setWidgetParams($params);
-
-        // Save additional parameters
-        foreach ($params as $name => $value) {
-            if (isset($this->allowedProperties[$name])) {
-                $this->properties[$this->allowedProperties[$name]] = $value;
-            }
-        }
-    }
-
-    /**
      * Check widget visibility
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -198,72 +255,9 @@ class Img extends \XLite\View\AView
     }
 
     /**
-     * Get image URL 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getURL()
-    {
-        $url = false;
-
-        if ($this->getParam(self::PARAM_IMAGE)) {
-
-            // Specified image
-
-            $url = $this->getParam(self::PARAM_USE_CACHE)
-                ? $this->resizedURL
-                : $this->getParam(self::PARAM_IMAGE)->getFrontURL();
-
-        } elseif ($this->getParam(self::PARAM_USE_DEFAULT_IMAGE)) {
-
-            // Defualt image
-
-            $url = \XLite::getInstance()->getOptions(array('images', 'default_image'));
-
-            if (!\XLite\Core\Converter::isURL($url)) {
-                $url = \XLite::getInstance()->getShopUrl(
-                    \XLite\Model\Layout::getInstance()->getSkinURL($url)
-                );
-            }
-        }
-
-        return $url;
-    }
-
-    /**
-     * Get image alternative text
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getAlt()
-    {
-        return $this->getParam(self::PARAM_ALT);
-    }
-
-    /**
-     * Get properties 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProperties()
-    {
-        return $this->properties;
-    }
-
-    /**
      * Return a CSS style centering the image vertically and horizontally
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -290,7 +284,6 @@ class Img extends \XLite\View\AView
      * @param string $style CSS styles to be added to the end of "style" attribute
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -309,7 +302,6 @@ class Img extends \XLite\View\AView
      * TODO: replace getResizedThumbnailURL to getResizedURL
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -334,13 +326,12 @@ class Img extends \XLite\View\AView
      * Preprocess default image 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function processDefaultImage()
     {
-        list($this->properties['width'], $this->properties['height']) = \XLite\Core\Converter::getCroppedDimensions(
+        list($this->properties['width'], $this->properties['height']) = \XLite\Core\ImageOperator::getCroppedDimensions(
             \XLite::getInstance()->getOptions(array('images', 'default_image_width')),
             \XLite::getInstance()->getOptions(array('images', 'default_image_height')),
             max(0, $this->getParam(self::PARAM_MAX_WIDTH)),
@@ -352,5 +343,4 @@ class Img extends \XLite\View\AView
             $this->setImagePaddings();
         }
     }
-
 }

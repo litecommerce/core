@@ -82,6 +82,18 @@ abstract class Autoloader
     }
 
     /**
+     * Autoloader for PEAR2
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function registerPEARAutolader()
+    {
+        require_once (LC_LIB_DIR . 'PEAR2' . LC_DS . 'Autoload.php');
+    }
+
+    /**
      * Common autoloader
      * 
      * @param string $namespace namespace to check
@@ -180,7 +192,11 @@ abstract class Autoloader
             spl_autoload_register(array('static', $method));
         }
 
+        // Doctrine
         static::registerDoctrineAutoloader();
+
+        // PEAR2
+        static::registerPEARAutolader();
     }
 
     /**

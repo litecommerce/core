@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model;
@@ -31,9 +31,9 @@ namespace XLite\Model;
 /**
  * Language
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
  * @Entity
  * @Table (name="languages",
  *      uniqueConstraints={
@@ -58,10 +58,10 @@ class Language extends \XLite\Model\Base\I18n
     /**
      * Unique id 
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
      * @Column (type="integer", unique=true)
@@ -71,10 +71,10 @@ class Language extends \XLite\Model\Base\I18n
     /**
      * Language alpha-2 code (ISO 639-2)
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="fixedstring", length="2", unique=true)
      */
     protected $code;
@@ -82,10 +82,10 @@ class Language extends \XLite\Model\Base\I18n
     /**
      * Language alpha-3 code (ISO 639-3)
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="fixedstring", length="3", unique=true)
      */
     protected $code3 = '';
@@ -93,10 +93,10 @@ class Language extends \XLite\Model\Base\I18n
     /**
      * Right-to-left flag
      * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="boolean")
      */
     protected $r2l = false;
@@ -104,10 +104,10 @@ class Language extends \XLite\Model\Base\I18n
     /**
      * Status
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="integer")
      */
     protected $status = self::INACTIVE;
@@ -116,7 +116,6 @@ class Language extends \XLite\Model\Base\I18n
      * Get added status
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -131,7 +130,6 @@ class Language extends \XLite\Model\Base\I18n
      * @param boolean $status Added status
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -149,7 +147,6 @@ class Language extends \XLite\Model\Base\I18n
      * Get enabled status
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -164,7 +161,6 @@ class Language extends \XLite\Model\Base\I18n
      * @param boolean $status Enabled status
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -179,21 +175,23 @@ class Language extends \XLite\Model\Base\I18n
      * Get flag URL 
      * 
      * @return string|void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getFlagURL()
     {
-        $path = \XLite\Model\Layout::getInstance()->getSkinURL('images/flags/' . $this->getCode() . '.png');
+        $path = \XLite\Core\Layout::getInstance()->getResourceWebPath(
+            'images/flags/' . $this->getCode() . '.png',
+            \XLite\Core\Layout::WEB_PATH_OUTPUT_URL
+        );
 
-        if (!file_exists(LC_ROOT_DIR . $path)) {
-            $path = \XLite\Model\Layout::getInstance()->getSkinURL('images/flags/__.png');
+        if (!$path) {
+            $path = \XLite\Core\Layout::getInstance()->getResourceWebPath(
+                'images/flags/__.png',
+                \XLite\Core\Layout::WEB_PATH_OUTPUT_URL
+            );
         }
 
-        return file_exists(LC_ROOT_DIR . $path)
-            ? \XLite::getInstance()->getShopUrl($path)
-            : null;
+        return $path;
     }
 }
-

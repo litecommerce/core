@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Sort;
@@ -33,9 +33,8 @@ namespace XLite\View\Sort;
 /**
  * Abstract sort widget 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class ASort extends \XLite\View\AView
 {
@@ -49,52 +48,9 @@ abstract class ASort extends \XLite\View\AView
 
 
     /**
-     * Return widget default template
-     *                               
-     * @return string                
-     * @access protected             
-     * @since  3.0.0                 
-     */                              
-    protected function getDefaultTemplate()
-    {
-        return 'common/sort.tpl';
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_PARAMS          => new \XLite\Model\WidgetParam\Collection('URL params', array()),
-            self::PARAM_SORT_CRITERIONS => new \XLite\Model\WidgetParam\Collection('Sort criterions', array()),
-            self::PARAM_CELL            => new \XLite\Model\WidgetParam\Collection('List conditions cell', array()),
-        );
-    }
-
-    /**
-     * Check if widget is visible
-     *
-     * @return boolean 
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible() && $this->getParam(self::PARAM_SORT_CRITERIONS);
-    }
-
-    /**
      * Get form parameters
      * 
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -113,7 +69,6 @@ abstract class ASort extends \XLite\View\AView
      * @param string $key Sort criterion code
      *  
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -128,7 +83,6 @@ abstract class ASort extends \XLite\View\AView
      * Check - sort order is ascending or not
      * 
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -143,11 +97,10 @@ abstract class ASort extends \XLite\View\AView
      * Build sort order link URL 
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getSortOrderUrl()
+    public function getSortOrderURL()
     {
         $params = $this->getParam(self::PARAM_PARAMS);
 
@@ -168,14 +121,13 @@ abstract class ASort extends \XLite\View\AView
 
         $params['sortOrder'] = $this->isSortOrderAsc() ? 'desc' : 'asc';
 
-        return $this->buildUrl($target, $action, $params);
+        return $this->buildURL($target, $action, $params);
     }
 
     /**
      * Get class name for sort order link
      * 
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -188,7 +140,6 @@ abstract class ASort extends \XLite\View\AView
      * Register JS files
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -205,7 +156,6 @@ abstract class ASort extends \XLite\View\AView
      * Register CSS files
      *
      * @return array
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -218,4 +168,46 @@ abstract class ASort extends \XLite\View\AView
         return $list;
     }
 
+
+    /**
+     * Return widget default template
+     *                               
+     * @return string                
+     * @see    ____func_see____
+     * @since  3.0.0                 
+     */                              
+    protected function getDefaultTemplate()
+    {
+        return 'common/sort.tpl';
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_PARAMS          => new \XLite\Model\WidgetParam\Collection('URL params', array()),
+            self::PARAM_SORT_CRITERIONS => new \XLite\Model\WidgetParam\Collection('Sort criterions', array()),
+            self::PARAM_CELL            => new \XLite\Model\WidgetParam\Collection('List conditions cell', array()),
+        );
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible() && $this->getParam(self::PARAM_SORT_CRITERIONS);
+    }
 }

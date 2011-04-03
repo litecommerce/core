@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\Model\Payment\Base;
@@ -31,9 +31,8 @@ namespace XLite\Model\Payment\Base;
 /**
  * Abstract credit card, web-based processor 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
 {
@@ -53,10 +52,92 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
 
 
     /**
+     * Get redirect form URL 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract protected function getFormURL();
+
+    /**
+     * Get redirect form fields list
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract protected function getFormFields();
+
+
+    /**
+     * Get input template
+     *
+     * @return string|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getInputTemplate()
+    {
+        return null;
+    }
+
+    /**
+     * Get return request owner transaction or null
+     * 
+     * @return \XLite\Model\Payment\Transaction|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getReturnOwnerTransaction()
+    {
+        return null;
+    }
+
+    /**
+     * Process return
+     * 
+     * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function processReturn(\XLite\Model\Payment\Transaction $transaction)
+    {
+        $this->transaction = $transaction;
+
+        $this->logReturn(\XLite\Core\Request::getInstance()->getData());
+    }
+
+    /**
+     * Get return type 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getReturnType()
+    {
+        return self::RETURN_TYPE_HTTP_REDIRECT;
+    }
+
+    /**
+     * Do custom redirect after customer's return
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function doCustomReturnRedirect()
+    {
+    }
+
+
+    /**
      * Do initial payment 
      * 
      * @return string Status code
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -96,7 +177,6 @@ HTML;
      * Get form method 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -106,82 +186,18 @@ HTML;
     }
 
     /**
-     * Get redirect form URL 
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    abstract protected function getFormURL();
-
-    /**
-     * Get redirect form fields list
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    abstract protected function getFormFields();
-
-    /**
-     * Get input template
-     *
-     * @return string|void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getInputTemplate()
-    {
-        return null;
-    }
-
-    /**
-     * Get return request owner transaction or null
-     * 
-     * @return \XLite\Model\Payment\Transaction|void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getReturnOwnerTransaction()
-    {
-        return null;
-    }
-
-    /**
-     * Process return
-     * 
-     * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function processReturn(\XLite\Model\Payment\Transaction $transaction)
-    {
-        $this->transaction = $transaction;
-
-        $this->logReturn(\XLite\Core\Request::getInstance()->getData());
-    }
-
-    /**
      * Get transactionId-based return URL 
      *
      * @param string $fieldName TransactionId field name
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getReturnURL($fieldName)
     {
-        return \XLite::getInstance()->getShopUrl(
-            \XLite\Core\Converter::buildUrl('payment_return', '', array('txn_id_name' => $fieldName)),
+        return \XLite::getInstance()->getShopURL(
+            \XLite\Core\Converter::buildURL('payment_return', '', array('txn_id_name' => $fieldName)),
             true
         );
     }
@@ -192,7 +208,6 @@ HTML;
      * @param float $total Total from gateway response
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -221,7 +236,6 @@ HTML;
      * @param string $currency Transaction response currency code
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -246,35 +260,9 @@ HTML;
     }
 
     /**
-     * Get return type 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getReturnType()
-    {
-        return self::RETURN_TYPE_HTTP_REDIRECT;
-    }
-
-    /**
-     * Do custom redirect after customer's return
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function doCustomReturnRedirect()
-    {
-    }
-
-    /**
      * Assemble form body (field set)
      * 
      * @return string HTML
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -299,7 +287,6 @@ HTML;
      * @param array $list Form fields list
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -320,7 +307,6 @@ HTML;
      * @param array $list Request data
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
