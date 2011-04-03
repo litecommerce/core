@@ -64,6 +64,93 @@ class Order extends \XLite\Model\Repo\ARepo
      */
     protected $currentSearchCnd = null;
 
+
+    /**
+     * Find all expired temporary orders 
+     * 
+     * @return \Doctrine\Common\Collection\ArrayCollection
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findAllExipredTemporaryOrders()
+    {
+        return $this->defineAllExpiredTemporaryOrdersQuery()->getResult();
+    }
+
+    /**
+     * Create a new QueryBuilder instance that is prepopulated for this entity name
+     *
+     * @param string  $alias      Table alias OPTIONAL
+     * @param boolean $placedOnly Use only orders or orders + carts OPTIONAL
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createQueryBuilder($alias = null, $placedOnly = true)
+    {
+        $result = parent::createQueryBuilder($alias);
+
+        if ($placedOnly) {
+            $result->andWhere('o.status != :tempStatus')
+                ->setParameter('tempStatus', \XLite\Model\Order::STATUS_TEMPORARY);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Orders collect garbage 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function collectGarbage()
+    {
+        $list = $this->findAllExipredTemporaryOrders();
+        if (count($list)) {
+            foreach ($list as $order) {
+                \XLite\Core\Database::getEM()->remove($order);
+            }
+
+            \XLite\Core\Database::getEM()->flush();
+        }
+    }
+
+    /**
+     * Common search
+     * 
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param boolean                $countOnly Return items list or only its size OPTIONAL
+     *  
+     * @return \Doctrine\ORM\PersistentCollection|integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
+    {
+        $queryBuilder = $this->createQueryBuilder();
+        $this->currentSearchCnd = $cnd;
+
+        foreach ($this->currentSearchCnd as $key => $value) {
+            if (self::P_LIMIT != $key || !$countOnly) {
+                $this->callSearchConditionHandler($value, $key, $queryBuilder);
+            }
+        }
+
+        if ($countOnly) {
+            $queryBuilder->select('COUNT(o.order_id)');
+            $result = intval($queryBuilder->getSingleScalarResult());
+
+        } else {
+            $result = $queryBuilder->getResult();
+        }
+
+        return $result;
+    }
+
+
     /**
      * Return list of handling search params 
      * 
@@ -112,8 +199,7 @@ class Order extends \XLite\Model\Repo\ARepo
     protected function prepareCndOrderId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if (!empty($value)) {
-            $queryBuilder
-                ->andWhere('o.order_id = :order_id')
+            $queryBuilder->andWhere('o.order_id = :order_id')
                 ->setParameter('order_id', $value);
         }
     }
@@ -131,8 +217,7 @@ class Order extends \XLite\Model\Repo\ARepo
     protected function prepareCndProfile(\Doctrine\ORM\QueryBuilder $queryBuilder, \XLite\Model\Profile $value)
     {
         if (!empty($value)) {
-            $queryBuilder
-                ->andWhere('o.orig_profile = :orig_profile')
+            $queryBuilder->andWhere('o.orig_profile = :orig_profile')
                 ->setParameter('orig_profile', $value);
         }
     }
@@ -151,8 +236,7 @@ class Order extends \XLite\Model\Repo\ARepo
     {
         if (!empty($value)) {
             $value = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($value);
-            $queryBuilder
-                ->andWhere('o.orig_profile = :orig_profile')
+            $queryBuilder->andWhere('o.orig_profile = :orig_profile')
                 ->setParameter('orig_profile', $value);
         }
     }
@@ -170,8 +254,7 @@ class Order extends \XLite\Model\Repo\ARepo
     protected function prepareCndEmail(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if (!empty($value)) {
-            $queryBuilder
-                ->innerJoin('o.profile', 'p')
+            $queryBuilder->innerJoin('o.profile', 'p')
                 ->andWhere('p.login = :email')
                 ->setParameter('email', $value);
         }
@@ -193,8 +276,7 @@ class Order extends \XLite\Model\Repo\ARepo
             !empty($value)
             && !is_null(\XLite\Model\Order::getAllowedStatuses($value))
         ) {
-            $queryBuilder
-                ->andWhere('o.status = :status')
+            $queryBuilder->andWhere('o.status = :status')
                 ->setParameter('status', $value);
 
         } else {
@@ -206,7 +288,7 @@ class Order extends \XLite\Model\Repo\ARepo
      * Prepare certain search condition
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     * @param array                      $value        Condition data
+     * @param array                      $value        Condition data OPTIONAL
      *
      * @return void
      * @see    ____func_see____
@@ -217,8 +299,7 @@ class Order extends \XLite\Model\Repo\ARepo
         if (2 == count($value)) {
             list($start, $end) = $value;
 
-            $queryBuilder
-                ->andWhere('o.date >= :start')
+            $queryBuilder->andWhere('o.date >= :start')
                 ->andWhere('o.date <= :end')
                 ->setParameter('start', $start)
                 ->setParameter('end', $end);
@@ -250,60 +331,6 @@ class Order extends \XLite\Model\Repo\ARepo
             ->andWhere('o.status = :tempStatus AND o.date < :time')
             ->setParameter('tempStatus', \XLite\Model\Order::STATUS_TEMPORARY)
             ->setParameter('time', time() - $this->getOrderTTL());
-    }
-
-    /**
-     * Find all expired temporary orders 
-     * 
-     * @return \Doctrine\Common\Collection\ArrayCollection
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findAllExipredTemporaryOrders()
-    {
-        return $this->defineAllExpiredTemporaryOrdersQuery()->getResult();
-    }
-
-    /**
-     * Create a new QueryBuilder instance that is prepopulated for this entity name
-     *
-     * @param string  $alias      Table alias OPTIONAL
-     * @param boolean $placedOnly Use only orders or orders + carts OPTIONAL
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function createQueryBuilder($alias = null, $placedOnly = true)
-    {
-        $result = parent::createQueryBuilder($alias);
-
-        if ($placedOnly) {
-            $result
-                ->andWhere('o.status != :tempStatus')
-                ->setParameter('tempStatus', \XLite\Model\Order::STATUS_TEMPORARY);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Orders collect garbage 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function collectGarbage()
-    {
-        $list = $this->findAllExipredTemporaryOrders();
-        if (count($list)) {
-            foreach ($list as $order) {
-                \XLite\Core\Database::getEM()->remove($order);
-            }
-
-            \XLite\Core\Database::getEM()->flush();
-        }
     }
 
     /**
@@ -361,38 +388,5 @@ class Order extends \XLite\Model\Repo\ARepo
         } else {
             // TODO - add logging here
         }
-    }
-
-
-    /**
-     * Common search
-     * 
-     * @param \XLite\Core\CommonCell $cnd       Search condition
-     * @param boolean                $countOnly Return items list or only its size OPTIONAL
-     *  
-     * @return \Doctrine\ORM\PersistentCollection|integer
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
-    {
-        $queryBuilder = $this->createQueryBuilder();
-        $this->currentSearchCnd = $cnd;
-
-        foreach ($this->currentSearchCnd as $key => $value) {
-            if (self::P_LIMIT != $key || !$countOnly) {
-                $this->callSearchConditionHandler($value, $key, $queryBuilder);
-            }
-        }
-
-        if ($countOnly) {
-            $queryBuilder->select('COUNT(o.order_id)');
-            $result = intval($queryBuilder->getSingleScalarResult());
-
-        } else {
-            $result = $queryBuilder->getResult();
-        }
-
-        return $result;
     }
 }

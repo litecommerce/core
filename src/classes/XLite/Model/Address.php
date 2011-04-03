@@ -31,8 +31,9 @@ namespace XLite\Model;
 /**
  * Address model
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
  * @Entity
  * @Table (name="profile_addresses",
  *      indexes={
@@ -54,9 +55,10 @@ class Address extends \XLite\Model\AEntity
     /**
      * Unique id 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
      * @Column (type="integer")
@@ -66,9 +68,10 @@ class Address extends \XLite\Model\AEntity
     /**
      * Flag: is it a billing address
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="boolean")
      */
     protected $is_billing = false;
@@ -76,9 +79,10 @@ class Address extends \XLite\Model\AEntity
     /**
      * Flag: is it a shipping address
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="boolean")
      */
     protected $is_shipping = false;
@@ -86,9 +90,10 @@ class Address extends \XLite\Model\AEntity
     /**
      * Address type: residential/commercial
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="fixedstring", length="1")
      */
     protected $address_type = 'R';
@@ -96,9 +101,10 @@ class Address extends \XLite\Model\AEntity
     /**
      * Title
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="string", length="32")
      */
     protected $title = '';
@@ -106,9 +112,10 @@ class Address extends \XLite\Model\AEntity
     /**
      * First name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="string", length="128")
      */
     protected $firstname = '';
@@ -116,9 +123,10 @@ class Address extends \XLite\Model\AEntity
     /**
      * Last name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="string", length="128")
      */
     protected $lastname = '';
@@ -126,9 +134,10 @@ class Address extends \XLite\Model\AEntity
     /**
      * Phone
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="string", length="32")
      */
     protected $phone = '';
@@ -136,9 +145,10 @@ class Address extends \XLite\Model\AEntity
     /**
      * Street, number of building, apartment etc
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="string", length="255")
      */
     protected $street = '';
@@ -146,9 +156,10 @@ class Address extends \XLite\Model\AEntity
     /**
      * City
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="string", length="255")
      */
     protected $city = '';
@@ -156,9 +167,9 @@ class Address extends \XLite\Model\AEntity
     /**
      * State
      *
-     * @var    \XLite\Model\State
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\State
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\State", cascade={"merge","detach"})
      * @JoinColumn (name="state_id", referencedColumnName="state_id")
@@ -168,9 +179,10 @@ class Address extends \XLite\Model\AEntity
     /**
      * Custom state
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="string", length="255")
      */
     protected $custom_state = '';
@@ -178,9 +190,9 @@ class Address extends \XLite\Model\AEntity
     /**
      * Country
      *
-     * @var    \XLite\Model\Country
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Country
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Country", cascade={"merge","detach"})
      * @JoinColumn (name="country_code", referencedColumnName="code")
@@ -190,9 +202,10 @@ class Address extends \XLite\Model\AEntity
     /**
      * Zip/postal code
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="string", length="32")
      */
     protected $zipcode = '';
@@ -200,14 +213,38 @@ class Address extends \XLite\Model\AEntity
     /**
      * Profile: many-to-one relation with profile entity
      * 
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\ArrayCollection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @ManyToOne (targetEntity="XLite\Model\Profile", inversedBy="addresses")
      * @JoinColumn (name="profile_id", referencedColumnName="profile_id")
      */
     protected $profile;
+
+
+    /**
+     * Get address fields list
+     * 
+     * @return array(string)
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAddressFields()
+    {
+        return array(
+            'firstname',
+            'lastname',
+            'phone',
+            'street',
+            'city',
+            'zipcode',
+            'state_id',
+            'custom_state',
+            'country_code',
+        );
+    }
+
 
     /**
      * Get state 
@@ -396,28 +433,6 @@ class Address extends \XLite\Model\AEntity
     public function isCompleted($atype)
     {
         return 0 == count($this->getRequiredEmptyFields($atype));
-    }
-
-    /**
-     * Get address fields list
-     * 
-     * @return array(string)
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAddressFields()
-    {
-        return array(
-            'firstname',
-            'lastname',
-            'phone',
-            'street',
-            'city',
-            'zipcode',
-            'state_id',
-            'custom_state',
-            'country_code',
-        );
     }
 
     /**

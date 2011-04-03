@@ -737,6 +737,14 @@ class Order extends \XLite\Model\Base\SurchargeOwner
             $event = $item->getEventCell();
             $event['quantity'] = $item->getAmount();
 
+            // Inventory tracking
+            if (
+                $item->getObject()->getInventory()->getEnabled()
+                && $item->getObject()->getInventory()->getAmount() <= $item->getAmount()
+            ) {
+                $event['is_limit'] = 1;
+            }
+
             $hash['items'][] = $event;
         }
 
@@ -906,6 +914,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * Return list of available payment methods
      * 
      * @return array
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getPaymentMethods()
@@ -952,8 +961,8 @@ class Order extends \XLite\Model\Base\SurchargeOwner
     /**
      * Check item key equal
      *
-     * @param \XLite\Model\OrderItem $item  Item
-     * @param string                 $key   Key
+     * @param \XLite\Model\OrderItem $item Item
+     * @param string                 $key  Key
      *
      * @return boolean
      * @see    ____func_see____

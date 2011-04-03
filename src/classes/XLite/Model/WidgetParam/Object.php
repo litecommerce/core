@@ -39,10 +39,35 @@ class Object extends \XLite\Model\WidgetParam\AWidgetParam
     /**
      * class 
      * 
-     * @var    mixed
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $class = null;
+
+
+    /**
+     * Constructor
+     *
+     * @param mixed  $label     Param label (text)
+     * @param mixed  $value     Default value OPTIONAL
+     * @param mixed  $isSetting Display this setting in CMS or not OPTIONAL
+     * @param string $class     Object class OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct($label, $value = null, $isSetting = false, $class = null)
+    {
+        parent::__construct($label, $value, $isSetting);
+
+        // TODO - check if there are more convinient way to extend this class
+        if (!isset($this->class)) {
+            $this->class = $class;
+        }
+    }
+
 
     /**
      * Return list of conditions to check
@@ -50,6 +75,7 @@ class Object extends \XLite\Model\WidgetParam\AWidgetParam
      * @param mixed $value Value to validate
      *
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getValidaionSchema($value)
@@ -64,26 +90,5 @@ class Object extends \XLite\Model\WidgetParam\AWidgetParam
                 self::ATTR_MESSAGE   => ' parameter class is undefined or passed object is not an instance of the param class',
             ),
         );
-    }
-
-    /**
-     * Constructor
-     *
-     * @param mixed  $label     Param label (text)
-     * @param mixed  $value     Default value OPTIONAL
-     * @param mixed  $isSetting Display this setting in CMS or not OPTIONAL
-     * @param string $class     Object class OPTIONAL
-     *
-     * @return void
-     * @since  3.0.0
-     */
-    public function __construct($label, $value = null, $isSetting = false, $class = null)
-    {
-        parent::__construct($label, $value, $isSetting);
-
-        // TODO - check if there are more convinient way to extend this class
-        if (!isset($this->class)) {
-            $this->class = $class;
-        }
     }
 }

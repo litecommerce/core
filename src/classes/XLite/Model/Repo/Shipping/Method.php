@@ -31,8 +31,8 @@ namespace XLite\Model\Repo\Shipping;
 /**
  * Shipping method model
  * 
- * @see        ____class_see____
- * @since     3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Method extends \XLite\Model\Repo\ARepo
 {
@@ -55,6 +55,36 @@ class Method extends \XLite\Model\Repo\ARepo
     protected $alternativeIdentifier = array(
         array('processor', 'code'),
     );
+
+
+    /**
+     * Returns shipping methods by specified processor Id 
+     * 
+     * @param string $processorId Processor Id
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findMethodsByProcessor($processorId)
+    {
+        return $this->defineFindMethodsByProcessor($processorId)->getResult();
+    }
+
+    /**
+     * Returns shipping methods by ids
+     * 
+     * @param array $ids Array of method_id values
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findMethodsByIds($ids)
+    {
+        return $this->defineFindMethodsByIds($ids)->getResult();
+    }
+
 
     /**
      * Adds additional condition to the query for checking if method is enabled
@@ -108,33 +138,4 @@ class Method extends \XLite\Model\Repo\ARepo
 
         return $qb->andWhere($qb->expr()->in('m.method_id', $ids));
     }
-
-    /**
-     * Returns shipping methods by specified processor Id 
-     * 
-     * @param string $processorId Processor Id
-     *  
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findMethodsByProcessor($processorId)
-    {
-        return $this->defineFindMethodsByProcessor($processorId)->getResult();
-    }
-
-    /**
-     * Returns shipping methods by ids
-     * 
-     * @param array $ids Array of method_id values
-     *  
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findMethodsByIds($ids)
-    {
-        return $this->defineFindMethodsByIds($ids)->getResult();
-    }
-
 }

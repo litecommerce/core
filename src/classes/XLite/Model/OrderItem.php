@@ -31,8 +31,8 @@ namespace XLite\Model;
 /**
  * Something customer can put into his cart
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="XLite\Model\Repo\OrderItem")
  * @Table  (name="order_items",
@@ -54,9 +54,9 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     /**
      * Primary key 
      * 
-     * @var    int
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -67,9 +67,9 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     /**
      * Object (product)
      * 
-     * @var    \XLite\Model\Product
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Product
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="order_items", cascade={"merge","detach"})
      * @JoinColumn (name="object_id", referencedColumnName="product_id")
@@ -79,9 +79,9 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     /**
      * Item name
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -90,9 +90,9 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     /**
      * Item SKU 
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="32")
      */
@@ -101,9 +101,9 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     /**
      * Item price
      *
-     * @var    decimal
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   float
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="decimal", precision="14", scale="4")
      */
@@ -112,9 +112,9 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     /**
      * Item quantity 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -123,9 +123,9 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     /**
      * Item order 
      * 
-     * @var    \XLite\Model\Order
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Order
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @ManyToOne  (targetEntity="XLite\Model\Order", inversedBy="items")
      * @JoinColumn (name="order_id", referencedColumnName="order_id")
@@ -152,6 +152,23 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * @since 3.0.0
      */
     protected $dumpProduct;
+
+
+    /**
+     * Constructor
+     *
+     * @param array $data Entity properties OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $data = array())
+    {
+        $this->surcharges = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
+    }
 
     /**
      * Reset surcharges list
@@ -189,25 +206,6 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     }
 
     /**
-     * Get deleted product 
-     * 
-     * @return \XLite\Model\Product|void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDeletedProduct()
-    {
-        if (!isset($this->dumpProduct) && $this->getPrice() && $this->getName()) {
-            $this->dumpProduct = new \XLite\Model\Product();
-            $this->dumpProduct->setPrice($this->getPrice());
-            $this->dumpProduct->setName($this->getName());
-            $this->dumpProduct->setSku($this->getSku());
-        }
-
-        return $this->dumpProduct;
-    }
-
-    /**
      * Save some fields from product
      * 
      * @param \XLite\Model\Product $product Product to set OPTIONAL
@@ -224,7 +222,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
     /**
      * Set object 
      * 
-     * @param \XLite\Model\Base\IOrderItem $item Order item related object
+     * @param \XLite\Model\Base\IOrderItem $item Order item related object OPTIONAL
      *  
      * @return void
      * @see    ____func_see____
@@ -242,38 +240,6 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
         } else {
             $this->resetItemState();
         }
-    }
-
-    /**
-     * Save item state 
-     * 
-     * @param \XLite\Model\Base\IOrderItem $item Item object
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function saveItemState(\XLite\Model\Base\IOrderItem $item)
-    {
-        $price = $item->getPrice();
-
-        $this->setPrice(\Includes\Utils\Converter::formatPrice($price));
-        $this->setName($item->getName());
-        $this->setSku($item->getSku());
-    }
-
-    /**
-     * Reset item state 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function resetItemState()
-    {
-        $this->price = 0;
-        $this->name = '';
-        $this->sku = '';
     }
 
     /**
@@ -467,19 +433,55 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
         );
     }
 
+
     /**
-     * Constructor
-     *
-     * @param array $data Entity properties
-     *
+     * Get deleted product 
+     * 
+     * @return \XLite\Model\Product|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDeletedProduct()
+    {
+        if (!isset($this->dumpProduct) && $this->getPrice() && $this->getName()) {
+            $this->dumpProduct = new \XLite\Model\Product();
+            $this->dumpProduct->setPrice($this->getPrice());
+            $this->dumpProduct->setName($this->getName());
+            $this->dumpProduct->setSku($this->getSku());
+        }
+
+        return $this->dumpProduct;
+    }
+
+    /**
+     * Save item state 
+     * 
+     * @param \XLite\Model\Base\IOrderItem $item Item object
+     *  
      * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct(array $data = array())
+    protected function saveItemState(\XLite\Model\Base\IOrderItem $item)
     {
-        $this->surcharges = new \Doctrine\Common\Collections\ArrayCollection();
+        $price = $item->getPrice();
 
-        parent::__construct($data);
+        $this->setPrice(\Includes\Utils\Converter::formatPrice($price));
+        $this->setName($item->getName());
+        $this->setSku($item->getSku());
+    }
+
+    /**
+     * Reset item state 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function resetItemState()
+    {
+        $this->price = 0;
+        $this->name = '';
+        $this->sku = '';
     }
 }

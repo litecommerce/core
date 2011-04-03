@@ -37,6 +37,12 @@ namespace XLite\Model\Repo;
 class FormId extends \XLite\Model\Repo\ARepo
 {
     /**
+     * Form id length
+     */
+    const FORM_ID_LENGTH = 32;
+
+
+    /**
      * Repository type 
      * 
      * @var   string
@@ -44,12 +50,6 @@ class FormId extends \XLite\Model\Repo\ARepo
      * @since 3.0.0
      */
     protected $type = self::TYPE_SERVICE;
-
-    /**
-     * Form id length
-     */
-    const FORM_ID_LENGTH = 32;
-
 
     /**
      * Default 'order by' field name
@@ -109,25 +109,6 @@ class FormId extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Define query for countByFormIdAndSessionId) method
-     *
-     * @param string  $formId    Form id
-     * @param integer $sessionId Session id
-     * 
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineByFormIdAndSessionIdQuery($formId, $sessionId)
-    {
-        return $this->createQueryBuilder('f')
-            ->select('COUNT(f)')
-            ->andWhere('f.session_id = :sid AND f.form_id = :fid')
-            ->setParameter('sid', $sessionId)
-            ->setParameter('fid', $formId);
-    }
-
-    /**
      * Generate public session id 
      * 
      * @param integer $sessionId Session id OPTIONAL
@@ -184,6 +165,53 @@ class FormId extends \XLite\Model\Repo\ARepo
     }
 
     /**
+     * Process DB schema 
+     * 
+     * @param array  $schema Schema
+     * @param string $type   Schema type
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function processSchema(array $schema, $type)
+    {
+        $schema = parent::processSchema($schema, $type);
+
+        if (\XLite\Core\Database::SCHEMA_CREATE == $type) {
+            $schema[] = 'ALTER TABLE `' . $this->getClassMetadata()->getTableName() . '`'
+                . ' ADD CONSTRAINT `formid_to_session` FOREIGN KEY `session_id` (`session_id`)'
+                . ' REFERENCES `' . $this->_em->getClassMetadata('XLite\Model\Session')->getTableName() . '` (`id`)'
+                . ' ON DELETE CASCADE ON UPDATE CASCADE';
+
+        } elseif (\XLite\Core\Database::SCHEMA_UPDATE == $type) {
+            $schema = preg_grep('/DROP FOREIGN KEY `?formid_to_session`?/Ss', $schema, PREG_GREP_INVERT);
+        }
+
+        return $schema;
+    }
+
+
+    /**
+     * Define query for countByFormIdAndSessionId) method
+     *
+     * @param string  $formId    Form id
+     * @param integer $sessionId Session id
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineByFormIdAndSessionIdQuery($formId, $sessionId)
+    {
+        return $this->createQueryBuilder('f')
+            ->select('COUNT(f)')
+            ->andWhere('f.session_id = :sid AND f.form_id = :fid')
+            ->setParameter('sid', $sessionId)
+            ->setParameter('fid', $formId);
+    }
+
+    /**
      * Get frontier date 
      * 
      * @param integer $sessionId Session id
@@ -235,32 +263,4 @@ class FormId extends \XLite\Model\Repo\ARepo
             ->setParameter('id', $id)
             ->setParameter('sid', $sessionId);
     }
-
-    /**
-     * Process DB schema 
-     * 
-     * @param array  $schema Schema
-     * @param string $type   Schema type
-     *  
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function processSchema(array $schema, $type)
-    {
-        $schema = parent::processSchema($schema, $type);
-
-        if (\XLite\Core\Database::SCHEMA_CREATE == $type) {
-            $schema[] = 'ALTER TABLE `' . $this->getClassMetadata()->getTableName() . '`'
-                . ' ADD CONSTRAINT `formid_to_session` FOREIGN KEY `session_id` (`session_id`)'
-                . ' REFERENCES `' . $this->_em->getClassMetadata('XLite\Model\Session')->getTableName() . '` (`id`)'
-                . ' ON DELETE CASCADE ON UPDATE CASCADE';
-
-        } elseif (\XLite\Core\Database::SCHEMA_UPDATE == $type) {
-            $schema = preg_grep('/DROP FOREIGN KEY `?formid_to_session`?/Ss', $schema, PREG_GREP_INVERT);
-        }
-
-        return $schema;
-    }
-
 }

@@ -31,8 +31,8 @@ namespace XLite\Model\Shipping\Processor;
 /**
  * Shipping processor model
  * 
- * @see        ____class_see____
- * @since     3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Offline extends \XLite\Model\Shipping\Processor\AProcessor
 {

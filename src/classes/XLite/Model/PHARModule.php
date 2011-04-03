@@ -55,50 +55,45 @@ class PHARModule extends \XLite\Base
     /**
      * Inner \Phar object
      *
-     * @var    \Phar
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Phar
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $phar;
 
     /**
      * Temp dir to unpack
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $tempDir;
 
     /**
      * Status of last operation
      *
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $status = self::STATUS_OK;
 
     /**
      * Package main class name
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $mainClass;
 
     /**
      * <Status, Message> pairs
      *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $errorMessages = array(
         self::STATUS_OK                   => 'No errors',
@@ -111,7 +106,7 @@ class PHARModule extends \XLite\Base
     );
 
 
-    // ------------------------------ Constructor -
+    // {{{ Constructor
 
     /**
      * Constructor
@@ -119,7 +114,6 @@ class PHARModule extends \XLite\Base
      * @param string $name Name of the .PHAR file in the inner local repository
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -148,14 +142,14 @@ class PHARModule extends \XLite\Base
         }
     }
 
+    // }}}
 
-    // ------------------------------ Status and message -
+    // {{{  Status and message
 
     /**
      * Getter
      * 
      * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -168,7 +162,6 @@ class PHARModule extends \XLite\Base
      * Getter
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -184,7 +177,6 @@ class PHARModule extends \XLite\Base
      * @param string  $message Message to set OPTIONAL
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -197,14 +189,14 @@ class PHARModule extends \XLite\Base
         }
     }
 
+    // }}}
 
-    // ------------------------------ Deployment-related methods -
+    // {{{ Deployment-related methods
 
     /**
      * Extract the .PHAR package file content into the temporary local repository
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -229,7 +221,6 @@ class PHARModule extends \XLite\Base
      * Extract files from archive
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -242,7 +233,6 @@ class PHARModule extends \XLite\Base
      * Return temporary dir name (to deploy packs there)
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -259,7 +249,6 @@ class PHARModule extends \XLite\Base
      * Create temporary dir and return it's name
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -282,7 +271,6 @@ class PHARModule extends \XLite\Base
      * Get basename for temp dir
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -291,14 +279,14 @@ class PHARModule extends \XLite\Base
         return tempnam(LC_TMP_DIR, 'phar_package');
     }
 
+    // }}}
 
-    // ------------------------------ Integrity check -
+    // {{{ Integrity check
 
     /**
      * Check status
      *
      * @return boolean
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -311,7 +299,6 @@ class PHARModule extends \XLite\Base
      * Return minimal allowed version of LC kernel
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -324,7 +311,6 @@ class PHARModule extends \XLite\Base
      * Check file structure
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -356,7 +342,6 @@ class PHARModule extends \XLite\Base
      * Check for LC kernel version
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -369,7 +354,6 @@ class PHARModule extends \XLite\Base
      * Check if Main.php exists
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -382,7 +366,6 @@ class PHARModule extends \XLite\Base
      * Check if package dir already exists
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -391,8 +374,9 @@ class PHARModule extends \XLite\Base
         return \Includes\Utils\FileManager::isDir($this->getRootDirFull());
     }
 
+    // }}}
 
-    // ------------------------------ Classes, files and dirs -
+    // {{{ Classes, files and dirs
 
     /**
      * Return name of the main class file
@@ -400,7 +384,6 @@ class PHARModule extends \XLite\Base
      * FIXME: move Main.php to the root directory
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -413,7 +396,6 @@ class PHARModule extends \XLite\Base
      * Return name of package main class
      *
      * @return string
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -436,7 +418,6 @@ class PHARModule extends \XLite\Base
      * Return module name
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -449,7 +430,6 @@ class PHARModule extends \XLite\Base
      * Get module root directory
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -462,7 +442,6 @@ class PHARModule extends \XLite\Base
      * Get module root directory
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -471,14 +450,14 @@ class PHARModule extends \XLite\Base
         return str_replace('\\', LC_DS, $this->getModuleName());
     }
     
+    // }}}
 
-    // ------------------------------ Deploy and cleanup -
+    // {{{ Deploy and cleanup
 
     /**
      * Deploy 
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -494,7 +473,6 @@ class PHARModule extends \XLite\Base
      * Clean up
      *
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -509,7 +487,6 @@ class PHARModule extends \XLite\Base
      * Copy classes
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -524,7 +501,6 @@ class PHARModule extends \XLite\Base
      * TODO: decompose
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -541,4 +517,6 @@ class PHARModule extends \XLite\Base
             );
         }
     }
+
+    // }}}
 }

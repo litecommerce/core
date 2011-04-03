@@ -31,8 +31,8 @@ namespace XLite\Model\Payment;
 /**
  * Transaction data storage
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity
  * @Table (name="payment_transaction_data",
@@ -53,9 +53,9 @@ class TransactionData extends \XLite\Model\AEntity
     /**
      * Primary key 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -66,9 +66,9 @@ class TransactionData extends \XLite\Model\AEntity
     /**
      * Record name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @Column (type="string", length="128")
      */
@@ -77,9 +77,9 @@ class TransactionData extends \XLite\Model\AEntity
     /**
      * Record public name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @Column (type="string", length="255")
      */
@@ -88,9 +88,9 @@ class TransactionData extends \XLite\Model\AEntity
     /**
      * Access level
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @Column (type="fixedstring", length="1")
      */
@@ -99,9 +99,9 @@ class TransactionData extends \XLite\Model\AEntity
     /**
      * Value
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="text")
      */
@@ -110,9 +110,9 @@ class TransactionData extends \XLite\Model\AEntity
     /**
      * Transaction
      * 
-     * @var    \XLite\Model\Payment\Transaction
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Payment\Transaction
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @ManyToOne  (targetEntity="XLite\Model\Payment\Transaction", inversedBy="data")
      * @JoinColumn (name="transaction_id", referencedColumnName="transaction_id")

@@ -37,4 +37,3 @@ namespace XLite\Model\Repo\Base;
 class Common extends \XLite\Model\Repo\ARepo
 {
 }
-

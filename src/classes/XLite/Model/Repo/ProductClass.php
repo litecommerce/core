@@ -36,7 +36,4 @@ namespace XLite\Model\Repo;
  */
 class ProductClass extends \XLite\Model\Repo\Base\I18n
 {
-
-
-
 }

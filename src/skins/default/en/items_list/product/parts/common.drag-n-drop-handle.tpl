@@ -14,4 +14,7 @@
  * @ListChild (list="itemsList.product.list.customer.info", weight="0")
  *}
 
-<div class="drag-n-drop-handle">Drag and drop me to the bag</div>
+<div class="drag-n-drop-handle">
+  <span class="drag-message">{t(#Drag and drop me to the bag#)}</span>
+  <span class="out-message">{t(#Product is out of stock#)}</span>
+</div>

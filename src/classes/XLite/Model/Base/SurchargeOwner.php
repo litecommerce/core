@@ -31,8 +31,8 @@ namespace XLite\Model\Base;
 /**
  * Surcharge owner 
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * MappedSuperclass
  */
@@ -41,9 +41,9 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
     /**
      * Total 
      * 
-     * @var    float
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   float
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="decimal", precision="14", scale="4")
      */
@@ -52,9 +52,9 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
     /**
      * Subtotal 
      * 
-     * @var    float
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   float
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="decimal", precision="14", scale="4")
      */

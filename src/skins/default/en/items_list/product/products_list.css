@@ -104,6 +104,12 @@ ul.products-sidebar li.last {
   position: relative;
 }
 
+.products .product-cell:hover .product
+{
+  opacity: 1;
+  filter: Alpha(Opacity=1);
+}
+
 .products .product-cell .drag-n-drop-handle
 {
   background: transparent url(images/icon_drag.png) no-repeat left center;
@@ -125,6 +131,28 @@ ul.products-sidebar li.last {
 .products .product-cell:hover .quicklook
 {
   visibility: visible;
+}
+
+.products .out-of-stock .drag-n-drop-handle
+{
+  background: transparent none;
+  padding-left: 0;
+  cursor: default;
+}
+
+.products .drag-n-drop-handle .out-message
+{
+  display: none;
+}
+
+.products .out-of-stock .drag-n-drop-handle .drag-message
+{
+  display: none;
+}
+
+.products .out-of-stock .drag-n-drop-handle .out-message
+{
+  display: inline;
 }
 
 .products .product .quicklook
@@ -173,6 +201,13 @@ ul.products-sidebar li.last {
   height: 24px;
 }
 
+.products .products-table .out-of-stock input[type="image"]
+{
+  background: transparent url(images/bag/out.png) no-repeat;
+  width: 19px;
+  height: 24px;
+  cursor: default;
+}
 
 .cart-tray
 {

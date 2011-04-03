@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\ItemsList\Module;
@@ -31,9 +31,8 @@ namespace XLite\View\ItemsList\Module;
 /**
  * Abstract product list
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AModule extends \XLite\View\ItemsList\AItemsList
 {
@@ -58,10 +57,32 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
 
 
     /**
+     * Define and set widget attributes; initialize widget
+     *
+     * @param array $params Widget params OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $params = array())
+    {
+        $this->sortByModes += array(
+            self::SORT_BY_MODE_NAME    => 'Name',
+            self::SORT_BY_MODE_POPULAR => 'Popular',
+            self::SORT_BY_MODE_RATING  => 'Most rated',
+            self::SORT_BY_MODE_DATE    => 'Newest',
+            self::SORT_BY_MODE_ENABLED => 'Enabled',
+        );
+
+        parent::__construct($params);
+    }
+
+
+    /**
      * Return name of the base widgets list
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -74,7 +95,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * Get widget templates directory
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -87,7 +107,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * Return dir which contains the page body template
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -100,7 +119,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * Return list of the modes allowed by default
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultModes()
@@ -114,7 +133,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -130,7 +148,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * getJSHandlerClassName
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -145,7 +162,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Module
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -162,12 +178,11 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     /**
      * Check if the module can be installed
      *
-     * :FIXME: actualize
+     * FIXME: actualize
      * 
      * @param \XLite\Model\Module $module Module
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -179,12 +194,11 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     /**
      * Check if the module can be installed
      *
-     * :FIXME: actualize
+     * FIXME: actualize
      *
      * @param \XLite\Model\Module $module Module
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -194,32 +208,10 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Define and set widget attributes; initialize widget
-     *
-     * @param array $params Widget params
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function __construct(array $params = array())
-    {
-        $this->sortByModes += array(
-            self::SORT_BY_MODE_NAME    => 'Name',
-            self::SORT_BY_MODE_POPULAR => 'Popular',
-            self::SORT_BY_MODE_RATING  => 'Most rated',
-            self::SORT_BY_MODE_DATE    => 'Newest',
-            self::SORT_BY_MODE_ENABLED => 'Enabled',
-        );
-
-        parent::__construct($params);
-    }
-
-    /**
      * Define widget parameters
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  1.0.0
      */
     protected function defineWidgetParams()
@@ -240,7 +232,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return array|integer
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -258,7 +249,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Module to check
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -273,7 +263,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Module to check
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -288,7 +277,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Module to check
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -306,7 +294,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Module to check
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -321,7 +308,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Module to check
      *  
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -337,7 +323,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Module to check
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -353,7 +338,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Current module
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -368,7 +352,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Current module
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -383,7 +366,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @param \XLite\Model\Module $module Module to check
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

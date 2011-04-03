@@ -31,8 +31,8 @@ namespace XLite\Model;
 /**
  * Order details
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *  
  * @Entity
  * @Table (name="order_details",
@@ -46,9 +46,9 @@ class OrderDetail extends \XLite\Model\AEntity
     /**
      * Order detail unique id
      * 
-     * @var    mixed
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -59,9 +59,9 @@ class OrderDetail extends \XLite\Model\AEntity
     /**
      * Record name (code)
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -70,9 +70,9 @@ class OrderDetail extends \XLite\Model\AEntity
     /**
      * Record label
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255", nullable=true)
      */
@@ -81,9 +81,9 @@ class OrderDetail extends \XLite\Model\AEntity
     /**
      * Value
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="65536")
      */
@@ -92,9 +92,9 @@ class OrderDetail extends \XLite\Model\AEntity
     /**
      * Relation to a order entity
      *
-     * @var    \XLite\Model\Order
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Order
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Order", inversedBy="details", fetch="LAZY")
      * @JoinColumn (name="order_id", referencedColumnName="order_id")

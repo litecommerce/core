@@ -31,8 +31,8 @@ namespace XLite\Model\Payment;
 /**
  * Payment transaction
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Payment\Transaction")
  * @Table  (name="payment_transactions",
@@ -67,9 +67,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Primary key 
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -80,9 +80,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Payment method name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @Column (type="string", length="128")
      */
@@ -91,9 +91,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Payment method localized name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @Column (type="string", length="255")
      */
@@ -102,9 +102,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Status
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @Column (type="fixedstring", length="1")
      */
@@ -113,9 +113,10 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Transaction value
      * 
-     * @var    float
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   float
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="decimal", precision="14", scale="4")
      */
     protected $value = 0.0000;
@@ -123,9 +124,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Customer message
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -134,9 +135,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Transaction type
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="8")
      */
@@ -145,9 +146,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Order
      * 
-     * @var    \XLite\Model\Order
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Order
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @ManyToOne  (targetEntity="XLite\Model\Order", inversedBy="payment_transactions")
      * @JoinColumn (name="order_id", referencedColumnName="order_id")
@@ -157,9 +158,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Payment method 
      * 
-     * @var    \XLite\Model\Payment\Method
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Payment\Method
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @ManyToOne  (targetEntity="XLite\Model\Payment\Method", inversedBy="transactions")
      * @JoinColumn (name="method_id", referencedColumnName="method_id")
@@ -169,9 +170,9 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Transaction data
      *
-     * @var    \XLite\Model\Payment\TransactionData
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Payment\TransactionData
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Payment\TransactionData", mappedBy="transaction", cascade={"all"})
      */
@@ -261,7 +262,7 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Constructor
      *
-     * @param array $data Entity properties
+     * @param array $data Entity properties OPTIONAL
      *
      * @return void
      * @see    ____func_see____

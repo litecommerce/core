@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    SVN: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\ItemsList\Product;
@@ -31,9 +31,8 @@ namespace XLite\View\ItemsList\Product;
 /**
  * Abstract product list
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 abstract class AProduct extends \XLite\View\ItemsList\AItemsList
 {
@@ -51,7 +50,6 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      * Return current display mode
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -59,94 +57,31 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
 
 
     /**
-     * Return name of the base widgets list
+     * Define and set widget attributes; initialize widget
      *
-     * @return string
-     * @access protected
+     * @param array $params Widget params OPTIONAL
+     *
+     * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getListName()
+    public function __construct(array $params = array())
     {
-        return parent::getListName() . '.product'
-            . (is_null($this->getDisplayMode()) ?: '.' . $this->getDisplayMode());
+        $this->sortByModes += array(
+            self::SORT_BY_MODE_PRICE  => static::t('Price'),
+            self::SORT_BY_MODE_NAME   => static::t('Name'),
+            self::SORT_BY_MODE_SKU    => static::t('SKU'),
+            self::SORT_BY_MODE_AMOUNT => static::t('Amount'),
+        );
+
+        parent::__construct($params);
     }
-
-    /**
-     * Get widget templates directory
-     * NOTE: do not use "$this" pointer here (see "get[CSS/JS]Files()")
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDir()
-    {
-        return parent::getDir() . '/product';
-    }
-
-    /**
-     * Return dir which contains the page body template
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getPageBodyDir()
-    {
-        return str_replace('.', '/', $this->getDisplayMode());
-    }
-
-    /**
-     * getSortByModeDefault
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSortByModeDefault()
-    {
-        return self::SORT_BY_MODE_NAME;
-    }
-
-    /**
-     * Return params list to use for search
-     *
-     * @return \XLite\Core\CommonCell
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSearchCondition()
-    {
-        $result = parent::getSearchCondition();
-        $result->{\XLite\Model\Repo\Product::P_ORDER_BY} = array($this->getSortBy(), $this->getSortOrder());
-
-        return $result;
-    }
-
-    /**
-     * getJSHandlerClassName
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getJSHandlerClassName()
-    {
-        return 'ProductsList';
-    }
-
 
     /**
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getCSSFiles()
@@ -162,7 +97,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return array
-     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getJSFiles()
@@ -174,24 +109,81 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
         return $list;
     }
 
+
     /**
-     * Define and set widget attributes; initialize widget
+     * Return name of the base widgets list
      *
-     * @param array $params Widget params
-     *
-     * @return void
-     * @access public
+     * @return string
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct(array $params = array())
+    protected function getListName()
     {
-        $this->sortByModes += array(
-            self::SORT_BY_MODE_PRICE  => static::t('Price'),
-            self::SORT_BY_MODE_NAME   => static::t('Name'),
-            self::SORT_BY_MODE_SKU    => static::t('SKU'),
-            self::SORT_BY_MODE_AMOUNT => static::t('Amount'),
-        );
+        return parent::getListName() . '.product'
+            . (is_null($this->getDisplayMode()) ?: '.' . $this->getDisplayMode());
+    }
 
-        parent::__construct($params);
+    /**
+     * Get widget templates directory
+     * NOTE: do not use "$this" pointer here (see "get[CSS/JS]Files()")
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return parent::getDir() . '/product';
+    }
+
+    /**
+     * Return dir which contains the page body template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPageBodyDir()
+    {
+        return str_replace('.', '/', $this->getDisplayMode());
+    }
+
+    /**
+     * getSortByModeDefault
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSortByModeDefault()
+    {
+        return self::SORT_BY_MODE_NAME;
+    }
+
+    /**
+     * Return params list to use for search
+     *
+     * @return \XLite\Core\CommonCell
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSearchCondition()
+    {
+        $result = parent::getSearchCondition();
+        $result->{\XLite\Model\Repo\Product::P_ORDER_BY} = array($this->getSortBy(), $this->getSortOrder());
+
+        return $result;
+    }
+
+    /**
+     * getJSHandlerClassName
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getJSHandlerClassName()
+    {
+        return 'ProductsList';
     }
 }

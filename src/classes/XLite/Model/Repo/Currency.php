@@ -55,5 +55,4 @@ class Currency extends \XLite\Model\Repo\ARepo
     protected $alternativeIdentifier = array(
         array('code'),
     );
-
 }

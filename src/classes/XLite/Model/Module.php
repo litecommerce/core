@@ -38,7 +38,7 @@ namespace XLite\Model;
  * @Table  (name="modules",
  *      uniqueConstraints={
  *          @UniqueConstraint (name="moduleVersion", columns={"author","name","majorVersion","minorVersion"}),
-            @UniqueConstraint (name="moduleInstalled", columns={"author","name","installed"})
+ *          @UniqueConstraint (name="moduleInstalled", columns={"author","name","installed"})
  *      },
  *      indexes={
  *          @Index (name="enabled", columns={"enabled"}),
@@ -54,9 +54,9 @@ class Module extends \XLite\Model\AEntity
     /**
      * Module ID
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -67,9 +67,9 @@ class Module extends \XLite\Model\AEntity
     /**
      * Name 
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="64")
      */
@@ -78,9 +78,9 @@ class Module extends \XLite\Model\AEntity
     /**
      * Author 
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="64")
      */
@@ -89,9 +89,9 @@ class Module extends \XLite\Model\AEntity
     /**
      * Public identifier
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="32")
      */
@@ -100,9 +100,9 @@ class Module extends \XLite\Model\AEntity
     /**
      * Enabled 
      * 
-     * @var    boolean
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="boolean")
      */
@@ -111,9 +111,9 @@ class Module extends \XLite\Model\AEntity
     /**
      * Installed status
      * 
-     * @var    boolean
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="boolean")
      */
@@ -122,11 +122,11 @@ class Module extends \XLite\Model\AEntity
     /**
      * Module data dump (YAML or SQL) installed status
      *
-     * :TODO: check if it's really needed
+     * TODO: check if it's really needed
      *
-     * @var    boolean
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="boolean")
      */
@@ -135,9 +135,9 @@ class Module extends \XLite\Model\AEntity
     /**
      * Order creation timestamp
      * 
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -146,9 +146,10 @@ class Module extends \XLite\Model\AEntity
     /**
      * Rating
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="integer")
      */
     protected $rating = 0;
@@ -156,9 +157,10 @@ class Module extends \XLite\Model\AEntity
     /**
      * Downloads
      *
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="integer")
      */
     protected $downloads = 0;
@@ -166,9 +168,9 @@ class Module extends \XLite\Model\AEntity
     /**
      * Price
      *
-     * @var    float
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   float
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="decimal", precision=14, scale=2)
      */
@@ -177,9 +179,9 @@ class Module extends \XLite\Model\AEntity
     /**
      * Currency code
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length=3)
      */
@@ -188,9 +190,9 @@ class Module extends \XLite\Model\AEntity
     /**
      * Major version
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length=8)
      */
@@ -199,9 +201,9 @@ class Module extends \XLite\Model\AEntity
     /**
      * Minor version
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length=8)
      */
@@ -210,9 +212,10 @@ class Module extends \XLite\Model\AEntity
     /**
      * Revision date
      *
-     * @var    integer
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
      * @Column (type="integer")
      */
     protected $revisionDate = 0;
@@ -220,9 +223,9 @@ class Module extends \XLite\Model\AEntity
     /**
      * Module name
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length=255)
      */
@@ -231,9 +234,9 @@ class Module extends \XLite\Model\AEntity
     /**
      * Author name
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length=255)
      */
@@ -242,9 +245,9 @@ class Module extends \XLite\Model\AEntity
     /**
      * Description
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="text")
      */
@@ -253,9 +256,9 @@ class Module extends \XLite\Model\AEntity
     /**
      * Icon URL
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length=255)
      */
@@ -264,9 +267,9 @@ class Module extends \XLite\Model\AEntity
     /**
      * Icon URL
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length=255)
      */
@@ -275,9 +278,9 @@ class Module extends \XLite\Model\AEntity
     /**
      * Icon URL
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length=255)
      */
@@ -319,11 +322,11 @@ class Module extends \XLite\Model\AEntity
      * @since  3.0.0
      */
     public function getMinorVersion()
-	{
+    {
         // Do not replace the first argument by the 
         // magic constant "__FUNCTION__": their are the same "accidentally"
-		return $this->callModuleMethod('getMinorVersion', $this->minorVersion);
-	}
+        return $this->callModuleMethod('getMinorVersion', $this->minorVersion);
+    }
 
     /**
      * Getter
@@ -333,11 +336,11 @@ class Module extends \XLite\Model\AEntity
      * @since  3.0.0
      */
     public function getModuleName()
-	{
+    {
         // Do not replace the first argument by the
         // magic constant "__FUNCTION__": their are the same "accidentally"
-		return $this->callModuleMethod('getModuleName', $this->moduleName);
-	}
+        return $this->callModuleMethod('getModuleName', $this->moduleName);
+    }
 
     /**
      * Getter
@@ -347,11 +350,11 @@ class Module extends \XLite\Model\AEntity
      * @since  3.0.0
      */
     public function getAuthorName()
-	{
+    {
         // Do not replace the first argument by the
         // magic constant "__FUNCTION__": their are the same "accidentally"
-		return $this->callModuleMethod('getAuthorName', $this->authorName);
-	}
+        return $this->callModuleMethod('getAuthorName', $this->authorName);
+    }
 
     /**
      * Getter
@@ -361,11 +364,11 @@ class Module extends \XLite\Model\AEntity
      * @since  3.0.0
      */
     public function getDescription()
-	{
+    {
         // Do not replace the first argument by the
         // magic constant "__FUNCTION__": their are the same "accidentally"
-		return $this->callModuleMethod('getDescription', $this->description);
-	}
+        return $this->callModuleMethod('getDescription', $this->description);
+    }
 
     /**
      * Getter
@@ -375,11 +378,11 @@ class Module extends \XLite\Model\AEntity
      * @since  3.0.0
      */
     public function getIconURL()
-	{
+    {
         // Do not replace the first argument by the
         // magic constant "__FUNCTION__": their are the same "accidentally"
-		return $this->callModuleMethod('getIconURL', $this->iconURL);
-	}
+        return $this->callModuleMethod('getIconURL', $this->iconURL);
+    }
 
     /**
      * Getter
@@ -389,11 +392,11 @@ class Module extends \XLite\Model\AEntity
      * @since  3.0.0
      */
     public function getPageURL()
-	{
+    {
         // Do not replace the first argument by the
         // magic constant "__FUNCTION__": their are the same "accidentally"
-		return $this->callModuleMethod('getPageURL', $this->pageURL);
-	}
+        return $this->callModuleMethod('getPageURL', $this->pageURL);
+    }
 
     /**
      * Getter
@@ -403,11 +406,11 @@ class Module extends \XLite\Model\AEntity
      * @since  3.0.0
      */
     public function getAuthorPageURL()
-	{
+    {
         // Do not replace the first argument by the
         // magic constant "__FUNCTION__": their are the same "accidentally"
-		return $this->callModuleMethod('getAuthorPageURL', $this->authorPageURL);
-	}
+        return $this->callModuleMethod('getAuthorPageURL', $this->authorPageURL);
+    }
 
     /**
      * Getter
@@ -417,11 +420,11 @@ class Module extends \XLite\Model\AEntity
      * @since  3.0.0
      */
     public function getDependencies()
-	{
+    {
         // Do not replace the first argument by the
         // magic constant "__FUNCTION__": their are the same "accidentally"
-		return $this->callModuleMethod('getDependencies', $this->dependencies);
-	}
+        return $this->callModuleMethod('getDependencies', $this->dependencies);
+    }
 
     /**
      * Method to call functions from module main classes
@@ -550,7 +553,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Check if module is already purchased
      *
-     * :TODO: add code here
+     * TODO: add code here
      * 
      * @return boolean
      * @see    ____func_see____

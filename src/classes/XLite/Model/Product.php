@@ -31,8 +31,8 @@ namespace XLite\Model;
 /**
  * The "product" model class
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  * 
  * @Entity (repositoryClass="\XLite\Model\Repo\Product")
  * @Table  (name="products",
@@ -51,9 +51,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Product unique ID 
      * 
-     * @var    int
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -64,9 +64,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Product price
      *
-     * @var    decimal
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   float
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -75,9 +75,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Product sale price
      *
-     * @var    decimal
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   float
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -86,9 +86,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Product SKU
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="32", nullable=false)
      */
@@ -97,9 +97,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Is product available or not
      * 
-     * @var    boolean
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="boolean")
      */
@@ -108,9 +108,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Product weight
      *
-     * @var    decimal
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   float
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -119,9 +119,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Is free shipping available for the product
      *
-     * @var    bool
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer", length="11", nullable=false)
      */
@@ -130,9 +130,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Clean URL
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255", nullable=false)
      */
@@ -141,9 +141,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Custom javascript code
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="65535")
      */
@@ -153,9 +153,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Relation to a CategoryProducts entities
      *
-     * @var    \Doctrine\ORM\PersistentCollection
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\ORM\PersistentCollection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\CategoryProducts", mappedBy="product", cascade={"all"})
      * @OrderBy   ({"orderby" = "ASC"})
@@ -165,9 +165,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Product order items
      * 
-     * @var    \XLite\Model\OrderItem
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\OrderItem
+     * @see   ____var_see____
+     * @since 3.0.0
      * 
      * @OneToMany (targetEntity="XLite\Model\OrderItem", mappedBy="object")
      */
@@ -176,9 +176,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Product images
      *
-     * @var    \Doctrine\Common\Collections\Collection
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \Doctrine\Common\Collections\Collection
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Image\Product\Image", mappedBy="product", cascade={"all"})
      * @OrderBy   ({"orderby" = "ASC"})
@@ -188,9 +188,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Qty in stock 
      * 
-     * @var    \XLite\Model\Product\Inventory
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Product\Inventory
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToOne (targetEntity="XLite\Model\Inventory", mappedBy="product", fetch="LAZY", cascade={"all"})
      */
@@ -210,6 +210,26 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * )
      */
     protected $classes;
+
+
+    /**
+     * Constructor
+     *
+     * @param array $data Entity properties OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $data = array())
+    {
+        $this->categoryProducts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->images           = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->order_items      = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->classes          = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
+    }
 
     /**
      * Get object unique id 
@@ -294,51 +314,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     {
         return $this->free_shipping;
     }
-
-    /**
-     * Return certain Product <--> Category association
-     * 
-     * @param integer|null $categoryId Category ID
-     *  
-     * @return \XLite\Model\CategoryProducts|void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function findLinkByCategoryId($categoryId)
-    {
-        $result = null;
-
-        foreach ($this->getCategoryProducts() as $cp) {
-            if ($cp->getCategory() && $cp->getCategory()->getCategoryId() == $categoryId) {
-                $result = $cp;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Return certain Product <--> Category association
-     * 
-     * @param integer|null $categoryId Category ID OPTIONAL
-     *  
-     * @return \XLite\Model\CategoryProducts
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getLink($categoryId = null)
-    {
-        $result = empty($categoryId) 
-            ? $this->getCategoryProducts()->first()
-            : $this->findLinkByCategoryId($categoryId);
-
-        if (empty($result)) {
-            $result = new \XLite\Model\CategoryProducts();
-        }
-
-        return $result;
-    }
-
 
     /**
      * Check if product is accessible 
@@ -513,27 +488,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     }
 
     /**
-     * Constructor
-     *
-     * @param array $data Entity properties
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __construct(array $data = array())
-    {
-        $this->categoryProducts = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->images           = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->order_items      = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->classes          = new \Doctrine\Common\Collections\ArrayCollection();
-
-        parent::__construct($data);
-    }
-
-    // {{{ Tax common functionaly
-
-    /**
      * Get taxable basis 
      * 
      * @return float
@@ -545,5 +499,48 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
         return $this->getPrice();
     }
 
-    // }}}
+
+    /**
+     * Return certain Product <--> Category association
+     * 
+     * @param integer|null $categoryId Category ID
+     *  
+     * @return \XLite\Model\CategoryProducts|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function findLinkByCategoryId($categoryId)
+    {
+        $result = null;
+
+        foreach ($this->getCategoryProducts() as $cp) {
+            if ($cp->getCategory() && $cp->getCategory()->getCategoryId() == $categoryId) {
+                $result = $cp;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return certain Product <--> Category association
+     * 
+     * @param integer|null $categoryId Category ID OPTIONAL
+     *  
+     * @return \XLite\Model\CategoryProducts
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLink($categoryId = null)
+    {
+        $result = empty($categoryId) 
+            ? $this->getCategoryProducts()->first()
+            : $this->findLinkByCategoryId($categoryId);
+
+        if (empty($result)) {
+            $result = new \XLite\Model\CategoryProducts();
+        }
+
+        return $result;
+    }
 }

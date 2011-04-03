@@ -76,10 +76,11 @@ class ProductClass extends \XLite\Model\Base\I18n
      */
     protected $shipping_methods;
 
+
     /**
      * Constructor
      *
-     * @param array $data Entity properties
+     * @param array $data Entity properties OPTIONAL
      *
      * @return void
      * @see    ____func_see____
@@ -91,5 +92,4 @@ class ProductClass extends \XLite\Model\Base\I18n
 
         parent::__construct($data);
     }
-
 }

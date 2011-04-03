@@ -53,6 +53,7 @@ class XLite_Web_Customer_SubstutionalSkin extends XLite_Web_Customer_ACustomer
             dirname(__FILE__) . LC_DS . 'SubstutionalSkin' . LC_DS . 'scripts' . LC_DS . 'CDev',
             LC_MODULES_DIR . 'CDev'
         );
+
         \Includes\Utils\FileManager::copyRecursive(
             dirname(__FILE__) . LC_DS . 'SubstutionalSkin' . LC_DS . 'scripts' . LC_DS . 'CDev',
             LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module' . LC_DS . 'CDev'
@@ -63,11 +64,24 @@ class XLite_Web_Customer_SubstutionalSkin extends XLite_Web_Customer_ACustomer
             LC_SKINS_DIR
         );
 
-        $skin = \XLite\Core\Database::getRepo('XLite\Model\Module')->findOneByNameAndAuthor('TestSkin', 'CDev');
+        $skin = \XLite\Core\Database::getRepo('XLite\Model\Module')->findOneBy(
+            array(
+                'name'   => 'TestSkin',
+                'author' => 'CDev',
+            )   
+        );
+
         if (!$skin) {
+
             $skin = new \XLite\Model\Module;
+
             $skin->setAuthor('CDev');
             $skin->setName('TestSkin');
+            $skin->setMajorVersion('1.0');
+            $skin->setMinorVersion('0');
+            $skin->setModuleName('TestSkin');
+            $skin->setAuthorName('CDev');
+
 
             \XLite\Core\Database::getEM()->persist($skin);
         }
@@ -105,7 +119,13 @@ class XLite_Web_Customer_SubstutionalSkin extends XLite_Web_Customer_ACustomer
             LC_SKINS_DIR . 'test'
         );
 
-        $skin = \XLite\Core\Database::getRepo('XLite\Model\Module')->findOneByNameAndAuthor('TestSkin', 'CDev');
+        $skin = \XLite\Core\Database::getRepo('XLite\Model\Module')->findOneBy(
+            array(
+                'name'   => 'TestSkin',
+                'author' => 'CDev',
+            )
+        );
+
         if ($skin) {
             \XLite\Core\Database::getEM()->remove($skin);
             \XLite\Core\Database::getEM()->flush();

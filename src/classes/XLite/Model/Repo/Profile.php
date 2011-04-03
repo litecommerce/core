@@ -75,7 +75,145 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @since 3.0.0
      */
     protected $currentSearchCnd = null;
-   
+
+
+    /**
+     * Common search
+     * 
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param boolean                $countOnly Flag: return items list or only items count OPTIONAL
+     *  
+     * @return \Doctrine\ORM\PersistentCollection|integer
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
+    {
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->addSelect('addresses')
+            ->leftJoin('p.addresses', 'addresses')
+            ->leftJoin('addresses.country', 'country')
+            ->leftJoin('addresses.state', 'state');
+
+        $this->currentSearchCnd = $cnd;
+
+        foreach ($this->currentSearchCnd as $key => $value) {
+            $this->callSearchConditionHandler($value, $key, $queryBuilder);
+        }
+
+        $result = $queryBuilder->getResult();
+
+        return $countOnly ? count($result) : $result;
+    }
+
+    /**
+     * Find profile by CMS identifiers 
+     * 
+     * @param array $fields CMS identifiers
+     *  
+     * @return \XLite\Model\Profile|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findOneByCMSId(array $fields)
+    {
+        return $this->defineFindOneByCMSIdQuery($fields)->getSingleResult();
+    }
+
+    /**
+     * Search profile by login 
+     * 
+     * @param string $login User's login
+     *  
+     * @return \XLite\Model\Profile
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findByLogin($login)
+    {
+        return $this->findByLoginPassword($login);
+    }
+
+    /**
+     * Search profile by login and password
+     *
+     * @param string  $login    User's login
+     * @param string  $password User's password OPTIONAL
+     * @param integer $orderId  Order ID related to the profile OPTIONAL
+     *
+     * @return \XLite\Model\Profile
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findByLoginPassword($login, $password = null, $orderId = 0)
+    {
+        return $this->defineFindByLoginPasswordQuery($login, $password, $orderId)->getSingleResult();
+    }
+
+    /**
+     * Find recently logged in administrators 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findRecentAdmins()
+    {
+        return $this->defineFindRecentAdminsQuery()->getResult();
+    }
+
+    /**
+     * Find user with same login 
+     * 
+     * @param \XLite\Model\Profile $profile Profile object
+     *  
+     * @return \XLite\Model\Profile|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findUserWithSameLogin(\XLite\Model\Profile $profile) 
+    {
+        return $this->defineFindUserWithSameLoginQuery($profile)->getSingleResult();
+    }
+
+    /**
+     * Find the count of administrator accounts 
+     * 
+     * @return integer 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findCountOfAdminAccounts()
+    {
+        return intval($this->defineFindCountOfAdminAccountsQuery()->getSingleScalarResult());
+    }
+
+    /**
+     * Find one by record
+     *
+     * @param array                $data   Record
+     * @param \XLite\Model\AEntity $parent Parent model OPTIONAL
+     *
+     * @return \XLite\Model\AEntity|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
+    {
+        if (
+            isset($data['login'])
+            && (isset($data['order_id']) && 0 == $data['order_id'] || 1 == count($data))
+        ) {
+            $entity = $this->defineOneByRecord($data['login'])->getSingleResult();
+            
+        } else {
+            $entity = parent::findOneByRecord($data, $parent);
+        }
+
+        return $entity;
+    }
+
+
     /**
      * Return list of handling search params 
      * 
@@ -608,20 +746,6 @@ class Profile extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Find profile by CMS identifiers 
-     * 
-     * @param array $fields CMS identifiers
-     *  
-     * @return \XLite\Model\Profile|void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findOneByCMSId(array $fields)
-    {
-        return $this->defineFindOneByCMSIdQuery($fields)->getSingleResult();
-    }
-
-    /**
      * Define query for findOneByCMSId() 
      * 
      * @return \Doctrine\ORM\PersistentCollection
@@ -640,65 +764,6 @@ class Profile extends \XLite\Model\Repo\ARepo
         }
 
         return $qb;
-    }
-
-
-    /**
-     * Common search
-     * 
-     * @param \XLite\Core\CommonCell $cnd       Search condition
-     * @param boolean                $countOnly Flag: return items list or only items count OPTIONAL
-     *  
-     * @return \Doctrine\ORM\PersistentCollection|integer
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
-    {
-        $queryBuilder = $this->createQueryBuilder('p')
-            ->addSelect('addresses')
-            ->leftJoin('p.addresses', 'addresses')
-            ->leftJoin('addresses.country', 'country')
-            ->leftJoin('addresses.state', 'state');
-
-        $this->currentSearchCnd = $cnd;
-
-        foreach ($this->currentSearchCnd as $key => $value) {
-            $this->callSearchConditionHandler($value, $key, $queryBuilder);
-        }
-
-        $result = $queryBuilder->getResult();
-
-        return $countOnly ? count($result) : $result;
-    }
-
-    /**
-     * Search profile by login 
-     * 
-     * @param string $login User's login
-     *  
-     * @return \XLite\Model\Profile
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findByLogin($login)
-    {
-        return $this->findByLoginPassword($login);
-    }
-
-    /**
-     * Search profile by login and password
-     *
-     * @param string  $login    User's login
-     * @param string  $password User's password OPTIONAL
-     * @param integer $orderId  Order ID related to the profile OPTIONAL
-     *
-     * @return \XLite\Model\Profile
-     * @since  3.0.0
-     */
-    public function findByLoginPassword($login, $password = null, $orderId = 0)
-    {
-        return $this->defineFindByLoginPasswordQuery($login, $password, $orderId)->getSingleResult();
     }
 
     /**
@@ -736,44 +801,6 @@ class Profile extends \XLite\Model\Repo\ARepo
         }
 
         return $qb;
-    }
-
-    /**
-     * Find recently logged in administrators 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findRecentAdmins()
-    {
-        return $this->defineFindRecentAdminsQuery()->getResult();
-    }
-
-    /**
-     * Find user with same login 
-     * 
-     * @param \XLite\Model\Profile $profile Profile object
-     *  
-     * @return \XLite\Model\Profile|void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findUserWithSameLogin(\XLite\Model\Profile $profile) 
-    {
-        return $this->defineFindUserWithSameLoginQuery($profile)->getSingleResult();
-    }
-
-    /**
-     * Find the count of administrator accounts 
-     * 
-     * @return integer 
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findCountOfAdminAccounts()
-    {
-        return intval($this->defineFindCountOfAdminAccountsQuery()->getSingleScalarResult());
     }
 
     /**
@@ -847,31 +874,6 @@ class Profile extends \XLite\Model\Repo\ARepo
         );
 
         return $list;
-    }
-
-    /**
-     * Find one by record
-     *
-     * @param array                $data   Record
-     * @param \XLite\Model\AEntity $parent Parent model
-     *
-     * @return \XLite\Model\AEntity|void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
-    {
-        if (
-            isset($data['login'])
-            && (isset($data['order_id']) && 0 == $data['order_id'] || 1 == count($data))
-        ) {
-            $entity = $this->defineOneByRecord($data['login'])->getSingleResult();
-            
-        } else {
-            $entity = parent::findOneByRecord($data, $parent);
-        }
-
-        return $entity;
     }
 
     /**

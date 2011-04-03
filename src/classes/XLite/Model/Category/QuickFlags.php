@@ -31,8 +31,8 @@ namespace XLite\Model\Category;
 /**
  * Category quick flags
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Category\QuickFlags")
  * @Table  (name="category_quick_flags")
@@ -42,9 +42,9 @@ class QuickFlags extends \XLite\Model\AEntity
     /**
      * Doctrine ID 
      * 
-     * @var    int
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -55,9 +55,9 @@ class QuickFlags extends \XLite\Model\AEntity
     /**
      * Total number of subcategories
      * 
-     * @var    int
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -66,9 +66,9 @@ class QuickFlags extends \XLite\Model\AEntity
     /**
      * Number of enabled subcategories
      *
-     * @var    int
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="integer")
      */
@@ -77,9 +77,9 @@ class QuickFlags extends \XLite\Model\AEntity
     /**
      * Relation to a category entity
      *
-     * @var    \XLite\Model\Category
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Category
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @OneToOne  (targetEntity="XLite\Model\Category", inversedBy="quickFlags")
      * @JoinColumn (name="category_id", referencedColumnName="category_id")

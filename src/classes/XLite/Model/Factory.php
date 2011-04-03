@@ -39,12 +39,31 @@ namespace XLite\Model;
 class Factory extends \XLite\Base
 {
     /**
+     * Create object instance and pass arguments to it contructor (if needed)
+     * 
+     * @param string $class Class name
+     * @param array  $args  Constructor arguments OPTIONAL
+     *  
+     * @return \XLite\Base
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function create($class, array $args = array())
+    {
+        $handler = new \ReflectionClass($class);
+
+        return self::isSingleton($handler) ? self::getSingleton($class) : self::createObject($handler, $args);
+    }
+    
+    
+    /**
      * Check if class is a singleton 
      * FIXME - must be revised or removed
      * 
-     * @param ReflectionClass $handler Class descriptor
+     * @param \ReflectionClass $handler Class descriptor
      *  
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected static function isSingleton(\ReflectionClass $handler)
@@ -58,6 +77,7 @@ class Factory extends \XLite\Base
      * @param string $class Class name
      *
      * @return \XLite\Base
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected static function getSingleton($class)
@@ -68,10 +88,11 @@ class Factory extends \XLite\Base
     /**
      * Create new object
      * 
-     * @param ReflectionClass $handler Class descriptor
-     * @param array           $args    Constructor params
+     * @param \ReflectionClass $handler Class descriptor
+     * @param array            $args    Constructor params OPTIONAL
      *  
      * @return \XLite\Base
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected static function createObject(\ReflectionClass $handler, array $args = array())
@@ -86,26 +107,11 @@ class Factory extends \XLite\Base
      * @param string $name Class name
      *  
      * @return \XLite\Base
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function __get($name)
     {
         return self::create($name);
-    }
-
-    /**
-     * Create object instance and pass arguments to it contructor (if needed)
-     * 
-     * @param string $class Class name
-     * @param array  $args  Constructor arguments
-     *  
-     * @return \XLite\Base
-     * @since  3.0.0
-     */
-    public static function create($class, array $args = array())
-    {
-        $handler = new \ReflectionClass($class);
-
-        return self::isSingleton($handler) ? self::getSingleton($class) : self::createObject($handler, $args);
     }
 }

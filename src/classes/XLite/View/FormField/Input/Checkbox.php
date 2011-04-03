@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\FormField\Input;
@@ -31,9 +31,8 @@ namespace XLite\View\FormField\Input;
 /**
  * \XLite\View\FormField\Input\Checkbox 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Checkbox extends \XLite\View\FormField\Input\AInput
 {
@@ -45,10 +44,23 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
 
 
     /**
+     * Return field type
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFieldType()
+    {
+        return self::FIELD_TYPE_CHECKBOX;
+    }
+
+
+    /**
      * Define widget params
      *
      * @return void
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function defineWidgetParams()
@@ -64,7 +76,6 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
      * Determines if checkbox is checked
      * 
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -79,7 +90,7 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
      * @param array $attrs Field attributes to prepare
      *
      * @return array
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function prepareAttributes(array $attrs)
@@ -92,18 +103,4 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
 
         return $attrs;
     }
-
-
-    /**
-     * Return field type
-     * 
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getFieldType()
-    {
-        return self::FIELD_TYPE_CHECKBOX;
-    }
 }
-

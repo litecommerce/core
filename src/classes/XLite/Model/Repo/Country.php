@@ -65,6 +65,8 @@ class Country extends \XLite\Model\Repo\ARepo
         array('code'),
     );
 
+    // {{{ defineCacheCells
+
     /**
      * Define cache cells 
      * 
@@ -94,6 +96,10 @@ class Country extends \XLite\Model\Repo\ARepo
 
         return $list;
     }
+
+    // }}}
+
+    // {{{ findAllEnabled
 
     /**
      * Find all enabled countries 
@@ -129,6 +135,10 @@ class Country extends \XLite\Model\Repo\ARepo
             ->setParameter('enable', true);
     }
 
+    // }}}
+
+    // {{{
+
     /**
      * Find all countries 
      * 
@@ -160,6 +170,10 @@ class Country extends \XLite\Model\Repo\ARepo
             ->addSelect('s')
             ->leftJoin('c.states', 's');
     }
+
+    // }}}
+
+    // {{{ findCountriesStates
 
     /**
      * Get hash array (key - enabled country code, value - empty array)
@@ -223,5 +237,6 @@ class Country extends \XLite\Model\Repo\ARepo
 
         return $result;
     }
-}
 
+    // }}}
+}

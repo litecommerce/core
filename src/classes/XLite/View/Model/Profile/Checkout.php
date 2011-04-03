@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  *
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru>
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    SVN: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Model\Profile;
@@ -31,17 +31,47 @@ namespace XLite\View\Model\Profile;
 /**
  * \XLite\View\Model\Profile\Checkout
  *
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Checkout extends \XLite\View\Model\Profile\Main
 {
     /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'checkout';
+
+        return $result;
+    }
+
+
+    /**
+     * Return current profile ID
+     *
+     * @param boolean $checkMode Check mode or not OPTIONAL
+     *
+     * @return integer 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProfileId($checkMode = true)
+    {
+        return \XLite\Model\Cart::getInstance()->getProfileId();
+    }
+
+    
+    /**
      * Return name of web form widget class
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getFormClass()
@@ -55,7 +85,6 @@ class Checkout extends \XLite\View\Model\Profile\Main
      * @param array $sections Passed list of sections
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -74,7 +103,6 @@ class Checkout extends \XLite\View\Model\Profile\Main
      * Prepare secret hash string to log in anonymous user
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -92,7 +120,6 @@ class Checkout extends \XLite\View\Model\Profile\Main
      * @param string $password Password to set
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -107,7 +134,6 @@ class Checkout extends \XLite\View\Model\Profile\Main
      * Three possibilities to log in
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -143,7 +169,6 @@ class Checkout extends \XLite\View\Model\Profile\Main
      * @param string|null $secureHash Secret hash string (if needed)
      *
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -160,7 +185,6 @@ class Checkout extends \XLite\View\Model\Profile\Main
      * Perform some actions on success
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -176,7 +200,6 @@ class Checkout extends \XLite\View\Model\Profile\Main
      * FIXME: adapt this for the standalone LC
      *
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -189,7 +212,6 @@ class Checkout extends \XLite\View\Model\Profile\Main
      * Renew shipping method
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -206,7 +228,6 @@ class Checkout extends \XLite\View\Model\Profile\Main
      * isPassedEmailDifferent
      *
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -221,7 +242,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
      * Perform certain action for the model object
      *
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function performActionModify()
@@ -247,39 +268,6 @@ class Checkout extends \XLite\View\Model\Profile\Main
 
             $result = $this->loginProfile($password, $secureHash);
         }
-
-        return $result;
-    }
-
-
-    /**
-     * Return current profile ID
-     *
-     * @param boolean $checkMode Check mode or not OPTIONAL
-     *
-     * @return integer 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProfileId($checkMode = true)
-    {
-        return \XLite\Model\Cart::getInstance()->getProfileId();
-    }
-
-
-    /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = 'checkout';
 
         return $result;
     }

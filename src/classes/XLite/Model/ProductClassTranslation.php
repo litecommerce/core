@@ -31,8 +31,9 @@ namespace XLite\Model;
 /**
  * Product class multilingual data
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
+ *
  * @Entity
  *
  * @Table (name="product_class_translations",
@@ -47,9 +48,9 @@ class ProductClassTranslation extends \XLite\Model\Base\Translation
     /**
      * Name
      *
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */

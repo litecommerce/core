@@ -58,23 +58,6 @@ class ViewList extends \XLite\Model\Repo\ARepo
         'tpl'    => true,
     );
 
-    /**
-     * Define cache cells 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineCacheCells()
-    {
-        $list = parent::defineCacheCells();
-
-        $list['class_list'] = array(
-            self::ATTRS_CACHE_CELL => array('list', 'zone'),
-        );
-
-        return $list;
-    }
 
     /**
      * Find class list 
@@ -110,6 +93,25 @@ class ViewList extends \XLite\Model\Repo\ARepo
     public function findOneByTplAndList($tpl, $list)
     {
         return $this->defineOneByTplAndListQuery($tpl, $list)->getSingleResult();
+    }
+
+
+    /**
+     * Define cache cells 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineCacheCells()
+    {
+        $list = parent::defineCacheCells();
+
+        $list['class_list'] = array(
+            self::ATTRS_CACHE_CELL => array('list', 'zone'),
+        );
+
+        return $list;
     }
 
     /**

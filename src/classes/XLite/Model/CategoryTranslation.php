@@ -31,8 +31,8 @@ namespace XLite\Model;
 /**
  * Category multilingual data
  * 
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  *
  * @Entity
  * @Table  (name="category_translations",
@@ -47,9 +47,9 @@ class CategoryTranslation extends \XLite\Model\Base\Translation
     /**
      * Category name
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -58,9 +58,9 @@ class CategoryTranslation extends \XLite\Model\Base\Translation
     /**
      * Category description
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="text")
      */
@@ -69,9 +69,9 @@ class CategoryTranslation extends \XLite\Model\Base\Translation
     /**
      * Category meta keywords
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -80,9 +80,9 @@ class CategoryTranslation extends \XLite\Model\Base\Translation
     /**
      * Category meta description
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="text")
      */
@@ -91,9 +91,9 @@ class CategoryTranslation extends \XLite\Model\Base\Translation
     /**
      * Value of the title HTML-tag for category page
      * 
-     * @var    string
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      *
      * @Column (type="string", length="255")
      */   

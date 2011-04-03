@@ -31,8 +31,8 @@ namespace XLite\Model\Shipping;
 /**
  * Shipping rate model
  * 
- * @see        ____class_see____
- * @since     3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Rate extends \XLite\Base\SuperClass
 {

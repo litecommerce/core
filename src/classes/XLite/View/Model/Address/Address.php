@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     3.0.0
  */
 
 namespace XLite\View\Model\Address;
@@ -31,9 +31,8 @@ namespace XLite\View\Model\Address;
 /**
  * Profile model widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 3.0.0
  */
 class Address extends \XLite\View\Model\AModel
 {
@@ -46,9 +45,9 @@ class Address extends \XLite\View\Model\AModel
      *       self::SCHEMA_REQUIRED => true,
      *   ),
      *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $addressSchema = array(
         'title' => array(
@@ -106,18 +105,109 @@ class Address extends \XLite\View\Model\AModel
     /**
      * Address instance
      * 
-     * @var    \XLite\Model\Address
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   \XLite\Model\Address
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $address = null;
+
+
+    /**
+     * Return model object to use
+     *
+     * @return \XLite\Model\Address
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModelObject()
+    {
+        $address = parent::getModelObject();
+
+        if (!isset($address)) {
+            $address = $this->getDefaultModelObject();
+        }
+
+        return $address;
+    }
+
+    /**
+     * getAddressSchema 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAddressSchema()
+    {
+        $result = array();
+
+        $addressId = $this->getAddressId();
+
+        foreach ($this->addressSchema as $key => $data) {
+            $result[$addressId . '_' . $key] = $data;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return fields list by the corresponding schema
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFormFieldsForSectionDefault()
+    {
+        $result = $this->getFieldsBySchema($this->getAddressSchema());
+
+        // For country <-> state syncronization
+        $this->setStateSelectorIds($result);
+
+        return $result;
+    }
+
+    /**
+     * getRequestAddressId 
+     * 
+     * @return integer|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRequestAddressId()
+    {
+        return \XLite\Core\Request::getInstance()->address_id;
+    }
+
+    /**
+     * getRequestProfileId 
+     * 
+     * @return integer|void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRequestProfileId()
+    {
+        return \XLite\Core\Request::getInstance()->profile_id;
+    }
+
+    /**
+     * Return current address ID
+     * 
+     * @return integer 
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAddressId()
+    {
+        return $this->getRequestAddressId() ?: null;
+    }
+
 
     /**
      * Returns widget head 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -130,7 +220,6 @@ class Address extends \XLite\View\Model\AModel
      * This object will be used if another one is not pased
      *
      * @return \XLite\Model\Address
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -174,7 +263,7 @@ class Address extends \XLite\View\Model\AModel
      * Return name of web form widget class
      *
      * @return string
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getFormClass()
@@ -188,7 +277,6 @@ class Address extends \XLite\View\Model\AModel
      * @param array &$fields Widgets list
      *  
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -208,7 +296,7 @@ class Address extends \XLite\View\Model\AModel
      * @param string $name Field/property name
      *
      * @return mixed
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getModelObjectValue($name)
@@ -229,7 +317,6 @@ class Address extends \XLite\View\Model\AModel
      * Define form field classes and values 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -242,7 +329,6 @@ class Address extends \XLite\View\Model\AModel
      * Some JavaScript code to insert
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -255,7 +341,6 @@ class Address extends \XLite\View\Model\AModel
      * Return text for the "Submit" button
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -268,7 +353,6 @@ class Address extends \XLite\View\Model\AModel
      * Return list of the "Button" widgets
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -283,105 +367,10 @@ class Address extends \XLite\View\Model\AModel
     }
 
     /**
-     * Return model object to use
-     *
-     * @return \XLite\Model\Address
-     * @access public
-     * @since  3.0.0
-     */
-    public function getModelObject()
-    {
-        $address = parent::getModelObject();
-
-        if (!isset($address)) {
-            $address = $this->getDefaultModelObject();
-        }
-
-        return $address;
-    }
-
-    /**
-     * getAddressSchema 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getAddressSchema()
-    {
-        $result = array();
-
-        $addressId = $this->getAddressId();
-
-        foreach ($this->addressSchema as $key => $data) {
-            $result[$addressId . '_' . $key] = $data;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Return fields list by the corresponding schema
-     *
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getFormFieldsForSectionDefault()
-    {
-        $result = $this->getFieldsBySchema($this->getAddressSchema());
-
-        // For country <-> state syncronization
-        $this->setStateSelectorIds($result);
-
-        return $result;
-    }
-
-    /**
-     * getRequestAddressId 
-     * 
-     * @return integer|void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getRequestAddressId()
-    {
-        return \XLite\Core\Request::getInstance()->address_id;
-    }
-
-    /**
-     * getRequestProfileId 
-     * 
-     * @return integer|void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getRequestProfileId()
-    {
-        return \XLite\Core\Request::getInstance()->profile_id;
-    }
-
-    /**
-     * Return current address ID
-     * 
-     * @return integer 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getAddressId()
-    {
-        return $this->getRequestAddressId() ?: null;
-    }
-
-    /**
      * Update profile 
      * 
      * @return boolean 
-     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function performActionUpdate()
@@ -393,7 +382,6 @@ class Address extends \XLite\View\Model\AModel
      * prepareDataForMapping 
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -416,7 +404,6 @@ class Address extends \XLite\View\Model\AModel
      * prepareObjectForMapping 
      * 
      * @return \XLite\Model\Address
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -447,5 +434,4 @@ class Address extends \XLite\View\Model\AModel
 
         return $address;
     }
-
 }

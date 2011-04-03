@@ -37,6 +37,22 @@ namespace XLite\Model\Repo\Base;
 abstract class I18n extends \XLite\Model\Repo\ARepo
 {
     /**
+     * Create a new QueryBuilder instance that is prepopulated for this entity name
+     * 
+     * @param string $alias Table alias OPTIONAL
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createQueryBuilder($alias = null)
+    {
+        return $this->addTranslationsSubquery(parent::createQueryBuilder($alias), $alias);
+
+    }
+
+
+    /**
      * Add language subquery with language code relation
      * 
      * @param \Doctrine\ORM\QueryBuilder $qb    Query builder
@@ -103,21 +119,4 @@ abstract class I18n extends \XLite\Model\Repo\ARepo
 
         return $qb;
     }
-
-    /**
-     * Create a new QueryBuilder instance that is prepopulated for this entity name
-     * 
-     * @param string $alias Table alias OPTIONAL
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function createQueryBuilder($alias = null)
-    {
-        return $this->addTranslationsSubquery(parent::createQueryBuilder($alias), $alias);
-
-    }
-
 }
-

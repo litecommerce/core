@@ -48,32 +48,36 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
     /**
      * Param type
      *
-     * @var    string
-     * @since  3.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $type = null;
 
     /**
      * Param value 
      * 
-     * @var    mixed
-     * @since  3.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $value = null;
 
     /**
      * Param label 
      * 
-     * @var    string
-     * @since  3.0
+     * @var   string
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $label = null;
 
     /**
      * Determines if the param will be diaplayed in CMS as widget setting
      * 
-     * @var    mixed
-     * @since  3.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 3.0.0
      */
     protected $isSetting = false;
 
@@ -84,34 +88,10 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param mixed $value Value to validate
      *  
      * @return array
+     * @see    ____func_see____
      * @since  3.0.0
      */
     abstract protected function getValidaionSchema($value);
-
-
-    /**
-     * Check passed conditions
-     *
-     * @param array $conditions Conditions to check
-     *
-     * @return array
-     * @since  3.0.0
-     */
-    protected function checkConditions(array $conditions)
-    {
-        $messages = array();
-
-        foreach ($conditions as $condition) {
-            if (true === $condition[self::ATTR_CONDITION]) {
-                $messages[] = $condition[self::ATTR_MESSAGE];
-                if (!isset($condition[self::ATTR_CONTINUE])) {
-                     break;
-                }
-            }
-        }
-
-        return $messages;
-    }
 
 
     /**
@@ -122,6 +102,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param mixed $isSetting Display this setting in CMS or not OPTIONAL
      *  
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function __construct($label, $value = null, $isSetting = false)
@@ -138,6 +119,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param mixed $value Value to validate
      *  
      * @return mixed
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function validate($value)
@@ -153,7 +135,8 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param string $name Property name
      *  
      * @return mixed
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function __get($name)
     {
@@ -166,6 +149,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param mixed $value Value to set
      *  
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function setValue($value)
@@ -179,6 +163,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param mixed $value Value to append
      *  
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function appendValue($value)
@@ -192,10 +177,37 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * @param boolean $isSetting Visibility flag
      *  
      * @return void
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function setVisibility($isSetting)
     {
         $this->isSetting = $isSetting;
+    }
+
+
+    /**
+     * Check passed conditions
+     *
+     * @param array $conditions Conditions to check
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkConditions(array $conditions)
+    {
+        $messages = array();
+
+        foreach ($conditions as $condition) {
+            if (true === $condition[self::ATTR_CONDITION]) {
+                $messages[] = $condition[self::ATTR_MESSAGE];
+                if (!isset($condition[self::ATTR_CONTINUE])) {
+                     break;
+                }
+            }
+        }
+
+        return $messages;
     }
 }
