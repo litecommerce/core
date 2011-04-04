@@ -76,6 +76,9 @@ Base.prototype.callSupermethod = function(name, args)
 
 // Core definition
 window.core = {
+
+  isDebug: false,
+
   isReady: false,
 
   isRequesterEnabled: false,
@@ -93,7 +96,7 @@ window.core = {
 
     if (this.isReady) {
     
-      if ('undefined' != typeof(window.console)) {
+      if (this.isDebug && 'undefined' != typeof(window.console)) {
         if (params) {
           console.log('Fire \'' + name + '\' event with arguments: ' + var_export(params, true));
 
