@@ -128,7 +128,11 @@
 
     <tr>
       <td colspan="3">
-        <widget class="\XLite\View\Button\Submit" label="{if:getRequestParamValue(#mode#)=#modify#}Update{else:}Create category{end:}" />
+        {if:getRequestParamValue(#mode#)=#modify#}
+          <widget class="\XLite\View\Button\Submit" label="Update" />
+        {else:}
+          <widget class="\XLite\View\Button\Submit" label="Create category" />
+        {end:}
       </td>
     </tr>
 

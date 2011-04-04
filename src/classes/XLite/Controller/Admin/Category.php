@@ -154,7 +154,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
 
         if (!$img) {
             $img = new \XLite\Model\Image\Category\Image();
-        }   
+        }
 
         if ($img->loadFromRequest('postedData', 'image')) {
             if (!$img->getCategory()) {
