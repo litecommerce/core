@@ -135,7 +135,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
             </td>
 
             <td>
-              <widget class="\XLite\View\Button\Regular" name="delete" label="Delete" jsCode="javascript: onDeleteButton('{method.getMethodId()}');" />
+              <widget class="\XLite\View\Button\Regular" name="delete" label="Delete" jsCode="onDeleteButton('{method.getMethodId()}');" />
             </td>
           </tr>
 
