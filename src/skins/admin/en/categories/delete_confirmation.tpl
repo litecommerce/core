@@ -62,7 +62,7 @@
         <br />
         q<br />
         <widget class="\XLite\View\Button\Submit" label="Yes" style="main-button" />&nbsp;&nbsp;
-        <widget class="\XLite\View\Button\Regular" label="No" jsCode="javascript: document.location='admin.php?target=categories&category_id={category.parent.getCategoryId()}'" />
+        <widget class="\XLite\View\Button\Regular" label="No" jsCode="document.location='admin.php?target=categories&category_id={category.parent.getCategoryId()}'" />
       </td>
     </tr>
 
