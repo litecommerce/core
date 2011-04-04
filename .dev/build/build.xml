@@ -67,7 +67,7 @@
 
 		<echo message="Deploy built releases" />
 		<exec executable="/usr/bin/tar" dir="${buildDir}">
-			<arg line="-xzf ${distrDir}/drupal-lc-${version}-build${label}-test.tgz" />
+			<arg line="-xzf ${distrDir}/drupal-lc-${version}-${label}-test.tgz" />
 		</exec>
 		<move file="${buildDir}/drupal" tofile="${installDir}" />
 
