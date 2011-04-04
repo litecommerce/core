@@ -107,6 +107,7 @@ class States extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return parent::getDir() . '/states';
+        return 'states';
     }
+
 }
