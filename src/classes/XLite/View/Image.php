@@ -125,7 +125,7 @@ class Image extends \XLite\View\AView
      */
     public function getURL()
     {
-        $url = false;
+        $url = null;
 
         if ($this->getParam(self::PARAM_IMAGE) && $this->getParam(self::PARAM_IMAGE)->isExists()) {
 
@@ -133,11 +133,13 @@ class Image extends \XLite\View\AView
 
             $url = $this->getParam(self::PARAM_USE_CACHE)
                 ? $this->resizedURL
-                : $this->getParam(self::PARAM_IMAGE)->getURL();
+                : $this->getParam(self::PARAM_IMAGE)->getFrontURL();
 
-        } elseif ($this->getParam(self::PARAM_USE_DEFAULT_IMAGE)) {
+        }
 
-            // Defualt image
+        if (!$url && $this->getParam(self::PARAM_USE_DEFAULT_IMAGE)) {
+
+            // Default image
 
             $url = \XLite::getInstance()->getOptions(array('images', 'default_image'));
 
@@ -201,7 +203,7 @@ class Image extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_IMAGE             => new \XLite\Model\WidgetParam\Object('Image', null, false, '\XLite\Model\Image'),
+            self::PARAM_IMAGE             => new \XLite\Model\WidgetParam\Object('Image', null, false, '\XLite\Model\Base\Image'),
             self::PARAM_ALT               => new \XLite\Model\WidgetParam\String('Alt. text', '', false),
             self::PARAM_MAX_WIDTH         => new \XLite\Model\WidgetParam\Int('Max. width', 0),
             self::PARAM_MAX_HEIGHT        => new \XLite\Model\WidgetParam\Int('Max. height', 0),
