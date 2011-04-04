@@ -42,7 +42,6 @@ namespace XLite\Model;
  *          @Index (name="subtotal", columns={"subtotal"}),
  *          @Index (name="tracking", columns={"tracking"}),
  *          @Index (name="status", columns={"status"}),
- *          @Index (name="notes", columns={"notes"}),
  *          @Index (name="shipping_id", columns={"shipping_id"})
  *      }
  * )
