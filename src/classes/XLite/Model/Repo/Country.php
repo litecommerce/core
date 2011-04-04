@@ -185,9 +185,12 @@ class Country extends \XLite\Model\Repo\ARepo
     public function findCountriesStates()
     {
         $data = $this->getFromCache('states');
+
         if (!isset($data)) {
+
             $data = $this->defineCountriesStatesQuery()->getResult();
             $data = $this->postprocessCountriesStates($data);
+
             $this->saveToCache($data, 'states');
         }
 
