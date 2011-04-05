@@ -62,6 +62,8 @@ final class XLite_Tests_TestSuite extends PHPUnit_Framework_TestSuite
         exec($cmd . ' ' . $config['database'] . ' < ' . $path);
 
         echo ('done' . PHP_EOL);
+
+        sleep(1);
     }
 
 }

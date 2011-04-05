@@ -85,6 +85,15 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      */
     protected $testConfig = null;
 
+    /**
+     * Flag: generate database backup on test failure
+     * 
+     * @var    boolean
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $makeSqlBackupOnFailure = false;
+
 
     // {{{ Methods that are redefine the methods of a base class
 
@@ -212,7 +221,28 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
             $this->markTestSkipped();
 
         } else {
-            $result = parent::runTest();
+
+            try {
+
+                $result = parent::runTest();
+        
+            } catch (PHPUnit_Framework_AssertionFailedError $exception) {
+
+                if ($this->makeSqlBackupOnFailure) {
+
+                    $path = LC_ROOT_DIR . 'var/log/unit-' . date('Ymd-His') . '-' . $this->getName() . '.sql';
+
+                    try {
+                        ob_start();
+                        xlite_make_sql_backup($path);
+                        ob_end_clean();
+
+                    } catch (\Exception $e) {
+                    }
+                }
+
+                throw $exception;
+            }
         }
 
         return $result;
