@@ -18,6 +18,8 @@
 
 class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
 {
+    protected $makeSqlBackupOnFailure = true;
+
     protected $testSearchData = array(
         // Test dataset #1
         0 => array(
