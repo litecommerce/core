@@ -201,7 +201,7 @@ function managedate(type, status) {
         </tr>
 
         <tr>
-          <td><widget class="\XLite\View\Button\Regular" label="Reset" jsCode="javascript: resetForm();" /></td>
+          <td><widget class="\XLite\View\Button\Regular" label="Reset" jsCode="resetForm();" /></td>
           <td>
             <widget class="\XLite\View\Button\Submit" label="Search" />
           </td>

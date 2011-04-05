@@ -288,10 +288,6 @@ class AnnotationDriver implements Driver
                     throw MappingException::tableIdGeneratorNotImplemented($className);
                 }
             } else if ($oneToOneAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ORM\Mapping\OneToOne')) {
-                if ($idAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ORM\Mapping\Id')) {
-                    $mapping['id'] = true;
-                }
-
                 $mapping['targetEntity'] = $oneToOneAnnot->targetEntity;
                 $mapping['joinColumns'] = $joinColumns;
                 $mapping['mappedBy'] = $oneToOneAnnot->mappedBy;
@@ -313,10 +309,6 @@ class AnnotationDriver implements Driver
 
                 $metadata->mapOneToMany($mapping);
             } else if ($manyToOneAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ORM\Mapping\ManyToOne')) {
-                if ($idAnnot = $this->_reader->getPropertyAnnotation($property, 'Doctrine\ORM\Mapping\Id')) {
-                    $mapping['id'] = true;
-                }
-
                 $mapping['joinColumns'] = $joinColumns;
                 $mapping['cascade'] = $manyToOneAnnot->cascade;
                 $mapping['inversedBy'] = $manyToOneAnnot->inversedBy;
@@ -375,7 +367,8 @@ class AnnotationDriver implements Driver
         // Evaluate @HasLifecycleCallbacks annotation
         if (isset($classAnnotations['Doctrine\ORM\Mapping\HasLifecycleCallbacks'])) {
             foreach ($class->getMethods() as $method) {
-                if ($method->isPublic()) {
+                // filter for the declaring class only, callbacks from parents will already be registered.
+                if ($method->isPublic() && $method->getDeclaringClass()->getName() == $class->name) {
                     $annotations = $this->_reader->getMethodAnnotations($method);
 
                     if (isset($annotations['Doctrine\ORM\Mapping\PrePersist'])) {
