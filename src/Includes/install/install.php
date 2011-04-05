@@ -804,23 +804,31 @@ function checkMemAllocation(&$errorMsg, &$value)
     $result = true;
     
     $sizes = array(32, 64, 128);
-    
-    foreach ($sizes as $size) {
+
+    $currentMemoryLimit = convert_ini_str_to_int(@ini_get('memory_limit'));
+
+    if (max($sizes) > $currentMemoryLimit) {
+
+        foreach ($sizes as $size) {
+
+            if ($size > $currentMemoryLimit) {
+
+                $response = inst_http_request_install("action=memory_test&size=$size");
         
-        $response = inst_http_request_install("action=memory_test&size=$size");
+                if (!(strpos($response, "MEMORY-TEST-SKIPPED") === false)) {
+                    $value = 'MEMORY-TEST-SKIPPED';
+                    break;
+                }
         
-        if (!(strpos($response, "MEMORY-TEST-SKIPPED") === false)) {
-            $value = 'MEMORY-TEST-SKIPPED';
-            break;
+                if (strpos($response, "MEMORY-TEST-OK") === false) {
+                    $status = false;
+                    $errorMsg = xtr('Memory allocation test failed. Response:') . "\n" . substr($response, 0, 255);
+                    break;
+                }
+        
+                $value = $size . 'M';
+            }
         }
-        
-        if (strpos($response, "MEMORY-TEST-OK") === false) {
-            $status = false;
-            $errorMsg = xtr('Memory allocation test failed. Response:') . "\n" . substr($response, 0, 255);
-            break;
-        }
-        
-        $value = $size . 'M';
     }
 
     return $result;

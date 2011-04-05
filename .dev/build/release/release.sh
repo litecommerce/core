@@ -262,7 +262,7 @@ if [ -d $OUTPUT_DIR -a ! $CLEAR_OUTPUT_DIR ]; then
 	fi
 fi
 
-[ "x${XLITE_BUILD_NUMBER}" = "x" ] && BUILD_SUFFIX='' || BUILD_SUFFIX="-build${XLITE_BUILD_NUMBER}"
+[ "x${XLITE_BUILD_NUMBER}" = "x" ] && BUILD_SUFFIX='' || BUILD_SUFFIX="-${XLITE_BUILD_NUMBER}"
 
 [ "x${DEMO_VERSION}" != "x" ] && BUILD_SUFFIX="${BUILD_SUFFIX}-demo"
 

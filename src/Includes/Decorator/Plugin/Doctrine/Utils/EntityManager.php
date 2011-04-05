@@ -244,26 +244,6 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
     }
 
     /**
-     * Return list of callbacks to configure the EntityGenerator
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getEntityGeneratorConfigCallbacks()
-    {
-        return array(
-            array('setGenerateAnnotations', array(true)),
-            array('setGenerateStubMethods', array(true)),
-            array('setRegenerateEntityIfExists', array(false)),
-            array('setUpdateEntityIfExists', array(true)),
-            array('setNumSpaces', array(4)),
-            array('setClassToExtend', array('\XLite\Model\AEntity')),
-        );
-    }
-
-    /**
      * Return the Doctrine tools
      * 
      * @return \Doctrine\ORM\Tools\EntityGenerator
@@ -274,11 +254,15 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
     protected static function getEntityGenerator()
     {
         $generator = new \Doctrine\ORM\Tools\EntityGenerator();
+        $generator->setGenerateAnnotations(true);
+        $generator->setRegenerateEntityIfExists(false);
+        $generator->setUpdateEntityIfExists(true);
+        $generator->setGenerateStubMethods(true);
+        $generator->setNumSpaces(4);
+        $generator->setClassToExtend('\XLite\Model\AEntity');
 
-        foreach (static::getEntityGeneratorConfigCallbacks() as $data) {
-            list($method, $args) = $data;
-            call_user_func_array(array($generator, $method), $args);
-        }
+        // :TODO: Uncomment after the Doctrine upgrade to 2.0.3 will be completed
+        // $generator->setBackupExisting(false);
 
         return $generator;
     }

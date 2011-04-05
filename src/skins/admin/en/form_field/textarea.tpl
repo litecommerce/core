@@ -1,6 +1,6 @@
-/* vim: set ts=2 sw=2 sts=2 et: */
+{* vim: set ts=2 sw=2 sts=2 et: *}
 
-/**
+{**
  * ____file_title____
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
@@ -9,9 +9,6 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- */
+ *}
 
-function setChecked(input, check)
-{
-    $(input).attr('checked', check);
-}
+<textarea{getAttributesCode():h}>{getValue():h}</textarea>

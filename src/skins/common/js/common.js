@@ -340,7 +340,11 @@ function checkMarks(form, reg, lbl) {
     return true;
 
   for (var x = 0; x < form.elements.length; x++) {
-    if (form.elements[x].name.search(reg) == 0 && form.elements[x].type == 'checkbox' && !form.elements[x].disabled) {
+    if (
+      form.elements[x].type == 'checkbox' 
+      && form.elements[x].name.search(reg) == 0 
+      && !form.elements[x].disabled
+    ) {
       is_exist = true;
 
       if (form.elements[x].checked)
