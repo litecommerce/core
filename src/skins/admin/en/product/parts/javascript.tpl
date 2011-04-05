@@ -13,5 +13,5 @@
  *}
 <tr>
     <td>{t(#Custom Javascript code#)}</td>
-    <td><textarea name="{getNamePostedData(#javascript#)}" cols="45" rows="6">{product.javascript}</textarea></td>
+    <td><widget class="\XLite\View\FormField\Textarea\Simple" fieldName="{getNamePostedData(#javascript#)}" cols="45" rows="6" value="{product.javascript}" /></td>
 </tr>

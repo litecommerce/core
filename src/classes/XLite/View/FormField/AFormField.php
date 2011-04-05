@@ -441,6 +441,18 @@ abstract class AFormField extends \XLite\View\AView
     }
 
     /**
+     * Getter for Field-only flag
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultParamFieldOnly()
+    {
+        return false;
+    }
+
+    /**
      * Define widget params 
      * 
      * @return void
@@ -465,7 +477,7 @@ abstract class AFormField extends \XLite\View\AView
             ),
             self::PARAM_FIELD_ONLY    => new \XLite\Model\WidgetParam\Bool(
                 'Skip wrapping with label and required flag, display just a field itself',
-                false
+                $this->getDefaultParamFieldOnly()
             ),
         );
     }
