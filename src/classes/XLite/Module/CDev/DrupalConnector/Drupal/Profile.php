@@ -83,6 +83,14 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             'cms_profile_id' => 'uid',
         );
 
+        $values = (is_array($edit) && isset($edit['values'])) ? $edit['values'] : array();
+
+        foreach ($fields as $lcKey => $drupalKey) {
+            // Only use data from user profile if they do not passed in request
+            $data[$lcKey] = isset($values[$drupalKey]) ? $values[$drupalKey] : $user->$drupalKey;
+        }
+
+        // Initialize flag when new user is created
         $data['createNewUser'] = !isset($user->original);
 
         // Prepare data for access_level field
@@ -90,9 +98,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
         if (isset($roles)) {
 
-            $fields['access_level'] = 'access_level';
-
-            $user->access_level = $this->isRoleHasAdminPermission($roles)
+            $data['access_level'] = $this->isRoleHasAdminPermission($roles)
                 ? \XLite\Core\Auth::getInstance()->getAdminAccessLevel()
                 : \XLite\Core\Auth::getInstance()->getCustomerAccessLevel();
 
@@ -106,15 +112,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
         // Prepare data for 'status' field
         if (isset($edit['status'])) {
-            $fields['status'] = 'status';
-            $user->status = (1 === intval($edit['status']) ? 'E' : 'D');
-        }
-
-        $values = (is_array($edit) && isset($edit['values'])) ? $edit['values'] : array();
-
-        foreach ($fields as $lcKey => $drupalKey) {
-            // Only use data from user profile if they do not passed in request
-            $data[$lcKey] = isset($values[$drupalKey]) ? $values[$drupalKey] : $user->$drupalKey;
+            $data['status'] = (1 === intval($edit['status']) ? 'E' : 'D');
         }
 
         // Skip password on update action if it wasn't changed
