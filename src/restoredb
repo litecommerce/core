@@ -201,7 +201,7 @@ if (file_exists('sql/local/xlite_local_demo.yaml')) {
 // Create modules list
 \Includes\Decorator\Utils\ModulesManager::saveModulesToFile($modules);
 
-// Remove disabeld structures
+// Remove disabled structures
 $path = LC_VAR_DIR . '.disabled.structures.php';
 if (file_exists($path)) {
     unlink($path);

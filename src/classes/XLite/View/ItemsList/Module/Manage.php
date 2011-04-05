@@ -115,6 +115,21 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     }
 
     /**
+     * Return params list to use for search
+     *
+     * @return \XLite\Core\CommonCell
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSearchCondition()
+    {
+        $result = parent::getSearchCondition();
+        $result->{\XLite\Model\Repo\Module::P_INSTALLED} = true;
+
+        return $result;
+    }
+
+    /**
      * Return filters array
      *
      * @return array
@@ -179,6 +194,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
             $cnd->$filter = true;
         }
 
-        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->search($cnd, $countOnly);
+        return parent::getData($cnd, $countOnly);
     }
 }

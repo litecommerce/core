@@ -9,9 +9,11 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ *
  * @ListChild (list="itemsList.module.manage.columns", weight="50")
  * @ListChild (list="itemsList.module.install.columns", weight="50")
  *}
+
 <td class="module-main-section">
   {displayNestedViewListContent(#module-main-section#,_ARRAY_(#module#^module))}
 </td>
