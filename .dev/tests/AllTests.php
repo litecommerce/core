@@ -47,31 +47,26 @@ function xlite_make_sql_backup($path = null)
             unlink($path);
         }
 
-        if (!isset($deploy) || !$deploy) {
-            $config = XLite::getInstance()->getOptions('database_details');
+        $config = \XLite::getInstance()->getOptions('database_details');
 
-            $cmd = defined('TEST_MYSQLDUMP_BIN') ? TEST_MYSQLDUMP_BIN : 'mysqldump';
-            $cmd .= ' --opt -h' . $config['hostspec'];
+        $cmd = defined('TEST_MYSQLDUMP_BIN') ? TEST_MYSQLDUMP_BIN : 'mysqldump';
+        $cmd .= ' --opt -h' . $config['hostspec'];
 
-            if ($config['port']) {
-                $cmd .= ':' . $config['port'];
-            }
-
-            $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
-
-            if ($config['socket']) {
-                $cmd .= ' -S' . $config['socket'];
-            }
-
-            exec($cmd .= ' ' . $config['database'] . ' > ' . $path);
-
-            echo ('done' . PHP_EOL);
-
-            sleep(1);
-
-        } else {
-            $result = false;
+        if ($config['port']) {
+            $cmd .= ':' . $config['port'];
         }
+
+        $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
+
+        if ($config['socket']) {
+            $cmd .= ' -S' . $config['socket'];
+        }
+
+        exec($cmd .= ' ' . $config['database'] . ' > ' . $path);
+
+        echo ('done' . PHP_EOL);
+
+        sleep(1);
 
     } else {
         $result = false;
@@ -314,7 +309,9 @@ class XLite_Tests_AllTests
             }
         }
 
-        xlite_make_sql_backup();
+        if (!isset($deploy) || !$deploy) {
+            xlite_make_sql_backup();
+        }
 
         // Classes tests
         if (!defined('UNITS_DISABLED')) {
