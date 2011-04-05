@@ -11,21 +11,7 @@
  * @since     3.0.0
  */
 
-// TODO: jQuery rework
-
-function setChecked(form, input, check)
+function setChecked(input, check)
 {
-    var elements = document.forms[form].elements[input];
-
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].checked = check;
-    }
-}
-
-function setHeaderChecked()
-{
-  var Element = document.getElementById("activate_products");
-    if (Element && !Element.checked) {
-      Element.checked = true;
-    }
+    $(input).attr('checked', check);
 }
