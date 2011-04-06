@@ -37,7 +37,7 @@ namespace XLite\Controller\Admin;
 class OrdersStats extends \XLite\Controller\Admin\Stats
 {
     /**
-     * Status params
+     * Columns
      */
     const P_PROCESSED  = 'processed';
     const P_QUEUED     = 'queued';
@@ -45,7 +45,6 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     const P_INCOMPLETE = 'incomplete';
     const P_TOTAL      = 'total';
     const P_PAID       = 'paid';
-
 
 
     /**
@@ -86,7 +85,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      * @see   ____var_see____
      * @since 3.0.0
      */
-    protected function getStatusRows()
+    public function getStatusRows()
     {
         return array(
             self::P_PROCESSED => array(
@@ -119,13 +118,32 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     }
 
     /**
+     * Is totals row
+     *
+     * @param  string $row Row identificator
+     * @return boolean
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public function isTotalsRow($row)
+    {
+        return in_array(
+            $row,
+            array(
+                self::P_PAID,
+                self::P_TOTAL,
+            )
+        );
+    }
+
+    /**
      * Get data
      *
      * @return array
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getStatsRows()
+    public function getStatsRows()
     {
         return array_keys($this->getStatusRows());
     }

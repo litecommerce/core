@@ -443,6 +443,11 @@ table.data-table tr.highlight td
   background-color: #f2f2f2;
 }
 
+table.data-table tr.totals td
+{
+  font-weight: bold;
+}
+
 table.data-table td.separator
 {
   border-top: solid 1px #E5EBEF;
