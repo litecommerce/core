@@ -123,7 +123,7 @@ class HashArray extends \XLite\Core\Validator\AValidator
     {
         $result = null;
 
-        foreach ($thi->getPairs() as $pair) {
+        foreach ($this->getPairs() as $pair) {
             if ($pair->getName() == $name) {
                 $result = $pair->getValidator();
                 break;
