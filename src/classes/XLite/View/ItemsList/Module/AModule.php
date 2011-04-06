@@ -116,35 +116,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Return list of the modes allowed by default
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDefaultModes()
-    {
-        $list = parent::getDefaultModes();
-
-        return $list;
-    }
-
-    /**
-     * Return params list to use for search
-     *
-     * @return \XLite\Core\CommonCell
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSearchCondition()
-    {
-        $result = parent::getSearchCondition();
-        $result->{\XLite\Model\Repo\Module::P_ORDER_BY} = array($this->getSortBy(), $this->getSortOrder());
-
-        return $result;
-    }
-
-    /**
      * getJSHandlerClassName
      *
      * @return string
@@ -167,44 +138,16 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function canEnable(\XLite\Model\Module $module)
     {
-        return array_filter(
-            array_map(
-                array('\Includes\Decorator\Utils\ModulesManager', 'getActiveModules'),
-                $module->getDependencies()
-            )
-        ) && $this->isVersionValid($module);
-    }
+        $result = $this->isVersionValid($module);
 
-    /**
-     * Check if the module can be installed
-     *
-     * FIXME: actualize
-     * 
-     * @param \XLite\Model\Module $module Module
-     *  
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function canInstall(\XLite\Model\Module $module)
-    {
-        return !$module->getInstalled() && ($module->isPurchased() || $module->isFree());
-    }
+        if ($result && ($dependencies = $module->getDependencies())) {
+            $result = ! (bool) \Includes\Utils\ArrayManager::filterByKeys(
+                $dependencies,
+                array_keys(\Includes\Decorator\Utils\ModulesManager::getActiveModules())
+            );
+        }
 
-    /**
-     * Check if the module can be installed
-     *
-     * FIXME: actualize
-     *
-     * @param \XLite\Model\Module $module Module
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function canPurchase(\XLite\Model\Module $module)
-    {
-        return !$module->getInstalled() && !$module->isPurchased() && !$module->isFree();
+        return $result;
     }
 
     /**
@@ -244,10 +187,38 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     // {{{ Version-related checks
 
     /**
-     * Check if module requires new core version
+     * Check if core requires new (but the same as core major) version of module. (module is NOT marketplace one)
      * 
      * @param \XLite\Model\Module $module Module to check
      *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isModuleUpdateAvailable(\XLite\Model\Module $module)
+    {
+        return $this->isModuleCompatible($module) && (bool) $this->getModuleForUpdate($module);
+    }
+
+    /**
+     * Check if the module major version is the same as the core one
+     * 
+     * @param \XLite\Model\Module $module Module to check
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isModuleCompatible(\XLite\Model\Module $module)
+    {
+        return \XLite::getInstance()->checkVersion($module->getMajorVersion(), '=');
+    }
+
+    /**
+     * Check if module requires new core version
+     *
+     * @param \XLite\Model\Module $module Module to check
+     *
      * @return boolean
      * @see    ____func_see____
      * @since  3.0.0
@@ -272,92 +243,35 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Check if core requires new (but the same as core major) version of module
-     * 
-     * @param \XLite\Model\Module $module Module to check
-     *  
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isModuleUpdateNeeded(\XLite\Model\Module $module)
-    {
-        // TODO MARKETPLACE: ADD checking _new_ minor version (module here - is MARKETPLACE one)
-        return $this->isModuleCompatible($module);
-    }
-
-    /**
-     * Check if new module version is available for install
-     *
-     * TODO: it's the stub
-     *
-     * @param \XLite\Model\Module $module Module to check
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isModuleUpgradeAvailable(\XLite\Model\Module $module)
-    {
-        return $module->getEnabled() && $this->isVersionValid($module) && (bool) rand(0, 1);
-    }
-
-    /**
-     * Check if core requires new (but the same as core major) version of module. (module is NOT marketplace one)
-     * 
-     * @param \XLite\Model\Module $module Module to check
-     *  
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isModuleUpdateAvailable(\XLite\Model\Module $module)
-    {
-        // TODO MARKETPLACE: ADD checking _new_ minor version (module here - is NOT marketplace one)
-        return false && $this->isModuleCompatible($module);
-    }
-
-    /**
-     * Check if the module major version is the same as the core one
-     * 
-     * @param \XLite\Model\Module $module Module to check
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isModuleCompatible(\XLite\Model\Module $module)
-    {
-        return \XLite::getInstance()->checkVersion($module->getMajorVersion(), '=');
-    }
-
-
-    /**
-     * Get max available core version for upgrade
+     * Search for module for update
      *
      * @param \XLite\Model\Module $module Current module
      *
-     * @return boolean
+     * @return \XLite\Model\Module
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getMaxCoreVersion(\XLite\Model\Module $module)
+    protected function getModuleForUpdate(\XLite\Model\Module $module)
     {
-        return $module->getMajorVersion() . '.x';
+        return $module->getRepository()->getModuleForUpdate($module);
     }
 
     /**
-     * Get max available module version for upgrade
+     * Get max available module version for update
      *
      * @param \XLite\Model\Module $module Current module
      *
-     * @return boolean
+     * @return string
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getMaxModuleVersion(\XLite\Model\Module $module)
     {
-        return \XLite::getInstance()->getVersion();
+        if ($result = $this->getModuleForUpdate($module)) {
+            $result = \Includes\Utils\Converter::composeVersion($result->getMajorVersion(), $result->getMinorVersion());
+        }
+
+        return $result;
     }
 
     /**
