@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
@@ -30,15 +30,27 @@ namespace XLite\Controller\Admin;
 
 /**
  * Orders statistics page controller
- * 
+ *
  * @see   ____class_see____
  * @since 3.0.0
  */
 class OrdersStats extends \XLite\Controller\Admin\Stats
 {
     /**
-     * getPageTemplate 
-     * 
+     * Status params
+     */
+    const P_PROCESSED  = 'processed';
+    const P_QUEUED     = 'queued';
+    const P_FAILED     = 'failed';
+    const P_INCOMPLETE = 'incomplete';
+    const P_TOTAL      = 'total';
+    const P_PAID       = 'paid';
+
+
+
+    /**
+     * getPageTemplate
+     *
      * @return void
      * @see    ____func_see____
      * @since  3.0.0
@@ -49,35 +61,88 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     }
 
     /**
-     * handleRequest 
-     * 
-     * @return void
+     * Get row headings
+     *
+     * @return array
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest()
+    public function getRowTitles()
     {
-        // typedef
-        $statRec = array('today' => 0, 'week' => 0, 'month' => 0);
-        $this->stat = array(
-            'processed'    => $statRec,
-            'queued'       => $statRec,
-            'failed'       => $statRec,
-            'not_finished' => $statRec,
-            'total'        => $statRec,
-            'paid'         => $statRec
+        return array(
+            self::P_PROCESSED  => 'Processed',
+            self::P_QUEUED     => 'Queued',
+            self::P_FAILED     => 'Failed',
+            self::P_INCOMPLETE => 'Not finished',
+            self::P_TOTAL      => 'Total',
+            self::P_PAID       => 'Paid',
         );
-
-        $order = new \XLite\Model\Order();
-        $date = $this->getMonthDate();
-        // fetch orders for this month
-
-        // FIXME - old code
-        array_map(array($this, 'summarize'), /*$order->findAll("date>=$date")*/array());
-
-        parent::handleRequest();
     }
 
+    /**
+     * Status rows
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 3.0.0
+     */
+    protected function getStatusRows()
+    {
+        return array(
+            self::P_PROCESSED => array(
+                \XLite\Model\Order::STATUS_PROCESSED,
+                \XLite\Model\Order::STATUS_COMPLETED,
+            ),
+            self::P_QUEUED => array(
+                \XLite\Model\Order::STATUS_QUEUED,
+            ),
+            self::P_FAILED => array(
+                \XLite\Model\Order::STATUS_FAILED,
+                \XLite\Model\Order::STATUS_DECLINED,
+            ),
+            self::P_INCOMPLETE => array(
+                \XLite\Model\Order::STATUS_INPROGRESS,
+            ),
+            self::P_TOTAL => array(
+                \XLite\Model\Order::STATUS_INPROGRESS,
+                \XLite\Model\Order::STATUS_FAILED,
+                \XLite\Model\Order::STATUS_DECLINED,
+                \XLite\Model\Order::STATUS_QUEUED,
+                \XLite\Model\Order::STATUS_PROCESSED,
+                \XLite\Model\Order::STATUS_COMPLETED,
+            ),
+            self::P_PAID => array(
+                \XLite\Model\Order::STATUS_PROCESSED,
+                \XLite\Model\Order::STATUS_COMPLETED,
+            ),
+        );
+    }
+
+    /**
+     * Get data
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getStatsRows()
+    {
+        return array_keys($this->getStatusRows());
+    }
+
+    /**
+     * Get data
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getData()
+    {
+        $cnd = $this->getSearchCondition();
+
+        return \XLite\Core\Database::getRepo('\XLite\Model\Order')->search($cnd);
+    }
 
     /**
      * Common method to determine current location
@@ -106,62 +171,77 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     }
 
     /**
-     * save 
-     * 
+     * save
+     *
      * @param mixed $index ____param_comment____
      * @param mixed $order ____param_comment____
      * @param mixed $paid  ____param_comment____ OPTIONAL
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function save($index, $order, $paid = false)
     {
-        if ($order->getDate() >= $this->getTodayDate()) {
+
+        foreach ($this->getStatsColumns() as $period) {
+            if ($order->getDate() >= $this->getStartTime($period)) {
+                $this->sum($index, $period, $order->getTotal(), $paid);
+            }
+        }
+
+/*
+        if ($order->getDate() >= $this->getTodayStartTime()) {
             $this->sum($index, 'today', $order->getTotal(), $paid);
         }
-        if ($order->getDate() >= $this->getWeekDate()) {
+        if ($order->getDate() >= $this->getWeekStartTime()) {
             $this->sum($index, 'week', $order->getTotal(), $paid);
         }
-        if ($order->getDate() >= $this->getMonthDate()) {
+        if ($order->getDate() >= $this->getMonthStartTime()) {
             $this->sum($index, 'month', $order->getTotal(), $paid);
         }
+        if ($order->getDate() >= $this->getYearStartTime()) {
+            $this->sum($index, 'year', $order->getTotal(), $paid);
+        }
+        if ($order->getDate() >= $this->getAllStartTime()) {
+            $this->sum($index, 'all', $order->getTotal(), $paid);
+        }
+*/
     }
 
     /**
-     * sum 
-     * 
+     * sum
+     *
      * @param mixed $index  ____param_comment____
      * @param mixed $period ____param_comment____
      * @param mixed $amount ____param_comment____
      * @param mixed $paid   ____param_comment____
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function sum($index, $period, $amount, $paid)
     {
-        $this->stat[$index][$period] += 1;
-        
-        $this->stat['total'][$period] += $amount;
-        
+        $this->stats[$index][$period] += 1;
+
+        $this->stats['total'][$period] += $amount;
+
         if ($paid) {
-            $this->stat['paid'][$period] += $amount;
+            $this->stats['paid'][$period] += $amount;
         }
     }
-    
+
     /**
-     * summarize 
-     * 
+     * summarize
+     *
      * @param mixed $order ____param_comment____
-     *  
+     *
      * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function summarize($order)
+    protected function process($order)
     {
         switch ($order->getStatus()) {
             case 'P':

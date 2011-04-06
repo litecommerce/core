@@ -10,52 +10,18 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<p align="justify">This section displays order placement statistics for today, this week and this month.</p>
+<p align="justify">{t(#This section displays order placement statistics for today, this week and this month.#)}</p>
 
 <br /><br />
 
 <table class="data-table" width="80%">
-    <tr class=TableHead bgcolor=#ffffff>
-        <th align=left>Status</th>
-        <th>Today</th>
-        <th>This week</th>
-        <th>This month</th>
+    <tr class="TableHead" align="center">
+        <th align=left>&nbsp;</th>
+        <th FOREACH="getColumnTitles(),k,t">{t}</th>
     </tr>
-    <tr class="dialog-box">
-        <td>Processed</td>
-        <td align=center>{stat.processed.today}</td>
-        <td align=center>{stat.processed.week}</td>
-        <td align=center>{stat.processed.month}</td>
-    </tr>
-    <tr class="highlight">
-        <td>Queued</td>
-        <td align=center>{stat.queued.today}</td>
-        <td align=center>{stat.queued.week}</td>
-        <td align=center>{stat.queued.month}</td>
-    </tr>
-    <tr class="dialog-box">
-        <td>Failed/Declined</td>
-        <td align=center>{stat.failed.today}</td>
-        <td align=center>{stat.failed.week}</td>
-        <td align=center>{stat.failed.month}</td>
-    </tr>
-    <tr class="highlight">
-        <td>Incomplete</td>
-        <td align=center>{stat.not_finished.today}</td>
-        <td align=center>{stat.not_finished.week}</td>
-        <td align=center>{stat.not_finished.month}</td>
-    </tr>
-    <tr class="dialog-box">
-        <td align=right><b>Gross total:</b></td>
-        <td align=center>{price_format(stat.total.today):h}</td>
-        <td align=center>{price_format(stat.total.week):h}</td>
-        <td align=center>{price_format(stat.total.month):h}</td>
-    </tr>
-    <tr class="dialog-box">
-        <td align=right><b>Payments received:</b></td>
-        <td align=center>{price_format(stat.paid.today):h}</td>
-        <td align=center>{price_format(stat.paid.week):h}</td>
-        <td align=center>{price_format(stat.paid.month):h}</td>
+    <tr FOREACH="getStats(),idx,row" class="dialog-box" class="{getRowClass(idx,#dialog-box#,#highlight#)}">
+        <td>{getRowTitle(idx)}</td>
+        <td FOREACH="row,idx1,val" align="center">{val}</td>
     </tr>
     </table>
 
