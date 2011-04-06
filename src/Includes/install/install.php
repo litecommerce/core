@@ -150,7 +150,7 @@ function x_install_log($message = null)
     $securityHeader = "<?php die(1); ?>\n";
 
     if (!file_exists($fileName) || $securityHeader > filesize($fileName)) {
-        file_put_contents($fileName, $securityHeader);
+        @file_put_contents($fileName, $securityHeader);
     }
 
     $args = func_get_args();
@@ -190,7 +190,7 @@ OUT;
         $output .= $varDump;
     }
 
-    file_put_contents($fileName, $output, FILE_APPEND);
+    @file_put_contents($fileName, $output, FILE_APPEND);
 }
 
 /**
