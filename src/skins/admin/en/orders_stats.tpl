@@ -15,15 +15,17 @@
 <br /><br />
 
 <table class="data-table" width="80%">
-    <tr class="TableHead" align="center">
-        <th align=left>&nbsp;</th>
-        <th FOREACH="getColumnTitles(),k,t">{t}</th>
-    </tr>
-    <tr FOREACH="getStats(),idx,row" class="dialog-box" class="{getRowClass(idx,#dialog-box#,#highlight#)}">
-        <td>{getRowTitle(idx)}</td>
-        <td FOREACH="row,idx1,val" align="center">{val}</td>
-    </tr>
-    </table>
+  <tr class="TableHead" align="center">
+    <th align="left">&nbsp;</th>
+    <th FOREACH="getStatsColumns(),c" style="text-align:center;">{getColumnTitle(c)}</th>
+  </tr>
+  <tr FOREACH="getStats(),idx,row" class="dialog-box{if:isTotalsRow(idx)} totals{end:}">
+    <td>{getRowTitle(idx)}</td>
+    <td FOREACH="row,idx1,val" align="center">
+      {if:isTotalsRow(idx)}{price_format(val)}{else:}{val}{end:}
+    </td>
+  </tr>
+</table>
 
 <br /><br />
 <widget class="\XLite\View\Button\Regular" label="Perform order search" jsCode="self.location='admin.php?target=order_list';" />

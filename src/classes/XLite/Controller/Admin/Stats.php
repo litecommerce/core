@@ -157,7 +157,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getStatsRows()
+    public function getStatsRows()
     {
         return array();
     }
@@ -169,7 +169,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getStatsColumns()
+    public function getStatsColumns()
     {
         return $this->getTimeIntervals();
     }
