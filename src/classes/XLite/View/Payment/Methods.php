@@ -95,7 +95,7 @@ class Methods extends \XLite\View\Dialog
     }
 
     /**
-     * Срусл - method is enabled or not
+     * Check - method is enabled or not
      * 
      * @param \XLite\Model\Payment\Method $method Method
      *  
