@@ -263,7 +263,7 @@ LiteCommerce Installation Wizard
   'lc_loopback_description' => 'Installation cannot be continued because the loopback test failed to host :host.<br /><br />If a firewall is installed on your system, please open access to :host.',
   'lc_php_version_description' => 'PHP versions <b>5.3.0+</b> are currently supported.<br /><br />This version of LiteCommerce will work on any OS,<br />where PHP/MySQL meets the minimum <a href="http://www.litecommerce.com/server_requirements.html">system requirements</a>.
 <br /><br />You can find more information on LiteCommerce software<br />at <a href="http://www.litecommerce.com/faqs.html">http://www.litecommerce.com/faqs.html</a>.',
-  'lc_php_disable_functions_description' => 'Some functions, used by LiteComemrce, are found disabled in the php.ini file (see the "disable_functions" option). Please correct this parameter and try again.',
+  'lc_php_disable_functions_description' => 'Some functions, used by LiteCommerce, are found disabled in the php.ini file (see the "disable_functions" option). Please correct this parameter and try again.',
   'lc_php_memory_limit_description' => 'To ensure the proper operation of LiteCommerce, the file_uploads option in php.ini should be set to 1. Please correct this parameter and try again.',
   'lc_php_mysql_support_description' => 'To ensure the proper operation of LiteCommerce with the database, the MySQL extension must be loaded in php.ini file.<br /><br />Please correct this or contact the support services of your hosting provider to adjust this parameter.',
   'lc_php_pdo_mysql_description' => 'PDO extension with enabled MySQL support is used by LiteCommerce for connecting to the database. Please make sure this extension is loaded in your php.ini file and try again.',
