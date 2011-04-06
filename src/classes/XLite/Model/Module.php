@@ -450,9 +450,21 @@ class Module extends \XLite\Model\AEntity
      */
     public function callModuleMethod($method, $result = null, array $args = array())
     {
-        return $this->getInstalled() && class_exists($class = $this->getMainClass())
-            ? call_user_func_array(array($class, $method), $args) 
+        return $this->checkModuleMainClass() 
+            ? call_user_func_array(array($this->getMainClass(), $method), $args) 
             : $result;
+    }
+
+    /**
+     * Check if we can call method from the module main class
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkModuleMainClass()
+    {
+        return $this->getInstalled() && \Includes\Utils\Operator::checkIfClassExists($this->getMainClass());
     }
 
     /**
