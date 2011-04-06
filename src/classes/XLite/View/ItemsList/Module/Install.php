@@ -343,4 +343,36 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     {
         return '\XLite\View\Pager\Admin\Module\Install';
     }
+
+    /**
+     * Check if the module can be installed
+     *
+     * FIXME: actualize
+     *
+     * @param \XLite\Model\Module $module Module
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function canInstall(\XLite\Model\Module $module)
+    {
+        return !$module->getInstalled() && ($module->isPurchased() || $module->isFree());
+    }
+
+    /**
+     * Check if the module can be installed
+     *
+     * FIXME: actualize
+     *
+     * @param \XLite\Model\Module $module Module
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function canPurchase(\XLite\Model\Module $module)
+    {
+        return !$module->getInstalled() && !$module->isPurchased() && !$module->isFree();
+    }
 }

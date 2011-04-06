@@ -95,7 +95,7 @@ abstract class AModule
      */
     public static function getIconURL()
     {
-        return null;
+        return '';
     }
 
     /**
@@ -107,7 +107,7 @@ abstract class AModule
      */
     public static function getAuthorPageURL()
     {
-        return null;
+        return '';
     }
 
     /**
@@ -119,7 +119,7 @@ abstract class AModule
      */
     public static function getPageURL()
     {
-        return null;
+        return '';
     }
 
     /**

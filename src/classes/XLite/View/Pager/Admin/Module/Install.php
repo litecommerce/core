@@ -37,41 +37,14 @@ namespace XLite\View\Pager\Admin\Module;
 class Install extends \XLite\View\Pager\Admin\Module\AModule
 {
     /**
-     * Check if pages list is visible or not
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isPagesListVisible()
-    {
-        return parent::isPagesListVisible()
-            && \XLite\View\ItemsList\Module\Install::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode;
-    }
-
-    /**
-     * isItemsPerPageVisible
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isItemsPerPageVisible()
-    {
-        return parent::isItemsPerPageVisible()
-            && \XLite\View\ItemsList\Module\Install::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode;
-    }
-
-    /**
      * getItemsPerPageDefault
      *
      * @return integer
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getItemsPerPage()
+    protected function getItemsPerPageDefault()
     {
-        return \XLite\View\ItemsList\Module\Install::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode ? 10 : 5;
+        return 5;
     }
-
 }

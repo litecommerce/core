@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-{* TODO : to REMOVE it*}
+{* TODO : to REMOVE *}
 
 <td style="width:40%;" valign="top">
 
