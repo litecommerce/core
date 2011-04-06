@@ -155,6 +155,17 @@ class Module extends \XLite\Model\AEntity
     protected $rating = 0;
 
     /**
+     * Votes
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 3.0.0
+     *
+     * @Column (type="integer")
+     */
+    protected $votes = 0;
+
+    /**
      * Downloads
      *
      * @var   integer
