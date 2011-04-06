@@ -398,13 +398,14 @@ function doCheckRequirements()
     if ($requirementsOk) {
         x_install_log(xtr('Checking requirements is successfully complete'));
 
-    } else {
         $failedRequirements = array();
+
         foreach ($checkRequirements as $key => $value) {
             if (!$value['status']) {
                 $failedRequirements[$key] = $value;
             }
         }
+
         x_install_log(xtr('Some requirements are failed'), $failedRequirements);
     }
 
