@@ -489,6 +489,7 @@ abstract class ModulesManager extends AUtils
                     'installed'     => true,
                     'dataInstalled' => true,
                     'date'          => time(),
+                    'marketplaceID' => '',
                     'majorVersion'  => static::callModuleMethod($module, 'getMajorVersion'),
                     'minorVersion'  => static::callModuleMethod($module, 'getMinorVersion'),
                     'moduleName'    => static::callModuleMethod($module, 'getModuleName'),

@@ -88,6 +88,7 @@ class Marketplace extends \XLite\Base\Singleton
     const RESPONSE_FIELD_MODULE_RATING             = 'rating';
     const RESPONSE_FIELD_MODULE_RATING_RATE        = 'rate';
     const RESPONSE_FIELD_MODULE_RATING_VOTES_COUNT = 'votesCount';
+    const RESPONSE_FIELD_MODULE_DOWNLOADS_COUNT    = 'downloadCount';
 
 
     /**
@@ -524,6 +525,10 @@ class Marketplace extends \XLite\Base\Singleton
                 'flags'   => FILTER_REQUIRE_ARRAY,
                 'options' => array('regexp' => '/[\w\\\\]+/'),
             ),
+            self::RESPONSE_FIELD_MODULE_DOWNLOADS_COUNT => array(
+                'filter'  => FILTER_VALIDATE_INT,
+                'options' => array('min_range' => 0),
+            ),
         );
     }
 
@@ -542,7 +547,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function prepareResponseForGetAddonsAction(array $data)
     {
-        $modules = $result = array();
+        $result = array();
 
         foreach ($data as $module) {
 
@@ -550,55 +555,45 @@ class Marketplace extends \XLite\Base\Singleton
             if ($this->validateAgainstSchema($module, $this->getResponseSchemaForGetAddonsAction())) {
 
                 // Module key fields
-                $author  = $this->getField($module, self::RESPONSE_FIELD_MODULE_AUTHOR);
-                $name    = $this->getField($module, self::RESPONSE_FIELD_MODULE_NAME);
+                $author = $this->getField($module, self::RESPONSE_FIELD_MODULE_AUTHOR);
+                $name = $this->getField($module, self::RESPONSE_FIELD_MODULE_NAME);
 
                 // Arrays passed in response
                 $version = $this->getField($module, self::RESPONSE_FIELD_MODULE_VERSION) ?: array();
-                $rating  = $this->getField($module, self::RESPONSE_FIELD_MODULE_RATING)  ?: array();
+                $rating = $this->getField($module, self::RESPONSE_FIELD_MODULE_RATING)  ?: array();
 
                 $majorVersion = $this->getField($version, self::FIELD_VERSION_MAJOR);
+                $key = $author . '\\' . $name;
 
-                // It's the structure of \XLite\Model\Module class data
-                $modules[$author . '\\' . $name][$majorVersion] = array(
-                    'name'          => $name,
-                    'author'        => $author,
-                    'marketplaceID' => $this->getField($module, self::RESPONSE_FIELD_MODULE_ID),
-                    'rating'        => $this->getField($rating, self::RESPONSE_FIELD_MODULE_RATING_RATE),
-                    'downloads'     => $this->getField($rating, self::RESPONSE_FIELD_MODULE_RATING_VOTES_COUNT),
-                    'price'         => $this->getField($module, self::RESPONSE_FIELD_MODULE_PRICE),
-                    'currency'      => $this->getField($module, self::RESPONSE_FIELD_MODULE_CURRENCY),
-                    'majorVersion'  => $majorVersion,
-                    'minorVersion'  => $this->getField($version, self::FIELD_VERSION_MINOR),
-                    'revisionDate'  => $this->getField($module, self::RESPONSE_FIELD_MODULE_REVISION_DATE),
-                    'moduleName'    => $this->getField($module, self::RESPONSE_FIELD_MODULE_READABLE_NAME),
-                    'authorName'    => $this->getField($module, self::RESPONSE_FIELD_MODULE_READABLE_AUTHOR),
-                    'description'   => $this->getField($module, self::RESPONSE_FIELD_MODULE_DESCRIPTION),
-                    'iconURL'       => $this->getField($module, self::RESPONSE_FIELD_MODULE_ICON_URL),
-                    'pageURL'       => $this->getField($module, self::RESPONSE_FIELD_MODULE_PAGE_URL),
-                    'authorPageURL' => $this->getField($module, self::RESPONSE_FIELD_MODULE_AUTHOR_PAGE_URL),
-                    'dependencies'  => (array) $this->getField($module, self::RESPONSE_FIELD_MODULE_DEPENDENCIES),
-                );
+                // To make modules list unique
+                if (!isset($result[$key]) || version_compare($result[$key]['majorVersion'], $majorVersion, '<')) {
 
-            } else {
+                    // It's the structure of \XLite\Model\Module class data
+                    $result[$author . '\\' . $name] = array(
+                        'name'          => $name,
+                        'author'        => $author,
+                        'marketplaceID' => $this->getField($module, self::RESPONSE_FIELD_MODULE_ID),
+                        'rating'        => $this->getField($rating, self::RESPONSE_FIELD_MODULE_RATING_RATE),
+                        'votes'         => $this->getField($rating, self::RESPONSE_FIELD_MODULE_RATING_VOTES_COUNT),
+                        'downloads'     => $this->getField($module, self::RESPONSE_FIELD_MODULE_DOWNLOADS_COUNT),
+                        'price'         => $this->getField($module, self::RESPONSE_FIELD_MODULE_PRICE),
+                        'currency'      => $this->getField($module, self::RESPONSE_FIELD_MODULE_CURRENCY),
+                        'majorVersion'  => $majorVersion,
+                        'minorVersion'  => $this->getField($version, self::FIELD_VERSION_MINOR),
+                        'revisionDate'  => $this->getField($module, self::RESPONSE_FIELD_MODULE_REVISION_DATE),
+                        'moduleName'    => $this->getField($module, self::RESPONSE_FIELD_MODULE_READABLE_NAME),
+                        'authorName'    => $this->getField($module, self::RESPONSE_FIELD_MODULE_READABLE_AUTHOR),
+                        'description'   => $this->getField($module, self::RESPONSE_FIELD_MODULE_DESCRIPTION),
+                        'iconURL'       => $this->getField($module, self::RESPONSE_FIELD_MODULE_ICON_URL),
+                        'pageURL'       => $this->getField($module, self::RESPONSE_FIELD_MODULE_PAGE_URL),
+                        'authorPageURL' => $this->getField($module, self::RESPONSE_FIELD_MODULE_AUTHOR_PAGE_URL),
+                        'dependencies'  => (array) $this->getField($module, self::RESPONSE_FIELD_MODULE_DEPENDENCIES),
+                    );
 
-                // :TODO: add logging here
-            }
-        }
+                } else {
 
-        $coreVersion = \XLite::getInstance()->getMajorVersion();
-
-        foreach ($modules as $key => $element) {
-
-            if (isset($element[$coreVersion])) {
-
-                $result[$key] = $element[$coreVersion];
-
-            } else {
-
-                ksort($element);
-
-                $result[$key] = end($element);
+                    // :TODO: add logging here
+                }
             }
         }
 
@@ -684,7 +679,7 @@ class Marketplace extends \XLite\Base\Singleton
     {
         // :NOTE: do not change operator to the "===":
         // "Filter" extension changes type for some variables
-        return filter_var_array($data, $schema) == $data;
+        return array_intersect_key($data, $filtered = filter_var_array($data, $schema)) == $filtered;
     }
 
     // }}}
