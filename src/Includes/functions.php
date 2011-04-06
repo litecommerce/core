@@ -1272,3 +1272,16 @@ function func_debug_print_backtrace()
     print (implode(PHP_EOL, func_debug_backtrace()));
 }
 
+/**
+ * Returns LiteCommerce tables prefix
+ * 
+ * @return string
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function get_xlite_tables_prefix()
+{
+    return \Includes\Utils\ConfigParser::getOptions(array('database_details', 'table_prefix'));
+}
+
+
