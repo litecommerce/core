@@ -159,10 +159,14 @@ class Modules extends \XLite\Controller\Admin\AAdmin
     protected function doActionDisable()
     {
         $this->setReturnURL($this->buildURL('modules'));
-        $id = \XLite\Core\Request::getInstance()->moduleId;
 
-        if ($module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id)) {
+        $id     = \XLite\Core\Request::getInstance()->moduleId;
+        $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id);
+
+        if ($module) {
+
             \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
+
             \XLite::setCleanUpCacheFlag(true);
         }
     }
