@@ -92,17 +92,18 @@ Use this section to manage the list of existing countries. This list is used in 
 
     <tr>
       <td colspan="5">
+
 		<table width="100%">
 		<tr>
 			<td align="left">
-        <br />
         <widget class="\XLite\View\Button\Submit" style="main-button" name="submit" label="Update" />
       </td>
 			<td align="right">
-        <widget class="\XLite\View\Button\Submit" label="Delete selected" name="delete" jsCode="document.countries_form.action.value='delete';" />
+        <widget class="\XLite\View\Button\Regular" label="Delete selected" name="delete" jsCode="document.countries_form.action.value='delete';document.countries_form.submit()" />
       </td>
 		</tr>
 		</table>
+
 	</td>
 	<script type="text/javascript">CheckBoxes["enable_countries"] = CountryEnabledCheckBoxes;</script>
 </tr>

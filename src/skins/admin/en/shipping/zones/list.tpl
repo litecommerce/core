@@ -80,7 +80,7 @@ function deleteZones()
   <tr>
   <td colspan="2">
   <br />
-  <widget class="\XLite\View\Button\Regular" IF="isZonesDefined()" label="Delete selected" jsCode="javascript: deleteZones();" />
+  <widget class="\XLite\View\Button\Regular" IF="isZonesDefined()" label="Delete selected" jsCode="deleteZones();" />
   </td>
 </tr>
 
@@ -93,5 +93,5 @@ function deleteZones()
 <br />
 <br />
 
-<widget class="\XLite\View\Button\Regular" label="Add zone" jsCode="javascript: self.location='admin.php?target=shipping_zones&mode=add';" />
+<widget class="\XLite\View\Button\Regular" label="Add zone" jsCode="self.location='admin.php?target=shipping_zones&mode=add';" />
 

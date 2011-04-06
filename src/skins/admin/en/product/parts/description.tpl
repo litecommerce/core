@@ -14,6 +14,6 @@
 <tr>
   <td valign="top">{t(#Detailed Description#)}</td>
   <td valign="top">
-    <textarea name="{getNamePostedData(#description#)}" cols="45" rows="6">{product.description:h}</textarea>
+    <widget class="\XLite\View\FormField\Textarea\Advanced" fieldName="{getNamePostedData(#description#)}" cols="45" rows="6" value="{product.description:h}" />
   </td>
 </tr>
