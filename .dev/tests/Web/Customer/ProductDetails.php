@@ -513,7 +513,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         $this->assertJqueryNotPresent($errorQtySelector, 'check normalized quantity');
         $this->assertJqueryNotPresent('button.action.buy-more.disabled.add2cart-disabled', 'check enabled buy now button');
 
-        $this->typeKeys($quantitySelector, '46');
+        $this->typeKeys($quantitySelector, '146');
         $this->getJSExpression($qtyBlurOperation);
         $this->assertJqueryPresent($errorDivSelector, 'check maximum allowed quantity error');
         $this->assertJqueryPresent($errorQtySelector, 'check maximum allowed quantity');

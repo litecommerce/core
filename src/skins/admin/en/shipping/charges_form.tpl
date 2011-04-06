@@ -138,7 +138,7 @@ function submitForm(formName, action)
 
     <tr>
       <td>
-        <widget class="\XLite\View\Button\Regular" label="Delete selected" jsCode="javascript: if (checkMarks(this.form, new RegExp('to_delete\\[[0-9]+\\]', 'gi'))) submitForm('shippingratesform', 'delete');" />
+        <widget class="\XLite\View\Button\Regular" label="Delete selected" jsCode="if (checkMarks(this.form, new RegExp('to_delete\\[[0-9]+\\]', 'gi'))) submitForm('shippingratesform', 'delete');" />
         &nbsp;&nbsp;&nbsp;&nbsp;
         <widget class="\XLite\View\Button\Submit" label="Update" />
       </td>
