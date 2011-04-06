@@ -169,7 +169,7 @@ foreach ($steps as $stepData) {
 
         // Prepare data for requirement notes displaying
         $label = $reqName . '_description';
-        $labeText = null;
+        $labelText = null;
         $funcname = 'get_' . $label;
 
         if (function_exists($funcname)) {
