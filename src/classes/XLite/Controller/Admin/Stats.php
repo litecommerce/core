@@ -79,7 +79,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
     {
         if (is_null($this->stats)) {
             $this->stats = $this->initStats();
-            array_map(array($this, 'process'), $this->getData());
+            array_map(array($this, 'processStatsRecord'), $this->getData());
         }
 
         return $this->stats;

@@ -69,9 +69,9 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     public function getRowTitles()
     {
         return array(
-            self::P_PROCESSED  => 'Processed',
+            self::P_PROCESSED  => 'Processed/Completed',
             self::P_QUEUED     => 'Queued',
-            self::P_FAILED     => 'Failed',
+            self::P_FAILED     => 'Failed/Declined',
             self::P_INCOMPLETE => 'Not finished',
             self::P_TOTAL      => 'Total',
             self::P_PAID       => 'Paid',
@@ -79,7 +79,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     }
 
     /**
-     * Status rows
+     * Status rows as row identificator => included statuses
      *
      * @var   array
      * @see   ____var_see____
@@ -189,98 +189,46 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     }
 
     /**
-     * save
+     * Collect statistics record
      *
-     * @param mixed $index ____param_comment____
-     * @param mixed $order ____param_comment____
-     * @param mixed $paid  ____param_comment____ OPTIONAL
+     * @param string             $row   Row identificator
+     * @param \Xlite\Model\Order $order Order
      *
      * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function save($index, $order, $paid = false)
+    protected function collectStatsRecord($row, $order)
     {
-
         foreach ($this->getStatsColumns() as $period) {
+
             if ($order->getDate() >= $this->getStartTime($period)) {
-                $this->sum($index, $period, $order->getTotal(), $paid);
+
+                if ($this->isTotalsRow($row)) {
+                    $this->stats[$row][$period] += $order->getTotal();
+                } else {
+                    $this->stats[$row][$period] += 1;
+                }
+
             }
         }
-
-/*
-        if ($order->getDate() >= $this->getTodayStartTime()) {
-            $this->sum($index, 'today', $order->getTotal(), $paid);
-        }
-        if ($order->getDate() >= $this->getWeekStartTime()) {
-            $this->sum($index, 'week', $order->getTotal(), $paid);
-        }
-        if ($order->getDate() >= $this->getMonthStartTime()) {
-            $this->sum($index, 'month', $order->getTotal(), $paid);
-        }
-        if ($order->getDate() >= $this->getYearStartTime()) {
-            $this->sum($index, 'year', $order->getTotal(), $paid);
-        }
-        if ($order->getDate() >= $this->getAllStartTime()) {
-            $this->sum($index, 'all', $order->getTotal(), $paid);
-        }
-*/
     }
 
     /**
-     * sum
+     * Process statistics record
      *
-     * @param mixed $index  ____param_comment____
-     * @param mixed $period ____param_comment____
-     * @param mixed $amount ____param_comment____
-     * @param mixed $paid   ____param_comment____
+     * @param \Xlite\Model\Order $order Order
      *
      * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function sum($index, $period, $amount, $paid)
+    protected function processStatsRecord($order)
     {
-        $this->stats[$index][$period] += 1;
-
-        $this->stats['total'][$period] += $amount;
-
-        if ($paid) {
-            $this->stats['paid'][$period] += $amount;
-        }
-    }
-
-    /**
-     * summarize
-     *
-     * @param mixed $order ____param_comment____
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function process($order)
-    {
-        switch ($order->getStatus()) {
-            case 'P':
-            case 'C':
-                $this->save('processed', $order, true);
-                break;
-
-            case 'Q':
-                $this->save('queued', $order);
-                break;
-
-            case 'I':
-                $this->save('not_finished', $order);
-                break;
-
-            case 'F':
-            case 'D':
-                $this->save('failed', $order);
-                break;
-
-            default:
+        foreach ($this->getStatusRows() as $row => $includedStatuses) {
+            if (in_array($order->getStatus(), $includedStatuses)) {
+                $this->collectStatsRecord($row, $order);
+            }
         }
     }
 }
