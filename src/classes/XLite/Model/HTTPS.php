@@ -508,7 +508,7 @@ class HTTPS extends \XLite\Base
 
             default:
                 $this->error = 'Can\'t detect client software to use for SSL connections: '
-                    . 'nither libcurl extension is installed nor curl/openssl binaries are found in PATH';
+                    . 'neither libcurl extension is installed nor curl/openssl binaries are found in PATH';
                 $result = self::HTTPS_ERROR;
         }
 
