@@ -311,7 +311,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
             'x_state'         => $bState,
             'x_zip'           => $this->getOrder()->getProfile()->getBillingAddress()->getZipcode(),
             'x_country'       => $this->getOrder()->getProfile()->getBillingAddress()->getCountry()->getCountry(),
-            'x_ship_to_first_name' => $this->getOrder()->getProfile()->getShippingAddres()->getFirstname(),
+            'x_ship_to_first_name' => $this->getOrder()->getProfile()->getShippingAddress()->getFirstname(),
             'x_ship_to_last_name'  => $this->getOrder()->getProfile()->getShippingAddress()->getLastname(),
             'x_ship_to_address'    => $this->getOrder()->getProfile()->getShippingAddress()->getStreet(),
             'x_ship_to_city'       => $this->getOrder()->getProfile()->getShippingAddress()->getCity(),
