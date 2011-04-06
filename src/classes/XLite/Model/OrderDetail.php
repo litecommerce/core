@@ -85,7 +85,7 @@ class OrderDetail extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 3.0.0
      *
-     * @Column (type="string", length="65536")
+     * @Column (type="text")
      */
     protected $value;
 

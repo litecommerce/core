@@ -62,7 +62,7 @@ class OptionGroupTranslation extends \XLite\Model\Base\Translation
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="65536")
+     * @Column (type="text")
      */
     protected $fullname = '';
 }
