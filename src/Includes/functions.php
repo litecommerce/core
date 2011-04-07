@@ -886,7 +886,7 @@ function isLiteCommerceInstalled($dbURL = null, &$message)
                             && (!isset($data['mysqlsock']) || $configData['socket'] == $data['mysqlsock']);
 
                         if (!$checkResult) {
-                            $message = 'Database parameters comparison failed (config file and $dbURL was compared)';
+                            $message = 'Database parameters (specified in Drupal and LiteCommerce configs) comparison failed';
                         }
 
                     } else {
@@ -920,12 +920,12 @@ function isLiteCommerceInstalled($dbURL = null, &$message)
             }
         
         } else {
-            $message = 'Corrupted config file';
+            $message = 'Corrupted LiteCommerce config file';
             $checkResult = false;
         }
     
     } else {
-        $message = 'config.php or admin/en/welcome.tpl files not found';
+        $message = 'config.php or admin/en/welcome.tpl files are not found';
     }
 
     return $checkResult;
