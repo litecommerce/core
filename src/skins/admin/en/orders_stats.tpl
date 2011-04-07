@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<p align="justify">{t(#This section displays order placement statistics for today, this week and this month.#)}</p>
+<p align="justify">{t(#This section displays order placement statistics.#)}</p>
 
 <br /><br />
 
