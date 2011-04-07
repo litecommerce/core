@@ -15,15 +15,7 @@
 
   <table>
 
-      {displayViewListContent(#product.search.conditions#)}
-
-      <tr>
-        <td colspan="3">&nbsp;</td>
-      </tr>
-
-    	<tr>
-    		<td colspan="3"><widget class="\XLite\View\Button\Submit" label="Search" /></td>
-      </tr>
+    {displayViewListContent(#product.search.conditions#)}
 
   </table>
 

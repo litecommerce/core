@@ -35,14 +35,14 @@
 <widget target="settings" class="\XLite\View\Tabber" body="general_settings.tpl" switch="page" />
 
 <widget template="users/search.tpl" target="users">
+
 <widget target="recent_login" template="common/dialog.tpl" body="recent_login.tpl" />
 
 <widget target="product_list" template="product/product_list_form.tpl">
+
 <widget target="product" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
 
 <widget target="profile" template="common/dialog.tpl" head="Delete profile - Confirmation" body="profile/confirm_delete.tpl" IF="mode=#delete#" />
-
-<widget target="order_list,order,advanced_security" module="CDev\AdvancedSecurity" template="modules/CDev/AdvancedSecurity/advanced_security.tpl">
 
 <widget class="\XLite\View\Order\Details\Admin\Model" template="order/order.tpl" />
 

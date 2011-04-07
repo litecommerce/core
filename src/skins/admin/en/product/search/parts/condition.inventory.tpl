@@ -10,17 +10,17 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *                 
- * @ListChild (list="product.search.conditions", weight="50")
+ * @ListChild (list="product.search.conditions", weight="60")
  *}
 
 <tr>
-  <td class="table-label">Inventory status</td>
+  <td class="table-label">{t(#Inventory status#)}</td>
   <td style="width:10px;height:10px;"></td>
   <td>
-      <select name="inventory">
-          <option value="all" selected='{inventory=#all#}'>All</option>
-          <option value="low" selected='{inventory=#low#}'>Low stock</option>
-          <option value="out" selected='{inventory=#out#}'>Out of stock</option>
-      </select>
+    <select name="inventory">
+      <option value="all" selected='{inventory=#all#}'>{t(#All#)}</option>
+      <option value="low" selected='{inventory=#low#}'>{t(#Low stock#)}</option>
+      <option value="out" selected='{inventory=#out#}'>{t(#Out of stock#)}</option>
+    </select>
   </td>
 </tr>
