@@ -162,22 +162,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
     }
 
     /**
-     * Process statistics record
-     *
-     * @param \Xlite\Model\Order $order Order
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function processStatsRecord($data)
-    {
-        if (!empty($data)) {
-            $this->collectStatsRecord($data);
-        }
-    }
-
-    /**
      * processData 
      * 
      * @param array $data Collected data
