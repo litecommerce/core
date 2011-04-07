@@ -499,6 +499,12 @@ abstract class ModulesManager extends AUtils
                     'pageURL'       => static::callModuleMethod($module, 'getPageURL'),
                     'authorPageURL' => static::callModuleMethod($module, 'getAuthorPageURL'),
                     'dependencies'  => serialize(static::callModuleMethod($module, 'getDependencies')),
+                    'rating'        => 0,
+                    'votes'         => 0,
+                    'downloads'     => 0,
+                    'price'         => 0.00,
+                    'currency'      => 'USD',
+                    'revisionDate'  => 0,
                 );
                 $query = 'REPLACE INTO ' . static::getTableName() 
                         . ' SET ' . implode(' = ?,', array_keys($params)) . ' = ?';
