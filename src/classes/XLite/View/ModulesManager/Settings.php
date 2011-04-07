@@ -72,18 +72,6 @@ class Settings extends \XLite\View\AView
     }
 
     /**
-     * getModule 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getModule()
-    {
-        return $this->getParam(self::PARAM_SECTION);
-    }
-
-    /**
      * getModuleTemplate 
      * 
      * @return string
@@ -92,8 +80,8 @@ class Settings extends \XLite\View\AView
      */
     protected function getModuleTemplate()
     {
-        return 'modules' . LC_DS . $this->module->getAuthor() 
-            . LC_DS . $this->module->getName() . LC_DS . 'settings.tpl';
+        return 'modules' . LC_DS . $this->getModule()->getAuthor() 
+            . LC_DS . $this->getModule()->getName() . LC_DS . 'settings.tpl';
     }
 
     /**

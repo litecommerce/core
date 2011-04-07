@@ -72,18 +72,6 @@ class SettingsFooter extends \XLite\View\AView
     }
 
     /**
-     * getModule 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getModule()
-    {
-        return $this->getParam(self::PARAM_SECTION);
-    }
-
-    /**
      * getModuleTemplate 
      * 
      * @return string
@@ -92,7 +80,8 @@ class SettingsFooter extends \XLite\View\AView
      */
     protected function getModuleTemplate()
     {
-        return 'modules/' . $this->getModule() . '/settings_footer.tpl';
+        return 'modules' . LC_DS . $this->getModule()->getAuthor()
+            . LC_DS . $this->getModule()->getName() . LC_DS . 'settings_footer.tpl';
     }
 
     /**
@@ -107,6 +96,7 @@ class SettingsFooter extends \XLite\View\AView
         $template = parent::getTemplate();
 
         if (!isset($template)) {
+
             $template = $this->getModuleTemplate();
         }
 
@@ -129,7 +119,6 @@ class SettingsFooter extends \XLite\View\AView
         );
     }
 
-    
     /**
      * Check if widget is visible
      *
