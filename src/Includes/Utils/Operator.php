@@ -182,6 +182,7 @@ class Operator extends AUtils
      */
     public static function checkIfClassExists($name)
     {
-        return class_exists($name, false);
+        return class_exists($name, false) 
+            || \Includes\Utils\FileManager::isFileReadable(\Includes\Utils\Converter::getClassFile($name));
     }
 }

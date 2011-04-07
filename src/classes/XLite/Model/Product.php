@@ -145,7 +145,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see   ____var_see____
      * @since 3.0.0
      *
-     * @Column (type="string", length="65535")
+     * @Column (type="text")
      */
     protected $javascript = '';
 

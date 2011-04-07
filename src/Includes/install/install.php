@@ -150,7 +150,7 @@ function x_install_log($message = null)
     $securityHeader = "<?php die(1); ?>\n";
 
     if (!file_exists($fileName) || $securityHeader > filesize($fileName)) {
-        file_put_contents($fileName, $securityHeader);
+        @file_put_contents($fileName, $securityHeader);
     }
 
     $args = func_get_args();
@@ -190,7 +190,7 @@ OUT;
         $output .= $varDump;
     }
 
-    file_put_contents($fileName, $output, FILE_APPEND);
+    @file_put_contents($fileName, $output, FILE_APPEND);
 }
 
 /**
@@ -397,15 +397,7 @@ function doCheckRequirements()
 
     if ($requirementsOk) {
         x_install_log(xtr('Checking requirements is successfully complete'));
-
-    } else {
-        $failedRequirements = array();
-        foreach ($checkRequirements as $key => $value) {
-            if (!$value['status']) {
-                $failedRequirements[$key] = $value;
-            }
-        }
-        x_install_log(xtr('Some requirements are failed'), $failedRequirements);
+        x_install_log(xtr('Requirements log'), $checkRequirements);
     }
 
     return $checkRequirements;
@@ -923,7 +915,7 @@ function checkFilePermissions(&$errorMsg, &$value)
 }
 
 /**
- * Check MySQL version
+ * Check MySQL version: returns false only if version is gathered and it isn't suit
  * 
  * @param string   $errorMsg   Error message if checking failed
  * @param string   $value      Actual value of the checked parameter
@@ -951,16 +943,15 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
         if (!is_array($data)) {
             $data = parseDbURL(constant('DB_URL'));
         }
-        
+
         $isConnected = dbConnect($data, $pdoErrorMsg);
 
         if (!$isConnected) {
             $errorMsg = xtr('Can\'t connect to MySQL server') . (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : '');
-            $result = false;
         }
     }
 
-    if ($result && $isConnected) {
+    if ($isConnected) {
 
         try {
             $version = \Includes\Utils\Database::getDbVersion();
@@ -979,7 +970,6 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
 
         } else {
             $errorMsg = xtr('Cannot get the MySQL server version') . (!empty($pdoErrorMsg) ? ' : ' . $pdoErrorMsg : '.');
-            $result = false;
         }
     }
 

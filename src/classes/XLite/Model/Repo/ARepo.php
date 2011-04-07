@@ -1371,7 +1371,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     {
         $entity = $this->find($id);
         if (!$entity) {
-            throw new \Exception(get_called_class() . '::getById() - unknow ID (' . $id . ')');
+            throw new \Exception(get_called_class() . '::getById() - unknown ID (' . $id . ')');
         }
 
         return $entity;

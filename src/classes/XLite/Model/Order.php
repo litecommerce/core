@@ -170,7 +170,7 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      * @see   ____var_see____
      * @since 3.0.0
      *
-     * @Column (type="string", length="65535")
+     * @Column (type="text")
      */
     protected $notes = '';
 
