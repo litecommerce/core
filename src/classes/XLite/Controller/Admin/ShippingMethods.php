@@ -77,7 +77,7 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
 
         $newMethod = new \XLite\Model\Shipping\Method();
 
-        $newMethod->setPosition($postedData['position']);
+        $newMethod->setPosition(intval($postedData['position']));
         $newMethod->setProcessor('offline');
 
         $code = $this->getCurrentLanguage();
