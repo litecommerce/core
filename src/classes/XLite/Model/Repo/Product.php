@@ -51,6 +51,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     const P_ORDER_BY          = 'orderBy';
     const P_LIMIT             = 'limit';
     const P_INCLUDING         = 'including';    
+
     const P_BY_TITLE          = 'byTitle';
     const P_BY_DESCR          = 'byDescr';
     const P_BY_SKU            = 'bySKU';
@@ -102,10 +103,12 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
         $this->currentSearchCnd = $cnd;
 
         foreach ($this->currentSearchCnd as $key => $value) {
+
             $this->callSearchConditionHandler($value, $key, $queryBuilder);
         }
 
         if ($countOnly) {
+
             $queryBuilder->select('COUNT(p.product_id)');
         }
 
@@ -243,14 +246,18 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
         $allEmpty = true;
 
         foreach ($conditionsBy as $conditionBy) {
+
             if ('Y' === $this->currentSearchCnd->{$conditionBy}) {
+
                 $allEmpty = false;
             }
         }
 
         // if ALL parameters is FALSE then we search by ALL parameters
         if ($allEmpty) {
+
             foreach ($conditionsBy as $conditionBy) {
+
                 $this->currentSearchCnd->{$conditionBy} = 'Y';
             }
         }
@@ -361,11 +368,14 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
             ->addOrderBy('cp.orderby');
 
         if (empty($this->currentSearchCnd->{self::P_SEARCH_IN_SUBCATS})) {
+
             $queryBuilder->andWhere('c.category_id = :categoryId')
                 ->setParameter('categoryId', $value);
 
         } elseif (!\XLite\Core\Database::getRepo('XLite\Model\Category')->addSubTreeCondition($queryBuilder, $value)) {
+
             // TODO - add throw exception
+
         }
     }
 

@@ -9,14 +9,10 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- *                 
- * @ListChild (list="product.search.conditions", weight="50")
+ *
+ * @ListChild (list="product.search.conditions", weight="1000")
  *}
 
 <tr>
-  <td class="table-label">{t(#Search in subcategories#)}</td>
-  <td style="width:10px;height:10px;"></td>
-  <td style="height:10px;">
-    <input type="checkbox" name="searchInSubcats" checked="{getCondition(#searchInSubcats#)|!mode=#search#}" value="1" />
-  </td>
+  <td colspan="3"><widget class="\XLite\View\Button\Submit" label="Search" /></td>
 </tr>

@@ -14,7 +14,7 @@
  *}
 
 <tr>
-  <td class="table-label">Product SKU</td>
+  <td class="table-label">{t(#Product SKU#)}</td>
   <td style="width:10px;height:10px;"></td>
   <td style="height:10px;"><input type="text" size="6" name="sku" value="{getCondition(#sku#):r}" /></td>
 </tr>

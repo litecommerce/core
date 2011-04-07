@@ -118,33 +118,78 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionSearch()
     {
-        $sessionCell    = \XLite\View\ItemsList\Product\Admin\Search::getSessionCellName();
-        $searchParams   = \XLite\View\ItemsList\Product\Admin\Search::getSearchParams();
-        $productsSearch = array();
-
-        $cBoxFields     = array(
-            \XLite\View\ItemsList\Product\Admin\Search::PARAM_SEARCH_IN_SUBCATS
+        $this->session->set(
+            \XLite\View\ItemsList\Product\Admin\Search::getSessionCellName(), 
+            $this->getSearchParams()
         );
-        
-        foreach ($searchParams as $modelParam => $requestParam) {
-
-            if (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
-
-                $productsSearch[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
-            }
-        }
- 
-        foreach ($cBoxFields as $requestParam) {
-
-            $productsSearch[$requestParam] = isset(\XLite\Core\Request::getInstance()->$requestParam)
-                ? 1
-                : 0;
-        }
-        
-        $this->session->set($sessionCell, $productsSearch);
 
         $this->setReturnURL($this->buildURL('product_list', '', array('mode' => 'search')));
     }
+
+
+    /**
+     * Return search parameters for product list.
+     * It is based on search params from Product Items list viewer
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSearchParams()
+    {
+        return $this->getSearchParamsCommon() 
+            + $this->getSearchParamsCheckboxes(); 
+    }
+
+    /**
+     * Return search parameters for product list from Product Items list viewer
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSearchParamsCommon()
+    {
+        $productsSearchParams = array();
+
+        foreach (
+            \XLite\View\ItemsList\Product\Admin\Search::getSearchParams() as $requestParam
+        ) {
+            if (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
+
+                $productsSearchParams[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
+            }
+        }
+
+        return $productsSearchParams;
+    }
+
+
+    /**
+     * Return search parameters for product list given as checkboxes: (0, 1) values
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSearchParamsCheckboxes()
+    {
+        $productsSearchParams = array();
+
+        $cBoxFields = array(
+            \XLite\View\ItemsList\Product\Admin\Search::PARAM_SEARCH_IN_SUBCATS,
+            \XLite\View\ItemsList\Product\Admin\Search::PARAM_BY_TITLE,
+            \XLite\View\ItemsList\Product\Admin\Search::PARAM_BY_DESCR,
+        );
+
+        foreach ($cBoxFields as $requestParam) {
+
+            $productsSearchParams[$requestParam] = isset(\XLite\Core\Request::getInstance()->$requestParam) ? 1 : 0;
+        }
+
+        return $productsSearchParams;
+    }
+
 
     /**
      * Get search conditions

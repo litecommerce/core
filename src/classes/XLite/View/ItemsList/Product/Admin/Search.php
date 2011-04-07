@@ -44,6 +44,8 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
     const PARAM_CATEGORY_ID       = 'categoryId';
     const PARAM_SKU               = 'sku';
     const PARAM_SEARCH_IN_SUBCATS = 'searchInSubcats';
+    const PARAM_BY_TITLE          = 'by_title';
+    const PARAM_BY_DESCR          = 'by_descr';
 
 
     /**
@@ -60,6 +62,8 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
             \XLite\Model\Repo\Product::P_CATEGORY_ID       => self::PARAM_CATEGORY_ID,
             \XLite\Model\Repo\Product::P_SKU               => self::PARAM_SKU,
             \XLite\Model\Repo\Product::P_SEARCH_IN_SUBCATS => self::PARAM_SEARCH_IN_SUBCATS,
+            \XLite\Model\Repo\Product::P_BY_TITLE          => self::PARAM_BY_TITLE,
+            \XLite\Model\Repo\Product::P_BY_DESCR          => self::PARAM_BY_DESCR,
         );
     }
 
@@ -171,6 +175,12 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
             ),
             self::PARAM_SEARCH_IN_SUBCATS => new \XLite\Model\WidgetParam\Checkbox(
                 'Search in subcategories', 0
+            ),
+            self::PARAM_BY_TITLE => new \XLite\Model\WidgetParam\Checkbox(
+                'Search in title', 0
+            ),
+            self::PARAM_BY_DESCR => new \XLite\Model\WidgetParam\Checkbox(
+                'Search in description', 0
             ),
         );
     }

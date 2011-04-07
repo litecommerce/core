@@ -16,3 +16,12 @@
   width: 100%;
 }
 
+ul.by-conditions {
+  list-style: none;
+}
+
+ul.by-conditions li {
+  float: left;
+  margin: 5px 20px 5px 0px;
+}
+
