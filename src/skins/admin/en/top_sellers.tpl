@@ -10,10 +10,10 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<p align="justify">This section displays 10 top-selling products for today, this week and this month.</p>
+<p align="justify">{t(#This section displays 10 top-selling products for today, this week and this month.#)}</p>
 
-<h2>Top 10 products</h2>
-
+<h2>{t(#Top 10 products#)}</h2>
+{getStats()}
 <table class="data-table">
   <tr class=TableHead bgcolor=#ffffff>
     <th>&nbsp;</th>

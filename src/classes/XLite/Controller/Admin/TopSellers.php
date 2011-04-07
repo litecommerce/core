@@ -37,36 +37,6 @@ namespace XLite\Controller\Admin;
 class TopSellers extends \XLite\Controller\Admin\Stats
 {
     /**
-     * todayItems 
-     * FIXME: to refactoring
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    protected $todayItems = array();
-
-    /**
-     * weekItems
-     * FIXME: to refactoring
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    protected $weekItems = array();
-
-    /**
-     * monthItems 
-     * FIXME: to refactoring
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    protected $monthItems = array();
-
-    /**
      * sort_by 
      * FIXME: to refactoring
      * 
@@ -107,40 +77,6 @@ class TopSellers extends \XLite\Controller\Admin\Stats
     public function getPageTemplate()
     {
         return 'top_sellers.tpl';
-    }
-
-    /**
-     * handleRequest 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function handleRequest()
-    {
-        // typedef
-        $statRec = array('today' => 0, 'week' => 0, 'month' => 0);
-        
-        $this->stat = array(
-            'processed' => $statRec,
-            'queued' => $statRec,
-            'failed' => $statRec,
-            'not_finished' => $statRec,
-            'total' => $statRec,
-            'paid' => $statRec
-        );
-
-        $order = new \XLite\Model\Order();
-        $date = $this->getMonthDate();
-
-        // FIXME - old code
-        array_map(array($this, 'collect'), /*$order->findAll("(status='P' OR status='C') AND date>=$date")*/ array());
-
-        $this->sort('todayItems');
-        $this->sort('weekItems');
-        $this->sort('monthItems');
-
-        parent::handleRequest();
     }
 
     /**
@@ -189,26 +125,67 @@ class TopSellers extends \XLite\Controller\Admin\Stats
     }
 
     /**
-     * collect 
-     * 
-     * @param mixed $order ____param_comment____
-     *  
+     * Initialize table matrix
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function initStats()
+    {
+        return array_fill_keys($this->getStatsColumns(), array());
+    }
+
+    /**
+     * Get data
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getData()
+    {
+        $cnd = $this->getSearchCondition();
+
+        return \XLite\Core\Database::getRepo('\XLite\Model\Order')->search($cnd);
+/*
+        $this->sort('todayItems');
+        $this->sort('weekItems');
+        $this->sort('monthItems');
+*/
+    }
+
+    /**
+     * Collect statistics record
+     *
+     * @param string             $row   Row identificator
+     * @param \Xlite\Model\Order $order Order
+     *
      * @return void
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function collect($order)
+    protected function collectStatsRecord($order)
     {
-        $items = $order->get('items');
-        if ($order->get('date') >= $this->get('todayDate')) {
-            $this->todayItems = array_merge($this->todayItems, $items);
+        foreach ($this->getStatsColumns() as $period) {
+            if ($order->getDate() >= $this->getStartTime($period)) {
+                $this->stats[$period] = array_merge($this->stats[$period], $order->getItems());
+            }
         }
-        if ($order->get('date') >= $this->get('weekDate')) {
-            $this->weekItems = array_merge($this->weekItems, $items);
-        }
-        if ($order->get('date') >= $this->get('monthDate')) {
-            $this->monthItems = array_merge($this->monthItems, $items);
-        }
+    }
+
+    /**
+     * Process statistics record
+     *
+     * @param \Xlite\Model\Order $order Order
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processStatsRecord($order)
+    {
+        $this->collectStatsRecord($order);
     }
 
     /**
