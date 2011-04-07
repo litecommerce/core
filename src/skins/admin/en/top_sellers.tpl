@@ -12,19 +12,18 @@
  *}
 <p align="justify">{t(#This section displays 10 top-selling products for today, this week and this month.#)}</p>
 
-<h2>{t(#Top 10 products#)}</h2>
-{getStats()}
+<h2>{t(#Top X products#,_ARRAY_(#count#^getRowsCount()))}</h2>
+
 <table class="data-table">
-  <tr class=TableHead bgcolor=#ffffff>
-    <th>&nbsp;</th>
-    <th>Today</th>
-    <th>This week</th>
-    <th>This month</th>
+  <tr class="TableHead">
+    <th align="left">&nbsp;</th>
+    <th FOREACH="getStatsColumns(),c" style="text-align:center;">{getColumnTitle(c)}</th>
   </tr>
-  <tr foreach="counter,ind,cidx" class="{getRowClass(ind,#dialog-box#,#highlight#)}">
-    <td align=center>{inc(cidx)}.</td>
-    <td><a href="admin.php?target=product&product_id={getTopProduct(#today#,cidx,#id#)}">{truncate(getTopProduct(#today#,cidx,#name#),50):h}</a></td>
-    <td><a href="admin.php?target=product&product_id={getTopProduct(#week#,cidx,#id#)}">{truncate(getTopProduct(#week#,cidx,#name#),50):h}</a></td>
-    <td><a href="admin.php?target=product&product_id={getTopProduct(#month#,cidx,#id#)}">{truncate(getTopProduct(#month#,cidx,#name#),50):h}</a></td>
+  <tr FOREACH="getStats(),idx,row" class="dialog-box">
+    <td>{inc(idx)}.</td>
+    <td FOREACH="row,idx1,val" align="center">
+      <a IF="val" href="{buildURL(#product#,##,_ARRAY_(#product_id#^val.product.product_id))}">{val.name}</a>
+      <span IF="!val">&mdash;</span>
+    </td>
   </tr>
 </table>

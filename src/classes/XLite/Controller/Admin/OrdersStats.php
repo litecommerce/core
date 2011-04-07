@@ -149,6 +149,24 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
     }
 
     /**
+     * Prepare statistics table
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getStats()
+    {
+        if (is_null($this->stats)) {
+            $this->stats = $this->initStats();
+            array_map(array($this, 'processStatsRecord'), $this->getData());
+        }
+
+        return $this->stats;
+    }
+
+
+    /**
      * Get data
      *
      * @return array

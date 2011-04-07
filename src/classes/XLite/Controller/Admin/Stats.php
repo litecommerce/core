@@ -79,7 +79,6 @@ class Stats extends \XLite\Controller\Admin\AAdmin
     {
         if (is_null($this->stats)) {
             $this->stats = $this->initStats();
-            array_map(array($this, 'processStatsRecord'), $this->getData());
         }
 
         return $this->stats;
@@ -191,17 +190,19 @@ class Stats extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Get search condition
+     *
+     * @param string $interval Time interval OPTIONAL
      * 
      * @return array
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getSearchCondition()
+    protected function getSearchCondition($interval = null)
     {
         $cnd = new \XLite\Core\CommonCell();
         
         $cnd->date = array(
-            $this->getStartTime(array_pop($this->getTimeIntervals())),
+            $this->getStartTime($interval ? $interval : array_pop($this->getTimeIntervals())),
             LC_START_TIME
         );
 
