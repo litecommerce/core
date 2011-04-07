@@ -38,8 +38,7 @@ namespace XLite\Model;
  * @Table  (name="countries",
  *      indexes={
  *          @Index (name="country", columns={"country"}),
- *          @Index (name="enabled", columns={"enabled"}),
- *          @Index (name="eu_member", columns={"eu_member"})
+ *          @Index (name="enabled", columns={"enabled"})
  *      }
  * )
  */
@@ -78,17 +77,6 @@ class Country extends \XLite\Model\AEntity
      * @Column (type="boolean")
      */
     protected $enabled = true;
-
-    /**
-     * Country is EU memeber or not
-     * 
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 3.0.0
-     *
-     * @Column (type="boolean")
-     */
-    protected $eu_member = false;
 
     /**
      * States (relation)

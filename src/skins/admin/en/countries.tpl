@@ -128,7 +128,6 @@ Use this section to manage the list of existing countries. This list is used in 
 				<tr class="dialog-box">
 					<td><input type="text" size="3" maxlength="2" name="code" value="{code}" /></td>
 					<td><input type="text" size="34" maxlength="50" name="country" value="{country}" /></td>
-					<td align="middle"><input type="checkbox" name="eu_member" value="Y" checked="{isSelected(eu_member,#Y#)}" /></td>
 					<td align="middle"><input type="checkbox" name="enabled" value="Y" checked /></td>
 				</tr>
 
