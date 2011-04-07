@@ -51,6 +51,7 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
         $searchParams = $this->getConditions();
 
         if (isset($searchParams[$paramName])) {
+
             $return = $searchParams[$paramName];
         }
 
@@ -116,27 +117,32 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      * @since  3.0.0
      */
     protected function doActionSearch()
-    {   
+    {
         $sessionCell    = \XLite\View\ItemsList\Product\Admin\Search::getSessionCellName();
         $searchParams   = \XLite\View\ItemsList\Product\Admin\Search::getSearchParams();
         $productsSearch = array();
+
         $cBoxFields     = array(
             \XLite\View\ItemsList\Product\Admin\Search::PARAM_SEARCH_IN_SUBCATS
         );
         
         foreach ($searchParams as $modelParam => $requestParam) {
+
             if (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
+
                 $productsSearch[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
             }
         }
  
         foreach ($cBoxFields as $requestParam) {
+
             $productsSearch[$requestParam] = isset(\XLite\Core\Request::getInstance()->$requestParam)
                 ? 1
                 : 0;
         }
         
         $this->session->set($sessionCell, $productsSearch);
+
         $this->setReturnURL($this->buildURL('product_list', '', array('mode' => 'search')));
     }
 
@@ -152,6 +158,7 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
         $searchParams = $this->session->get(\XLite\View\ItemsList\Product\Admin\Search::getSessionCellName());
 
         if (!is_array($searchParams)) {
+
             $searchParams = array();
         }
 
