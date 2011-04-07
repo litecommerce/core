@@ -915,7 +915,7 @@ function checkFilePermissions(&$errorMsg, &$value)
 }
 
 /**
- * Check MySQL version
+ * Check MySQL version: returns false only if version is gathered and it isn't suit
  * 
  * @param string   $errorMsg   Error message if checking failed
  * @param string   $value      Actual value of the checked parameter
@@ -943,16 +943,15 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
         if (!is_array($data)) {
             $data = parseDbURL(constant('DB_URL'));
         }
-        
+
         $isConnected = dbConnect($data, $pdoErrorMsg);
 
         if (!$isConnected) {
             $errorMsg = xtr('Can\'t connect to MySQL server') . (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : '');
-            $result = false;
         }
     }
 
-    if ($result && $isConnected) {
+    if ($isConnected) {
 
         try {
             $version = \Includes\Utils\Database::getDbVersion();
@@ -971,7 +970,6 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
 
         } else {
             $errorMsg = xtr('Cannot get the MySQL server version') . (!empty($pdoErrorMsg) ? ' : ' . $pdoErrorMsg : '.');
-            $result = false;
         }
     }
 
