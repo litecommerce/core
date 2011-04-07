@@ -176,7 +176,7 @@ abstract class ModulesManager extends AUtils
                     if ($enabled) {
                         $list[$author . '\\' . $name] = array(
                             'actualName' => $author . '\\' . $name,
-                            'moduleId'   => null,
+                            'moduleID'   => null,
                             'name'       => $name,
                             'author'     => $author,
                             'enabled'    => 1,
@@ -440,18 +440,16 @@ abstract class ModulesManager extends AUtils
             // Short name
             $data = static::$activeModules[$key];
 
+            // Set flag in .ini-file
             if ($path = static::getModulesFilePath()) {
-
-                // Set flag in .ini-file
                 $pattern = '/(\[' . $data['author'] . '\][^\[]+\s*' . $data['name'] . '\s*=)\s*\S+/Ss';
                 \Includes\Utils\FileManager::replace($path, '$1 0', $pattern);
 
-            } else {
-
-                // Set flag in DB
-                $query = 'UPDATE ' . static::getTableName() . ' SET enabled = ? WHERE moduleId = ?';
-                \Includes\Utils\Database::execute($query, array(0, $data['moduleId']));
             }
+
+            // Set flag in DB
+            $query = 'UPDATE ' . static::getTableName() . ' SET enabled = ? WHERE moduleID = ?';
+            \Includes\Utils\Database::execute($query, array(0, $data['moduleID']));
 
             // Remove from local cache
             unset(static::$activeModules[$key]);
@@ -469,27 +467,51 @@ abstract class ModulesManager extends AUtils
      */
     public static function switchModules()
     {
-        foreach (static::getActiveModules() as $data) {
+        foreach (static::getActiveModules() as $module => $data) {
 
             // Search for modules
             $moduleID = \Includes\Utils\Database::fetchColumn(
-                'SELECT moduleId FROM ' . static::getTableName() . ' WHERE author = ? AND name = ? AND installed = ?',
+                'SELECT moduleID FROM ' . static::getTableName() . ' WHERE author = ? AND name = ? AND installed = ?',
                 array($data['author'], $data['name'], true)
             );
 
             // If found in DB
             if ($moduleID) {
                 $query  = 'UPDATE ' . static::getTableName() 
-                        . ' SET enabled = ?, dataInstalled = ? WHERE moduleId = ?';
+                        . ' SET enabled = ?, dataInstalled = ? WHERE moduleID = ?';
                 $params = array(true, true, $moduleID);
+
             } else {
-                $query  = 'REPLACE INTO ' . static::getTableName() 
-                        . ' SET enabled = ?, dataInstalled = ?, installed = ?, author = ?, name = ?, dependencies = ?';
-                $params = array(true, true, true, $data['author'], $data['name'], serialize(array()));
+                $params = array(
+                    'name'          => $data['name'],
+                    'author'        => $data['author'],
+                    'enabled'       => true,
+                    'installed'     => true,
+                    'dataInstalled' => true,
+                    'date'          => time(),
+                    'marketplaceID' => '',
+                    'majorVersion'  => static::callModuleMethod($module, 'getMajorVersion'),
+                    'minorVersion'  => static::callModuleMethod($module, 'getMinorVersion'),
+                    'moduleName'    => static::callModuleMethod($module, 'getModuleName'),
+                    'authorName'    => static::callModuleMethod($module, 'getAuthorName'),
+                    'description'   => static::callModuleMethod($module, 'getDescription'),
+                    'iconURL'       => static::callModuleMethod($module, 'getIconURL'),
+                    'pageURL'       => static::callModuleMethod($module, 'getPageURL'),
+                    'authorPageURL' => static::callModuleMethod($module, 'getAuthorPageURL'),
+                    'dependencies'  => serialize(static::callModuleMethod($module, 'getDependencies')),
+                    'rating'        => 0,
+                    'votes'         => 0,
+                    'downloads'     => 0,
+                    'price'         => 0.00,
+                    'currency'      => 'USD',
+                    'revisionDate'  => 0,
+                );
+                $query = 'REPLACE INTO ' . static::getTableName() 
+                        . ' SET ' . implode(' = ?,', array_keys($params)) . ' = ?';
             }
 
             // Enable module
-            \Includes\Utils\Database::execute($query, $params);
+            \Includes\Utils\Database::execute($query, array_values($params));
         }
     }
 

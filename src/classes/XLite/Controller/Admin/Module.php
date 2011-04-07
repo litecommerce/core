@@ -71,6 +71,29 @@ class Module extends \XLite\Controller\Admin\AAdmin
         return $this->getModule()->getName() . ' (' . $this->getModule()->getAuthor() . ')';
     }
 
+    /** 
+     * Return current module object
+     * 
+     * @return \XLite\Model\Module
+     * @throws \Exception
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModule()
+    {   
+        if (!isset($this->module)) {
+
+            $this->module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->getModuleID());
+
+            if (!$this->module) {
+
+                throw new \Exception('Add-on does not exist (ID#' . $this->getModuleID() . ')');
+            }   
+        }
+
+        return $this->module;
+    }
+
 
     /**
      * Get current module ID
@@ -82,27 +105,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
     protected function getModuleID()
     {
         return \XLite\Core\Request::getInstance()->moduleId;
-    }
-
-    /**
-     * Return current module object
-     * 
-     * @return \XLite\Model\Module
-     * @throws \Exception
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getModule()
-    {
-        if (!isset($this->module)) {
-            $this->module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->getModuleID());
-
-            if (!$this->module) {
-                throw new \Exception('Add-on does not exist (ID#' . $this->getModuleID() . ')');
-            }
-        }
-
-        return $this->module;
     }
 
     /**

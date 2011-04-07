@@ -288,9 +288,9 @@ abstract class Image extends \XLite\Model\AEntity
 
                 $path = \Includes\Utils\FileManager::getUniquePath($root, $basename);
                 if (move_uploaded_file($tmp, $path)) {
-                    $this->path = basename($path);
-                    $result = $this->renewImageParameters();
-                    if (!$result) {
+                    chmod($path, 0644);
+
+                    if (!$this->savePath($path)) {
                         unlink($path);
                     }
                 }
@@ -331,12 +331,7 @@ abstract class Image extends \XLite\Model\AEntity
             $path = $newPath;
         }
 
-        if ($result) {
-            $this->path = basename($path);
-            $result = $this->renewImageParameters();
-        }
-
-        return $result;
+        return $result && $this->savePath($path);
     }
 
     /**
@@ -365,11 +360,30 @@ abstract class Image extends \XLite\Model\AEntity
                 : false;
 
         } else {
+
             $this->path = $url;
-            $this->renewImageParameters();
+            $result = $this->renewImageParameters();
         }
 
         return $result;
+    }
+
+    /**
+     * Remove image file 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function removeFile()
+    {
+        if (!$this->isURL()) {
+            $path = $this->getRepository()->getFileSystemRoot() . $this->path;
+            if (file_exists($path)) {
+                @unlink($path);
+            }
+        }
+
     }
 
     /**
@@ -433,6 +447,25 @@ abstract class Image extends \XLite\Model\AEntity
         }
     }
 
+    /**
+     * savePath 
+     * 
+     * @param string $path Full path
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function savePath($path)
+    {
+        // Remove old image
+        if ($this->path && $this->path != basename($path)) {
+            $this->removeFile();
+        }
+
+        $this->path = basename($path);
+        return $this->renewImageParameters();
+    }
 
     /**
      * Renew image parameters 

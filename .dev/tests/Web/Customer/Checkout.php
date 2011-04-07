@@ -246,12 +246,12 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
             'check address-not-completed note hide'
         );
 
-        $this->assertJqueryPresent('.current .button-row button.disabled', 'check disabled main button');
+        $this->assertElementPresent('css=.current .button-row button.disabled', 'check disabled main button');
 
         // Select shipping method
         $this->toggleByJquery('ul.shipping-rates li input:eq(0)', true);
 
-        $this->assertJqueryPresent('.current .button-row button.disabled', 'check disabled main button #2');
+        $this->assertElementPresent('css=.current .button-row button.disabled', 'check disabled main button #2');
         $this->assertJqueryPresent('.current p.email-not-defined:visible', 'email-not-defined is visible');
 
         // Fill profile data
@@ -280,7 +280,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->fillShippingAddress();
 
         // Check payment method
-        $this->assertJqueryPresent('.current .button-row button.disabled', 'payment not selected - main button is disabled');
+        $this->assertElementPresent('css=.current .button-row button.disabled', 'payment not selected - main button is disabled');
 
         $this->assertJqueryNotPresent('ul.payments li input:checked', 'payment is not selected');
 
@@ -295,7 +295,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         // Fill billing address
 
         $this->toggleByJquery('#same_address', false);
-        $this->assertJqueryPresent('.current .button-row button.disabled', 'same addres disabled and address not loaded - main button is disabled');
+        $this->assertElementPresent('css=.current .button-row button.disabled', 'same addres disabled and address not loaded - main button is disabled');
 
         $this->waitForLocalCondition(
             'jQuery("#billing_address_name").length > 0',
@@ -383,16 +383,16 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         );
 
         // Check place button
-        $this->assertJqueryNotPresent('.current .button-row button.disabled', 'main button is enabled always');
-        $this->assertJqueryNotPresent('.current .non-agree', 'non-agree style is NOT applyed');
+        $this->assertElementNotPresent('css=.current .button-row button.disabled', 'main button is enabled always');
+        $this->assertElementNotPresent('css=.current .non-agree', 'non-agree style is NOT applyed');
 
         $this->click('css=.current .button-row button');
 
-        $this->assertJqueryPresent('.current .non-agree', 'non-agree style is applyed');
+        $this->assertElementPresent('css=.current .non-agree', 'non-agree style is applyed');
 
         $this->click('//input[@id="place_order_agree"]');
 
-        $this->assertJqueryPresent('.current .non-agree', 'non-agree style is applyed always');
+        $this->assertElementPresent('css=.current .non-agree', 'non-agree style is applyed always');
 
         // Checkout with Check payment method
         $this->click('css=.current .button-row button');

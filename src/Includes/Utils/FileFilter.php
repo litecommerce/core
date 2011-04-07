@@ -48,14 +48,14 @@ class FileFilter extends AUtils
     protected $dir;
 
     /**
-     * Patern to filter files by path
+     * Pattern to filter files by path
      * 
      * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $patern;
+    protected $pattern;
 
     /**
      * Mode 
