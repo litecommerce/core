@@ -616,8 +616,11 @@ class Settings extends \XLite\Controller\Admin\AAdmin
             } elseif ('serialized' == $type && isset(\XLite\Core\Request::getInstance()->$name) && is_array(\XLite\Core\Request::getInstance()->$name)) {
                 $newValue = serialize(\XLite\Core\Request::getInstance()->$name);
 
-            } else {
+            } elseif ('text' == $type) {
                 $newValue = isset(\XLite\Core\Request::getInstance()->$name) ? trim(\XLite\Core\Request::getInstance()->$name) : '';
+            
+            } else {
+                $newValue = isset(\XLite\Core\Request::getInstance()->$name) ? \XLite\Core\Request::getInstance()->$name : '';
             }
 
             if ($value != $newValue) {
