@@ -13,7 +13,7 @@
 
 <div class="location-node{if:subnodes} expandable{end:}">
 
-  {if:getParam(%static::PARAM_LINK%)}<a href="{getParam(%static::PARAM_LINK%)}" class="location-title">{end:}{getParam(%static::PARAM_NAME%):h}{if:getParam(%static::PARAM_LINK%)}</a>{end:}
+  {if:getParam(%static::PARAM_LINK%)}<a href="{getParam(%static::PARAM_LINK%)}" class="location-title">{end:}{getParam(%static::PARAM_NAME%)}{if:getParam(%static::PARAM_LINK%)}</a>{end:}
 
   <ul class="location-subnodes" IF="subnodes">
     <li FOREACH="subnodes,node"><a href="{node.getParam(%static::PARAM_LINK%)}">{node.getParam(%static::PARAM_NAME%)}</a></li>

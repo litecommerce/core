@@ -815,6 +815,7 @@ button.invert:hover
 {
   min-width: 150px;
   white-space: nowrap;
+  vertical-align: top;
 }
 
 /* Profile form */
