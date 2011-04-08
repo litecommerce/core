@@ -105,4 +105,34 @@ class Connection extends \Doctrine\DBAL\Connection
 
         return $result;
     }
+
+    /**
+     * Replace query
+     * 
+     * @param string $tableName table name
+     * @param array  $data      Data
+     *  
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function replace($tableName, array $data)
+    {
+        $this->connect();
+
+        // column names are specified as array keys
+        $cols = array();
+        $placeholders = array();
+        
+        foreach ($data as $columnName => $value) {
+            $cols[] = $columnName;
+            $placeholders[] = '?';
+        }
+
+        $query = 'REPLACE INTO ' . $tableName
+               . ' (' . implode(', ', $cols) . ')'
+               . ' VALUES (' . implode(', ', $placeholders) . ')';
+
+        return $this->executeUpdate($query, array_values($data));
+    }
 }

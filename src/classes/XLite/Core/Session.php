@@ -440,8 +440,8 @@ class Session extends \XLite\Base\Singleton
     {
         $this->session = new \XLite\Model\Session();
 
-        $this->session->setSid(\XLite\Core\Database::getRepo('XLite\Model\Session')->generatePublicSessionId());
         $this->session->updateExpiry();
+        $this->session->setSid(\XLite\Core\Database::getRepo('XLite\Model\Session')->generatePublicSessionId());
 
         \XLite\Core\Database::getEM()->persist($this->session);
         \XLite\Core\Database::getEM()->flush();

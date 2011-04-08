@@ -59,7 +59,7 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      */
     public function insertCell($id, $name, $value)
     {
-        $this->getEntityManager()->getConnection()->insert(
+        $this->getEntityManager()->getConnection()->replace(
             $this->_class->getTableName(),
             $this->prepareDataForNewCell($id, $name, $value)
         );

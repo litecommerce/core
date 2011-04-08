@@ -150,7 +150,8 @@ class Session extends \XLite\Model\Repo\ARepo
         $limit = count($this->chars) - 1;
 
         do {
-            mt_srand(microtime(true) * 1000);
+            $x = explode('.', uniqid('', true));
+            mt_srand(microtime(true) + intval(hexdec($x[0])) + $x[1]);
             $sid = '';
             for ($i = 0; self::PUBLIC_SESSION_ID_LENGTH > $i; $i++) {
                 $sid .= $this->chars[mt_rand(0, $limit)];
