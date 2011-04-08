@@ -290,7 +290,10 @@ abstract class Image extends \XLite\Model\AEntity
                 if (move_uploaded_file($tmp, $path)) {
                     chmod($path, 0644);
 
-                    if (!$this->savePath($path)) {
+                    if ($this->savePath($path)) {
+                        $result = true;
+
+                    } else {
                         unlink($path);
                     }
                 }
@@ -448,7 +451,7 @@ abstract class Image extends \XLite\Model\AEntity
     }
 
     /**
-     * savePath 
+     * Save path into entity
      * 
      * @param string $path Full path
      *  
@@ -464,6 +467,7 @@ abstract class Image extends \XLite\Model\AEntity
         }
 
         $this->path = basename($path);
+
         return $this->renewImageParameters();
     }
 
