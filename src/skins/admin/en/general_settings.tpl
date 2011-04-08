@@ -82,7 +82,7 @@ function setUnitSymbol(symbol) {
               <select name="{option.name}">
                 <option value="" selected="{option.value=##}">No delimiter</option>
                 <option value="," selected="{option.value=#,#}">,</option>
-                <option value="&amp;nbsp;" selected="{option.value=#&nbsp;#}">Space</option>
+                <option value=" " selected="{option.value=# #}">Space</option>
               </select>
             {end:}
 
