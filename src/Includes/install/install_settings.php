@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 /**
@@ -31,7 +31,7 @@
  * 
  * @package LiteCommerce
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 
 if (!defined('XLITE_INSTALL_MODE')) {

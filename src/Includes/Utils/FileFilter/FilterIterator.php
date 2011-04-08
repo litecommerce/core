@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Utils\FileFilter;
@@ -33,7 +33,7 @@ namespace Includes\Utils\FileFilter;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class FilterIterator extends \FilterIterator
 {
@@ -43,7 +43,7 @@ class FilterIterator extends \FilterIterator
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $pattern;
 
@@ -53,7 +53,7 @@ class FilterIterator extends \FilterIterator
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $callbacks = array();
 
@@ -67,7 +67,7 @@ class FilterIterator extends \FilterIterator
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(\Iterator $iterator, $pattern = null)
     {
@@ -84,7 +84,7 @@ class FilterIterator extends \FilterIterator
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function registerCallback(array $callback)
     {
@@ -101,7 +101,7 @@ class FilterIterator extends \FilterIterator
      * @return bool
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function accept()
     {

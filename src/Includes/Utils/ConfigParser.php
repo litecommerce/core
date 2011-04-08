@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Utils;
@@ -33,7 +33,7 @@ namespace Includes\Utils;
  * 
  * @package    XLite
  * @see        ____class_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 class ConfigParser extends AUtils
 {
@@ -43,7 +43,7 @@ class ConfigParser extends AUtils
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $options;
 
@@ -53,7 +53,7 @@ class ConfigParser extends AUtils
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $mutators = array(
         'setWebDirWOSlash'
@@ -65,7 +65,7 @@ class ConfigParser extends AUtils
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $configFiles = array(
         'config.local.php'
@@ -77,7 +77,7 @@ class ConfigParser extends AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getMainFile()
     {
@@ -92,7 +92,7 @@ class ConfigParser extends AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function handleFileAbsenceError($file)
     {
@@ -107,7 +107,7 @@ class ConfigParser extends AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function handleFileWrongFormatError($file)
     {
@@ -122,7 +122,7 @@ class ConfigParser extends AUtils
      * @return bool
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function checkFile($file)
     {
@@ -138,7 +138,7 @@ class ConfigParser extends AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function parseCommon($file, $errorHandler = null)
     {
@@ -161,7 +161,7 @@ class ConfigParser extends AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function parseMainFile()
     {
@@ -174,7 +174,7 @@ class ConfigParser extends AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function parseLocalFile($fileName)
     {
@@ -190,7 +190,7 @@ class ConfigParser extends AUtils
      * @return array|mixed
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getOptionsByNames(array $names, $options)
     {
@@ -206,7 +206,7 @@ class ConfigParser extends AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function executeMutators()
     {
@@ -220,7 +220,7 @@ class ConfigParser extends AUtils
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function setWebDirWOSlash()
     {
@@ -237,7 +237,7 @@ class ConfigParser extends AUtils
      * @return array|mixed
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getOptions($names = null)
     {
@@ -263,7 +263,7 @@ class ConfigParser extends AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function registerConfigFile($fileName)
     {

@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Pattern;
@@ -33,7 +33,7 @@ namespace Includes\Pattern;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class Singleton extends \Includes\Pattern\APattern
 {
@@ -43,7 +43,7 @@ abstract class Singleton extends \Includes\Pattern\APattern
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $instances = array();
 
@@ -54,7 +54,7 @@ abstract class Singleton extends \Includes\Pattern\APattern
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function __construct()
     {
@@ -67,7 +67,7 @@ abstract class Singleton extends \Includes\Pattern\APattern
      * @return static
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getInstance()
     {
