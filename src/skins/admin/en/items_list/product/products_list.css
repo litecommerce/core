@@ -16,12 +16,19 @@
   width: 100%;
 }
 
-ul.by-conditions {
+ul.by-conditions,
+  ul.category-list
+{
   list-style: none;
 }
 
-ul.by-conditions li {
+ul.by-conditions li,
+  ul.category-list li
+{
   float: left;
   margin: 5px 20px 5px 0px;
 }
 
+ul.category-list {
+  width: 200px;
+}

@@ -12,4 +12,12 @@
  * @ListChild (list="itemsList.product.modify.common.admin.columns", weight="40")
  *}
 
-<td><a class="category" href="{buildURL(#category#,##,_ARRAY_(#category_id#^product.category.getCategoryId()))}">{product.category.getName():h}</a></td>
+<td>
+  <ul class="category-list">
+    <li FOREACH="product.getCategoryProducts(),idx,category">
+
+    {displayViewListContent(#itemsList.product.modify.common.admin.columns.category_item#,_ARRAY_(#category#^category.getCategory()))}
+
+    </li>
+  </ul>
+</td>
