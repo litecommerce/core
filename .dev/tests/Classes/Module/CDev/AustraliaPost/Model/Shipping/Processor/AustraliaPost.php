@@ -13,7 +13,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 class XLite_Tests_Module_CDev_AustraliaPost_Model_Shipping_Processor_AustraliaPost
@@ -27,7 +27,7 @@ extends XLite_Tests_Model_OrderAbstract
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setUp()
     {
@@ -42,7 +42,7 @@ extends XLite_Tests_Model_OrderAbstract
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function tearDown()
     {
@@ -57,7 +57,7 @@ extends XLite_Tests_Model_OrderAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetProcessorName()
     {
@@ -72,7 +72,7 @@ extends XLite_Tests_Model_OrderAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetProcessorId()
     {
@@ -87,7 +87,7 @@ extends XLite_Tests_Model_OrderAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetApiUrl()
     {
@@ -102,7 +102,7 @@ extends XLite_Tests_Model_OrderAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testIsMethodNamesAdjustable()
     {
@@ -117,7 +117,7 @@ extends XLite_Tests_Model_OrderAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetShippingMethods()
     {
@@ -139,7 +139,7 @@ extends XLite_Tests_Model_OrderAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetRates()
     {
@@ -223,7 +223,7 @@ extends XLite_Tests_Model_OrderAbstract
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTestOrder($realProfile = true)
     {

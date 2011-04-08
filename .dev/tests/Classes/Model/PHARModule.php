@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 /**
@@ -31,7 +31,7 @@
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
 {
@@ -41,7 +41,7 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setUp()
     {
@@ -58,7 +58,7 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
      * @return void
      * @access private
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private function getFile($file)
     {
@@ -72,7 +72,7 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testBadConstruct()
     {
@@ -113,7 +113,7 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGoodConstruct()
     {
@@ -147,7 +147,7 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testCheck()
     {
@@ -171,7 +171,7 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     /*public function testDeploy()
     {
@@ -216,7 +216,7 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testDeploy2()
     {
@@ -264,7 +264,7 @@ class XLite_Tests_Model_PHARModule extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testCleanUp()
     {

@@ -13,7 +13,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 class XLite_Tests_Model_Shipping_Processor_Offline extends XLite_Tests_Model_OrderAbstract
@@ -24,7 +24,7 @@ class XLite_Tests_Model_Shipping_Processor_Offline extends XLite_Tests_Model_Ord
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetProcessorName()
     {
@@ -39,7 +39,7 @@ class XLite_Tests_Model_Shipping_Processor_Offline extends XLite_Tests_Model_Ord
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetProcessorId()
     {
@@ -54,7 +54,7 @@ class XLite_Tests_Model_Shipping_Processor_Offline extends XLite_Tests_Model_Ord
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testIsMethodNamesAdjustable()
     {
@@ -69,7 +69,7 @@ class XLite_Tests_Model_Shipping_Processor_Offline extends XLite_Tests_Model_Ord
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetShippingMethods()
     {
@@ -91,7 +91,7 @@ class XLite_Tests_Model_Shipping_Processor_Offline extends XLite_Tests_Model_Ord
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetRates()
     {
@@ -117,7 +117,7 @@ class XLite_Tests_Model_Shipping_Processor_Offline extends XLite_Tests_Model_Ord
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTestOrder()
     {

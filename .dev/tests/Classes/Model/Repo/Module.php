@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
@@ -41,7 +41,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
      * @return \XLite\Core\CommonCell
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultCnd()
     {
@@ -63,7 +63,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testSearch()
     {
@@ -85,7 +85,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindAllModules()
     {
@@ -100,7 +100,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindInactiveModules()
     {
@@ -117,7 +117,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindUpgradableModules()
     {
@@ -132,7 +132,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindAllNames()
     {
@@ -153,7 +153,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindAllByModuleIds()
     {
@@ -172,7 +172,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindAllEnabled()
     {
@@ -189,7 +189,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindByActualName()
     {
@@ -207,7 +207,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetActiveModules()
     {
@@ -225,7 +225,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testIsModuleActive()
     {
@@ -242,7 +242,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testInitialize()
     {
@@ -255,7 +255,7 @@ class XLite_Tests_Model_Repo_Module extends XLite_Tests_Model_ModuleAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testCheckModules()
     {

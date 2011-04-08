@@ -27,7 +27,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * 
      * @var    array
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static $testsRange = array();
 
@@ -36,7 +36,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * 
      * @var    integer
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $messageLength = 70;
 
@@ -81,7 +81,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * 
      * @var    array
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $testConfig = null;
 
@@ -90,7 +90,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * 
      * @var    boolean
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $makeSqlBackupOnFailure = false;
 
@@ -209,7 +209,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * 
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function runTest()
     {
@@ -381,7 +381,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private function writeMetricLog()
     {
@@ -541,7 +541,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function query($sql)
     {
@@ -553,7 +553,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * 
      * @return \XLite\Model\Product
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProduct()
     {
@@ -567,7 +567,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      *  
      * @return \XLite\Model\Product
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProductBySku($sku)
     {
