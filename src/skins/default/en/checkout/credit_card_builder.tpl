@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 <form action="{cart.paymentMethod.getFormURL(cart)}" method="{cart.paymentMethod.getFormMethod()}" name="cc_form" class="cc-auto-form">
   <input FOREACH="cart.paymentMethod.getFields(cart),name,value" type="hidden" name="{name}" value="{value:r}" />
