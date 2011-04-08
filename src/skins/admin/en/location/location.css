@@ -57,6 +57,7 @@ ul.location-subnodes li {
   background-image: none;
   padding: 0;
   white-space: nowrap;
+  margin: 6px 0px 0px 0px;
 }
 
 .location-title-subnodes-mark {
