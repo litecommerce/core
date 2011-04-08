@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 <widget class="\XLite\Module\CDev\ProductOptions\View\Form\Item\ChangeOptions" name="change_options" className="change-options" />
   <widget class="\XLite\Module\CDev\ProductOptions\View\ProductOptions" product="{getProduct()}" selectedOptions="{getSelectedOptions()}" />

@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  * @ListChild (list="order.status", weight="10")
  *}
 <div class="shipping order-status-{order.getStatus()}"><widget template="common/order_status.tpl" order="{getOrder()}" /></div>

@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 
 <span IF="target=#aupost#">&nbsp;::&nbsp;Shipping settings&nbsp;::&nbsp;<a href="admin.php?target=aupost" class="navigation-path">Australia Post Settings</a></span>

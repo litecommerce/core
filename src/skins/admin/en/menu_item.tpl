@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 <td style="width:46;" valign="top">{if:href}<a href="{href}" onclick="javascript: this.blur()">{end:}<img src="images/{icon}" alt="" />{if:href}</a>{end:}</td>
             <td style="width:45%;" valign="top">{if:href}<a href="{href}" onclick="javascript: this.blur()">{end:}{text:h}{if:href}</a>{end:}</td>
