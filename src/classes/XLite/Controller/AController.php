@@ -660,32 +660,6 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * getEmailValidatorRegExp
-     * FIXME: is used in skins/default/en/contactus.tpl only
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getEmailValidatorRegExp()
-    {
-        $values = array();
-        $domains = split(',| |;|\||\/', $this->config->Email->valid_email_domains);
-        
-        foreach ((array)$domains as $key=>$val) {
-            if (trim($val)) {
-                $values[$key] = '(\.' . trim($val) . ')';
-            }
-        }
-
-        if (empty($values)) {
-            $values[] = '(\..{2,3})';
-        }
-
-        return '/\b(^(\S+@).+(' . implode('|', $values) . ')$)\b/gi';
-    }
-
-    /**
      * isSecure 
      * 
      * @return void
