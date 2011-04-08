@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Abstract entity 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AEntity
 {
@@ -41,7 +41,7 @@ abstract class AEntity
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $cacheEnabled = array();
 
@@ -50,7 +50,7 @@ abstract class AEntity
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $methodNames = array();
 
@@ -62,7 +62,7 @@ abstract class AEntity
      *                                                                            
      * @return void                                                               
      * @see    ____func_see____                                                   
-     * @since  3.0.0                                                              
+     * @since  1.0.0
      */                                                                           
     public function __construct(array $data = array())                            
     {
@@ -76,7 +76,7 @@ abstract class AEntity
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function map(array $data)
     {
@@ -100,7 +100,7 @@ abstract class AEntity
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __get($name)
     {
@@ -116,7 +116,7 @@ abstract class AEntity
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __set($name, $value)
     {
@@ -131,7 +131,7 @@ abstract class AEntity
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __unset($name)
     {
@@ -143,7 +143,7 @@ abstract class AEntity
      *
      * @return \XLite\Model\Doctrine\Repo\AbstractRepo
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRepository()
     {
@@ -155,7 +155,7 @@ abstract class AEntity
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkCache()
     {
@@ -178,7 +178,7 @@ abstract class AEntity
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function detach()
     {
@@ -195,7 +195,7 @@ abstract class AEntity
      * @return mixed
      * @throws \BadMethodCallException
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __call($method, array $args = array())
     {
@@ -230,7 +230,7 @@ abstract class AEntity
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isPersistent()
     {
@@ -242,7 +242,7 @@ abstract class AEntity
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function update()
     {
@@ -257,7 +257,7 @@ abstract class AEntity
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function create()
     {
@@ -269,7 +269,7 @@ abstract class AEntity
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function delete()
     {
@@ -285,7 +285,7 @@ abstract class AEntity
      * 
      * @return \XLite\Model\AEntity
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function cloneEntity()
     {
@@ -309,7 +309,7 @@ abstract class AEntity
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function prepareEntityBeforeCommit()
     {
@@ -323,7 +323,7 @@ abstract class AEntity
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMethodName($name)
     {

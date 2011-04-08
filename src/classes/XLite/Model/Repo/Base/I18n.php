@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo\Base;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo\Base;
  * Translations-owner abstract reporitory
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class I18n extends \XLite\Model\Repo\ARepo
 {
@@ -43,7 +43,7 @@ abstract class I18n extends \XLite\Model\Repo\ARepo
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function createQueryBuilder($alias = null)
     {
@@ -61,7 +61,7 @@ abstract class I18n extends \XLite\Model\Repo\ARepo
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addLanguageQuery(\Doctrine\ORM\QueryBuilder $qb, $alias = null, $code = null)
     {
@@ -98,7 +98,7 @@ abstract class I18n extends \XLite\Model\Repo\ARepo
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addTranslationsSubquery(\Doctrine\ORM\QueryBuilder $qb, $alias = null)
     {

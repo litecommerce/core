@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -34,7 +34,7 @@ namespace XLite\View;
  * State selector
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class StateSelect extends \XLite\View\FormField
 {
@@ -54,7 +54,7 @@ class StateSelect extends \XLite\View\FormField
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $statesDefined = false;
 
@@ -64,7 +64,7 @@ class StateSelect extends \XLite\View\FormField
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isCustomState()
     {
@@ -76,7 +76,7 @@ class StateSelect extends \XLite\View\FormField
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getStateValue()
     {
@@ -88,7 +88,7 @@ class StateSelect extends \XLite\View\FormField
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isDefineStates()
     {
@@ -100,7 +100,7 @@ class StateSelect extends \XLite\View\FormField
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCountriesStates()
     {
@@ -114,7 +114,7 @@ class StateSelect extends \XLite\View\FormField
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSDataDefinitionBlock()
     {
@@ -143,7 +143,7 @@ class StateSelect extends \XLite\View\FormField
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isStateSelected(\XLite\Model\State $state)
     {
@@ -156,7 +156,7 @@ class StateSelect extends \XLite\View\FormField
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -168,7 +168,7 @@ class StateSelect extends \XLite\View\FormField
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -188,7 +188,7 @@ class StateSelect extends \XLite\View\FormField
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getStates()
     {

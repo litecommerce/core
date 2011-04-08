@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\Validator\String\ObjectId;
@@ -32,7 +32,7 @@ namespace XLite\Core\Validator\String\ObjectId;
  * Country code
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Country extends \XLite\Core\Validator\String
 {
@@ -41,7 +41,7 @@ class Country extends \XLite\Core\Validator\String
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $onlyEnabled = false;
 
@@ -53,7 +53,7 @@ class Country extends \XLite\Core\Validator\String
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct($nonEmpty = false, $onlyEnabled = false)
     {
@@ -70,7 +70,7 @@ class Country extends \XLite\Core\Validator\String
      * @return void
      * @throws \XLite\Core\Validator\Exception
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function validate($data)
     {
@@ -97,7 +97,7 @@ class Country extends \XLite\Core\Validator\String
      *
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function sanitize($data)
     {

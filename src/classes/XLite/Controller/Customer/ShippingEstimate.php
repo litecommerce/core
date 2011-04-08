@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * Shipping estimator
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
 {
@@ -41,7 +41,7 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
      * 
      * @var   \XLite\Model\Order\Modifier
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $modifier;
 
@@ -50,7 +50,7 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -62,7 +62,7 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAddress()
     {
@@ -74,7 +74,7 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
      * 
      * @return \XLite\Model\Order\Modifier
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getModifier()
     {
@@ -91,7 +91,7 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -103,7 +103,7 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionSetDestination()
     {
@@ -173,7 +173,7 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionChangeMethod()
     {

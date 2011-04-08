@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * Request 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Request extends \XLite\Base\Singleton
 {
@@ -43,7 +43,7 @@ class Request extends \XLite\Base\Singleton
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $requestMethod = null;
 
@@ -52,7 +52,7 @@ class Request extends \XLite\Base\Singleton
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $data = array();
 
@@ -64,7 +64,7 @@ class Request extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function mapRequest(array $data = array())
     {
@@ -88,7 +88,7 @@ class Request extends \XLite\Base\Singleton
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getData()
     {
@@ -100,7 +100,7 @@ class Request extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRequestMethod()
     {
@@ -114,7 +114,7 @@ class Request extends \XLite\Base\Singleton
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setRequestMethod($method)
     {
@@ -126,7 +126,7 @@ class Request extends \XLite\Base\Singleton
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isGet()
     {
@@ -138,7 +138,7 @@ class Request extends \XLite\Base\Singleton
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isPost()
     {
@@ -150,7 +150,7 @@ class Request extends \XLite\Base\Singleton
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isAJAX()
     {
@@ -162,7 +162,7 @@ class Request extends \XLite\Base\Singleton
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isHTTPS()
     {
@@ -179,7 +179,7 @@ class Request extends \XLite\Base\Singleton
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isCLI()
     {
@@ -193,7 +193,7 @@ class Request extends \XLite\Base\Singleton
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __get($name)
     {
@@ -208,7 +208,7 @@ class Request extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __set($name, $value)
     {
@@ -222,7 +222,7 @@ class Request extends \XLite\Base\Singleton
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __isset($name)
     {
@@ -235,7 +235,7 @@ class Request extends \XLite\Base\Singleton
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function __construct()
     {
@@ -250,7 +250,7 @@ class Request extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doUnescapeSingle($value)
     {
@@ -264,7 +264,7 @@ class Request extends \XLite\Base\Singleton
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doUnescape($data)
     {
@@ -280,7 +280,7 @@ class Request extends \XLite\Base\Singleton
      *
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepare($data)
     {
@@ -303,7 +303,7 @@ class Request extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkControlArgument($value, $name)
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Payment\Base;
@@ -32,7 +32,7 @@ namespace XLite\Model\Payment\Base;
  * Processor 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class Processor extends \XLite\Base
 {
@@ -50,7 +50,7 @@ abstract class Processor extends \XLite\Base
      * 
      * @var   \XLite\Model\Payment\Transaction
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $transaction;
 
@@ -59,7 +59,7 @@ abstract class Processor extends \XLite\Base
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $request;
 
@@ -69,7 +69,7 @@ abstract class Processor extends \XLite\Base
      * 
      * @return string Status code
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function doInitialPayment();
 
@@ -82,7 +82,7 @@ abstract class Processor extends \XLite\Base
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function pay(\XLite\Model\Payment\Transaction $transaction, array $request = array())
     {
@@ -99,7 +99,7 @@ abstract class Processor extends \XLite\Base
      * 
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getInputTemplate()
     {
@@ -113,7 +113,7 @@ abstract class Processor extends \XLite\Base
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getInputErrors(array $data)
     {
@@ -125,7 +125,7 @@ abstract class Processor extends \XLite\Base
      * 
      * @return string Widget class name or template path
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSettingsWidget()
     {
@@ -139,7 +139,7 @@ abstract class Processor extends \XLite\Base
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isConfigured(\XLite\Model\Payment\Method $method)
     {
@@ -152,7 +152,7 @@ abstract class Processor extends \XLite\Base
      * 
      * @return \XLite\Model\Order
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getOrder()
     {
@@ -164,7 +164,7 @@ abstract class Processor extends \XLite\Base
      * 
      * @return \XLite\Model\Profile
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProfile()
     {
@@ -178,7 +178,7 @@ abstract class Processor extends \XLite\Base
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSetting($name)
     {
@@ -190,7 +190,7 @@ abstract class Processor extends \XLite\Base
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function saveInputData()
     {
@@ -217,7 +217,7 @@ abstract class Processor extends \XLite\Base
      *  
      * @return \XLite\Model\Payment\TransactionData
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setDetail($name, $value, $label = null)
     {
@@ -242,7 +242,7 @@ abstract class Processor extends \XLite\Base
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getInputDataLabels()
     {
@@ -254,7 +254,7 @@ abstract class Processor extends \XLite\Base
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getInputDataAccessLevels()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\Pack;
@@ -32,7 +32,7 @@ namespace XLite\Core\Pack;
  * APack 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class APack
 {
@@ -46,7 +46,7 @@ abstract class APack
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract public function getName();
 
@@ -55,7 +55,7 @@ abstract class APack
      * 
      * @return \Iterator
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract public function getDirectoryIterator();
 
@@ -64,7 +64,7 @@ abstract class APack
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMetadata()
     {

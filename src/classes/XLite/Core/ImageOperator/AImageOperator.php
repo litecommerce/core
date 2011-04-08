@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\ImageOperator;
@@ -32,7 +32,7 @@ namespace XLite\Core\ImageOperator;
  * Abstract image operator enagine
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AImageOperator extends \XLite\Base\Singleton
 {
@@ -41,7 +41,7 @@ abstract class AImageOperator extends \XLite\Base\Singleton
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $mimeType;
 
@@ -50,7 +50,7 @@ abstract class AImageOperator extends \XLite\Base\Singleton
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $width;
 
@@ -59,7 +59,7 @@ abstract class AImageOperator extends \XLite\Base\Singleton
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $height;
 
@@ -69,7 +69,7 @@ abstract class AImageOperator extends \XLite\Base\Singleton
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract public function getImage();
 
@@ -81,7 +81,7 @@ abstract class AImageOperator extends \XLite\Base\Singleton
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract public function resize($width, $height);
 
@@ -91,7 +91,7 @@ abstract class AImageOperator extends \XLite\Base\Singleton
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isEnabled()
     {
@@ -108,7 +108,7 @@ abstract class AImageOperator extends \XLite\Base\Singleton
      *  
      * @return array (new width & height)
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getCroppedDimensions($w, $h, $maxw, $maxh)
     {
@@ -158,7 +158,7 @@ abstract class AImageOperator extends \XLite\Base\Singleton
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setImage(\XLite\Model\Base\Image $image)
     {
@@ -174,7 +174,7 @@ abstract class AImageOperator extends \XLite\Base\Singleton
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getWidth()
     {
@@ -186,7 +186,7 @@ abstract class AImageOperator extends \XLite\Base\Singleton
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getHeight()
     {
@@ -198,7 +198,7 @@ abstract class AImageOperator extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMimeType()
     {
@@ -213,7 +213,7 @@ abstract class AImageOperator extends \XLite\Base\Singleton
      *  
      * @return array New width, new height and operation result
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function resizeDown($width = null, $height = null)
     {

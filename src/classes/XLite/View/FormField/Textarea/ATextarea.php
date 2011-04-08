@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Textarea;
@@ -32,7 +32,7 @@ namespace XLite\View\FormField\Textarea;
  * Abstract class for textarea widget
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ATextarea extends \XLite\View\FormField\AFormField
 {
@@ -52,7 +52,7 @@ abstract class ATextarea extends \XLite\View\FormField\AFormField
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFieldType()
     {
@@ -65,7 +65,7 @@ abstract class ATextarea extends \XLite\View\FormField\AFormField
      * @return integer
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRows()
     {   
@@ -78,7 +78,7 @@ abstract class ATextarea extends \XLite\View\FormField\AFormField
      * @return integer
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCols()
     {   
@@ -90,7 +90,7 @@ abstract class ATextarea extends \XLite\View\FormField\AFormField
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultRows()
     {
@@ -102,7 +102,7 @@ abstract class ATextarea extends \XLite\View\FormField\AFormField
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultCols()
     {
@@ -114,7 +114,7 @@ abstract class ATextarea extends \XLite\View\FormField\AFormField
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCommonAttributes()
     {   
@@ -129,7 +129,7 @@ abstract class ATextarea extends \XLite\View\FormField\AFormField
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultParamFieldOnly()
     {   
@@ -141,7 +141,7 @@ abstract class ATextarea extends \XLite\View\FormField\AFormField
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

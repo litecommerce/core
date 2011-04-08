@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Controller main widget
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Controller extends \XLite\View\AView
 {
@@ -43,7 +43,7 @@ class Controller extends \XLite\View\AView
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public static $bodyContent = null;
 
@@ -56,7 +56,7 @@ class Controller extends \XLite\View\AView
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $params = array(), $contentTemplate = null)
     {
@@ -70,7 +70,7 @@ class Controller extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function display()
     {
@@ -91,7 +91,7 @@ class Controller extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function startPage()
     {
@@ -109,7 +109,7 @@ class Controller extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -121,7 +121,7 @@ class Controller extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isAJAXCenterRequest()
     {
@@ -133,7 +133,7 @@ class Controller extends \XLite\View\AView
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBodyClasses()
     {
@@ -145,7 +145,7 @@ class Controller extends \XLite\View\AView
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineBodyClasses()
     {
@@ -188,7 +188,7 @@ class Controller extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isSidebarFirstVisible()
     {
@@ -200,7 +200,7 @@ class Controller extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isSidebarSecondVisible()
     {
@@ -212,7 +212,7 @@ class Controller extends \XLite\View\AView
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -229,7 +229,7 @@ class Controller extends \XLite\View\AView
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isSilent()
     {
@@ -241,7 +241,7 @@ class Controller extends \XLite\View\AView
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isDumpStarted()
     {
@@ -253,7 +253,7 @@ class Controller extends \XLite\View\AView
      * 
      * @return \XLite\View\AView
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getContentWidget()
     {
@@ -265,7 +265,7 @@ class Controller extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareContent()
     {
@@ -277,7 +277,7 @@ class Controller extends \XLite\View\AView
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function useDefaultDisplayMode()
     {
@@ -289,7 +289,7 @@ class Controller extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function displayPage()
     {
@@ -309,7 +309,7 @@ class Controller extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function refreshEnd()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * Checkout success page
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
 {
@@ -41,7 +41,7 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $params = array('target', 'order_id');
 
@@ -50,7 +50,7 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      * 
      * @var   \XLite\Model\Order
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $order;
 
@@ -60,7 +60,7 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -73,7 +73,7 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -95,7 +95,7 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      * 
      * @return \XLite\Model\Order
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOrder()
     {
@@ -113,7 +113,7 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */     
     protected function getLocation()
     {

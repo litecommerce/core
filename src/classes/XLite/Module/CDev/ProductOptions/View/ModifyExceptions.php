@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\View;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\ProductOptions\View;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class ModifyExceptions extends \XLite\View\AView
 {
@@ -43,7 +43,7 @@ class ModifyExceptions extends \XLite\View\AView
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $exceptions;
 
@@ -52,7 +52,7 @@ class ModifyExceptions extends \XLite\View\AView
      *
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -65,7 +65,7 @@ class ModifyExceptions extends \XLite\View\AView
      * @return boolean 
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -81,7 +81,7 @@ class ModifyExceptions extends \XLite\View\AView
      * @return integer
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProductId()
     {
@@ -94,7 +94,7 @@ class ModifyExceptions extends \XLite\View\AView
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getGroups()
     {
@@ -117,7 +117,7 @@ class ModifyExceptions extends \XLite\View\AView
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getExceptions()
     {
@@ -152,7 +152,7 @@ class ModifyExceptions extends \XLite\View\AView
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isNotPartException(array $exception, \XLite\Module\CDev\ProductOptions\Model\OptionGroup $group)
     {
@@ -168,7 +168,7 @@ class ModifyExceptions extends \XLite\View\AView
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isOptionSelected(array $exception, \XLite\Module\CDev\ProductOptions\Model\Option $option)
     {
@@ -182,7 +182,7 @@ class ModifyExceptions extends \XLite\View\AView
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getEmptyException()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer\Base;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer\Base;
  * Order 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class Order extends \XLite\Controller\Customer\ACustomer
 {
@@ -41,7 +41,7 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      *
      * @var   \XLite\Model\Order
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $order;
 
@@ -50,7 +50,7 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getOrderId()
     {
@@ -62,7 +62,7 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * 
      * @return \XLite\Model\Order
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getOrder()
     {
@@ -78,7 +78,7 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isAdmin()
     {
@@ -90,7 +90,7 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkOrderProfile()
     {
@@ -102,7 +102,7 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkOrderAccess()
     {
@@ -114,7 +114,7 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkAccess()
     {
@@ -126,7 +126,7 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addBaseLocation()
     {

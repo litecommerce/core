@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Model;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\ProductOptions\Model;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
@@ -43,7 +43,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @var    \Doctrine\Common\Collections\ArrayCollection
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\ProductOptions\Model\OptionGroup", mappedBy="product", cascade={"all"})
      */
@@ -55,7 +55,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $productOptions = null;
 
@@ -65,7 +65,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function hasOptions()
     {
@@ -78,7 +78,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @return array(\XLite\Module\CDev\ProductOptions\Model\OptionGroup)
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getActiveOptions()
     {
@@ -96,7 +96,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isDisplayPriceModifier()
     {
@@ -111,7 +111,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @return array|void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function prepareOptions(array $options)
     {
@@ -167,7 +167,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDefaultProductOptions()
     {
@@ -226,7 +226,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkOptionsException(array $options)
     {
@@ -250,7 +250,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {

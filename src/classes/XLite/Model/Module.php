@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Module
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Module")
  * @Table  (name="modules",
@@ -56,7 +56,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -69,7 +69,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="64")
      */
@@ -80,7 +80,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="64")
      */
@@ -91,7 +91,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="32")
      */
@@ -102,7 +102,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
@@ -113,7 +113,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
@@ -126,7 +126,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
@@ -137,7 +137,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -148,7 +148,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -159,7 +159,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -170,7 +170,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -181,7 +181,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="decimal", precision=14, scale=2)
      */
@@ -192,7 +192,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length=3)
      */
@@ -203,7 +203,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length=8)
      */
@@ -214,7 +214,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length=8)
      */
@@ -225,7 +225,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -236,7 +236,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length=255)
      */
@@ -247,7 +247,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length=255)
      */
@@ -258,7 +258,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="text")
      */
@@ -269,7 +269,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length=255)
      */
@@ -280,7 +280,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length=255)
      */
@@ -291,7 +291,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length=255)
      */
@@ -302,7 +302,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="array")
      */
@@ -316,7 +316,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMajorVersion()
     {
@@ -330,7 +330,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMinorVersion()
     {
@@ -344,7 +344,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getModuleName()
     {
@@ -358,7 +358,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAuthorName()
     {
@@ -372,7 +372,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDescription()
     {
@@ -386,7 +386,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getIconURL()
     {
@@ -400,7 +400,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPageURL()
     {
@@ -414,7 +414,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAuthorPageURL()
     {
@@ -428,7 +428,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDependencies()
     {
@@ -446,7 +446,7 @@ class Module extends \XLite\Model\AEntity
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function callModuleMethod($method, $result = null, array $args = array())
     {
@@ -460,7 +460,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkModuleMainClass()
     {
@@ -472,7 +472,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMainClass()
     {
@@ -488,7 +488,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getActualName()
     {
@@ -500,7 +500,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getVersion()
     {
@@ -512,7 +512,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function hasIcon()
     {
@@ -524,7 +524,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSettingsForm()
     {
@@ -537,7 +537,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDependentModules()
     {
@@ -556,7 +556,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isFree()
     {
@@ -570,7 +570,7 @@ class Module extends \XLite\Model\AEntity
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isPurchased()
     {
@@ -582,7 +582,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRootDirectory()
     {
@@ -594,7 +594,7 @@ class Module extends \XLite\Model\AEntity
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPath()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\LanguagesModify;
@@ -32,7 +32,7 @@ namespace XLite\View\LanguagesModify;
  * Add new label dialog
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class AddLabel extends \XLite\View\AView
 {
@@ -41,7 +41,7 @@ class AddLabel extends \XLite\View\AView
      * 
      * @return \XLite\Model\Language
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDefaultLanguage()
     {
@@ -55,7 +55,7 @@ class AddLabel extends \XLite\View\AView
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isRequiredLanguage(\XLite\Model\Language $language)
     {
@@ -67,7 +67,7 @@ class AddLabel extends \XLite\View\AView
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAddedLanguages()
     {
@@ -80,7 +80,7 @@ class AddLabel extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

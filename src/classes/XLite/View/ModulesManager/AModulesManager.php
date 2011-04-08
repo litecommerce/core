@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\ModulesManager;
@@ -32,7 +32,7 @@ namespace XLite\View\ModulesManager;
  * Addons search and installation widget
  *
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class AModulesManager extends \XLite\View\Dialog
 {
@@ -41,7 +41,7 @@ class AModulesManager extends \XLite\View\Dialog
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModuleId()
     {   
@@ -53,7 +53,7 @@ class AModulesManager extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -65,7 +65,7 @@ class AModulesManager extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {

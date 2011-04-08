@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Model;
@@ -34,7 +34,7 @@ namespace XLite\Module\CDev\DrupalConnector\Model;
  * @package    XLite
  * @subpackage Model
  * @see        ____class_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
 {
@@ -43,7 +43,7 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
      *
      * @var    \XLite\Module\CDev\DrupalConnector\Model\DrupalRole
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\DrupalConnector\Model\DrupalRole", mappedBy="profile", cascade={"all"})
      */
@@ -55,7 +55,7 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareCreate()
     {
@@ -72,7 +72,7 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
      * @return object|void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCMSProfile()
     {
@@ -88,7 +88,7 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function updateDrupalRoles($newDrupalRoles)
     {

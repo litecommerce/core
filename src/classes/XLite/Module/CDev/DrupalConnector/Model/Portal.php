@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Model;
@@ -36,7 +36,7 @@ namespace XLite\Module\CDev\DrupalConnector\Model;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Portal extends \XLite\Base\SuperClass
 {
@@ -46,7 +46,7 @@ class Portal extends \XLite\Base\SuperClass
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $url;
 
@@ -56,7 +56,7 @@ class Portal extends \XLite\Base\SuperClass
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $controller;
 
@@ -66,7 +66,7 @@ class Portal extends \XLite\Base\SuperClass
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $title = '';
 
@@ -76,7 +76,7 @@ class Portal extends \XLite\Base\SuperClass
      * @var    integer
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $type;
 
@@ -87,7 +87,7 @@ class Portal extends \XLite\Base\SuperClass
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getContentCallback()
     {
@@ -100,7 +100,7 @@ class Portal extends \XLite\Base\SuperClass
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAccessCallback()
     {
@@ -113,7 +113,7 @@ class Portal extends \XLite\Base\SuperClass
      * @return integer
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultType()
     {
@@ -131,7 +131,7 @@ class Portal extends \XLite\Base\SuperClass
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct($url, $controller, $title = '', $type = null)
     {
@@ -152,7 +152,7 @@ class Portal extends \XLite\Base\SuperClass
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getURL()
     {
@@ -165,7 +165,7 @@ class Portal extends \XLite\Base\SuperClass
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getController()
     {
@@ -178,7 +178,7 @@ class Portal extends \XLite\Base\SuperClass
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -191,7 +191,7 @@ class Portal extends \XLite\Base\SuperClass
      * @return integer
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getType()
     {
@@ -204,7 +204,7 @@ class Portal extends \XLite\Base\SuperClass
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDrupalMenuDescription()
     {
@@ -226,7 +226,7 @@ class Portal extends \XLite\Base\SuperClass
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getLCArgs($path, array $args = array(), array $pageArgs = array())
     {
@@ -246,7 +246,7 @@ class Portal extends \XLite\Base\SuperClass
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDrupalArgs($target, $action, array $args = array())
     {

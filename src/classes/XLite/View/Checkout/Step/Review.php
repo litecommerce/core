@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Checkout\Step;
@@ -32,7 +32,7 @@ namespace XLite\View\Checkout\Step;
  * Review checkout step
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Review extends \XLite\View\Checkout\Step\AStep
 {
@@ -41,7 +41,7 @@ class Review extends \XLite\View\Checkout\Step\AStep
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getStepName()
     {
@@ -53,7 +53,7 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -65,7 +65,7 @@ class Review extends \XLite\View\Checkout\Step\AStep
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isCompleted()
     {
@@ -77,7 +77,7 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTermsURL()
     {
@@ -89,7 +89,7 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPlaceTitle()
     {
@@ -106,7 +106,7 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * 
      * @return \XLite\Model\Payment\Base\Processor
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProcessor()
     {
@@ -120,7 +120,7 @@ class Review extends \XLite\View\Checkout\Step\AStep
      * 
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPaymentTemplate()
     {

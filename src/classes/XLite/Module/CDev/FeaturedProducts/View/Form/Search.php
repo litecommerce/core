@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\View\Form;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\FeaturedProducts\View\Form;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Search extends \XLite\View\Form\Product\Search\Admin\AAdmin
 {
@@ -42,7 +42,7 @@ class Search extends \XLite\View\Form\Product\Search\Admin\AAdmin
      *
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -54,7 +54,7 @@ class Search extends \XLite\View\Form\Product\Search\Admin\AAdmin
      *
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -66,7 +66,7 @@ class Search extends \XLite\View\Form\Product\Search\Admin\AAdmin
      *
      * @return array
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultParams()
     {

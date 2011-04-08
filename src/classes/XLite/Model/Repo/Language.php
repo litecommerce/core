@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo;
  * Language repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Language extends \XLite\Model\Repo\Base\I18n
 {
@@ -41,7 +41,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = self::TYPE_SERVICE;
 
@@ -50,7 +50,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $defaultOrderBy = 'code';
 
@@ -59,7 +59,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * 
      * @var   \XLite\Model\Language
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $defaultLanguage = null;
 
@@ -70,7 +70,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getLanguagesQuery()
     {
@@ -87,7 +87,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * 
      * @return string Language code
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDefaultLanguage()
     {
@@ -112,7 +112,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineCacheCells()
     {
@@ -136,7 +136,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findAllLanguages()
     {
@@ -154,7 +154,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineAllLanguagesQuery()
     {
@@ -170,7 +170,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findActiveLanguages()
     {
@@ -188,7 +188,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findInactiveLanguages()
     {
@@ -202,7 +202,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineByStatusQuery($status)
     {
@@ -220,7 +220,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findAddedLanguages()
     {
@@ -232,7 +232,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineAddedQuery()
     {
@@ -252,7 +252,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      *  
      * @return \XLite\Model\Language|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findOneByCode($code)
     {
@@ -266,7 +266,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineOneByCodeQuery($code)
     {

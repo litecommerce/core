@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\RemoteModel\Repo;
@@ -32,7 +32,7 @@ namespace XLite\RemoteModel\Repo;
  * Abstract remote model repository class
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ARepo extends \XLite\Base\Singleton
 {
@@ -44,7 +44,7 @@ class ARepo extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function map(\XLite\RemoteModel\AModel $model, array $data)
     {

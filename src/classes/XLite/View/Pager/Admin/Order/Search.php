@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Pager\Admin\Order;
@@ -32,7 +32,7 @@ namespace XLite\View\Pager\Admin\Order;
  * Pager for the orders search page
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Search extends \XLite\View\Pager\Admin\Order\AOrder
 {

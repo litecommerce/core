@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * The "profile" model class
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  * 
  * @Entity (repositoryClass="\XLite\Model\Repo\Profile")
  * @Table  (name="profiles",
@@ -55,7 +55,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -68,7 +68,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="128")
      */
@@ -79,7 +79,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="32")
      */
@@ -90,7 +90,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="128")
      */
@@ -101,7 +101,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="128")
      */
@@ -112,7 +112,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -123,7 +123,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -134,7 +134,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="32")
      */
@@ -145,7 +145,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -156,7 +156,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -167,7 +167,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -178,7 +178,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="fixedstring", length="1")
      */
@@ -189,7 +189,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -200,7 +200,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @var   \XLite\Model\Order
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @OneToOne  (targetEntity="XLite\Model\Order")
      * @JoinColumn (name="order_id", referencedColumnName="order_id")
@@ -212,7 +212,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="2")
      */
@@ -223,7 +223,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer", nullable=true)
      */
@@ -234,7 +234,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer", nullable=true)
      */
@@ -245,7 +245,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="membership_id", referencedColumnName="membership_id")
@@ -257,7 +257,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="pending_membership_id", referencedColumnName="membership_id")
@@ -269,7 +269,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Address", mappedBy="profile", cascade={"all"})
      */
@@ -280,7 +280,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $orders_count = null;
 
@@ -292,7 +292,7 @@ class Profile extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setMembership(\XLite\Model\Membership $membership = null)
     {
@@ -306,7 +306,7 @@ class Profile extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setPendingMembership(\XLite\Model\Membership $pendingMembership = null)
     {
@@ -318,7 +318,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @return \XLite\Model\Address
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getBillingAddress()
     {
@@ -330,7 +330,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @return \XLite\Model\Address
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getShippingAddress()
     {
@@ -342,7 +342,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOrdersCount()
     {
@@ -362,7 +362,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isEnabled()
     {
@@ -374,7 +374,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function enable() 
     {
@@ -386,7 +386,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function disable() 
     {
@@ -398,7 +398,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isAdmin()
     {
@@ -410,7 +410,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function create()
     {
@@ -424,7 +424,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function update($cloneMode = false)
     {
@@ -452,7 +452,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function delete()
     {
@@ -476,7 +476,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isSameAddress()
     {
@@ -517,7 +517,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isEqualAddress()
     {
@@ -534,7 +534,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @return \XLite\Model\AEntity
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function cloneEntity()
     {
@@ -578,7 +578,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -594,7 +594,7 @@ class Profile extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setOrder(\XLite\Model\Order $order = null)
     {
@@ -607,7 +607,7 @@ class Profile extends \XLite\Model\AEntity
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareCreate()
     {
@@ -660,7 +660,7 @@ class Profile extends \XLite\Model\AEntity
      *  
      * @return \XLite\Model\Address
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAddressByType($atype = \XLite\Model\Address::BILLING)
     {

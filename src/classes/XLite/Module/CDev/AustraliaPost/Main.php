@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\AustraliaPost;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\AustraliaPost;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class Main extends \XLite\Module\AModule
 {
@@ -43,7 +43,7 @@ abstract class Main extends \XLite\Module\AModule
      * @var    string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAuthorName()
     {
@@ -56,7 +56,7 @@ abstract class Main extends \XLite\Module\AModule
      * @var    string
      * @access public
      * @see    ____func_see____
-     * @since  3.0
+     * @since  1.0.0
      */
     public static function getModuleName()
     {
@@ -68,7 +68,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @var    string
      * @access protected
-     * @since  3.0
+     * @since  1.0.0
      */
     public static function getMinorVersion()
     {
@@ -80,7 +80,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @var    string
      * @access protected
-     * @since  3.0
+     * @since  1.0.0
      */
     public static function getDescription()
     {
@@ -92,7 +92,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @return boolean 
      * @access public
-     * @since  3.0
+     * @since  1.0.0
      */
     public static function showSettingsForm()
     {
@@ -104,7 +104,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @return string
      * @access public
-     * @since  3.0
+     * @since  1.0.0
      */
     public static function getSettingsForm() 
     {
@@ -116,7 +116,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @return void
      * @access public
-     * @since  3.0
+     * @since  1.0.0
      */
     public static function init() 
     {
@@ -134,7 +134,7 @@ abstract class Main extends \XLite\Module\AModule
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getPostInstallationNotes()
     {

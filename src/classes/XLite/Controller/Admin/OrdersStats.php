@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Orders statistics page controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class OrdersStats extends \XLite\Controller\Admin\Stats
 {
@@ -41,7 +41,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPageTemplate()
     {
@@ -53,7 +53,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -84,7 +84,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -96,7 +96,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -114,7 +114,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function save($index, $order, $paid = false)
     {
@@ -139,7 +139,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function sum($index, $period, $amount, $paid)
     {
@@ -159,7 +159,7 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function summarize($order)
     {

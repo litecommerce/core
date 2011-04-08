@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\Validator\Pair;
@@ -32,7 +32,7 @@ namespace XLite\Core\Validator\Pair;
  * Country-state validator 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class CountryState extends \XLite\Core\Validator\Pair\APair
 {
@@ -44,7 +44,7 @@ class CountryState extends \XLite\Core\Validator\Pair\APair
      * @return void
      * @throws \XLite\Core\Validator\Exception
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function validate($data)
     {
@@ -93,7 +93,7 @@ class CountryState extends \XLite\Core\Validator\Pair\APair
      *
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function sanitize($data)
     {

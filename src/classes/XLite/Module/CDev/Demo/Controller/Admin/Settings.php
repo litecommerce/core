@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\Demo\Controller\Admin;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\Demo\Controller\Admin;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Settings extends \XLite\Controller\Admin\Settings implements \XLite\Base\IDecorator
 {
@@ -43,7 +43,7 @@ class Settings extends \XLite\Controller\Admin\Settings implements \XLite\Base\I
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTabPages()
     {

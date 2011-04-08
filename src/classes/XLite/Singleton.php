@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite;
@@ -32,7 +32,7 @@ namespace XLite;
  * Singleton 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class Singleton
 {
@@ -41,7 +41,7 @@ abstract class Singleton
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public static $xlite = '\XLite';
 
@@ -50,7 +50,7 @@ abstract class Singleton
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public static $request = '\XLite\Core\Request';
 
@@ -59,7 +59,7 @@ abstract class Singleton
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public static $layout = '\XLite\Core\Layout';
 
@@ -68,7 +68,7 @@ abstract class Singleton
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public static $session = '\XLite\Core\Session';
 
@@ -77,7 +77,7 @@ abstract class Singleton
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public static $config = '\XLite\Core\Config';
 
@@ -86,7 +86,7 @@ abstract class Singleton
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public static $flexy = '\XLite\Core\FlexyCompiler';
 
@@ -96,7 +96,7 @@ abstract class Singleton
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function init()
     {

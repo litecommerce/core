@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * Miscelaneous convertion routines
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Converter extends \XLite\Base\Singleton
 {
@@ -41,7 +41,7 @@ class Converter extends \XLite\Base\Singleton
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $to = array(
         'Q', 'W', 'E', 'R', 'T',
@@ -57,7 +57,7 @@ class Converter extends \XLite\Base\Singleton
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $from = array(
         '_q', '_w', '_e', '_r', '_t',
@@ -75,7 +75,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function convertToCamelCase($string)
     {
@@ -89,7 +89,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function convertFromCamelCase($string)
     {
@@ -103,7 +103,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function prepareMethodName($string)
     {
@@ -146,7 +146,7 @@ class Converter extends \XLite\Base\Singleton
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
     {
@@ -181,7 +181,7 @@ class Converter extends \XLite\Base\Singleton
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function buildFullURL($target = '', $action = '', array $params = array())
     {
@@ -196,7 +196,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getArraySchema(array $keys = array(), array $values = array())
     {
@@ -211,7 +211,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function convertTreeToFlatArray(array $data, $currKey = '')
     {
@@ -230,7 +230,7 @@ class Converter extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function generateRandomToken()
     {
@@ -242,7 +242,7 @@ class Converter extends \XLite\Base\Singleton
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isGDEnabled()
     {
@@ -260,7 +260,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isURL($url)
     {
@@ -276,7 +276,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getPlainClassName(\XLite\Base $obj)
     {
@@ -290,7 +290,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function formatCurrency($price)
     {
@@ -314,7 +314,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function formatPrice($price)
     {
@@ -338,7 +338,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return float
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function convertWeightUnits($value, $srcUnit, $dstUnit)
     {
@@ -362,7 +362,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function formatTime($base, $format = null)
     {
@@ -382,7 +382,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function formatDate($base, $format = null)
     {
@@ -401,7 +401,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function sortURLParams($a, $b)
     {

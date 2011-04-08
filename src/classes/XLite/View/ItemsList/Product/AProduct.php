@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList\Product;
@@ -32,7 +32,7 @@ namespace XLite\View\ItemsList\Product;
  * Abstract product list
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AProduct extends \XLite\View\ItemsList\AItemsList
 {
@@ -51,7 +51,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getDisplayMode();
 
@@ -63,7 +63,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $params = array())
     {
@@ -82,7 +82,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -98,7 +98,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -115,7 +115,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -129,7 +129,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -141,7 +141,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageBodyDir()
     {
@@ -153,7 +153,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSortByModeDefault()
     {
@@ -165,7 +165,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      *
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -180,7 +180,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getJSHandlerClassName()
     {

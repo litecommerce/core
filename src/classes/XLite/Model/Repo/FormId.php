@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo;
  * Form id repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class FormId extends \XLite\Model\Repo\ARepo
 {
@@ -47,7 +47,7 @@ class FormId extends \XLite\Model\Repo\ARepo
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = self::TYPE_SERVICE;
 
@@ -56,7 +56,7 @@ class FormId extends \XLite\Model\Repo\ARepo
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $defaultOrderBy = array(
         'date' => false,
@@ -68,7 +68,7 @@ class FormId extends \XLite\Model\Repo\ARepo
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $chars = array(
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -85,7 +85,7 @@ class FormId extends \XLite\Model\Repo\ARepo
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $frontierLength = 100;
 
@@ -97,7 +97,7 @@ class FormId extends \XLite\Model\Repo\ARepo
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function countByFormIdAndSessionId($formId, $sessionId = null)
     {
@@ -115,7 +115,7 @@ class FormId extends \XLite\Model\Repo\ARepo
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function generateFormId($sessionId = null)
     {
@@ -150,7 +150,7 @@ class FormId extends \XLite\Model\Repo\ARepo
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function removeExpired($sessionId = null)
     {
@@ -172,7 +172,7 @@ class FormId extends \XLite\Model\Repo\ARepo
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function processSchema(array $schema, $type)
     {
@@ -200,7 +200,7 @@ class FormId extends \XLite\Model\Repo\ARepo
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineByFormIdAndSessionIdQuery($formId, $sessionId)
     {
@@ -218,7 +218,7 @@ class FormId extends \XLite\Model\Repo\ARepo
      * 
      * @return integer|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFrontierId($sessionId)
     {
@@ -233,7 +233,7 @@ class FormId extends \XLite\Model\Repo\ARepo
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineGetFrontierQuery($frontier, $sessionId)
     {
@@ -253,7 +253,7 @@ class FormId extends \XLite\Model\Repo\ARepo
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineRemoveExpiredQuery($id, $sessionId)
     {

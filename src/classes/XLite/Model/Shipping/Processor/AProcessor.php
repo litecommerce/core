@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Shipping\Processor;
@@ -32,7 +32,7 @@ namespace XLite\Model\Shipping\Processor;
  * Shipping processor model
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AProcessor extends \XLite\Base\SuperClass
 {
@@ -41,7 +41,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $processorId = null;
 
@@ -50,7 +50,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $apiURL = null;
 
@@ -59,7 +59,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $apiCommunicationLog = null;
 
@@ -69,7 +69,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract public function getProcessorName();
 
@@ -81,7 +81,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier, $ignoreCache = false);
 
@@ -91,7 +91,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct()
     {
@@ -102,7 +102,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getShippingMethods()
     {
@@ -115,7 +115,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProcessorId()
     {
@@ -127,7 +127,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isMethodNamesAdjustable()
     {
@@ -139,7 +139,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getApiURL()
     {
@@ -151,7 +151,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getApiCommunicationLog()
     {
@@ -165,7 +165,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDataFromCache($key)
     {
@@ -190,7 +190,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function saveDataInCache($key, $data)
     {

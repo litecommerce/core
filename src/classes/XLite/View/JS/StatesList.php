@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\JS;
@@ -32,7 +32,7 @@ namespace XLite\View\JS;
  * \XLite\View\JS\StatesList 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class StatesList extends \XLite\View\JS\AJS
 {
@@ -41,7 +41,7 @@ class StatesList extends \XLite\View\JS\AJS
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCountriesStates()
     {
@@ -53,7 +53,7 @@ class StatesList extends \XLite\View\JS\AJS
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

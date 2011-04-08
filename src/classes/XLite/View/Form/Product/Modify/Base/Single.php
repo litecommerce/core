@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Product\Modify\Base;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Product\Modify\Base;
  * Details (abstract)
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class Single extends \XLite\View\Form\Product\Modify\AModify
 {
@@ -41,7 +41,7 @@ abstract class Single extends \XLite\View\Form\Product\Modify\AModify
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -53,7 +53,7 @@ abstract class Single extends \XLite\View\Form\Product\Modify\AModify
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultParams()
     {

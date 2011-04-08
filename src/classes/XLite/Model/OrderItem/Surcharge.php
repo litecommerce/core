@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\OrderItem;
@@ -32,7 +32,7 @@ namespace XLite\Model\OrderItem;
  * Surcharge
  *
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity
  * @Table  (name="order_item_surcharges")
@@ -44,7 +44,7 @@ class Surcharge extends \XLite\Model\Base\Surcharge
      *
      * @var   \XLite\Model\OrderItem
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\OrderItem", inversedBy="surcharges")
      * @JoinColumn (name="item_id", referencedColumnName="item_id")
@@ -56,7 +56,7 @@ class Surcharge extends \XLite\Model\Base\Surcharge
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOrder()
     {

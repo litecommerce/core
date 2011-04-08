@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * Login page controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Login extends \XLite\Controller\Customer\ACustomer
 {
@@ -47,7 +47,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $params = array('target', 'mode');
 
@@ -56,7 +56,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * 
      * @var   \XLite\Model\Profile|integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $profile;
 
@@ -66,7 +66,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function redirectFromLogin()
     {
@@ -87,7 +87,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getShopURL($url = '', $secure = false)
     {
@@ -102,7 +102,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -114,7 +114,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRedirectFromLoginURL()
     {
@@ -126,7 +126,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * 
      * @return \XLite\Model\Profile
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performLogin()
     {
@@ -141,7 +141,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionLogin()
     {
@@ -173,7 +173,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionLogoff()
     {
@@ -198,7 +198,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function actionPostprocessLogin()
     {

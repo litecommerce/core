@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\OrderList;
@@ -32,7 +32,7 @@ namespace XLite\View\OrderList;
  * Abstract order list
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AOrderList extends \XLite\View\Dialog
 {
@@ -41,7 +41,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      * 
      * @var   array(\XLite\Model\Order)
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $orders = null;
 
@@ -50,7 +50,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $widgetClass = '';
 
@@ -60,7 +60,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      * 
      * @return array(\XLite\Model\Order)
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract public function getOrders();
 
@@ -70,7 +70,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getWidgetKeys();
 
@@ -80,7 +80,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -96,7 +96,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getClassIdentifier()
     {
@@ -108,7 +108,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAJAXRequestParamsAsJSObject()
     {
@@ -137,7 +137,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -149,7 +149,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -161,7 +161,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -174,7 +174,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAJAXRequestParams()
     {

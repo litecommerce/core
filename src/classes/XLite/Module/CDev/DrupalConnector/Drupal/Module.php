@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Drupal;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
@@ -50,7 +50,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $portals = array();
 
@@ -65,7 +65,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addMenus(array &$menus)
     {
@@ -77,7 +77,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAdminAreaURLArgs()
     {
@@ -100,7 +100,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function __construct()
     {
@@ -120,7 +120,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function registerPortal($url, $controller, $title = '', $type = MENU_LOCAL_TASK)
     {
@@ -133,7 +133,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function registerPortals()
     {
@@ -153,7 +153,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPortalMenus()
     {
@@ -174,7 +174,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareMenus(array $menus)
     {
@@ -187,7 +187,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPortals()
     {
@@ -202,7 +202,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return \XLite\Module\CDev\DrupalConnector\Model\Portal|null
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPortal($path)
     {
@@ -218,7 +218,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function invokeHookInit()
     {
@@ -231,7 +231,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function invokeHookMenu()
     {
@@ -268,7 +268,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function optimizeJSFiles(array $list)
     {
@@ -296,7 +296,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function optimizeCSSFiles($list)
     {

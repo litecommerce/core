@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\FormField;
@@ -32,7 +32,7 @@ namespace XLite\View\FormField;
  * Label 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Label extends \XLite\View\FormField\Label\ALabel
 {
@@ -41,7 +41,7 @@ class Label extends \XLite\View\FormField\Label\ALabel
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {

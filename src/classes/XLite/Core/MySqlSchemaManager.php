@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * Doctrine-based MySQL schema manager
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class MySqlSchemaManager extends \Doctrine\DBAL\Schema\MySqlSchemaManager
 {
@@ -41,7 +41,7 @@ class MySqlSchemaManager extends \Doctrine\DBAL\Schema\MySqlSchemaManager
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function listTableNames()
     {

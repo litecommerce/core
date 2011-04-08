@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\View\Form\Item;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\ProductOptions\View\Form\Item;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class ChangeOptions extends \XLite\View\Form\AForm
 {
@@ -51,7 +51,7 @@ class ChangeOptions extends \XLite\View\Form\AForm
      *
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormName()
     {
@@ -63,7 +63,7 @@ class ChangeOptions extends \XLite\View\Form\AForm
      *
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -75,7 +75,7 @@ class ChangeOptions extends \XLite\View\Form\AForm
      *
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -87,7 +87,7 @@ class ChangeOptions extends \XLite\View\Form\AForm
      *
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -105,7 +105,7 @@ class ChangeOptions extends \XLite\View\Form\AForm
      * 
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function initView()
     {
@@ -119,7 +119,7 @@ class ChangeOptions extends \XLite\View\Form\AForm
      * 
      * @return array
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormDefaultParams()
     {

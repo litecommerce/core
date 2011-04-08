@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\Validator;
@@ -32,7 +32,7 @@ namespace XLite\Core\Validator;
  * Integer
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Float extends \XLite\Core\Validator\Scalar
 {
@@ -41,7 +41,7 @@ class Float extends \XLite\Core\Validator\Scalar
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $min;
 
@@ -50,7 +50,7 @@ class Float extends \XLite\Core\Validator\Scalar
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $max;
 
@@ -62,7 +62,7 @@ class Float extends \XLite\Core\Validator\Scalar
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setRange($min, $max)
     {
@@ -83,7 +83,7 @@ class Float extends \XLite\Core\Validator\Scalar
      * @return void
      * @throws \XLite\Core\Validator\Exception
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function validate($data)
     {
@@ -109,7 +109,7 @@ class Float extends \XLite\Core\Validator\Scalar
      *
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function sanitize($data)
     {
