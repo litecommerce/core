@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Shipping;
@@ -32,7 +32,7 @@ namespace XLite\Model\Shipping;
  * Shipping method model
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity (repositoryClass="XLite\Model\Repo\Shipping\Method")
  * @Table  (name="shipping_methods",
@@ -51,7 +51,7 @@ class Method extends \XLite\Model\Base\I18n
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -64,7 +64,7 @@ class Method extends \XLite\Model\Base\I18n
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -75,7 +75,7 @@ class Method extends \XLite\Model\Base\I18n
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -86,7 +86,7 @@ class Method extends \XLite\Model\Base\I18n
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -97,7 +97,7 @@ class Method extends \XLite\Model\Base\I18n
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
@@ -108,7 +108,7 @@ class Method extends \XLite\Model\Base\I18n
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -119,7 +119,7 @@ class Method extends \XLite\Model\Base\I18n
      * 
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Shipping\Markup", mappedBy="shipping_method", cascade={"all"})
      */
@@ -131,7 +131,7 @@ class Method extends \XLite\Model\Base\I18n
      * 
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @ManyToMany (targetEntity="XLite\Model\ProductClass", inversedBy="methods")
      * @JoinTable (name="shipping_class_links",
@@ -149,7 +149,7 @@ class Method extends \XLite\Model\Base\I18n
      *                                     
      * @return void                        
      * @see    ____func_see____            
-     * @since  3.0.0                       
+     * @since  1.0.0
      */                                    
     public function __construct(array $data = array())
     {                                                 

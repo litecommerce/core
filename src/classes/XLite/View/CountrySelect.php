@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -34,7 +34,7 @@ namespace XLite\View;
  * \XLite\View\CountrySelect 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class CountrySelect extends \XLite\View\FormField
 {
@@ -54,7 +54,7 @@ class CountrySelect extends \XLite\View\FormField
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -86,7 +86,7 @@ class CountrySelect extends \XLite\View\FormField
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isEnabledOnly()
     {
@@ -98,7 +98,7 @@ class CountrySelect extends \XLite\View\FormField
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCountries()
     {

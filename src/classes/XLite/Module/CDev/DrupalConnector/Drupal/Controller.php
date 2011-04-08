@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Drupal;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
@@ -53,7 +53,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @var    boolean
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $arePreinitialized = false;
 
@@ -83,7 +83,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return boolean
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isAJAX()
     {
@@ -98,7 +98,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function displayAJAXContent($content)
     {
@@ -119,7 +119,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setNocacheHeaders()
     {
@@ -143,7 +143,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setBreadcrumbs()
     {
@@ -189,7 +189,7 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performCommonActions()
     {

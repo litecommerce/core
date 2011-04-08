@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Product\Details;
@@ -32,7 +32,7 @@ namespace XLite\View\Product\Details;
  * ADetails 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ADetails extends \XLite\View\Product\AProduct
 {
@@ -41,7 +41,7 @@ abstract class ADetails extends \XLite\View\Product\AProduct
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {

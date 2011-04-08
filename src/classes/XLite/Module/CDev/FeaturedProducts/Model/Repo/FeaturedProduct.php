@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\Model\Repo;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\FeaturedProducts\Model\Repo;
  *
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class FeaturedProduct extends \XLite\Model\Repo\ARepo
 {
@@ -43,7 +43,7 @@ class FeaturedProduct extends \XLite\Model\Repo\ARepo
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $defaultOrderBy = 'order_by';
 
@@ -55,7 +55,7 @@ class FeaturedProduct extends \XLite\Model\Repo\ARepo
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function findByCategoryId($categoryId)
     {
@@ -74,7 +74,7 @@ class FeaturedProduct extends \XLite\Model\Repo\ARepo
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineByCategoryIdQuery($categoryId)
     {
@@ -91,7 +91,7 @@ class FeaturedProduct extends \XLite\Model\Repo\ARepo
      * @return array(\XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct) Objects
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFeaturedProducts($categoryId)
     {

@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\View\Model\Profile;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\View\Model\Profile;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \XLite\Base\IDecorator
 {
@@ -43,7 +43,7 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getIncompleteProfileErrorMessage()
     {
@@ -57,7 +57,7 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAccessDeniedMessage()
     {
@@ -71,7 +71,7 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultModelObject()
     {
@@ -100,7 +100,7 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
     * 
     * @return void
     * @see    ____func_see____
-    * @since  3.0.0
+    * @since  1.0.0
     */
     public function getProfileId()
     {
@@ -121,7 +121,7 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
      *
      * @return boolean 
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkAccess()
     {
@@ -140,7 +140,7 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $params = array(), array $sections = array())
     {
@@ -158,7 +158,7 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addDataSavedTopMessage()
     {
@@ -173,7 +173,7 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addDataDeletedTopMessage()
     {

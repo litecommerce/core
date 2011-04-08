@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo;
  * Country repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class State extends \XLite\Model\Repo\ARepo
 {
@@ -41,7 +41,7 @@ class State extends \XLite\Model\Repo\ARepo
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = self::TYPE_SERVICE;
 
@@ -50,7 +50,7 @@ class State extends \XLite\Model\Repo\ARepo
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $defaultOrderBy = 'state';
 
@@ -62,7 +62,7 @@ class State extends \XLite\Model\Repo\ARepo
      * 
      * @return \XLite\Model\State
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOtherState($customState = '')
     {
@@ -80,7 +80,7 @@ class State extends \XLite\Model\Repo\ARepo
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isOtherStateId($stateId)
     {
@@ -94,7 +94,7 @@ class State extends \XLite\Model\Repo\ARepo
      *  
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCodeById($stateId)
     {
@@ -111,7 +111,7 @@ class State extends \XLite\Model\Repo\ARepo
      *  
      * @return \XLite\Model\State
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findById($stateId, $customState = '')
     {
@@ -127,7 +127,7 @@ class State extends \XLite\Model\Repo\ARepo
      *  
      * @return \XLite\Model\State
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findOneByStateId($stateId)
     {
@@ -145,7 +145,7 @@ class State extends \XLite\Model\Repo\ARepo
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findAllStates()
     {
@@ -165,7 +165,7 @@ class State extends \XLite\Model\Repo\ARepo
      *  
      * @return \XLite\Model\State|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findByCountryCode($countryCode)
     {
@@ -184,7 +184,7 @@ class State extends \XLite\Model\Repo\ARepo
      *  
      * @return \XLite\Model\State|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findOneByCountryAndCode($countryCode, $code)
     {
@@ -199,7 +199,7 @@ class State extends \XLite\Model\Repo\ARepo
      *
      * @return \XLite\Model\AEntity|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
     {
@@ -214,7 +214,7 @@ class State extends \XLite\Model\Repo\ARepo
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineCacheCells()
     {
@@ -234,7 +234,7 @@ class State extends \XLite\Model\Repo\ARepo
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineGetCodeByIdQuery($stateId)
     {
@@ -251,7 +251,7 @@ class State extends \XLite\Model\Repo\ARepo
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineOneByStateIdQuery($stateId)
     {
@@ -268,7 +268,7 @@ class State extends \XLite\Model\Repo\ARepo
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineAllStatesQuery()
     {
@@ -284,7 +284,7 @@ class State extends \XLite\Model\Repo\ARepo
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineByCountryQuery(\XLite\Model\Country $country)
     {
@@ -301,7 +301,7 @@ class State extends \XLite\Model\Repo\ARepo
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineOneByCountryAndCodeQuery($countryCode, $code)
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * CMS connector 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class CMSConnector extends \XLite\Base\Singleton
 {
@@ -47,7 +47,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $currentCMS = null;
 
@@ -57,7 +57,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $widgetsList = array(
         '\XLite\View\TopCategories' => 'Categories list',
@@ -76,7 +76,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $pageTypes = array(
         'category'   => 'Category page',
@@ -92,7 +92,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract public function getCMSName();
 
@@ -102,7 +102,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isCMSStarted()
     {
@@ -116,7 +116,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function mapRequest(array $request)
     {
@@ -128,7 +128,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function init()
     {
@@ -140,7 +140,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkCurrentCMS()
     {
@@ -154,7 +154,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *
      * @return array|string|null
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getWidgetsList($name = null)
     {
@@ -166,7 +166,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPageTypes()
     {
@@ -180,7 +180,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *  
      * @return \XLite
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getApplication($applicationId = null)
     {
@@ -196,7 +196,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *
      * @return \XLite\View\Controller
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getViewer($applicationId = null)
     {
@@ -212,7 +212,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * 
      * @return \XLite\Controller\AController
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getController($applicationId = null)
     {
@@ -228,7 +228,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function runController($applicationId = null)
     {
@@ -246,7 +246,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *  
      * @return \XLite\Core\WidgetDataTransport
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getWidget($class, array $params = array(), $delta = 0)
     {
@@ -263,7 +263,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *
      * @return \XLite\Core\WidgetDataTransport
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPageInstance($target, array $params = array())
     {
@@ -282,7 +282,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function prepareProfileData($cmsUserId, array $data)
     {
@@ -296,7 +296,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProfileIdByCMSId($cmsUserId)
     {
@@ -313,7 +313,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCMSIdByProfileId($lcUserId)
     {
@@ -330,7 +330,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *  
      * @return \XLite\Model\Profile
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProfile($cmsUserId)
     {
@@ -348,7 +348,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isAllowed()
     {
@@ -378,7 +378,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCleanURL(array $args)
     {
@@ -413,7 +413,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getURLByCleanURL($path)
     {
@@ -470,7 +470,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSessionTtl()
     {
@@ -485,7 +485,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProfileDBFields($cmsUserId)
     {
@@ -503,7 +503,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProfileWhereCondition($cmsUserId)
     {
@@ -517,7 +517,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCleanURLTargets()
     {
@@ -535,7 +535,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *  
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCategoryCleanURL($id, array $params = array())
     {
@@ -554,7 +554,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProductCleanURL($productId)
     {

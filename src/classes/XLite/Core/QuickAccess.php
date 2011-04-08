@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * Quick access class
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class QuickAccess
 {
@@ -41,7 +41,7 @@ class QuickAccess
      *
      * @var   \Doctrine\ORM\EntityManager
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $em;
 
@@ -50,7 +50,7 @@ class QuickAccess
      * 
      * @var   \XLite\Core\Translation
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $translation;
 
@@ -59,7 +59,7 @@ class QuickAccess
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $entities = array();
 
@@ -73,7 +73,7 @@ class QuickAccess
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function t($name, array $arguments = array(), $code = null)
     {
@@ -86,7 +86,7 @@ class QuickAccess
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct()
     {
@@ -117,7 +117,7 @@ class QuickAccess
      * 
      * @return \Doctrine\ORM\EntityManager
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function em()
     {
@@ -131,7 +131,7 @@ class QuickAccess
      *  
      * @return \XLite\Model\Repo\ARepo
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function repo($name)
     {

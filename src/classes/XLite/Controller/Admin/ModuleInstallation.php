@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Module marketplace installation controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
 {
@@ -43,7 +43,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -55,7 +55,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getLicense()
     {
@@ -71,7 +71,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModuleId()
     {   
@@ -83,7 +83,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * 
      * @return \XLite\Model\Module|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModule()
     {
@@ -97,7 +97,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * 
      * @return \XLite\Model\ModuleKey
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModuleKey(array $data)
     {
@@ -112,7 +112,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionGetLicense()
     {
@@ -131,7 +131,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionRegisterKey()
     {
@@ -201,7 +201,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionGetPackage()
     {
@@ -228,7 +228,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkModuleKey()
     {
@@ -264,7 +264,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPackage($key = null)
     {
@@ -289,7 +289,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function retrieveToLocalRepository($key = null)
     {
@@ -307,7 +307,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkAndDeployPackage($file)
     {
@@ -340,7 +340,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkModuleIntegrity(\XLite\Model\PHARModule $module)
     {
@@ -354,7 +354,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function deployModule(\XLite\Model\PHARModule $module)
     {
@@ -368,7 +368,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function finishDeployment(\XLite\Model\PHARModule $module = null)
     {
@@ -393,7 +393,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function cleanUpOnDeploymentComplete($file, \XLite\Model\PHARModule $module = null)
     {

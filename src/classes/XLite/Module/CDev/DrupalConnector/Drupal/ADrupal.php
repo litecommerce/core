@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Drupal;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class ADrupal extends \XLite\Base\Singleton
 {
@@ -43,7 +43,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @var    \XLite\Module\CDev\DrupalConnector\Handler
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $handler;
 
@@ -53,7 +53,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $registeredResources = array('js' => array(), 'css' => array());
 
@@ -63,7 +63,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @var    integer
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $resourcesCounter = 0;
 
@@ -75,7 +75,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @return \XLite\Module\CDev\DrupalConnector\Handler
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHandler()
     {
@@ -97,7 +97,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function runController($target, $action = null, array $data = array())
     {
@@ -119,7 +119,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @return array
      * @access protected
      * @see    ____func_see____
-     i* @since  3.0.0
+     i* @since  1.0.0
      */
     protected function getUniqueResources($type, array $files)
     {
@@ -138,7 +138,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getJSScope($file)
     {
@@ -153,7 +153,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getResourceBasename($file)
     {
@@ -168,7 +168,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getResourceInfoCommon(array $file)
     {
@@ -187,7 +187,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getResourceInfoJS(array $file)
     {
@@ -207,7 +207,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getResourceInfoCSS(array $file)
     {
@@ -226,7 +226,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getResourceInfo($type, array $file)
     {
@@ -242,7 +242,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @return mixed
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function registerResource($type, array $file)
     {
@@ -257,7 +257,7 @@ abstract class ADrupal extends \XLite\Base\Singleton
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function registerResources(\XLite\View\AView $widget)
     {

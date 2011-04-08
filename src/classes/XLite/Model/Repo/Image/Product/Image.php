@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo\Image\Product;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo\Image\Product;
  * Product image
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Image extends \XLite\Model\Repo\Base\Image
 {
@@ -41,7 +41,7 @@ class Image extends \XLite\Model\Repo\Base\Image
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $defaultOrderBy = 'orderby';
 
@@ -50,7 +50,7 @@ class Image extends \XLite\Model\Repo\Base\Image
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getStorageName()
     {

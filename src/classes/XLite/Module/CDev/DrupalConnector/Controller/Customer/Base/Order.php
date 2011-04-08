@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Controller\Customer\Base;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer\Base;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class Order extends \XLite\Controller\Customer\Base\Order implements \XLite\Base\IDecorator
 {
@@ -45,7 +45,7 @@ abstract class Order extends \XLite\Controller\Customer\Base\Order implements \X
      * @return integer
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getLCProfileId($id)
     {
@@ -60,7 +60,7 @@ abstract class Order extends \XLite\Controller\Customer\Base\Order implements \X
      * @return integer
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getDrupalProfileId($id)
     {
@@ -73,7 +73,7 @@ abstract class Order extends \XLite\Controller\Customer\Base\Order implements \X
      * @return boolean
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function isPortal()
     {
@@ -90,7 +90,7 @@ abstract class Order extends \XLite\Controller\Customer\Base\Order implements \X
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getPortalLCArgs($path, array $args = array(), array $pageArgs = array())
     {
@@ -113,7 +113,7 @@ abstract class Order extends \XLite\Controller\Customer\Base\Order implements \X
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getPortalDrupalArgs($path, array $args = array())
     {

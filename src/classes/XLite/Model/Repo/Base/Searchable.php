@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo\Base;
@@ -35,7 +35,7 @@ namespace XLite\Model\Repo\Base;
  * Searchable 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class Searchable extends \XLite\Base\SuperClass
 {
@@ -48,7 +48,7 @@ abstract class Searchable extends \XLite\Base\SuperClass
      *  
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function addLimitCondition($start, $count, \XLite\Core\CommonCell $cnd = null)
     {

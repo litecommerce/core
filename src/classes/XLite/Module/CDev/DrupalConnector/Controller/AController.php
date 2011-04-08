@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Controller;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Controller;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class AController extends \XLite\Controller\AController implements \XLite\Base\IDecorator
 {
@@ -42,7 +42,7 @@ abstract class AController extends \XLite\Controller\AController implements \XLi
      * 
      * @return \XLite\View\Controller
      * @access public
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getViewer()
     {
@@ -74,7 +74,7 @@ abstract class AController extends \XLite\Controller\AController implements \XLi
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getPortalLCArgs($path, array $args = array(), array $pageArgs = array())
     {
@@ -90,7 +90,7 @@ abstract class AController extends \XLite\Controller\AController implements \XLi
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getPortalDrupalArgs($path, array $args = array())
     {

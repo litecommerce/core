@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Product\Details\Customer\Page;
@@ -32,7 +32,7 @@ namespace XLite\View\Product\Details\Customer\Page;
  * Main 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="center", zone="customer")
  */
@@ -43,7 +43,7 @@ class Main extends \XLite\View\Product\Details\Customer\Page\APage
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -59,7 +59,7 @@ class Main extends \XLite\View\Product\Details\Customer\Page\APage
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {

@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\Controller\Admin;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\FeaturedProducts\Controller\Admin;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Base\IDecorator
 {
@@ -44,7 +44,7 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
      * @var    array
      * @access public
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public $params = array('category_id');
 
@@ -54,7 +54,7 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionAddFeaturedProducts()
     {
@@ -114,7 +114,7 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdateFeaturedProducts()
     {
@@ -158,7 +158,7 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getConditions()
     {
@@ -179,7 +179,7 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
      * @return mixed
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCondition($paramName)
     {
@@ -200,7 +200,7 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
      * @return array(\XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct) Objects
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFeaturedProductsList()
     {

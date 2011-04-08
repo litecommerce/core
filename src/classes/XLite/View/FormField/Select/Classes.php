@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Select;
@@ -32,7 +32,7 @@ namespace XLite\View\FormField\Select;
  * Category selector
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Classes extends \XLite\View\FormField\Select\Multiple
 {
@@ -42,7 +42,7 @@ class Classes extends \XLite\View\FormField\Select\Multiple
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -58,7 +58,7 @@ class Classes extends \XLite\View\FormField\Select\Multiple
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -74,7 +74,7 @@ class Classes extends \XLite\View\FormField\Select\Multiple
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {
@@ -86,7 +86,7 @@ class Classes extends \XLite\View\FormField\Select\Multiple
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {
@@ -100,7 +100,7 @@ class Classes extends \XLite\View\FormField\Select\Multiple
      *  
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isClassSelected($classId)
     {
@@ -114,7 +114,7 @@ class Classes extends \XLite\View\FormField\Select\Multiple
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSelectedClassesList()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Select;
@@ -32,7 +32,7 @@ namespace XLite\View\FormField\Select;
  * Category selector
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Categories extends \XLite\View\FormField\Select\Multiple
 {
@@ -41,7 +41,7 @@ class Categories extends \XLite\View\FormField\Select\Multiple
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {
@@ -53,7 +53,7 @@ class Categories extends \XLite\View\FormField\Select\Multiple
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {
@@ -67,7 +67,7 @@ class Categories extends \XLite\View\FormField\Select\Multiple
      *  
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isCategorySelected($categoryId)
     {
@@ -87,7 +87,7 @@ class Categories extends \XLite\View\FormField\Select\Multiple
      *  
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getIndentation(\XLite\Model\Category $category, $multiplier)
     {

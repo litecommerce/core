@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Core;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Core;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Request extends \XLite\Core\Request implements \XLite\Base\IDecorator
 {
@@ -44,7 +44,7 @@ class Request extends \XLite\Core\Request implements \XLite\Base\IDecorator
      *
      * @return mixed
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepare($data)
     {

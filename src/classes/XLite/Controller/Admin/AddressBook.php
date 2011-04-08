@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Profile management controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class AddressBook extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,7 +41,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   \XLite\Model\Address
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $address = null;
 
@@ -51,7 +51,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -63,7 +63,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * 
      * @return \XLite\Model\Address
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAddress()
     {
@@ -84,7 +84,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getReturnURL()
     {
@@ -112,7 +112,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * 
      * @return \XLite\Model\Profile
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProfile()
     {
@@ -124,7 +124,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -136,7 +136,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -150,7 +150,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModelFormClass()
     {
@@ -162,7 +162,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionSave()
     {
@@ -174,7 +174,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -195,7 +195,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionCancelDelete()
     {

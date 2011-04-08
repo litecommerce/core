@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Minicart widget
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="layout.header.right", weight="100")
  */
@@ -62,7 +62,7 @@ class Minicart extends \XLite\View\SideBarBox
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $displayModes = array(
         self::DISPLAY_MODE_VERTICAL   => 'Vertical',
@@ -75,7 +75,7 @@ class Minicart extends \XLite\View\SideBarBox
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -90,7 +90,7 @@ class Minicart extends \XLite\View\SideBarBox
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -106,7 +106,7 @@ class Minicart extends \XLite\View\SideBarBox
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCommonFiles()
     {
@@ -123,7 +123,7 @@ class Minicart extends \XLite\View\SideBarBox
      *                                                 
      * @return string                                  
      * @see    ____func_see____
-     * @since  3.0.0                                
+     * @since  1.0.0
      */                                                
     protected function getHead()                       
     {
@@ -135,7 +135,7 @@ class Minicart extends \XLite\View\SideBarBox
      *                               
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -147,7 +147,7 @@ class Minicart extends \XLite\View\SideBarBox
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getItemsList()
     {
@@ -163,7 +163,7 @@ class Minicart extends \XLite\View\SideBarBox
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isTruncated()
     {
@@ -175,7 +175,7 @@ class Minicart extends \XLite\View\SideBarBox
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCollapsed()
     {
@@ -187,7 +187,7 @@ class Minicart extends \XLite\View\SideBarBox
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTotals()
     {

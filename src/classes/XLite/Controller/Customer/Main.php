@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * \XLite\Controller\Customer\Main 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Main extends \XLite\Controller\Customer\Category
 {
@@ -41,7 +41,7 @@ class Main extends \XLite\Controller\Customer\Category
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $params = array('target');
 
@@ -50,7 +50,7 @@ class Main extends \XLite\Controller\Customer\Category
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -83,7 +83,7 @@ class Main extends \XLite\Controller\Customer\Category
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doNoAction()
     {
@@ -99,7 +99,7 @@ class Main extends \XLite\Controller\Customer\Category
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

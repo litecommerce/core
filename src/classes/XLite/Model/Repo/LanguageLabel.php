@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo;
  * Langauge labels repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class LanguageLabel extends \XLite\Model\Repo\Base\I18n
 {
@@ -41,7 +41,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = self::TYPE_SERVICE;
 
@@ -50,7 +50,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $alternativeIdentifier = array(
         array('name'),
@@ -63,7 +63,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineCacheCells()
     {
@@ -86,7 +86,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findLabelsByCode($code = null)
     {
@@ -109,7 +109,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineLabelsByCodeQuery()
     {
@@ -124,7 +124,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessLabelsByCode(array $data, $code)
     {
@@ -149,7 +149,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function countByName($name)
     {
@@ -163,7 +163,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineCountByNameQuery($name)
     {
@@ -185,7 +185,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findLikeName($name, $start = 0, $limit = 0)
     {
@@ -201,7 +201,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineLikeNameQuery($name, $start, $limit)
     {
@@ -221,7 +221,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function convertRecordToParamsAllByCode(\XLite\Model\AEntity $entity)
     {

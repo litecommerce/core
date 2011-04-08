@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Logic\Order\Modifier;
@@ -32,7 +32,7 @@ namespace XLite\Logic\Order\Modifier;
  * Abstract order modifier
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AModifier extends \XLite\Logic\ALogic
 {
@@ -41,7 +41,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type;
 
@@ -50,7 +50,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $code;
 
@@ -59,7 +59,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      * 
      * @var   \XLite\Model\Order\Modifier
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $model;
 
@@ -68,7 +68,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      * 
      * @var   \XLite\Model\Order
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $order;
 
@@ -77,7 +77,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      * 
      * @var   \XLite\DataSet\Collection\OrderModifier
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $list;
 
@@ -86,7 +86,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $identificationPattern;
 
@@ -96,7 +96,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract public function calculate();
 
@@ -107,7 +107,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      *  
      * @return \XLite\DataSet\Transport\Order\Surcharge
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract public function getSurchargeInfo(\XLite\Model\Base\Surcharge $surcharge);
 
@@ -119,7 +119,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(\XLite\Model\Order\Modifier $model)
     {
@@ -134,7 +134,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function initialize(\XLite\Model\Order $order, \XLite\DataSet\Collection\OrderModifier $list)
     {
@@ -147,7 +147,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function preprocess()
     {
@@ -158,7 +158,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function canApply()
     {
@@ -170,7 +170,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getType()
     {
@@ -182,7 +182,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCode()
     {
@@ -194,7 +194,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      * 
      * @return \XLite\Model\Order
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOrder()
     {
@@ -210,7 +210,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isSurchargeOwner(\XLite\Model\Base\Surcharge $surcharge)
     {
@@ -228,7 +228,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      *  
      * @return \XLite\Model\Order\Surcharge
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addOrderSurcharge($code, $value, $include = false, $available = true)
     {
@@ -261,7 +261,7 @@ abstract class AModifier extends \XLite\Logic\ALogic
      *  
      * @return \XLite\Model\OrderItem\Surcharge
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addOrderItemSurcharge(\XLite\Model\OrderItem $item, $code, $value, $include = false, $available = true)
     {

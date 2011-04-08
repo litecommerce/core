@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\OrderList;
@@ -32,7 +32,7 @@ namespace XLite\View\OrderList;
  * Orders search widget
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="orders.search.base", weight="30")
  */
@@ -43,7 +43,7 @@ class Search extends \XLite\View\OrderList\AOrderList
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $widgetClass = '\XLite\View\OrderList\Search';
 
@@ -52,7 +52,7 @@ class Search extends \XLite\View\OrderList\AOrderList
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $conditions = null;
 
@@ -62,7 +62,7 @@ class Search extends \XLite\View\OrderList\AOrderList
      * 
      * @return array(\XLite\Model\Order)
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOrders(\XLite\Core\CommonCell $cnd = null)
     {
@@ -80,7 +80,7 @@ class Search extends \XLite\View\OrderList\AOrderList
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPageData()
     {
@@ -100,7 +100,7 @@ class Search extends \XLite\View\OrderList\AOrderList
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPageId()
     {
@@ -113,7 +113,7 @@ class Search extends \XLite\View\OrderList\AOrderList
      * 
      * @return \XLite\Model\Profile
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProfile()
     {
@@ -125,7 +125,7 @@ class Search extends \XLite\View\OrderList\AOrderList
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getWidgetKeys()
     {
@@ -139,7 +139,7 @@ class Search extends \XLite\View\OrderList\AOrderList
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getConditions(\XLite\Core\CommonCell $cnd = null)
     {

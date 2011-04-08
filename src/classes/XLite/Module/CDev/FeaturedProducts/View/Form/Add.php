@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\View\Form;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\FeaturedProducts\View\Form;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Add extends \XLite\View\Form\AForm
 {
@@ -43,7 +43,7 @@ class Add extends \XLite\View\Form\AForm
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormName()
     {
@@ -55,7 +55,7 @@ class Add extends \XLite\View\Form\AForm
      *
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -67,7 +67,7 @@ class Add extends \XLite\View\Form\AForm
      *
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -80,7 +80,7 @@ class Add extends \XLite\View\Form\AForm
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormParams()
     {

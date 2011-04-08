@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\TranslationDriver;
@@ -32,7 +32,7 @@ namespace XLite\Core\TranslationDriver;
  * gettext-based driver
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
 {
@@ -47,7 +47,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $domains = array();
 
@@ -56,7 +56,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $lastLanguage = null;
 
@@ -65,7 +65,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $msgfmtPath = null;
  
@@ -77,7 +77,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      *  
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function translate($name, $code)
     {
@@ -98,7 +98,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isValid()
     {
@@ -131,7 +131,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function reset()
     {
@@ -148,7 +148,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkCurrentLocale($code)
     {
@@ -162,7 +162,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setLocale($code)
     {
@@ -181,7 +181,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocaleByCode($code)
     {
@@ -195,7 +195,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDomain($code)
     {
@@ -224,7 +224,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkIndex($code)
     {
@@ -258,7 +258,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function createIndexFile($path, $code)
     {
@@ -324,7 +324,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function createIndexFileBin($path, $code)
     {
@@ -367,7 +367,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMsgFmtExecutable()
     {

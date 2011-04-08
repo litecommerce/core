@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Base;
@@ -32,7 +32,7 @@ namespace XLite\Model\Base;
  * Image abstract store
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @MappedSuperclass
  * @HasLifecycleCallbacks
@@ -44,7 +44,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -57,7 +57,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="512", nullable=false)
      */
@@ -68,7 +68,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="64", nullable=false)
      */
@@ -79,7 +79,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -90,7 +90,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -101,7 +101,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -112,7 +112,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -123,7 +123,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="fixedstring", length="32")
      */
@@ -134,7 +134,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getBody()
     {
@@ -148,7 +148,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getExtension()
     {
@@ -160,7 +160,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getExtensionByMIME()
     {
@@ -194,7 +194,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getURL()
     {
@@ -206,7 +206,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFrontURL()
     {
@@ -221,7 +221,7 @@ abstract class Image extends \XLite\Model\AEntity
      *  
      * @return array (new width + new height + URL)
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getResizedURL($width = null, $height = null)
     {
@@ -271,7 +271,7 @@ abstract class Image extends \XLite\Model\AEntity
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function loadFromRequest($key, $subkey = null)
     {
@@ -309,7 +309,7 @@ abstract class Image extends \XLite\Model\AEntity
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function loadFromLocalFile($path, $basename = null)
     {
@@ -342,7 +342,7 @@ abstract class Image extends \XLite\Model\AEntity
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function loadFromURL($url, $copy2fs = false)
     {
@@ -373,7 +373,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function removeFile()
     {
@@ -391,7 +391,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkImageHash()
     {
@@ -411,7 +411,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isURL()
     {
@@ -424,7 +424,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isExists()
     {
@@ -436,7 +436,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      * @PrePersist
      * @PreUpdate
      */
@@ -454,7 +454,7 @@ abstract class Image extends \XLite\Model\AEntity
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function savePath($path)
     {
@@ -472,7 +472,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function renewImageParameters()
     {
@@ -505,7 +505,7 @@ abstract class Image extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getImagePath()
     {

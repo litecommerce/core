@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Payment;
@@ -32,7 +32,7 @@ namespace XLite\Model\Payment;
  * Something customer can put into his cart
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity
  * @Table (name="payment_method_settings",
@@ -48,7 +48,7 @@ class MethodSetting extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      * 
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -61,7 +61,7 @@ class MethodSetting extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      * 
      * @Column (type="string", length="128")
      */
@@ -72,7 +72,7 @@ class MethodSetting extends \XLite\Model\AEntity
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="text")
      */
@@ -83,7 +83,7 @@ class MethodSetting extends \XLite\Model\AEntity
      * 
      * @var   \XLite\Model\Payment\Method
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      * 
      * @ManyToOne  (targetEntity="XLite\Model\Payment\Method", inversedBy="settings")
      * @JoinColumn (name="method_id", referencedColumnName="method_id")

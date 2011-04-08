@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Separator;
@@ -33,7 +33,7 @@ namespace XLite\View\FormField\Separator;
  * \XLite\View\FormField\Separator\Regular 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Regular extends \XLite\View\FormField\Separator\ASeparator
 {
@@ -42,7 +42,7 @@ class Regular extends \XLite\View\FormField\Separator\ASeparator
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {

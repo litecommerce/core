@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite;
@@ -32,7 +32,7 @@ namespace XLite;
  * Logger 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Logger extends \XLite\Base\Singleton
 {
@@ -41,7 +41,7 @@ class Logger extends \XLite\Base\Singleton
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $securityHeader = '<?php die(1); ?>';
 
@@ -50,7 +50,7 @@ class Logger extends \XLite\Base\Singleton
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $hashErrors = array();
 
@@ -59,7 +59,7 @@ class Logger extends \XLite\Base\Singleton
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $errorsTranslate = null;
 
@@ -68,7 +68,7 @@ class Logger extends \XLite\Base\Singleton
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $errorTypes = null;
 
@@ -77,7 +77,7 @@ class Logger extends \XLite\Base\Singleton
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $options = array(
         'type'  => null,
@@ -91,7 +91,7 @@ class Logger extends \XLite\Base\Singleton
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $markTemplates = false;
 
@@ -101,7 +101,7 @@ class Logger extends \XLite\Base\Singleton
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isMarkTemplates()
     {
@@ -113,7 +113,7 @@ class Logger extends \XLite\Base\Singleton
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct()
     {
@@ -180,7 +180,7 @@ class Logger extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function log($message, $level = LOG_DEBUG, array $trace = array())
     {
@@ -231,7 +231,7 @@ class Logger extends \XLite\Base\Singleton
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function registerPHPError($errno, $errstr, $errfile, $errline)
     {
@@ -281,7 +281,7 @@ class Logger extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function registerException(\Exception $exception)
     {
@@ -321,7 +321,7 @@ class Logger extends \XLite\Base\Singleton
      * 
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getType()
     {
@@ -333,7 +333,7 @@ class Logger extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getName()
     {
@@ -360,7 +360,7 @@ class Logger extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getIdent()
     {
@@ -372,7 +372,7 @@ class Logger extends \XLite\Base\Singleton
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBackTrace()
     {
@@ -386,7 +386,7 @@ class Logger extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareBackTrace(array $trace)
     {
@@ -400,7 +400,7 @@ class Logger extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function detectClassName($obj)
     {
@@ -414,7 +414,7 @@ class Logger extends \XLite\Base\Singleton
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function convertPHPErrorToLogError($errno)
     {
@@ -452,7 +452,7 @@ class Logger extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPHPErrorName($errno)
     {
@@ -487,7 +487,7 @@ class Logger extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getErrorLogPath()
     {
@@ -501,7 +501,7 @@ class Logger extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkLogSecurityHeader($path)
     {

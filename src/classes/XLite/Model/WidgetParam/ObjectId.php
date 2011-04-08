@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\WidgetParam;
@@ -32,7 +32,7 @@ namespace XLite\Model\WidgetParam;
  * Abstract Object id widget parameter
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ObjectId extends \XLite\Model\WidgetParam\Int
 {
@@ -41,7 +41,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getClassName();
 
@@ -53,7 +53,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
      *
      * @return \XLite\Model\AEntity
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getObject($id = null)
     {
@@ -68,7 +68,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getIdValidCondition($value)
     {
@@ -85,7 +85,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getObjectExistsCondition($value)
     {
@@ -102,7 +102,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
      *  
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getId($id = null)
     {
@@ -116,7 +116,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getValidaionSchema($value)
     {

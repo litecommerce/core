@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Shipping\Processor;
@@ -32,7 +32,7 @@ namespace XLite\Model\Shipping\Processor;
  * Shipping processor model
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Offline extends \XLite\Model\Shipping\Processor\AProcessor
 {
@@ -46,7 +46,7 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $processorId = 'offline';
 
@@ -55,7 +55,7 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProcessorName()
     {
@@ -70,7 +70,7 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier, $ignoreCache = false)
     {
@@ -102,7 +102,7 @@ class Offline extends \XLite\Model\Shipping\Processor\AProcessor
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isMethodNamesAdjustable()
     {

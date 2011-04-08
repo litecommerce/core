@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo\Payment;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo\Payment;
  * Payment method repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Method extends \XLite\Model\Repo\Base\I18n
 {
@@ -41,7 +41,7 @@ class Method extends \XLite\Model\Repo\Base\I18n
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = self::TYPE_SECONDARY;
 
@@ -50,7 +50,7 @@ class Method extends \XLite\Model\Repo\Base\I18n
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $defaultOrderBy = 'orderby';
 
@@ -59,7 +59,7 @@ class Method extends \XLite\Model\Repo\Base\I18n
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $alternativeIdentifier = array(
         array('service_name'),
@@ -72,7 +72,7 @@ class Method extends \XLite\Model\Repo\Base\I18n
      * 
      * @return \Doctrine\Common\Collection\Colelction
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findAllMethods()
     {
@@ -84,7 +84,7 @@ class Method extends \XLite\Model\Repo\Base\I18n
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineAllMethodsQuery()
     {
@@ -100,7 +100,7 @@ class Method extends \XLite\Model\Repo\Base\I18n
      * 
      * @return \Doctrine\Common\Collection\Colelction
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findAllActive()
     {
@@ -120,7 +120,7 @@ class Method extends \XLite\Model\Repo\Base\I18n
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineAllActiveQuery()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Category
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Category")
  * @Table  (name="categories",
@@ -51,7 +51,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -64,7 +64,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -75,7 +75,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -86,7 +86,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
@@ -97,7 +97,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -108,7 +108,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
@@ -119,7 +119,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @var   \XLite\Model\Category\QuickFlags
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      * 
      * @OneToOne (targetEntity="XLite\Model\Category\QuickFlags", mappedBy="category", cascade={"all"})
      */
@@ -130,7 +130,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="membership_id", referencedColumnName="membership_id")
@@ -142,7 +142,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @var   \XLite\Model\Image\Category\Image
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @OneToOne  (targetEntity="XLite\Model\Image\Category\Image", mappedBy="category", cascade={"all"})
      */
@@ -153,7 +153,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\CategoryProducts", mappedBy="category", cascade={"all"})
      * @OrderBy   ({"orderby" = "ASC"})
@@ -165,7 +165,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Category", mappedBy="parent", cascade={"all"})
      */
@@ -176,7 +176,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @var   \XLite\Model\Category
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Category", inversedBy="children")
      * @JoinColumn (name="parent_id", referencedColumnName="category_id")
@@ -190,7 +190,7 @@ class Category extends \XLite\Model\Base\I18n
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setParent(\XLite\Model\Category $parent = null)
     {
@@ -204,7 +204,7 @@ class Category extends \XLite\Model\Base\I18n
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setImage(\XLite\Model\Image\Category\Image $image = null)
     {
@@ -216,7 +216,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function hasImage()
     {
@@ -228,7 +228,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @return integer|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSubCategoriesCount()
     {
@@ -244,7 +244,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function hasSubcategories()
     {
@@ -256,7 +256,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @return \Doctrine\Common\Collections\ArrayCollection
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSubcategories()
     {
@@ -268,7 +268,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSiblings()
     {
@@ -280,7 +280,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getStringPath()
     {
@@ -300,7 +300,7 @@ class Category extends \XLite\Model\Base\I18n
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProductsCount()
     {
@@ -315,7 +315,7 @@ class Category extends \XLite\Model\Base\I18n
      *  
      * @return array|integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProducts(\XLite\Core\CommonCell $cnd = null, $countOnly = false)
     {
@@ -336,7 +336,7 @@ class Category extends \XLite\Model\Base\I18n
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {

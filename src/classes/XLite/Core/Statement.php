@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * Statement 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Statement extends \Doctrine\DBAL\Statement
 {
@@ -41,7 +41,7 @@ class Statement extends \Doctrine\DBAL\Statement
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $_sql;
 
@@ -50,7 +50,7 @@ class Statement extends \Doctrine\DBAL\Statement
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $_params = array();
 
@@ -59,7 +59,7 @@ class Statement extends \Doctrine\DBAL\Statement
      * 
      * @var   \Doctrine\DBAL\Driver\Statement
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $_stmt;
 
@@ -71,7 +71,7 @@ class Statement extends \Doctrine\DBAL\Statement
      * @return boolean
      * @throws \XLite\Core\PDOException
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function execute($params = null)
     {

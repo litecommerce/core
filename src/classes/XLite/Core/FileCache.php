@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * File system cache 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class FileCache extends \Doctrine\Common\Cache\AbstractCache
 {
@@ -41,7 +41,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $path = null;
 
@@ -50,7 +50,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $header = '<?php die(); ?>';
 
@@ -59,7 +59,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $headerLength = 15;
 
@@ -68,7 +68,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $ttlLength = 11;
 
@@ -77,7 +77,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct($path = null)
     {
@@ -91,7 +91,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setPath($path)
     {
@@ -111,7 +111,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPath()
     {
@@ -123,7 +123,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getIds()
     {
@@ -143,7 +143,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * 
      * @return array Array of the deleted cache ids
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function deleteAll()
     {
@@ -165,7 +165,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function _doFetch($id)
     {
@@ -187,7 +187,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function _doContains($id)
     {
@@ -205,7 +205,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function _doSave($id, $data, $lifeTime = 0)
     {
@@ -224,7 +224,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function _doDelete($id)
     {
@@ -246,7 +246,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPathById($id)
     {
@@ -260,7 +260,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isKeyValid($path)
     {

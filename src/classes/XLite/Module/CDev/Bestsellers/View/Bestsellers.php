@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\Bestsellers\View;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\Bestsellers\View;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  *
  * @ListChild (list="center.bottom", zone="customer", weight="400")
  * @ListChild (list="sidebar.first", zone="customer", weight="150")
@@ -74,7 +74,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -87,7 +87,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -147,7 +147,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -162,7 +162,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return mixed
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -192,7 +192,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return integer 
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRootId()
     {
@@ -213,7 +213,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -230,7 +230,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      *
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTemplate()
     {
@@ -249,7 +249,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return boolean 
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

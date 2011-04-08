@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * Image operator 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ImageOperator extends \Xlite\Base\SuperClass
 {
@@ -41,7 +41,7 @@ class ImageOperator extends \Xlite\Base\SuperClass
      * 
      * @var   \XLite\Core\ImageOperator\AImageOperator
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $engine;
 
@@ -50,7 +50,7 @@ class ImageOperator extends \Xlite\Base\SuperClass
      * 
      * @var   \XLite\Model\Base\Image
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $model;
 
@@ -59,7 +59,7 @@ class ImageOperator extends \Xlite\Base\SuperClass
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $prepared = false;
 
@@ -72,7 +72,7 @@ class ImageOperator extends \Xlite\Base\SuperClass
      *
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function __callStatic($method, array $args = array())
     {
@@ -85,7 +85,7 @@ class ImageOperator extends \Xlite\Base\SuperClass
      * 
      * @return \XLite\Core\ImageOperator\AImageOperator
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getEngine()
     {
@@ -109,7 +109,7 @@ class ImageOperator extends \Xlite\Base\SuperClass
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(\XLite\Model\Base\Image $image)
     {
@@ -124,7 +124,7 @@ class ImageOperator extends \Xlite\Base\SuperClass
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __call($method, array $args = array())
     {
@@ -139,7 +139,7 @@ class ImageOperator extends \Xlite\Base\SuperClass
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepare()
     {

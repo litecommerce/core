@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Pager\Customer\Product;
@@ -32,7 +32,7 @@ namespace XLite\View\Pager\Customer\Product;
  * Pager for the category products page
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Category extends \XLite\View\Pager\Customer\Product\AProduct
 {
@@ -48,7 +48,7 @@ class Category extends \XLite\View\Pager\Customer\Product\AProduct
      *
      * @return \XLite\Model\Category
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCategory()
     {
@@ -60,7 +60,7 @@ class Category extends \XLite\View\Pager\Customer\Product\AProduct
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -78,7 +78,7 @@ class Category extends \XLite\View\Pager\Customer\Product\AProduct
      *                                      
      * @return void                         
      * @see    ____func_see____             
-     * @since  3.0.0                        
+     * @since  1.0.0
      */                                     
     protected function defineRequestParams()
     {                                       
@@ -95,7 +95,7 @@ class Category extends \XLite\View\Pager\Customer\Product\AProduct
      *
      * @return array|\Doctrine\ORM\PersistentCollection
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDataFrame($start, $count)
     {

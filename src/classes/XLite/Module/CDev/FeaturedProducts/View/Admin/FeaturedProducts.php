@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\View\Admin;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\FeaturedProducts\View\Admin;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
 {
@@ -52,7 +52,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      *
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -65,7 +65,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -80,7 +80,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineViewList($list)
     {
@@ -99,7 +99,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * @return boolean 
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isFooterVisible()
     {
@@ -111,7 +111,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      *
      * @return array
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultModes()
     {
@@ -127,7 +127,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -140,7 +140,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCommonParams()
     {
@@ -153,7 +153,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     static public function getSearchParams()
     {
@@ -198,7 +198,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -216,7 +216,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * @return \XLite\Core\CommonCell
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -243,7 +243,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * @return array|int
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {

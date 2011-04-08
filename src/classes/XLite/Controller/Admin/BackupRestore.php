@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * ____description____
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class BackupRestore extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,7 +41,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $pages = array(
         'db_backup'  => 'Backup database',
@@ -53,7 +53,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $params = array('target', 'page');
 
@@ -62,7 +62,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $page = 'db_backup';
 
@@ -71,7 +71,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $pageTemplates = array(
         'db_backup'  => 'db/backup.tpl',
@@ -83,7 +83,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   mixed
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $sqldumpFile = null;
 
@@ -93,7 +93,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct()
     {
@@ -109,7 +109,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getUploadMaxFilesize()
     {
@@ -121,7 +121,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -133,7 +133,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -157,7 +157,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isFileExists()
     {
@@ -170,7 +170,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -184,7 +184,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isDirExists()
     {
@@ -204,7 +204,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isFileWritable()
     {
@@ -221,7 +221,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionBackup()
     {
@@ -261,7 +261,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * @return void
      * @throws
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -279,7 +279,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * @return void
      * @throws 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionRestoreFromUploadedFile()
     {
@@ -309,7 +309,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionRestoreFromLocalFile()
     {
@@ -324,7 +324,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionPackDistr()
     {
@@ -338,7 +338,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function restoreDatabase($sqlFile)
     {
@@ -402,7 +402,7 @@ class BackupRestore extends \XLite\Controller\Admin\AAdmin
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageReturnURL()
     {
