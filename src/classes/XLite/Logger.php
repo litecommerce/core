@@ -340,7 +340,7 @@ class Logger extends \XLite\Base\Singleton
         $result = $this->options['name'];
 
         if ('file' == $this->getType()) {
-            $dir = dirname(LC_DIR . ltrim($result, LC_DS));
+            $dir = dirname(LC_DIR . LC_DS . ltrim($result, LC_DS));
             $file = basename($result);
             $parts = explode('.', $file);
             array_splice($parts, count($parts) - 1, 0, date('Y-m-d'));
