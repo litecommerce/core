@@ -28,7 +28,7 @@ XLite\Model\Config:
   - { name: customer_presentation, category: General, type: separator, orderby: 200, translations: [{ code: en, option_name: 'Customer Zone settings', option_comment: '' }] }
   - { name: customer_security, category: Security, type: checkbox, value: Y, translations: [{ code: en, option_name: 'Use HTTPS in the Customer Zone (for logi', option_comment: 'heckout and profile pages)' }] }
   - { name: date_format, category: General, type: select, orderby: 660, value: '%b %d, %Y', translations: [{ code: en, option_name: 'Date format', option_comment: '' }] }
-  - { name: decimal_delim, category: General, type: select, orderby: 650, value: ., translations: [{ code: en, option_name: 'Currency decimal delimiter', option_comment: '' }] }
+  - { name: decimal_delim, category: General, type: select, orderby: 650, value: ., translations: [{ code: en, option_name: 'Currency decimal separator', option_comment: '' }] }
   - { name: defaultSources, category: Images, type: serialized }
   - { name: default_country, category: General, type: country, orderby: 310, value: US, translations: [{ code: en, option_name: 'Default country in the registration form', option_comment: '' }] }
   - { name: default_offline_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Payment method to be assumed in case of zero order totals', option_comment: '' }] }
@@ -89,7 +89,7 @@ XLite\Model\Config:
   - { name: start_year, category: Company, type: text, orderby: 380, value: '2009', translations: [{ code: en, option_name: 'Year when store started its operation', option_comment: '' }] }
   - { name: subcategories_look, category: General, type: select, orderby: 220, value: icons, translations: [{ code: en, option_name: 'Category listings format', option_comment: '' }] }
   - { name: support_department, category: Company, type: text, orderby: 490, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'HelpDesk/Support service e-mail', option_comment: '' }] }
-  - { name: thousand_delim, category: General, type: select, orderby: 640, translations: [{ code: en, option_name: 'Currency thousands delimiter', option_comment: '' }] }
+  - { name: thousand_delim, category: General, type: select, orderby: 640, translations: [{ code: en, option_name: 'Currency thousands separator', option_comment: '' }] }
   - { name: time_format, category: General, type: select, orderby: 670, value: '%H:%M', translations: [{ code: en, option_name: 'Time format', option_comment: '' }] }
   - { name: time_zone, category: General, type: select, orderby: 680, translations: [{ code: en, option_name: 'Time zone', option_comment: '' }] }
   - { name: unit_presentation, category: General, type: separator, orderby: 600, translations: [{ code: en, option_name: 'Units of measurement', option_comment: '' }] }
