@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Module\Test\Module3;
@@ -32,7 +32,7 @@ namespace XLite\Module\Test\Module3;
  * Main 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class Main extends \XLite\Module\AModule
 {
@@ -42,7 +42,7 @@ abstract class Main extends \XLite\Module\AModule
      * @var    string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAuthorName()
     {
@@ -55,7 +55,7 @@ abstract class Main extends \XLite\Module\AModule
      * @var    string
      * @access public
      * @see    ____func_see____
-     * @since  3.0
+     * @since  1.0.0
      */
     public static function getModuleName()
     {
@@ -67,7 +67,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @return string
      * @access public
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getMinorVersion()
     {
@@ -79,7 +79,7 @@ abstract class Main extends \XLite\Module\AModule
      *
      * @return string
      * @access public
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getDescription()
     {
@@ -92,7 +92,7 @@ abstract class Main extends \XLite\Module\AModule
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0
+     * @since  1.0.0
      */
     public static function getDependencies()
     {

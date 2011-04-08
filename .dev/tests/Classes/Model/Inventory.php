@@ -13,7 +13,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 /**
@@ -21,7 +21,7 @@
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
 {
@@ -46,7 +46,7 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProduct2()
     {
@@ -63,7 +63,7 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProductWithInventory()
     {
@@ -80,7 +80,7 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProductWithInventoryAndLowLimit()
     {
@@ -98,7 +98,7 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProductWithoutInventory()
     {
@@ -115,7 +115,7 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProductWithoutInventoryAndLowLimit()
     {
@@ -135,7 +135,7 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getInventory($type)
     {
@@ -148,7 +148,7 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareCart()
     {
@@ -173,7 +173,7 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testChangeAmount()
     {
@@ -208,7 +208,7 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetAvailableAmount()
     {
@@ -235,7 +235,7 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testIsOutOfStock()
     {
@@ -266,7 +266,7 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testIsLowLimitReached()
     {
@@ -292,7 +292,7 @@ class XLite_Tests_Model_Inventory extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testProccessPreUpdate()
     {
