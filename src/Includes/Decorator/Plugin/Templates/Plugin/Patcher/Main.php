@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\Plugin\Templates\Plugin\Patcher;
@@ -33,7 +33,7 @@ namespace Includes\Decorator\Plugin\Templates\Plugin\Patcher;
  *
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
 {
@@ -49,7 +49,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $pathers;
 
@@ -60,7 +60,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function executeHookHandlerStepThird()
     {
@@ -79,7 +79,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkClassForPatcherInterface(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -94,7 +94,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function clearAll()
     {
@@ -107,7 +107,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function collectPatches()
     {
@@ -134,7 +134,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPatchers()
     {
@@ -155,7 +155,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCommonData(array $data, $class)
     {
@@ -172,7 +172,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getXpathData(array $data, $class)
     {
@@ -192,7 +192,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRegexpData(array $data, $class)
     {
@@ -210,7 +210,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCustomData(array $data)
     {

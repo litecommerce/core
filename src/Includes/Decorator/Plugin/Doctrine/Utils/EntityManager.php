@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\Plugin\Doctrine\Utils;
@@ -33,7 +33,7 @@ namespace Includes\Decorator\Plugin\Doctrine\Utils;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctrine
 {
@@ -43,7 +43,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * @var    Doctrine\ORM\EntityManager
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $handler;
 
@@ -53,7 +53,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $metadata;
 
@@ -66,7 +66,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllMetadata($class = null)
     {
@@ -89,7 +89,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function generateModels()
     {
@@ -102,7 +102,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function generateProxies()
     {
@@ -115,7 +115,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getDSN()
     {
@@ -131,7 +131,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function setMetadataDriver(\Doctrine\ORM\Configuration $config)
     {
@@ -175,7 +175,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * @return Doctrine\ORM\Configuration
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getConfig()
     {
@@ -200,7 +200,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * @return Doctrine\ORM\EntityManager
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getHandler()
     {
@@ -218,7 +218,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * @return Doctrine\ORM\Proxy\ProxyFactory
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getProxyFactory()
     {
@@ -236,7 +236,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * @return Doctrine\ORM\Mapping\ClassMetadataFactory
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getMetadataFactory()
     {
@@ -249,7 +249,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      * @return \Doctrine\ORM\Tools\EntityGenerator
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getEntityGenerator()
     {

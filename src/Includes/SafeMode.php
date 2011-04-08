@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace Includes;
@@ -32,7 +32,7 @@ namespace Includes;
  * Safe Mode
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class SafeMode
 {
@@ -60,7 +60,7 @@ abstract class SafeMode
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $unsafeModulesIniFile;
 
@@ -70,7 +70,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isSafeModeRequested()
     {
@@ -83,7 +83,7 @@ abstract class SafeMode
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isSoftResetRequested()
     {
@@ -95,7 +95,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isSafeModeStarted()
     {
@@ -107,7 +107,7 @@ abstract class SafeMode
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAccessKey()
     {
@@ -123,7 +123,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function regenerateAccessKey()
     {
@@ -142,7 +142,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function sendNotification()
     {
@@ -161,7 +161,7 @@ abstract class SafeMode
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getResetURL($soft = false)
     {
@@ -191,7 +191,7 @@ abstract class SafeMode
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function cleanupIndicator()
     {
@@ -203,7 +203,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function initialize()
     {
@@ -233,7 +233,7 @@ abstract class SafeMode
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function checkAccessKey()
     {
@@ -245,7 +245,7 @@ abstract class SafeMode
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getIndicatorFileName()
     {
@@ -257,7 +257,7 @@ abstract class SafeMode
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getAccessKeyFileName()
     {
@@ -269,7 +269,7 @@ abstract class SafeMode
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function generateAccessKey()
     {
@@ -281,7 +281,7 @@ abstract class SafeMode
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getIndicatorFileContent()
     {
@@ -300,7 +300,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function clearUnsafeModules()
     {
@@ -314,7 +314,7 @@ abstract class SafeMode
      *  
      * @return integer|boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function saveUnsafeModulesToFile(array $modules)
     {
@@ -341,7 +341,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getUnsafeModulesList()
     {
@@ -363,7 +363,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function markModuleAsUnsafe($author, $name)
     {
@@ -387,7 +387,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function markModulesAsUnsafe(array $modules)
     {
@@ -416,7 +416,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getUnsafeModulesSQLConditionString()
     {
@@ -442,7 +442,7 @@ abstract class SafeMode
      * 
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getUnsafeModulesFilePath()
     {

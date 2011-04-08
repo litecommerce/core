@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace Includes\Utils;
@@ -32,7 +32,7 @@ namespace Includes\Utils;
  * Array manager 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ArrayManager extends AUtils
 {
@@ -46,7 +46,7 @@ class ArrayManager extends AUtils
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isUnique(array $array, &$firstValue, array $skip = null)
     {
@@ -75,7 +75,7 @@ class ArrayManager extends AUtils
      * @return array|mixed|null
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getIndex(array $data, $index = null, $strict = false)
     {
@@ -91,7 +91,7 @@ class ArrayManager extends AUtils
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function filterByKeys(array $data, array $keys, $invert = false)
     {
@@ -111,7 +111,7 @@ class ArrayManager extends AUtils
      * @return mixed
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getObjectField($object, $field, $isGetter = false)
     {
@@ -127,7 +127,7 @@ class ArrayManager extends AUtils
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getArraysArrayFieldValues(array $array, $field)
     {
@@ -147,7 +147,7 @@ class ArrayManager extends AUtils
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getObjectsArrayFieldValues(array $array, $field, $isGetter = true)
     {
@@ -168,7 +168,7 @@ class ArrayManager extends AUtils
      *
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function searchAllInObjectsArray(array $array, $field, $value, $isGetter = true)
     {
@@ -193,7 +193,7 @@ class ArrayManager extends AUtils
      *
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function searchInObjectsArray(array $array, $field, $value, $isGetter = true)
     {
@@ -211,7 +211,7 @@ class ArrayManager extends AUtils
      *
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function sumObjectsArrayFieldValues(array $array, $field, $isGetter = true)
     {
@@ -230,7 +230,7 @@ class ArrayManager extends AUtils
      *  
      * @return array|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function findValue(&$data, $callback, $userData = null)
     {
@@ -261,7 +261,7 @@ class ArrayManager extends AUtils
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function filter(&$data, $callback, $userData = null)
     {
