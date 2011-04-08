@@ -22,7 +22,6 @@ class XLite_Tests_Model_Country extends XLite_Tests_TestCase
         'country'   => 'test country',
         'code'      => 'ZZ',
         'enabled'   => false,
-        'eu_member' => true,
     );
 
     /**
@@ -38,14 +37,19 @@ class XLite_Tests_Model_Country extends XLite_Tests_TestCase
         $c = new \XLite\Model\Country();
 
         foreach ($this->entityData as $field => $testValue) {
+
             $setterMethod = 'set' . \XLite\Core\Converter::getInstance()->convertToCamelCase($field);
             $getterMethod = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($field);
+
             $c->$setterMethod($testValue);
+
             $value = $c->$getterMethod();
+
             $this->assertEquals($testValue, $value, 'Creation checking (' . $field . ')');
         }
 
         $s = new \XLite\Model\State;
+
         $s->setState('test state');
         $s->setCode('ttt');
         $c->addStates($s);
@@ -57,10 +61,13 @@ class XLite_Tests_Model_Country extends XLite_Tests_TestCase
         $c = \XLite\Core\Database::getEM()->merge($c);
 
         foreach ($this->entityData as $field => $testValue) {
+
             $getterMethod = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($field);
+
             $this->assertEquals($testValue, $c->$getterMethod(), 'Creation checking (' . $field . ') #2');
         }
 
         $this->assertEquals($s->getStateId(), $c->getStates()->get(0)->getStateId(), 'check state');
+
     }
 }
