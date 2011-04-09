@@ -13,8 +13,8 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
- * PHP version 5.3.0
+ *
+ * PHP version 5.3.0 
  *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
@@ -26,48 +26,25 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Console;
+namespace XLite\Controller\Admin;
 
 /**
- * DB-based widget
+ * Controller for Pack distributive page
  * 
  * @see   ____class_see____
  * @since 1.0.0
- *
- * @ListChild (list="cli.center", zone="console")
  */
-class Db extends \XLite\View\Console\AConsole
+class PackDistr extends \XLite\Controller\Admin\Base\BackupRestore
 {
     /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
+     * doActionPackDistr 
+     * 
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getAllowedTargets()
+    protected function doActionPackDistr()
     {
-        $result = parent::getAllowedTargets();
-        $result[] = 'db_backup';
-        $result[] = 'db_restore';
-        
-        if (LC_DEVELOPER_MODE) {
-            $result[] = 'pack_distr';
-        }
-
-        return $result;
-    }
-
-
-    /**
-     * Return widget default template
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'db/body.tpl';
+        \Includes\Utils\PHARManager::packCore(new \XLite\Core\Pack\Distr());
     }
 }
