@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Order\Details\Base;
@@ -32,7 +32,7 @@ namespace XLite\View\Order\Details\Base;
  * AForm 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AForm extends \XLite\View\Form\AForm
 {
@@ -41,7 +41,7 @@ abstract class AForm extends \XLite\View\Form\AForm
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormName()
     {
@@ -53,7 +53,7 @@ abstract class AForm extends \XLite\View\Form\AForm
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -65,7 +65,7 @@ abstract class AForm extends \XLite\View\Form\AForm
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultParams()
     {

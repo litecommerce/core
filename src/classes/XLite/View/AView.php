@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Abstract widget
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AView extends \XLite\Core\Handler
 {
@@ -65,7 +65,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @var   \XLite\Core\FlexyCompiler
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $flexy;
 
@@ -75,7 +75,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @var   \XLite\Core\Layout
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $layout;
 
@@ -84,7 +84,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $countDeep = 0;
 
@@ -93,7 +93,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $countLevel = 0;
 
@@ -102,7 +102,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $isCloned = false;
 
@@ -111,7 +111,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $resources = array(
         self::RESOURCE_JS  => array(),
@@ -123,7 +123,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $namedWidgets = array();
 
@@ -132,7 +132,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $viewLists = array();
 
@@ -141,7 +141,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $previousSkin;
 
@@ -150,7 +150,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $previousTemplate;
 
@@ -159,7 +159,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getDefaultTemplate();
 
@@ -169,7 +169,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getRegisteredResources($type = null)
     {
@@ -181,7 +181,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function cleanUpResources()
     {
@@ -193,7 +193,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -209,7 +209,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function prepareResources(array $data, $isCommon = false)
     {
@@ -253,7 +253,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getResourcesSchema(array $jsResources = array(), array $cssResources = array())
     {
@@ -268,7 +268,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __get($name)
     {
@@ -289,7 +289,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __call($method, array $args = array())
     {
@@ -301,7 +301,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __clone()
     {
@@ -317,7 +317,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getResources()
     {
@@ -344,7 +344,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return \XLite\View\AView
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getWidget(array $params = array(), $class = null, $name = null)
     {
@@ -375,7 +375,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkVisibility()
     {
@@ -387,7 +387,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function display()
     {
@@ -403,7 +403,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getContent()
     {
@@ -420,7 +420,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -445,7 +445,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -457,7 +457,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCommonFiles()
     {
@@ -497,7 +497,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isDisplayRequired(array $targets)
     {
@@ -511,7 +511,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isDisplayRequiredForMode(array $modes)
     {
@@ -523,7 +523,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return \XLite\Model\Language
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCurrentLanguage()
     {
@@ -537,7 +537,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function get($name)
     {
@@ -554,7 +554,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setPreviousTpl($skin, $template)
     {
@@ -570,7 +570,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTemplate()
     {
@@ -586,7 +586,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTemplateFile($template = null, $previousSkin = null, $previousTemplate = null)
     {
@@ -604,7 +604,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return \XLite\View\AView
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getChildWidget($class = null)
     {
@@ -616,7 +616,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultModes()
     {
@@ -648,7 +648,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function registerResourcesType($type, array $resources)
     {
@@ -672,7 +672,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function registerResources()
     {
@@ -686,7 +686,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkTarget()
     {
@@ -700,7 +700,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkMode()
     {
@@ -714,7 +714,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function initView()
     {
@@ -727,7 +727,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function closeView()
     {
@@ -738,7 +738,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -754,7 +754,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function includeCompiledFile($original = null, $previousSkin = null, $previousTemplate = null)
     {
@@ -805,7 +805,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRequestParamValue($name)
     {
@@ -822,7 +822,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function __constructStatic()
     {
@@ -839,7 +839,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function displayViewListContent($list, array $arguments = array())
     {
@@ -853,7 +853,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function displayCommentedData(array $data)
     {
@@ -868,7 +868,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function formatPrice($value, \XLite\Model\Currency $currency = null)
     {
@@ -890,7 +890,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isViewListVisible($list, array $arguments = array())
     {
@@ -903,7 +903,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function concat()
     {
@@ -919,7 +919,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isSelected($val1, $val2, $val3 = null)
     {
@@ -956,7 +956,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function truncate($base, $field, $length = 0, $etc = '...', $breakWords = false)
     {
@@ -998,7 +998,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function formatDate($base, $field = null, $format = null)
     {
@@ -1020,7 +1020,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function formatTime($base, $field = null, $format = null)
     {
@@ -1044,7 +1044,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function price_format($base, $field = '', $thousandDelim = null, $decimalDelim = null)
     {
@@ -1084,7 +1084,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addSlashes($base, $field = null)
     {
@@ -1098,7 +1098,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isEmpty($data)
     {
@@ -1113,7 +1113,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function split(array $array, $count)
     {
@@ -1139,7 +1139,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function inc($value, $inc = 1)
     {
@@ -1152,7 +1152,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function rand()
     {
@@ -1168,7 +1168,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRowClass($row, $oddCSSClass, $evenCSSClass = null)
     {
@@ -1183,7 +1183,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getViewList($list, array $arguments = array())
     {
@@ -1214,7 +1214,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getViewListChildren($list)
     {
@@ -1229,7 +1229,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function detectCurrentViewZone()
     {
@@ -1258,7 +1258,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addViewListChild(array &$list, array $properties, $weight = 0) 
     {
@@ -1288,7 +1288,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineViewList($list)
     {
@@ -1341,7 +1341,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getViewListClass()
     {
@@ -1355,7 +1355,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessContent($content)
     {
@@ -1369,7 +1369,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return \DOMXPath
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getXpathByContent($content)
     {
@@ -1387,7 +1387,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getViewListContent($list, array $arguments = array())
     {
@@ -1408,7 +1408,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return \DOMNamedNodeMap|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getViewListContentAsNodes($list)
     {
@@ -1432,7 +1432,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function insertViewListByXpath($content, $query, $list, $insertPosition = self::INSERT_BEFORE)
     {
@@ -1458,7 +1458,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function applyXpathPatches(\DOMNamedNodeMap $places, \DOMNamedNodeMap $patches, $baseInsertType)
     {
@@ -1513,7 +1513,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function insertViewListByPattern($content, $pattern, $list, $replace = '%s')
     {
@@ -1531,7 +1531,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getNestedListName($part)
     {
@@ -1546,7 +1546,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function displayNestedViewListContent($part, array $params = array())
     {
@@ -1561,7 +1561,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getNestedViewList($part, array $arguments = array())
     {
@@ -1573,7 +1573,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -1587,7 +1587,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getInheritedListName($part)
     {
@@ -1602,7 +1602,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function displayInheritedViewListContent($part, array $params = array())
     {
@@ -1617,7 +1617,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getInheritedViewList($part, array $arguments = array())
     {
@@ -1632,7 +1632,7 @@ abstract class AView extends \XLite\Core\Handler
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getNamePostedData($field, $id = null)
     {
@@ -1662,7 +1662,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getNameToDelete($id)
     {
@@ -1676,7 +1676,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isDeveloperMode()
     {
@@ -1688,7 +1688,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCurrencySymbol()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList\Order\Admin;
@@ -32,7 +32,7 @@ namespace XLite\View\ItemsList\Order\Admin;
  * Search 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
 {
@@ -51,7 +51,7 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getSearchParams()
     {
@@ -69,7 +69,7 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -81,7 +81,7 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -95,7 +95,7 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineViewList($list)
     {
@@ -114,7 +114,7 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isFooterVisible()
     {
@@ -126,7 +126,7 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultModes()
     {
@@ -141,7 +141,7 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -153,7 +153,7 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCommonParams()
     {
@@ -192,7 +192,7 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -206,7 +206,7 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
      *
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -227,7 +227,7 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
      *
      * @return array|integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {

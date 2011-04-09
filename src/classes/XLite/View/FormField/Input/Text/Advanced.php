@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Input\Text;
@@ -32,7 +32,7 @@ namespace XLite\View\FormField\Input\Text;
  * \XLite\View\FormField\Input\Text\Advanced
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Advanced extends \XLite\View\FormField\Input\Text
 {
@@ -47,7 +47,7 @@ class Advanced extends \XLite\View\FormField\Input\Text
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {   
@@ -62,7 +62,7 @@ class Advanced extends \XLite\View\FormField\Input\Text
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {   
@@ -77,7 +77,7 @@ class Advanced extends \XLite\View\FormField\Input\Text
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getLabel()
     {
@@ -89,7 +89,7 @@ class Advanced extends \XLite\View\FormField\Input\Text
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {
@@ -101,7 +101,7 @@ class Advanced extends \XLite\View\FormField\Input\Text
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getParentFieldTemplate()
     {

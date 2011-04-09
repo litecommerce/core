@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Product\Search;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Product\Search;
  * ASearch 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ASearch extends \XLite\View\Form\Product\AProduct
 {
@@ -43,7 +43,7 @@ abstract class ASearch extends \XLite\View\Form\Product\AProduct
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getOnSubmitResult()
     {   
@@ -55,7 +55,7 @@ abstract class ASearch extends \XLite\View\Form\Product\AProduct
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormName()
     {
@@ -67,7 +67,7 @@ abstract class ASearch extends \XLite\View\Form\Product\AProduct
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultFormMethod()
     {
@@ -79,7 +79,7 @@ abstract class ASearch extends \XLite\View\Form\Product\AProduct
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultParams()
     {

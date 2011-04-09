@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Product multilingual data
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity
  *
@@ -50,7 +50,7 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -61,7 +61,7 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="text")
      */
@@ -72,7 +72,7 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="text")
      */
@@ -83,7 +83,7 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -94,7 +94,7 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="text")
      */
@@ -105,7 +105,7 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="255")
      */

@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\Plugin\Doctrine\Plugin\DocBlockCorrector;
@@ -33,7 +33,7 @@ namespace Includes\Decorator\Plugin\Doctrine\Plugin\DocBlockCorrector;
  *
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 {
@@ -51,7 +51,7 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function executeHookHandlerStepFirst()
     {
@@ -66,7 +66,7 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setMappedSuperClassTag(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {

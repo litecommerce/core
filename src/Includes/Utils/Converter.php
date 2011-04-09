@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Utils;
@@ -33,7 +33,7 @@ namespace Includes\Utils;
  * 
  * @package    XLite
  * @see        ____class_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 class Converter extends AUtils
 {
@@ -48,7 +48,7 @@ class Converter extends AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function buildQuery(array $data, $glue = '=', $separator = '&', $quotes = '')
     {
@@ -71,7 +71,7 @@ class Converter extends AUtils
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function parseArgs(array $args, $glue = '=', $quotes = '')
     {
@@ -97,7 +97,7 @@ class Converter extends AUtils
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function parseQuery($query, $glue = '=', $separator = '&', $quotes = '')
     {
@@ -113,7 +113,7 @@ class Converter extends AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function trimLeadingChars($string, $chars)
     {
@@ -129,7 +129,7 @@ class Converter extends AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function trimTrailingChars($string, $chars)
     {
@@ -144,7 +144,7 @@ class Converter extends AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function formatPrice($price)
     {
@@ -158,7 +158,7 @@ class Converter extends AUtils
      *
      * @return string
      * @access public
-     * @since  3.0
+     * @since  1.0.0
      */
     public static function convertToCamelCase($string)
     {
@@ -172,7 +172,7 @@ class Converter extends AUtils
      *
      * @return string
      * @access public
-     * @since  3.0
+     * @since  1.0.0
      */
     public static function convertFromCamelCase($string)
     {
@@ -186,7 +186,7 @@ class Converter extends AUtils
      *
      * @return string
      * @access public
-     * @since  3.0
+     * @since  1.0.0
      */
     public static function convertToPascalCase($string)
     {
@@ -202,7 +202,7 @@ class Converter extends AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function prepareClassName($class, $relative = true)
     {
@@ -217,7 +217,7 @@ class Converter extends AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getClassFile($class)
     {
@@ -232,7 +232,7 @@ class Converter extends AUtils
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function composeVersion($versionMajor, $versionMinor)
     {

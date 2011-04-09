@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Menu;
@@ -32,7 +32,7 @@ namespace XLite\View\Menu;
  * Abstract menu 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AMenu extends \XLite\View\AView
 {
@@ -41,7 +41,7 @@ abstract class AMenu extends \XLite\View\AView
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $items;
 
@@ -51,7 +51,7 @@ abstract class AMenu extends \XLite\View\AView
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function defineItems();
 
@@ -61,7 +61,7 @@ abstract class AMenu extends \XLite\View\AView
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getItems()
     {
@@ -83,7 +83,7 @@ abstract class AMenu extends \XLite\View\AView
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isActiveItem(array $item)
     {
@@ -97,7 +97,7 @@ abstract class AMenu extends \XLite\View\AView
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function displayItemClass($i)
     {
@@ -119,7 +119,7 @@ abstract class AMenu extends \XLite\View\AView
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

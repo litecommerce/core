@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList\Product\Admin;
@@ -32,7 +32,7 @@ namespace XLite\View\ItemsList\Product\Admin;
  * AAdmin 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
 {
@@ -41,7 +41,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -53,7 +53,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDisplayMode()
     {
@@ -65,7 +65,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getChangeabilityType()
     {
@@ -77,7 +77,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDisplayStyle()
     {
@@ -89,7 +89,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

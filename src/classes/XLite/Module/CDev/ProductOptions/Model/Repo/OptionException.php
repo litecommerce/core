@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Model\Repo;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\ProductOptions\Model\Repo;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class OptionException extends \XLite\Model\Repo\ARepo
 {
@@ -45,7 +45,7 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkOptions(array $ids)
     {
@@ -75,7 +75,7 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * @return \Doctrine\ORM\NativeQuery
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineCheckExceptionQuery(array $ids)
     {
@@ -116,7 +116,7 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * @return integer
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getNextExceptionId()
     {
@@ -129,7 +129,7 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineNextExceptionIdQuery()
     {
@@ -145,7 +145,7 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findByExceptionId($exceptionId)
     {
@@ -160,7 +160,7 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineByExceptionIdQuery($exceptionId)
     {
@@ -177,7 +177,7 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findByExceptionIds(array $exceptionIds)
     {
@@ -192,7 +192,7 @@ class OptionException extends \XLite\Model\Repo\ARepo
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineByExceptionIdsQuery(array $exceptionIds)
     {

@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Invoice extends \XLite\Controller\Customer\Invoice implements \XLite\Base\IDecorator
 {
@@ -46,7 +46,7 @@ class Invoice extends \XLite\Controller\Customer\Invoice implements \XLite\Base\
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getPortalDrupalArgs($path, array $args = array())
     {

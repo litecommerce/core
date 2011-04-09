@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Base;
@@ -32,7 +32,7 @@ namespace XLite\Base;
  * Singleton 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class Singleton extends \XLite\Base\SuperClass
 {
@@ -41,7 +41,7 @@ abstract class Singleton extends \XLite\Base\SuperClass
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $instances = array();
 
@@ -50,7 +50,7 @@ abstract class Singleton extends \XLite\Base\SuperClass
      *
      * @return \XLite\Base
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getInstance()
     {

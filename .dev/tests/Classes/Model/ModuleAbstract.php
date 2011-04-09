@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 abstract class XLite_Tests_Model_ModuleAbstract extends XLite_Tests_TestCase
@@ -61,7 +61,7 @@ abstract class XLite_Tests_Model_ModuleAbstract extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setUp()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\SideBarBox;
@@ -32,7 +32,7 @@ namespace XLite\View\SideBarBox;
  * Sidebar help
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="sidebar.first", zone="customer", weight="300")
  */
@@ -43,7 +43,7 @@ class Profile extends \XLite\View\SideBarBox
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -55,7 +55,7 @@ class Profile extends \XLite\View\SideBarBox
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {

@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\DataStructure;
@@ -33,7 +33,7 @@ namespace Includes\DataStructure;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Graph
 {
@@ -49,7 +49,7 @@ class Graph
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $key;
 
@@ -59,7 +59,7 @@ class Graph
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $children = array();
 
@@ -74,7 +74,7 @@ class Graph
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct($key = self::ROOT_NODE_KEY)
     {
@@ -87,7 +87,7 @@ class Graph
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getKey()
     {
@@ -100,7 +100,7 @@ class Graph
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getChildren()
     {
@@ -118,7 +118,7 @@ class Graph
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function addChild(self $node)
     {
@@ -133,7 +133,7 @@ class Graph
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function removeChild(self $node)
     {
@@ -155,7 +155,7 @@ class Graph
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setKey($key)
     {
@@ -171,7 +171,7 @@ class Graph
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function replant(self $oldParent, self $newParent)
     {
@@ -190,7 +190,7 @@ class Graph
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function walkThrough($callback, self $parent = null, $isStarted = false)
     {
@@ -214,7 +214,7 @@ class Graph
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkIntegrity()
     {
@@ -232,7 +232,7 @@ class Graph
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleError($code, self $node = null)
     {
@@ -248,7 +248,7 @@ class Graph
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareErrorMessage($code, self $node = null)
     {
@@ -267,7 +267,7 @@ class Graph
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function draw(self $root = null, $offset = 0)
     {

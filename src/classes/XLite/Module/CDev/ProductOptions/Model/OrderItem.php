@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Model;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\ProductOptions\Model;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 {
@@ -43,7 +43,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * @var    \Doctrine\ORM\PersistentCollection|array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\ProductOptions\Model\OrderItemOption", mappedBy="order_item", cascade={"all"})
      * @OrderBy   ({"orderby"="ASC", "option_id"="ASC"})
@@ -56,7 +56,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSerializedOptions()
     {
@@ -77,7 +77,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getKey()
     {
@@ -90,7 +90,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function hasOptions()
     {
@@ -105,7 +105,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setProductOptions(array $options)
     {
@@ -157,7 +157,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProductOptions()
     {
@@ -170,7 +170,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * @return integer
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function countProductOptions()
     {
@@ -183,7 +183,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * @return float
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPrice()
     {
@@ -207,7 +207,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * @return float
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getWeight()
     {
@@ -231,7 +231,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getEventCell()
     {
@@ -258,7 +258,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {

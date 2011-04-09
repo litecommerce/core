@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Product\Modify;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Product\Modify;
  * Details 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Single extends \XLite\View\Form\Product\Modify\Base\Single
 {
@@ -41,7 +41,7 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormName()
     {
@@ -53,7 +53,7 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -65,7 +65,7 @@ class Single extends \XLite\View\Form\Product\Modify\Base\Single
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isMultipart()
     {

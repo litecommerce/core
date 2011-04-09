@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Order items list (short version)
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class OrderItemsShort extends \XLite\View\AView
 {
@@ -49,7 +49,7 @@ class OrderItemsShort extends \XLite\View\AView
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $orderItemsMax = 3;
 
@@ -58,7 +58,7 @@ class OrderItemsShort extends \XLite\View\AView
      * 
      * @var   \XLite\Model\Order
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $order = null;
 
@@ -68,7 +68,7 @@ class OrderItemsShort extends \XLite\View\AView
      * 
      * @return \XLite\Model\Order
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOrder()
     {
@@ -100,7 +100,7 @@ class OrderItemsShort extends \XLite\View\AView
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOrderId()
     {
@@ -112,7 +112,7 @@ class OrderItemsShort extends \XLite\View\AView
      * 
      * @return array(\XLite\Model\OrderItem)
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getItems()
     {
@@ -126,7 +126,7 @@ class OrderItemsShort extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isMoreLinkVisible()
     {
@@ -138,7 +138,7 @@ class OrderItemsShort extends \XLite\View\AView
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMoreLinkClassName()
     {
@@ -150,7 +150,7 @@ class OrderItemsShort extends \XLite\View\AView
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -168,7 +168,7 @@ class OrderItemsShort extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -198,7 +198,7 @@ class OrderItemsShort extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

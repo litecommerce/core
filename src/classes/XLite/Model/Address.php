@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Address model
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity
  * @Table (name="profile_addresses",
@@ -57,7 +57,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -70,7 +70,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
@@ -81,7 +81,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
@@ -92,7 +92,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="fixedstring", length="1")
      */
@@ -103,7 +103,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="32")
      */
@@ -114,7 +114,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="128")
      */
@@ -125,7 +125,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="128")
      */
@@ -136,7 +136,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="32")
      */
@@ -147,7 +147,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -158,7 +158,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -169,7 +169,7 @@ class Address extends \XLite\Model\AEntity
      *
      * @var   \XLite\Model\State
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\State", cascade={"merge","detach"})
      * @JoinColumn (name="state_id", referencedColumnName="state_id")
@@ -181,7 +181,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -192,7 +192,7 @@ class Address extends \XLite\Model\AEntity
      *
      * @var   \XLite\Model\Country
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Country", cascade={"merge","detach"})
      * @JoinColumn (name="country_code", referencedColumnName="code")
@@ -204,7 +204,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="32")
      */
@@ -215,7 +215,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @ManyToOne (targetEntity="XLite\Model\Profile", inversedBy="addresses")
      * @JoinColumn (name="profile_id", referencedColumnName="profile_id")
@@ -228,7 +228,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @return array(string)
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAddressFields()
     {
@@ -251,7 +251,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @return \XLite\Model\State
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getState()
     {
@@ -277,7 +277,7 @@ class Address extends \XLite\Model\AEntity
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setState($state)
     {
@@ -307,7 +307,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getName()
     {
@@ -321,7 +321,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setName($value)
     {
@@ -336,7 +336,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getBillingRequiredFields()
     {
@@ -355,7 +355,7 @@ class Address extends \XLite\Model\AEntity
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getShippingRequiredFields()
     {
@@ -376,7 +376,7 @@ class Address extends \XLite\Model\AEntity
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRequiredFieldsByType($atype)
     {
@@ -404,7 +404,7 @@ class Address extends \XLite\Model\AEntity
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRequiredEmptyFields($atype)
     {
@@ -428,7 +428,7 @@ class Address extends \XLite\Model\AEntity
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isCompleted($atype)
     {
@@ -440,7 +440,7 @@ class Address extends \XLite\Model\AEntity
      *
      * @return \XLite\Model\AEntity
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function cloneEntity()
     {

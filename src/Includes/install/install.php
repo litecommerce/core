@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 
@@ -32,7 +32,7 @@
  * 
  * @package LiteCommerce
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 
 if (!defined('XLITE_INSTALL_MODE')) {
@@ -56,7 +56,7 @@ class InstallTestDockblocks { }
  *
  * @return string
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function xtr($label, array $substitute = array())
 {
@@ -78,7 +78,7 @@ function xtr($label, array $substitute = array())
  *
  * @return string
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function getTextByLabel($label)
 {
@@ -134,7 +134,7 @@ function getTextByLabel($label)
  * @return void
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 
 function x_install_log($message = null)
@@ -201,7 +201,7 @@ OUT;
  * @return void
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function x_install_log_mask_params($params)
 {
@@ -238,7 +238,7 @@ function x_install_log_mask_params($params)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function doCheckRequirements()
 { 
@@ -412,7 +412,7 @@ function doCheckRequirements()
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkDocblocksSupport(&$errorMsg, $value = null)
 {
@@ -442,7 +442,7 @@ function checkDocblocksSupport(&$errorMsg, $value = null)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkInstallScript(&$errorMsg, $value = null)
 {
@@ -464,7 +464,7 @@ function checkInstallScript(&$errorMsg, $value = null)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkLoopback(&$errorMsg, $value = null)
 {
@@ -489,7 +489,7 @@ function checkLoopback(&$errorMsg, $value = null)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkPhpVersion(&$errorMsg, &$value)
 {
@@ -540,7 +540,7 @@ function checkPhpVersion(&$errorMsg, &$value)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkPhpDisableFunctions(&$errorMsg, &$value)
 {
@@ -564,7 +564,7 @@ function checkPhpDisableFunctions(&$errorMsg, &$value)
  * 
  * @return string
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function getAllowedDisableFunctionsValue()
 {
@@ -578,7 +578,7 @@ function getAllowedDisableFunctionsValue()
  * 
  * @return array (unallowed & allowed)
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function getDisabledFunctions()
 {
@@ -653,7 +653,7 @@ function getDisabledFunctions()
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkPhpMemoryLimit(&$errorMsg, &$value)
 {
@@ -685,7 +685,7 @@ function checkPhpMemoryLimit(&$errorMsg, &$value)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkPhpFileUploads(&$errorMsg, &$value)
 {
@@ -710,7 +710,7 @@ function checkPhpFileUploads(&$errorMsg, &$value)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkPhpMysqlSupport(&$errorMsg, &$value)
 {
@@ -737,7 +737,7 @@ function checkPhpMysqlSupport(&$errorMsg, &$value)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkPhpPdoMysql(&$errorMsg, &$value)
 {
@@ -764,7 +764,7 @@ function checkPhpPdoMysql(&$errorMsg, &$value)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkPhpUploadMaxFilesize(&$errorMsg, &$value)
 {
@@ -789,7 +789,7 @@ function checkPhpUploadMaxFilesize(&$errorMsg, &$value)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkMemAllocation(&$errorMsg, &$value)
 {
@@ -835,7 +835,7 @@ function checkMemAllocation(&$errorMsg, &$value)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkRecursionTest(&$errorMsg, &$value)
 {
@@ -861,7 +861,7 @@ function checkRecursionTest(&$errorMsg, &$value)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkFilePermissions(&$errorMsg, &$value)
 {
@@ -915,7 +915,7 @@ function checkFilePermissions(&$errorMsg, &$value)
 }
 
 /**
- * Check MySQL version
+ * Check MySQL version: returns false only if version is gathered and it isn't suit
  * 
  * @param string   $errorMsg   Error message if checking failed
  * @param string   $value      Actual value of the checked parameter
@@ -924,7 +924,7 @@ function checkFilePermissions(&$errorMsg, &$value)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
 {
@@ -943,16 +943,15 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
         if (!is_array($data)) {
             $data = parseDbURL(constant('DB_URL'));
         }
-        
+
         $isConnected = dbConnect($data, $pdoErrorMsg);
 
         if (!$isConnected) {
             $errorMsg = xtr('Can\'t connect to MySQL server') . (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : '');
-            $result = false;
         }
     }
 
-    if ($result && $isConnected) {
+    if ($isConnected) {
 
         try {
             $version = \Includes\Utils\Database::getDbVersion();
@@ -971,7 +970,6 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
 
         } else {
             $errorMsg = xtr('Cannot get the MySQL server version') . (!empty($pdoErrorMsg) ? ' : ' . $pdoErrorMsg : '.');
-            $result = false;
         }
     }
 
@@ -989,7 +987,7 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkPhpGdlib(&$errorMsg, &$value)
 {
@@ -1017,7 +1015,7 @@ function checkPhpGdlib(&$errorMsg, &$value)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkPhpPhar(&$errorMsg, &$value)
 {
@@ -1040,7 +1038,7 @@ function checkPhpPhar(&$errorMsg, &$value)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkHttpsBouncer(&$errorMsg, &$value)
 {
@@ -1087,7 +1085,7 @@ function checkHttpsBouncer(&$errorMsg, &$value)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkXmlSupport(&$errorMsg, &$value)
 {
@@ -1130,7 +1128,7 @@ function checkXmlSupport(&$errorMsg, &$value)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function doPrepareFixtures(&$params, $silentMode = false)
 {
@@ -1241,7 +1239,7 @@ function doUpdateConfig(&$params, $silentMode = false)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function doRemoveCache($params)
 {
@@ -1302,7 +1300,7 @@ function doRemoveCache($params)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function doBuildCache()
 {
@@ -1333,7 +1331,7 @@ function doBuildCache()
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function doInstallDirs($silentMode = false)
 {
@@ -1401,7 +1399,7 @@ function doInstallDirs($silentMode = false)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function doCreateAdminAccount(&$params, $silentMode = false)
 {
@@ -1487,7 +1485,7 @@ function doCreateAdminAccount(&$params, $silentMode = false)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function doFinishInstallation(&$params, $silentMode = false)
 {
@@ -1614,7 +1612,7 @@ function doFinishInstallation(&$params, $silentMode = false)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function create_dirs($dirs)
 {
@@ -1664,7 +1662,7 @@ function create_dirs($dirs)
  * @return void
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function chmod_others_directories($dirs)
 {
@@ -1691,7 +1689,7 @@ function chmod_others_directories($dirs)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function create_htaccess_files($files_to_create)
 {
@@ -1737,7 +1735,7 @@ function create_htaccess_files($files_to_create)
  * @return array
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function checkPermissionsRecursive($object)
 {
@@ -1794,7 +1792,7 @@ function checkPermissionsRecursive($object)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function copy_files($source_dir, $parent_dir, $destination_dir, &$failedList)
 {
@@ -1887,7 +1885,7 @@ function copy_files($source_dir, $parent_dir, $destination_dir, &$failedList)
  * @return void
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function change_config(&$params)
 {
@@ -1972,7 +1970,7 @@ function change_config(&$params)
  * @return mixed
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function save_config($content)
 {
@@ -1988,7 +1986,7 @@ function save_config($content)
  * @return array
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function get_info()
 {
@@ -2060,7 +2058,7 @@ function get_info()
  * @return string
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function inst_http_request_install($action_str, $url = null)
 {
@@ -2079,7 +2077,7 @@ function inst_http_request_install($action_str, $url = null)
  * @return string
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function getLiteCommerceURL()
 {
@@ -2102,7 +2100,7 @@ function getLiteCommerceURL()
  * @return string
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function inst_http_request($url_request)
 {
@@ -2147,7 +2145,7 @@ function inst_http_request($url_request)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function is_disabled_memory_limit()
 {
@@ -2172,7 +2170,7 @@ function is_disabled_memory_limit()
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function check_memory_limit($current_limit, $required_limit)
 {
@@ -2201,7 +2199,7 @@ function check_memory_limit($current_limit, $required_limit)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function is_php5()
 {
@@ -2216,7 +2214,7 @@ function is_php5()
  * @return string
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function convert_ini_str_to_int($string)
 {
@@ -2249,7 +2247,7 @@ function convert_ini_str_to_int($string)
  * @return void
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function recursion_depth_test($index)
 {
@@ -2266,7 +2264,7 @@ function recursion_depth_test($index)
  * @return string
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function make_check_report($requirements)
 {
@@ -2339,7 +2337,7 @@ function make_check_report($requirements)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function status($status, $code = null)
 {
@@ -2373,7 +2371,7 @@ function status($status, $code = null)
  * @return string
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function status_skipped() 
 {
@@ -2388,7 +2386,7 @@ function status_skipped()
  * @return void
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function fatal_error($txt) {
 
@@ -2407,7 +2405,7 @@ function fatal_error($txt) {
  * @return void
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function warning_error($txt) {
 
@@ -2430,7 +2428,7 @@ function warning_error($txt) {
  * @return void
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function message($txt) {
 ?>
@@ -2444,7 +2442,7 @@ function message($txt) {
  * @return mixed
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function rename_install_script()
 {
@@ -2470,7 +2468,7 @@ function rename_install_script()
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function isHTTPS()
 {
@@ -2487,7 +2485,7 @@ function isHTTPS()
  * @return void
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function getStepBackNumber()
 {
@@ -2522,7 +2520,7 @@ function getStepBackNumber()
  * @return string
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function default_js_back()
 {
@@ -2541,7 +2539,7 @@ function default_js_back()
  * @return string
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function default_js_next()
 {
@@ -2558,7 +2556,7 @@ function default_js_next()
  * @return string
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function generate_authcode()
 {
@@ -2574,7 +2572,7 @@ function generate_authcode()
  * @return void
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function check_authcode(&$params)
 {
@@ -2598,7 +2596,7 @@ function check_authcode(&$params)
  * @return mixed
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function get_authcode()
 {
@@ -2617,7 +2615,7 @@ function get_authcode()
  * @return void
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function save_authcode(&$params) {
 
@@ -2656,7 +2654,7 @@ function save_authcode(&$params) {
  * @return int
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function get_step($name)
 {
@@ -2685,7 +2683,7 @@ function get_step($name)
  * @return string
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function displayFormElement($fieldName, $fieldData, $clrNumber)
 {
@@ -2775,7 +2773,7 @@ OUT;
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function module_default(&$params)
 {
@@ -2792,7 +2790,7 @@ function module_default(&$params)
  * @return string
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function module_default_js_next()
 {
@@ -2815,7 +2813,7 @@ function module_default_js_next()
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function module_check_cfg()
 {
@@ -2888,7 +2886,7 @@ function module_check_cfg()
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function module_cfg_install_db(&$params)
 {
@@ -3129,7 +3127,7 @@ function module_cfg_install_db(&$params)
  * @return string
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function module_cfg_install_db_js_back()
 {
@@ -3154,7 +3152,7 @@ function module_cfg_install_db_js_back()
  * @return string
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function module_cfg_install_db_js_next()
 {
@@ -3204,7 +3202,7 @@ function module_cfg_install_db_js_next()
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function module_install_cache(&$params)
 {
@@ -3258,7 +3256,7 @@ function module_install_cache(&$params)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function module_install_dirs(&$params)
 {
@@ -3322,7 +3320,7 @@ function module_install_dirs(&$params)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function module_cfg_create_admin(&$params)
 {
@@ -3412,7 +3410,7 @@ function module_cfg_create_admin(&$params)
  * @return string
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function module_cfg_create_admin_js_next()
 {
@@ -3468,7 +3466,7 @@ function module_cfg_create_admin_js_next()
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function module_install_done(&$params)
 {

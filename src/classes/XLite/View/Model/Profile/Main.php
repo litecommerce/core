@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Model\Profile;
@@ -32,7 +32,7 @@ namespace XLite\View\Model\Profile;
  * \XLite\View\Model\Profile\Main 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Main extends \XLite\View\Model\Profile\AProfile
 {
@@ -49,7 +49,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $mainSchema = array(
         'login' => array( 
@@ -74,7 +74,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $accessSchema = array(
         'access_level' => array(
@@ -100,7 +100,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getRegisterMode()
     {
@@ -116,7 +116,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $params = array(), array $sections = array())
     {
@@ -131,7 +131,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isRegisterMode()
     {
@@ -145,7 +145,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      *
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProfileId($checkMode = true)
     {
@@ -157,7 +157,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isValid()
     {
@@ -169,7 +169,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -185,7 +185,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormClass()
     {
@@ -197,7 +197,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -209,7 +209,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormFieldsForSectionMain()
     {
@@ -230,7 +230,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormFieldsForSectionAccess()
     {
@@ -244,7 +244,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setModelProperties(array $data)
     {
@@ -261,7 +261,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkPassword()
     {
@@ -287,7 +287,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProfileMainSections()
     {
@@ -304,7 +304,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getErrorActionValidateInputMessage($login)
     {
@@ -317,7 +317,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessErrorActionValidateInput()
     {
@@ -332,7 +332,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performActionCreate()
     {
@@ -347,7 +347,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performActionUpdate()
     {
@@ -359,7 +359,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performActionDelete()
     {
@@ -375,7 +375,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performActionValidateInput()
     {

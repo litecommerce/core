@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Input;
@@ -33,7 +33,7 @@ namespace XLite\View\FormField\Input;
  * \XLite\View\FormField\Input\AInput 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AInput extends \XLite\View\FormField\AFormField
 {
@@ -42,7 +42,7 @@ abstract class AInput extends \XLite\View\FormField\AFormField
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {
@@ -54,7 +54,7 @@ abstract class AInput extends \XLite\View\FormField\AFormField
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCommonAttributes()
     {

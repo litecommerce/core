@@ -13,7 +13,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
@@ -24,7 +24,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $testProfileData = array(
         // Admin profile
@@ -56,7 +56,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $testAddresses = array(
         // Addresses set #0
@@ -121,7 +121,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $profileFields = array(
         'login'                 => 'aaa',
@@ -145,7 +145,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function tearDown()
     {
@@ -160,7 +160,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetBillingAddress()
     {
@@ -206,7 +206,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetShippingAddress()
     {
@@ -253,7 +253,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetOrdersCount()
     {
@@ -269,7 +269,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testIsEnabled()
     {
@@ -290,7 +290,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testCreate()
     {
@@ -320,7 +320,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testUpdate()
     {
@@ -380,7 +380,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testIsSameAddress()
     {
@@ -419,7 +419,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testCloneEntity()
     {
@@ -472,7 +472,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTestProfile($selectedProfileId = 0, $selectedAddressesId = 0)
     {
@@ -508,7 +508,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function deleteTestProfile($profileId)
     {

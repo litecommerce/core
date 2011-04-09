@@ -13,7 +13,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 include_once __DIR__ . '/AProduct.php';
@@ -26,7 +26,7 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 	 * @return void
 	 * @access protected
 	 * @see    ____func_see____
-	 * @since  3.0.0
+	 * @since  1.0.0
 	 */
 	protected function getProductData()
 	{
@@ -54,7 +54,7 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
-	 * @since  3.0.0
+	 * @since  1.0.0
 	 */
 	public function testConstruct()
 	{
@@ -95,7 +95,7 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
-	 * @since  3.0.0
+	 * @since  1.0.0
 	 */
 	public function testAddCategoryProducts()
 	{
@@ -123,7 +123,7 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
-	 * @since  3.0.0
+	 * @since  1.0.0
 	 */
 	public function testAddOptionGroups()
     {
@@ -151,7 +151,7 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testAddTranslations()
     {

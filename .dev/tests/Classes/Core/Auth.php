@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 /**
@@ -31,7 +31,7 @@
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
 {
@@ -41,7 +41,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function tearDown()
     {
@@ -57,7 +57,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testAddSessionVarToClear()
     {
@@ -76,7 +76,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testLogin()
     {
@@ -153,7 +153,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testLogoff()
     {
@@ -177,7 +177,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testIsLogged()
     {
@@ -199,7 +199,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetProfile()
     {
@@ -223,7 +223,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testCheckProfile()
     {
@@ -279,7 +279,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testIsAdmin()
     {
@@ -303,7 +303,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetAccessLevel()
     {
@@ -334,7 +334,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetAdminAccessLevel()
     {
@@ -347,7 +347,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetCustomerAccessLevel()
     {
@@ -360,7 +360,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetAccessLevelsList()
     {
@@ -380,7 +380,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetUserTypesRaw()
     {
@@ -400,7 +400,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testSetSecureHash()
     {
@@ -421,7 +421,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testRemindLogin()
     {
@@ -436,7 +436,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testLoginAdministrator()
     {
@@ -458,7 +458,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testIsAuthorized()
     {

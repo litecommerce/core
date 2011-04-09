@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 {* TODO: REMOVE? we are using items_list/products/* templates instead*}
 <div class="{getListTitleClass()}">{getCount()} results found</div>

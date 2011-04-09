@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo;
  * Zone repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Zone extends \XLite\Model\Repo\ARepo
 {
@@ -41,7 +41,7 @@ class Zone extends \XLite\Model\Repo\ARepo
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = self::TYPE_SECONDARY;
 
@@ -50,7 +50,7 @@ class Zone extends \XLite\Model\Repo\ARepo
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $alternativeIdentifier = array(
         array('zone_name'),
@@ -63,7 +63,7 @@ class Zone extends \XLite\Model\Repo\ARepo
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineCacheCells()
     {
@@ -92,7 +92,7 @@ class Zone extends \XLite\Model\Repo\ARepo
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function cleanCache($zoneId = null)
     {
@@ -115,7 +115,7 @@ class Zone extends \XLite\Model\Repo\ARepo
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findAllZones()
     {
@@ -134,7 +134,7 @@ class Zone extends \XLite\Model\Repo\ARepo
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineFindAllZones()
     {
@@ -156,7 +156,7 @@ class Zone extends \XLite\Model\Repo\ARepo
      *  
      * @return \XLite\Model\Zone
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findZone($zoneId)
     {
@@ -181,7 +181,7 @@ class Zone extends \XLite\Model\Repo\ARepo
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineFindZone($zoneId)
     {
@@ -203,7 +203,7 @@ class Zone extends \XLite\Model\Repo\ARepo
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findApplicableZones($address)
     {

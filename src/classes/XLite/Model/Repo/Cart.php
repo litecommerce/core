@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo;
  * Cart repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Cart extends \XLite\Model\Repo\ARepo
 {
@@ -43,7 +43,7 @@ class Cart extends \XLite\Model\Repo\ARepo
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function markAsOrder($orderId)
     {
@@ -59,7 +59,7 @@ class Cart extends \XLite\Model\Repo\ARepo
      *  
      * @return \Doctrine\DBAL\Statement|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineMarkAsOrderQuery($orderId)
     {

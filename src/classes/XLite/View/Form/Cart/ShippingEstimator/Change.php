@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Cart\ShippingEstimator;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Cart\ShippingEstimator;
  * Shipping estimator change shipping method form
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Change extends \XLite\View\Form\Cart\ShippingEstimator\AShippingEstimator
 {
@@ -41,7 +41,7 @@ class Change extends \XLite\View\Form\Cart\ShippingEstimator\AShippingEstimator
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

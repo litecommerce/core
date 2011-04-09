@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Controller\Customer;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\ProductOptions\Controller\Customer;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecorator
 {
@@ -43,7 +43,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      * @var    boolean
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $optionInvalid = false;
 
@@ -56,7 +56,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCurrentItem(\XLite\Model\Product $product)
     {
@@ -89,7 +89,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionAdd()
     {

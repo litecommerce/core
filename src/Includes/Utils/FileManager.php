@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Utils;
@@ -33,7 +33,7 @@ namespace Includes\Utils;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class FileManager extends \Includes\Utils\AUtils
 {
@@ -45,7 +45,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return bool
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isExists($file)
     {
@@ -60,7 +60,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return bool
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isReadable($file)
     {
@@ -75,7 +75,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return bool
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isFile($file)
     {
@@ -90,7 +90,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return bool
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isDir($file)
     {
@@ -105,7 +105,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return bool
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isFileReadable($file)
     {
@@ -120,7 +120,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return bool
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isDirReadable($file)
     {
@@ -135,7 +135,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getDir($file)
     {
@@ -150,7 +150,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getRealPath($dir)
     {
@@ -166,7 +166,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getRelativePath($path, $compareTo)
     {
@@ -198,7 +198,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function mkdir($dir, $mode = 0755)
     {
@@ -214,7 +214,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function mkdirRecursive($dir, $mode = 0755)
     {
@@ -230,7 +230,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function unlinkRecursive($dir)
     {
@@ -259,7 +259,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function copyRecursive($dirFrom, $dirTo)
     {
@@ -285,7 +285,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getHash($path)
     {
@@ -301,7 +301,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getUniquePath($dir, $file)
     {
@@ -325,7 +325,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function chmod($path, $mode)
     {
@@ -340,7 +340,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function read($path)
     {
@@ -358,7 +358,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return integer
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function write($path, $data, $mode = 0644, $flags = 0)
     {
@@ -380,7 +380,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return int
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function replace($path, $data, $pattern, $mode = 0644, $flags = 0)
     {
@@ -395,7 +395,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function delete($path)
     {
@@ -410,7 +410,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function deleteDir($dir)
     {
@@ -427,7 +427,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function copy($pathFrom, $pathTo, $overwrite = true)
     {
@@ -445,7 +445,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return string|void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function findExecutable($filename)
     {
@@ -487,7 +487,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function normalize($path)
     {
@@ -503,7 +503,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function normalizeCallback($a, $b)
     {

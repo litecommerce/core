@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * \XLite\Model\ActionStatus 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ActionStatus extends \XLite\Base
 {
@@ -50,7 +50,7 @@ class ActionStatus extends \XLite\Base
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $status = self::STATUS_UNDEFINED;
 
@@ -59,7 +59,7 @@ class ActionStatus extends \XLite\Base
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $code = null;
 
@@ -68,7 +68,7 @@ class ActionStatus extends \XLite\Base
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $message = null;
 
@@ -77,7 +77,7 @@ class ActionStatus extends \XLite\Base
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $allowedStatuses = array(
         self::STATUS_ERROR,
@@ -94,7 +94,7 @@ class ActionStatus extends \XLite\Base
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct($status, $message = '', $code = 0)
     {
@@ -114,7 +114,7 @@ class ActionStatus extends \XLite\Base
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isError()
     {
@@ -126,7 +126,7 @@ class ActionStatus extends \XLite\Base
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isSuccess()
     {
@@ -138,7 +138,7 @@ class ActionStatus extends \XLite\Base
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getStatus()
     {
@@ -150,7 +150,7 @@ class ActionStatus extends \XLite\Base
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCode()
     {
@@ -162,7 +162,7 @@ class ActionStatus extends \XLite\Base
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMessage()
     {
@@ -177,7 +177,7 @@ class ActionStatus extends \XLite\Base
      *  
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkStatus($status)
     {

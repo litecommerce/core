@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * Common operations repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Operator extends \XLite\Base\Singleton
 {
@@ -41,7 +41,7 @@ class Operator extends \XLite\Base\Singleton
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $filesRepositories = array(
         LC_COMPILE_DIR => 'compiled classes repository',
@@ -58,7 +58,7 @@ class Operator extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function redirect($location, $force = false, $code = 302)
     {
@@ -75,7 +75,7 @@ class Operator extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isClassExists($name)
     {
@@ -90,7 +90,7 @@ class Operator extends \XLite\Base\Singleton
      *  
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getURLContent($url)
     {
@@ -120,7 +120,7 @@ class Operator extends \XLite\Base\Singleton
      *  
      * @return array (pages count + current page number)
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function calculatePagination($count, $page = 1, $limit = 20)
     {
@@ -145,7 +145,7 @@ class Operator extends \XLite\Base\Singleton
      * 
      * @return boolean 
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function checkRedirectStatus()
     {
@@ -161,7 +161,7 @@ class Operator extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function setHeaderLocation($location, $code = 302)
     {
@@ -194,7 +194,7 @@ class Operator extends \XLite\Base\Singleton
      * 
      * @return void
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function finish()
     {
@@ -207,7 +207,7 @@ class Operator extends \XLite\Base\Singleton
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function display404()
     {
@@ -228,7 +228,7 @@ class Operator extends \XLite\Base\Singleton
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getBackTrace($slice = 0)
     {
@@ -243,7 +243,7 @@ class Operator extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function prepareBackTrace(array $backTrace, $slice = 0)
     {
@@ -298,7 +298,7 @@ class Operator extends \XLite\Base\Singleton
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function saveServiceYAML($path, array $data)
     {
@@ -315,7 +315,7 @@ class Operator extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function loadServiceYAML($path)
     {
@@ -337,7 +337,7 @@ class Operator extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBackTraceArgs(array $l)
     {
@@ -405,7 +405,7 @@ class Operator extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function detectClassName($class)
     {
@@ -417,7 +417,7 @@ class Operator extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getServiceHeader()
     {

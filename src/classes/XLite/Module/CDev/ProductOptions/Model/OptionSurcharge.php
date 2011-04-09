@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Model;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\ProductOptions\Model;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  * @Entity (repositoryClass="\XLite\Module\CDev\ProductOptions\Model\Repo\OptionSurcharge")
  * @Table (name="option_surcharges",
  *      uniqueConstraints={
@@ -56,7 +56,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @var    integer
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      * @Id
      * @GeneratedValue (strategy="AUTO")
      * @Column (type="integer")
@@ -69,7 +69,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      * @Column (type="string", length="32")
      */
     protected $type = 'price';
@@ -80,7 +80,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @var    float
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      * @Column (type="decimal", precision="14", scale="4")
      */
     protected $modifier = 0.0000;
@@ -91,7 +91,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      * @Column (type="string", length="1")
      */
     protected $modifier_type = self::PERCENT_MODIFIER;
@@ -102,7 +102,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @var    \XLite\Module\CDev\ProductOptions\Model\Option
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      * @ManyToOne (targetEntity="XLite\Module\CDev\ProductOptions\Model\Option", inversedBy="surcharges")
      * @JoinColumn (name="option_id", referencedColumnName="option_id")
      */
@@ -116,7 +116,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setModifierType($type)
     {
@@ -138,7 +138,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSign()
     {
@@ -160,7 +160,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isEmpty()
     {
@@ -173,7 +173,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @return float
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAbsoluteValue()
     {
@@ -189,7 +189,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @return float
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPositiveAbsoluteValue()
     {
@@ -202,7 +202,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCalculator()
     {
@@ -224,7 +224,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @return mixed
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function calculateAbsolute()
     {
@@ -237,7 +237,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @return mixed
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function calculateRelative()
     {
@@ -250,7 +250,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @return float
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSurchargeBase()
     {
@@ -275,7 +275,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @return float
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSurchargeBasePrice()
     {
@@ -292,7 +292,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @return integer
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSurchargeBaseWeight()
     {
@@ -310,7 +310,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @return mixed
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessSurcharge($surcharge)
     {
@@ -337,7 +337,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @return float
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessSurchargePrice($surcharge)
     {
@@ -352,7 +352,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @return integer
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessSurchargeWeight($surcharge)
     {

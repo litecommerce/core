@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Product\Details\Customer;
@@ -32,7 +32,7 @@ namespace XLite\View\Product\Details\Customer;
  * ACustomer 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ACustomer extends \XLite\View\Product\Details\ADetails
 {
@@ -41,7 +41,7 @@ abstract class ACustomer extends \XLite\View\Product\Details\ADetails
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isProductAdded()
     {
@@ -54,7 +54,7 @@ abstract class ACustomer extends \XLite\View\Product\Details\ADetails
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

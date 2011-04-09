@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Cart\Item;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Cart\Item;
  * Delete cart item form
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Delete extends \XLite\View\Form\Cart\Item\AItem
 {
@@ -41,7 +41,7 @@ class Delete extends \XLite\View\Form\Cart\Item\AItem
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormName()
     {

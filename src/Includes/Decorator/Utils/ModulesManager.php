@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\Utils;
@@ -41,7 +41,7 @@ define('LC_DS_OPTIONAL', '(' . LC_DS_QUOTED . '|$)');
  * :TODO:  move it into the Includes/Utils
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ModulesManager extends AUtils
 {
@@ -62,7 +62,7 @@ abstract class ModulesManager extends AUtils
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $activeModules;
 
@@ -72,7 +72,7 @@ abstract class ModulesManager extends AUtils
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $modulesINIFile;
 
@@ -82,7 +82,7 @@ abstract class ModulesManager extends AUtils
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $quotedPaths;
 
@@ -93,7 +93,7 @@ abstract class ModulesManager extends AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getTableName()
     {
@@ -106,7 +106,7 @@ abstract class ModulesManager extends AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getModuleNameField()
     {
@@ -119,7 +119,7 @@ abstract class ModulesManager extends AUtils
      * @return string|void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getModulesFilePath()
     {
@@ -141,7 +141,7 @@ abstract class ModulesManager extends AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getModulesList()
     {
@@ -208,7 +208,7 @@ abstract class ModulesManager extends AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getModuleQuotedPaths()
     {
@@ -228,7 +228,7 @@ abstract class ModulesManager extends AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getModuleQuotedPathsCallback(\Includes\Decorator\DataStructure\Graph\Modules $node)
     {
@@ -245,7 +245,7 @@ abstract class ModulesManager extends AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getPathPattern($rootPath, $dir, $extension)
     {
@@ -262,7 +262,7 @@ abstract class ModulesManager extends AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function correctDependencies()
     {
@@ -286,7 +286,7 @@ abstract class ModulesManager extends AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function checkVersions()
     {
@@ -307,7 +307,7 @@ abstract class ModulesManager extends AUtils
      * @return mixed
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function callModuleMethod($module, $method, array $args = array())
     {
@@ -322,7 +322,7 @@ abstract class ModulesManager extends AUtils
      *
      * @return string
      * @access public
-     * @since  3.0
+     * @since  1.0.0
      */
     public static function getClassNameByModuleName($moduleName)
     {
@@ -336,7 +336,7 @@ abstract class ModulesManager extends AUtils
      *
      * @return string|null
      * @access public
-     * @since  3.0
+     * @since  1.0.0
      */
     public static function getModuleNameByClassName($className)
     {
@@ -351,7 +351,7 @@ abstract class ModulesManager extends AUtils
      * @return array|bool
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getActiveModules($moduleName = null)
     {
@@ -372,7 +372,7 @@ abstract class ModulesManager extends AUtils
      * @return bool
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isActiveModule($moduleName)
     {
@@ -385,7 +385,7 @@ abstract class ModulesManager extends AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function removeFile()
     {
@@ -400,7 +400,7 @@ abstract class ModulesManager extends AUtils
      * @return integer|boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function saveModulesToFile(array $modules)
     {
@@ -431,7 +431,7 @@ abstract class ModulesManager extends AUtils
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function disableModule($key)
     {
@@ -463,7 +463,7 @@ abstract class ModulesManager extends AUtils
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function switchModules()
     {
@@ -499,6 +499,12 @@ abstract class ModulesManager extends AUtils
                     'pageURL'       => static::callModuleMethod($module, 'getPageURL'),
                     'authorPageURL' => static::callModuleMethod($module, 'getAuthorPageURL'),
                     'dependencies'  => serialize(static::callModuleMethod($module, 'getDependencies')),
+                    'rating'        => 0,
+                    'votes'         => 0,
+                    'downloads'     => 0,
+                    'price'         => 0.00,
+                    'currency'      => 'USD',
+                    'revisionDate'  => 0,
                 );
                 $query = 'REPLACE INTO ' . static::getTableName() 
                         . ' SET ' . implode(' = ?,', array_keys($params)) . ' = ?';
@@ -515,7 +521,7 @@ abstract class ModulesManager extends AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getPathPatternForPHP()
     {
@@ -528,7 +534,7 @@ abstract class ModulesManager extends AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getPathPatternForTemplates()
     {
@@ -544,7 +550,7 @@ abstract class ModulesManager extends AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getActualName($author, $name)
     {
@@ -556,7 +562,7 @@ abstract class ModulesManager extends AUtils
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function initModules()
     {

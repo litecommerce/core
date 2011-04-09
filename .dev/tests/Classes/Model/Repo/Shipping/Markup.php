@@ -13,7 +13,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 class XLite_Tests_Model_Repo_Shipping_Markup extends XLite_Tests_Model_OrderAbstract
@@ -24,7 +24,7 @@ class XLite_Tests_Model_Repo_Shipping_Markup extends XLite_Tests_Model_OrderAbst
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindMarkupsByProcessor()
     {
@@ -55,7 +55,7 @@ class XLite_Tests_Model_Repo_Shipping_Markup extends XLite_Tests_Model_OrderAbst
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindMarkupsByZoneAndMethod()
     {
@@ -81,7 +81,7 @@ class XLite_Tests_Model_Repo_Shipping_Markup extends XLite_Tests_Model_OrderAbst
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindMarkupsByIds()
     {
@@ -110,7 +110,7 @@ class XLite_Tests_Model_Repo_Shipping_Markup extends XLite_Tests_Model_OrderAbst
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTestOrder()
     {

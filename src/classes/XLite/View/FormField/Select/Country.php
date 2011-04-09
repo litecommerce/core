@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Select;
@@ -32,7 +32,7 @@ namespace XLite\View\FormField\Select;
  * \XLite\View\FormField\Select\Country 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Country extends \XLite\View\FormField\Select\Regular
 {
@@ -50,7 +50,7 @@ class Country extends \XLite\View\FormField\Select\Regular
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $onlyEnabled = false;
 
@@ -62,7 +62,7 @@ class Country extends \XLite\View\FormField\Select\Regular
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $params = array())
     {
@@ -78,7 +78,7 @@ class Country extends \XLite\View\FormField\Select\Regular
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -97,7 +97,7 @@ class Country extends \XLite\View\FormField\Select\Regular
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setStateSelectorIds($selectorId, $inputId)
     {
@@ -111,7 +111,7 @@ class Country extends \XLite\View\FormField\Select\Regular
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {
@@ -141,7 +141,7 @@ class Country extends \XLite\View\FormField\Select\Regular
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultOptions()
     {
@@ -155,7 +155,7 @@ class Country extends \XLite\View\FormField\Select\Regular
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultValue()
     {
@@ -167,7 +167,7 @@ class Country extends \XLite\View\FormField\Select\Regular
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getInlineJSCode()
     {

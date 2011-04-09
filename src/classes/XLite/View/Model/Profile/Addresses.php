@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Model\Profile;
@@ -32,7 +32,7 @@ namespace XLite\View\Model\Profile;
  * \XLite\View\Model\Profile\Addresses 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Addresses extends \XLite\View\Model\Profile\AProfile
 {
@@ -47,7 +47,7 @@ class Addresses extends \XLite\View\Model\Profile\AProfile
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -63,7 +63,7 @@ class Addresses extends \XLite\View\Model\Profile\AProfile
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormClass()
     {
@@ -75,7 +75,7 @@ class Addresses extends \XLite\View\Model\Profile\AProfile
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -87,7 +87,7 @@ class Addresses extends \XLite\View\Model\Profile\AProfile
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkAccess()
     {
@@ -99,7 +99,7 @@ class Addresses extends \XLite\View\Model\Profile\AProfile
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSubmitButtonLabel()
     {
@@ -111,7 +111,7 @@ class Addresses extends \XLite\View\Model\Profile\AProfile
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -129,7 +129,7 @@ class Addresses extends \XLite\View\Model\Profile\AProfile
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function useBodyTemplate()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\ProductClass;
@@ -32,7 +32,7 @@ namespace XLite\View\ProductClass;
  * Product class 
  *
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  */
 abstract class AProductClass extends \XLite\View\Dialog
@@ -42,7 +42,7 @@ abstract class AProductClass extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -54,7 +54,7 @@ abstract class AProductClass extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {

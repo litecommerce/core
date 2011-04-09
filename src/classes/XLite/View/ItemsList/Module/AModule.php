@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList\Module;
@@ -32,7 +32,7 @@ namespace XLite\View\ItemsList\Module;
  * Abstract product list
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AModule extends \XLite\View\ItemsList\AItemsList
 {
@@ -63,7 +63,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $params = array())
     {
@@ -84,7 +84,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -96,7 +96,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -108,7 +108,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageBodyDir()
     {
@@ -120,7 +120,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getJSHandlerClassName()
     {
@@ -134,7 +134,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function canEnable(\XLite\Model\Module $module)
     {
@@ -176,7 +176,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      *
      * @return array|integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -193,7 +193,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isModuleUpdateAvailable(\XLite\Model\Module $module)
     {
@@ -209,7 +209,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isModuleCompatible(\XLite\Model\Module $module)
     {
@@ -223,7 +223,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isCoreUpgradeNeeded(\XLite\Model\Module $module)
     {
@@ -237,7 +237,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isModuleUpgradeNeeded(\XLite\Model\Module $module)
     {
@@ -251,7 +251,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      *
      * @return \XLite\Model\Module
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModuleForUpdate(\XLite\Model\Module $module)
     {
@@ -265,7 +265,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMaxModuleVersion(\XLite\Model\Module $module)
     {
@@ -281,7 +281,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVersionValid(\XLite\Model\Module $module)
     {

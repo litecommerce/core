@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -34,7 +34,7 @@ namespace XLite\Model;
  * FIXME: move all actions into controllers
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class PHARModule extends \XLite\Base
 {
@@ -57,7 +57,7 @@ class PHARModule extends \XLite\Base
      *
      * @var   \Phar
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $phar;
 
@@ -66,7 +66,7 @@ class PHARModule extends \XLite\Base
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $tempDir;
 
@@ -75,7 +75,7 @@ class PHARModule extends \XLite\Base
      *
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $status = self::STATUS_OK;
 
@@ -84,7 +84,7 @@ class PHARModule extends \XLite\Base
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $mainClass;
 
@@ -93,7 +93,7 @@ class PHARModule extends \XLite\Base
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $errorMessages = array(
         self::STATUS_OK                   => 'No errors',
@@ -115,7 +115,7 @@ class PHARModule extends \XLite\Base
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct($name)
     {
@@ -151,7 +151,7 @@ class PHARModule extends \XLite\Base
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getStatus()
     {
@@ -163,7 +163,7 @@ class PHARModule extends \XLite\Base
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMessage()
     {
@@ -178,7 +178,7 @@ class PHARModule extends \XLite\Base
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setStatus($status, $message = null)
     {
@@ -198,7 +198,7 @@ class PHARModule extends \XLite\Base
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function deployToTemp()
     {
@@ -222,7 +222,7 @@ class PHARModule extends \XLite\Base
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function extractPHAR()
     {
@@ -234,7 +234,7 @@ class PHARModule extends \XLite\Base
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTempDir()
     {
@@ -250,7 +250,7 @@ class PHARModule extends \XLite\Base
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function makeTempDir()
     {
@@ -272,7 +272,7 @@ class PHARModule extends \XLite\Base
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTempDirSuffix()
     {
@@ -288,7 +288,7 @@ class PHARModule extends \XLite\Base
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isValid()
     {
@@ -300,7 +300,7 @@ class PHARModule extends \XLite\Base
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getVersion()
     {
@@ -312,7 +312,7 @@ class PHARModule extends \XLite\Base
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkIntegrity()
     {
@@ -343,7 +343,7 @@ class PHARModule extends \XLite\Base
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkVersion()
     {
@@ -355,7 +355,7 @@ class PHARModule extends \XLite\Base
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isMainFileExists()
     {
@@ -367,7 +367,7 @@ class PHARModule extends \XLite\Base
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isRootDirExists()
     {
@@ -385,7 +385,7 @@ class PHARModule extends \XLite\Base
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMainFile()
     {
@@ -397,7 +397,7 @@ class PHARModule extends \XLite\Base
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMainClass()
     {
@@ -419,7 +419,7 @@ class PHARModule extends \XLite\Base
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModuleName()
     {
@@ -431,7 +431,7 @@ class PHARModule extends \XLite\Base
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRootDirFull()
     {
@@ -443,7 +443,7 @@ class PHARModule extends \XLite\Base
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRootDirRelative()
     {
@@ -459,7 +459,7 @@ class PHARModule extends \XLite\Base
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function deploy()
     {
@@ -474,7 +474,7 @@ class PHARModule extends \XLite\Base
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function cleanUp()
     {
@@ -488,7 +488,7 @@ class PHARModule extends \XLite\Base
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function deployClasses()
     {
@@ -502,7 +502,7 @@ class PHARModule extends \XLite\Base
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function deploySkins()
     {

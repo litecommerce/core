@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Top sellers statistics page controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class TopSellers extends \XLite\Controller\Admin\Stats
 {
@@ -42,7 +42,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $todayItems = array();
 
@@ -52,7 +52,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $weekItems = array();
 
@@ -62,7 +62,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $monthItems = array();
 
@@ -72,7 +72,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $sort_by = "amount";
     
@@ -82,7 +82,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $counter = array(0,1,2,3,4,5,6,7,8,9);
 
@@ -92,7 +92,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $topProducts = array();
 
@@ -102,7 +102,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPageTemplate()
     {
@@ -114,7 +114,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -152,7 +152,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTopProduct($period, $pos, $property)
     {
@@ -167,7 +167,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -179,7 +179,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -195,7 +195,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function collect($order)
     {
@@ -218,7 +218,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function sort($name)
     {
@@ -258,7 +258,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function compareProducts($p1, $p2)
     {

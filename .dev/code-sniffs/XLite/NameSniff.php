@@ -241,7 +241,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 	 * @return boolean
 	 * @access protected
 	 * @see    ____func_see____
-	 * @since  3.0.0
+	 * @since  1.0.0
 	 */
 	protected function isReserverMethodName($methodName)
 	{

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Order\Details\Admin;
@@ -32,7 +32,7 @@ namespace XLite\View\Order\Details\Admin;
  * Model 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Model extends \XLite\View\Order\Details\Base\AModel
 {
@@ -41,7 +41,7 @@ class Model extends \XLite\View\Order\Details\Base\AModel
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $schemaMain = array(
         'order_id' => array(
@@ -67,7 +67,7 @@ class Model extends \XLite\View\Order\Details\Base\AModel
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $params = array(), array $sections = array())
     {
@@ -81,7 +81,7 @@ class Model extends \XLite\View\Order\Details\Base\AModel
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -98,7 +98,7 @@ class Model extends \XLite\View\Order\Details\Base\AModel
      * 
      * @return \XLite\Model\Order
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getOrder()
     {
@@ -112,7 +112,7 @@ class Model extends \XLite\View\Order\Details\Base\AModel
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareFieldParamsDate(array &$data)
     {

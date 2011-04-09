@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Categories page controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Categories extends \XLite\Controller\Admin\Base\Catalog
 {
@@ -41,7 +41,7 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -58,7 +58,7 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __call($method, array $args = array())
     {
@@ -74,7 +74,7 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMemberships()
     {
@@ -87,7 +87,7 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDelete()
     {

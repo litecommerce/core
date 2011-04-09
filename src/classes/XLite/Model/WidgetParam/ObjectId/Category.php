@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\WidgetParam\ObjectId;
@@ -32,7 +32,7 @@ namespace XLite\Model\WidgetParam\ObjectId;
  * ____description____
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Category extends \XLite\Model\WidgetParam\ObjectId
 {
@@ -41,7 +41,7 @@ class Category extends \XLite\Model\WidgetParam\ObjectId
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $rootIsAllowed = false;
 
@@ -56,7 +56,7 @@ class Category extends \XLite\Model\WidgetParam\ObjectId
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct($label, $value = null, $isSetting = false, $rootIsAllowed = false)
     {
@@ -71,7 +71,7 @@ class Category extends \XLite\Model\WidgetParam\ObjectId
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getClassName()
     {
@@ -85,7 +85,7 @@ class Category extends \XLite\Model\WidgetParam\ObjectId
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getIdValidCondition($value)
     {
@@ -108,7 +108,7 @@ class Category extends \XLite\Model\WidgetParam\ObjectId
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getObjectExistsCondition($value)
     {

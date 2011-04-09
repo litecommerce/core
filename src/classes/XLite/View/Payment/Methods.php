@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Payment;
@@ -32,7 +32,7 @@ namespace XLite\View\Payment;
  * Payment methods list
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -43,7 +43,7 @@ class Methods extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -59,7 +59,7 @@ class Methods extends \XLite\View\Dialog
      * 
      * @return \Doctrine\Common\Collections\Collection
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPaymentMethods()
     {
@@ -73,7 +73,7 @@ class Methods extends \XLite\View\Dialog
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMethodName(\XLite\Model\Payment\Method $method)
     {
@@ -87,7 +87,7 @@ class Methods extends \XLite\View\Dialog
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMethodDescription(\XLite\Model\Payment\Method $method)
     {
@@ -101,7 +101,7 @@ class Methods extends \XLite\View\Dialog
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isMethodEnabled(\XLite\Model\Payment\Method $method)
     {
@@ -115,7 +115,7 @@ class Methods extends \XLite\View\Dialog
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isMethodConfigurable(\XLite\Model\Payment\Method $method)
     {
@@ -128,7 +128,7 @@ class Methods extends \XLite\View\Dialog
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLanguage()
     {
@@ -142,7 +142,7 @@ class Methods extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -154,7 +154,7 @@ class Methods extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector;
@@ -32,7 +32,7 @@ namespace XLite\Module\CDev\DrupalConnector;
  * CMS connector
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Handler extends \XLite\Core\CMSConnector
 {
@@ -41,7 +41,7 @@ class Handler extends \XLite\Core\CMSConnector
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $messageTypes = array(
         \XLite\Core\TopMessage::INFO    => 'status',
@@ -66,7 +66,7 @@ class Handler extends \XLite\Core\CMSConnector
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDefaultTarget()
     {
@@ -90,7 +90,7 @@ class Handler extends \XLite\Core\CMSConnector
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPortal()
     {
@@ -134,7 +134,7 @@ class Handler extends \XLite\Core\CMSConnector
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPortalArgs(
         \XLite\Module\CDev\DrupalConnector\Model\Portal $portal,
@@ -152,7 +152,7 @@ class Handler extends \XLite\Core\CMSConnector
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getControllerArgs(array $args)
     {
@@ -170,7 +170,7 @@ class Handler extends \XLite\Core\CMSConnector
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultArgs()
     {
@@ -217,7 +217,7 @@ class Handler extends \XLite\Core\CMSConnector
      *  
      * @return \XLite\Module\CDev\DrupalConnector\Model\Portal
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPortalByPath($path)
     {
@@ -231,7 +231,7 @@ class Handler extends \XLite\Core\CMSConnector
      *  
      * @return \XLite\Module\CDev\DrupalConnector\Model\Portal
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPortalByTarget($target)
     {
@@ -252,7 +252,7 @@ class Handler extends \XLite\Core\CMSConnector
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function init()
     {
@@ -267,7 +267,7 @@ class Handler extends \XLite\Core\CMSConnector
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setPreviousTopMessages()
     {

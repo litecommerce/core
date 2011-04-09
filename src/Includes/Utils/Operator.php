@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Utils;
@@ -33,7 +33,7 @@ namespace Includes\Utils;
  * 
  * @package    XLite
  * @see        ____class_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 class Operator extends AUtils
 {
@@ -45,7 +45,7 @@ class Operator extends AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getJSRedirectCode($location)
     {
@@ -59,7 +59,7 @@ class Operator extends AUtils
      * @return int
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getDummyBufferLength()
     {
@@ -72,7 +72,7 @@ class Operator extends AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function flushBuffers()
     {
@@ -90,7 +90,7 @@ class Operator extends AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function redirect($location, $code = 302)
     {
@@ -112,7 +112,7 @@ class Operator extends AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function refresh()
     {
@@ -128,7 +128,7 @@ class Operator extends AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function flush($message, $dummyFlush = true)
     {
@@ -153,7 +153,7 @@ class Operator extends AUtils
      * @return mixed
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function executeWithCustomMaxExecTime($time, $callback, array $args = array())
     {
@@ -178,7 +178,7 @@ class Operator extends AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function checkIfClassExists($name)
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\RemoteModel\Repo;
@@ -32,7 +32,7 @@ namespace XLite\RemoteModel\Repo;
  * Module repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Module extends \XLite\RemoteModel\Repo\ARepo
 {
@@ -53,7 +53,7 @@ class Module extends \XLite\RemoteModel\Repo\ARepo
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $requestURLGet = 'https://litecommerce.com/module/%1$s/info?authCode=%2$s';
 
@@ -62,7 +62,7 @@ class Module extends \XLite\RemoteModel\Repo\ARepo
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $requestURLFind = 'https://litecommerce.com/modules/search';
 
@@ -78,7 +78,7 @@ class Module extends \XLite\RemoteModel\Repo\ARepo
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findModules(
         $name = null,
@@ -116,7 +116,7 @@ class Module extends \XLite\RemoteModel\Repo\ARepo
      *  
      * @return \XLite\RemoteModel\Module|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getModule($name)
     {
@@ -142,7 +142,7 @@ class Module extends \XLite\RemoteModel\Repo\ARepo
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessFind($data)
     {
@@ -153,7 +153,7 @@ class Module extends \XLite\RemoteModel\Repo\ARepo
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAuthCode()
     {
@@ -168,7 +168,7 @@ class Module extends \XLite\RemoteModel\Repo\ARepo
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function hydrate(\XLite\RemoteModel\Module $module, $data)
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\LanguagesModify\Button;
@@ -32,7 +32,7 @@ namespace XLite\View\LanguagesModify\Button;
  * Add new label button
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class AddNewLabel extends \XLite\View\Button\Regular
 {
@@ -68,7 +68,7 @@ class AddNewLabel extends \XLite\View\Button\Regular
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultJSCode()
     {

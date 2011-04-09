@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Core;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Core;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecorator
 {
@@ -45,7 +45,7 @@ abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecor
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCookiePath($secure = false)
     {
@@ -62,7 +62,7 @@ abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecor
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCookieURL($secure = false)
     {
@@ -85,7 +85,7 @@ abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecor
      * @return string Language code
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCurrentLanguage()
     {

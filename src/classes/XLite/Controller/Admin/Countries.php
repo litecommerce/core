@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Countries management page controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Countries extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,7 +41,7 @@ class Countries extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -54,7 +54,7 @@ class Countries extends \XLite\Controller\Admin\AAdmin
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCountries()
     {
@@ -67,7 +67,7 @@ class Countries extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -81,13 +81,15 @@ class Countries extends \XLite\Controller\Admin\AAdmin
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setObligatoryStatus($status)
     {
         if (!in_array('status', $this->params)) {
+
             $this->params[] = 'status';
         }
+
         $this->set('status', $status);
     }
 
@@ -96,22 +98,26 @@ class Countries extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
         $update = false;
 
         foreach (\XLite\Core\Database::getRepo('XLite\Model\Country')->findAll() as $country) {
+
             if (isset(\XLite\Core\Request::getInstance()->countries[$country->getCode()])) {
-                $data['eu_member'] = isset($data['eu_member']);
+
                 $data['enabled'] = isset($data['enabled']);
+
                 $country->map($data);
+
                 $update = true;
             }
         }
 
         if ($update) {
+
             \XLite\Core\Database::getEM()->flush();
         }
 
@@ -123,12 +129,14 @@ class Countries extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionAdd()
     {
         if (empty(\XLite\Core\Request::getInstance()->code)) {
+
             $this->set('valid', false);
+
             $this->setObligatoryStatus('code');
 
         } else {
@@ -137,13 +145,17 @@ class Countries extends \XLite\Controller\Admin\AAdmin
                 ->find(\XLite\Core\Request::getInstance()->code);
 
             if ($country) {
+
                 $this->set('valid', false);
+
                 $this->setObligatoryStatus('exists');
 
             } else {
 
                 if (empty(\XLite\Core\Request::getInstance()->country)) {
+
                     $this->set('valid', false);
+
                     $this->setObligatoryStatus('country');
 
                 } else {
@@ -151,7 +163,7 @@ class Countries extends \XLite\Controller\Admin\AAdmin
                     $country = new \XLite\Model\Country();
 
                     $country->map(\XLite\Core\Request::getInstance()->getData());
-                    $country->eu_member = isset(\XLite\Core\Request::getInstance()->eu_member);
+
                     $country->enabled = isset(\XLite\Core\Request::getInstance()->enabled);
 
                     \XLite\Core\Database::getEM()->persist($country);
@@ -168,19 +180,24 @@ class Countries extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDelete()
     {
         $countries = \XLite\Core\Request::getInstance()->delete_countries;
 
         if ( is_array($countries) && count($countries) > 0 ) {
+
             foreach ($countries as $code) {
+
                 $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($code);
+
                 if ($country) {
+
                     \XLite\Core\Database::getEM()->remove($country);
                 }
             }
+
             \XLite\Core\Database::getEM()->flush();
         }
 

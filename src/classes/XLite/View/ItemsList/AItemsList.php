@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList;
@@ -32,7 +32,7 @@ namespace XLite\View\ItemsList;
  * Base class for all lists 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AItemsList extends \XLite\View\Container
 {
@@ -56,7 +56,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $defaultTemplate = 'common/dialog.tpl';
 
@@ -65,7 +65,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $commonParams;
 
@@ -74,7 +74,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @var   \XLite\View\PagerOrig
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $pager;
 
@@ -83,7 +83,7 @@ abstract class AItemsList extends \XLite\View\Container
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $itemsCount;
 
@@ -92,7 +92,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $sortByModes = array();
 
@@ -101,7 +101,7 @@ abstract class AItemsList extends \XLite\View\Container
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $sortOrderModes = array(
         self::SORT_ORDER_ASC  => 'Ascending',
@@ -113,7 +113,7 @@ abstract class AItemsList extends \XLite\View\Container
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $sortWidgetIds = array();
 
@@ -123,7 +123,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getPageBodyDir();
 
@@ -132,7 +132,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getPagerClass();
 
@@ -144,7 +144,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return array|integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false);
 
@@ -154,7 +154,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     static public function getSessionCellName()
     {
@@ -169,7 +169,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setWidgetParams(array $params)
     {
@@ -187,7 +187,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getActionURL(array $params = array())
     {
@@ -199,7 +199,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -216,7 +216,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCommonFiles()
     {
@@ -231,7 +231,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -250,7 +250,7 @@ abstract class AItemsList extends \XLite\View\Container
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getListCSSClasses()
     {
@@ -262,7 +262,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getItemsCount()
     {
@@ -279,7 +279,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -292,7 +292,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -306,7 +306,7 @@ abstract class AItemsList extends \XLite\View\Container
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function preparePagerCSSFiles($list)
     {
@@ -321,7 +321,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBody()
     {
@@ -335,7 +335,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -347,7 +347,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageBodyTemplate()
     {
@@ -359,7 +359,7 @@ abstract class AItemsList extends \XLite\View\Container
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageBodyFile()
     {
@@ -371,7 +371,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getEmptyListTemplate()
     {
@@ -383,7 +383,7 @@ abstract class AItemsList extends \XLite\View\Container
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getEmptyListFile()
     {
@@ -395,7 +395,7 @@ abstract class AItemsList extends \XLite\View\Container
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isEmptyListTemplateVisible()
     {
@@ -407,7 +407,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPagerParams()
     {
@@ -422,7 +422,7 @@ abstract class AItemsList extends \XLite\View\Container
      * 
      * @return \XLite\View\PagerOrig
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPager()
     {
@@ -438,7 +438,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -450,7 +450,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageData()
     {
@@ -462,7 +462,7 @@ abstract class AItemsList extends \XLite\View\Container
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSortOrderModeDefault()
     {
@@ -474,7 +474,7 @@ abstract class AItemsList extends \XLite\View\Container
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSortByModeDefault()
     {
@@ -486,7 +486,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSortBy()
     {
@@ -498,7 +498,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSortOrder()
     {
@@ -534,7 +534,7 @@ abstract class AItemsList extends \XLite\View\Container
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getJSHandlerClassName()
     {
@@ -548,7 +548,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getJSArray(array $params)
     {
@@ -566,7 +566,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCommonParams()
     {
@@ -584,7 +584,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAJAXSpecificParams()
     {
@@ -600,7 +600,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getURLParams()
     {
@@ -612,7 +612,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getURLAJAXParams()
     {
@@ -624,7 +624,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getURLParamsJS()
     {
@@ -636,7 +636,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getURLAJAXParamsJS()
     {
@@ -650,7 +650,7 @@ abstract class AItemsList extends \XLite\View\Container
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSortWidgetId($getLast = false)
     {
@@ -674,7 +674,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isSortByModeSelected($sortByMode)
     {
@@ -686,7 +686,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isSortOrderAsc()
     {
@@ -698,7 +698,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSortOrderToChange()
     {
@@ -710,7 +710,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -722,7 +722,7 @@ abstract class AItemsList extends \XLite\View\Container
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function hasResults()
     {
@@ -734,7 +734,7 @@ abstract class AItemsList extends \XLite\View\Container
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isHeaderVisible()
     {
@@ -746,7 +746,7 @@ abstract class AItemsList extends \XLite\View\Container
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isHeadVisible()
     {
@@ -758,7 +758,7 @@ abstract class AItemsList extends \XLite\View\Container
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isPagerVisible()
     {
@@ -770,7 +770,7 @@ abstract class AItemsList extends \XLite\View\Container
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isFooterVisible()
     {
@@ -782,7 +782,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineRequestParams()
     {

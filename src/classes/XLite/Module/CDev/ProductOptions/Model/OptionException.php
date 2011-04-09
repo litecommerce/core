@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Model;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\ProductOptions\Model;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  * @Entity (repositoryClass="\XLite\Module\CDev\ProductOptions\Model\Repo\OptionException")
  * @Table (name="option_exceptions",
  *      uniqueConstraints={
@@ -49,7 +49,7 @@ class OptionException extends \XLite\Model\AEntity
      * @var    integer
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      * @Id
      * @GeneratedValue (strategy="AUTO")
      * @Column (type="integer")
@@ -62,7 +62,7 @@ class OptionException extends \XLite\Model\AEntity
      * @var    integer
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      * @Column (type="integer")
      */
     protected $exception_id;
@@ -73,7 +73,7 @@ class OptionException extends \XLite\Model\AEntity
      * @var    \XLite\Module\CDev\ProductOptions\Model\Option
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      * @ManyToOne (targetEntity="XLite\Module\CDev\ProductOptions\Model\Option", inversedBy="exceptions")
      * @JoinColumn (name="option_id", referencedColumnName="option_id")
      */

@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 require_once __DIR__ . '/AAdmin.php';
@@ -53,7 +53,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testProductClassesModify()
     {
@@ -92,7 +92,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testProductPage()
     {
@@ -167,7 +167,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testShippingMethods()
     {
@@ -211,7 +211,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
      * @return void
      * @access private
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private function checkProductClassOption($class, $text = '', $selector = self::PRODUCT_SELECTOR)
     {
@@ -229,7 +229,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
      * @return void
      * @access private
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private function addNewProductClass($name)
     {
@@ -255,7 +255,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
      * @return integer
      * @access private
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private function getTableLength()
     {
@@ -270,7 +270,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
      * @return void
      * @access private
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private function removeInput($name)
     {
@@ -299,7 +299,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
      * @return void
      * @access private
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private function checkAdvancedInput($name, $newName = '')
     {

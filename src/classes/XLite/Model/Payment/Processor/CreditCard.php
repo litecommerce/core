@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Payment\Processor;
@@ -32,7 +32,7 @@ namespace XLite\Model\Payment\Processor;
  * Credit card
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class CreditCard extends \XLite\Model\Payment\Processor\Offline
 {
@@ -41,7 +41,7 @@ class CreditCard extends \XLite\Model\Payment\Processor\Offline
      *
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getInputTemplate()
     {
@@ -53,7 +53,7 @@ class CreditCard extends \XLite\Model\Payment\Processor\Offline
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getInputDataLabels()
     {
@@ -71,7 +71,7 @@ class CreditCard extends \XLite\Model\Payment\Processor\Offline
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getInputDataAccessLevels()
     {

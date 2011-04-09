@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 require_once __DIR__ . '/ACustomer.php';
@@ -36,7 +36,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testListMode()
     {
@@ -49,7 +49,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testTreeMode()
     {
@@ -62,7 +62,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testPathMode()
     {
@@ -77,7 +77,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function testDisplayMode($mode)
     {
@@ -178,7 +178,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function testRootCategories($mode)
     {
@@ -217,7 +217,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function testSubcategories($categoryId = 0)
     {
@@ -247,7 +247,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function assertCategoryVisible($categoryId, $message)
     {
@@ -267,7 +267,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function assertCategoryNotVisible($categoryId, $message)
     {
@@ -287,7 +287,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function assertCategoryActiveTrail($categoryId, $message)
     {
@@ -307,7 +307,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function assertCategoryNotActiveTrail($categoryId, $message)
     {
@@ -324,7 +324,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getWidgetSelector()
     {
@@ -340,7 +340,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLinkSelector($name, $depth)
     {
@@ -353,7 +353,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return object
      * @access private
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private function getRepo()
     {
@@ -368,7 +368,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return \XLite\Model\Category
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCategory($id = null)
     {
@@ -383,7 +383,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return object
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSubcategories($categoryId)
     {
@@ -398,7 +398,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return \XLite\Model\Category
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRandomCategory($depth = 1)
     {
@@ -427,7 +427,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return \XLite\Model\Category
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getParentCategory($id = 0)
     {
@@ -443,7 +443,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setDisplayMode($mode = 'path')
     {

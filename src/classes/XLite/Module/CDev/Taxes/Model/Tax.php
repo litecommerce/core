@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Taxes\Model;
@@ -32,7 +32,7 @@ namespace XLite\Module\CDev\Taxes\Model;
  * Tax 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity
  * @Table (name="taxes")
@@ -44,7 +44,7 @@ class Tax extends \XLite\Model\Base\I18n
      * 
      * @var    int
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -57,7 +57,7 @@ class Tax extends \XLite\Model\Base\I18n
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
@@ -68,7 +68,7 @@ class Tax extends \XLite\Model\Base\I18n
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
@@ -79,7 +79,7 @@ class Tax extends \XLite\Model\Base\I18n
      * 
      * @var    \Doctrine\Common\Collections\ArrayCollection
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\Taxes\Model\Tax\Rate", mappedBy="tax", cascade={"all"})
      */
@@ -92,7 +92,7 @@ class Tax extends \XLite\Model\Base\I18n
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -109,7 +109,7 @@ class Tax extends \XLite\Model\Base\I18n
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFilteredRates(array $zones, \XLite\Model\Mebership $membership)
     {

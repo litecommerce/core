@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Input\Checkbox;
@@ -32,7 +32,7 @@ namespace XLite\View\FormField\Input\Checkbox;
  * \XLite\View\FormField\Input\Checkbox\ShipAsBill 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
 {
@@ -41,7 +41,7 @@ class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFieldId()
     {
@@ -53,7 +53,7 @@ class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -69,7 +69,7 @@ class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultValue()
     {
@@ -81,7 +81,7 @@ class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -93,7 +93,7 @@ class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -105,7 +105,7 @@ class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isChecked()
     {

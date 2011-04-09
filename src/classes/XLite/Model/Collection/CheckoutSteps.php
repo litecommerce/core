@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Collection;
@@ -32,7 +32,7 @@ namespace XLite\Model\Collection;
  * Checkout steps list
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class CheckoutSteps extends \XLite\Model\Collection
 {
@@ -41,7 +41,7 @@ class CheckoutSteps extends \XLite\Model\Collection
      * 
      * @var   \XLite\Model\ListNode\CheckoutStep
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $current = null;
 
@@ -50,7 +50,7 @@ class CheckoutSteps extends \XLite\Model\Collection
      * 
      * @var   \XLite\Model\ListNode\CheckoutStep
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $actual = null;
 
@@ -60,7 +60,7 @@ class CheckoutSteps extends \XLite\Model\Collection
      * 
      * @return \XLite\Model\ListNode\CheckoutStep
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCurrentStep()
     {
@@ -72,7 +72,7 @@ class CheckoutSteps extends \XLite\Model\Collection
      * 
      * @return \XLite\Model\ListNode\CheckoutStep
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getActualStep()
     {
@@ -84,7 +84,7 @@ class CheckoutSteps extends \XLite\Model\Collection
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isCorrectedStep()
     {
@@ -99,7 +99,7 @@ class CheckoutSteps extends \XLite\Model\Collection
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function findLastPassedRegularStep(\XLite\Model\ListNode\CheckoutStep &$step)
     {
@@ -115,7 +115,7 @@ class CheckoutSteps extends \XLite\Model\Collection
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function correctStep(\XLite\Model\ListNode\CheckoutStep &$step)
     {
@@ -132,7 +132,7 @@ class CheckoutSteps extends \XLite\Model\Collection
      *  
      * @return \XLite\Model\ListNode\CheckoutStep
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getStep($isActual, $method = null)
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Model\Profile;
@@ -32,7 +32,7 @@ namespace XLite\View\Model\Profile;
  * Profile model widget
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AProfile extends \XLite\View\Model\AModel
 {
@@ -55,7 +55,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $addressSchema = array(
         'address_type' => array(
@@ -120,7 +120,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -139,7 +139,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $params = array(), array $sections = array())
     {
@@ -155,7 +155,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      *
      * @return \XLite\Model\Profile
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getModelObject()
     {
@@ -174,7 +174,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFormFieldsForSectionBilling()
     {
@@ -191,7 +191,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFormFieldsForSectionShipping()
     {
@@ -208,7 +208,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getShipAsBillFlag()
     {
@@ -220,7 +220,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * 
      * @return integer|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRequestProfileId()
     {
@@ -232,7 +232,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProfileId()
     {
@@ -244,7 +244,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -260,7 +260,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getShipAsBillSchema()
     {
@@ -276,7 +276,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * 
      * @return \XLite\View\FormField\Separator\ShippingAddress
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getShipAsBillWidget()
     {
@@ -296,7 +296,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProfileAddressSections()
     {
@@ -311,7 +311,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      *
      * @return \XLite\Model\Profile
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultModelObject()
     {
@@ -329,7 +329,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormClass()
     {
@@ -344,7 +344,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setStateSelectorIds(array &$fields, $section)
     {
@@ -361,7 +361,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      *
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModelObjectValue($name)
     {
@@ -401,7 +401,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineFormFields()
     {
@@ -421,7 +421,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAddressSchema($type)
     {
@@ -439,7 +439,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBottomInlineJSCode()
     {
@@ -451,7 +451,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSubmitButtonLabel()
     {
@@ -463,7 +463,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormButtons()
     {
@@ -482,7 +482,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareRequestData(array $data)
     {
@@ -504,7 +504,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareDataForMapping()
     {
@@ -565,7 +565,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setModelProperties(array $data)
     {

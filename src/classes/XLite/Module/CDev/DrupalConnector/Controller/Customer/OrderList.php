@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\Base\IDecorator
 {
@@ -45,7 +45,7 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
      * @return integer
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getLCProfileId($id)
     {
@@ -60,7 +60,7 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
      * @return integer
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getDrupalProfileId($id)
     {
@@ -73,7 +73,7 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
      * @return boolean
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function isPortal()
     {
@@ -90,7 +90,7 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getPortalLCArgs($path, array $args = array(), array $pageArgs = array())
     {
@@ -112,7 +112,7 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getPortalDrupalArgs($path, array $args = array())
     {
@@ -127,7 +127,7 @@ class OrderList extends \XLite\Controller\Customer\OrderList implements \XLite\B
      *
      * @return void
      * @access public
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function init()
     {

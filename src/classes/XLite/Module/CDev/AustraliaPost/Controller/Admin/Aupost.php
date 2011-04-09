@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\AustraliaPost\Controller\Admin;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\AustraliaPost\Controller\Admin;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Aupost extends \XLite\Controller\Admin\ShippingSettings
 {
@@ -43,7 +43,7 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -55,7 +55,7 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
      *
      * @return string
      * @access public
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -68,7 +68,7 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getOptionsCategory()
     {
@@ -81,7 +81,7 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionTest()
     {

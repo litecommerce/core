@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * Abstract controller for Customer interface
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ACustomer extends \XLite\Controller\AController
 {
@@ -41,7 +41,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      * 
      * @var   \XLite\Model\Cart
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $cart;
 
@@ -50,7 +50,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $initialCartFingerprint;
 
@@ -60,7 +60,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      * 
      * @return \XLite\Model\Order
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCart()
     {
@@ -76,7 +76,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getShopURL($url = '', $secure = false)
     {
@@ -88,7 +88,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isSecure()
     {
@@ -106,7 +106,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -126,7 +126,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkStorefrontAccessability()
     {
@@ -138,7 +138,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function closeStorefront()
     {
@@ -151,7 +151,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCMSTemplate()
     {
@@ -163,7 +163,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getViewerTemplate()
     {
@@ -175,7 +175,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function updateCart()
     {
@@ -201,7 +201,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function assembleEvent()
     {
@@ -256,7 +256,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isCartProcessed()
     {
@@ -268,7 +268,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      * 
      * @return \XLite\Model\Profile
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCartProfile()
     {

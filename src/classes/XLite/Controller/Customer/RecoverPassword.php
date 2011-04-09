@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -33,7 +33,7 @@ namespace XLite\Controller\Customer;
  * TODO: full refactoring is needed
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class RecoverPassword extends \XLite\Controller\Customer\ACustomer
 {
@@ -42,7 +42,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $params = array('target', 'mode', 'email', 'link_mailed');
 
@@ -52,7 +52,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -66,7 +66,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -78,7 +78,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionRecoverPassword()
     {
@@ -97,7 +97,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionConfirm()
     {
@@ -115,7 +115,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function requestRecoverPassword($email) 
     {
@@ -136,7 +136,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doPasswordRecovery($email, $requestID) 
     {

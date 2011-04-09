@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Module settings
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Module extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,7 +41,7 @@ class Module extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   mixed
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $module;
 
@@ -51,7 +51,7 @@ class Module extends \XLite\Controller\Admin\AAdmin
      * 
      * @return array 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOptions()
     {
@@ -64,11 +64,34 @@ class Module extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getLocation()
     {
         return $this->getModule()->getName() . ' (' . $this->getModule()->getAuthor() . ')';
+    }
+
+    /** 
+     * Return current module object
+     * 
+     * @return \XLite\Model\Module
+     * @throws \Exception
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getModule()
+    {   
+        if (!isset($this->module)) {
+
+            $this->module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->getModuleID());
+
+            if (!$this->module) {
+
+                throw new \Exception('Add-on does not exist (ID#' . $this->getModuleID() . ')');
+            }   
+        }
+
+        return $this->module;
     }
 
 
@@ -77,7 +100,7 @@ class Module extends \XLite\Controller\Admin\AAdmin
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModuleID()
     {
@@ -85,32 +108,11 @@ class Module extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Return current module object
-     * 
-     * @return \XLite\Model\Module
-     * @throws \Exception
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getModule()
-    {
-        if (!isset($this->module)) {
-            $this->module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->getModuleID());
-
-            if (!$this->module) {
-                throw new \Exception('Add-on does not exist (ID#' . $this->getModuleID() . ')');
-            }
-        }
-
-        return $this->module;
-    }
-
-    /**
      * Add part to the location nodes list
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -124,7 +126,7 @@ class Module extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
