@@ -141,7 +141,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
         return array(
             ''                                     => 'All',
             \XLite\Model\Repo\Module::P_INACTIVE   => 'Inactive',
-            \XLite\Model\Repo\Module::P_UPGRADABLE => 'Upgradable',
         );
     }
 
