@@ -187,7 +187,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     // {{{ Version-related checks
 
     /**
-     * Check if core requires new (but the same as core major) version of module. (module is NOT marketplace one)
+     * Check if core requires new (but the same as core major) version of module
      * 
      * @param \XLite\Model\Module $module Module to check
      *  
@@ -197,7 +197,9 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function isModuleUpdateAvailable(\XLite\Model\Module $module)
     {
-        return $this->isModuleCompatible($module) && (bool) $this->getModuleForUpdate($module);
+        return $module->getInstalled() 
+            && $this->isModuleCompatible($module) 
+            && (bool) $this->getModuleForUpdate($module);
     }
 
     /**
@@ -267,11 +269,9 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function getMaxModuleVersion(\XLite\Model\Module $module)
     {
-        if ($result = $this->getModuleForUpdate($module)) {
-            $result = \Includes\Utils\Converter::composeVersion($result->getMajorVersion(), $result->getMinorVersion());
-        }
+        $result = $this->getModuleForUpdate($module) ?: $module;
 
-        return $result;
+        return \Includes\Utils\Converter::composeVersion($result->getMajorVersion(), $result->getMinorVersion());
     }
 
     /**
