@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Order page controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Order extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,7 +41,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -53,7 +53,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -68,7 +68,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRequestData()
     {
@@ -83,7 +83,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -100,7 +100,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getViewerTemplate()
     {

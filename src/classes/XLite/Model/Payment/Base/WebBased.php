@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Payment\Base;
@@ -32,7 +32,7 @@ namespace XLite\Model\Payment\Base;
  * Abstract credit card, web-based processor 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
 {
@@ -56,7 +56,7 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getFormURL();
 
@@ -65,7 +65,7 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getFormFields();
 
@@ -75,7 +75,7 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
      *
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getInputTemplate()
     {
@@ -87,7 +87,7 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
      * 
      * @return \XLite\Model\Payment\Transaction|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getReturnOwnerTransaction()
     {
@@ -101,7 +101,7 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function processReturn(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -115,7 +115,7 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getReturnType()
     {
@@ -127,7 +127,7 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function doCustomReturnRedirect()
     {
@@ -139,7 +139,7 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
      * 
      * @return string Status code
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doInitialPayment()
     {
@@ -178,7 +178,7 @@ HTML;
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormMethod()
     {
@@ -192,7 +192,7 @@ HTML;
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getReturnURL($fieldName)
     {
@@ -209,7 +209,7 @@ HTML;
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkTotal($total)
     {
@@ -237,7 +237,7 @@ HTML;
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkCurrency($currency)
     {
@@ -264,7 +264,7 @@ HTML;
      * 
      * @return string HTML
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function assembleFormBody()
     {
@@ -288,7 +288,7 @@ HTML;
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function logRedirect(array $list)
     {
@@ -308,7 +308,7 @@ HTML;
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function logReturn(array $list)
     {

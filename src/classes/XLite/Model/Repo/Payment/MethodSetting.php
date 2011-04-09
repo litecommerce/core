@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo\Payment;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo\Payment;
  * Payment method setting repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class MethodSetting extends \XLite\Model\Repo\ARepo
 {
@@ -41,7 +41,7 @@ class MethodSetting extends \XLite\Model\Repo\ARepo
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = self::TYPE_SECONDARY;
 }

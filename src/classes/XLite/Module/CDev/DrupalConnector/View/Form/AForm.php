@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\View\Form;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\View\Form;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDecorator
 {
@@ -42,7 +42,7 @@ abstract class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDeco
      * 
      * @return boolean 
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isDrupalGetForm()
     {
@@ -55,7 +55,7 @@ abstract class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDeco
      * 
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getJSOnSubmitCode()
     {
@@ -67,7 +67,7 @@ abstract class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDeco
      * 
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormParamsAsJSArray()
     {

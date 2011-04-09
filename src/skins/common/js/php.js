@@ -115,7 +115,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  *  
  * @version GIT: $Id$
- * @since   3.0.0
+ * @since   1.0.0
  */
 
 function var_export (mixed_expression, bool_return) {

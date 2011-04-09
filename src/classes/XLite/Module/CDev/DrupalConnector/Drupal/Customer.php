@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Drupal;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Customer extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
@@ -64,7 +64,7 @@ class Customer extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOrderHistoryPage(\stdClass $account)
     {

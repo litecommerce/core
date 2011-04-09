@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * ____description____
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class AddonKey extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,7 +41,7 @@ class AddonKey extends \XLite\Controller\Admin\AAdmin
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {

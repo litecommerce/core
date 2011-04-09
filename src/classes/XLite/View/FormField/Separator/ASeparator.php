@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Separator;
@@ -33,7 +33,7 @@ namespace XLite\View\FormField\Separator;
  * \XLite\View\FormField\Separator\ASeparator 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ASeparator extends \XLite\View\FormField\AFormField
 {
@@ -42,7 +42,7 @@ abstract class ASeparator extends \XLite\View\FormField\AFormField
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFieldType()
     {
@@ -55,7 +55,7 @@ abstract class ASeparator extends \XLite\View\FormField\AFormField
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -67,7 +67,7 @@ abstract class ASeparator extends \XLite\View\FormField\AFormField
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

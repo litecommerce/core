@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Module key
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\ModuleKey")
  * @Table  (name="module_keys",
@@ -51,7 +51,7 @@ class ModuleKey extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -64,7 +64,7 @@ class ModuleKey extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="64")
      */
@@ -75,7 +75,7 @@ class ModuleKey extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="64")
      */
@@ -87,7 +87,7 @@ class ModuleKey extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="256")
      */

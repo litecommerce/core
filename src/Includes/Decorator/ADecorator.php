@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator;
@@ -33,7 +33,7 @@ namespace Includes\Decorator;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class ADecorator
 {
@@ -52,7 +52,7 @@ abstract class ADecorator
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $step;
 
@@ -62,7 +62,7 @@ abstract class ADecorator
      * @var    \Includes\Decorator\DataStructure\Graph\Classes
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $classesTree;
 
@@ -72,7 +72,7 @@ abstract class ADecorator
      * @var    \Includes\Decorator\DataStructure\Graph\Modules
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $modulesGraph;
 
@@ -83,7 +83,7 @@ abstract class ADecorator
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getClassesDir()
     {
@@ -96,7 +96,7 @@ abstract class ADecorator
      * @return \Includes\Decorator\DataStructure\Graph\Classes
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getClassesTree()
     {
@@ -113,7 +113,7 @@ abstract class ADecorator
      * @return \Includes\Decorator\DataStructure\Graph\Modules
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getModulesGraph()
     {

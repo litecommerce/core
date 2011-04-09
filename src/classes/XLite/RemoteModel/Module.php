@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\RemoteModel;
@@ -32,7 +32,7 @@ namespace XLite\RemoteModel;
  * Module 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Module extends \XLite\RemoteModel\AModel
 {
@@ -47,7 +47,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $status = self::NO_EXISTS;
 
@@ -56,7 +56,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $name;
 
@@ -65,7 +65,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $description;
 
@@ -74,7 +74,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $version;
 
@@ -83,7 +83,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $changelog = array();
 
@@ -92,7 +92,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $hash;
 
@@ -101,7 +101,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $packHash;
 
@@ -110,7 +110,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $price = 0;
 
@@ -119,7 +119,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $currency = 'USD';
 
@@ -128,7 +128,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $uploadCode;
 
@@ -137,7 +137,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $uploadURL = 'https://litecommerce.com/module/%1$s/upload?code=%2$s';
 
@@ -146,7 +146,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @var   \XLite\Model\Module
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $model = null;
 
@@ -155,7 +155,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getStatus()
     {
@@ -167,7 +167,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getName()
     {
@@ -179,7 +179,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDescription()
     {
@@ -191,7 +191,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getVersion()
     {
@@ -203,7 +203,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getChangelog()
     {
@@ -215,7 +215,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getHash()
     {
@@ -227,7 +227,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @return float
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPrice()
     {
@@ -241,7 +241,7 @@ class Module extends \XLite\RemoteModel\AModel
      *  
      * @return \XLite\Model\Module
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getModel($overrideCache = false)
     {
@@ -260,7 +260,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function canUpload()
     {
@@ -272,7 +272,7 @@ class Module extends \XLite\RemoteModel\AModel
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function upload()
     {
@@ -302,7 +302,7 @@ class Module extends \XLite\RemoteModel\AModel
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function install($overrideExists = false)
     {
@@ -336,7 +336,7 @@ class Module extends \XLite\RemoteModel\AModel
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function depack($path)
     {

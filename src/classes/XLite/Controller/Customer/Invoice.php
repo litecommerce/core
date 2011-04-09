@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * Invoice controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Invoice extends \XLite\Controller\Customer\Base\Order
 {
@@ -41,7 +41,7 @@ class Invoice extends \XLite\Controller\Customer\Base\Order
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -53,7 +53,7 @@ class Invoice extends \XLite\Controller\Customer\Base\Order
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {

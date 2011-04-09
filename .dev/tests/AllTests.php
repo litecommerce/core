@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 if (0 > version_compare(phpversion(), '5.3.0')) {
     echo ('PHP version must be 5.3.0 or later' . PHP_EOL);

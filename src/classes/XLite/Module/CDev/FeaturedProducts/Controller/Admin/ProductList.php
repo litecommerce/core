@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\Controller\Admin;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\FeaturedProducts\Controller\Admin;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class ProductList extends \XLite\Controller\Admin\ProductList implements \XLite\Base\IDecorator
 {
@@ -43,7 +43,7 @@ class ProductList extends \XLite\Controller\Admin\ProductList implements \XLite\
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionSearchFeaturedProducts()
     {

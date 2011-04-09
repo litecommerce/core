@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Cart\Item;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Cart\Item;
  * Abstract cart item form
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AItem extends \XLite\View\Form\AForm
 {
@@ -47,7 +47,7 @@ abstract class AItem extends \XLite\View\Form\AForm
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormName()
     {
@@ -59,7 +59,7 @@ abstract class AItem extends \XLite\View\Form\AForm
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -87,7 +87,7 @@ abstract class AItem extends \XLite\View\Form\AForm
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function initView()
     {

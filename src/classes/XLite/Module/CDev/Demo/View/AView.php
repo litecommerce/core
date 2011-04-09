@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\Demo\View;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\Demo\View;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 {
@@ -47,7 +47,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function includeCompiledFile($original = null, $previousSkin = null, $previousTemplate = null)
     {
@@ -64,7 +64,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAdditionalHeader()
     {

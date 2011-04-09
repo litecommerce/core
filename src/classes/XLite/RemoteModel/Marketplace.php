@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\RemoteModel;
@@ -32,7 +32,7 @@ namespace XLite\RemoteModel;
  * Marketplace requests collector
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Marketplace extends \XLite\Base\Singleton
 {
@@ -64,7 +64,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @var    string
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     // protected $error = '';
 
@@ -74,7 +74,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     /*public function getError()
     {
@@ -86,7 +86,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     /*public function getLastVersion()
     {
@@ -98,7 +98,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     /*public function getAddonsXML()
     {
@@ -113,7 +113,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     /*protected function requestMarketplace($action, array $data = array())
     {
@@ -140,7 +140,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     /*protected function getMarketplaceURL()
     {
@@ -153,7 +153,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     /*protected function getMarketplaceURLFull()
     {
@@ -169,7 +169,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return \XLite\Model\HTTPS
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     /*protected function getRequest($action, array $data = array())
     {
@@ -189,7 +189,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     /*protected function getCommonData($action)
     {
@@ -286,7 +286,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $error = null;
 
@@ -297,7 +297,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function isVersionInfoActual()
     {
@@ -314,7 +314,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function isVersionUpdateNeeded()
     {
@@ -327,7 +327,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getError()
     {
@@ -341,7 +341,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMarketplaceURL()
     {
@@ -358,7 +358,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAddonsXML()
     {   
@@ -376,7 +376,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getLicense($moduleId)
     {
@@ -396,7 +396,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return string Status of downloading
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function retrieveToLocalRepository($moduleId, $additionalData = array())
     {
@@ -433,7 +433,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getLastVersion()
     {
@@ -456,7 +456,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getModuleInfoByKey($key)
     {
@@ -514,7 +514,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModuleInfo($moduleId)
     {
@@ -537,7 +537,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return string Marketplace response
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function requestMarketplace($target, $action, array $additionalData = array())
     {

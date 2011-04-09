@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
@@ -50,7 +50,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testSendProfileCreatedUserNotification()
     {
@@ -81,7 +81,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testSendProfileCreatedAdminNotification()
     {
@@ -114,7 +114,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testSendProfileUpdatedUserNotification()
     {
@@ -145,7 +145,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testSendProfileUpdatedAdminNotification()
     {
@@ -178,7 +178,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testSendProfileDeletedAdminNotification()
     {
@@ -211,7 +211,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testSendFailedAdminLoginNotification()
     {
@@ -246,7 +246,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testSendRecoverPasswordRequest()
     {
@@ -281,7 +281,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testSendRecoverPasswordConfirmation()
     {
@@ -316,7 +316,7 @@ class XLite_Tests_Core_Mailer extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTestProfile()
     {

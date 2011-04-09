@@ -37,7 +37,7 @@ class XLite_Sniffs_PHP_Formatting_ForbidFunctionsSniff extends XLite_ReqCodesSni
 	 * @var    array
 	 * @access protected
 	 * @see    ____var_see____
-	 * @since  3.0.0
+	 * @since  1.0.0
 	 */
 	protected $forbidFunctions = array(
 		'php_version'   => 'Используйте константу PHP_VERSION',

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * Abstract handler (common parent for viewer and controller) 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class Handler extends \XLite\Base
 {
@@ -63,7 +63,7 @@ abstract class Handler extends \XLite\Base
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $widgetParams;
 
@@ -75,7 +75,7 @@ abstract class Handler extends \XLite\Base
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $params = array())
     {
@@ -89,7 +89,7 @@ abstract class Handler extends \XLite\Base
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function init()
     {
@@ -102,7 +102,7 @@ abstract class Handler extends \XLite\Base
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setWidgetParams(array $params)
     {
@@ -128,7 +128,7 @@ abstract class Handler extends \XLite\Base
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getWidgetParams($param = null)
     {
@@ -146,7 +146,7 @@ abstract class Handler extends \XLite\Base
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getWidgetSettings()
     {
@@ -163,7 +163,7 @@ abstract class Handler extends \XLite\Base
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getWidgetSettingsFilter(\XLite\Model\WidgetParam\AWidgetParam $param)
     {
@@ -211,7 +211,7 @@ abstract class Handler extends \XLite\Base
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function buildURL($target = '', $action = '', array $params = array())
     {
@@ -228,7 +228,7 @@ abstract class Handler extends \XLite\Base
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function buildURLPath($target, $action = '', array $params = array())
     {
@@ -248,7 +248,7 @@ abstract class Handler extends \XLite\Base
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function buildURLArguments($target, $action = '', array $params = array())
     {
@@ -285,7 +285,7 @@ abstract class Handler extends \XLite\Base
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getParam($param)
     {
@@ -299,7 +299,7 @@ abstract class Handler extends \XLite\Base
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isExported()
     {
@@ -313,7 +313,7 @@ abstract class Handler extends \XLite\Base
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getParamsHash(array $params)
     {

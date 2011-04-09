@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Category;
@@ -32,7 +32,7 @@ namespace XLite\Model\Category;
  * Category quick flags
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Category\QuickFlags")
  * @Table  (name="category_quick_flags")
@@ -44,7 +44,7 @@ class QuickFlags extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -57,7 +57,7 @@ class QuickFlags extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -68,7 +68,7 @@ class QuickFlags extends \XLite\Model\AEntity
      *
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -79,7 +79,7 @@ class QuickFlags extends \XLite\Model\AEntity
      *
      * @var   \XLite\Model\Category
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @OneToOne  (targetEntity="XLite\Model\Category", inversedBy="quickFlags")
      * @JoinColumn (name="category_id", referencedColumnName="category_id")

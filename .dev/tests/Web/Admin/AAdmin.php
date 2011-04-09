@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 require_once __DIR__ . '/../AWeb.php';
@@ -40,7 +40,7 @@ abstract class XLite_Web_Admin_AAdmin extends XLite_Web_AWeb
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function logIn($user = 'rnd_tester@cdev.ru', $password = 'master')
     {
@@ -66,7 +66,7 @@ abstract class XLite_Web_Admin_AAdmin extends XLite_Web_AWeb
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function logOut($pageIsOpened = false)
     {
@@ -88,7 +88,7 @@ abstract class XLite_Web_Admin_AAdmin extends XLite_Web_AWeb
      * @return boolean
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isLoggedIn()
     {
@@ -103,7 +103,7 @@ abstract class XLite_Web_Admin_AAdmin extends XLite_Web_AWeb
      * @return Doctrine\DBAL\Driver\PDOStatement
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function query($query)
     {
@@ -115,7 +115,7 @@ abstract class XLite_Web_Admin_AAdmin extends XLite_Web_AWeb
      *
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function resetBrowser()
     {
@@ -129,7 +129,7 @@ abstract class XLite_Web_Admin_AAdmin extends XLite_Web_AWeb
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setUp()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\Pack;
@@ -32,7 +32,7 @@ namespace XLite\Core\Pack;
  * Distr 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Distr extends \XLite\Core\Pack\APack
 {
@@ -47,7 +47,7 @@ class Distr extends \XLite\Core\Pack\APack
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $exclude = array();
 
@@ -56,7 +56,7 @@ class Distr extends \XLite\Core\Pack\APack
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $include = array();
 
@@ -65,7 +65,7 @@ class Distr extends \XLite\Core\Pack\APack
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $excludePattern;
 
@@ -74,7 +74,7 @@ class Distr extends \XLite\Core\Pack\APack
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $includePattern;
 
@@ -85,7 +85,7 @@ class Distr extends \XLite\Core\Pack\APack
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct()
     {
@@ -107,7 +107,7 @@ class Distr extends \XLite\Core\Pack\APack
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getName()
     {
@@ -120,7 +120,7 @@ class Distr extends \XLite\Core\Pack\APack
      *
      * @return \Iterator
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDirectoryIterator()
     {
@@ -137,7 +137,7 @@ class Distr extends \XLite\Core\Pack\APack
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMetadata()
     {
@@ -152,7 +152,7 @@ class Distr extends \XLite\Core\Pack\APack
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function preparePatterns()
     {
@@ -183,7 +183,7 @@ class Distr extends \XLite\Core\Pack\APack
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function filterCoreFiles(\Includes\Utils\FileFilter\FilterIterator $iterator)
     {

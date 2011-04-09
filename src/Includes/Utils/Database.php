@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace Includes\Utils;
@@ -32,7 +32,7 @@ namespace Includes\Utils;
  * Database 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Database extends \Includes\Utils\AUtils
 {
@@ -42,7 +42,7 @@ class Database extends \Includes\Utils\AUtils
      * @var    \PDO
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $handler;
 
@@ -52,7 +52,7 @@ class Database extends \Includes\Utils\AUtils
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $dbOptions;
 
@@ -62,7 +62,7 @@ class Database extends \Includes\Utils\AUtils
      * @return \PDO
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function setDbOptions($options)
     {
@@ -77,7 +77,7 @@ class Database extends \Includes\Utils\AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function resetDbOptions()
     {
@@ -92,7 +92,7 @@ class Database extends \Includes\Utils\AUtils
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getConnectionParams($fullList = false)
     {
@@ -127,7 +127,7 @@ class Database extends \Includes\Utils\AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getConnectionString()
     {
@@ -140,7 +140,7 @@ class Database extends \Includes\Utils\AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getDbOptions($name = null)
     {
@@ -156,7 +156,7 @@ class Database extends \Includes\Utils\AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getUsername()
     {
@@ -169,7 +169,7 @@ class Database extends \Includes\Utils\AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getPassword()
     {
@@ -182,7 +182,7 @@ class Database extends \Includes\Utils\AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getConnectionFlags()
     {
@@ -199,7 +199,7 @@ class Database extends \Includes\Utils\AUtils
      * @return \PDO
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function connectToDb()
     {
@@ -217,7 +217,7 @@ class Database extends \Includes\Utils\AUtils
      * @return \PDO
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getHandler()
     {
@@ -237,7 +237,7 @@ class Database extends \Includes\Utils\AUtils
      * @return \PDOStatement
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function executeStatement($sql, array $params = array())
     {
@@ -257,7 +257,7 @@ class Database extends \Includes\Utils\AUtils
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function fetchAll($sql, array $params = array(), $flags = \PDO::FETCH_ASSOC)
     {
@@ -273,7 +273,7 @@ class Database extends \Includes\Utils\AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function fetchColumn($sql, array $params = array())
     {
@@ -289,7 +289,7 @@ class Database extends \Includes\Utils\AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function execute($sql, array $params = array())
     {
@@ -305,7 +305,7 @@ class Database extends \Includes\Utils\AUtils
      * @return bool
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function exec($sql)
     {
@@ -318,7 +318,7 @@ class Database extends \Includes\Utils\AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getDbVersion()
     {
@@ -335,7 +335,7 @@ class Database extends \Includes\Utils\AUtils
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function uploadSQLFromFile($fileName, $verbose = false)
     {

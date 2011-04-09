@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -33,7 +33,7 @@ namespace XLite\Model;
  * TODO: full refactoring is required
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class MailImageParser extends \XLite\Core\FlexyCompiler
 {
@@ -42,7 +42,7 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public $webdir;
     
@@ -51,7 +51,7 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public $images;
     
@@ -60,7 +60,7 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public $counter;
 
@@ -71,7 +71,7 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct()
     {
@@ -83,7 +83,7 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function flexy()
     {
@@ -94,7 +94,7 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function postprocess()
     {
@@ -151,7 +151,7 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function substImage($start, $end) 
     {
@@ -175,7 +175,7 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getImgSubstitution($img) 
     {

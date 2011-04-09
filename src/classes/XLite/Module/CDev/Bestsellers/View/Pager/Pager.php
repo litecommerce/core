@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\Bestsellers\View\Pager;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\Bestsellers\View\Pager;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Pager extends \XLite\View\Pager\APager
 {
@@ -43,7 +43,7 @@ class Pager extends \XLite\View\Pager\APager
      * @return integer 
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getItemsPerPageDefault()
     {
@@ -56,7 +56,7 @@ class Pager extends \XLite\View\Pager\APager
      * @return integer
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPagesPerFrame()
     {

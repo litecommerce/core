@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\ImageOperator;
@@ -32,7 +32,7 @@ namespace XLite\Core\ImageOperator;
  * GD 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class GD extends \XLite\Core\ImageOperator\AImageOperator
 {
@@ -41,7 +41,7 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $types = array(
         'image/jpeg' => 'jpeg',
@@ -59,7 +59,7 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
      * 
      * @var   resource
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $image;
 
@@ -68,7 +68,7 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isEnabled()
     {
@@ -83,7 +83,7 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setImage(\XLite\Model\Base\Image $image)
     {
@@ -118,7 +118,7 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getImage()
     {
@@ -141,7 +141,7 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function resize($width, $height)
     {
@@ -190,7 +190,7 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
      * 
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getImageType()
     {

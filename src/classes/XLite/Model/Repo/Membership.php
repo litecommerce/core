@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo;
  * Membership repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Membership extends \XLite\Model\Repo\Base\I18n
 {
@@ -41,7 +41,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = self::TYPE_SECONDARY;
 
@@ -50,7 +50,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $defaultOrderBy = 'orderby';
 
@@ -61,7 +61,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineCacheCells()
     {
@@ -85,7 +85,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findAllMemberships()
     {
@@ -103,7 +103,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineAllMembershipsQuery()
     {
@@ -119,7 +119,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findActiveMemberships()
     {
@@ -137,7 +137,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineActiveMembershipsQuery()
     {
@@ -158,7 +158,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      *  
      * @return \XLite\Model\Membership|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findOneByName($name, $onlyActive = true)
     {
@@ -173,7 +173,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineOneByNameQuery($name, $onlyActive)
     {

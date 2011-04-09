@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Order;
@@ -32,7 +32,7 @@ namespace XLite\Model\Order;
  * Order modifier
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity
  * @Table (name="order_modifiers")
@@ -44,7 +44,7 @@ class Modifier extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      * 
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -57,7 +57,7 @@ class Modifier extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      * 
      * @Column (type="string", length="255")
      */
@@ -68,7 +68,7 @@ class Modifier extends \XLite\Model\AEntity
      *
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -79,7 +79,7 @@ class Modifier extends \XLite\Model\AEntity
      * 
      * @var   \XLite\Logic\Order\Modifier\AModifier
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $modifier;
 
@@ -91,7 +91,7 @@ class Modifier extends \XLite\Model\AEntity
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __call($method, array $args = array())
     {
@@ -107,7 +107,7 @@ class Modifier extends \XLite\Model\AEntity
      * 
      * @return \XLite\Logic\Order\Modifier\AModifier
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getModifier()
     {

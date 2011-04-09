@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * DB-based temporary variables
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class TmpVars extends \XLite\Base\Singleton
 {
@@ -43,7 +43,7 @@ class TmpVars extends \XLite\Base\Singleton
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __get($name)
     {
@@ -58,7 +58,7 @@ class TmpVars extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __set($name, $value)
     {
@@ -87,7 +87,7 @@ class TmpVars extends \XLite\Base\Singleton
      *  
      * @return \XLite\Model\TmpVar
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getVar($name)
     {
@@ -99,7 +99,7 @@ class TmpVars extends \XLite\Base\Singleton
      * 
      * @return \XLite\Model\Repo\TmpVar
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRepo()
     {

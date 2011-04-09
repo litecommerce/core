@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Model\Repo;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Model\Repo;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Config extends \XLite\Model\Repo\Config implements \XLite\Base\IDecorator
 {
@@ -46,7 +46,7 @@ class Config extends \XLite\Model\Repo\Config implements \XLite\Base\IDecorator
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(\Doctrine\ORM\EntityManager $em, \Doctrine\ORM\Mapping\ClassMetadata $class)
     {

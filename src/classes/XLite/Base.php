@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite;
@@ -34,7 +34,7 @@ namespace XLite;
  * FIXME - must extends \XLite\the Base\SuperClass
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Base extends \XLite\Base\Singleton
 {
@@ -43,7 +43,7 @@ class Base extends \XLite\Base\Singleton
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $singletons = array(
         'xlite'    => 'XLite',
@@ -64,7 +64,7 @@ class Base extends \XLite\Base\Singleton
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __get($name)
     {
@@ -81,7 +81,7 @@ class Base extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __call($method, array $args = array())
     {
@@ -98,7 +98,7 @@ class Base extends \XLite\Base\Singleton
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function get($name)
     {
@@ -136,7 +136,7 @@ class Base extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function set($name, $value)
     {
@@ -158,7 +158,7 @@ class Base extends \XLite\Base\Singleton
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function is($name)
     {
@@ -173,7 +173,7 @@ class Base extends \XLite\Base\Singleton
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getComplex($name)
     {
@@ -217,7 +217,7 @@ class Base extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setComplex($name, $value)
     {
@@ -259,7 +259,7 @@ class Base extends \XLite\Base\Singleton
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isComplex($name)
     {
@@ -273,7 +273,7 @@ class Base extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setProperties(array $assoc)
     {

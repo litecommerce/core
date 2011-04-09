@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 namespace XLite\Model\Base;
 
@@ -31,7 +31,7 @@ namespace XLite\Model\Base;
  * Order item related object interface
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 interface IOrderItem
 {
@@ -40,7 +40,7 @@ interface IOrderItem
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getId();
 
@@ -49,7 +49,7 @@ interface IOrderItem
      * 
      * @return float
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPrice();
 
@@ -58,7 +58,7 @@ interface IOrderItem
      * 
      * @return float
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getWeight();
 
@@ -67,7 +67,7 @@ interface IOrderItem
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMinPurchaseLimit();
 
@@ -76,7 +76,7 @@ interface IOrderItem
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMaxPurchaseLimit();
 
@@ -85,7 +85,7 @@ interface IOrderItem
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getName();
 
@@ -94,7 +94,7 @@ interface IOrderItem
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSku();
 
@@ -103,7 +103,7 @@ interface IOrderItem
      * 
      * @return \XLite\Model\Base\Image|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getImage();
 
@@ -112,7 +112,7 @@ interface IOrderItem
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFreeShipping();
 
@@ -121,7 +121,7 @@ interface IOrderItem
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getURL();
 }

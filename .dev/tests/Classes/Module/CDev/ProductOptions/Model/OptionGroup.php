@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 class XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup extends XLite_Tests_TestCase

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -34,7 +34,7 @@ namespace XLite\Model;
  * NOTE - check the "factory.<name>" tags in templates
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Factory extends \XLite\Base
 {
@@ -46,7 +46,7 @@ class Factory extends \XLite\Base
      *  
      * @return \XLite\Base
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function create($class, array $args = array())
     {
@@ -64,7 +64,7 @@ class Factory extends \XLite\Base
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function isSingleton(\ReflectionClass $handler)
     {
@@ -78,7 +78,7 @@ class Factory extends \XLite\Base
      *
      * @return \XLite\Base
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getSingleton($class)
     {
@@ -93,7 +93,7 @@ class Factory extends \XLite\Base
      *  
      * @return \XLite\Base
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function createObject(\ReflectionClass $handler, array $args = array())
     {
@@ -108,7 +108,7 @@ class Factory extends \XLite\Base
      *  
      * @return \XLite\Base
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __get($name)
     {

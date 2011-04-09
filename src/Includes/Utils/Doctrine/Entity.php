@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Utils\Doctrine;
@@ -33,7 +33,7 @@ namespace Includes\Utils\Doctrine;
  * 
  * @package    XLite
  * @see        ____class_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 class Entity extends \Includes\Utils\AUtils
 {
@@ -46,7 +46,7 @@ class Entity extends \Includes\Utils\AUtils
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function fillArray($class, array $data = array())
     {

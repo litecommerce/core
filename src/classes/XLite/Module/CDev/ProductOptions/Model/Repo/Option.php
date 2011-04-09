@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Model\Repo;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\ProductOptions\Model\Repo;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Option extends \XLite\Model\Repo\Base\I18n
 {
@@ -43,7 +43,7 @@ class Option extends \XLite\Model\Repo\Base\I18n
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $defaultOrderBy = 'orderby';
 
@@ -56,7 +56,7 @@ class Option extends \XLite\Model\Repo\Base\I18n
      * @return \XLite\Model\AEntity|void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
     {
@@ -86,7 +86,7 @@ class Option extends \XLite\Model\Repo\Base\I18n
      * @return \XLite\Module\CDev\ProductOptions\Model\Option|void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineOneBySkuAndNameQuery($sku, $group, $name)
     {

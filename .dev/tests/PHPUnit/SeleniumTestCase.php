@@ -21,7 +21,7 @@ require_once dirname(__FILE__) . '/SeleniumTestCase/Driver.php';
  * Selenium test case 
  * 
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase
 {
@@ -38,7 +38,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @var    array
      * @access public
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static $testsRange = array();
 
@@ -48,7 +48,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @var    array
      * @access public
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $cssProcessedFiles = array();
 
@@ -58,7 +58,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $validatedPages = array();
 
@@ -68,7 +68,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @var    boolean
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $validatePage = false;
 
@@ -98,7 +98,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @var    boolean
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $temporarySkipped = false;
 
@@ -118,7 +118,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $unknownCSSProperty = array(
         'zoom',
@@ -360,7 +360,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     /**
      * @param  array $browser
      * @return XLite_Extensions_SeleniumTestCase_Driver
-     * @since  Method available since Release 3.3.0
+     * @since  1.0.0
      */
     protected function getDriver(array $browser)
     {
@@ -433,7 +433,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function runTest()
     {
@@ -588,7 +588,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @return mixed
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function typeKeys($locator, $value)
     {
@@ -606,7 +606,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @return boolean Current status
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function toggleByJquery($jqueryExpression, $checked = null)
     {
@@ -629,7 +629,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @return mixed
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSExpression($expression)
     {
@@ -651,7 +651,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function assertJqueryPresent($pattern, $message = null)
     {
@@ -670,7 +670,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function assertJqueryNotPresent($pattern, $message = null)
     {
@@ -690,7 +690,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function waitInlineProgress($jqueryExpression, $message = null)
     {
@@ -715,7 +715,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function assertInputErrorPresent($jqueryExpression, $message = null)
     {
@@ -735,7 +735,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function assertInputErrorNotPresent($jqueryExpression, $message = null)
     {
@@ -752,7 +752,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function skipCoverage()
     {
@@ -771,7 +771,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function dragAndDropDelay($locatorFrom, $locatorMiddle, $locatorTo, $delay = 1)
     {
@@ -795,7 +795,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function waitForLocalCondition($condition, $ttl = 10000, $message = null)
     {
@@ -829,7 +829,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @return mixed
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __call($command, $arguments)
     {
@@ -937,7 +937,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function validatePageCSS($html)
     {
@@ -1068,7 +1068,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function validateCSS($data, $url)
     {

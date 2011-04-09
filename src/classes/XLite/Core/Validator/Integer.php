@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\Validator;
@@ -32,7 +32,7 @@ namespace XLite\Core\Validator;
  * Integer
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Integer extends \XLite\Core\Validator\Float
 {
@@ -44,7 +44,7 @@ class Integer extends \XLite\Core\Validator\Float
      * @return void
      * @throws \XLite\Core\Validator\Exception
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function validate($data)
     {
@@ -65,7 +65,7 @@ class Integer extends \XLite\Core\Validator\Float
      *
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function sanitize($data)
     {

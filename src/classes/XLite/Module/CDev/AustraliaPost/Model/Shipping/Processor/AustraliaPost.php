@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\AustraliaPost\Model\Shipping\Processor;
@@ -35,7 +35,7 @@ namespace XLite\Module\CDev\AustraliaPost\Model\Shipping\Processor;
  * @package    XLite
  * @subpackage Model
  * @see        ____class_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implements \XLite\Base\IDecorator
 {
@@ -45,7 +45,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $processorId = 'aupost';
 
@@ -55,7 +55,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $apiURL = 'http://drc.edeliver.com.au/ratecalc.asp';
 
@@ -67,7 +67,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareInputData(\XLite\Logic\Order\Modifier\Shipping $modifier)
     {
@@ -107,7 +107,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doQuery($data, $ignoreCache)
     {
@@ -212,7 +212,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function parseResponse($stringData)
     {
@@ -237,7 +237,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProcessorName()
     {
@@ -253,7 +253,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier, $ignoreCache = false)
     {
@@ -278,7 +278,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRatesByArray(array $inputData, $ignoreCache = false)
     {

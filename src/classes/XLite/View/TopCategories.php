@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Sidebar categories list
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="sidebar.first", zone="customer", weight="100")
  */
@@ -60,7 +60,7 @@ class TopCategories extends \XLite\View\SideBarBox
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $displayModes = array(
         self::DISPLAY_MODE_LIST => 'List',
@@ -73,7 +73,7 @@ class TopCategories extends \XLite\View\SideBarBox
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $pathIds;
 
@@ -87,7 +87,7 @@ class TopCategories extends \XLite\View\SideBarBox
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function displayItemClass($index, $count, \XLite\Model\Category $category)
     {
@@ -105,7 +105,7 @@ class TopCategories extends \XLite\View\SideBarBox
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function displayLinkClass($i, $count, \XLite\Model\Category $category)
     {
@@ -123,7 +123,7 @@ class TopCategories extends \XLite\View\SideBarBox
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function displayListItemClass($i, $count, \XLite\View\AView $widget)
     {
@@ -138,7 +138,7 @@ class TopCategories extends \XLite\View\SideBarBox
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -150,7 +150,7 @@ class TopCategories extends \XLite\View\SideBarBox
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -164,7 +164,7 @@ class TopCategories extends \XLite\View\SideBarBox
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCategories($categoryId = null)
     {
@@ -180,7 +180,7 @@ class TopCategories extends \XLite\View\SideBarBox
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultCategoryId()
     {
@@ -192,7 +192,7 @@ class TopCategories extends \XLite\View\SideBarBox
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -218,7 +218,7 @@ class TopCategories extends \XLite\View\SideBarBox
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isSubtree()
     {
@@ -232,7 +232,7 @@ class TopCategories extends \XLite\View\SideBarBox
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isActiveTrail(\XLite\Model\Category $category)
     {
@@ -267,7 +267,7 @@ class TopCategories extends \XLite\View\SideBarBox
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function assembleItemClassName($index, $count, \XLite\Model\Category $category)
     {
@@ -313,7 +313,7 @@ class TopCategories extends \XLite\View\SideBarBox
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function assembleLinkClassName($i, $count, \XLite\Model\Category $category)
     {
@@ -331,7 +331,7 @@ class TopCategories extends \XLite\View\SideBarBox
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function assembleListItemClassName($i, $count, \XLite\View\AView $widget)
     {

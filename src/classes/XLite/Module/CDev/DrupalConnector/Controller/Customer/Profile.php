@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\IDecorator
 {
@@ -52,7 +52,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModelFormPartMain()
     {
@@ -65,7 +65,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModelFormPartAddresses()
     {
@@ -78,7 +78,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModelFormPartAll()
     {
@@ -93,7 +93,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * @return \XLite\View\Model\Profile\AProfile
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModelFormPart($type)
     {
@@ -109,7 +109,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * @return boolean 
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionRegisterBasic()
     {
@@ -122,7 +122,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * @return boolean 
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdateBasic()
     {
@@ -134,7 +134,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionCancel()
     {
@@ -152,7 +152,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -164,7 +164,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdateRoles()
     {
@@ -176,7 +176,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDeleteRole()
     {
@@ -206,7 +206,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function updateAdminAccessLevels()
     {
@@ -243,7 +243,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function updateAccessLevel($profiles, $accessLevel)
     {

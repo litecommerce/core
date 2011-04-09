@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form;
@@ -32,7 +32,7 @@ namespace XLite\View\Form;
  * Sort form
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Sort extends \XLite\View\Form\AForm
 {
@@ -48,7 +48,7 @@ class Sort extends \XLite\View\Form\AForm
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormName()
     {
@@ -60,7 +60,7 @@ class Sort extends \XLite\View\Form\AForm
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -72,7 +72,7 @@ class Sort extends \XLite\View\Form\AForm
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -102,7 +102,7 @@ class Sort extends \XLite\View\Form\AForm
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function initView()
     {
@@ -116,7 +116,7 @@ class Sort extends \XLite\View\Form\AForm
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormDefaultParams()
     {

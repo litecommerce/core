@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Tabs;
@@ -33,7 +33,7 @@ namespace XLite\View\Tabs;
  * on their targets
  *
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ATabs extends \XLite\View\AView
 {
@@ -54,7 +54,7 @@ abstract class ATabs extends \XLite\View\AView
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $tabs = array();
 
@@ -63,7 +63,7 @@ abstract class ATabs extends \XLite\View\AView
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $processedTabs = null;
 
@@ -73,7 +73,7 @@ abstract class ATabs extends \XLite\View\AView
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -98,7 +98,7 @@ abstract class ATabs extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isTemplateOnlyTab()
     {
@@ -112,7 +112,7 @@ abstract class ATabs extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isFullWidgetTab()
     {
@@ -126,7 +126,7 @@ abstract class ATabs extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isWidgetOnlyTab()
     {
@@ -140,7 +140,7 @@ abstract class ATabs extends \XLite\View\AView
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTabWidget()
     {
@@ -154,7 +154,7 @@ abstract class ATabs extends \XLite\View\AView
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTabTemplate()
     {
@@ -168,7 +168,7 @@ abstract class ATabs extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isCommonTab()
     {
@@ -183,7 +183,7 @@ abstract class ATabs extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -195,7 +195,7 @@ abstract class ATabs extends \XLite\View\AView
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCurrentTarget()
     {
@@ -207,7 +207,7 @@ abstract class ATabs extends \XLite\View\AView
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTabTargets()
     {
@@ -219,7 +219,7 @@ abstract class ATabs extends \XLite\View\AView
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -233,7 +233,7 @@ abstract class ATabs extends \XLite\View\AView
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function buildTabURL($target)
     {
@@ -247,7 +247,7 @@ abstract class ATabs extends \XLite\View\AView
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isSelectedTab($target)
     {
@@ -259,7 +259,7 @@ abstract class ATabs extends \XLite\View\AView
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTabValues()
     {
@@ -276,7 +276,7 @@ abstract class ATabs extends \XLite\View\AView
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTabs()
     {
@@ -308,7 +308,7 @@ abstract class ATabs extends \XLite\View\AView
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTitle()
     {
@@ -320,7 +320,7 @@ abstract class ATabs extends \XLite\View\AView
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSelectedTab()
     {

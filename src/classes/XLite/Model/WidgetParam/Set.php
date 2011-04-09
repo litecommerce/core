@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\WidgetParam;
@@ -32,7 +32,7 @@ namespace XLite\Model\WidgetParam;
  * Set
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Set extends \XLite\Model\WidgetParam\String
 {
@@ -41,7 +41,7 @@ class Set extends \XLite\Model\WidgetParam\String
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = 'list';
 
@@ -50,7 +50,7 @@ class Set extends \XLite\Model\WidgetParam\String
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $options = null;
 
@@ -65,7 +65,7 @@ class Set extends \XLite\Model\WidgetParam\String
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct($label, $value = null, $isSetting = false, array $options = array())
     {
@@ -85,7 +85,7 @@ class Set extends \XLite\Model\WidgetParam\String
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getValidaionSchema($value)
     {

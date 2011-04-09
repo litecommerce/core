@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Profile;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Profile;
  * \XLite\View\Form\Profile\Addresses 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Addresses extends \XLite\View\Form\Profile\AProfile
 {
@@ -41,7 +41,7 @@ class Addresses extends \XLite\View\Form\Profile\AProfile
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -53,7 +53,7 @@ class Addresses extends \XLite\View\Form\Profile\AProfile
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

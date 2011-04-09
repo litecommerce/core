@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\ModulesManager;
@@ -32,7 +32,7 @@ namespace XLite\View\ModulesManager;
  * Module settings page footer 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class SettingsFooter extends \XLite\View\AView
 {
@@ -48,7 +48,7 @@ class SettingsFooter extends \XLite\View\AView
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -64,7 +64,7 @@ class SettingsFooter extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -72,27 +72,16 @@ class SettingsFooter extends \XLite\View\AView
     }
 
     /**
-     * getModule 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getModule()
-    {
-        return $this->getParam(self::PARAM_SECTION);
-    }
-
-    /**
      * getModuleTemplate 
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModuleTemplate()
     {
-        return 'modules/' . $this->getModule() . '/settings_footer.tpl';
+        return 'modules' . LC_DS . $this->getModule()->getAuthor()
+            . LC_DS . $this->getModule()->getName() . LC_DS . 'settings_footer.tpl';
     }
 
     /**
@@ -100,13 +89,14 @@ class SettingsFooter extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTemplate()
     {
         $template = parent::getTemplate();
 
         if (!isset($template)) {
+
             $template = $this->getModuleTemplate();
         }
 
@@ -129,13 +119,12 @@ class SettingsFooter extends \XLite\View\AView
         );
     }
 
-    
     /**
      * Check if widget is visible
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

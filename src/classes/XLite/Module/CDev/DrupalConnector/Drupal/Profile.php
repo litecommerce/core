@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Drupal;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
@@ -45,7 +45,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return bool
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isResetPasswordPage()
     {
@@ -72,7 +72,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProfileData(\stdClass $user, $edit, $addConfirmation = true)
     {
@@ -149,7 +149,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isRoleHasAdminPermission(array $roles)
     {
@@ -178,7 +178,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProfileDataLogin(\stdClass $user, $edit)
     {

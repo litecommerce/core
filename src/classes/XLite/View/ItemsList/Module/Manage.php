@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList\Module;
@@ -32,7 +32,7 @@ namespace XLite\View\ItemsList\Module;
  * Addons search and installation widget
  *
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Manage extends \XLite\View\ItemsList\Module\AModule
 {
@@ -41,7 +41,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -56,7 +56,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -71,7 +71,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -83,7 +83,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -95,7 +95,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageBodyDir()
     {
@@ -107,7 +107,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -119,7 +119,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      *
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -134,7 +134,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFilters()
     {
@@ -149,7 +149,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFilter()
     {
@@ -169,7 +169,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModulesCount($filter)
     {
@@ -185,7 +185,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      *
      * @return array|integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false, $filter = null)
     {

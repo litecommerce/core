@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller;
@@ -32,7 +32,7 @@ namespace XLite\Controller;
  * Get widget (AJAX)
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class GetWidget extends \XLite\Controller\AController
 {
@@ -41,7 +41,7 @@ abstract class GetWidget extends \XLite\Controller\AController
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -62,7 +62,7 @@ abstract class GetWidget extends \XLite\Controller\AController
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -76,7 +76,7 @@ abstract class GetWidget extends \XLite\Controller\AController
      * 
      * @return \XLite\View\Controller
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getViewer($isExported = false)
     {
@@ -88,7 +88,7 @@ abstract class GetWidget extends \XLite\Controller\AController
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getClass()
     {
@@ -101,7 +101,7 @@ abstract class GetWidget extends \XLite\Controller\AController
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAJAXParamsTranslationTable()
     {
@@ -116,7 +116,7 @@ abstract class GetWidget extends \XLite\Controller\AController
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkRequest()
     {
@@ -128,7 +128,7 @@ abstract class GetWidget extends \XLite\Controller\AController
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getViewerTemplate()
     {

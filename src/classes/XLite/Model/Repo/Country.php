@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo;
  * Country repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Country extends \XLite\Model\Repo\ARepo
 {
@@ -41,7 +41,7 @@ class Country extends \XLite\Model\Repo\ARepo
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = self::TYPE_SERVICE;
 
@@ -50,7 +50,7 @@ class Country extends \XLite\Model\Repo\ARepo
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $defaultOrderBy = 'country';
 
@@ -59,7 +59,7 @@ class Country extends \XLite\Model\Repo\ARepo
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $alternativeIdentifier = array(
         array('code'),
@@ -72,7 +72,7 @@ class Country extends \XLite\Model\Repo\ARepo
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineCacheCells()
     {
@@ -106,7 +106,7 @@ class Country extends \XLite\Model\Repo\ARepo
      * 
      * @return \Doctrine\Common\Collections\ArrayCollection
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findAllEnabled()
     {
@@ -124,7 +124,7 @@ class Country extends \XLite\Model\Repo\ARepo
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineAllEnabledQuery()
     {
@@ -144,7 +144,7 @@ class Country extends \XLite\Model\Repo\ARepo
      * 
      * @return \Doctrine\Common\Collections\ArrayCollection
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findAllCountries()
     {
@@ -162,7 +162,7 @@ class Country extends \XLite\Model\Repo\ARepo
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineAllCountriesQuery()
     {
@@ -180,7 +180,7 @@ class Country extends \XLite\Model\Repo\ARepo
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findCountriesStates()
     {
@@ -202,7 +202,7 @@ class Country extends \XLite\Model\Repo\ARepo
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineCountriesStatesQuery()
     {
@@ -221,7 +221,7 @@ class Country extends \XLite\Model\Repo\ARepo
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessCountriesStates(array $data)
     {

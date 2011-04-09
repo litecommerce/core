@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Core;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Core;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
 {
@@ -58,7 +58,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      *
      * @return string
      * @access public
-     * @since  3.0
+     * @since  1.0.0
      */
     public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
     {
@@ -97,7 +97,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function buildDrupalPath($target = '', $action = '', array $params = array(), $node = self::DRUPAL_ROOT_NODE)
     {
@@ -124,7 +124,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      *
      * @return string
      * @access public
-     * @since  3.0
+     * @since  1.0.0
      */
     public static function buildDrupalURL($target = '', $action = '', array $params = array(), $node = self::DRUPAL_ROOT_NODE)
     {
@@ -139,7 +139,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function normalizeDrupalURL($url)
     {

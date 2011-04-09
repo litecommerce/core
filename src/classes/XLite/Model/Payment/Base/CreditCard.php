@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Payment\Base;
@@ -32,7 +32,7 @@ namespace XLite\Model\Payment\Base;
  * Abstract credit card-based processor 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class CreditCard extends \XLite\Model\Payment\Base\Online
 {
@@ -80,7 +80,7 @@ abstract class CreditCard extends \XLite\Model\Payment\Base\Online
      *
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getInputTemplate()
     {
@@ -92,7 +92,7 @@ abstract class CreditCard extends \XLite\Model\Payment\Base\Online
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOperationTypes()
     {

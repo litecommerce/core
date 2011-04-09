@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\LanguagesModify;
@@ -32,7 +32,7 @@ namespace XLite\View\LanguagesModify;
  * Add (activate) language dialog
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class AddLanguage extends \XLite\View\AView
 {
@@ -41,7 +41,7 @@ class AddLanguage extends \XLite\View\AView
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getInactiveLanguages()
     {
@@ -55,7 +55,7 @@ class AddLanguage extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -67,7 +67,7 @@ class AddLanguage extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

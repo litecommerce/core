@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Image upload component.
  *
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ImageUpload extends \XLite\View\AView
 {
@@ -49,7 +49,7 @@ class ImageUpload extends \XLite\View\AView
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public $showDelete = true;
 
@@ -58,7 +58,7 @@ class ImageUpload extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -89,7 +89,7 @@ class ImageUpload extends \XLite\View\AView
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function hasImage()
     {
@@ -113,7 +113,7 @@ class ImageUpload extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isFS()
     {

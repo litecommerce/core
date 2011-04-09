@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * List node
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ListNode extends \XLite\Base\SuperClass
 {
@@ -41,7 +41,7 @@ class ListNode extends \XLite\Base\SuperClass
      *
      * @var   \XLite_Model_ListNode or null
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $prev = null;
 
@@ -50,7 +50,7 @@ class ListNode extends \XLite\Base\SuperClass
      *
      * @var   \XLite_Model_ListNode|null
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $next = null;
 
@@ -59,7 +59,7 @@ class ListNode extends \XLite\Base\SuperClass
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $key = null;
 
@@ -71,7 +71,7 @@ class ListNode extends \XLite\Base\SuperClass
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct($key)
     {
@@ -83,7 +83,7 @@ class ListNode extends \XLite\Base\SuperClass
      *
      * @return \XLite\Model\ListNode
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPrev()
     {
@@ -95,7 +95,7 @@ class ListNode extends \XLite\Base\SuperClass
      *
      * @return \XLite\Model\ListNode
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getNext()
     {
@@ -109,7 +109,7 @@ class ListNode extends \XLite\Base\SuperClass
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setPrev(\Xlite\Model\ListNode $node = null)
     {
@@ -123,7 +123,7 @@ class ListNode extends \XLite\Base\SuperClass
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setNext(\Xlite\Model\ListNode $node = null)
     {
@@ -135,7 +135,7 @@ class ListNode extends \XLite\Base\SuperClass
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getKey()
     {
@@ -149,7 +149,7 @@ class ListNode extends \XLite\Base\SuperClass
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkKey($key)
     {

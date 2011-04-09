@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Category page controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Category extends \XLite\Controller\Admin\Base\Catalog
 {
@@ -42,7 +42,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public $page = 'category_modify';
 
@@ -52,7 +52,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public $pages = array(
         'category_modify' => 'Add/Modify category',
@@ -64,7 +64,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public $pageTemplates = array(
         'category_modify' => 'categories/add_modify_body.tpl',
@@ -76,7 +76,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function init()
     {
@@ -95,7 +95,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      *
      * @return \XLite\Model\Category
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCategory()
     {
@@ -109,7 +109,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -124,7 +124,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -140,7 +140,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      *
      * @return \XLite\Model\Image\Category\Image
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function saveImage($categoryId = null)
     {
@@ -172,7 +172,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionAddChild()
     {
@@ -191,7 +191,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionModify()
     {
@@ -213,7 +213,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function validateCategoryData($isNewObject = false)
     {
@@ -290,7 +290,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isCleanURLUnique($cleanURL, $categoryId = null)
     {

@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\Quantum\Model\Payment\Processor;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\Quantum\Model\Payment\Processor;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Quantum extends \XLite\Model\Payment\Base\WebBased
 {
@@ -43,7 +43,7 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      * @return string Widget class name or template path
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSettingsWidget()
     {
@@ -56,7 +56,7 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormURL()
     {
@@ -69,7 +69,7 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormFields()
     {
@@ -120,7 +120,7 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function processReturn(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -170,7 +170,7 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isConfigured(\XLite\Model\Payment\Method $method)
     {
@@ -184,7 +184,7 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineSavedData()
     {
@@ -207,7 +207,7 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function logRedirect(array $list)
     {

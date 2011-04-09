@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Product;
@@ -32,7 +32,7 @@ namespace XLite\View\Product;
  * QuantityBox 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class QuantityBox extends \XLite\View\Product\AProduct
 {
@@ -53,7 +53,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -68,7 +68,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -84,7 +84,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -96,7 +96,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -117,7 +117,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * 
      * @return \XLite\Model\Product
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProduct()
     {
@@ -129,7 +129,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBoxName()
     {
@@ -141,7 +141,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBoxId()
     {
@@ -153,7 +153,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBoxValue()
     {
@@ -165,7 +165,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBoxTitle()
     {
@@ -177,7 +177,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isCartPage()
     {
@@ -189,7 +189,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultClass()
     {
@@ -201,7 +201,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getClass()
     {
@@ -213,7 +213,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMaxQuantityMethod()
     {
@@ -225,7 +225,7 @@ class QuantityBox extends \XLite\View\Product\AProduct
      *
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMaxQuantity()
     {

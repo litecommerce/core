@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\View\Customer;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\FeaturedProducts\View\Customer;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  *
  * @ListChild (list="center.bottom", zone="customer", weight="300")
  */
@@ -60,7 +60,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -73,7 +73,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -86,7 +86,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -116,7 +116,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -131,7 +131,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -160,7 +160,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return boolean 
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -173,7 +173,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {

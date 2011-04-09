@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * Payment method callback
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Callback extends \XLite\Controller\Customer\ACustomer
 {
@@ -41,7 +41,7 @@ class Callback extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -57,7 +57,7 @@ class Callback extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkStorefrontAccessability()
     {
@@ -69,7 +69,7 @@ class Callback extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionCallback()
     {

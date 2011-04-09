@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Taxes\Model\Repo;
@@ -32,7 +32,7 @@ namespace XLite\Module\CDev\Taxes\Model\Repo;
  * Tax repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Tax extends \XLite\Model\Repo\ARepo
 {
@@ -41,7 +41,7 @@ class Tax extends \XLite\Model\Repo\ARepo
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findActive()
     {
@@ -53,7 +53,7 @@ class Tax extends \XLite\Model\Repo\ARepo
      * 
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineFindActiveQuery()
     {

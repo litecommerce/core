@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Abstarct admin-zone controller 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AAdmin extends \XLite\Controller\AController
 {
@@ -48,7 +48,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $recentAdmins = null;
 
@@ -57,7 +57,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -69,7 +69,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function postprocess()
     {
@@ -85,7 +85,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkFormId()
     {
@@ -97,7 +97,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCurrentLanguage()
     {
@@ -111,7 +111,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCustomerZoneWarning()
     {
@@ -123,7 +123,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAccessLevel()
     {
@@ -135,7 +135,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -160,7 +160,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRecentAdmins()
     {
@@ -176,7 +176,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isFormIdValid()
     {
@@ -213,7 +213,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isPublicZone()
     {
@@ -225,7 +225,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function startDump()
     {
@@ -241,7 +241,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function displayPageHeader($title = '', $scrollDown = false)
     {
@@ -275,7 +275,7 @@ OUT;
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function displayPageFooter()
     {
@@ -302,7 +302,7 @@ OUT;
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageReturnURL()
     {
@@ -310,11 +310,11 @@ OUT;
     }
 
     /**
-     * Check - curent target and action is ignored (form id validation is disabled) or not
+     * Check - current target and action is ignored (form id validation is disabled) or not
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isIgnoredTarget()
     {
@@ -361,7 +361,7 @@ OUT;
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineIngnoredTargets()
     {
@@ -376,12 +376,11 @@ OUT;
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineSpecialIgnoredTargets()
     {
         return array(
-            'backup_restore' => array('backup', 'delete'),
             'files'          => array('tar', 'tar_skins', 'untar_skins'),
         );
     }
@@ -393,7 +392,7 @@ OUT;
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isRuleExists(array $rules)
     {
@@ -414,7 +413,7 @@ OUT;
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function sanitizeCleanURL($cleanURL)
     {
@@ -432,7 +431,7 @@ OUT;
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRequestDataByPrefix($prefix, $field = null)
     {
@@ -446,7 +445,7 @@ OUT;
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPostedData($field = null)
     {
@@ -458,7 +457,7 @@ OUT;
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getToDelete()
     {
@@ -474,7 +473,7 @@ OUT;
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCurrentCoreVersion()
     {
@@ -486,7 +485,7 @@ OUT;
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isCoreUpgradeAvailable()
     {
@@ -502,7 +501,7 @@ OUT;
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMarketplaceURL()
     {

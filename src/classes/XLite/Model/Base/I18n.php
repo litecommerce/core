@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Base;
@@ -32,7 +32,7 @@ namespace XLite\Model\Base;
  * Translation-owner abstract class
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @MappedSuperclass
  */
@@ -43,7 +43,7 @@ abstract class I18n extends \XLite\Model\AEntity
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $languagesQuery = null;
 
@@ -52,7 +52,7 @@ abstract class I18n extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $editLanguage;
 
@@ -62,7 +62,7 @@ abstract class I18n extends \XLite\Model\AEntity
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getLanguagesQuery()
     {
@@ -84,7 +84,7 @@ abstract class I18n extends \XLite\Model\AEntity
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -98,7 +98,7 @@ abstract class I18n extends \XLite\Model\AEntity
      * 
      * @return \Doctrine\Common\Collections\ArrayCollection
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTranslations()
     {
@@ -112,7 +112,7 @@ abstract class I18n extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function addTranslations(\XLite\Model\Base\Translation $translation)
     {
@@ -126,7 +126,7 @@ abstract class I18n extends \XLite\Model\AEntity
      *  
      * @return \XLite\Model\Base\Translation
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTranslation($code = null)
     {
@@ -163,7 +163,7 @@ abstract class I18n extends \XLite\Model\AEntity
      *  
      * @return \XLite\Model\Base\Translation
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSoftTranslation($code = null)
     {
@@ -223,7 +223,7 @@ abstract class I18n extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setEditLanguageCode($code = null)
     {
@@ -237,7 +237,7 @@ abstract class I18n extends \XLite\Model\AEntity
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function hasTranslation($code = null)
     {
@@ -262,7 +262,7 @@ abstract class I18n extends \XLite\Model\AEntity
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTranslationCodes()
     {
@@ -280,7 +280,7 @@ abstract class I18n extends \XLite\Model\AEntity
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function detach()
     {
@@ -297,7 +297,7 @@ abstract class I18n extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultLanguageCode()
     {

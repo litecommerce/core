@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin\Base;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin\Base;
  * Catalog 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class Catalog extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,7 +41,7 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      *
      * @return \XLite\Model\Category
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCategory()
     {
@@ -54,7 +54,7 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCategoryPath()
     {
@@ -68,7 +68,7 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCategoryURL(\XLite\Model\Category $category)
     {
@@ -82,7 +82,7 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocationNodeSubnodes(\XLite\Model\Category $category)
     {
@@ -100,7 +100,7 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addBaseLocation()
     {

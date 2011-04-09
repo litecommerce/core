@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\Utils;
@@ -33,7 +33,7 @@ namespace Includes\Decorator\Utils;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
 {
@@ -43,7 +43,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $path;
 
@@ -53,7 +53,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $tokens;
 
@@ -68,7 +68,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return string|null
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getFullClassName($path)
     {
@@ -89,7 +89,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return string|void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getClassName()
     {
@@ -102,7 +102,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return string|void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getInterfaceName()
     {
@@ -115,7 +115,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return string|void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getNamespace()
     {
@@ -130,7 +130,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getClassRelatedValue($token)
     {
@@ -147,7 +147,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function prepareClassRelatedValue($value)
     {
@@ -169,7 +169,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getSourceCode($path, $namespace, $class, $parent, $dockblock = null)
     {
@@ -206,7 +206,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function replaceNamespace($token)
     {
@@ -221,7 +221,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function replaceClassName($token)
     {
@@ -236,7 +236,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function replaceParentClassName($token)
     {
@@ -251,7 +251,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function replaceDockblock($token)
     {
@@ -285,7 +285,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function replaceClassRelatedToken($type, $token)
     {
@@ -317,7 +317,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function addCodeToClassBody($path, $code)
     {
@@ -344,7 +344,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getBodyTokenData($type)
     {
@@ -374,7 +374,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function reset($path, $prepare = true)
     {
@@ -398,7 +398,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function prepareTokens(array $tokens, $index = null)
     {
@@ -419,7 +419,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function composeTokens(array &$tokens)
     {
@@ -442,7 +442,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function replaceTokens($start, $end, array $tokens)
     {
@@ -457,7 +457,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getClassRelatedTokens($token)
     {
@@ -473,7 +473,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function findTokensByIndexFromOffset(array $index, $offset)
     {
@@ -489,7 +489,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function findTokensByValueFromOffset(array $values, $offset)
     {
@@ -508,7 +508,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function findTokensFromOffset(array $data, $offset, $index)
     {

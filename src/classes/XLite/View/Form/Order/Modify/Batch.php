@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Order\Modify;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Order\Modify;
  * List 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Batch extends \XLite\View\Form\Order\Modify\AModify
 {
@@ -41,7 +41,7 @@ class Batch extends \XLite\View\Form\Order\Modify\AModify
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormName()
     {
@@ -53,7 +53,7 @@ class Batch extends \XLite\View\Form\Order\Modify\AModify
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -65,7 +65,7 @@ class Batch extends \XLite\View\Form\Order\Modify\AModify
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultAction()
     {

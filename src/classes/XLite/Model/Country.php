@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,14 +32,13 @@ namespace XLite\Model;
  * Country 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Country")
  * @Table  (name="countries",
  *      indexes={
  *          @Index (name="country", columns={"country"}),
- *          @Index (name="enabled", columns={"enabled"}),
- *          @Index (name="eu_member", columns={"eu_member"})
+ *          @Index (name="enabled", columns={"enabled"})
  *      }
  * )
  */
@@ -50,7 +49,7 @@ class Country extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="50")
      */
@@ -61,7 +60,7 @@ class Country extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @Column (type="fixedstring", length="2", unique=true)
@@ -73,29 +72,18 @@ class Country extends \XLite\Model\AEntity
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
     protected $enabled = true;
 
     /**
-     * Country is EU memeber or not
-     * 
-     * @var   boolean
-     * @see   ____var_see____
-     * @since 3.0.0
-     *
-     * @Column (type="boolean")
-     */
-    protected $eu_member = false;
-
-    /**
      * States (relation)
      * 
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\State", mappedBy="country", cascade={"all"})
      * @OrderBy   ({"state" = "ASC"})
@@ -110,7 +98,7 @@ class Country extends \XLite\Model\AEntity
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {

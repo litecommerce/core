@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\Model;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\FeaturedProducts\Model;
  *
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  *
  * @Entity
  * @Table (name="featured_products",
@@ -56,7 +56,7 @@ class FeaturedProduct extends \XLite\Model\AEntity
      * @var    integer
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -70,7 +70,7 @@ class FeaturedProduct extends \XLite\Model\AEntity
      * @var    integer
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @Column (type="integer")
      */
@@ -82,7 +82,7 @@ class FeaturedProduct extends \XLite\Model\AEntity
      * @var    \XLite\Model\Product
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="featuredProducts")
      * @JoinColumn (name="product_id", referencedColumnName="product_id")
@@ -95,7 +95,7 @@ class FeaturedProduct extends \XLite\Model\AEntity
      * @var    \XLite\Model\Category
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Category", inversedBy="featuredProducts")
      * @JoinColumn (name="category_id", referencedColumnName="category_id")

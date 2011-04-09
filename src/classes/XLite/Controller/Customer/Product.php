@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * Product
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Product extends \XLite\Controller\Customer\Catalog
 {
@@ -41,7 +41,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $params = array('target', 'product_id');
 
@@ -51,7 +51,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isTitleVisible()
     {
@@ -63,7 +63,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      *
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCategoryId()
     {
@@ -81,7 +81,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDescription()
     {
@@ -93,7 +93,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      *
      * @return \XLite\Model\Product
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getModelObject()
     {
@@ -105,7 +105,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      *
      * @return \XLite\Model\Product
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProduct()
     {
@@ -118,7 +118,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -130,7 +130,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      *
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProductId()
     {
@@ -142,7 +142,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

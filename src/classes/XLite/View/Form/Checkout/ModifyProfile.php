@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Checkout;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Checkout;
  * Register form (Checkout page)
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ModifyProfile extends \XLite\View\Form\Checkout\ACheckout
 {
@@ -41,7 +41,7 @@ class ModifyProfile extends \XLite\View\Form\Checkout\ACheckout
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormName()
     {
@@ -53,7 +53,7 @@ class ModifyProfile extends \XLite\View\Form\Checkout\ACheckout
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -65,7 +65,7 @@ class ModifyProfile extends \XLite\View\Form\Checkout\ACheckout
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultClassName()
     {

@@ -13,7 +13,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 class XLite_Tests_Model_Address extends XLite_Tests_TestCase
@@ -25,7 +25,7 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $addressFields = array(
         'is_billing'   => 2,
@@ -46,7 +46,7 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testCreate()
     {
@@ -207,7 +207,7 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetState()
     {
@@ -241,7 +241,7 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetCountry()
     {
@@ -260,7 +260,7 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetAddressFields()
     {

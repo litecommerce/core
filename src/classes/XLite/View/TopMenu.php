@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,16 +32,52 @@ namespace XLite\View;
  * Top menu widget
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class TopMenu extends \XLite\View\AView
 {
+    /**
+     * Array of targets related to the same menu link
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $relatedTargets = array(
+        'orders_stats' => array(
+            'top_sellers',
+        ),
+        'product_list' => array(
+            'product',
+        ),
+        'categories' => array(
+            'category',
+        ),
+        'users' => array(
+            'profile',
+            'address_book',
+        ),
+        'shipping_methods' => array(
+            'shipping_settings',
+            'shipping_zones',
+            'shipping_rates',
+        ),
+        'payment_methods' => array(
+            'payment_method',
+        ),
+        'db_backup' => array(
+            'db_restore',
+            'pack_distr',
+        ),
+    );
+
+
     /**
      * Register CSS files
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -58,7 +94,7 @@ class TopMenu extends \XLite\View\AView
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -70,7 +106,7 @@ class TopMenu extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -82,10 +118,26 @@ class TopMenu extends \XLite\View\AView
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
         return \XLite\Core\Auth::getInstance()->isLogged();
+    }
+
+    /**
+     * Returns the list of related targets
+     * 
+     * @param string $target Target name
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getRelatedTargets($target)
+    {
+        return isset($this->relatedTargets[$target]) 
+            ? array_merge(array($target), $this->relatedTargets[$target]) 
+            : array($target);
     }
 }

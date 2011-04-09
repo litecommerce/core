@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 require_once __DIR__ . '/ACustomer.php';
@@ -33,7 +33,7 @@ require_once __DIR__ . '/ACustomer.php';
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 {
@@ -43,7 +43,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
 
     public function testStructure()

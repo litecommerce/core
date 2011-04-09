@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * Select address from address book
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class SelectAddress extends \XLite\Controller\Customer\Cart
 {
@@ -41,7 +41,7 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $params = array('target', 'atype');
 
@@ -51,7 +51,7 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -63,7 +63,7 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
      * 
      * @return integer|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCurrentAddressId()
     {
@@ -84,7 +84,7 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -96,7 +96,7 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkAccess()
     {
@@ -110,7 +110,7 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionSelect()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo;
  * Session cell repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class SessionCell extends \XLite\Model\Repo\ARepo
 {
@@ -41,7 +41,7 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = self::TYPE_SERVICE;
 
@@ -55,7 +55,7 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      *
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function insertCell($id, $name, $value)
     {
@@ -75,7 +75,7 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function updateCell(\XLite\Model\SessionCell $cell, $value)
     {
@@ -93,7 +93,7 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function removeCell(\XLite\Model\SessionCell $cell)
     {
@@ -111,7 +111,7 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function processSchema(array $schema, $type)
     {
@@ -138,7 +138,7 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCellIdentifier(\XLite\Model\SessionCell $cell)
     {
@@ -156,7 +156,7 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareDataForNewCell($id, $name, $value)
     {
@@ -174,7 +174,7 @@ class SessionCell extends \XLite\Model\Repo\ARepo
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareDataForExistingCell($value, \XLite\Model\SessionCell $cell = null)
     {

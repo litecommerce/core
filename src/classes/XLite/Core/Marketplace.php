@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * Marketplace 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Marketplace extends \XLite\Base\Singleton
 {
@@ -96,7 +96,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $errorCode;
 
@@ -105,7 +105,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $errorMessage;
 
@@ -117,7 +117,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMarketplaceURL()
     {
@@ -129,7 +129,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCoreVersions()
     {
@@ -146,7 +146,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCorePack($versionMajor, $versionMinor)
     {
@@ -167,7 +167,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCoreHash($versionMajor, $versionMinor)
     {
@@ -184,7 +184,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAddonsList()
     {
@@ -201,7 +201,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAddonPack($moduleID, $key = null)
     {
@@ -222,7 +222,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAddonLicense($moduleID, $key = null)
     {
@@ -243,7 +243,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAddonInfo($moduleID, $key = null)
     {
@@ -265,7 +265,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCommonData()
     {
@@ -285,7 +285,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function sendRequestToMarkeplace($action, array $data = array())
     {
@@ -303,7 +303,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return \XLite\Model\HTTPS
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRequest($action, array $data = array())
     {
@@ -320,7 +320,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMarketplaceActionURL($action)
     {
@@ -334,7 +334,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRequestData($action)
     {
@@ -357,7 +357,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareResponse(\PEAR2\HTTP\Request\Response $response, $action)
     {
@@ -396,7 +396,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function parseResponse(array $data)
     {
@@ -422,7 +422,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkForError()
     {
@@ -434,7 +434,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getError()
     {
@@ -446,7 +446,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function clearError()
     {
@@ -461,7 +461,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setError($code, $message)
     {
@@ -478,7 +478,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getResponseSchemaForGetAddonsAction()
     {
@@ -543,7 +543,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareResponseForGetAddonsAction(array $data)
     {
@@ -619,7 +619,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMethodToGetRequestData($action)
     {
@@ -633,7 +633,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMethodToPrepareResponse($action)
     {
@@ -648,7 +648,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getVersionField($versionMajor, $versionMinor)
     {
@@ -666,7 +666,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getField(array $data, $field)
     {
@@ -681,7 +681,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function validateAgainstSchema(array $data, array $schema)
     {

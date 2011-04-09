@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Zone model
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity (repositoryClass="XLite\Model\Repo\Zone")
  * @Table  (name="zones",
@@ -49,7 +49,7 @@ class Zone extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -62,7 +62,7 @@ class Zone extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="64")
      */
@@ -73,7 +73,7 @@ class Zone extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
@@ -84,7 +84,7 @@ class Zone extends \XLite\Model\AEntity
      * 
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\ZoneElement", mappedBy="zone", cascade={"all"})
      */
@@ -95,7 +95,7 @@ class Zone extends \XLite\Model\AEntity
      * 
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Shipping\Markup", mappedBy="zone", cascade={"all"})
      */
@@ -110,7 +110,7 @@ class Zone extends \XLite\Model\AEntity
      *  
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     static protected function sortStates($a, $b)
     {
@@ -141,7 +141,7 @@ class Zone extends \XLite\Model\AEntity
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -158,7 +158,7 @@ class Zone extends \XLite\Model\AEntity
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getZoneCountries($excluded = false)
     {
@@ -190,7 +190,7 @@ class Zone extends \XLite\Model\AEntity
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getZoneStates($excluded = false)
     {
@@ -222,7 +222,7 @@ class Zone extends \XLite\Model\AEntity
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getZoneCities()
     {
@@ -234,7 +234,7 @@ class Zone extends \XLite\Model\AEntity
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getZoneZipCodes()
     {
@@ -246,7 +246,7 @@ class Zone extends \XLite\Model\AEntity
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getZoneAddresses()
     {
@@ -258,7 +258,7 @@ class Zone extends \XLite\Model\AEntity
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function hasZoneElements()
     {
@@ -272,7 +272,7 @@ class Zone extends \XLite\Model\AEntity
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getElementsByType($elementType)
     {
@@ -297,7 +297,7 @@ class Zone extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getZoneWeight($address)
     {
@@ -345,7 +345,7 @@ class Zone extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkZoneCountries($address, $elements)
     {
@@ -362,7 +362,7 @@ class Zone extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkZoneStates($address, $elements)
     {
@@ -382,7 +382,7 @@ class Zone extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkZoneZipCodes($address, $elements)
     {
@@ -401,7 +401,7 @@ class Zone extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkZoneCities($address, $elements)
     {
@@ -420,7 +420,7 @@ class Zone extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkZoneAddresses($address, $elements)
     {
@@ -439,7 +439,7 @@ class Zone extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkMasks($value, $masksList)
     {

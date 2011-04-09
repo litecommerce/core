@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\DataSet\Transport\Order;
@@ -32,7 +32,7 @@ namespace XLite\DataSet\Transport\Order;
  * Surcharge info
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Surcharge extends \XLite\DataSet\Transport\ATransport
 {
@@ -41,7 +41,7 @@ class Surcharge extends \XLite\DataSet\Transport\ATransport
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineKeys()
     {

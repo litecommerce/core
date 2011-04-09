@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Product\Details\Customer;
@@ -32,7 +32,7 @@ namespace XLite\View\Product\Details\Customer;
  * Image
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="product.details.page.image.photo", weight="10")
  * @ListChild (list="product.details.quicklook.image", weight="10")
@@ -62,7 +62,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      *
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $isZoom;
 
@@ -72,7 +72,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCommonFiles()
     {
@@ -88,7 +88,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -105,7 +105,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getZoomAdjustX()
     {
@@ -120,7 +120,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -132,7 +132,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTemplate()
     {
@@ -167,7 +167,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function hasZoomImage()
     {
@@ -195,7 +195,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getZoomImageURL()
     {
@@ -207,7 +207,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      *
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getZoomWidth()
     {
@@ -219,7 +219,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getWidgetMaxWidth()
     {
@@ -233,7 +233,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getWidgetMaxHeight()
     {
@@ -257,7 +257,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getJSData()
     {

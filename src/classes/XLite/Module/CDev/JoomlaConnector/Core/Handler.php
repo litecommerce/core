@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\JoomlaConnector\Core;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\JoomlaConnector\Core;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class Handler extends \XLite\Core\Handler implements \XLite\Base\IDecorator
 {
@@ -46,7 +46,7 @@ abstract class Handler extends \XLite\Core\Handler implements \XLite\Base\IDecor
      *
      * @return string
      * @access public
-     * @since  3.0
+     * @since  1.0.0
      */
     protected function getJoomlaURL($target, $action = '', array $params = array())
     {
@@ -64,7 +64,7 @@ abstract class Handler extends \XLite\Core\Handler implements \XLite\Base\IDecor
      *
      * @return string
      * @access public
-     * @since  3.0
+     * @since  1.0.0
      */
     public function buildURL($target = '', $action = '', array $params = array())
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\LanguagesModify;
@@ -32,7 +32,7 @@ namespace XLite\View\LanguagesModify;
  * Confirm language deletion dialog
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ConfirmDeletion extends \XLite\View\AView
 {
@@ -47,7 +47,7 @@ class ConfirmDeletion extends \XLite\View\AView
      * 
      * @return \XLite\Model\Language|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getConfirmLanguage()
     {
@@ -61,7 +61,7 @@ class ConfirmDeletion extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -91,7 +91,7 @@ class ConfirmDeletion extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Sort;
@@ -34,7 +34,7 @@ namespace XLite\View\Sort;
  * Abstract sort widget 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ASort extends \XLite\View\AView
 {
@@ -52,7 +52,7 @@ abstract class ASort extends \XLite\View\AView
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFormParams()
     {
@@ -70,7 +70,7 @@ abstract class ASort extends \XLite\View\AView
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isSortCriterionSelected($key)
     {
@@ -84,7 +84,7 @@ abstract class ASort extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isSortOrderAsc()
     {
@@ -98,7 +98,7 @@ abstract class ASort extends \XLite\View\AView
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSortOrderURL()
     {
@@ -129,7 +129,7 @@ abstract class ASort extends \XLite\View\AView
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSortOrderLinkClassName()
     {
@@ -141,7 +141,7 @@ abstract class ASort extends \XLite\View\AView
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -157,7 +157,7 @@ abstract class ASort extends \XLite\View\AView
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -174,7 +174,7 @@ abstract class ASort extends \XLite\View\AView
      *                               
      * @return string                
      * @see    ____func_see____
-     * @since  3.0.0                 
+     * @since  1.0.0
      */                              
     protected function getDefaultTemplate()
     {
@@ -204,7 +204,7 @@ abstract class ASort extends \XLite\View\AView
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

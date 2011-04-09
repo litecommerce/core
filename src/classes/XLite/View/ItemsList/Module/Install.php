@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList\Module;
@@ -32,7 +32,7 @@ namespace XLite\View\ItemsList\Module;
  * Addons search and installation widget
  *
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Install extends \XLite\View\ItemsList\Module\AModule
 {
@@ -59,7 +59,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $sortOption = null;
 
@@ -68,7 +68,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $sortOptions = null;
 
@@ -77,7 +77,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -92,7 +92,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getSearchParams()
     {
@@ -109,7 +109,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getSortOptions()
     {
@@ -137,7 +137,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getSortOption()
     {
@@ -165,7 +165,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCommonFiles()
     {
@@ -182,7 +182,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -202,7 +202,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -227,7 +227,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -244,7 +244,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCommonParams()
     {
@@ -260,7 +260,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -272,7 +272,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -284,7 +284,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageBodyDir()
     {
@@ -296,7 +296,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultModes()
     {
@@ -313,7 +313,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSortByModeDefault()
     {
@@ -325,7 +325,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSortOrder()
     {
@@ -337,7 +337,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -353,7 +353,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function canInstall(\XLite\Model\Module $module)
     {
@@ -369,7 +369,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function canPurchase(\XLite\Model\Module $module)
     {

@@ -13,7 +13,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
@@ -269,7 +269,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setUp()
     {
@@ -290,7 +290,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function tearDown()
     {
@@ -306,7 +306,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testSearch()
     {
@@ -363,7 +363,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindByLogin()
     {
@@ -386,7 +386,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindByLoginPassword()
     {
@@ -423,7 +423,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindRecentAdmins()
     {
@@ -443,7 +443,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindUserWithSameLogin()
     {
@@ -473,7 +473,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindCountOfAdminAccounts()
     {
