@@ -9,13 +9,11 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- *
- * @ListChild (list="itemsList.module.manage.columns", weight="30")
- * @ListChild (list="itemsList.module.install.columns", weight="30")
+ * 
+ * @ListChild (list="itemsList.module.manage.sections", weight="200")
  *}
-<td class="icon">
-  <div class="icon-container">
-    {displayNestedViewListContent(#icon#,_ARRAY_(#module#^module))}
- </div>
-</td>
 
+<div style="padding: 10px; float: left;" class="tags">
+  <span>Tags:</span>
+  <span FOREACH="getTags(),tag,label"><a href="#{tag}">{t(label)}</a></span>
+</div>
