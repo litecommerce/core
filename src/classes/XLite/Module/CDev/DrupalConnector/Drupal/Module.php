@@ -341,4 +341,24 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             $options['external'] = true;
         }
     }
+
+    /**
+     * Initialize drupal_root_url option 
+     * 
+     * @param string $url Drupal base URL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setDrupalRootURL($url)
+    {
+         \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            array(
+                'name'     => 'drupal_root_url',
+                'category' => 'CDev\\DrupalConnector',
+                'value'    => $url,
+            )
+        );
+    }
 }
