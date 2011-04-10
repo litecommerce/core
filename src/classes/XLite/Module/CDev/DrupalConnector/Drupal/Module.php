@@ -43,6 +43,11 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     const LANDING_LINK_PATH = 'admin/lc_admin_area';
 
+    /**
+     * Drupal page URL user come from
+     */
+    const PARAM_DRUPAL_RETURN_URL = 'drupalReturnURL';
+
 
     /**
      * List of registered portals 
@@ -86,6 +91,8 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         if (\XLite\Core\Auth::getInstance()->isAdmin()) {
             $query .= '?' . \XLite\Core\Session::getInstance()->getName();
             $query .= '=' . \XLite\Core\Session::getInstance()->getId();
+            $query .= '&' . self::PARAM_DRUPAL_RETURN_URL;
+            $query .= '=' . urlencode(\Includes\Utils\URLManager::getCurrentURL());
         }
 
         return $query;

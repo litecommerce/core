@@ -191,7 +191,7 @@ abstract class AForm extends \XLite\View\AView
         $index = \XLite\Controller\AController::RETURN_URL;
 
         if (!isset($params[$index])) {
-            $params[$index] = \Includes\Utils\URLManager::getSelfURL();
+            $params[$index] = \Includes\Utils\URLManager::getSelfURI();
         }
     }
 

@@ -116,7 +116,7 @@ class Operator extends AUtils
      */
     public static function refresh()
     {
-        static::redirect(\Includes\Utils\URLManager::getSelfURL());
+        static::redirect(\Includes\Utils\URLManager::getSelfURI());
     }
 
     /**
