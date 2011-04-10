@@ -138,16 +138,32 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function canEnable(\XLite\Model\Module $module)
     {
-        $result = $this->isVersionValid($module);
+        $result = $this->isModuleCompatible($module);
 
-        if ($result && ($dependencies = $module->getDependencies())) {
-            $result = ! (bool) \Includes\Utils\ArrayManager::filterByKeys(
-                $dependencies,
-                array_keys(\Includes\Decorator\Utils\ModulesManager::getActiveModules())
-            );
+        if ($result) {
+            $dependencies = $module->getDependencies();
+
+            if ($dependencies) {
+                $modules = array_keys(\Includes\Decorator\Utils\ModulesManager::getActiveModules());
+                $result  = ! (bool) array_diff($dependencies, $modules);
+            }
         }
 
         return $result;
+    }
+
+    /**
+     * Check if the module can be disabled
+     *
+     * @param \XLite\Model\Module $module Module
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function canDisable(\XLite\Model\Module $module)
+    {
+        return ! (bool) $module->getDependentModules();
     }
 
     /**
@@ -272,20 +288,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
         $result = $this->getModuleForUpdate($module) ?: $module;
 
         return \Includes\Utils\Converter::composeVersion($result->getMajorVersion(), $result->getMinorVersion());
-    }
-
-    /**
-     * Check if module has a correct version
-     *
-     * @param \XLite\Model\Module $module Module to check
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isVersionValid(\XLite\Model\Module $module)
-    {
-        return \XLite::getInstance()->checkVersion($module->getMajorVersion(), '=');
     }
 
     // }}}

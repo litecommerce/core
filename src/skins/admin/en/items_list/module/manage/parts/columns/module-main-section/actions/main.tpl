@@ -14,9 +14,15 @@
  *}
 
 {if:module.getEnabled()}
-  <a href="{buildURL(#modules#,#disable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('disable', '{module.getModuleId()}');">{t(#Disable#)}</a>
+
+  <span IF="{!canDisable(module)}" class="disabled">{t(#Disable#)}</span>
+  <a IF="{canDisable(module)}" href="{buildURL(#modules#,#disable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('disable', '{module.getModuleId()}');">{t(#Disable#)}</a>
+
   <a IF="{module.callModuleMethod(#showSettingsForm#)}" href="{module.getSettingsForm()}">{t(#Settings#)}</a>
+
 {else:}
+
   <span IF="{!canEnable(module)}" class="disabled">{t(#Enable#)}</span>
   <a IF="{canEnable(module)}" href="{buildURL(#modules#,#enable#,_ARRAY_(#moduleId#^module.getModuleId()))}" onclick="javascript: return confirmNote('enable', '{module.getModuleId()}');">{t(#Enable#)}</a>
+
 {end:}

@@ -164,6 +164,9 @@ $enabledModules['Test'] = $enabledModules['Test1'] = array(
     'Module4',
     'Module5',
     'Module6',
+    'Module7',
+    'Module8',
+    'Module9',
 );
 
 if (!R_INSTALL_STANDALONE) {

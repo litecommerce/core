@@ -406,19 +406,42 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * Get list of dependent modules as Doctrine entities
+     * Get list of dependency modules as Doctrine entities
      * 
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getDependentModules()
+    public function getDependencyModules()
     {
         $result = array();
 
         foreach ($this->getDependencies() as $class) {
             $result[$class] = $this->getRepository()
                 ->findOneBy(array_combine(array('author', 'name'), explode('\\', $class)));
+        }
+
+        return array_filter($result);
+    }
+
+    /**
+     * Get list of dependent modules as Doctrine entities
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getDependentModules()
+    {
+        $result  = array();
+        $current = \Includes\Decorator\ADecorator::getModulesGraph()->find($this->getActualName());
+
+        if ($current) {
+            foreach ($current->getChildren() as $node) {
+                $class = $node->getActualName();
+                $result[$class] = $this->getRepository()
+                    ->findOneBy(array_combine(array('author', 'name'), explode('\\', $class)));
+            }
         }
 
         return array_filter($result);

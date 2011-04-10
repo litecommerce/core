@@ -95,10 +95,9 @@ class ArrayManager extends AUtils
      */
     public static function filterByKeys(array $data, array $keys, $invert = false)
     {
-        return call_user_func_array(
-            $invert ? 'array_diff_key' : 'array_intersect_key',
-            array($data, array_fill_keys($keys, true))
-        );
+        $method = $invert ? 'array_diff_key' : 'array_intersect_key';
+
+        return $method($data, array_fill_keys($keys, true));
     }
 
     /**

@@ -18,7 +18,7 @@
   <div IF="module.getDependencies()" class="note dependencies">
     {t(#The following add-on(s) must be enabled:#)}<br /><br />
     <ul>
-      <li FOREACH="module.getDependentModules(),depend">
+      <li FOREACH="module.getDependencyModules(),depend">
         <a href="#{depend.getName()}">{depend.getModuleName()} ({t(#by#)} {depend.getAuthorName()})</a>
         [
           <span IF="depend.getEnabled()" class="good">{t(#enabled#)}</span>
