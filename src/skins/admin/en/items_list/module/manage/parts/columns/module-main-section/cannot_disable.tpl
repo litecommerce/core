@@ -10,14 +10,17 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="itemsList.module.manage.columns.module-main-section", weight="1000")
+ * @ListChild (list="itemsList.module.manage.columns.module-main-section", weight="30")
  *}
 
-<script type="text/javascript">
-  depends[{module.getModuleId()}] = [];
-  {foreach:module.getDependencyModules(),k,m}
-    {if:m.getEnabled()}
-      depends[{module.getModuleId()}][{k}] = '{m.getModuleName()} ({t(#by#)} {m.getAuthorName()})';
-    {end:}
-  {end:}
-</script>
+<div IF="!canDisable(module)" class="note dependencies">
+
+  {t(#Can't be disabled. The module is required by:#)}
+
+  <ul>
+    <li FOREACH="module.getDependentModules(),depend">
+      <a href="#{depend.getName()}">{depend.getModuleName()} ({t(#by#)} {depend.getAuthorName()})</a>
+    </li>
+  </ul>
+
+</div>
