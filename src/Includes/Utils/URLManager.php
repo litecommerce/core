@@ -126,7 +126,7 @@ abstract class URLManager extends \Includes\Utils\AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getCurrentURL()
+    public static function getCurrentURL()
     {
         return (\XLite\Core\Request::getInstance()->isHTTPS() ? 'https' : 'http')
             . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
