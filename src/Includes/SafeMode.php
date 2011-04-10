@@ -30,6 +30,8 @@ namespace Includes;
 
 /**
  * Safe Mode
+ *
+ * :TODO: reduce numder of public methods
  * 
  * @see   ____class_see____
  * @since 1.0.0
@@ -39,7 +41,6 @@ abstract class SafeMode
     /**
      * Request params
      */
-
     const PARAM_SAFE_MODE  = 'safe_mode';
     const PARAM_ACCESS_KEY = 'access_key';
     const PARAM_SOFT_RESET = 'soft_reset';
@@ -53,16 +54,6 @@ abstract class SafeMode
      * Modules list file name
      */
     const UNSAFE_MODULES_FILE_NAME = '.decorator.unsafe_modules.ini.php';
-
-
-    /**
-     * Unsafe modules list file name
-     * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected static $unsafeModulesIniFile;
 
 
     /**
@@ -412,47 +403,16 @@ abstract class SafeMode
     }
 
     /**
-     * SQL string condition for unsafe modules
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getUnsafeModulesSQLConditionString()
-    {
-        $cnd = '';
-        $unsafeModules = static::getUnsafeModulesList();
-
-        if (!empty($unsafeModules)) {
-
-            foreach ($unsafeModules as $author => $names) {
-                $disableCondition[] = 'author = \'' . $author 
-                    . '\' AND name IN (\'' . implode('\',\'', array_keys($names)) . '\')';
-            }
-
-            $cnd = '(' . implode(') OR (', $disableCondition) . ')';
-        }
-
-        return $cnd;
-    }
-
-
-    /**
      * Get modules list file path 
      * 
-     * @return string|void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function getUnsafeModulesFilePath()
     {
-        if (!isset(static::$unsafeModulesIniFile)) {
-            static::$unsafeModulesIniFile = LC_VAR_DIR . static::UNSAFE_MODULES_FILE_NAME;
-        }
-
-        return static::$unsafeModulesIniFile;
+        return LC_VAR_DIR . self::UNSAFE_MODULES_FILE_NAME;
     }
 
     // }}}
-
 }

@@ -26,7 +26,7 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\Taxes;
+namespace XLite\Module\Test1\Module4;
 
 /**
  * Main 
@@ -46,7 +46,20 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getAuthorName()
     {
-        return 'Creative Development LLC';
+        return 'Test author 1';
+    }
+
+    /**
+     * Module name
+     *
+     * @var    string
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getModuleName()
+    {
+        return 'Test module 4';
     }
 
     /**
@@ -62,28 +75,30 @@ abstract class Main extends \XLite\Module\AModule
     }
 
     /**
-     * Module name
-     *
-     * @var    string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getModuleName()
-    {
-        return 'Taxes';
-    }
-
-    /**
      * Module description
-     * 
+     *
      * @return string
      * @access public
-     * @see    ____func_see____
      * @since  1.0.0
      */
     public static function getDescription()
     {
-        return 'This module enables taxes';
+        return 'Test module 4 description';
+    }
+
+    /**
+     * Return module dependencies
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getDependencies()
+    {
+        $list = parent::getDependencies();
+        $list[] = 'Test1\Module1';
+
+        return $list;
     }
 }

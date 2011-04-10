@@ -26,7 +26,7 @@
  * @since     1.0.0
  */
 
-namespace XLite\Module\CDev\Taxes;
+namespace XLite\Module\Test1\Module2;
 
 /**
  * Main 
@@ -46,7 +46,20 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getAuthorName()
     {
-        return 'Creative Development LLC';
+        return 'Test author 1';
+    }
+
+    /**
+     * Module name
+     *
+     * @var    string
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getModuleName()
+    {
+        return 'Test module 2';
     }
 
     /**
@@ -62,28 +75,27 @@ abstract class Main extends \XLite\Module\AModule
     }
 
     /**
-     * Module name
+     * Get module major version
      *
-     * @var    string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getModuleName()
-    {
-        return 'Taxes';
-    }
-
-    /**
-     * Module description
-     * 
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
+    public static function getMajorVersion()
+    {
+        return '2.7';
+    }
+
+    /**
+     * Module description
+     *
+     * @return string
+     * @access public
+     * @since  1.0.0
+     */
     public static function getDescription()
     {
-        return 'This module enables taxes';
+        return 'Test module 2 description';
     }
 }

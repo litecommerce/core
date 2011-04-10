@@ -171,18 +171,20 @@ class Operator extends AUtils
 
     /**
      * Check if class is already declared.
-     * NOTE: this function do not use autoload
+     *
+     * :NOTE: this function does not use autoloader
      * 
-     * @param string $name class name
+     * @param string $name Class name
      *  
-     * @return void
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
     public static function checkIfClassExists($name)
     {
-        return class_exists($name, false) 
-            || \Includes\Utils\FileManager::isFileReadable(\Includes\Utils\Converter::getClassFile($name));
+        $file = \Includes\Autoloader::getLCAutoloadDir() . \Includes\Utils\Converter::getClassFile($name);
+
+        return class_exists($name, false) || \Includes\Utils\FileManager::isFileReadable($file);
     }
 }

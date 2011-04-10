@@ -10,12 +10,10 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="itemsList.module.manage.columns", weight="30")
- * @ListChild (list="itemsList.module.install.columns", weight="30")
+ * @ListChild (list="itemsList.module.manage.columns.icon", weight="300")
+ * @ListChild (list="itemsList.module.install.columns.icon", weight="300")
  *}
-<td class="icon">
-  <div class="icon-container">
-    {displayNestedViewListContent(#icon#,_ARRAY_(#module#^module))}
- </div>
-</td>
 
+<div IF="!module.getEnabled()" class="addon-icon addon-disabled-note">
+  {t(#Disabled#)}
+</div>
