@@ -15,14 +15,13 @@
 
 <div class="modules-filters">
 
-  <div class="activity">
-    <tbody FOREACH="getFilters(),fltr,desc">
-      <a IF="fltr" href="{buildURL(#modules#,##,_ARRAY_(#filter#^fltr))}" class="upgradable{if:fltr=getFilter()} current{end:}">{t(desc)}</a>
-      <a IF="!fltr" href="{buildURL(#modules#)}" class="upgradable{if:fltr=getFilter()} current{end:}">{t(desc)}</a>
-      <span>({getModulesCount(fltr)})</span>
-    </tbody>
-  </div>
+  <ul class="activity">
+    <li FOREACH="getFilters(),filterId,description" class="{getFilterClasses(filterId)}">
+      <a IF="filterId" href="{buildURL(#modules#,##,_ARRAY_(#filter#^filterId,#tag#^getTag()))}">{t(description)}</a>
+      <a IF="!filterId" href="{buildURL(#modules#)}">{t(description)}</a>
+      <span>({getModulesCount(filterId)})</span>
+    </li>
+  </ul>
 
   <div class="clear"></div>
-
 </div>

@@ -66,7 +66,7 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
     {
         $list = parent::getCSSFiles();
 
-        $list[] = $this->getDir() . LC_DS . 'css' . LC_DS . 'style.css';
+        $list[] = $this->getDir() . '/css/style.css';
 
         return $list;
     }   
@@ -93,6 +93,6 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getDir()
     {
-        return 'modules_manager' . LC_DS . 'enter_key';
+        return 'modules_manager/enter_key';
     }
 }

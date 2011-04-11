@@ -75,7 +75,7 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
     {
         $list = parent::getCSSFiles();
 
-        $list[] = $this->getDir() . LC_DS . 'style.css';
+        $list[] = $this->getDir() . '/css/style.css';
 
         return $list;
     }
@@ -91,7 +91,7 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
     {
         $list = parent::getJSFiles();
 
-        $list[] = $this->getDir() . LC_DS . 'js' . LC_DS . 'switch-button.js';
+        $list[] = $this->getDir() . '/js/switch-button.js';
 
         return $list;
     }
@@ -117,6 +117,6 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'license';
+        return parent::getDir() . '/license';
     }
 }

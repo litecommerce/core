@@ -63,8 +63,25 @@ class Manage extends \XLite\View\ModulesManager\AModulesManager
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-        $list[] = 'modules_manager' . LC_DS . 'common.css';
-        $list[] = $this->getDir() . LC_DS . 'style.css';
+
+        $list[] = 'modules_manager/css/common.css';
+        $list[] = $this->getDir() . '/css/style.css';
+
+        return $list;
+    }
+
+    /**
+     * Register JS files 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = $this->getDir() . '/js/script.js';
 
         return $list;
     }
@@ -90,6 +107,6 @@ class Manage extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'manage';
+        return parent::getDir() . '/manage';
     }
 }

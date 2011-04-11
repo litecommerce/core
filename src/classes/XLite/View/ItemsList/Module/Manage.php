@@ -61,7 +61,22 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-        $list[] = 'modules_manager' . LC_DS . 'common.css';
+
+        return $list;
+    }
+
+    /**
+     * Register JS files
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = $this->getDir() . '/manage/js/script.js'; 
 
         return $list;
     }
@@ -141,7 +156,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     protected function getTags()
     {
         return array(
-            '____ALL____'      => 'All',
+            ''                 => 'All',
             '____PAYMENT____'  => 'Payment',
             '____LAYOUT____'   => 'Layout',
             '____DELIVERY____' => 'Delivery',
@@ -175,11 +190,63 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     {
         $filter = \XLite\Core\Request::getInstance()->filter;
 
-        if (empty($filter) || !in_array($filter, array_keys($this->getFilters()))) {
+        if (
+            empty($filter) 
+            || !in_array($filter, array_keys($this->getFilters()))
+        ) {
             $filter = '';
         }
 
         return $filter;
+    }
+
+    /**
+     * Get current tag
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getTag()
+    {
+        $tag = \XLite\Core\Request::getInstance()->tag;
+
+        if (
+            empty($tag) 
+            || !in_array($tag, array_keys($this->getTags()))
+        ) {
+            $tag = '';
+        }
+
+        return $tag;
+    }
+
+    /**
+     *  Get classes names for filter item
+     * 
+     * @param string $filter Name of filter
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getFilterClasses($filter)
+    {
+        return $filter === $this->getFilter() ? 'current' : '';
+    }
+
+    /**
+     * Get classes names for tag item
+     * 
+     * @param string $tag Name of tag
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getTagClasses($tag)
+    {
+        return $tag === $this->getTag() ? 'current' : '';
     }
 
     /**

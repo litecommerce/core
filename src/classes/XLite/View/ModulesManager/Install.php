@@ -64,8 +64,8 @@ class Install extends \XLite\View\ModulesManager\AModulesManager
     {
         $list = parent::getCSSFiles();
 
-        $list[] = 'modules_manager' . LC_DS . 'common.css';
-        $list[] = $this->getDir() . LC_DS . 'style.css';
+        $list[] = 'modules_manager/css/common.css';
+        $list[] = $this->getDir() . '/css/style.css';
 
         return $list;
     }
