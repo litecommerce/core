@@ -13,7 +13,11 @@
  * @ListChild (list="itemsList.module.manage.sections", weight="200")
  *}
 
-<div style="padding: 10px; float: left;" class="tags">
-  <span>Tags:</span>
-  <span FOREACH="getTags(),tag,label"><a href="#{tag}">{t(label)}</a></span>
+<div class="tags">
+  <div class="tags-title">{t(#Tags#)}</div>
+  <ul class="tags-list">
+    <li FOREACH="getTags(),tagId,label" class="{getTagClasses(tagId)}">
+      <a href="{buildURL(#modules#,##,_ARRAY_(#tag#^tagId,#filter#^getFilter()))}">{t(label)}</a>
+    </li>
+  </ul>
 </div>
