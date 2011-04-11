@@ -35,7 +35,7 @@ namespace XLite\Module\CDev\Taxes\Model;
  * @since 1.0.0
  *
  * @Entity
- * @Table (name="taxes")
+ * @Table  (name="taxes")
  */
 class Tax extends \XLite\Model\Base\I18n
 {
@@ -105,13 +105,13 @@ class Tax extends \XLite\Model\Base\I18n
      * Get filtered rates by zones and membership
      * 
      * @param array                  $zones      Zone id list
-     * @param \XLite\Model\Mebership $membership Membership
+     * @param \XLite\Model\Membership $membership Membership
      *  
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getFilteredRates(array $zones, \XLite\Model\Mebership $membership)
+    public function getFilteredRates(array $zones, \XLite\Model\Membership $membership)
     {
         $rates = array();
 
@@ -123,5 +123,4 @@ class Tax extends \XLite\Model\Base\I18n
 
         return $rates; 
     }
-
 }

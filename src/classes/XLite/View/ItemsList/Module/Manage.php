@@ -130,6 +130,26 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     }
 
     /**
+     * Return tags array
+     *
+     * :TODO: actualize keys
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getTags()
+    {
+        return array(
+            '____ALL____'      => 'All',
+            '____PAYMENT____'  => 'Payment',
+            '____LAYOUT____'   => 'Layout',
+            '____DELIVERY____' => 'Delivery',
+            '____CMS____'      => 'CMS',
+        );
+    }
+
+    /**
      * Return filters array
      *
      * @return array
@@ -139,9 +159,8 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     protected function getFilters()
     {
         return array(
-            ''                                     => 'All',
-            \XLite\Model\Repo\Module::P_INACTIVE   => 'Inactive',
-            \XLite\Model\Repo\Module::P_UPGRADABLE => 'Upgradable',
+            ''                                   => 'All',
+            \XLite\Model\Repo\Module::P_INACTIVE => 'Inactive',
         );
     }
 

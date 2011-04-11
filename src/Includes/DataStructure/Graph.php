@@ -205,6 +205,43 @@ class Graph
         }
     }
 
+    /**
+     * Find all nodes by key
+     * 
+     * @param string $key Key to search
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function findAll($key)
+    {
+        $searchResult = array();
+
+        $this->walkThrough(
+            function (\Includes\DataStructure\Graph $node) use ($key, &$searchResult) {
+                if ($node->getKey() == $key) {
+                    $searchResult[] = $node;
+                }
+            }
+        );
+
+        return $searchResult;
+    }
+
+    /**
+     * Find node by key
+     *
+     * @param string $key Key to search
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function find($key)
+    {
+        return \Includes\Utils\ArrayManager::getIndex($this->findAll($key), 0, true);
+    }
 
     // ------------------------------ Integrity check -
 

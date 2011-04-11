@@ -11,7 +11,6 @@
  * @since     1.0.0
  *
  * @ListChild (list="itemsList.module.manage.columns.module-main-section", weight="20")
- * @ListChild (list="itemsList.module.install.columns.module-main-section", weight="20")
  *}
 
 <div class="version">{t(#Version#)}: {module.getVersion()}</div>

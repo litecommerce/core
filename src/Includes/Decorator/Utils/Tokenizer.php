@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Decorator
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace Includes\Decorator\Utils;
@@ -31,9 +31,8 @@ namespace Includes\Decorator\Utils;
 /**
  * Tokenizer 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
 {
@@ -499,7 +498,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
     /**
      * Search for certain tokens from position of some other one
      *
-     * WARNING: do not modify this method until you really know what you're doing
+     * :WARNING: do not modify this method until you really know what you're doing
      *
      * @param array   $data   List of token indexes/values to search
      * @param integer $offset Index of the "offset" token

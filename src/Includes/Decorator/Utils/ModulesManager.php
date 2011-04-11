@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Includes
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace Includes\Decorator\Utils;
@@ -37,9 +37,6 @@ define('LC_DS_OPTIONAL', '(' . LC_DS_QUOTED . '|$)');
 /**
  * ModulesManager 
  *
- * :FIXME: must be completely refactored
- * :TODO:  move it into the Includes/Utils
- * 
  * @see   ____class_see____
  * @since 1.0.0
  */
@@ -59,39 +56,354 @@ abstract class ModulesManager extends AUtils
     /**
      * List of active modules
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected static $activeModules;
 
     /**
-     * Modules list file name
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
-     */
-    protected static $modulesINIFile;
-
-    /**
      * Data for class tree walker
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected static $quotedPaths;
 
+
+    // {{{ Name convertion routines
+
+    /**
+     * Get class name by module name
+     *
+     * @param string $moduleName module actual name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getClassNameByModuleName($moduleName)
+    {
+        return '\XLite\Module\\' . $moduleName . '\Main';
+    }
+
+    /**
+     * Retrieve module name from class name
+     *
+     * @param string $className class name to parse
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getModuleNameByClassName($className)
+    {
+        return preg_match(self::CLASS_NAME_PATTERN, $className, $matches) ? $matches[1] : null;
+    }
+
+    /**
+     * Compose module actual name
+     *
+     * @param string $author Module author
+     * @param string $name   Module name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getActualName($author, $name)
+    {
+        return $author . '\\' . $name;
+    }
+
+    /**
+     * Compose module class name by module author and name
+     *
+     * @param string $author Module author
+     * @param string $name   Module name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getClassNameByAuthorAndName($author, $name)
+    {
+        return static::getClassNameByModuleName(static::getActualName($author, $name));
+    }
+
+    // }}}
+
+    // {{{ Methods to access installed module main class
+
+     /**
+     * Initialize active modules
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function initModules()
+    {
+        foreach (static::getActiveModules() as $module => $data) {
+            static::callModuleMethod($module, 'init');
+        }
+    }
+
+    /**
+     * Method to access module main clas methods
+     *
+     * @param string $module Module actual name
+     * @param string $method Method to call
+     * @param array  $args   Call arguments OPTIONAL
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function callModuleMethod($module, $method, array $args = array())
+    {
+        $result = null;
+        $class  = static::getClassNameByModuleName($module);
+
+        if (\Includes\Utils\Operator::checkIfClassExists($class)) {
+            $result = call_user_func_array(array(static::getClassNameByModuleName($module), $method), $args);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get module info from it's main class
+     * 
+     * @param string $author         Module author
+     * @param string $name           Module name
+     * @param array  $additionalData Data to add to result
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getModuleDataFromClass($author, $name, array $additionalData = array())
+    {
+        $module = static::getActualName($author, $name);
+
+        $result = array(
+            'name'          => $name,
+            'author'        => $author,
+            'enabled'       => static::isActiveModule($module),
+            'installed'     => true,
+            'dataInstalled' => true,
+            'date'          => time(),
+            'marketplaceID' => '',
+            'majorVersion'  => static::callModuleMethod($module, 'getMajorVersion'),
+            'minorVersion'  => static::callModuleMethod($module, 'getMinorVersion'),
+            'moduleName'    => static::callModuleMethod($module, 'getModuleName'),
+            'authorName'    => static::callModuleMethod($module, 'getAuthorName'),
+            'description'   => static::callModuleMethod($module, 'getDescription'),
+            'iconURL'       => static::callModuleMethod($module, 'getIconURL'),
+            'pageURL'       => static::callModuleMethod($module, 'getPageURL'),
+            'authorPageURL' => static::callModuleMethod($module, 'getAuthorPageURL'),
+            'dependencies'  => serialize((array) static::callModuleMethod($module, 'getDependencies')),
+            'rating'        => 0,
+            'votes'         => 0,
+            'downloads'     => 0,
+            'price'         => 0.00,
+            'currency'      => 'USD',
+            'revisionDate'  => 0,
+        );
+
+        return array_replace_recursive($result, $additionalData);
+    }
+
+    // }}}
+
+    // {{{ Active modules
+
+    /**
+     * Return list of active modules (or check a single module)
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getActiveModules()
+    {
+        if (!isset(static::$activeModules)) {
+
+            // Fetch active modules from the common list
+            static::$activeModules = \Includes\Utils\ArrayManager::searchAllInArraysArray(
+                static::getModulesList(),
+                'enabled',
+                true
+            );
+
+            // Remove unsupported modules from list
+            static::checkVersions();
+
+            // Remove unsafe modules
+            static::performSafeModeProtection();
+
+            // Remove modules with corrupted dependencies
+            static::correctDependencies();
+        }
+
+        return static::$activeModules;
+    }
+
+    /**
+     * Check if module is active
+     *
+     * @param string|null $moduleName module name
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function isActiveModule($moduleName)
+    {
+        return (bool) \Includes\Utils\ArrayManager::getIndex(static::getActiveModules(), $moduleName, true);
+    }
+
+    /**
+     * Disable modules with non-correct versions
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function checkVersions()
+    {
+        foreach (static::$activeModules as $module => $data) {
+            if (\XLite::getInstance()->checkVersion(static::callModuleMethod($module, 'getMajorVersion'), '!=')) {
+                static::disableModule($module);
+            }
+        }
+    }
+
+    /**
+     * Disable some (or all) modules in SafeMode
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function performSafeModeProtection()
+    {
+        if (\Includes\SafeMode::isSafeModeStarted()) {
+
+            // Get unsafe modules list 
+            $modules = \Includes\SafeMode::isSoftResetRequested() 
+                ? \Includes\SafeMode::getUnsafeModulesList()
+                : array_keys(static::$activeModules);
+
+            // Disable modules
+            array_walk_recursive($modules, array('static', 'disableModule'));
+            \Includes\SafeMode::cleanupIndicator();
+        }
+    }
+
+    /**
+     * Disable modules with incorrect dependencies
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function correctDependencies()
+    {
+        $dependencies = array();
+
+        foreach (static::$activeModules as $module => $data) {
+            $dependencies = array_merge_recursive(
+                $dependencies,
+                array_fill_keys(static::callModuleMethod($module, 'getDependencies'), $module)
+            );
+        }
+
+        $dependencies = array_diff_key($dependencies, static::$activeModules);
+        array_walk_recursive($dependencies, array('static', 'disableModule'));
+    }
+
+    // }}}
+
+    // {{{ Methods to manage module states (installed/enabled)
+
+    /**
+     * Set module enabled fleg fo "false"
+     *
+     * @param string $key module actual name (key)
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function disableModule($key)
+    {
+        if (isset(static::$activeModules[$key])) {
+
+            // Short names
+            $data = static::$activeModules[$key];
+            $path = static::getModulesFilePath();
+
+            // Check if "xlite_modules" table exists
+            if (\Includes\Utils\FileManager::isFileReadable($path)) {
+
+                // Set flag in .ini-file
+                $pattern = '/(\[' . $data['author'] . '\][^\[]+\s*' . $data['name'] . '\s*=)\s*\S+/Ss';
+                \Includes\Utils\FileManager::replace($path, '$1 0', $pattern);
+
+            } else {
+
+                // Set flag in DB
+                $query = 'UPDATE ' . static::getTableName() . ' SET enabled = ? WHERE moduleID = ?';
+                \Includes\Utils\Database::execute($query, array(false, $data['moduleID']));
+            }
+
+            // Remove from local cache
+            unset(static::$activeModules[$key]);
+        }
+    }
+
+    /**
+     * Get modules list file path
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getModulesFilePath()
+    {
+        return LC_VAR_DIR . self::MODULES_FILE_NAME;
+    }
+
+    // }}}
+
+    // {{{ DB-related routines
+
+    /**
+     * Fetch modules list from the database
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function fetchModulesListFromDB()
+    {
+        $field = static::getModuleNameField();
+        $table = static::getTableName();
+
+        return \Includes\Utils\Database::fetchAll(
+            'SELECT ' . $field . $field . $table . '.* FROM ' . $table . ' WHERE installed = ? AND enabled = ?',
+            array(true, true),
+            \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE
+        );
+    }
 
     /**
      * Return name of the table where the module info is stored 
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -104,7 +416,6 @@ abstract class ModulesManager extends AUtils
      * Part of SQL query to fetch composed module name
      * 
      * @return string
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -112,6 +423,228 @@ abstract class ModulesManager extends AUtils
     {
         return 'CONCAT(author,\'\\\\\',name) AS actualName, ';
     }
+
+    // {{{ List of all modules
+
+    /**
+     * Fetch list of active modules from DB
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getModulesList()
+    {
+        $list = array();
+        $path = static::getModulesFilePath();
+
+        if (\Includes\Utils\FileManager::isFileReadable($path)) {
+            foreach (parse_ini_file($path, true) as $author => $data) {
+                foreach ($data as $name => $enabled) {
+                    if ($enabled) {
+                        $list[$author . '\\' . $name] = array(
+                            'actualName' => static::getActualName($author, $name),
+                            'name'       => $name,
+                            'author'     => $author,
+                            'enabled'    => $enabled,
+                            'moduleName' => $name,
+                            'authorName' => $author,
+                        );
+                    }
+                }
+            }
+        } else {
+            $list = static::fetchModulesListFromDB();
+        }
+
+        return $list;
+    }
+
+    // }}}
+
+    // {{{ Modules info manipulations
+
+    /**
+     * Remove file with active modules list
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function removeFile()
+    {
+        \Includes\Utils\FileManager::delete(static::getModulesFilePath());
+    }
+
+    /**
+     * Save modules to file
+     *
+     * @param array $modules Modules array
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function saveModulesToFile(array $modules)
+    {
+        $string = '';
+
+        foreach ($modules as $author => $data) {
+            $string .= '[' . $author . ']' . PHP_EOL;
+            foreach ($data as $name => $enabled) {
+                $string .= $name . ' = ' . ((bool) $enabled) . PHP_EOL;
+            }
+        }
+
+        if ($string) {
+            file_put_contents(static::getModulesFilePath(), '; <' . '?php /*' . PHP_EOL . $string . '; */ ?' . '>');
+        }
+    }
+
+    /**
+     * Write module info to DB
+     *
+     * @param string $author Module author
+     * @param string $name   Module name
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function switchModule($author, $name)
+    {
+        // Short names
+        $condition = ' WHERE author = ? AND name = ?';
+        $table     = static::getTableName();
+        $module    = static::getActualName($author, $name);
+
+        // Versions
+        $majorVersion = static::callModuleMethod($module, 'getMajorVersion');
+        $minorVersion = static::callModuleMethod($module, 'getMinorVersion');
+
+        // Reset exisiting settings
+        $query = 'UPDATE ' . $table . ' SET enabled = ?, installed = ?, dataInstalled = ?' . $condition;
+        \Includes\Utils\Database::execute($query, array(false, false, false, $author, $name));
+
+        // Search for module
+        $query    = 'SELECT moduleID FROM ' . $table . $condition . ' AND majorVersion = ? AND minorVersion = ?';
+        $moduleID = \Includes\Utils\Database::fetchColumn($query, array($author, $name, $majorVersion, $minorVersion));
+
+        // If found in DB
+        if ($moduleID) {
+            $data  = array(static::isActiveModule($module), true, true, $moduleID);
+            $query = 'UPDATE ' . $table . ' SET enabled = ?, installed = ?, dataInstalled = ? WHERE moduleID = ?';
+        } else {
+            $data  = static::getModuleDataFromClass($author, $name);
+            $query = 'REPLACE INTO ' . $table . ' SET ' . implode(' = ?,', array_keys($data)) . ' = ?';
+        }
+
+        // Save changes in DB
+        \Includes\Utils\Database::execute($query, array_values($data));
+    }
+
+    // }}}
+
+    // {{{ Module paths
+
+    /**
+     * Return pattern to check PHP file paths
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getPathPatternForPHP()
+    {
+        return static::getPathPattern(preg_quote(static::getClassesDir(), '/') . '\w+', 'Module', 'php');
+    }
+
+    /**
+     * Return pattern to check .tpl file paths
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getPathPatternForTemplates()
+    {
+        return static::getPathPattern(preg_quote(LC_SKINS_DIR, '/') . '\w+' . LC_DS_QUOTED . '\w+', 'modules', 'tpl');
+    }
+
+    /**
+     * Callback to collect module paths
+     *
+     * @param \Includes\Decorator\DataStructure\Graph\Modules $node Current module node
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getModuleQuotedPathsCallback(\Includes\Decorator\DataStructure\Graph\Modules $node)
+    {
+        static::$quotedPaths[$node->getActualName()] = str_replace('\\', LC_DS_QUOTED, $node->getActualName());
+    }
+
+    /**
+     * Return list of relative module paths
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getModuleQuotedPaths()
+    {
+        if (!isset(static::$quotedPaths)) {
+            static::$quotedPaths = array();
+            static::getModulesGraph()->walkThrough(array(get_called_class(), 'getModuleQuotedPathsCallback'));
+        }
+
+        return static::$quotedPaths;
+    }
+
+    /**
+     * Return pattern to file path againist active modules list
+     *
+     * @param string $rootPath  name of the root directory
+     * @param string $dir       name of the directory with modules
+     * @param string $extension file extension
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getPathPattern($rootPath, $dir, $extension)
+    {
+        $modulePattern = $dir . LC_DS_QUOTED . ($placeholder = '@') . LC_DS_OPTIONAL;
+
+        return '/^' . $rootPath . '(.((?!' . str_replace($placeholder, '\w+', $modulePattern) . ')|'
+            . str_replace($placeholder, '(' . implode('|', static::getModuleQuotedPaths()) . ')', $modulePattern)
+            . '))*\.' . $extension . '$/i';
+    }
+
+    // }}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Get modules list file path 
@@ -121,18 +654,18 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function getModulesFilePath()
+/*    protected static function getModulesFilePath()
     {
-        if (!isset(static::$modulesINIFile)) {
+        if (!isset(static::$modulesIniFile)) {
 
-            static::$modulesINIFile = LC_VAR_DIR . static::MODULES_FILE_NAME;
+            static::$modulesIniFile = LC_VAR_DIR . static::MODULES_FILE_NAME;
 
-            if (!\Includes\Utils\FileManager::isFileReadable(static::$modulesINIFile)) {
-                static::$modulesINIFile = false;
+            if (!\Includes\Utils\FileManager::isFileReadable(static::$modulesIniFile)) {
+                static::$modulesIniFile = false;
             }
         }
 
-        return static::$modulesINIFile;
+        return static::$modulesIniFile;
     }
 
     /**
@@ -143,7 +676,7 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function getModulesList()
+/*    protected static function getModulesList()
     {
         $list = array();
 
@@ -162,29 +695,25 @@ abstract class ModulesManager extends AUtils
             );
             \Includes\SafeMode::cleanupIndicator();
 
-        } 
+        }
+
+        $path = $path = static::getModulesFilePath(); 
         
-        if (
-            !\Includes\SafeMode::isSafeModeStarted()
-            && $path = static::getModulesFilePath()
-        ) {
+        if (!\Includes\SafeMode::isSafeModeStarted() && $path) {
 
             $list = array();
 
-            foreach (parse_ini_file($path, true) as $author => $authors) {
-                foreach ($authors as $name => $enabled) {
-                    if ($enabled) {
-                        $list[$author . '\\' . $name] = array(
-                            'actualName' => $author . '\\' . $name,
-                            'moduleID'   => null,
-                            'name'       => $name,
-                            'author'     => $author,
-                            'enabled'    => 1,
-                            'status'     => 0,
-                            'moduleName' => $name,
-                            'authorName' => $author,
-                        );
-                    }
+            foreach (parse_ini_file($path, true) as $author => $data) {
+                foreach ($data as $name => $enabled) {
+
+                    $list[$author . '\\' . $name] = array(
+                        'actualName' => $author . '\\' . $name,
+                        'name'       => $name,
+                        'author'     => $author,
+                        'enabled'    => $enabled,
+                        'moduleName' => $name,
+                        'authorName' => $author,
+                    );
                 }
             }
 
@@ -192,8 +721,7 @@ abstract class ModulesManager extends AUtils
 
             $list = \Includes\Utils\Database::fetchAll(
                 'SELECT ' . static::getModuleNameField() . static::getModuleNameField()
-                . static::getTableName() . '.* FROM ' . static::getTableName() 
-                . ' WHERE enabled = ? AND installed = ?',
+                . static::getTableName() . '.* FROM ' . static::getTableName() . ' WHERE installed = ?',
                 array(true, true),
                 \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE
             );
@@ -210,7 +738,7 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function getModuleQuotedPaths()
+/*    protected static function getModuleQuotedPaths()
     {
         if (!isset(static::$quotedPaths)) {
             static::$quotedPaths = array();
@@ -230,7 +758,7 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getModuleQuotedPathsCallback(\Includes\Decorator\DataStructure\Graph\Modules $node)
+/*    public static function getModuleQuotedPathsCallback(\Includes\Decorator\DataStructure\Graph\Modules $node)
     {
         static::$quotedPaths[$node->getActualName()] = str_replace('\\', LC_DS_QUOTED, $node->getActualName());
     }
@@ -247,7 +775,7 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function getPathPattern($rootPath, $dir, $extension)
+/*    protected static function getPathPattern($rootPath, $dir, $extension)
     {
         $modulePattern = $dir . LC_DS_QUOTED . ($placeholder = '@') . LC_DS_OPTIONAL;
 
@@ -264,7 +792,7 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function correctDependencies()
+/*    protected static function correctDependencies()
     {
         $dependencies = array();
 
@@ -275,9 +803,8 @@ abstract class ModulesManager extends AUtils
             );
         }
 
-        foreach (array_diff_key($dependencies, array_keys(static::$activeModules)) as $module) {
-            static::disableModule($module);
-        }
+        $dependencies = array_diff_key($dependencies, static::$activeModules);
+        array_walk_recursive($dependencies, array('static', 'disableModule'));
     }
 
     /**
@@ -288,7 +815,7 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function checkVersions()
+/*    protected static function checkVersions()
     {
         foreach (static::$activeModules as $module => $data) {
             if (\XLite::getInstance()->checkVersion(static::callModuleMethod($module, 'getMajorVersion'), '!=')) {
@@ -309,8 +836,13 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function callModuleMethod($module, $method, array $args = array())
+/*    protected static function callModuleMethod($module, $method, array $args = array())
     {
+        $class = static::getClassNameByModuleName($module);
+
+        if (\Includes\Utils\Operator::checkIfClassExists($class)) {
+        }
+
         return call_user_func_array(array(static::getClassNameByModuleName($module), $method), $args);
     }
 
@@ -324,7 +856,7 @@ abstract class ModulesManager extends AUtils
      * @access public
      * @since  1.0.0
      */
-    public static function getClassNameByModuleName($moduleName)
+/*    public static function getClassNameByModuleName($moduleName)
     {
         return '\XLite\Module\\' . $moduleName . '\Main';
     }
@@ -338,7 +870,7 @@ abstract class ModulesManager extends AUtils
      * @access public
      * @since  1.0.0
      */
-    public static function getModuleNameByClassName($className)
+/*    public static function getModuleNameByClassName($className)
     {
         return preg_match(self::CLASS_NAME_PATTERN, $className, $matches) ? $matches[1] : null;
     }
@@ -353,10 +885,14 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getActiveModules($moduleName = null)
+/*    public static function getActiveModules($moduleName = null)
     {
         if (!isset(static::$activeModules)) {
-            static::$activeModules = static::getModulesList();
+            static::$activeModules = \Includes\Utils\ArrayManager::searchAllInArraysArray(
+                static::getModulesList(),
+                'enabled',
+                true
+            );
             static::checkVersions();
             static::correctDependencies();
         }
@@ -374,7 +910,7 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function isActiveModule($moduleName)
+/*    public static function isActiveModule($moduleName)
     {
         return !isset($moduleName) || (bool) static::getActiveModules($moduleName);
     }
@@ -387,7 +923,7 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function removeFile()
+/*    public static function removeFile()
     {
         \Includes\Utils\FileManager::delete(static::getModulesFilePath());
     }
@@ -402,7 +938,7 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function saveModulesToFile(array $modules)
+/*    public static function saveModulesToFile(array $modules)
     {
         $path = LC_VAR_DIR . static::MODULES_FILE_NAME;
 
@@ -417,7 +953,7 @@ abstract class ModulesManager extends AUtils
             }
         }
 
-        $string .= '; */ ?' . '>';
+        $string .= '; *//* ?' . '>';
 
         return $i ? file_put_contents($path, $string) : false;
     }
@@ -433,23 +969,26 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function disableModule($key)
+/*    public static function disableModule($key)
     {
         if (isset(static::$activeModules[$key])) {
 
             // Short name
             $data = static::$activeModules[$key];
 
-            // Set flag in .ini-file
+            // Check if "xlite_modules" table exists
             if ($path = static::getModulesFilePath()) {
+
+                // Set flag in .ini-file
                 $pattern = '/(\[' . $data['author'] . '\][^\[]+\s*' . $data['name'] . '\s*=)\s*\S+/Ss';
                 \Includes\Utils\FileManager::replace($path, '$1 0', $pattern);
 
-            }
+            } else {
 
-            // Set flag in DB
-            $query = 'UPDATE ' . static::getTableName() . ' SET enabled = ? WHERE moduleID = ?';
-            \Includes\Utils\Database::execute($query, array(0, $data['moduleID']));
+                // Set flag in DB
+                $query = 'UPDATE ' . static::getTableName() . ' SET enabled = ? WHERE moduleID = ?';
+                \Includes\Utils\Database::execute($query, array(0, $data['moduleID']));
+            }
 
             // Remove from local cache
             unset(static::$activeModules[$key]);
@@ -465,9 +1004,9 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function switchModules()
+/*    public static function switchModules()
     {
-        foreach (static::getActiveModules() as $module => $data) {
+        foreach (static::getModulesList() as $module => $data) {
 
             // Search for modules
             $moduleID = \Includes\Utils\Database::fetchColumn(
@@ -475,17 +1014,20 @@ abstract class ModulesManager extends AUtils
                 array($data['author'], $data['name'], true)
             );
 
+            // Module status
+            $enabled = static::isActiveModule($module);
+
             // If found in DB
             if ($moduleID) {
                 $query  = 'UPDATE ' . static::getTableName() 
                         . ' SET enabled = ?, dataInstalled = ? WHERE moduleID = ?';
-                $params = array(true, true, $moduleID);
+                $params = array($enabled, true, $moduleID);
 
             } else {
                 $params = array(
                     'name'          => $data['name'],
                     'author'        => $data['author'],
-                    'enabled'       => true,
+                    'enabled'       => $enabled,
                     'installed'     => true,
                     'dataInstalled' => true,
                     'date'          => time(),
@@ -523,7 +1065,7 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getPathPatternForPHP()
+/*    public static function getPathPatternForPHP()
     {
         return static::getPathPattern(preg_quote(static::getClassesDir(), '/') . '\w+', 'Module', 'php');
     }
@@ -536,7 +1078,7 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getPathPatternForTemplates()
+/*    public static function getPathPatternForTemplates()
     {
         return static::getPathPattern(preg_quote(LC_SKINS_DIR, '/') . '\w+' . LC_DS_QUOTED . '\w+', 'modules', 'tpl');
     }
@@ -552,7 +1094,7 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getActualName($author, $name)
+/*    public static function getActualName($author, $name)
     {
         return $author . '\\' . $name;
     }
@@ -564,11 +1106,11 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function initModules()
+/*    public static function initModules()
     {
         foreach (static::getActiveModules() as $module => $data) {
             $class = static::getClassNameByModuleName($module);
             $class::init();
         }
-    }
+    }*/
 }

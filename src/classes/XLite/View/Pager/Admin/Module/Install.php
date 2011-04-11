@@ -47,4 +47,18 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
     {
         return 5;
     }
+
+    /**
+     * Return widget default template
+     *
+     * :TODO: check if where is a more convinient way to get ItemsList dir
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'items_list' . LC_DS . 'module' . LC_DS . 'install' . LC_DS . 'pager' . LC_DS . 'body.tpl';
+    }
 }

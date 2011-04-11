@@ -17,7 +17,7 @@
 
   <div class="name">{module.getModuleName()}</div>
 
-  <div class="version">{t(#Version#)}: {module.getVersion()}</div>
+  <div class="version">{t(#Version#)}: {getMaxModuleVersion(module)}</div>
 
   <div IF="module.getInstalled()" class="installed">{t(#Already installed#)}</div>
 
