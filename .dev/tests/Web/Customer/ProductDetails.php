@@ -156,21 +156,11 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             'check Add to bag button'
         );
 
-        $facebookSelector = "css=form.product-details .product-details-info .facebook object";
+        $facebookSelector = "css=form.product-details .product-details-info .facebook script";
         $this->assertElementPresent(
             $facebookSelector,
             "check Facebook widget"
         );
-
-        $url = urlencode($this->getLocation());
-        $facebookLink = "http://www.facebook.com/plugins/like.php?href=$url&layout=standard&show_faces=true&width=450&action=like&colorscheme=light&height=24";
-        $iframeLink = $this->getJSExpression('jQuery(".facebook object").attr("data")');
-        $this->assertEquals(
-            $iframeLink,
-            $facebookLink,
-            'check Facebook Like link'
-        );
-
 
         // Tabs
         $this->assertElementPresent(
