@@ -37,49 +37,6 @@ namespace XLite\View\ItemsList\Module;
 abstract class AModule extends \XLite\View\ItemsList\AItemsList
 {
     /**
-     * Allowed sort criterions
-     */
-
-    const SORT_BY_MODE_NAME    = 'm.moduleName';
-    const SORT_BY_MODE_POPULAR = 'm.downloads';
-    const SORT_BY_MODE_RATING  = 'm.rating';
-    const SORT_BY_MODE_DATE    = 'm.date';
-    const SORT_BY_MODE_ENABLED = 'm.enabled';
-
-    /**
-     * Widget param names 
-     */
-
-    const PARAM_SUBSTRING    = 'substring';
-    const PARAM_TAG          = 'tag';
-    const PARAM_PRICE_FILTER = 'priceFilter';
-    const PARAM_STATUS       = 'status';
-
-
-    /**
-     * Define and set widget attributes; initialize widget
-     *
-     * @param array $params Widget params OPTIONAL
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function __construct(array $params = array())
-    {
-        $this->sortByModes += array(
-            self::SORT_BY_MODE_NAME    => 'Name',
-            self::SORT_BY_MODE_POPULAR => 'Popular',
-            self::SORT_BY_MODE_RATING  => 'Most rated',
-            self::SORT_BY_MODE_DATE    => 'Newest',
-            self::SORT_BY_MODE_ENABLED => 'Enabled',
-        );
-
-        parent::__construct($params);
-    }
-
-
-    /**
      * Return name of the base widgets list
      *
      * @return string
@@ -167,24 +124,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Define widget parameters
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-    
-        $this->widgetParams += array(
-            self::PARAM_SUBSTRING    => new \XLite\Model\WidgetParam\String('Substring', ''),
-            self::PARAM_TAG          => new \XLite\Model\WidgetParam\String('Tag', ''),
-            self::PARAM_PRICE_FILTER => new \XLite\Model\WidgetParam\String('Price filter', ''),
-        );
-    }
-
-    /**
      * Return modules list
      *
      * @param \XLite\Core\CommonCell $cnd       Search condition
@@ -196,8 +135,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Module')
-            ->search($cnd, $countOnly);
+        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->search($cnd, $countOnly);
     }
 
     // {{{ Version-related checks
@@ -219,7 +157,8 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Check if the module major version is the same as the core one
+     * Check if the module major version is the same as the core one.
+     * Alias
      * 
      * @param \XLite\Model\Module $module Module to check
      *  
@@ -229,11 +168,12 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function isModuleCompatible(\XLite\Model\Module $module)
     {
-        return \XLite::getInstance()->checkVersion($module->getMajorVersion(), '=');
+        return $this->checkModuleMajorVersion($module, '=');
     }
 
     /**
-     * Check if module requires new core version
+     * Check if module requires new core version.
+     * Alias
      *
      * @param \XLite\Model\Module $module Module to check
      *
@@ -243,11 +183,12 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function isCoreUpgradeNeeded(\XLite\Model\Module $module)
     {
-        return \XLite::getInstance()->checkVersion($module->getMajorVersion(), '<');
+        return $this->checkModuleMajorVersion($module, '<');
     }
 
     /**
-     * Check if core requires new module version
+     * Check if core requires new module version.
+     * Alias
      *
      * @param \XLite\Model\Module $module Module to check
      *
@@ -257,7 +198,22 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function isModuleUpgradeNeeded(\XLite\Model\Module $module)
     {
-        return \XLite::getInstance()->checkVersion($module->getMajorVersion(), '>');
+        return $this->checkModuleMajorVersion($module, '>');
+    }
+
+    /**
+     * Compare module version with the core one 
+     * 
+     * @param \XLite\Model\Module $module   Module to check
+     * @param string              $operator Comparison operator
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkModuleMajorVersion(\XLite\Model\Module $module, $operator)
+    {
+        return \XLite::getInstance()->checkVersion($module->getMajorVersion(), $operator);
     }
 
     /**

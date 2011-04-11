@@ -11,20 +11,21 @@
  * @since     1.0.0
  *}
 
+{* :TODO: divide into parts *}
+
 <h2 IF="mode=#search#">{pager.itemsTotal} results found{if:getParam(#substring#)} for the "{getParam(#substring#)}" keyword{end:}</h2>
-<h2 IF="!mode=#search#">Featured add-ons</h2>
 
 <div class="addons-filters">
 
   <div class="features">
     <ul>
       {foreach:getSortOptions(),fltr,desc}
-        <li class="{if:fltr=getSortOption()}hl{end:}"><a href="{buildURL(#addons_list#,##,_ARRAY_(%static::PARAM_SORT_BY%^fltr,#mode#^mode))}">{t(desc)}</a></li>
+        <li class="{if:fltr=getSortOption()}hl{end:}"><a href="{buildURL(#addons_list#,##,_ARRAY_(%static::PARAM_SORT_BY%^fltr))}">{t(desc)}</a></li>
       {end:}
     </ul>
   </div>
 
-  <div class="price-filter" IF="mode=#search#">
+  <div class="price-filter">
 
     <form action="admin.php" method="post" name="pricefilterform">
 

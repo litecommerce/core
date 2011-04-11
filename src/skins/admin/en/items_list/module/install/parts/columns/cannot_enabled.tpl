@@ -16,7 +16,7 @@
 <div IF="!canEnable(module)">
 
   <div IF="module.getDependencies()" class="note dependencies">
-    {t(#The following add-on(s) must be enabled:#)}<br /><br />
+    {t(#The following add-on(s) must be enabled:#)}<br />
     <ul>
       <li FOREACH="module.getDependencyModules(),depend">
         <a href="#{depend.getName()}">{depend.getModuleName()} ({t(#by#)} {depend.getAuthorName()})</a>
@@ -29,7 +29,7 @@
   </div>
 
   <div IF="isCoreUpgradeNeeded(module)" class="note version error">
-    {t(#The module version is incompatible with your core version and cannot be installed#)}<br /><br />
+    {t(#The module version is incompatible with your core version and cannot be installed#)}<br />
     {t(#Please#)} <a href="#">upgrade core</a>
   </div>
 
