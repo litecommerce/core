@@ -36,31 +36,4 @@ namespace XLite\View\Pager\Admin\Module;
  */
 abstract class AModule extends \XLite\View\Pager\Admin\AAdmin
 {
-    /**
-     * getItemsPerPageDefault
-     *
-     * @return integer
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getItemsPerPageDefault()
-    {
-        return 10000;
-    }
-
-    /**
-     * Define so called "request" parameters
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineRequestParams()
-    {
-        parent::defineRequestParams();
-
-        foreach (array_keys($this->requestParams, self::PARAM_ITEMS_PER_PAGE) as $key) {
-            unset($this->requestParams[$key]);
-        }
-    }
 }

@@ -65,18 +65,6 @@ class Module extends \XLite\Model\Repo\ARepo
     protected $type = self::TYPE_INTERNAL;
 
     /**
-     * Default 'order by' field name
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $defaultOrderBy = array(
-        'enabled' => false,
-        'name'    => true,
-    );
-
-    /**
      * Alternative record identifiers
      *
      * @var   array

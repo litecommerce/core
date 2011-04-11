@@ -98,4 +98,28 @@ abstract class Main extends \XLite\Module\AModule
     {
         return 'Test module 5 description';
     }
+
+    /**
+     * Return link to the module author page
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getAuthorPageURL()
+    {
+        return 'http://www.example.com';
+    }
+
+    /**
+     * Return link to the module page
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getPageURL()
+    {
+        return 'http://www.example.com';
+    }
 }

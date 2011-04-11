@@ -10,17 +10,25 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
+{* :TODO: divide into parts *}
+{* :TODO: remove any modes *}
+
 <div class="top-controls">
 
   <div class="form-panel addons-search-panel">
 
+    {* :TODO: make the form as a widget *}
     <form action="admin.php" method="post" name="search_form" >
       <input type="hidden" name="target" value="addons_list" />
       <input type="hidden" name="action" value="search" />
         <input class="{if:mode=#featured#|!getCondition(#substring#)}default-value{end:}" id="search_substring" type="text" name="substring" value="{if:mode=#search#&getCondition(#substring#)}{getCondition(#substring#)}{else:}{t(#Enter keywords#)}{end:}" />
         <widget class="\XLite\View\Button\Submit" label="{t(#Search#)}" />
+        {* :TODO: move to CSS of course *}
+        <div class="tags" style="float: right; border: 1px solid #000;">{t(#Tags#)}</div>
     </form>
 
+{* :TODO: move it into a JS file *}
 <script type="text/javascript">
 var default_substring = '{t(#Enter keywords#)}';
 var sObj = jQuery('#search_substring');
@@ -53,10 +61,6 @@ sForm.submit(function(e){
 </div>
 
 <div class="clear"></div>
-
-<div class="tags">
-{*** TODO ***}
-</div>
 
 {* Display add-ons list *}
 <widget class="\XLite\View\ItemsList\Module\Install" />
