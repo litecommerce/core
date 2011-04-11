@@ -200,16 +200,27 @@ abstract class Autoloader
     }
 
     /**
+     * Return path ot the autoloader current dir
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getLCAutoloadDir()
+    {
+        return static::$lcAutoloadDir;
+    }
+
+    /**
      * Switch autoload directory from var/run/classes/ to classes/
      * 
      * @param string $dir New autoload directory
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function switchLcAutoloadDir()
+    public static function switchLCAutoloadDir()
     {
         static::$lcAutoloadDir = LC_CLASSES_DIR;
     }

@@ -10,6 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
 <ul class="pager grid-list" IF="isPagesListVisible()">
   <li FOREACH="getPages(),page" class="{page.classes}">
     <a IF="page.href" href="{page.href}" class="{page.page}" title="{page.title}">{page.text:h}</a>

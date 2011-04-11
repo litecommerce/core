@@ -67,6 +67,8 @@ class OptionException extends \XLite\Model\Repo\ARepo
 
     /**
      * Define check exception query 
+     *
+     * :FIXME: decompose; move query definition to a separate method
      * 
      * @param array $ids Option ids list
      *  
@@ -77,7 +79,7 @@ class OptionException extends \XLite\Model\Repo\ARepo
      */
     protected function defineCheckExceptionQuery(array $ids)
     {
-        $rsm = new \Doctrine\ORM\Query\ResultSetMapping;
+        $rsm = new \Doctrine\ORM\Query\ResultSetMapping();
         $rsm->addScalarResult('cnt', 'cnt');
 
         $keys = array();

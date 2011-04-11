@@ -165,3 +165,6 @@ div.icon-container div.addon-icon img.addon-default-icon {
   background: transparent url(../images/addon_default.png) left top no-repeat;
 }
 
+div.icon-container div.addon-icon.addon-disabled-note {
+  text-align: center;
+}

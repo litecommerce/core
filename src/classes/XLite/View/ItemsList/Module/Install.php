@@ -37,40 +37,26 @@ namespace XLite\View\ItemsList\Module;
 class Install extends \XLite\View\ItemsList\Module\AModule
 {
     /**
-     * SortOption name definitions
+     * Sort option name definitions
      */
     const SORT_OPT_POPULAR    = 'm.downloads';
     const SORT_OPT_RATED      = 'm.rating';
-    const SORT_OPT_NEWEST     = 'm.date';
+    const SORT_OPT_NEWEST     = 'm.revisionDate';
     const SORT_OPT_ALPHA      = 'm.moduleName';
 
+    /**
+     * Types of sort order 
+     */
     const SORT_ORDER_ASC  = 'asc';
     const SORT_ORDER_DESC = 'desc';
 
     /**
-     * Modes 
+     * Widget param names
      */
+    const PARAM_SUBSTRING    = 'substring';
+    const PARAM_TAG          = 'tag';
+    const PARAM_PRICE_FILTER = 'priceFilter';
 
-    const MODE_SEARCH   = 'search';
-    const MODE_FEATURED = 'featured';
-
-    /**
-     * Currently applie sortOption (cached)
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected static $sortOption = null;
-
-    /**
-     * Possible sortOptions (cached)
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected static $sortOptions = null;
 
     /**
      * Return list of targets allowed for this widget
@@ -88,79 +74,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     }
 
     /**
-     * getSearchParams
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getSearchParams()
-    {
-        return array(
-            \XLite\Model\Repo\Module::P_SUBSTRING    => self::PARAM_SUBSTRING,
-            \XLite\Model\Repo\Module::P_TAG          => self::PARAM_TAG,
-            \XLite\Model\Repo\Module::P_PRICE_FILTER => self::PARAM_PRICE_FILTER,
-        );
-    }
-
-
-    /**
-     * Return sortOptions array
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function getSortOptions()
-    {
-        if (is_null(static::$sortOptions)) {
-
-            static::$sortOptions = array(
-                static::SORT_OPT_POPULAR    => 'Most Popular',
-                static::SORT_OPT_RATED      => 'Most Rated',
-                static::SORT_OPT_NEWEST     => 'Newest',
-            );
-
-            if (static::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode) {
-                static::$sortOptions += array(
-                    static::SORT_OPT_ALPHA  => 'Alphabetically'
-                );
-            }
-
-        }
-
-        return static::$sortOptions;
-    }
-
-    /**
-     * Return applied sortOption
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function getSortOption()
-    {
-        $sortOption = \XLite\Core\Request::getInstance()->sortBy;
-
-        if (
-            is_null($sortOption)
-            || empty($sortOption)
-            || !in_array($sortOption, array_keys(static::getSortOptions()))
-        ) {
-
-            static::$sortOption = static::SORT_OPT_POPULAR;
-
-        } else {
-
-            static::$sortOption = $sortOption;
-        }
-
-        return static::$sortOption;
-    }
-
-
-    /**
      * Register files from common repository
      *
      * @return array
@@ -170,7 +83,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     public function getCommonFiles()
     {
         $list = parent::getCommonFiles();
-
         $list['js'][] = 'js/ui.selectmenu.js';
         $list['css'][] = 'css/ui.selectmenu.css';
 
@@ -187,7 +99,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'modules_manager' . LC_DS . 'common.css';
         // TODO fix with enter-key license widget. It should be taken dynamically from AJAX
         $list[] = 'modules_manager' . LC_DS . 'enter_key' . LC_DS . 'css' . LC_DS . 'style.css';
@@ -196,63 +107,16 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         return $list;
     }
 
-
     /**
-     * Return params list to use for search
+     * Return class name for the list pager
      *
-     * @return \XLite\Core\CommonCell
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getSearchCondition()
+    protected function getPagerClass()
     {
-        $result = parent::getSearchCondition();
-
-        foreach (static::getSearchParams() as $modelParam => $requestParam) {
-            $result->$modelParam = $this->getParam($requestParam);
-        }
-
-        // Remove substring and tag params for the Featured add-ons pages
-        if (self::MODE_SEARCH !== \XLite\Core\Request::getInstance()->mode) {
-            $result->{self::PARAM_SUBSTRING} = null;
-            $result->{self::PARAM_TAG} = null;
-            $result->{self::PARAM_PRICE_FILTER} = null;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Define so called "request" parameters
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineRequestParams()
-    {
-        parent::defineRequestParams();
-
-        $this->requestParams = array_merge(
-            $this->requestParams,
-            static::getSearchParams()
-        );
-    }
-
-    /**
-     * Get URL common parameters
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCommonParams()
-    {
-        $mode = static::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode
-            ? static::MODE_SEARCH
-            : static::MODE_FEATURED;
-
-        return parent::getCommonParams() + array('mode' => $mode);
+        return '\XLite\View\Pager\Admin\Module\Install';
     }
 
     /**
@@ -292,13 +156,280 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     }
 
     /**
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_SUBSTRING    => new \XLite\Model\WidgetParam\String('Substring', ''),
+            self::PARAM_TAG          => new \XLite\Model\WidgetParam\String('Tag', ''),
+            self::PARAM_PRICE_FILTER => new \XLite\Model\WidgetParam\String('Price filter', ''),
+        );
+    }
+
+    /**
+     * Return list of dort options
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSortOptions()
+    {
+        return array(
+            static::SORT_OPT_POPULAR => 'Most Popular',
+            static::SORT_OPT_RATED   => 'Most Rated',
+            static::SORT_OPT_NEWEST  => 'Newest',
+            static::SORT_OPT_ALPHA   => 'Alphabetically',
+        );
+    }
+
+    /**
+     * Return applied sortOption
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSortOption()
+    {
+        $sortOption = \XLite\Core\Request::getInstance()->sortBy;
+
+        return in_array($sortOption, array_keys(static::getSortOptions())) ? $sortOption : static::SORT_OPT_ALPHA;
+    }
+
+    /**
+     * Return params list to use for search
+     *
+     * @return \XLite\Core\CommonCell
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSearchCondition()
+    {
+        $cnd = parent::getSearchCondition();
+        $cnd->{\XLite\Model\Repo\Module::P_ORDER_BY} = array($this->getSortOption(), $this->getSortOrder());
+
+        return $cnd;
+    }
+
+    /**
+     * getSortOrder
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSortOrder()
+    {
+        return $this->getSortOption() === self::SORT_OPT_ALPHA ? self::SORT_ORDER_ASC : self::SORT_ORDER_DESC;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * getSearchParams
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+/*    public static function getSearchParams()
+    {
+        return array(
+            \XLite\Model\Repo\Module::P_SUBSTRING    => self::PARAM_SUBSTRING,
+            \XLite\Model\Repo\Module::P_TAG          => self::PARAM_TAG,
+            \XLite\Model\Repo\Module::P_PRICE_FILTER => self::PARAM_PRICE_FILTER,
+        );
+    }
+
+
+    /**
+     * Return list of dort options 
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+/*    protected static function getSortOptions()
+    {
+        return array(
+            static::SORT_OPT_POPULAR => 'Most Popular',
+            static::SORT_OPT_RATED   => 'Most Rated',
+            static::SORT_OPT_NEWEST  => 'Newest',
+            static::SORT_OPT_ALPHA   => 'Alphabetically',
+        );
+    }
+
+    /**
+     * Return applied sortOption
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+/*    protected static function getSortOption()
+    {
+        $sortOption = \XLite\Core\Request::getInstance()->sortBy;
+
+        return in_array($sortOption, array_keys(static::getSortOptions())) ? $sortOption : static::SORT_OPT_POPULAR;
+    }
+
+
+    /**
+     * Register files from common repository
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+/*    public function getCommonFiles()
+    {
+        $list = parent::getCommonFiles();
+        $list['js'][] = 'js/ui.selectmenu.js';
+        $list['css'][] = 'css/ui.selectmenu.css';
+
+        return $list;
+    }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+/*    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = 'modules_manager' . LC_DS . 'common.css';
+        // TODO fix with enter-key license widget. It should be taken dynamically from AJAX
+        $list[] = 'modules_manager' . LC_DS . 'enter_key' . LC_DS . 'css' . LC_DS . 'style.css';
+        $list[] = $this->getDir() . LC_DS . 'style.css';
+
+        return $list;
+    }
+
+
+    /**
+     * Return params list to use for search
+     *
+     * @return \XLite\Core\CommonCell
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+/*    protected function getSearchCondition()
+    {
+        $result = parent::getSearchCondition();
+
+        foreach (static::getSearchParams() as $modelParam => $requestParam) {
+            $result->$modelParam = $this->getParam($requestParam);
+        }
+
+        // Remove substring and tag params for the Featured add-ons pages
+        if (self::MODE_SEARCH !== \XLite\Core\Request::getInstance()->mode) {
+            $result->{self::PARAM_SUBSTRING} = null;
+            $result->{self::PARAM_TAG} = null;
+            $result->{self::PARAM_PRICE_FILTER} = null;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Define so called "request" parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+/*    protected function defineRequestParams()
+    {
+        parent::defineRequestParams();
+
+        $this->requestParams = array_merge(
+            $this->requestParams,
+            static::getSearchParams()
+        );
+    }
+
+    /**
+     * Get URL common parameters
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+/*    protected function getCommonParams()
+    {
+        $mode = static::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode
+            ? static::MODE_SEARCH
+            : static::MODE_FEATURED;
+
+        return parent::getCommonParams() + array('mode' => $mode);
+    }
+
+    /**
+     * Return name of the base widgets list
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+/*    protected function getListName()
+    {
+        return parent::getListName() . '.install';
+    }
+
+    /**
+     * Return title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+/*    protected function getHead()
+    {
+        return '';
+    }
+
+    /**
+     * Return dir which contains the page body template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+/*    protected function getPageBodyDir()
+    {
+        return 'install';
+    }
+
+    /**
      * Return list of the modes allowed by default
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultModes()
+/*    protected function getDefaultModes()
     {
         $list = parent::getDefaultModes();
         $list[] = static::MODE_SEARCH;
@@ -315,7 +446,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getSortByModeDefault()
+/*    protected function getSortByModeDefault()
     {
         return parent::SORT_BY_MODE_POPULAR;
     }
@@ -327,7 +458,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getSortOrder()
+/*    protected function getSortOrder()
     {
         return self::getSortOption() === self::SORT_OPT_ALPHA ? self::SORT_ORDER_ASC : self::SORT_ORDER_DESC;
     }
@@ -339,7 +470,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getPagerClass()
+/*    protected function getPagerClass()
     {
         return '\XLite\View\Pager\Admin\Module\Install';
     }
@@ -355,7 +486,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function canInstall(\XLite\Model\Module $module)
+/*    protected function canInstall(\XLite\Model\Module $module)
     {
         return !$module->getInstalled() && ($module->isPurchased() || $module->isFree());
     }
@@ -371,8 +502,8 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function canPurchase(\XLite\Model\Module $module)
+/*    protected function canPurchase(\XLite\Model\Module $module)
     {
         return !$module->getInstalled() && !$module->isPurchased() && !$module->isFree();
-    }
+    }*/
 }

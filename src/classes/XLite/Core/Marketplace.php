@@ -556,20 +556,28 @@ class Marketplace extends \XLite\Base\Singleton
 
                 // Module key fields
                 $author = $this->getField($module, self::RESPONSE_FIELD_MODULE_AUTHOR);
-                $name = $this->getField($module, self::RESPONSE_FIELD_MODULE_NAME);
+                $name   = $this->getField($module, self::RESPONSE_FIELD_MODULE_NAME);
 
                 // Arrays passed in response
                 $version = $this->getField($module, self::RESPONSE_FIELD_MODULE_VERSION) ?: array();
-                $rating = $this->getField($module, self::RESPONSE_FIELD_MODULE_RATING)  ?: array();
+                $rating  = $this->getField($module, self::RESPONSE_FIELD_MODULE_RATING)  ?: array();
 
+                // Module versions
                 $majorVersion = $this->getField($version, self::FIELD_VERSION_MAJOR);
-                $key = $author . '\\' . $name;
+                $minorVersion = $this->getField($version, self::FIELD_VERSION_MINOR);
+
+                // Short names
+                $key    = $author . '_' . $name . '_' . $majorVersion;
+                $search = compact('name', 'author', 'majorVersion', 'minorVersion') + array('installed' => true);
 
                 // To make modules list unique
-                if (!isset($result[$key]) || version_compare($result[$key]['majorVersion'], $majorVersion, '<')) {
+                if (
+                    (!isset($result[$key]) || version_compare($result[$key]['minorVersion'], $minorVersion, '<'))
+                    && !\XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy($search)
+                ) {
 
                     // It's the structure of \XLite\Model\Module class data
-                    $result[$author . '\\' . $name] = array(
+                    $result[$key] = array(
                         'name'          => $name,
                         'author'        => $author,
                         'marketplaceID' => $this->getField($module, self::RESPONSE_FIELD_MODULE_ID),
@@ -579,7 +587,7 @@ class Marketplace extends \XLite\Base\Singleton
                         'price'         => $this->getField($module, self::RESPONSE_FIELD_MODULE_PRICE),
                         'currency'      => $this->getField($module, self::RESPONSE_FIELD_MODULE_CURRENCY),
                         'majorVersion'  => $majorVersion,
-                        'minorVersion'  => $this->getField($version, self::FIELD_VERSION_MINOR),
+                        'minorVersion'  => $minorVersion,
                         'revisionDate'  => $this->getField($module, self::RESPONSE_FIELD_MODULE_REVISION_DATE),
                         'moduleName'    => $this->getField($module, self::RESPONSE_FIELD_MODULE_READABLE_NAME),
                         'authorName'    => $this->getField($module, self::RESPONSE_FIELD_MODULE_READABLE_AUTHOR),
