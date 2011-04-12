@@ -56,4 +56,56 @@ class OrderItem extends \XLite\Model\Repo\ARepo
 
         return $list;
     }
+
+    // {{{ Functions to grab top selling products data
+
+    /**
+     * Get top sellers depending on certain condition
+     *
+     * @param \XLite\Core\CommonCell $cnd Conditions
+     *
+     * @return \Doctrine\ORM\PersistentCollection
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getTopSellers(\XLite\Core\CommonCell $cnd)
+    {
+        $queryBuilder = $this->createQueryBuilder();
+
+        $this->prepareTopSellersCondition($queryBuilder, $cnd);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+
+    /**
+     * Prepare top sellers search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param \XLite\Core\CommonCell     $cnd          Conditions
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareTopSellersCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, \XLite\Core\CommonCell $cnd)
+    {
+        list($start, $end) = $cnd->date;
+
+        $queryBuilder->addSelect('SUM(o.amount) as cnt')
+            ->innerJoin('o.order', 'o1')
+            ->addSelect('o1.date')
+            ->andWhere('o1.date >= :start')
+            ->setParameter('start', $start)
+            ->andWhere('o1.date <= :end')
+            ->setParameter('end', $end)
+            ->andWhere('o1.status IN (:statusProcessed, :statusCompleted)')
+            ->setParameter('statusProcessed', \XLite\Model\Order::STATUS_PROCESSED)
+            ->setParameter('statusCompleted', \XLite\Model\Order::STATUS_COMPLETED)
+            ->setMaxResults($cnd->limit)
+            ->addGroupBy('o.sku')
+            ->addOrderBy('cnt', 'desc');
+    }
+
+    // }}}
 }
