@@ -276,9 +276,20 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false, $filter = null)
     {
-        if (!empty($filter) || ($filter = $this->getFilter())) {
+        if (is_null($filter)) {
+
+            $filter = $this->getFilter();
+        }
+
+        if (!empty($filter)) {
+
             $cnd->$filter = true;
         }
+
+        // TODO Add tags !!!
+        $cnd->tag = $this->getTag();
+
+        return parent::getData($cnd, $countOnly);
 
         return parent::getData($cnd, $countOnly);
     }
