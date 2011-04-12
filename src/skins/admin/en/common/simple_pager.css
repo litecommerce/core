@@ -12,7 +12,7 @@
  */
 
 .simple-pager {
-  display: inline;
+  display: inline-block;
   white-space: nowrap;
   padding-bottom: 3px;
   padding-right: 4px;
