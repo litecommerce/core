@@ -32,8 +32,7 @@ abstract class XLite_Tests_Model_AProduct extends XLite_Tests_TestCase
 
         \XLite\Core\Database::getEM()->clear();
 
-        $this->query(file_get_contents(__DIR__ . '/Repo/sql/product/setup.sql'));
-        \XLite\Core\Database::getEM()->flush();
+        $this->doRestoreDb(__DIR__ . '/Repo/sql/product/setup.sql', false);
     }
 
     /**
@@ -48,7 +47,6 @@ abstract class XLite_Tests_Model_AProduct extends XLite_Tests_TestCase
     {
         parent::tearDown();
 
-        $this->query(file_get_contents(__DIR__ . '/Repo/sql/product/restore.sql'));
-        \XLite\Core\Database::getEM()->flush();
+        $this->doRestoreDb();
     }
 }

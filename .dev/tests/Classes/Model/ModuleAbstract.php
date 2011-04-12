@@ -71,8 +71,7 @@ abstract class XLite_Tests_Model_ModuleAbstract extends XLite_Tests_TestCase
         
         \XLite\Core\Database::getEM()->clear();
 
-        $this->query(file_get_contents(__DIR__ . '/Repo/sql/module/setup.sql'));
-        \XLite\Core\Database::getEM()->flush();
+        $this->doRestoreDb(__DIR__ . '/Repo/sql/module/setup.sql', false);
     }
 
     protected function getTestModule()
