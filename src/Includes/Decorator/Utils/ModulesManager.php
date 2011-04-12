@@ -191,7 +191,7 @@ abstract class ModulesManager extends AUtils
         $result = array(
             'name'          => $name,
             'author'        => $author,
-            'enabled'       => static::isActiveModule($module),
+            'enabled'       => intval(static::isActiveModule($module)),
             'installed'     => 1,
             'dataInstalled' => 1,
             'date'          => time(),
