@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -33,7 +33,7 @@ namespace XLite\View;
  * Category selector
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class CategorySelect extends \XLite\View\AView
 {
@@ -91,7 +91,7 @@ class CategorySelect extends \XLite\View\AView
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCategories()
     {
@@ -128,7 +128,7 @@ class CategorySelect extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isDisplayNoCategories()
     {
@@ -141,7 +141,7 @@ class CategorySelect extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -175,7 +175,7 @@ class CategorySelect extends \XLite\View\AView
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCategoriesCondition()
     {
@@ -189,7 +189,7 @@ class CategorySelect extends \XLite\View\AView
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isCategorySelected(\XLite\Model\Category $category)
     {
@@ -208,7 +208,7 @@ class CategorySelect extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSelectedCategory()
     {
@@ -227,7 +227,7 @@ class CategorySelect extends \XLite\View\AView
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setFieldName($name)
     {
@@ -246,7 +246,7 @@ class CategorySelect extends \XLite\View\AView
      *  
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getIndentation(\XLite\Model\Category $category, $multiplier)
     {

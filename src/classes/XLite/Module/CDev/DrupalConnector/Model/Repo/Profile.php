@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Model\Repo;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Model\Repo;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorator
 {
@@ -46,7 +46,7 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function linkProfiles($profileId, $cmsProfileId)
     {
@@ -62,7 +62,7 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineUnlinkProfilesQuery($cmsProfileId)
     {
@@ -85,7 +85,7 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineLinkProfilesQuery($profileId, $cmsProfileId)
     {
@@ -109,7 +109,7 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findAdminsWithoutRoles($roles)
     {
@@ -125,7 +125,7 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findCustomersWithRoles($roles)
     {
@@ -139,7 +139,7 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineAdminsWithoutRolesQuery($roles)
     {
@@ -168,7 +168,7 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineCustomersWithRolesQuery($roles)
     {

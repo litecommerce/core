@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\Utils;
@@ -36,7 +36,7 @@ namespace Includes\Decorator\Utils;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
 {
@@ -52,7 +52,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $plugins;
 
@@ -65,7 +65,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function invokeHook($hook)
     {
@@ -89,7 +89,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getPlugins($hook = null)
     {
@@ -124,7 +124,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getConfigFile()
     {

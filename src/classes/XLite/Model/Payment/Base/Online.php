@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Payment\Base;
@@ -32,7 +32,7 @@ namespace XLite\Model\Payment\Base;
  * Abstract online (gateway-based) processor 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class Online extends \XLite\Model\Payment\Base\Processor
 {
@@ -43,7 +43,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function processCallback(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -57,7 +57,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * 
      * @return \XLite\Model\Payment\Transaction|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCallbackOwnerTransaction()
     {
@@ -69,7 +69,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getClientIP()
     {
@@ -90,7 +90,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getInvoiceDescription()
     {
@@ -103,7 +103,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineSavedData()
     {
@@ -115,7 +115,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function saveDataFromRequest()
     {
@@ -134,7 +134,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function maskCell(array $list, $name)
     {
@@ -152,7 +152,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function logCallback(array $list)
     {

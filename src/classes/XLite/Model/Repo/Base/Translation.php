@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo\Base;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo\Base;
  * Common translation repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Translation extends \XLite\Model\Repo\ARepo
 {
@@ -44,7 +44,7 @@ class Translation extends \XLite\Model\Repo\ARepo
      *  
      * @return \XLite\Model\AEntity|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
     {
@@ -62,7 +62,7 @@ class Translation extends \XLite\Model\Repo\ARepo
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRepoType()
     {

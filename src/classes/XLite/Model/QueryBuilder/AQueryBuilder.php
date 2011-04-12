@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\QueryBuilder;
@@ -32,7 +32,7 @@ namespace XLite\Model\QueryBuilder;
  * Abstract query builder 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
 {
@@ -41,7 +41,7 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getResult()
     {
@@ -53,7 +53,7 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      * 
      * @return \XLite\Model\AEntity|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSingleResult()
     {
@@ -75,7 +75,7 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      * 
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSingleScalarResult()
     {
@@ -97,7 +97,7 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
      * 
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function execute()
     {

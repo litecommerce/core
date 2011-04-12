@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * Layout manager
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Layout extends \XLite\Base\Singleton
 {
@@ -61,7 +61,7 @@ class Layout extends \XLite\Base\Singleton
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $skin;
 
@@ -70,7 +70,7 @@ class Layout extends \XLite\Base\Singleton
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $locale;
 
@@ -79,7 +79,7 @@ class Layout extends \XLite\Base\Singleton
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $path;
 
@@ -88,7 +88,7 @@ class Layout extends \XLite\Base\Singleton
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $currentInterface = \XLite::CUSTOMER_INTERFACE;
 
@@ -99,7 +99,7 @@ class Layout extends \XLite\Base\Singleton
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $mailInterface = \XLite::CUSTOMER_INTERFACE;
 
@@ -108,7 +108,7 @@ class Layout extends \XLite\Base\Singleton
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $substutionalSkins = array();
 
@@ -117,7 +117,7 @@ class Layout extends \XLite\Base\Singleton
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $skinPaths = array();
 
@@ -126,7 +126,7 @@ class Layout extends \XLite\Base\Singleton
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $resourcesCache = array();
 
@@ -135,7 +135,7 @@ class Layout extends \XLite\Base\Singleton
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $substutionalSkinsCache = false;
 
@@ -146,7 +146,7 @@ class Layout extends \XLite\Base\Singleton
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSkin()
     {
@@ -158,7 +158,7 @@ class Layout extends \XLite\Base\Singleton
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPath()
     {
@@ -170,7 +170,7 @@ class Layout extends \XLite\Base\Singleton
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSkinsAll()
     {
@@ -189,7 +189,7 @@ class Layout extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSkinPathRelative($skin)
     {
@@ -208,7 +208,7 @@ class Layout extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function addSubstutionalSkin($name, $interface = \XLite::CUSTOMER_INTERFACE)
     {
@@ -227,7 +227,7 @@ class Layout extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function removeSubstutionalSkin($name, $interface = null)
     {
@@ -256,7 +256,7 @@ class Layout extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSkins($interface = null)
     {
@@ -278,7 +278,7 @@ class Layout extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTemplateFullPath($shortPath, $currentSkin, $currentTemplate)
     {
@@ -311,7 +311,7 @@ class Layout extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getResourceFullPath($shortPath, $interface = null, $doMail = true)
     {
@@ -352,7 +352,7 @@ class Layout extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getResourceParentFullPath($shortPath, $parentSkin)
     {
@@ -384,7 +384,7 @@ class Layout extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getResourceSkinFullPath($shortPath, $skin)
     {
@@ -412,7 +412,7 @@ class Layout extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getResourceWebPath($shortPath, $outputType = self::WEB_PATH_OUTPUT_SHORT, $interface = null)
     {
@@ -442,7 +442,7 @@ class Layout extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function prepareSkinURL($shortPath, $outputType = self::WEB_PATH_OUTPUT_SHORT)
     {
@@ -458,7 +458,7 @@ class Layout extends \XLite\Base\Singleton
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function saveSubstitutonalSkins()
     {
@@ -476,7 +476,7 @@ class Layout extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSkinPaths($interface = null, $reset = false)
     {
@@ -512,7 +512,7 @@ class Layout extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocalesQuery($interface)
     {
@@ -539,7 +539,7 @@ class Layout extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBaseSkinByInterface($interface = null)
     {
@@ -576,7 +576,7 @@ class Layout extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareResourceURL($url, $outputType)
     {
@@ -601,7 +601,7 @@ class Layout extends \XLite\Base\Singleton
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function restoreSubstitutonalSkins()
     {
@@ -624,7 +624,7 @@ class Layout extends \XLite\Base\Singleton
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setAdminSkin()
     {
@@ -637,7 +637,7 @@ class Layout extends \XLite\Base\Singleton
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setConsoleSkin()
     {
@@ -652,7 +652,7 @@ class Layout extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setMailSkin($interface = \XLite::CUSTOMER_INTERFACE)
     {
@@ -668,7 +668,7 @@ class Layout extends \XLite\Base\Singleton
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setCustomerSkin()
     {
@@ -687,7 +687,7 @@ class Layout extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setSkin($skin)
     {
@@ -700,7 +700,7 @@ class Layout extends \XLite\Base\Singleton
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setOptions()
     {
@@ -720,7 +720,7 @@ class Layout extends \XLite\Base\Singleton
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setPath()
     {

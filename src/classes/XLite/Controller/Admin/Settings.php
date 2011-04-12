@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Settings
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Settings extends \XLite\Controller\Admin\AAdmin
 {
@@ -42,7 +42,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $displayedCategories = array(
         'General'     => 'General',
@@ -59,7 +59,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public $params = array('target', 'page');
 
@@ -69,7 +69,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public $page = 'General';
 
@@ -79,7 +79,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      *
      * @var   mixed
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public $_waiting_list = null;
 
@@ -89,7 +89,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -101,7 +101,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isGDLibLoaded()
     {
@@ -113,7 +113,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTabPages()
     {
@@ -127,7 +127,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOptions()
     {
@@ -140,7 +140,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isOpenBasedirRestriction()
     {
@@ -156,7 +156,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function get($name) 
     {
@@ -417,7 +417,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDirPermission($dir)
     {
@@ -450,7 +450,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDirPermissionStr($dir = '')
     {
@@ -466,7 +466,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFilePermission($file)
     {
@@ -493,7 +493,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFilePermissionStr($file = '')
     {
@@ -510,7 +510,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkSubdirs($path, &$subdirErrors)
     {
@@ -561,7 +561,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function action_phpinfo()
     {
@@ -573,7 +573,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function action_safe_mode_key_regen()
     {
@@ -596,7 +596,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function action_update()
     {
@@ -616,8 +616,11 @@ class Settings extends \XLite\Controller\Admin\AAdmin
             } elseif ('serialized' == $type && isset(\XLite\Core\Request::getInstance()->$name) && is_array(\XLite\Core\Request::getInstance()->$name)) {
                 $newValue = serialize(\XLite\Core\Request::getInstance()->$name);
 
-            } else {
+            } elseif ('text' == $type) {
                 $newValue = isset(\XLite\Core\Request::getInstance()->$name) ? trim(\XLite\Core\Request::getInstance()->$name) : '';
+            
+            } else {
+                $newValue = isset(\XLite\Core\Request::getInstance()->$name) ? \XLite\Core\Request::getInstance()->$name : '';
             }
 
             if ($value != $newValue) {
@@ -646,7 +649,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCurrentIP()
     {
@@ -659,7 +662,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isCurrentIpValid()
     {
@@ -671,7 +674,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function action_add_new_ip()
     {
@@ -715,7 +718,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function action_delete_allowed_ip()
     {
@@ -754,7 +757,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function action_update_allowed_ip()
     {
@@ -792,7 +795,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isWin()
     {
@@ -804,7 +807,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTimeZonesList()
     {
@@ -816,7 +819,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCurrentTimeZone()
     {
@@ -830,7 +833,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getStateById($stateId)
     {
@@ -842,7 +845,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSafeModeKey()
     {
@@ -854,7 +857,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getHardResetURL()
     {
@@ -878,7 +881,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     /* public function getInventoryOrderStatuses()
     {
@@ -894,7 +897,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -906,7 +909,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAllowedList($fromDB = false)
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\Validator;
@@ -32,7 +32,7 @@ namespace XLite\Core\Validator;
  * Validate exception 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Exception extends \XLite\Core\Exception
 {
@@ -41,7 +41,7 @@ class Exception extends \XLite\Core\Exception
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $path = array();
 
@@ -50,7 +50,7 @@ class Exception extends \XLite\Core\Exception
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $arguments = array();
 
@@ -61,7 +61,7 @@ class Exception extends \XLite\Core\Exception
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function addPathItem($item)
     {
@@ -73,7 +73,7 @@ class Exception extends \XLite\Core\Exception
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPath()
     {
@@ -91,7 +91,7 @@ class Exception extends \XLite\Core\Exception
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function markAsInternal()
     {
@@ -103,7 +103,7 @@ class Exception extends \XLite\Core\Exception
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isInternal()
     {
@@ -117,7 +117,7 @@ class Exception extends \XLite\Core\Exception
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setLabelArguments(array $arguments)
     {
@@ -129,7 +129,7 @@ class Exception extends \XLite\Core\Exception
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getLabelArguments()
     {

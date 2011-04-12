@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Shipping;
@@ -32,7 +32,7 @@ namespace XLite\Model\Shipping;
  * Shipping markup model
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity (repositoryClass="XLite\Model\Repo\Shipping\Markup")
  * @Table (name="shipping_markups",
@@ -55,7 +55,7 @@ class Markup extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -68,7 +68,7 @@ class Markup extends \XLite\Model\AEntity
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="decimal", precision="14", scale="4")
      */
@@ -79,7 +79,7 @@ class Markup extends \XLite\Model\AEntity
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="decimal", precision="14", scale="4")
      */
@@ -90,7 +90,7 @@ class Markup extends \XLite\Model\AEntity
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="decimal", precision="14", scale="4")
      */
@@ -101,7 +101,7 @@ class Markup extends \XLite\Model\AEntity
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="decimal", precision="14", scale="4")
      */
@@ -112,7 +112,7 @@ class Markup extends \XLite\Model\AEntity
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="decimal", precision="14", scale="4")
      */
@@ -123,7 +123,7 @@ class Markup extends \XLite\Model\AEntity
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="decimal", precision="14", scale="4")
      */
@@ -134,7 +134,7 @@ class Markup extends \XLite\Model\AEntity
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="decimal", precision="14", scale="4")
      */
@@ -145,7 +145,7 @@ class Markup extends \XLite\Model\AEntity
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="decimal", precision="4", scale="2")
      */
@@ -156,7 +156,7 @@ class Markup extends \XLite\Model\AEntity
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="decimal", precision="14", scale="4")
      */
@@ -167,7 +167,7 @@ class Markup extends \XLite\Model\AEntity
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="decimal", precision="14", scale="4")
      */
@@ -178,7 +178,7 @@ class Markup extends \XLite\Model\AEntity
      * 
      * @var   \XLite\Model\Shipping\Method
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Shipping\Method", inversedBy="shipping_markups")
      * @JoinColumn (name="method_id", referencedColumnName="method_id")
@@ -190,7 +190,7 @@ class Markup extends \XLite\Model\AEntity
      * 
      * @var   \XLite\Model\Zone
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Zone", inversedBy="shipping_markups")
      * @JoinColumn (name="zone_id", referencedColumnName="zone_id")
@@ -202,7 +202,7 @@ class Markup extends \XLite\Model\AEntity
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $markupValue = 0;
 
@@ -211,7 +211,7 @@ class Markup extends \XLite\Model\AEntity
      * 
      * @return float
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMarkupValue()
     {
@@ -225,7 +225,7 @@ class Markup extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setMarkupValue($value)
     {

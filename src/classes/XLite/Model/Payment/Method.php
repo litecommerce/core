@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Payment;
@@ -32,7 +32,7 @@ namespace XLite\Model\Payment;
  * Payment method
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Payment\Method")
  * @Table  (name="payment_methods",
@@ -50,7 +50,7 @@ class Method extends \XLite\Model\Base\I18n
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -63,7 +63,7 @@ class Method extends \XLite\Model\Base\I18n
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="128")
      */
@@ -74,7 +74,7 @@ class Method extends \XLite\Model\Base\I18n
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="64")
      */
@@ -85,7 +85,7 @@ class Method extends \XLite\Model\Base\I18n
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -96,7 +96,7 @@ class Method extends \XLite\Model\Base\I18n
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
@@ -107,7 +107,7 @@ class Method extends \XLite\Model\Base\I18n
      *
      * @var   \XLite\Model\Payment\MethodSetting
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Payment\MethodSetting", mappedBy="payment_method", cascade={"all"})
      */
@@ -118,7 +118,7 @@ class Method extends \XLite\Model\Base\I18n
      *
      * @var   \XLite\Model\Payment\Transaction
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Payment\Transaction", mappedBy="payment_method", cascade={"all"})
      */
@@ -129,7 +129,7 @@ class Method extends \XLite\Model\Base\I18n
      * 
      * @return \XLite\Model\Payment\Base\Processor
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProcessor()
     {
@@ -144,7 +144,7 @@ class Method extends \XLite\Model\Base\I18n
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isEnabled()
     {
@@ -162,7 +162,7 @@ class Method extends \XLite\Model\Base\I18n
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setClass($class)
     {
@@ -176,7 +176,7 @@ class Method extends \XLite\Model\Base\I18n
      *  
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSetting($name)
     {
@@ -192,7 +192,7 @@ class Method extends \XLite\Model\Base\I18n
      *  
      * @return \XLite\Model\Payment\MethodSetting
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSettingEntity($name)
     {
@@ -216,7 +216,7 @@ class Method extends \XLite\Model\Base\I18n
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setSetting($name, $value)
     {
@@ -240,7 +240,7 @@ class Method extends \XLite\Model\Base\I18n
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {

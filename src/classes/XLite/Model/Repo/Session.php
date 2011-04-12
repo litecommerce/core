@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo;
  * Session repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Session extends \XLite\Model\Repo\ARepo
 {
@@ -47,7 +47,7 @@ class Session extends \XLite\Model\Repo\ARepo
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = self::TYPE_SERVICE;
 
@@ -56,7 +56,7 @@ class Session extends \XLite\Model\Repo\ARepo
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $chars = array(
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -76,7 +76,7 @@ class Session extends \XLite\Model\Repo\ARepo
      * 
      * @return \XLite\Model\SessionCell|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function removeExpired()
     {
@@ -88,7 +88,7 @@ class Session extends \XLite\Model\Repo\ARepo
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineRemoveExpiredQuery()
     {
@@ -109,7 +109,7 @@ class Session extends \XLite\Model\Repo\ARepo
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function countBySid($sid)
     {
@@ -123,7 +123,7 @@ class Session extends \XLite\Model\Repo\ARepo
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineCountBySidQuery($sid)
     {
@@ -142,7 +142,7 @@ class Session extends \XLite\Model\Repo\ARepo
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function generatePublicSessionId()
     {
@@ -173,7 +173,7 @@ class Session extends \XLite\Model\Repo\ARepo
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isPublicSessionIdValid($sid)
     {

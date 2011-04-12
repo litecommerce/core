@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\Validator;
@@ -32,7 +32,7 @@ namespace XLite\Core\Validator;
  * String 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class String extends \XLite\Core\Validator\Scalar
 {
@@ -41,7 +41,7 @@ class String extends \XLite\Core\Validator\Scalar
      * 
      * @var   mixed
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $nonEmpty = false;
 
@@ -52,7 +52,7 @@ class String extends \XLite\Core\Validator\Scalar
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct($nonEmpty = false)
     {
@@ -66,7 +66,7 @@ class String extends \XLite\Core\Validator\Scalar
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function markAsNonEmpty($nonEmpty = true)
     {
@@ -81,7 +81,7 @@ class String extends \XLite\Core\Validator\Scalar
      * @return void
      * @throws \XLite\Core\Validator\Exception
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function validate($data)
     {

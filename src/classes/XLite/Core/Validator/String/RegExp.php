@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\Validator\String;
@@ -32,7 +32,7 @@ namespace XLite\Core\Validator\String;
  * Regular expression
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class RegExp extends \XLite\Core\Validator\String
 {
@@ -41,7 +41,7 @@ class RegExp extends \XLite\Core\Validator\String
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $regExp;
 
@@ -53,7 +53,7 @@ class RegExp extends \XLite\Core\Validator\String
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct($nonEmpty = false, $regExp = null)
     {
@@ -71,7 +71,7 @@ class RegExp extends \XLite\Core\Validator\String
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setRegExp($regExp)
     {
@@ -86,7 +86,7 @@ class RegExp extends \XLite\Core\Validator\String
      * @return void
      * @throws \XLite\Core\Validator\Exception
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function validate($data)
     {

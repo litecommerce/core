@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Session
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Session")
  * @Table  (name="sessions",
@@ -58,7 +58,7 @@ class Session extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -71,7 +71,7 @@ class Session extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="fixedstring", length="32")
      */
@@ -82,7 +82,7 @@ class Session extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="uinteger")
      */
@@ -93,7 +93,7 @@ class Session extends \XLite\Model\AEntity
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $cache = array();
 
@@ -103,7 +103,7 @@ class Session extends \XLite\Model\AEntity
      * 
      * @return \XLite\Model\Repo\SessionCell
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getSessionCellRepo()
     {
@@ -118,7 +118,7 @@ class Session extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setSid($value)
     {
@@ -130,7 +130,7 @@ class Session extends \XLite\Model\AEntity
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function updateExpiry()
     {
@@ -144,7 +144,7 @@ class Session extends \XLite\Model\AEntity
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __get($name)
     {
@@ -161,7 +161,7 @@ class Session extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __set($name, $value)
     {
@@ -175,7 +175,7 @@ class Session extends \XLite\Model\AEntity
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __isset($name)
     {
@@ -189,7 +189,7 @@ class Session extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __unset($name)
     {
@@ -204,7 +204,7 @@ class Session extends \XLite\Model\AEntity
      *
      * @return \XLite\Model\SessionCell|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCellByName($name)
     {
@@ -225,7 +225,7 @@ class Session extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function invalidateCellCache($name)
     {
@@ -243,7 +243,7 @@ class Session extends \XLite\Model\AEntity
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setCellValue($name, $value)
     {

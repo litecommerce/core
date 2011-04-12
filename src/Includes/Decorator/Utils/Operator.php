@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\Utils;
@@ -33,7 +33,7 @@ namespace Includes\Decorator\Utils;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class Operator extends \Includes\Decorator\Utils\AUtils
 {
@@ -51,7 +51,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @return \Includes\Decorator\DataStructure\Graph\Classes
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function createClassesTree()
     {
@@ -97,7 +97,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getClassesTreeIndex()
     {
@@ -123,7 +123,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @return \Includes\Utils\FileFilter
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getClassFileIterator()
     {
@@ -142,7 +142,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @return \Includes\Decorator\DataStructure\Graph\Modules
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function createModulesGraph()
     {
@@ -183,7 +183,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getModulesGraphIndex()
     {
@@ -191,7 +191,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
 
         // Fetch all active modules from database.
         // Dependencies are checked and corrected by the ModulesManager
-        foreach (static::getActiveModuleList() as $module) {
+        foreach (\Includes\Decorator\Utils\ModulesManager::getActiveModules() as $module => $tmp) {
 
             // Unconditionally add module to the index (since its dependencies are already checked)
             $index[$module] = new \Includes\Decorator\DataStructure\Graph\Modules($module);
@@ -200,23 +200,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
         return $index;
     }
       
-    /**
-     * Return list of active module names
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getActiveModuleList()
-    {
-        return \Includes\Utils\ArrayManager::getArraysArrayFieldValues(
-            \Includes\Decorator\Utils\ModulesManager::getActiveModules(),
-            'actualName'
-        );
-    }
-
-
     // ------------------------------ Decorator routines -
 
     /**
@@ -227,7 +210,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function decorateClass(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -278,7 +261,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function divideChildrenIntoGroups(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -310,7 +293,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @return integer
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function compareClassWeight(
         \Includes\Decorator\DataStructure\Graph\Classes $node1,
@@ -330,7 +313,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @return integer
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getModuleWeight(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -349,7 +332,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function writeClassFile(
         \Includes\Decorator\DataStructure\Graph\Classes $node,
@@ -370,7 +353,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getTags($content, array $tags = array())
     {
@@ -391,7 +374,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getTagPattern(array $tags)
     {
@@ -408,7 +391,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function parseTags(array $matches)
     {
@@ -455,7 +438,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function parseTagValue($value)
     {

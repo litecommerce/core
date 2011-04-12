@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * ____description____
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class Catalog extends \XLite\Controller\Customer\ACustomer
 {
@@ -41,7 +41,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      *
      * @return \XLite\Model\AEntity
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getModelObject();
 
@@ -51,7 +51,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      *
      * @return \XLite\Model\Category
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCategory()
     {
@@ -63,7 +63,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -77,7 +77,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPageTitle()
     {
@@ -91,7 +91,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDescription()
     {
@@ -105,7 +105,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMetaDescription()
     {
@@ -126,7 +126,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getKeywords()
     {
@@ -141,7 +141,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCategoryPath()
     {
@@ -153,7 +153,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doNoAction()
     {
@@ -171,7 +171,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCategoryURL(\XLite\Model\Category $category)
     {
@@ -185,7 +185,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocationNodeSubnodes(\XLite\Model\Category $category)
     {
@@ -206,7 +206,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addBaseLocation()
     {

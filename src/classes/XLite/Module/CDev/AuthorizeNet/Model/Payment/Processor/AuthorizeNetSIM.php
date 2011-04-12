@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\AuthorizeNet\Model\Payment\Processor;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\AuthorizeNet\Model\Payment\Processor;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
 {
@@ -43,7 +43,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $avserr = array(
         'A' => 'Address (Street) matches, ZIP does not',
@@ -67,7 +67,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $cvverr = array(
         'M' => 'Match',
@@ -83,7 +83,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $err = array(
         '1' => 'This transaction has been approved.',
@@ -211,7 +211,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOperationTypes()
     {
@@ -227,7 +227,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * @return string Widget class name or template path
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSettingsWidget()
     {
@@ -240,7 +240,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormURL()
     {
@@ -255,7 +255,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormFields()
     {
@@ -334,7 +334,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function processReturn(\XLite\Model\Payment\Transaction $transaction)
     {
@@ -388,7 +388,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isConfigured(\XLite\Model\Payment\Method $method)
     {
@@ -403,7 +403,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getReturnType()
     {
@@ -419,7 +419,7 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHMAC($key, $data)
     {

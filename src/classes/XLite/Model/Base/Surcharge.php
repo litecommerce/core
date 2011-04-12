@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Base;
@@ -32,7 +32,7 @@ namespace XLite\Model\Base;
  * Surcharge 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @MappedSuperclass
  */
@@ -52,7 +52,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -65,7 +65,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="fixedstring", length="8")
      */
@@ -76,7 +76,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="128")
      */
@@ -87,7 +87,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -98,7 +98,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
@@ -109,7 +109,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
@@ -120,7 +120,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -131,7 +131,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length=255)
      */
@@ -142,7 +142,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract public function getOrder();
 
@@ -151,7 +151,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * 
      * @return \XLite\Model\Order\Modifier
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getModifier()
     {
@@ -172,7 +172,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * 
      * @return \XLite\DataSet\Transport\Surcharge
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getInfo()
     {
@@ -188,7 +188,7 @@ abstract class Surcharge extends \XLite\Model\AEntity
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getName()
     {

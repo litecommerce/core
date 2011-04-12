@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Order\Details\Base;
@@ -32,7 +32,7 @@ namespace XLite\View\Order\Details\Base;
  * AModel 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AModel extends \XLite\View\Model\AModel
 {
@@ -41,7 +41,7 @@ abstract class AModel extends \XLite\View\Model\AModel
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -60,7 +60,7 @@ abstract class AModel extends \XLite\View\Model\AModel
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOrderId()
     {
@@ -73,7 +73,7 @@ abstract class AModel extends \XLite\View\Model\AModel
      *
      * @return \XLite\Model\Order
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultModelObject()
     {
@@ -85,7 +85,7 @@ abstract class AModel extends \XLite\View\Model\AModel
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormClass()
     {
@@ -97,7 +97,7 @@ abstract class AModel extends \XLite\View\Model\AModel
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {

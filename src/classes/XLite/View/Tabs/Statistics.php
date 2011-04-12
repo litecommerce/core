@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Tabs;
@@ -32,7 +32,7 @@ namespace XLite\View\Tabs;
  * Tabs related to user profile section
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -43,7 +43,7 @@ class Statistics extends \XLite\View\Tabs\ATabs
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $tabs = array(
         'orders_stats' => array(

@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Controller\Customer;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\ProductOptions\Controller\Customer;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class ChangeOptions extends \XLite\Controller\Customer\ACustomer
 {
@@ -43,7 +43,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * @var    \XLite\Model\OrderItem
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $item = null;
 
@@ -52,7 +52,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * 
      * @return array 
      * @access protected 
-     * @since  3.0.0
+     * @since  1.0.0
      */      
     protected function getLocation()
     {
@@ -65,7 +65,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -80,7 +80,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      *
      * @return void
      * @access public
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function init()
     {
@@ -100,7 +100,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      *  
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function actionPostprocess($action = null)
     {
@@ -117,7 +117,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function assembleReturnURL()
     {
@@ -133,7 +133,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionChange()
     {
@@ -179,7 +179,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * @return \XLite\Model\OrderItem
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getItem()
     {
@@ -211,7 +211,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      * @return \XLite\Model\Product
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProduct()
     {

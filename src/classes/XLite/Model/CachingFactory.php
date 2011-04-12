@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Abstract caching factory 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class CachingFactory extends \XLite\Model\Factory
 {
@@ -41,7 +41,7 @@ class CachingFactory extends \XLite\Model\Factory
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $cache = array();
 
@@ -57,7 +57,7 @@ class CachingFactory extends \XLite\Model\Factory
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getObjectFromCallback($signature, $handler, $method, array $args = array(), $clearCache = false)
     {
@@ -77,7 +77,7 @@ class CachingFactory extends \XLite\Model\Factory
      *  
      * @return \XLite\Base
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getObject($signature, $class, array $args = array())
     {
@@ -91,7 +91,7 @@ class CachingFactory extends \XLite\Model\Factory
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function clearCacheCell($signature)
     {
@@ -103,7 +103,7 @@ class CachingFactory extends \XLite\Model\Factory
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function clearCache()
     {
@@ -118,7 +118,7 @@ class CachingFactory extends \XLite\Model\Factory
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function prepareHandler($handler)
     {
@@ -133,7 +133,7 @@ class CachingFactory extends \XLite\Model\Factory
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __destruct()
     {

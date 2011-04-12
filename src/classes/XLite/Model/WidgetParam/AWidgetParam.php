@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\WidgetParam;
@@ -32,7 +32,7 @@ namespace XLite\Model\WidgetParam;
  * ____description____
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AWidgetParam extends \XLite\Base\SuperClass
 {
@@ -50,7 +50,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = null;
 
@@ -59,7 +59,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * 
      * @var   mixed
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $value = null;
 
@@ -68,7 +68,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $label = null;
 
@@ -77,7 +77,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * 
      * @var   mixed
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $isSetting = false;
 
@@ -89,7 +89,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getValidaionSchema($value);
 
@@ -103,7 +103,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct($label, $value = null, $isSetting = false)
     {
@@ -120,7 +120,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function validate($value)
     {
@@ -136,7 +136,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __get($name)
     {
@@ -150,7 +150,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setValue($value)
     {
@@ -164,7 +164,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function appendValue($value)
     {
@@ -178,7 +178,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setVisibility($isSetting)
     {
@@ -193,7 +193,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkConditions(array $conditions)
     {

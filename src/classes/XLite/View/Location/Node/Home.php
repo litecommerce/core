@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Location\Node;
@@ -32,7 +32,7 @@ namespace XLite\View\Location\Node;
  * Home node 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Home extends \XLite\View\Location\Node
 {
@@ -41,7 +41,7 @@ class Home extends \XLite\View\Location\Node
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -53,7 +53,7 @@ class Home extends \XLite\View\Location\Node
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

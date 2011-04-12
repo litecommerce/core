@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\RequestHandler;
@@ -32,7 +32,7 @@ namespace XLite\View\RequestHandler;
  * Abstract base which can populate its params from request and session
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ARequestHandler extends \XLite\View\AView
 {
@@ -54,7 +54,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $requestParams;
 
@@ -63,7 +63,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $savedRequestParams;
 
@@ -86,7 +86,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRequestParams()
     {
@@ -102,7 +102,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      *
      * @return array
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRequestParamsHash()
     {
@@ -116,7 +116,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      *
      * @return void
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setWidgetParams(array $params)
     {
@@ -133,7 +133,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSessionCell()
     {
@@ -145,7 +145,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getWidgetClass()
     {
@@ -157,7 +157,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getWidgetParameters()
     {
@@ -169,7 +169,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getJSData()
     {
@@ -193,7 +193,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      *
      * @return boolean 
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkSessionCell()
     {
@@ -207,7 +207,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkRequestParams()
     {
@@ -222,7 +222,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      *
      * @return void
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function initView()
     {
@@ -238,7 +238,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -252,7 +252,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      *
      * @return mixed
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSavedRequestParam($param)
     {
@@ -279,7 +279,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setWidgetRequestParamValues(array &$params)
     {

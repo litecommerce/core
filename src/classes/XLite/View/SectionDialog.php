@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Section-based dialog
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class SectionDialog extends \XLite\View\SimpleDialog
 {
@@ -41,7 +41,7 @@ abstract class SectionDialog extends \XLite\View\SimpleDialog
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function defineSections();
 
@@ -51,7 +51,7 @@ abstract class SectionDialog extends \XLite\View\SimpleDialog
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -66,7 +66,7 @@ abstract class SectionDialog extends \XLite\View\SimpleDialog
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBody()
     {

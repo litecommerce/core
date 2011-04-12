@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\AustraliaPost\View\Tabs;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\AustraliaPost\View\Tabs;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class ShippingSettings extends \XLite\View\Tabs\ShippingSettings implements \XLite\Base\IDecorator
 {
@@ -43,7 +43,7 @@ class ShippingSettings extends \XLite\View\Tabs\ShippingSettings implements \XLi
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function init() 
     {

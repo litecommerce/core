@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * Widget data transport
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class WidgetDataTransport extends \XLite\Base
 {
@@ -41,7 +41,7 @@ class WidgetDataTransport extends \XLite\Base
      * 
      * @var   \XLite\View\AView|null
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $handler;
 
@@ -53,7 +53,7 @@ class WidgetDataTransport extends \XLite\Base
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct($handler)
     {
@@ -65,7 +65,7 @@ class WidgetDataTransport extends \XLite\Base
      * 
      * @return \XLite\View\AView
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProtectedWidget()
     {
@@ -80,7 +80,7 @@ class WidgetDataTransport extends \XLite\Base
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __call($method, array $args = array())
     {

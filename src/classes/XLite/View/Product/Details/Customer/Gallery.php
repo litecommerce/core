@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Product\Details\Customer;
@@ -32,7 +32,7 @@ namespace XLite\View\Product\Details\Customer;
  * Gallery
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="product.details.page.image", weight="20")
  * @ListChild (list="product.details.quicklook.image", weight="20")
@@ -44,7 +44,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCommonFiles()
     {
@@ -60,7 +60,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -75,7 +75,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getWidgetMaxWidth()
     {
@@ -90,7 +90,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAlt(\XLite\Model\Base\Image $image, $i)
     {
@@ -103,7 +103,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -115,7 +115,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLightBoxImagesDir()
     {
@@ -130,7 +130,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -144,7 +144,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getListItemClassAttribute($i)
     {
@@ -160,7 +160,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getListItemClass($i)
     {
@@ -176,7 +176,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMiddleImageURL(\XLite\Model\Base\Image $image, $width = null, $height = null)
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList\Module;
@@ -32,52 +32,39 @@ namespace XLite\View\ItemsList\Module;
  * Addons search and installation widget
  *
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Install extends \XLite\View\ItemsList\Module\AModule
 {
     /**
-     * SortOption name definitions
+     * Sort option name definitions
      */
     const SORT_OPT_POPULAR    = 'm.downloads';
     const SORT_OPT_RATED      = 'm.rating';
-    const SORT_OPT_NEWEST     = 'm.date';
+    const SORT_OPT_NEWEST     = 'm.revisionDate';
     const SORT_OPT_ALPHA      = 'm.moduleName';
 
-    const SORT_ORDER_ASC  = 'asc';
-    const SORT_ORDER_DESC = 'desc';
+    /**
+     * Price filter options
+     */
+    const PRICE_FILTER_OPT_ALL  = 'all';
+    const PRICE_FILTER_OPT_FREE = \XLite\Model\Repo\Module::PRICE_FREE;
+    const PRICE_FILTER_OPT_PAID = \XLite\Model\Repo\Module::PRICE_PAID;
 
     /**
-     * Modes 
+     * Widget param names
      */
+    const PARAM_SUBSTRING    = 'substring';
+    const PARAM_TAG          = 'tag';
+    const PARAM_PRICE_FILTER = 'priceFilter';
 
-    const MODE_SEARCH   = 'search';
-    const MODE_FEATURED = 'featured';
-
-    /**
-     * Currently applie sortOption (cached)
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    protected static $sortOption = null;
-
-    /**
-     * Possible sortOptions (cached)
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    protected static $sortOptions = null;
 
     /**
      * Return list of targets allowed for this widget
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -88,89 +75,31 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     }
 
     /**
-     * getSearchParams
+     * Define and set widget attributes; initialize widget
      *
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getSearchParams()
-    {
-        return array(
-            \XLite\Model\Repo\Module::P_SUBSTRING    => self::PARAM_SUBSTRING,
-            \XLite\Model\Repo\Module::P_TAG          => self::PARAM_TAG,
-            \XLite\Model\Repo\Module::P_PRICE_FILTER => self::PARAM_PRICE_FILTER,
-        );
-    }
-
-
-    /**
-     * Return sortOptions array
+     * @param array $params Widget params OPTIONAL
      *
-     * @return array
+     * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    protected static function getSortOptions()
+    public function __construct(array $params = array())
     {
-        if (is_null(static::$sortOptions)) {
+        $this->sortByModes += $this->getSortOptions();
 
-            static::$sortOptions = array(
-                static::SORT_OPT_POPULAR    => 'Most Popular',
-                static::SORT_OPT_RATED      => 'Most Rated',
-                static::SORT_OPT_NEWEST     => 'Newest',
-            );
-
-            if (static::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode) {
-                static::$sortOptions += array(
-                    static::SORT_OPT_ALPHA  => 'Alphabetically'
-                );
-            }
-
-        }
-
-        return static::$sortOptions;
+        parent::__construct($params);
     }
-
-    /**
-     * Return applied sortOption
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getSortOption()
-    {
-        $sortOption = \XLite\Core\Request::getInstance()->sortBy;
-
-        if (
-            is_null($sortOption)
-            || empty($sortOption)
-            || !in_array($sortOption, array_keys(static::getSortOptions()))
-        ) {
-
-            static::$sortOption = static::SORT_OPT_POPULAR;
-
-        } else {
-
-            static::$sortOption = $sortOption;
-        }
-
-        return static::$sortOption;
-    }
-
 
     /**
      * Register files from common repository
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCommonFiles()
     {
         $list = parent::getCommonFiles();
-
         $list['js'][] = 'js/ui.selectmenu.js';
         $list['css'][] = 'css/ui.selectmenu.css';
 
@@ -182,12 +111,11 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'modules_manager' . LC_DS . 'common.css';
         // TODO fix with enter-key license widget. It should be taken dynamically from AJAX
         $list[] = 'modules_manager' . LC_DS . 'enter_key' . LC_DS . 'css' . LC_DS . 'style.css';
@@ -196,63 +124,40 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         return $list;
     }
 
-
     /**
-     * Return params list to use for search
+     * Return widget default template
      *
-     * @return \XLite\Core\CommonCell
+     * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    protected function getSearchCondition()
+    protected function getDefaultTemplate()
     {
-        $result = parent::getSearchCondition();
-
-        foreach (static::getSearchParams() as $modelParam => $requestParam) {
-            $result->$modelParam = $this->getParam($requestParam);
-        }
-
-        // Remove substring and tag params for the Featured add-ons pages
-        if (self::MODE_SEARCH !== \XLite\Core\Request::getInstance()->mode) {
-            $result->{self::PARAM_SUBSTRING} = null;
-            $result->{self::PARAM_TAG} = null;
-            $result->{self::PARAM_PRICE_FILTER} = null;
-        }
-
-        return $result;
+        return $this->getDir() . LC_DS . $this->getPageBodyDir() . LC_DS . 'items_list.tpl';
     }
 
     /**
-     * Define so called "request" parameters
+     * Auxiliary method to check visibility
      *
-     * @return void
+     * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    protected function defineRequestParams()
+    protected function isDisplayWithEmptyList()
     {
-        parent::defineRequestParams();
-
-        $this->requestParams = array_merge(
-            $this->requestParams,
-            static::getSearchParams()
-        );
+        return true;
     }
 
     /**
-     * Get URL common parameters
+     * Return class name for the list pager
      *
-     * @return array
+     * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    protected function getCommonParams()
+    protected function getPagerClass()
     {
-        $mode = static::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode
-            ? static::MODE_SEARCH
-            : static::MODE_FEATURED;
-
-        return parent::getCommonParams() + array('mode' => $mode);
+        return '\XLite\View\Pager\Admin\Module\Install';
     }
 
     /**
@@ -260,7 +165,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -272,7 +177,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -284,7 +189,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageBodyDir()
     {
@@ -292,20 +197,87 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     }
 
     /**
-     * Return list of the modes allowed by default
+     * isHeaderVisible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isHeaderVisible()
+    {
+        return true;
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_SUBSTRING => new \XLite\Model\WidgetParam\String(
+                'Substring', ''
+            ),
+            self::PARAM_TAG => new \XLite\Model\WidgetParam\String(
+                'Tag', ''
+            ),
+            self::PARAM_PRICE_FILTER => new \XLite\Model\WidgetParam\Set(
+                'Price filter', self::PRICE_FILTER_OPT_ALL, false, $this->getPriceFilterOptions()
+            ),
+        );
+    }
+
+    /**
+     * Define so called "request" parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineRequestParams()
+    {
+        parent::defineRequestParams();
+
+        $this->requestParams[] = self::PARAM_PRICE_FILTER;
+        $this->requestParams[] = self::PARAM_SUBSTRING;
+    }
+
+    /**
+     * Return list of dort options
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    protected function getDefaultModes()
+    protected function getSortOptions()
     {
-        $list = parent::getDefaultModes();
-        $list[] = static::MODE_SEARCH;
-        $list[] = static::MODE_FEATURED;
-        $list[] = '';
+        return array(
+            static::SORT_OPT_POPULAR => 'Most Popular',
+            static::SORT_OPT_RATED   => 'Most Rated',
+            static::SORT_OPT_NEWEST  => 'Newest',
+            static::SORT_OPT_ALPHA   => 'Alphabetically',
+        );
+    }
 
-        return $list;
+    /**
+     * Return list of price filter options
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getPriceFilterOptions()
+    {
+        return array(
+            self::PRICE_FILTER_OPT_ALL  => 'No price filtering',
+            self::PRICE_FILTER_OPT_FREE => 'Free add-ons',
+            self::PRICE_FILTER_OPT_PAID => 'Commercial add-ons',
+        );
     }
 
     /**
@@ -313,11 +285,11 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSortByModeDefault()
     {
-        return parent::SORT_BY_MODE_POPULAR;
+        return self::SORT_OPT_ALPHA;
     }
 
     /**
@@ -325,54 +297,106 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSortOrder()
     {
-        return self::getSortOption() === self::SORT_OPT_ALPHA ? self::SORT_ORDER_ASC : self::SORT_ORDER_DESC;
+        return self::SORT_OPT_ALPHA === $this->getSortBy() ? self::SORT_ORDER_ASC : self::SORT_ORDER_DESC;
     }
 
     /**
-     * Return class name for the list pager
+     * Return params list to use for search
      *
-     * @return string
+     * @return \XLite\Core\CommonCell
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    protected function getPagerClass()
+    protected function getSearchCondition()
     {
-        return '\XLite\View\Pager\Admin\Module\Install';
+        $cnd = parent::getSearchCondition();
+        $cnd->{\XLite\Model\Repo\Module::P_ORDER_BY}     = array($this->getSortBy(), $this->getSortOrder());
+        $cnd->{\XLite\Model\Repo\Module::P_PRICE_FILTER} = $this->getParam(self::PARAM_PRICE_FILTER);
+        $cnd->{\XLite\Model\Repo\Module::P_SUBSTRING}    = $this->getParam(self::PARAM_SUBSTRING);
+
+        return $cnd;
     }
 
+    // {{{ Helpers to use in templates
+
     /**
-     * Check if the module can be installed
-     *
-     * FIXME: actualize
+     * Check if the module is purchased
      *
      * @param \XLite\Model\Module $module Module
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
+     */
+    protected function isInstalled(\XLite\Model\Module $module)
+    {
+        return $module->getInstalled();
+    }
+
+    /**
+     * Check if the module is free
+     *
+     * @param \XLite\Model\Module $module Module
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isFree(\XLite\Model\Module $module)
+    {
+        return !$this->isInstalled($module) && $module->isFree();
+    }
+
+    /**
+     * Check if the module is purchased
+     *
+     * @param \XLite\Model\Module $module Module
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isPurchased(\XLite\Model\Module $module)
+    {
+        return !$this->isInstalled($module) && !$this->isFree($module) && $module->isPurchased();
+    }
+
+    /**
+     * Check if the module can be installed
+     *
+     * @param \XLite\Model\Module $module Module
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
      */
     protected function canInstall(\XLite\Model\Module $module)
     {
-        return !$module->getInstalled() && ($module->isPurchased() || $module->isFree());
+        return !$this->isInstalled($module) 
+            && ($this->isPurchased($module) || $this->isFree($module)) 
+            && $this->canEnable($module);
     }
 
     /**
      * Check if the module can be installed
      *
-     * FIXME: actualize
-     *
      * @param \XLite\Model\Module $module Module
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function canPurchase(\XLite\Model\Module $module)
     {
-        return !$module->getInstalled() && !$module->isPurchased() && !$module->isFree();
+        return !$this->isInstalled($module) 
+            && !$this->isPurchased($module) 
+            && !$this->isFree($module)
+            && $this->canEnable($module);
     }
+
+    // }}}
 }

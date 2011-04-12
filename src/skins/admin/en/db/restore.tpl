@@ -1,15 +1,17 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Database restore tab template
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
+
+
 <script type="text/javascript">
 function visibleBox(id, status)
 {
@@ -60,7 +62,7 @@ To restore the images which are stored in the file system, you have to copy them
 <p class="adminParagraph"><b class="star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings">General settings</a> page before performing restore procedure!</p>
 
 <form action="admin.php" method="post" id="dbform" enctype="multipart/form-data">
-<input type="hidden" name="target" value="backup_restore" />
+<input type="hidden" name="target" value="db_restore" />
 <input type="hidden" name="action" value="" />
 <input type="hidden" name="page" value="{page}" />
 <table cellpadding="0" cellspacing="0">

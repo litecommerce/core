@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 require_once __DIR__ . '/AProductList.php';
@@ -64,7 +64,7 @@ class XLite_Web_Customer_CategoryProducts extends XLite_Web_Customer_AProductLis
      * @return \XLite\Model\Category
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTestCategory()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -34,7 +34,7 @@ namespace XLite\Controller\Admin;
  * (in similar way as it was done for products). Remove hardcoded session cell admin_users_search
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Users extends \XLite\Controller\Admin\AAdmin
 {
@@ -43,7 +43,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $users = null;
 
@@ -53,7 +53,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -67,7 +67,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSearchParams($paramName = null)
     {
@@ -97,7 +97,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isAdvancedOptionSelected()
     {
@@ -123,7 +123,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getUsers()
     {
@@ -146,7 +146,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getUsersCount()
     {
@@ -159,7 +159,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -171,7 +171,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionOrders()
     {
@@ -184,7 +184,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionSearch()
     {
@@ -200,7 +200,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionReset()
     {
@@ -216,7 +216,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setSearchParams($data)
     {
@@ -236,7 +236,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAdvancedSearchFields()
     {
@@ -256,7 +256,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function searchOrders()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller;
@@ -32,7 +32,7 @@ namespace XLite\Controller;
  * Abstract controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AController extends \XLite\Core\Handler
 {
@@ -63,7 +63,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @var   \XLite\Model\ActionError\Abstract
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $actionStatus;
 
@@ -72,7 +72,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @var   \XLite\View\Location
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $locationPath;
 
@@ -81,7 +81,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $returnURL;
 
@@ -90,7 +90,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $pages = array();
 
@@ -99,7 +99,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $params = array('target');
 
@@ -108,7 +108,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $pageTemplates = array();
 
@@ -118,7 +118,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $valid = true;
 
@@ -128,7 +128,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getTargetByClassName()
     {
@@ -147,7 +147,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAllParams($exeptions = null)
     {
@@ -170,7 +170,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isRedirectNeeded()
     {
@@ -182,7 +182,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTarget()
     {
@@ -194,7 +194,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAction()
     {
@@ -210,7 +210,7 @@ abstract class AController extends \XLite\Core\Handler
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getShopURL($url = '', $secure = false)
     {
@@ -222,7 +222,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return \XLite\View\Location
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getLocationPath()
     {
@@ -238,7 +238,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getReturnURL()
     {
@@ -256,7 +256,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setReturnURL($url)
     {
@@ -270,7 +270,7 @@ abstract class AController extends \XLite\Core\Handler
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setReturnURLParams(array $params)
     {
@@ -284,7 +284,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -315,7 +315,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isAJAX()
     {
@@ -327,7 +327,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return \XLite\View\Controller
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getViewer()
     {
@@ -341,7 +341,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function processRequest()
     {
@@ -363,7 +363,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function postprocess()
     {
@@ -374,7 +374,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -386,7 +386,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isTitleVisible()
     {
@@ -398,7 +398,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPageTitle()
     {
@@ -410,7 +410,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isActionError()
     {
@@ -426,7 +426,7 @@ abstract class AController extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setActionStatus($status, $message = '', $code = 0)
     {
@@ -441,7 +441,7 @@ abstract class AController extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setActionError($message = '', $code = 0)
     {
@@ -456,7 +456,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setActionSuccess($message = '', $code = 0)
     {
@@ -469,7 +469,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isValid()
     {
@@ -481,7 +481,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function init()
     {
@@ -493,7 +493,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isHTTPS()
     {
@@ -505,7 +505,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAccessLevel()
     {
@@ -517,7 +517,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProperties()
     {
@@ -537,7 +537,7 @@ abstract class AController extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getURL(array $params = array())
     {
@@ -555,7 +555,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPageTemplate()
     {
@@ -575,7 +575,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTabPages()
     {
@@ -587,7 +587,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getUploadedFile()
     {
@@ -618,7 +618,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkUploadedFile()
     {
@@ -652,7 +652,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCharset()
     {
@@ -660,37 +660,11 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * getEmailValidatorRegExp
-     * FIXME: is used in skins/default/en/contactus.tpl only
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getEmailValidatorRegExp()
-    {
-        $values = array();
-        $domains = split(',| |;|\||\/', $this->config->Email->valid_email_domains);
-        
-        foreach ((array)$domains as $key=>$val) {
-            if (trim($val)) {
-                $values[$key] = '(\.' . trim($val) . ')';
-            }
-        }
-
-        if (empty($values)) {
-            $values[] = '(\..{2,3})';
-        }
-
-        return '/\b(^(\S+@).+(' . implode('|', $values) . ')$)\b/gi';
-    }
-
-    /**
      * isSecure 
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isSecure()
     {
@@ -705,7 +679,7 @@ abstract class AController extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function strftime($format)
     {
@@ -720,7 +694,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPrefixPostedData()
     {
@@ -735,7 +709,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPrefixToDelete()
     {
@@ -748,7 +722,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return \XLite\Model\Currency
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCurrentCurrency()
     {
@@ -760,7 +734,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRootCategoryId()
     {
@@ -772,7 +746,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCategoryId()
     {
@@ -784,7 +758,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMetaDescription()
     {
@@ -796,7 +770,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getKeywords()
     {
@@ -810,7 +784,7 @@ abstract class AController extends \XLite\Core\Handler
      *  
      * @return \XLite\View\Model\AModel|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getModelForm(array $params = array())
     {    
@@ -834,7 +808,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return boolean 
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkAccess()
     {
@@ -846,7 +820,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultRedirectCode()
     {
@@ -858,7 +832,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return string
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultReturnURL()
     {
@@ -872,7 +846,7 @@ abstract class AController extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function redirect($url = null)
     {
@@ -905,7 +879,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRedirectMode()
     {
@@ -917,7 +891,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -929,7 +903,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -944,7 +918,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addLocationNode($name, $link = null, array $subnodes = null)
     {
@@ -956,7 +930,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineLocationPath()
     {
@@ -981,7 +955,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getViewerTemplate()
     {
@@ -1009,7 +983,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModelFormClass()
     {
@@ -1023,7 +997,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function actionPostprocess($action)
     {
@@ -1039,7 +1013,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function callAction()
     {
@@ -1065,7 +1039,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doRedirect()
     {
@@ -1082,7 +1056,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function translateTopMessagesToHTTPHeaders()
     {
@@ -1103,7 +1077,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function assignAJAXResponseStatus()
     {
@@ -1138,7 +1112,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doNoAction()
     {
@@ -1149,7 +1123,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -1161,7 +1135,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function display404()
     {
@@ -1182,7 +1156,7 @@ abstract class AController extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setInternalRedirect($flag = true)
     {
@@ -1198,7 +1172,7 @@ abstract class AController extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setHardRedirect($flag = true)
     {
@@ -1214,7 +1188,7 @@ abstract class AController extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setSilenceClose($flag = true)
     {
@@ -1228,7 +1202,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isAJAXViewer()
     {
@@ -1240,7 +1214,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getViewerClass()
     {
@@ -1256,7 +1230,7 @@ abstract class AController extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function printAJAXOuput($output)
     {
@@ -1269,7 +1243,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function markAsAccessDenied()
     {
@@ -1286,7 +1260,7 @@ abstract class AController extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function startDownload($filename, $contentType = 'application/force-download')
     {
@@ -1300,7 +1274,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function startImage()
     {
@@ -1313,7 +1287,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function startDump()
     {
@@ -1335,7 +1309,7 @@ abstract class AController extends \XLite\Core\Handler
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function filterXliteFormID($url)
     {
@@ -1363,7 +1337,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getViewerParams()
     {
@@ -1402,7 +1376,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function updateMarketplaceDataCache()
     {
@@ -1436,7 +1410,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function areMarketplaceCachedDataExpired()
     {
@@ -1451,7 +1425,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMarketplaceLastRequestTime()
     {
@@ -1463,7 +1437,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setMarketplaceLastRequestTime()
     {
@@ -1475,7 +1449,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMarketplaceDataTTL()
     {

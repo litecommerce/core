@@ -8,13 +8,13 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *
  * @ListChild (list="product.search.conditions", weight="10")
  *}
 
 <tr>
-  <td class="table-label">Product SKU</td>
+  <td class="table-label">{t(#Product SKU#)}</td>
   <td style="width:10px;height:10px;"></td>
   <td style="height:10px;"><input type="text" size="6" name="sku" value="{getCondition(#sku#):r}" /></td>
 </tr>

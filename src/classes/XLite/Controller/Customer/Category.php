@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * Category
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Category extends \XLite\Controller\Customer\Catalog
 {
@@ -41,7 +41,7 @@ class Category extends \XLite\Controller\Customer\Catalog
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $params = array('target', 'category_id');
 
@@ -50,7 +50,7 @@ class Category extends \XLite\Controller\Customer\Catalog
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isTitleVisible()
     {
@@ -62,7 +62,7 @@ class Category extends \XLite\Controller\Customer\Catalog
      *
      * @return \XLite\Model\AEntity
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModelObject()
     {
@@ -74,7 +74,7 @@ class Category extends \XLite\Controller\Customer\Catalog
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

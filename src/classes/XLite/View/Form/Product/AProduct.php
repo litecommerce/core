@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Product;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Product;
  * Abstract product-based form
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AProduct extends \XLite\View\Form\AForm
 {
@@ -66,7 +66,7 @@ abstract class AProduct extends \XLite\View\Form\AForm
      * 
      * @return \XLite\Model\Product
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProduct()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\PagerOrig;
@@ -32,7 +32,7 @@ namespace XLite\View\PagerOrig;
  * Pager 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class OrdersList extends \XLite\View\PagerOrig\Common
 {
@@ -43,7 +43,7 @@ class OrdersList extends \XLite\View\PagerOrig\Common
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageURLParams($pageId)
     {

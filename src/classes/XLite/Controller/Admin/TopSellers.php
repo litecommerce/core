@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Top sellers statistics page controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class TopSellers extends \XLite\Controller\Admin\Stats
 {
@@ -47,7 +47,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPageTemplate()
     {
@@ -59,7 +59,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRowsCount()
     {
@@ -83,7 +83,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getStats()
     {
@@ -100,7 +100,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -112,7 +112,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -126,7 +126,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getData()
     {
@@ -168,7 +168,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function processData($data)
     {

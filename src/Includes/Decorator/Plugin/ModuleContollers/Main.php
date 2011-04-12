@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\Plugin\ModuleContollers;
@@ -33,7 +33,7 @@ namespace Includes\Decorator\Plugin\ModuleContollers;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\APlugin
 {
@@ -51,7 +51,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function executeHookHandlerBeforeDecorate()
     {
@@ -70,7 +70,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function changeControllerClass(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -87,7 +87,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @return boolean
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isModuleController(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -102,7 +102,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareModuleControllerClass(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -34,7 +34,7 @@ namespace XLite\View;
  * FIXME: must extend the AView class
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
 {
@@ -43,7 +43,7 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getHead();
 
@@ -52,7 +52,7 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getDir();
 
@@ -61,7 +61,7 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isWrapper()
     {
@@ -73,7 +73,7 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBodyTemplate()
     {
@@ -85,7 +85,7 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTemplate()
     {
@@ -97,7 +97,7 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBody()
     {
@@ -109,7 +109,7 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function useBodyTemplate()
     {

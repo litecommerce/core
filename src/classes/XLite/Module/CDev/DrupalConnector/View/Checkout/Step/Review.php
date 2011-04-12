@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\View\Checkout\Step;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\View\Checkout\Step;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Review extends \XLite\View\Checkout\Step\Review implements \XLite\Base\IDecorator
 {
@@ -50,7 +50,7 @@ class Review extends \XLite\View\Checkout\Step\Review implements \XLite\Base\IDe
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTermsURL()
     {

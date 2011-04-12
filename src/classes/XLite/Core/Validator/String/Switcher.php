@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\Validator\String;
@@ -32,7 +32,7 @@ namespace XLite\Core\Validator\String;
  * Switcher
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Switcher extends \XLite\Core\Validator\String
 {
@@ -44,7 +44,7 @@ class Switcher extends \XLite\Core\Validator\String
      * @return void
      * @throws \XLite\Core\Validator\Exception
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function validate($data)
     {
@@ -62,7 +62,7 @@ class Switcher extends \XLite\Core\Validator\String
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function sanitize($data)
     {

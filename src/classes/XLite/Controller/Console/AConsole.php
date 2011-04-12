@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Console;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Console;
  * Abstarct console-zone controller 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AConsole extends \XLite\Controller\AController
 {
@@ -41,7 +41,7 @@ abstract class AConsole extends \XLite\Controller\AController
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $actionTime;
 
@@ -50,7 +50,7 @@ abstract class AConsole extends \XLite\Controller\AController
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $pureOutput = false;
 
@@ -60,7 +60,7 @@ abstract class AConsole extends \XLite\Controller\AController
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -90,7 +90,7 @@ abstract class AConsole extends \XLite\Controller\AController
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isRedirectNeeded()
     {
@@ -102,7 +102,7 @@ abstract class AConsole extends \XLite\Controller\AController
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -114,7 +114,7 @@ abstract class AConsole extends \XLite\Controller\AController
      * 
      * @return \XLite\View\Controller
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getViewer()
     {
@@ -126,7 +126,7 @@ abstract class AConsole extends \XLite\Controller\AController
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAllowedActions()
     {
@@ -149,7 +149,7 @@ abstract class AConsole extends \XLite\Controller\AController
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkCLIKey()
     {
@@ -163,7 +163,7 @@ abstract class AConsole extends \XLite\Controller\AController
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHelp()
     {
@@ -189,7 +189,7 @@ abstract class AConsole extends \XLite\Controller\AController
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getControllerHelp()
     {
@@ -204,7 +204,7 @@ abstract class AConsole extends \XLite\Controller\AController
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function printContent($str)
     {
@@ -218,7 +218,7 @@ abstract class AConsole extends \XLite\Controller\AController
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function printError($error)
     {
@@ -236,7 +236,7 @@ abstract class AConsole extends \XLite\Controller\AController
      *  
      * @return void
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function redirect($url = null)
     {
@@ -247,7 +247,7 @@ abstract class AConsole extends \XLite\Controller\AController
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function markAsAccessDenied()
     {
@@ -259,7 +259,7 @@ abstract class AConsole extends \XLite\Controller\AController
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isInputStream()
     {
@@ -280,7 +280,7 @@ abstract class AConsole extends \XLite\Controller\AController
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function openInputStream()
     {
@@ -299,7 +299,7 @@ abstract class AConsole extends \XLite\Controller\AController
      * 
      * @return string|boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function readInputStream()
     {
@@ -318,7 +318,7 @@ abstract class AConsole extends \XLite\Controller\AController
      * 
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function saveInputStream()
     {

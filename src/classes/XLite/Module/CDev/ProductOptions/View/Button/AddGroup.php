@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\View\Button;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\ProductOptions\View\Button;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class AddGroup extends \XLite\View\Button\Link
 {
@@ -66,7 +66,7 @@ class AddGroup extends \XLite\View\Button\Link
      *
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {

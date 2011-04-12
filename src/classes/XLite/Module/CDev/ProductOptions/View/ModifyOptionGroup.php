@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\View;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\ProductOptions\View;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class ModifyOptionGroup extends \XLite\View\AView
 {
@@ -43,7 +43,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      * @var    \XLite\Module\CDev\ProductOptions\Model\OptionGroup
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $group;
 
@@ -53,7 +53,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $options;
 
@@ -62,7 +62,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      *
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -75,7 +75,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      * @return \XLite\Module\CDev\ProductOptions\Model\OptionGroup
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getGroup()
     {
@@ -99,7 +99,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      * @return boolean 
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -113,7 +113,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isNew()
     {
@@ -126,7 +126,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      * @return integer
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProductId()
     {
@@ -139,7 +139,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      * @return integer
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getGroupId()
     {
@@ -154,7 +154,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      * @return \XLite\Module\CDev\ProductOptions\Model\OptionGroupTranslation
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTranslation()
     {
@@ -169,7 +169,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOptions()
     {
@@ -189,7 +189,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      * @return \XLite\Module\CDev\ProductOptions\Model\OptionTranslation
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOptionTranslation(\XLite\Module\CDev\ProductOptions\Model\Option $option, $field)
     {
@@ -203,7 +203,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getModifiersNames()
     {
@@ -221,7 +221,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOptionModifiers(\XLite\Module\CDev\ProductOptions\Model\Option $option = null)
     {
@@ -249,7 +249,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOptionGroupTypes()
     {
@@ -265,7 +265,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOptionGroupViewTypes()
     {
@@ -283,7 +283,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOptionSurchargeModifierTypes()
     {

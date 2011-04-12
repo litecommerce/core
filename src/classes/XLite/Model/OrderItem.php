@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Something customer can put into his cart
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity (repositoryClass="XLite\Model\Repo\OrderItem")
  * @Table  (name="order_items",
@@ -56,7 +56,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      * 
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -69,7 +69,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @var   \XLite\Model\Product
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="order_items", cascade={"merge","detach"})
      * @JoinColumn (name="object_id", referencedColumnName="product_id")
@@ -81,7 +81,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="255")
      */
@@ -92,7 +92,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="32")
      */
@@ -103,7 +103,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      *
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="decimal", precision="14", scale="4")
      */
@@ -114,7 +114,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -125,7 +125,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @var   \XLite\Model\Order
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      * 
      * @ManyToOne  (targetEntity="XLite\Model\Order", inversedBy="items")
      * @JoinColumn (name="order_id", referencedColumnName="order_id")
@@ -137,7 +137,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      *
      * @var   \Doctrine\Common\Collections\Collection
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\OrderItem\Surcharge", mappedBy="owner", cascade={"all"})
      * @OrderBy   ({"id" = "ASC"})
@@ -149,7 +149,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @var   \XLite\Model\Product
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $dumpProduct;
 
@@ -161,7 +161,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {
@@ -175,7 +175,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function resetSurcharges()
     {
@@ -193,7 +193,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @return \XLite\Model\Product
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProduct()
     {
@@ -212,7 +212,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setProduct(\XLite\Model\Product $product = null)
     {
@@ -226,7 +226,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setObject(\XLite\Model\Base\IOrderItem $item = null)
     {
@@ -249,7 +249,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setAmount($amount)
     {
@@ -266,7 +266,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @return float
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getWeight()
     {
@@ -282,7 +282,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function hasImage()
     {
@@ -294,7 +294,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getImageURL()
     {
@@ -306,7 +306,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      *
      * @return \XLite\Model\Base\Image
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getImage()
     {
@@ -318,7 +318,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDescription()
     {
@@ -330,7 +330,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getURL()
     {
@@ -342,7 +342,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isShipped()
     {
@@ -354,7 +354,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getKey()
     {
@@ -366,7 +366,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isValid()
     {
@@ -378,7 +378,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function calculate()
     {
@@ -393,7 +393,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @return float
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTaxableBasis()
     {
@@ -407,7 +407,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProductClasses()
     {
@@ -421,7 +421,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getEventCell()
     {
@@ -439,7 +439,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @return \XLite\Model\Product|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDeletedProduct()
     {
@@ -460,7 +460,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function saveItemState(\XLite\Model\Base\IOrderItem $item)
     {
@@ -476,7 +476,7 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function resetItemState()
     {

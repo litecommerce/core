@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Tabs;
@@ -32,7 +32,7 @@ namespace XLite\View\Tabs;
  * Tabs related to shipping settings
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -44,7 +44,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $tabs = array(
         'shipping_settings' => array(
@@ -71,7 +71,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $zones = null;
 
@@ -80,7 +80,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $markups = null;
 
@@ -89,7 +89,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function init()
     {
@@ -111,7 +111,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getShippingProcessors()
     {
@@ -123,7 +123,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getShippingMethods()
     {
@@ -135,7 +135,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isDisplayZoneDetails()
     {
@@ -148,7 +148,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * 
      * @return \XLite\Model\Zone
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getZone()
     {
@@ -174,7 +174,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getShippingZones()
     {
@@ -190,7 +190,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isZonesDefined()
     {
@@ -202,7 +202,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function hasShippingMarkups()
     {
@@ -214,7 +214,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getShippingMarkups()
     {
@@ -254,7 +254,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPreparedShippingMarkups()
     {
@@ -270,7 +270,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      *  
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isShowMarkupsSeparator($id, array $array)
     {
@@ -302,7 +302,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareMarkups($markups)
     {

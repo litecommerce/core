@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Product 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Product extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,7 +41,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public $params = array('target', 'product_id', 'page', 'backURL');
 
@@ -50,7 +50,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public $page = 'info';
 
@@ -59,7 +59,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public $pages = array(
         'info'      => 'Product info',
@@ -72,7 +72,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public $pageTemplates = array(
         'info'      => 'product/info.tpl',
@@ -87,7 +87,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *
      * @return \XLite\Model\Product
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProduct()
     {
@@ -107,7 +107,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -119,7 +119,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return \XLite\Model\Inventory
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getInventory()
     {
@@ -131,7 +131,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCategoryId()
     {
@@ -151,7 +151,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProductId()
     {
@@ -165,7 +165,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isNew()
     {
@@ -178,7 +178,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -190,7 +190,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -206,7 +206,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCategoryProducts(\XLite\Model\Product $product)
     {
@@ -233,7 +233,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getClasses(\XLite\Model\Product $product)
     {
@@ -264,7 +264,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setCleanURLError($cleanURL)
     {
@@ -281,7 +281,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkCleanURL($cleanURL)
     {
@@ -305,7 +305,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionModify()
     {
@@ -319,7 +319,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionAdd()
     {
@@ -348,7 +348,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -379,7 +379,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionAddImage()
     {
@@ -413,7 +413,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDeleteImage()
     {
@@ -442,7 +442,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdateImages()
     {
@@ -476,7 +476,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdateInventory()
     {

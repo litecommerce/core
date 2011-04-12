@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Shipping;
@@ -32,7 +32,7 @@ namespace XLite\Model\Shipping;
  * Shipping rate model
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Rate extends \XLite\Base\SuperClass
 {
@@ -41,7 +41,7 @@ class Rate extends \XLite\Base\SuperClass
      * 
      * @var   \XLite\Model\Shipping\Method
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $method = null;
 
@@ -50,7 +50,7 @@ class Rate extends \XLite\Base\SuperClass
      * 
      * @var   \XLite\Model\Shipping\Markup
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $markup = null;
 
@@ -59,7 +59,7 @@ class Rate extends \XLite\Base\SuperClass
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $baseRate = 0;
 
@@ -68,7 +68,7 @@ class Rate extends \XLite\Base\SuperClass
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $markupRate = 0;
 
@@ -77,7 +77,7 @@ class Rate extends \XLite\Base\SuperClass
      * 
      * @var   \XLite\Core\CommonCell
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $extraData = null;
 
@@ -86,7 +86,7 @@ class Rate extends \XLite\Base\SuperClass
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct()
     {
@@ -98,7 +98,7 @@ class Rate extends \XLite\Base\SuperClass
      * 
      * @return \XLite\Model\Shipping\Method
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMethod()
     {
@@ -112,7 +112,7 @@ class Rate extends \XLite\Base\SuperClass
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setMethod($method)
     {
@@ -124,7 +124,7 @@ class Rate extends \XLite\Base\SuperClass
      * 
      * @return \XLite\Model\Shipping\Markup
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMarkup()
     {
@@ -138,7 +138,7 @@ class Rate extends \XLite\Base\SuperClass
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setMarkup($markup)
     {
@@ -150,7 +150,7 @@ class Rate extends \XLite\Base\SuperClass
      * 
      * @return float
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getBaseRate()
     {
@@ -164,7 +164,7 @@ class Rate extends \XLite\Base\SuperClass
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setBaseRate($baseRate)
     {
@@ -176,7 +176,7 @@ class Rate extends \XLite\Base\SuperClass
      * 
      * @return float
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMarkupRate()
     {
@@ -190,7 +190,7 @@ class Rate extends \XLite\Base\SuperClass
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setMarkupRate($markupRate)
     {
@@ -202,7 +202,7 @@ class Rate extends \XLite\Base\SuperClass
      * 
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getExtraData()
     {
@@ -216,7 +216,7 @@ class Rate extends \XLite\Base\SuperClass
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setExtraData(\XLite\Core\CommonCell $extraData)
     {
@@ -228,7 +228,7 @@ class Rate extends \XLite\Base\SuperClass
      * 
      * @return float
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTotalRate()
     {
@@ -240,7 +240,7 @@ class Rate extends \XLite\Base\SuperClass
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMethodId()
     {
@@ -254,7 +254,7 @@ class Rate extends \XLite\Base\SuperClass
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMethodName()
     {

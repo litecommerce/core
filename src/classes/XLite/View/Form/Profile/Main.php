@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Profile;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Profile;
  * \XLite\View\Form\Profile\Main 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Main extends \XLite\View\Form\Profile\AProfile
 {
@@ -41,7 +41,7 @@ class Main extends \XLite\View\Form\Profile\AProfile
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isRegisterMode()
     {
@@ -53,7 +53,7 @@ class Main extends \XLite\View\Form\Profile\AProfile
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -65,7 +65,7 @@ class Main extends \XLite\View\Form\Profile\AProfile
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -77,7 +77,7 @@ class Main extends \XLite\View\Form\Profile\AProfile
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultParams()
     {

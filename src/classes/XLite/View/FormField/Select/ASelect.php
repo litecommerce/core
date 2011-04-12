@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Select;
@@ -32,7 +32,7 @@ namespace XLite\View\FormField\Select;
  * Form abstract selector
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ASelect extends \XLite\View\FormField\AFormField
 {
@@ -48,7 +48,7 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getDefaultOptions();
 
@@ -58,7 +58,7 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFieldType()
     {
@@ -71,7 +71,7 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFieldTemplate()
     {
@@ -83,7 +83,7 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getOptions()
     {
@@ -95,7 +95,7 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isListEmpty()
     {
@@ -107,7 +107,7 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

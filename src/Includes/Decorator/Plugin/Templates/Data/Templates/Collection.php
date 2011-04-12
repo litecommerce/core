@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\Plugin\Templates\Data\Templates;
@@ -33,7 +33,7 @@ namespace Includes\Decorator\Plugin\Templates\Data\Templates;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Collection
 {
@@ -43,7 +43,7 @@ class Collection
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $list = array();
 
@@ -54,7 +54,7 @@ class Collection
      * @return \Includes\Utils\FileFilter
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFileIterator()
     {
@@ -72,7 +72,7 @@ class Collection
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareNodeData($fileinfo)
     {
@@ -87,7 +87,7 @@ class Collection
      * @return \Includes\Decorator\Plugin\Templates\Data\Templates\Node
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function createNode(array $data = array())
     {
@@ -102,7 +102,7 @@ class Collection
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function create(\Includes\Utils\FileFilter\FilterIterator $iterator)
     {
@@ -126,7 +126,7 @@ class Collection
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findByCallback($callback)
     {
@@ -139,7 +139,7 @@ class Collection
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getList()
     {
@@ -152,7 +152,7 @@ class Collection
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct()
     {

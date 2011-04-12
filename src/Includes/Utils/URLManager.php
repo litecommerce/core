@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace Includes\Utils;
@@ -32,7 +32,7 @@ namespace Includes\Utils;
  * URLManager 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class URLManager extends \Includes\Utils\AUtils
 {
@@ -52,7 +52,7 @@ abstract class URLManager extends \Includes\Utils\AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function trimTrailingSlashes($url)
     {
@@ -70,7 +70,7 @@ abstract class URLManager extends \Includes\Utils\AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getShopURL(
         $url = '',
@@ -107,15 +107,28 @@ abstract class URLManager extends \Includes\Utils\AUtils
     }
 
     /**
-     * Return current URL
+     * Return current URI
      * 
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    public static function getSelfURL()
+    public static function getSelfURI()
     {
         return isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null;
+    }
+
+    /**
+     * Return current URL
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getCurrentURL()
+    {
+        return (\XLite\Core\Request::getInstance()->isHTTPS() ? 'https' : 'http')
+            . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     }
 }

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\WidgetParam;
@@ -32,7 +32,7 @@ namespace XLite\Model\WidgetParam;
  * ____description____
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Float extends \XLite\Model\WidgetParam\AWidgetParam
 {
@@ -41,7 +41,7 @@ class Float extends \XLite\Model\WidgetParam\AWidgetParam
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = 'float';
 
@@ -52,7 +52,7 @@ class Float extends \XLite\Model\WidgetParam\AWidgetParam
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getValidaionSchema($value)
     {

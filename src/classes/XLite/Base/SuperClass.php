@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Base;
@@ -32,7 +32,7 @@ namespace XLite\Base;
  * SuperClass 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class SuperClass
 {
@@ -45,7 +45,7 @@ abstract class SuperClass
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function t($name, array $arguments = array(), $code = null)
     {
@@ -59,7 +59,7 @@ abstract class SuperClass
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function __construct()
     {
@@ -73,7 +73,7 @@ abstract class SuperClass
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doDie($message)
     {

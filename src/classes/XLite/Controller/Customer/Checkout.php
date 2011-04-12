@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * Checkout 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Checkout extends \XLite\Controller\Customer\Cart
 {
@@ -41,7 +41,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @var   mixed
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $requestData;
 
@@ -51,7 +51,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -68,7 +68,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -81,7 +81,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function callSuccess()
     {
@@ -94,7 +94,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isSecure()
     {
@@ -106,7 +106,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getLoginURL()
     {
@@ -118,7 +118,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isAnonymous()
     {
@@ -132,7 +132,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionCheckout()
     {
@@ -189,7 +189,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doPayment()
     {
@@ -281,7 +281,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionReturn()
     {
@@ -327,7 +327,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function processSucceed()
     {
@@ -367,7 +367,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function saveAnonymousProfile()
     {
@@ -383,7 +383,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function cloneProfile()
     {
@@ -404,7 +404,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isCheckoutNotAllowed()
     {
@@ -417,7 +417,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isRegistrationNeeded()
     {
@@ -429,7 +429,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isZeroOrderTotal()
     {
@@ -441,7 +441,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isPaymentNeeded()
     {
@@ -453,7 +453,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -465,7 +465,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkItemsAmount()
     {
@@ -477,7 +477,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdateProfile()
     {
@@ -494,7 +494,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function updateProfile()
     {
@@ -543,7 +543,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function updateShippingAddress()
     {
@@ -586,7 +586,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function updateBillingAddress()
     {
@@ -667,7 +667,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareAddressData(array $data)
     {
@@ -681,7 +681,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionPayment()
     {
@@ -713,7 +713,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionShipping()
     {
@@ -733,7 +733,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkCart()
     {

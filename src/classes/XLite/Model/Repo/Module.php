@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo;
  * Module repository
  *
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Module extends \XLite\Model\Repo\ARepo
 {
@@ -46,7 +46,7 @@ class Module extends \XLite\Model\Repo\ARepo
     const P_PRICE_FILTER = 'priceFilter';
     const P_INSTALLED    = 'installed';
     const P_INACTIVE     = 'inactive';
-    const P_UPGRADABLE   = 'upgradable';
+    const P_CORE_VERSION = 'coreVersion';
 
     /**
      * Price criteria
@@ -60,28 +60,16 @@ class Module extends \XLite\Model\Repo\ARepo
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = self::TYPE_INTERNAL;
-
-    /**
-     * Default 'order by' field name
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    protected $defaultOrderBy = array(
-        'enabled' => false,
-        'name'    => true,
-    );
 
     /**
      * Alternative record identifiers
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $alternativeIdentifier = array(
         array('author', 'name'),
@@ -91,6 +79,22 @@ class Module extends \XLite\Model\Repo\ARepo
     // {{{ The Searchable interface
 
     /**
+     * Create a new QueryBuilder instance that is prepopulated for this entity name
+     *
+     * @param string $alias Table alias OPTIONAL
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createQueryBuilder($alias = null)
+    {
+        return parent::createQueryBuilder($alias)
+            ->addGroupBy('m.name')
+            ->addGroupBy('m.author');
+    }
+
+    /**
      * Common search
      *
      * @param \XLite\Core\CommonCell $cnd       Search condition
@@ -98,7 +102,7 @@ class Module extends \XLite\Model\Repo\ARepo
      *
      * @return \Doctrine\ORM\PersistentCollection|integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -124,7 +128,7 @@ class Module extends \XLite\Model\Repo\ARepo
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder)
     {
@@ -142,7 +146,7 @@ class Module extends \XLite\Model\Repo\ARepo
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isSearchParamHasHandler($param)
     {
@@ -154,7 +158,7 @@ class Module extends \XLite\Model\Repo\ARepo
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHandlingSearchParams()
     {
@@ -166,7 +170,7 @@ class Module extends \XLite\Model\Repo\ARepo
             self::P_PRICE_FILTER,
             self::P_INSTALLED,
             self::P_INACTIVE,
-            self::P_UPGRADABLE,
+            self::P_CORE_VERSION,
         );
     }
 
@@ -175,7 +179,7 @@ class Module extends \XLite\Model\Repo\ARepo
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSubstringSearchFields()
     {
@@ -192,7 +196,7 @@ class Module extends \XLite\Model\Repo\ARepo
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSearchWords($value)
     {
@@ -215,7 +219,7 @@ class Module extends \XLite\Model\Repo\ARepo
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareCndLimit(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
     {
@@ -230,7 +234,7 @@ class Module extends \XLite\Model\Repo\ARepo
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareCndSubstring(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -258,7 +262,7 @@ class Module extends \XLite\Model\Repo\ARepo
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareCndTag(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -272,7 +276,7 @@ class Module extends \XLite\Model\Repo\ARepo
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
     {
@@ -284,14 +288,14 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * prepareCndOrderBy
+     * Prepare certain search condition
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
-     * @param mixed                      $value        Searchable value
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param string                     $value        Condition
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareCndPriceFilter(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -311,7 +315,7 @@ class Module extends \XLite\Model\Repo\ARepo
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareCndInstalled(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -327,7 +331,7 @@ class Module extends \XLite\Model\Repo\ARepo
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareCndInactive(\Doctrine\ORM\QueryBuilder $queryBuilder)
     {
@@ -340,23 +344,17 @@ class Module extends \XLite\Model\Repo\ARepo
      * Prepare certain search condition
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
-     * @param boolean                    $value        Condition
+     * @param string                     $value        Condition
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    protected function prepareCndUpgradable(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    protected function prepareCndCoreVersion(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        /*$cnd = new \Doctrine\ORM\Query\Expr\Orx();
-        $cnd->add('m.majorVersion < m1.majorVersion');
-        $cnd->add('m.minorVersion < m1.minorVersion');
-
         $queryBuilder
-            ->innerJoin('m', 'm1')
-            ->andWhere('m.name = m1.name')
-            ->andWhere('m.author = m1.author')
-            ->andWhere($cnd);*/
+            ->andWhere('m.majorVersion = :majorVersion')
+            ->setParameter('majorVersion', $value);
     }
 
     // }}}
@@ -370,12 +368,13 @@ class Module extends \XLite\Model\Repo\ARepo
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function updateMarketplaceModules(array $data)
     {
         // Clear previously saved data
         $this->defineDeleteNotInstalledModulesQuery()->execute();
+        $this->flushChanges();
 
         // Save recieved data
         $this->insertInBatch($data);
@@ -386,7 +385,7 @@ class Module extends \XLite\Model\Repo\ARepo
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineDeleteNotInstalledModulesQuery()
     {
@@ -402,12 +401,14 @@ class Module extends \XLite\Model\Repo\ARepo
 
     /**
      * Search for modules having an elder version
-     * 
+     *
+     * :NOTE: function is public since it's needed for viewers
+     *
      * @param \XLite\Model\Module $module Module to get info from
-     *  
-     * @return void
+     *
+     * @return \XLite\Model\Module
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getModuleForUpdate(\XLite\Model\Module $module)
     {
@@ -415,31 +416,25 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Define the Doctrine query
+     * Query to search for modules having an elder version
      *
      * @param \XLite\Model\Module $module Module to get info from
-     *
+     * 
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineModuleForUpdateQuery(\XLite\Model\Module $module)
     {
-        $queryBuilder = $this->createQueryBuilder();
-
-        $this->prepareCndInstalled($queryBuilder, false);
-        $this->prepareCndInactive($queryBuilder);
-
-        return $queryBuilder
+        return $this->createQueryBuilder()
             ->andWhere('m.name = :name')
             ->andWhere('m.author = :author')
             ->andWhere('m.majorVersion = :majorVersion')
             ->andWhere('m.minorVersion > :minorVersion')
-            ->setParameter('majorVersion', $module->getMajorVersion())
-            ->setParameter('minorVersion', $module->getMinorVersion())
             ->setParameter('name', $module->getName())
             ->setParameter('author', $module->getAuthor())
-            ->setMaxResults(1);
+            ->setParameter('majorVersion', $module->getMajorVersion())
+            ->setParameter('minorVersion', $module->getMinorVersion());
     }
 
     // }}}

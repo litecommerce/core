@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Order;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Order;
  * Abstract product-based form
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AOrder extends \XLite\View\Form\AForm
 {
@@ -41,7 +41,7 @@ abstract class AOrder extends \XLite\View\Form\AForm
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultFormMethod()
     {
@@ -53,7 +53,7 @@ abstract class AOrder extends \XLite\View\Form\AForm
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultParams()
     {

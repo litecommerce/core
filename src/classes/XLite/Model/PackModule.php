@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Module packaging model TODO: refactor with \XLite\Model\PHARModule
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class PackModule extends \XLite\Base
 {
@@ -78,7 +78,7 @@ class PackModule extends \XLite\Base
      * 
      * @var   mixed
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $tempDir = null;
 
@@ -88,7 +88,7 @@ class PackModule extends \XLite\Base
      * 
      * @var   mixed
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $error = null;
 
@@ -98,7 +98,7 @@ class PackModule extends \XLite\Base
      * 
      * @var   mixed
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $module = null;
 
@@ -111,7 +111,7 @@ class PackModule extends \XLite\Base
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct($moduleId)
     {
@@ -126,7 +126,7 @@ class PackModule extends \XLite\Base
      * 
      * @return string Status of package creation 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function createPackage()
     {
@@ -170,7 +170,7 @@ class PackModule extends \XLite\Base
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function downloadPackage()
     {
@@ -203,7 +203,7 @@ class PackModule extends \XLite\Base
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function cleanUp()
     {
@@ -221,7 +221,7 @@ class PackModule extends \XLite\Base
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getError()
     {
@@ -234,7 +234,7 @@ class PackModule extends \XLite\Base
      * 
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTempDir()
     {
@@ -247,7 +247,7 @@ class PackModule extends \XLite\Base
      * 
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModule()
     {
@@ -260,7 +260,7 @@ class PackModule extends \XLite\Base
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPharName()
     {
@@ -272,7 +272,7 @@ class PackModule extends \XLite\Base
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPharGZName()
     {
@@ -284,7 +284,7 @@ class PackModule extends \XLite\Base
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFileFilter()
     {
@@ -297,7 +297,7 @@ class PackModule extends \XLite\Base
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function collectClasses()
     {
@@ -322,7 +322,7 @@ class PackModule extends \XLite\Base
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function collectSkins()
     {
@@ -352,7 +352,7 @@ class PackModule extends \XLite\Base
      * 
      * @return string File path to the INI file
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getIniFile()
     {
@@ -367,7 +367,7 @@ class PackModule extends \XLite\Base
      * 
      * @return string Catalog path
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getClassesTempDir()
     {
@@ -382,7 +382,7 @@ class PackModule extends \XLite\Base
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSkinsTempDir($skinDir)
     {
@@ -395,7 +395,7 @@ class PackModule extends \XLite\Base
      * 
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function createIniFile()
     {
@@ -430,7 +430,7 @@ DATA;
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function makeTempDir()
     {

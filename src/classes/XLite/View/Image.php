@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Image
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Image extends \XLite\View\AView
 {
@@ -62,7 +62,7 @@ class Image extends \XLite\View\AView
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $allowedProperties = array(
         'className'   => 'class',
@@ -81,7 +81,7 @@ class Image extends \XLite\View\AView
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $properties = array();
 
@@ -90,7 +90,7 @@ class Image extends \XLite\View\AView
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $resizedURL = null;
 
@@ -102,7 +102,7 @@ class Image extends \XLite\View\AView
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setWidgetParams(array $params)
     {
@@ -121,7 +121,7 @@ class Image extends \XLite\View\AView
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getURL()
     {
@@ -134,7 +134,6 @@ class Image extends \XLite\View\AView
             $url = $this->getParam(self::PARAM_USE_CACHE)
                 ? $this->resizedURL
                 : $this->getParam(self::PARAM_IMAGE)->getFrontURL();
-
         }
 
         if (!$url && $this->getParam(self::PARAM_USE_DEFAULT_IMAGE)) {
@@ -159,7 +158,7 @@ class Image extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAlt()
     {
@@ -171,7 +170,7 @@ class Image extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProperties()
     {
@@ -184,7 +183,7 @@ class Image extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -219,7 +218,7 @@ class Image extends \XLite\View\AView
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkImage()
     {
@@ -232,7 +231,7 @@ class Image extends \XLite\View\AView
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkDefaultImage()
     {
@@ -245,7 +244,7 @@ class Image extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -272,7 +271,7 @@ class Image extends \XLite\View\AView
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setImagePaddings()
     {
@@ -314,7 +313,7 @@ class Image extends \XLite\View\AView
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addInlineStyle($style)
     {
@@ -332,7 +331,7 @@ class Image extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function processImage()
     {
@@ -361,7 +360,7 @@ class Image extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function processDefaultImage()
     {

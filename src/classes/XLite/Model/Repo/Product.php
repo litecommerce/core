@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -35,7 +35,7 @@ namespace XLite\Model\Repo;
  * The "product" model repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
 {
@@ -51,6 +51,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     const P_ORDER_BY          = 'orderBy';
     const P_LIMIT             = 'limit';
     const P_INCLUDING         = 'including';    
+
     const P_BY_TITLE          = 'byTitle';
     const P_BY_DESCR          = 'byDescr';
     const P_BY_SKU            = 'bySKU';
@@ -69,7 +70,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * 
      * @var   \XLite\Core\CommonCell
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $currentSearchCnd = null;
 
@@ -78,7 +79,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $alternativeIdentifier = array(
         array('sku'),
@@ -93,7 +94,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *  
      * @return \Doctrine\ORM\PersistentCollection|integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -102,10 +103,12 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
         $this->currentSearchCnd = $cnd;
 
         foreach ($this->currentSearchCnd as $key => $value) {
+
             $this->callSearchConditionHandler($value, $key, $queryBuilder);
         }
 
         if ($countOnly) {
+
             $queryBuilder->select('COUNT(p.product_id)');
         }
 
@@ -121,7 +124,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function createQueryBuilder($alias = null)
     {
@@ -145,7 +148,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *  
      * @return \XLite_Model_Product
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findOneByCleanURL($url)
     {
@@ -157,7 +160,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRESTNames()
     {
@@ -173,7 +176,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProductREST($id)
     {
@@ -201,7 +204,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHandlingSearchParams()
     {
@@ -222,7 +225,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *  
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isSearchParamHasHandler($param)
     {
@@ -234,7 +237,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSubstringSearchFields()
     {
@@ -243,14 +246,18 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
         $allEmpty = true;
 
         foreach ($conditionsBy as $conditionBy) {
+
             if ('Y' === $this->currentSearchCnd->{$conditionBy}) {
+
                 $allEmpty = false;
             }
         }
 
         // if ALL parameters is FALSE then we search by ALL parameters
         if ($allEmpty) {
+
             foreach ($conditionsBy as $conditionBy) {
+
                 $this->currentSearchCnd->{$conditionBy} = 'Y';
             }
         }
@@ -274,7 +281,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getConditionBy()
     {
@@ -290,7 +297,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSubstringSearchFieldsByTitle()
     {
@@ -304,7 +311,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSubstringSearchFieldsByDescr()
     {
@@ -319,7 +326,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSubstringSearchFieldsBySKU()
     {
@@ -336,7 +343,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareCndSKU(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -352,7 +359,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareCndCategoryId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -361,11 +368,14 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
             ->addOrderBy('cp.orderby');
 
         if (empty($this->currentSearchCnd->{self::P_SEARCH_IN_SUBCATS})) {
+
             $queryBuilder->andWhere('c.category_id = :categoryId')
                 ->setParameter('categoryId', $value);
 
         } elseif (!\XLite\Core\Database::getRepo('XLite\Model\Category')->addSubTreeCondition($queryBuilder, $value)) {
+
             // TODO - add throw exception
+
         }
     }
 
@@ -377,7 +387,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareCndSubstring(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
@@ -402,7 +412,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *  
      * @return \Doctrine\ORM\Query\Expr\Base Condition class
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCndSubstringPhrase(\Doctrine\ORM\QueryBuilder $queryBuilder, $value) 
     {
@@ -426,7 +436,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *  
      * @return \Doctrine\ORM\Query\Expr\Base Condition class
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCndSubstringAll(\Doctrine\ORM\QueryBuilder $queryBuilder, $value) 
     {
@@ -467,7 +477,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *  
      * @return \Doctrine\ORM\Query\Expr\Base Condition class
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCndSubstringAny(\Doctrine\ORM\QueryBuilder $queryBuilder, $value) 
     {
@@ -497,7 +507,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSearchWords($value)
     {
@@ -529,7 +539,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareCndLowInventory(\Doctrine\ORM\QueryBuilder $queryBuilder)
     {
@@ -549,7 +559,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
     {
@@ -571,7 +581,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareCndLimit(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
     {
@@ -587,7 +597,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder)
     {
@@ -606,7 +616,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addEnabledCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {

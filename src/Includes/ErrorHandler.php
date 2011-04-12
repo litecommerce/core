@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes;
@@ -33,7 +33,7 @@ namespace Includes;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class ErrorHandler
 {
@@ -54,7 +54,7 @@ abstract class ErrorHandler
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function throwException($message, $code)
     {
@@ -70,7 +70,7 @@ abstract class ErrorHandler
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function logInfo($message, $code, array $backtrace = array())
     {
@@ -141,7 +141,7 @@ abstract class ErrorHandler
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getErrorPageFileDefault()
     {
@@ -154,7 +154,7 @@ abstract class ErrorHandler
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getErrorPageFileFromConfig()
     {
@@ -167,7 +167,7 @@ abstract class ErrorHandler
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getErrorPageFile()
     {
@@ -180,7 +180,7 @@ abstract class ErrorHandler
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getErrorPageFileContent()
     {
@@ -193,7 +193,7 @@ abstract class ErrorHandler
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getErrorPage()
     {
@@ -210,7 +210,7 @@ abstract class ErrorHandler
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function showErrorPage($code, $message, $page = null)
     {
@@ -224,7 +224,7 @@ abstract class ErrorHandler
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function shutdown()
     {
@@ -239,7 +239,7 @@ abstract class ErrorHandler
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function handleError(array $error)
     {
@@ -259,7 +259,7 @@ abstract class ErrorHandler
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function handleException(\Exception $exception)
     {
@@ -276,7 +276,7 @@ abstract class ErrorHandler
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function fireError($message, $code = self::ERROR_UNKNOWN)
     {
@@ -290,7 +290,7 @@ abstract class ErrorHandler
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function checkIsLCInstalled()
     {
