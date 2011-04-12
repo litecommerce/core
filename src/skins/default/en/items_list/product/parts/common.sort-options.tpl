@@ -10,7 +10,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="itemsList.header")
+ * @ListChild (list="itemsList.product.grid.customer.header")
+ * @ListChild (list="itemsList.product.list.customer.header")
+ * @ListChild (list="itemsList.product.table.customer.header")
  *}
 
 <div IF="isSortBySelectorVisible()" class="sort-box">

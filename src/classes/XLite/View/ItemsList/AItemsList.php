@@ -714,7 +714,19 @@ abstract class AItemsList extends \XLite\View\Container
      */
     protected function isVisible()
     {
-        return parent::isVisible() && $this->hasResults();
+        return parent::isVisible() && ($this->isDisplayWithEmptyList() || $this->hasResults());
+    }
+
+    /**
+     * Auxiliary method to check visibility
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isDisplayWithEmptyList()
+    {
+        return false;
     }
 
     /**

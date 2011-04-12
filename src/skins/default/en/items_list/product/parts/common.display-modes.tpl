@@ -10,7 +10,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="itemsList.header", weight="20")
+ * @ListChild (list="itemsList.product.grid.customer.header", weight="20")
+ * @ListChild (list="itemsList.product.list.customer.header", weight="20")
+ * @ListChild (list="itemsList.product.table.customer.header", weight="20")
  *}
 
 <ul class="display-modes grid-list" IF="isDisplayModeSelectorVisible()">
