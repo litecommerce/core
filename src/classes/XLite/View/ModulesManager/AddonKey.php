@@ -48,7 +48,6 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
         $result[] = 'addon_key';
     
         return $result;
@@ -65,12 +64,10 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = $this->getDir() . '/css/style.css';
 
         return $list;
     }   
-
 
     /**
      * Return title

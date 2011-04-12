@@ -36,7 +36,7 @@ namespace XLite\Controller\Admin;
  */
 class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
 {
-    // ------------------------------ Public methods for viewers -
+    // {{{ Public methods for viewers
 
     /**
      * Return title
@@ -59,12 +59,37 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      */
     public function getLicense()
     {
-        // :FIXME: [MARKETPLACE]
-        // return \XLite\RemoteModel\Marketplace::getInstance()->getLicense($this->getModuleId());
+        $result = null;
+        $marketplaceID = $this->getModule()->getMarketplaceID();
+
+        if (!empty($marketplaceID)) {
+
+            $info = \XLite\Core\Marketplace::getInstance()->getAddonInfo($marketplaceID);
+
+            if ($info) {
+                $result = $info[\XLite\Core\Marketplace::RESPONSE_FIELD_MODULE_LICENSE];
+            } else {
+                list($code, $message) = \XLite\Core\Marketplace::getInstance()->getError();
+                \XLite\Core\TopMessage::getInstance()->addError($message, $code);
+            }
+
+        } else {
+
+            \XLite\Core\TopMessage::getInstance()->addError('Markeplace ID is not set for module');
+        }
+
+        // Since this action is performed in popup
+        if (!isset($result)) {
+            // :TODO: check if this needed. Or may be empty license is allowed?
+            // $this->redirect();
+        }
+
+        return $result;
     }
 
+    // }}}
 
-    // ------------------------------ Short-name methods -
+    // {{{ Short-name methods
 
     /** 
      * Return module identificator
@@ -104,8 +129,9 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
         return \XLite\Core\Database::getRepo('\XLite\Model\ModuleKey')->findOneBy($data);
     }
 
+    // }}}
 
-    // ------------------------------ "Get license" action handler -
+    // {{{ "Get license" action handler
 
     /**
      * Action of getting LICENSE text. Redirection to GET request
@@ -121,8 +147,9 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
         );
     }
 
+    // }}}
 
-    // ------------------------------ "Register key" action handler -
+    // {{{ "Register key" action handler
 
     /**
      * Action of license key registration 
@@ -193,8 +220,9 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
         $this->set('returnUrl', $this->buildURL('addons_list'));
     }
 
+    // }}}
 
-    // ------------------------------ "Get package" action handler -
+    // {{{ "Get package" action handler
 
     /**
      * Action of getting package from marketplace
@@ -238,9 +266,10 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
             'module' => $this->getModule()->getName(),
             'author' => $this->getModule()->getAuthor(),
         );
+        $key = $this->getModuleKey($data);
 
         // Search for module key
-        if (is_null($key = $this->getModuleKey($data))) {
+        if (!isset($key)) {
 
             // Key not found
             \XLite\Core\TopMessage::getInstance()->addError(
@@ -268,7 +297,6 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
      */
     protected function getPackage($key = null)
     {
-        // :FIXME: [MARKETPLACE]
         // Trying to recieve module source
         /*if (\XLite\RemoteModel\Marketplace::STATUS_ERROR !== ($status = $this->retrieveToLocalRepository($key))) {
 

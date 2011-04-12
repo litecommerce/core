@@ -74,33 +74,4 @@ class EnterLicenseKey extends \XLite\View\Button\APopupButton
             'widget' => static::ENTER_KEY_WIDGET,
         );
     }
-
-    /** 
-     * Register CSS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCSSFiles()
-    {   
-        $list = parent::getCSSFiles();
-
-        return $list;
-    }   
-
-
-    /** 
-     * Register JS files
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        return $list;
-    }   
 }
