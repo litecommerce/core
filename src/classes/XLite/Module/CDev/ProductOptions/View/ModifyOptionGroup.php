@@ -181,6 +181,19 @@ class ModifyOptionGroup extends \XLite\View\AView
     }
 
     /**
+     * Check if theare are any options created for the group
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function hasOptions()
+    {
+        return 0 < count($this->getOptions());
+    }
+
+    /**
      * Get option translation storage
      *
      * @param \XLite\Module\CDev\ProductOptions\Model\Option $option Option
