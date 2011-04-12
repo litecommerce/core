@@ -439,6 +439,20 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     // {{{ E-mail box operations
 
     /**
+     * Check IMAP extension
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function checkIMAP()
+    {
+        if (!function_exists('imap_open')) {
+            $this->markTestSkipped('IMAP extension is not loaded');
+        }
+    }
+
+    /**
      * Set start of emails counter
      * 
      * @return void
@@ -465,6 +479,8 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      */
     private function initMailBox()
     {
+        $this->checkIMAP();
+
         if (
             is_null($this->mailBox) 
             || false === $this->mailBox
@@ -531,6 +547,23 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
     // }}}
 
+    // {{{ Database operations
+
+    /**
+     * Restore database from common backup
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doRestoreDb($path = null, $drop = true)
+    {
+        $message = '';
+        $this->assertTrue(xlite_restore_sql_from_backup($path, false, $drop, $message), $message);
+    }
+
+    // }}}
 
     // {{{ XLite-specific methods
 

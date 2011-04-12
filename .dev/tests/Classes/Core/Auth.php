@@ -36,22 +36,6 @@
 class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
 {
     /**
-     * tearDown
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-        $this->query(file_get_contents(__DIR__ . '/../Model/Repo/sql/profile/restore.sql'));
-        \XLite\Core\Database::getEM()->flush();
-    }
-
-    /**
      * testAddSessionVarToClear 
      * 
      * @return void
@@ -157,6 +141,8 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
      */
     public function testLogoff()
     {
+        $this->doRestoreDb();
+
         $result = \XLite\Core\Auth::getInstance()->login('rnd_tester@rrf.ru', 'guest');
     
         $this->assertTrue($result instanceof \XLite\Model\Profile, 'Checking if user is logged in');
