@@ -470,7 +470,7 @@ class Module extends \XLite\Model\AEntity
      */
     public function isPurchased()
     {
-        return true;
+        return 'Test\Module6' === $this->getActualName();
     }
 
     /**

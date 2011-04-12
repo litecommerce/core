@@ -14,5 +14,4 @@
  *}
 
 <div IF="isFree(module)">{t(#Free#)}</div>
-<div IF="isPurchased(module)">{t(#Purchased#)}</div>
-<div IF="canPurchase(module)">{formatPrice(module.getPrice(),module.getCurrency())}</div>
+<div IF="!isFree(module)">{formatPrice(module.getPrice(),module.getCurrency())} <span IF="isPurchased(module)">{t(#Purchased#)}</span></div>
