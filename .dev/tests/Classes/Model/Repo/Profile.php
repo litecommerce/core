@@ -277,8 +277,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
 
         \XLite\Core\Database::getEM()->clear();
 
-        $this->query(file_get_contents(__DIR__ . '/sql/profile/setup.sql'));
-        \XLite\Core\Database::getEM()->flush();
+        $this->doRestoreDb(__DIR__ . '/sql/profile/setup.sql', false);
 
         $this->testSearchData[22]['cnd']['startDate'] = date('M j, Y', time()-60*60*24*7);
         $this->testSearchData[22]['cnd']['endDate'] = date('M j, Y', time()-60*60*24*3);
@@ -296,8 +295,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
     {
         parent::tearDown();
 
-        $this->query(file_get_contents(__DIR__ . '/sql/profile/restore.sql'));
-        \XLite\Core\Database::getEM()->flush();
+        $this->doRestoreDb();
     }
 
     /**
