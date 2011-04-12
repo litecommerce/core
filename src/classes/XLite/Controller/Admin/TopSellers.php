@@ -135,27 +135,10 @@ class TopSellers extends \XLite\Controller\Admin\Stats
         foreach ($this->getStatsColumns() as $interval) {
 
             $cnd = $this->getSearchCondition($interval);
+            $cnd->limit = self::TOP_SELLERS_NUMBER;
 
-            list($start, $end) = $cnd->date;
-
-            $qb = \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')->createQueryBuilder();
-
-            $data[$interval] = $qb
-                ->addSelect('SUM(o.amount) as cnt')
-                ->innerJoin('o.order', 'o1')
-                ->addSelect('o1.date')
-                ->andWhere('o1.date >= :start')
-                ->setParameter('start', $start)
-                ->andWhere('o1.date <= :end')
-                ->setParameter('end', $end)
-                ->andWhere('o1.status IN (:statusProcessed, :statusCompleted)')
-                ->setParameter('statusProcessed', \XLite\Model\Order::STATUS_PROCESSED)
-                ->setParameter('statusCompleted', \XLite\Model\Order::STATUS_COMPLETED)
-                ->setMaxResults(self::TOP_SELLERS_NUMBER)
-                ->addGroupBy('o.sku')
-                ->addOrderBy('cnt', 'desc')
-                ->getQuery()
-                ->getResult();
+            $data[$interval] = \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')
+                ->getTopSellers($cnd);
         }
 
         return $data;
