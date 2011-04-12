@@ -376,7 +376,9 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function canInstall(\XLite\Model\Module $module)
     {
-        return !$this->isInstalled($module) && ($this->isPurchased($module) || $this->isFree($module));
+        return !$this->isInstalled($module) 
+            && ($this->isPurchased($module) || $this->isFree($module)) 
+            && $this->canEnable($module);
     }
 
     /**
@@ -390,7 +392,10 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function canPurchase(\XLite\Model\Module $module)
     {
-        return !$this->isInstalled($module) && !$this->isPurchased($module) && !$this->isFree($module);
+        return !$this->isInstalled($module) 
+            && !$this->isPurchased($module) 
+            && !$this->isFree($module)
+            && $this->canEnable($module);
     }
 
     // }}}
