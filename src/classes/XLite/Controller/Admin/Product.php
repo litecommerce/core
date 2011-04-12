@@ -45,42 +45,67 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     public $params = array('target', 'product_id', 'page', 'backURL');
 
-    /**
-     * FIXME- backward compatibility
-     * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    public $page = 'info';
 
     /**
-     * FIXME- backward compatibility
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * Get current page
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
      */
-    public $pages = array(
-        'info'      => 'Product info',
-        'images'    => 'Product images',
-        'inventory' => 'Inventory tracking',
-    );
+    public function getPage()
+    {
+        return is_null($this->page) || !in_array($this->page, array_keys($this->getPages()))
+            ? 'default'
+            : $this->page;
+    }
 
     /**
-     * FIXME- backward compatibility 
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * Get pages sections
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
      */
-    public $pageTemplates = array(
-        'info'      => 'product/info.tpl',
-        'default'   => 'product/info.tpl',
-        'images'    => 'product/product_images.tpl',
-        'inventory' => 'product/inventory.tpl'
-    );
+    public function getPages()
+    {
+        $pages = array(
+            'info'      => 'Product info',
+        );
 
+        if (!$this->isNew()) {
+            $pages += array(
+               'images'    => 'Product images',
+                'inventory' => 'Inventory tracking',
+            );
+        }
+
+        return $pages;
+    }
+
+    /**
+     * Get pages templates
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPageTemplates()
+    {
+        $tpls = array(
+            'info'      => 'product/info.tpl',
+            'default'   => 'product/info.tpl',
+        );
+
+        if (!$this->isNew()) {
+            $tpls += array(
+                'images'    => 'product/product_images.tpl',
+                'inventory' => 'product/inventory.tpl',
+            );
+        }
+
+        return $tpls;
+    }
 
     /**
      * Alias

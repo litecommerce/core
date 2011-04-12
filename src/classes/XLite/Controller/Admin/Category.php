@@ -37,57 +37,48 @@ namespace XLite\Controller\Admin;
 class Category extends \XLite\Controller\Admin\Base\Catalog
 {
     /**
-     * Default tabber page
-     * TODO: make it protected
-     * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    public $page = 'category_modify';
-
-    /**
-     * Tabber pages titles
-     * TODO: make it protected
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    public $pages = array(
-        'category_modify' => 'Add/Modify category',
-    );
-
-    /**
-     * Tabber pages templates
-     * TODO: make it protected
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    public $pageTemplates = array(
-        'category_modify' => 'categories/add_modify_body.tpl',
-    );
-
-
-    /**
-     * Controller initialization
-     * 
-     * @return void
+     * Get current page
+     *
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function init()
+    public function getPage()
     {
-        parent::init();
+        return is_null($this->page) || !in_array($this->page, array_keys($this->getPages()))
+            ? 'default'
+            : $this->page;
+    }
 
-        if ('add' != $this->mode && 'modify' == $this->mode) {
-            $this->pages['category_modify'] = $this->t('Modify category');
+    /**
+     * Get pages sections
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPages()
+    {
+        return array(
+            'category_modify' => ($this->getCategory()->getCategoryId())
+                ? 'Modify category'
+                : 'Add new category',
+        );
+    }
 
-        } else {
-            $this->pages['category_modify'] = $this->t('Add new category');
-        }
+    /**
+     * Get pages templates
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPageTemplates()
+    {
+        return array(
+            'category_modify' => 'categories/add_modify_body.tpl',
+            'default'         => 'categories/add_modify_body.tpl',
+        );
     }
 
     /**
