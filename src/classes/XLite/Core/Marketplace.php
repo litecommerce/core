@@ -59,7 +59,7 @@ class Marketplace extends \XLite\Base\Singleton
     const REQUEST_FIELD_VERSION_CORE         = 'version';
     const REQUEST_FIELD_VERSION_MODULE       = 'version';
     const REQUEST_FIELD_IS_PACK_GZIPPED      = 'gzipped';
-    const REQUEST_FIELD_MODULE_ID            = 'moduleID';
+    const REQUEST_FIELD_MODULE_ID            = 'moduleId';
     const REQUEST_FIELD_MODULE_KEY           = 'key';
 
     /**
@@ -89,6 +89,7 @@ class Marketplace extends \XLite\Base\Singleton
     const RESPONSE_FIELD_MODULE_RATING_RATE        = 'rate';
     const RESPONSE_FIELD_MODULE_RATING_VOTES_COUNT = 'votesCount';
     const RESPONSE_FIELD_MODULE_DOWNLOADS_COUNT    = 'downloadCount';
+    const RESPONSE_FIELD_MODULE_LICENSE            = 'license';
 
 
     /**
@@ -207,27 +208,6 @@ class Marketplace extends \XLite\Base\Singleton
     {
         return $this->sendRequestToMarkeplace(
             self::ACTION_GET_ADDON_PACK,
-            array(
-                self::REQUEST_FIELD_MODULE_ID  => $moduleID,
-                self::REQUEST_FIELD_MODULE_KEY => $key,
-            )
-        );
-    }
-
-    /**
-     * The "get_addon_license" request handler
-     *
-     * @param string $moduleID External module identifier
-     * @param string $key      Module license key OPTIONAL
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getAddonLicense($moduleID, $key = null)
-    {
-        return $this->sendRequestToMarkeplace(
-            self::ACTION_GET_ADDON_LICENSE,
             array(
                 self::REQUEST_FIELD_MODULE_ID  => $moduleID,
                 self::REQUEST_FIELD_MODULE_KEY => $key,

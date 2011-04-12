@@ -23,7 +23,4 @@
     <widget class="\XLite\View\Button\InstallAddon" moduleId="{module.getModuleId()}" />
   </div>
 
-  <div class="purchase" IF="canPurchase(module)">
-    <widget class="\XLite\View\Button\Submit" label="{t(#Purchase#)}" />
-  </div>
 </form>

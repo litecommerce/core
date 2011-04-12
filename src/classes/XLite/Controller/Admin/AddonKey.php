@@ -45,6 +45,6 @@ class AddonKey extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return $this->t('Enter license key');
+        return 'Enter license key';
     }
 }
