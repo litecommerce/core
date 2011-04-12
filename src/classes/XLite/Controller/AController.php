@@ -559,13 +559,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getPageTemplate()
     {
-        $result = null;
-        
-        if (isset($this->pageTemplates[$this->get('page')])) {
-            $result = $this->pageTemplates[$this->get('page')];
-        }
-
-        return $result;
+        return \Includes\Utils\ArrayManager::getIndex($this->getPageTemplates(), $this->getPage());
     }
 
     /**
@@ -579,7 +573,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getTabPages()
     {
-        return $this->pages;
+        return $this->getPages();
     }
 
     /**
