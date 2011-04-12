@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\DataSet\Transport;
@@ -32,7 +32,7 @@ namespace XLite\DataSet\Transport;
  * Abstract transport 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAggregate, \ArrayAccess
 {
@@ -41,7 +41,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $data = array();
 
@@ -50,7 +50,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $keys;
 
@@ -59,7 +59,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function defineKeys();
 
@@ -70,7 +70,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function map(array $data)
     {
@@ -84,7 +84,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function clear()
     {
@@ -96,7 +96,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function check()
     {
@@ -117,7 +117,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getKeys()
     {
@@ -137,7 +137,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __get($name)
     {
@@ -152,7 +152,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __set($name, $value)
     {
@@ -168,7 +168,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __isset($name)
     {
@@ -182,7 +182,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __unset($name)
     {
@@ -196,7 +196,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      * 
      * @return string 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __sleep()
     {
@@ -210,7 +210,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __wakeup($serialized)
     {
@@ -227,7 +227,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function count()
     {
@@ -243,7 +243,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      * 
      * @return \Traversable
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getIterator()
     {
@@ -267,7 +267,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function offsetExists($offset)
     {
@@ -281,7 +281,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function offsetGet($offset)
     {
@@ -296,7 +296,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function offsetSet($offset, $value)
     {
@@ -310,7 +310,7 @@ abstract class ATransport extends \XLite\Base implements \Countable, \IteratorAg
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function offsetUnset($offset)
     {

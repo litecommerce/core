@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Pager\Admin\Product;
@@ -32,7 +32,7 @@ namespace XLite\View\Pager\Admin\Product;
  * Pager for the products search page
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Search extends \XLite\View\Pager\Admin\Product\AProduct
 {
@@ -48,7 +48,7 @@ class Search extends \XLite\View\Pager\Admin\Product\AProduct
      *
      * @return \XLite\Model\Category
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCategory()
     {
@@ -60,7 +60,7 @@ class Search extends \XLite\View\Pager\Admin\Product\AProduct
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -78,7 +78,7 @@ class Search extends \XLite\View\Pager\Admin\Product\AProduct
      *                                      
      * @return void                         
      * @see    ____func_see____             
-     * @since  3.0.0                        
+     * @since  1.0.0
      */                                     
     protected function defineRequestParams()
     {                                       

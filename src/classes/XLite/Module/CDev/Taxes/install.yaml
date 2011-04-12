@@ -8,7 +8,7 @@
 # @version   GIT: $Id$
 # @link      http://www.litecommerce.com/
 # @since     3.0.0
-XLite\Module\Taxes\Model\Tax:
+XLite\Module\CDev\Taxes\Model\Tax:
   - included: true
     enabled: true
     translations:

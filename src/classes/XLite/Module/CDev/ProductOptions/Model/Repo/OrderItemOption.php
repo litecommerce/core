@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Model\Repo;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\ProductOptions\Model\Repo;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class OrderItemOption extends \XLite\Model\Repo\ARepo
 {
@@ -46,7 +46,7 @@ class OrderItemOption extends \XLite\Model\Repo\ARepo
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findByItemIdAndOrderId($itemId, $orderId)
     {
@@ -62,7 +62,7 @@ class OrderItemOption extends \XLite\Model\Repo\ARepo
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineByItemIdAndOrderIdQuery($itemId, $orderId)
     {
@@ -78,7 +78,7 @@ class OrderItemOption extends \XLite\Model\Repo\ARepo
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDetailedForeignKeys()
     {

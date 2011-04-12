@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  */
 .modules-list .status
 {
@@ -123,9 +123,11 @@ table.modules-list div.icon-container {
 
 table.modules-list div.note
 {
-  padding: 10px;
+  padding: 10px 20px;
   width: 250px;
   white-space: normal;
+  font-size: 14px;
+  line-height: 24px;
 }
 
 table.modules-list div.note.dependencies,
@@ -158,10 +160,13 @@ div.icon-container div.addon-disabled img.disabled,
 }
 
 div.icon-container div.addon-disabled img.disabled {
-  background: transparent url(../images/addon_disabled.png) left top no-repeat;
+  background: transparent url(../../images/addon_disabled.png) left top no-repeat;
 }
 
 div.icon-container div.addon-icon img.addon-default-icon {
-  background: transparent url(../images/addon_default.png) left top no-repeat;
+  background: transparent url(../../images/addon_default.png) left top no-repeat;
 }
 
+div.icon-container div.addon-icon.addon-disabled-note {
+  text-align: center;
+}

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Button;
@@ -32,7 +32,7 @@ namespace XLite\View\Button;
  * 'Delete selecetd' button
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class DeleteSelected extends \XLite\View\Button\Regular
 {
@@ -48,7 +48,7 @@ class DeleteSelected extends \XLite\View\Button\Regular
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -60,7 +60,7 @@ class DeleteSelected extends \XLite\View\Button\Regular
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -72,7 +72,7 @@ class DeleteSelected extends \XLite\View\Button\Regular
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultConfirmationText()
     {
@@ -102,7 +102,7 @@ class DeleteSelected extends \XLite\View\Button\Regular
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultJSCode()
     {

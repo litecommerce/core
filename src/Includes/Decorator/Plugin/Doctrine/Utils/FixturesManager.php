@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\Plugin\Doctrine\Utils;
@@ -35,7 +35,7 @@ namespace Includes\Decorator\Plugin\Doctrine\Utils;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoctrine
 {
@@ -51,7 +51,7 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getFixtures()
     {
@@ -83,7 +83,7 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function removeFixtures()
     {
@@ -101,7 +101,7 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function addFixtureToList($path)
     {
@@ -122,7 +122,7 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
      * @return string|void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getFixturesFilePath()
     {
@@ -139,7 +139,7 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function saveFile(array $list)
     {

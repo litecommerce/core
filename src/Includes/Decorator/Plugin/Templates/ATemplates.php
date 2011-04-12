@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\Plugin\Templates;
@@ -33,7 +33,7 @@ namespace Includes\Decorator\Plugin\Templates;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
 {
@@ -49,7 +49,7 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $annotatedTemplates;
 
@@ -59,7 +59,7 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $zones = array(
         'console' => \XLite\Model\ViewList::INTERFACE_CONSOLE,
@@ -74,7 +74,7 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAnnotatedTemplates()
     {
@@ -103,7 +103,7 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
      * @return \Includes\Utils\FileFilter
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTemplateFileIterator()
     {
@@ -122,7 +122,7 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addTags(array $data, $path)
     {

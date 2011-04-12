@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Orders search widget
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="center")
  */
@@ -43,7 +43,7 @@ class OrderSearch extends \XLite\View\Dialog
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $orders = null;
     /**
@@ -51,7 +51,7 @@ class OrderSearch extends \XLite\View\Dialog
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $totalCount = null;
 
@@ -60,7 +60,7 @@ class OrderSearch extends \XLite\View\Dialog
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $conditions = null;
 
@@ -70,7 +70,7 @@ class OrderSearch extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -88,7 +88,7 @@ class OrderSearch extends \XLite\View\Dialog
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCondition($name)
     {
@@ -100,7 +100,7 @@ class OrderSearch extends \XLite\View\Dialog
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isDefaultConditions()
     {
@@ -112,11 +112,12 @@ class OrderSearch extends \XLite\View\Dialog
      * 
      * @return array(\XLite\Model\Order)
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOrders()
     {
         if (!isset($this->orders)) {
+
             $this->orders = \XLite\Core\Database::getRepo('\XLite\Model\Order')->search(
                 $this->getConditions()
             );
@@ -130,7 +131,7 @@ class OrderSearch extends \XLite\View\Dialog
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCount()
     {
@@ -142,7 +143,7 @@ class OrderSearch extends \XLite\View\Dialog
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTotalCount()
     {
@@ -158,7 +159,7 @@ class OrderSearch extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -175,7 +176,7 @@ class OrderSearch extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -192,7 +193,7 @@ class OrderSearch extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -204,7 +205,7 @@ class OrderSearch extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -216,7 +217,7 @@ class OrderSearch extends \XLite\View\Dialog
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getConditions()
     {
@@ -225,37 +226,45 @@ class OrderSearch extends \XLite\View\Dialog
             $this->conditions = $this->session->get('orders_search');
 
             if (!is_array($this->conditions)) {
+
                 $this->conditions = array();
                 $this->session->set('orders_search', $this->conditions);
             }
-
         }
 
         $cnd = new \XLite\Core\CommonCell();
 
         if ($this->getProfile()->isAdmin()) {
+
             if (!empty(\XLite\Core\Request::getInstance()->profile_id)) {
+
                 $cnd->profileId = \XLite\Core\Request::getInstance()->profile_id;
             }
+
         } else {
+
             $cnd->profileId = $this->getProfile()->getProfileId();
         }
 
         if (!isset($this->conditions['sortCriterion']) || !$this->conditions['sortCriterion']) {
+
             $this->conditions['sortCriterion'] = 'order_id';
         }
 
         if (!isset($this->conditions['sortOrder']) || !$this->conditions['sortOrder']) {
+
             $this->conditions['sortOrder'] = 'ASC';
         }
 
         $cnd->orderBy = array('o.' . $this->conditions['sortCriterion'], $this->conditions['sortOrder']);
 
         if (isset($this->conditions['order_id'])) {
+
             $this->cnd->orderId = $this->conditions['order_id'];
         }   
 
         if (isset($this->conditions['status'])) {
+
             $this->cnd->status = $this->conditions['status'];
         }   
 
@@ -263,6 +272,7 @@ class OrderSearch extends \XLite\View\Dialog
         $end   = isset($this->conditions['endDate']) ? $this->conditions['endDate'] : 0;
 
         if ($start < $end) {
+
             $cnd->date = array($start, $end);
         }
 
@@ -274,7 +284,7 @@ class OrderSearch extends \XLite\View\Dialog
      *
      * @return \XLite\Model\Profile
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProfile()
     {
@@ -287,7 +297,8 @@ class OrderSearch extends \XLite\View\Dialog
                 $result = \XLite\Core\Database::getRepo('XLite\Model\Profile')
                     ->find(\XLite\Core\Request::getInstance()->profile_id);
 
-                if (!$result->isExists()) {
+                if (!$result->isPersistent()) {
+
                     $result = null;
                 }
             }
@@ -297,6 +308,7 @@ class OrderSearch extends \XLite\View\Dialog
             $result = \XLite\Core\Auth::getInstance()->getProfile(\XLite\Core\Request::getInstance()->profile_id);
 
             if (!$result) {
+
                 $result = \XLite\Core\Auth::getInstance()->getProfile();
             }
         }

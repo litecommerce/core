@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Base;
@@ -32,7 +32,7 @@ namespace XLite\Model\Base;
  * Surcharge owner 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * MappedSuperclass
  */
@@ -43,7 +43,7 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="decimal", precision="14", scale="4")
      */
@@ -54,7 +54,7 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="decimal", precision="14", scale="4")
      */
@@ -69,7 +69,7 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
      *  
      * @return float
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSurchargeSumByType($type)
     {
@@ -91,7 +91,7 @@ abstract class SurchargeOwner extends \XLite\Model\AEntity
      *  
      * @return float
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSurchargeTotalByType($type)
     {

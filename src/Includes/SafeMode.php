@@ -23,23 +23,24 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace Includes;
 
 /**
  * Safe Mode
+ *
+ * :TODO: reduce numder of public methods
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class SafeMode
 {
     /**
      * Request params
      */
-
     const PARAM_SAFE_MODE  = 'safe_mode';
     const PARAM_ACCESS_KEY = 'access_key';
     const PARAM_SOFT_RESET = 'soft_reset';
@@ -56,21 +57,11 @@ abstract class SafeMode
 
 
     /**
-     * Unsafe modules list file name
-     * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    protected static $unsafeModulesIniFile;
-
-
-    /**
      * Check request parameters
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isSafeModeRequested()
     {
@@ -83,7 +74,7 @@ abstract class SafeMode
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isSoftResetRequested()
     {
@@ -95,7 +86,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isSafeModeStarted()
     {
@@ -107,7 +98,7 @@ abstract class SafeMode
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAccessKey()
     {
@@ -123,7 +114,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function regenerateAccessKey()
     {
@@ -142,7 +133,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function sendNotification()
     {
@@ -161,7 +152,7 @@ abstract class SafeMode
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getResetURL($soft = false)
     {
@@ -191,7 +182,7 @@ abstract class SafeMode
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function cleanupIndicator()
     {
@@ -203,7 +194,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function initialize()
     {
@@ -233,7 +224,7 @@ abstract class SafeMode
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function checkAccessKey()
     {
@@ -245,7 +236,7 @@ abstract class SafeMode
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getIndicatorFileName()
     {
@@ -257,7 +248,7 @@ abstract class SafeMode
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getAccessKeyFileName()
     {
@@ -269,7 +260,7 @@ abstract class SafeMode
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function generateAccessKey()
     {
@@ -281,7 +272,7 @@ abstract class SafeMode
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getIndicatorFileContent()
     {
@@ -300,7 +291,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function clearUnsafeModules()
     {
@@ -314,7 +305,7 @@ abstract class SafeMode
      *  
      * @return integer|boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function saveUnsafeModulesToFile(array $modules)
     {
@@ -341,7 +332,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getUnsafeModulesList()
     {
@@ -363,7 +354,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function markModuleAsUnsafe($author, $name)
     {
@@ -387,7 +378,7 @@ abstract class SafeMode
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function markModulesAsUnsafe(array $modules)
     {
@@ -412,47 +403,16 @@ abstract class SafeMode
     }
 
     /**
-     * SQL string condition for unsafe modules
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getUnsafeModulesSQLConditionString()
-    {
-        $cnd = '';
-        $unsafeModules = static::getUnsafeModulesList();
-
-        if (!empty($unsafeModules)) {
-
-            foreach ($unsafeModules as $author => $names) {
-                $disableCondition[] = 'author = \'' . $author 
-                    . '\' AND name IN (\'' . implode('\',\'', array_keys($names)) . '\')';
-            }
-
-            $cnd = '(' . implode(') OR (', $disableCondition) . ')';
-        }
-
-        return $cnd;
-    }
-
-
-    /**
      * Get modules list file path 
      * 
-     * @return string|void
+     * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getUnsafeModulesFilePath()
     {
-        if (!isset(static::$unsafeModulesIniFile)) {
-            static::$unsafeModulesIniFile = LC_VAR_DIR . static::UNSAFE_MODULES_FILE_NAME;
-        }
-
-        return static::$unsafeModulesIniFile;
+        return LC_VAR_DIR . self::UNSAFE_MODULES_FILE_NAME;
     }
 
     // }}}
-
 }

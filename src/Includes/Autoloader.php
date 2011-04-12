@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes;
@@ -34,7 +34,7 @@ namespace Includes;
  * 
  * @package    XLite
  * @see        ____class_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 abstract class Autoloader
 {
@@ -44,7 +44,7 @@ abstract class Autoloader
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $functions = array(
         '__lc_autoload',
@@ -58,7 +58,7 @@ abstract class Autoloader
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $lcAutoloadDir = LC_CLASSES_CACHE_DIR;
 
@@ -68,7 +68,7 @@ abstract class Autoloader
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function registerDoctrineAutoloader()
     {
@@ -86,7 +86,7 @@ abstract class Autoloader
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function registerPEARAutolader()
     {
@@ -103,7 +103,7 @@ abstract class Autoloader
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function autoloadCommon($namespace, $class, $dir)
     {
@@ -135,7 +135,7 @@ abstract class Autoloader
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function __lc_autoload($class)
     {
@@ -150,7 +150,7 @@ abstract class Autoloader
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function __lc_autoload_includes($class)
     {
@@ -165,7 +165,7 @@ abstract class Autoloader
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function addFunction($method)
     {
@@ -184,7 +184,7 @@ abstract class Autoloader
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function registerAll()
     {
@@ -200,16 +200,27 @@ abstract class Autoloader
     }
 
     /**
+     * Return path ot the autoloader current dir
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getLCAutoloadDir()
+    {
+        return static::$lcAutoloadDir;
+    }
+
+    /**
      * Switch autoload directory from var/run/classes/ to classes/
      * 
      * @param string $dir New autoload directory
      *  
      * @return void
-     * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    public static function switchLcAutoloadDir()
+    public static function switchLCAutoloadDir()
     {
         static::$lcAutoloadDir = LC_CLASSES_DIR;
     }

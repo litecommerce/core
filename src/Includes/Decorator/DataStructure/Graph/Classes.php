@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\DataStructure\Graph;
@@ -33,7 +33,7 @@ namespace Includes\Decorator\DataStructure\Graph;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Classes extends \Includes\DataStructure\Graph
 {
@@ -43,7 +43,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @var    \ReflectionClass
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $reflection;
 
@@ -53,7 +53,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @var    boolean
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $isLowLevelNode;
 
@@ -63,7 +63,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @var    boolean
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $isTopLevelNode;
 
@@ -73,7 +73,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @var    boolean
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $isChanged;
 
@@ -85,7 +85,7 @@ class Classes extends \Includes\DataStructure\Graph
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getClass()
     {
@@ -98,7 +98,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isLowLevelNode()
     {
@@ -111,7 +111,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isTopLevelNode()
     {
@@ -124,7 +124,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getParentClass()
     {
@@ -137,7 +137,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getInterfaces()
     {
@@ -152,7 +152,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isImplements($interface)
     {
@@ -165,7 +165,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isDecorator()
     {
@@ -178,7 +178,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getModuleName()
     {
@@ -191,7 +191,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return self
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTopLevelNode()
     {
@@ -209,7 +209,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setKey($key)
     {
@@ -228,7 +228,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setLowLevelNodeFlag()
     {
@@ -241,7 +241,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setTopLevelNodeFlag()
     {
@@ -257,7 +257,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPath()
     {
@@ -272,7 +272,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSource(self $parent = null)
     {
@@ -289,7 +289,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getActualSource(self $parent = null)
     {
@@ -310,7 +310,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getEmptySource(self $parent = null)
     {
@@ -331,7 +331,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRegularSource()
     {
@@ -346,7 +346,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getActualParentClassName(self $parent = null)
     {
@@ -359,7 +359,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getActualNamespace()
     {
@@ -374,7 +374,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getClassBaseName()
     {
@@ -389,7 +389,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getClassNameParts()
     {
@@ -409,7 +409,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTag($name)
     {
@@ -422,7 +422,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTags()
     {
@@ -442,7 +442,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return \ReflectionClass
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getReflection()
     {
@@ -461,7 +461,7 @@ class Classes extends \Includes\DataStructure\Graph
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareClassName($class)
     {

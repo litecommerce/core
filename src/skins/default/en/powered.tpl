@@ -8,6 +8,6 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 <center><a href="http://www.litecommerce.com"><img src="images/powered_by.gif" alt="E-commerce software and services" width=110 height=30 border=0></a></center>

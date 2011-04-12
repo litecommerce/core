@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\Plugin\StaticRoutines;
@@ -33,7 +33,7 @@ namespace Includes\Decorator\Plugin\StaticRoutines;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\APlugin
 {
@@ -51,7 +51,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function executeHookHandlerStepSecond()
     {
@@ -71,7 +71,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function addStaticConstructorCall(
         \Includes\Decorator\DataStructure\Graph\Classes $node,
@@ -90,7 +90,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @return boolean
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkForStaticConstructor(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
@@ -105,7 +105,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function writeCallToSourceFile(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {

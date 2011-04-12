@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * REST services end-point
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Rest extends \XLite\Controller\Customer\ACustomer
 {
@@ -50,7 +50,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $restActions = array('get', 'post', 'put', 'delete');
 
@@ -59,7 +59,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $restClasses;
 
@@ -68,7 +68,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * 
      * @var   object
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $currentRepo;
 
@@ -77,7 +77,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $data = array(
         'status' => self::STATUS_ERROR,
@@ -90,7 +90,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -120,7 +120,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function actionPostprocess($action = null)
     {
@@ -140,7 +140,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRESTClasses()
     {
@@ -179,7 +179,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineRESTClasses()
     {
@@ -197,7 +197,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      *  
      * @return object|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRepo($name, $type = null)
     {
@@ -217,7 +217,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionGet()
     {
@@ -234,7 +234,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionPost()
     {
@@ -255,7 +255,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionPut()
     {
@@ -275,7 +275,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDelete()
     {

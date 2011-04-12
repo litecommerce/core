@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Product inventory
  *
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity
  * @Table  (name="inventory",
@@ -58,7 +58,7 @@ class Inventory extends \XLite\Model\AEntity
      *
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -71,7 +71,7 @@ class Inventory extends \XLite\Model\AEntity
      *                            
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
@@ -82,7 +82,7 @@ class Inventory extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="uinteger")
      */
@@ -93,7 +93,7 @@ class Inventory extends \XLite\Model\AEntity
      *
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="boolean")
      */
@@ -104,7 +104,7 @@ class Inventory extends \XLite\Model\AEntity
      *
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="uinteger")
      */
@@ -115,7 +115,7 @@ class Inventory extends \XLite\Model\AEntity
      * 
      * @var   \XLite\Model\Product
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @OneToOne   (targetEntity="XLite\Model\Product", inversedBy="inventory")
      * @JoinColumn (name="id", referencedColumnName="product_id")
@@ -130,7 +130,7 @@ class Inventory extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setAmount($amount)
     {
@@ -144,7 +144,7 @@ class Inventory extends \XLite\Model\AEntity
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setLowLimitAmount($amount)
     {
@@ -158,7 +158,7 @@ class Inventory extends \XLite\Model\AEntity
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function changeAmount($delta)
     {
@@ -172,7 +172,7 @@ class Inventory extends \XLite\Model\AEntity
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAvailableAmount()
     {
@@ -184,7 +184,7 @@ class Inventory extends \XLite\Model\AEntity
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isOutOfStock()
     {
@@ -196,7 +196,7 @@ class Inventory extends \XLite\Model\AEntity
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isLowLimitReached()
     {
@@ -208,7 +208,7 @@ class Inventory extends \XLite\Model\AEntity
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @PreUpdate
      */
@@ -227,7 +227,7 @@ class Inventory extends \XLite\Model\AEntity
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function correctAmount($amount)
     {
@@ -239,7 +239,7 @@ class Inventory extends \XLite\Model\AEntity
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLockedItems()
     {
@@ -251,7 +251,7 @@ class Inventory extends \XLite\Model\AEntity
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLockedAmount()
     {
@@ -263,7 +263,7 @@ class Inventory extends \XLite\Model\AEntity
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultAmount()
     {
@@ -275,7 +275,7 @@ class Inventory extends \XLite\Model\AEntity
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function sendLowLimitNotification()
     {

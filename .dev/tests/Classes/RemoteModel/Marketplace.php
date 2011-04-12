@@ -23,14 +23,14 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 /**
  * XLite_Tests_RemoteModel_Marketplace 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
 {
@@ -52,7 +52,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @var    mixed
      * @access private
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private $moduleId = null;
 
@@ -70,7 +70,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @return void
      * @access private
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private function getModuleId($name)
     {
@@ -99,7 +99,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @return string
      * @access private
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private function getFile($name)
     {
@@ -114,7 +114,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetURL()
     {
@@ -133,7 +133,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testLicense()
     {
@@ -156,7 +156,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testAddonsXML()
     {
@@ -171,7 +171,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testRetrieveToLocalRepository()
     {
@@ -199,7 +199,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testLastVersion()
     {
@@ -212,7 +212,7 @@ class XLite_Tests_RemoteModel_Marketplace extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testModuleInfoByKey()
     {

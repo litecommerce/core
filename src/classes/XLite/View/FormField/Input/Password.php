@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Input;
@@ -33,7 +33,7 @@ namespace XLite\View\FormField\Input;
  * \XLite\View\FormField\Input\Password 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Password extends \XLite\View\FormField\Input\AInput
 {
@@ -42,7 +42,7 @@ class Password extends \XLite\View\FormField\Input\AInput
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFieldType()
     {
@@ -57,7 +57,7 @@ class Password extends \XLite\View\FormField\Input\AInput
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setCommonAttributes(array $attrs)
     {

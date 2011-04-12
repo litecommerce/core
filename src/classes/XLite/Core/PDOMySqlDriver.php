@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * Doctrine-based PDO MySQL driver
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class PDOMySqlDriver extends \Doctrine\DBAL\Driver\PDOMySql\Driver
 {
@@ -43,7 +43,7 @@ class PDOMySqlDriver extends \Doctrine\DBAL\Driver\PDOMySql\Driver
      *  
      * @return \Doctrine\DBAL\Schema\MySqlSchemaManager
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSchemaManager(\Doctrine\DBAL\Connection $conn)
     {
@@ -55,7 +55,7 @@ class PDOMySqlDriver extends \Doctrine\DBAL\Driver\PDOMySql\Driver
      * 
      * @return \Doctrine\DBAL\Platforms\AbstractPlatform
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDatabasePlatform()
     {

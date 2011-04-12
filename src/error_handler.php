@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 define('LC_ERR_TAG_MSG',   '@MSG@');
@@ -41,7 +41,7 @@ define('LC_ERROR_PAGE_MESSAGE', 'ERROR: "' . LC_ERR_TAG_ERROR . '" (' . LC_ERR_T
  *
  * @return void
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function showErrorPage($code, $message, $page = LC_ERROR_PAGE_MESSAGE, $prefix = 'ERROR_')
 {

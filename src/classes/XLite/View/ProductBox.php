@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Product box widget
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ProductBox extends \XLite\View\SideBarBox
 {
@@ -42,13 +42,17 @@ class ProductBox extends \XLite\View\SideBarBox
 
     const PARAM_PRODUCT_ID = 'product_id';
 
+    const PARAM_ICON_MAX_WIDTH = 'iconWidth';
+
+    const PARAM_ICON_MAX_HEIGHT =  'iconHeight';
+
 
     /**
      * Get a list of CSS files required to display the widget properly
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -61,7 +65,7 @@ class ProductBox extends \XLite\View\SideBarBox
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -73,7 +77,7 @@ class ProductBox extends \XLite\View\SideBarBox
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -85,7 +89,7 @@ class ProductBox extends \XLite\View\SideBarBox
      * 
      * @return \XLite\Model\Product
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProduct()
     {
@@ -105,7 +109,39 @@ class ProductBox extends \XLite\View\SideBarBox
 
         $this->widgetParams += array(
             self::PARAM_PRODUCT_ID => new \XLite\Model\WidgetParam\ObjectId\Product('Product Id', 0, true),
+
+            self::PARAM_ICON_MAX_WIDTH => new \XLite\Model\WidgetParam\Int(
+                'Maximal icon width', 180, true
+            ),
+
+            self::PARAM_ICON_MAX_HEIGHT => new \XLite\Model\WidgetParam\Int(
+                'Maximal icon height', 180, true
+            ),
         );
+    }
+
+    /**
+     * getIconWidth 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getIconWidth()
+    {
+        return $this->getParam(self::PARAM_ICON_MAX_WIDTH);
+    }
+
+    /**
+     * getIconHeight 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getIconHeight()
+    {
+        return $this->getParam(self::PARAM_ICON_MAX_HEIGHT);
     }
 
     /**
@@ -113,7 +149,7 @@ class ProductBox extends \XLite\View\SideBarBox
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

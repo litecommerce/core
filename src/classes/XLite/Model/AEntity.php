@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Abstract entity 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AEntity
 {
@@ -41,7 +41,7 @@ abstract class AEntity
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $cacheEnabled = array();
 
@@ -50,7 +50,7 @@ abstract class AEntity
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $methodNames = array();
 
@@ -62,7 +62,7 @@ abstract class AEntity
      *                                                                            
      * @return void                                                               
      * @see    ____func_see____                                                   
-     * @since  3.0.0                                                              
+     * @since  1.0.0
      */                                                                           
     public function __construct(array $data = array())                            
     {
@@ -76,18 +76,22 @@ abstract class AEntity
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function map(array $data)
     {
         foreach ($data as $key => $value) {
+
             // Map only existing properties with setter methods or direct
             $method = 'set' . $this->getMethodName($key);
+
             if (method_exists($this, $method)) {
+
                 // $method is assembled from 'set' + getMethodName()
                 $this->$method($value);
 
             } elseif (property_exists($this, $key)) {
+
                 $this->$key = $value;
             }
         }
@@ -100,7 +104,7 @@ abstract class AEntity
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __get($name)
     {
@@ -116,7 +120,7 @@ abstract class AEntity
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __set($name, $value)
     {
@@ -131,7 +135,7 @@ abstract class AEntity
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __unset($name)
     {
@@ -143,7 +147,7 @@ abstract class AEntity
      *
      * @return \XLite\Model\Doctrine\Repo\AbstractRepo
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRepository()
     {
@@ -155,20 +159,23 @@ abstract class AEntity
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkCache()
     {
         $class = get_called_class();
 
         if (!isset(self::$cacheEnabled[$class])) {
+
             $repo = $this->getRepository();
+
             self::$cacheEnabled[$class] = ($repo && is_subclass_of($repo, '\XLite\Model\Repo\ARepo'))
                 ? $repo->hasCacheCells()
                 : false;
         }
 
         if (self::$cacheEnabled[$class]) {
+
             $this->getRepository()->deleteCacheByEntity($this);
         }
     }
@@ -178,7 +185,7 @@ abstract class AEntity
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function detach()
     {
@@ -195,28 +202,34 @@ abstract class AEntity
      * @return mixed
      * @throws \BadMethodCallException
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __call($method, array $args = array())
     {
         $result = preg_match('/^(get|set)(\w+)$/Si', $method, $matches) && !empty($matches[2]);
 
         if ($result) {
+
             $property = \XLite\Core\Converter::convertFromCamelCase($matches[2]);
+
             $result = property_exists($this, $property);
         }
 
         $return = null;
 
         if ($result) {
+
             if ('set' === $matches[1]) {
+
                 $this->$property = array_shift($args);
 
             } else {
+
                 $return = $this->$property;
             }
 
         } else {
+
             throw new \BadMethodCallException(
                 get_class($this) . '::' . $method . '() - method not exists or invalid getter/setter'
             );
@@ -230,7 +243,7 @@ abstract class AEntity
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isPersistent()
     {
@@ -242,7 +255,7 @@ abstract class AEntity
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function update()
     {
@@ -257,7 +270,7 @@ abstract class AEntity
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function create()
     {
@@ -269,7 +282,7 @@ abstract class AEntity
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function delete()
     {
@@ -285,17 +298,20 @@ abstract class AEntity
      * 
      * @return \XLite\Model\AEntity
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function cloneEntity()
     {
         $class  = $this instanceof \Doctrine\ORM\Proxy\Proxy ? $this->_entityClass : get_called_class();
+
         $entity = new $class();
+
         $fields = array_keys(\XLite\Core\Database::getEM()->getClassMetadata($class)->fieldMappings);
 
         $map = array();
 
         foreach ($fields as $field) {
+
             $map[$field] = $this->$field;
         }
 
@@ -309,7 +325,7 @@ abstract class AEntity
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function prepareEntityBeforeCommit()
     {
@@ -323,17 +339,19 @@ abstract class AEntity
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMethodName($name)
     {
         $class = get_called_class();
 
         if (!isset(self::$methodNames[$class])) {
+
             self::$methodNames[$class] = array();
         }
 
         if (!isset(self::$methodNames[$class][$name])) {
+
             self::$methodNames[$class][$name] = \XLite\Core\Converter::convertToCamelCase($name);
         }
 

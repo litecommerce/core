@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Label;
@@ -32,7 +32,7 @@ namespace XLite\View\FormField\Label;
  * OrderStatus
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class OrderStatus extends \XLite\View\FormField\Label
 {
@@ -41,7 +41,7 @@ class OrderStatus extends \XLite\View\FormField\Label
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getValue()
     {

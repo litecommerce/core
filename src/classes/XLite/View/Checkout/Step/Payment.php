@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Checkout\Step;
@@ -32,7 +32,7 @@ namespace XLite\View\Checkout\Step;
  * Payment checkout step
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Payment extends \XLite\View\Checkout\Step\AStep
 {
@@ -41,7 +41,7 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      * 
      * @var   \XLite\Model\Order\Modifier
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $modifier;
 
@@ -50,7 +50,7 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getStepName()
     {
@@ -62,7 +62,7 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -74,7 +74,7 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isCompleted()
     {
@@ -89,7 +89,7 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPaymentMethods()
     {
@@ -101,7 +101,7 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isAddressCompleted()
     {
@@ -120,7 +120,7 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isPaymentSelected(\XLite\Model\Payment\Method $method)
     {
@@ -132,7 +132,7 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isSameAddress()
     {
@@ -144,7 +144,7 @@ class Payment extends \XLite\View\Checkout\Step\AStep
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isDisplayAddressButton()
     {

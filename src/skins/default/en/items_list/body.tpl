@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 
 <div class="{getListCSSClasses()}">
@@ -19,12 +19,12 @@
 
   <div IF="isPagerVisible()" class="list-pager">{pager.display()}</div>
 
-  <div IF="isHeaderVisible()" class="list-header">{displayViewListContent(#itemsList.header#)}</div>
+  <div IF="isHeaderVisible()" class="list-header">{displayInheritedViewListContent(#header#)}</div>
 
   <widget template="{getPageBodyTemplate()}" />
 
   <div class="list-pager list-pager-bottom" IF="pager.isPagesListVisible()">{pager.display()}</div>
 
-  <div IF="isFooterVisible()" class="list-footer">{displayViewListContent(#itemsList.footer#)}</div>
+  <div IF="isFooterVisible()" class="list-footer">{displayInheritedViewListContent(#footer#)}</div>
 
 </div>

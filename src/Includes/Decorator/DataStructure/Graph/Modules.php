@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\DataStructure\Graph;
@@ -33,7 +33,7 @@ namespace Includes\Decorator\DataStructure\Graph;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Modules extends \Includes\DataStructure\Graph
 {
@@ -43,7 +43,7 @@ class Modules extends \Includes\DataStructure\Graph
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $criticalPaths;
 
@@ -55,7 +55,7 @@ class Modules extends \Includes\DataStructure\Graph
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getActualName()
     {
@@ -68,7 +68,7 @@ class Modules extends \Includes\DataStructure\Graph
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDependencies()
     {
@@ -81,7 +81,7 @@ class Modules extends \Includes\DataStructure\Graph
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModuleClass()
     {
@@ -99,7 +99,7 @@ class Modules extends \Includes\DataStructure\Graph
      * @return integer
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCriticalPath($module)
     {
@@ -116,7 +116,7 @@ class Modules extends \Includes\DataStructure\Graph
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function calculateCriticalPathLengths($length = 1)
     {

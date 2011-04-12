@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\ColumnType;
@@ -32,7 +32,7 @@ namespace XLite\Core\ColumnType;
  * Fixed string type
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class FixedString extends \Doctrine\DBAL\Types\StringType
 {
@@ -49,7 +49,7 @@ class FixedString extends \Doctrine\DBAL\Types\StringType
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSQLDeclaration(array $fieldDeclaration, \Doctrine\DBAL\Platforms\AbstractPlatform $platform)
     {
@@ -63,7 +63,7 @@ class FixedString extends \Doctrine\DBAL\Types\StringType
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getName()
     {

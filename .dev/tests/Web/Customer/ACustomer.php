@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 require_once __DIR__ . '/../AWeb.php';
@@ -83,7 +83,7 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
      * @return int
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function findWidgetID($widgetClass)
     {
@@ -101,7 +101,7 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
      *
      * @return int
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getWidgetId()
     {
@@ -120,7 +120,7 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setWidgetParam($widgetId, $param, $value)
     {
@@ -135,7 +135,7 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
      * @return Doctrine\DBAL\Driver\PDOStatement
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function query($query)
     {
@@ -147,7 +147,7 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
      *
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function resetBrowser()
     {
@@ -163,7 +163,7 @@ abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
      * @return integer
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPaymentMethodIdByName($name)
     {

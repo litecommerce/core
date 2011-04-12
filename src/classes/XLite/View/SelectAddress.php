@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Pick address from address book
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="center")
  */
@@ -43,7 +43,7 @@ class SelectAddress extends \XLite\View\Dialog
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $columnsNumber = 2;
 
@@ -53,7 +53,7 @@ class SelectAddress extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -70,7 +70,7 @@ class SelectAddress extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -88,7 +88,7 @@ class SelectAddress extends \XLite\View\Dialog
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isSelectedAddress(\XLite\Model\Address $address)
     {
@@ -103,7 +103,7 @@ class SelectAddress extends \XLite\View\Dialog
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAddresses()
     {
@@ -115,7 +115,7 @@ class SelectAddress extends \XLite\View\Dialog
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function hasAddresses()
     {
@@ -130,7 +130,7 @@ class SelectAddress extends \XLite\View\Dialog
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getItemClassName(\XLite\Model\Address $address, $i)
     {
@@ -153,7 +153,7 @@ class SelectAddress extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -165,7 +165,7 @@ class SelectAddress extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -177,7 +177,7 @@ class SelectAddress extends \XLite\View\Dialog
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

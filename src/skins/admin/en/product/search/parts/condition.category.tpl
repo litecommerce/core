@@ -8,13 +8,13 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *
- * @ListChild (list="product.search.conditions", weight="30")
+ * @ListChild (list="product.search.conditions", weight="40")
  *}
 
 <tr>
-  <td class="table-label">In category</td>
+  <td class="table-label">{t(#In category#)}</td>
   <td style="width:10px;height:10px;"><span class="error-message">*</span></td>
   <td style="height:10px;">
     <widget class="\XLite\View\CategorySelect" fieldName="categoryId" selectedCategoryId="{getCondition(#categoryId#):r}" allOption />

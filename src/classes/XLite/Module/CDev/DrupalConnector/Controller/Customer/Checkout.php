@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Base\IDecorator
 {
@@ -43,7 +43,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * @return boolean
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isCreateProfile()
     {
@@ -58,7 +58,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function updateProfile()
     {
@@ -113,7 +113,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getLoginURL()
     {
@@ -129,7 +129,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function saveAnonymousProfile()
     {
@@ -186,7 +186,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function cloneProfile()
     {
@@ -202,7 +202,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * @return boolean
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRedirectMode()
     {

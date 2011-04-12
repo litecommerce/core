@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace Includes\Utils;
@@ -32,7 +32,7 @@ namespace Includes\Utils;
  * PHARManager 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class PHARManager extends \Includes\Utils\AUtils
 {
@@ -47,7 +47,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $extensions = array(\Phar::GZ => 'gz', \Phar::BZ2 => 'bz2');
 
@@ -62,7 +62,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function packCore(\XLite\Core\Pack\Distr $pack)
     {
@@ -77,7 +77,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function packModule(\XLite\Core\Pack\Module $pack)
     {
@@ -96,7 +96,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function download(\XLite\Core\Pack\APack $pack)
     {
@@ -122,7 +122,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * @return \Phar
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function pack(&$name, \Iterator $iterator, array $metadata = array())
     {
@@ -146,7 +146,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function canCompress()
     {
@@ -161,7 +161,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      *  
      * @return \PharData
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function compress(\PharData $phar, &$name)
     {
@@ -184,7 +184,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getExtension()
     {

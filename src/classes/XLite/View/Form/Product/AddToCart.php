@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Product;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Product;
  * Add product to cart form
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class AddToCart extends \XLite\View\Form\Product\AProduct
 {
@@ -41,7 +41,7 @@ class AddToCart extends \XLite\View\Form\Product\AProduct
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormName()
     {
@@ -53,7 +53,7 @@ class AddToCart extends \XLite\View\Form\Product\AProduct
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -65,7 +65,7 @@ class AddToCart extends \XLite\View\Form\Product\AProduct
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -77,7 +77,7 @@ class AddToCart extends \XLite\View\Form\Product\AProduct
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function initView()
     {
@@ -91,7 +91,7 @@ class AddToCart extends \XLite\View\Form\Product\AProduct
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormDefaultParams()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * MySql DBAL platform 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class MySqlPlatform extends \Doctrine\DBAL\Platforms\MySqlPlatform
 {
@@ -43,7 +43,7 @@ class MySqlPlatform extends \Doctrine\DBAL\Platforms\MySqlPlatform
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getBooleanTypeDeclarationSQL(array $field)
     {

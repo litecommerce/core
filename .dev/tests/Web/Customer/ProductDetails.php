@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 require_once __DIR__ . '/ACustomer.php';
@@ -33,7 +33,7 @@ require_once __DIR__ . '/ACustomer.php';
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 {
@@ -43,7 +43,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
 
     public function testStructure()
@@ -156,21 +156,11 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             'check Add to bag button'
         );
 
-        $facebookSelector = "css=form.product-details .product-details-info .facebook object";
+        $facebookSelector = "css=form.product-details .product-details-info .facebook script";
         $this->assertElementPresent(
             $facebookSelector,
             "check Facebook widget"
         );
-
-        $url = urlencode($this->getLocation());
-        $facebookLink = "http://www.facebook.com/plugins/like.php?href=$url&layout=standard&show_faces=true&width=450&action=like&colorscheme=light&height=24";
-        $iframeLink = $this->getJSExpression('jQuery(".facebook object").attr("data")');
-        $this->assertEquals(
-            $iframeLink,
-            $facebookLink,
-            'check Facebook Like link'
-        );
-
 
         // Tabs
         $this->assertElementPresent(

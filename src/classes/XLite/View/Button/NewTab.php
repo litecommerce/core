@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Button;
@@ -32,7 +32,7 @@ namespace XLite\View\Button;
  * ____description____
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class NewTab extends \XLite\View\Button\Link
 {
@@ -41,7 +41,7 @@ class NewTab extends \XLite\View\Button\Link
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultJSCode($action = null)
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\Validator\Pair;
@@ -32,7 +32,7 @@ namespace XLite\Core\Validator\Pair;
  * Hash array simple pair validator 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Simple extends \XLite\Core\Validator\Pair\APair
 {
@@ -41,7 +41,7 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $mode = self::STRICT;
 
@@ -50,7 +50,7 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $name;
 
@@ -59,7 +59,7 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * 
      * @var   \XLite\Core\Validator\AValidator
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $validator;
 
@@ -68,7 +68,7 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * 
      * @var   mixed
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $defaultValue;
 
@@ -77,7 +77,7 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * 
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getName()
     {
@@ -91,7 +91,7 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setName($name)
     {
@@ -103,7 +103,7 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * 
      * @return \XLite\Core\Validator\AValidator
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getValidator()
     {
@@ -117,7 +117,7 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setValidator(\XLite\Core\Validator\AValidator $validator)
     {
@@ -131,7 +131,7 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setDefaultValue($value)
     {
@@ -145,7 +145,7 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function find(array $data)
     {
@@ -160,7 +160,7 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      * @return void
      * @throws \XLite\Core\Validator\Exception
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function validate($data)
     {
@@ -197,7 +197,7 @@ class Simple extends \XLite\Core\Validator\Pair\APair
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function sanitize($data)
     {

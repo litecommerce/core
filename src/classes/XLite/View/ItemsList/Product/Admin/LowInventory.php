@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList\Product\Admin;
@@ -32,7 +32,7 @@ namespace XLite\View\ItemsList\Product\Admin;
  * LowInventory 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
 {
@@ -41,7 +41,7 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -53,7 +53,7 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -65,7 +65,7 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDisplayStyle()
     {
@@ -77,7 +77,7 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isFooterVisible()
     {
@@ -89,7 +89,7 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
      *
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -106,7 +106,7 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineViewList($list)
     {
@@ -127,7 +127,7 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
      *
      * @return array|integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {

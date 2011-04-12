@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Logic\Order\Modifier;
@@ -32,7 +32,7 @@ namespace XLite\Logic\Order\Modifier;
  * Abstract shipping modifier
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AShipping extends \XLite\Logic\Order\Modifier\AModifier
 {
@@ -41,7 +41,7 @@ abstract class AShipping extends \XLite\Logic\Order\Modifier\AModifier
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = \XLite\Model\Base\Surcharge::TYPE_SHIPPING;
 }

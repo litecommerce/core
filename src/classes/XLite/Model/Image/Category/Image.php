@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Image\Category;
@@ -32,7 +32,7 @@ namespace XLite\Model\Image\Category;
  * Category
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity
  * @Table  (name="category_images",
@@ -48,7 +48,7 @@ class Image extends \XLite\Model\Base\Image
      *
      * @var   \XLite\Model\Category
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @OneToOne  (targetEntity="XLite\Model\Category", inversedBy="image")
      * @JoinColumn (name="id", referencedColumnName="category_id")

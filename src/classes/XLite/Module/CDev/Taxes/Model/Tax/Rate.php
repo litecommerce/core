@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Taxes\Model\Tax;
@@ -32,7 +32,7 @@ namespace XLite\Module\CDev\Taxes\Model\Tax;
  * Rate 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity
  * @Table (name="tax_rates")
@@ -51,7 +51,7 @@ class Rate extends \XLite\Model\AEntity
      * 
      * @var    int
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -64,7 +64,7 @@ class Rate extends \XLite\Model\AEntity
      * 
      * @var   float
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="decimal", precision=14, scale=4)
      */
@@ -75,7 +75,7 @@ class Rate extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="fixedstring", length="1")
      */
@@ -86,7 +86,7 @@ class Rate extends \XLite\Model\AEntity
      * 
      * @var    \XLite\Module\CDev\Taxes\Model\Tax
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Module\CDev\Taxes\Model\Tax", inversedBy="rates")
      * @JoinColumn (name="tax_id", referencedColumnName="id")
@@ -98,7 +98,7 @@ class Rate extends \XLite\Model\AEntity
      * 
      * @var    \XLite\Model\Zone
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Zone", inversedBy="tax_rates")
      * @JoinColumn (name="zone_id", referencedColumnName="zone_id")
@@ -110,7 +110,7 @@ class Rate extends \XLite\Model\AEntity
      * 
      * @var    \XLite\Model\ProductClass
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\ProductClass", inversedBy="tax_rates")
      * @JoinColumn (name="product_class_id", referencedColumnName="id")
@@ -122,7 +122,7 @@ class Rate extends \XLite\Model\AEntity
      * 
      * @var    \XLite\Model\Membership
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Model\Membership", inversedBy="tax_rates")
      * @JoinColumn (name="membership_id", referencedColumnName="membership_id")
@@ -137,7 +137,7 @@ class Rate extends \XLite\Model\AEntity
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isApplyed(array $zones, \XLite\Model\Membership $membership)
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\Validator;
@@ -32,7 +32,7 @@ namespace XLite\Core\Validator;
  * Plain array alidator 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class PlainArray extends \XLite\Core\Validator\AValidator
 {
@@ -41,7 +41,7 @@ class PlainArray extends \XLite\Core\Validator\AValidator
      * 
      * @var   mixed
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $itemValidator;
 
@@ -50,7 +50,7 @@ class PlainArray extends \XLite\Core\Validator\AValidator
      * 
      * @return \XLite\Core\Validator\AValidator
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getValidator()
     {
@@ -64,7 +64,7 @@ class PlainArray extends \XLite\Core\Validator\AValidator
      *  
      * @return \XLite\Core\Validator\AValidator
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setValidator(\XLite\Core\Validator\AValidator $itemValidator)
     {
@@ -81,7 +81,7 @@ class PlainArray extends \XLite\Core\Validator\AValidator
      * @return void
      * @throws \XLite\Core\Validator\Exception
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function validate($data)
     {
@@ -116,7 +116,7 @@ class PlainArray extends \XLite\Core\Validator\AValidator
      *
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function sanitize($data)
     {

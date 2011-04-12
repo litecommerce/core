@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Checkout;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Checkout;
  * Checkout update profile form
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class UpdateProfile extends \XLite\View\Form\Checkout\ACheckout
 {
@@ -41,7 +41,7 @@ class UpdateProfile extends \XLite\View\Form\Checkout\ACheckout
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -53,7 +53,7 @@ class UpdateProfile extends \XLite\View\Form\Checkout\ACheckout
      *
      * @return \XLite\Core\Validator\HashArray
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getValidator()
     {

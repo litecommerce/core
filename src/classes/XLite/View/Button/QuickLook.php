@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Button;
@@ -32,7 +32,7 @@ namespace XLite\View\Button;
  * QuickLook 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class QuickLook extends \XLite\View\Button\Regular
 {
@@ -47,7 +47,7 @@ class QuickLook extends \XLite\View\Button\Regular
      * 
      * @return \XLite\Model\Product
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProduct()
     {
@@ -59,7 +59,7 @@ class QuickLook extends \XLite\View\Button\Regular
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultLabel()
     {
@@ -71,7 +71,7 @@ class QuickLook extends \XLite\View\Button\Regular
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getClass()
     {
@@ -83,7 +83,7 @@ class QuickLook extends \XLite\View\Button\Regular
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultJSCode()
     {
@@ -95,7 +95,7 @@ class QuickLook extends \XLite\View\Button\Regular
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {

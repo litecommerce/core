@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Utils;
@@ -33,7 +33,7 @@ namespace Includes\Utils;
  * 
  * @package    XLite
  * @see        ____class_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 class FileFilter extends AUtils
 {
@@ -43,7 +43,7 @@ class FileFilter extends AUtils
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $dir;
 
@@ -53,7 +53,7 @@ class FileFilter extends AUtils
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $pattern;
 
@@ -63,7 +63,7 @@ class FileFilter extends AUtils
      * @var    int
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $mode;
 
@@ -73,7 +73,7 @@ class FileFilter extends AUtils
      * @var    \Includes\Utils\FileFilter\FilterIterator
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $iterator;
 
@@ -84,7 +84,7 @@ class FileFilter extends AUtils
      * @return \RecursiveIteratorIterator
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getUnfilteredIterator()
     {
@@ -102,7 +102,7 @@ class FileFilter extends AUtils
      * @return \Includes\Utils\FileFilter\FilterIterator
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getIterator()
     {
@@ -123,7 +123,7 @@ class FileFilter extends AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct($dir, $pattern = null, $mode = \RecursiveIteratorIterator::LEAVES_ONLY)
     {

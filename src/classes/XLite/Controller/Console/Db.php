@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Console;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Console;
  * Db services controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Db extends \XLite\Controller\Console\AConsole
 {
@@ -42,7 +42,7 @@ class Db extends \XLite\Controller\Console\AConsole
      * @return void
      * @throws \PDOException
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionLoadFixtures()
     {
@@ -81,7 +81,7 @@ class Db extends \XLite\Controller\Console\AConsole
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHelpLoadFixtures()
     {
@@ -94,7 +94,7 @@ class Db extends \XLite\Controller\Console\AConsole
      * @return void
      * @throws \PDOException
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUnloadFixtures()
     {
@@ -133,7 +133,7 @@ class Db extends \XLite\Controller\Console\AConsole
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHelpUnloadFixtures()
     {
@@ -145,7 +145,7 @@ class Db extends \XLite\Controller\Console\AConsole
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionExportSchema()
     {
@@ -184,7 +184,7 @@ class Db extends \XLite\Controller\Console\AConsole
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHelpExportSchema()
     {
@@ -197,7 +197,7 @@ class Db extends \XLite\Controller\Console\AConsole
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdateSchema()
     {
@@ -210,7 +210,7 @@ class Db extends \XLite\Controller\Console\AConsole
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDropSchema()
     {
@@ -223,7 +223,7 @@ class Db extends \XLite\Controller\Console\AConsole
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionRecreateSchema()
     {
@@ -237,7 +237,7 @@ class Db extends \XLite\Controller\Console\AConsole
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionTruncate()
     {

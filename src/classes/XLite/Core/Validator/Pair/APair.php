@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\Validator\Pair;
@@ -32,7 +32,7 @@ namespace XLite\Core\Validator\Pair;
  * Abstarct hash array pair validator 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class APair extends \XLite\Core\Validator\AValidator
 {
@@ -48,7 +48,7 @@ abstract class APair extends \XLite\Core\Validator\AValidator
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $mode = self::STRICT;
 
@@ -59,7 +59,7 @@ abstract class APair extends \XLite\Core\Validator\AValidator
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct($mode = self::STRICT)
     {

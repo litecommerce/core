@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Pager\Admin\Module;
@@ -32,7 +32,7 @@ namespace XLite\View\Pager\Admin\Module;
  * Pager for the orders search page
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Install extends \XLite\View\Pager\Admin\Module\AModule
 {
@@ -41,10 +41,24 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
      *
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getItemsPerPageDefault()
     {
         return 5;
+    }
+
+    /**
+     * Return widget default template
+     *
+     * :TODO: check if where is a more convinient way to get ItemsList dir
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'items_list' . LC_DS . 'module' . LC_DS . 'install' . LC_DS . 'pager' . LC_DS . 'body.tpl';
     }
 }

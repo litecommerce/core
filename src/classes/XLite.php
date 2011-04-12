@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 /**
@@ -33,7 +33,7 @@
  * TODO[SINGLETON]: lowest priority
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class XLite extends \XLite\Base
 {
@@ -66,7 +66,7 @@ class XLite extends \XLite\Base
      *
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $adminZone = false;
 
@@ -75,7 +75,7 @@ class XLite extends \XLite\Base
      * 
      * @var   \XLite\Controller\AController
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $controller = null;
 
@@ -84,7 +84,7 @@ class XLite extends \XLite\Base
      *
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $isNeedToCleanupCache = false;
 
@@ -93,7 +93,7 @@ class XLite extends \XLite\Base
      * 
      * @var   mixed
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $_xlite_form_id = null;
 
@@ -102,7 +102,7 @@ class XLite extends \XLite\Base
      * 
      * @var   \XLite\Model\Currency
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $currentCurrency;
 
@@ -111,7 +111,7 @@ class XLite extends \XLite\Base
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isAdminZone()
     {
@@ -125,7 +125,7 @@ class XLite extends \XLite\Base
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function setCleanUpCacheFlag($flag)
     {
@@ -137,7 +137,7 @@ class XLite extends \XLite\Base
      *
      * @return \XLite\Controller\AController
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getController()
     {
@@ -164,7 +164,7 @@ class XLite extends \XLite\Base
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function setController($controller = null)
     {
@@ -178,7 +178,7 @@ class XLite extends \XLite\Base
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getTarget()
     {
@@ -196,7 +196,7 @@ class XLite extends \XLite\Base
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getControllerClass()
     {
@@ -210,7 +210,7 @@ class XLite extends \XLite\Base
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getOptions($names = null)
     {
@@ -222,7 +222,7 @@ class XLite extends \XLite\Base
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __destruct()
     {
@@ -236,7 +236,7 @@ class XLite extends \XLite\Base
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getScript()
     {
@@ -252,7 +252,7 @@ class XLite extends \XLite\Base
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getShopURL($url = '', $isSecure = false, array $params = array())
     {
@@ -264,7 +264,7 @@ class XLite extends \XLite\Base
      * 
      * @return \XLite\Model\Factory
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFactory()
     {
@@ -278,7 +278,7 @@ class XLite extends \XLite\Base
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function doGlobalDie($message)
     {
@@ -290,7 +290,7 @@ class XLite extends \XLite\Base
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function initModules()
     {
@@ -302,7 +302,7 @@ class XLite extends \XLite\Base
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function runController()
     {
@@ -314,7 +314,7 @@ class XLite extends \XLite\Base
      * 
      * @return \XLite\View\Controller|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getViewer()
     {
@@ -331,7 +331,7 @@ class XLite extends \XLite\Base
      * 
      * @return \XLite
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function processRequest()
     {
@@ -349,7 +349,7 @@ class XLite extends \XLite\Base
      *  
      * @return \XLite
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function run($adminZone = false)
     {
@@ -385,7 +385,7 @@ class XLite extends \XLite\Base
      * 
      * @return \XLite\Model\Currency
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCurrency()
     {
@@ -401,7 +401,7 @@ class XLite extends \XLite\Base
      * 
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAction()
     {
@@ -413,7 +413,7 @@ class XLite extends \XLite\Base
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function clearDataOnStartup()
     {
@@ -429,7 +429,7 @@ class XLite extends \XLite\Base
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     final public function getVersion()
     {
@@ -441,7 +441,7 @@ class XLite extends \XLite\Base
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     final public function getMajorVersion()
     {
@@ -453,7 +453,7 @@ class XLite extends \XLite\Base
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     final public function getMinorVersion()
     {
@@ -468,7 +468,7 @@ class XLite extends \XLite\Base
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     final public function checkVersion($version, $operator)
     {

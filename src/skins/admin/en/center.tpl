@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 <widget template="noscript.tpl" />
 
@@ -35,20 +35,18 @@
 <widget target="settings" class="\XLite\View\Tabber" body="general_settings.tpl" switch="page" />
 
 <widget template="users/search.tpl" target="users">
+
 <widget target="recent_login" template="common/dialog.tpl" body="recent_login.tpl" />
 
 <widget target="product_list" template="product/product_list_form.tpl">
+
 <widget target="product" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
 
 <widget target="profile" template="common/dialog.tpl" head="Delete profile - Confirmation" body="profile/confirm_delete.tpl" IF="mode=#delete#" />
 
-<widget target="order_list,order,advanced_security" module="CDev\AdvancedSecurity" template="modules/CDev/AdvancedSecurity/advanced_security.tpl">
-
 <widget class="\XLite\View\Order\Details\Admin\Model" template="order/order.tpl" />
 
 <widget target="countries" template="common/dialog.tpl" body="countries.tpl" head="Countries">
-
-<widget class="\XLite\View\Tabber" target="backup_restore" body="{pageTemplate}" switch="page">
 
 <widget target="update_inventory" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">
 

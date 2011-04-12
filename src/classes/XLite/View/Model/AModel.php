@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Model;
@@ -32,7 +32,7 @@ namespace XLite\View\Model;
  * Abstract model widget
  *
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AModel extends \XLite\View\Dialog
 {
@@ -96,7 +96,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @var   \XLite\View\Model\AModel
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $currentForm = null;
 
@@ -106,7 +106,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $formFields = null;
 
@@ -115,7 +115,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $formFieldNames = array();
 
@@ -124,7 +124,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $errorMessages = null;
 
@@ -133,7 +133,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $savedData = null;
 
@@ -142,7 +142,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $sections = array(
         self::SECTION_DEFAULT => null,
@@ -154,7 +154,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $currentAction = null;
 
@@ -163,7 +163,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $requestData = null;
 
@@ -173,7 +173,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $shemaDefault = array();
 
@@ -182,7 +182,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $schemaHidden = array();
 
@@ -191,7 +191,7 @@ abstract class AModel extends \XLite\View\Dialog
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $excludedFields = array();
 
@@ -200,7 +200,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return \XLite\Model\AEntity
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getDefaultModelObject();
 
@@ -209,7 +209,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getFormClass();
 
@@ -219,7 +219,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getCurrentForm()
     {
@@ -235,7 +235,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $params = array(), array $sections = array())
     {
@@ -255,7 +255,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDefaultFieldValue($name)
     {
@@ -277,7 +277,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isValid()
     {
@@ -292,7 +292,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function performAction($action, array $data = array())
     {
@@ -324,7 +324,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -341,7 +341,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSavedData($name = null)
     {
@@ -361,7 +361,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRequestData($name = null)
     {
@@ -382,7 +382,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setRequestData($name, $value)
     {
@@ -394,7 +394,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return \XLite\Model\AEntity
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getModelObject()
     {
@@ -407,7 +407,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkAccess()
     {
@@ -419,7 +419,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBodyTemplate()
     {
@@ -431,7 +431,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAccessDeniedMessage()
     {
@@ -443,7 +443,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -457,7 +457,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormDir($template = null)
     {
@@ -471,7 +471,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormTemplate($template)
     {
@@ -485,7 +485,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormFieldsForSection($section)
     {
@@ -500,7 +500,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineFormFields()
     {
@@ -524,7 +524,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormName()
     {
@@ -557,7 +557,7 @@ abstract class AModel extends \XLite\View\Dialog
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function useBodyTemplate()
     {
@@ -571,7 +571,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function composeFieldName($name)
     {
@@ -586,7 +586,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFieldSchemaArgs($name, array $data)
     {
@@ -604,7 +604,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setModelProperties(array $data)
     {
@@ -618,7 +618,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareFormDataToSave(array $data)
     {
@@ -630,7 +630,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSavedForms()
     {
@@ -644,7 +644,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSavedForm($field = null)
     {
@@ -667,7 +667,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function saveFormData($data)
     {
@@ -689,7 +689,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function clearFormData()
     {
@@ -701,7 +701,7 @@ abstract class AModel extends \XLite\View\Dialog
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addDataSavedTopMessage()
     {
@@ -713,7 +713,7 @@ abstract class AModel extends \XLite\View\Dialog
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addDataDeletedTopMessage()
     {
@@ -725,7 +725,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessSuccessActionCreate()
     {
@@ -737,7 +737,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessSuccessActionUpdate()
     {
@@ -749,7 +749,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessSuccessActionModify()
     {
@@ -761,7 +761,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessSuccessActionDelete()
     {
@@ -773,7 +773,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessSuccessAction()
     {
@@ -792,7 +792,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessErrorAction()
     {
@@ -813,7 +813,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function startCurrentForm()
     {
@@ -825,7 +825,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function closeView()
     {
@@ -843,7 +843,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return \XLite\View\FormField\AFormField
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFieldBySchema($name, array $data)
     {
@@ -866,7 +866,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFieldsBySchema(array $schema)
     {
@@ -884,7 +884,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function filterFormFields()
     {
@@ -917,7 +917,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function translateSchema($name)
     {
@@ -933,7 +933,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormFields($onlyNames = false)
     {
@@ -954,7 +954,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return \XLite\View\FormField\AFormField
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormField($section, $name, $preprocessName = true)
     {
@@ -977,7 +977,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormFieldsForDisplay()
     {
@@ -994,7 +994,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isShowSectionHeader($section)
     {
@@ -1008,7 +1008,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareRequestData(array $data)
     {
@@ -1023,7 +1023,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineRequestData(array $data = array(), $name = null)
     {
@@ -1048,7 +1048,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSectionFieldValues($section)
     {
@@ -1067,7 +1067,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormButtons()
     {
@@ -1082,7 +1082,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareErrorMessage($message, array $data)
     {
@@ -1104,7 +1104,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function validateFields(array $data)
     {
@@ -1119,7 +1119,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getErrorMessages()
     {
@@ -1143,7 +1143,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addErrorMessage($name, $message, array $data = array())
     {
@@ -1155,7 +1155,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTopInlineJSCode()
     {
@@ -1167,7 +1167,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBottomInlineJSCode()
     {
@@ -1181,7 +1181,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function callActionHandler($action = null)
     {
@@ -1196,7 +1196,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performActionCreate()
     {
@@ -1208,7 +1208,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performActionUpdate()
     {
@@ -1220,7 +1220,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performActionModify()
     {
@@ -1241,7 +1241,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performActionDelete()
     {
@@ -1257,7 +1257,7 @@ abstract class AModel extends \XLite\View\Dialog
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModelObjectValue($name)
     {
@@ -1278,7 +1278,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -1292,7 +1292,7 @@ abstract class AModel extends \XLite\View\Dialog
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function excludeField($fieldName) 
     {
@@ -1304,7 +1304,7 @@ abstract class AModel extends \XLite\View\Dialog
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareDataForMapping()
     {
@@ -1327,7 +1327,7 @@ abstract class AModel extends \XLite\View\Dialog
      * 
      * @return \XLite\Model\AEntity
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareObjectForMapping()
     {

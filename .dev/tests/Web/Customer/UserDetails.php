@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
@@ -33,7 +33,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
      * 
      * @var    array
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $users = array(
         // Administrator
@@ -67,7 +67,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
      * 
      * @var    string
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $roleName = 'test role';
 
@@ -76,7 +76,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testUpdate1()
     {
@@ -101,7 +101,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testUpdate2()
     {
@@ -166,7 +166,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testCreateUser()
     {
@@ -266,7 +266,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testPassword()
     {
@@ -350,7 +350,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testRoles()
     {
@@ -591,7 +591,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getUser($id)
     {
@@ -605,7 +605,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function loginUser($user)
     {
@@ -621,7 +621,7 @@ class XLite_Web_Customer_UserDetails extends XLite_Web_Customer_ACustomer
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function createUser($user, $isAdmin = false)
     {

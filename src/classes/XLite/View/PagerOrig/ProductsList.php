@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\PagerOrig;
@@ -32,7 +32,7 @@ namespace XLite\View\PagerOrig;
  * Pager 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ProductsList extends \XLite\View\PagerOrig
 {
@@ -50,7 +50,7 @@ class ProductsList extends \XLite\View\PagerOrig
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $pagesPerFrame = 5;
 
@@ -60,7 +60,7 @@ class ProductsList extends \XLite\View\PagerOrig
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -76,7 +76,7 @@ class ProductsList extends \XLite\View\PagerOrig
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function buildURLByPageId($pageId)
     {
@@ -88,7 +88,7 @@ class ProductsList extends \XLite\View\PagerOrig
      *
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFrameStartPage()
     {
@@ -102,7 +102,7 @@ class ProductsList extends \XLite\View\PagerOrig
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function definePageURLs()
     {
@@ -118,7 +118,7 @@ class ProductsList extends \XLite\View\PagerOrig
      *  
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isFurthermostPage($type)
     {
@@ -135,7 +135,7 @@ class ProductsList extends \XLite\View\PagerOrig
      *  
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageIdByNotation($index)
     {
@@ -156,7 +156,7 @@ class ProductsList extends \XLite\View\PagerOrig
      *  
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLinkClassName($index)
     {
@@ -170,7 +170,7 @@ class ProductsList extends \XLite\View\PagerOrig
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBorderLinkClassName($type)
     {
@@ -184,7 +184,7 @@ class ProductsList extends \XLite\View\PagerOrig
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageClassName($pageId)
     {
@@ -196,7 +196,7 @@ class ProductsList extends \XLite\View\PagerOrig
      *
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBeginRecordNumber()
     {
@@ -208,7 +208,7 @@ class ProductsList extends \XLite\View\PagerOrig
      *
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getEndRecordNumber()
     {
@@ -221,7 +221,7 @@ class ProductsList extends \XLite\View\PagerOrig
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getItemsPerPageRange()
     {

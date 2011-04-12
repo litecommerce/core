@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\Plugin\Doctrine\Utils;
@@ -33,7 +33,7 @@ namespace Includes\Decorator\Plugin\Doctrine\Utils;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class ProxyFactory extends \Includes\Decorator\Plugin\Doctrine\ADoctrine
 {
@@ -49,7 +49,7 @@ abstract class ProxyFactory extends \Includes\Decorator\Plugin\Doctrine\ADoctrin
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $proxyClassTemplate = <<<'CODE'
 <?php
@@ -77,7 +77,7 @@ abstract class ProxyFactory extends \Includes\Decorator\Plugin\Doctrine\ADoctrin
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace <namespace>;
@@ -87,7 +87,7 @@ namespace <namespace>;
  * 
  * @package    XLite
  * @see        ____class_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 class <proxyClassName> extends \<className> implements \Doctrine\ORM\Proxy\Proxy
 {
@@ -97,7 +97,7 @@ class <proxyClassName> extends \<className> implements \Doctrine\ORM\Proxy\Proxy
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $_entityClass;
 
@@ -107,7 +107,7 @@ class <proxyClassName> extends \<className> implements \Doctrine\ORM\Proxy\Proxy
      * @var    mixed
      * @access private
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private $_entityPersister;
 
@@ -117,7 +117,7 @@ class <proxyClassName> extends \<className> implements \Doctrine\ORM\Proxy\Proxy
      * @var    mixed
      * @access private
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private $_identifier;
 
@@ -127,7 +127,7 @@ class <proxyClassName> extends \<className> implements \Doctrine\ORM\Proxy\Proxy
      * @var    mixed
      * @access public
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public $__isInitialized__ = false;
 
@@ -140,7 +140,7 @@ class <proxyClassName> extends \<className> implements \Doctrine\ORM\Proxy\Proxy
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct($entityPersister, $identifier)
     {
@@ -155,7 +155,7 @@ class <proxyClassName> extends \<className> implements \Doctrine\ORM\Proxy\Proxy
      * @return void
      * @access private
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private function _load()
     {
@@ -177,7 +177,7 @@ class <proxyClassName> extends \<className> implements \Doctrine\ORM\Proxy\Proxy
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __sleep()
     {
@@ -190,7 +190,7 @@ class <proxyClassName> extends \<className> implements \Doctrine\ORM\Proxy\Proxy
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __wakeup()
     {
@@ -215,7 +215,7 @@ CODE;
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function modifyCodeTemplate(\Doctrine\ORM\Proxy\ProxyFactory $factory)
     {

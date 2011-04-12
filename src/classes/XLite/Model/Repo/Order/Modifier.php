@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo\Order;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo\Order;
  * Order modifier repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Modifier extends \XLite\Model\Repo\ARepo
 {
@@ -41,7 +41,7 @@ class Modifier extends \XLite\Model\Repo\ARepo
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $defaultOrderBy = 'weight';
 
@@ -50,7 +50,7 @@ class Modifier extends \XLite\Model\Repo\ARepo
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findActive()
     {
@@ -64,7 +64,7 @@ class Modifier extends \XLite\Model\Repo\ARepo
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineFindActiveQuery()
     {

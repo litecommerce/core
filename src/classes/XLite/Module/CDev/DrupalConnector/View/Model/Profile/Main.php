@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\View\Model\Profile;
@@ -34,7 +34,7 @@ namespace XLite\Module\CDev\DrupalConnector\View\Model\Profile;
  *
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecorator
 {
@@ -44,7 +44,7 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessErrorActionValidateInput()
     {
@@ -61,7 +61,7 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      *
      * @return boolean 
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performActionValidateInput()
     {
@@ -82,7 +82,7 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareFieldParamsAccessLevel(&$data)
     {
@@ -98,7 +98,7 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareFieldParamsStatus(&$data)
     {
@@ -114,7 +114,7 @@ class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecora
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setModelProperties(array $data)
     {

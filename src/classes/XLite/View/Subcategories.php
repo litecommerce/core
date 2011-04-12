@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Subcategories list
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="center.bottom", zone="customer", weight="100")
  */
@@ -59,7 +59,7 @@ class Subcategories extends \XLite\View\Dialog
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $displayModes = array(
         self::DISPLAY_MODE_LIST  => 'List',
@@ -72,7 +72,7 @@ class Subcategories extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -89,7 +89,7 @@ class Subcategories extends \XLite\View\Dialog
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -105,7 +105,7 @@ class Subcategories extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -117,7 +117,7 @@ class Subcategories extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -129,7 +129,7 @@ class Subcategories extends \XLite\View\Dialog
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDisplayMode()
     {
@@ -143,7 +143,7 @@ class Subcategories extends \XLite\View\Dialog
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -155,7 +155,7 @@ class Subcategories extends \XLite\View\Dialog
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -179,7 +179,7 @@ class Subcategories extends \XLite\View\Dialog
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getIconWidth()
     {
@@ -191,7 +191,7 @@ class Subcategories extends \XLite\View\Dialog
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getIconHeight()
     {
@@ -203,7 +203,7 @@ class Subcategories extends \XLite\View\Dialog
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getColumnsCount()
     {
@@ -215,7 +215,7 @@ class Subcategories extends \XLite\View\Dialog
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCategoryRows()
     {
@@ -231,7 +231,7 @@ class Subcategories extends \XLite\View\Dialog
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function hasSubcategories()
     {
@@ -243,7 +243,7 @@ class Subcategories extends \XLite\View\Dialog
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSubcategories()
     {

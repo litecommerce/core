@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Controller\Admin;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Admin;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Profile extends \XLite\Controller\Admin\Profile implements \XLite\Base\IDecorator
 {
@@ -42,7 +42,7 @@ class Profile extends \XLite\Controller\Admin\Profile implements \XLite\Base\IDe
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleRequest()
     {

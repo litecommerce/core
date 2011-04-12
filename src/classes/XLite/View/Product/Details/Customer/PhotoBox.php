@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Product\Details\Customer;
@@ -32,7 +32,7 @@ namespace XLite\View\Product\Details\Customer;
  * PhotoBox
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="product.details.page.image", weight="0")
  */
@@ -43,7 +43,7 @@ class PhotoBox extends \XLite\View\Product\Details\Customer\ACustomer
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -60,7 +60,7 @@ class PhotoBox extends \XLite\View\Product\Details\Customer\ACustomer
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

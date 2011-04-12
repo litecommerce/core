@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Store statisics page controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Stats extends \XLite\Controller\Admin\AAdmin
 {
@@ -51,7 +51,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $stats = null;
 
@@ -61,7 +61,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -73,7 +73,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getStats()
     {
@@ -89,7 +89,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getColumnTitles()
     {
@@ -107,7 +107,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRowTitles()
     {
@@ -121,7 +121,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * 
      * @return array|string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getColumnTitle($column)
     {
@@ -137,7 +137,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      *
      * @return array|string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRowTitle($row)
     {
@@ -154,7 +154,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getStatsRows()
     {
@@ -166,7 +166,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getStatsColumns()
     {
@@ -178,7 +178,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function initStats()
     {
@@ -195,7 +195,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSearchCondition($interval = null)
     {
@@ -214,7 +214,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getData()
     {
@@ -232,7 +232,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTimeIntervals()
     {
@@ -250,7 +250,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getStartTime($interval = self::P_ALL)
     {
@@ -266,7 +266,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTodayStartTime()
     {
@@ -278,7 +278,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getWeekStartTime()
     {
@@ -290,7 +290,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMonthStartTime()
     {
@@ -302,7 +302,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getYearStartTime()
     {
@@ -314,7 +314,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAllStartTime()
     {
@@ -326,7 +326,7 @@ class Stats extends \XLite\Controller\Admin\AAdmin
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultStartTime()
     {
