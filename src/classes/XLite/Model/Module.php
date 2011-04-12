@@ -510,5 +510,17 @@ class Module extends \XLite\Model\AEntity
             ?: $this->currency;
     }
 
+    /**
+     * Check if module is installed in LC
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getInstalled()
+    {
+        return $this->installed ?: (bool) $this->getRepository()->getModuleInstalled($this);
+    }
+
     // }}}
 }

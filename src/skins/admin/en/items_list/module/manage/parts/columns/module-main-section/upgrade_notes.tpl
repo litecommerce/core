@@ -14,6 +14,6 @@
  *}
 
 <div IF="isModuleUpdateAvailable(module)" class="note version upgrade">
-  {t(#Version#)}:&nbsp;{getMaxModuleVersion(module)}&nbsp;{t(#is available#)}<br />
+  {t(#Version#)}:&nbsp;{getModuleVersion(getModuleForUpdate(module))}&nbsp;{t(#is available#)}<br />
   <a href="#">{t(#Update module#)}</a>
 </div>

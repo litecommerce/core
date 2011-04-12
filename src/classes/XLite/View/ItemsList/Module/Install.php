@@ -314,9 +314,10 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     protected function getSearchCondition()
     {
         $cnd = parent::getSearchCondition();
-        $cnd->{\XLite\Model\Repo\Module::P_ORDER_BY}     = array($this->getSortBy(), $this->getSortOrder());
-        $cnd->{\XLite\Model\Repo\Module::P_PRICE_FILTER} = $this->getParam(self::PARAM_PRICE_FILTER);
-        $cnd->{\XLite\Model\Repo\Module::P_SUBSTRING}    = $this->getParam(self::PARAM_SUBSTRING);
+        $cnd->{\XLite\Model\Repo\Module::P_ORDER_BY}         = array($this->getSortBy(), $this->getSortOrder());
+        $cnd->{\XLite\Model\Repo\Module::P_PRICE_FILTER}     = $this->getParam(self::PARAM_PRICE_FILTER);
+        $cnd->{\XLite\Model\Repo\Module::P_SUBSTRING}        = $this->getParam(self::PARAM_SUBSTRING);
+        $cnd->{\XLite\Model\Repo\Module::P_FROM_MARKETPLACE} = true;
 
         return $cnd;
     }
@@ -396,6 +397,28 @@ class Install extends \XLite\View\ItemsList\Module\AModule
             && !$this->isPurchased($module) 
             && !$this->isFree($module)
             && $this->canEnable($module);
+    }
+
+    // }}}
+
+    // {{{ Methods to search modules of certain types
+
+    /**
+     * Check if core requires new (but the same as core major) version of module
+     *
+     * @param \XLite\Model\Module $module Module to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isModuleUpdateAvailable(\XLite\Model\Module $module)
+    {
+        $installed = $this->getModuleInstalled($module);
+
+        return $installed 
+            && version_compare($installed->getMajorVersion(), $module->getMajorVersion(), '=') 
+            && version_compare($installed->getMinorVersion(), $module->getMinorVersion(), '<');
     }
 
     // }}}

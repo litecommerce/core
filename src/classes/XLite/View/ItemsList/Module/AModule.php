@@ -141,22 +141,6 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     // {{{ Version-related checks
 
     /**
-     * Check if core requires new (but the same as core major) version of module
-     * 
-     * @param \XLite\Model\Module $module Module to check
-     *  
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isModuleUpdateAvailable(\XLite\Model\Module $module)
-    {
-        return $module->getInstalled() 
-            && $this->isModuleCompatible($module) 
-            && (bool) $this->getModuleForUpdate($module);
-    }
-
-    /**
      * Check if the module major version is the same as the core one.
      * Alias
      * 
@@ -216,8 +200,23 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
         return \XLite::getInstance()->checkVersion($module->getMajorVersion(), $operator);
     }
 
+    // }}}
+
+    // {{{ Methods to search modules of certain types
+
     /**
-     * Search for module for update
+     * Check if core requires new (but the same as core major) version of module
+     *
+     * @param \XLite\Model\Module $module Module to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract protected function isModuleUpdateAvailable(\XLite\Model\Module $module);
+
+    /**
+     * Search for module for update. Alias
      *
      * @param \XLite\Model\Module $module Current module
      *
@@ -231,7 +230,35 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Get max available module version for update
+     * Search for module for upgrade. Alias
+     *
+     * @param \XLite\Model\Module $module Current module
+     *
+     * @return \XLite\Model\Module
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleForUpgrade(\XLite\Model\Module $module)
+    {
+        return $module->getRepository()->getModuleForUpgrade($module);
+    }
+
+    /**
+     * Search for installed module
+     *
+     * @param \XLite\Model\Module $module Current module
+     *
+     * @return \XLite\Model\Module
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleInstalled(\XLite\Model\Module $module)
+    {
+        return $module->getRepository()->getModuleInstalled($module);
+    }
+
+    /**
+     * Get module version. Alias
      *
      * @param \XLite\Model\Module $module Current module
      *
@@ -239,11 +266,9 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getMaxModuleVersion(\XLite\Model\Module $module)
+    protected function getModuleVersion(\XLite\Model\Module $module)
     {
-        $result = $this->getModuleForUpdate($module) ?: $module;
-
-        return \Includes\Utils\Converter::composeVersion($result->getMajorVersion(), $result->getMinorVersion());
+        return $module->getVersion();
     }
 
     // }}}

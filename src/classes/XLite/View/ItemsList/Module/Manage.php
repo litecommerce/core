@@ -75,7 +75,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = $this->getDir() . '/manage/js/script.js'; 
 
         return $list;
@@ -190,10 +189,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     {
         $filter = \XLite\Core\Request::getInstance()->filter;
 
-        if (
-            empty($filter) 
-            || !in_array($filter, array_keys($this->getFilters()))
-        ) {
+        if (empty($filter) || !in_array($filter, array_keys($this->getFilters()))) {
             $filter = '';
         }
 
@@ -211,10 +207,7 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     {
         $tag = \XLite\Core\Request::getInstance()->tag;
 
-        if (
-            empty($tag) 
-            || !in_array($tag, array_keys($this->getTags()))
-        ) {
+        if (empty($tag) || !in_array($tag, array_keys($this->getTags()))) {
             $tag = '';
         }
 
@@ -276,21 +269,35 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false, $filter = null)
     {
-        if (is_null($filter)) {
-
+        if (!isset($filter)) {
             $filter = $this->getFilter();
         }
 
         if (!empty($filter)) {
-
             $cnd->$filter = true;
         }
 
-        // TODO Add tags !!!
+        // TODO Add tags
         $cnd->tag = $this->getTag();
 
         return parent::getData($cnd, $countOnly);
-
-        return parent::getData($cnd, $countOnly);
     }
+
+    // {{{ Methods to search modules of certain types
+
+    /**
+     * Check if core requires new (but the same as core major) version of module
+     *
+     * @param \XLite\Model\Module $module Module to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isModuleUpdateAvailable(\XLite\Model\Module $module)
+    {
+        return $module->getInstalled() && $this->isModuleCompatible($module) && $this->getModuleForUpdate($module);
+    }
+
+    // }}}
 }

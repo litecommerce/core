@@ -14,6 +14,6 @@
  *}
 
 <div IF="isModuleUpdateAvailable(module)" class="note version upgrade">
-  {t(#Installed version#)}:&nbsp;{module.getVersion()}&nbsp;({t(#outdated#)})<br />
+  {t(#Installed version#)}:&nbsp;{getModuleVersion(getModuleInstalled(module))}&nbsp;({t(#outdated#)})<br />
   <a href="#">{t(#Update module#)}</a>
 </div>
