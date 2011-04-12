@@ -42,6 +42,10 @@ class ProductBox extends \XLite\View\SideBarBox
 
     const PARAM_PRODUCT_ID = 'product_id';
 
+    const PARAM_ICON_MAX_WIDTH = 'iconWidth';
+
+    const PARAM_ICON_MAX_HEIGHT =  'iconHeight';
+
 
     /**
      * Get a list of CSS files required to display the widget properly
@@ -105,7 +109,39 @@ class ProductBox extends \XLite\View\SideBarBox
 
         $this->widgetParams += array(
             self::PARAM_PRODUCT_ID => new \XLite\Model\WidgetParam\ObjectId\Product('Product Id', 0, true),
+
+            self::PARAM_ICON_MAX_WIDTH => new \XLite\Model\WidgetParam\Int(
+                'Maximal icon width', 180, true
+            ),
+
+            self::PARAM_ICON_MAX_HEIGHT => new \XLite\Model\WidgetParam\Int(
+                'Maximal icon height', 180, true
+            ),
         );
+    }
+
+    /**
+     * getIconWidth 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getIconWidth()
+    {
+        return $this->getParam(self::PARAM_ICON_MAX_WIDTH);
+    }
+
+    /**
+     * getIconHeight 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getIconHeight()
+    {
+        return $this->getParam(self::PARAM_ICON_MAX_HEIGHT);
     }
 
     /**
