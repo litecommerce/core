@@ -145,11 +145,11 @@ class Module extends \XLite\Model\AEntity
     /**
      * Rating
      *
-     * @var   string
+     * @var   float
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="integer")
+     * @Column (type="decimal", precision=14, scale=4)
      */
     protected $rating = 0;
 
@@ -495,6 +495,19 @@ class Module extends \XLite\Model\AEntity
     public function getPath()
     {
         return str_replace('\\', LC_DS, $this->getActualName());
+    }
+
+    /**
+     * Return currency for paid modules
+     * 
+     * @return \XLite\Model\Currency
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCurrency()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Currency')->findOneByCode($this->currency)
+            ?: $this->currency;
     }
 
     // }}}

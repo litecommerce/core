@@ -13,4 +13,4 @@
  * @ListChild (list="itemsList.module.install.columns.module-description-section.info-element", weight="10")
  *}
 
-<li><widget class="\XLite\View\VoteBar" rate={module.getRating()} /></li>
+<li><widget class="\XLite\View\VoteBar" rate="{module.getRating()}" max="5" /></li>

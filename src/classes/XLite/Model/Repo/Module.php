@@ -288,10 +288,10 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * prepareCndOrderBy
+     * Prepare certain search condition
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
-     * @param mixed                      $value        Searchable value
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param string                     $value        Condition
      *
      * @return void
      * @see    ____func_see____

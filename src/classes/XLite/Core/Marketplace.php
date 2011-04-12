@@ -516,9 +516,8 @@ class Marketplace extends \XLite\Base\Singleton
             self::RESPONSE_FIELD_MODULE_PAGE_URL        => FILTER_SANITIZE_URL,
             self::RESPONSE_FIELD_MODULE_AUTHOR_PAGE_URL => FILTER_SANITIZE_URL,
             self::RESPONSE_FIELD_MODULE_RATING          => array(
-                'filter'  => FILTER_VALIDATE_INT,
-                'flags'   => FILTER_REQUIRE_ARRAY,
-                'options' => array('min_range' => 0),
+                'filter'  => FILTER_SANITIZE_NUMBER_FLOAT,
+                'flags'   => FILTER_REQUIRE_ARRAY | FILTER_FLAG_ALLOW_FRACTION,
             ),
             self::RESPONSE_FIELD_MODULE_DEPENDENCIES    => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,

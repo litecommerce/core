@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="itemsList.module.install.columns.module-main-section", weight="30")
+ * @ListChild (list="itemsList.module.install.columns.module-main-section", weight="400")
  *}
 
 <div IF="!canEnable(module)">

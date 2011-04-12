@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="itemsList.module.install.columns.module-main-section", weight="40")
+ * @ListChild (list="itemsList.module.install.columns.module-main-section", weight="500")
  *}
 
 <div IF="isModuleUpdateAvailable(module)" class="note version upgrade">
