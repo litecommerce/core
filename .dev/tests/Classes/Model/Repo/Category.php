@@ -30,8 +30,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
     {
         parent::setUp();
 
-        $this->query(file_get_contents(__DIR__ . '/sql/category/setup.sql'));
-        \XLite\Core\Database::getEM()->flush();
+        $this->doRestoreDb(__DIR__ . '/sql/category/setup.sql', false);
     }
 
     /**
@@ -47,8 +46,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
         parent::tearDown();
 
         // Not needed right now
-        // $this->query(file_get_contents(__DIR__ . '/sql/category/restore.sql'));
-        // \XLite\Core\Database::getEM()->flush();
+        // $this->doRestoreDb();
     }
 
     public function testDump()
