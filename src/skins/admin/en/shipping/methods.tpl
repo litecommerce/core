@@ -16,46 +16,14 @@
 </div>
 
 <script type="text/javascript">
-<!-- 
-
-var CheckBoxes = new Array();
-
-function populateChecked(class_name, check_id)
-{
-  var CheckBoxesArray = CheckBoxes[class_name];
-  CheckBoxesArray[CheckBoxesArray.length] = check_id;
-}
-
-function setChecked(class_name, check)
-{
-  var CheckBoxesArray = CheckBoxes[class_name];
-
-  if (CheckBoxesArray) {
-        for (var i = 0; i < CheckBoxesArray.length; i++) {
-          var Element = document.getElementById(CheckBoxesArray[i]);
-            if (Element) {
-              Element.checked = check;
-            }
-        }
-  }
-}
-
-function setHeaderChecked(class_name)
-{
-  var Element = document.getElementById("enable_method_" + class_name);
-    if (Element && !Element.checked) {
-      Element.checked = true;
-    }
-}
-
+//<![CDATA[ 
 function onDeleteButton(method_id)
 {
   formName = 'delete_method';
   document.forms[formName].elements['method_id'].value = method_id;
   document.forms[formName].submit();
 }
-
-// -->
+//]]>
 </script>
 
 Use this section to define your store's shipping methods.
@@ -71,15 +39,6 @@ Use this section to define your store's shipping methods.
 </form>
 
 {foreach:getShippingProcessors(),processor}
-
-<script type="text/javascript">
-<!--
-
-CheckBoxes["{processor.getProcessorId()}"] = new Array();
-
--->
-</script>
-
 <form action="admin.php" name="shipping_method_{processor.getProcessorId()}" method="post">
   
   <input type="hidden" name="target" value="shipping_methods" />
@@ -107,10 +66,10 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
 
           <tr>
             <th style="width:90%;">Shipping method</th>
-            <th>Pos.</th>
-            <th>Assigned classes</th>
-            <th>Active<br />
-              <input id="enable_method_{processor.getProcessorId()}" type="checkbox" onclick="this.blur();setChecked('{processor.getProcessorId()}',this.checked);" />
+            <th>{t(#Pos.#)}</th>
+            <th>{t(#Assigned classes#)}</th>
+            <th class="center">{t(#Active#)}<br />
+              <input class="column-selector" id="enable_method_{processor.getProcessorId()}" type="checkbox" />
             </th>
             <th valign="top">&nbsp;</th>
           </tr>
@@ -129,9 +88,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
             </td>
 
             <td align="center">
-              <input id="shipping_enabled_{method.getMethodId()}" type="checkbox" name="methods[{method.getMethodId()}][enabled]" checked="{method.getEnabled()}" onclick="this.blur();" />
-              <script type="text/javascript">populateChecked("{processor.getProcessorId()}", "shipping_enabled_{method.getMethodId()}");</script>
-              <script type="text/javascript" IF="method.getEnabled()">setHeaderChecked("{processor.getProcessorId()}");</script>
+              <input id="shipping_enabled_{method.getMethodId()}" type="checkbox" name="methods[{method.getMethodId()}][enabled]" checked="{method.getEnabled()}" />
             </td>
 
             <td>
