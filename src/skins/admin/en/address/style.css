@@ -84,7 +84,7 @@ li.address-text-firstname,
 li.address-text-lastname,
 li.address-text-city,
 li.address-text-state_id,
-li.address-text-zipcode
+li.address-text-custom_state
 {
   display: inline;
 }
@@ -112,6 +112,7 @@ li.address-text-phone
 .address-text-label-street,
 .address-text-label-city,
 .address-text-label-state_id,
+.address-text-label-custom_state,
 .address-text-label-zipcode,
 .address-text-label-country_code
 {
@@ -138,6 +139,7 @@ ul.address-box
 {
   text-align: center;
   padding-top: 60px;
+  height: 120px;
 }
 
 .address-text
