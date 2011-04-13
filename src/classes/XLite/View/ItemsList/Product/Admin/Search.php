@@ -91,7 +91,7 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
     {
         $result = parent::defineViewList($list);
 
-        if ('itemsList.admin.footer' === $list) {
+        if ($this->getListName() . '.footer' === $list) {
             $result[] = $this->getWidget(array('label' => 'Update'), '\XLite\View\Button\Submit');
             $result[] = $this->getWidget(array(), '\XLite\View\Button\DeleteSelected');
         }

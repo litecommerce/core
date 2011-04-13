@@ -25,3 +25,9 @@
 </div>
 
 <widget IF="isEmptyListTemplateVisible()" template="{getEmptyListTemplate()}" />
+
+<script type="text/javascript">
+//<![CDATA[
+  new ItemsList('{getSessionCell()}', {getURLParamsJS():h}, {getURLAJAXParamsJS():h});
+//]]>
+</script>

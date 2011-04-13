@@ -14,7 +14,7 @@
 // Main class
 function ItemsList(cell, URLParams, URLAJAXParams)
 {
-  this.container = jQuery('.items-list.' + cell).eq(0);
+  this.container = jQuery('.items-list').eq(0);
 
   if (!this.container.length) {
     return;
@@ -222,18 +222,14 @@ ItemsList.prototype.loadHandler = function(xhr, s)
   var processed = false;
 
   if (xhr.status == 200 && xhr.responseText) {
-    var div = document.createElement('DIV');
-    jQuery(div).html(xhr.responseText);
+    var div = document.createElement('div');
+    jQuery(div).html(jQuery('.items-list.sessioncell-' + this.cell, xhr.responseText));
 
-    div = jQuery('.items-list.' + this.cell, div).eq(0);
-    if (div.length) {
-      this.container.replaceWith(div);
-      this.container = jQuery('.items-list.' + this.cell);
+    this.container.replaceWith(div);
 
-      this.addListeners();
+    new ItemsList(this.cell, this.URLParams, this.URLAJAXParams);
 
-      processed = true;
-    }
+    processed = true;
   }
 
   this.hideModalScreen();
