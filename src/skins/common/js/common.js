@@ -130,11 +130,7 @@ jQuery(document).ready(
         if (!this.columnSelectors) {
           var idx = jQuery(this).parents('th').get(0).cellIndex;
           var table = jQuery(this).parents('table').get(0);
-          this.columnSelectors = [];
-          for (var r = 0; r < table.rows.length; r++) {
-            this.columnSelectors.push(jQuery(':checkbox', table.rows[r].cells[idx]).get(0));
-          }
-          this.columnSelectors = jQuery(this.columnSelectors);
+          this.columnSelectors = jQuery('tr', table).find('td:eq('+idx+') :checkbox');
         }
 
         this.columnSelectors.attr('checked', this.checked ? 'checked' : '');
