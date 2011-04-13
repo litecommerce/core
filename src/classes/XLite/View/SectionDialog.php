@@ -58,7 +58,7 @@ abstract class SectionDialog extends \XLite\View\SimpleDialog
         $mode = strval(\XLite\Core\Request::getInstance()->mode);
         $sections = $this->defineSections();
 
-        return isset($sections[$mode]) ? $sections[$mode]['head'] : null;
+        return isset($sections[$mode]) ? $sections[$mode]['head'] : parent::getHead();
     }
 
     /**

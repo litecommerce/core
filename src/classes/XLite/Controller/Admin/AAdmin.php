@@ -489,7 +489,7 @@ OUT;
      */
     public function isCoreUpgradeAvailable()
     {
-        return \XLite\Core\TmpVars::getInstance()->isCoreUpgradeAvailable;
+        return (bool) \XLite\Core\TmpVars::getInstance()->isCoreUpgradeAvailable;
     }
 
     // }}}

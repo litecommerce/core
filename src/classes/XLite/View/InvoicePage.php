@@ -47,7 +47,6 @@ class InvoicePage extends \XLite\View\Dialog
      */
     protected $order;
 
-
     /**
      * Return list of targets allowed for this widget
      *
@@ -58,12 +57,10 @@ class InvoicePage extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
         $result[] = 'invoice';
     
         return $result;
     }
-
 
     /**
      * Get order
@@ -82,7 +79,6 @@ class InvoicePage extends \XLite\View\Dialog
         return $this->order;
     }
 
-
     /**
      * Check widget visibility
      * 
@@ -92,8 +88,7 @@ class InvoicePage extends \XLite\View\Dialog
      */
     protected function isVisible()
     {
-        return parent::isVisible()
-            && $this->getOrder();
+        return parent::isVisible() && $this->getOrder();
     }
 
     /**
@@ -117,7 +112,7 @@ class InvoicePage extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'order/invoice';
+        return 'order' . LC_DS . 'invoice';
     }
 
     /**
@@ -129,6 +124,6 @@ class InvoicePage extends \XLite\View\Dialog
      */
     protected function getBody()
     {
-        return 'order/invoice/page.tpl';
+        return $this->getDir() . LC_DS . 'page.tpl';
     }
 }

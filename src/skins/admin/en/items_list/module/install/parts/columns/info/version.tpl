@@ -13,4 +13,4 @@
  * @ListChild (list="itemsList.module.install.columns.module-main-section", weight="20")
  *}
 
-<div class="version">{t(#Version#)}: {getMaxModuleVersion(module)}</div>
+<div class="version">{t(#Version#)}: {getModuleVersion(module)}</div>

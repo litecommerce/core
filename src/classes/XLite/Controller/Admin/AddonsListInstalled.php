@@ -29,12 +29,12 @@
 namespace XLite\Controller\Admin;
 
 /**
- * Modules
+ * AddonsListInstalled 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Modules extends \XLite\Controller\Admin\AAdmin
+class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
 {
     /**
      * Return the current page title (for the content area)
@@ -45,24 +45,9 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Manage add-ons' . $this->getUpgradableModulesFlag();
+        return 'Manage add-ons';
     }
     
-    /**
-     * Call controller action or special default action
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function handleRequest()
-    {
-        // :FIXME: to remove
-        // \XLite\Core\Database::getRepo('XLite\Model\Module')->checkModules();
-
-        parent::handleRequest();
-    }
-
     /**
      * Common method to determine current location
      *
@@ -75,24 +60,35 @@ class Modules extends \XLite\Controller\Admin\AAdmin
         return 'Manage add-ons';
     }
 
+    // {{{ Short-name methods
+
     /**
-     * Return upgradable modules flag label:
-     * - empty string if no any
-     * - number of upgradable modules in brackets
+     * Return module identificator
      *
-     * @return string
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getUpgradableModulesFlag()
+    protected function getModuleId()
     {
-        // :FIXME: actualize
-        /*$upgradeables = count(\Xlite\Core\Database::getRepo('XLite\Model\Module')->findUpgradableModules());
-
-        return 0 < $upgradeables ? ' (' . $upgradeables . ')' : '';*/
-
-        return '';
+        return \XLite\Core\Request::getInstance()->moduleId;
     }
+
+    /**
+     * Search for module
+     *
+     * @return \XLite\Model\Module|void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModule()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->getModuleId());
+    }
+
+    // }}}
+
+    // Action handlers
 
     /**
      * Enable module
@@ -103,18 +99,16 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionEnable()
     {
-        $this->setReturnURL($this->buildURL('modules'));
-
-        $id = \XLite\Core\Request::getInstance()->moduleId;
-
-        $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id);
+        $module = $this->getModule();
 
         if ($module) {
 
+            // Update data in DB
+            // :TODO: this action should be performed via ModulesManager
             $module->setEnabled(true);
+            $module->getRepository()->update($module);
 
-            \XLite\Core\Database::getEM()->flush();
-
+            // Flag to rebuild cache
             \XLite::setCleanUpCacheFlag(true);
         }
     }
@@ -128,17 +122,14 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionPack()
     {
-        $this->setReturnURL($this->buildURL('modules'));
-
         if (LC_DEVELOPER_MODE) {
 
-            $moduleId = \XLite\Core\Request::getInstance()->moduleId;
-            $module   = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($moduleId);
+            $module = $this->getModule();
 
             if ($module) {
                 \Includes\Utils\PHARManager::packModule(new \XLite\Core\Pack\Module($module));
             } else {
-                \XLite\Core\TopMessage::addError('Module with ID "' . $moduleId . '" is not found');
+                \XLite\Core\TopMessage::addError('Module with ID "' . $this->getModuleId() . '" is not found');
             }
 
         } else {
@@ -158,15 +149,14 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionDisable()
     {
-        $this->setReturnURL($this->buildURL('modules'));
-
-        $id     = \XLite\Core\Request::getInstance()->moduleId;
-        $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id);
+        $module = $this->getModule();
 
         if ($module) {
 
+            // Update data in DB
             \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
 
+            // Flag to rebuild cache
             \XLite::setCleanUpCacheFlag(true);
         }
     }
@@ -180,15 +170,9 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUninstall()
     {
-        $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find(
-            \XLite\Core\Request::getInstance()->moduleId
-        );
+        $module = $this->getModule();
 
-        if (!$module) {
-
-            \XLite\Core\TopMessage::addError('The module to uninstall has not been found');
-
-        } else {
+        if ($module) {
 
             $class = $module->getMainClass();
             $notes = $class::getPostUninstallationNotes();
@@ -208,7 +192,23 @@ class Modules extends \XLite\Controller\Admin\AAdmin
                 \XLite\Core\TopMessage::addInfo($notes);
             }
         }
-        
-        $this->setReturnURL($this->buildURL('modules'));
     }
+
+    /**
+     * Perform some actions before redirect
+     *
+     * @param string $action Performed action
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function actionPostprocess($action)
+    {
+        parent::actionPostprocess($action);
+
+        $this->setReturnURL($this->buildURL('addons_list_installed'));
+    }
+
+    // }}}
 }

@@ -48,7 +48,6 @@ class States extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
         $result[] = 'states';
     
         return $result;
@@ -64,7 +63,6 @@ class States extends \XLite\View\Dialog
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = $this->getDir() . '/css/style.css';
 
         return $list;
@@ -80,7 +78,6 @@ class States extends \XLite\View\Dialog
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = $this->getDir() . '/js/script.js';
 
         return $list;
@@ -109,5 +106,4 @@ class States extends \XLite\View\Dialog
     {
         return 'states';
     }
-
 }

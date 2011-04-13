@@ -48,7 +48,6 @@ class Methods extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
         $result[] = 'payment_methods';
 
         return $result;
@@ -105,7 +104,7 @@ class Methods extends \XLite\View\Dialog
      */
     public function isMethodEnabled(\XLite\Model\Payment\Method $method)
     {
-        return (bool)$method->getEnabled();
+        return (bool) $method->getEnabled();
     }
 
     /**
@@ -119,7 +118,7 @@ class Methods extends \XLite\View\Dialog
      */
     public function isMethodConfigurable(\XLite\Model\Payment\Method $method)
     {
-        return (bool)$method->getProcessor()->getSettingsWidget();
+        return (bool) $method->getProcessor()->getSettingsWidget();
     }
 
 
@@ -138,18 +137,6 @@ class Methods extends \XLite\View\Dialog
     }
 
     /**
-     * Return title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHead()
-    {
-        return null;
-    }
-
-    /**
      * Return templates directory name
      *
      * @return string
@@ -158,6 +145,6 @@ class Methods extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'payment/methods';
+        return 'payment' . LC_DS . 'methods';
     }
 }

@@ -118,7 +118,7 @@ class Module extends \XLite\Controller\Admin\AAdmin
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode('Manage modules', $this->buildURL('modules'));
+        $this->addLocationNode('Manage modules', $this->buildURL('addons_list_installed'));
     }
 
     /**
@@ -159,6 +159,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
             );
         }
 
-        $this->setReturnUrl($this->buildUrl('modules'));
+        $this->setReturnUrl($this->buildUrl('addons_list_installed'));
     }
 }

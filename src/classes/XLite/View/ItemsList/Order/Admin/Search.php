@@ -39,7 +39,6 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
     /**
      * Widget param names 
      */
-
     const PARAM_ORDER_ID = 'orderId';
     const PARAM_LOGIN    = 'login';
     const PARAM_STATUS   = 'status';
@@ -62,7 +61,6 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
             \XLite\Model\Repo\Order::P_DATE     => self::PARAM_DATE,
         );
     }
-
 
     /**
      * Return name of the base widgets list
