@@ -29,7 +29,7 @@
 namespace XLite\Controller\Admin;
 
 /**
- * Settings
+ * Settings. TODO FULL REFACTOR!!!
  * 
  * @see   ____class_see____
  * @since 1.0.0
