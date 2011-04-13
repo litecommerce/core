@@ -76,7 +76,8 @@ class Countries extends \XLite\Controller\Admin\AAdmin
 
     /**
      * setObligatoryStatus 
-     * 
+     * TODO!! REMOVE ???
+     *  
      * @param mixed $status ____param_comment____
      *  
      * @return void
@@ -107,6 +108,8 @@ class Countries extends \XLite\Controller\Admin\AAdmin
         foreach (\XLite\Core\Database::getRepo('XLite\Model\Country')->findAll() as $country) {
 
             if (isset(\XLite\Core\Request::getInstance()->countries[$country->getCode()])) {
+
+                $data = \XLite\Core\Request::getInstance()->countries[$country->getCode()];
 
                 $data['enabled'] = isset($data['enabled']);
 
