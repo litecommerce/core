@@ -45,6 +45,6 @@ class Manage extends \XLite\View\Form\Module\AModule
      */
     protected function getDefaultTarget()
     {
-        return 'modules';
+        return 'addons_list_installed';
     }
 }

@@ -39,7 +39,6 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
     /**
      * Widget param names 
      */
-
     const PARAM_SUBSTRING         = 'substring';
     const PARAM_CATEGORY_ID       = 'categoryId';
     const PARAM_SKU               = 'sku';
@@ -66,7 +65,6 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
             \XLite\Model\Repo\Product::P_BY_DESCR          => self::PARAM_BY_DESCR,
         );
     }
-
 
     /**
      * Return title

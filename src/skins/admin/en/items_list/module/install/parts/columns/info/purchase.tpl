@@ -14,7 +14,7 @@
  *}
 
 <form action="admin.php" method="post" IF="canPurchase(module)">
-  <input type="hidden" name="target" value="module_installation" />
+  <input type="hidden" name="target" value="addon_install" />
   <input type="hidden" name="action" value="get_license" />
   <input type="hidden" name="module_id" value="{module.getModuleId()}" />
 

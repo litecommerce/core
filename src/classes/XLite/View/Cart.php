@@ -38,7 +38,6 @@ namespace XLite\View;
  */
 class Cart extends \XLite\View\Dialog
 {
-
     /**
      * Return list of targets allowed for this widget
      *
@@ -49,12 +48,10 @@ class Cart extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
         $result[] = 'cart';
     
         return $result;
     }
-    
     
     /**
      * Get continue URL 
@@ -88,7 +85,6 @@ class Cart extends \XLite\View\Dialog
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = $this->getDir() . '/cart.css';
 
         return $list;
@@ -104,7 +100,6 @@ class Cart extends \XLite\View\Dialog
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = $this->getDir() . '/controller.js';
 
         return $list;
@@ -120,23 +115,9 @@ class Cart extends \XLite\View\Dialog
     public function getCommonFiles()
     {
         $list = parent::getCommonFiles();
-
         $list['js'][] = 'js/jquery.blockUI.js';
 
         return $list;
-    }
-
-
-    /**
-     * Return title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHead()
-    {
-        return null;
     }
 
     /**
@@ -160,9 +141,7 @@ class Cart extends \XLite\View\Dialog
      */
     protected function getBodyTemplate()
     {
-        return $this->getCart()->isEmpty()
-            ? 'empty.tpl'
-            : parent::getBodyTemplate();
+        return $this->getCart()->isEmpty() ? 'empty.tpl' : parent::getBodyTemplate();
     }
 }
 

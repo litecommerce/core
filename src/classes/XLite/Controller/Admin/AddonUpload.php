@@ -29,12 +29,12 @@
 namespace XLite\Controller\Admin;
 
 /**
- * Upload addons page controller
+ * AddonUpload 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class UploadAddons extends \XLite\Controller\Admin\AAdmin
+class AddonUpload extends \XLite\Controller\Admin\Base\AddonInstall
 {
     /**
      * Name of the variable in the global $_FILES array
@@ -103,7 +103,7 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
         }
 
         // Redirect admin to the modules list page
-        $this->setReturnURL($this->buildURL('modules'));
+        $this->setReturnURL($this->buildURL('addons_list_installed'));
     }
 
 
@@ -133,9 +133,9 @@ class UploadAddons extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\TopMessage::addError(
                 'Checking procedure returns with "{{result}}" result for {{index}}: {{file}} file.',
                 array(
-                    'result'    => $module->getStatus() . ' (' . $module->getMessage() . ')',
-                    'file'      => $name,
-                    'index'     => $index,
+                    'result' => $module->getStatus() . ' (' . $module->getMessage() . ')',
+                    'file'   => $name,
+                    'index'  => $index,
                 )
             );
         }   

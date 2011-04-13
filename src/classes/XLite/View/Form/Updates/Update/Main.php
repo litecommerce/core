@@ -15,7 +15,7 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -26,25 +26,49 @@
  * @since     1.0.0
  */
 
-namespace XLite\Controller\Admin;
+namespace XLite\View\Form\Updates\Update;
 
 /**
- * ____description____
+ * Main 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class AddonKey extends \XLite\Controller\Admin\AAdmin
+class Main extends \XLite\View\Form\Updates\Update\AUpdate
 {
     /**
-     * Return page title
-     * 
+     * Form name
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getTitle()
+    protected function getFormName()
     {
-        return 'Enter license key';
+        return 'install_updates';
+    }
+
+    /**
+     * Return default value for the "target" parameter
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTarget()
+    {
+        return 'updates';
+    }
+
+    /**
+     * Return default value for the "action" parameter
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultAction()
+    {
+        return 'install';
     }
 }

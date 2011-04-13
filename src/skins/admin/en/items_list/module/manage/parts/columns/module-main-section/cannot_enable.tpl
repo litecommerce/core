@@ -32,7 +32,7 @@
     {t(#The module version is incompatible with current core version#)}.<br />
 
     <span IF="isCoreUpgradeNeeded(module)">
-      {t(#Please#)}, <a href="#">{t(#upgrade core#)}</a>.
+      {t(#Please#)}, <a href="{buildURL(#upgrades#)}">{t(#upgrade core#)}</a>.
     </span>
 
     <span IF="isModuleUpgradeNeeded(module)&!isModuleUpdateAvailable(module)">

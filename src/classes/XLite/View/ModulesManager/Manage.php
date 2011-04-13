@@ -48,7 +48,7 @@ class Manage extends \XLite\View\ModulesManager\AModulesManager
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-        $result[] = 'modules';
+        $result[] = 'addons_list_installed';
     
         return $result;
     }
@@ -63,7 +63,6 @@ class Manage extends \XLite\View\ModulesManager\AModulesManager
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'modules_manager/css/common.css';
         $list[] = $this->getDir() . '/css/style.css';
 
@@ -80,22 +79,9 @@ class Manage extends \XLite\View\ModulesManager\AModulesManager
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = $this->getDir() . '/js/script.js';
 
         return $list;
-    }
-
-    /**
-     * Return title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHead()
-    {
-        return null;
     }
 
     /**
@@ -107,6 +93,6 @@ class Manage extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getDir()
     {
-        return parent::getDir() . '/manage';
+        return parent::getDir() . LC_DS . 'manage';
     }
 }

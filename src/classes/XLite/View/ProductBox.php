@@ -39,11 +39,8 @@ class ProductBox extends \XLite\View\SideBarBox
     /**
      * Widget parameter names
      */
-
-    const PARAM_PRODUCT_ID = 'product_id';
-
-    const PARAM_ICON_MAX_WIDTH = 'iconWidth';
-
+    const PARAM_PRODUCT_ID      = 'product_id';
+    const PARAM_ICON_MAX_WIDTH  = 'iconWidth';
     const PARAM_ICON_MAX_HEIGHT =  'iconHeight';
 
 
@@ -56,9 +53,11 @@ class ProductBox extends \XLite\View\SideBarBox
      */
     public function getCSSFiles()
     {
-        return array_merge(parent::getCSSFiles(), array('products_list/products_list.css'));
-    }
+        $result = parent::getCSSFiles();
+        $result[] = 'products_list/products_list.css';
 
+        return $result;
+    }
 
     /**
      * Return title

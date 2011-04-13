@@ -230,7 +230,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * Search for module for upgrade. Alias
+     * Search for module from marketplace. Alias
      *
      * @param \XLite\Model\Module $module Current module
      *
@@ -238,9 +238,9 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getModuleForUpgrade(\XLite\Model\Module $module)
+    protected function getModuleFromMarketplace(\XLite\Model\Module $module)
     {
-        return $module->getRepository()->getModuleForUpgrade($module);
+        return $module->getRepository()->getModuleFromMarketplace($module);
     }
 
     /**

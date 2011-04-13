@@ -45,6 +45,6 @@ class Install extends \XLite\View\Form\Module\AModule
      */
     protected function getDefaultTarget()
     {
-        return 'addons_list';
+        return 'addons_list_marketplace';
     }
 }

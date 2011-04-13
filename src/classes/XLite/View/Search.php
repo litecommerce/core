@@ -51,7 +51,6 @@ class Search extends \XLite\View\Dialog
         );
     }
 
-
     /**
      * Return title
      *
@@ -61,7 +60,7 @@ class Search extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return $this->t('Products search');
+        return 'Products search';
     }
 
     /**
@@ -73,6 +72,6 @@ class Search extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'product/search';
+        return 'product' . LC_DS . 'search';
     }
 }

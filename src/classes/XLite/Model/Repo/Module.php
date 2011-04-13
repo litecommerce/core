@@ -429,14 +429,14 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getModuleForUpgrade(\XLite\Model\Module $module)
+    public function getModuleFromMarketplace(\XLite\Model\Module $module)
     {
         $installed = $this->getModuleInstalled($module);
 
         if ($installed) {
             $result = $this->getModuleForUpdate($module) ?: $installed;
         } else {
-            $result = $this->defineModuleForUpgradeQuery($module)->getSingleResult();
+            $result = $this->defineModuleFromMarketplaceQuery($module)->getSingleResult();
         }
 
         return $result;
@@ -454,6 +454,21 @@ class Module extends \XLite\Model\Repo\ARepo
     public function getModuleInstalled(\XLite\Model\Module $module)
     {
         return $this->defineModuleInstalledQuery($module)->getSingleResult();
+    }
+
+    /**
+     * Search module for upgrade
+     * 
+     * @param \XLite\Model\Module $module       Currently installed module
+     * @param string              $majorVersion Core version
+     *  
+     * @return \XLite\Model\Module
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getModuleForUpgrade(\XLite\Model\Module $module, $majorVersion)
+    {
+        return $this->defineModuleForUpgradeQuery($module, $majorVersion)->getSingleResult();
     }
 
     /**
@@ -488,15 +503,38 @@ class Module extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function defineModuleForUpgradeQuery(\XLite\Model\Module $module)
+    protected function defineModuleFromMarketplaceQuery(\XLite\Model\Module $module)
     {
         $queryBuilder = $this->createQueryBuilder();
         $this->prepareCndSingleModuleSearch($queryBuilder, $module);
 
         $queryBuilder
-            ->addOrderBy('m.majorVersion')
-            ->addOrderBy('m.minorVersion');
+            ->addOrderBy('m.majorVersion', 'DESC')
+            ->addOrderBy('m.minorVersion', 'DESC');
 
+
+        return $queryBuilder;
+    }
+
+    /**
+     * Query to search for modules having an elder version
+     *
+     * @param \XLite\Model\Module $module       Module to get info from
+     * @param string              $majorVersion Core version
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineModuleForUpgradeQuery(\XLite\Model\Module $module, $majorVersion)
+    {
+        $queryBuilder = $this->createQueryBuilder();
+        $this->prepareCndSingleModuleSearch($queryBuilder, $module);
+
+        $queryBuilder
+            ->andWhere('m.majorVersion = :majorVersion')
+            ->setParameter('majorVersion', $majorVersion)
+            ->addOrderBy('m.minorVersion', 'DESC');
 
         return $queryBuilder;
     }

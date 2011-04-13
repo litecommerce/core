@@ -47,7 +47,6 @@ class SelectAddress extends \XLite\View\Dialog
      */
     protected $columnsNumber = 2;
 
-
     /**
      * Return list of targets allowed for this widget
      *
@@ -58,7 +57,6 @@ class SelectAddress extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
         $result[] = 'select_address';
     
         return $result;
@@ -75,7 +73,6 @@ class SelectAddress extends \XLite\View\Dialog
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = 'select_address/controller.js';
 
         return $list;
@@ -145,19 +142,6 @@ class SelectAddress extends \XLite\View\Dialog
         }
 
         return $class;
-    }
-
-
-    /**
-     * Return title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHead()
-    {
-        return null;
     }
 
     /**

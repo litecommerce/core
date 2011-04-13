@@ -9,7 +9,8 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
+ *
  * @ListChild (list="itemsList.module.manage.columns.module-main-section.actions", weight="30")
  *}
 
-<a href="{buildURL(#modules#,#pack#,_ARRAY_(#moduleId#^module.getModuleId()))}">{t(#Pack it#)}</a>
+<a href="{buildURL(#addons_list_installed#,#pack#,_ARRAY_(#moduleId#^module.getModuleId()))}">{t(#Pack it#)}</a>
