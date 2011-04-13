@@ -41,7 +41,8 @@ class ProductBox extends \XLite\View\SideBarBox
      */
     const PARAM_PRODUCT_ID      = 'product_id';
     const PARAM_ICON_MAX_WIDTH  = 'iconWidth';
-    const PARAM_ICON_MAX_HEIGHT =  'iconHeight';
+    const PARAM_ICON_MAX_HEIGHT = 'iconHeight';
+    const PARAM_SHOW_BUY_NOW    = 'showBuyNow';
 
 
     /**
@@ -54,6 +55,7 @@ class ProductBox extends \XLite\View\SideBarBox
     public function getCSSFiles()
     {
         $result = parent::getCSSFiles();
+
         $result[] = 'products_list/products_list.css';
 
         return $result;
@@ -107,6 +109,7 @@ class ProductBox extends \XLite\View\SideBarBox
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
+
             self::PARAM_PRODUCT_ID => new \XLite\Model\WidgetParam\ObjectId\Product('Product Id', 0, true),
 
             self::PARAM_ICON_MAX_WIDTH => new \XLite\Model\WidgetParam\Int(
@@ -116,6 +119,10 @@ class ProductBox extends \XLite\View\SideBarBox
             self::PARAM_ICON_MAX_HEIGHT => new \XLite\Model\WidgetParam\Int(
                 'Maximal icon height', 180, true
             ),
+
+            self::PARAM_SHOW_BUY_NOW => new \XLite\Model\WidgetParam\Checkbox(
+                'Show "Buy now" button', true, true
+            ),  
         );
     }
 
@@ -154,4 +161,17 @@ class ProductBox extends \XLite\View\SideBarBox
     {
         return parent::isVisible() && $this->getProduct()->isAvailable();
     }
+
+    /**
+     * Flag to show "buy now" widget (buy now button)
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isBuyNowVisible()
+    {
+        return $this->getParam(self::PARAM_SHOW_BUY_NOW);
+    }
+
 }
