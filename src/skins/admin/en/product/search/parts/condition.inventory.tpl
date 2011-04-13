@@ -18,9 +18,9 @@
   <td style="width:10px;height:10px;"></td>
   <td>
     <select name="inventory">
-      <option value="all" selected='{inventory=#all#}'>{t(#All#)}</option>
-      <option value="low" selected='{inventory=#low#}'>{t(#Low stock#)}</option>
-      <option value="out" selected='{inventory=#out#}'>{t(#Out of stock#)}</option>
+      <option value="all" selected='{getCondition(#inventory#)=#all#}'>{t(#All#)}</option>
+      <option value="low" selected='{getCondition(#inventory#)=#low#}'>{t(#Low stock#)}</option>
+      <option value="out" selected='{getCondition(#inventory#)=#out#}'>{t(#Out of stock#)}</option>
     </select>
   </td>
 </tr>
