@@ -20,35 +20,45 @@
     <table class="search-form-main-part">
 
       <tr>
+
         <td class="substring-cell">
-          <input type="text" class="form-text" size="30" name="substring" value="{getCondition(#substring#)}" />
+          <input type="text" class="form-text" size="30" maxlength="200" name="substring" value="{getCondition(#substring#)}" />
         </td>
+
         <td>
           <widget class="\XLite\View\Button\Submit" label="Search products" style="search-form-submit" />
         </td>
+
       </tr> 
 
       <tr class="including-options-list">
+
         <td>
 
           <ul class="search-including-options">
+
             <li>
               <input type="radio" name="including" id="including-all" value="all" checked="{getChecked(#including#,#all#)}" />
-              <label for="including-all">All words<label/>
+              <label for="including-all">{t(#All words#)}<label/>
             </li>
+
             <li>
               <input type="radio" name="including" id="including-any" value="any" checked="{getChecked(#including#,#any#)}" />
-              <label for="including-any">Any word</label>
+              <label for="including-any">{t(#Any word#)}</label>
             </li>
+
             <li>
               <input type="radio" name="including" id="including-phrase" value="phrase" checked="{getChecked(#including#,#phrase#)}" /> 
-              <label for="including-phrase">Exact phrase</label>
+              <label for="including-phrase">{t(#Exact phrase#)}</label>
             </li>
+
           </ul>
 
         </td>
+
         <td class="less-search-options-cell">
-          <a href="javascript:void(0);" onclick="javascript:core.toggleText(this,'Less search options','#advanced_search_options');">More search options</a>
+          <a href="javascript:void(0);" onclick="javascript:core.toggleText(this,'Less search options','#advanced_search_options');">
+          {t(#More search options#)}</a>
         </td>
 
     </table>
@@ -56,24 +66,30 @@
     <table id="advanced_search_options" class="advanced-search-options">
 
       <tr>
+
         <td class="option-name">
-          Search in: 
+          {t(#Search in#)}: 
         </td>
+
         <td>
 
           <ul class="search-by-options">
+
             <li><label for="by-title">
               <input type="checkbox" name="by_title" id="by-title" value="Y" checked="{getChecked(#by_title#)}" />
-              Title
+              {t(#Title#)}
             </label></li>
+
             <li><label for="by-descr">
               <input type="checkbox" name="by_descr" id="by-descr" value="Y" checked="{getChecked(#by_descr#)}" /> 
-              Description
+              {t(#Description#)}
             </label></li>
+
             <li><label for="by-sku">
               <input type="checkbox" name="by_sku" id="by-sku" value="Y" checked="{getChecked(#by_sku#)}" /> 
-              SKU
+              {t(#SKU#)}
             </label></li>
+
           </ul>
 
         </td>
@@ -81,7 +97,7 @@
 
       <tr>
         <td class="option-name">
-          Category:
+          {t(#Category#)}:
         </td>
         <td>
           <widget class="\XLite\View\CategorySelect" fieldName="categoryId" selectedCategoryId="{getCondition(#categoryId#):r}" allOption />
