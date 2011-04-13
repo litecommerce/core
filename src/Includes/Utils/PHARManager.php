@@ -84,6 +84,29 @@ abstract class PHARManager extends \Includes\Utils\AUtils
         static::download($pack);
     }
 
+    /**
+     * Unpack PHAR archive
+     * 
+     * @param string $file File path
+     * @param string $dir  Dir to extract to
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function unpack($file, $dir)
+    {
+        try {
+            $phar = new \PharData($file);
+            $result = $phar->extractTo($dir .= 'phr' . uniqid() . LC_DS, null, true);
+
+        } catch (\Exception $exception) {
+            $result = false;
+        }
+
+        return $result ? $dir : null;
+    }
+
     // }}}
 
     // {{{ PHAR-related routines
@@ -131,10 +154,38 @@ abstract class PHARManager extends \Includes\Utils\AUtils
 
         $phar = new \PharData($name);
 
+        // Files
         $phar->buildFromIterator($iterator, LC_ROOT_DIR);
+
+        // Metadata
         $phar->setMetadata($metadata);
 
+        // File hashes
+        static::addPackHash($phar, $iterator);
+
+        // GZ compression
         return static::compress($phar, $name);
+    }
+
+    /**
+     * Create list of archive file hashes and add it to the pack
+     * 
+     * @param \PharData $phar     PHAR archive
+     * @param \Iterator $iterator Directory iterator
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function addPackHash(\PharData $phar, \Iterator $iterator)
+    {
+        $data = array();
+
+        foreach ($iterator as $filePath => $fileInfo) {
+            $data[\Includes\Utils\FileManager::getRelativePath($filePath, LC_ROOT_DIR)] = md5_file($filePath);
+        }
+
+        $phar->addFromString('.hash', json_encode($data));
     }
 
     // }}}

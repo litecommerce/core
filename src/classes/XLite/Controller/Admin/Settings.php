@@ -296,6 +296,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
 
                 break;
 
+            // :FIXME: checng to the constants
             case 'check_dirs':
          
                 $result = array();

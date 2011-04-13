@@ -36,4 +36,46 @@ namespace XLite\Controller\Admin\Base;
  */
 abstract class PackManager extends \XLite\Controller\Admin\AAdmin
 {
+    /**
+     * Save archive in temporary directory and unpack it
+     * 
+     * @param string $source Archive content
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function unpack($source)
+    {
+        $dir = null;
+
+        // Get unique file name
+        $file = tempnam($this->getTempDir(), 'phr');
+
+        // Save data into created file
+        if ($file && \Includes\Utils\FileManager::write($file, $source)) {
+            $dir = \Includes\Utils\PHARManager::unpack($file, $this->getTempDir());
+
+            if (!$dir) {
+                \XLite\Core\TopMessage::addError('Unable to extract archive files');
+            }
+
+        } else {
+            \XLite\Core\TopMessage::addError('Unable to save archive in temporary directory');
+        }
+
+        return $dir;
+    }
+
+    /**
+     * Return dir to temporary save and unpack archives
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getTempDir()
+    {
+        return LC_TMP_DIR;
+    }
 }
