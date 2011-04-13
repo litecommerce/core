@@ -69,7 +69,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-        $result[] = 'addons_list';
+        $result[] = 'addons_list_marketplace';
     
         return $result;
     }
@@ -170,18 +170,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     protected function getListName()
     {
         return parent::getListName() . '.install';
-    }
-
-    /**
-     * Return title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHead()
-    {
-        return '';
     }
 
     /**

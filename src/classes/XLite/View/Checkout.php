@@ -41,7 +41,6 @@ class Checkout extends \XLite\View\Dialog
     /**
      * Indexes in step data array 
      */
-
     const STEP_TEMPLATE  = 'template';
     const STEP_SHOW_CART = 'showCart';
 
@@ -56,12 +55,10 @@ class Checkout extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
         $result[] = 'checkout';
     
         return $result;
     }
-
 
     /**
      * Get a list of JS files required to display the widget properly
@@ -74,23 +71,9 @@ class Checkout extends \XLite\View\Dialog
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = 'checkout/controller.js';
 
         return $list;
-    }
-
-
-    /**
-     * Return title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHead()
-    {
-        return null;
     }
 
     /**

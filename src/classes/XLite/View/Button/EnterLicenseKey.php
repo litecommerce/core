@@ -69,7 +69,7 @@ class EnterLicenseKey extends \XLite\View\Button\APopupButton
     public function prepareURLParams()
     {
         return array(
-            'target' => 'addon_key',
+            'target' => 'module_key',
             'action' => 'view',
             'widget' => static::ENTER_KEY_WIDGET,
         );

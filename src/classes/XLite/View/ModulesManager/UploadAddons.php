@@ -41,12 +41,12 @@ class UploadAddons extends \XLite\View\Dialog
     /**
      * Target that is allowed for Upload Addons widget 
      */
-    const UPLOAD_ADDONS_TARGET  = 'upload_addons';
+    const UPLOAD_ADDONS_TARGET = 'addon_upload';
 
     /**
      * Javascript file that is used for multiadd functionality 
      */
-    const JS_SCRIPT             = 'modules_manager/upload_addons/js/upload_addons.js';
+    const JS_SCRIPT = 'modules_manager/upload_addons/js/upload_addons.js';
 
 
     /**
@@ -59,7 +59,6 @@ class UploadAddons extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
         $result[] = self::UPLOAD_ADDONS_TARGET;
     
         return $result;
@@ -75,12 +74,10 @@ class UploadAddons extends \XLite\View\Dialog
     public function getJSFiles()
     {   
         $list = parent::getJSFiles();
-
         $list[] = self::JS_SCRIPT;
 
         return $list;
     }   
-
 
     /**
      * Return title
@@ -103,6 +100,6 @@ class UploadAddons extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'modules_manager/upload_addons';
+        return 'modules_manager' . LC_DS . 'upload_addons';
     }
 }

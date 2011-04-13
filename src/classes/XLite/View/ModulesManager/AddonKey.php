@@ -48,11 +48,10 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-        $result[] = 'addon_key';
+        $result[] = 'module_key';
     
         return $result;
     }
-
 
     /** 
      * Register CSS files
@@ -90,6 +89,6 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getDir()
     {
-        return 'modules_manager/enter_key';
+        return 'modules_manager' . LC_DS . 'enter_key';
     }
 }

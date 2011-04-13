@@ -50,7 +50,6 @@ abstract class AModel extends \XLite\View\Model\AModel
 
         return $result;
     }
-
     
     /**
      * Return current order ID
@@ -66,7 +65,6 @@ abstract class AModel extends \XLite\View\Model\AModel
     {
         return intval(\XLite\Core\Request::getInstance()->order_id);
     }
-
     
     /**
      * This object will be used if another one is not pased

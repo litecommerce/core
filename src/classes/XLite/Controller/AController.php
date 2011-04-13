@@ -1351,13 +1351,8 @@ abstract class AController extends \XLite\Core\Handler
         if ($this->isAJAXViewer()) {
             $data = \XLite\Core\Request::getInstance()->getData();
 
-            if (isset($data['target'])) {
-                unset($data['target']);
-            }
-
-            if (isset($data['action'])) {
-                unset($data['action']);
-            }
+            unset($data['target']);
+            unset($data['action']);
 
             $params += $data;
         }

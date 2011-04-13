@@ -203,7 +203,6 @@ class Address extends \XLite\View\Model\AModel
         return $this->getRequestAddressId() ?: null;
     }
 
-
     /**
      * Returns widget head 
      * 

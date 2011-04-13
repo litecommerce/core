@@ -41,7 +41,6 @@ class TopCategories extends \XLite\View\SideBarBox
     /**
      * Widget parameter names
      */
-
     const PARAM_DISPLAY_MODE = 'displayMode';
     const PARAM_ROOT_ID      = 'rootId';
     const PARAM_IS_SUBTREE   = 'is_subtree';
@@ -49,7 +48,6 @@ class TopCategories extends \XLite\View\SideBarBox
     /**
      * Allowed display modes
      */
-
     const DISPLAY_MODE_LIST = 'list';
     const DISPLAY_MODE_TREE = 'tree';
     const DISPLAY_MODE_PATH = 'path';
@@ -131,7 +129,6 @@ class TopCategories extends \XLite\View\SideBarBox
 
         return $className ? ' class="' . $className . '"' : '';
     }
-
 
     /**
      * Get widge title

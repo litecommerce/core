@@ -46,23 +46,9 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-        $result[] = 'modules';
+        $result[] = 'addons_list_installed';
     
         return $result;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        return $list;
     }
 
     /**
@@ -90,18 +76,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     protected function getListName()
     {
         return parent::getListName() . '.manage';
-    }
-
-    /**
-     * Return title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHead()
-    {
-        return null;
     }
 
     /**

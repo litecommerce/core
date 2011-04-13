@@ -30,23 +30,15 @@ namespace XLite\View;
 
 /**
  * Abstract container widget
- * TODO:  waiting for the multiple inheritance
- * FIXME: must extend the AView class
+ *
+ * :TODO:  waiting for the multiple inheritance
+ * :FIXME: must extend the AView class
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
 abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
 {
-    /**
-     * Return title 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    abstract protected function getHead();
-
     /**
      * Return templates directory name 
      * 
@@ -55,6 +47,18 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * @since  1.0.0
      */
     abstract protected function getDir();
+
+    /**
+     * Return title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getHead()
+    {
+        return null;
+    }
 
     /**
      * isWrapper 

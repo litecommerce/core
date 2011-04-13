@@ -29,12 +29,12 @@
 namespace XLite\Controller\Admin;
 
 /**
- * Module marketplace installation controller
+ * AddonInstall 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
+class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
 {
     // {{{ Public methods for viewers
 
@@ -143,7 +143,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
     protected function doActionGetLicense()
     {
         $this->setReturnURL(
-            $this->buildURL('module_installation', 'show_license', array('module_id' => $this->getModuleId()))
+            $this->buildURL('addon_install', 'show_license', array('module_id' => $this->getModuleId()))
         );
     }
 
@@ -217,7 +217,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
             );
         }
 
-        $this->set('returnUrl', $this->buildURL('addons_list'));
+        $this->setReturnURL($this->buildURL('addons_list_marketplace'));
     }
 
     // }}}
@@ -234,7 +234,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
     protected function doActionGetPackage()
     {
         // Assuming an error
-        $this->setReturnUrl($this->buildURL('addons_list'));
+        $this->setReturnURL($this->buildURL('addons_list_marketplace'));
 
         // Checking "Agree" checkbox
         if ('Y' !== \XLite\Core\Request::getInstance()->agree) {
@@ -410,7 +410,7 @@ class ModuleInstallation extends \XLite\Controller\Admin\AAdmin
         }
 
         // Success
-        $this->setReturnURL($this->buildURL('modules'));
+        $this->setReturnURL($this->buildURL('addons_list_installed'));
     }
 
     /**

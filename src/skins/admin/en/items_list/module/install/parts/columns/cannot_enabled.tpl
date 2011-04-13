@@ -30,7 +30,7 @@
 
   <div IF="isCoreUpgradeNeeded(module)" class="note version error">
     {t(#The module version is incompatible with your core version and cannot be installed#)}<br />
-    {t(#Please#)} <a href="#">upgrade core</a>
+    {t(#Please#)} <a href="{buildURL(#upgrades#)}">upgrade core</a>
   </div>
 
   <div IF="isModuleUpgradeNeeded(module)" class="note version error">

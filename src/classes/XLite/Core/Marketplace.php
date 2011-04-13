@@ -71,6 +71,12 @@ class Marketplace extends \XLite\Base\Singleton
     /**
      * Protocol data fields - response
      */
+    const RESPONSE_FIELD_CORE_VERSION       = 'version';
+    const RESPONSE_FIELD_CORE_REVISION_DATE = 'revisionDate';
+
+    /**
+     * Protocol data fields - response
+     */
     const RESPONSE_FIELD_MODULE_NAME               = 'name';
     const RESPONSE_FIELD_MODULE_AUTHOR             = 'author';
     const RESPONSE_FIELD_MODULE_VERSION            = 'version';
@@ -90,6 +96,11 @@ class Marketplace extends \XLite\Base\Singleton
     const RESPONSE_FIELD_MODULE_RATING_VOTES_COUNT = 'votesCount';
     const RESPONSE_FIELD_MODULE_DOWNLOADS_COUNT    = 'downloadCount';
     const RESPONSE_FIELD_MODULE_LICENSE            = 'license';
+
+    /**
+     * Some regexps 
+     */
+    const REGEXP_VERSION = '/\d+\.?[\w-\.]*/';
 
 
     /**
@@ -455,6 +466,28 @@ class Marketplace extends \XLite\Base\Singleton
 
     /**
      * Return validation schema for certain action
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getResponseSchemaForGetCoresAction()
+    {
+        return array(
+            self::RESPONSE_FIELD_CORE_VERSION       => array(
+                'filter'  => FILTER_VALIDATE_REGEXP,
+                'flags'   => FILTER_REQUIRE_ARRAY,
+                'options' => array('regexp' => self::REGEXP_VERSION),
+            ),
+            self::RESPONSE_FIELD_CORE_REVISION_DATE => array(
+                'filter'  => FILTER_VALIDATE_INT,
+                'options' => array('max_range' => time()),
+            ),
+        );
+    }
+
+    /**
+     * Return validation schema for certain action
      * 
      * @return void
      * @see    ____func_see____
@@ -466,7 +499,7 @@ class Marketplace extends \XLite\Base\Singleton
             self::RESPONSE_FIELD_MODULE_VERSION         => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
                 'flags'   => FILTER_REQUIRE_ARRAY,
-                'options' => array('regexp' => '/\d+\.?[\w-\.]*/'),
+                'options' => array('regexp' => self::REGEXP_VERSION),
             ),
             self::RESPONSE_FIELD_MODULE_REVISION_DATE   => array(
                 'filter'  => FILTER_VALIDATE_INT,
@@ -516,7 +549,31 @@ class Marketplace extends \XLite\Base\Singleton
     // {{{ Certain requests
 
     /**
-     * Prepare data for addons list
+     * Prepare data for certain response
+     *
+     * @param array $data Data recieved from marketplace
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareResponseForGetCoresAction(array $data)
+    {
+        $result = array();
+
+        foreach ($data as $core) {
+
+            // Validate data recieved in responese
+            if ($this->validateAgainstSchema($module, $this->getResponseSchemaForGetAddonsAction())) {
+                $result[] = $core;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Prepare data for certain response
      * 
      * @param array $data Data recieved from marketplace
      *  
@@ -530,7 +587,7 @@ class Marketplace extends \XLite\Base\Singleton
 
         foreach ($data as $module) {
 
-            // Validate a module data recieved in responese
+            // Validate data recieved in responese
             if ($this->validateAgainstSchema($module, $this->getResponseSchemaForGetAddonsAction())) {
 
                 // Module key fields
@@ -654,6 +711,8 @@ class Marketplace extends \XLite\Base\Singleton
 
     /**
      * Common method to validate response
+     *
+     * :FIXME: must ignore unknown fields in data from marketplace
      * 
      * @param array $data   Data to validate
      * @param array $schema Validation schema
