@@ -156,6 +156,7 @@ $enabledModules['CDev'] = array(
     'FeaturedProducts',
     'ProductOptions',
     'Taxes',
+    'TinyMCE',
 );
 $enabledModules['Test'] = $enabledModules['Test1'] = array(
     'Module1',
