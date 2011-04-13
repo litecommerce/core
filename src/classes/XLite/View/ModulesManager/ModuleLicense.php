@@ -41,7 +41,7 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
     /**
      * Module license widget target 
      */
-    const MODULE_LICENSE_TARGET = 'module_installation';
+    const MODULE_LICENSE_TARGET = 'addon_install';
 
     /**
      * Title to show 
@@ -74,7 +74,6 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = $this->getDir() . '/css/style.css';
 
         return $list;
@@ -90,7 +89,6 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = $this->getDir() . '/js/switch-button.js';
 
         return $list;
@@ -105,7 +103,7 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getHead()
     {
-        return $this->t(static::WIDGET_TITLE);
+        return static::WIDGET_TITLE;
     }
 
     /**
@@ -117,6 +115,6 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getDir()
     {
-        return parent::getDir() . '/license';
+        return parent::getDir() . LC_DS . 'license';
     }
 }

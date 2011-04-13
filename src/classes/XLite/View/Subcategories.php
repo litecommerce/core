@@ -41,7 +41,6 @@ class Subcategories extends \XLite\View\Dialog
     /**
      * Widget parameter names
      */
-
     const PARAM_DISPLAY_MODE = 'displayMode';
     const PARAM_ICON_MAX_WIDTH = 'iconWidth';
     const PARAM_ICON_MAX_HEIGHT = 'iconHeight';
@@ -49,13 +48,12 @@ class Subcategories extends \XLite\View\Dialog
     /**
      * Allowed display modes
      */
-
     const DISPLAY_MODE_LIST  = 'list';
     const DISPLAY_MODE_ICONS = 'icons';
 
 
     /**
-     *  Display modes
+     * Display modes
      * 
      * @var   array
      * @see   ____var_see____
@@ -65,7 +63,6 @@ class Subcategories extends \XLite\View\Dialog
         self::DISPLAY_MODE_LIST  => 'List',
         self::DISPLAY_MODE_ICONS => 'Icons',
     );
-
 
     /**
      * Return list of targets allowed for this widget
@@ -77,7 +74,6 @@ class Subcategories extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
         $result[] = 'main';
         $result[] = 'category';
     
@@ -98,7 +94,6 @@ class Subcategories extends \XLite\View\Dialog
 
         return $list;
     }
-
 
     /**
      * Return title
@@ -121,7 +116,7 @@ class Subcategories extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'subcategories/' . $this->getParam(self::PARAM_DISPLAY_MODE);
+        return 'subcategories' . LC_DS . $this->getParam(self::PARAM_DISPLAY_MODE);
     }
 
     /**
@@ -250,4 +245,3 @@ class Subcategories extends \XLite\View\Dialog
         return $this->getCategory() ? $this->getCategory()->getSubcategories() : array();
     }
 }
-

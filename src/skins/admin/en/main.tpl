@@ -11,6 +11,8 @@
  * @since     1.0.0
  *}
 
+{* :TODO: divide into parts (lists) *}
+
 <widget class="\XLite\View\TopMessage" />
 
 <div id="page-container"{if:!auth.isLogged()} class="login-page"{end:}>
@@ -36,7 +38,7 @@
       <span class="current" IF="!auth.isLogged()">{t(#LiteCommerce shopping cart software#)}</span>
       <span class="current" IF="auth.isLogged()">{t(#v.#)} {getCurrentCoreVersion()}</span>
       <span IF="auth.isLogged()&isCoreUpgradeAvailable()" class="upgrade-note">
-        <a href="#">{t(#Upgrade available#)}</a>
+        <a href="{buildURL(#upgrades#)}">{t(#Upgrade available#)}</a>
       </span>
     </div>
 

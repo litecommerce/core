@@ -63,7 +63,7 @@ abstract class AForm extends \XLite\View\AView
 
 
     /**
-     * Each form must define its own name
+     * Form name
      *
      * @return string
      * @see    ____func_see____

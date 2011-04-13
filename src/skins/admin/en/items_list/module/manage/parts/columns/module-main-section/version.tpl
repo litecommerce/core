@@ -13,4 +13,4 @@
  * @ListChild (list="itemsList.module.manage.columns.module-main-section", weight="20")
  *}
 
-<div class="version">{t(#Version#)}: {module.getVersion()}</div>
+<div class="version">{t(#Version#)}: {getModuleVersion(module)}</div>

@@ -54,7 +54,6 @@ abstract class AOrderList extends \XLite\View\Dialog
      */
     protected $widgetClass = '';
 
-
     /**
      * Get orders 
      * 
@@ -64,7 +63,6 @@ abstract class AOrderList extends \XLite\View\Dialog
      */
     abstract public function getOrders();
 
-
     /**
      * Get widget keys 
      * 
@@ -73,7 +71,6 @@ abstract class AOrderList extends \XLite\View\Dialog
      * @since  1.0.0
      */
     abstract protected function getWidgetKeys();
-
 
     /**
      * Register CSS files
@@ -85,7 +82,6 @@ abstract class AOrderList extends \XLite\View\Dialog
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'order/list/list.css';
 
         return $list;
@@ -131,7 +127,6 @@ abstract class AOrderList extends \XLite\View\Dialog
             . ' }';
     }
 
-
     /**
      * Return title
      *
@@ -165,8 +160,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      */
     protected function isVisible()
     {
-        return parent::isVisible()
-            && $this->getOrders();
+        return parent::isVisible() && $this->getOrders();
     }
 
     /**

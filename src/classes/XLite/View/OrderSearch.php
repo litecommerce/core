@@ -147,7 +147,7 @@ class OrderSearch extends \XLite\View\Dialog
      */
     public function getTotalCount()
     {
-        if (is_null($this->totalCount)) {
+        if (!isset($this->totalCount)) {
             $this->totalCount = count($this->getOrders());
         }
 
@@ -165,7 +165,7 @@ class OrderSearch extends \XLite\View\Dialog
     {
         $list = parent::getJSFiles();
 
-        // TODO JS search 
+        // :TODO: JS search 
         // $list[] = 'order/search/search.js';
 
         return $list;
@@ -181,7 +181,6 @@ class OrderSearch extends \XLite\View\Dialog
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'order/search/search.css';
 
         return $list;
@@ -209,7 +208,7 @@ class OrderSearch extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'order/search';
+        return 'order' . LC_DS . 'search';
     }
 
     /**
