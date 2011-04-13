@@ -36,19 +36,6 @@ namespace XLite\Controller\Admin;
  */
 class Category extends \XLite\Controller\Admin\Base\Catalog
 {
-    /**
-     * Get current page
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getPage()
-    {
-        return is_null($this->page) || !in_array($this->page, array_keys($this->getPages()))
-            ? 'default'
-            : $this->page;
-    }
 
     /**
      * Get pages sections

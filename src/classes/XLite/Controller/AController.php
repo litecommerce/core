@@ -86,15 +86,6 @@ abstract class AController extends \XLite\Core\Handler
     protected $returnURL;
 
     /**
-     * Pages array for tabber
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $pages = array();
-
-    /**
      * params 
      * 
      * @var   string
@@ -103,14 +94,6 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected $params = array('target');
 
-    /**
-     * pageTemplates 
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $pageTemplates = array();
 
     /**
      * Validity flag
@@ -137,6 +120,32 @@ abstract class AController extends \XLite\Core\Handler
         return \Includes\Utils\Converter::convertFromCamelCase(lcfirst(array_pop($parts)));
     }
 
+    /** 
+     * Get current page
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPage()
+    {
+        return is_null($this->page) || !in_array($this->page, array_keys($this->getPages()))
+            ? 'default'
+            : $this->page;
+    }
+
+    /**
+     * getPages 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPages()
+    {
+        return array();
+    }
 
     /**
      * Get controlelr parameters
