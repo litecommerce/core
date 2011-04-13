@@ -342,8 +342,20 @@ div.noscript
   width: 170px;
 }
 
-input.input-disabled {
+input.input-disabled
+{
   color: #8f8f8f;
+}
+
+.center
+{
+  text-align: center;
+}
+
+.middle
+{
+  vertical-align: middle;
+  height: 100%;
 }
 
 /* Page tabs */
@@ -414,6 +426,11 @@ table.data-table th
 {
   background-color: #e5ebef;
   text-align: left;
+}
+
+table.data-table th.center
+{
+  text-align: center;
 }
 
 table.data-table td a
