@@ -37,23 +37,6 @@ namespace XLite\Controller\Admin;
 class Settings extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * The list of option categories displayed on General settings page 
-     * FIXME
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $displayedCategories = array(
-        'General'     => 'General',
-        'Company'     => 'Company',
-        'Email'       => 'Email',
-        'Security'    => 'Security',
-        'Environment' => 'Environment',
-        'Performance' => 'Performance',
-    );
-
-    /**
      * params 
      * FIXME
      * 
@@ -115,11 +98,16 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getTabPages()
+    public function getPages()
     {
-        $pages = $this->displayedCategories;
-
-        return $pages;
+        return array(
+            'General'     => 'General',
+            'Company'     => 'Company',
+            'Email'       => 'Email',
+            'Security'    => 'Security',
+            'Environment' => 'Environment',
+            'Performance' => 'Performance',
+        );
     }
 
     /**

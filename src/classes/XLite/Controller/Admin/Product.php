@@ -47,20 +47,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
 
 
     /**
-     * Get current page
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getPage()
-    {
-        return is_null($this->page) || !in_array($this->page, array_keys($this->getPages()))
-            ? 'default'
-            : $this->page;
-    }
-
-    /**
      * Get pages sections
      *
      * @return array
@@ -70,12 +56,12 @@ class Product extends \XLite\Controller\Admin\AAdmin
     public function getPages()
     {
         $pages = array(
-            'info'      => 'Product info',
+            'info'  => 'Product info',
         );
 
         if (!$this->isNew()) {
             $pages += array(
-               'images'    => 'Product images',
+                'images'    => 'Product images',
                 'inventory' => 'Inventory tracking',
             );
         }
