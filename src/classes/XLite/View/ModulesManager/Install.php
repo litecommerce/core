@@ -48,7 +48,7 @@ class Install extends \XLite\View\ModulesManager\AModulesManager
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-        $result[] = 'addons_list';
+        $result[] = 'addons_list_marketplace';
     
         return $result;
     }
@@ -63,23 +63,10 @@ class Install extends \XLite\View\ModulesManager\AModulesManager
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
-        $list[] = 'modules_manager' . LC_DS . 'common.css';
-        $list[] = $this->getDir() . LC_DS . 'style.css';
+        $list[] = 'modules_manager/css/common.css';
+        $list[] = $this->getDir() . '/css/style.css';
 
         return $list;
-    }
-
-    /**
-     * Return title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHead()
-    {
-        return null;
     }
 
     /**

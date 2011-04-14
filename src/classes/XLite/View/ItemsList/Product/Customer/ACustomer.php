@@ -39,7 +39,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * Widget param names
      */
-
     const PARAM_WIDGET_TYPE  = 'widgetType';
     const PARAM_DISPLAY_MODE = 'displayMode';
     const PARAM_GRID_COLUMNS = 'gridColumns';
@@ -58,17 +57,15 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
     const PARAM_SIDEBAR_MAX_ITEMS = 'sidebarMaxItems';
 
-    /*
+    /**
      * Allowed widget types
      */
-
     const WIDGET_TYPE_SIDEBAR = 'sidebar';
     const WIDGET_TYPE_CENTER  = 'center';
 
     /**
      * Allowed display modes
      */
-
     const DISPLAY_MODE_LIST    = 'list';
     const DISPLAY_MODE_GRID    = 'grid';
     const DISPLAY_MODE_TABLE   = 'table';
@@ -77,20 +74,17 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * A special option meaning that a CSS layout is to be used
      */
-
     const DISPLAY_GRID_CSS_LAYOUT = 'css-defined';
 
     /**
      * Columns number range
      */
-
     const GRID_COLUMNS_MIN = 1;
     const GRID_COLUMNS_MAX = 5;
 
     /**
      * Template to use for sidebars
      */
-
     const TEMPLATE_SIDEBAR = 'common/sidebar_box.tpl';
 
 

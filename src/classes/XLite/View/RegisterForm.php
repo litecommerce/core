@@ -41,7 +41,6 @@ class RegisterForm extends \XLite\View\Dialog
     /*
      * Widget parameters names
      */
-
     const PARAM_HEAD       = 'head';
     const PARAM_PROFILE_ID = 'profile_id';
 
@@ -60,7 +59,6 @@ class RegisterForm extends \XLite\View\Dialog
         );
     }
 
-
     /**
      * Return list of register form fields 
      * 
@@ -76,7 +74,6 @@ class RegisterForm extends \XLite\View\Dialog
 
         return $result;
     }
-
 
     /**
      * Get directory where template is located (body.tpl)

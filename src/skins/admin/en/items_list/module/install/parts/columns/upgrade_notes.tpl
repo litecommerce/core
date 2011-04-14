@@ -10,10 +10,10 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="itemsList.module.install.columns.module-main-section", weight="40")
+ * @ListChild (list="itemsList.module.install.columns.module-main-section", weight="500")
  *}
 
 <div IF="isModuleUpdateAvailable(module)" class="note version upgrade">
-  {t(#An update is available#)}<br />
-  <widget class="\XLite\View\Button\Regular" label="Update" />{t(#to v.#)}{getMaxModuleVersion(module)}
+  {t(#Installed version#)}:&nbsp;{getModuleVersion(getModuleInstalled(module))}&nbsp;({t(#outdated#)})<br />
+  <a href="{buildURL(#updates#)}">{t(#Update module#)}</a>
 </div>

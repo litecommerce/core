@@ -71,7 +71,7 @@ class Search extends \XLite\View\Form\Product\Search\Admin\AAdmin
     protected function getDefaultParams()
     {
         $params = parent::getDefaultParams();
-        $params[\XLite\Controller\AController::RETURN_URL] = \Includes\Utils\URLManager::getSelfURL() . '&mode=search_featured_products';
+        $params[\XLite\Controller\AController::RETURN_URL] = \Includes\Utils\URLManager::getSelfURI() . '&mode=search_featured_products';
 
         return $params;
     }

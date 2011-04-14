@@ -351,7 +351,7 @@ abstract class AItemsList extends \XLite\View\Container
      */
     protected function getPageBodyTemplate()
     {
-        return $this->getDir() . '/' . $this->getPageBodyDir() . '/' . $this->getPageBodyFile();
+        return $this->getDir() . LC_DS . $this->getPageBodyDir() . LC_DS . $this->getPageBodyFile();
     }
 
     /**
@@ -714,7 +714,19 @@ abstract class AItemsList extends \XLite\View\Container
      */
     protected function isVisible()
     {
-        return parent::isVisible() && $this->hasResults();
+        return parent::isVisible() && ($this->isDisplayWithEmptyList() || $this->hasResults());
+    }
+
+    /**
+     * Auxiliary method to check visibility
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isDisplayWithEmptyList()
+    {
+        return false;
     }
 
     /**

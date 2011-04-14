@@ -310,7 +310,7 @@ OUT;
     }
 
     /**
-     * Check - curent target and action is ignored (form id validation is disabled) or not
+     * Check - current target and action is ignored (form id validation is disabled) or not
      * 
      * @return boolean
      * @see    ____func_see____
@@ -381,7 +381,6 @@ OUT;
     protected function defineSpecialIgnoredTargets()
     {
         return array(
-            'backup_restore' => array('backup', 'delete'),
             'files'          => array('tar', 'tar_skins', 'untar_skins'),
         );
     }
@@ -490,7 +489,7 @@ OUT;
      */
     public function isCoreUpgradeAvailable()
     {
-        return \XLite\Core\TmpVars::getInstance()->isCoreUpgradeAvailable;
+        return (bool) \XLite\Core\TmpVars::getInstance()->isCoreUpgradeAvailable;
     }
 
     // }}}

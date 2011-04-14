@@ -117,6 +117,7 @@ class OrderSearch extends \XLite\View\Dialog
     public function getOrders()
     {
         if (!isset($this->orders)) {
+
             $this->orders = \XLite\Core\Database::getRepo('\XLite\Model\Order')->search(
                 $this->getConditions()
             );
@@ -146,7 +147,7 @@ class OrderSearch extends \XLite\View\Dialog
      */
     public function getTotalCount()
     {
-        if (is_null($this->totalCount)) {
+        if (!isset($this->totalCount)) {
             $this->totalCount = count($this->getOrders());
         }
 
@@ -164,7 +165,7 @@ class OrderSearch extends \XLite\View\Dialog
     {
         $list = parent::getJSFiles();
 
-        // TODO JS search 
+        // :TODO: JS search 
         // $list[] = 'order/search/search.js';
 
         return $list;
@@ -180,7 +181,6 @@ class OrderSearch extends \XLite\View\Dialog
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'order/search/search.css';
 
         return $list;
@@ -208,7 +208,7 @@ class OrderSearch extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'order/search';
+        return 'order' . LC_DS . 'search';
     }
 
     /**
@@ -225,37 +225,45 @@ class OrderSearch extends \XLite\View\Dialog
             $this->conditions = $this->session->get('orders_search');
 
             if (!is_array($this->conditions)) {
+
                 $this->conditions = array();
                 $this->session->set('orders_search', $this->conditions);
             }
-
         }
 
         $cnd = new \XLite\Core\CommonCell();
 
         if ($this->getProfile()->isAdmin()) {
+
             if (!empty(\XLite\Core\Request::getInstance()->profile_id)) {
+
                 $cnd->profileId = \XLite\Core\Request::getInstance()->profile_id;
             }
+
         } else {
+
             $cnd->profileId = $this->getProfile()->getProfileId();
         }
 
         if (!isset($this->conditions['sortCriterion']) || !$this->conditions['sortCriterion']) {
+
             $this->conditions['sortCriterion'] = 'order_id';
         }
 
         if (!isset($this->conditions['sortOrder']) || !$this->conditions['sortOrder']) {
+
             $this->conditions['sortOrder'] = 'ASC';
         }
 
         $cnd->orderBy = array('o.' . $this->conditions['sortCriterion'], $this->conditions['sortOrder']);
 
         if (isset($this->conditions['order_id'])) {
+
             $this->cnd->orderId = $this->conditions['order_id'];
         }   
 
         if (isset($this->conditions['status'])) {
+
             $this->cnd->status = $this->conditions['status'];
         }   
 
@@ -263,6 +271,7 @@ class OrderSearch extends \XLite\View\Dialog
         $end   = isset($this->conditions['endDate']) ? $this->conditions['endDate'] : 0;
 
         if ($start < $end) {
+
             $cnd->date = array($start, $end);
         }
 
@@ -287,7 +296,8 @@ class OrderSearch extends \XLite\View\Dialog
                 $result = \XLite\Core\Database::getRepo('XLite\Model\Profile')
                     ->find(\XLite\Core\Request::getInstance()->profile_id);
 
-                if (!$result->isExists()) {
+                if (!$result->isPersistent()) {
+
                     $result = null;
                 }
             }
@@ -297,6 +307,7 @@ class OrderSearch extends \XLite\View\Dialog
             $result = \XLite\Core\Auth::getInstance()->getProfile(\XLite\Core\Request::getInstance()->profile_id);
 
             if (!$result) {
+
                 $result = \XLite\Core\Auth::getInstance()->getProfile();
             }
         }

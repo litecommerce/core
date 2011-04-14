@@ -37,64 +37,9 @@ namespace XLite\Controller\Admin;
 class TopSellers extends \XLite\Controller\Admin\Stats
 {
     /**
-     * todayItems 
-     * FIXME: to refactoring
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
+     * Number of positions 
      */
-    protected $todayItems = array();
-
-    /**
-     * weekItems
-     * FIXME: to refactoring
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $weekItems = array();
-
-    /**
-     * monthItems 
-     * FIXME: to refactoring
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $monthItems = array();
-
-    /**
-     * sort_by 
-     * FIXME: to refactoring
-     * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $sort_by = "amount";
-    
-    /**
-     * counter 
-     * FIXME: to refactoring
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $counter = array(0,1,2,3,4,5,6,7,8,9);
-
-    /**
-     * topProducts 
-     * FIXME: to refactoring
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $topProducts = array();
+    const TOP_SELLERS_NUMBER = 10;
 
 
     /**
@@ -110,55 +55,43 @@ class TopSellers extends \XLite\Controller\Admin\Stats
     }
 
     /**
-     * handleRequest 
+     * Get rows count in statistics 
      * 
-     * @return void
+     * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function handleRequest()
+    public function getRowsCount()
     {
-        // typedef
-        $statRec = array('today' => 0, 'week' => 0, 'month' => 0);
-        
-        $this->stat = array(
-            'processed' => $statRec,
-            'queued' => $statRec,
-            'failed' => $statRec,
-            'not_finished' => $statRec,
-            'total' => $statRec,
-            'paid' => $statRec
-        );
-
-        $order = new \XLite\Model\Order();
-        $date = $this->getMonthDate();
-
-        // FIXME - old code
-        array_map(array($this, 'collect'), /*$order->findAll("(status='P' OR status='C') AND date>=$date")*/ array());
-
-        $this->sort('todayItems');
-        $this->sort('weekItems');
-        $this->sort('monthItems');
-
-        parent::handleRequest();
+        return self::TOP_SELLERS_NUMBER;    
     }
 
     /**
-     * getTopProduct 
-     * 
-     * @param mixed $period   ____param_comment____
-     * @param mixed $pos      ____param_comment____
-     * @param mixed $property ____param_comment____
-     *  
-     * @return void
+     * Get columns for statistics table
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getStatsRows()
+    {
+        return array_keys(array_fill(0, $this->getRowsCount(), ''));
+    }
+
+    /**
+     * Prepare statistics table
+     *
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getTopProduct($period, $pos, $property)
+    public function getStats()
     {
-        $val = $this->getComplex('topProducts.' . $period . 'Items.' . $pos . '.' . $property);
-    
-        return is_null($val) ? '' : $val;
+        parent::getStats();
+
+        $this->stats = $this->processData($this->getData());
+
+        return $this->stats;
     }
 
 
@@ -189,87 +122,49 @@ class TopSellers extends \XLite\Controller\Admin\Stats
     }
 
     /**
-     * collect 
-     * 
-     * @param mixed $order ____param_comment____
-     *  
-     * @return void
+     * Get data
+     *
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function collect($order)
+    protected function getData()
     {
-        $items = $order->get('items');
-        if ($order->get('date') >= $this->get('todayDate')) {
-            $this->todayItems = array_merge($this->todayItems, $items);
+        $data = array();
+
+        foreach ($this->getStatsColumns() as $interval) {
+
+            $cnd = $this->getSearchCondition($interval);
+            $cnd->limit = self::TOP_SELLERS_NUMBER;
+
+            $data[$interval] = \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')
+                ->getTopSellers($cnd);
         }
-        if ($order->get('date') >= $this->get('weekDate')) {
-            $this->weekItems = array_merge($this->weekItems, $items);
-        }
-        if ($order->get('date') >= $this->get('monthDate')) {
-            $this->monthItems = array_merge($this->monthItems, $items);
-        }
+
+        return $data;
     }
 
     /**
-     * sort 
+     * processData 
      * 
-     * @param mixed $name ____param_comment____
+     * @param array $data Collected data
      *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function sort($name)
+    protected function processData($data)
     {
-        $this->topProducts[$name] = array();
-        
-        foreach ((array) $this->get($name) as $item) {
-        
-            $id = $item->get('product_id');
-        
-            if ($id) {
+        $stats = $this->stats;
 
-                if (!isset($this->topProducts[$name][$id])) {
-                    $this->topProducts[$name][$id] = array(
-                        'id'     => $id,
-                        'name'   => $item->get('name'),
-                        'amount' => $item->get('amount')
-                    );
-
-                } else {
-                    $this->topProducts[$name][$id]['amount'] += $item->get('amount');
-                }
+        foreach ($this->stats as $rownum => $periods) {
+            foreach ($periods as $period => $val) {
+                $stats[$rownum][$period] = \Includes\Utils\ArrayManager::getIndex($data[$period], $rownum)
+                    ? \Includes\Utils\ArrayManager::getIndex($data[$period][$rownum][0])
+                    : null;
             }
         }
 
-        usort($this->topProducts[$name], array($this, 'compareProducts'));
-
-        $topProducts = array_chunk(array_reverse($this->topProducts[$name]), 10);
-        
-        $this->topProducts[$name] = isset($topProducts[0]) ? $topProducts[0] : null;
-    }
-
-    /**
-     * compareProducts 
-     * 
-     * @param mixed $p1 ____param_comment____
-     * @param mixed $p2 ____param_comment____
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function compareProducts($p1, $p2)
-    {
-        $result = 0;
-        
-        $key = $this->sort_by;
-        
-        if ($p1[$key] != $p2[$key]) {
-            $result = ($p1[$key] < $p2[$key]) ? -1 : 1;
-        }
-
-        return $result;
+        return $stats;
     }
 }

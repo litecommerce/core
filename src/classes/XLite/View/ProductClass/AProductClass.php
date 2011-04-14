@@ -33,7 +33,6 @@ namespace XLite\View\ProductClass;
  *
  * @see   ____class_see____
  * @since 1.0.0
- *
  */
 abstract class AProductClass extends \XLite\View\Dialog
 {

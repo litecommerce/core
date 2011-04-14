@@ -37,6 +37,42 @@ namespace XLite\View;
 class TopMenu extends \XLite\View\AView
 {
     /**
+     * Array of targets related to the same menu link
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $relatedTargets = array(
+        'orders_stats' => array(
+            'top_sellers',
+        ),
+        'product_list' => array(
+            'product',
+        ),
+        'categories' => array(
+            'category',
+        ),
+        'users' => array(
+            'profile',
+            'address_book',
+        ),
+        'shipping_methods' => array(
+            'shipping_settings',
+            'shipping_zones',
+            'shipping_rates',
+        ),
+        'payment_methods' => array(
+            'payment_method',
+        ),
+        'db_backup' => array(
+            'db_restore',
+            'pack_distr',
+        ),
+    );
+
+
+    /**
      * Register CSS files
      *
      * @return array
@@ -87,5 +123,21 @@ class TopMenu extends \XLite\View\AView
     protected function isVisible()
     {
         return \XLite\Core\Auth::getInstance()->isLogged();
+    }
+
+    /**
+     * Returns the list of related targets
+     * 
+     * @param string $target Target name
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getRelatedTargets($target)
+    {
+        return isset($this->relatedTargets[$target]) 
+            ? array_merge(array($target), $this->relatedTargets[$target]) 
+            : array($target);
     }
 }

@@ -191,7 +191,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
 
         // Fetch all active modules from database.
         // Dependencies are checked and corrected by the ModulesManager
-        foreach (static::getActiveModuleList() as $module) {
+        foreach (\Includes\Decorator\Utils\ModulesManager::getActiveModules() as $module => $tmp) {
 
             // Unconditionally add module to the index (since its dependencies are already checked)
             $index[$module] = new \Includes\Decorator\DataStructure\Graph\Modules($module);
@@ -200,23 +200,6 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
         return $index;
     }
       
-    /**
-     * Return list of active module names
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function getActiveModuleList()
-    {
-        return \Includes\Utils\ArrayManager::getArraysArrayFieldValues(
-            \Includes\Decorator\Utils\ModulesManager::getActiveModules(),
-            'actualName'
-        );
-    }
-
-
     // ------------------------------ Decorator routines -
 
     /**

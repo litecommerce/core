@@ -52,8 +52,7 @@ class FacebookLike extends \XLite\View\AView
      */
     public function getCurrentURL()
     {
-        return (\XLite\Core\Request::getInstance()->isHTTPS() ? 'https' : 'http')
-            . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        return \Includes\Utils\URLManager::getCurrentURL();
     }
 
     /**

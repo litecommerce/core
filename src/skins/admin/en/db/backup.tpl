@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Database backup tab template
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,6 +10,8 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
+
 <script type="text/javascript">
 function visibleBox(id, status)
 {
@@ -56,7 +58,7 @@ file from the server later on and delete it from the server by clicking on the
 <p class="adminParagraph"><b class="star">Warning:</b> It is strongly recommended that you close the shop for maintenance on the <a href="admin.php?target=settings">General settings</a> page before performing backup procedure!</p>
 
 <form action="admin.php" method="post" name="backup_form">
-<input type="hidden" name="target" value="backup_restore" />
+<input type="hidden" name="target" value="db_backup" />
 <input type="hidden" name="action" value="backup" />
 <input type="hidden" name="write_to_file" value="0" />
 <table cellpadding="0" cellspacing="0">
@@ -66,7 +68,7 @@ file from the server later on and delete it from the server by clicking on the
 	<tr>
         <td><widget class="\XLite\View\Button\Submit" label="Download SQL file" style="main-button" /></td>
 		<td>
-		{if:fileWritable}&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" label="Create SQL file" jsCode="document.backup_form.write_to_file.value = '1'; document.backup_form.submit();" />
+		{if:isFileWritable()}&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" label="Create SQL file" jsCode="document.backup_form.write_to_file.value = '1'; document.backup_form.submit();" />
 		{else:}
 		<table cellpadding="2" cellspacing="2">
 		<tr>
@@ -83,7 +85,7 @@ file from the server later on and delete it from the server by clicking on the
 		</table>
 		{end:}
 		</td>
-		<td IF="fileExists">&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" value="delete" label="Delete SQL file" jsCode="document.backup_form.action.value='delete'; document.backup_form.submit();" /></td>
+		<td IF="isFileExists()">&nbsp;&nbsp;&nbsp;<widget class="\XLite\View\Button\Regular" value="delete" label="Delete SQL file" jsCode="document.backup_form.action.value='delete'; document.backup_form.submit();" /></td>
 	</tr>
 	<tr>
 		<td colspan='3'>&nbsp;</td>

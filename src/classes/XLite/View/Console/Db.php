@@ -48,7 +48,12 @@ class Db extends \XLite\View\Console\AConsole
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-        $result[] = 'backup_restore';
+        $result[] = 'db_backup';
+        $result[] = 'db_restore';
+        
+        if (LC_DEVELOPER_MODE) {
+            $result[] = 'pack_distr';
+        }
 
         return $result;
     }

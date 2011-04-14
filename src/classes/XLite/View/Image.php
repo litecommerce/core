@@ -134,7 +134,6 @@ class Image extends \XLite\View\AView
             $url = $this->getParam(self::PARAM_USE_CACHE)
                 ? $this->resizedURL
                 : $this->getParam(self::PARAM_IMAGE)->getFrontURL();
-
         }
 
         if (!$url && $this->getParam(self::PARAM_USE_DEFAULT_IMAGE)) {

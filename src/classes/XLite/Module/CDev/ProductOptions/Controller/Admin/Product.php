@@ -51,14 +51,52 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
     {
         parent::__construct($params);
 
-        $this->pages['product_options'] = 'Product options';
-        $this->pageTemplates['product_options'] = 'modules/CDev/ProductOptions/product_options_lander.tpl';
-
         if (!in_array('language', $this->params)) {
             $this->params[] = 'language';
         }
         
     }
+
+    /**
+     * Get pages sections
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPages()
+    {
+        $pages = parent::getPages();
+
+        if (!$this->isNew()) {
+            $pages += array(
+                'product_options' => 'Product options',
+            );
+        }
+
+        return $pages;
+    }
+
+    /**
+     * Get pages templates
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPageTemplates()
+    {
+        $tpls = parent::getPageTemplates();
+
+        if (!$this->isNew()) {
+            $tpls += array(
+                'product_options' => 'modules/CDev/ProductOptions/product_options_lander.tpl',
+            );
+        }
+
+        return $tpls;
+    }
+
 
     /**
      * Update option groups list

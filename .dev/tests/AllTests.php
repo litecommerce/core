@@ -75,6 +75,71 @@ function xlite_make_sql_backup($path = null)
     if (!$result) {
         echo ('ignored' . PHP_EOL);
     }
+
+    return $result;
+}
+
+function xlite_restore_sql_from_backup($path = null, $verbose = true, $drop = true, &$message = null) 
+{
+    !$verbose && ob_start();
+
+    echo (PHP_EOL . 'DB restore ... ');
+
+    $result = true;
+
+    if (!isset($path)) {
+        $path = dirname(__FILE__) . LC_DS . 'dump.sql';
+    }
+
+    if (file_exists($path)) {
+
+        $config = \XLite::getInstance()->getOptions('database_details');
+        
+        $cmd = defined('TEST_MYSQL_BIN') ? TEST_MYSQL_BIN : 'mysql';
+        $cmd .= ' -h' . $config['hostspec'];
+        
+        if ($config['port']) {
+            $cmd .= ':' . $config['port'];
+        }
+
+        $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
+        if ($config['socket']) {
+            $cmd .= ' -S' . $config['socket'];
+        }
+
+        $message = '';
+
+        if ($drop) {
+        
+            // Drop&Create database
+
+            exec($cmd . ' -e"drop database ' . $config['database'] . '"' , $message);
+
+            if (empty($message)) {
+                exec($cmd . ' -e"create database ' . $config['database'] . '"', $message);
+            }
+        }    
+     
+        if (empty($message)) {
+            exec($cmd . ' ' . $config['database'] . ' < ' . $path, $message);
+        }
+
+        if (empty($message)) {
+            echo ('done' . PHP_EOL);
+        
+        } else {
+            $result = false;
+            echo ('failed: ' . $message . PHP_EOL);
+        }
+    
+    } else {
+        echo ('failed' . PHP_EOL);
+        $result = false;
+    }
+
+    !$verbose && ob_end_clean();
+    
+    return $result;
 }
 
 

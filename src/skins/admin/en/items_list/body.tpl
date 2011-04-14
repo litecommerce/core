@@ -14,13 +14,13 @@
 
   <div IF="pager.isVisible()" class="list-pager">{pager.display()}</div>
 
-  <div IF="isHeaderVisible()" class="list-header">{displayViewListContent(#itemsList.admin.header#)}</div>
+  <div IF="isHeaderVisible()" class="list-header">{displayInheritedViewListContent(#header#)}</div>
 
   <widget template="{getPageBodyTemplate()}" />
 
   <div IF="pager.isVisible()" class="list-pager">{pager.display()}</div>
 
-  <div IF="isFooterVisible()" class="list-footer">{displayViewListContent(#itemsList.admin.footer#)}</div>
+  <div IF="isFooterVisible()" class="list-footer">{displayInheritedViewListContent(#footer#)}</div>
 
 </div>
 

@@ -39,14 +39,15 @@ class Module extends \XLite\Model\Repo\ARepo
     /**
      * Allowable search params 
      */
-    const P_SUBSTRING    = 'substring';
-    const P_TAG          = 'tag';
-    const P_ORDER_BY     = 'orderBy';
-    const P_LIMIT        = 'limit';
-    const P_PRICE_FILTER = 'priceFilter';
-    const P_INSTALLED    = 'installed';
-    const P_INACTIVE     = 'inactive';
-    const P_UPGRADABLE   = 'upgradable';
+    const P_SUBSTRING        = 'substring';
+    const P_TAG              = 'tag';
+    const P_ORDER_BY         = 'orderBy';
+    const P_LIMIT            = 'limit';
+    const P_PRICE_FILTER     = 'priceFilter';
+    const P_INSTALLED        = 'installed';
+    const P_INACTIVE         = 'inactive';
+    const P_CORE_VERSION     = 'coreVersion';
+    const P_FROM_MARKETPLACE = 'fromMarketplace';
 
     /**
      * Price criteria
@@ -63,18 +64,6 @@ class Module extends \XLite\Model\Repo\ARepo
      * @since 1.0.0
      */
     protected $type = self::TYPE_INTERNAL;
-
-    /**
-     * Default 'order by' field name
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $defaultOrderBy = array(
-        'enabled' => false,
-        'name'    => true,
-    );
 
     /**
      * Alternative record identifiers
@@ -110,7 +99,10 @@ class Module extends \XLite\Model\Repo\ARepo
             $this->callSearchConditionHandler($value, $key, $queryBuilder);
         }
 
-        $result = $queryBuilder->getResult();
+        $result = $queryBuilder
+            ->addGroupBy('m.name')
+            ->addGroupBy('m.author')
+            ->getResult();
 
         return $countOnly ? count($result) : $result;
     }
@@ -166,7 +158,8 @@ class Module extends \XLite\Model\Repo\ARepo
             self::P_PRICE_FILTER,
             self::P_INSTALLED,
             self::P_INACTIVE,
-            self::P_UPGRADABLE,
+            self::P_CORE_VERSION,
+            self::P_FROM_MARKETPLACE,
         );
     }
 
@@ -262,6 +255,7 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     protected function prepareCndTag(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
+        // :TODO: add code here
     }
 
     /**
@@ -284,10 +278,10 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * prepareCndOrderBy
+     * Prepare certain search condition
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
-     * @param mixed                      $value        Searchable value
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param string                     $value        Condition
      *
      * @return void
      * @see    ____func_see____
@@ -340,23 +334,34 @@ class Module extends \XLite\Model\Repo\ARepo
      * Prepare certain search condition
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param string                     $value        Condition
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareCndCoreVersion(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        $queryBuilder
+            ->andWhere('m.majorVersion = :majorVersion')
+            ->setParameter('majorVersion', $value);
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      * @param boolean                    $value        Condition
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareCndUpgradable(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    protected function prepareCndFromMarketplace(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        /*$cnd = new \Doctrine\ORM\Query\Expr\Orx();
-        $cnd->add('m.majorVersion < m1.majorVersion');
-        $cnd->add('m.minorVersion < m1.minorVersion');
-
-        $queryBuilder
-            ->innerJoin('m', 'm1')
-            ->andWhere('m.name = m1.name')
-            ->andWhere('m.author = m1.author')
-            ->andWhere($cnd);*/
+        if ($value) {
+            // :TODO: for a future use
+        }
     }
 
     // }}}
@@ -376,6 +381,7 @@ class Module extends \XLite\Model\Repo\ARepo
     {
         // Clear previously saved data
         $this->defineDeleteNotInstalledModulesQuery()->execute();
+        $this->flushChanges();
 
         // Save recieved data
         $this->insertInBatch($data);
@@ -402,10 +408,10 @@ class Module extends \XLite\Model\Repo\ARepo
 
     /**
      * Search for modules having an elder version
-     * 
+     *
      * @param \XLite\Model\Module $module Module to get info from
-     *  
-     * @return void
+     *
+     * @return \XLite\Model\Module
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -415,10 +421,61 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Define the Doctrine query
+     * Search for modules having an elder version
      *
      * @param \XLite\Model\Module $module Module to get info from
      *
+     * @return \XLite\Model\Module
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getModuleFromMarketplace(\XLite\Model\Module $module)
+    {
+        $installed = $this->getModuleInstalled($module);
+
+        if ($installed) {
+            $result = $this->getModuleForUpdate($module) ?: $installed;
+        } else {
+            $result = $this->defineModuleFromMarketplaceQuery($module)->getSingleResult();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Search for installed module
+     *
+     * @param \XLite\Model\Module $module Module to get info from
+     *
+     * @return \XLite\Model\Module
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getModuleInstalled(\XLite\Model\Module $module)
+    {
+        return $this->defineModuleInstalledQuery($module)->getSingleResult();
+    }
+
+    /**
+     * Search module for upgrade
+     * 
+     * @param \XLite\Model\Module $module       Currently installed module
+     * @param string              $majorVersion Core version
+     *  
+     * @return \XLite\Model\Module
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getModuleForUpgrade(\XLite\Model\Module $module, $majorVersion)
+    {
+        return $this->defineModuleForUpgradeQuery($module, $majorVersion)->getSingleResult();
+    }
+
+    /**
+     * Query to search for modules having an elder version
+     *
+     * @param \XLite\Model\Module $module Module to get info from
+     * 
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
@@ -426,17 +483,95 @@ class Module extends \XLite\Model\Repo\ARepo
     protected function defineModuleForUpdateQuery(\XLite\Model\Module $module)
     {
         $queryBuilder = $this->createQueryBuilder();
+        $this->prepareCndSingleModuleSearch($queryBuilder, $module);
 
-        $this->prepareCndInstalled($queryBuilder, false);
-        $this->prepareCndInactive($queryBuilder);
-
-        return $queryBuilder
-            ->andWhere('m.name = :name')
-            ->andWhere('m.author = :author')
+        $queryBuilder
             ->andWhere('m.majorVersion = :majorVersion')
             ->andWhere('m.minorVersion > :minorVersion')
             ->setParameter('majorVersion', $module->getMajorVersion())
-            ->setParameter('minorVersion', $module->getMinorVersion())
+            ->setParameter('minorVersion', $module->getMinorVersion());
+
+        return $queryBuilder;
+    }
+
+    /**
+     * Query to search for modules having an elder version
+     *
+     * @param \XLite\Model\Module $module Module to get info from
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineModuleFromMarketplaceQuery(\XLite\Model\Module $module)
+    {
+        $queryBuilder = $this->createQueryBuilder();
+        $this->prepareCndSingleModuleSearch($queryBuilder, $module);
+
+        $queryBuilder
+            ->addOrderBy('m.majorVersion', 'DESC')
+            ->addOrderBy('m.minorVersion', 'DESC');
+
+
+        return $queryBuilder;
+    }
+
+    /**
+     * Query to search for modules having an elder version
+     *
+     * @param \XLite\Model\Module $module       Module to get info from
+     * @param string              $majorVersion Core version
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineModuleForUpgradeQuery(\XLite\Model\Module $module, $majorVersion)
+    {
+        $queryBuilder = $this->createQueryBuilder();
+        $this->prepareCndSingleModuleSearch($queryBuilder, $module);
+
+        $queryBuilder
+            ->andWhere('m.majorVersion = :majorVersion')
+            ->setParameter('majorVersion', $majorVersion)
+            ->addOrderBy('m.minorVersion', 'DESC');
+
+        return $queryBuilder;
+    }
+
+    /**
+     * Query to search for installed modules
+     *
+     * @param \XLite\Model\Module $module Module to get info from
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineModuleInstalledQuery(\XLite\Model\Module $module)
+    {
+        $queryBuilder = $this->createQueryBuilder();
+        $this->prepareCndSingleModuleSearch($queryBuilder, $module);
+        $this->prepareCndInstalled($queryBuilder, true);
+
+        return $queryBuilder;
+    }
+
+    /**
+     * Helper to search module with the same name and author
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param \XLite\Model\Module        $module       Module to get info from
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareCndSingleModuleSearch(\Doctrine\ORM\QueryBuilder $queryBuilder, \XLite\Model\Module $module)
+    {
+        $queryBuilder
+            ->andWhere('m.name = :name')
+            ->andWhere('m.author = :author')
             ->setParameter('name', $module->getName())
             ->setParameter('author', $module->getAuthor())
             ->setMaxResults(1);

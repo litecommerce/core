@@ -189,7 +189,7 @@ class XLite_Tests_Model_Category extends XLite_Tests_TestCase
 
     public function testGetStringPath()
     {
-        $this->query(file_get_contents(__DIR__ . '/Repo/sql/category/setup.sql'));
+        $this->doRestoreDb(__DIR__ . '/Repo/sql/category/setup.sql', false);
 
         $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'fruit_1'));
         $this->assertEquals('Fruit/Fruit 2', $c->getStringPath());
@@ -197,9 +197,6 @@ class XLite_Tests_Model_Category extends XLite_Tests_TestCase
 
     public function testGetProductsCount()
     {
-        $this->query(file_get_contents(__DIR__ . '/Repo/sql/category/setup.sql'));
-        \XLite\Core\Database::getEM()->flush();
-
         $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'fruit'));
 
         $this->assertEquals(6, $c->getProductsCount(), 'check products count (fruit)');
@@ -207,9 +204,6 @@ class XLite_Tests_Model_Category extends XLite_Tests_TestCase
 
     public function testGetProducts()
     {
-        $this->query(file_get_contents(__DIR__ . '/Repo/sql/category/setup.sql'));
-        \XLite\Core\Database::getEM()->flush();
-
         $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'fruit'));
 
         $list = $c->getProducts();

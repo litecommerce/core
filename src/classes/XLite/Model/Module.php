@@ -37,8 +37,7 @@ namespace XLite\Model;
  * @Entity (repositoryClass="\XLite\Model\Repo\Module")
  * @Table  (name="modules",
  *      uniqueConstraints={
- *          @UniqueConstraint (name="moduleVersion", columns={"author","name","majorVersion","minorVersion"}),
- *          @UniqueConstraint (name="moduleInstalled", columns={"author","name","installed"})
+ *          @UniqueConstraint (name="moduleVersion", columns={"author","name","majorVersion","minorVersion"})
  *      },
  *      indexes={
  *          @Index (name="enabled", columns={"enabled"}),
@@ -146,11 +145,11 @@ class Module extends \XLite\Model\AEntity
     /**
      * Rating
      *
-     * @var   string
+     * @var   float
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="integer")
+     * @Column (type="decimal", precision=14, scale=4)
      */
     protected $rating = 0;
 
@@ -312,132 +311,6 @@ class Module extends \XLite\Model\AEntity
     // {{{ Routines to access methods of (non)installed modules
 
     /**
-     * Getter
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getMajorVersion()
-    {
-        // Do not replace the first argument by the
-        // magic constant "__FUNCTION__": their are the same "accidentally"
-        return $this->callModuleMethod('getMajorVersion', $this->majorVersion);
-    }
-
-    /**
-     * Getter
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getMinorVersion()
-    {
-        // Do not replace the first argument by the 
-        // magic constant "__FUNCTION__": their are the same "accidentally"
-        return $this->callModuleMethod('getMinorVersion', $this->minorVersion);
-    }
-
-    /**
-     * Getter
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getModuleName()
-    {
-        // Do not replace the first argument by the
-        // magic constant "__FUNCTION__": their are the same "accidentally"
-        return $this->callModuleMethod('getModuleName', $this->moduleName);
-    }
-
-    /**
-     * Getter
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getAuthorName()
-    {
-        // Do not replace the first argument by the
-        // magic constant "__FUNCTION__": their are the same "accidentally"
-        return $this->callModuleMethod('getAuthorName', $this->authorName);
-    }
-
-    /**
-     * Getter
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getDescription()
-    {
-        // Do not replace the first argument by the
-        // magic constant "__FUNCTION__": their are the same "accidentally"
-        return $this->callModuleMethod('getDescription', $this->description);
-    }
-
-    /**
-     * Getter
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getIconURL()
-    {
-        // Do not replace the first argument by the
-        // magic constant "__FUNCTION__": their are the same "accidentally"
-        return $this->callModuleMethod('getIconURL', $this->iconURL);
-    }
-
-    /**
-     * Getter
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getPageURL()
-    {
-        // Do not replace the first argument by the
-        // magic constant "__FUNCTION__": their are the same "accidentally"
-        return $this->callModuleMethod('getPageURL', $this->pageURL);
-    }
-
-    /**
-     * Getter
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getAuthorPageURL()
-    {
-        // Do not replace the first argument by the
-        // magic constant "__FUNCTION__": their are the same "accidentally"
-        return $this->callModuleMethod('getAuthorPageURL', $this->authorPageURL);
-    }
-
-    /**
-     * Getter
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getDependencies()
-    {
-        // Do not replace the first argument by the
-        // magic constant "__FUNCTION__": their are the same "accidentally"
-        return $this->callModuleMethod('getDependencies', $this->dependencies);
-    }
-
-    /**
      * Method to call functions from module main classes
      * 
      * @param string $method Method to call
@@ -533,19 +406,42 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * Get list of dependent modules as Doctrine entities
+     * Get list of dependency modules as Doctrine entities
      * 
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getDependentModules()
+    public function getDependencyModules()
     {
         $result = array();
 
         foreach ($this->getDependencies() as $class) {
             $result[$class] = $this->getRepository()
                 ->findOneBy(array_combine(array('author', 'name'), explode('\\', $class)));
+        }
+
+        return array_filter($result);
+    }
+
+    /**
+     * Get list of dependent modules as Doctrine entities
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getDependentModules()
+    {
+        $result  = array();
+        $current = \Includes\Decorator\ADecorator::getModulesGraph()->find($this->getActualName());
+
+        if ($current) {
+            foreach ($current->getChildren() as $node) {
+                $class = $node->getActualName();
+                $result[$class] = $this->getRepository()
+                    ->findOneBy(array_combine(array('author', 'name'), explode('\\', $class)));
+            }
         }
 
         return array_filter($result);
@@ -574,7 +470,7 @@ class Module extends \XLite\Model\AEntity
      */
     public function isPurchased()
     {
-        return true;
+        return 'Test\Module6' === $this->getActualName();
     }
 
     /**
@@ -599,6 +495,31 @@ class Module extends \XLite\Model\AEntity
     public function getPath()
     {
         return str_replace('\\', LC_DS, $this->getActualName());
+    }
+
+    /**
+     * Return currency for paid modules
+     * 
+     * @return \XLite\Model\Currency
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCurrency()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Currency')->findOneByCode($this->currency)
+            ?: $this->currency;
+    }
+
+    /**
+     * Check if module is installed in LC
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getInstalled()
+    {
+        return $this->installed ?: (bool) $this->getRepository()->getModuleInstalled($this);
     }
 
     // }}}

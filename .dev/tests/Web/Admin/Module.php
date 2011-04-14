@@ -99,7 +99,7 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
     {
         $this->logIn();
 
-        $this->open('admin.php?target=addons_list');
+        $this->open('admin.php?target=addons_list_marketplace');
 
         $this->assertElementPresent(
             self::BUTTON_ENTER_LICENSE_KEY,

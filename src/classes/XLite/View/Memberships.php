@@ -80,19 +80,6 @@ class Memberships extends \XLite\View\Dialog
         return $result;
     }
 
-
-    /**
-     * Return title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHead()
-    {
-        return null;
-    }
-
     /**
      * Return templates directory name
      *

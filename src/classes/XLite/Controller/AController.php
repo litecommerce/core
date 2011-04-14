@@ -86,15 +86,6 @@ abstract class AController extends \XLite\Core\Handler
     protected $returnURL;
 
     /**
-     * Pages array for tabber
-     *
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $pages = array();
-
-    /**
      * params 
      * 
      * @var   string
@@ -103,14 +94,6 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected $params = array('target');
 
-    /**
-     * pageTemplates 
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $pageTemplates = array();
 
     /**
      * Validity flag
@@ -137,6 +120,32 @@ abstract class AController extends \XLite\Core\Handler
         return \Includes\Utils\Converter::convertFromCamelCase(lcfirst(array_pop($parts)));
     }
 
+    /** 
+     * Get current page
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPage()
+    {
+        return is_null($this->page) || !in_array($this->page, array_keys($this->getPages()))
+            ? 'default'
+            : $this->page;
+    }
+
+    /**
+     * getPages 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPages()
+    {
+        return array();
+    }
 
     /**
      * Get controlelr parameters
@@ -559,13 +568,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getPageTemplate()
     {
-        $result = null;
-        
-        if (isset($this->pageTemplates[$this->get('page')])) {
-            $result = $this->pageTemplates[$this->get('page')];
-        }
-
-        return $result;
+        return \Includes\Utils\ArrayManager::getIndex($this->getPageTemplates(), $this->getPage());
     }
 
     /**
@@ -579,7 +582,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getTabPages()
     {
-        return $this->pages;
+        return $this->getPages();
     }
 
     /**
@@ -1351,13 +1354,8 @@ abstract class AController extends \XLite\Core\Handler
         if ($this->isAJAXViewer()) {
             $data = \XLite\Core\Request::getInstance()->getData();
 
-            if (isset($data['target'])) {
-                unset($data['target']);
-            }
-
-            if (isset($data['action'])) {
-                unset($data['action']);
-            }
+            unset($data['target']);
+            unset($data['action']);
 
             $params += $data;
         }

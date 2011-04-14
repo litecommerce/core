@@ -9,6 +9,8 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
+ *
  * @ListChild (list="menus", weight="70")
  *}
-<widget class="\XLite\View\TopMenu\Node" list="addons" title="Add-ons" className="addons" linkTarget="modules" />
+
+<widget class="\XLite\View\TopMenu\Node" list="addons" title="Add-ons" className="addons" linkTarget="addons_list_installed" />

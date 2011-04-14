@@ -15,7 +15,7 @@
 
 <script type="text/javascript">
   depends[{module.getModuleId()}] = [];
-  {foreach:module.getDependentModules(),k,m}
+  {foreach:module.getDependencyModules(),k,m}
     {if:m.getEnabled()}
       depends[{module.getModuleId()}][{k}] = '{m.getModuleName()} ({t(#by#)} {m.getAuthorName()})';
     {end:}

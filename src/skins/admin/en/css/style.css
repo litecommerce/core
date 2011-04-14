@@ -342,8 +342,20 @@ div.noscript
   width: 170px;
 }
 
-input.input-disabled {
+input.input-disabled
+{
   color: #8f8f8f;
+}
+
+.center
+{
+  text-align: center;
+}
+
+.middle
+{
+  vertical-align: middle;
+  height: 100%;
 }
 
 /* Page tabs */
@@ -416,6 +428,11 @@ table.data-table th
   text-align: left;
 }
 
+table.data-table th.center
+{
+  text-align: center;
+}
+
 table.data-table td a
 {
   text-decoration: underline;
@@ -441,6 +458,11 @@ table.data-table th a:hover {
 table.data-table tr.highlight td
 {
   background-color: #f2f2f2;
+}
+
+table.data-table tr.totals td
+{
+  font-weight: bold;
 }
 
 table.data-table td.separator

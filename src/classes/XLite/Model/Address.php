@@ -286,12 +286,12 @@ class Address extends \XLite\Model\AEntity
             // Set by state object
             if ($state->getStateId()) {
                 $this->state = $state;
-                $this->setCustomState($state->getState());
 
             } else {
                 $this->state = null;
-                $this->setCustomState($state->getState());
             }
+
+            $this->setCustomState('');
 
         } elseif (is_string($state)) {
 
@@ -329,6 +329,30 @@ class Address extends \XLite\Model\AEntity
 
         $this->setFirstname($parts[0]);
         $this->setLastname(isset($parts[1]) ? $parts[1] : '');
+    }
+
+    /**
+     * Get state Id 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getStateId()
+    {
+        return $this->getState() ? $this->getState()->getStateId() : null;
+    }
+
+    /**
+     * Get country code
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCountryCode()
+    {
+        return $this->getCountry() ? $this->getCountry()->getCode() : null;
     }
 
     /**

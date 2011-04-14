@@ -81,13 +81,17 @@ abstract class AEntity
     public function map(array $data)
     {
         foreach ($data as $key => $value) {
+
             // Map only existing properties with setter methods or direct
             $method = 'set' . $this->getMethodName($key);
+
             if (method_exists($this, $method)) {
+
                 // $method is assembled from 'set' + getMethodName()
                 $this->$method($value);
 
             } elseif (property_exists($this, $key)) {
+
                 $this->$key = $value;
             }
         }
@@ -162,13 +166,16 @@ abstract class AEntity
         $class = get_called_class();
 
         if (!isset(self::$cacheEnabled[$class])) {
+
             $repo = $this->getRepository();
+
             self::$cacheEnabled[$class] = ($repo && is_subclass_of($repo, '\XLite\Model\Repo\ARepo'))
                 ? $repo->hasCacheCells()
                 : false;
         }
 
         if (self::$cacheEnabled[$class]) {
+
             $this->getRepository()->deleteCacheByEntity($this);
         }
     }
@@ -202,21 +209,27 @@ abstract class AEntity
         $result = preg_match('/^(get|set)(\w+)$/Si', $method, $matches) && !empty($matches[2]);
 
         if ($result) {
+
             $property = \XLite\Core\Converter::convertFromCamelCase($matches[2]);
+
             $result = property_exists($this, $property);
         }
 
         $return = null;
 
         if ($result) {
+
             if ('set' === $matches[1]) {
+
                 $this->$property = array_shift($args);
 
             } else {
+
                 $return = $this->$property;
             }
 
         } else {
+
             throw new \BadMethodCallException(
                 get_class($this) . '::' . $method . '() - method not exists or invalid getter/setter'
             );
@@ -290,12 +303,15 @@ abstract class AEntity
     public function cloneEntity()
     {
         $class  = $this instanceof \Doctrine\ORM\Proxy\Proxy ? $this->_entityClass : get_called_class();
+
         $entity = new $class();
+
         $fields = array_keys(\XLite\Core\Database::getEM()->getClassMetadata($class)->fieldMappings);
 
         $map = array();
 
         foreach ($fields as $field) {
+
             $map[$field] = $this->$field;
         }
 
@@ -330,10 +346,12 @@ abstract class AEntity
         $class = get_called_class();
 
         if (!isset(self::$methodNames[$class])) {
+
             self::$methodNames[$class] = array();
         }
 
         if (!isset(self::$methodNames[$class][$name])) {
+
             self::$methodNames[$class][$name] = \XLite\Core\Converter::convertToCamelCase($name);
         }
 
