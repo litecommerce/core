@@ -14,6 +14,6 @@
   <li FOREACH="getRates(),rate">
     <input type="radio" id="method{getMethodId(rate)}" name="methodId" value="{getMethodId(rate)}" checked="{isRateSelected(rate)}" />
     <label for="method{getMethodId(rate)}">{getMethodName(rate)}</label>
-    <span>{formatPrice(getMarkup(rate),cart.getCurrency())}</span>
+    <span>{formatPrice(getMarkup(rate),cart.getCurrency()):h}</span>
   </li>
 </ul>
