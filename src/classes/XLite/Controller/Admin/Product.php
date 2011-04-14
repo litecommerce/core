@@ -345,6 +345,10 @@ class Product extends \XLite\Controller\Admin\AAdmin
                 $this->getCategoryProducts($product)
             );
 
+
+            // Add default inventory record
+            $this->createInventory();
+
             \XLite\Core\TopMessage::addInfo(
                 'New product has been successfully added'
             );
@@ -483,6 +487,23 @@ class Product extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Create inventory
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function createInventory()
+    {
+        $inv = $this->getInventory();
+
+        $inv->product = $this->getProduct();
+
+        \XLite\Core\Database::getEM()->persist($inv);
+        \XLite\Core\Database::getEM()->flush();
+    }
+
+    /**
      * Update inventory 
      * 
      * @return void
@@ -491,9 +512,12 @@ class Product extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdateInventory()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Inventory')->updateById(
-            $this->getProductId(),
-            $this->getPostedData()
-        );
+        $inv = $this->getInventory();
+
+        $inv->product = $this->getProduct();
+        $inv->map($this->getPostedData());
+
+        \XLite\Core\Database::getEM()->persist($inv);
+        \XLite\Core\Database::getEM()->flush();
     }
 }
