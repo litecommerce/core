@@ -57,7 +57,7 @@ class InstallAddon extends \XLite\View\Button\APopupButton
      */
     public function getButtonContent() 
     {
-        return $this->t(self::INSTALL_ADDON_LABEL);
+        return self::INSTALL_ADDON_LABEL;
     }
 
     /** 
@@ -73,7 +73,7 @@ class InstallAddon extends \XLite\View\Button\APopupButton
             'target'    => \XLite\View\ModulesManager\ModuleLicense::MODULE_LICENSE_TARGET,
             'action'    => 'view',
             'widget'    => self::INSTALL_ADDON_WIDGET,
-            'module_id' => $this->getParam(self::PARAM_MODULEID),
+            'moduleId' => $this->getParam(self::PARAM_MODULEID),
         );
     }
 
@@ -105,7 +105,7 @@ class InstallAddon extends \XLite\View\Button\APopupButton
     {   
         $list = parent::getJSFiles();
 
-        // TODO must be taken from LICENSE module widget!!!
+        // TODO must be taken from LICENSE module widget
         $list[] = 'modules_manager' . LC_DS . 'license' . LC_DS . 'js' . LC_DS . 'switch-button.js';
 
         return $list;

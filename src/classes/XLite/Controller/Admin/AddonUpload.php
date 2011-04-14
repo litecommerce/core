@@ -36,16 +36,49 @@ namespace XLite\Controller\Admin;
  */
 class AddonUpload extends \XLite\Controller\Admin\Base\AddonInstall
 {
+    // {{{ Get package source as string
+
+    /**
+     * Method to get package source (data)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getPackage()
+    {
+        return '';
+    }
+
+    /// }}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Name of the variable in the global $_FILES array
      */
-    const UPLOAD_NAME = 'upload_addon';
+    // const UPLOAD_NAME = 'upload_addon';
 
     /**
      * Values for the statuses of uploaded file moving 
      */
 
-    const MOVE_OK    = 'ok';
+    /*const MOVE_OK    = 'ok';
     const MOVE_ERROR = 'error';
 
 
@@ -56,7 +89,7 @@ class AddonUpload extends \XLite\Controller\Admin\Base\AddonInstall
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getTitle()
+    /*public function getTitle()
     {
         return $this->t('Upload add-ons');
     }
@@ -68,7 +101,7 @@ class AddonUpload extends \XLite\Controller\Admin\Base\AddonInstall
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doActionUpload()
+    /*protected function doActionUpload()
     {
         if (isset($_FILES[self::UPLOAD_NAME])) {
 
@@ -118,7 +151,7 @@ class AddonUpload extends \XLite\Controller\Admin\Base\AddonInstall
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function deployModule(\XLite\Model\PHARModule $module, $index, $name)
+    /*protected function deployModule(\XLite\Model\PHARModule $module, $index, $name)
     {
         if ($module->isValid()) {
 
@@ -152,7 +185,7 @@ class AddonUpload extends \XLite\Controller\Admin\Base\AddonInstall
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function moveToLocalRepository($uploadedFile, $newFile)
+    /*protected function moveToLocalRepository($uploadedFile, $newFile)
     {
         \Includes\Utils\FileManager::mkdirRecursive(LC_LOCAL_REPOSITORY);
 
@@ -161,5 +194,5 @@ class AddonUpload extends \XLite\Controller\Admin\Base\AddonInstall
         return @move_uploaded_file($uploadedFile, $newFile)
             ? self::MOVE_OK
             : self::MOVE_ERROR;
-    }
+    }*/
 }
