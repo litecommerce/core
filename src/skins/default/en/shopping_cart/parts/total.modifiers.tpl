@@ -14,7 +14,7 @@
 <li FOREACH="cart.getSurcharges(),surcharge" class="{surcharge.getType()}-modifier">
   <strong>{surcharge.getName()}:</strong>
   {if:surcharge.getAvailable()}
-    {formatPrice(surcharge.getValue(),cart.getCurrency())}
+    {formatPrice(surcharge.getValue(),cart.getCurrency()):h}
   {else:}
     {t(#n/a#)}
   {end:}
