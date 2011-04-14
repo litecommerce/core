@@ -14,7 +14,7 @@
 
 <td class="body">
   <div class="quick-look-cell">
-    {displayNestedViewListContent(#quick_look.info#)}
+    {displayNestedViewListContent(#quicklook.info#)}
     {displayNestedViewListContent(#info#,_ARRAY_(#product#^product))}
   </div>
 </td>
