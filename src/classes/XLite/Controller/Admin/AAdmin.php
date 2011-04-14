@@ -483,13 +483,21 @@ OUT;
     /**
      * Is core upgrade available
      * 
-     * @return boolean
+     * @param string $majorVersion core version to check OPTIONAL
+     *  
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isCoreUpgradeAvailable()
+    public function isCoreUpgradeAvailable($majorVersion = null)
     {
-        return (bool) \XLite\Core\TmpVars::getInstance()->isCoreUpgradeAvailable;
+        $result = \XLite\Core\TmpVars::getInstance()->coreVersionsForUpgarde;
+
+        if ($result && isset($majorVersion)) {
+            $result = in_array($majorVersion, $result);
+        }
+
+        return (bool) $result;
     }
 
     // }}}

@@ -13,6 +13,8 @@
  * @ListChild (list="itemsList.module.manage.columns.module-main-section", weight="30")
  *}
 
+{* :TODO: divide into parts *}
+
 <div IF="!canEnable(module)">
 
   <div IF="module.getDependencies()" class="note dependencies">
@@ -28,11 +30,15 @@
     </ul>
   </div>
 
+  <div IF="isModuleUpgradeNeeded(module)" class="note version error">
+    {t(#The module is available for older core versions only#)}      
+  </div> 
+
   <div IF="!isModuleCompatible(module)" class="note version error">
     {t(#The module version is incompatible with current core version#)}.<br />
 
-    <span IF="isCoreUpgradeNeeded(module)">
-      {t(#Please#)}, <a href="{buildURL(#upgrades#)}">{t(#upgrade core#)}</a>.
+    <span IF="isCoreUpgradeNeeded(module)&isCoreUpgradeAvailable(module.getMajorVersion())">
+      {t(#Please#)}, <a href="{buildURL(#upgrade#,##,_ARRAY_(#version#^module.getMajorVersion()))}">{t(#upgrade core#)}</a>.
     </span>
 
     <span IF="isModuleUpgradeNeeded(module)&!isModuleUpdateAvailable(module)">

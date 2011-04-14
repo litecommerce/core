@@ -26,19 +26,19 @@
  * @since     1.0.0
  */
 
-namespace XLite\Controller\Admin\Base;
+namespace XLite\Controller\Admin;
 
 /**
- * Updater 
+ * Upgrade 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class Updater extends \XLite\Controller\Admin\Base\PackManager
+class Upgrade extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * List of cores recieved from marketplace (cache)
-     * 
+     *
      * @var   array
      * @see   ____var_see____
      * @since 1.0.0
@@ -46,28 +46,76 @@ abstract class Updater extends \XLite\Controller\Admin\Base\PackManager
     protected $coreVersions;
 
 
-    // {{{ Methods for viewers
+    // {{{ Controller common methods
 
     /**
-     * Return major version of core to update/upgrade
-     * 
+     * Return the current page title (for the content area)
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    abstract public function getCoreMajorVersionForUpdate();
+    public function getTitle()
+    {
+        $version = $this->getCoreMajorVersionForUpdate();
+
+        return \XLite::getInstance()->checkVersion($version, '<')
+            ? 'Upgrade to version ' . $version
+            : 'Updates for your version (' . $version . ')';
+    }
 
     /**
-     * Method to get module for update/upgrade
-     * 
-     * @param \XLite\Model\Module $module Currently installed module version
-     *  
-     * @return \XLite\Model\Module
+     * Common method to set current location
+     *
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    abstract protected function getModuleForUpdate(\XLite\Model\Module $module);
+    protected function getLocation()
+    {
+        return $this->isUpgrade() ? 'Upgrade' : 'Updates available';
+    }
 
+    // }}}
+
+    // {{{ Methods for viewers
+
+    /**
+     * Check if core major version 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isUpgrade()
+    {
+        return 'install_updates' !== \XLite\Core\Request::getInstance()->mode;
+    }
+
+    /**
+     * Return major version of core to update/upgrade
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCoreMajorVersionForUpdate()
+    {
+        $result = \XLite\Core\Request::getInstance()->version;
+
+        if (isset($result)) {
+            foreach ($this->getAvailableCoreVersions() as $data) {
+                $data = $data[\XLite\Core\Marketplace::RESPONSE_FIELD_CORE_VERSION];
+
+                if (version_compare($data[\XLite\Core\Marketplace::FIELD_VERSION_MAJOR], $result, '=')) {
+                    $found = true;
+                    break;
+                }
+            }
+        }
+
+        return (!empty($found) && !empty($result)) ? $result : \XLite::getInstance()->getMajorVersion();
+    }
 
     /**
      * Return minor version of core to update/upgrade
@@ -131,13 +179,28 @@ abstract class Updater extends \XLite\Controller\Admin\Base\PackManager
         return $module->getRepository()->getModuleInstalled($module);
     }
 
-    // }}}
+    /**
+     * Method to get module for update/upgrade
+     *
+     * @param \XLite\Model\Module $module Currently installed module version
+     *
+     * @return \XLite\Model\Module
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getModuleForUpdate(\XLite\Model\Module $module)
+    {
+        $version = $this->getCoreMajorVersionForUpdate();
+        $method  = \XLite::getInstance()->checkVersion($version, '<') ? 'getModuleForUpgrade' : 'getModuleForUpdate';
+
+        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->$method($module, $version);
+    }
 
     // {{{ Marketplace-related methods
 
     /**
      * Get list of available kernel versions from the marketplace
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -149,6 +212,22 @@ abstract class Updater extends \XLite\Controller\Admin\Base\PackManager
         }
 
         return $this->coreVersions;
+    }
+
+    // }}}
+
+    // {{{ Action handlers
+
+    /**
+     * Main controller action: perform update
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionInstall()
+    {
+        // :TODO: update core and/or modules
     }
 
     // }}}

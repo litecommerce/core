@@ -37,9 +37,12 @@
     <div class="sw-version">
       <span class="current" IF="!auth.isLogged()">{t(#LiteCommerce shopping cart software#)}</span>
       <span class="current" IF="auth.isLogged()">{t(#v.#)} {getCurrentCoreVersion()}</span>
+
+      {* :TODO: should be two cases: "Updates available" (link) and "Upgrade available" (popup) *}
       <span IF="auth.isLogged()&isCoreUpgradeAvailable()" class="upgrade-note">
-        <a href="{buildURL(#upgrades#)}">{t(#Upgrade available#)}</a>
+        <a href="{buildURL(#upgrade#,##,_ARRAY_(#mode#^#install_updates#))}">{t(#Upgrade available#)}</a>
       </span>
+
     </div>
 
     <widget class="\XLite\View\TopMenu" />

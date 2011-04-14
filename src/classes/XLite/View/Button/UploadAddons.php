@@ -53,7 +53,7 @@ class UploadAddons extends \XLite\View\Button\APopupButton
      */
     public function getButtonContent() 
     {
-        return $this->t(self::UPLOAD_ADDONS_LABEL);
+        return self::UPLOAD_ADDONS_LABEL;
     }
 
     /** 
@@ -82,7 +82,6 @@ class UploadAddons extends \XLite\View\Button\APopupButton
     public function getJSFiles()
     {   
         $list = parent::getJSFiles();
-
         $list[] = \XLite\View\ModulesManager\UploadAddons::JS_SCRIPT;
 
         return $list;
@@ -99,5 +98,4 @@ class UploadAddons extends \XLite\View\Button\APopupButton
     {
         return parent::getClass() . ' ' . self::UPLOAD_ADDON_CSS_CLASS;
     }
-
 }
