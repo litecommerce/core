@@ -594,6 +594,8 @@ abstract class AModel extends \XLite\View\Dialog
             $data[self::SCHEMA_NAME] = $this->composeFieldName($name);
         }
 
+        $data[self::SCHEMA_VALUE] = $this->getDefaultFieldValue($name);
+
         return $data;
     }
 
