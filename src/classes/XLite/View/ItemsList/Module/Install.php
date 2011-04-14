@@ -411,4 +411,35 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     }
 
     // }}}
+
+    // {{{ Purchase form
+
+    /**
+     * Get purchase page URL 
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getPurchaseURL()
+    {
+        $apiURL = trim(\Includes\Utils\Converter::trimTrailingChars(\XLite\Core\Marketplace::getInstance()->getMarketplaceURL(), '/'));
+        $apiURL = preg_replace('/^http:\/\//Ss', 'https://', $apiURL);
+
+        return preg_replace('/\?q=.+/Ss', '', $apiURL);
+    }
+
+    /**
+     * Get return URL for Purchase operation
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getReturnURL()
+    {
+        return \Includes\Utils\URLManager::getShopURL(\XLite\Core\Converter::buildURL());
+    }
+
+    // }}}
 }
