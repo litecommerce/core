@@ -306,7 +306,9 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
     public function testAdd2Cart()
     {
         $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'toys'));
+
         list($product, $selector) = $this->popupTestProduct('store/category/0/category_id-' . $c2->getCategoryId(), '00022');
+
         $id = $product->getProductId();
 
         // This assertion requires the minicart widget to be visible on the page
@@ -366,7 +368,23 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
             "Minicart widget displays a wrong qty (#1)"
         );
 
+        // <BUG E:0039432> --------------------
         $this->popupQuicklook($id);
+
+        $this->click($cartButtonSelector);
+
+        $this->closeQuicklook();
+
+        $this->waitForLocalCondition(
+            "jQuery('.BlockMsg-product-quicklook:visible').length <= 0",
+            10000,
+            "Add-to-cart button doesn't close Quicklook popups 2"
+        );
+
+        // </ BUG E:0039432> --------------------
+
+        $this->popupQuicklook($id);
+
 
         $this->assertElementNotPresent($cartButtonSelector, "Add-to-cart button is visible (#1)");
         $this->assertElementPresent($buyButtonSelector, "Buy-now button is missing (#2)");
