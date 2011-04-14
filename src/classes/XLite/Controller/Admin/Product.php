@@ -149,6 +149,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
         $categoryId = parent::getCategoryId();
 
         if (empty($categoryId) && !$this->isNew()) {
+
             $categoryId = $this->getProduct()->getCategoryId();
         }
 
@@ -339,15 +340,18 @@ class Product extends \XLite\Controller\Admin\AAdmin
         
         if ($product) {
 
+            $inventory = new \XLite\Model\Inventory();
+
+            $inventory->setProduct($product);
+
             // Create associations (categories and images)
             \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
                 $product,
                 $this->getCategoryProducts($product)
+                + array(
+                    'inventory' => $inventory,
+                )
             );
-
-
-            // Add default inventory record
-            $this->createInventory();
 
             \XLite\Core\TopMessage::addInfo(
                 'New product has been successfully added'
@@ -436,7 +440,9 @@ class Product extends \XLite\Controller\Admin\AAdmin
             ->find(\XLite\Core\Request::getInstance()->image_id);
 
         if ($img) {
+
             $img->getProduct()->getImages()->removeElement($img);
+
             \XLite\Core\Database::getEM()->remove($img);
             \XLite\Core\Database::getEM()->flush();
 
@@ -462,17 +468,23 @@ class Product extends \XLite\Controller\Admin\AAdmin
     protected function doActionUpdateImages()
     {
         $zoomId = 0;
+
         if (isset(\XLite\Core\Request::getInstance()->is_zoom)) {
+
             $keys = array_keys(\XLite\Core\Request::getInstance()->is_zoom);
+
             $zoomId = array_shift($keys);
         }
 
         foreach (\XLite\Core\Request::getInstance()->alt as $imageId => $alt) {
+
             $img = \XLite\Core\Database::getRepo('\XLite\Model\Image\Product\Image')
                 ->find($imageId);
 
             if ($img) {
+
                 $img->setAlt($alt);
+
                 $img->setOrderby(\XLite\Core\Request::getInstance()->orderby[$imageId]);
 
                 \XLite\Core\Database::getEM()->persist($img);
@@ -486,22 +498,6 @@ class Product extends \XLite\Controller\Admin\AAdmin
         );
     }
 
-    /**
-     * Create inventory
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function createInventory()
-    {
-        $inv = $this->getInventory();
-
-        $inv->product = $this->getProduct();
-
-        \XLite\Core\Database::getEM()->persist($inv);
-        \XLite\Core\Database::getEM()->flush();
-    }
 
     /**
      * Update inventory 
@@ -515,6 +511,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
         $inv = $this->getInventory();
 
         $inv->product = $this->getProduct();
+
         $inv->map($this->getPostedData());
 
         \XLite\Core\Database::getEM()->persist($inv);
