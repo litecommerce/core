@@ -11,7 +11,7 @@
  * @since     1.0.0
  * 
  * @ListChild (list="itemsList.product.grid.customer.info", weight="999")
- * @ListChild (list="itemsList.product.list.customer", weight="999")
+ * @ListChild (list="itemsList.product.list.customer.quicklook", weight="999")
  *}
 <div class="quicklook">
   <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="quicklook-link quicklook-link-{product.product_id}"><img src="images/spacer.gif" alt="{t(#Quick look#)}" /></a>
