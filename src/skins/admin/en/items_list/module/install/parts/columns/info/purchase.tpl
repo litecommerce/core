@@ -13,12 +13,13 @@
  * @ListChild (list="itemsList.module.install.columns.module-main-section", weight="200")
  *}
 
-<form action="admin.php" method="post" IF="canPurchase(module)">
-  <input type="hidden" name="target" value="addon_install" />
-  <input type="hidden" name="action" value="get_license" />
-  <input type="hidden" name="module_id" value="{module.getModuleId()}" />
+<form action="{getPurchaseURL(module)}" method="get" IF="canPurchase(module)">
+  <input type="hidden" name="q" value="pay" />
+  <input type="hidden" name="name" value="{module.getName()}" />
+  <input type="hidden" name="author" value="{module.getAuthor()}" />
+  <input type="hidden" name="return_url" value="{getReturnURL()}" />
 
-  <div class="purchase" IF="canPurchase(module)">
+  <div class="purchase">
     <widget class="\XLite\View\Button\Submit" label="{t(#Purchase#)}" />
   </div>
 </form>
