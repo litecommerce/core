@@ -94,7 +94,7 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
     protected function getSearchCondition()
     {
         $result = parent::getSearchCondition();
-        $result->{\XLite\Model\Repo\Product::P_LOW_INVENTORY} = true;
+        $result->{\XLite\Model\Repo\Product::P_INVENTORY} = \XLite\Model\Repo\Product::INV_LOW;
 
         return $result;
     }
@@ -112,7 +112,7 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
     {
         $result = parent::defineViewList($list);
 
-        if ('itemsList.admin.footer' === $list) {
+        if ($this->getListName() . '.footer' === $list) {
             $result[] = $this->getWidget(array('label' => 'Update'), '\XLite\View\Button\Submit');
         }
 

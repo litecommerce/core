@@ -208,6 +208,11 @@ abstract class AItemsList extends \XLite\View\Container
         // Static call of the non-static function
         $list[] = self::getDir() . '/controller.js';
 
+        // FIXME: implement common controller for this case
+        if (\XLite::isAdminZone()) {
+            $list[] = self::getDir() . '/items_list.js';
+        }
+
         return $list;
     }
 

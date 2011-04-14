@@ -47,7 +47,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     const P_CATEGORY_ID       = 'categoryId';
     const P_SUBSTRING         = 'substring';
     const P_SEARCH_IN_SUBCATS = 'searchInSubcats';
-    const P_LOW_INVENTORY     = 'lowInventory';
+    const P_INVENTORY         = 'inventory';
     const P_ORDER_BY          = 'orderBy';
     const P_LIMIT             = 'limit';
     const P_INCLUDING         = 'including';    
@@ -59,6 +59,10 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     const INCLUDING_ALL     = 'all';
     const INCLUDING_ANY     = 'any';
     const INCLUDING_PHRASE  = 'phrase';
+
+    const INV_ALL = 'all';
+    const INV_LOW = 'low';
+    const INV_OUT = 'out';
 
     const TITLE_FIELD       = 'translations.name';
     const BRIEF_DESCR_FIELD = 'translations.brief_description';
@@ -212,7 +216,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
             self::P_SKU,
             self::P_CATEGORY_ID,
             self::P_SUBSTRING,
-            self::P_LOW_INVENTORY,
+            self::P_INVENTORY,
             self::P_ORDER_BY,
             self::P_LIMIT,
         );
@@ -536,19 +540,32 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * Prepare certain search condition
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param string                     $value        Condition data
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareCndLowInventory(\Doctrine\ORM\QueryBuilder $queryBuilder)
+    protected function prepareCndInventory(\Doctrine\ORM\QueryBuilder $queryBuilder, $value = self::INV_ALL)
     {
-        $queryBuilder->innerJoin('p.inventory', 'i')
-            ->andWhere('i.enabled = :enabled')
-            ->setParameter('enabled', true)
-            ->andWhere('i.lowLimitEnabled = :lowLimitEnabled')
-            ->setParameter('lowLimitEnabled', true)
-            ->andWhere('i.amount < i.lowLimitAmount');
+        if (in_array($value, array(self::INV_LOW, self::INV_OUT))) {
+            $queryBuilder->innerJoin('p.inventory', 'i')
+                ->andWhere('i.enabled = :enabled')
+                ->setParameter('enabled', true);
+        }
+
+        if ($value === self::INV_LOW) {
+
+            $queryBuilder->andWhere('i.lowLimitEnabled = :lowLimitEnabled')
+                ->setParameter('lowLimitEnabled', true)
+                ->andWhere('i.amount < i.lowLimitAmount');
+
+        } elseif ($value === self::INV_OUT) {
+
+            $queryBuilder->andWhere('i.amount <= :zero')
+                ->setParameter('zero', 0);
+
+        }
     }
 
     /**
