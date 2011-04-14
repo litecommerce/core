@@ -26,61 +26,14 @@
  * @since     1.0.0
  */
 
-namespace XLite\Controller\Admin\Base;
+namespace Includes\Utils;
 
 /**
- * AddonInstall 
+ * Backup 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class AddonInstall extends \XLite\Controller\Admin\Base\PackManager
+abstract class Backup extends \Includes\Utils\AUtils
 {
-    // {{{ Package source
-
-    /**
-     * Method to get package source (data)
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    abstract protected function getPackage();
-
-    // }}}
-
-    // {{{ Action handlers
-
-    /**
-     * Save, unpack and install module
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionInstall()
-    {
-        // Extract files to a temporary directory
-        $dir = $this->unpack($this->getPackage());
-
-        if ($dir) {
-
-            // Backup files if exist
-
-            $this->deploy($dir);
-        }
-    }
-
-    /**
-     * Deploy pack
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function deploy()
-    {
-    }
-
-    // }}}
 }

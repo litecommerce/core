@@ -80,8 +80,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
 
         // Since this action is performed in popup
         if (!isset($result)) {
-            // :TODO: check if this needed. Or may be empty license is allowed?
-            // $this->redirect();
+            $this->redirect();
         }
 
         return $result;
@@ -100,7 +99,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
      */
     protected function getModuleId()
     {   
-        return \XLite\Core\Request::getInstance()->module_id;    
+        return \XLite\Core\Request::getInstance()->moduleId;
     }
 
     /**
@@ -143,13 +142,74 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
     protected function doActionGetLicense()
     {
         $this->setReturnURL(
-            $this->buildURL('addon_install', 'show_license', array('module_id' => $this->getModuleId()))
+            $this->buildURL('addon_install', 'show_license', array('moduleId' => $this->getModuleId()))
         );
     }
 
     // }}}
 
+    // {{{ Get package source as string
+
+    /**
+     * Method to get package source (data)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getPackage()
+    {
+        return '';
+    }
+
+    // }}}
+
     // {{{ "Register key" action handler
+
+    /**
+     * Action of license key registration
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionRegisterKey()
+    {
+    }
+
+    // }}}
+
+    // {{{ "Install addon" action handler
+
+    /**
+     * Save, unpack and nstall module
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionInstall()
+    {
+        parent::doActionInstall();
+    }
+
+    // }}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Action of license key registration 
@@ -160,7 +220,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doActionRegisterKey()
+    /*protected function doActionRegisterKey()
     {
         $key = \XLite\Core\Request::getInstance()->key;
 
@@ -231,7 +291,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doActionGetPackage()
+/*    protected function doActionGetPackage()
     {
         // Assuming an error
         $this->setReturnURL($this->buildURL('addons_list_marketplace'));
@@ -258,7 +318,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function checkModuleKey()
+/*    protected function checkModuleKey()
     {
         $result = null;
 
@@ -295,7 +355,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getPackage($key = null)
+/*    protected function getPackage($key = null)
     {
         // Trying to recieve module source
         /*if (\XLite\RemoteModel\Marketplace::STATUS_ERROR !== ($status = $this->retrieveToLocalRepository($key))) {
@@ -308,7 +368,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
             // An error occured
             \XLite\Core\TopMessage::getInstance()->addError('Error while recieving the module');
         }*/
-    }
+/*    }
 
     /**
      * Fetch module from marketplace
@@ -319,14 +379,14 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function retrieveToLocalRepository($key = null)
+/*    protected function retrieveToLocalRepository($key = null)
     {
         // :FIXME: [MARKETPLACE]
         /*return \XLite\RemoteModel\Marketplace::getInstance()->retrieveToLocalRepository(
             $this->getModuleId(),
             $key ? array('key' => $key) : array()
         );*/
-    }
+/*    }
 
     /**
      * Check status and deploy module
@@ -337,7 +397,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function checkAndDeployPackage($file)
+/*    protected function checkAndDeployPackage($file)
     {
         // Create object and extract files into temp dir
         $module = new \XLite\Model\PHARModule($file);
@@ -370,7 +430,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function checkModuleIntegrity(\XLite\Model\PHARModule $module)
+/*    protected function checkModuleIntegrity(\XLite\Model\PHARModule $module)
     {
         return $module->isValid();
     }
@@ -384,7 +444,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function deployModule(\XLite\Model\PHARModule $module)
+/*    protected function deployModule(\XLite\Model\PHARModule $module)
     {
         return $module->deploy() || true;
     }
@@ -398,7 +458,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function finishDeployment(\XLite\Model\PHARModule $module = null)
+/*    protected function finishDeployment(\XLite\Model\PHARModule $module = null)
     {
         // Set flags
         $this->getModule()->setPurchased(true);
@@ -423,7 +483,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function cleanUpOnDeploymentComplete($file, \XLite\Model\PHARModule $module = null)
+/*    protected function cleanUpOnDeploymentComplete($file, \XLite\Model\PHARModule $module = null)
     {
         if ($module) {
             $module->cleanUp();
@@ -431,5 +491,5 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
 
         // Remove temporary file
         \Includes\Utils\FileManager::delete($file);
-    }
+    }*/
 }

@@ -11,13 +11,15 @@
  * @since     1.0.0
  *}
 
+{* :TODO: divide into parts *}
+
 <div class="module-license">
 
   <div class="form">
 
     <form action="admin.php" method="post" name="getAddonForm" >
       <input type="hidden" name="target" value="addon_install" />
-      <input type="hidden" name="action" value="get_package" />
+      <input type="hidden" name="action" value="install" />
       <input type="hidden" name="module_id" value="{getModuleId()}" />
 
       <div class="license-block">
