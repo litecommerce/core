@@ -46,22 +46,22 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-        $result[] = 'modules';
+        $result[] = 'addons_list_installed';
     
         return $result;
     }
 
     /**
-     * Register CSS files
-     *
+     * Register JS files
+     * 
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getCSSFiles()
+    public function getJSFiles()
     {
-        $list = parent::getCSSFiles();
-        $list[] = 'modules_manager' . LC_DS . 'common.css';
+        $list = parent::getJSFiles();
+        $list[] = $this->getDir() . '/manage/js/script.js'; 
 
         return $list;
     }
@@ -76,18 +76,6 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     protected function getListName()
     {
         return parent::getListName() . '.manage';
-    }
-
-    /**
-     * Return title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHead()
-    {
-        return null;
     }
 
     /**
@@ -130,6 +118,26 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     }
 
     /**
+     * Return tags array
+     *
+     * :TODO: actualize keys
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getTags()
+    {
+        return array(
+            ''                 => 'All',
+            '____PAYMENT____'  => 'Payment',
+            '____LAYOUT____'   => 'Layout',
+            '____DELIVERY____' => 'Delivery',
+            '____CMS____'      => 'CMS',
+        );
+    }
+
+    /**
      * Return filters array
      *
      * @return array
@@ -139,9 +147,8 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
     protected function getFilters()
     {
         return array(
-            ''                                     => 'All',
-            \XLite\Model\Repo\Module::P_INACTIVE   => 'Inactive',
-            \XLite\Model\Repo\Module::P_UPGRADABLE => 'Upgradable',
+            ''                                   => 'All',
+            \XLite\Model\Repo\Module::P_INACTIVE => 'Inactive',
         );
     }
 
@@ -161,6 +168,52 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
         }
 
         return $filter;
+    }
+
+    /**
+     * Get current tag
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getTag()
+    {
+        $tag = \XLite\Core\Request::getInstance()->tag;
+
+        if (empty($tag) || !in_array($tag, array_keys($this->getTags()))) {
+            $tag = '';
+        }
+
+        return $tag;
+    }
+
+    /**
+     *  Get classes names for filter item
+     * 
+     * @param string $filter Name of filter
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getFilterClasses($filter)
+    {
+        return $filter === $this->getFilter() ? 'current' : '';
+    }
+
+    /**
+     * Get classes names for tag item
+     * 
+     * @param string $tag Name of tag
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getTagClasses($tag)
+    {
+        return $tag === $this->getTag() ? 'current' : '';
     }
 
     /**
@@ -190,10 +243,35 @@ class Manage extends \XLite\View\ItemsList\Module\AModule
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false, $filter = null)
     {
-        if (!empty($filter) || ($filter = $this->getFilter())) {
+        if (!isset($filter)) {
+            $filter = $this->getFilter();
+        }
+
+        if (!empty($filter)) {
             $cnd->$filter = true;
         }
 
+        // TODO Add tags
+        $cnd->tag = $this->getTag();
+
         return parent::getData($cnd, $countOnly);
     }
+
+    // {{{ Methods to search modules of certain types
+
+    /**
+     * Check if core requires new (but the same as core major) version of module
+     *
+     * @param \XLite\Model\Module $module Module to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isModuleUpdateAvailable(\XLite\Model\Module $module)
+    {
+        return $module->getInstalled() && $this->isModuleCompatible($module) && $this->getModuleForUpdate($module);
+    }
+
+    // }}}
 }

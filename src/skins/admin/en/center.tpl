@@ -48,8 +48,6 @@
 
 <widget target="countries" template="common/dialog.tpl" body="countries.tpl" head="Countries">
 
-<widget class="\XLite\View\Tabber" target="backup_restore" body="{pageTemplate}" switch="page">
-
 <widget target="update_inventory" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">
 
 {displayViewListContent(#admin.center#)}

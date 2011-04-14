@@ -151,7 +151,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     {
         parent::tearDown();
 
-        $this->query(file_get_contents(__DIR__ . '/Repo/sql/profile/restore.sql'));
+        $this->doRestoreDb();
     }
 
     /**

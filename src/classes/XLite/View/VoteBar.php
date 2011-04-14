@@ -39,7 +39,6 @@ class VoteBar extends \XLite\View\AView
     /**
      * Widget param names
      */
-
     const PARAM_LENGTH = 'length';
     const PARAM_RATE   = 'rate';
     const PARAM_MAX    = 'max';

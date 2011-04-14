@@ -928,9 +928,7 @@ abstract class AView extends \XLite\Core\Handler
             $method = 'get';
 
             if ($val1 instanceof \XLite\Model\AEntity) {
-
-                $method .= \XLite\Core\Converter::convertToCamelCase($val2);
-
+                $method .= \Includes\Utils\Converter::convertToPascalCase($val2);
             }
 
             // Get value with get() method and compare it with third value
@@ -939,10 +937,25 @@ abstract class AView extends \XLite\Core\Handler
         } else {
 
             $result = $val1 == $val2;
-
         }
 
         return $result;
+    }
+
+    /**
+     * Helper to get object field values
+     * 
+     * @param object  $object   Object to get field value
+     * @param string  $field    Field name
+     * @param boolean $isGetter Flag OPTIONAL
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getObjectField($object, $field, $isGetter = true)
+    {
+        return \Includes\Utils\ArrayManager::getObjectField($object, $field, $isGetter);
     }
 
     /**
@@ -1669,10 +1682,9 @@ abstract class AView extends \XLite\Core\Handler
         return $this->getPrefixToDelete() . '[' . $id . ']';
     }
 
-
     /**
      * Checks if specific developer mode is defined
-     * TODO: check if this method is used
+     * :TODO: check if this method is used
      * 
      * @return boolean
      * @see    ____func_see____
@@ -1696,5 +1708,4 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     // }}}
-
 }

@@ -83,7 +83,6 @@ class Dialog extends \XLite\View\Dialog
      */
     protected $translateLanguage = null;
 
-
     /**
      * Return list of targets allowed for this widget
      *
@@ -94,7 +93,6 @@ class Dialog extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
         $result[] = 'languages';
 
         return $result;
@@ -282,8 +280,7 @@ class Dialog extends \XLite\View\Dialog
      */
     public function isTranslatedLanguageSelected()
     {
-        return \XLite\Core\Request::getInstance()->language
-            && $this->getTranslatedLanguage();
+        return \XLite\Core\Request::getInstance()->language && $this->getTranslatedLanguage();
     }
 
     /**
@@ -326,7 +323,6 @@ class Dialog extends \XLite\View\Dialog
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'languages/style.css';
 
         return $list;
@@ -342,7 +338,6 @@ class Dialog extends \XLite\View\Dialog
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = 'languages/controller.js';
 
         return $list;
@@ -359,18 +354,6 @@ class Dialog extends \XLite\View\Dialog
     protected function getDefaultTemplate()
     {
         return 'common/empty_dialog.tpl';
-    }
-
-    /**
-     * Return title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHead()
-    {
-        return null;
     }
 
     /**
@@ -401,6 +384,8 @@ class Dialog extends \XLite\View\Dialog
 
     /**
      * Define (search) labels 
+     *
+     * :FIXME: simplify
      * 
      * @return void
      * @see    ____func_see____

@@ -41,7 +41,7 @@ class XLite_Tests_Model_CategoryProducts extends XLite_Tests_TestCase
      */
     public function testCreate()
     {
-        $this->query(file_get_contents(__DIR__ . '/Repo/sql/category/setup.sql'));
+        $this->doRestoreDb(__DIR__ . '/Repo/sql/category/setup.sql', false);
 
         $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'fruit'));
         $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => '00007'));

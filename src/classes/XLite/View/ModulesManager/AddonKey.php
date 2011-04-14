@@ -48,12 +48,10 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
-        $result[] = 'addon_key';
+        $result[] = 'module_key';
     
         return $result;
     }
-
 
     /** 
      * Register CSS files
@@ -65,12 +63,10 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
-        $list[] = $this->getDir() . LC_DS . 'css' . LC_DS . 'style.css';
+        $list[] = $this->getDir() . '/css/style.css';
 
         return $list;
     }   
-
 
     /**
      * Return title

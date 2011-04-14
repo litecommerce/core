@@ -95,10 +95,9 @@ class ArrayManager extends AUtils
      */
     public static function filterByKeys(array $data, array $keys, $invert = false)
     {
-        return call_user_func_array(
-            $invert ? 'array_diff_key' : 'array_intersect_key',
-            array($data, array_fill_keys($keys, true))
-        );
+        $method = $invert ? 'array_diff_key' : 'array_intersect_key';
+
+        return $method($data, array_fill_keys($keys, true));
     }
 
     /**
@@ -136,6 +135,49 @@ class ArrayManager extends AUtils
         }
 
         return $array;
+    }
+
+    /**
+     * Search entities in array by a field value
+     *
+     * @param array  $array Array to search
+     * @param string $field Field to search by
+     * @param mixed  $value Value to use for comparison
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function searchAllInArraysArray(array $array, $field, $value)
+    {
+        $result = array();
+
+        foreach ($array as $key => $element) {
+            $element = (array) $element;
+            if (static::getIndex($element, $field, true) == $value) {
+                $result[$key] = $element;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Search entities in array by a field value
+     *
+     * @param array  $array Array to search
+     * @param string $field Field to search by
+     * @param mixed  $value Value to use for comparison
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function searchInArraysArray(array $array, $field, $value)
+    {
+        $list = static::searchAllInObjectsArray($array, $field, $value);
+
+        return $list ? reset($list) : null;
     }
 
     /**

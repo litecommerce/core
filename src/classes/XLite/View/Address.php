@@ -39,7 +39,6 @@ class Address extends \XLite\View\Dialog
     /**
      * Widget parameter names
      */
-
     const PARAM_DISPLAY_MODE    = 'displayMode';
     const PARAM_ADDRESS         = 'address';
     const PARAM_DISPLAY_WRAPPER = 'displayWrapper';
@@ -47,7 +46,6 @@ class Address extends \XLite\View\Dialog
     /**
      * Allowed display modes
      */
-
     const DISPLAY_MODE_TEXT = 'text';
     const DISPLAY_MODE_FORM = 'form';
 
@@ -123,7 +121,6 @@ class Address extends \XLite\View\Dialog
         ),
         */
     );
-
 
     /**
      * getSchemaFields 
@@ -219,12 +216,10 @@ class Address extends \XLite\View\Dialog
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'address/style.css';
 
         return $list;
     }
-
 
     /**
      * Return title

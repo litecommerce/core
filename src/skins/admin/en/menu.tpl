@@ -33,7 +33,7 @@
         <tr>
             <widget template="menu_item.tpl" href="admin.php?target=product_list" icon="menu/icon_products.gif" text="<span class='main-menu-item-header'>Products</span><br />Manage your product inventory">
             <td style="width:1%;">&nbsp;&nbsp;</td>
-            <widget template="menu_item.tpl" href="admin.php?target=modules" icon="menu/icon_modules.gif" text="<span class='main-menu-item-header'>Add-ons</span><br />Expand the functionality of your store by installing and using add-on modules">
+            <widget template="menu_item.tpl" href="admin.php?target=addons_list_installed" icon="menu/icon_modules.gif" text="<span class='main-menu-item-header'>Add-ons</span><br />Expand the functionality of your store by installing and using add-on modules">
         </tr>
         <tr>
             <td colspan="5">&nbsp;</td>
@@ -41,7 +41,7 @@
         <tr>
             <widget template="menu_item.tpl" href="admin.php?target=users&mode=search" icon="menu/icon_users.gif" text="<span class='main-menu-item-header'>Users</span><br />Manage customer and administrator accounts" />
             <td style="width:1%;">&nbsp;&nbsp;</td>
-            <widget template="menu_item.tpl" href="admin.php?target=backup_restore" icon="menu/icon_catalog.gif" text="<span class='main-menu-item-header'>Store Maintenance</span><br>Perform backup of your store database" />
+            <widget template="menu_item.tpl" href="admin.php?target=db_backup" icon="menu/icon_catalog.gif" text="<span class='main-menu-item-header'>Store Maintenance</span><br>Perform backup of your store database" />
         </tr>
 		</table>
   </td>

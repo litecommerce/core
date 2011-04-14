@@ -47,7 +47,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     const PARAM_BY_DESCR          = 'by_descr';
     const PARAM_BY_SKU            = 'by_sku';
 
-
     /**
      * Widget target 
      */
@@ -55,7 +54,8 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
 
     /**
-     * Return search parameters TODO refactor with XLite\View\ItemsList\Product\Admin\Search::getSearchParams() 
+     * Return search parameters.
+     * :TODO: refactor with XLite\View\ItemsList\Product\Admin\Search::getSearchParams() 
      * 
      * @return array
      * @see    ____func_see____

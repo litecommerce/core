@@ -90,7 +90,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
     protected function getObjectExistsCondition($value)
     {
         return array(
-            self::ATTR_CONDITION => !$this->getObject($value)->isExists(),
+            self::ATTR_CONDITION => !is_object($this->getObject($value)),
             self::ATTR_MESSAGE   => ' record with such ID is not found',
         );
     }

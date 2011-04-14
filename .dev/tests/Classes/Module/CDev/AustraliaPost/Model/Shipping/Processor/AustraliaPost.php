@@ -33,7 +33,7 @@ extends XLite_Tests_Model_OrderAbstract
     {
         parent::setUp();
 
-        $this->query(file_get_contents(__DIR__ . '/sql/shipping/setup.sql'));
+        $this->doRestoreDb(__DIR__ . '/sql/shipping/setup.sql', false);
     }
 
     /**
@@ -48,7 +48,7 @@ extends XLite_Tests_Model_OrderAbstract
     {
         parent::tearDown();
 
-        $this->query(file_get_contents(__DIR__ . '/sql/shipping/restore.sql'));
+        $this->doRestoreDb();
     }
 
     /**

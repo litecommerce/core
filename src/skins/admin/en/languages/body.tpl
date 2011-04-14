@@ -81,6 +81,7 @@
     <widget class="\XLite\View\PagerOrig\Simple" pages="{getPages()}" page="{getPage()}" url="{getPagerURL()}" />
     (<strong>{t(#N items#,_ARRAY_(#n#^countLabels()))}</strong> total)
   </div>
+  <div class="clear"></div>
 </div>
 
 <hr class="tiny languages-separator" />

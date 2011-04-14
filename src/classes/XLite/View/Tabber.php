@@ -106,7 +106,7 @@ class Tabber extends \XLite\View\AView
         }
 
         // if there is only one tab page, set it as a seleted with the default URL
-        if (1 == count($pages)) {
+        if (1 == count($pages) || 'default' === $this->getPage()) {
             $pages[0]->set('selected', $url);
         }
 

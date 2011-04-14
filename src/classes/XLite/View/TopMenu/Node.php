@@ -47,6 +47,7 @@ class Node extends \XLite\View\TopMenu
     const PARAM_TARGET   = 'linkTarget';
     const PARAM_EXTRA    = 'extra';
 
+
     /**
      * Return widget default template
      *
@@ -147,7 +148,10 @@ class Node extends \XLite\View\TopMenu
     protected function isCurrentPageLink()
     {
         return '' !== $this->getParam(self::PARAM_TARGET)
-            && \XLite\Core\Request::getInstance()->target === $this->getParam(self::PARAM_TARGET);
+            && in_array(
+                \XLite\Core\Request::getInstance()->target,
+                $this->getRelatedTargets($this->getParam(self::PARAM_TARGET))
+            );
     }
 
     /**

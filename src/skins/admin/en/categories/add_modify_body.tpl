@@ -63,7 +63,7 @@
     <tr>
       <td valign="top">Description</td>
       <td>&nbsp;</td>
-      <td><textarea name="description" cols="50" rows="10">{category.description}</textarea></td>
+      <td><widget class="\XLite\View\FormField\Textarea\Advanced" fieldName="description" cols="50" rows="10" value="{category.description}" /></td>
     </tr>
 
     <tr>

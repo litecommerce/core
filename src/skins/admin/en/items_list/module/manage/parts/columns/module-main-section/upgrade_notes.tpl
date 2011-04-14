@@ -14,6 +14,6 @@
  *}
 
 <div IF="isModuleUpdateAvailable(module)" class="note version upgrade">
-  {t(#An update is available#)}<br />
-  <widget class="\XLite\View\Button\Regular" label="Update" />{t(#to v.#)}{getMaxModuleVersion(module)}
+  {t(#Version#)}:&nbsp;{getModuleVersion(getModuleForUpdate(module))}&nbsp;{t(#is available#)}<br />
+  <a href="{buildURL(#updates#)}">{t(#Update module#)}</a>
 </div>

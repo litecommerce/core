@@ -97,7 +97,6 @@ class Order extends \XLite\View\Dialog
         return $list;
     }
 
-
     /**
      * Return title 
      * 

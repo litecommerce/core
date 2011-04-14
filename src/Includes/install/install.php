@@ -1314,7 +1314,7 @@ function doBuildCache()
 
     $response = inst_http_request($url_request);
 
-    if (preg_match('/(?:error|warning|notice)/Ssi', $response)) {
+    if (preg_match('/(?:404 Not Found|error|warning|notice)/Ssi', $response)) {
         fatal_error(xtr("Cache building procedure failed:<br />\n\nRequest URL: :requesturl<br />\n\nResponse: :response", array(':requesturl' => $url_request, ':response' => $response)));
         $result = false;
     }

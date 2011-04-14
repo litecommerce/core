@@ -113,24 +113,6 @@ class Address extends \XLite\View\Model\AModel
 
 
     /**
-     * Return model object to use
-     *
-     * @return \XLite\Model\Address
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getModelObject()
-    {
-        $address = parent::getModelObject();
-
-        if (!isset($address)) {
-            $address = $this->getDefaultModelObject();
-        }
-
-        return $address;
-    }
-
-    /**
      * getAddressSchema 
      * 
      * @return array
@@ -180,6 +162,18 @@ class Address extends \XLite\View\Model\AModel
     }
 
     /**
+     * Return current address ID
+     * 
+     * @return integer 
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getAddressId()
+    {
+        return $this->getRequestAddressId() ?: null;
+    }
+
+    /**
      * getRequestProfileId 
      * 
      * @return integer|void
@@ -192,15 +186,17 @@ class Address extends \XLite\View\Model\AModel
     }
 
     /**
-     * Return current address ID
+     * Return current profile ID
      * 
      * @return integer 
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getAddressId()
+    public function getProfileId()
     {
-        return $this->getRequestAddressId() ?: null;
+        return ($this->getRequestProfileId() && \Xlite\Core\Auth::getInstance()->isAdmin())
+            ? $this->getRequestProfileId()
+            : \Xlite\Core\Auth::getInstance()->getProfile()->getProfileId();
     }
 
 
@@ -229,20 +225,16 @@ class Address extends \XLite\View\Model\AModel
             
             $addressId = $this->getAddressId();
 
-            $address = null;
-
             if (isset($addressId)) {
                 $this->address = \XLite\Core\Database::getRepo('XLite\Model\Address')->find($this->getAddressId());
             
-            } elseif (isset(\XLite\Core\Request::getInstance()->profile_id)) {
-                
-                $profileId = \XLite\Core\Request::getInstance()->profile_id;
+            } else {
 
-                if (isset($profileId)) {
+                $this->address = new \XLite\Model\Address();
 
-                    $profileId = intval($profileId);
- 
-                    $this->address = new \XLite\Model\Address();
+                $profileId = $this->getProfileId();
+
+                if (0 < intval($profileId)) {
                     
                     $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($profileId);
 
@@ -250,9 +242,6 @@ class Address extends \XLite\View\Model\AModel
                         $this->address->setProfile($profile);
                     }
                 }
-
-            } else {
-                $this->address = new \XLite\Model\Address();
             }
         }
 
@@ -303,26 +292,7 @@ class Address extends \XLite\View\Model\AModel
     {
         $name = preg_replace('/^([^_]*_)(.*)$/', '\2', $name);
 
-        $methodName = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($name);
-
-        if (method_exists($this->getModelObject(), $methodName)) {
-            // Call the getter method
-            $value = $this->getModelObject()->$methodName();
-        }
-
-        return $value;
-    }
-
-    /**
-     * Define form field classes and values 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function defineFormFields()
-    {
-        parent::defineFormFields();
+        return parent::getModelObjectValue($name);
     }
 
     /**
@@ -346,7 +316,7 @@ class Address extends \XLite\View\Model\AModel
      */
     protected function getSubmitButtonLabel()
     {
-        return 'Save';
+        return $this->t('Save');
     }
 
     /**
@@ -364,18 +334,6 @@ class Address extends \XLite\View\Model\AModel
         );
 
         return $result;
-    }
-
-    /**
-     * Update profile 
-     * 
-     * @return boolean 
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function performActionUpdate()
-    {
-        parent::performActionUpdate();
     }
 
     /**
@@ -397,41 +355,32 @@ class Address extends \XLite\View\Model\AModel
             unset($data[$key]);
         }
 
-        return $data;
-    }
+        if (isset($data['country_code'])) {
 
-    /**
-     * prepareObjectForMapping 
-     * 
-     * @return \XLite\Model\Address
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function prepareObjectForMapping()
-    {
-        $address = parent::prepareObjectForMapping();
+            $data['country'] = \XLite\Core\Database::getRepo('XLite\Model\Country')
+                ->findOneByCode($data['country_code']);
 
-        $addressId = $address->getAddressId();
+            $data['state'] = null;
 
-        if (!isset($addressId)) {
-            
-            if (isset(\XLite\Core\Request::getInstance()->profile_id)) {
+            if (isset($data['state_id'])) {
+
+                $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($data['state_id']);
                 
-                $profileId = \XLite\Core\Request::getInstance()->profile_id;
-
-                if (isset($profileId)) {
-
-                    $profileId = intval($profileId);
- 
-                    $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($profileId);
-
-                    if (isset($profile)) {
-                        $address->setProfile($profile);
-                    }
+                if (isset($state) && $state->getCountry()->getCode() == $data['country_code']) {
+                    $data['state'] = $state;
+                    $data['custom_state'] = '';
                 }
+
+                unset($data['state_id']);
             }
+            
+            if (!isset($data['state'])) {
+                $data['state'] = $data['custom_state'];
+            }
+
+            unset($data['country_code']);
         }
 
-        return $address;
+        return $data;
     }
 }
