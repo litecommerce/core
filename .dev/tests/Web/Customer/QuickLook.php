@@ -63,7 +63,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
             $productsCount = $this->getJSExpression("jQuery('$list .product').size()");
             $buttonsCount = $this->getJSExpression("jQuery('$list .product a.quicklook-link').size()");
-            $this->assertEquals($buttonsCount, $productsCount, "Wrong number of Quicklook buttons");
+            $this->assertEquals($buttonsCount, $productsCount, "Wrong number of Quicklook buttons ($mode mode)");
  
             // Test several products
             $products = array(
@@ -81,7 +81,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
                     $l[$id] = $link;
                 } else {
                     // Make sure a product link is the same for all modes
-                    $this->assertEquals($link, $l[$id], "Product links depend on the display mode ($id)");
+                    $this->assertEquals($link, $l[$id], "Product links depend on the display mode ($id) ($mode mode)");
                 }
             }
         }
