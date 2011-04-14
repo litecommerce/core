@@ -36,6 +36,18 @@ namespace XLite\Controller\Admin;
  */
 class AddonUpload extends \XLite\Controller\Admin\Base\AddonInstall
 {
+    /**
+     * Controller title
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getTitle()
+    {
+        return 'Upload add-on';
+    }
+
     // {{{ Get package source as string
 
     /**
