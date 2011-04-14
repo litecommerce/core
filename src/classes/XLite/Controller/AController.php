@@ -1392,7 +1392,7 @@ abstract class AController extends \XLite\Core\Handler
             } else {
 
                 // Flag for core upgrade
-                \XLite\Core\TmpVars::getInstance()->isCoreUpgradeAvailable = !empty($versions);
+                \XLite\Core\TmpVars::getInstance()->coreVersionsForUpgarde = $versions;
 
                 // Update modules list
                 \XLite\Core\Database::getRepo('\XLite\Model\Module')->updateMarketplaceModules($modules);
