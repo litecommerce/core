@@ -9,7 +9,6 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="itemsList.product.modify.common.admin.columns", weight="50")
  *}
 
 <td><input type="text" class="pos" size="5" name="{getNamePostedData(#pos#,product.getProductId())}" value="{product.getOrderBy():r}" /></td>
