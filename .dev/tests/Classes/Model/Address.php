@@ -66,7 +66,7 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
 
         $address->setProfile($profile);
 
-        $this->assertTrue($address->getProfile() instanceof \XLite\Model\Profile, 'Profile checking');
+        $this->assertInstanceOf('\XLite\Model\Profile', $address->getProfile(), 'Profile checking');
     }
 
     public function testName()
@@ -218,11 +218,11 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
         $address->setCountry(\XLite\Core\Database::getRepo('XLite\Model\Country')->find('US'));
         $address->setState(\XLite\Core\Database::getRepo('XLite\Model\State')->findOneByCountryAndCode('US', 'NY'));
 
-        $this->assertTrue($address->getState() instanceof \XLite\Model\State, 'State checking');
+        $this->assertInstanceOf('\XLite\Model\State', $address->getState(), 'State checking');
 
         $address->setState('Test state');
 
-        $this->assertEquals($address->getState() instanceof \XLite\Model\State, 'State checking #2');
+        $this->assertInstanceOf('\XLite\Model\State', $address->getState(), 'State checking #2');
         $this->assertEquals('Test state', $address->getState()->getState(), 'State name checking');
         $this->assertNull($address->getState()->getStateId(), 'State id checking');
 
@@ -230,9 +230,16 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
         $s->setState('Test state 2');
         $address->setState($s);
 
-        $this->assertEquals($address->getState() instanceof \XLite\Model\State, 'State checking #3');
-        $this->assertEquals('Test state 2', $address->getState()->getState(), 'State name checking #3');
+        $this->assertInstanceOf('\XLite\Model\State', $address->getState(), 'State checking #3');
+        $this->assertEquals('', $address->getState()->getState(), 'State name checking #3');
         $this->assertNull($address->getState()->getStateId(), 'State id checking #3');
+
+        $address->setCustomState('Test state 3');
+
+        $this->assertInstanceOf('\XLite\Model\State', $address->getState(), 'State checking #4');
+        $this->assertEquals('Test state 3', $address->getState()->getState(), 'State name checking #4');
+        $this->assertNull($address->getState()->getStateId(), 'State id checking #4');
+
     }
 
     /**
@@ -251,7 +258,52 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
 
         $address->setCountry(\XLite\Core\Database::getRepo('XLite\Model\Country')->find('US'));
 
-        $this->assertTrue($address->getCountry() instanceof \XLite\Model\Country, 'Country checking');
+        $this->assertInstanceOf('\XLite\Model\Country', $address->getCountry(), 'Country checking');
+    }
+
+    /**
+     * testGetCountryCode 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testGetCountryCode()
+    {
+        $address = new \XLite\Model\Address();
+
+        $address->map($this->addressFields);
+
+        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find('US');
+
+        $address->setCountry($country);
+
+        $this->assertNotNull($address->getCountryCode(), 'Checking that getCountryCode() result is not null');
+        $this->assertEquals('US', $address->getCountryCode(), 'Checking that getCountryCode() result is alpha-2 code');
+        $this->assertEquals($country->getCode(), $address->getCountryCode(), 'Checking getCountryCode() result');
+    }
+
+    /**
+     * testGetStateId 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testGetStateId()
+    {
+        $address = new \XLite\Model\Address();
+
+        $address->map($this->addressFields);
+        
+        $state = \XLite\Core\Database::getRepo('XLite\Model\State')->findOneByCountryAndCode('US', 'NY');
+
+        $address->setState($state);
+
+        $this->assertNotNull($address->getStateId(), 'Checking that getStateId() result is not null');
+        $this->assertEquals($state->getStateId(), $address->getStateId(), 'Checking getStateId() result');
     }
 
     /**

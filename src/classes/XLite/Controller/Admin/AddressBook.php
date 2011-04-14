@@ -67,16 +67,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      */
     public function getAddress()
     {
-        if (!isset($this->address)) {
-
-            $addressId = \XLite\Core\Request::getInstance()->address_id;
-
-            if (isset($addressId)) {
-                $this->address = \XLite\Core\Database::getRepo('XLite\Model\Address')->find($addressId);
-            }
-        }
-
-        return $this->address;
+        return $this->address = $this->getModelForm()->getModelObject();
     }
 
     /**
@@ -93,7 +84,12 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
             $profileId = \XLite\Core\Request::getInstance()->profile_id;
 
             if (!isset($profileId)) {
-                $profileId = $this->getAddress()->getProfileId();
+            
+                $profileId = $this->getAddress()->getProfile()->getProfileId();
+
+                if (\XLite\Core\Auth::getInstance()->getProfile()->getProfileId() === $profileId) {
+                    unset($profileId);
+                }
             }
 
             $params = isset($profileId) ? array('profile_id' => $profileId) : array();

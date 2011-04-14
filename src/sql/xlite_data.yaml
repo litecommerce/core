@@ -16,7 +16,6 @@ XLite\Model\Config:
   - { name: admin_presentation, category: General, type: separator, orderby: 400, translations: [{ code: en, option_name: 'Administrator Zone settings', option_comment: '' }] }
   - { name: admin_security, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Administrator Zone', option_comment: '' }] }
   - { name: allow_admin_ip, category: SecurityIP, orderby: 40, translations: [{ code: en, option_name: 'Allow admin IP', option_comment: '' }] }
-  - { name: buynow_button_enabled, category: General, type: checkbox, orderby: 240, value: Y, translations: [{ code: en, option_name: 'Enable "Buy Now" button in the product list', option_comment: '' }] }
   - { name: clear_cc_info, category: General, type: select, orderby: 500, value: N, translations: [{ code: en, option_name: 'Clear credit cards info from the database on order status change', option_comment: '' }] }
   - { name: company_address, category: Company, type: separator, orderby: 385, translations: [{ code: en, option_name: Address, option_comment: '' }] }
   - { name: company_contacts, category: Company, type: separator, orderby: 455, translations: [{ code: en, option_name: Contacts, option_comment: '' }] }
