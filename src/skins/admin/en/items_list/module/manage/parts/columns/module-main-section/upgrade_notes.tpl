@@ -15,5 +15,5 @@
 
 <div IF="isModuleUpdateAvailable(module)" class="note version upgrade">
   {t(#Version#)}:&nbsp;{getModuleVersion(getModuleForUpdate(module))}&nbsp;{t(#is available#)}<br />
-  <a href="{buildURL(#updates#)}">{t(#Update module#)}</a>
+  <a href="{buildURL(#upgrade#,##,_ARRAY_(#mode#^#install_updates#))}">{t(#Update module#)}</a>
 </div>

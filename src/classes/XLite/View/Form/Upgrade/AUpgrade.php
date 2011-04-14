@@ -26,14 +26,14 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Form\Updates\Update;
+namespace XLite\View\Form\Upgrade;
 
 /**
- * AUpdate
+ * AUpgrade 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class AUpdate extends \XLite\View\Form\Updates\AUpdates
+abstract class AUpgrade extends \XLite\View\Form\AForm
 {
 }

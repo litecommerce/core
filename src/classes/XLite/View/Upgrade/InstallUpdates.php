@@ -26,45 +26,18 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Updates;
+namespace XLite\View\Upgrade;
 
 /**
- * Update 
+ * InstallUpdates
  * 
  * @see   ____class_see____
  * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
-class Update extends \XLite\View\Updates\AUpdates
+class InstallUpdates extends \XLite\View\Upgrade\AUpgrade
 {
-    /**
-     * Return list of allowed targets
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = 'updates';
-
-        return $result;
-    }
-
-    /**
-     * Check if core requires an update/upgrade
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isCoreUpdateNeeded()
-    {
-        return version_compare(\XLite::getInstance()->getMinorVersion(), $this->getCoreMinorVersionForUpdate(), '<');
-    }
-
     /**
      * Get directory where template is located (body.tpl)
      *
@@ -74,6 +47,18 @@ class Update extends \XLite\View\Updates\AUpdates
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'update';
+        return parent::getDir() . LC_DS . 'install_updates';
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible() && !$this->isUpgrade();
     }
 }
