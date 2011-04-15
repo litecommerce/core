@@ -27,6 +27,24 @@ div.addons-search-panel input {
 div.addons-search-panel input.default-value {
   font-style: italic;
   color: #a5a5a5;
+  width: 390px;
+}
+
+div.tags {
+  float: left;
+  padding: 3px;
+}
+
+div.tags div.tags-title {
+  float: left;
+  background: transparent url(../../manage/images/icon_cloud.png) no-repeat 0px 0px;
+  width: 50px;
+  height: 34px;
+  padding: 13px 10px 0px;
+  color: #2e7db2;
+  font-family: arial,helvetica,sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
 }
 
 div.top-controls {
@@ -41,7 +59,8 @@ div.top-controls div.addons-search-panel {
 }
 
 div.top-controls div.action-buttons {
-  float: right;
+  float: left;
+  margin-left: 90px;
 }
 
 .modules-list div.price-info {
@@ -56,13 +75,18 @@ div.top-controls div.action-buttons {
 
 .modules-list div.installed {
   font-size: 16px;
-  color: #5c88a8;
+  color: #4a8946;
   margin-bottom: 10px;
+}
+
+.modules-list span.currency {
+  color: #f49455;
+  font-size: 18px;
 }
 
 .modules-list span.purchased {
   font-size: 16px;
-  color: #5c88a8;
+  color: #4a8946;
   margin-bottom: 10px;
 }
 
@@ -74,6 +98,13 @@ div.top-controls div.action-buttons {
   margin: 10px 0 0 0;
   padding: 10px 20px;
   background: #f0f0f0;
+  width: 900px;
+}
+
+.addons-filters,
+  table.items-list.modules-list
+{
+  width: 945px;
 }
 
 .addons-filters .features {

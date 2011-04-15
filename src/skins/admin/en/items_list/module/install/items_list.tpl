@@ -18,15 +18,14 @@
   <div class="form-panel addons-search-panel">
 
     <form name="search_form" method="GET" action="admin.php">
+
       <input FOREACH="getURLParams(),name,value" type="hidden" name="{name}" value="{value}" />
 
       <input IF="getParam(#substring#)" id="search_substring" type="text" name="substring" value="{getParam(#substring#)}" />
-      <input IF="!getParam(#substring#)" class="default-value" id="search_substring" type="text" name="substring" value="{t(#Enter keywords#)}" />
+
+      <input IF="!getParam(#substring#)" id="search_substring" type="text" name="substring" value="{t(#Enter keywords#)}" class="default-value" />
 
       <widget class="\XLite\View\Button\Submit" label="{t(#Search#)}" />
-
-      {* :TODO: move to CSS of course *}
-      <div class="tags" style="float: right; border: 1px solid #000;">{t(#Tags#)}</div>
 
     </form>
 
@@ -55,9 +54,17 @@ sForm.submit(function(e){
 
   </div>
 
+  {* TODO: Use the same widget as in Manage addons. (or move it to separated widget ?)*}
+  <div class="tags">
+    <div class="tags-title">{t(#Tags#)}</div>
+  </div>
+
   <div class="action-buttons">
+
     <widget class="\XLite\View\Button\UploadAddons" />
+
     <widget class="\XLite\View\Button\EnterLicenseKey" />
+
   </div>
 
 </div>

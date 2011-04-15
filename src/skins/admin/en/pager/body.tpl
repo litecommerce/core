@@ -19,5 +19,3 @@
 </ul>
 
 {displayInheritedViewListContent(#itemsTotal#)}
-
-
