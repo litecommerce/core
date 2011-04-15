@@ -359,7 +359,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
     {
         $result = array();
 
-        if (preg_match_all(static::getTagPattern($tags), $content, $matches)) {
+        if (preg_match_all(static::getTagPattern($tags), $content, $matches)) {            
             $result += static::parseTags($matches);
         }
 
@@ -380,7 +380,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
     {
         $pattern = empty($tags) ? '\w+' : implode('|', $tags);
 
-        return '/@(' . $pattern . ')\s*(?:\()?(.*?)\s*(?:\))?(?=$|^.*@(?:' . $pattern . '))/Smi';
+        return '/@(' . $pattern . ')\s*(?:\()?(.*?)\s*(?:\)\s*)?(?=$|^.*@(?:' . $pattern . '))/Smi';
     }
 
     /**
