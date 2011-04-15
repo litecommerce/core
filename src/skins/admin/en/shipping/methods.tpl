@@ -88,7 +88,7 @@ Use this section to define your store's shipping methods.
             </td>
 
             <td align="center">
-              <input id="shipping_enabled_{method.getMethodId()}" type="checkbox" name="methods[{method.getMethodId()}][enabled]" checked="{method.getEnabled()}" />
+              <input type="checkbox" name="methods[{method.getMethodId()}][enabled]" checked="{method.getEnabled()}" />
             </td>
 
             <td>

@@ -122,7 +122,7 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      */
     public function isShippingAvailable()
     {
-        return $this->getModifier()->isRatesExists();
+        return $this->isShippingEnabled();
     }
 
     /**

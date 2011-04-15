@@ -73,7 +73,7 @@ class ShippingEstimateBox extends \XLite\View\AView
     }
 
     /**
-     * Check - shipping estimate or not
+     * Check - shipping estimate and method selected or not
      * 
      * @return boolean
      * @see    ____func_see____
@@ -81,7 +81,8 @@ class ShippingEstimateBox extends \XLite\View\AView
      */
     protected function isShippingEstimate()
     {
-        return (bool)\XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getModifier()->getModifier());
+        return \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getModifier()->getModifier())
+            && $this->getModifier()->getMethod();
     }
 
     /**

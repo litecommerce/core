@@ -12,7 +12,7 @@
  *}
 <div class="estimator">
 
-  {if:isShippingEstimate()&modifier.getMethod()}
+  {if:isShippingEstimate()}
 
     <ul>
       <li><span>{t(#Shipping#)}:</span> {modifier.method.getName():h} ({getShippingCost()})</li>
@@ -25,17 +25,11 @@
 
   {else:}
 
-    {if:modifier.isRatesExists()}
-      <widget class="\XLite\View\Form\Cart\ShippingEstimator\Open" name="shippingEstimator" />
-        <div class="buttons">
-          <widget class="\XLite\View\Button\Submit" label="Estimate shipping cost" style="action estimate" />
-        </div>
-      <widget name="shippingEstimator" end />
-
-    {else:}
-      <span class="error">{t(#Delivery methods is not defined.#)}</span>
-      <span class="error">{t(#Shipping is not available.#)}</span>
-    {end:}
+    <widget class="\XLite\View\Form\Cart\ShippingEstimator\Open" name="shippingEstimator" />
+      <div class="buttons">
+        <widget class="\XLite\View\Button\Submit" label="Estimate shipping cost" style="action estimate" />
+      </div>
+    <widget name="shippingEstimator" end />
 
   {end:}
 

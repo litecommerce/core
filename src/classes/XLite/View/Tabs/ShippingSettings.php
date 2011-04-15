@@ -85,28 +85,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     protected $markups = null;
 
     /**
-     * Widget initialization
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function init()
-    {
-        parent::init();
-
-        // Leave only one tab if shipping disabled
-        if ('Y' != $this->config->Shipping->shipping_enabled) {
-
-            foreach ($this->tabs as $key => $tab) {
-                if ('shipping_settings' != $key) {
-                    unset($this->tabs[$key]);
-                }
-            }
-        }
-    }
-
-    /**
      * Returns a list of shipping processors
      * 
      * @return array

@@ -54,8 +54,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      */
     public function canApply()
     {
-        return parent::canApply()
-            && 'Y' == \XLite\Base::getInstance()->config->Shipping->shipping_enabled;
+        return parent::canApply();
     }
 
     // {{{ Calculation
