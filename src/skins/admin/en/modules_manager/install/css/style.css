@@ -82,6 +82,7 @@ div.top-controls div.action-buttons {
 .modules-list span.currency {
   color: #f49455;
   font-size: 18px;
+  text-transform: uppercase;
 }
 
 .modules-list span.purchased {
