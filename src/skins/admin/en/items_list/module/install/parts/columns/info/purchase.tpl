@@ -18,6 +18,7 @@
   <input type="hidden" name="name" value="{module.getName()}" />
   <input type="hidden" name="author" value="{module.getAuthor()}" />
   <input type="hidden" name="return_url" value="{getReturnURL()}" />
+  <input type="hidden" name="email" value="{auth.profile.getLogin()}" />
 
   <div class="purchase">
     <widget class="\XLite\View\Button\Submit" label="{t(#Purchase#)}" />
