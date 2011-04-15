@@ -13,7 +13,7 @@
  * @ListChild (list="itemsList.module.install.columns.module-main-section", weight="100")
  *}
 
-<div IF="!isInstalled(module)">
-  <div IF="isFree(module)">{t(#Free#)}</div>
-  <div IF="!isFree(module)">{formatPrice(module.getPrice(),module.getCurrency()):r} <span IF="isPurchased(module)">{t(#Purchased#)}</span></div>
+<div IF="!isInstalled(module)" class="price">
+  <div IF="isFree(module)" class="free">{t(#Free#)}</div>
+  <div IF="!isFree(module)" class="paid"><span class="currency">{formatPrice(module.getPrice(),module.getCurrency()):r}</span> <span IF="isPurchased(module)" class="purchased">({t(#Purchased#)})</span></div>
 </div>

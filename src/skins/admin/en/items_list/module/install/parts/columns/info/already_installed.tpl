@@ -13,4 +13,4 @@
  * @ListChild (list="itemsList.module.install.columns.module-main-section", weight="100")
  *}
 
-<div IF="isInstalled(module)">{t(#Already installed#)}</div>
+<div IF="isInstalled(module)" class="installed">{t(#Already installed#)}</div>

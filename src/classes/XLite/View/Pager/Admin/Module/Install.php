@@ -36,6 +36,34 @@ namespace XLite\View\Pager\Admin\Module;
  */
 class Install extends \XLite\View\Pager\Admin\Module\AModule
 {
+    /** 
+     * Register CSS files to include
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {   
+        $list = parent::getCSSFiles();
+
+        $list[] = 'items_list/module/install/pager/css/style.css';
+
+        return $list;
+    }   
+
+    /**
+     * Return CSS classes to use in parent widget of pager
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSClasses()
+    {
+        return parent::getCSSClasses() . ' addons-pager';
+    }
+
     /**
      * getItemsPerPageDefault
      *
@@ -60,5 +88,17 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
     protected function getDefaultTemplate()
     {
         return 'items_list' . LC_DS . 'module' . LC_DS . 'install' . LC_DS . 'pager' . LC_DS . 'body.tpl';
+    }
+
+    /**
+     * Do not show pager on bottom
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisibleBottom()
+    {
+        return false;
     }
 }

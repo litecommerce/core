@@ -132,6 +132,18 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     }
 
     /**
+     * Return CSS classes for parent block of pager (list-pager by default)
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSClasses()
+    {
+        return 'list-pager';
+    }
+
+    /**
      * Return SQL condition with limits
      * 
      * @param integer                $start Index of the first item on the page OPTIONAL
@@ -681,5 +693,17 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     {
         return parent::isVisible()
             && ($this->isPagesListVisible() || $this->isItemsPerPageVisible());
+    }
+
+    /**
+     * isVisible bottom
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisibleBottom()
+    {
+        return $this->isVisible();
     }
 }
