@@ -36,4 +36,17 @@ namespace XLite\View\Pager\Admin\Module;
  */
 abstract class AModule extends \XLite\View\Pager\Admin\AAdmin
 {
+
+    /**
+     * Return current tag
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getTag()
+    {
+        return \XLite\Core\Request::getInstance()->tag;
+    }
 }

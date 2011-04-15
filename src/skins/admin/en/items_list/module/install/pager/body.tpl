@@ -11,11 +11,13 @@
  * @since     1.0.0
  *}
 
-<div IF="#1#">{getItemsTotal()} {t(#add-ons found for "Post" tag#)}</div>
+<div IF="#1#" class="addons-install-pager-found-title">{getItemsTotal()} {t(#add-ons found#)}<span IF="getTag()">{t(#for"#)} "<span class="tag">{getTag()}</span>" {t(#tag#)}</span></div>
 
-<ul class="pager grid-list" IF="isPagesListVisible()">
+<ul class="pager grid-list addons-install-pager-list" IF="isPagesListVisible()">
   <li FOREACH="getPages(),page" class="{page.classes}">
     <a IF="page.href" href="{page.href}" class="{page.page}" title="{page.title}">{page.text:h}</a>
     <span IF="!page.href" class="{page.page}" title="{page.title}">{page.text}</span>
   </li>
 </ul>
+
+<div class="clear"></div>
