@@ -47,23 +47,6 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
     {
         return 'Shipping zones';
     }
-
-    /**
-     * handleRequest 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function handleRequest()
-    {
-        parent::handleRequest();
-
-        if ('Y' != $this->config->Shipping->shipping_enabled) {
-            $this->redirect('admin.php?target=shipping_settings');
-        }
-    }
-
     /**
      * Add elements into the specified zone 
      * 

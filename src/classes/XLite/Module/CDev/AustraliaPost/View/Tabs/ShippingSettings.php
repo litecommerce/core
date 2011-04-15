@@ -49,11 +49,9 @@ class ShippingSettings extends \XLite\View\Tabs\ShippingSettings implements \XLi
     {
         parent::init();
 
-        if ('Y' == $this->config->Shipping->shipping_enabled) {
-            $this->tabs['aupost'] = array(
-                'title'    => 'Australia Post settings',
-                'template' => 'modules/CDev/AustraliaPost/main.tpl'
-            );
-        }
+        $this->tabs['aupost'] = array(
+            'title'    => 'Australia Post settings',
+            'template' => 'modules/CDev/AustraliaPost/main.tpl'
+        );
     }
 }

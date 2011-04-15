@@ -64,7 +64,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
     public function canApply()
     {
         return parent::canApply()
-            && 'Y' == \XLite\Base::getInstance()->config->Shipping->shipping_enabled;
+            && $this->isShipped();
     }
 
     /**
@@ -85,10 +85,31 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
             if (isset($rate)) {
                 $cost = $this->getOrder()->getCurrency()->roundValue($rate->getTotalRate());
             }
-        }
 
-        $this->addOrderSurcharge('SHIPPING', doubleval($cost), false, isset($cost));
+            $this->addOrderSurcharge($this->code, doubleval($cost), false, isset($cost));
+
+        } else {
+
+            foreach ($this->order->getSurcharges() as $s) {
+                if ($s->getType() == $this->type && $s->getCode() == $this->code) {
+                    $this->order->getSurcharges()->remove($s);
+                    \XLite\Core\Database::geEM()->remove($s);
+                }
+            }
+        }
     }
+
+    /**     
+     * Check - shipping rates exists or not
+     *          
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */ 
+    public function isRatesExists()
+    {       
+        return (bool)$this->getRates();
+    }       
 
     /**
      * Get shipping rates 
@@ -122,18 +143,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
         }
 
         return $result;
-    }
-
-    /**
-     * Check - shipping is available for this order or not
-     * 
-     * @return boolean 
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isAvailable()
-    {
-        return $this->isShipped() && 0 < count($this->getRates());
     }
 
     // {{{ Shipping rates
@@ -265,19 +274,6 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
 
             \XLite\Core\Database::getEM()->flush();
         }
-    }
-
-    /**
-     * Check - shipping rates exists or not
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isRatesExists()
-    {
-        return $this->isAvailable()
-            || !\XLite\Model\Shipping::getInstance()->getDestinationAddress($this);
     }
 
     /**

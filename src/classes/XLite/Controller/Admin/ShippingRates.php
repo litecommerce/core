@@ -49,22 +49,6 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * handleRequest 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function handleRequest()
-    {
-        parent::handleRequest();
-
-        if ('Y' != $this->config->Shipping->shipping_enabled) {
-            $this->redirect('admin.php?target=shipping_settings');
-        }
-    }
-
-    /**
      * Do action 'Add'
      * 
      * @return void
