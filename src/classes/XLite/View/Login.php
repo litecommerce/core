@@ -92,6 +92,6 @@ class Login extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return $this->getDir() . LC_DS . 'body.tpl';
+        return $this->getDir() . '/body.tpl';
     }
 }
