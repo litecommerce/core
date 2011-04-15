@@ -45,6 +45,7 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
     const PARAM_SEARCH_IN_SUBCATS = 'searchInSubcats';
     const PARAM_BY_TITLE          = 'by_title';
     const PARAM_BY_DESCR          = 'by_descr';
+    const PARAM_INVENTORY         = 'inventory';
 
 
     /**
@@ -63,6 +64,7 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
             \XLite\Model\Repo\Product::P_SEARCH_IN_SUBCATS => self::PARAM_SEARCH_IN_SUBCATS,
             \XLite\Model\Repo\Product::P_BY_TITLE          => self::PARAM_BY_TITLE,
             \XLite\Model\Repo\Product::P_BY_DESCR          => self::PARAM_BY_DESCR,
+            \XLite\Model\Repo\Product::P_INVENTORY         => self::PARAM_INVENTORY,
         );
     }
 
@@ -91,7 +93,7 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
     {
         $result = parent::defineViewList($list);
 
-        if ('itemsList.admin.footer' === $list) {
+        if ($this->getListName() . '.footer' === $list) {
             $result[] = $this->getWidget(array('label' => 'Update'), '\XLite\View\Button\Submit');
             $result[] = $this->getWidget(array(), '\XLite\View\Button\DeleteSelected');
         }
@@ -179,6 +181,9 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
             ),
             self::PARAM_BY_DESCR => new \XLite\Model\WidgetParam\Checkbox(
                 'Search in description', 0
+            ),
+            self::PARAM_INVENTORY => new \XLite\Model\WidgetParam\String(
+                'Inventory', 'all'
             ),
         );
     }

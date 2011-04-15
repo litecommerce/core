@@ -127,7 +127,12 @@ class AddonsListInstalled extends \XLite\Controller\Admin\Base\AddonsList
             $module = $this->getModule();
 
             if ($module) {
-                \Includes\Utils\PHARManager::packModule(new \XLite\Core\Pack\Module($module));
+                if ($module->getEnabled()) {
+                    \Includes\Utils\PHARManager::packModule(new \XLite\Core\Pack\Module($module));
+                } else {
+                    \XLite\Core\TopMessage::addError('Only enabled modules can be packed');
+                }
+
             } else {
                 \XLite\Core\TopMessage::addError('Module with ID "' . $this->getModuleId() . '" is not found');
             }

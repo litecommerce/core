@@ -59,7 +59,7 @@ class Order extends \XLite\Controller\Admin\AAdmin
     {
         parent::addBaseLocation();
 
-        $this->addLocationNode('Search orders', $this->buildURL('orders_list'));
+        $this->addLocationNode('Search orders', $this->buildURL('order_list'));
     }
 
     /**

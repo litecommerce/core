@@ -15,7 +15,7 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -26,49 +26,40 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Form\Updates\Update;
+namespace XLite\View\Button;
 
 /**
- * Main 
+ * SelectVersionForUpgrade 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Main extends \XLite\View\Form\Updates\Update\AUpdate
+class SelectVersionForUpgrade extends \XLite\View\Button\APopupButton
 {
-    /**
-     * Form name
-     *
+    /** 
+     * Return content for popup button
+     * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getFormName()
+    public function getButtonContent() 
     {
-        return 'install_updates';
+        return 'Upgrade available';
     }
 
-    /**
-     * Return default value for the "target" parameter
-     *
-     * @return string
+    /** 
+     * Return URL parameters to use in AJAX popup
+     * 
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDefaultTarget()
+    public function prepareURLParams()
     {
-        return 'updates';
-    }
-
-    /**
-     * Return default value for the "action" parameter
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultAction()
-    {
-        return 'install';
+        return array(
+            'target' => 'upgrade',
+            'widget' => '\XLite\View\Upgrade\SelectCoreVersion',
+        );
     }
 }
