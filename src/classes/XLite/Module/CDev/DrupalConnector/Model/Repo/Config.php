@@ -56,5 +56,7 @@ class Config extends \XLite\Model\Repo\Config implements \XLite\Base\IDecorator
         $this->disableOption('General', 'shop_closed');
         $this->disableOption('General', 'add_on_mode');
         $this->disableOption('General', 'add_on_mode_page');
+        $this->disableOption('General', 'subcategories_look');
+
     }
 }

@@ -45,7 +45,7 @@ class AddonsListMarketplace extends \XLite\Controller\Admin\Base\AddonsList
      */
     public function getTitle()
     {
-        return 'Install new add-ons';
+        return 'Install Add-ons';
     }
 
     /**
@@ -57,6 +57,6 @@ class AddonsListMarketplace extends \XLite\Controller\Admin\Base\AddonsList
      */
     protected function getLocation()
     {
-        return 'Install new add-ons';
+        return 'Install Add-ons';
     }
 }
