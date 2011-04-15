@@ -535,7 +535,7 @@ CheckoutView.prototype.refreshState = function()
       }
     }
 
-    result = result && profileIsCreate && (!shippingVisible || (shippingAddressIsValid && shippingMethodIsSelected));
+    result = result && profileIsCreate && (shippingAddressIsValid && (shippingMethodIsSelected || !shippingVisible));
 
   } else if (box.hasClass('payment-step')) {
 

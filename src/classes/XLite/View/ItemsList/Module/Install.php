@@ -426,7 +426,11 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         $apiURL = trim(\Includes\Utils\Converter::trimTrailingChars(\XLite\Core\Marketplace::getInstance()->getMarketplaceURL(), '/'));
         $apiURL = preg_replace('/^http:\/\//Ss', 'https://', $apiURL);
 
-        return preg_replace('/\?q=.+/Ss', '', $apiURL);
+        // Remove 'api' directory
+        $apiURL = preg_replace('/\?q=.+/Ss', '', $apiURL);
+        $apiURL = preg_replace('/\/api$/Ss', '/', $apiURL);
+
+        return $apiURL;
     }
 
     /**
