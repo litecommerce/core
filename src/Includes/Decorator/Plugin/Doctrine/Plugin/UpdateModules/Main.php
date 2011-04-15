@@ -88,6 +88,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      */
     protected function getModulesPathPattern()
     {
-        return '|^' . LC_MODULES_DIR . '(\w)+' . LC_DS . '(\w)+' . LC_DS . 'Main.php$|Si';
+        return '|^' . preg_quote(LC_MODULES_DIR) . '(\w)+' . LC_DS_QUOTED . '(\w)+' . LC_DS_QUOTED . 'Main.php$|Si';
     }
 }

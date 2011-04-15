@@ -478,6 +478,56 @@ class Address extends \XLite\Model\AEntity
             $entity->setState($this->getState());
         }
 
+        if ($this->getProfile()) {
+            $entity->setProfile($this->getProfile());
+        }
+
         return $entity;
+    }
+
+    /**
+     * Update record in database
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function update()
+    {
+        return $this->checkAddress() && parent::update();
+    }
+
+    /**
+     * Create record in database
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function create()
+    {
+        return $this->checkAddress() && parent::create();
+    }
+
+
+    /**
+     * Check if address has duplicates
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkAddress()
+    {
+        $result = true;
+
+        $sameAddress = \XLite\Core\Database::getRepo('XLite\Model\Address')->findSameAddress($this);
+
+        if ($sameAddress) {
+            \XLite\Core\TopMessage::addWarning('Address was not saved as other address with specified fields is already exists.');
+            $result = false;
+        }
+
+        return $result;
     }
 }

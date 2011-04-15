@@ -191,7 +191,6 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
         $address2 = $address->cloneEntity();
 
         foreach ($this->addressFields as $field => $testValue) {
-            $setterMethod = 'set' . \XLite\Core\Converter::getInstance()->convertToCamelCase($field);
             $getterMethod = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($field);
             $value = $address2->$getterMethod();
             $this->assertEquals($testValue, $value, 'Cloning checking ('.$field.')');
@@ -322,4 +321,47 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
         $this->assertTrue(!empty($result), 'check that getAddressFields() returns non empty array');
     }
 
+    public function testCheckAddress()
+    {
+        // Prepare address and save it in database
+        $origAddress = new \XLite\Model\Address();
+
+        $origAddress->map($this->addressFields);
+
+        $origAddress->setState(\XLite\Core\Database::getRepo('XLite\Model\State')->findOneByCountryAndCode('US', 'NY'));
+        $origAddress->setCountry(\XLite\Core\Database::getRepo('XLite\Model\Country')->find('US'));
+        $origAddress->setProfile(\XLite\Core\Database::getRepo('XLite\Model\Profile')->find(1));
+
+        $address = $origAddress->cloneEntity();
+
+        $origAddress->create();
+
+        // Test: new address should not be created as it is identical
+        $this->assertFalse($address->create(), "Check that address is not created (all fields are identical)");
+
+        foreach(\XLite\Model\Address::getAddressFields() as $field) {
+    
+            $address = $origAddress->cloneEntity();
+
+            if ('state_id' == $field) {
+                $address->setState(\XLite\Core\Database::getRepo('XLite\Model\State')->findOneByCountryAndCode('US', 'CA'));
+
+            } elseif ('country_code' == $field) {
+                $address->setCountry(\XLite\Core\Database::getRepo('XLite\Model\Country')->find('GB'));
+
+            } elseif ('custom_state' != $field) {
+
+                $address->map($this->addressFields);
+
+                $methodName = 'set' . \XLite\Core\Converter::getInstance()->convertToCamelCase($field);
+                $this->assertTrue(method_exists($address, $methodName), "Check if method exists ($methodName)");
+
+                $modifiedField = $this->addressFields[$field] . '2';
+                $address->$methodName($modifiedField);
+            }
+
+            // Test: new address must be created as one of fields is modified
+            $this->assertTrue($address->create(), "Check if address is created ($field)");
+        }
+    }
 }
