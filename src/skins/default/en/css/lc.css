@@ -1272,6 +1272,7 @@ table.list-body-list td
 .lc-minicart .items-list .item-price {
   color: #404040;
   padding-top: 6px;
+  display: inline-block;
 }
 
 .lc-minicart .other-items {

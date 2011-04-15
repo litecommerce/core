@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
@@ -26,83 +26,79 @@
  * @since     1.0.0
  */
 
-namespace XLite\Controller\Admin;
+namespace XLite\View\Upgrade;
 
 /**
- * Updates 
+ * AUpgrade 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Updates extends \XLite\Controller\Admin\Base\Updater
+abstract class AUpgrade extends \XLite\View\Dialog
 {
-    // {{{ Public methods for viewers
+    /**
+     * Return list of allowed targets
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'upgrade';
+
+        return $result;
+    }
 
     /**
-     * Return major version of core to update/upgrade
+     * Get directory where template is located (body.tpl)
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getCoreMajorVersionForUpdate()
+    protected function getDir()
     {
-        return \XLite::getInstance()->getMajorVersion();
+        return 'upgrade';
     }
 
     /**
-     * Return the current page title (for the content area)
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getTitle()
-    {
-        return 'Updates for your version (' . $this->getCoreMajorVersionForUpdate() . ')';
-    }
-
-    // }}}
-
-    /**
-     * Common method to set current location
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getLocation()
-    {
-        return 'Updates';
-    }
-
-    /**
-     * Method to get module for update/upgrade
-     *
-     * @param \XLite\Model\Module $module Currently installed module version
-     *
-     * @return \XLite\Model\Module
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getModuleForUpdate(\XLite\Model\Module $module)
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->getModuleForUpdate($module);
-    }
-
-    // {{{ Action handlers
-
-    /**
-     * Main controller action: perform update
+     * Compose core version
      * 
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doActionInstall()
+    protected function getCoreVersionForUpdate()
     {
-        // :TODO: update core and/or modules
+        return \Includes\Utils\Converter::composeVersion(
+            $this->getCoreMajorVersionForUpdate(),
+            $this->getCoreMinorVersionForUpdate()
+        );
     }
 
-    // }}}
+    /**
+     * Alias
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCoreVersionCurrent()
+    {
+        return \XLite::getInstance()->getVersion();
+    }
+
+    /**
+     * Check if core requires an update/upgrade
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isCoreUpdateNeeded()
+    {
+        return version_compare($this->getCoreVersionCurrent(), $this->getCoreVersionForUpdate(), '<');
+    }
 }

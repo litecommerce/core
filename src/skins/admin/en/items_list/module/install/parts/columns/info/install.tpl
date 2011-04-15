@@ -16,7 +16,7 @@
 <form action="admin.php" method="post" IF="canInstall(module)">
   <input type="hidden" name="target" value="addon_install" />
   <input type="hidden" name="action" value="get_license" />
-  <input type="hidden" name="module_id" value="{module.getModuleId()}" />
+  <input type="hidden" name="moduleId" value="{module.getModuleId()}" />
 
   <div class="install">
     {* :FIXME: widget must be removed; all functionality must be moved here *}

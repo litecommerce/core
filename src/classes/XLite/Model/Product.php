@@ -188,7 +188,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Qty in stock 
      * 
-     * @var   \XLite\Model\Product\Inventory
+     * @var   \XLite\Model\Inventory
      * @see   ____var_see____
      * @since 1.0.0
      *
@@ -445,6 +445,20 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     public function getMaxPurchaseLimit()
     {
         return intval(\XLite\Core\Config::getInstance()->General->default_purchase_limit);
+    }
+
+    /**
+     * Get inventory
+     *
+     * @return \XLite\Model\Inventory
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getInventory()
+    {
+        return is_null($this->inventory)
+            ? new \XLite\Model\Inventory()
+            : $this->inventory;
     }
 
     /**

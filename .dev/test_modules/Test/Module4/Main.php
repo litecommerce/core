@@ -85,20 +85,4 @@ abstract class Main extends \XLite\Module\AModule
     {
         return 'Test module 4 description';
     }
-
-    /**
-     * Return module dependencies
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getDependencies()
-    {
-        $list = parent::getDependencies();
-        $list[] = 'Test\Module1';
-
-        return $list;
-    }
 }

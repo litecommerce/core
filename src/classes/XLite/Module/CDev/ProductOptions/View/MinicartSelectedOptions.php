@@ -35,8 +35,8 @@ namespace XLite\Module\CDev\ProductOptions\View;
  * @see     ____class_see____
  * @since   1.0.0
  *
- * @ListChild (list="minicart.horizontal.item", weight="15")
- * @ListChild (list="minicart.vertical.item", weight="15")
+ * @ListChild (list="minicart.horizontal.item", weight="25")
+ * @ListChild (list="minicart.vertical.item", weight="25")
  */
 class MinicartSelectedOptions extends \XLite\View\AView
 {

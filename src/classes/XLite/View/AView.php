@@ -877,7 +877,7 @@ abstract class AView extends \XLite\Core\Handler
         }
 
         $symbol = $currency->getSymbol() ?: (strtoupper($currency->getCode()) . ' ');
-        $sign   = 0 < $value ? '' : '&minus;&#8197';
+        $sign   = 0 <= $value ? '' : '&minus;&#8197';
 
         return $sign . $symbol . $currency->formatValue(abs($value));
     }

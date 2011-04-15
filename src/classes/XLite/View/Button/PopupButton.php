@@ -39,10 +39,10 @@ abstract class PopupButton extends \XLite\View\Button\AButton
     /**
      * Several inner constants 
      */
-    const TEMPLATE  = 'button/popup_button.tpl';
-    const CSS_CLASS = 'popup-button';
-    const JS_SCRIPT = 'button/js/popup_button.js';
-    const URLParams = 'url_params';
+    const TEMPLATE       = 'button/popup_button.tpl';
+    const CSS_CLASS      = 'popup-button';
+    const JS_SCRIPT      = 'button/js/popup_button.js';
+    const URLParams      = 'url_params';
     const POPUP_CSS_FILE = 'button/css/popup.css';
 
 
@@ -88,7 +88,6 @@ abstract class PopupButton extends \XLite\View\Button\AButton
     public function getJSFiles()
     {   
         $list = parent::getJSFiles();
-
         $list[] = self::JS_SCRIPT;
 
         return $list;
@@ -104,7 +103,6 @@ abstract class PopupButton extends \XLite\View\Button\AButton
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = self::POPUP_CSS_FILE;
 
         return $list;
