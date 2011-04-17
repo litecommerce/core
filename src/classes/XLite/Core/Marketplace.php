@@ -98,6 +98,12 @@ class Marketplace extends \XLite\Base\Singleton
     const RESPONSE_FIELD_MODULE_LICENSE            = 'license';
 
     /**
+     * Protocol data fields - response
+     */
+    const RESPONSE_FIELD_MODULE_PACK_DATA   = 'data';
+    const RESPONSE_FIELD_MODULE_PACK_LENGTH = 'length';
+
+    /**
      * Some regexps 
      */
     const REGEXP_VERSION = '/\d+\.?[\w-\.]*/';
@@ -166,7 +172,7 @@ class Marketplace extends \XLite\Base\Singleton
             self::ACTION_GET_CORE_PACK,
             array(
                 self::REQUEST_FIELD_VERSION_CORE    => $this->getVersionField($versionMajor, $versionMinor),
-                self::REQUEST_FIELD_IS_PACK_GZIPPED => \Phar::canCompress(\Phar::GZ),
+                self::REQUEST_FIELD_IS_PACK_GZIPPED => \Includes\Utils\PHARManager::canCompress(),
             )
         );
     }
@@ -220,8 +226,10 @@ class Marketplace extends \XLite\Base\Singleton
         return $this->sendRequestToMarkeplace(
             self::ACTION_GET_ADDON_PACK,
             array(
-                self::REQUEST_FIELD_MODULE_ID  => $moduleID,
-                self::REQUEST_FIELD_MODULE_KEY => $key,
+                self::REQUEST_FIELD_MODULE_ID       => $moduleID,
+                self::REQUEST_FIELD_MODULE_KEY      => $key,
+                self::REQUEST_FIELD_IS_PACK_GZIPPED => \Includes\Utils\PHARManager::canCompress(),
+
             )
         );
     }
@@ -467,7 +475,7 @@ class Marketplace extends \XLite\Base\Singleton
     /**
      * Return validation schema for certain action
      *
-     * @return void
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -489,7 +497,7 @@ class Marketplace extends \XLite\Base\Singleton
     /**
      * Return validation schema for certain action
      * 
-     * @return void
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -538,6 +546,24 @@ class Marketplace extends \XLite\Base\Singleton
                 'options' => array('regexp' => '/[\w\\\\]+/'),
             ),
             self::RESPONSE_FIELD_MODULE_DOWNLOADS_COUNT => array(
+                'filter'  => FILTER_VALIDATE_INT,
+                'options' => array('min_range' => 0),
+            ),
+        );
+    }
+
+    /**
+     * Return validation schema for certain action
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getResponseSchemaForGetAddonPackAction()
+    {
+        return array(
+            self::RESPONSE_FIELD_MODULE_PACK_DATA   => FILTER_UNSAFE_RAW,
+            self::RESPONSE_FIELD_MODULE_PACK_LENGTH => array(
                 'filter'  => FILTER_VALIDATE_INT,
                 'options' => array('min_range' => 0),
             ),
@@ -644,6 +670,27 @@ class Marketplace extends \XLite\Base\Singleton
         return $result;
     }
 
+    /**
+     * Prepare data for certain response
+     *
+     * @param array $data Data recieved from marketplace
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareResponseForGetAddonPackAction(array $data)
+    {
+        $result = null;
+
+        // Validate data recieved in responese
+        if ($this->validateAgainstSchema($data, $this->getResponseSchemaForGetAddonPackAction())) {
+            $result = base64_decode($data['data']);
+        }
+
+        return $result;
+    }
+
     // }}}
 
     // {{{ Auxiliary methods
@@ -727,6 +774,10 @@ class Marketplace extends \XLite\Base\Singleton
         // "Filter" extension changes type for some variables
         return array_intersect_key($data, $filtered = filter_var_array($data, $schema)) == $filtered;
     }
+
+    // }}}
+
+    // {{{ Some external methods for controllers
 
     // }}}
 }

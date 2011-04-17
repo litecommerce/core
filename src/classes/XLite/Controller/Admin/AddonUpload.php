@@ -59,12 +59,26 @@ class AddonUpload extends \XLite\Controller\Admin\Base\AddonInstall
      */
     protected function getPackage()
     {
-        return '';
+        var_dump($_FILES);die;
     }
 
-    /// }}}
+    // }}}
 
+    // {{{ Action handlers
 
+    /**
+     * Save, unpack and install module
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionInstall()
+    {
+        parent::doActionInstall();
+    }
+
+    // }}}
 
 
 

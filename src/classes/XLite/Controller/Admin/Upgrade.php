@@ -34,7 +34,7 @@ namespace XLite\Controller\Admin;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Upgrade extends \XLite\Controller\Admin\AAdmin
+class Upgrade extends \XLite\Controller\Admin\Base\PackManager
 {
     /**
      * List of cores recieved from marketplace (cache)

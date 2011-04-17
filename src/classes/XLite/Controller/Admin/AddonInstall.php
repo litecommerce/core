@@ -159,7 +159,14 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
      */
     protected function getPackage()
     {
-        return '';
+        $result = null;
+        $module = $this->getModule();
+
+        if ($module && $module->getMarketplaceID()) {
+            $result = \XLite\Core\Marketplace::getInstance()->getAddonPack($module->getMarketplaceID());
+        }
+
+        return $result;
     }
 
     // }}}
