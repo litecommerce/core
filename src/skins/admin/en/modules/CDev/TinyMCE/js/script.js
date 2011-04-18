@@ -16,6 +16,7 @@ $(function() {
 
     // General options
     theme : "advanced", // Use Advanced theme
+    skin : "o2k7",
 
     plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
 
