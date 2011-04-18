@@ -532,7 +532,7 @@ abstract class ModulesManager extends AUtils
 
         // If found in DB
         if ($moduleID) {
-            $data  = array(static::isActiveModule($module), 1, 1, $moduleID);
+            $data  = array(intval(static::isActiveModule($module)), 1, 1, $moduleID);
             $query = 'UPDATE ' . $table . ' SET enabled = ?, installed = ?, dataInstalled = ? WHERE moduleID = ?';
         } else {
             $data  = static::getModuleDataFromClass($author, $name);
