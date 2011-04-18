@@ -157,6 +157,12 @@ hr
   height: 1px;
 }
 
+input.input-file {
+  background: #ffffff;
+  border: solid 1px;
+  font-size: 14px;
+}
+
 
 /**
  * Layout
