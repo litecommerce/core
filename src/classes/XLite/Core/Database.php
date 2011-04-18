@@ -655,15 +655,15 @@ OUT;
             // Null must be presented as 'NULL' string
             $result = 'NULL';
 
-        } elseif (is_numeric($value)) {
-            // Numeric values should not be quoted
-            $result = $value;
-
-        } else {
+        } elseif (is_string($value)) {
             // Do quoting string value
             $result = '\'' . str_replace($search, $replace, addslashes($value)) . '\'';
-        }
         
+        } else {
+            // Numeric values should not be quoted
+            $result = $value;
+        }
+       
         return $result;
     }
 
