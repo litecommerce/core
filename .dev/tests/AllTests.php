@@ -217,6 +217,10 @@ if (!defined('SELENIUM_SERVER')) {
     define('SELENIUM_SERVER', 'cormorant.crtdev.local');
 }
 
+if (!defined('TESTS_LOG_DIR')) {
+    define('TESTS_LOG_DIR', LC_VAR_DIR . 'log' . LC_DS);
+}
+
 if (isset($_SERVER['argv']) && preg_match('/--log-xml\s+(\S+)\s/s', implode(' ', $_SERVER['argv']), $match)) {
     XLite_Tests_MetricWriter::init($match[1] . '.speed');
     unset($match);
