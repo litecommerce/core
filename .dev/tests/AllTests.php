@@ -53,7 +53,7 @@ function xlite_make_sql_backup($path = null)
         $cmd .= ' --opt -h' . $config['hostspec'];
 
         if ($config['port']) {
-            $cmd .= ':' . $config['port'];
+            $cmd .= ' -P' . $config['port'];
         }
 
         $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
@@ -99,7 +99,7 @@ function xlite_restore_sql_from_backup($path = null, $verbose = true, $drop = tr
         $cmd .= ' -h' . $config['hostspec'];
         
         if ($config['port']) {
-            $cmd .= ':' . $config['port'];
+            $cmd .= ' -P' . $config['port'];
         }
 
         $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
