@@ -97,17 +97,11 @@ ul.products-sidebar li.last {
   padding-bottom: 0px;
 }
 
-.products div.product,      /* Position nested elements inside a product tag */
-.products div.product-info,     /* Tables and table cells cannot be relative, so we position tags inside a wrapper in table cells */
+.products div.product,
+.products div.product-info,
 .products div.product-photo
 {
   position: relative;
-}
-
-.products .product-cell:hover .product
-{
-  opacity: 1;
-  filter: Alpha(Opacity=1);
 }
 
 .products .product-cell .drag-n-drop-handle
@@ -163,6 +157,7 @@ ul.products-sidebar li.last {
   top: 30%;
   left: 0;
   z-index: 100;
+  background: transparent;
 }
 
 .products .product .quicklook a.quicklook-link
@@ -455,3 +450,4 @@ div.cart-tray-box.droppable {
 }
 
 */
+
