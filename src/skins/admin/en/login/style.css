@@ -13,6 +13,7 @@
 div.login-page {
   width: 960px !important;
   margin: 0 auto;
+  position: static !important;
 }
 
 div.login-page #header .logo {
