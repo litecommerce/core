@@ -281,17 +281,22 @@ class Address extends \XLite\Model\AEntity
      */
     public function setState($state)
     {
-        if (is_object($state) && $state instanceof \XLite\Model\State) {
+        if ($state instanceof \XLite\Model\State) {
 
             // Set by state object
             if ($state->getStateId()) {
                 $this->state = $state;
+                $this->setCustomState('');
 
             } else {
+                
                 $this->state = null;
+                
+                if ($state->getState()) {
+                    $this->setCustomState($state->getState());
+                }
             }
 
-            $this->setCustomState('');
 
         } elseif (is_string($state)) {
 

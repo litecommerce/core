@@ -78,6 +78,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     {
         $data   = array();
         $fields = array(
+            'login_time'     => 'access',
             'login'          => 'mail',
             'password'       => 'pass',
             'cms_profile_id' => 'uid',
@@ -87,7 +88,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
         foreach ($fields as $lcKey => $drupalKey) {
             // Only use data from user profile if they do not passed in request
-            $data[$lcKey] = isset($values[$drupalKey]) ? $values[$drupalKey] : $user->$drupalKey;
+            $data[$lcKey] = isset($values[$drupalKey]) ? $values[$drupalKey] : (isset($user->$drupalKey) ? $user->$drupalKey : null);
         }
 
         // Initialize flag when new user is created
@@ -189,7 +190,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         list($result, $timestamp, $hash) = $this->isResetPasswordPage();
 
         // Only start LC log in procedure after Drupal hash string is checked
-        if ($result && user_pass_rehash($data['password'], $timestamp, 0) === $hash) {
+        if ($result && user_pass_rehash($data['password'], $timestamp, $data['login_time']) === $hash) {
             $token = \XLite\Core\Converter::generateRandomToken();
 
             // Save token in session and pass it to LC controller. Strings must match

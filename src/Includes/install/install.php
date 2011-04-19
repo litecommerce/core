@@ -1422,52 +1422,26 @@ function doCreateAdminAccount(&$params, $silentMode = false)
         $password = md5($password);
     }
 
-    // Connect to database via config.php file
-    if (dbConnect(null, $pdoErrorMsg)) {
+    $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findByLogin($login);
 
-        // check for profile
-        $query = '';
+    if (is_null($profile)) {
+        // Register default admin account
 
-        $profileId = dbFetchColumn('SELECT profile_id FROM xlite_profiles WHERE login = \'' . $login .'\'', $pdoErrorMsg);
+        $profile = new \XLite\Model\Profile();
+        $profile->setLogin($login);
 
-        if (empty($pdoErrorMsg)) {
-
-            if ($profileId) {
-                // Account already exists
-
-                $query = "UPDATE xlite_profiles SET password='$password', access_level='100', status='E' WHERE profile_id='$profileId'";
-
-                echo xtr('Updating primary administrator profile...');
-
-            } else {
-                // Register default admin account
-
-                $query = "INSERT INTO xlite_profiles (login, password, access_level, status) VALUES ('$login', '$password', 100, 'E')";
-
-                echo xtr('Registering primary administrator profile...');
-            }
-            
-            dbExecute($query, $pdoErrorMsg);
-
-            if (empty($pdoErrorMsg)) {
-                echo status(true);
-
-            } else {
-                // an error has occured
-                echo status(false);
-                $result = false;
-                $errorMsg = fatal_error(xtr('ERROR') . ': ' . $pdoErrorMsg);
-            }
-
-        } else {
-            $result = false;
-            $errorMsg = fatal_error(xtr('ERROR') . ': ' . $pdoErrorMsg);
-        }
+        echo xtr('Registering primary administrator profile...');
 
     } else {
-        $result = false;
-        $errorMsg = fatal_error(xtr('cannot_connect_mysql_server', array(':pdoerr' => (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : ''))));
+        // Account already exists
+        echo xtr('Updating primary administrator profile...');
     }
+
+    $profile->setPassword($password);
+    $profile->setAccessLevel(100);
+    $profile->enable();
+
+    $profile->create();
 
     if ($silentMode) {
         ob_end_clean();

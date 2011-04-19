@@ -388,6 +388,33 @@ class AdminMain extends \XLite\View\Model\AModel
     }
 
     /**
+     * Prepare request data for mapping profile object
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareDataForMapping()
+    {
+        $data = parent::prepareDataForMapping();
+
+        if (isset($data['membership_id']) && 0 < intval($data['membership_id'])) {
+
+            $membership = \XLite\Core\Database::getRepo('XLite\Model\Membership')->find($data['membership_id']);
+
+            if (isset($membership)) {
+                $data['membership'] = $membership;
+            }
+        }
+
+        if (!isset($data['membership'])) {
+            $data['membership'] = null;
+        }
+
+        return $data;
+    }
+
+    /**
      * Check password and its confirmation
      * TODO: simplify
      * 

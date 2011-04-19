@@ -594,7 +594,7 @@ CommonElement.prototype.markAsWheelControlled = function()
   var o = this;
   this.$element.mousewheel(
     function(event, delta) {
-      return o.updateByMouseWheel(event, delta);
+      return o.$element.hasClass('focused') && o.updateByMouseWheel(event, delta);
     }
   );
 
@@ -618,13 +618,17 @@ CommonElement.prototype.markAsWheelControlled = function()
     )
     .insertAfter(this.$element);
 
-  this.$element.focus(function(){
-    jQuery(this).addClass('focused')
-  });
+  this.$element.focus(
+    function() {
+      jQuery(this).addClass('focused')
+    }
+  );
 
-  this.$element.blur(function(){
-    jQuery(this).removeClass('focused')
-  });
+  this.$element.blur(
+    function() {
+      jQuery(this).removeClass('focused')
+    }
+  );
 }
 
 // Update element by mosue wheel
@@ -651,17 +655,23 @@ CommonElement.prototype.updateByMouseWheel = function(event, delta)
   }
 
   if (value !== false) {
-    var min = jQuery(this).mousewheel.options.min;
-    var max = jQuery(this).mousewheel.options.max;
 
     value = value + delta;
 
-    if (typeof(min) != 'undefined' && min > value) {
-      value = min;
-    }
+    if (
+      typeof(jQuery(this).mousewheel) != 'undefined'
+      && typeof(jQuery(this).mousewheel.options) != 'undefined'
+    ) {
 
-    if (typeof(max) != 'undefined' && max < value) {
-      value = max;
+      var mwBase = jQuery(this).mousewheel.options;
+
+      if (typeof(mwBase.min) != 'undefined' && mwBase.min > value) {
+        value = mwBase.min;
+      }
+
+      if (typeof(mwBase.max) != 'undefined' && mwBase.max < value) {
+        value = mwBase.max;
+      }
     }
 
     value = mantis

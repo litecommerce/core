@@ -198,7 +198,7 @@ class XLite_Web_Admin_Stats extends XLite_Web_Admin_AAdmin
         
         // Check key values of the demo data
         $this->assertEquals(
-            "Planet Express Babydoll",
+            "Wi-Fi Detector Shirt",
             $this->getJSExpression('jQuery("table.data-table tr:eq(5) td:eq(5) a").text().trim()'),
             "Check 5th product"
         );

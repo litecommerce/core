@@ -463,7 +463,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
                         $trace = \XLite\Core\Operator::getInstance()->getBackTrace();
                     }
                     file_put_contents(
-                        LC_ROOT_DIR . 'var/log/selenium.' . $location . '.' . date('Ymd-His') . '.html',
+                        TESTS_LOG_DIR . 'selenium.' . $location . '.' . date('Ymd-His') . '.html',
                         '<!--' . PHP_EOL
                         . 'Exception: ' . $exception->getMessage() . ';' . PHP_EOL
                         . ($trace ? 'Back trace: ' . var_export($trace, true) . PHP_EOL : '')
@@ -495,7 +495,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             }
 
             file_put_contents(
-                LC_ROOT_DIR . 'var/log/selenium.' . date('Ymd-His') . '.backtrace',
+                TESTS_LOG_DIR . 'selenium.' . date('Ymd-His') . '.backtrace',
                 'Exception: ' . $exception->getMessage() . ';' . PHP_EOL
                 . PHP_EOL
                 . 'Backtrace: ' . PHP_EOL

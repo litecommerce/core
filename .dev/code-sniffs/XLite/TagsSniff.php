@@ -397,7 +397,7 @@ abstract class XLite_TagsSniff extends XLite_ReqCodesSniff
 			foreach ($match[1] as $k => $v) {
 				$gotcha = array(
 					'name'  => $v,
-					'text'  => trim($match[2][$k]),
+					'text'  => isset($match[2][$k]) ? trim($match[2][$k]) : '',
 					'begin' => $i,
 					'end'   => $i,
 					'link'  => array(

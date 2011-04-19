@@ -72,7 +72,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @Column (type="string", length="128")
      */
-    protected $login = '';
+    protected $login;
 
     /**
      * Password
@@ -311,6 +311,30 @@ class Profile extends \XLite\Model\AEntity
     public function setPendingMembership(\XLite\Model\Membership $pendingMembership = null)
     {
         $this->pending_membership = $pendingMembership;
+    }
+
+    /**
+     * Get membership Id 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getMembershipId()
+    {
+        return $this->getMembership() ? $this->getMembership()->getMembershipId() : null;
+    }
+
+    /**
+     * Get pending membership Id 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPendingMembershipId()
+    {
+        return $this->getPendingMembership() ? $this->getPendingMembership()->getMembershipId() : null;
     }
 
     /**

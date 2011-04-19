@@ -26,51 +26,25 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Form\Search\Product;
+namespace XLite\View\FormField\Input;
 
 /**
- * Simple product search form
- * FIXME - to remove
+ * \XLite\View\FormField\Input\UserProfileId
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Simple extends \XLite\View\Form\AForm
+class UserProfileId extends \XLite\View\FormField\Input\Checkbox
 {
     /**
-     * Current form name 
+     * Return field type
      * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getFormName()
+    public function getFieldType()
     {
-        return 'search_form';
+        return self::FIELD_TYPE_RADIO;
     }
-
-    /**
-     * getDefaultTarget 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultTarget()
-    {
-        return 'search';
-    }
-
-    /**
-     * Return default value for the "action" parameter
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultAction()
-    {
-        return 'search';
-    }
-
 }

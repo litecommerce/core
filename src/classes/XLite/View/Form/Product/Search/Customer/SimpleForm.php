@@ -15,7 +15,7 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -26,51 +26,28 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Form\Search\Product;
+namespace XLite\View\Form\Product\Search\Customer;
 
 /**
- * Simple product search form
- * FIXME - to remove
+ * Simple form 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Simple extends \XLite\View\Form\AForm
+class SimpleForm extends \XLite\View\Form\Product\Search\Customer\Main
 {
-    /**
-     * Current form name 
+    /** 
+     * JavaScript: this value will be returned on form submit
+     * NOTE - this function designed for AJAX easy switch on/off  
      * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getFormName()
+    protected function getOnSubmitResult()
     {
-        return 'search_form';
-    }
-
-    /**
-     * getDefaultTarget 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultTarget()
-    {
-        return 'search';
-    }
-
-    /**
-     * Return default value for the "action" parameter
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultAction()
-    {
-        return 'search';
+        return 'true';
     }
 
 }
+

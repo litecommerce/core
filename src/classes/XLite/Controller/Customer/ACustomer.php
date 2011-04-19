@@ -276,6 +276,7 @@ abstract class ACustomer extends \XLite\Controller\AController
 
         if (!$profile) {
             $profile = new \XLite\Model\Profile;
+            $profile->setLogin('');
             $profile->setOrder($this->getCart());
             $profile->create();
 

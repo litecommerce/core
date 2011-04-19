@@ -145,6 +145,7 @@ jQuery(document).ready(
 function openDialog(selector, additionalOptions)
 {
   if (!jQuery('.ui-dialog ' + selector).length) {
+
     var options =  {
       dialogClass: 'popup',
       draggable: false,
@@ -163,6 +164,7 @@ function openDialog(selector, additionalOptions)
 
     if (additionalOptions) {
       for (var k in additionalOptions) {
+
         options[k] = additionalOptions[k];
       }
     }
@@ -170,11 +172,17 @@ function openDialog(selector, additionalOptions)
     // Grab title from h2/h1 tag
     var hTags = ['h2','h1'];
     var tagSelector;
+
     for (var i in hTags) {
+
       tagSelector = hTags[i] + ':first-child';
+
       if (!options.title && jQuery(selector + ' ' + tagSelector).length) {
+
         options.title = jQuery(selector + ' ' + tagSelector).html();
+
         jQuery(selector + ' ' + tagSelector).remove();
+
         break;
       }
     }
@@ -182,6 +190,7 @@ function openDialog(selector, additionalOptions)
     jQuery(selector).dialog(options);
 
   } else {
+
     jQuery(selector).dialog('open');
   }
 }

@@ -56,11 +56,10 @@
       <td colspan="3">&nbsp;</td>
     </tr>
 
-    <tr>	
+    <tr>
       <td colspan="3">
         {t(#Are you sure you want to continue?#)}
         <br />
-        q<br />
         <widget class="\XLite\View\Button\Submit" label="Yes" style="main-button" />&nbsp;&nbsp;
         <widget class="\XLite\View\Button\Regular" label="No" jsCode="document.location='admin.php?target=categories&category_id={category.parent.getCategoryId()}'" />
       </td>
