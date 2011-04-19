@@ -91,6 +91,7 @@ class Main extends \XLite\Controller\Customer\Category
 
         if (!\XLite\Core\Request::getInstance()->isAJAX()) {
             \XLite\Core\Session::getInstance()->productListURL = $this->getURL();
+            \XLite\Core\Session::getInstance()->continueShoppingURL = $this->getURL();
         }
     }
 
