@@ -150,14 +150,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
             $this->set('absence_of_product', true);
             $this->redirect($this->buildURL('cart'));
 
-        } elseif ($this->isPaymentNeeded()) {
+        } elseif (!$this->checkCheckoutAction()) {
 
-            // Payment method is not selected
-            $this->redirect($this->buildURL('checkout'));
-
-        } elseif (!\XLite\Core\Request::getInstance()->agree) {
-
-            // Terms and Conditions not signed
+            // Check access
             $this->redirect($this->buildURL('checkout'));
 
         } else {
@@ -737,7 +732,43 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function checkCart()
     {
-        return !$this->getCart()->isEmpty() && !((bool) $this->getCart()->getItemsWithWrongAmounts());
+        return !$this->getCart()->isEmpty()
+            && !$this->getCart()->getItemsWithWrongAmounts();
+    }
+
+    /**
+     * Check checkout action accessibility
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkCheckoutAction()
+    {
+        $result = true;
+
+        $steps = new \XLite\View\Checkout\Steps();
+        foreach (array_slice($steps->getSteps(), 0, -1) as $step) {
+            if (!$step->isCompleted()) {
+                $result = false;
+                break;
+            }
+        }
+
+        return $result && $this->checkReviewStep();
+    }
+
+    /**
+     * Check review step - complete or not
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkReviewStep()
+    {
+        return \XLite\Core\Request::getInstance()->agree
+            && $this->getCart()->getProfile()->getLogin();
     }
 }
 
