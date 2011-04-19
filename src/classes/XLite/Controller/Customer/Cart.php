@@ -78,22 +78,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     }
 
 
-    /** 
-     * If we can proceed with checkout with current cart
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function checkCart()
-    {
-        return
-            !$this->getCart()->isEmpty()
-            && !((bool) $this->getCart()->getItemsWithWrongAmounts())
-            && $this->isCheckoutAllowed();
-    }
-
-
     /**
      * Common method to determine current location 
      * 
@@ -340,8 +324,11 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     protected function setURLToReturn()
     {
         if (\XLite\Core\Config::getInstance()->General->redirect_to_cart) {
+
             \XLite\Core\Session::getInstance()->continueURL = $this->getURLToReturn();
+
         } else {
+
             $this->setReturnURL($this->getURLToReturn());
         }
     }
@@ -474,17 +461,5 @@ class Cart extends \XLite\Controller\Customer\ACustomer
         \XLite\Core\TopMessage::addInfo('Item has been deleted from cart');
         $this->setReturnUrl($this->buildURL('cart'));
     }
-
-    /** 
-     * Check for order min/max total 
-     * 
-     * @return boolean 
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isCheckoutAllowed()
-    {   
-        return !$this->getCart()->isMinOrderAmountError() && !$this->getCart()->isMaxOrderAmountError();
-    }   
 
 }
