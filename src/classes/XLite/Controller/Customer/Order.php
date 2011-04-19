@@ -45,7 +45,9 @@ class Order extends \XLite\Controller\Customer\Base\Order
      */
     public function getTitle()
     {
-        return 'Order #' . $this->getOrderId() . ', ' . date('M d, Y, H:i', $this->getOrder()->getDate());
+        return $this->getOrder()
+            ? ('Order #' . $this->getOrderId() . ', ' . date('M d, Y, H:i', $this->getOrder()->getDate()))
+            : 'Order not found';
     }
 
     /**
