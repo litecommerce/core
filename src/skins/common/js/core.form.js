@@ -651,17 +651,23 @@ CommonElement.prototype.updateByMouseWheel = function(event, delta)
   }
 
   if (value !== false) {
-    var min = jQuery(this).mousewheel.options.min;
-    var max = jQuery(this).mousewheel.options.max;
 
     value = value + delta;
 
-    if (typeof(min) != 'undefined' && min > value) {
-      value = min;
-    }
+    if (
+      typeof(jQuery(this).mousewheel) != 'undefined'
+      && typeof(jQuery(this).mousewheel.options) != 'undefined'
+    ) {
 
-    if (typeof(max) != 'undefined' && max < value) {
-      value = max;
+      var mwBase = jQuery(this).mousewheel.options;
+
+      if (typeof(mwBase.min) != 'undefined' && mwBase.min > value) {
+        value = mwBase.min;
+      }
+
+      if (typeof(mwBase.max) != 'undefined' && mwBase.max < value) {
+        value = mwBase.max;
+      }
     }
 
     value = mantis
