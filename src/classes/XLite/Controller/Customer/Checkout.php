@@ -55,8 +55,10 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     public function handleRequest()
     {
-        if (!$this->checkCart()) {
+        if (!$this->getCart()->checkCart()) {
+
             $this->setHardRedirect();
+
             $this->setReturnURL($this->buildURL('cart'));
         }
 
@@ -137,7 +139,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
     protected function doActionCheckout()
     {
         $itemsBeforeUpdate = $this->getCart()->getItemsFingerprint();
+
         $this->updateCart();
+
         $itemsAfterUpdate = $this->getCart()->getItemsFingerprint();
 
         if (
@@ -167,12 +171,16 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 ->getInputErrors($data);
 
             if ($errors) {
+
                 foreach ($errors as $error) {
+
                     \XLite\Core\TopMessage::addError($error);
                 }
+
                 $this->redirect($this->buildURL('checkout'));
 
             } else {
+
                 $this->doPayment();
             }
         }
@@ -212,6 +220,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
         $result = null;
 
         if ($transaction) {
+
             $result = $transaction->handleCheckoutAction();
 
         } elseif (!$cart->isOpen()) {
@@ -223,7 +232,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
             foreach ($cart->getPaymentTransactions() as $t) {
 
                 if ($t::STATUS_SUCCESS != $t->getStatus()) {
+
                     $status = \XLite\Model\Order::STATUS_QUEUED;
+
                     break;
                 }
             }
@@ -232,7 +243,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
         }
 
         if (\XLite\Model\Payment\Transaction::PROLONGATION == $result) {
+
             $this->set('silent', true);
+
             exit (0);
 
         } elseif ($cart->isOpen()) {
@@ -240,6 +253,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
             // Order is open - go to Select payment method step
 
             if ($transaction && $transaction->getNote()) {
+
                 \XLite\Core\TopMessage::getInstance()->add(
                     $transaction->getNote(),
                     $transaction->isFailed() ? \XLite\Core\TopMessage::ERROR : \XLite\Core\TopMessage::INFO,
@@ -254,9 +268,11 @@ class Checkout extends \XLite\Controller\Customer\Cart
             $status = $cart->isPayed()
                 ? \XLite\Model\Order::STATUS_PROCESSED
                 : \XLite\Model\Order::STATUS_QUEUED;
+
             $cart->setStatus($status);
 
             $this->processSucceed();
+
             $this->setReturnURL(
                 $this->buildURL(
                     'checkoutSuccess',
@@ -287,21 +303,26 @@ class Checkout extends \XLite\Controller\Customer\Cart
         $cart = \XLite\Core\Database::getRepo('XLite\Model\Cart')->find($orderId);
 
         if ($cart) {
+
             \XLite\Model\Cart::setObject($cart);
         }
 
         if (!$cart) {
+
             \XLite\Core\Session::getInstance()->order_id = null;
 
             \XLite\Core\TopMessage::addError(
                 'Order not found'
             );
+
             $this->redirect($this->buildURL('cart'));
 
         } elseif ($cart->isOpen()) {
+
             \XLite\Core\TopMessage::addInfo(
                 'Order is open'
             );
+
             $this->redirect($this->buildURL('checkout'));
 
         } else {
@@ -329,6 +350,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
         $isAnonymous = $this->isAnonymous();
 
         if ($isAnonymous) {
+
             if (\XLite\Core\Session::getInstance()->order_create_profile) {
 
                 // Create profile based on anonymous order profile
@@ -353,6 +375,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
         // anonymous checkout: logoff
         if ($isAnonymous && \XLite\Core\Auth::getInstance()->getProfile()) {
+
             \XLite\Core\Auth::getInstance()->logoff();
         }
     }
@@ -392,18 +415,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
         // Save old profile as original profile
         $this->getCart()->setOrigProfile($origProfile);
         $origProfile->setOrder(null);
-    }
-
-    /**
-     * Check for order min/max total 
-     * 
-     * @return boolean 
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isCheckoutNotAllowed()
-    {
-        return $this->getCart()->isMinOrderAmountError() || $this->getCart()->isMaxOrderAmountError();
     }
 
     /**
@@ -477,10 +488,13 @@ class Checkout extends \XLite\Controller\Customer\Cart
     protected function doActionUpdateProfile()
     {
         $form = new \XLite\View\Form\Checkout\UpdateProfile;
+
         $this->requestData = $form->getRequestData();
 
         $this->updateProfile();
+
         $this->updateShippingAddress();
+
         $this->updateBillingAddress();
     }
 
@@ -496,6 +510,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
         $login = $this->requestData['email'];
 
         if (isset($login)) {
+
             $tmpProfile = new \XLite\Model\Profile;
             $tmpProfile->setProfileId(0);
             $tmpProfile->setLogin($login);
@@ -515,6 +530,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
                     'This email address is used for an existing account. Enter another email address or sign in',
                     array('URL' => $this->getLoginURL())
                 );
+
                 \XLite\Core\Event::invalidElement('email', $label);
 
             } elseif (false !== $this->valid) {
@@ -526,6 +542,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 $this->getCart()->setProfile($profile);
 
                 \XLite\Core\Session::getInstance()->order_create_profile = (bool)$this->requestData['create_profile'];
+
                 $this->getCart()->setOrigProfile($profile);
 
                 $this->updateCart();
@@ -545,27 +562,37 @@ class Checkout extends \XLite\Controller\Customer\Cart
         $data = $this->requestData['shippingAddress'];
 
         if (is_array($data)) {
+
             $profile = $this->getCartProfile();
+
             $address = $profile->getShippingAddress();
+
             $andAsBilling = false;
 
             if (!$address || $data['save_as_new']) {
+
                 if ($address) {
+
                     $andAsBilling = $address->getIsBilling();
                     $address->setIsBilling(false);
                     $address->setIsShipping(false);
                 }
+
                 $address = new \XLite\Model\Address;
+
                 $address->setProfile($profile);
                 $address->setIsShipping(true);
                 $address->setIsBilling($andAsBilling);
+
                 $profile->addAddresses($address);
+
                 \XLite\Core\Database::getEM()->persist($address);
             }
 
             $address->map($this->prepareAddressData($data));
 
             if (!$profile->getBillingAddress()) {
+
                 // Same address as default behavior
                 $address->setIsBilling(true);
             }
@@ -586,12 +613,14 @@ class Checkout extends \XLite\Controller\Customer\Cart
     protected function updateBillingAddress()
     {
         $data = $this->requestData['billingAddress'];
+
         $profile = $this->getCartProfile();
 
         if ($this->requestData['same_address']) {
 
             // Shipping and billing are same addresses
             $address = $profile->getBillingAddress();
+
             if ($address) {
 
                 // Unselect old billing address
@@ -599,12 +628,14 @@ class Checkout extends \XLite\Controller\Customer\Cart
             }
 
             $address = $profile->getShippingAddress();
+
             if ($address) {
     
                 // Link shipping and billing address
                 $address->setIsBilling(true);
 
             } else {
+
                 $this->valid = false;
             }
 
@@ -615,7 +646,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             // Unlink shipping and billing addresses 
             $address = $profile->getShippingAddress();
+
             if ($address && $address->getIsBilling()) {
+
                 $address->setIsBilling(false);
             }
         }
@@ -624,19 +657,25 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             // Save separate billing address
             $address = $profile->getBillingAddress();
+
             $andAsShipping = false;
 
             if (!$address || $data['save_as_new']) {
+
                 if ($address) {
+
                     $andAsShipping = $address->getIsShipping();
                     $address->setIsBilling(false);
                     $address->setIsShipping(false);
                 }
+
                 $address = new \XLite\Model\Address;
                 $address->setProfile($profile);
                 $address->setIsBilling(true);
                 $address->setIsShipping($andAsShipping);
+
                 $profile->addAddresses($address);
+
                 \XLite\Core\Database::getEM()->persist($address);
             }
 
@@ -682,7 +721,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
     {
         $pm = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
             ->find(\XLite\Core\Request::getInstance()->methodId);
+
         if (!$pm) {
+
             \XLite\Core\TopMessage::addError(
                 'No payment method selected'
             );
@@ -692,10 +733,13 @@ class Checkout extends \XLite\Controller\Customer\Cart
             if ($this->getCart()->getProfile()) {
                 $this->getCart()->getProfile()->setLastPaymentId($pm->getMethodId());
             }
+
             $this->getCart()->setPaymentMethod($pm);
+
             $this->updateCart();
 
             if ($this->isPaymentNeeded()) {
+
                 \XLite\Core\TopMessage::addError(
                     'The selected payment method is obsolete or invalid. Select another payment method'
                 );
@@ -719,21 +763,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
             $this->updateCart();
 
         } else {
+
             $this->valid = false;
         }
-    }
-
-    /**
-     * If we can proceed with checkout with current cart
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function checkCart()
-    {
-        return !$this->getCart()->isEmpty()
-            && !$this->getCart()->getItemsWithWrongAmounts();
     }
 
     /**
@@ -771,4 +803,3 @@ class Checkout extends \XLite\Controller\Customer\Cart
             && $this->getCart()->getProfile()->getLogin();
     }
 }
-

@@ -10,6 +10,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
+
+{*TODO total refactoring !*}
+
 <div class="languages-dialog">
 
 <widget IF="countLabels()" class="\XLite\View\SavePanel" formName="updateForm" />
@@ -87,22 +90,32 @@
 <hr class="tiny languages-separator" />
 
 <form IF="countLabels()" method="post" action="admin.php" name="updateForm" >
+
   <input type="hidden" name="target" value="languages" />
   <input type="hidden" name="action" value="update" />
   <input type="hidden" name="page" value="{getPage()}" />
   <input type="hidden" name="language" value="{language}" />
 
   <ul class="language-labels">
+
     <li FOREACH="getLabels(),label">
+
       <div class="title">
+
         <input type="checkbox" name="mark[]" value="{label.label_id}" class="mark" />
+
         <input type="text" readonly="readonly" value="{label.name}" class="name" />
+
         <a href="javascript:void(0);" class="edit" onclick="javascript: return openEditLabelDialog(this, {label.label_id}, '{language}', {getPage()});"><img src="images/spacer.gif" alt="" /></a>
+
         <a href="admin.php?target=languages&action=delete_label&label_id={label.label_id}&language={language}&page={getPage()}" class="delete"><img src="images/spacer.gif" alt="" /></a>
+
       </div>
 
       <textarea name="current[{label.label_id}]"{if:isTranslatedLanguageSelected()} class="left"{end:} lang="{defaultLanguage.code}" xml:lang="{defaultLanguage.code}">{getLabelDefaultValue(label)}</textarea>
+
       <textarea IF="isTranslatedLanguageSelected()" name="translated[{label.label_id}]" class="right" lang="{translatedLanguage.code}" xml:lang="{translatedLanguage.code}"{if:translatedLanguage.r2l} dir="rtl"{end:}>{getTranslation(label)}</textarea>
+
       <div class="clear"></div>
 
     </li>
