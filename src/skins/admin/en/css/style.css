@@ -182,8 +182,8 @@ body
 
 #page-container {
   min-height: 100%;
-  position: absolute;
-  top: 0px;
+  /* position: absolute;
+  top: 0px; */
 }
 
 #page-container
@@ -200,9 +200,9 @@ body
 }
 
 #footer {
-  position: absolute;
+  /* position: absolute;
   bottom: 0;
-  left: 0;
+  left: 0;*/
 }
 
 /* safari and opera need this */
