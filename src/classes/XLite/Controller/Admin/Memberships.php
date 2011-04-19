@@ -103,12 +103,12 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
 
                     } else {
 
-                        $m->getTranslation($code)->name = $row['membership'];
+                        $m->getTranslation($code)->setName($row['membership']);
 
                     }
 
-                    $m->orderby = intval($row['orderby']);
-                    $m->active = isset($row['active']) && '1' == $row['active'];
+                    $m->setOrderby(intval($row['orderby']));
+                    $m->setActive(isset($row['active']) && '1' == $row['active']);
 
                     \XLite\Core\Database::getEM()->persist($m);
 
@@ -181,8 +181,8 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
 
             $code = $this->getCurrentLanguage();
             $membership = new \XLite\Model\Membership();
-            $membership->orderby = $data['orderby'];
-            $membership->getTranslation($code)->name = $data['membership'];
+            $membership->setOrderby(intval($data['orderby']));
+            $membership->getTranslation($code)->setName($data['membership']);
 
             \XLite\Core\Database::getEM()->persist($membership);
             \XLite\Core\Database::getEM()->flush();

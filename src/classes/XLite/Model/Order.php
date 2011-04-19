@@ -428,8 +428,10 @@ class Order extends \XLite\Model\Base\SurchargeOwner
      */
     public function getItemByItemId($itemId)
     {
+        $items = $this->getItems();
+
         return \Includes\Utils\ArrayManager::findValue(
-            $this->getItems(),
+            $items,
             array($this, 'checkItemIdEqual'),
             $itemId
         );
