@@ -104,7 +104,8 @@ class OrderItem extends \XLite\Model\Repo\ARepo
             ->setParameter('statusCompleted', \XLite\Model\Order::STATUS_COMPLETED)
             ->setMaxResults($cnd->limit)
             ->addGroupBy('o.sku')
-            ->addOrderBy('cnt', 'desc');
+            ->addOrderBy('cnt', 'desc')
+            ->addOrderBy('o.name', 'asc');
     }
 
     // }}}
