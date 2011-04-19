@@ -11,4 +11,7 @@
  * @since     1.0.0
  * @ListChild (list="cart.panel.totals", weight="40")
  *}
-<li class="button"><widget class="\XLite\View\Button\Link" label="Go to checkout" location="{buildURL(#checkout#)}" style="bright" /></li>
+<li class="button">
+  <widget IF="checkCart()" class="\XLite\View\Button\Link" label="Go to checkout" location="{buildURL(#checkout#)}" style="bright" />
+  <widget IF="!checkCart()" class="\XLite\View\Button\Link" label="Go to checkout" style="bright disabled add2cart-disabled" />
+</li>
