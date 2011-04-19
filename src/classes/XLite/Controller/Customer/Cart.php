@@ -327,6 +327,11 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
             \XLite\Core\Session::getInstance()->continueURL = $this->getURLToReturn();
 
+            // Hard redirect to cart 
+            $this->setReturnURL($this->buildURL('cart'));
+
+            $this->setHardRedirect();
+
         } else {
 
             $this->setReturnURL($this->getURLToReturn());
