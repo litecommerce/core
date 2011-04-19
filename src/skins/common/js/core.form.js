@@ -594,7 +594,7 @@ CommonElement.prototype.markAsWheelControlled = function()
   var o = this;
   this.$element.mousewheel(
     function(event, delta) {
-      return o.updateByMouseWheel(event, delta);
+      return o.$element.hasClass('focused') && o.updateByMouseWheel(event, delta);
     }
   );
 
@@ -618,13 +618,17 @@ CommonElement.prototype.markAsWheelControlled = function()
     )
     .insertAfter(this.$element);
 
-  this.$element.focus(function(){
-    jQuery(this).addClass('focused')
-  });
+  this.$element.focus(
+    function() {
+      jQuery(this).addClass('focused')
+    }
+  );
 
-  this.$element.blur(function(){
-    jQuery(this).removeClass('focused')
-  });
+  this.$element.blur(
+    function() {
+      jQuery(this).removeClass('focused')
+    }
+  );
 }
 
 // Update element by mosue wheel
