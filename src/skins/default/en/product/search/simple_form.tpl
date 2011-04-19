@@ -13,11 +13,11 @@
 
 <div class="simple-search-product-form">
 
-  <widget class="\XLite\View\Form\Search\Product\Simple" name="simple_products_search" />
+  <widget class="\XLite\View\Form\Product\Search\Customer\SimpleForm" name="simple_products_search" />
 
     <div class="simple-search-box">
 
-      <input type="text" class="form-text" size="30" maxlength="200" name="substring" value="{substring}" title="{t(#Search#)}" />
+      <input type="text" class="form-text" size="30" maxlength="200" name="substring" value="" title="{t(#Search#)}" />
 
       <widget class="\XLite\View\Button\Submit" style="submit-button" label="{t(#Search#)}" />
 

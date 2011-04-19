@@ -157,6 +157,12 @@ hr
   height: 1px;
 }
 
+input.input-file {
+  background: #ffffff;
+  border: solid 1px;
+  font-size: 14px;
+}
+
 
 /**
  * Layout
@@ -169,9 +175,6 @@ body
   height: 100%;
 }
 
-#page-container,
-#content,
-#sub-section,
 #footer
 {
   overflow: hidden;
@@ -179,7 +182,8 @@ body
 
 #page-container {
   min-height: 100%;
-  position: relative;
+  position: absolute;
+  top: 0px;
 }
 
 #page-container
@@ -646,7 +650,7 @@ button span
 {
     color: #0e55a6;
     font-family: "Trebuchet MS",Helvetica,sans-serif;
-    font-size: 15px;
+    font-size: 12px;
     vertical-align: middle;
 }
 
@@ -835,9 +839,16 @@ button.invert:hover
 
 .table-label
 {
-  min-width: 150px;
   white-space: nowrap;
   vertical-align: top;
+}
+
+table.data-table th.table-id-column,
+table.data-table td.table-id-column
+{
+  width: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 /* Profile form */

@@ -102,7 +102,8 @@ ItemsList.prototype.checkAll = function(handler)
 // Change current page
 ItemsList.prototype.showPage = function(handler)
 {
-  return this.process('pageId', jQuery(handler).attr('class'));
+//TODO change to getCommentedData() -> also in templates
+  return this.process('pageId', core.getValueFromClass(handler,'page'));
 }
 
 // Change items per page number

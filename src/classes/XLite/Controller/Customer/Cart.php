@@ -324,8 +324,16 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     protected function setURLToReturn()
     {
         if (\XLite\Core\Config::getInstance()->General->redirect_to_cart) {
+
             \XLite\Core\Session::getInstance()->continueURL = $this->getURLToReturn();
+
+            // Hard redirect to cart 
+            $this->setReturnURL($this->buildURL('cart'));
+
+            $this->setHardRedirect();
+
         } else {
+
             $this->setReturnURL($this->getURLToReturn());
         }
     }
@@ -458,4 +466,5 @@ class Cart extends \XLite\Controller\Customer\ACustomer
         \XLite\Core\TopMessage::addInfo('Item has been deleted from cart');
         $this->setReturnUrl($this->buildURL('cart'));
     }
+
 }

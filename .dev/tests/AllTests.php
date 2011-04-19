@@ -53,7 +53,7 @@ function xlite_make_sql_backup($path = null)
         $cmd .= ' --opt -h' . $config['hostspec'];
 
         if ($config['port']) {
-            $cmd .= ':' . $config['port'];
+            $cmd .= ' -P' . $config['port'];
         }
 
         $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
@@ -99,7 +99,7 @@ function xlite_restore_sql_from_backup($path = null, $verbose = true, $drop = tr
         $cmd .= ' -h' . $config['hostspec'];
         
         if ($config['port']) {
-            $cmd .= ':' . $config['port'];
+            $cmd .= ' -P' . $config['port'];
         }
 
         $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
@@ -215,6 +215,10 @@ if (!defined('SELENIUM_SOURCE_URL')) {
 
 if (!defined('SELENIUM_SERVER')) {
     define('SELENIUM_SERVER', 'cormorant.crtdev.local');
+}
+
+if (!defined('TESTS_LOG_DIR')) {
+    define('TESTS_LOG_DIR', LC_VAR_DIR . 'log' . LC_DS);
 }
 
 if (isset($_SERVER['argv']) && preg_match('/--log-xml\s+(\S+)\s/s', implode(' ', $_SERVER['argv']), $match)) {

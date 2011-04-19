@@ -230,7 +230,7 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
         $address->setState($s);
 
         $this->assertInstanceOf('\XLite\Model\State', $address->getState(), 'State checking #3');
-        $this->assertEquals('', $address->getState()->getState(), 'State name checking #3');
+        $this->assertEquals('Test state 2', $address->getState()->getState(), 'State name checking #3');
         $this->assertNull($address->getState()->getStateId(), 'State id checking #3');
 
         $address->setCustomState('Test state 3');

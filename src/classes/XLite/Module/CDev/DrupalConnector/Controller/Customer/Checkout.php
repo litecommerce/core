@@ -64,12 +64,13 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
     {
         if ($this->isCreateProfile()) {
 
-            if (!\XLite\Core\Request::getInstance()->username) {
+            $error = user_validate_name(\XLite\Core\Request::getInstance()->username);
 
-                // Username is empty
+            if ($error) {
+
+                // Username validation error
                 $this->valid = false;
-                $label = $this->t('This user name is empty');
-                \XLite\Core\Event::invalidElement('username', $label);
+                \XLite\Core\Event::invalidElement('username', $error);
 
             } elseif (user_load_by_name(\XLite\Core\Request::getInstance()->username)) {
 

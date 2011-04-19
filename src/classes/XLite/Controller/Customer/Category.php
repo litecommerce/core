@@ -82,4 +82,21 @@ class Category extends \XLite\Controller\Customer\Catalog
             && !is_null($this->getCategory())
             && \XLite\Model\Repo\Category::CATEGORY_ID_ROOT != $this->getCategory()->getCategoryId();
     }
+
+    /**
+     * Preprocessor for no-action ren
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doNoAction()
+    {
+        parent::doNoAction();
+
+        if (!\XLite\Core\Request::getInstance()->isAJAX()) {
+            \XLite\Core\Session::getInstance()->continueShoppingURL = $this->getURL();
+        }
+    }
+
 }

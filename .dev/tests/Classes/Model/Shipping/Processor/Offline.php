@@ -102,10 +102,15 @@ class XLite_Tests_Model_Shipping_Processor_Offline extends XLite_Tests_Model_Ord
 
         $this->assertTrue(is_array($rates), 'getRates() must return an array');
 
-        foreach ($rates as $rate) {
-            $this->assertTrue($rate instanceof \XLite\Model\Shipping\Rate, 'getRates() must return an array of \XLite\Model\Shipping\Rate instances');
-            $this->assertEquals(0, $rate->getBaseRate(), 'Base rate is not zero');
-            $this->assertNotEquals(0, $rate->getMarkupRate(), 'Markup rate is zero');
+        foreach ($rates as $i => $rate) {
+            $this->assertInstanceOf('XLite\Model\Shipping\Rate', $rate, 'getRates() must return an array of \XLite\Model\Shipping\Rate instances (#' . $i . ')');
+            $this->assertEquals(0, $rate->getBaseRate(), 'Base rate is not zero (#' . $i . ')');
+            if ($rate->getMarkup()->getMarkupId() == 1) {
+                $this->assertEquals(0, $rate->getMarkupRate(), 'Markup rate is not zero (#' . $i . ')');
+
+            } else {
+                $this->assertNotEquals(0, $rate->getMarkupRate(), 'Markup rate is zero (#' . $i . ')');
+            }
         }
     }
 
