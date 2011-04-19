@@ -59,6 +59,7 @@ abstract class AFormField extends \XLite\View\AView
     const FIELD_TYPE_PASSWORD  = 'password';
     const FIELD_TYPE_SELECT    = 'select';
     const FIELD_TYPE_CHECKBOX  = 'checkbox';
+    const FIELD_TYPE_RADIO     = 'radio';
     const FIELD_TYPE_TEXTAREA  = 'textarea';
     const FIELD_TYPE_SEPARATOR = 'separator';
 

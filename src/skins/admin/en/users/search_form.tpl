@@ -69,17 +69,23 @@ function managedate(type, status) {
       <table cellpadding="1" cellspacing="5">
 
         <tr>
+
           <td style="width:20%;height:10px;" class="table-label">Search for pattern:</td>
+
           <td style="height:10px;" nowrap="nowrap">
             <input type="text" name="posted_data[pattern]" size="50" value="{getSearchParams(#pattern#)}" />
             &nbsp;
             <widget class="\XLite\View\Button\Submit" label="Search" />
           </td>
+
         </tr>
 
         <tr>
+
           <td></td>
+
           <td>(will search in emails and user names)</td>
+
         </tr>
 
       </table>
@@ -247,11 +253,8 @@ managedate('date', true);
 -->
 </script>
 
-
-
 </form>
 
 <br />
 
 <widget class="\XLite\View\Button\AddUser" label="Add user" jsCode="self.location = '{buildURL(#profile#,##,_ARRAY_(#mode#^#register#))}';" />
-

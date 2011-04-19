@@ -175,9 +175,6 @@ body
   height: 100%;
 }
 
-#page-container,
-#content,
-#sub-section,
 #footer
 {
   overflow: hidden;
@@ -185,7 +182,8 @@ body
 
 #page-container {
   min-height: 100%;
-  position: relative;
+  position: absolute;
+  top: 0px;
 }
 
 #page-container
@@ -841,9 +839,16 @@ button.invert:hover
 
 .table-label
 {
-  min-width: 150px;
   white-space: nowrap;
   vertical-align: top;
+}
+
+table.data-table th.table-id-column,
+table.data-table td.table-id-column
+{
+  width: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 /* Profile form */
