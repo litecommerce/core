@@ -72,7 +72,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @Column (type="string", length="128")
      */
-    protected $login = '';
+    protected $login;
 
     /**
      * Password
