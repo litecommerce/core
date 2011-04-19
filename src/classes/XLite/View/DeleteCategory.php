@@ -74,7 +74,7 @@ class DeleteCategory extends \XLite\View\SimpleDialog
      */
     protected function getBody()
     {
-        return 'categories' . LC_DS . 'delete_confirmation.tpl';
+        return 'categories/delete_confirmation.tpl';
     }
 
     /**
@@ -98,7 +98,8 @@ class DeleteCategory extends \XLite\View\SimpleDialog
      */
     protected function isVisible()
     {
-        return parent::isVisible() && 'delete' === \XLite\Core\Request::getInstance()->mode;
+        return parent::isVisible() 
+            && 'delete' === \XLite\Core\Request::getInstance()->pre_action;
     }
 }
 
