@@ -34,17 +34,4 @@
     {t(#The module is available for older core versions only#)}      
   </div> 
 
-  <div IF="!isModuleCompatible(module)" class="note version error">
-    {t(#The module version is incompatible with current core version#)}.<br />
-
-    <span IF="isCoreUpgradeNeeded(module)&isCoreUpgradeAvailable(module.getMajorVersion())">
-      {t(#Please#)}, <a href="{buildURL(#upgrade#,##,_ARRAY_(#version#^module.getMajorVersion()))}">{t(#upgrade core#)}</a>.
-    </span>
-
-    <span IF="isModuleUpgradeNeeded(module)&!isModuleUpdateAvailable(module)">
-      {t(#The module is available for old core versions only#)}.
-    </span>
-
-  </div>
-
 </div>
