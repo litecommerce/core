@@ -81,7 +81,7 @@ class XLite_Web_Admin_Orders extends XLite_Web_Admin_AAdmin
         $this->assertJqueryPresent($warnIconSelector, 'check warning icon');
 
         // Check message
-        $this->mouseOver('//a[@id="status_warning_"' . $oid . ']');
+        $this->mouseOver('id=status_warning_' . $oid);
         $this->waitForLocalCondition(
             'jQuery("' . $popupMesgSelector . '").length > 0',
             2000,
