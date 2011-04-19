@@ -212,4 +212,21 @@ class Cart extends \XLite\Model\Order
     {
         $this->getRepository()->markAsOrder($this->getOrderId());
     }
+
+    /** 
+     * If we can proceed with checkout with current cart
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function checkCart()
+    {
+        return
+            !$this->isEmpty()
+            && !((bool) $this->getItemsWithWrongAmounts())
+            && !$this->isMinOrderAmountError()
+            && !$this->isMaxOrderAmountError();
+    }
+
 }
