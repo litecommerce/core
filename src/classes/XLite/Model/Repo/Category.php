@@ -94,6 +94,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
         $this->addOrderByCondition($qb, $alias);
 
         if ($excludeRoot) {
+
             $this->addExcludeRootCondition($qb, $alias);
         }
 
@@ -228,9 +229,15 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         // Create new record for the QuickFlags model
         $quickFlags = new \XLite\Model\Category\QuickFlags();
+
         $quickFlags->setCategory($entity);
-        $entity->setQuickFlags($quickFlags);
-        \XLite\Core\Database::getEM()->persist($quickFlags);
+
+        $this->update(
+            $entity,
+            array(
+                'quickFlags' => $quickFlags,
+            )
+        );
 
         return $entity;
     }
@@ -252,7 +259,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         // Save some variables
         $right = $entity->getRpos() - ($onlySubtree ? 1 : 0);
-        $width = $right - $entity->getLpos() + ($onlySubtree ? 0 : 1);
+
+        $width = $entity->getRpos() - $entity->getLpos();
 
         $onlySubtree 
             ? $this->deleteInBatch($this->getSubtree($entity->getCategoryId())) 
@@ -327,10 +335,12 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function defineFullTreeQuery($categoryId)
     {
         if (!isset($categoryId)) {
+
             $categoryId = $this->getRootCategoryId();
         }
 
         $queryBuilder = $this->createQueryBuilder();
+
         $this->addSubTreeCondition($queryBuilder, $categoryId);
         
         return $queryBuilder;
@@ -350,10 +360,13 @@ class Category extends \XLite\Model\Repo\Base\I18n
         $qb = $this->createQueryBuilder();
 
         if ($categoryId) {
+
             $qb->innerJoin('c.parent', 'cparent')
                 ->andWhere('cparent.category_id = :parentId')
                 ->setParameter('parentId', $categoryId);
+
         } else {
+
             $qb->andWhere('c.parent IS NULL');
         }
 
@@ -409,10 +422,13 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function defineCategoryPathQuery($categoryId)
     {
         $queryBuilder = $this->createQueryBuilder();
+
         $category = $this->getCategory($categoryId);
 
         if ($category) {
+
             $this->addSubTreeCondition($queryBuilder, $categoryId, 'lpos', 1, $category->getLpos());
+
             $this->addSubTreeCondition(
                 $queryBuilder,
                 $categoryId,
@@ -503,8 +519,11 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function addEnabledCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
         if ($this->getEnabledCondition()) {
+
             $alias = $alias ?: $this->getDefaultAlias();
-            $queryBuilder->andWhere($alias . '.enabled = :enabled')
+
+            $queryBuilder
+                ->andWhere($alias . '.enabled = :enabled')
                 ->setParameter('enabled', true);
         }
     }
@@ -521,8 +540,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function addOrderByCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
-        $queryBuilder
-            ->addOrderBy(($alias ?: $this->getDefaultAlias()) . '.lpos', 'ASC');
+        $queryBuilder->addOrderBy(
+            ($alias ?: $this->getDefaultAlias()) . '.lpos', 'ASC'
+        );
     }
 
     /**
@@ -538,6 +558,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function addExcludeRootCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
         $alias = $alias ?: $this->getDefaultAlias();
+
         $queryBuilder->andWhere($alias . '.category_id <> :rootId')
             ->setParameter('rootId', $this->getRootCategoryId());
     }
@@ -566,21 +587,25 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function prepareNewCategoryData(array $data, \XLite\Model\Category $parent = null)
     {
-        if (!isset($parent) && isset($data['parent_id']) && $data['parent_id']) {
+        if (
+            !isset($parent) 
+            && isset($data['parent_id']) 
+            && $data['parent_id']
+        ) {
             $parent = $this->getCategory($data['parent_id']);
         }
 
         if (isset($parent)) {
 
-            $data['lpos'] = $parent->getLpos() + 1;
-            $data['rpos'] = $parent->getLpos() + 2;
+            $data['lpos']   = $parent->getLpos() + 1;
+            $data['rpos']   = $parent->getLpos() + 2;
             $data['parent'] = $parent;
 
         } else {
 
             // TODO - rework - add support last root category
-            $data['lpos'] = 1;
-            $data['rpos'] = 2;
+            $data['lpos']   = 1;
+            $data['rpos']   = 2;
             $data['parent'] = null;
         }
         
@@ -634,9 +659,13 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function updateQuickFlags(\XLite\Model\Category $entity, array $flags)
     {
         if (is_object($entity->getQuickFlags())) {
+
             foreach ($flags as $name => $delta) {
+
                 $name = \XLite\Core\Converter::convertToCamelCase($name);
+
                 $value = $entity->getQuickFlags()->{'get' . $name}();
+
                 $entity->getQuickFlags()->{'set' . $name}($value + $delta);
             }
         }
@@ -661,8 +690,10 @@ class Category extends \XLite\Model\Repo\Base\I18n
         $entity = null;
         $parent = null;
 
-        if (!isset($data['parent_id']) || 0 == $data['parent_id']) {
-
+        if (
+            !isset($data['parent_id']) 
+            || 0 == $data['parent_id']
+        ) {
             // Insert root category
             $entity = parent::performInsert($this->prepareNewCategoryData($data));
 
@@ -670,6 +701,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
             // Get parent for non-root category
             $parent = $this->getCategory($data['parent_id']);
+
             if ($parent) {
 
                 // Update indexes in the nested set
@@ -685,6 +717,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
         }
 
         if ($entity && $parent) {
+
             // Update quick flags
             $this->updateQuickFlags($parent, $this->prepareQuickFlags(1, $entity->getEnabled() ? 1 : -1));
         }
@@ -705,8 +738,15 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function performUpdate(\XLite\Model\AEntity $entity, array $data = array())
     {
         // Update quick flags (if needed)
-        if (isset($data['enabled']) && ($entity->getEnabled() xor ((bool) $data['enabled']))) {
+        if (
+            isset($data['enabled']) 
+            && (
+                $entity->getEnabled() 
+                xor ((bool) $data['enabled'])
+            )
+        ) {
             $enabled = $entity->getEnabled() ? -1 : 1;
+
             $this->updateQuickFlags($entity->getParent(), $this->prepareQuickFlags(0, $enabled));
         }
 
