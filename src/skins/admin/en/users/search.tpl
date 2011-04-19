@@ -13,9 +13,12 @@
 
 <widget template="common/dialog.tpl" body="users/search_form.tpl" />
 
-<span IF="mode=#search#|mode=#list#">
+<div IF="mode=#search#|mode=#list#">
+
+  {getUsersCount()} {t(#account(s) found#)}
+
   <br />
-  {getUsersCount()} account(s) found
-  <br />
+
   <widget template="common/dialog.tpl" head="Search results" body="users/search_results.tpl" IF="{getUsersCount()}" />
-</span>
+
+</div>

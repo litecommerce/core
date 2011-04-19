@@ -58,14 +58,19 @@
         <td style="width:78;">&nbsp;</td>
         <td style="height:30;">
           <widget class="\XLite\View\Button\Submit" label=" Search " style="main-button" />
+
           {* TODO - restore and uncomment *}
-          {*&nbsp;&nbsp;&nbsp;
+
+          {*
+          &nbsp;&nbsp;&nbsp;
           <widget class="\XLite\View\Button\Regular" label=" Export to.. " jsCode="document.order_search_form.action.value=document.order_search_form.export_format.value;document.order_search_form.submit()" />
           &nbsp;
           <select name="export_format">
             <option value="default" selected>- select export format -</option>
             <option FOREACH="exportFormats,format,description" value="{format}">{description}</option>
-          </select>*}
+          </select>
+          *}
+
         </td>
       </tr>
 
