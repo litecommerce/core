@@ -314,6 +314,30 @@ class Profile extends \XLite\Model\AEntity
     }
 
     /**
+     * Get membership Id 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getMembershipId()
+    {
+        return $this->getMembership() ? $this->getMembership()->getMembershipId() : null;
+    }
+
+    /**
+     * Get pending membership Id 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPendingMembershipId()
+    {
+        return $this->getPendingMembership() ? $this->getPendingMembership()->getMembershipId() : null;
+    }
+
+    /**
      * Returns billing address 
      * 
      * @return \XLite\Model\Address
