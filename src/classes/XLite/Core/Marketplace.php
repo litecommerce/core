@@ -45,6 +45,7 @@ class Marketplace extends \XLite\Base\Singleton
     const ACTION_GET_ADDONS_LIST   = 'get_addons';
     const ACTION_GET_ADDON_PACK    = 'get_addon_pack';
     const ACTION_GET_ADDON_INFO    = 'get_addon_info';
+    const ACTION_CHECK_ADDON_KEY   = 'check_addon_key';
 
     /**
      * Protocol data fields - common
@@ -255,6 +256,25 @@ class Marketplace extends \XLite\Base\Singleton
         );
     }
 
+    /**
+     * The "check_addon_key" request handler
+     *
+     * @param string $key Module license to check
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function checkAddonKey($key)
+    {
+        return $this->sendRequestToMarkeplace(
+            self::ACTION_CHECK_ADDON_KEY,
+            array(
+                self::REQUEST_FIELD_MODULE_KEY => $key,
+            )
+        );
+    }
+
     // }}}
 
     // {{{ Protocol (handlers)
@@ -441,6 +461,19 @@ class Marketplace extends \XLite\Base\Singleton
     }
 
     /**
+     * Set top message with error info
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setErrorTopMessage()
+    {
+        list($code, $message) = $this->getError();
+        \XLite\Core\TopMessage::getInstance()->addError($message, array(), $code);
+    }
+
+    /**
      * Unset the error-related variables
      * 
      * @return void
@@ -570,6 +603,27 @@ class Marketplace extends \XLite\Base\Singleton
         );
     }
 
+    /**
+     * Return validation schema for certain action
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getResponseSchemaForCheckAddonKeyAction()
+    {
+        return array(
+            self::RESPONSE_FIELD_MODULE_AUTHOR => array(
+                'filter'  => FILTER_VALIDATE_REGEXP,
+                'options' => array('regexp' => '/\w+/'),
+            ),
+            self::RESPONSE_FIELD_MODULE_NAME   => array(
+                'filter'  => FILTER_VALIDATE_REGEXP,
+                'options' => array('regexp' => '/\w+/'),
+            ),
+        );
+    }
+
     // }}}
 
     // {{{ Certain requests
@@ -686,6 +740,27 @@ class Marketplace extends \XLite\Base\Singleton
         // Validate data recieved in responese
         if ($this->validateAgainstSchema($data, $this->getResponseSchemaForGetAddonPackAction())) {
             $result = base64_decode($data['data']);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Prepare data for certain response
+     *
+     * @param array $data Data recieved from marketplace
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareResponseForCheckAddonKeyAction(array $data)
+    {
+        $result = null;
+
+        // Validate data recieved in responese
+        if ($this->validateAgainstSchema($data, $this->getResponseSchemaForCheckAddonKeyAction())) {
+            $result = $data;
         }
 
         return $result;

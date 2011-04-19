@@ -37,10 +37,10 @@ namespace XLite\Model;
  * @Entity (repositoryClass="\XLite\Model\Repo\ModuleKey")
  * @Table  (name="module_keys",
  *      uniqueConstraints={
- *          @UniqueConstraint (name="an", columns={"author","module"})
+ *          @UniqueConstraint (name="an", columns={"author","name"})
  *      },
  *      indexes={
- *          @Index (name="author_module", columns={"author","module"})
+ *          @Index (name="author_name", columns={"author","name"})
  *      }
  * )
  */
@@ -55,7 +55,7 @@ class ModuleKey extends \XLite\Model\AEntity
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer")
+     * @Column         (type="integer")
      */
     protected $keyId;
 
@@ -68,7 +68,7 @@ class ModuleKey extends \XLite\Model\AEntity
      *
      * @Column (type="string", length="64")
      */
-    protected $module = '';
+    protected $name;
 
     /**
      * Author name
@@ -79,8 +79,7 @@ class ModuleKey extends \XLite\Model\AEntity
      *
      * @Column (type="string", length="64")
      */
-    protected $author = '';
-
+    protected $author;
 
     /**  
      * Key value
@@ -89,7 +88,7 @@ class ModuleKey extends \XLite\Model\AEntity
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="string", length="256")
+     * @Column (type="fixedstring", length="64")
      */
-    protected $keyValue = '';
+    protected $keyValue;
 }

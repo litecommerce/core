@@ -68,9 +68,9 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
 
             if ($info) {
                 $result = $info[\XLite\Core\Marketplace::RESPONSE_FIELD_MODULE_LICENSE];
+
             } else {
-                list($code, $message) = \XLite\Core\Marketplace::getInstance()->getError();
-                \XLite\Core\TopMessage::getInstance()->addError($message, $code);
+                \XLite\Core\Marketplace::getInstance()->setErrorTopMessage();
             }
 
         } else {
@@ -163,25 +163,19 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
         $module = $this->getModule();
 
         if ($module && $module->getMarketplaceID()) {
-            $result = \XLite\Core\Marketplace::getInstance()->getAddonPack($module->getMarketplaceID());
+            $entity = $module->getLicenseKey();
+
+            $result = \XLite\Core\Marketplace::getInstance()->getAddonPack(
+                $module->getMarketplaceID(),
+                $entity ? $entity->getKeyValue() : null
+            );
+
+            if (!isset($result)) {
+                \XLite\Core\Marketplace::getInstance()->setErrorTopMessage();
+            }
         }
 
         return $result;
-    }
-
-    // }}}
-
-    // {{{ "Register key" action handler
-
-    /**
-     * Action of license key registration
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionRegisterKey()
-    {
     }
 
     // }}}
