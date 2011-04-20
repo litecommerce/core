@@ -204,7 +204,7 @@ jQuery(document).ready(
 /**
  * Prepare submit params for the forms having "GET" method
  * 
- * @param HTMLFormElement $form curretn form
+ * @param HTMLFormElement $form current form
  *  
  * @return void
  * @since  1.0.0
