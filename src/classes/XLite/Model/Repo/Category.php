@@ -257,13 +257,16 @@ class Category extends \XLite\Model\Repo\Base\I18n
         // Find category by ID
         $entity = $this->getCategory($categoryId);
 
+        // ROOT category cannot be removed. Only its subtree.
+        $onlySubtree = $categoryId === $this->getRootCategoryId() ? true : $onlySubtree;
+
         // Save some variables
         $right = $entity->getRpos() - ($onlySubtree ? 1 : 0);
 
         $width = $entity->getRpos() - $entity->getLpos();
 
-        $onlySubtree 
-            ? $this->deleteInBatch($this->getSubtree($entity->getCategoryId())) 
+        $onlySubtree
+            ? $this->deleteInBatch($this->getSubtree($entity->getCategoryId()))
             : $this->delete($entity);
 
         // Update indexes in the nested set
@@ -658,21 +661,22 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function updateQuickFlags(\XLite\Model\Category $entity, array $flags)
     {
-        if (is_object($entity->getQuickFlags())) {
+        if (is_object($entity)) {
+            if (is_object($entity->getQuickFlags())) {
+                foreach ($flags as $name => $delta) {
 
-            foreach ($flags as $name => $delta) {
+                    $name = \XLite\Core\Converter::convertToCamelCase($name);
 
-                $name = \XLite\Core\Converter::convertToCamelCase($name);
+                    $value = $entity->getQuickFlags()->{'get' . $name}();
 
-                $value = $entity->getQuickFlags()->{'get' . $name}();
-
-                $entity->getQuickFlags()->{'set' . $name}($value + $delta);
+                    $entity->getQuickFlags()->{'set' . $name}($value + $delta);
+                }
             }
-        }
 
-        // Do not change to $this->update() or $this->performUpdate():
-        // it will cause the unfinite recursion
-        parent::performUpdate($entity);
+            // Do not change to $this->update() or $this->performUpdate():
+            // it will cause the unfinite recursion
+            parent::performUpdate($entity);
+        }
     }
 
 
@@ -716,7 +720,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
             }
         }
 
-        if ($entity && $parent) {
+        if ($entity) {
 
             // Update quick flags
             $this->updateQuickFlags($parent, $this->prepareQuickFlags(1, $entity->getEnabled() ? 1 : -1));
@@ -738,19 +742,22 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function performUpdate(\XLite\Model\AEntity $entity, array $data = array())
     {
         // Update quick flags (if needed)
-        if (
-            isset($data['enabled']) 
-            && (
-                $entity->getEnabled() 
-                xor ((bool) $data['enabled'])
-            )
-        ) {
-            $enabled = $entity->getEnabled() ? -1 : 1;
+        if (is_object($entity)) {
 
-            $this->updateQuickFlags($entity->getParent(), $this->prepareQuickFlags(0, $enabled));
+            if (
+                isset($data['enabled']) 
+                && (
+                    $entity->getEnabled() 
+                    xor ((bool) $data['enabled'])
+                )
+            ) {
+                $enabled = $entity->getEnabled() ? -1 : 1;
+
+                $this->updateQuickFlags($entity->getParent(), $this->prepareQuickFlags(0, $enabled));
+            }
+
+            parent::performUpdate($entity, $data);
         }
-
-        parent::performUpdate($entity, $data);
     }
 
     /**
@@ -811,7 +818,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
         if ($parent instanceof \XLite\Model\Category) {
 
             $qf = new \XLite\Model\Category\QuickFlags;
+
             $entity->setQuickFlags($qf);
+
             $qf->setCategory($entity);
 
             // Update indexes in the nested set
@@ -830,6 +839,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
             } else {
 
                 $rpos = $this->getMaxRightPos();
+
                 $entity->setLpos($rpos + 1);
                 $entity->setRpos($rpos + 2);
             }

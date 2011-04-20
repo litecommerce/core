@@ -41,7 +41,7 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      */
     const TEMPLATE  = 'button/popup_button.tpl';
     const CSS_CLASS = 'popup-button';
-    const JS_SCRIPT = 'button/js/popup_button.js';
+    const JS_SCRIPT = 'button/js/core.popup_button.js';
     const URLParams = 'url_params';
     const POPUP_CSS_FILE = 'button/css/popup.css';
 

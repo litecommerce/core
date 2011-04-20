@@ -97,7 +97,7 @@
       </th>
     </tr>
 
-    {if:category.hasSubcategories()}
+    {if:category&category.hasSubcategories()}
     <tr FOREACH="getSubcategories(getCategoryId()),id,cat" class="{getRowClass(id,##,#highlight#)}">
 
       <td style="width:100%;">
@@ -136,7 +136,7 @@
         <widget class="\XLite\View\Button\Regular" id="add" label="Add category" jsCode="onAddChildClick({getCategoryId()})" />
       </td>		
 
-      <td align="right" IF="category.getSubCategoriesCount()">
+      <td align="right" IF="category&category.getSubCategoriesCount()">
         <widget class="\XLite\View\Button\DeleteCategory" id="delete_all_button" label="Delete all" />
       </td>		
 
