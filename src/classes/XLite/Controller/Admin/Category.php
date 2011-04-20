@@ -155,6 +155,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     protected function doActionAddChild()
     {
         if ($properties = $this->validateCategoryData(true)) {
+
             $category = \XLite\Core\Database::getRepo('XLite\Model\Category')
                 ->insert(array('parent_id' => $this->getCategoryId()) + $properties);
 
