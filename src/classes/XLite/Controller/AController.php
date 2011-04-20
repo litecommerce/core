@@ -1376,7 +1376,7 @@ abstract class AController extends \XLite\Core\Handler
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function updateMarketplaceDataCache()
+/*    protected function updateMarketplaceDataCache()
     {
         // Check if data is still valid
         if (\XLite\Core\Auth::getInstance()->isAdmin() && $this->areMarketplaceCachedDataExpired()) {
@@ -1410,7 +1410,7 @@ abstract class AController extends \XLite\Core\Handler
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function areMarketplaceCachedDataExpired()
+/*    protected function areMarketplaceCachedDataExpired()
     {
         // DEVCODE, to remove
         return true;
@@ -1425,7 +1425,7 @@ abstract class AController extends \XLite\Core\Handler
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getMarketplaceLastRequestTime()
+/*    protected function getMarketplaceLastRequestTime()
     {
         return \XLite\Core\TmpVars::getInstance()->{self::MARKETPLACE_LAST_REQUEST_TIME};
     }
@@ -1437,7 +1437,7 @@ abstract class AController extends \XLite\Core\Handler
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function setMarketplaceLastRequestTime()
+/*    protected function setMarketplaceLastRequestTime()
     {
         \XLite\Core\TmpVars::getInstance()->{self::MARKETPLACE_LAST_REQUEST_TIME} = time();
     }
@@ -1449,10 +1449,10 @@ abstract class AController extends \XLite\Core\Handler
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getMarketplaceDataTTL()
+/*    protected function getMarketplaceDataTTL()
     {
         return 3600 * 24;
-    }
+    }*/
 
     // }}}
 }

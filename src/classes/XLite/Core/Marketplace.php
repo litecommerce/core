@@ -46,6 +46,7 @@ class Marketplace extends \XLite\Base\Singleton
     const ACTION_GET_ADDON_PACK    = 'get_addon_pack';
     const ACTION_GET_ADDON_INFO    = 'get_addon_info';
     const ACTION_CHECK_ADDON_KEY   = 'check_addon_key';
+    const ACTION_CHECK_FOR_UPDATES = 'check_for_updates';
 
     /**
      * Protocol data fields - common
@@ -273,6 +274,26 @@ class Marketplace extends \XLite\Base\Singleton
                 self::REQUEST_FIELD_MODULE_KEY => $key,
             )
         );
+    }
+
+    /**
+     * The "check_for_updates" request handler
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function checkForUpdates()
+    {
+        /*if (!$this->checkTTL(__FUNCTION__, self::TTL_UPGRADE_FLAGS)) {
+            \XLite\Core\TmpVars::getInstance()->{self::CACHED_DATA_UPGRADE_FLAGS}
+                = $this->sendRequestToMarkeplace(self::ACTION_CHECK_FOR_UPDATES);
+            $this->setTTLStart(__FUNCTION__);
+        }
+
+        return \XLite\Core\TmpVars::getInstance()->{self::CACHED_DATA_UPGRADE_FLAGS};*/
+
+        return true;
     }
 
     // }}}
@@ -644,7 +665,7 @@ class Marketplace extends \XLite\Base\Singleton
         foreach ($data as $core) {
 
             // Validate data recieved in responese
-            if ($this->validateAgainstSchema($module, $this->getResponseSchemaForGetAddonsAction())) {
+            if ($this->validateAgainstSchema($core, $this->getResponseSchemaForGetAddonsAction())) {
                 $result[] = $core;
             }
         }
@@ -852,7 +873,38 @@ class Marketplace extends \XLite\Base\Singleton
 
     // }}}
 
-    // {{{ Some external methods for controllers
+    // {{{ Cache-related routines
+
+    /**
+     * Check and update cache TTL
+     * 
+     * @param string  $type Name (type) of the current element
+     * @param integer $ttl  TTL value (in seconds)
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkTTL($type, $ttl)
+    {
+        $start = \XLite\Core\TmpVars::getInstance()->{$this->getTTLName($type)};
+
+        return isset($start) && time() < ($start + $ttl);
+    }
+
+    /**
+     * Return name of a TTL cell
+     *
+     * @param string $type Name (type) of the current element
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getTTLName($type)
+    {
+        return 'marketplace' . $type . 'TTLStart';
+    }
 
     // }}}
 }

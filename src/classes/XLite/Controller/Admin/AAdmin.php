@@ -480,41 +480,5 @@ OUT;
         return \XLite::getInstance()->getVersion();
     }
 
-    /**
-     * Is core upgrade available
-     * 
-     * @param string $majorVersion core version to check OPTIONAL
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isCoreUpgradeAvailable($majorVersion = null)
-    {
-        $result = \XLite\Core\TmpVars::getInstance()->coreVersionsForUpgarde;
-
-        if ($result && isset($majorVersion)) {
-            $result = in_array($majorVersion, $result);
-        }
-
-        return (bool) $result;
-    }
-
-    // }}}
-
-    // {{{ Marketplace routines; :FIXME: must be moved to the base controller for module list
-
-    /**
-     * Return marketplace URL
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getMarketplaceURL()
-    {
-        return \XLite\Core\Marketplace::getInstance()->getMarketplaceURL();
-    }
-
     // }}}
 }

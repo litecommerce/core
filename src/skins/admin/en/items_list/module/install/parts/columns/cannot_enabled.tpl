@@ -30,7 +30,7 @@
 
   <div IF="isCoreUpgradeNeeded(module)" class="note version error">
     {t(#The module version is incompatible with your core version and cannot be installed#)}<br />
-    <span="isCoreUpgradeAvailable(module.getMajorVersion())">
+    <span IF="isCoreUpgradeAvailable(module.getMajorVersion())">
       {t(#Please#)} <a href="{buildURL(#upgrade#,##,_ARRAY_(#version#^module.getMajorVersion()))}">upgrade core</a>
     </span>
   </div>
