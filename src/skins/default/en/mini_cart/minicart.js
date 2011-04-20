@@ -102,7 +102,7 @@ MinicartView.prototype.postprocess = function(isSuccess)
       this.widgetParams.displayMode = m[1];
     }
 
-    // Initialize view mode toggle mechanim
+    // Initialize view mode toggle mechanism
     this.base.click(
       function(event) {
         event.stopPropagation();
