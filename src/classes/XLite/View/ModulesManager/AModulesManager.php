@@ -45,7 +45,7 @@ class AModulesManager extends \XLite\View\Dialog
      */
     protected function getModuleId()
     {   
-        return \XLite\Core\Request::getInstance()->module_id;    
+        return \XLite\Core\Request::getInstance()->moduleId;
     }   
 
     /**

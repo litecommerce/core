@@ -123,7 +123,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      */
     protected static function download(\XLite\Core\Pack\APack $pack)
     {
-        $path = LC_LOCAL_REPOSITORY . $pack->getName() . '.tar';
+        $path = LC_TMP_DIR . $pack->getName() . '.tar';
         $phar = static::pack($path, $pack->getDirectoryIterator(), $pack->getMetadata());
 
         header('Content-Type: application/force-download');
@@ -205,6 +205,18 @@ abstract class PHARManager extends \Includes\Utils\AUtils
     }
 
     /**
+     * Return extension for the archive file
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getExtension()
+    {
+        return \Includes\Utils\ArrayManager::getIndex(static::$extensions, self::COMPRESSION_TYPE, true);
+    }
+
+    /**
      * Check and (if available) compress TAR arctive
      * 
      * @param \PharData $phar  Archive to compress
@@ -228,18 +240,6 @@ abstract class PHARManager extends \Includes\Utils\AUtils
         }
 
         return $phar;
-    }
-
-    /**
-     * Return extension for the archive file
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function getExtension()
-    {
-        return \Includes\Utils\ArrayManager::getIndex(static::$extensions, self::COMPRESSION_TYPE, true);
     }
 
     // }}}

@@ -36,4 +36,18 @@ namespace XLite\Model\Repo;
  */
 class ModuleKey extends \XLite\Model\Repo\ARepo
 {
+    /**
+     * Alias
+     * 
+     * @param string $author Module author
+     * @param string $name   Module name
+     *  
+     * @return \XLite\Model\ModuleKey
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function findKey($author, $name)
+    {
+        return $this->findOneBy(compact('author', 'name'));
+    }
 }

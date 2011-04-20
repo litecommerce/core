@@ -360,7 +360,9 @@ class Module extends \XLite\Model\Repo\ARepo
     protected function prepareCndFromMarketplace(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if ($value) {
-            // :TODO: for a future use
+            $queryBuilder
+                ->andWhere('m.marketplaceID != :marketplaceID')
+                ->setParameter('marketplaceID', '');
         }
     }
 
@@ -434,7 +436,7 @@ class Module extends \XLite\Model\Repo\ARepo
         $installed = $this->getModuleInstalled($module);
 
         if ($installed) {
-            $result = $this->getModuleForUpdate($module) ?: $installed;
+            $result = $this->getModuleForUpdate($installed) ?: $installed;
         } else {
             $result = $this->defineModuleFromMarketplaceQuery($module)->getSingleResult();
         }

@@ -462,15 +462,25 @@ class Module extends \XLite\Model\AEntity
     /**
      * Check if module is already purchased
      *
-     * TODO: add code here
-     * 
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function isPurchased()
     {
-        return 'Test\Module6' === $this->getActualName();
+        return (bool) $this->getLicenseKey();
+    }
+
+    /**
+     * Search for license key
+     * 
+     * @return \XLite\Model\ModuleKey
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getLicenseKey()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\ModuleKey')->findKey($this->getAuthor(), $this->getName());
     }
 
     /**

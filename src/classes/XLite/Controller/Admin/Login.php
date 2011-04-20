@@ -85,7 +85,7 @@ class Login extends \XLite\Controller\Admin\AAdmin
         parent::init();
         
         if (empty(\XLite\Core\Request::getInstance()->login)) {
-            \XLite\Core\Request::getInstance()->login = $this->auth->remindLogin();
+            \XLite\Core\Request::getInstance()->login = \XLite\Core\Auth::getInstance()->remindLogin();
         }
     }
 
@@ -98,7 +98,7 @@ class Login extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionLogin()
     {
-        $profile = $this->auth->loginAdministrator(
+        $profile = \XLite\Core\Auth::getInstance()->loginAdministrator(
             \XLite\Core\Request::getInstance()->login,
             \XLite\Core\Request::getInstance()->password
         );
@@ -129,18 +129,6 @@ class Login extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionLogoff()
     {
-        $this->auth->logoff();
-    }
-
-    /**
-     * Perform some actions before redirect
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function actionPostprocessLogin()
-    {
-        $this->updateMarketplaceDataCache();
+        \XLite\Core\Auth::getInstance()->logoff();
     }
 }

@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
@@ -26,52 +26,73 @@
  * @since     1.0.0
  */
 
-namespace XLite\Controller\Admin;
+namespace XLite\View;
 
 /**
- * AddonsListMarketplace 
+ * CoreVersionTopLink 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class AddonsListMarketplace extends \XLite\Controller\Admin\Base\AddonsList
+class CoreVersionTopLink extends \XLite\View\AView
 {
     /**
-     * Initialize controller
+     * Return widget default template
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'top_links' . LC_DS . 'core_version.tpl';
+    }
+
+    /**
+     * Check widget visibility
      * 
-     * @return void
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function init()
+    protected function isVisible()
     {
-        parent::init();
-
-        // Upload addons info into the database
-        \XLite\Core\Marketplace::getInstance()->saveAddonsList();
+        return parent::isVisible() && \XLite\Core\Auth::getInstance()->isLogged();
     }
 
     /**
-     * Return the current page title (for the content area)
-     *
+     * Alias
+     * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getTitle()
+    protected function getCurrentCoreVersion()
     {
-        return 'Install Add-ons';
+        return \XLite::getInstance()->getVersion();
     }
 
     /**
-     * Common method to determine current location
-     *
-     * @return string
+     * Check if there is a new core version
+     * 
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getLocation()
+    protected function isCoreUpgradeAvailable()
     {
-        return 'Install Add-ons';
+        return \XLite\Core\Marketplace::getInstance()->checkForUpdates();
+    }
+
+    /**
+     * Check if there are updates (new core revision and/or module revisions)
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function araUpdatesAvailable()
+    {
+        return \XLite\Core\Marketplace::getInstance()->checkForUpdates();
     }
 }

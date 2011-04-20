@@ -202,7 +202,6 @@ class Login extends \XLite\Controller\Customer\ACustomer
      */
     protected function actionPostprocessLogin()
     {
-        $this->updateMarketplaceDataCache();
         $this->redirectFromLogin();
     }
 }
