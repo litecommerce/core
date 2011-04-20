@@ -60,8 +60,8 @@
       <td colspan="3">
         {t(#Are you sure you want to continue?#)}
         <br />
-        <widget class="\XLite\View\Button\Submit" label="Yes" style="main-button" />&nbsp;&nbsp;
-        <widget class="\XLite\View\Button\Regular" label="No" jsCode="document.location='admin.php?target=categories&category_id={category.parent.getCategoryId()}'" />
+        <widget class="\XLite\View\Button\Submit" label="Yes" style="" />&nbsp;&nbsp;
+        <widget class="\XLite\View\Button\Regular" label="No" style="back-button" jsCode="history.go(-1);" />
       </td>
     </tr>
 

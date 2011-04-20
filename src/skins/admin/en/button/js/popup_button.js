@@ -11,26 +11,4 @@
  * @since     1.0.0
  */
 
-jQuery(document).ready(
-  function() {
-    jQuery('.popup-button').each(
-      function () {
-        var button;
-        button = this;
-
-        jQuery(this).click(
-          function () {
-            var urlParams;
-            urlParams = core.getCommentedData(button, 'url_params');
-            return loadDialogByLink(
-              button,
-              URLHandler.buildURL(urlParams),
-              {'width' : 'auto'}
-            );
-          }
-        );
-      }
-    );
-  }
-);
-
+core.autoload(PopupButton);
