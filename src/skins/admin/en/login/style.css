@@ -13,7 +13,6 @@
 div.login-page {
   width: 960px !important;
   margin: 0 auto;
-  position: static !important;
 }
 
 div.login-page #header .logo {
@@ -39,7 +38,7 @@ div.login-page h1 {
 div.login-page #content {
   background: transparent none;
   border-top: 0 none;
-  margin-top: 135px;
+  padding-top: 135px;
 }
 
 div.login-box-wrapper {
