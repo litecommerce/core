@@ -110,6 +110,25 @@ class Marketplace extends \XLite\Base\Singleton
      */
     const REGEXP_VERSION = '/\d+\.?[\w-\.]*/';
 
+    /**
+     * Name of the cache data cells
+     */
+    const CACHE_DATA_CELL_CORES         = 'marketplaceCoresListData';
+    const CACHE_DATA_CELL_UPGRADE_FLAGS = 'marketplaceUpgradeFlagsData';
+
+    /**
+     * Name of the cache TTL cells
+     */
+    const CACHE_TTL_CELL_CORES         = 'marketplaceCoresListTTL';
+    const CACHE_TTL_CELL_UPGRADE_FLAGS = 'marketplaceUpgradeFlagsTTL';
+    const CACHE_TTL_CELL_SAVE_ADDONS   = 'marketplaceSaveAddonsListTTL';
+
+    /**
+     * Some predefined TTLs
+     */
+    const TTL_LONG  = 86400;
+    const TTL_SHORT = 3600;
+
 
     /**
      * Error code
@@ -147,15 +166,18 @@ class Marketplace extends \XLite\Base\Singleton
     /**
      * The "get_core_versions" request handler
      * 
-     * @return array
+     * @param integer $ttl Data TTL OPTIONAL
+     *  
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getCoreVersions()
+    public function getCoreVersions($ttl = self::TTL_LONG)
     {
-        return $this->sendRequestToMarkeplace(
-            self::ACTION_GET_CORE_VERSIONS
-        );
+        // Renew (if needed) data in TmpVars
+        $this->performActionWithTTL(self::CACHE_TTL_CELL_CORES, $ttl, array($this, 'getCoreVersionsCallback'));
+
+        return \XLite\Core\TmpVars::getInstance()->{self::CACHE_DATA_CELL_CORES};
     }
 
     /**
@@ -201,16 +223,16 @@ class Marketplace extends \XLite\Base\Singleton
 
     /**
      * The "get_addons_list" request handler
+     *
+     * @param integer $ttl Data TTL OPTIONAL
      * 
-     * @return array
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getAddonsList()
+    public function saveAddonsList($ttl = self::TTL_LONG)
     {
-        return $this->sendRequestToMarkeplace(
-            self::ACTION_GET_ADDONS_LIST
-        );
+        $this->performActionWithTTL(self::CACHE_TTL_CELL_SAVE_ADDONS, $ttl, array($this, 'saveAddonsListCallback'));
     }
 
     /**
@@ -279,21 +301,62 @@ class Marketplace extends \XLite\Base\Singleton
     /**
      * The "check_for_updates" request handler
      *
+     * @param integer $ttl Data TTL OPTIONAL
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function checkForUpdates()
+    public function checkForUpdates($ttl = self::TTL_LONG)
     {
-        /*if (!$this->checkTTL(__FUNCTION__, self::TTL_UPGRADE_FLAGS)) {
-            \XLite\Core\TmpVars::getInstance()->{self::CACHED_DATA_UPGRADE_FLAGS}
-                = $this->sendRequestToMarkeplace(self::ACTION_CHECK_FOR_UPDATES);
-            $this->setTTLStart(__FUNCTION__);
-        }
+        // Renew (if needed) data in TmpVars
+        $this->performActionWithTTL(self::CACHE_TTL_CELL_UPGRADE_FLAGS, $ttl, array($this, 'checkForUpdatesCallback'));
 
-        return \XLite\Core\TmpVars::getInstance()->{self::CACHED_DATA_UPGRADE_FLAGS};*/
+        return \XLite\Core\TmpVars::getInstance()->{self::CACHE_DATA_CELL_UPGRADE_FLAGS};
+    }
 
-        return true;
+    // }}}
+
+    // {{{ Callbacks for public methods (wrappers)
+
+    /**
+     * Save list of core versions into the cache 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCoreVersionsCallback()
+    {
+        \XLite\Core\TmpVars::getInstance()->{self::CACHE_DATA_CELL_CORES} 
+            = $this->sendRequestToMarkeplace(self::ACTION_GET_CORE_VERSIONS);
+    }
+
+    /**
+     * Upload addons list into the database 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function saveAddonsListCallback()
+    {
+        \XLite\Core\Database::getRepo('\XLite\Model\Module')->updateMarketplaceModules(
+            (array) $this->sendRequestToMarkeplace(self::ACTION_GET_ADDONS_LIST)
+        );
+    }
+
+    /**
+     * Save list of upgrade into the cache
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkForUpdatesCallback()
+    {
+        \XLite\Core\TmpVars::getInstance()->{self::CACHE_DATA_CELL_UPGRADE_FLAGS}
+            = $this->sendRequestToMarkeplace(self::ACTION_CHECK_FOR_UPDATES);
     }
 
     // }}}
@@ -426,6 +489,9 @@ class Marketplace extends \XLite\Base\Singleton
             $result = $this->$method($result);
         }
 
+        // For developer mode only
+        $this->showDeveloperTopMessage($action);
+
         return $result;
     }
 
@@ -451,6 +517,33 @@ class Marketplace extends \XLite\Base\Singleton
         }
 
         return $data;
+    }
+
+    /**
+     * Show diagnostic message 
+     * 
+     * @param string $action Current action
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function showDeveloperTopMessage($action)
+    {
+        if (LC_DEVELOPER_MODE) {
+            list($code, $message) = $this->getError();
+            $common = '["' . \XLite\Core\Request::getInstance()->target . '"]: ';
+
+            if (isset($message)) {
+                \XLite\Core\TopMessage::getInstance()->addError(
+                    $common . 'Marketplace connection error (' . $action . ', "' . $message . '")'
+                );
+            } else {
+                \XLite\Core\TopMessage::getInstance()->addInfo(
+                    $common . 'Successfully connected to marketplace (' . $action . ')'
+                );
+            }
+        }
     }
 
     // }}}
@@ -524,7 +617,7 @@ class Marketplace extends \XLite\Base\Singleton
 
     // }}}
 
-    // {{{ Response schemas
+    // {{{ Response validation schemas
 
     /**
      * Return validation schema for certain action
@@ -665,8 +758,20 @@ class Marketplace extends \XLite\Base\Singleton
         foreach ($data as $core) {
 
             // Validate data recieved in responese
-            if ($this->validateAgainstSchema($core, $this->getResponseSchemaForGetAddonsAction())) {
-                $result[] = $core;
+            if ($this->validateAgainstSchema($core, $this->getResponseSchemaForGetCoresAction())) {
+
+                $coreVersion = $core[self::RESPONSE_FIELD_CORE_VERSION];
+                $coreVersionMajor = $coreVersion[self::FIELD_VERSION_MAJOR];
+                $coreVersionMinor = $coreVersion[self::FIELD_VERSION_MINOR];
+
+                if (isset($result[$coreVersionMajor])) {
+                    $currentVersion = $result[$coreVersionMajor][self::RESPONSE_FIELD_CORE_VERSION];
+                    $currentVersionMinor = $currentVersion[self::FIELD_VERSION_MINOR];
+                }
+
+                if (!isset($currentVersionMinor) || version_compare($currentVersionMinor, $coreVersionMinor, '<')) {
+                    $result[$coreVersionMajor] = $core;
+                }
             }
         }
 
@@ -875,35 +980,41 @@ class Marketplace extends \XLite\Base\Singleton
 
     // {{{ Cache-related routines
 
+    protected function performActionWithTTL($cell, $ttl, array $callback, array $params = array())
+    {
+        if (!$this->checkTTL($cell, $ttl)) {
+            call_user_func_array($callback, $params);
+            $this->setTTLStart($cell);
+        }
+    }
+
     /**
      * Check and update cache TTL
      * 
-     * @param string  $type Name (type) of the current element
+     * @param string  $cell Name of the cache cell
      * @param integer $ttl  TTL value (in seconds)
      *  
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function checkTTL($type, $ttl)
+    protected function checkTTL($cell, $ttl)
     {
-        $start = \XLite\Core\TmpVars::getInstance()->{$this->getTTLName($type)};
-
-        return isset($start) && time() < ($start + $ttl);
+        return !is_null($start = \XLite\Core\TmpVars::getInstance()->$cell) && time() < ($start + $ttl);
     }
 
     /**
-     * Return name of a TTL cell
-     *
-     * @param string $type Name (type) of the current element
-     *
-     * @return string
+     * Renew TTL cell value
+     * 
+     * @param string $cell Name of the cache cell
+     *  
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getTTLName($type)
+    protected function setTTLStart($cell)
     {
-        return 'marketplace' . $type . 'TTLStart';
+        \XLite\Core\TmpVars::getInstance()->$cell = time();
     }
 
     // }}}

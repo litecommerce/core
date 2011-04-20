@@ -61,6 +61,18 @@ class CoreVersionTopLink extends \XLite\View\AView
     }
 
     /**
+     * Alias
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCurrentCoreVersion()
+    {
+        return \XLite::getInstance()->getVersion();
+    }
+
+    /**
      * Check if there is a new core version
      * 
      * @return boolean

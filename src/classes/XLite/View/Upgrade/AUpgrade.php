@@ -101,4 +101,16 @@ abstract class AUpgrade extends \XLite\View\Dialog
     {
         return version_compare($this->getCoreVersionCurrent(), $this->getCoreVersionForUpdate(), '<');
     }
+
+    /**
+     * Is core upgrade available
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isCoreUpgradeAvailable()
+    {
+        return (bool) $this->getAvailableCoreVersions();
+    }
 }

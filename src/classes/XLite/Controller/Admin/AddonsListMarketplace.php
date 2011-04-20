@@ -37,6 +37,21 @@ namespace XLite\Controller\Admin;
 class AddonsListMarketplace extends \XLite\Controller\Admin\Base\AddonsList
 {
     /**
+     * Initialize controller
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function init()
+    {
+        parent::init();
+
+        // Upload addons info into the database
+        \XLite\Core\Marketplace::getInstance()->saveAddonsList();
+    }
+
+    /**
      * Return the current page title (for the content area)
      *
      * @return string

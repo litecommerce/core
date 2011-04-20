@@ -49,6 +49,21 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
     // {{{ Controller common methods
 
     /**
+     * Initialize controller
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function init()
+    {
+        parent::init();
+
+        // Upload addons info into the database
+        \XLite\Core\Marketplace::getInstance()->saveAddonsList($this->getCacheTTL());
+    }
+
+    /**
      * Return the current page title (for the content area)
      *
      * @return string
@@ -196,6 +211,8 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
         return \XLite\Core\Database::getRepo('\XLite\Model\Module')->$method($module, $version);
     }
 
+    // }}}
+
     // {{{ Marketplace-related methods
 
     /**
@@ -205,13 +222,25 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getAvailableCoreVersions()
+    public function getAvailableCoreVersions()
     {
         if (!isset($this->coreVersions)) {
-            $this->coreVersions = (array) \XLite\Core\Marketplace::getInstance()->getCoreVersions();
+            $this->coreVersions = (array) \XLite\Core\Marketplace::getInstance()->getCoreVersions($this->getCacheTTL());
         }
 
         return $this->coreVersions;
+    }
+
+    /**
+     * Return so called "short" TTL
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCacheTTL()
+    {
+        return \XLite\Core\Marketplace::TTL_SHORT;
     }
 
     // }}}

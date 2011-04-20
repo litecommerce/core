@@ -465,20 +465,4 @@ OUT;
     }
 
     // }}}
-
-    // {{{ Core upgrade support
-
-    /**
-     * Get current core version
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCurrentCoreVersion()
-    {
-        return \XLite::getInstance()->getVersion();
-    }
-
-    // }}}
 }

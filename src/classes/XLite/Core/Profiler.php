@@ -175,6 +175,16 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     protected $currentQuery;
 
     /**
+     * List of plain text messages 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $messages = array();
+
+
+    /**
      * Check - templates profiling mode is enabled or not
      * 
      * @return boolean
@@ -416,6 +426,20 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
 
         }
     }
+
+    /**
+     * Add new message 
+     * 
+     * @param string $message Message text
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function addMessage($message)
+    {
+        $this->messages[] = '[' . number_format(microtime(true) - $this->start_time, 4) . ']: ' . $message;
+    }
     
 
     /**
@@ -572,7 +596,38 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     </tr>
 
 </table>
+HTML;
+        echo ($html);
 
+        if (!empty($this->messages)) {
+            $html = <<<HTML
+<br /><br />
+<table cellspacing="0" cellpadding="3" border="1" style="width: auto; top: 0; z-index: 10000; background-color: #fff;">
+    <caption style="font-weight: bold; text-align: left;">Profiler Messages</caption>
+HTML;
+
+            foreach ($this->messages as $message) {
+                $html .= <<<HTML
+<tr><td>$message</td></tr>
+HTML;
+            }
+
+            $html .= <<<HTML
+</table>
+HTML;
+
+            echo ($html);
+
+            if (LC_DEVELOPER_MODE && \Includes\Utils\ConfigParser::getOptions(array('profiler_details', 'show_messages_on_top'))) {
+                $html = str_replace(PHP_EOL, ' ', $html) . '<br /><br />';
+                echo ('<script type="text/javascript">jQuery("#profiler-messages").html(\'' . $html . '\');</script>');
+            }
+        }
+
+        if (self::$queries) {
+
+            $html = <<<HTML
+<br /><br />
 <table cellspacing="0" cellpadding="3" border="1" style="width: auto;">
     <caption style="font-weight: bold; text-align: left;">Queries log</caption>
     <tr>
@@ -582,29 +637,30 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     </tr>
 HTML;
 
-        echo ($html);
+            echo ($html);
 
-        $warnStyle = ' background-color: red; font-weight: bold;';
+            $warnStyle = ' background-color: red; font-weight: bold;';
 
-        foreach (self::$queries as $query => $d) {
-            $timesLimit = (self::QUERY_LIMIT_TIMES < $d['count'] ? $warnStyle : '');
-            $durationLimit = (self::QUERY_LIMIT_DURATION < $d['max'] ? $warnStyle : '');
+            foreach (self::$queries as $query => $d) {
+                $timesLimit = (self::QUERY_LIMIT_TIMES < $d['count'] ? $warnStyle : '');
+                $durationLimit = (self::QUERY_LIMIT_DURATION < $d['max'] ? $warnStyle : '');
 
-            echo (
-                '<tr>' . "\n"
-                . '<td style="vertical-align: top;' . $timesLimit . '">'
-                . $d['count']
-                . '</td>'
-                . '<td style="vertical-align: top;' . $durationLimit . '">'
-                . number_format($d['max'], 4, self::DEC_POINT, self::THOUSANDS_SEP)
-                . '</td><td style="white-space: nowrap;">'
-                . $query . '<br />'
-                . implode(' << ', $d['trace'])
-                . '</td></tr>' . "\n"
-            );
+                echo (
+                    '<tr>' . "\n"
+                    . '<td style="vertical-align: top;' . $timesLimit . '">'
+                    . $d['count']
+                    . '</td>'
+                    . '<td style="vertical-align: top;' . $durationLimit . '">'
+                    . number_format($d['max'], 4, self::DEC_POINT, self::THOUSANDS_SEP)
+                    . '</td><td style="white-space: nowrap;">'
+                    . $query . '<br />'
+                    . implode(' << ', $d['trace'])
+                    . '</td></tr>' . "\n"
+                );
+            }
+
+            echo ('</table>');
         }
-
-        echo ('</table>');
 
         if (self::$memoryPoints) {
             $html = <<<HTML
