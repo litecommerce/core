@@ -273,7 +273,7 @@ window.core = {
       }
     }
 
-    // TODO - add request languale label from server-side
+    // TODO - add request language label from server-side
     if (!found) {
       var loadedLabel = core.rest.get('translation', label, false);
       if (loadedLabel) {
