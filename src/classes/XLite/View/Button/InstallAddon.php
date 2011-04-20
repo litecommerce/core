@@ -34,7 +34,7 @@ namespace XLite\View\Button;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class InstallAddon extends \XLite\View\Button\APopupButton
+class InstallAddon extends \XLite\View\Button\PopupButton
 {
     /**
      * Button label
@@ -73,7 +73,7 @@ class InstallAddon extends \XLite\View\Button\APopupButton
             'target'    => \XLite\View\ModulesManager\ModuleLicense::MODULE_LICENSE_TARGET,
             'action'    => 'view',
             'widget'    => self::INSTALL_ADDON_WIDGET,
-            'moduleId' => $this->getParam(self::PARAM_MODULEID),
+            'moduleId'  => $this->getParam(self::PARAM_MODULEID),
         );
     }
 
@@ -88,7 +88,7 @@ class InstallAddon extends \XLite\View\Button\APopupButton
     {   
         $list = parent::getCSSFiles();
         // TODO must be taken from LICENSE module widget!!!
-        $list[] = 'modules_manager' . LC_DS . 'license' . LC_DS . 'style.css';
+        $list[] = 'modules_manager/license/style.css';
 
         return $list;
     }   
@@ -106,7 +106,7 @@ class InstallAddon extends \XLite\View\Button\APopupButton
         $list = parent::getJSFiles();
 
         // TODO must be taken from LICENSE module widget
-        $list[] = 'modules_manager' . LC_DS . 'license' . LC_DS . 'js' . LC_DS . 'switch-button.js';
+        $list[] = 'modules_manager/license/js/switch-button.js';
 
         return $list;
     }   

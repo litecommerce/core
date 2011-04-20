@@ -22,6 +22,7 @@
 
 <script type="text/javascript">
 //<![CDATA[
+// TODO move to separated JS script
 jQuery(document).ready(function(){
 
   var menuObj = jQuery('#topMenu li.root');
@@ -38,7 +39,7 @@ jQuery(document).ready(function(){
       homeTab.removeClass('current');
       jQuery(selectedTab).addClass('current');
       jQuery('div', selectedTab).clone().attr('id','topMenuLine').appendTo('#header');
-      jQuery('#content').css('margin-top', parseInt(jQuery('#content').css('margin-top')) + parseInt(jQuery('#topMenuLine').css('height')));
+      jQuery('#content').css('padding-top', parseInt(jQuery('#content').css('padding-top')) + parseInt(jQuery('#topMenuLine').css('height')));
     }
 
   }

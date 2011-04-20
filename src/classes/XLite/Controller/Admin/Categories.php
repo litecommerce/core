@@ -45,7 +45,7 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
      */
     public function getTitle()
     {
-        return $this->getRootCategoryId() !== $this->getCategory()->getCategoryId()
+        return ($this->getCategory() && $this->getRootCategoryId() !== $this->getCategory()->getCategoryId())
             ? $this->getCategory()->getName()
             : $this->t('Manage categories');
     }
@@ -91,13 +91,19 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
      */
     protected function doActionDelete()
     {
-        $parentId = $this->getCategory()->getParent()->getCategoryId();
-     
+        $parent = $this->getCategory()->getParent();
+
         \XLite\Core\Database::getRepo('XLite\Model\Category')->deleteCategory(
             $this->getCategoryId(),
             (bool) \XLite\Core\Request::getInstance()->subcats
         );
 
-        $this->setReturnURL($this->buildURL('categories', '', array('category_id' => $parentId)));
+        $this->setReturnURL(
+            $this->buildURL(
+                'categories',
+                '',
+                $parent ? array('category_id' => $parent->getCategoryId()) : array()
+            )
+        );
     }
 }

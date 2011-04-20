@@ -532,6 +532,7 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
         $this->includedFilesTotal = round($this->includedFilesTotal / 1024, 3);
 
         $html = <<<HTML
+<div class="inner-profiler">
 <table cellspacing="0" cellpadding="3" style="width: auto;">
     <tr>
         <td><strong>Execution time</strong></td>
@@ -658,6 +659,8 @@ HTML;
 
             echo ('</table>');
         }
+
+        echo ('</div>');
     }
 
     /**

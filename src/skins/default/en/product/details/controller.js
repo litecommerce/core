@@ -178,7 +178,7 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
       cloud.CloudZoom();
     }
 
-    // Change Conntinue shopping button for QuickLook mode
+    // Change Continue shopping button for QuickLook mode
     if (this.base.hasClass('product-quicklook') && 0 < this.base.parents('.blockUI').length) {
       jQuery('button.continue', this.base)
         .unbind('click')
