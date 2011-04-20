@@ -13,6 +13,8 @@
 
 {* :TODO: divide into parts (lists) *}
 
+<div IF="isDeveloperMode()" id="profiler-messages"></div>
+
 <widget class="\XLite\View\TopMessage" />
 
 <div id="page-container"{if:!auth.isLogged()} class="login-page"{end:}>
