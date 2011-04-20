@@ -85,6 +85,19 @@ class Payment extends \XLite\View\Checkout\Step\AStep
     }
 
     /**
+     * Check main button visibility (inactive mode)
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isInactiveButtonVisible()
+    {
+        return $this->isCompleted()
+            && !$this->getStepsCollector()->isFutureStep($this);
+    }
+
+    /**
      * Return list of available payment methods
      * 
      * @return array

@@ -15,7 +15,7 @@
   {if:isCurrent()}
     <widget class="\XLite\View\Button\Link" label="Continue" location="{buildURL(#checkout#)}" style="bright disabled" />
   {else:}
-    {if:isCompleted()}
+    {if:isInactiveButtonVisible()}
       <widget class="\XLite\View\Button\Link" label="Change payment info" location="{buildURL(#checkout#,##,_ARRAY_(#step#^getStepName()))}" />
     {end:}
   {end:}

@@ -84,6 +84,17 @@ abstract class AStep extends \XLite\View\AView
         return $this->getParam(self::PARAM_PARENT_WIDGET)->isCurrentStep($this);
     }
 
+    /**
+     * Get steps collector 
+     * 
+     * @return \XLite\View\Checkout\Steps
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getStepsCollector()
+    {
+        return $this->getParam(self::PARAM_PARENT_WIDGET);
+    }
 
     /**
      * Define widget parameters

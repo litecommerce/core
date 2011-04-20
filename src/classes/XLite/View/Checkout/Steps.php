@@ -152,6 +152,35 @@ class Steps extends \XLite\View\AView
     }
 
     /**
+     * Check - specified step is completed and next or not
+     *
+     * @param \XLite\View\Checkout\Step\AStep $step Step
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isFutureStep(\XLite\View\Checkout\Step\AStep $step)
+    {
+        $result = false;
+
+        if (!$this->isCurrentStep($step)) {
+            $step = get_class($step);
+            foreach ($this->getSteps() as $s) {
+                if (!$s->isCompleted()) {
+                    $result = true;
+                    break;
+
+                } elseif (get_class($s) == $step) {
+                    break;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Get current step number 
      * 
      * @return integer
