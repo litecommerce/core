@@ -13,11 +13,11 @@
  * @ListChild (list="itemsList.module.manage.sections", weight="200")
  *}
 
-<div class="tags">
+{* <div class="tags">
   <div class="tags-title">{t(#Tags#)}</div>
   <ul class="tags-list">
     <li FOREACH="getTags(),tagId,label" class="{getTagClasses(tagId)}">
       <a href="{buildURL(#addons_list_installed#,##,_ARRAY_(#tag#^tagId,#filter#^getFilter()))}">{t(label)}</a>
     </li>
   </ul>
-</div>
+</div> *}

@@ -11,7 +11,10 @@
  * @since     1.0.0
  *}
 
-<div IF="#1#" class="addons-install-pager-found-title">{getItemsTotal()} {t(#add-ons found#)}<span IF="getTag()">{t(#for"#)} "<span class="tag">{getTag()}</span>" {t(#tag#)}</span></div>
+<div IF="#1#" class="addons-install-pager-found-title">
+  {getItemsTotal()} {t(#add-ons found#)}
+  <span IF="getTag()">{t(#for"#)} "<span class="tag">{getTag()}</span>" {t(#tag#)}</span>
+</div>
 
 <ul class="pager grid-list addons-install-pager-list" IF="isPagesListVisible()">
   <li FOREACH="getPages(),page" class="{page.classes}">

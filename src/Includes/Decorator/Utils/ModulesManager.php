@@ -497,7 +497,10 @@ abstract class ModulesManager extends AUtils
         }
 
         if ($string) {
-            file_put_contents(static::getModulesFilePath(), '; <' . '?php /*' . PHP_EOL . $string . '; */ ?' . '>');
+            \Includes\Utils\FileManager::write(
+                static::getModulesFilePath(),
+                '; <' . '?php /*' . PHP_EOL . $string . '; */ ?' . '>'
+            );
         }
     }
 

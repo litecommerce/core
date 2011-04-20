@@ -30,6 +30,13 @@
     </ul>
   </div>
 
+  <div IF="isCoreUpgradeNeeded(module)" class="note version error">
+    {t(#The module version is incompatible with your core version and cannot be enabled#)}<br />
+    <span IF="isCoreUpgradeAvailable(module.getMajorVersion())">
+      {t(#Please#)} <a href="{buildURL(#upgrade#,##,_ARRAY_(#version#^module.getMajorVersion()))}">upgrade core</a>
+    </span>
+  </div>
+
   <div IF="isModuleUpgradeNeeded(module)" class="note version error">
     {t(#The module is available for older core versions only#)}      
   </div> 

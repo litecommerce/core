@@ -216,6 +216,20 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     abstract protected function isModuleUpdateAvailable(\XLite\Model\Module $module);
 
     /**
+     * Is core upgrade available
+     *
+     * @param string $majorVersion core version to check
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isCoreUpgradeAvailable($majorVersion)
+    {
+        return in_array($majorVersion, (array) \XLite\Core\Marketplace::getInstance()->getCoreVersions());
+    }
+
+    /**
      * Search for module for update. Alias
      *
      * @param \XLite\Model\Module $module Current module

@@ -123,7 +123,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      */
     protected static function download(\XLite\Core\Pack\APack $pack)
     {
-        $path = LC_LOCAL_REPOSITORY . $pack->getName() . '.tar';
+        $path = LC_TMP_DIR . $pack->getName() . '.tar';
         $phar = static::pack($path, $pack->getDirectoryIterator(), $pack->getMetadata());
 
         header('Content-Type: application/force-download');

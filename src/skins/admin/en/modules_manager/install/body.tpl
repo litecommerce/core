@@ -13,8 +13,3 @@
 
 {* Display add-ons list *}
 <widget class="\XLite\View\ItemsList\Module\Install" />
-
-<div class="compatibility-note">
-  <p>These modules are suitable for the current LiteCommerce version only!</p>
-  <p>To see the list of all available modules, go to <a href="{getMarketPlaceURL()}">LC Marketplace</a></p>
-</div>
