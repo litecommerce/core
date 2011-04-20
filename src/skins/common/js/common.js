@@ -220,7 +220,7 @@ function loadDialog(url, dialogOptions, callback)
         closeWaitBar();
 
         if (callback) {
-          callback();
+          callback('.' + selector);
         }
       }
     }
@@ -230,13 +230,13 @@ function loadDialog(url, dialogOptions, callback)
 }
 
 // Load dialog by link
-function loadDialogByLink(link, url, options)
+function loadDialogByLink(link, url, options, callback)
 {
   if (!link.linkedDialog) {
-    link.linkedDialog = loadDialog(url, options);
+    link.linkedDialog = loadDialog(url, options, callback);
 
   } else {
-    openDialog(link.linkedDialog, options);
+    openDialog(link.linkedDialog, options, callback);
   }
 }
 

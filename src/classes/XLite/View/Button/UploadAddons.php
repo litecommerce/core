@@ -34,7 +34,7 @@ namespace XLite\View\Button;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class UploadAddons extends \XLite\View\Button\APopupButton
+class UploadAddons extends \XLite\View\Button\PopupButton
 {
     /**
      *  Several specific constants

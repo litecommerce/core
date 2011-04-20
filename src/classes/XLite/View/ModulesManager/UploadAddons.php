@@ -100,6 +100,6 @@ class UploadAddons extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'modules_manager' . LC_DS . 'upload_addons';
+        return 'modules_manager/upload_addons';
     }
 }

@@ -102,4 +102,3 @@ class DeleteCategory extends \XLite\View\SimpleDialog
             && 'delete' === \XLite\Core\Request::getInstance()->pre_action;
     }
 }
-
