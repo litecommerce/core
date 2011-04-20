@@ -68,7 +68,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             'check content reloading'
         );
 
-        $this->openAndWait('store/cart');
+        $this->clickAndWait('css=.lc-minicart .title a');
 
         return $product;
     }
@@ -562,20 +562,8 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
     {
         $product = $this->addToCart();
 
-        $this->clickAndWait(
-            "//div[@id='cart']"
-            . "/div[@id='shopping-cart']"
-            . "/div[@class='cart-buttons']"
-            . "/button[@class='action']",
-            'check Continue shopping'
-        );
-
-        $pid = null;
-        if (preg_match('/product_id-(\d+)/Ss', $this->getLocation(), $m)) {
-            $pid = intval($m[1]);
-        }
-
-        $this->assertEquals($product->getProductId(), $pid, 'check product id');
+        $this->clickAndWait('css=#cart .cart-buttons button.action', 'click Continue shopping');
+        $this->assertRegExp('/product_id-' . $product->getProductId() . '/Ss', $this->getLocation(), 'check product id');
     }
 
 }
