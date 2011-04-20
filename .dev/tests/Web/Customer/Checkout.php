@@ -295,14 +295,14 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         // Fill billing address
 
         $this->toggleByJquery('#same_address', false);
-        $this->assertElementPresent('css=.current .button-row button.disabled', 'same addres disabled and address not loaded - main button is disabled');
+        $this->assertElementPresent('css=.current .button-row button.disabled', 'same address disabled and address not loaded - main button is disabled');
 
         $this->waitForLocalCondition(
             'jQuery("#billing_address_name").length > 0',
             10000,
             'check empty billing address form load'
         );
-        $this->assertJqueryNotPresent('.current .button-row button.disabled', 'same addres disabled amd address form loaded - main button is disabled');
+        $this->assertElementNotPresent('css=.current .button-row button.disabled', 'same address disabled and address form loaded - main button is enabled');
 
         $this->select(
             '//select[@id="billing_address_country"]',
