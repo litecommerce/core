@@ -52,7 +52,7 @@ class TmpVar extends \XLite\Model\AEntity
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer")
+     * @Column         (type="integer")
      */
     protected $id;
 

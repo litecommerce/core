@@ -211,10 +211,6 @@ div.modules-filters div.tags {
   float: left;
 }
 
-div.compatibility-note p {
-  margin: 3px 0;
-}
-
 div.price-filter {
   float: right;
   border-left: solid 1px #cbcbcb;

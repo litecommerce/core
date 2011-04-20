@@ -31,20 +31,12 @@ namespace Includes\Decorator\Plugin\Doctrine\Utils;
 /**
  * Fixtures manager 
  *
- * TODO: to revise
- * 
  * @package XLite
  * @see     ____class_see____
  * @since   1.0.0
  */
 abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoctrine
 {
-    /**
-     * Modules list file name
-     */
-    const FIXTURES_FILE_NAME = '.decorator.fixtures.ini.php';
-
-
     /**
      * Get fixtures paths list
      * 
@@ -57,17 +49,16 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
     {
         $list = array();
 
-        $path = static::getFixturesFilePath();
+        if (\Includes\Utils\FileManager::isFileReadable(static::getFixturesFilePath())) {
+            foreach (parse_ini_file(static::getFixturesFilePath(), false) as $file) {
 
-        if ($path) {
-            foreach (parse_ini_file($path, false) as $p) {
-
-                if (!file_exists($p)) {
-                    $p = LC_DIR . LC_DS . $p;
+                // :FIXME: is it needed?
+                if (!\Includes\Utils\FileManager::isFile($file)) {
+                    $file = LC_ROOT_DIR . $file;
                 }
 
-                if (file_exists($p) && is_readable($p)) {
-                    $list[] = $p;
+                if (\Includes\Utils\FileManager::isFileReadable($file)) {
+                    $list[] = $file;
                 }
             }
 
@@ -87,10 +78,7 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
      */
     public static function removeFixtures()
     {
-        $path = static::getFixturesFilePath();
-        if ($path) {
-            @unlink($path);
-        }
+        \Includes\Utils\FileManager::delete(static::getFixturesFilePath());
     }
 
     /**
@@ -106,12 +94,7 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
     public static function addFixtureToList($path)
     {
         $list = static::getFixtures();
-
-        $path = preg_match('/^(?:sql|classes)/Ss', $path)
-            ? $path
-            : substr($path, strlen(LC_DIR) + 1);
-
-        $list[] = LC_DIR . LC_DS . $path;
+        $list[] = LC_ROOT_DIR . (preg_match('/^(?:sql|classes)/Ss', $path) ? $path : substr($path, strlen(LC_DIR) + 1));
 
         static::saveFile($list);
     }
@@ -119,16 +102,14 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
     /**
      * Get file path with fixtures paths
      *
-     * @return string|void
+     * @return string
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected static function getFixturesFilePath()
     {
-        $path = LC_VAR_DIR . static::FIXTURES_FILE_NAME;
-
-        return (file_exists($path) && is_readable($path)) ? $path : null;
+        return LC_VAR_DIR . '.decorator.fixtures.ini.php';
     }
 
     /**
@@ -143,18 +124,12 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
      */
     protected static function saveFile(array $list)
     {
-        $path = LC_VAR_DIR . static::FIXTURES_FILE_NAME;
-        $fp = fopen($path, 'w');
+        $string  = '';
 
-        fwrite($fp, '; <' . '?php /*' . PHP_EOL);
-
-        $i = 1;
-        foreach (array_unique($list) as $p) {
-            fwrite($fp, $i . ' = "' . $p . '"' . PHP_EOL);
-            $i++;
+        foreach (array_values(array_unique($list)) as $index => $value) {
+            $string .= ++$index . ' = "' . $value . '"' . PHP_EOL;
         }
 
-        fwrite($fp, '; */ ?' . '>');
-        fclose($fp);
+        \Includes\Utils\FileManager::write(static::getFixturesFilePath(), '; <?php /*' . PHP_EOL . $string . '; */ ?>');
     }
 }

@@ -65,7 +65,6 @@ class TmpVars extends \XLite\Base\Singleton
         $var = $this->getVar($name);
 
         if (isset($value)) {
-
             $data = array('value' => serialize($value));
 
             if (!isset($var)) {
@@ -75,7 +74,6 @@ class TmpVars extends \XLite\Base\Singleton
             }
 
         } elseif ($var) {
-
             $this->getRepo()->delete($var);
         }
     }

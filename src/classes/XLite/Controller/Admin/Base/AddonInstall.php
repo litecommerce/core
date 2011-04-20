@@ -66,9 +66,15 @@ abstract class AddonInstall extends \XLite\Controller\Admin\Base\PackManager
         if ($dir) {
 
             // Backup files if exist
+            // ...
 
             $this->deploy($dir);
+
+        } elseif ($this->getPackingError()) {
+            \XLite\Core\TopMessage::getInstance()->addError($this->getPackingError());
         }
+
+        $this->setReturnURL($this->buildURL('addons_list_marketplace'));
     }
 
     /**

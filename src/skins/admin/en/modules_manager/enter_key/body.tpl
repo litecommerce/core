@@ -12,7 +12,7 @@
 <div class="enter-addon-key-form">
 
   <form action="admin.php" method="post" name="getAddonForm" >
-    <input type="hidden" name="target" value="addon_install" />
+    <input type="hidden" name="target" value="module_key" />
     <input type="hidden" name="action" value="register_key" />
 
     <div class="enter-key-hint">

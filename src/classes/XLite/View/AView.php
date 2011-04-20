@@ -1684,7 +1684,6 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Checks if specific developer mode is defined
-     * :TODO: check if this method is used
      * 
      * @return boolean
      * @see    ____func_see____
@@ -1692,7 +1691,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function isDeveloperMode()
     {
-        return defined('LC_DEVELOPER_MODE') && constant('LC_DEVELOPER_MODE');
+        return LC_DEVELOPER_MODE;
     }
 
     /**

@@ -11,6 +11,8 @@
  * @since     1.0.0
  *}
 
+<div IF="isDeveloperMode()" id="profiler-messages"></div>
+
 <div id="page-wrapper">
   <div id="page">
     {displayViewListContent(#layout.main#)}

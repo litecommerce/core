@@ -22,7 +22,6 @@
       <input FOREACH="getURLParams(),name,value" type="hidden" name="{name}" value="{value}" />
 
       <input IF="getParam(#substring#)" id="search_substring" type="text" name="substring" value="{getParam(#substring#)}" />
-
       <input IF="!getParam(#substring#)" id="search_substring" type="text" name="substring" value="{t(#Enter keywords#)}" class="default-value" />
 
       <widget class="\XLite\View\Button\Submit" label="{t(#Search#)}" />
@@ -54,17 +53,14 @@ sForm.submit(function(e){
 
   </div>
 
-  {* TODO: Use the same widget as in Manage addons. (or move it to separated widget ?)*}
-  <div class="tags">
+  {* :TODO: Use the same widget as in Manage addons. (or move it to separated widget ?) *}
+  {* <div class="tags">
     <div class="tags-title">{t(#Tags#)}</div>
-  </div>
+  </div> *}
 
   <div class="action-buttons">
-
     <widget class="\XLite\View\Button\UploadAddons" />
-
-    <widget class="\XLite\View\Button\EnterLicenseKey" />
-
+    <widget class="\XLite\View\Button\EnterLicenseKey" IF="hasResults()" />
   </div>
 
 </div>

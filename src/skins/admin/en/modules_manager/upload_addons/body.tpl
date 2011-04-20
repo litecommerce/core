@@ -16,10 +16,8 @@
 <div class="upload-addon-form">
 
 <form action="admin.php" method="post" name="uploadAddonsForm" enctype="multipart/form-data" onsubmit="javascript:this.submit();">
-
-  <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}" />
-
-  <input type="hidden" name="action" value="upload" />
+  <input type="hidden" name="target" value="addon_upload" />
+  <input type="hidden" name="action" value="install" />
 
   <div class="upload-area">
     <input type="file" name="upload_addon[]" />

@@ -115,6 +115,7 @@ enabled = Off
 process_widgets = On
 xdebug_log_trace = Off
 eta = On
+show_messages_on_top = Off
 
 [recorder]
 record_queries = off
