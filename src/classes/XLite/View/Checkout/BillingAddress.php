@@ -68,11 +68,10 @@ class BillingAddress extends \XLite\View\AView
     public function getSameAddress()
     {
         $address = null;
+        $profile = $this->getCart()->getProfile();
 
-        if ($this->getCart()->getProfile()) {
-            $address = $this->isSameAddress()
-                ? $this->getCart()->getProfile()->getShippingAddress()
-                : $this->getCart()->getProfile()->getBillingAddress();
+        if ($profile) {
+            $address = $profile->getBillingAddress() ?: $profile->getShippingAddress();
         }
 
         return $address;
