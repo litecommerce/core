@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<div class="language-options-dialog" style="display: none;">
+<div class="language-options-dialog">
   <h2>{t(#X Language (Code: Y)#,_ARRAY_(#language#^editLanguage.name,#code#^editLanguage.code))}</h2>
   <form action="admin.php" method="post" name="confirm_delete_form">
     <input type="hidden" name="target" value="languages" />

@@ -64,17 +64,21 @@ function openAddNewLabel(link, language, page)
 // Open Confirm language deletion dialog
 function confirmLanguageDelete(link, id, language, page)
 {
-  var url = 'admin.php?target=languages&widget=\\XLite\\View\\LanguagesModify\\ConfirmDeletion&lng_id' + id;
+  var params = {
+      target: 'languages',
+      widget: '\\XLite\\View\\LanguagesModify\\ConfirmDeletion',
+      lng_id: id
+  };
 
   if (language) {
-    url += '&language=' + language;
+    params.language = language;
   }
 
   if (page) {
-    url += '&page=' + page;
+    params.page = page;
   }
 
-  loadDialogByLink(link, url, {width: 500, height: 250});
+  loadDialogByLink(link, URLHandler.buildURL(params), {width: 500, height: 250});
 
   return false;
 }
