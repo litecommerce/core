@@ -69,6 +69,15 @@ class Converter extends \XLite\Base\Singleton
     );
 
     /**
+     * Flag to avoid multiple setlocale() calls
+     * 
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected static $isLocaleSet = false;
+
+    /**
      * Convert a string like "test_foo_bar" into the camel case (like "TestFooBar")
      * 
      * @param string $string String to convert
@@ -357,40 +366,87 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Format time 
      * 
-     * @param integer $base   UNIX time stamp
-     * @param string  $format Format string OPTIONAL
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function formatTime($base, $format = null)
-    {
-        if (!$format) {
-            $config = \XLite\Core\Config::getInstance();
-            $format = $config->General->date_format . ', ' . $config->General->time_format;
-        }
-
-        return strftime($format, $base);
-    }
-
-    /**
-     * Format date 
-     * 
-     * @param integer $base   UNIX time stamp
+     * @param integer $base   UNIX time stamp OPTIONAL
      * @param string  $format Format string OPTIONAL
      *  
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function formatDate($base, $format = null)
+    public static function formatTime($base = null, $format = null)
+    {
+        if (!$format) {
+            $config = \XLite\Core\Config::getInstance();
+            $format = $config->General->date_format . ', ' . $config->General->time_format;
+        }
+
+        return static::getStrftime($format, $base);
+    }
+
+    /**
+     * Format date 
+     * 
+     * @param integer $base   UNIX time stamp OPTIONAL
+     * @param string  $format Format string OPTIONAL
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function formatDate($base = null, $format = null)
     {
         if (!$format) {
             $format = \XLite\Core\Config::getInstance()->General->date_format;
         }
 
-        return strftime($format, $base);
+        return static::getStrftime($format, $base);
+    }
+
+    /**
+     * Get strftime() with specified format and timestamp value 
+     * 
+     * @param string  $format Format string
+     * @param integer $base   UNIX time stamp OPTIONAL
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getStrftime($format, $base = null)
+    {
+        static::setLocaleToUTF8();
+
+        return isset($base) ? strftime($format, $base) : strftime($format); 
+    }
+
+    /**
+     * Attempt to set locale to UTF-8
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function setLocaleToUTF8()
+    {
+        if (
+            !self::$isLocaleSet
+            && preg_match('/(([^_]+)_?([^.]*))\.?(.*)?/', setlocale(LC_TIME, null), $match) 
+            && !preg_match('/utf\-?8/i', $match[4])
+        ) {
+            setlocale(
+                LC_TIME,
+                $match[1] . '.UTF8',
+                $match[1] . '.UTF-8',
+                'en_US.UTF8',
+                'en_US.UTF-8',
+                'en_US',
+                'ENG',
+                'English',
+                $match[0]
+            );
+
+            self::$isLocaleSet = true;
+        }
     }
 
     /**

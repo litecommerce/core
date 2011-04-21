@@ -675,21 +675,6 @@ abstract class AController extends \XLite\Core\Handler
     }
     
     /**
-     * strftime 
-     * FIXME: is used in skins/admin/en/general_settings.tpl
-     * 
-     * @param string $format Time format
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function strftime($format)
-    {
-        return strftime($format);
-    }
-
-    /**
      * Common prefix for editable elements in lists
      *
      * NOTE: this method is requered for the GetWidget and AAdmin classes
