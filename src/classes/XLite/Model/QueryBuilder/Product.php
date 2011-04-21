@@ -26,15 +26,56 @@
  * @since     1.0.0
  */
 
-namespace XLite\Model\QueryBuilder\Base;
+namespace XLite\Model\QueryBuilder;
 
 /**
- * Common query builder
+ * Product query builder
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Common extends \XLite\Model\QueryBuilder\AQueryBuilder
+class Product extends \XLite\Model\QueryBuilder\AQueryBuilder
 {
+
+    /**
+     * Flag to define is inventory is already joined to prevent double joining (error)
+     * 
+     * @var    boolean
+     * @see    ____var_see____
+     * @since  1.0.0
+     */
+    protected $hasJoinedInventory = false;
+
+    /**
+     * Join inventory procedure
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function innerJoinInventory()
+    {
+        if (!$this->hasJoinedInventory) {
+
+            $this->innerJoin('p.inventory', 'i');
+
+            $this->hasJoinedInventory = true;
+        }
+    }
+
+    /**
+     * getResult 
+     * 
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getResult()
+    {
+        $this->hasJoinedInventory = false;
+
+        return parent::getResult();
+    }
+
 }
 

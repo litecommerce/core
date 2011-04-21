@@ -133,6 +133,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     public function createQueryBuilder($alias = null)
     {
         $result = parent::createQueryBuilder($alias);
+
         $this->addEnabledCondition($result, $alias);
 
         if (!\XLite::isAdminZone()) {
@@ -548,14 +549,14 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     protected function prepareCndInventory(\Doctrine\ORM\QueryBuilder $queryBuilder, $value = self::INV_ALL)
     {
+        $queryBuilder->innerJoinInventory();
+
         if (in_array($value, array(self::INV_LOW, self::INV_OUT))) {
-            $queryBuilder->innerJoin('p.inventory', 'i')
-                ->andWhere('i.enabled = :enabled')
+            $queryBuilder->andWhere('i.enabled = :enabled')
                 ->setParameter('enabled', true);
         }
 
         if ($value === self::INV_LOW) {
-
             $queryBuilder->andWhere('i.lowLimitEnabled = :lowLimitEnabled')
                 ->setParameter('lowLimitEnabled', true)
                 ->andWhere('i.amount < i.lowLimitAmount');
@@ -564,7 +565,6 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
 
             $queryBuilder->andWhere('i.amount <= :zero')
                 ->setParameter('zero', 0);
-
         }
     }
 
@@ -584,7 +584,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
 
         // FIXME - add aliases for sort modes
         if ('i.amount' === $sort) {
-            $queryBuilder->innerJoin('p.inventory', 'i');
+            $queryBuilder->innerJoinInventory();
         }
 
         $queryBuilder->addOrderBy($sort, $order);

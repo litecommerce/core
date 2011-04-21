@@ -104,7 +104,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
      */
     protected function getLocation()
     {
-        return $this->t('Top sellers');
+        return 'Top sellers';
     }
 
     /**
@@ -135,6 +135,7 @@ class TopSellers extends \XLite\Controller\Admin\Stats
         foreach ($this->getStatsColumns() as $interval) {
 
             $cnd = $this->getSearchCondition($interval);
+
             $cnd->limit = self::TOP_SELLERS_NUMBER;
 
             $data[$interval] = \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')
@@ -158,8 +159,13 @@ class TopSellers extends \XLite\Controller\Admin\Stats
         $stats = $this->stats;
 
         foreach ($this->stats as $rownum => $periods) {
+
             foreach ($periods as $period => $val) {
-                $stats[$rownum][$period] = \Includes\Utils\ArrayManager::getIndex($data[$period], $rownum)
+
+                $stats[$rownum][$period] = (
+                    is_array($data[$period]) 
+                    && \Includes\Utils\ArrayManager::getIndex($data[$period], $rownum)
+                )
                     ? \Includes\Utils\ArrayManager::getIndex($data[$period][$rownum][0])
                     : null;
             }
