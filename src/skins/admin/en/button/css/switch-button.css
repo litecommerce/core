@@ -1,7 +1,7 @@
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
- * TinyMCE widget specific styles
+ * ____file_title____
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,19 +11,17 @@
  * @since     1.0.0
  */
 
-
-span.mceEditor {
-  margin: 0px 5px;
+button.button.switch-button {
+  background: none;
+  border: 0 none;
+  margin: 0px;
+  padding: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
 }
 
-ul.tinymce-widget {
-  list-style: none;
-}
-
-ul.tinymce-widget li {
-  float: left;
-}
-
-ul.tinymce-widget li.button button.button.switch-button {
-  margin: 13px 5px;
+button.switch-button img {
+  background: transparent url(../images/switch-button.png) 0 0 no-repeat;
+  width: 23px;
+  height: 31px;
 }
