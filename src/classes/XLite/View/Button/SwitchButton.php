@@ -29,52 +29,41 @@
 namespace XLite\View\Button;
 
 /**
- * Button to use with popup
+ * Switch button (register two onclick callbacks JS functions)
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class APopupButton extends \XLite\View\Button\AButton
+class SwitchButton extends \XLite\View\Button\AButton
 {
     /**
      * Several inner constants 
      */
-    const TEMPLATE  = 'button/popup_button.tpl';
-    const CSS_CLASS = 'popup-button';
-    const JS_SCRIPT = 'button/js/core.popup_button.js';
-    const URLParams = 'url_params';
-    const POPUP_CSS_FILE = 'button/css/popup.css';
-
+    const TEMPLATE  = 'button/switch-button.tpl';
+    const JS_SCRIPT = 'button/js/switch-button.js';
+    const SWITCH_CSS_FILE = 'button/css/switch-button.css';
 
     /**
-     * Return content for popup button
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
+     * Widget parameters to use 
      */
-    abstract public function getButtonContent();
+    const PARAM_FIRST  = 'first';
+    const PARAM_SECOND = 'second';
+
 
     /**
-     * Return URL parameters to use in AJAX popup
+     * Return JS callbacks to use with onclick event
      * 
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    abstract public function prepareURLParams();
-
-    /**
-     * Return array of URL params for JS 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getURLParams()
+    public function getCallbacks()
     {
         return array(
-            static::URLParams => $this->prepareURLParams(),
+            'callbacks' => array (
+                'first'  => $this->getParam(self::PARAM_FIRST),
+                'second' => $this->getParam(self::PARAM_SECOND),
+            ),
         );
     }
 
@@ -88,8 +77,7 @@ abstract class APopupButton extends \XLite\View\Button\AButton
     public function getJSFiles()
     {   
         $list = parent::getJSFiles();
-
-        $list[] = static::JS_SCRIPT;
+        $list[] = self::JS_SCRIPT;
 
         return $list;
     }   
@@ -104,29 +92,10 @@ abstract class APopupButton extends \XLite\View\Button\AButton
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
-        $list[] = static::POPUP_CSS_FILE;
+        $list[] = self::SWITCH_CSS_FILE;
 
         return $list;
     }
-
-    /**  
-     * Register files from common repository
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCommonFiles()
-    {    
-        $list = parent::getCommonFiles();
-
-        // popup button is using several specific popup JS
-        $list['js'][] = 'js/core.popup.js';
-
-        return $list;
-    } 
-
 
     /**
      * Return widget default template
@@ -141,14 +110,19 @@ abstract class APopupButton extends \XLite\View\Button\AButton
     }
 
     /** 
-     * getClass 
+     * Define widget params 
      * 
-     * @return string
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getClass()
-    {   
-        return static::CSS_CLASS;
-    }   
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_FIRST  => new \XLite\Model\WidgetParam\String('First callback', ''),
+            self::PARAM_SECOND => new \XLite\Model\WidgetParam\String('Second callback', ''),
+        );
+    }
 }
