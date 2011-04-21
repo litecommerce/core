@@ -416,6 +416,10 @@ class Converter extends \XLite\Base\Singleton
     {
         static::setLocaleToUTF8();
 
+        if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
+            $format = str_replace('%e', '%#d', $format);
+        }
+
         return isset($base) ? strftime($format, $base) : strftime($format); 
     }
 
