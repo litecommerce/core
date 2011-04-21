@@ -120,9 +120,6 @@ ul.language-labels .edit:hover,
 }
 
 .language-translate-panel div.right {
-  position: absolute;
-  right: 0;
-  top: 0;
   width: 48%;
   white-space: nowrap;
 }
