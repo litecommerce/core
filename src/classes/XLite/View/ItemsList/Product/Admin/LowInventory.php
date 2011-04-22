@@ -45,7 +45,7 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
      */
     protected function getHead()
     {
-        return 'Products with low inventory';
+        return $this->t('Products with low inventory');
     }
 
     /**

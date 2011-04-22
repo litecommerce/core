@@ -222,7 +222,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getHead()
     {
-        return 'Catalog';
+        return $this->t('Catalog');
     }
 
     /**

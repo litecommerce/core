@@ -15,7 +15,7 @@
 
   {displayCommentedData(getJSData())}
 
-  <h2 IF="isHeadVisible()" class="items-list-title" >{getHead()}</h2>
+  <h2 IF="isHeadVisible()" class="items-list-title">{getHead()}</h2>
 
   <div IF="isPagerVisible()" class="list-pager">{pager.display()}</div>
 
