@@ -85,7 +85,7 @@ class SaveMark extends \XLite\View\AView
         $product = $this->getParam(self::PARAM_PRODUCT);
 
         return parent::isVisible()
-            && $this->config->General->enable_sale_price
+            && \XLite\Core\Config::getInstance()->General->enable_sale_price
             && ($product->getSalePrice() > $product->getListPrice());
     }
 }

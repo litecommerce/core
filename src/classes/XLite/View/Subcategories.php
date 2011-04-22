@@ -130,7 +130,7 @@ class Subcategories extends \XLite\View\Dialog
     {
         return $this->getParam(self::PARAM_IS_EXPORTED)
             ? $this->getParam(self::PARAM_DISPLAY_MODE)
-            : $this->config->General->subcategories_look;
+            : \XLite\Core\Config::getInstance()->General->subcategories_look;
     }
 
     /**

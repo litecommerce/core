@@ -66,7 +66,7 @@ class States extends \XLite\Controller\Admin\AAdmin
 
         $countryCode = isset(\XLite\Core\Request::getInstance()->country_code)
             ? \XLite\Core\Request::getInstance()->country_code
-            : $this->config->General->default_country;
+            : \XLite\Core\Config::getInstance()->General->default_country;
 
         $this->set(
             'country_code',

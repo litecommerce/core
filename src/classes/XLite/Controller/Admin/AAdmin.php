@@ -115,7 +115,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      */
     public function getCustomerZoneWarning()
     {
-        return ('Y' == \XLite::getInstance()->config->General->shop_closed) ? 'maintenance_mode' : null;
+        return ('Y' == \XLite\Core\Config::getInstance()->General->shop_closed) ? 'maintenance_mode' : null;
     }
 
     /**

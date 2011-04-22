@@ -103,7 +103,7 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
             $data['srcAddress']['zipcode'] = $postedData['sourceZipcode'];
 
         } else {
-            $data['srcAddress']['zipcode'] = $this->config->Company->location_zipcode;
+            $data['srcAddress']['zipcode'] = \XLite\Core\Config::getInstance()->Company->location_zipcode;
         }
 
         if (isset($postedData['destinationZipcode']) && !empty($postedData['destinationZipcode'])) {

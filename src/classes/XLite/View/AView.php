@@ -1062,11 +1062,11 @@ abstract class AView extends \XLite\Core\Handler
     protected function price_format($base, $field = '', $thousandDelim = null, $decimalDelim = null)
     {
         if (!isset($thousandDelim)) {
-            $thousandDelim = $this->config->General->thousand_delim;
+            $thousandDelim = \XLite\Core\Config::getInstance()->General->thousand_delim;
         }
 
         if (!isset($decimalDelim)) {
-            $decimalDelim = $this->config->General->decimal_delim;
+            $decimalDelim = \XLite\Core\Config::getInstance()->General->decimal_delim;
         }
 
         $result = null;
@@ -1081,7 +1081,7 @@ abstract class AView extends \XLite\Core\Handler
             }
 
             $result = sprintf(
-                $this->config->General->price_format,
+                \XLite\Core\Config::getInstance()->General->price_format,
                 number_format($base, 2, $decimalDelim, $thousandDelim)
             );
         }

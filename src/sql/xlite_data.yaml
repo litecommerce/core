@@ -25,7 +25,7 @@ XLite\Model\Config:
   - { name: company_phone, category: Company, type: text, orderby: 410, value: '(555) 555-5555', translations: [{ code: en, option_name: Phone, option_comment: '' }] }
   - { name: company_website, category: Company, type: text, orderby: 370, value: '', translations: [{ code: en, option_name: 'Company website', option_comment: '' }] }
   - { name: customer_presentation, category: General, type: separator, orderby: 200, translations: [{ code: en, option_name: 'Customer Zone settings', option_comment: '' }] }
-  - { name: customer_security, category: Security, type: checkbox, value: '', translations: [{ code: en, option_name: 'Use HTTPS in the Customer Zone (for login, Checkout and profile pages)' }] }
+  - { name: customer_security, category: Security, type: checkbox, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Customer Zone (for login, Checkout and profile pages)' }] }
   - { name: date_format, category: General, type: select, orderby: 660, value: '%b %e, %Y', translations: [{ code: en, option_name: 'Date format', option_comment: '' }] }
   - { name: decimal_delim, category: General, type: select, orderby: 650, value: ., translations: [{ code: en, option_name: 'Currency decimal separator', option_comment: '' }] }
   - { name: defaultSources, category: Images, type: serialized }

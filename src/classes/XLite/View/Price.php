@@ -53,7 +53,7 @@ class Price extends \XLite\View\AView
      */
     public function isSalePriceEnabled()
     {
-        return $this->config->General->enable_sale_price
+        return \XLite\Core\Config::getInstance()->General->enable_sale_price
             && $this->getProduct()->getSalePrice() > $this->getProduct()->getListPrice();
     }
 
@@ -66,7 +66,7 @@ class Price extends \XLite\View\AView
      */
     public function isSaveEnabled()
     {
-        return ('N' !== $this->config->General->you_save) && (0 < $this->getSaveValuePercent());
+        return ('N' !== \XLite\Core\Config::getInstance()->General->you_save) && (0 < $this->getSaveValuePercent());
     }
 
     /**

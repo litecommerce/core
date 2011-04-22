@@ -100,7 +100,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     public function isSecure()
     {
-        return $this->config->Security->customer_security;
+        return \XLite\Core\Config::getInstance()->Security->customer_security;
     }
 
     /**
@@ -439,7 +439,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function isZeroOrderTotal()
     {
-        return 0 == $this->getCart()->getTotal() && $this->config->Payments->default_offline_payment;
+        return 0 == $this->getCart()->getTotal() && \XLite\Core\Config::getInstance()->Payments->default_offline_payment;
     }
 
     /**

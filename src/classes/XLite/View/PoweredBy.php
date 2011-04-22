@@ -39,6 +39,12 @@ namespace XLite\View;
 class PoweredBy extends \XLite\View\AView
 {
     /**
+     * Phrase to use in footer
+     */
+    const PHRASE = 'Powered by LiteCommerce v3 [shopping cart software]';
+
+
+    /**
      * Advertise phrases 
      * 
      * @var   array
@@ -114,13 +120,16 @@ class PoweredBy extends \XLite\View\AView
      */
     protected function getPhrase()
     {
-        $phrase = 'Powered by LiteCommerce v3 [shopping cart software]';
-        
-        if (isset($this->phrases) && is_array($this->phrases) && 0 < count($this->phrases)) {
+        $phrase = self::PHRASE;
 
+        if (
+            isset($this->phrases) 
+            && is_array($this->phrases) 
+            && 0 < count($this->phrases)
+        ) {
             if (
-                !isset($this->config->Internal->prnotice_index)
-                || !isset($this->phrases[$this->config->Internal->prnotice_index])
+                !isset(\XLite\Core\Config::getInstance()->Internal->prnotice_index)
+                || !isset($this->phrases[\XLite\Core\Config::getInstance()->Internal->prnotice_index])
             ) {
                 $index = mt_rand(0, count($this->phrases) - 1);
 
@@ -133,15 +142,18 @@ class PoweredBy extends \XLite\View\AView
                 );
 
             } else {
-                $index = intval($this->config->Internal->prnotice_index);
+
+                $index = intval(\XLite\Core\Config::getInstance()->Internal->prnotice_index);
             }
 
             $tmp = $this->phrases[$index];
 
-            if (is_string($tmp) && 0 < strlen(trim($tmp))) {
+            if (
+                is_string($tmp)
+                && 0 < strlen(trim($tmp))
+            ) {
                 $phrase = $tmp;
             }
-
         }
 
         return $phrase;

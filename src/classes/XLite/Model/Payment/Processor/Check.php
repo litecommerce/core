@@ -57,7 +57,7 @@ class Check extends \XLite\Model\Payment\Processor\Offline
      */
     public function isDisplayNumber()
     {
-        return $this->config->General->display_check_number;
+        return \XLite\Core\Config::getInstance()->General->display_check_number;
     }
 
 
