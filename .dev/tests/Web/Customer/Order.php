@@ -138,10 +138,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
     {
         $order = $this->buy();
 
-        $date = strftime(
-            \XLite\Core\Config::getInstance()->General->date_format . ', ' . \XLite\Core\Config::getInstance()->General->time_format,
-            $order->getDate()
-        );
+        $date = \XLite\Core\Converter::formatTime($order->getDate());
 
         // Title
         $this->assertEquals(

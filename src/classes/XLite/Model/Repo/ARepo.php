@@ -1245,7 +1245,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     protected function getQueryBuilder()
     {
         if (!isset($this->queryBuilderClass)) {
-            $this->queryBuilderClass = str_replace('\\Repo\\', '\\QuieryBuilder\\', get_called_class());
+            $this->queryBuilderClass = str_replace('\\Repo\\', '\\QueryBuilder\\', get_called_class());
 
             if (!\XLite\Core\Operator::isClassExists($this->queryBuilderClass)) {
                 $this->queryBuilderClass = '\XLite\Model\QueryBuilder\Base\Common';
