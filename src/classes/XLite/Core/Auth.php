@@ -516,7 +516,8 @@ class Auth extends \XLite\Base
     protected function rememberLogin($login) 
     {
         $options = \XLite::getInstance()->getOptions('host_details');
-        $ttl = time() + 86400 * intval($this->config->General->login_lifetime);
+
+        $ttl = time() + 86400 * intval(\XLite\Core\Config::getInstance()->General->login_lifetime);
 
         foreach (array($options['http_host'], $options['https_host']) as $host) {
             @setcookie('recent_login', $login, $ttl, '/', func_parse_host($host));

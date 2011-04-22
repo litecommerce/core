@@ -54,10 +54,10 @@ class Main extends \XLite\Controller\Customer\Category
      */
     public function handleRequest()
     {
-        if ($this->config->General->add_on_mode) {
+        if (\XLite\Core\Config::getInstance()->General->add_on_mode) {
 
             // switch to cart in Add-on mode
-            $addOnModePage = $this->config->General->add_on_mode_page;
+            $addOnModePage = \XLite\Core\Config::getInstance()->General->add_on_mode_page;
 
             if ('cart.php' !== $addOnModePage) {
 

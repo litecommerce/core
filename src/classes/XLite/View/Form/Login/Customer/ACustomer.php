@@ -45,7 +45,7 @@ abstract class ACustomer extends \XLite\View\Form\Login\ALogin
      */
     protected function getSecuritySetting()
     {
-        return $this->config->Security->customer_security;
+        return \XLite\Core\Config::getInstance()->Security->customer_security;
     }
 }
 

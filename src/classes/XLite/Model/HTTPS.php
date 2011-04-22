@@ -488,9 +488,9 @@ class HTTPS extends \XLite\Base
         $this->response = null;
 
         if (is_null($software)) {
-            $software = 'autodetect' == $this->config->Security->httpsClient
+            $software = 'autodetect' == \XLite\Core\Config::getInstance()->Security->httpsClient
                 ? $this->detectSoftware()
-                : $this->config->Security->httpsClient;
+                : \XLite\Core\Config::getInstance()->Security->httpsClient;
         }
 
         switch ($software) {
@@ -653,9 +653,9 @@ class HTTPS extends \XLite\Base
             curl_setopt($c, CURLOPT_TIMEOUT, $this->timeout);
         }
 
-        if ($this->config->Security->proxy) {
+        if (\XLite\Core\Config::getInstance()->Security->proxy) {
             curl_setopt($c, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
-            curl_setopt($c, CURLOPT_PROXY, $this->config->Security->proxy);
+            curl_setopt($c, CURLOPT_PROXY, \XLite\Core\Config::getInstance()->Security->proxy);
         }
 
         curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
@@ -882,8 +882,8 @@ class HTTPS extends \XLite\Base
             $execline .= ' --connect-timeout ' . $this->timeout . ' -m ' . $this->timeout;
         }
 
-        if ($this->config->Security->proxy) {
-            $execline .= '  --proxy ' . $this->config->Security->proxy;
+        if (\XLite\Core\Config::getInstance()->Security->proxy) {
+            $execline .= '  --proxy ' . \XLite\Core\Config::getInstance()->Security->proxy;
         }
 
         if ($this->user) {

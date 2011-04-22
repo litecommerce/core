@@ -80,7 +80,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      */
     public function getShopURL($url = '', $secure = false)
     {
-        return parent::getShopURL($url, $this->config->Security->full_customer_security ?: $secure);
+        return parent::getShopURL($url, \XLite\Core\Config::getInstance()->Security->full_customer_security ?: $secure);
     }
 
     /**
@@ -95,7 +95,8 @@ abstract class ACustomer extends \XLite\Controller\AController
         $result = parent::isSecure();
 
         if (!is_null($this->get('feed')) && $this->get('feed') == 'login') {
-            $result = $this->config->Security->customer_security;
+
+            $result = \XLite\Core\Config::getInstance()->Security->customer_security;
         }
 
         return $result;

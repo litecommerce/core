@@ -214,7 +214,7 @@ class PagerOrig extends \XLite\View\AView
                 'Page ID', 0
             ),
             self::PARAM_ITEMS_PER_PAGE => new \XLite\Model\WidgetParam\Int(
-                'Items per page', intval($this->config->General->products_per_page), true
+                'Items per page', intval(\XLite\Core\Config::getInstance()->General->products_per_page), true
             ),
             self::PARAM_DATA => new \XLite\Model\WidgetParam\Collection(
                 'Data', array()

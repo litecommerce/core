@@ -45,6 +45,6 @@ abstract class AAdmin extends \XLite\View\Form\Login\ALogin
      */
     protected function getSecuritySetting()
     {
-        return $this->config->Security->admin_security;
+        return \XLite\Core\Config::getInstance()->Security->admin_security;
     }
 }

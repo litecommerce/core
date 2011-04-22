@@ -116,7 +116,7 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
 
             $url = \XLite::getShopURL(
                 $this->buildURL('checkout', 'return', array('order_id' => $txn->getOrder()->getOrderId())),
-                $this->config->Security->customer_security
+                \XLite\Core\Config::getInstance()->Security->customer_security
             );
 
             switch ($txn->getPaymentMethod()->getProcessor()->getReturnType()) {

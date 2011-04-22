@@ -235,7 +235,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
                 break;
                                   
             case 'lite_version':
-                $return = $this->config->Version->version; 
+                $return = \XLite\Core\Config::getInstance()->Version->version; 
                 break;
 
             case 'libcurl': 
@@ -913,7 +913,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
              $result = is_array($ipsList) ? $ipsList : array();
 
         } else {
-            $result = $this->config->SecurityIP->allow_admin_ip;
+            $result = \XLite\Core\Config::getInstance()->SecurityIP->allow_admin_ip;
         }
 
         return $result;

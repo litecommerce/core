@@ -665,7 +665,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * isSecure 
      * 
-     * @return void
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
