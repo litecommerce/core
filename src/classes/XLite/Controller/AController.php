@@ -518,7 +518,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getAccessLevel()
     {
-        return $this->auth->getCustomerAccessLevel();
+        return \XLite\Core\Auth::getInstance()->getCustomerAccessLevel();
     }
 
     /**

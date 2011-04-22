@@ -118,10 +118,8 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionSearch()
     {
-        $this->session->set(
-            \XLite\View\ItemsList\Product\Admin\Search::getSessionCellName(), 
-            $this->getSearchParams()
-        );
+        \XLite\Core\Session::getInstance()
+            ->{\XLite\View\ItemsList\Product\Admin\Search::getSessionCellName()} = $this->getSearchParams();
 
         $this->setReturnURL($this->buildURL('product_list', '', array('mode' => 'search')));
     }
@@ -200,7 +198,8 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
      */
     protected function getConditions()
     {
-        $searchParams = $this->session->get(\XLite\View\ItemsList\Product\Admin\Search::getSessionCellName());
+        $searchParams = \XLite\Core\Session::getInstance()
+            ->{\XLite\View\ItemsList\Product\Admin\Search::getSessionCellName()};
 
         if (!is_array($searchParams)) {
 

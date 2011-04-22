@@ -193,14 +193,19 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
         }
         
         foreach ($searchParams as $modelParam => $requestParam) {
+
             if (\XLite\Model\Repo\Order::P_DATE === $requestParam) {
+
                 $ordersSearch[$requestParam] = array($this->startDate, $this->endDate);
+
             } elseif (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
+
                 $ordersSearch[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
             }
         }
         
-        $this->session->set(\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName(), $ordersSearch);
+        \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName()} = $ordersSearch;
+
         $this->setReturnURL($this->buildURL('order_list', '', array('mode' => 'search')));
     }
 
@@ -213,9 +218,10 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      */
     protected function getConditions()
     {
-        $searchParams = $this->session->get(\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName());
+        $searchParams = \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName()};
 
         if (!is_array($searchParams)) {
+
             $searchParams = array();
         }
 

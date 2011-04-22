@@ -41,7 +41,6 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      * Options invalid flag
      * 
      * @var    boolean
-     * @access protected
      * @see    ____var_see____
      * @since  1.0.0
      */
@@ -54,7 +53,6 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      * @param \XLite\Model\Product $product Product to add
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -62,20 +60,30 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
     {
         $item = parent::getCurrentItem($product);
 
-        if ($item->getProduct() && $item->getProduct()->hasOptions()) {
-
+        if (
+            $item->getProduct() 
+            && $item->getProduct()->hasOptions()
+        ) {
             if (isset(\XLite\Core\Request::getInstance()->product_options)) {
+
                 $options = $item->getProduct()->prepareOptions(\XLite\Core\Request::getInstance()->product_options);
+
                 if (!$item->getProduct()->checkOptionsException($options)) {
+
                     $options = null;
                 } 
+
             } else {
+
                 $options = $item->getProduct()->getDefaultProductOptions();
             }
 
             if (is_array($options)) {
+
                 $item->setProductOptions($options);
+
             } else {
+
                 $this->optionInvalid = true;
             }
         }
@@ -87,7 +95,6 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      * 'add' action
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -100,24 +107,27 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
 
             // Save wrong options set
             $request = \XLite\Core\Request::getInstance();
-            $this->session->set(
-                'saved_invalid_options',
-                array(
-                    $request->product_id => $request->product_options,
-                )
+
+            \XLite\Core\Session::getInstance()->saved_invalid_options = array(
+                $request->product_id => $request->product_options,
             );
 
             // Delete item from cart and switch back to product details
             $key = $this->getCurrentItem()->getKey();
+
             foreach ($this->getCart()->getItems() as $i) {
+
                 if ($i->getKey() == $key) {
+
                     $this->getCart()->getItems()->removeElement($i);
+
                     break;
                 }
             }
             $this->updateCart();
 
             \XLite\Core\TopMessage::getInstance()->clear();
+
             \XLite\Core\TopMessage::addError(
                 'The product options you have selected are not valid or fall into an exception.'
                 . ' Please select other product options and add the product to cart once again.'
@@ -132,7 +142,8 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
             );
 
         } else {
-            $this->session->set('saved_invalid_options', null);
+
+            \XLite\Core\Session::getInstance()->saved_invalid_options = null;
         }
     }
 }

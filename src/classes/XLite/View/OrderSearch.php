@@ -118,9 +118,8 @@ class OrderSearch extends \XLite\View\Dialog
     {
         if (!isset($this->orders)) {
 
-            $this->orders = \XLite\Core\Database::getRepo('\XLite\Model\Order')->search(
-                $this->getConditions()
-            );
+            $this->orders = \XLite\Core\Database::getRepo('\XLite\Model\Order')
+                ->search($this->getConditions());
         }
 
         return $this->orders;
@@ -208,7 +207,7 @@ class OrderSearch extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'order' . LC_DS . 'search';
+        return 'order/search';
     }
 
     /**
@@ -222,12 +221,13 @@ class OrderSearch extends \XLite\View\Dialog
     {
         if (!isset($this->conditions)) {
 
-            $this->conditions = $this->session->get('orders_search');
+            $this->conditions = \XLite\Core\Session::getInstance()->orders_search;
 
             if (!is_array($this->conditions)) {
 
                 $this->conditions = array();
-                $this->session->set('orders_search', $this->conditions);
+
+                \XLite\Core\Session::getInstance()->orders_search = $this->conditions;
             }
         }
 

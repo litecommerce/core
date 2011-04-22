@@ -66,6 +66,7 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
                 ->findByIds($pids);
 
             if (!$this->categoryId) {
+
                 $this->categoryId = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getRootCategoryId();
             }
 
@@ -76,9 +77,13 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
             $this->category_id = $this->categoryId;
 
             $existingLinksIds = array();
+
             $existingLinks = $this->getFeaturedProductsList();
+
             if ($existingLinks) {
+
                 foreach ($existingLinks as $k => $v) {
+
                     $existingLinksIds[] = $v->getProduct()->getProductId();
                 }
             }
@@ -88,18 +93,23 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
                 foreach ($products as $product) {
 
                     if (in_array($product->getProductId(), $existingLinksIds)) {
+
                         \XLite\Core\TopMessage::addWarning(
                             'The product SKU#"' . $product->getSku() . '" is already set as featured for the category'
                         );
+
                         continue;
                     }
 
                     $fp = new \XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct();
+
                     $fp->setProduct($product);
 
                     if ($category) {
+
                         $fp->setCategory($category);
                     }
+
                     \XLite\Core\Database::getEM()->persist($fp);
                 }
             }
@@ -127,7 +137,9 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
                 ->findByIds(array_keys($toDelete));
 
             if ($records) {
+
                 foreach ($records as $rec) {
+
                     \XLite\Core\Database::getEM()->remove($rec);
                 }
             }
@@ -137,14 +149,20 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
         $orderbys = \XLite\Core\Request::getInstance()->orderbys;
 
         if ($orderbys) {
+
             $records = \XLite\Core\Database::getRepo('\XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct')
                 ->findByIds(array_keys($orderbys));
 
             if ($records) {
+
                 foreach ($records as $rec) {
+
                     $cell = array();
+
                     $cell['order_by'] = abs(intval($orderbys[$rec->getId()]));
+
                     $rec->map($cell);
+
                     \XLite\Core\Database::getEM()->persist($rec);
                 }
             }
@@ -162,9 +180,11 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
      */
     protected function getConditions()
     {
-        $searchParams = $this->session->get(\XLite\Module\CDev\FeaturedProducts\View\Admin\FeaturedProducts::getSessionCellName());
+        $searchParams = \XLite\Core\Session::getInstance()
+            ->{\XLite\Module\CDev\FeaturedProducts\View\Admin\FeaturedProducts::getSessionCellName()};
 
         if (!is_array($searchParams)) {
+
             $searchParams = array();
         }
 
@@ -186,6 +206,7 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
         $searchParams = $this->getConditions();
 
         if (isset($searchParams[$paramName])) {
+
             $return = $searchParams[$paramName];
         }
 

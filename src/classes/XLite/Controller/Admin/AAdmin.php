@@ -76,6 +76,7 @@ abstract class AAdmin extends \XLite\Controller\AController
         parent::postprocess();
 
         if ($this->dumpStarted) {
+
             $this->displayPageFooter();
         }
     }
@@ -103,7 +104,7 @@ abstract class AAdmin extends \XLite\Controller\AController
     {
         $currentCode = \XLite\Core\Request::getInstance()->language;
 
-        return $currentCode ? $currentCode : \XLite\Core\Translation::getCurrentLanguageCode();
+        return $currentCode ?: \XLite\Core\Translation::getCurrentLanguageCode();
     }
 
     /**
@@ -127,7 +128,7 @@ abstract class AAdmin extends \XLite\Controller\AController
      */
     public function getAccessLevel()
     {
-        return $this->auth->getAdminAccessLevel();
+        return \XLite\Core\Auth::getInstance()->getAdminAccessLevel();
     }
 
     /**
@@ -140,15 +141,19 @@ abstract class AAdmin extends \XLite\Controller\AController
     public function handleRequest()
     {
         // Check if user is logged in and has a right access level
-        if (!$this->auth->isAuthorized($this) && !$this->isPublicZone()) {
+        if (
+            !\XLite\Core\Auth::getInstance()->isAuthorized($this) 
+            && !$this->isPublicZone()
+        ) {
+            \XLite\Core\Session::getInstance()->lastWorkingURL = $this->get('url');
 
-            $this->session->set('lastWorkingURL', $this->get('url'));
             $this->redirect($this->buildURL('login'));
 
         } else {
 
             if (isset(\XLite\Core\Request::getInstance()->no_https)) {
-                $this->session->set('no_https', true);
+
+                \XLite\Core\Session::getInstance()->no_https = true;
             }
 
             parent::handleRequest();
@@ -164,7 +169,10 @@ abstract class AAdmin extends \XLite\Controller\AController
      */
     public function getRecentAdmins()
     {
-        if ($this->auth->isLogged() && is_null($this->recentAdmins)) {
+        if (
+            \XLite\Core\Auth::getInstance()->isLogged() 
+            && is_null($this->recentAdmins)
+        ) {
             $this->recentAdmins = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findRecentAdmins();
         }
 
