@@ -158,7 +158,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getHead()
     {
-        return $this->getItemsCount() . ' products found';
+        return $this->getItemsCount() . ' ' . $this->t('products found');
     }
 
     /** 

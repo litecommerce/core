@@ -105,7 +105,7 @@ class DatePicker extends \XLite\View\FormField
     {
         return 0 >= $this->getParam(self::PARAM_VALUE)
             ? ''
-            : strftime($this->phpDateFormat, $this->getParam(self::PARAM_VALUE));
+            : \XLite\Core\Converter::formatDate($this->getParam(self::PARAM_VALUE), $this->phpDateFormat);
     }
 
     /**
