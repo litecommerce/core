@@ -434,7 +434,7 @@ class Converter extends \XLite\Base\Singleton
     {
         if (
             !self::$isLocaleSet
-            && preg_match('/(([^_]+)_?([^.]*))\.?(.*)?/', setlocale(LC_TIME, null), $match) 
+            && preg_match('/(([^_]+)_?([^.]*))\.?(.*)?/', setlocale(LC_TIME, 0), $match) 
             && !preg_match('/utf\-?8/i', $match[4])
         ) {
             setlocale(

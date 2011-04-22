@@ -138,6 +138,8 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
     {
         $order = $this->buy();
 
+        $locale = setlocale(LC_ALL, 'C');
+
         $date = \XLite\Core\Converter::formatTime($order->getDate());
 
         // Title
