@@ -80,12 +80,14 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
         // security check on return page
         $orderId = \XLite\Core\Request::getInstance()->order_id;
         if (
-            $orderId != $this->session->get('last_order_id')
+            $orderId != \XLite\Core\Session::getInstance()->last_order_id
             && $orderId != $this->getCart()->getOrderId()
         ) {
+
             $this->redirect($this->buildURL('cart'));
 
         } else {
+
             parent::handleRequest();
         }
     }
@@ -100,6 +102,7 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
     public function getOrder()
     {
         if (!isset($this->order)) {
+
             $this->order = \XLite\Core\Database::getRepo('XLite\Model\Order')
                 ->find(\XLite\Core\Request::getInstance()->order_id);
         }

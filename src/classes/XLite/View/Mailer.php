@@ -256,7 +256,7 @@ class Mailer extends \XLite\View\AView
 
         if ('' !== $output) {
 
-            $this->logger->log('Mailer echoed: "' . $output . '". Error: ' . $this->mail->ErrorInfo);
+            \XLite\Logger::getInstance()->log('Mailer echoed: "' . $output . '". Error: ' . $this->mail->ErrorInfo);
         }
 
         if (file_exists($fname)) {
@@ -280,7 +280,7 @@ class Mailer extends \XLite\View\AView
 
             if (!isset($this->mail)) {
 
-                $this->logger->log('Mail FAILED: not initialized inner mailer');
+                \XLite\Logger::getInstance()->log('Mail FAILED: not initialized inner mailer');
             }
 
             ob_start();
@@ -291,7 +291,7 @@ class Mailer extends \XLite\View\AView
 
             if (!$result) {
 
-                $this->logger->log('Mail FAILED: ' . $this->mail->ErrorInfo);
+                \XLite\Logger::getInstance()->log('Mail FAILED: ' . $this->mail->ErrorInfo);
             }
         }
 

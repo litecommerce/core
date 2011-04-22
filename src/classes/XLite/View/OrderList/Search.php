@@ -67,9 +67,9 @@ class Search extends \XLite\View\OrderList\AOrderList
     public function getOrders(\XLite\Core\CommonCell $cnd = null)
     {
         if (!isset($this->orders)) {
-            $this->orders = \XLite\Core\Database::getRepo('\XLite\Model\Order')->search(
-                $this->getConditions($cnd)
-            );
+
+            $this->orders = \XLite\Core\Database::getRepo('\XLite\Model\Order')
+                ->search($this->getConditions($cnd));
         }
 
         return $this->orders;
@@ -85,6 +85,7 @@ class Search extends \XLite\View\OrderList\AOrderList
     public function getPageData()
     {
         if (!isset($this->namedWidgets['pager'])) {
+
             $this->getWidget(
                 array('pageId' => $this->getPageId()),
                 '\XLite\View\Pager\Customer\Order\Search',
@@ -144,47 +145,63 @@ class Search extends \XLite\View\OrderList\AOrderList
     protected function getConditions(\XLite\Core\CommonCell $cnd = null)
     {
         if (!isset($this->conditions)) {
-            $this->conditions = $this->session->get('orders_search');
+
+            $this->conditions = \XLite\Core\Session::getInstance()->orders_search;
+
             if (!is_array($this->conditions)) {
+
                 $this->conditions = array();
-                $this->session->set('orders_search', $this->conditions);
+
+                \XLite\Core\Session::getInstance()->orders_search = $this->conditions;
             }
+
             foreach ($this->conditions as $key => $value) {
+
             }
         }
 
         $cnd = $cnd ?: new \XLite\Core\CommonCell();
 
         if ($this->getProfile()->isAdmin()) {
+
             if (!empty(\XLite\Core\Request::getInstance()->profile_id)) {
+
                 $cnd->profileId = \XLite\Core\Request::getInstance()->profile_id;
             }   
+
         } else {
+
             $cnd->profileId = $this->getProfile()->getProfileId();
         }
 
         if (!isset($this->conditions['sortCriterion']) || !$this->conditions['sortCriterion']) {
+
             $this->conditions['sortCriterion'] = 'order_id';
         }
 
         if (!isset($this->conditions['sortOrder']) || !$this->conditions['sortOrder']) {
+
             $this->conditions['sortOrder'] = 'ASC';
         }
 
         $cnd->orderBy = array('o.' . $this->conditions['sortCriterion'], $this->conditions['sortOrder']);
 
         if (isset($this->conditions['order_id'])) {
+
             $cnd->orderId = $this->conditions['order_id'];
         }
 
         if (isset($this->conditions['status'])) {
+
             $cnd->status = $this->conditions['status'];
         }
 
         $start = isset($this->conditions['startDate']) ? $this->conditions['startDate'] : 0;
+
         $end   = isset($this->conditions['endDate']) ? $this->conditions['endDate'] : 0;
 
         if ($start < $end) {
+
             $cnd->date = array($start, $end);
         }
 

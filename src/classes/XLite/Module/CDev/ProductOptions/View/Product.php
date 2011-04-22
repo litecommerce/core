@@ -70,7 +70,7 @@ abstract class Product extends \XLite\View\Product\Details\Customer\ACustomer im
      */
     public function getSelectedOptions()
     {
-        $saved = $this->session->get('saved_invalid_options');
+        $saved = \XLite\Core\Session::getInstance()->saved_invalid_options;
 
         return is_array($saved) && isset($saved[$this->getProduct()->getProductId()])
             ? $saved[$this->getProduct()->getProductId()]

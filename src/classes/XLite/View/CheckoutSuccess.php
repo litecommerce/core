@@ -64,13 +64,15 @@ class CheckoutSuccess extends \XLite\View\AView
      */
     public function getContinueURL()
     {
-        $url = $this->session->get('continueURL');
+        $url = \XLite\Core\Session::getInstance()->continueURL;
 
         if (!$url && isset($_SERVER['HTTP_REFERER'])) {
+
             $url = $_SERVER['HTTP_REFERER'];
         }
 
         if (!$url) {
+
             $url = $this->buildURL('main');
         }
 
