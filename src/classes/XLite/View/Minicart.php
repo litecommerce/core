@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Minicart widget
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="layout.header.right", weight="100")
  */
@@ -41,13 +41,11 @@ class Minicart extends \XLite\View\SideBarBox
     /**
      * Widget parameter names
      */
-
     const PARAM_DISPLAY_MODE = 'displayMode';
 
     /**
      * Allowed display modes
      */
-
     const DISPLAY_MODE_VERTICAL   = 'vertical';
     const DISPLAY_MODE_HORIZONTAL = 'horizontal';
 
@@ -62,7 +60,7 @@ class Minicart extends \XLite\View\SideBarBox
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $displayModes = array(
         self::DISPLAY_MODE_VERTICAL   => 'Vertical',
@@ -75,7 +73,7 @@ class Minicart extends \XLite\View\SideBarBox
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -90,12 +88,11 @@ class Minicart extends \XLite\View\SideBarBox
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = 'mini_cart/minicart.js';
 
         return $list;
@@ -106,28 +103,14 @@ class Minicart extends \XLite\View\SideBarBox
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCommonFiles()
     {
         $list = parent::getCommonFiles();
-
         $list['js'][] = 'js/jquery.blockUI.js';
 
         return $list;
-    }
-
-
-    /**                                                
-     * Return title                                    
-     *                                                 
-     * @return string                                  
-     * @see    ____func_see____
-     * @since  3.0.0                                
-     */                                                
-    protected function getHead()                       
-    {
-        return '';
     }
 
     /**
@@ -135,11 +118,11 @@ class Minicart extends \XLite\View\SideBarBox
      *                               
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
-        return 'mini_cart/' . $this->getParam(self::PARAM_DISPLAY_MODE);
+        return 'mini_cart' . LC_DS . $this->getParam(self::PARAM_DISPLAY_MODE);
     }
 
     /**
@@ -147,7 +130,7 @@ class Minicart extends \XLite\View\SideBarBox
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getItemsList()
     {
@@ -163,7 +146,7 @@ class Minicart extends \XLite\View\SideBarBox
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isTruncated()
     {
@@ -175,7 +158,7 @@ class Minicart extends \XLite\View\SideBarBox
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCollapsed()
     {
@@ -187,7 +170,7 @@ class Minicart extends \XLite\View\SideBarBox
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTotals()
     {

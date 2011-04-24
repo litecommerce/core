@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Orders list controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class OrderList extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,7 +41,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -57,7 +57,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      *  
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDateValue($fieldName, $isEndDate = false)
     {
@@ -94,7 +94,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCondition($paramName)
     {
@@ -116,7 +116,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDateCondition($start = true)
     {
@@ -134,7 +134,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -146,7 +146,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -158,7 +158,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -170,7 +170,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionSearch()
     {
@@ -193,14 +193,19 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
         }
         
         foreach ($searchParams as $modelParam => $requestParam) {
+
             if (\XLite\Model\Repo\Order::P_DATE === $requestParam) {
+
                 $ordersSearch[$requestParam] = array($this->startDate, $this->endDate);
+
             } elseif (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
+
                 $ordersSearch[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
             }
         }
         
-        $this->session->set(\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName(), $ordersSearch);
+        \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName()} = $ordersSearch;
+
         $this->setReturnURL($this->buildURL('order_list', '', array('mode' => 'search')));
     }
 
@@ -209,13 +214,14 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getConditions()
     {
-        $searchParams = $this->session->get(\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName());
+        $searchParams = \XLite\Core\Session::getInstance()->{\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName()};
 
         if (!is_array($searchParams)) {
+
             $searchParams = array();
         }
 

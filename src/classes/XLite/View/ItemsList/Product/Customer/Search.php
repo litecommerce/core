@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList\Product\Customer;
@@ -32,7 +32,7 @@ namespace XLite\View\ItemsList\Product\Customer;
  * Search 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
 {
@@ -47,7 +47,6 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     const PARAM_BY_DESCR          = 'by_descr';
     const PARAM_BY_SKU            = 'by_sku';
 
-
     /**
      * Widget target 
      */
@@ -55,11 +54,12 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
 
     /**
-     * Return search parameters TODO refactor with XLite\View\ItemsList\Product\Admin\Search::getSearchParams() 
+     * Return search parameters.
+     * :TODO: refactor with XLite\View\ItemsList\Product\Admin\Search::getSearchParams() 
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     static public function getSearchParams()
     {
@@ -78,7 +78,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -107,7 +107,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getListCSSClasses()
     {
@@ -119,7 +119,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -136,7 +136,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -154,11 +154,11 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
-        return $this->getItemsCount() . ' products found';
+        return $this->getItemsCount() . ' ' . $this->t('products found');
     }
 
     /** 
@@ -166,7 +166,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isHeadVisible()
     {
@@ -178,7 +178,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isHeaderVisible()
     {   
@@ -190,7 +190,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isPagerVisible()
     {
@@ -202,7 +202,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isFooterVisible()
     {
@@ -214,7 +214,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -226,7 +226,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -238,7 +238,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCommonParams()
     {
@@ -289,7 +289,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -306,7 +306,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      *   
      * @return \XLite\Core\CommonCell
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSearchCondition()
     {
@@ -335,7 +335,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      *
      * @return array|integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {

@@ -27,7 +27,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * 
      * @var    array
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static $testsRange = array();
 
@@ -36,7 +36,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * 
      * @var    integer
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $messageLength = 70;
 
@@ -81,9 +81,18 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * 
      * @var    array
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $testConfig = null;
+
+    /**
+     * Flag: generate database backup on test failure
+     * 
+     * @var    boolean
+     * @see    ____var_see____
+     * @since  1.0.0
+     */
+    protected $makeSqlBackupOnFailure = false;
 
 
     // {{{ Methods that are redefine the methods of a base class
@@ -200,7 +209,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * 
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function runTest()
     {
@@ -212,7 +221,28 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
             $this->markTestSkipped();
 
         } else {
-            $result = parent::runTest();
+
+            try {
+
+                $result = parent::runTest();
+        
+            } catch (PHPUnit_Framework_AssertionFailedError $exception) {
+
+                if ($this->makeSqlBackupOnFailure) {
+
+                    $path = LC_ROOT_DIR . 'var/log/unit-' . date('Ymd-His') . '-' . $this->getName() . '.sql';
+
+                    try {
+                        ob_start();
+                        xlite_make_sql_backup($path);
+                        ob_end_clean();
+
+                    } catch (\Exception $e) {
+                    }
+                }
+
+                throw $exception;
+            }
         }
 
         return $result;
@@ -351,7 +381,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private function writeMetricLog()
     {
@@ -409,6 +439,20 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     // {{{ E-mail box operations
 
     /**
+     * Check IMAP extension
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function checkIMAP()
+    {
+        if (!function_exists('imap_open')) {
+            $this->markTestSkipped('IMAP extension is not loaded');
+        }
+    }
+
+    /**
      * Set start of emails counter
      * 
      * @return void
@@ -435,6 +479,8 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      */
     private function initMailBox()
     {
+        $this->checkIMAP();
+
         if (
             is_null($this->mailBox) 
             || false === $this->mailBox
@@ -501,6 +547,23 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
     // }}}
 
+    // {{{ Database operations
+
+    /**
+     * Restore database from common backup
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doRestoreDb($path = null, $drop = true)
+    {
+        $message = '';
+        $this->assertTrue(xlite_restore_sql_from_backup($path, false, $drop, $message), $message);
+    }
+
+    // }}}
 
     // {{{ XLite-specific methods
 
@@ -511,7 +574,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function query($sql)
     {
@@ -523,7 +586,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * 
      * @return \XLite\Model\Product
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProduct()
     {
@@ -537,7 +600,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      *  
      * @return \XLite\Model\Product
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProductBySku($sku)
     {

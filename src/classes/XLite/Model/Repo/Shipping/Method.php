@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo\Shipping;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo\Shipping;
  * Shipping method model
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Method extends \XLite\Model\Repo\ARepo
 {
@@ -41,7 +41,7 @@ class Method extends \XLite\Model\Repo\ARepo
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = self::TYPE_SECONDARY;
 
@@ -50,7 +50,7 @@ class Method extends \XLite\Model\Repo\ARepo
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $alternativeIdentifier = array(
         array('processor', 'code'),
@@ -64,7 +64,7 @@ class Method extends \XLite\Model\Repo\ARepo
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findMethodsByProcessor($processorId)
     {
@@ -78,7 +78,7 @@ class Method extends \XLite\Model\Repo\ARepo
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findMethodsByIds($ids)
     {
@@ -94,7 +94,7 @@ class Method extends \XLite\Model\Repo\ARepo
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addEnabledCondition(\Doctrine\ORM\QueryBuilder $qb, $alias = 'm')
     {
@@ -112,7 +112,7 @@ class Method extends \XLite\Model\Repo\ARepo
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineFindMethodsByProcessor($processorId)
     {
@@ -130,7 +130,7 @@ class Method extends \XLite\Model\Repo\ARepo
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineFindMethodsByIds($ids)
     {

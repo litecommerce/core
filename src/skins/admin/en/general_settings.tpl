@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 <form action="admin.php" name="options_form" method="post" IF="!page=#Environment#">
   <input type="hidden" name="target" value="{target}" />
@@ -82,7 +82,7 @@ function setUnitSymbol(symbol) {
               <select name="{option.name}">
                 <option value="" selected="{option.value=##}">No delimiter</option>
                 <option value="," selected="{option.value=#,#}">,</option>
-                <option value="&amp;nbsp;" selected="{option.value=#&nbsp;#}">Space</option>
+                <option value=" " selected="{option.value=# #}">Space</option>
               </select>
             {end:}
 
@@ -96,18 +96,18 @@ function setUnitSymbol(symbol) {
 
             {if:option.name=#date_format#}
               <select name="{option.name}">
-                <option value="%m/%d/%Y" selected="{option.value=#%m/%d/%Y#}">mm/dd/yyyy</option>
-                <option value="%b %e, %Y" selected="{option.value=#%b %e, %Y#}">Mmm dd, yyyy</option>
-                <option value="%d.%m.%Y" selected="{option.value=#%d.%m.%Y#}">dd.mm.yyyy</option>
+                <option value="%m/%d/%Y" selected="{option.value=#%m/%d/%Y#}">{formatDate(null,null,#%m/%d/%Y#)}</option>
+                <option value="%b %e, %Y" selected="{option.value=#%b %e, %Y#}">{formatDate(null,null,#%b %e, %Y#)}</option>
+                <option value="%d.%m.%Y" selected="{option.value=#%d.%m.%Y#}">{formatDate(null,null,#%d.%m.%Y#)}</option>
               </select>
             {end:}
 
             {if:option.name=#time_format#}
               <select name="{option.name}">
-                <option value="%T" selected="{option.value=#%T#}">{strftime(#%T#)}</option>
-                <option value="%H:%M" selected="{option.value=#%H:%M#}">{strftime(#%H:%M#)}</option>
-                <option value="%I:%M %p" selected="{option.value=#%I:%M %p#}">{strftime(#%I:%M %p#)}</option>
-                <option value="%r" selected="{option.value=#%r#}">{strftime(#%r#)}</option>
+                <option value="%T" selected="{option.value=#%T#}">{formatTime(null,null,#%T#)}</option>
+                <option value="%H:%M" selected="{option.value=#%H:%M#}">{formatTime(null,null,#%H:%M#)}</option>
+                <option value="%I:%M %p" selected="{option.value=#%I:%M %p#}">{formatTime(null,null,#%I:%M %p#)}</option>
+                <option value="%r" selected="{option.value=#%r#}">{formatTime(null,null,#%r#)}</option>
               </select>
             {end:}
 

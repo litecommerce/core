@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Login\Admin;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Login\Admin;
  * Abstract log-in form in admn interface
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AAdmin extends \XLite\View\Form\Login\ALogin
 {
@@ -41,10 +41,10 @@ abstract class AAdmin extends \XLite\View\Form\Login\ALogin
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSecuritySetting()
     {
-        return $this->config->Security->admin_security;
+        return \XLite\Core\Config::getInstance()->Security->admin_security;
     }
 }

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\ModulesManager;
@@ -32,7 +32,7 @@ namespace XLite\View\ModulesManager;
  * Enter addon key page
  *
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -43,41 +43,37 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
-        $result[] = 'addon_key';
+        $result[] = 'module_key';
     
         return $result;
     }
-
 
     /** 
      * Register CSS files
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
-        $list[] = $this->getDir() . LC_DS . 'css' . LC_DS . 'style.css';
+        $list[] = $this->getDir() . '/css/style.css';
 
         return $list;
     }   
-
 
     /**
      * Return title
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -89,7 +85,7 @@ class AddonKey extends \XLite\View\ModulesManager\AModulesManager
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {

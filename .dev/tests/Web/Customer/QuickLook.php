@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 require_once __DIR__ . '/ACustomer.php';
@@ -37,7 +37,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
 
     public function testStructure()
@@ -63,7 +63,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 
             $productsCount = $this->getJSExpression("jQuery('$list .product').size()");
             $buttonsCount = $this->getJSExpression("jQuery('$list .product a.quicklook-link').size()");
-            $this->assertEquals($buttonsCount, $productsCount, "Wrong number of Quicklook buttons");
+            $this->assertEquals($buttonsCount, $productsCount, "Wrong number of Quicklook buttons ($mode mode)");
  
             // Test several products
             $products = array(
@@ -81,7 +81,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
                     $l[$id] = $link;
                 } else {
                     // Make sure a product link is the same for all modes
-                    $this->assertEquals($link, $l[$id], "Product links depend on the display mode ($id)");
+                    $this->assertEquals($link, $l[$id], "Product links depend on the display mode ($id) ($mode mode)");
                 }
             }
         }
@@ -95,7 +95,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
 
     public function testProductOptions()
@@ -208,7 +208,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
 
     public function testGalleryAndZoomer()
@@ -301,12 +301,14 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testAdd2Cart()
     {
         $c2 = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'toys'));
+
         list($product, $selector) = $this->popupTestProduct('store/category/0/category_id-' . $c2->getCategoryId(), '00022');
+
         $id = $product->getProductId();
 
         // This assertion requires the minicart widget to be visible on the page
@@ -366,7 +368,23 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
             "Minicart widget displays a wrong qty (#1)"
         );
 
+        // <BUG E:0039432> --------------------
         $this->popupQuicklook($id);
+
+        $this->click($cartButtonSelector);
+
+        $this->closeQuicklook();
+
+        $this->waitForLocalCondition(
+            "jQuery('.BlockMsg-product-quicklook:visible').length <= 0",
+            10000,
+            "Add-to-cart button doesn't close Quicklook popups 2"
+        );
+
+        // </ BUG E:0039432> --------------------
+
+        $this->popupQuicklook($id);
+
 
         $this->assertElementNotPresent($cartButtonSelector, "Add-to-cart button is visible (#1)");
         $this->assertElementPresent($buyButtonSelector, "Buy-now button is missing (#2)");
@@ -421,7 +439,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function popupTestProduct($categoryURL, $productId)
     {
@@ -450,7 +468,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @return integer
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function testProductStructure($id)
     {
@@ -535,7 +553,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @return boolean
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isZoomEnabled($width)
     {
@@ -551,7 +569,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function closeQuicklook()
     {
@@ -576,7 +594,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function popupQuicklook($productId)
     {
@@ -600,7 +618,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function switchDisplayMode($mode)
     {
@@ -618,7 +636,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * 
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function waitForAjaxProgress()
     {
@@ -633,7 +651,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModeSelector($mode)
     {
@@ -652,7 +670,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function openTestCategory()
     {
@@ -678,7 +696,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCategoryURL($id)
     {
@@ -692,7 +710,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
      * @return \XLite\Model\Category
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTestCategory()
     {

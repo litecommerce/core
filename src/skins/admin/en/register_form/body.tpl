@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 <script type="text/javascript" src="skins/admin/en/js/billing_shipping.js"></script>
 
@@ -456,7 +456,7 @@ Mandatory fields are marked with an asterisk (<span class="star">*</span>).
       <td style="width:160;">&nbsp;</td>
       <td >
         <widget class="\XLite\View\Button\Submit" IF="getRequestParamValue(#mode#)=#register#" name="modify" label="Add profile" />
-        <widget class="\XLite\View\Button\Regular" IF="getRequestParamValue(#mode#)=#modify#|getRequestParamValue(#mode#)=##" name="modify" label="Update profile" jsCode="javascript: document.profile_form.submit()" />
+        <widget class="\XLite\View\Button\Regular" IF="getRequestParamValue(#mode#)=#modify#|getRequestParamValue(#mode#)=##" name="modify" label="Update profile" jsCode="document.profile_form.submit()" />
         <br />
       </td>
     </tr>

@@ -70,6 +70,9 @@ define('SELENIUM_SERVER', 'cormorant.crtdev.local');
 // Selenium TTL (sec)
 define('SELENIUM_TTL', 60);
 
+// Directory where logs will be stored. Comment this out for storing logs in xlite/var/log by default
+//define('TESTS_LOG_DIR', '');
+
 
 // Browsers list
 

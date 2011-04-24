@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\FormField\Input;
@@ -32,7 +32,7 @@ namespace XLite\View\FormField\Input;
  * \XLite\View\FormField\Input\Checkbox 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Checkbox extends \XLite\View\FormField\Input\AInput
 {
@@ -48,7 +48,7 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFieldType()
     {
@@ -61,7 +61,7 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -77,7 +77,7 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isChecked()
     {
@@ -91,7 +91,7 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareAttributes(array $attrs)
     {

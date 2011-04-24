@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 require_once __DIR__ . '/ACustomer.php';
@@ -39,7 +39,7 @@ require_once __DIR__ . '/ACustomer.php';
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
 {
@@ -50,7 +50,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testPopupForms()
     {
@@ -162,7 +162,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testPopupLogin()
     {
@@ -181,7 +181,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
         // Submit wrong credentials
         $this->type("css=.blockUI form#user-login input[name='name']", "wrong");
         $this->type("css=.blockUI form#user-login input[name='pass']", "master");
-        $this->submitAndWait("css=.blockUI form#user-login");
+        $this->clickAndWait('id=edit-submit', 6000, 'Submit login form (1)');
         $this->assertElementPresent(
             "css=form#user-login",
             "Login form is not shown after submitting a wrong username"
@@ -199,7 +199,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
         // Submit correct credentials (make sure there is master/master user in the database!)
         $this->type("css=.blockUI form#user-login input[name='name']", "master");
         $this->type("css=.blockUI form#user-login input[name='pass']", "master");
-        $this->submitAndWait("css=.blockUI form#user-login");
+        $this->clickAndWait('id=edit-submit', 6000, 'Submit login form (2)');
         $this->assertElementNotPresent(
             "css=.blockUI form#user-login",
             "Login form is shown for a signed-in user"
@@ -233,7 +233,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testPopupRecoveryPassword()
     {
@@ -260,7 +260,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
             "password field"
         );
         $this->type("css=.blockUI form#user-pass input[name='name']", "wrong");
-        $this->submitAndWait("css=.blockUI form#user-pass");
+        $this->clickAndWait('id=edit-submit--2', 6000, 'Submit password recovery form (1)');
         $this->assertElementPresent(
             "css=form#user-pass",
             "Recovery Password form is not shown after submitting a wrong username"
@@ -278,7 +278,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
 
         // Submit correct credentials
         $this->type("css=.blockUI form#user-pass input[name='name']", "master");
-        $this->submitAndWait("css=.blockUI form#user-pass");
+        $this->clickAndWait('id=edit-submit--2', 6000, 'Submit password recovery form (2)');
         $this->assertTextPresent(
             "instructions*sent*to*mail",
             "Confirmation message is not shown after submitting Password form"

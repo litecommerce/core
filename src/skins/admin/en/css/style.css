@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 
@@ -157,6 +157,12 @@ hr
   height: 1px;
 }
 
+input.input-file {
+  background: #ffffff;
+  border: solid 1px;
+  font-size: 14px;
+}
+
 
 /**
  * Layout
@@ -169,9 +175,6 @@ body
   height: 100%;
 }
 
-#page-container,
-#content,
-#sub-section,
 #footer
 {
   overflow: hidden;
@@ -180,10 +183,6 @@ body
 #page-container {
   min-height: 100%;
   position: relative;
-}
-
-#page-container
-{
   vertical-align: top;
   width: 100%;
 }
@@ -299,9 +298,8 @@ body
 #content
 {
   background: url(../images/content_top_bg.gif) repeat-x top left;
-  padding: 15px 0 60px 0;
+  padding: 80px 0 60px 0;
   border-top: 1px solid #dfe5e8;
-  margin-top: 75px;
 }
 
 div.noscript
@@ -342,8 +340,20 @@ div.noscript
   width: 170px;
 }
 
-input.input-disabled {
+input.input-disabled
+{
   color: #8f8f8f;
+}
+
+.center
+{
+  text-align: center;
+}
+
+.middle
+{
+  vertical-align: middle;
+  height: 100%;
 }
 
 /* Page tabs */
@@ -416,6 +426,11 @@ table.data-table th
   text-align: left;
 }
 
+table.data-table th.center
+{
+  text-align: center;
+}
+
 table.data-table td a
 {
   text-decoration: underline;
@@ -441,6 +456,11 @@ table.data-table th a:hover {
 table.data-table tr.highlight td
 {
   background-color: #f2f2f2;
+}
+
+table.data-table tr.totals td
+{
+  font-weight: bold;
 }
 
 table.data-table td.separator
@@ -615,7 +635,6 @@ button
     color: #2c5fa6;
     cursor: pointer;
     font-size: 12px;
-    line-height: 12px;
     margin: 7px 7px 7px 0;
     padding: 3px 12px;
     font-family: "Trebuchet MS", Helvetica, Arial;
@@ -625,7 +644,7 @@ button span
 {
     color: #0e55a6;
     font-family: "Trebuchet MS",Helvetica,sans-serif;
-    font-size: 15px;
+    font-size: 12px;
     vertical-align: middle;
 }
 
@@ -814,8 +833,16 @@ button.invert:hover
 
 .table-label
 {
-  min-width: 150px;
   white-space: nowrap;
+  vertical-align: top;
+}
+
+table.data-table th.table-id-column,
+table.data-table td.table-id-column
+{
+  width: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 /* Profile form */
@@ -861,3 +888,4 @@ button.invert:hover
 {
   color: #082032;
 }
+

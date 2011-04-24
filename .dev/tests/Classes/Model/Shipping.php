@@ -13,7 +13,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
@@ -24,7 +24,7 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testRegisterProcessor()
     {
@@ -68,7 +68,7 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetShippingMethods()
     {
@@ -97,7 +97,7 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetRates()
     {
@@ -118,7 +118,7 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetDestinationAddress()
     {
@@ -162,7 +162,7 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_Model_OrderAbstract
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTestOrder($profile = true)
     {

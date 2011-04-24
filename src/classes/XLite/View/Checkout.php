@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Checkout
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="center")
  */
@@ -41,7 +41,6 @@ class Checkout extends \XLite\View\Dialog
     /**
      * Indexes in step data array 
      */
-
     const STEP_TEMPLATE  = 'template';
     const STEP_SHOW_CART = 'showCart';
 
@@ -51,17 +50,15 @@ class Checkout extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
         $result[] = 'checkout';
     
         return $result;
     }
-
 
     /**
      * Get a list of JS files required to display the widget properly
@@ -69,28 +66,14 @@ class Checkout extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = 'checkout/controller.js';
 
         return $list;
-    }
-
-
-    /**
-     * Return title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return null;
     }
 
     /**
@@ -98,7 +81,7 @@ class Checkout extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {

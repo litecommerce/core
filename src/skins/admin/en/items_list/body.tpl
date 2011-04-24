@@ -8,20 +8,26 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 <div IF="hasResults()" class="items-list widgetclass-{getWidgetClass()} widgettarget-{getWidgetTarget()} sessioncell-{getSessionCell()}">
 
-  <div IF="pager.isVisible()" class="list-pager">{pager.display()}</div>
+  <div IF="pager.isVisible()" class="{pager.getCSSClasses()}">{pager.display()}</div>
 
-  <div IF="isHeaderVisible()" class="list-header">{displayViewListContent(#itemsList.admin.header#)}</div>
+  <div IF="isHeaderVisible()" class="list-header">{displayInheritedViewListContent(#header#)}</div>
 
   <widget template="{getPageBodyTemplate()}" />
 
-  <div IF="pager.isVisible()" class="list-pager">{pager.display()}</div>
+  <div IF="pager.isVisibleBottom()" class="list-pager">{pager.display()}</div>
 
-  <div IF="isFooterVisible()" class="list-footer">{displayViewListContent(#itemsList.admin.footer#)}</div>
+  <div IF="isFooterVisible()" class="list-footer">{displayInheritedViewListContent(#footer#)}</div>
 
 </div>
 
 <widget IF="isEmptyListTemplateVisible()" template="{getEmptyListTemplate()}" />
+
+<script type="text/javascript">
+//<![CDATA[
+  new ItemsList('{getSessionCell()}', {getURLParamsJS():h}, {getURLAJAXParamsJS():h});
+//]]>
+</script>

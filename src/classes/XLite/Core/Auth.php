@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * Authorization routine
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Auth extends \XLite\Base
 {
@@ -54,7 +54,7 @@ class Auth extends \XLite\Base
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $sessionVarsToClear = array(
         'profile_id',
@@ -69,7 +69,7 @@ class Auth extends \XLite\Base
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function encryptPassword($password)
     {
@@ -84,7 +84,7 @@ class Auth extends \XLite\Base
      *  
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function loginProfile(\XLite\Model\Profile $profile)
     {
@@ -126,7 +126,7 @@ class Auth extends \XLite\Base
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function addSessionVarToClear($name)
     {
@@ -138,7 +138,7 @@ class Auth extends \XLite\Base
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSessionVarsToClear()
     {
@@ -154,7 +154,7 @@ class Auth extends \XLite\Base
      *  
      * @return \XLite\Model\Profile|integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function login($login, $password, $secureHash = null)
     {
@@ -200,7 +200,7 @@ class Auth extends \XLite\Base
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function logoff()
     {
@@ -215,7 +215,7 @@ class Auth extends \XLite\Base
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isLogged()
     {
@@ -229,7 +229,7 @@ class Auth extends \XLite\Base
      *  
      * @return \XLite\Model\Profile
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProfile($profileId = null)
     {
@@ -261,7 +261,7 @@ class Auth extends \XLite\Base
      *  
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkProfile(\XLite\Model\Profile $profile)
     {
@@ -275,7 +275,7 @@ class Auth extends \XLite\Base
      *  
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isAdmin(\XLite\Model\Profile $profile = null)
     {
@@ -293,7 +293,7 @@ class Auth extends \XLite\Base
      *  
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAccessLevel($type)
     {
@@ -307,7 +307,7 @@ class Auth extends \XLite\Base
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAdminAccessLevel()
     {
@@ -319,7 +319,7 @@ class Auth extends \XLite\Base
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCustomerAccessLevel()
     {
@@ -331,7 +331,7 @@ class Auth extends \XLite\Base
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getUserTypes()
     {
@@ -346,7 +346,7 @@ class Auth extends \XLite\Base
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAccessLevelsList()
     {
@@ -358,7 +358,7 @@ class Auth extends \XLite\Base
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getUserTypesRaw()
     {
@@ -373,7 +373,7 @@ class Auth extends \XLite\Base
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setSecureHash($hashString)
     {
@@ -386,7 +386,7 @@ class Auth extends \XLite\Base
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function remindLogin() 
     {
@@ -401,7 +401,7 @@ class Auth extends \XLite\Base
      *  
      * @return \XLite\Model\Profile
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function loginAdministrator($login, $password) 
     {
@@ -431,7 +431,7 @@ class Auth extends \XLite\Base
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isAuthorized(\XLite\Base $resource)
     {
@@ -457,7 +457,7 @@ class Auth extends \XLite\Base
      *  
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkProfileAccessibility(\XLite\Model\Profile $profile)
     {
@@ -469,7 +469,7 @@ class Auth extends \XLite\Base
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function clearSessionVars()
     {
@@ -486,7 +486,7 @@ class Auth extends \XLite\Base
      *  
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkSecureHash($hashString)
     {
@@ -511,12 +511,13 @@ class Auth extends \XLite\Base
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function rememberLogin($login) 
     {
         $options = \XLite::getInstance()->getOptions('host_details');
-        $ttl = time() + 86400 * intval($this->config->General->login_lifetime);
+
+        $ttl = time() + 86400 * intval(\XLite\Core\Config::getInstance()->General->login_lifetime);
 
         foreach (array($options['http_host'], $options['https_host']) as $host) {
             @setcookie('recent_login', $login, $ttl, '/', func_parse_host($host));

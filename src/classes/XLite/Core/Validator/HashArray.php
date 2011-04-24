@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\Validator;
@@ -32,7 +32,7 @@ namespace XLite\Core\Validator;
  * Hash array validator 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class HashArray extends \XLite\Core\Validator\AValidator
 {
@@ -41,7 +41,7 @@ class HashArray extends \XLite\Core\Validator\AValidator
      * 
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $pairs;
 
@@ -50,7 +50,7 @@ class HashArray extends \XLite\Core\Validator\AValidator
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct()
     {
@@ -66,7 +66,7 @@ class HashArray extends \XLite\Core\Validator\AValidator
      *
      * @return \XLite\Core\Validator\AValidator
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function addPair(
         $name,
@@ -103,7 +103,7 @@ class HashArray extends \XLite\Core\Validator\AValidator
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPairs()
     {
@@ -117,13 +117,13 @@ class HashArray extends \XLite\Core\Validator\AValidator
      *  
      * @return \XLite\Core\Validator\AValidator
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getChild($name)
     {
         $result = null;
 
-        foreach ($thi->getPairs() as $pair) {
+        foreach ($this->getPairs() as $pair) {
             if ($pair->getName() == $name) {
                 $result = $pair->getValidator();
                 break;
@@ -141,7 +141,7 @@ class HashArray extends \XLite\Core\Validator\AValidator
      * @return void
      * @throws \XLite\Core\Validator\Exception
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function validate($data)
     {
@@ -161,7 +161,7 @@ class HashArray extends \XLite\Core\Validator\AValidator
      *
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function sanitize($data)
     {

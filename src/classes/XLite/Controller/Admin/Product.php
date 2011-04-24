@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Product 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Product extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,53 +41,64 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     public $params = array('target', 'product_id', 'page', 'backURL');
 
-    /**
-     * FIXME- backward compatibility
-     * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    public $page = 'info';
 
     /**
-     * FIXME- backward compatibility
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 3.0.0
+     * Get pages sections
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
      */
-    public $pages = array(
-        'info'      => 'Product info',
-        'images'    => 'Product images',
-        'inventory' => 'Inventory tracking',
-    );
+    public function getPages()
+    {
+        $pages = array(
+            'info'  => 'Product info',
+        );
+
+        if (!$this->isNew()) {
+            $pages += array(
+                'images'    => 'Product images',
+                'inventory' => 'Inventory tracking',
+            );
+        }
+
+        return $pages;
+    }
 
     /**
-     * FIXME- backward compatibility 
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 3.0.0
+     * Get pages templates
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
      */
-    public $pageTemplates = array(
-        'info'      => 'product/info.tpl',
-        'default'   => 'product/info.tpl',
-        'images'    => 'product/product_images.tpl',
-        'inventory' => 'product/inventory.tpl'
-    );
+    public function getPageTemplates()
+    {
+        $tpls = array(
+            'info'      => 'product/info.tpl',
+            'default'   => 'product/info.tpl',
+        );
 
+        if (!$this->isNew()) {
+            $tpls += array(
+                'images'    => 'product/product_images.tpl',
+                'inventory' => 'product/inventory.tpl',
+            );
+        }
+
+        return $tpls;
+    }
 
     /**
      * Alias
      *
      * @return \XLite\Model\Product
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProduct()
     {
@@ -107,7 +118,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -119,7 +130,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return \XLite\Model\Inventory
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getInventory()
     {
@@ -131,13 +142,14 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCategoryId()
     {
         $categoryId = parent::getCategoryId();
 
         if (empty($categoryId) && !$this->isNew()) {
+
             $categoryId = $this->getProduct()->getCategoryId();
         }
 
@@ -151,7 +163,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProductId()
     {
@@ -165,7 +177,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isNew()
     {
@@ -178,7 +190,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -190,7 +202,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -206,7 +218,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCategoryProducts(\XLite\Model\Product $product)
     {
@@ -233,7 +245,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getClasses(\XLite\Model\Product $product)
     {
@@ -264,7 +276,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setCleanURLError($cleanURL)
     {
@@ -281,7 +293,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkCleanURL($cleanURL)
     {
@@ -305,7 +317,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionModify()
     {
@@ -319,7 +331,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionAdd()
     {
@@ -328,10 +340,17 @@ class Product extends \XLite\Controller\Admin\AAdmin
         
         if ($product) {
 
+            $inventory = new \XLite\Model\Inventory();
+
+            $inventory->setProduct($product);
+
             // Create associations (categories and images)
             \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
                 $product,
                 $this->getCategoryProducts($product)
+                + array(
+                    'inventory' => $inventory,
+                )
             );
 
             \XLite\Core\TopMessage::addInfo(
@@ -348,7 +367,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -379,7 +398,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionAddImage()
     {
@@ -413,7 +432,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDeleteImage()
     {
@@ -421,7 +440,9 @@ class Product extends \XLite\Controller\Admin\AAdmin
             ->find(\XLite\Core\Request::getInstance()->image_id);
 
         if ($img) {
+
             $img->getProduct()->getImages()->removeElement($img);
+
             \XLite\Core\Database::getEM()->remove($img);
             \XLite\Core\Database::getEM()->flush();
 
@@ -442,22 +463,28 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdateImages()
     {
         $zoomId = 0;
+
         if (isset(\XLite\Core\Request::getInstance()->is_zoom)) {
+
             $keys = array_keys(\XLite\Core\Request::getInstance()->is_zoom);
+
             $zoomId = array_shift($keys);
         }
 
         foreach (\XLite\Core\Request::getInstance()->alt as $imageId => $alt) {
+
             $img = \XLite\Core\Database::getRepo('\XLite\Model\Image\Product\Image')
                 ->find($imageId);
 
             if ($img) {
+
                 $img->setAlt($alt);
+
                 $img->setOrderby(\XLite\Core\Request::getInstance()->orderby[$imageId]);
 
                 \XLite\Core\Database::getEM()->persist($img);
@@ -471,18 +498,23 @@ class Product extends \XLite\Controller\Admin\AAdmin
         );
     }
 
+
     /**
      * Update inventory 
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdateInventory()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Inventory')->updateById(
-            $this->getProductId(),
-            $this->getPostedData()
-        );
+        $inv = $this->getInventory();
+
+        $inv->product = $this->getProduct();
+
+        $inv->map($this->getPostedData());
+
+        \XLite\Core\Database::getEM()->persist($inv);
+        \XLite\Core\Database::getEM()->flush();
     }
 }

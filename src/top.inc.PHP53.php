@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 // It's the feature of PHP 5. We need to explicitly define current time zone.
@@ -53,9 +53,9 @@ define('LC_COMPILE_DIR',       LC_VAR_DIR . 'run' . LC_DS);
 define('LC_CLASSES_CACHE_DIR', LC_COMPILE_DIR . 'classes' . LC_DS);
 define('LC_MODEL_CACHE_DIR',   LC_CLASSES_CACHE_DIR . LC_NAMESPACE . LC_DS . 'Model' . LC_DS);
 define('LC_PROXY_CACHE_DIR',   LC_MODEL_CACHE_DIR . 'Proxy' . LC_DS);
-define('LC_LOCAL_REPOSITORY',  LC_VAR_DIR . 'addons' . LC_DS);
 define('LC_BACKUP_DIR',        LC_VAR_DIR . 'backup' . LC_DS);
 define('LC_DATA_DIR',          LC_VAR_DIR . 'data' . LC_DS);
+define('LC_TMP_DIR',           LC_VAR_DIR . 'tmp' . LC_DS);
 
 // Disabled xdebug coverage for Selenium-based tests [DEVELOPMENT PURPOSE]
 if (isset($_COOKIE) && !empty($_COOKIE['no_xdebug_coverage']) && function_exists('xdebug_stop_code_coverage')) {
@@ -78,11 +78,8 @@ define('LC_DEVELOPER_MODE', (bool) \Includes\Utils\ConfigParser::getOptions(arra
 register_shutdown_function(array('\Includes\ErrorHandler', 'shutdown'));
 set_exception_handler(array('\Includes\ErrorHandler', 'handleException'));
 
-// FIXME - to remove
+// :FIXME: to remove
 require_once (LC_INCLUDES_DIR . 'prepend.php');
-
-// TODO and FIXME: Check this feature with the installation!!
-// require_once (LC_INCLUDES_DIR . 'NoDBStore.php');
 
 // Safe mode
 if (!defined('XLITE_INSTALL_MODE')) {

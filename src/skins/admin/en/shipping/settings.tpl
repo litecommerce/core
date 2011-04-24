@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 
 <form action="admin.php" name="shipping_settings" method="post">
@@ -16,27 +16,7 @@
   <input type="hidden" name="target" value="{target}" />
   <input type="hidden" name="action" value="update" />
 
-  <div IF="config.Shipping.shipping_enabled=#Y#">
-    {t(#Shipping is enabled#)} <br /><br />
-    <input type="hidden" name="shipping_enabled" value="N" />
-    <widget class="\XLite\View\Button\Submit" label="Disable shipping" />
-    <br /><br /><hr />
-  </div>
-
-  <div IF="!config.Shipping.shipping_enabled=#Y#">
-    {t(#Shipping is disabled#)} <br /><br />
-    <input type="hidden" name="shipping_enabled" value="Y" />
-    <widget class="\XLite\View\Button\Submit" label="Enable shipping" />
-  </div>
-
-</form>
-
-<form action="admin.php" name="shipping_settings" method="post">
-  
-  <input type="hidden" name="target" value="{target}" />
-  <input type="hidden" name="action" value="update" />
-
-  <table cellSpacing="2" cellpadding="2" width="700" IF="config.Shipping.shipping_enabled=#Y#">
+  <table cellSpacing="2" cellpadding="2" width="700">
 
     <tbody FOREACH="getOptions(),option">
 

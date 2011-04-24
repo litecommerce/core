@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\View\Customer;
@@ -31,9 +31,8 @@ namespace XLite\Module\CDev\FeaturedProducts\View\Customer;
 /**
  * Featured products widget 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  *
  * @ListChild (list="center.bottom", zone="customer", weight="300")
  */
@@ -47,20 +46,35 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Featured products
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   mixed
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $featuredProducts = null;
+
+    /** 
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getAllowedTargets()
+    {   
+        $result = parent::getAllowedTargets();
+
+        $result[] = 'main';
+        $result[] = 'category';
+    
+        return $result;
+    }   
 
     /**
      * Return title
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -71,9 +85,8 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return class name for the list pager
      *
      * @return string
-     * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -84,9 +97,8 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Define widget parameters
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {
@@ -96,7 +108,8 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
             self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category('Category ID', 0, false),
         );
 
-        $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->config->CDev->FeaturedProducts->featured_products_look);
+        $this->widgetParams[self::PARAM_DISPLAY_MODE]
+            ->setValue(\XLite\Core\Config::getInstance()->CDev->FeaturedProducts->featured_products_look);
 
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
         $this->widgetParams[self::PARAM_SHOW_THUMBNAIL]->setValue(true);
@@ -114,9 +127,8 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Define so called "request" parameters
      *
      * @return void
-     * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -129,9 +141,8 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return products list
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -158,30 +169,11 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Check if widget is visible
      *
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
-        return parent::isVisible() && !$this->get('page');
-    }
-
-    /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-
-        $result[] = 'main';
-        $result[] = 'category';
-    
-        return $result;
+        return parent::isVisible();
     }
 }

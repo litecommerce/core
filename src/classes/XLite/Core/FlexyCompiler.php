@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * Flexy compiler
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class FlexyCompiler extends \XLite\Base\Singleton
 {
@@ -48,7 +48,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * Template source code 
      * 
      * @var   string
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $source = null;
 
@@ -56,7 +56,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * Template file name 
      * 
      * @var   string
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $file = null;
 
@@ -64,7 +64,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * List of URLs to rewrite 
      * 
      * @var   array
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $urlRewrite = array();
 
@@ -73,7 +73,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * 
      * @var   mixed
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $patches;
 
@@ -82,7 +82,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $imageURLOutputType = \XLite\Core\Layout::WEB_PATH_OUTPUT_URL;
 
@@ -156,7 +156,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function preprocess()
     {
@@ -183,7 +183,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      *  
      * @return string (admin or customer)
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getZone($zone)
     {
@@ -201,7 +201,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPatches($zone, $lang, $tpl)
     {
@@ -235,7 +235,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function processXpathPatch(\XLite\Model\TemplatePatch $patch)
     {
@@ -270,7 +270,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function applyXpathPatches(\DOMNamedNodeMap $places, \DOMNamedNodeMap $patches, $baseInsertType)
     {
@@ -322,7 +322,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function processRegexpPatch(\XLite\Model\TemplatePatch $patch)
     {
@@ -340,7 +340,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function processCustomPatch(\XLite\Model\TemplatePatch $patch)
     {
@@ -687,7 +687,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTemplateInfo()
     {
@@ -742,7 +742,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
     {
         $result = '';
 
-        if (\Includes\Decorator\Utils\ModulesManager::isActiveModule($module)) {
+        if (!isset($module) || \Includes\Decorator\Utils\ModulesManager::isActiveModule($module)) {
 
             $class = isset($attrs['class']) ? $this->flexyAttribute($attrs['class'], false) : null;
 
@@ -819,7 +819,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      *  
      * @return boolean|array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function rewriteURL($url)
     {
@@ -851,7 +851,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function rewriteImageURL($url, $length)
     {
@@ -1254,7 +1254,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * 
      * @var    boolean
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $checkTemplateStatus = true;
 
@@ -1263,7 +1263,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * 
      * @var    \XLite\Core\Layout
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $layout;
 
@@ -1272,7 +1272,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * 
      * @var    integer
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $rootDirLength;
 
@@ -1284,7 +1284,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function prepare($original, $force = false)
     {
@@ -1316,7 +1316,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      *  
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isTemplateValid($original, $compiled)
     {
@@ -1330,7 +1330,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function init($file)
     {
@@ -1347,7 +1347,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function __construct()
     {

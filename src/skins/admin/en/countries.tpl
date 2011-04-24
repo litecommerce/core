@@ -8,50 +8,10 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
-<script type="text/javascript">
-<!-- 
+<p>{t(#Use this section to manage the list of existing countries. This list is used in the shipping settings and calculations, and in the registration form at the Customer Front-end.#)}</p>
 
-var CountryVatEnabledCheckBoxes = new Array();
-var CountryEnabledCheckBoxes = new Array();
-var CheckBoxes = new Array();
-
-function setChecked(column, check)
-{
-	var CheckBoxesArray = CheckBoxes[column];
-
-	if (CheckBoxesArray) {
-        for (var i = 0; i < CheckBoxesArray.length; i++) {
-        	var Element = document.getElementById(CheckBoxesArray[i]);
-            if (Element) {
-            	Element.checked = check;
-            }
-        }
-	}
-}
-
-function setHeaderChecked(column)
-{
-	var Element = document.getElementById(column);
-    if (Element && !Element.checked) {
-    	Element.checked = true;
-    }
-}
-
-function setDelete(form, input, check)
-{
-    var elements = document.forms[form].elements[input];
-
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].checked = check;
-    }
-}
-// -->
-</script>
-
-<p>
-Use this section to manage the list of existing countries. This list is used in the shipping settings and calculations, and in the registration form at the Customer Front-end.
 <hr />
 
 <span IF="status=#added#" class="success-message"><br /><br />&gt;&gt;&nbsp;Country added successfully&nbsp;&lt;&lt;<br /><br /></span>
@@ -63,48 +23,46 @@ Use this section to manage the list of existing countries. This list is used in 
 <input type="hidden" name="action" value="update" />
 	<table class="data-table">
 		<tr>
-    		<th>Code</th>
-		    <th>Country</th>
-		    <th>Active<br />
-		    	<input id="enable_countries" type="checkbox" onclick="this.blur();setChecked('enable_countries',this.checked);">
+    	<th>{t(#Code#)}</th>
+		  <th>{t(#Country#)}</th>
+		  <th class="center">{t(#Active#)}<br />
+		  	<input class="column-selector" id="enable_countries" type="checkbox" />
 			</th>
 			<widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/risk_country/label.tpl">
-			<th>Delete<br />
-				<input id="delete_countries" type="checkbox" onclick="this.blur();setDelete('countries_form','countries_ids',this.checked);">
+			<th class="center">{t(#Delete#)}<br />
+				<input class="column-selector" id="delete_countries" type="checkbox" />
 			</th>
 		</tr>
 
 		<tr FOREACH="getCountries(),country_idx,country" class="{getRowClass(country_idx,#dialog-box#,#highlight#)}">
-		    <td align="center"><a href="admin.php?target=states&country_code={country.code}" title="Click here to view states of country" onclick="this.blur();">{country.code}</a></td>
+		    <td align="center"><a href="admin.php?target=states&country_code={country.code}" title="Click here to view states of country" />{country.code}</a></td>
 		    <td>
 		        <input type="text" size="34" maxlength="50" name="countries[{country.code}][country]" value="{country.country:r}" />
 		    </td>
 		    <td align="center">
-		        <input id="country_enabled_{country_idx}" type="checkbox" name="countries[{country.code}][enabled]" value="Y" checked="{country.enabled}" onclick="this.blur();">
-		        <script type="text/javascript">CountryEnabledCheckBoxes[CountryEnabledCheckBoxes.length]="country_enabled_{country_idx}";</script>
-		        <script type="text/javascript" IF="country.enabled">setHeaderChecked("enable_countries");</script>
+		        <input id="country_enabled_{country_idx}" type="checkbox" name="countries[{country.code}][enabled]" value="Y" checked="{country.enabled}" />
 		    </td>
 			    <widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/risk_country/checkbox.tpl">
 			<td align="center">
-				<input id="countries_ids" type="checkbox" name="delete_countries[]" value="{country.code}" onclick="this.blur();">
+				<input id="countries_ids" type="checkbox" name="delete_countries[]" value="{country.code}" />
 			</td>
 		</tr>
 
     <tr>
       <td colspan="5">
+
 		<table width="100%">
 		<tr>
 			<td align="left">
-        <br />
         <widget class="\XLite\View\Button\Submit" style="main-button" name="submit" label="Update" />
       </td>
 			<td align="right">
-        <widget class="\XLite\View\Button\Submit" label="Delete selected" name="delete" jsCode="document.countries_form.action.value='delete';" />
+        <widget class="\XLite\View\Button\Regular" label="Delete selected" name="delete" jsCode="document.countries_form.action.value='delete';document.countries_form.submit()" />
       </td>
 		</tr>
 		</table>
+
 	</td>
-	<script type="text/javascript">CheckBoxes["enable_countries"] = CountryEnabledCheckBoxes;</script>
 </tr>
 </table>
 </form>
@@ -116,7 +74,7 @@ Use this section to manage the list of existing countries. This list is used in 
 <input type="hidden" name="target" value="countries" />
 <input type="hidden" name="action" value="add" />
 
-<h2>Add new country</h2>
+<h2>{t(#Add new country#)}</h2>
 			
       <table class="data-table">
 				<tr>
@@ -127,7 +85,6 @@ Use this section to manage the list of existing countries. This list is used in 
 				<tr class="dialog-box">
 					<td><input type="text" size="3" maxlength="2" name="code" value="{code}" /></td>
 					<td><input type="text" size="34" maxlength="50" name="country" value="{country}" /></td>
-					<td align="middle"><input type="checkbox" name="eu_member" value="Y" checked="{isSelected(eu_member,#Y#)}" /></td>
 					<td align="middle"><input type="checkbox" name="enabled" value="Y" checked /></td>
 				</tr>
 

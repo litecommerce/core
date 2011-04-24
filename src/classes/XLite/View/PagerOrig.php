@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Pager 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class PagerOrig extends \XLite\View\AView
 {
@@ -65,7 +65,7 @@ class PagerOrig extends \XLite\View\AView
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $pageId = null;
 
@@ -74,7 +74,7 @@ class PagerOrig extends \XLite\View\AView
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $itemsTotal = null;
 
@@ -83,7 +83,7 @@ class PagerOrig extends \XLite\View\AView
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $itemsPerPage = null;
 
@@ -92,7 +92,7 @@ class PagerOrig extends \XLite\View\AView
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $pagesCount = null;
 
@@ -101,7 +101,7 @@ class PagerOrig extends \XLite\View\AView
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $pageURLs = null;
 
@@ -110,7 +110,7 @@ class PagerOrig extends \XLite\View\AView
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPagesCount()
     {
@@ -126,7 +126,7 @@ class PagerOrig extends \XLite\View\AView
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPageData()
     {
@@ -142,7 +142,7 @@ class PagerOrig extends \XLite\View\AView
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -155,7 +155,7 @@ class PagerOrig extends \XLite\View\AView
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getItemsTotal()
     {
@@ -171,7 +171,7 @@ class PagerOrig extends \XLite\View\AView
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getItemsPerPage()
     {
@@ -191,7 +191,7 @@ class PagerOrig extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -214,7 +214,7 @@ class PagerOrig extends \XLite\View\AView
                 'Page ID', 0
             ),
             self::PARAM_ITEMS_PER_PAGE => new \XLite\Model\WidgetParam\Int(
-                'Items per page', intval($this->config->General->products_per_page), true
+                'Items per page', intval(\XLite\Core\Config::getInstance()->General->products_per_page), true
             ),
             self::PARAM_DATA => new \XLite\Model\WidgetParam\Collection(
                 'Data', array()
@@ -230,7 +230,7 @@ class PagerOrig extends \XLite\View\AView
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -244,7 +244,7 @@ class PagerOrig extends \XLite\View\AView
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isItemsPerPageSelectorVisible()
     {
@@ -258,7 +258,7 @@ class PagerOrig extends \XLite\View\AView
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageURLParams($pageId)
     {
@@ -272,7 +272,7 @@ class PagerOrig extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function buildURLByPageId($pageId)
     {
@@ -284,7 +284,7 @@ class PagerOrig extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function definePageURLs()
     {
@@ -298,7 +298,7 @@ class PagerOrig extends \XLite\View\AView
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageURLs()
     {
@@ -317,7 +317,7 @@ class PagerOrig extends \XLite\View\AView
      *  
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isCurrentPage($pageId)
     {
@@ -331,7 +331,7 @@ class PagerOrig extends \XLite\View\AView
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageClassName($pageId)
     {
@@ -343,7 +343,7 @@ class PagerOrig extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageId()
     {
@@ -359,7 +359,7 @@ class PagerOrig extends \XLite\View\AView
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

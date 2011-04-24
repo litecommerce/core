@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace Includes\Utils;
@@ -32,7 +32,7 @@ namespace Includes\Utils;
  * PHARManager 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class PHARManager extends \Includes\Utils\AUtils
 {
@@ -47,7 +47,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $extensions = array(\Phar::GZ => 'gz', \Phar::BZ2 => 'bz2');
 
@@ -62,7 +62,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function packCore(\XLite\Core\Pack\Distr $pack)
     {
@@ -77,11 +77,34 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function packModule(\XLite\Core\Pack\Module $pack)
     {
         static::download($pack);
+    }
+
+    /**
+     * Unpack PHAR archive
+     * 
+     * @param string $file File path
+     * @param string $dir  Dir to extract to
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function unpack($file, $dir)
+    {
+        try {
+            $phar = new \PharData($file);
+            $result = $phar->extractTo($dir .= 'phr' . uniqid() . LC_DS, null, true);
+
+        } catch (\Exception $exception) {
+            $result = false;
+        }
+
+        return $result ? $dir : null;
     }
 
     // }}}
@@ -96,11 +119,11 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function download(\XLite\Core\Pack\APack $pack)
     {
-        $path = LC_LOCAL_REPOSITORY . $pack->getName() . '.tar';
+        $path = LC_TMP_DIR . $pack->getName() . '.tar';
         $phar = static::pack($path, $pack->getDirectoryIterator(), $pack->getMetadata());
 
         header('Content-Type: application/force-download');
@@ -122,7 +145,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * @return \Phar
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function pack(&$name, \Iterator $iterator, array $metadata = array())
     {
@@ -131,10 +154,38 @@ abstract class PHARManager extends \Includes\Utils\AUtils
 
         $phar = new \PharData($name);
 
+        // Files
         $phar->buildFromIterator($iterator, LC_ROOT_DIR);
+
+        // Metadata
         $phar->setMetadata($metadata);
 
+        // File hashes
+        static::addPackHash($phar, $iterator);
+
+        // GZ compression
         return static::compress($phar, $name);
+    }
+
+    /**
+     * Create list of archive file hashes and add it to the pack
+     * 
+     * @param \PharData $phar     PHAR archive
+     * @param \Iterator $iterator Directory iterator
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function addPackHash(\PharData $phar, \Iterator $iterator)
+    {
+        $data = array();
+
+        foreach ($iterator as $filePath => $fileInfo) {
+            $data[\Includes\Utils\FileManager::getRelativePath($filePath, LC_ROOT_DIR)] = md5_file($filePath);
+        }
+
+        $phar->addFromString('.hash', json_encode($data));
     }
 
     // }}}
@@ -146,11 +197,23 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function canCompress()
     {
         return \Phar::canCompress(self::COMPRESSION_TYPE);
+    }
+
+    /**
+     * Return extension for the archive file
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getExtension()
+    {
+        return \Includes\Utils\ArrayManager::getIndex(static::$extensions, self::COMPRESSION_TYPE, true);
     }
 
     /**
@@ -161,7 +224,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      *  
      * @return \PharData
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function compress(\PharData $phar, &$name)
     {
@@ -177,18 +240,6 @@ abstract class PHARManager extends \Includes\Utils\AUtils
         }
 
         return $phar;
-    }
-
-    /**
-     * Return extension for the archive file
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getExtension()
-    {
-        return \Includes\Utils\ArrayManager::getIndex(static::$extensions, self::COMPRESSION_TYPE, true);
     }
 
     // }}}

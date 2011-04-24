@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Drupal;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
@@ -45,7 +45,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return bool
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isResetPasswordPage()
     {
@@ -72,17 +72,26 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProfileData(\stdClass $user, $edit, $addConfirmation = true)
     {
         $data   = array();
         $fields = array(
+            'login_time'     => 'access',
             'login'          => 'mail',
             'password'       => 'pass',
             'cms_profile_id' => 'uid',
         );
 
+        $values = (is_array($edit) && isset($edit['values'])) ? $edit['values'] : array();
+
+        foreach ($fields as $lcKey => $drupalKey) {
+            // Only use data from user profile if they do not passed in request
+            $data[$lcKey] = isset($values[$drupalKey]) ? $values[$drupalKey] : (isset($user->$drupalKey) ? $user->$drupalKey : null);
+        }
+
+        // Initialize flag when new user is created
         $data['createNewUser'] = !isset($user->original);
 
         // Prepare data for access_level field
@@ -90,9 +99,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
         if (isset($roles)) {
 
-            $fields['access_level'] = 'access_level';
-
-            $user->access_level = $this->isRoleHasAdminPermission($roles)
+            $data['access_level'] = $this->isRoleHasAdminPermission($roles)
                 ? \XLite\Core\Auth::getInstance()->getAdminAccessLevel()
                 : \XLite\Core\Auth::getInstance()->getCustomerAccessLevel();
 
@@ -106,15 +113,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
         // Prepare data for 'status' field
         if (isset($edit['status'])) {
-            $fields['status'] = 'status';
-            $user->status = (1 === intval($edit['status']) ? 'E' : 'D');
-        }
-
-        $values = (is_array($edit) && isset($edit['values'])) ? $edit['values'] : array();
-
-        foreach ($fields as $lcKey => $drupalKey) {
-            // Only use data from user profile if they do not passed in request
-            $data[$lcKey] = isset($values[$drupalKey]) ? $values[$drupalKey] : $user->$drupalKey;
+            $data['status'] = (1 === intval($edit['status']) ? 'E' : 'D');
         }
 
         // Skip password on update action if it wasn't changed
@@ -151,7 +150,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isRoleHasAdminPermission(array $roles)
     {
@@ -180,7 +179,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProfileDataLogin(\stdClass $user, $edit)
     {
@@ -191,7 +190,7 @@ class Profile extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         list($result, $timestamp, $hash) = $this->isResetPasswordPage();
 
         // Only start LC log in procedure after Drupal hash string is checked
-        if ($result && user_pass_rehash($data['password'], $timestamp, 0) === $hash) {
+        if ($result && user_pass_rehash($data['password'], $timestamp, $data['login_time']) === $hash) {
             $token = \XLite\Core\Converter::generateRandomToken();
 
             // Save token in session and pass it to LC controller. Strings must match

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * Products search
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Search extends \XLite\Controller\Customer\ACustomer
 {
@@ -43,7 +43,7 @@ class Search extends \XLite\Controller\Customer\ACustomer
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCondition($paramName)
     {
@@ -66,7 +66,7 @@ class Search extends \XLite\Controller\Customer\ACustomer
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getChecked($paramName, $value = 'Y')
     {   
@@ -79,7 +79,7 @@ class Search extends \XLite\Controller\Customer\ACustomer
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */ 
     protected function getLocation()
     {
@@ -91,7 +91,7 @@ class Search extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionSearch()
     {   
@@ -105,20 +105,23 @@ class Search extends \XLite\Controller\Customer\ACustomer
         );  
     
         foreach ($searchParams as $modelParam => $requestParam) {
+
             if (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
+
                 $productsSearch[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
             }   
         }   
  
         foreach ($cBoxFields as $requestParam) {
+
             $productsSearch[$requestParam] = isset(\XLite\Core\Request::getInstance()->$requestParam)
                 ? 1 
                 : 0;
         }   
     
-        $this->session->set($sessionCell, $productsSearch);
-        $this->setReturnURL($this->buildURL('search', '', array('mode' => 'search')));
+        \XLite\Core\Session::getInstance()->{$sessionCell} = $productsSearch;
 
+        $this->setReturnURL($this->buildURL('search', '', array('mode' => 'search')));
     }
 
     /** 
@@ -126,13 +129,15 @@ class Search extends \XLite\Controller\Customer\ACustomer
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getConditions()
     {
-        $searchParams = $this->session->get(\XLite\View\ItemsList\Product\Customer\Search::getSessionCellName());
+        $searchParams = \XLite\Core\Session::getInstance()
+            ->{\XLite\View\ItemsList\Product\Customer\Search::getSessionCellName()};
 
         if (!is_array($searchParams)) {
+
             $searchParams = array();
         }   
 

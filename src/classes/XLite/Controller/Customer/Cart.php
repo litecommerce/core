@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * \XLite\Controller\Customer\Cart 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Cart extends \XLite\Controller\Customer\ACustomer
 {
@@ -41,7 +41,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function init()
     {
@@ -55,7 +55,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -70,7 +70,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isSecure()
     {
@@ -83,7 +83,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -95,7 +95,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      *
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProductId()
     {
@@ -107,7 +107,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      *
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAmount()
     {
@@ -119,7 +119,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      *
      * @return \XLite\Model\Product
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProduct()
     {
@@ -133,7 +133,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      *
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProductAvailableAmount(\XLite\Model\Product $product)
     {
@@ -147,7 +147,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      *
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProductAmount(\XLite\Model\Product $product)
     {
@@ -162,7 +162,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      *
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkAmount(\XLite\Model\Product $product, $amount = null)
     {
@@ -176,7 +176,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkAmountToAdd(\XLite\Model\Product $product)
     {
@@ -189,7 +189,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkItemsAmount()
     {
@@ -206,7 +206,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function correctAmount(\XLite\Model\Product $product)
     {
@@ -227,7 +227,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCurrentItem(\XLite\Model\Product $product)
     {
@@ -244,7 +244,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addCurrentItem()
     {
@@ -259,7 +259,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function processInvalidAmountError(\XLite\Model\Product $product, $amount)
     {
@@ -273,7 +273,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function processAddItemError()
     {
@@ -287,7 +287,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function processAddItemSuccess()
     {
@@ -299,7 +299,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getURLToReturn()
     {
@@ -319,13 +319,21 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setURLToReturn()
     {
+        \XLite\Core\Session::getInstance()->continueURL = $this->getURLToReturn();
+
         if (\XLite\Core\Config::getInstance()->General->redirect_to_cart) {
-            \XLite\Core\Session::getInstance()->continueURL = $this->getURLToReturn();
+
+            // Hard redirect to cart 
+            $this->setReturnURL($this->buildURL('cart'));
+
+            $this->setHardRedirect();
+
         } else {
+
             $this->setReturnURL($this->getURLToReturn());
         }
     }
@@ -335,7 +343,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionAdd()
     {
@@ -357,7 +365,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -383,7 +391,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -427,7 +435,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionCheckout()
     {
@@ -442,7 +450,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionClear()
     {
@@ -458,4 +466,5 @@ class Cart extends \XLite\Controller\Customer\ACustomer
         \XLite\Core\TopMessage::addInfo('Item has been deleted from cart');
         $this->setReturnUrl($this->buildURL('cart'));
     }
+
 }

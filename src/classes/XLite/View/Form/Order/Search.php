@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Order;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Order;
  * Search orders form
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Search extends \XLite\View\Form\AForm
 {
@@ -47,7 +47,7 @@ class Search extends \XLite\View\Form\AForm
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormName()
     {
@@ -59,7 +59,7 @@ class Search extends \XLite\View\Form\AForm
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -71,7 +71,7 @@ class Search extends \XLite\View\Form\AForm
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -83,7 +83,7 @@ class Search extends \XLite\View\Form\AForm
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultParams()
     {

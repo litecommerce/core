@@ -23,20 +23,29 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 require_once __DIR__ . '/AAdmin.php';
 
 class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
 {
+
+
     const NEW_PRODUCT_CLASS_LABEL = '//div[@class="advanced-input-text"]/div[@class="original-label" and text()="New product class"]';
+
     const NEW_PRODUCT_CLASS_INPUT = '//div[@class="advanced-input-text"]/div[@class="original-input"]/input[@type="text" and @id="posteddata-new-name" and @name="postedData[new_name]"]';
+
     const PC_PAGE = 'admin.php?target=product_classes';
+
     const PRODUCT_SELECTOR = '//div[@class="select-classes"]/select[@id="posteddata-class-ids-" and @name="postedData[class_ids][]" and @multiple="multiple"]';
+
     const SHIPPING_SELECTOR = '//div[@class="select-classes"]/select[@id="posteddata-class-ids-1-" and @name="postedData[class_ids][1][]" and @multiple="multiple"]';
+
     const PRODUCT_UPDATE  = '//button[@type="submit"]/span[text()="Update"]';
-    const SHIPPING_UPDATE = '//button[@type="submit"]/span[text()="Update"]';
+
+    const SHIPPING_UPDATE = '//form[@name="shipping_method_offline"]/table/tbody/tr/td/button[@type="submit"]/span[text()="Update"]';
+
 
 
     private $classes = array(
@@ -53,7 +62,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testProductClassesModify()
     {
@@ -92,7 +101,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testProductPage()
     {
@@ -167,7 +176,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testShippingMethods()
     {
@@ -211,7 +220,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
      * @return void
      * @access private
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private function checkProductClassOption($class, $text = '', $selector = self::PRODUCT_SELECTOR)
     {
@@ -229,7 +238,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
      * @return void
      * @access private
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private function addNewProductClass($name)
     {
@@ -255,7 +264,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
      * @return integer
      * @access private
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private function getTableLength()
     {
@@ -270,7 +279,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
      * @return void
      * @access private
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private function removeInput($name)
     {
@@ -299,7 +308,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
      * @return void
      * @access private
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     private function checkAdvancedInput($name, $newName = '')
     {

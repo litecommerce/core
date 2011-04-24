@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\Bestsellers\View;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\Bestsellers\View;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  *
  * @ListChild (list="center.bottom", zone="customer", weight="400")
  * @ListChild (list="sidebar.first", zone="customer", weight="150")
@@ -74,7 +74,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -87,7 +87,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPagerClass()
     {
@@ -118,7 +118,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
             ),
         );
 
-        $widgetType = $this->config->CDev->Bestsellers->bestsellers_menu
+        $widgetType = \XLite\Core\Config::getInstance()->CDev->Bestsellers->bestsellers_menu
             ? self::WIDGET_TYPE_SIDEBAR
             : self::WIDGET_TYPE_CENTER;
 
@@ -127,12 +127,12 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(self::DISPLAY_MODE_LIST);
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
         $this->widgetParams[self::PARAM_SHOW_THUMBNAIL]->setValue(
-            'Y' == $this->config->CDev->Bestsellers->bestsellers_thumbnails
+            'Y' == \XLite\Core\Config::getInstance()->CDev->Bestsellers->bestsellers_thumbnails
         );
         $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue(true);
         $this->widgetParams[self::PARAM_SHOW_PRICE]->setValue(true);
         $this->widgetParams[self::PARAM_SHOW_ADD2CART]->setValue(true);
-        $this->widgetParams[self::PARAM_SIDEBAR_MAX_ITEMS]->setValue($this->config->CDev->Bestsellers->number_of_bestsellers);
+        $this->widgetParams[self::PARAM_SIDEBAR_MAX_ITEMS]->setValue(\XLite\Core\Config::getInstance()->CDev->Bestsellers->number_of_bestsellers);
 
         $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
         $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(true);
@@ -147,7 +147,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -162,7 +162,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return mixed
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
@@ -170,7 +170,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
             $limit = self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
                 ? $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS)
-                : $this->config->CDev->Bestsellers->number_of_bestsellers;
+                : \XLite\Core\Config::getInstance()->CDev->Bestsellers->number_of_bestsellers;
 
             $this->bestsellProducts = \XLite\Core\Database::getRepo('XLite\Model\Product')
                 ->findBestsellers(
@@ -192,7 +192,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return integer 
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRootId()
     {
@@ -213,7 +213,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -230,7 +230,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      *
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTemplate()
     {
@@ -249,7 +249,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return boolean 
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 /**
@@ -178,7 +178,7 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
       cloud.CloudZoom();
     }
 
-    // Change Conntinue shopping button for QuickLook mode
+    // Change Continue shopping button for QuickLook mode
     if (this.base.hasClass('product-quicklook') && 0 < this.base.parents('.blockUI').length) {
       jQuery('button.continue', this.base)
         .unbind('click')
@@ -242,7 +242,9 @@ ProductDetailsView.prototype.hideLightbox = function()
         event.stopPropagation();
 
         if (!jQuery(this).parents('li').eq(0).hasClass('selected')) {
+
           var i = jQuery.inArray(this, jQuery(this).parents('ul').eq(0).find('a').get());
+
           o.selectImage(i);
         }
 
@@ -266,13 +268,16 @@ ProductDetailsView.prototype.switchImage = function(diff)
   this.gallery.each(
       function() {
         if (selected == -1 && jQuery(this).hasClass('selected')) {
+
           selected = i;
         }
+
         i++;
       }
   );
 
   if (selected == -1) {
+
     selected = 0;
   }
 
@@ -280,9 +285,11 @@ ProductDetailsView.prototype.switchImage = function(diff)
   var next = selected + diff;
 
   if (next < 0) {
+
     next = this.gallery.length - Math.abs(next) % this.gallery.length;
 
   } else if (next >= this.gallery.length) {
+
     next = next % this.gallery.length;
   }
 
@@ -303,9 +310,11 @@ ProductDetailsView.prototype.selectImage = function(pos)
     var cloud = jQuery('.cloud-zoom', this.base);
 
     if (cloud.data('zoom')) {
+
       cloud.data('zoom').destroy();
 
     } else {
+
       cloud.unbind('click', this.linkClickHandler);
     }
 
@@ -328,9 +337,12 @@ ProductDetailsView.prototype.selectImage = function(pos)
     var shiftY = Math.max(0, parseInt(jQuery('.image .product-photo', this.base).css('height')) - middle.attr('height'));
 
     if (this.zoomWidget) {
+
       jQuery('.image .product-photo .wrapper').css('padding', shiftY/2 + 'px ' + shiftX/2 + 'px');
       jQuery('img', cloud).css('padding', 0);
+
     } else {
+
       jQuery('.image .product-photo img').css('padding', shiftY/2 + 'px ' + shiftX/2 + 'px');
     }
   }
@@ -338,9 +350,13 @@ ProductDetailsView.prototype.selectImage = function(pos)
   eval('var tmp = {' + jQuery('a', next).attr('rev') + '}');
 
   if (this.zoomWidget) {
+
     if (tmp.width > middle.attr('width') * this.kZoom || tmp.height > middle.attr('height') * this.kZoom) {
+
       cloud.CloudZoom();
+
     } else {
+
       cloud.click(this.linkClickHandler);
     }
   }
@@ -369,8 +385,11 @@ ProductDetailsView.prototype.addProductToCart = function(event, form)
   if (this.submitForm(form, callback)) {
 
     if (popup && popup.elementId == 'product-quicklook') {
+
       popup.openAsWait();
+
     } else {
+
       this.shade();
     }
 
@@ -386,14 +405,16 @@ ProductDetailsView.prototype.postprocessAdd2Cart = function(XMLHttpRequest, text
   this.base.get(0).controller.selfAdded = false;
 
   if (isValid) {
-    if (popup && popup.elementId == 'product-quicklook') {
-      popup.close();
 
-    } else {
-      this.load();
+    if (popup) {
+
+      popup.close();
     }
 
+    this.load();
+
   } else {
+
     this.unshade();
   }
 }

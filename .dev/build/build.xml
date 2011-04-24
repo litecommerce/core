@@ -28,7 +28,6 @@
 		<property name="root" location="${basedir}" />
         <property name="buildDir" location="${root}/build" />
         <property name="sourceDir" location="${root}/source" />
-		<property name="marketDir" location="${root}/market" />
 		<property name="jmeterDir" location="/u/xcart/jakarta-jmeter-2.3.4" />
 		<property name="srcDir" location="${sourceDir}/src" />
 		<property name="distrDir" location="${buildDir}/output" />
@@ -67,7 +66,7 @@
 
 		<echo message="Deploy built releases" />
 		<exec executable="/usr/bin/tar" dir="${buildDir}">
-			<arg line="-xzf ${distrDir}/drupal-lc-${version}-build${label}-test.tgz" />
+			<arg line="-xzf ${distrDir}/drupal-lc-${version}-${label}-test.tgz" />
 		</exec>
 		<move file="${buildDir}/drupal" tofile="${installDir}" />
 
@@ -75,12 +74,6 @@
 		<mkdir dir="${buildDir}/.dev" />
         <copy todir="${buildDir}/.dev">
             <fileset dir="${sourceDir}/.dev" />
-		</copy>
-
-		<echo message="Copy market from source directory" />
-		<mkdir dir="${marketDir}" />
-		<copy todir="${marketDir}">
-			<fileset dir="${sourceDir}/.dev/marketplace" />
 		</copy>
 
 		<echo message="Prepare deployed repositories" />

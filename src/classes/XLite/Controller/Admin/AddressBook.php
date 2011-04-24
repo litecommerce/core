@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Profile management controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class AddressBook extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,7 +41,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   \XLite\Model\Address
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $address = null;
 
@@ -51,7 +51,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -63,20 +63,11 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * 
      * @return \XLite\Model\Address
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAddress()
     {
-        if (!isset($this->address)) {
-
-            $addressId = \XLite\Core\Request::getInstance()->address_id;
-
-            if (isset($addressId)) {
-                $this->address = \XLite\Core\Database::getRepo('XLite\Model\Address')->find($addressId);
-            }
-        }
-
-        return $this->address;
+        return $this->address = $this->getModelForm()->getModelObject();
     }
 
     /**
@@ -84,7 +75,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getReturnURL()
     {
@@ -93,7 +84,12 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
             $profileId = \XLite\Core\Request::getInstance()->profile_id;
 
             if (!isset($profileId)) {
-                $profileId = $this->getAddress()->getProfileId();
+            
+                $profileId = $this->getAddress()->getProfile()->getProfileId();
+
+                if (\XLite\Core\Auth::getInstance()->getProfile()->getProfileId() === $profileId) {
+                    unset($profileId);
+                }
             }
 
             $params = isset($profileId) ? array('profile_id' => $profileId) : array();
@@ -112,7 +108,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * 
      * @return \XLite\Model\Profile
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProfile()
     {
@@ -124,7 +120,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -136,7 +132,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addBaseLocation()
     {
@@ -150,7 +146,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModelFormClass()
     {
@@ -162,7 +158,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionSave()
     {
@@ -174,7 +170,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -195,7 +191,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionCancelDelete()
     {

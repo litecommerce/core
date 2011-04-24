@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Product class
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity
  * @Table  (name="product_classes")
@@ -44,7 +44,7 @@ class ProductClass extends \XLite\Model\Base\I18n
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -58,7 +58,7 @@ class ProductClass extends \XLite\Model\Base\I18n
      * 
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @ManyToMany (targetEntity="XLite\Model\Product", mappedBy="classes")
      */
@@ -70,7 +70,7 @@ class ProductClass extends \XLite\Model\Base\I18n
      * 
      * @var   \Doctrine\Common\Collections\ArrayCollection
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @ManyToMany (targetEntity="XLite\Model\Shipping\Method", mappedBy="classes")
      */
@@ -84,7 +84,7 @@ class ProductClass extends \XLite\Model\Base\I18n
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {

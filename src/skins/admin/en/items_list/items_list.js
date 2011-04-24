@@ -8,13 +8,13 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 // Main class
 function ItemsList(cell, URLParams, URLAJAXParams)
 {
-  this.container = jQuery('.items-list.' + cell).eq(0);
+  this.container = jQuery('.items-list').eq(0);
 
   if (!this.container.length) {
     return;
@@ -102,7 +102,8 @@ ItemsList.prototype.checkAll = function(handler)
 // Change current page
 ItemsList.prototype.showPage = function(handler)
 {
-  return this.process('pageId', jQuery(handler).attr('class'));
+//TODO change to getCommentedData() -> also in templates
+  return this.process('pageId', core.getValueFromClass(handler,'page'));
 }
 
 // Change items per page number
@@ -222,18 +223,14 @@ ItemsList.prototype.loadHandler = function(xhr, s)
   var processed = false;
 
   if (xhr.status == 200 && xhr.responseText) {
-    var div = document.createElement('DIV');
-    jQuery(div).html(xhr.responseText);
+    var div = document.createElement('div');
+    jQuery(div).html(jQuery('.items-list.sessioncell-' + this.cell, xhr.responseText));
 
-    div = jQuery('.items-list.' + this.cell, div).eq(0);
-    if (div.length) {
-      this.container.replaceWith(div);
-      this.container = jQuery('.items-list.' + this.cell);
+    this.container.replaceWith(div);
 
-      this.addListeners();
+    new ItemsList(this.cell, this.URLParams, this.URLAJAXParams);
 
-      processed = true;
-    }
+    processed = true;
   }
 
   this.hideModalScreen();

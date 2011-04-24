@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Cart 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Cart")
  * @HasLifecycleCallbacks
@@ -44,7 +44,7 @@ class Cart extends \XLite\Model\Order
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $instances = array();
 
@@ -53,7 +53,7 @@ class Cart extends \XLite\Model\Order
      *
      * @return \XLite\Model\Cart
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getInstance()
     {
@@ -116,7 +116,7 @@ class Cart extends \XLite\Model\Order
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function setObject(\XLite\Model\Cart $cart)
     {
@@ -130,7 +130,7 @@ class Cart extends \XLite\Model\Order
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      * @PrePersist
      * @PreUpdate
      */
@@ -147,7 +147,7 @@ class Cart extends \XLite\Model\Order
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function clear()
     {
@@ -168,7 +168,7 @@ class Cart extends \XLite\Model\Order
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isProductAdded($productId)
     {
@@ -191,7 +191,7 @@ class Cart extends \XLite\Model\Order
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      * @PreRemove
      */
     public function prepareBeforeRemove()
@@ -206,10 +206,27 @@ class Cart extends \XLite\Model\Order
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function markAsOrder()
     {
         $this->getRepository()->markAsOrder($this->getOrderId());
     }
+
+    /** 
+     * If we can proceed with checkout with current cart
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function checkCart()
+    {
+        return
+            !$this->isEmpty()
+            && !((bool) $this->getItemsWithWrongAmounts())
+            && !$this->isMinOrderAmountError()
+            && !$this->isMaxOrderAmountError();
+    }
+
 }

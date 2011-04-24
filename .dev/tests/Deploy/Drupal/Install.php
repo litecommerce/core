@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 require_once __DIR__ . '/../ADeploy.php';
@@ -51,7 +51,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * @var    mixed
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $buildDir = null;
 
@@ -61,7 +61,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testInstall()
     {
@@ -107,7 +107,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function stepOne($pass = 1)
     {
@@ -172,7 +172,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function stepTwo()
     {
@@ -211,7 +211,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function stepThree($pass = 1)
     {
@@ -317,7 +317,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function stepFour($pass = 1)
     {
@@ -355,7 +355,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function stepFive($pass = 1)
     {
@@ -400,7 +400,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function stepSix($pass = 1)
     {
@@ -446,7 +446,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function stepSeven($pass = 1)
     {
@@ -556,7 +556,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function stepEight()
     {
@@ -591,7 +591,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function stepNine()
     {
@@ -617,7 +617,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBuildDir()
     {
@@ -636,7 +636,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getConfigOptions()
     {
@@ -666,7 +666,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function emptyDatabase()
     {
@@ -709,7 +709,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareHtaccess()
     {

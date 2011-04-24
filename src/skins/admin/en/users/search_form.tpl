@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 
 <script type="text/javascript">
@@ -69,17 +69,23 @@ function managedate(type, status) {
       <table cellpadding="1" cellspacing="5">
 
         <tr>
+
           <td style="width:20%;height:10px;" class="table-label">Search for pattern:</td>
+
           <td style="height:10px;" nowrap="nowrap">
             <input type="text" name="posted_data[pattern]" size="50" value="{getSearchParams(#pattern#)}" />
             &nbsp;
             <widget class="\XLite\View\Button\Submit" label="Search" />
           </td>
+
         </tr>
 
         <tr>
+
           <td></td>
+
           <td>(will search in emails and user names)</td>
+
         </tr>
 
       </table>
@@ -201,7 +207,7 @@ function managedate(type, status) {
         </tr>
 
         <tr>
-          <td><widget class="\XLite\View\Button\Regular" label="Reset" jsCode="javascript: resetForm();" /></td>
+          <td><widget class="\XLite\View\Button\Regular" label="Reset" jsCode="resetForm();" /></td>
           <td>
             <widget class="\XLite\View\Button\Submit" label="Search" />
           </td>
@@ -247,11 +253,8 @@ managedate('date', true);
 -->
 </script>
 
-
-
 </form>
 
 <br />
 
 <widget class="\XLite\View\Button\AddUser" label="Add user" jsCode="self.location = '{buildURL(#profile#,##,_ARRAY_(#mode#^#register#))}';" />
-

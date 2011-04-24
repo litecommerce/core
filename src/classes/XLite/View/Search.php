@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Product search widget 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  */
 class Search extends \XLite\View\Dialog
@@ -42,7 +42,7 @@ class Search extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -51,17 +51,16 @@ class Search extends \XLite\View\Dialog
         );
     }
 
-
     /**
      * Return title
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
-        return $this->t('Products search');
+        return 'Products search';
     }
 
     /**
@@ -69,10 +68,10 @@ class Search extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
-        return 'product/search';
+        return 'product' . LC_DS . 'search';
     }
 }

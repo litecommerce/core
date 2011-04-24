@@ -13,11 +13,13 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
 {
+    protected $makeSqlBackupOnFailure = true;
+
     protected $testSearchData = array(
         // Test dataset #1
         0 => array(
@@ -267,7 +269,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setUp()
     {
@@ -275,8 +277,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
 
         \XLite\Core\Database::getEM()->clear();
 
-        $this->query(file_get_contents(__DIR__ . '/sql/profile/setup.sql'));
-        \XLite\Core\Database::getEM()->flush();
+        $this->doRestoreDb(__DIR__ . '/sql/profile/setup.sql', false);
 
         $this->testSearchData[22]['cnd']['startDate'] = date('M j, Y', time()-60*60*24*7);
         $this->testSearchData[22]['cnd']['endDate'] = date('M j, Y', time()-60*60*24*3);
@@ -288,14 +289,13 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function tearDown()
     {
         parent::tearDown();
 
-        $this->query(file_get_contents(__DIR__ . '/sql/profile/restore.sql'));
-        \XLite\Core\Database::getEM()->flush();
+        $this->doRestoreDb();
     }
 
     /**
@@ -304,7 +304,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testSearch()
     {
@@ -361,7 +361,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindByLogin()
     {
@@ -384,7 +384,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindByLoginPassword()
     {
@@ -421,7 +421,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindRecentAdmins()
     {
@@ -441,7 +441,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindUserWithSameLogin()
     {
@@ -471,7 +471,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindCountOfAdminAccounts()
     {

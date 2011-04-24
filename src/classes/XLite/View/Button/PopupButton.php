@@ -23,132 +23,31 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Button;
 
 /**
- * Button to use with popup
+ * Button to use with popup (with defined AUTOLOADing of JS object)
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
-abstract class PopupButton extends \XLite\View\Button\AButton
+abstract class PopupButton extends \XLite\View\Button\APopupButton
 {
-    /**
-     * Several inner constants 
-     */
-    const TEMPLATE  = 'button/popup_button.tpl';
-    const CSS_CLASS = 'popup-button';
-    const JS_SCRIPT = 'button/js/popup_button.js';
-    const URLParams = 'url_params';
-    const POPUP_CSS_FILE = 'button/css/popup.css';
-
-
-    /**
-     * Return content for popup button
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    abstract public function getButtonContent();
-
-    /**
-     * Return URL parameters to use in AJAX popup
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    abstract public function prepareURLParams();
-
-    /**
-     * Return array of URL params for JS 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getURLParams()
-    {
-        return array(
-            self::URLParams => $this->prepareURLParams(),
-        );
-    }
-
     /** 
      * Get a list of JavaScript files required to display the widget properly
      * 
-     * @return void
+     * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {   
         $list = parent::getJSFiles();
-
-        $list[] = self::JS_SCRIPT;
-
-        return $list;
-    }   
-
-    /**
-     * Return CSS files list
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = self::POPUP_CSS_FILE;
+        $list[] = 'button/js/popup_button.js';
 
         return $list;
-    }
-
-    /**  
-     * Register files from common repository
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCommonFiles()
-    {    
-        $list = parent::getCommonFiles();
-
-        // popup button is using several specific popup JS
-        $list['js'][] = 'js/core.popup.js';
-
-        return $list;
-    }
-
-
-    /**
-     * Return widget default template
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return self::TEMPLATE;
-    }
-
-    /** 
-     * getClass 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getClass()
-    {   
-        return self::CSS_CLASS;
     }   
 }

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Sort;
@@ -32,12 +32,13 @@ namespace XLite\View\Sort;
  * Order sort widget 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="orders.panel", weight="20")
  */
 class Order extends \XLite\View\Sort\ASort
 {
+
     /**
      * Define widget parameters
      *
@@ -49,7 +50,13 @@ class Order extends \XLite\View\Sort\ASort
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_PARAMS]->setValue(array('target' => 'order_list', 'mode' => 'search'));
+        $this->widgetParams[self::PARAM_PARAMS]->setValue(
+            array(
+                'target' => 'order_list', 
+                'mode' => 'search',
+            )
+        );
+
         $this->widgetParams[self::PARAM_SORT_CRITERIONS]->setValue(
             array(
                 'order_id' => 'Order id',
@@ -58,6 +65,7 @@ class Order extends \XLite\View\Sort\ASort
                 'total'    => 'Total',
             )
         );
-        $this->widgetParams[self::PARAM_CELL]->setValue($this->session->get('orders_search'));
+
+        $this->widgetParams[self::PARAM_CELL]->setValue(\XLite\Core\Session::getInstance()->orders_search);
     }
 }

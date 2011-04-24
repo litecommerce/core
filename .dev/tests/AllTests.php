@@ -23,12 +23,125 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 if (0 > version_compare(phpversion(), '5.3.0')) {
     echo ('PHP version must be 5.3.0 or later' . PHP_EOL);
     die(1);
 }
+
+function xlite_make_sql_backup($path = null) 
+{
+    // DB backup
+    echo (PHP_EOL . 'DB backup ... ');
+
+    $result = true;
+
+    if (!isset($path)) {
+        $path = dirname(__FILE__) . LC_DS . 'dump.sql';
+    }
+
+    if (file_exists(dirname($path))) {
+
+        if (file_exists($path)) {
+            unlink($path);
+        }
+
+        $config = \XLite::getInstance()->getOptions('database_details');
+
+        $cmd = defined('TEST_MYSQLDUMP_BIN') ? TEST_MYSQLDUMP_BIN : 'mysqldump';
+        $cmd .= ' --opt -h' . $config['hostspec'];
+
+        if ($config['port']) {
+            $cmd .= ' -P' . $config['port'];
+        }
+
+        $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
+
+        if ($config['socket']) {
+            $cmd .= ' -S' . $config['socket'];
+        }
+
+        exec($cmd .= ' ' . $config['database'] . ' > ' . $path);
+
+        echo ('done' . PHP_EOL);
+
+        sleep(1);
+
+    } else {
+        $result = false;
+    }
+
+    if (!$result) {
+        echo ('ignored' . PHP_EOL);
+    }
+
+    return $result;
+}
+
+function xlite_restore_sql_from_backup($path = null, $verbose = true, $drop = true, &$message = null) 
+{
+    !$verbose && ob_start();
+
+    echo (PHP_EOL . 'DB restore ... ');
+
+    $result = true;
+
+    if (!isset($path)) {
+        $path = dirname(__FILE__) . LC_DS . 'dump.sql';
+    }
+
+    if (file_exists($path)) {
+
+        $config = \XLite::getInstance()->getOptions('database_details');
+        
+        $cmd = defined('TEST_MYSQL_BIN') ? TEST_MYSQL_BIN : 'mysql';
+        $cmd .= ' -h' . $config['hostspec'];
+        
+        if ($config['port']) {
+            $cmd .= ' -P' . $config['port'];
+        }
+
+        $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
+        if ($config['socket']) {
+            $cmd .= ' -S' . $config['socket'];
+        }
+
+        $message = '';
+
+        if ($drop) {
+        
+            // Drop&Create database
+
+            exec($cmd . ' -e"drop database ' . $config['database'] . '"' , $message);
+
+            if (empty($message)) {
+                exec($cmd . ' -e"create database ' . $config['database'] . '"', $message);
+            }
+        }    
+     
+        if (empty($message)) {
+            exec($cmd . ' ' . $config['database'] . ' < ' . $path, $message);
+        }
+
+        if (empty($message)) {
+            echo ('done' . PHP_EOL);
+        
+        } else {
+            $result = false;
+            echo ('failed: ' . $message . PHP_EOL);
+        }
+    
+    } else {
+        echo ('failed' . PHP_EOL);
+        $result = false;
+    }
+
+    !$verbose && ob_end_clean();
+    
+    return $result;
+}
+
 
 if (false === defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'XLite_Tests_AllTests::main');
@@ -102,6 +215,10 @@ if (!defined('SELENIUM_SOURCE_URL')) {
 
 if (!defined('SELENIUM_SERVER')) {
     define('SELENIUM_SERVER', 'cormorant.crtdev.local');
+}
+
+if (!defined('TESTS_LOG_DIR')) {
+    define('TESTS_LOG_DIR', LC_VAR_DIR . 'log' . LC_DS);
 }
 
 if (isset($_SERVER['argv']) && preg_match('/--log-xml\s+(\S+)\s/s', implode(' ', $_SERVER['argv']), $match)) {
@@ -261,33 +378,8 @@ class XLite_Tests_AllTests
             }
         }
 
-        // DB backup
-        echo ('DB backup ... ');
-        $path = dirname(__FILE__) . LC_DS . 'dump.sql';
-        if (file_exists($path)) {
-            unlink($path);
-        }
-
         if (!isset($deploy) || !$deploy) {
-            $config = XLite::getInstance()->getOptions('database_details');
-
-            $cmd = defined('TEST_MYSQLDUMP_BIN') ? TEST_MYSQLDUMP_BIN : 'mysqldump';
-            $cmd .= ' --opt -h' . $config['hostspec'];
-            
-            if ($config['port']) {
-                $cmd .= ':' . $config['port'];
-            }
-
-            $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
-            if ($config['socket']) {
-                $cmd .= ' -S' . $config['socket'];
-            }
-
-            exec($cmd .= ' ' . $config['database'] . ' > ' . $path);
-
-            echo ('done' . PHP_EOL);
-        } else {
-            echo ('ignored' . PHP_EOL);
+            xlite_make_sql_backup();
         }
 
         // Classes tests

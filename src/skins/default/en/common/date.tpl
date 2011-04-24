@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 <select id='{getField()}Month' name="{getField()}Month" IF="!hide_months" style="width: 120px;">
 	<option FOREACH="getMonths(),k,v" value="{k}" selected="{v=#selected#}">{getMonthString(k)}</option>

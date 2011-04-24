@@ -8,8 +8,12 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
+
+{* :TODO: divide into parts (lists) *}
+
+<div IF="isDeveloperMode()" id="profiler-messages"></div>
 
 <widget class="\XLite\View\TopMessage" />
 
@@ -34,10 +38,7 @@
 
     <div class="sw-version">
       <span class="current" IF="!auth.isLogged()">{t(#LiteCommerce shopping cart software#)}</span>
-      <span class="current" IF="auth.isLogged()">{t(#v.#)} {getCurrentCoreVersion()}</span>
-      <span IF="auth.isLogged()&isCoreUpgradeAvailable()" class="upgrade-note">
-        <a href="#">{t(#Upgrade available#)}</a>
-      </span>
+      <widget class="\XLite\View\CoreVersionTopLink" />
     </div>
 
     <widget class="\XLite\View\TopMenu" />

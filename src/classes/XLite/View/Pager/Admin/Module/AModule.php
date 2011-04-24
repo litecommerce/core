@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Pager\Admin\Module;
@@ -32,19 +32,21 @@ namespace XLite\View\Pager\Admin\Module;
  * Abstract pager class for the OrdersList widget
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AModule extends \XLite\View\Pager\Admin\AAdmin
 {
+
     /**
-     * getItemsPerPageDefault
-     *
-     * @return integer
+     * Return current tag
+     * 
+     * @return string
+     * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    protected function getItemsPerPageDefault()
+    protected function getTag()
     {
-        return 10;
+        return \XLite\Core\Request::getInstance()->tag;
     }
 }

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Orders list controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class RecentOrders extends \XLite\Controller\Admin\OrderList
 {
@@ -41,11 +41,12 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleRequest()
     {
         if (is_null(\XLite\Core\Request::getInstance()->mode)) {
+
             \XLite\Core\Request::getInstance()->{self::PARAM_ACTION} = 'search';
         }
 
@@ -58,7 +59,7 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -71,7 +72,7 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -83,21 +84,20 @@ class RecentOrders extends \XLite\Controller\Admin\OrderList
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionSearch()
     {
         parent::doActionSearch();
 
-        $this->session->set(
-            \XLite\View\ItemsList\Order\Admin\Recent::getSessionCellName(),
-            array(
+        \XLite\Core\Session::getInstance()
+            ->{\XLite\View\ItemsList\Order\Admin\Recent::getSessionCellName()} = array(
                 \XLite\Model\Repo\Order::P_DATE => array(
                     LC_START_TIME - 86400,
-                    LC_START_TIME
-                )
-            )
-        );
+                    LC_START_TIME,
+                ),
+            );
+
         $this->setReturnURL($this->buildURL('recent_orders', '', array('mode' => 'search')));
     }
 }

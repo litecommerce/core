@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Controller\Admin;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\ProductOptions\Controller\Admin;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDecorator
 {
@@ -45,14 +45,11 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $params)
     {
         parent::__construct($params);
-
-        $this->pages['product_options'] = 'Product options';
-        $this->pageTemplates['product_options'] = 'modules/CDev/ProductOptions/product_options_lander.tpl';
 
         if (!in_array('language', $this->params)) {
             $this->params[] = 'language';
@@ -61,12 +58,53 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
     }
 
     /**
+     * Get pages sections
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPages()
+    {
+        $pages = parent::getPages();
+
+        if (!$this->isNew()) {
+            $pages += array(
+                'product_options' => 'Product options',
+            );
+        }
+
+        return $pages;
+    }
+
+    /**
+     * Get pages templates
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPageTemplates()
+    {
+        $tpls = parent::getPageTemplates();
+
+        if (!$this->isNew()) {
+            $tpls += array(
+                'product_options' => 'modules/CDev/ProductOptions/product_options_lander.tpl',
+            );
+        }
+
+        return $tpls;
+    }
+
+
+    /**
      * Update option groups list
      * 
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdateOptionGroups()
     {
@@ -108,7 +146,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDeleteOptionGroups()
     {
@@ -142,7 +180,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function doActionUpdateOptionGroup()
     {
@@ -249,7 +287,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDeleteOptions()
     {
@@ -285,7 +323,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdateOptionGroupsExceptions()
     {
@@ -335,7 +373,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDeleteOptionGroupsExceptions()
     {
@@ -371,7 +409,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * @return boolean
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function saveOption(\XLite\Module\CDev\ProductOptions\Model\Option $option, array $data)
     {
@@ -435,7 +473,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function saveException($eid, array $data)
     {

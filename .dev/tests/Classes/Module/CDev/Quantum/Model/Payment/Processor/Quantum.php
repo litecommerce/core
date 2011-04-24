@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 class XLite_Tests_Module_CDev_Quantum_Model_Payment_Processor_Quantum extends XLite_Tests_Model_OrderAbstract
@@ -45,7 +45,7 @@ class XLite_Tests_Module_CDev_Quantum_Model_Payment_Processor_Quantum extends XL
         $method = $order->getPaymentMethod();
 
         $this->query(
-            'UPDATE xlite_payment_method_settings SET value = "xcart_arch" WHERE method_id = ' . $method->getMethodId() . ' AND name = "login"',
+            'UPDATE xlite_payment_method_settings SET value = "' . $this->testConfig['quantum_gateway']['login'] . '" WHERE method_id = ' . $method->getMethodId() . ' AND name = "login"',
             array()
         );
 
@@ -148,7 +148,7 @@ HTML;
         $method = $order->getPaymentMethod();
 
         $this->query(
-            'UPDATE xlite_payment_method_settings SET value = "xcart_arch" WHERE method_id = ' . $method->getMethodId() . ' AND name = "login"',
+            'UPDATE xlite_payment_method_settings SET value = "' . $this->testConfig['quantum_gateway']['login'] . '" WHERE method_id = ' . $method->getMethodId() . ' AND name = "login"',
             array()
         );
 

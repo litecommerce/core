@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\AustraliaPost\Model\Shipping\Processor;
@@ -35,7 +35,7 @@ namespace XLite\Module\CDev\AustraliaPost\Model\Shipping\Processor;
  * @package    XLite
  * @subpackage Model
  * @see        ____class_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implements \XLite\Base\IDecorator
 {
@@ -45,7 +45,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $processorId = 'aupost';
 
@@ -55,7 +55,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @var    string
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $apiURL = 'http://drc.edeliver.com.au/ratecalc.asp';
 
@@ -67,7 +67,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareInputData(\XLite\Logic\Order\Modifier\Shipping $modifier)
     {
@@ -75,9 +75,9 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
 
         // Fill $result array by data from the order
 
-        if ('AU' == \XLite\Base::getInstance()->config->Company->location_country) {
+        if ('AU' == \XLite\Core\Config::getInstance()->Company->location_country) {
 
-            $result['srcAddress']['zipcode'] = \XLite\Base::getInstance()->config->Company->location_zipcode;
+            $result['srcAddress']['zipcode'] = \XLite\Core\Config::getInstance()->Company->location_zipcode;
 
             $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($modifier);
 
@@ -85,7 +85,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
                 $result['dstAddress'] = $address;
                 $result['weight'] = \XLite\Core\Converter::convertWeightUnits(
                     $modifier->getWeight(), 
-                    \XLite\Base::getInstance()->config->General->weight_unit,
+                    \XLite\Core\Config::getInstance()->General->weight_unit,
                     'g'
                 );
 
@@ -107,7 +107,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doQuery($data, $ignoreCache)
     {
@@ -115,7 +115,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
 
         $availableMethods = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findMethodsByProcessor($this->getProcessorId());
 
-        $currencyRate = doubleval(\XLite\Base::getInstance()->config->CDev->AustraliaPost->currency_rate);
+        $currencyRate = doubleval(\XLite\Core\Config::getInstance()->CDev->AustraliaPost->currency_rate);
         $currencyRate = $currencyRate > 0 ?: 1;
 
         $errorMsg = null;
@@ -130,9 +130,9 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
                 'Destination_Postcode' => $data['dstAddress']['zipcode'],
                 'Country'              => $data['dstAddress']['country'],
                 'Weight'               => $data['weight'],
-                'Length'               => \XLite\Base::getInstance()->config->CDev->AustraliaPost->length,
-                'Width'                => \XLite\Base::getInstance()->config->CDev->AustraliaPost->width,
-                'Height'               => \XLite\Base::getInstance()->config->CDev->AustraliaPost->height,
+                'Length'               => \XLite\Core\Config::getInstance()->CDev->AustraliaPost->length,
+                'Width'                => \XLite\Core\Config::getInstance()->CDev->AustraliaPost->width,
+                'Height'               => \XLite\Core\Config::getInstance()->CDev->AustraliaPost->height,
                 'Quantity'             => 1,
             );
 
@@ -212,7 +212,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function parseResponse($stringData)
     {
@@ -237,7 +237,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProcessorName()
     {
@@ -253,7 +253,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRates(\XLite\Logic\Order\Modifier\Shipping $modifier, $ignoreCache = false)
     {
@@ -278,7 +278,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRatesByArray(array $inputData, $ignoreCache = false)
     {

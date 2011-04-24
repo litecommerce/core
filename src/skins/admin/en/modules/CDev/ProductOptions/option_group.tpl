@@ -8,10 +8,10 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
-<h3 IF="isNew()">Add new option group</h3>
-<h3 IF="!isNew()">Modify '{group.getName()}' option group</h3>
+<h2 IF="isNew()">Add new option group</h2>
+<h2 IF="!isNew()">Modify '{group.getName()}' option group</h2>
 
 <form action="admin.php" method="post" name="update_option_group_form" class="options-group-modify">
   <input type="hidden" name="target" value="product" />
@@ -45,7 +45,6 @@
       <select name="data[view_type]" id="data_view_type">
         <option FOREACH="getOptionGroupViewTypes(),type,name" value="{type}" selected="{isSelected(group.getViewType(),type)}">{name}</option>
       </select>
-
     </li>
 
     <li>
@@ -61,7 +60,7 @@
   </ul>
 
   <div id="options_list">
-    <h4>Group options</h4>
+    <h3>Group options</h3>
 
     <table cellspacing="1" class="data-table">
 
@@ -76,10 +75,10 @@
       <tr FOREACH="getOptions(),i,option" class="{getRowClass(i,#highlight#)}">
 
         <td class="center"><input type="checkbox" name="mark[]" value="{option.getOptionId()}" /></td>
-        <td><input type="input" name="options[{option.getOptionId()}][name]" value="{getOptionTranslation(option,#name#)}" class="extender field-required" /></td>
+        <td><input type="text" name="options[{option.getOptionId()}][name]" value="{getOptionTranslation(option,#name#)}" class="extender field-required" /></td>
 
         {foreach:getOptionModifiers(option),key,modifier}
-          <td><input type="input" name="options[{option.getOptionId()}][modifiers][{key}][modifier]" value="{modifier.getModifier()}" class="price field-float" /></td>
+          <td><input type="text" name="options[{option.getOptionId()}][modifiers][{key}][modifier]" value="{modifier.getModifier()}" class="price field-float" /></td>
           <td>
             <select name="options[{option.getOptionId()}][modifiers][{key}][modifier_type]">
               <option FOREACH="getOptionSurchargeModifierTypes(),type,name" value="{type}" selected="{isSelected(modifier.getModifierType(),type)}">{name}</option>
@@ -87,18 +86,17 @@
           </td>
         {end:}
 
-        <td><input type="input" name="options[{option.getOptionId()}][orderby]" value="{option.getOrderby()}" class="orderby field-integer" /></td>
+        <td><input type="text" name="options[{option.getOptionId()}][orderby]" value="{option.getOrderby()}" class="orderby field-integer" /></td>
         <td class="center"><input type="checkbox" name="options[{option.getOptionId()}][enabled]" value="1" checked="{option.getEnabled()}" /></td>
 
       </tr>
 
       <tr>
-
         <td class="center">&nbsp;</td>
-        <td><input type="input" name="newOption[name]" value="" class="extender" /></td>
+        <td><input type="text" name="newOption[name]" value="" class="extender" /></td>
 
         {foreach:getOptionModifiers(),key,modifier}
-          <td><input type="input" name="newOption[modifiers][{key}][modifier]" value="{modifier.getModifier()}" class="price field-float" /></td>
+          <td><input type="text" name="newOption[modifiers][{key}][modifier]" value="{modifier.getModifier()}" class="price field-float" /></td>
           <td>
             <select name="newOption[modifiers][{key}][modifier_type]">
               <option FOREACH="getOptionSurchargeModifierTypes(),type,name" value="{type}" selected="{isSelected(modifier.getModifierType(),type)}">{name}</option>
@@ -106,7 +104,7 @@
           </td>
         {end:}
 
-        <td><input type="input" name="newOption[orderby]" value="" class="orderby field-integer" /></td>
+        <td><input type="text" name="newOption[orderby]" value="" class="orderby field-integer" /></td>
         <td class="center"><input type="checkbox" name="newOption[enabled]" value="1" /></td>
 
       </tr>
@@ -116,8 +114,9 @@
   </div>
 
   <div class="buttons">
-    <widget class="\XLite\View\Button\Submit" label="Update option" />
-    <widget module="CDev\ProductOptions" IF="getOptions()" class="\XLite\Module\CDev\ProductOptions\View\Button\DeleteSelectedOptions" />
+    <widget IF="!hasOptions()" class="\XLite\View\Button\Submit" label="Add new option" />
+    <widget IF="hasOptions()" class="\XLite\View\Button\Submit" label="Add/update options" />
+    <widget module="CDev\ProductOptions" IF="hasOptions()" class="\XLite\Module\CDev\ProductOptions\View\Button\DeleteSelectedOptions" />
   </div>
 
 </form>

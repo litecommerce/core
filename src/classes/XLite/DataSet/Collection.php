@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\DataSet;
@@ -32,7 +32,7 @@ namespace XLite\DataSet;
  * Collection 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Collection extends \Doctrine\Common\Collections\ArrayCollection
 {
@@ -45,7 +45,7 @@ class Collection extends \Doctrine\Common\Collections\ArrayCollection
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $elements = array())
     {
@@ -61,7 +61,7 @@ class Collection extends \Doctrine\Common\Collections\ArrayCollection
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function offsetSet($offset, $value)
     {
@@ -75,7 +75,7 @@ class Collection extends \Doctrine\Common\Collections\ArrayCollection
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function filterElements()
     {
@@ -94,7 +94,7 @@ class Collection extends \Doctrine\Common\Collections\ArrayCollection
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkElement($element, $key)
     {
@@ -112,7 +112,7 @@ class Collection extends \Doctrine\Common\Collections\ArrayCollection
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPreviousSiblings($element)
     {
@@ -136,7 +136,7 @@ class Collection extends \Doctrine\Common\Collections\ArrayCollection
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getNextSiblings($element)
     {

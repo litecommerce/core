@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\Plugin\Doctrine\Plugin\UpdateModules;
@@ -33,7 +33,7 @@ namespace Includes\Decorator\Plugin\Doctrine\Plugin\UpdateModules;
  *
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 {
@@ -41,13 +41,53 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      * Execute certain hook handler
      * 
      * @return void
-     * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function executeHookHandlerStepThird()
     {
-        \Includes\Decorator\Utils\ModulesManager::switchModules();
+        // To cache data
+        \Includes\Decorator\Utils\ModulesManager::getActiveModules();
+
+        // Walk through the "XLite/Module" directory
+        foreach ($this->getModuleMainFileIterator()->getIterator() as $path => $data) {
+
+            $dir    = $path;
+            $name   = basename($dir = dirname($dir));
+            $author = basename($dir = dirname($dir));
+            $class  = \Includes\Decorator\Utils\ModulesManager::getClassNameByAuthorAndName($author, $name);
+
+            if (!\Includes\Utils\Operator::checkIfClassExists($class)) {
+                require_once ($path);
+            }
+
+            \Includes\Decorator\Utils\ModulesManager::switchModule($author, $name);
+        }
+
         \Includes\Decorator\Utils\ModulesManager::removeFile();
+    }
+
+    /**
+     * Get iterator for module files
+     *
+     * @return \Includes\Utils\FileFilter
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleMainFileIterator()
+    {
+        return new \Includes\Utils\FileFilter(LC_MODULES_DIR, $this->getModulesPathPattern());
+    }
+
+    /**
+     * Pattern to use for paths in "Module" directory
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModulesPathPattern()
+    {
+        return '|^' . preg_quote(LC_MODULES_DIR) . '(\w)+' . LC_DS_QUOTED . '(\w)+' . LC_DS_QUOTED . 'Main.php$|Si';
     }
 }

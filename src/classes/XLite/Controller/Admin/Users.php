@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -34,7 +34,7 @@ namespace XLite\Controller\Admin;
  * (in similar way as it was done for products). Remove hardcoded session cell admin_users_search
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Users extends \XLite\Controller\Admin\AAdmin
 {
@@ -43,7 +43,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $users = null;
 
@@ -53,7 +53,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -67,11 +67,11 @@ class Users extends \XLite\Controller\Admin\AAdmin
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSearchParams($paramName = null)
     {
-        $searchParams = $this->session->get('admin_users_search');
+        $searchParams = \XLite\Core\Session::getInstance()->admin_users_search;
 
         $searchParams = isset($searchParams) ? $searchParams : new \XLite\Core\CommonCell();
 
@@ -81,11 +81,15 @@ class Users extends \XLite\Controller\Admin\AAdmin
 
             $result = isset($searchParams->$paramName) ? $searchParams->$paramName : null;
 
-            if (isset($result) && in_array($paramName, array('startDate', 'endDate'))) {
+            if (
+                isset($result) 
+                && in_array($paramName, array('startDate', 'endDate'))
+            ) {
                 $result = strtotime($result);
             }
         
         } else {
+
             $result = $searchParams;
         }
 
@@ -97,7 +101,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isAdvancedOptionSelected()
     {
@@ -109,8 +113,12 @@ class Users extends \XLite\Controller\Admin\AAdmin
 
         foreach ($fields as $fieldName => $defaultValue) {
 
-            if (isset($searchParams->$fieldName) && $defaultValue != $searchParams->$fieldName) {
+            if (
+                isset($searchParams->$fieldName) 
+                && $defaultValue != $searchParams->$fieldName
+            ) {
                 $result = true;
+
                 break;
             }
         }
@@ -123,7 +131,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getUsers()
     {
@@ -134,6 +142,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
         if ('search' == $mode) {
             
             if (!isset($this->users)) {
+
                 $this->users = \XLite\Core\Database::getRepo('XLite\Model\Profile')->search($searchParams);
             }
         }
@@ -146,7 +155,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getUsersCount()
     {
@@ -159,7 +168,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -171,11 +180,12 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionOrders()
     {
         $this->searchOrders();
+
         $this->redirect();
     }
 
@@ -184,7 +194,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionSearch()
     {
@@ -200,7 +210,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionReset()
     {
@@ -216,19 +226,21 @@ class Users extends \XLite\Controller\Admin\AAdmin
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setSearchParams($data)
     {
         $searchParams = new \XLite\Core\CommonCell(); 
 
         if (isset($data) && is_array($data)) {
+
             foreach ($data as $key => $value) {
+
                 $searchParams->$key = $value;
             }
         }
 
-        $this->session->set('admin_users_search', $searchParams);
+        \XLite\Core\Session::getInstance()->admin_users_search = $searchParams;
     }
 
     /**
@@ -236,7 +248,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAdvancedSearchFields()
     {
@@ -256,7 +268,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function searchOrders()
     {
@@ -275,6 +287,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
             $this->setReturnURL($this->buildURL('order_list', '', $urlParams));
 
         } else {
+
             $this->setReturnURL($this->backURL);
         }
     }

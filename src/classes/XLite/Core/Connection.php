@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * Doctrine-based connection 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Connection extends \Doctrine\DBAL\Connection
 {
@@ -43,7 +43,7 @@ class Connection extends \Doctrine\DBAL\Connection
      *  
      * @return \Doctrine\DBAL\Driver\Statement
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function prepare($statement)
     {
@@ -65,7 +65,7 @@ class Connection extends \Doctrine\DBAL\Connection
      * @return \Doctrine\DBAL\Driver\Statement
      * @throws \XLite\Core\PDOException
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function executeQuery($query, array $params = array(), $types = array())
     {
@@ -92,7 +92,7 @@ class Connection extends \Doctrine\DBAL\Connection
      * @return integer The number of affected rows
      * @throws \XLite\Core\PDOException
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function executeUpdate($query, array $params = array(), array $types = array())
     {
@@ -104,5 +104,35 @@ class Connection extends \Doctrine\DBAL\Connection
         }
 
         return $result;
+    }
+
+    /**
+     * Replace query
+     * 
+     * @param string $tableName table name
+     * @param array  $data      Data
+     *  
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function replace($tableName, array $data)
+    {
+        $this->connect();
+
+        // column names are specified as array keys
+        $cols = array();
+        $placeholders = array();
+        
+        foreach ($data as $columnName => $value) {
+            $cols[] = $columnName;
+            $placeholders[] = '?';
+        }
+
+        $query = 'REPLACE INTO ' . $tableName
+               . ' (' . implode(', ', $cols) . ')'
+               . ' VALUES (' . implode(', ', $placeholders) . ')';
+
+        return $this->executeUpdate($query, array_values($data));
     }
 }

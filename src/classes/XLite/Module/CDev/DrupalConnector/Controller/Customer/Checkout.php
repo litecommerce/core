@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\DrupalConnector\Controller\Customer;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Base\IDecorator
 {
@@ -43,7 +43,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * @return boolean
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isCreateProfile()
     {
@@ -58,18 +58,19 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function updateProfile()
     {
         if ($this->isCreateProfile()) {
 
-            if (!\XLite\Core\Request::getInstance()->username) {
+            $error = user_validate_name(\XLite\Core\Request::getInstance()->username);
 
-                // Username is empty
+            if ($error) {
+
+                // Username validation error
                 $this->valid = false;
-                $label = $this->t('This user name is empty');
-                \XLite\Core\Event::invalidElement('username', $label);
+                \XLite\Core\Event::invalidElement('username', $error);
 
             } elseif (user_load_by_name(\XLite\Core\Request::getInstance()->username)) {
 
@@ -113,7 +114,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getLoginURL()
     {
@@ -129,7 +130,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function saveAnonymousProfile()
     {
@@ -186,7 +187,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function cloneProfile()
     {
@@ -202,7 +203,7 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
      * @return boolean
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRedirectMode()
     {

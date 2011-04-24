@@ -13,17 +13,17 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
+ *
+ * PHP version 5.3.0
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Core
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector;
@@ -31,19 +31,17 @@ namespace XLite\Module\CDev\DrupalConnector;
 /**
  * CMS connector
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Handler extends \XLite\Core\CMSConnector
 {
     /**
      * Message types translation table (XLite to Drupal)
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $messageTypes = array(
         \XLite\Core\TopMessage::INFO    => 'status',
@@ -55,7 +53,7 @@ class Handler extends \XLite\Core\CMSConnector
      * Return name of current CMS 
      * 
      * @return string
-     * @access public
+     * @see    ____func_see____
      * @since  1.0.0
      */
     public function getCMSName()
@@ -67,8 +65,8 @@ class Handler extends \XLite\Core\CMSConnector
      * Return the default controller name 
      * 
      * @return string
-     * @access public
-     * @since  3.0.0
+     * @see    ____func_see____
+     * @since  1.0.0
      */
     public function getDefaultTarget()
     {
@@ -79,7 +77,6 @@ class Handler extends \XLite\Core\CMSConnector
      * Method to get raw Drupal request arguments
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -92,9 +89,8 @@ class Handler extends \XLite\Core\CMSConnector
      * Check if current page is an LC portal
      * 
      * @return array
-     * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPortal()
     {
@@ -120,7 +116,6 @@ class Handler extends \XLite\Core\CMSConnector
      * @param array &$args Request arguments
      *
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -135,12 +130,11 @@ class Handler extends \XLite\Core\CMSConnector
      * @param \XLite\Module\CDev\DrupalConnector\Model\Portal $portal   Portal model object
      * @param string                                          $path     Portal path
      * @param array                                           $args     Drupal URL arguments
-     * @param array                                           $pageArgs Drupal page arguments
+     * @param array                                           $pageArgs Drupal page arguments OPTIONAL
      *  
      * @return array
-     * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPortalArgs(
         \XLite\Module\CDev\DrupalConnector\Model\Portal $portal,
@@ -157,9 +151,8 @@ class Handler extends \XLite\Core\CMSConnector
      * @param array $args Drupal URL arguments
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getControllerArgs(array $args)
     {
@@ -176,9 +169,8 @@ class Handler extends \XLite\Core\CMSConnector
      * Return default arguments
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultArgs()
     {
@@ -189,7 +181,6 @@ class Handler extends \XLite\Core\CMSConnector
      * Translate Drupal request into LC format
      *
      * @return array
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -225,9 +216,8 @@ class Handler extends \XLite\Core\CMSConnector
      * @param string $path Path to compare
      *  
      * @return \XLite\Module\CDev\DrupalConnector\Model\Portal
-     * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPortalByPath($path)
     {
@@ -240,9 +230,8 @@ class Handler extends \XLite\Core\CMSConnector
      * @param string $target Target to search
      *  
      * @return \XLite\Module\CDev\DrupalConnector\Model\Portal
-     * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPortalByTarget($target)
     {
@@ -262,9 +251,8 @@ class Handler extends \XLite\Core\CMSConnector
      * Initialization
      *
      * @return void
-     * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function init()
     {
@@ -278,8 +266,8 @@ class Handler extends \XLite\Core\CMSConnector
      * Set Drupal messages using LC top messages data
      * 
      * @return void
-     * @access public
-     * @since  3.0.0
+     * @see    ____func_see____
+     * @since  1.0.0
      */
     protected function setPreviousTopMessages()
     {

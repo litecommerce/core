@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Button;
@@ -32,7 +32,7 @@ namespace XLite\View\Button;
  * Button to use with popup
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class APopupButton extends \XLite\View\Button\AButton
 {
@@ -41,7 +41,7 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      */
     const TEMPLATE  = 'button/popup_button.tpl';
     const CSS_CLASS = 'popup-button';
-    const JS_SCRIPT = 'button/js/popup_button.js';
+    const JS_SCRIPT = 'button/js/core.popup_button.js';
     const URLParams = 'url_params';
     const POPUP_CSS_FILE = 'button/css/popup.css';
 
@@ -81,9 +81,9 @@ abstract class APopupButton extends \XLite\View\Button\AButton
     /** 
      * Get a list of JavaScript files required to display the widget properly
      * 
-     * @return void
+     * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {   
@@ -115,14 +115,14 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCommonFiles()
     {    
         $list = parent::getCommonFiles();
 
         // popup button is using several specific popup JS
-        $list['js'][] = 'js' . LC_DS . 'core.popup.js';
+        $list['js'][] = 'js/core.popup.js';
 
         return $list;
     } 
@@ -133,7 +133,7 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -145,7 +145,7 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getClass()
     {   

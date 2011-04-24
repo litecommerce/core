@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\WidgetParam\ObjectId;
@@ -32,7 +32,7 @@ namespace XLite\Model\WidgetParam\ObjectId;
  * Profiel id Widget parameter 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Profile extends \XLite\Model\WidgetParam\ObjectId
 {
@@ -41,7 +41,7 @@ class Profile extends \XLite\Model\WidgetParam\ObjectId
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getClassName()
     {

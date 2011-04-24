@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\TranslationDriver;
@@ -32,7 +32,7 @@ namespace XLite\Core\TranslationDriver;
  * DB-based driver
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Db extends \XLite\Core\TranslationDriver\ATranslationDriver
 {
@@ -41,7 +41,7 @@ class Db extends \XLite\Core\TranslationDriver\ATranslationDriver
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $translations = array();
 
@@ -53,7 +53,7 @@ class Db extends \XLite\Core\TranslationDriver\ATranslationDriver
      *  
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function translate($name, $code)
     {
@@ -70,7 +70,7 @@ class Db extends \XLite\Core\TranslationDriver\ATranslationDriver
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isValid()
     {
@@ -82,7 +82,7 @@ class Db extends \XLite\Core\TranslationDriver\ATranslationDriver
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function reset()
     {

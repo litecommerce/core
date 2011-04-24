@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Taxes\Logic\Order\Modifier;
@@ -32,7 +32,7 @@ namespace XLite\Module\CDev\Taxes\Logic\Order\Modifier;
  * Tax  business logic
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Tax extends \XLite\Logic\Order\Modifier\ATax
 {
@@ -41,7 +41,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $code = 'CDEV.TAXES';
 
@@ -50,12 +50,11 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function canApply()
     {
-        return parent::canApply()
-            && 'Y' == \XLite\Base::getInstance()->config->Shipping->shipping_enabled;
+        return parent::canApply();
     }
 
     // {{{ Calculation
@@ -65,7 +64,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function calculate()
     {
@@ -235,7 +234,7 @@ class Tax extends \XLite\Logic\Order\Modifier\ATax
 	 *  
 	 * @return \XLite\DataSet\Transport\Order\Surcharge
 	 * @see    ____func_see____
-	 * @since  3.0.0
+	 * @since  1.0.0
 	 */
 	public function getSurchargeInfo(\XLite\Model\Base\Surcharge $surcharge)
     {

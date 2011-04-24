@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,18 +32,24 @@ namespace XLite\View;
  * 'Powered by' widget
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="sidebar.footer", zone="customer")
  */
 class PoweredBy extends \XLite\View\AView
 {
     /**
+     * Phrase to use in footer
+     */
+    const PHRASE = 'Powered by LiteCommerce v3 [shopping cart software]';
+
+
+    /**
      * Advertise phrases 
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $phrases = array();
 
@@ -53,7 +59,7 @@ class PoweredBy extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isLink()
     {
@@ -65,7 +71,7 @@ class PoweredBy extends \XLite\View\AView
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -81,7 +87,7 @@ class PoweredBy extends \XLite\View\AView
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMessage()
     {
@@ -98,7 +104,7 @@ class PoweredBy extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -110,17 +116,20 @@ class PoweredBy extends \XLite\View\AView
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPhrase()
     {
-        $phrase = 'Powered by LiteCommerce v3 [shopping cart software]';
-        
-        if (isset($this->phrases) && is_array($this->phrases) && 0 < count($this->phrases)) {
+        $phrase = self::PHRASE;
 
+        if (
+            isset($this->phrases) 
+            && is_array($this->phrases) 
+            && 0 < count($this->phrases)
+        ) {
             if (
-                !isset($this->config->Internal->prnotice_index)
-                || !isset($this->phrases[$this->config->Internal->prnotice_index])
+                !isset(\XLite\Core\Config::getInstance()->Internal->prnotice_index)
+                || !isset($this->phrases[\XLite\Core\Config::getInstance()->Internal->prnotice_index])
             ) {
                 $index = mt_rand(0, count($this->phrases) - 1);
 
@@ -133,15 +142,18 @@ class PoweredBy extends \XLite\View\AView
                 );
 
             } else {
-                $index = intval($this->config->Internal->prnotice_index);
+
+                $index = intval(\XLite\Core\Config::getInstance()->Internal->prnotice_index);
             }
 
             $tmp = $this->phrases[$index];
 
-            if (is_string($tmp) && 0 < strlen(trim($tmp))) {
+            if (
+                is_string($tmp)
+                && 0 < strlen(trim($tmp))
+            ) {
                 $phrase = $tmp;
             }
-
         }
 
         return $phrase;

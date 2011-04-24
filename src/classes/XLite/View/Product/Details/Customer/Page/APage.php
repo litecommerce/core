@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Product\Details\Customer\Page;
@@ -32,7 +32,7 @@ namespace XLite\View\Product\Details\Customer\Page;
  * APage 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
 {
@@ -41,7 +41,7 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -56,7 +56,7 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCommonFiles()
     {

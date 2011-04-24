@@ -8,8 +8,10 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
+
+{* TODO full refactoring *}
 
 <table width="100%" IF="category&!getRootCategoryId()=category.getCategoryId()">
 
@@ -95,7 +97,7 @@
       </th>
     </tr>
 
-    {if:category.hasSubcategories()}
+    {if:category&category.hasSubcategories()}
     <tr FOREACH="getSubcategories(getCategoryId()),id,cat" class="{getRowClass(id,##,#highlight#)}">
 
       <td style="width:100%;">
@@ -107,15 +109,15 @@
       </td>
 
       <td class="table-label">
-        <widget class="\XLite\View\Button\Regular" label="Delete" jsCode="onDeleteClick('{cat.category_id}')" />
+        <widget class="\XLite\View\Button\DeleteCategory" categoryId="{cat.category_id}" />
         &nbsp;&nbsp;
-        <widget class="\XLite\View\Button\Regular" IF="cat.hasSubcategories()" label="Delete subcategories" jsCode="onDeleteSubcatsClick('{cat.category_id}')" />
+        <widget class="\XLite\View\Button\DeleteCategory" categoryId="{cat.category_id}" IF="cat.hasSubcategories()" label="Delete subcategories" removeSubcategories=true />
       </td>
 
     </tr>
     {else:}
     <tr>
-      <td>There are no categories</td>
+      <td>{t(#There are no categories#)}</td>
     </tr>
     {end:}
 
@@ -129,12 +131,15 @@
   <table cellpadding="3" cellspacing="1" width="90%">
 
     <tr>
+
       <td>
         <widget class="\XLite\View\Button\Regular" id="add" label="Add category" jsCode="onAddChildClick({getCategoryId()})" />
       </td>		
-      <td align="right" IF="category.getSubCategoriesCount()">
-        <widget class="\XLite\View\Button\Regular" id="delete_all_button" label="Delete all" jsCode="onDeleteSubcatsClick({category.category_id})" />
+
+      <td align="right" IF="category&category.getSubCategoriesCount()">
+        <widget class="\XLite\View\Button\DeleteCategory" id="delete_all_button" label="Delete all" />
       </td>		
+
     </tr>
 
   </table>
@@ -143,15 +148,7 @@
 
 <script type="text/javascript">
 
-function onDeleteClick(category_id)
-{
-	document.location = "admin.php?target=categories&category_id=" + category_id + "&mode=delete";
-}	
-
-function onDeleteSubcatsClick(category_id)
-{
-  document.location = "admin.php?target=categories&category_id=" + category_id + "&mode=delete&subcats=1";
-}
+{*TODO remove!!!*}
 
 function onAddChildClick(category_id)
 {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Categories page controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Categories extends \XLite\Controller\Admin\Base\Catalog
 {
@@ -41,11 +41,11 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
-        return $this->getRootCategoryId() !== $this->getCategory()->getCategoryId()
+        return ($this->getCategory() && $this->getRootCategoryId() !== $this->getCategory()->getCategoryId())
             ? $this->getCategory()->getName()
             : $this->t('Manage categories');
     }
@@ -58,7 +58,7 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __call($method, array $args = array())
     {
@@ -74,7 +74,7 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMemberships()
     {
@@ -87,17 +87,23 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDelete()
     {
-        $parentId = $this->getCategory()->getParent()->getCategoryId();
-     
+        $parent = $this->getCategory()->getParent();
+
         \XLite\Core\Database::getRepo('XLite\Model\Category')->deleteCategory(
             $this->getCategoryId(),
             (bool) \XLite\Core\Request::getInstance()->subcats
         );
 
-        $this->setReturnURL($this->buildURL('categories', '', array('category_id' => $parentId)));
+        $this->setReturnURL(
+            $this->buildURL(
+                'categories',
+                '',
+                $parent ? array('category_id' => $parent->getCategoryId()) : array()
+            )
+        );
     }
 }

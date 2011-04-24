@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 require_once __DIR__ . '/ACustomer.php';
@@ -136,7 +136,7 @@ class XLite_Web_Customer_StatusMessages extends XLite_Web_Customer_ACustomer
      *  
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function throwMessage($message, $type = 'info')
     {

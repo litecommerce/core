@@ -8,10 +8,10 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  * @ListChild (list="product.modify.list", weight="170")
  *}
 <tr>
     <td>{t(#Custom Javascript code#)}</td>
-    <td><textarea name="{getNamePostedData(#javascript#)}" cols="45" rows="6">{product.javascript}</textarea></td>
+    <td><widget class="\XLite\View\FormField\Textarea\Simple" fieldName="{getNamePostedData(#javascript#)}" cols="45" rows="6" value="{product.javascript}" /></td>
 </tr>

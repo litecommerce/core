@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 /**
@@ -118,12 +118,16 @@ CheckoutView.prototype.isLoadingStart = false;
 
 CheckoutView.prototype.shippingAddressSubmitting = false;
 
+CheckoutView.autoload.currentLoadedStep = false;
+
 // Postprocess widget
 CheckoutView.prototype.postprocess = function(isSuccess, initial)
 {
   CheckoutView.superclass.postprocess.apply(this, arguments);
 
   this.isLoadingStart = false;
+
+  this.currentLoadedStep = false;
 
   if (isSuccess) {
 
@@ -268,6 +272,8 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
             return false;
           }
 
+          o.currentLoadedStep = 'shipping';
+
           return !o.load({ step: 'shipping' });
         }
       );
@@ -315,6 +321,8 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
           if (jQuery(this).hasClass('disabled')) {
             return false;
           }
+
+          o.currentLoadedStep = 'payment';
 
           return !o.load({ step: 'payment' });
         }
@@ -527,7 +535,7 @@ CheckoutView.prototype.refreshState = function()
       }
     }
 
-    result = result && profileIsCreate && (!shippingVisible || (shippingAddressIsValid && shippingMethodIsSelected));
+    result = result && profileIsCreate && (shippingAddressIsValid && (shippingMethodIsSelected || !shippingVisible));
 
   } else if (box.hasClass('payment-step')) {
 
@@ -578,7 +586,9 @@ CheckoutView.prototype.openLoginPopup = function()
 
 CheckoutView.prototype.getShadeBase = function()
 {
-  return jQuery('.step.current .step-box', this.base).eq(0);
+  return this.currentLoadedStep
+    ? jQuery('.' + this.currentLoadedStep + '-step .step-box', this.base).eq(0)
+    : jQuery('.step.current .step-box', this.base).eq(0);
 }
 
 /**

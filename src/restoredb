@@ -15,16 +15,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Service
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    SVN: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 // No PHP warnings are allowed in LC
@@ -102,6 +102,9 @@ require_once './top.inc.php';
 set_time_limit(0);
 error_reporting(E_ALL ^ E_NOTICE);
 
+// Load classes from "classes" (do not use cache)
+\Includes\Autoloader::switchLCAutoloadDir();
+
 $config = parse_ini_file('etc/config.php');
 
 if (file_exists('etc/config.local.php')) {
@@ -144,37 +147,53 @@ if (!R_INSTALL_DEMO) {
 }
 
 // modules
-$enabledModules = array(
+$enabledModules = array();
+$enabledModules['CDev'] = array(
     'AustraliaPost',
     'AuthorizeNet',
     'Bestsellers',
     'Quantum',
     'FeaturedProducts',
     'ProductOptions',
+    'Taxes',
+    'TinyMCE',
+);
+$enabledModules['Test'] = $enabledModules['Test1'] = array(
+    'Module1',
+    'Module2',
+    'Module3',
+    'Module4',
+    'Module5',
+    'Module6',
+    'Module7',
+    'Module8',
+    'Module9',
 );
 
 if (!R_INSTALL_STANDALONE) {
     // Enable DrupalConnector module if 'standalone' option is not passed
-    $enabledModules[] = 'DrupalConnector';
+    $enabledModules['CDev'][] = 'DrupalConnector';
 }
 
-foreach (glob('classes/XLite/Module/CDev/*/Main.php') as $f) {
+foreach (array('CDev', 'Test', 'Test1') as $author) {
 
-    $author = basename(dirname(dirname($f)));
-    $name = basename(dirname($f));
+    foreach ((array) glob('classes/XLite/Module/' . $author . '/*/Main.php') as $f) {
 
-    // Load install.sql only for enabled modules
-    if (preg_match('/.CDev.(?:' . implode('|', $enabledModules) . ')./Ss', $f)) {
+        $name = basename(dirname($f));
 
-        $yamlFile = dirname($f) . '/install.yaml';
-        if (file_exists($yamlFile)) {
-            _do_yaml_upload($yamlFile);
+        // Load install.sql only for enabled modules
+        if (preg_match('/.' . $author . '.(?:' . implode('|', $enabledModules[$author]) . ')./Ss', $f)) {
+
+            $yamlFile = dirname($f) . '/install.yaml';
+            if (file_exists($yamlFile)) {
+                _do_yaml_upload($yamlFile);
+            }
+
+            if (!isset($modules[$author])) {
+                $modules[$author] = array();
+            }
+            $modules[$author][$name] = 1;
         }
-
-        if (!isset($modules[$author])) {
-            $modules[$author] = array();
-        }
-        $modules[$author][$name] = 1;
     }
 }
 
@@ -201,7 +220,7 @@ if (file_exists('sql/local/xlite_local_demo.yaml')) {
 // Create modules list
 \Includes\Decorator\Utils\ModulesManager::saveModulesToFile($modules);
 
-// Remove disabeld structures
+// Remove disabled structures
 $path = LC_VAR_DIR . '.disabled.structures.php';
 if (file_exists($path)) {
     unlink($path);

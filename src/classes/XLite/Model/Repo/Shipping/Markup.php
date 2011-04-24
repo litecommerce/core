@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo\Shipping;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo\Shipping;
  * Shipping method model
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Markup extends \XLite\Model\Repo\ARepo
 {
@@ -41,7 +41,7 @@ class Markup extends \XLite\Model\Repo\ARepo
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = self::TYPE_SECONDARY;
 
@@ -54,7 +54,7 @@ class Markup extends \XLite\Model\Repo\ARepo
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findMarkupsByProcessor($processor, \XLite\Logic\Order\Modifier\Shipping $modifier)
     {
@@ -97,7 +97,7 @@ class Markup extends \XLite\Model\Repo\ARepo
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findMarkupsByZoneAndMethod($zoneId = null, $methodId = null)
     {
@@ -111,7 +111,7 @@ class Markup extends \XLite\Model\Repo\ARepo
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findMarkupsByIds($ids)
     {
@@ -128,7 +128,7 @@ class Markup extends \XLite\Model\Repo\ARepo
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function addMarkupCondition(\Doctrine\ORM\QueryBuilder $qb, \XLite\Logic\Order\Modifier\Shipping $modifier, $zoneId)
     {
@@ -171,7 +171,7 @@ class Markup extends \XLite\Model\Repo\ARepo
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineFindMarkupsByProcessorQuery($processor, \XLite\Logic\Order\Modifier\Shipping $modifier, $zoneId)
     {
@@ -197,7 +197,7 @@ class Markup extends \XLite\Model\Repo\ARepo
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineFindMarkupsByZoneAndMethodQuery($zoneId, $methodId)
     {
@@ -228,7 +228,7 @@ class Markup extends \XLite\Model\Repo\ARepo
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineFindMarkupsByIdsQuery($ids)
     {

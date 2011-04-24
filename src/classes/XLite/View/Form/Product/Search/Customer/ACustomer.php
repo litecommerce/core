@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Product\Search\Customer;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Product\Search\Customer;
  * ACustomer
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ACustomer extends \XLite\View\Form\Product\Search\ASearch
 {

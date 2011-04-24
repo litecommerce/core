@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Menu\Customer;
@@ -32,7 +32,7 @@ namespace XLite\View\Menu\Customer;
  * Main menu 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="layout.main", weight="250")
  */
@@ -43,7 +43,7 @@ class Top extends \XLite\View\Menu\AMenu
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -55,7 +55,7 @@ class Top extends \XLite\View\Menu\AMenu
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineItems()
     {

@@ -23,45 +23,49 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
 
 /**
  * Abstract container widget
- * TODO:  waiting for the multiple inheritance
- * FIXME: must extend the AView class
+ *
+ * :TODO:  waiting for the multiple inheritance
+ * :FIXME: must extend the AView class
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
 {
-    /**
-     * Return title 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    abstract protected function getHead();
-
     /**
      * Return templates directory name 
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getDir();
+
+    /**
+     * Return title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getHead()
+    {
+        return null;
+    }
 
     /**
      * isWrapper 
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isWrapper()
     {
@@ -73,7 +77,7 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBodyTemplate()
     {
@@ -85,7 +89,7 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTemplate()
     {
@@ -97,7 +101,7 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getBody()
     {
@@ -109,7 +113,7 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function useBodyTemplate()
     {

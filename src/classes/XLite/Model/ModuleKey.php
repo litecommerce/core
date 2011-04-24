@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,15 +32,15 @@ namespace XLite\Model;
  * Module key
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\ModuleKey")
  * @Table  (name="module_keys",
  *      uniqueConstraints={
- *          @UniqueConstraint (name="an", columns={"author","module"})
+ *          @UniqueConstraint (name="an", columns={"author","name"})
  *      },
  *      indexes={
- *          @Index (name="author_module", columns={"author","module"})
+ *          @Index (name="author_name", columns={"author","name"})
  *      }
  * )
  */
@@ -51,11 +51,11 @@ class ModuleKey extends \XLite\Model\AEntity
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer")
+     * @Column         (type="integer")
      */
     protected $keyId;
 
@@ -64,32 +64,31 @@ class ModuleKey extends \XLite\Model\AEntity
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="64")
      */
-    protected $module = '';
+    protected $name;
 
     /**
      * Author name
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="64")
      */
-    protected $author = '';
-
+    protected $author;
 
     /**  
      * Key value
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
-     * @Column (type="string", length="256")
+     * @Column (type="fixedstring", length="64")
      */
-    protected $keyValue = '';
+    protected $keyValue;
 }

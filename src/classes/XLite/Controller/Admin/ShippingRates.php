@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Shipping rates page controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ShippingRates extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,7 +41,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -49,27 +49,11 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * handleRequest 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function handleRequest()
-    {
-        parent::handleRequest();
-
-        if ('Y' != $this->config->Shipping->shipping_enabled) {
-            $this->redirect('admin.php?target=shipping_settings');
-        }
-    }
-
-    /**
      * Do action 'Add'
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionAdd()
     {
@@ -95,7 +79,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -137,7 +121,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -170,7 +154,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionChange()
     {
@@ -183,7 +167,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -198,7 +182,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareData($data, $isNew = false)
     {
@@ -287,7 +271,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRedirectURL()
     {

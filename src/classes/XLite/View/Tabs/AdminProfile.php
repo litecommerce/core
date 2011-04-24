@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Tabs;
@@ -32,7 +32,7 @@ namespace XLite\View\Tabs;
  * Tabs related to user profile section
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -43,7 +43,7 @@ class AdminProfile extends \XLite\View\Tabs\ATabs
      *
      * @var   \XLite\Model\Profile
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $profile;
 
@@ -52,7 +52,7 @@ class AdminProfile extends \XLite\View\Tabs\ATabs
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $tabs = array(
         'profile' => array(
@@ -71,15 +71,18 @@ class AdminProfile extends \XLite\View\Tabs\ATabs
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function init()
     {
         parent::init();
 
         if (\XLite\Controller\Admin\Profile::getInstance()->isRegisterMode()) {
+
             foreach ($this->tabs as $key => $tab) {
+
                 if ('profile' != $key) {
+
                     unset($this->tabs[$key]);
                 }
             }            
@@ -91,7 +94,7 @@ class AdminProfile extends \XLite\View\Tabs\ATabs
      * 
      * @return \XLite\Model\Profile
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProfile()
     {
@@ -100,10 +103,12 @@ class AdminProfile extends \XLite\View\Tabs\ATabs
             $profileId = \XLite\Core\Request::getInstance()->profile_id;
 
             if (isset($profileId)) {
+
                 $this->profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($profileId);
             
             } else {
-                $this->profile = $this->xlite->auth->getProfile();
+
+                $this->profile = \XLite\Core\Auth::getInstance()->getProfile();
             }
         }
 
@@ -118,7 +123,7 @@ class AdminProfile extends \XLite\View\Tabs\ATabs
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function buildTabURL($target)
     {

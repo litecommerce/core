@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * Order controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Order extends \XLite\Controller\Customer\Base\Order
 {
@@ -41,11 +41,13 @@ class Order extends \XLite\Controller\Customer\Base\Order
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
-        return 'Order #' . $this->getOrderId() . ', ' . date('M d, Y, H:i', $this->getOrder()->getDate());
+        return $this->getOrder()
+            ? ('Order #' . $this->getOrderId() . ', ' . date('M d, Y, H:i', $this->getOrder()->getDate()))
+            : 'Order not found';
     }
 
     /**
@@ -53,7 +55,7 @@ class Order extends \XLite\Controller\Customer\Base\Order
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {

@@ -36,32 +36,9 @@ final class XLite_Tests_TestSuite extends PHPUnit_Framework_TestSuite
      */
     protected function restoreDBState()
     {
-        $path = realpath(dirname(__FILE__) . '/../dump.sql');
-        if (!file_exists($path)) {
-            return false;
-        }
+        xlite_restore_sql_from_backup();
 
-        echo (PHP_EOL . 'DB restore ... ');
-
-        $config = \XLite::getInstance()->getOptions('database_details');
-        
-        $cmd = defined('TEST_MYSQL_BIN') ? TEST_MYSQL_BIN : 'mysql';
-        $cmd .= ' -h' . $config['hostspec'];
-        
-        if ($config['port']) {
-            $cmd .= ':' . $config['port'];
-        }
-
-        $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
-        if ($config['socket']) {
-            $cmd .= ' -S' . $config['socket'];
-        }
-
-        exec($cmd . ' -e"drop database ' . $config['database'] . '"');
-        exec($cmd . ' -e"create database ' . $config['database'] . '"');
-        exec($cmd . ' ' . $config['database'] . ' < ' . $path);
-
-        echo ('done' . PHP_EOL);
+        sleep(1);
     }
 
 }

@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 /**
@@ -76,6 +76,9 @@ Base.prototype.callSupermethod = function(name, args)
 
 // Core definition
 window.core = {
+
+  isDebug: false,
+
   isReady: false,
 
   isRequesterEnabled: false,
@@ -93,7 +96,7 @@ window.core = {
 
     if (this.isReady) {
     
-      if ('undefined' != typeof(window.console)) {
+      if (this.isDebug && 'undefined' != typeof(window.console)) {
         if (params) {
           console.log('Fire \'' + name + '\' event with arguments: ' + var_export(params, true));
 
@@ -270,7 +273,7 @@ window.core = {
       }
     }
 
-    // TODO - add request languale label from server-side
+    // TODO - add request language label from server-side
     if (!found) {
       var loadedLabel = core.rest.get('translation', label, false);
       if (loadedLabel) {

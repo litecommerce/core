@@ -8,12 +8,14 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
-This page allows you to configure Shipping methods, zones and charges.<hr />
 
-<a href="admin.php?target=shipping_methods"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt="" /> Shipping methods</a><br />
-<a href="admin.php?target=shipping_rates"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt="" /> Shipping charges</a><br />
-<a href="admin.php?target=shipping_zones"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt="" /> Shipping zones</a><br />
+<p>{t(#This page allows you to configure Shipping methods, zones and charges.#)}</p>
+<hr />
 
-<p>
+<a href="{buildURL(#shipping_methods#)}"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt="" /> {t(#Shipping methods#)}</a><br />
+<a href="{buildURL(#shipping_rates#)}"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt="" /> {t(#Shipping charges#)}</a><br />
+<a href="{buildURL(#shipping_zones#)}"><img src="images/go.gif" width="13" height="13" align="absmiddle" alt="" /> {t(#Shipping zones#)}</a><br />
+
+<br /><br />

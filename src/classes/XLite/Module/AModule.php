@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Module;
@@ -32,7 +32,7 @@ namespace XLite\Module;
  * Module
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AModule
 {
@@ -41,7 +41,7 @@ abstract class AModule
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function init()
     {
@@ -53,7 +53,7 @@ abstract class AModule
      * @return string
      * @throws \Exception
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getModuleName()
     {
@@ -66,7 +66,7 @@ abstract class AModule
      * @return string
      * @throws \Exception
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAuthorName()
     {
@@ -79,7 +79,7 @@ abstract class AModule
      * @return string
      * @throws \Exception
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getDescription()
     {
@@ -91,11 +91,11 @@ abstract class AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getIconURL()
     {
-        return null;
+        return '';
     }
 
     /**
@@ -103,11 +103,11 @@ abstract class AModule
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAuthorPageURL()
     {
-        return null;
+        return '';
     }
 
     /**
@@ -115,11 +115,11 @@ abstract class AModule
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getPageURL()
     {
-        return null;
+        return '';
     }
 
     /**
@@ -127,7 +127,7 @@ abstract class AModule
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function showSettingsForm()
     {
@@ -139,7 +139,7 @@ abstract class AModule
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getSettingsForm()
     {
@@ -151,7 +151,7 @@ abstract class AModule
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getDependencies()
     {
@@ -163,7 +163,7 @@ abstract class AModule
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getPostInstallationNotes()
     {
@@ -175,7 +175,7 @@ abstract class AModule
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getPostUninstallationNotes()
     {
@@ -187,7 +187,7 @@ abstract class AModule
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function installModule(\XLite\Model\Module $module)
     {
@@ -199,7 +199,7 @@ abstract class AModule
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function uninstallModule(\XLite\Model\Module $module)
     {
@@ -211,7 +211,7 @@ abstract class AModule
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function wakeUpModule(\XLite\Model\Module $module)
     {
@@ -223,7 +223,7 @@ abstract class AModule
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function sleepModule(\XLite\Model\Module $module)
     {
@@ -237,7 +237,7 @@ abstract class AModule
      *  
      * @return array|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getBackupData(\XLite\Model\Module $module)
     {
@@ -251,7 +251,7 @@ abstract class AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getVersion()
     {
@@ -263,7 +263,7 @@ abstract class AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getMajorVersion()
     {
@@ -275,7 +275,7 @@ abstract class AModule
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getMinorVersion()
     {
@@ -290,7 +290,7 @@ abstract class AModule
      * @return string
      * @throws \Exception
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getModuleCode()
     {

@@ -8,14 +8,14 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 <div class="product-image-gallery">
   <ul>
     {foreach:product.getImages(),i,image}
     <li {getListItemClassAttribute(i):h}>
-      <a href="{image.getFrontURL()}" rel="gallery" rev="width: {image.getWidth()}, height: {image.getHeight()}" title="{image.getAlt()}"><widget class="\XLite\View\Img" image="{image}" alt="{getAlt(image, i)}" maxWidth="60" maxHeight="60" /></a>
-      <widget class="\XLite\View\Img" className="middle" style="display: none;" image="{image}" maxWidth="{getWidgetMaxWidth()}" />
+      <a href="{image.getFrontURL()}" rel="gallery" rev="width: {image.getWidth()}, height: {image.getHeight()}" title="{image.getAlt()}"><widget class="\XLite\View\Image" image="{image}" alt="{getAlt(image, i)}" maxWidth="60" maxHeight="60" /></a>
+      <widget class="\XLite\View\Image" className="middle" style="display: none;" image="{image}" maxWidth="{getWidgetMaxWidth()}" />
     </li>
     {end:}
   </ul>

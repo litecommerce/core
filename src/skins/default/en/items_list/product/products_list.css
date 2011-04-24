@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 .products .added-to-cart {
@@ -97,17 +97,11 @@ ul.products-sidebar li.last {
   padding-bottom: 0px;
 }
 
-.products div.product,      /* Position nested elements inside a product tag */
-.products div.product-info,     /* Tables and table cells cannot be relative, so we position tags inside a wrapper in table cells */
+.products div.product,
+.products div.product-info,
 .products div.product-photo
 {
   position: relative;
-}
-
-.products .product-cell:hover .product
-{
-  opacity: 1;
-  filter: Alpha(Opacity=1);
 }
 
 .products .product-cell .drag-n-drop-handle
@@ -158,10 +152,12 @@ ul.products-sidebar li.last {
 .products .product .quicklook
 {
   width: 100%;
+  height: 100%;
   position: absolute;
-  bottom: 8px;
+  top: 30%;
   left: 0;
   z-index: 100;
+  background: transparent;
 }
 
 .products .product .quicklook a.quicklook-link
@@ -262,6 +258,8 @@ ul.products-sidebar li.last {
 
 
 /*
+TODO: REMOVE!!!
+
 {
   border: 1px #bbc7d2 solid;
   -moz-border-radius: 0.25em;
@@ -452,3 +450,4 @@ div.cart-tray-box.droppable {
 }
 
 */
+

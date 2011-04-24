@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 
 <form name="deleteForm" action="admin.php" method="post">
@@ -56,13 +56,12 @@
       <td colspan="3">&nbsp;</td>
     </tr>
 
-    <tr>	
+    <tr>
       <td colspan="3">
         {t(#Are you sure you want to continue?#)}
         <br />
-        q<br />
-        <widget class="\XLite\View\Button\Submit" label="Yes" style="main-button" />&nbsp;&nbsp;
-        <widget class="\XLite\View\Button\Regular" label="No" jsCode="javascript: document.location='admin.php?target=categories&category_id={category.parent.getCategoryId()}'" />
+        <widget class="\XLite\View\Button\Submit" label="Yes" style="" />&nbsp;&nbsp;
+        <widget class="\XLite\View\Button\Regular" label="No" style="back-button" jsCode="history.go(-1);" />
       </td>
     </tr>
 

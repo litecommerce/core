@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Zones page controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ShippingZones extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,29 +41,12 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
         return 'Shipping zones';
     }
-
-    /**
-     * handleRequest 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function handleRequest()
-    {
-        parent::handleRequest();
-
-        if ('Y' != $this->config->Shipping->shipping_enabled) {
-            $this->redirect('admin.php?target=shipping_settings');
-        }
-    }
-
     /**
      * Add elements into the specified zone 
      * 
@@ -72,7 +55,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      *  
      * @return \XLite\Model\Zone
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function addElements($zone, $data)
     {
@@ -102,7 +85,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -114,7 +97,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDelete()
     {
@@ -145,7 +128,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
@@ -211,7 +194,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionCreate()
     {
@@ -273,7 +256,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getElementsData($postedData)
     {

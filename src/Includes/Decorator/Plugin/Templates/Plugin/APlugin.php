@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\Plugin\Templates\Plugin;
@@ -33,7 +33,7 @@ namespace Includes\Decorator\Plugin\Templates\Plugin;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class APlugin extends \Includes\Decorator\Plugin\Templates\ATemplates
 {

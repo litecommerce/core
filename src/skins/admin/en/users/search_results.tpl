@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 
 <widget class="\XLite\View\PagerOrig" data="{getUsers()}" name="searchResults" itemsPerPage="{config.General.users_per_page}" />
@@ -35,6 +35,7 @@ function searchOrders()
 </script>
 
 <form action="admin.php" method="post" name="user_profile">
+
   <fieldset>
     <input type="hidden" name="target" value="profile" />
     <input type="hidden" name="action" value="" />
@@ -44,20 +45,36 @@ function searchOrders()
   <table width="100%" class="data-table">
 
     <tr>
-      <th style="width:10px;">&nbsp;</td>
-      <th class="table-label" align="left">{t(#Login/E-mail#)}</th>
-      <th class="table-label" align="left">{t(#Username#)}</th>
-      <th class="table-label" align="left">{t(#Access level#)}</th>
-      <th class="table-label" align="left">{t(#Orders count#)}</th>
-      <th class="table-label" align="left" width="110">{t(#Created#)}</th>
-      <th class="table-label" align="left" width="110">{t(#Last login#)}</th>
+      <th class="table-id-column"></td>
+      <th class="table-label">{t(#Login/E-mail#)}</th>
+      <th class="table-label">{t(#Name#)}</th>
+      <th class="table-label">{t(#Access level#)}</th>
+      <th class="table-label">{t(#Orders#)}</th>
+      <th class="table-label">{t(#Created#)}</th>
+      <th class="table-label">{t(#Last login#)}</th>
     </tr>
 
     <tr FOREACH="namedWidgets.searchResults.pageData,id,user" class="{getRowClass(id,##,#highlight#)}">
-      <td align="center" width="10"><input type="radio" name="profile_id" value="{user.profile_id}" checked="{isSelected(id,#0#)}" /></td>
-      <td class="table-label"><a href="{buildURL(#profile#,##,_ARRAY_(#profile_id#^user.profile_id))}">{user.login:h}</a>{if:!user.status=#E#} (disabled account){end:}</td>
-      <td class="table-label"><a href="{buildURL(#address_book#,##,_ARRAY_(#profile_id#^user.profile_id))}">{if:user.billing_address.firstname&user.billing_address.lastname}{user.billing_address.firstname:h}&nbsp;{user.billing_address.lastname:h}{else:}n/a{end:}</a></td>
-      <td class="table-label" align="left">
+
+      <td class="table-id-column">
+        <widget class="XLite\View\FormField\Input\UserProfileId" fieldOnly=true fieldName="profile_id" value="{user.profile_id}" isChecked="{isSelected(id,#0#)}" />
+      </td>
+
+      <td class="table-label">
+        <a href="{buildURL(#profile#,##,_ARRAY_(#profile_id#^user.profile_id))}">{user.login:h}</a>
+        <span class="account-disabled" IF="!user.status=#E#"> ({t(#disabled account#)})</span>
+      </td>
+
+      <td class="table-label">
+        <a href="{buildURL(#address_book#,##,_ARRAY_(#profile_id#^user.profile_id))}" IF="user.billing_address.firstname&user.billing_address.lastname">{user.billing_address.firstname:h}&nbsp;{user.billing_address.lastname:h}</a>
+
+        {*TODO !!! this "if" construction is using global negation - MUST use the assigned method of class !!! *}
+
+        <a href="{buildURL(#address_book#,##,_ARRAY_(#profile_id#^user.profile_id))}" IF="!user.billing_address.firstname&user.billing_address.lastname">n/a</a>
+      </td>
+
+      <td class="table-label">
+
       {if:user.access_level=0}
         Customer
         {if:user.membership}
@@ -69,10 +86,15 @@ function searchOrders()
       {else:}
         Administrator
       {end:}
+
       </td>
-      <td class="table-label" align="left">{if:user.orders_count}<a href="{buildURL(#order_list#,##,_ARRAY_(#mode#^#search#,#login#^user.login))}">{user.orders_count}</a>{else:}n/a{end:}</td>
-      <td class="table-label" align="left">{if:user.added}{formatTime(user.added):h}{else:}Unknown{end:}</td>
-      <td class="table-label" align="left">{if:user.last_login}{formatTime(user.last_login):h}{else:}Never{end:}</td>
+
+      <td class="table-label">{if:user.orders_count}<a href="{buildURL(#order_list#,##,_ARRAY_(#mode#^#search#,#login#^user.login))}">{user.orders_count}</a>{else:}n/a{end:}</td>
+
+      <td class="table-label">{if:user.added}{formatTime(user.added):h}{else:}Unknown{end:}</td>
+
+      <td class="table-label">{if:user.last_login}{formatTime(user.last_login):h}{else:}Never{end:}</td>
+
     </tr>
 
   </table>
@@ -88,5 +110,3 @@ function searchOrders()
 </form>
 
 {displayViewListContent(#admin.users.results.bottom#)}
-
-

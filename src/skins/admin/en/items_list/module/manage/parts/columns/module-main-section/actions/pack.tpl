@@ -8,8 +8,9 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
+ *
  * @ListChild (list="itemsList.module.manage.columns.module-main-section.actions", weight="30")
  *}
 
-<a href="{buildURL(#modules#,#pack#,_ARRAY_(#moduleId#^module.getModuleId()))}">{t(#Pack it#)}</a>
+<a IF="module.getEnabled()" href="{buildURL(#addons_list_installed#,#pack#,_ARRAY_(#moduleId#^module.getModuleId()))}">{t(#Pack it#)}</a>

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Checkout;
@@ -32,7 +32,7 @@ namespace XLite\View\Checkout;
  * Shipping methods list 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ShippingMethodsList extends \XLite\View\AView
 {
@@ -41,7 +41,7 @@ class ShippingMethodsList extends \XLite\View\AView
      * 
      * @var   \XLite\Model\Order\Modifier
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $modifier;
 
@@ -51,7 +51,7 @@ class ShippingMethodsList extends \XLite\View\AView
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isShippingAvailable()
     {
@@ -63,7 +63,7 @@ class ShippingMethodsList extends \XLite\View\AView
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isAddressCompleted()
     {
@@ -81,7 +81,7 @@ class ShippingMethodsList extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -93,7 +93,7 @@ class ShippingMethodsList extends \XLite\View\AView
      * 
      * @return \XLite\Model\Order\Modifier
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModifier()
     {

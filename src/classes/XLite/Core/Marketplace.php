@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * Marketplace 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Marketplace extends \XLite\Base\Singleton
 {
@@ -45,6 +45,8 @@ class Marketplace extends \XLite\Base\Singleton
     const ACTION_GET_ADDONS_LIST   = 'get_addons';
     const ACTION_GET_ADDON_PACK    = 'get_addon_pack';
     const ACTION_GET_ADDON_INFO    = 'get_addon_info';
+    const ACTION_CHECK_ADDON_KEY   = 'check_addon_key';
+    const ACTION_CHECK_FOR_UPDATES = 'check_for_updates';
 
     /**
      * Protocol data fields - common
@@ -59,7 +61,7 @@ class Marketplace extends \XLite\Base\Singleton
     const REQUEST_FIELD_VERSION_CORE         = 'version';
     const REQUEST_FIELD_VERSION_MODULE       = 'version';
     const REQUEST_FIELD_IS_PACK_GZIPPED      = 'gzipped';
-    const REQUEST_FIELD_MODULE_ID            = 'moduleID';
+    const REQUEST_FIELD_MODULE_ID            = 'moduleId';
     const REQUEST_FIELD_MODULE_KEY           = 'key';
 
     /**
@@ -67,6 +69,12 @@ class Marketplace extends \XLite\Base\Singleton
      */
     const RESPONSE_FIELD_ERROR   = 'error';
     const RESPONSE_FIELD_MESSAGE = 'message';
+
+    /**
+     * Protocol data fields - response
+     */
+    const RESPONSE_FIELD_CORE_VERSION       = 'version';
+    const RESPONSE_FIELD_CORE_REVISION_DATE = 'revisionDate';
 
     /**
      * Protocol data fields - response
@@ -88,6 +96,38 @@ class Marketplace extends \XLite\Base\Singleton
     const RESPONSE_FIELD_MODULE_RATING             = 'rating';
     const RESPONSE_FIELD_MODULE_RATING_RATE        = 'rate';
     const RESPONSE_FIELD_MODULE_RATING_VOTES_COUNT = 'votesCount';
+    const RESPONSE_FIELD_MODULE_DOWNLOADS_COUNT    = 'downloadCount';
+    const RESPONSE_FIELD_MODULE_LICENSE            = 'license';
+
+    /**
+     * Protocol data fields - response
+     */
+    const RESPONSE_FIELD_MODULE_PACK_DATA   = 'data';
+    const RESPONSE_FIELD_MODULE_PACK_LENGTH = 'length';
+
+    /**
+     * Some regexps 
+     */
+    const REGEXP_VERSION = '/\d+\.?[\w-\.]*/';
+
+    /**
+     * Name of the cache data cells
+     */
+    const CACHE_DATA_CELL_CORES         = 'marketplaceCoresListData';
+    const CACHE_DATA_CELL_UPGRADE_FLAGS = 'marketplaceUpgradeFlagsData';
+
+    /**
+     * Name of the cache TTL cells
+     */
+    const CACHE_TTL_CELL_CORES         = 'marketplaceCoresListTTL';
+    const CACHE_TTL_CELL_UPGRADE_FLAGS = 'marketplaceUpgradeFlagsTTL';
+    const CACHE_TTL_CELL_SAVE_ADDONS   = 'marketplaceSaveAddonsListTTL';
+
+    /**
+     * Some predefined TTLs
+     */
+    const TTL_LONG  = 86400;
+    const TTL_SHORT = 3600;
 
 
     /**
@@ -95,7 +135,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $errorCode;
 
@@ -104,7 +144,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $errorMessage;
 
@@ -116,7 +156,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMarketplaceURL()
     {
@@ -126,15 +166,18 @@ class Marketplace extends \XLite\Base\Singleton
     /**
      * The "get_core_versions" request handler
      * 
-     * @return array
+     * @param integer $ttl Data TTL OPTIONAL
+     *  
+     * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    public function getCoreVersions()
+    public function getCoreVersions($ttl = self::TTL_LONG)
     {
-        return $this->sendRequestToMarkeplace(
-            self::ACTION_GET_CORE_VERSIONS
-        );
+        // Renew (if needed) data in TmpVars
+        $this->performActionWithTTL(self::CACHE_TTL_CELL_CORES, $ttl, array($this, 'getCoreVersionsCallback'));
+
+        return \XLite\Core\TmpVars::getInstance()->{self::CACHE_DATA_CELL_CORES};
     }
 
     /**
@@ -145,7 +188,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCorePack($versionMajor, $versionMinor)
     {
@@ -153,7 +196,7 @@ class Marketplace extends \XLite\Base\Singleton
             self::ACTION_GET_CORE_PACK,
             array(
                 self::REQUEST_FIELD_VERSION_CORE    => $this->getVersionField($versionMajor, $versionMinor),
-                self::REQUEST_FIELD_IS_PACK_GZIPPED => \Phar::canCompress(\Phar::GZ),
+                self::REQUEST_FIELD_IS_PACK_GZIPPED => \Includes\Utils\PHARManager::canCompress(),
             )
         );
     }
@@ -166,7 +209,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCoreHash($versionMajor, $versionMinor)
     {
@@ -180,16 +223,16 @@ class Marketplace extends \XLite\Base\Singleton
 
     /**
      * The "get_addons_list" request handler
+     *
+     * @param integer $ttl Data TTL OPTIONAL
      * 
-     * @return array
+     * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    public function getAddonsList()
+    public function saveAddonsList($ttl = self::TTL_LONG)
     {
-        return $this->sendRequestToMarkeplace(
-            self::ACTION_GET_ADDONS_LIST
-        );
+        $this->performActionWithTTL(self::CACHE_TTL_CELL_SAVE_ADDONS, $ttl, array($this, 'saveAddonsListCallback'));
     }
 
     /**
@@ -200,36 +243,17 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAddonPack($moduleID, $key = null)
     {
         return $this->sendRequestToMarkeplace(
             self::ACTION_GET_ADDON_PACK,
             array(
-                self::REQUEST_FIELD_MODULE_ID  => $moduleID,
-                self::REQUEST_FIELD_MODULE_KEY => $key,
-            )
-        );
-    }
+                self::REQUEST_FIELD_MODULE_ID       => $moduleID,
+                self::REQUEST_FIELD_MODULE_KEY      => $key,
+                self::REQUEST_FIELD_IS_PACK_GZIPPED => \Includes\Utils\PHARManager::canCompress(),
 
-    /**
-     * The "get_addon_license" request handler
-     *
-     * @param string $moduleID External module identifier
-     * @param string $key      Module license key OPTIONAL
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getAddonLicense($moduleID, $key = null)
-    {
-        return $this->sendRequestToMarkeplace(
-            self::ACTION_GET_ADDON_LICENSE,
-            array(
-                self::REQUEST_FIELD_MODULE_ID  => $moduleID,
-                self::REQUEST_FIELD_MODULE_KEY => $key,
             )
         );
     }
@@ -242,7 +266,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAddonInfo($moduleID, $key = null)
     {
@@ -255,6 +279,86 @@ class Marketplace extends \XLite\Base\Singleton
         );
     }
 
+    /**
+     * The "check_addon_key" request handler
+     *
+     * @param string $key Module license to check
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function checkAddonKey($key)
+    {
+        return $this->sendRequestToMarkeplace(
+            self::ACTION_CHECK_ADDON_KEY,
+            array(
+                self::REQUEST_FIELD_MODULE_KEY => $key,
+            )
+        );
+    }
+
+    /**
+     * The "check_for_updates" request handler
+     *
+     * @param integer $ttl Data TTL OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function checkForUpdates($ttl = self::TTL_LONG)
+    {
+        // Renew (if needed) data in TmpVars
+        $this->performActionWithTTL(self::CACHE_TTL_CELL_UPGRADE_FLAGS, $ttl, array($this, 'checkForUpdatesCallback'));
+
+        return \XLite\Core\TmpVars::getInstance()->{self::CACHE_DATA_CELL_UPGRADE_FLAGS};
+    }
+
+    // }}}
+
+    // {{{ Callbacks for public methods (wrappers)
+
+    /**
+     * Save list of core versions into the cache 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCoreVersionsCallback()
+    {
+        \XLite\Core\TmpVars::getInstance()->{self::CACHE_DATA_CELL_CORES} 
+            = $this->sendRequestToMarkeplace(self::ACTION_GET_CORE_VERSIONS);
+    }
+
+    /**
+     * Upload addons list into the database 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function saveAddonsListCallback()
+    {
+        \XLite\Core\Database::getRepo('\XLite\Model\Module')->updateMarketplaceModules(
+            (array) $this->sendRequestToMarkeplace(self::ACTION_GET_ADDONS_LIST)
+        );
+    }
+
+    /**
+     * Save list of upgrade into the cache
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkForUpdatesCallback()
+    {
+        \XLite\Core\TmpVars::getInstance()->{self::CACHE_DATA_CELL_UPGRADE_FLAGS}
+            = $this->sendRequestToMarkeplace(self::ACTION_CHECK_FOR_UPDATES);
+    }
+
     // }}}
 
     // {{{ Protocol (handlers)
@@ -264,7 +368,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCommonData()
     {
@@ -284,7 +388,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function sendRequestToMarkeplace($action, array $data = array())
     {
@@ -302,7 +406,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return \XLite\Model\HTTPS
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRequest($action, array $data = array())
     {
@@ -319,7 +423,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMarketplaceActionURL($action)
     {
@@ -333,7 +437,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRequestData($action)
     {
@@ -356,7 +460,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareResponse(\PEAR2\HTTP\Request\Response $response, $action)
     {
@@ -385,6 +489,9 @@ class Marketplace extends \XLite\Base\Singleton
             $result = $this->$method($result);
         }
 
+        // For developer mode only
+        $this->showDeveloperTopMessage($action);
+
         return $result;
     }
 
@@ -395,7 +502,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function parseResponse(array $data)
     {
@@ -412,6 +519,33 @@ class Marketplace extends \XLite\Base\Singleton
         return $data;
     }
 
+    /**
+     * Show diagnostic message 
+     * 
+     * @param string $action Current action
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function showDeveloperTopMessage($action)
+    {
+        if (LC_DEVELOPER_MODE) {
+            list($code, $message) = $this->getError();
+            $common = '["' . \XLite\Core\Request::getInstance()->target . '"]: ';
+
+            if (isset($message)) {
+                \XLite\Core\TopMessage::getInstance()->addError(
+                    $common . 'Marketplace connection error (' . $action . ', "' . $message . '")'
+                );
+            } else {
+                \XLite\Core\TopMessage::getInstance()->addInfo(
+                    $common . 'Successfully connected to marketplace (' . $action . ')'
+                );
+            }
+        }
+    }
+
     // }}}
 
     // {{{ Error handling
@@ -421,7 +555,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkForError()
     {
@@ -433,7 +567,7 @@ class Marketplace extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getError()
     {
@@ -441,11 +575,24 @@ class Marketplace extends \XLite\Base\Singleton
     }
 
     /**
+     * Set top message with error info
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setErrorTopMessage()
+    {
+        list($code, $message) = $this->getError();
+        \XLite\Core\TopMessage::getInstance()->addError($message, array(), $code);
+    }
+
+    /**
      * Unset the error-related variables
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function clearError()
     {
@@ -460,7 +607,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setError($code, $message)
     {
@@ -470,14 +617,36 @@ class Marketplace extends \XLite\Base\Singleton
 
     // }}}
 
-    // {{{ Response schemas
+    // {{{ Response validation schemas
+
+    /**
+     * Return validation schema for certain action
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getResponseSchemaForGetCoresAction()
+    {
+        return array(
+            self::RESPONSE_FIELD_CORE_VERSION       => array(
+                'filter'  => FILTER_VALIDATE_REGEXP,
+                'flags'   => FILTER_REQUIRE_ARRAY,
+                'options' => array('regexp' => self::REGEXP_VERSION),
+            ),
+            self::RESPONSE_FIELD_CORE_REVISION_DATE => array(
+                'filter'  => FILTER_VALIDATE_INT,
+                'options' => array('max_range' => time()),
+            ),
+        );
+    }
 
     /**
      * Return validation schema for certain action
      * 
-     * @return void
+     * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getResponseSchemaForGetAddonsAction()
     {
@@ -485,7 +654,7 @@ class Marketplace extends \XLite\Base\Singleton
             self::RESPONSE_FIELD_MODULE_VERSION         => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
                 'flags'   => FILTER_REQUIRE_ARRAY,
-                'options' => array('regexp' => '/\d+\.?[\w-\.]*/'),
+                'options' => array('regexp' => self::REGEXP_VERSION),
             ),
             self::RESPONSE_FIELD_MODULE_REVISION_DATE   => array(
                 'filter'  => FILTER_VALIDATE_INT,
@@ -515,14 +684,56 @@ class Marketplace extends \XLite\Base\Singleton
             self::RESPONSE_FIELD_MODULE_PAGE_URL        => FILTER_SANITIZE_URL,
             self::RESPONSE_FIELD_MODULE_AUTHOR_PAGE_URL => FILTER_SANITIZE_URL,
             self::RESPONSE_FIELD_MODULE_RATING          => array(
-                'filter'  => FILTER_VALIDATE_INT,
-                'flags'   => FILTER_REQUIRE_ARRAY,
-                'options' => array('min_range' => 0),
+                'filter'  => FILTER_SANITIZE_NUMBER_FLOAT,
+                'flags'   => FILTER_REQUIRE_ARRAY | FILTER_FLAG_ALLOW_FRACTION,
             ),
             self::RESPONSE_FIELD_MODULE_DEPENDENCIES    => array(
                 'filter'  => FILTER_VALIDATE_REGEXP,
                 'flags'   => FILTER_REQUIRE_ARRAY,
                 'options' => array('regexp' => '/[\w\\\\]+/'),
+            ),
+            self::RESPONSE_FIELD_MODULE_DOWNLOADS_COUNT => array(
+                'filter'  => FILTER_VALIDATE_INT,
+                'options' => array('min_range' => 0),
+            ),
+        );
+    }
+
+    /**
+     * Return validation schema for certain action
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getResponseSchemaForGetAddonPackAction()
+    {
+        return array(
+            self::RESPONSE_FIELD_MODULE_PACK_DATA   => FILTER_UNSAFE_RAW,
+            self::RESPONSE_FIELD_MODULE_PACK_LENGTH => array(
+                'filter'  => FILTER_VALIDATE_INT,
+                'options' => array('min_range' => 0),
+            ),
+        );
+    }
+
+    /**
+     * Return validation schema for certain action
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getResponseSchemaForCheckAddonKeyAction()
+    {
+        return array(
+            self::RESPONSE_FIELD_MODULE_AUTHOR => array(
+                'filter'  => FILTER_VALIDATE_REGEXP,
+                'options' => array('regexp' => '/\w+/'),
+            ),
+            self::RESPONSE_FIELD_MODULE_NAME   => array(
+                'filter'  => FILTER_VALIDATE_REGEXP,
+                'options' => array('regexp' => '/\w+/'),
             ),
         );
     }
@@ -532,74 +743,150 @@ class Marketplace extends \XLite\Base\Singleton
     // {{{ Certain requests
 
     /**
-     * Prepare data for addons list
+     * Prepare data for certain response
+     *
+     * @param array $data Data recieved from marketplace
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareResponseForGetCoresAction(array $data)
+    {
+        $result = array();
+
+        foreach ($data as $core) {
+
+            // Validate data recieved in responese
+            if ($this->validateAgainstSchema($core, $this->getResponseSchemaForGetCoresAction())) {
+
+                $coreVersion = $core[self::RESPONSE_FIELD_CORE_VERSION];
+                $coreVersionMajor = $coreVersion[self::FIELD_VERSION_MAJOR];
+                $coreVersionMinor = $coreVersion[self::FIELD_VERSION_MINOR];
+
+                if (isset($result[$coreVersionMajor])) {
+                    $currentVersion = $result[$coreVersionMajor][self::RESPONSE_FIELD_CORE_VERSION];
+                    $currentVersionMinor = $currentVersion[self::FIELD_VERSION_MINOR];
+                }
+
+                if (!isset($currentVersionMinor) || version_compare($currentVersionMinor, $coreVersionMinor, '<')) {
+                    $result[$coreVersionMajor] = $core;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Prepare data for certain response
      * 
      * @param array $data Data recieved from marketplace
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function prepareResponseForGetAddonsAction(array $data)
     {
-        $modules = $result = array();
+        $result = array();
 
         foreach ($data as $module) {
 
-            // Validate a module data recieved in responese
+            // Validate data recieved in responese
             if ($this->validateAgainstSchema($module, $this->getResponseSchemaForGetAddonsAction())) {
 
                 // Module key fields
-                $author  = $this->getField($module, self::RESPONSE_FIELD_MODULE_AUTHOR);
-                $name    = $this->getField($module, self::RESPONSE_FIELD_MODULE_NAME);
+                $author = $this->getField($module, self::RESPONSE_FIELD_MODULE_AUTHOR);
+                $name   = $this->getField($module, self::RESPONSE_FIELD_MODULE_NAME);
 
                 // Arrays passed in response
                 $version = $this->getField($module, self::RESPONSE_FIELD_MODULE_VERSION) ?: array();
                 $rating  = $this->getField($module, self::RESPONSE_FIELD_MODULE_RATING)  ?: array();
 
+                // Module versions
                 $majorVersion = $this->getField($version, self::FIELD_VERSION_MAJOR);
+                $minorVersion = $this->getField($version, self::FIELD_VERSION_MINOR);
 
-                // It's the structure of \XLite\Model\Module class data
-                $modules[$author . '\\' . $name][$majorVersion] = array(
-                    'name'          => $name,
-                    'author'        => $author,
-                    'marketplaceID' => $this->getField($module, self::RESPONSE_FIELD_MODULE_ID),
-                    'rating'        => $this->getField($rating, self::RESPONSE_FIELD_MODULE_RATING_RATE),
-                    'downloads'     => $this->getField($rating, self::RESPONSE_FIELD_MODULE_RATING_VOTES_COUNT),
-                    'price'         => $this->getField($module, self::RESPONSE_FIELD_MODULE_PRICE),
-                    'currency'      => $this->getField($module, self::RESPONSE_FIELD_MODULE_CURRENCY),
-                    'majorVersion'  => $majorVersion,
-                    'minorVersion'  => $this->getField($version, self::FIELD_VERSION_MINOR),
-                    'revisionDate'  => $this->getField($module, self::RESPONSE_FIELD_MODULE_REVISION_DATE),
-                    'moduleName'    => $this->getField($module, self::RESPONSE_FIELD_MODULE_READABLE_NAME),
-                    'authorName'    => $this->getField($module, self::RESPONSE_FIELD_MODULE_READABLE_AUTHOR),
-                    'description'   => $this->getField($module, self::RESPONSE_FIELD_MODULE_DESCRIPTION),
-                    'iconURL'       => $this->getField($module, self::RESPONSE_FIELD_MODULE_ICON_URL),
-                    'pageURL'       => $this->getField($module, self::RESPONSE_FIELD_MODULE_PAGE_URL),
-                    'authorPageURL' => $this->getField($module, self::RESPONSE_FIELD_MODULE_AUTHOR_PAGE_URL),
-                    'dependencies'  => (array) $this->getField($module, self::RESPONSE_FIELD_MODULE_DEPENDENCIES),
-                );
+                // Short names
+                $key    = $author . '_' . $name . '_' . $majorVersion;
+                $search = compact('name', 'author', 'majorVersion', 'minorVersion') + array('installed' => true);
 
-            } else {
+                // To make modules list unique
+                if (
+                    (!isset($result[$key]) || version_compare($result[$key]['minorVersion'], $minorVersion, '<'))
+                    && !\XLite\Core\Database::getRepo('\XLite\Model\Module')->findOneBy($search)
+                ) {
 
-                // :TODO: add logging here
+                    // It's the structure of \XLite\Model\Module class data
+                    $result[$key] = array(
+                        'name'          => $name,
+                        'author'        => $author,
+                        'marketplaceID' => $this->getField($module, self::RESPONSE_FIELD_MODULE_ID),
+                        'rating'        => $this->getField($rating, self::RESPONSE_FIELD_MODULE_RATING_RATE),
+                        'votes'         => $this->getField($rating, self::RESPONSE_FIELD_MODULE_RATING_VOTES_COUNT),
+                        'downloads'     => $this->getField($module, self::RESPONSE_FIELD_MODULE_DOWNLOADS_COUNT),
+                        'price'         => $this->getField($module, self::RESPONSE_FIELD_MODULE_PRICE),
+                        'currency'      => $this->getField($module, self::RESPONSE_FIELD_MODULE_CURRENCY),
+                        'majorVersion'  => $majorVersion,
+                        'minorVersion'  => $minorVersion,
+                        'revisionDate'  => $this->getField($module, self::RESPONSE_FIELD_MODULE_REVISION_DATE),
+                        'moduleName'    => $this->getField($module, self::RESPONSE_FIELD_MODULE_READABLE_NAME),
+                        'authorName'    => $this->getField($module, self::RESPONSE_FIELD_MODULE_READABLE_AUTHOR),
+                        'description'   => $this->getField($module, self::RESPONSE_FIELD_MODULE_DESCRIPTION),
+                        'iconURL'       => $this->getField($module, self::RESPONSE_FIELD_MODULE_ICON_URL),
+                        'pageURL'       => $this->getField($module, self::RESPONSE_FIELD_MODULE_PAGE_URL),
+                        'authorPageURL' => $this->getField($module, self::RESPONSE_FIELD_MODULE_AUTHOR_PAGE_URL),
+                        'dependencies'  => (array) $this->getField($module, self::RESPONSE_FIELD_MODULE_DEPENDENCIES),
+                    );
+
+                } else {
+
+                    // :TODO: add logging here
+                }
             }
         }
 
-        $coreVersion = \XLite::getInstance()->getMajorVersion();
+        return $result;
+    }
 
-        foreach ($modules as $key => $element) {
+    /**
+     * Prepare data for certain response
+     *
+     * @param array $data Data recieved from marketplace
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareResponseForGetAddonPackAction(array $data)
+    {
+        $result = null;
 
-            if (isset($element[$coreVersion])) {
+        // Validate data recieved in responese
+        if ($this->validateAgainstSchema($data, $this->getResponseSchemaForGetAddonPackAction())) {
+            $result = base64_decode($data['data']);
+        }
 
-                $result[$key] = $element[$coreVersion];
+        return $result;
+    }
 
-            } else {
+    /**
+     * Prepare data for certain response
+     *
+     * @param array $data Data recieved from marketplace
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareResponseForCheckAddonKeyAction(array $data)
+    {
+        $result = null;
 
-                ksort($element);
-
-                $result[$key] = end($element);
-            }
+        // Validate data recieved in responese
+        if ($this->validateAgainstSchema($data, $this->getResponseSchemaForCheckAddonKeyAction())) {
+            $result = $data;
         }
 
         return $result;
@@ -616,7 +903,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMethodToGetRequestData($action)
     {
@@ -630,7 +917,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMethodToPrepareResponse($action)
     {
@@ -645,7 +932,7 @@ class Marketplace extends \XLite\Base\Singleton
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getVersionField($versionMajor, $versionMinor)
     {
@@ -663,7 +950,7 @@ class Marketplace extends \XLite\Base\Singleton
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getField(array $data, $field)
     {
@@ -672,19 +959,62 @@ class Marketplace extends \XLite\Base\Singleton
 
     /**
      * Common method to validate response
+     *
+     * :FIXME: must ignore unknown fields in data from marketplace
      * 
      * @param array $data   Data to validate
      * @param array $schema Validation schema
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function validateAgainstSchema(array $data, array $schema)
     {
         // :NOTE: do not change operator to the "===":
         // "Filter" extension changes type for some variables
-        return filter_var_array($data, $schema) == $data;
+        return array_intersect_key($data, $filtered = filter_var_array($data, $schema)) == $filtered;
+    }
+
+    // }}}
+
+    // {{{ Cache-related routines
+
+    protected function performActionWithTTL($cell, $ttl, array $callback, array $params = array())
+    {
+        if (!$this->checkTTL($cell, $ttl)) {
+            call_user_func_array($callback, $params);
+            $this->setTTLStart($cell);
+        }
+    }
+
+    /**
+     * Check and update cache TTL
+     * 
+     * @param string  $cell Name of the cache cell
+     * @param integer $ttl  TTL value (in seconds)
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkTTL($cell, $ttl)
+    {
+        return !is_null($start = \XLite\Core\TmpVars::getInstance()->$cell) && time() < ($start + $ttl);
+    }
+
+    /**
+     * Renew TTL cell value
+     * 
+     * @param string $cell Name of the cache cell
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function setTTLStart($cell)
+    {
+        \XLite\Core\TmpVars::getInstance()->$cell = time();
     }
 
     // }}}

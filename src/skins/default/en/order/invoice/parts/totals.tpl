@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  * @ListChild (list="invoice.base", weight="40")
  *}
 <table cellspacing="0" class="totals">
@@ -20,7 +20,7 @@
 
   <tr FOREACH="order.getSurcharges(),surcharge" class="{surcharge.getType()}">
     <td class="title">{surcharge.getName()}:</td>
-    <td class="value">{if:surcharge.getAvailable()}{formatPrice(surcharge.getValue(),order.getCurrency())}{else:}{t(#n/a#)}{end:}</td>
+    <td class="value">{if:surcharge.getAvailable()}{formatPrice(surcharge.getValue(),order.getCurrency()):h}{else:}{t(#n/a#)}{end:}</td>
   </tr>
 
   <tr class="total">

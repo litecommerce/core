@@ -8,7 +8,10 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  * @ListChild (list="cart.panel.totals", weight="40")
  *}
-<li class="button"><widget class="\XLite\View\Button\Link" label="Go to checkout" location="{buildURL(#checkout#)}" style="bright" /></li>
+<li class="button">
+  <widget IF="cart.checkCart()" class="\XLite\View\Button\Link" label="Go to checkout" location="{buildURL(#checkout#)}" style="bright" />
+  <widget IF="!cart.checkCart()" class="\XLite\View\Button\Link" label="Go to checkout" style="bright disabled add2cart-disabled" />
+</li>

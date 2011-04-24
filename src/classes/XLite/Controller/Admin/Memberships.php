@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Memberships management page controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Memberships extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,7 +41,7 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -53,7 +53,7 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -65,7 +65,7 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdate() 
     {
@@ -103,12 +103,12 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
 
                     } else {
 
-                        $m->getTranslation($code)->name = $row['membership'];
+                        $m->getTranslation($code)->setName($row['membership']);
 
                     }
 
-                    $m->orderby = intval($row['orderby']);
-                    $m->active = isset($row['active']) && '1' == $row['active'];
+                    $m->setOrderby(intval($row['orderby']));
+                    $m->setActive(isset($row['active']) && '1' == $row['active']);
 
                     \XLite\Core\Database::getEM()->persist($m);
 
@@ -132,7 +132,7 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionDelete() 
     {
@@ -159,7 +159,7 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionAdd() 
     {
@@ -181,8 +181,8 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
 
             $code = $this->getCurrentLanguage();
             $membership = new \XLite\Model\Membership();
-            $membership->orderby = $data['orderby'];
-            $membership->getTranslation($code)->name = $data['membership'];
+            $membership->setOrderby(intval($data['orderby']));
+            $membership->getTranslation($code)->setName($data['membership']);
 
             \XLite\Core\Database::getEM()->persist($membership);
             \XLite\Core\Database::getEM()->flush();

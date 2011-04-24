@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Checkout;
@@ -32,7 +32,7 @@ namespace XLite\View\Checkout;
  * Billing address block 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class BillingAddress extends \XLite\View\AView
 {
@@ -41,7 +41,7 @@ class BillingAddress extends \XLite\View\AView
      * 
      * @var   \XLite\Model\Order\Modifier
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $modifier;
 
@@ -51,7 +51,7 @@ class BillingAddress extends \XLite\View\AView
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isSameAddress()
     {
@@ -63,16 +63,15 @@ class BillingAddress extends \XLite\View\AView
      * 
      * @return \XLite\Model\Address
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSameAddress()
     {
         $address = null;
+        $profile = $this->getCart()->getProfile();
 
-        if ($this->getCart()->getProfile()) {
-            $address = $this->isSameAddress()
-                ? $this->getCart()->getProfile()->getBillingAddress()
-                : $this->getCart()->getProfile()->getShippingAddress();
+        if ($profile) {
+            $address = $profile->getBillingAddress() ?: $profile->getShippingAddress();
         }
 
         return $address;
@@ -84,7 +83,7 @@ class BillingAddress extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -96,7 +95,7 @@ class BillingAddress extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isSameAddressVisible()
     {
@@ -108,7 +107,7 @@ class BillingAddress extends \XLite\View\AView
      * 
      * @return \XLite\Model\Order\Modifier
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModifier()
     {

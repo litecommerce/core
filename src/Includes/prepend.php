@@ -23,15 +23,13 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 // Temporary directories
 define('LC_VAR_URL', 'var');
 
 define('LC_SKINS_CACHE_DIR', LC_COMPILE_DIR . 'skins' . LC_DS);
-
-define('LC_TMP_DIR', LC_VAR_DIR . 'tmp' . LC_DS);
 
 define('LC_LOCALE_DIR', LC_VAR_DIR . 'locale');
 

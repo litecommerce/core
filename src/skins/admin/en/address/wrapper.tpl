@@ -8,12 +8,12 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 
 <ul class="address-box">
 
-  <table width="100%" IF="{address}">
+  <table width="100%" IF="{address.getAddressId()}">
 
     <tr>
       <td class="address-text" width="100%">
@@ -44,7 +44,7 @@
 
   </table>
 
-  <div class="address-center-button" IF="{!address}">
+  <div class="address-center-button" IF="{!address.getAddressId()}">
     <widget class="\XLite\View\Button\Regular" label="Add new address" jsCode="openAddAddress(this, '{profile_id}');" />
   </div>
 

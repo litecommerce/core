@@ -8,8 +8,8 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  * @ListChild (list="modules.manage.buttons", weight="0")
  *}
 
-<widget class="\XLite\View\Button\Regular" label="{t(#Add new add-ons#)}" jsCode="self.location = '{buildURL(#addons_list#)}'" />
+<widget class="\XLite\View\Button\Regular" label="{t(#Add new add-ons#)}" jsCode="self.location.replace('{buildURL(#addons_list_marketplace#)}')" />

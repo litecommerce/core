@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\LanguagesModify;
@@ -32,7 +32,7 @@ namespace XLite\View\LanguagesModify;
  * Select language dialog
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class SelectLanguage extends \XLite\View\AView
 {
@@ -41,7 +41,7 @@ class SelectLanguage extends \XLite\View\AView
      * 
      * @var   \XLite\Model\Language
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $translateLanguage = null;
 
@@ -51,7 +51,7 @@ class SelectLanguage extends \XLite\View\AView
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAddedLanguages()
     {
@@ -65,7 +65,7 @@ class SelectLanguage extends \XLite\View\AView
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isInterfaceLanguage(\XLite\Model\Language $language)
     {
@@ -79,7 +79,7 @@ class SelectLanguage extends \XLite\View\AView
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isTranslateLanguage(\XLite\Model\Language $language)
     {
@@ -92,7 +92,7 @@ class SelectLanguage extends \XLite\View\AView
      * 
      * @return \XLite\Model\Language
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDefaultLanguage()
     {
@@ -106,7 +106,7 @@ class SelectLanguage extends \XLite\View\AView
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function canSelect(\XLite\Model\Language $language)
     {
@@ -121,7 +121,7 @@ class SelectLanguage extends \XLite\View\AView
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function canDelete(\XLite\Model\Language $language)
     {
@@ -136,7 +136,7 @@ class SelectLanguage extends \XLite\View\AView
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getInactiveLanguages()
     {
@@ -150,7 +150,7 @@ class SelectLanguage extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -162,7 +162,7 @@ class SelectLanguage extends \XLite\View\AView
      * 
      * @return \XLite\Model\Language|boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTranslatedLanguage()
     {
@@ -185,7 +185,7 @@ class SelectLanguage extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

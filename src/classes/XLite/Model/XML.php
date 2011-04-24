@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * XML parser
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class XML extends \XLite\Base
 {
@@ -41,7 +41,7 @@ class XML extends \XLite\Base
      * 
      * @var   resource
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $xml_parser = null;
 
@@ -50,7 +50,7 @@ class XML extends \XLite\Base
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $error = '';
 
@@ -59,7 +59,7 @@ class XML extends \XLite\Base
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $parserEncode = 'ISO-8859-1';
 
@@ -68,7 +68,7 @@ class XML extends \XLite\Base
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $xml = '';
 
@@ -80,7 +80,7 @@ class XML extends \XLite\Base
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getFormattedXML($xml)
     {
@@ -139,7 +139,7 @@ class XML extends \XLite\Base
      *
      * @return void
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct()
     {
@@ -153,7 +153,7 @@ class XML extends \XLite\Base
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function parse($xml)
     {
@@ -189,7 +189,7 @@ class XML extends \XLite\Base
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function parseXMLErrors($xml)
     {
@@ -214,7 +214,7 @@ class XML extends \XLite\Base
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function compileTree(array $values, &$i)
     {

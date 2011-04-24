@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\Model;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\ProductOptions\Model;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  *
  * @Entity (repositoryClass="\XLite\Module\CDev\ProductOptions\Model\Repo\Option")
  * @Table  (name="options",
@@ -50,7 +50,7 @@ class Option extends \XLite\Model\Base\I18n
      * @var    integer
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
@@ -64,7 +64,7 @@ class Option extends \XLite\Model\Base\I18n
      * @var    integer
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @Column (type="integer")
      */
@@ -76,7 +76,7 @@ class Option extends \XLite\Model\Base\I18n
      * @var    boolean
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @Column (type="boolean")
      */
@@ -88,7 +88,7 @@ class Option extends \XLite\Model\Base\I18n
      * @var    \XLite\Module\CDev\ProductOptions\Model\OptionGroup
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @ManyToOne  (targetEntity="XLite\Module\CDev\ProductOptions\Model\OptionGroup", inversedBy="options")
      * @JoinColumn (name="group_id", referencedColumnName="group_id")
@@ -101,7 +101,7 @@ class Option extends \XLite\Model\Base\I18n
      * @var    \Doctrine\Common\Collections\ArrayCollection
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\ProductOptions\Model\OptionException", mappedBy="option", cascade={"all"})
      */
@@ -113,7 +113,7 @@ class Option extends \XLite\Model\Base\I18n
      * @var    \Doctrine\Common\Collections\ArrayCollection
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\ProductOptions\Model\OptionSurcharge", mappedBy="option", cascade={"all"})
      */
@@ -127,7 +127,7 @@ class Option extends \XLite\Model\Base\I18n
      * @return \XLite\Module\CDev\ProductOptions\Model\OptionSurcharge|void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSurcharge($type)
     {
@@ -151,7 +151,7 @@ class Option extends \XLite\Model\Base\I18n
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function hasActiveSurcharge($type)
     {
@@ -166,7 +166,7 @@ class Option extends \XLite\Model\Base\I18n
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isModifier()
     {
@@ -179,7 +179,7 @@ class Option extends \XLite\Model\Base\I18n
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getNotEmptyModifiers()
     {
@@ -205,7 +205,7 @@ class Option extends \XLite\Model\Base\I18n
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {

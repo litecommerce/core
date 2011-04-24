@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\FeaturedProducts\Controller\Admin;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\FeaturedProducts\Controller\Admin;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 class ProductList extends \XLite\Controller\Admin\ProductList implements \XLite\Base\IDecorator
 {
@@ -41,31 +41,36 @@ class ProductList extends \XLite\Controller\Admin\ProductList implements \XLite\
      * doActionSearch 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionSearchFeaturedProducts()
     {
         $sessionCell    = \XLite\Module\CDev\FeaturedProducts\View\Admin\FeaturedProducts::getSessionCellName();
+
         $searchParams   = \XLite\View\ItemsList\Product\Admin\Search::getSearchParams();
+
         $productsSearch = array();
+
         $cBoxFields     = array(
             \XLite\View\ItemsList\Product\Admin\Search::PARAM_SEARCH_IN_SUBCATS
         );
 
         foreach ($searchParams as $modelParam => $requestParam) {
+
             if (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
+
                 $productsSearch[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
             }
         }
 
         foreach ($cBoxFields as $requestParam) {
+
             $productsSearch[$requestParam] = isset(\XLite\Core\Request::getInstance()->$requestParam)
                 ? 1
                 : 0;
         }
 
-        $this->session->set($sessionCell, $productsSearch);
+        \XLite\Core\Session::getInstance()->{$sessionCell} = $productsSearch;
     }
 } 

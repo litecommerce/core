@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core;
@@ -32,7 +32,7 @@ namespace XLite\Core;
  * Miscelaneous convertion routines
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Converter extends \XLite\Base\Singleton
 {
@@ -41,7 +41,7 @@ class Converter extends \XLite\Base\Singleton
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $to = array(
         'Q', 'W', 'E', 'R', 'T',
@@ -57,7 +57,7 @@ class Converter extends \XLite\Base\Singleton
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $from = array(
         '_q', '_w', '_e', '_r', '_t',
@@ -69,13 +69,22 @@ class Converter extends \XLite\Base\Singleton
     );
 
     /**
+     * Flag to avoid multiple setlocale() calls
+     * 
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected static $isLocaleSet = false;
+
+    /**
      * Convert a string like "test_foo_bar" into the camel case (like "TestFooBar")
      * 
      * @param string $string String to convert
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function convertToCamelCase($string)
     {
@@ -89,7 +98,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function convertFromCamelCase($string)
     {
@@ -103,7 +112,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function prepareMethodName($string)
     {
@@ -146,7 +155,7 @@ class Converter extends \XLite\Base\Singleton
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
     {
@@ -181,7 +190,7 @@ class Converter extends \XLite\Base\Singleton
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function buildFullURL($target = '', $action = '', array $params = array())
     {
@@ -196,7 +205,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getArraySchema(array $keys = array(), array $values = array())
     {
@@ -211,7 +220,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function convertTreeToFlatArray(array $data, $currKey = '')
     {
@@ -230,7 +239,7 @@ class Converter extends \XLite\Base\Singleton
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function generateRandomToken()
     {
@@ -242,7 +251,7 @@ class Converter extends \XLite\Base\Singleton
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isGDEnabled()
     {
@@ -260,7 +269,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isURL($url)
     {
@@ -276,7 +285,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getPlainClassName(\XLite\Base $obj)
     {
@@ -290,7 +299,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function formatCurrency($price)
     {
@@ -314,7 +323,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function formatPrice($price)
     {
@@ -338,7 +347,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return float
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function convertWeightUnits($value, $srcUnit, $dstUnit)
     {
@@ -357,40 +366,91 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Format time 
      * 
-     * @param integer $base   UNIX time stamp
+     * @param integer $base   UNIX time stamp OPTIONAL
      * @param string  $format Format string OPTIONAL
      *  
-     * @return void
+     * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    public static function formatTime($base, $format = null)
+    public static function formatTime($base = null, $format = null)
     {
         if (!$format) {
             $config = \XLite\Core\Config::getInstance();
             $format = $config->General->date_format . ', ' . $config->General->time_format;
         }
 
-        return strftime($format, $base);
+        return static::getStrftime($format, $base);
     }
 
     /**
      * Format date 
      * 
-     * @param integer $base   UNIX time stamp
+     * @param integer $base   UNIX time stamp OPTIONAL
      * @param string  $format Format string OPTIONAL
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    public static function formatDate($base, $format = null)
+    public static function formatDate($base = null, $format = null)
     {
         if (!$format) {
             $format = \XLite\Core\Config::getInstance()->General->date_format;
         }
 
-        return strftime($format, $base);
+        return static::getStrftime($format, $base);
+    }
+
+    /**
+     * Get strftime() with specified format and timestamp value 
+     * 
+     * @param string  $format Format string
+     * @param integer $base   UNIX time stamp OPTIONAL
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getStrftime($format, $base = null)
+    {
+        static::setLocaleToUTF8();
+
+        if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
+            $format = str_replace('%e', '%#d', $format);
+        }
+
+        return isset($base) ? strftime($format, $base) : strftime($format); 
+    }
+
+    /**
+     * Attempt to set locale to UTF-8
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function setLocaleToUTF8()
+    {
+        if (
+            !self::$isLocaleSet
+            && preg_match('/(([^_]+)_?([^.]*))\.?(.*)?/', setlocale(LC_TIME, 0), $match) 
+            && !preg_match('/utf\-?8/i', $match[4])
+        ) {
+            setlocale(
+                LC_TIME,
+                $match[1] . '.UTF8',
+                $match[1] . '.UTF-8',
+                'en_US.UTF8',
+                'en_US.UTF-8',
+                'en_US',
+                'ENG',
+                'English',
+                $match[0]
+            );
+
+            self::$isLocaleSet = true;
+        }
     }
 
     /**
@@ -401,7 +461,7 @@ class Converter extends \XLite\Base\Singleton
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function sortURLParams($a, $b)
     {

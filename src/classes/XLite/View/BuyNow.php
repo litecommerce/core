@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Buy now widget
  *
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class BuyNow extends \XLite\View\AView
 {
@@ -40,9 +40,9 @@ class BuyNow extends \XLite\View\AView
      * Widget parameter names
      */
 
-    const PARAM_PRODUCT = 'product';
-    const PARAM_BUTTON_STYLE = 'style';
-    const PARAM_SHOW_PRICE = 'showPrice';
+    const PARAM_PRODUCT         = 'product';
+    const PARAM_BUTTON_STYLE    = 'style';
+    const PARAM_SHOW_PRICE      = 'showPrice';
 
 
     /**
@@ -50,7 +50,7 @@ class BuyNow extends \XLite\View\AView
      * 
      * @return \XLite\Model\Product
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProduct()
     {
@@ -62,7 +62,7 @@ class BuyNow extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isShowPrice()
     {
@@ -75,7 +75,7 @@ class BuyNow extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -94,21 +94,9 @@ class BuyNow extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT      => new \XLite\Model\WidgetParam\Object('Product', null, false, '\XLite\Model\Product'),
-            self::PARAM_BUTTON_STYLE => new \XLite\Model\WidgetParam\String('Button style', ''),
-            self::PARAM_SHOW_PRICE => new \XLite\Model\WidgetParam\String('Show the product price in the button', ''),
+            self::PARAM_PRODUCT         => new \XLite\Model\WidgetParam\Object('Product', null, false, '\XLite\Model\Product'),
+            self::PARAM_BUTTON_STYLE    => new \XLite\Model\WidgetParam\String('Button style', ''),
+            self::PARAM_SHOW_PRICE      => new \XLite\Model\WidgetParam\String('Show the product price in the button', ''),
         );
-    }
-
-    /**
-     * Check visibility 
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible() && $this->config->General->buynow_button_enabled;
     }
 }

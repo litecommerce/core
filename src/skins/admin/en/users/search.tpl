@@ -8,14 +8,17 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 
 <widget template="common/dialog.tpl" body="users/search_form.tpl" />
 
-<span IF="mode=#search#|mode=#list#">
+<div IF="mode=#search#|mode=#list#">
+
+  {getUsersCount()} {t(#account(s) found#)}
+
   <br />
-  {getUsersCount()} account(s) found
-  <br />
+
   <widget template="common/dialog.tpl" head="Search results" body="users/search_results.tpl" IF="{getUsersCount()}" />
-</span>
+
+</div>

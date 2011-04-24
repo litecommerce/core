@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  */
 var URLHandler = {
 
@@ -130,11 +130,7 @@ jQuery(document).ready(
         if (!this.columnSelectors) {
           var idx = jQuery(this).parents('th').get(0).cellIndex;
           var table = jQuery(this).parents('table').get(0);
-          this.columnSelectors = [];
-          for (var r = 0; r < table.rows.length; r++) {
-            this.columnSelectors.push(jQuery(':checkbox', table.rows[r].cells[idx]).get(0));
-          }
-          this.columnSelectors = jQuery(this.columnSelectors);
+          this.columnSelectors = jQuery('tr', table).find('td:eq('+idx+') :checkbox');
         }
 
         this.columnSelectors.attr('checked', this.checked ? 'checked' : '');
@@ -149,6 +145,7 @@ jQuery(document).ready(
 function openDialog(selector, additionalOptions)
 {
   if (!jQuery('.ui-dialog ' + selector).length) {
+
     var options =  {
       dialogClass: 'popup',
       draggable: false,
@@ -167,6 +164,7 @@ function openDialog(selector, additionalOptions)
 
     if (additionalOptions) {
       for (var k in additionalOptions) {
+
         options[k] = additionalOptions[k];
       }
     }
@@ -174,11 +172,17 @@ function openDialog(selector, additionalOptions)
     // Grab title from h2/h1 tag
     var hTags = ['h2','h1'];
     var tagSelector;
+
     for (var i in hTags) {
+
       tagSelector = hTags[i] + ':first-child';
+
       if (!options.title && jQuery(selector + ' ' + tagSelector).length) {
+
         options.title = jQuery(selector + ' ' + tagSelector).html();
+
         jQuery(selector + ' ' + tagSelector).remove();
+
         break;
       }
     }
@@ -186,6 +190,7 @@ function openDialog(selector, additionalOptions)
     jQuery(selector).dialog(options);
 
   } else {
+
     jQuery(selector).dialog('open');
   }
 }
@@ -215,7 +220,7 @@ function loadDialog(url, dialogOptions, callback)
         closeWaitBar();
 
         if (callback) {
-          callback();
+          callback('.' + selector);
         }
       }
     }
@@ -225,13 +230,13 @@ function loadDialog(url, dialogOptions, callback)
 }
 
 // Load dialog by link
-function loadDialogByLink(link, url, options)
+function loadDialogByLink(link, url, options, callback)
 {
   if (!link.linkedDialog) {
-    link.linkedDialog = loadDialog(url, options);
+    link.linkedDialog = loadDialog(url, options, callback);
 
   } else {
-    openDialog(link.linkedDialog, options);
+    openDialog(link.linkedDialog, options, callback);
   }
 }
 
@@ -340,7 +345,11 @@ function checkMarks(form, reg, lbl) {
     return true;
 
   for (var x = 0; x < form.elements.length; x++) {
-    if (form.elements[x].name.search(reg) == 0 && form.elements[x].type == 'checkbox' && !form.elements[x].disabled) {
+    if (
+      form.elements[x].type == 'checkbox' 
+      && form.elements[x].name.search(reg) == 0 
+      && !form.elements[x].disabled
+    ) {
       is_exist = true;
 
       if (form.elements[x].checked)

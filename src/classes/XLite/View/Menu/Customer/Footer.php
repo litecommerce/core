@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Menu\Customer;
@@ -32,7 +32,7 @@ namespace XLite\View\Menu\Customer;
  * Footer menu 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Footer extends \XLite\View\Menu\AMenu
 {
@@ -41,7 +41,7 @@ class Footer extends \XLite\View\Menu\AMenu
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -53,7 +53,7 @@ class Footer extends \XLite\View\Menu\AMenu
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineItems()
     {

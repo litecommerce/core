@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Button;
@@ -32,9 +32,9 @@ namespace XLite\View\Button;
  * Enter license key popup text 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
-class EnterLicenseKey extends \XLite\View\Button\APopupButton
+class EnterLicenseKey extends \XLite\View\Button\PopupButton
 {
     /**
      * Button label
@@ -69,38 +69,9 @@ class EnterLicenseKey extends \XLite\View\Button\APopupButton
     public function prepareURLParams()
     {
         return array(
-            'target' => 'addon_key',
+            'target' => 'module_key',
             'action' => 'view',
             'widget' => static::ENTER_KEY_WIDGET,
         );
     }
-
-    /** 
-     * Register CSS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {   
-        $list = parent::getCSSFiles();
-
-        return $list;
-    }   
-
-
-    /** 
-     * Register JS files
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        return $list;
-    }   
 }

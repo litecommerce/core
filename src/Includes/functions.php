@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 /**
@@ -33,7 +33,7 @@
  *  
  * @return \XLite\Core\QuickAccess
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function xlite($restart = false)
 {
@@ -843,7 +843,7 @@ function func_htmlspecialchars($str) {
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function isLiteCommerceInstalled($dbURL = null, &$message)
 {
@@ -886,7 +886,7 @@ function isLiteCommerceInstalled($dbURL = null, &$message)
                             && (!isset($data['mysqlsock']) || $configData['socket'] == $data['mysqlsock']);
 
                         if (!$checkResult) {
-                            $message = 'Database parameters comparison failed (config file and $dbURL was compared)';
+                            $message = 'Database parameters (specified in Drupal and LiteCommerce configs) comparison failed';
                         }
 
                     } else {
@@ -920,12 +920,12 @@ function isLiteCommerceInstalled($dbURL = null, &$message)
             }
         
         } else {
-            $message = 'Corrupted config file';
+            $message = 'Corrupted LiteCommerce config file';
             $checkResult = false;
         }
     
     } else {
-        $message = 'config.php or admin/en/welcome.tpl files not found';
+        $message = 'config.php or admin/en/welcome.tpl files are not found';
     }
 
     return $checkResult;
@@ -945,7 +945,7 @@ function isLiteCommerceInstalled($dbURL = null, &$message)
  * @return array
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function parseDbURL($dbURL)
 {    
@@ -990,7 +990,7 @@ function parseDbURL($dbURL)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function dbConnect ($data = null, &$errorMsg = null)
 {
@@ -1039,7 +1039,7 @@ function dbConnect ($data = null, &$errorMsg = null)
  * @return mixed
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function dbFetchColumn($sql, &$errorMsg = null)
 {
@@ -1061,7 +1061,7 @@ function dbFetchColumn($sql, &$errorMsg = null)
  * @return array
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function dbFetchAll($sql, &$errorMsg = null)
 {
@@ -1083,7 +1083,7 @@ function dbFetchAll($sql, &$errorMsg = null)
  * @return void
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function dbExecute($sql, &$errorMsg = null)
 {
@@ -1105,7 +1105,7 @@ function dbExecute($sql, &$errorMsg = null)
  * @return bool
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
 {
@@ -1204,7 +1204,7 @@ function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
  * @return void
  * @access public
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function showQueryStatus($myerr, $ignoreErrors)
 {
@@ -1225,7 +1225,7 @@ function showQueryStatus($myerr, $ignoreErrors)
  * 
  * @return array
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function func_debug_backtrace()
 {
@@ -1265,10 +1265,23 @@ function func_debug_backtrace()
  * 
  * @return void
  * @see    ____func_see____
- * @since  3.0.0
+ * @since  1.0.0
  */
 function func_debug_print_backtrace()
 {
     print (implode(PHP_EOL, func_debug_backtrace()));
 }
+
+/**
+ * Returns LiteCommerce tables prefix
+ * 
+ * @return string
+ * @see    ____func_see____
+ * @since  1.0.0
+ */
+function get_xlite_tables_prefix()
+{
+    return \Includes\Utils\ConfigParser::getOptions(array('database_details', 'table_prefix'));
+}
+
 

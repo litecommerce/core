@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo;
  * Abstract repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ARepo extends \Doctrine\ORM\EntityRepository
 {
@@ -79,7 +79,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $cacheCells = null;
 
@@ -88,7 +88,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $defaultOrderBy;
 
@@ -97,7 +97,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $defaultAlias;
 
@@ -106,7 +106,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $alternativeIdentifier;
 
@@ -115,7 +115,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $entityProperties;
 
@@ -124,7 +124,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $flushAfterLoading = false;
 
@@ -133,7 +133,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $type = self::TYPE_STORE;
 
@@ -142,7 +142,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $queryBuilderClass;
 
@@ -152,7 +152,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRepoType()
     {
@@ -166,7 +166,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function addCacheRelations(array $externalCells)
     {
@@ -194,7 +194,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRelatedCacheCells()
     {
@@ -210,7 +210,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function hasCacheCells()
     {
@@ -224,7 +224,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function deleteCacheByEntity(\XLite\Model\AEntity $entity)
     {
@@ -269,7 +269,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function deleteCache($name = '')
     {
@@ -284,7 +284,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function assignDefaultOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
@@ -319,7 +319,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function createQueryBuilder($alias = null)
     {
@@ -340,7 +340,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function createPureQueryBuilder($alias = null)
     {
@@ -356,7 +356,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDefaultAlias()
     {
@@ -373,7 +373,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function count()
     {
@@ -387,7 +387,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findByIds(array $ids)
     {
@@ -417,7 +417,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findFrame($start = 0, $limit = 0)
     {
@@ -431,7 +431,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return \XLite\Model\AEntity|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findDetached($id)
     {
@@ -449,7 +449,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function flushChanges()
     {
@@ -465,7 +465,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __call($method, $args)
     {
@@ -522,7 +522,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function clearAll()
     {
@@ -535,7 +535,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPrimaryKeyField()
     {
@@ -550,7 +550,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return \XLite\Model\AEntity|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findOneByRecord(array $data, \XLite\Model\AEntity $parent = null)
     {
@@ -568,7 +568,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function loadFixtures(array $data, \XLite\Model\AEntity $parent = null, array $parentAssoc = array())
     {
@@ -592,7 +592,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function loadFixture(
         array $record,
@@ -680,7 +680,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @return array(array)
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getEntityProperties()
     {
@@ -749,7 +749,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function unloadFixtures(array $data, \XLite\Model\AEntity $parent = null, array $parentAssoc = array())
     {
@@ -774,7 +774,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return \XLite\Model\AEntity
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function unloadFixture(
         array $record,
@@ -831,7 +831,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function processSchema(array $schema, $type)
     {
@@ -945,7 +945,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function canTableDisabled()
     {
@@ -958,7 +958,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineCacheCells()
     {
@@ -972,7 +972,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCacheCells($key = null)
     {
@@ -990,7 +990,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function restoreCacheCells()
     {
@@ -1022,7 +1022,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return array (cache cells & relations data)
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessCacheCells(array $cacheCells)
     {
@@ -1085,7 +1085,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return mixed|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFromCache($name, array $params = array())
     {
@@ -1114,7 +1114,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function saveToCache($data, $name, array $params = array())
     {
@@ -1150,7 +1150,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCellHash($name, array $cell, array $params)
     {
@@ -1183,7 +1183,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHashPrefix($suffix = 'data')
     {
@@ -1197,7 +1197,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCacheHashGeneratorName($name)
     {
@@ -1211,7 +1211,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getCacheParamsConverterName($name)
     {
@@ -1225,7 +1225,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMainAlias(\Doctrine\ORM\QueryBuilder $qb)
     {
@@ -1240,12 +1240,12 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @return \XLite\Model\QueryBuilder\AQueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getQueryBuilder()
     {
         if (!isset($this->queryBuilderClass)) {
-            $this->queryBuilderClass = str_replace('\\Repo\\', '\\QuieryBuilder\\', get_called_class());
+            $this->queryBuilderClass = str_replace('\\Repo\\', '\\QueryBuilder\\', get_called_class());
 
             if (!\XLite\Core\Operator::isClassExists($this->queryBuilderClass)) {
                 $this->queryBuilderClass = '\XLite\Model\QueryBuilder\Base\Common';
@@ -1262,7 +1262,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineCountQuery()
     {
@@ -1280,7 +1280,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineFrameQuery($start, $limit)
     {
@@ -1296,7 +1296,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function assignFrame(\Doctrine\ORM\QueryBuilder $qb, $start = 0, $limit = 0)
     {
@@ -1321,7 +1321,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getIdentifiersList(\Doctrine\ORM\QueryBuilder $qb)
     {
@@ -1343,7 +1343,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function detachList($data)
     {
@@ -1365,13 +1365,13 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @return \XLite\Model\AEntity
      * @throws \Exception
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getById($id)
     {
         $entity = $this->find($id);
         if (!$entity) {
-            throw new \Exception(get_called_class() . '::getById() - unknow ID (' . $id . ')');
+            throw new \Exception(get_called_class() . '::getById() - unknown ID (' . $id . ')');
         }
 
         return $entity;
@@ -1382,7 +1382,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAllowedModifiers()
     {
@@ -1394,7 +1394,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModifierPattern()
     {
@@ -1408,7 +1408,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performInsert(array $data = array())
     {
@@ -1430,7 +1430,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performUpdate(\XLite\Model\AEntity $entity, array $data = array())
     {
@@ -1448,7 +1448,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performDelete(\XLite\Model\AEntity $entity)
     {
@@ -1466,7 +1466,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return array(mixed)|boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function collectIdentifiersByRecord(array $data)
     {
@@ -1503,7 +1503,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return boolean|array(mixed)
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function collectAlternativeIdentifiersByRecord(array $data)
     {
@@ -1541,7 +1541,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function assembleRegularFieldsFromRecord(array $record, array $regular = array())
     {
@@ -1560,7 +1560,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function assembleAssociationsFromRecord(array $record, array $assocs = array())
     {
@@ -1588,7 +1588,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function linkLoadedEntity(\XLite\Model\AEntity $entity, \XLite\Model\AEntity $parent, array $parentAssoc)
     {
@@ -1606,7 +1606,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDetailedForeignKeys()
     {

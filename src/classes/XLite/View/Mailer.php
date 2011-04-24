@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Mailer 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Mailer extends \XLite\View\AView
 {
@@ -48,7 +48,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @var   boolean
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected static $composeRunned = false;
 
@@ -57,7 +57,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $subjectTemplate = 'subject.tpl';
 
@@ -66,7 +66,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $bodyTemplate = 'body.tpl';
 
@@ -75,7 +75,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $signatureTemplate = 'signature.tpl';
 
@@ -84,7 +84,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $langLocale = 'en';
 
@@ -93,7 +93,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $langPath = 'lib/PHPMailer/language/';
 
@@ -102,7 +102,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @var   \PHPMailer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $mail = null;
 
@@ -111,7 +111,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $charset = 'UTF-8';
 
@@ -120,7 +120,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $templatesSkin = null;
 
@@ -129,7 +129,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $template = null;
 
@@ -138,7 +138,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $images = array();
 
@@ -147,7 +147,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $errorInfo = null;
 
@@ -157,7 +157,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isComposeRunned()
     {
@@ -172,7 +172,7 @@ class Mailer extends \XLite\View\AView
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function set($name, $value)
     {
@@ -210,7 +210,7 @@ class Mailer extends \XLite\View\AView
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function compose($from, $to, $dir, $customHeaders = array(), $interface = \XLite::CUSTOMER_INTERFACE)
     {
@@ -256,7 +256,7 @@ class Mailer extends \XLite\View\AView
 
         if ('' !== $output) {
 
-            $this->logger->log('Mailer echoed: "' . $output . '". Error: ' . $this->mail->ErrorInfo);
+            \XLite\Logger::getInstance()->log('Mailer echoed: "' . $output . '". Error: ' . $this->mail->ErrorInfo);
         }
 
         if (file_exists($fname)) {
@@ -272,7 +272,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function send()
     {
@@ -280,7 +280,7 @@ class Mailer extends \XLite\View\AView
 
             if (!isset($this->mail)) {
 
-                $this->logger->log('Mail FAILED: not initialized inner mailer');
+                \XLite\Logger::getInstance()->log('Mail FAILED: not initialized inner mailer');
             }
 
             ob_start();
@@ -291,7 +291,7 @@ class Mailer extends \XLite\View\AView
 
             if (!$result) {
 
-                $this->logger->log('Mail FAILED: ' . $this->mail->ErrorInfo);
+                \XLite\Logger::getInstance()->log('Mail FAILED: ' . $this->mail->ErrorInfo);
             }
         }
 
@@ -312,7 +312,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getLastError()
     {
@@ -325,7 +325,7 @@ class Mailer extends \XLite\View\AView
       *  
       * @return string 
       * @see    ____func_see____ 
-      * @since  3.0.0 
+      * @since  1.0.0
       */ 
     protected function getDefaultTemplate() 
     { 
@@ -339,7 +339,7 @@ class Mailer extends \XLite\View\AView
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function createAltBody($html)
     {
@@ -358,7 +358,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function initMailFromSet()
     {
@@ -411,7 +411,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function initMailFromConfig()
     {
@@ -456,7 +456,7 @@ class Mailer extends \XLite\View\AView
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function compile($template, $interface = \XLite::CUSTOMER_INTERFACE, $switchLayout = true)
     {
@@ -492,7 +492,7 @@ class Mailer extends \XLite\View\AView
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHeaders()
     {

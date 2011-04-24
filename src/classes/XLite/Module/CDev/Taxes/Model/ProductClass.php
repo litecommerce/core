@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\Taxes\Model;
@@ -32,7 +32,7 @@ namespace XLite\Module\CDev\Taxes\Model;
  * Product class 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ProductClass extends \XLite\Model\ProductClass implements \XLite\Base\IDecorator
 {
@@ -41,7 +41,7 @@ abstract class ProductClass extends \XLite\Model\ProductClass implements \XLite\
      * 
      * @var    \Doctrine\Common\Collections\ArrayCollection
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      *
      * @OneToMany (targetEntity="XLite\Module\CDev\Taxes\Model\Tax\Rate", mappedBy="product_class", cascade={"all"})
      */
@@ -54,7 +54,7 @@ abstract class ProductClass extends \XLite\Model\ProductClass implements \XLite\
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {

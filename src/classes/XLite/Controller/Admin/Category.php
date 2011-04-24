@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,62 +32,40 @@ namespace XLite\Controller\Admin;
  * Category page controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Category extends \XLite\Controller\Admin\Base\Catalog
 {
-    /**
-     * Default tabber page
-     * TODO: make it protected
-     * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    public $page = 'category_modify';
 
     /**
-     * Tabber pages titles
-     * TODO: make it protected
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    public $pages = array(
-        'category_modify' => 'Add/Modify category',
-    );
-
-    /**
-     * Tabber pages templates
-     * TODO: make it protected
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 3.0.0
-     */
-    public $pageTemplates = array(
-        'category_modify' => 'categories/add_modify_body.tpl',
-    );
-
-
-    /**
-     * Controller initialization
-     * 
-     * @return void
+     * Get pages sections
+     *
+     * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    public function init()
+    public function getPages()
     {
-        parent::init();
+        return array(
+            'category_modify' => ($this->getCategory()->getCategoryId())
+                ? 'Modify category'
+                : 'Add new category',
+        );
+    }
 
-        if ('add' != $this->mode && 'modify' == $this->mode) {
-            $this->pages['category_modify'] = $this->t('Modify category');
-
-        } else {
-            $this->pages['category_modify'] = $this->t('Add new category');
-        }
+    /**
+     * Get pages templates
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPageTemplates()
+    {
+        return array(
+            'category_modify' => 'categories/add_modify_body.tpl',
+            'default'         => 'categories/add_modify_body.tpl',
+        );
     }
 
     /**
@@ -95,7 +73,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      *
      * @return \XLite\Model\Category
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCategory()
     {
@@ -109,7 +87,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -124,7 +102,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -140,7 +118,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      *
      * @return \XLite\Model\Image\Category\Image
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function saveImage($categoryId = null)
     {
@@ -154,7 +132,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
 
         if (!$img) {
             $img = new \XLite\Model\Image\Category\Image();
-        }   
+        }
 
         if ($img->loadFromRequest('postedData', 'image')) {
             if (!$img->getCategory()) {
@@ -172,11 +150,12 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionAddChild()
     {
         if ($properties = $this->validateCategoryData(true)) {
+
             $category = \XLite\Core\Database::getRepo('XLite\Model\Category')
                 ->insert(array('parent_id' => $this->getCategoryId()) + $properties);
 
@@ -191,7 +170,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionModify()
     {
@@ -213,7 +192,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      *  
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function validateCategoryData($isNewObject = false)
     {
@@ -290,7 +269,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      *  
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isCleanURLUnique($cleanURL, $categoryId = null)
     {

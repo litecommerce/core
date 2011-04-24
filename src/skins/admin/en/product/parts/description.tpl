@@ -8,12 +8,12 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  * @ListChild (list="product.modify.list", weight="130")
  *}
 <tr>
   <td valign="top">{t(#Detailed Description#)}</td>
   <td valign="top">
-    <textarea name="{getNamePostedData(#description#)}" cols="45" rows="6">{product.description:h}</textarea>
+    <widget class="\XLite\View\FormField\Textarea\Advanced" fieldName="{getNamePostedData(#description#)}" cols="45" rows="6" value="{product.description:h}" />
   </td>
 </tr>

@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\View;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\ProductOptions\View;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class ProductsList extends \XLite\View\ItemsList\Product\Customer\ACustomer implements \XLite\Base\IDecorator
 {
@@ -44,7 +44,7 @@ abstract class ProductsList extends \XLite\View\ItemsList\Product\Customer\ACust
      *
      * @return boolean
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isShowAdd2Cart(\XLite\Model\Product $product)
     {

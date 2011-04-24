@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Double-linked list
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Collection extends \XLite\Base\SuperClass
 {
@@ -41,7 +41,7 @@ class Collection extends \XLite\Base\SuperClass
      *
      * @var   \XLite_Model_ListNode
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $head = null;
 
@@ -50,7 +50,7 @@ class Collection extends \XLite\Base\SuperClass
      *
      * @var   \XLite_Model_ListNode
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $tail = null;
 
@@ -63,7 +63,7 @@ class Collection extends \XLite\Base\SuperClass
      *
      * @return \XLite\Model\ListNode
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findByCallbackResult($method, array $args = array())
     {
@@ -83,7 +83,7 @@ class Collection extends \XLite\Base\SuperClass
      *
      * @return \XLite\Model\ListNode
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function findByKey($key)
     {
@@ -98,7 +98,7 @@ class Collection extends \XLite\Base\SuperClass
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function insertBefore($key, \Xlite\Model\ListNode $node)
     {
@@ -125,7 +125,7 @@ class Collection extends \XLite\Base\SuperClass
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function insertAfter($key, \Xlite\Model\ListNode $node)
     {
@@ -151,7 +151,7 @@ class Collection extends \XLite\Base\SuperClass
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function add(\Xlite\Model\ListNode $node)
     {
@@ -167,7 +167,7 @@ class Collection extends \XLite\Base\SuperClass
      *
      * @return \Xlite\Model\ListNode
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getHead()
     {
@@ -179,7 +179,7 @@ class Collection extends \XLite\Base\SuperClass
      *
      * @return \Xlite\Model\ListNode
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTail()
     {
@@ -192,7 +192,7 @@ class Collection extends \XLite\Base\SuperClass
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isInitialized()
     {

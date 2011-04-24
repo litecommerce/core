@@ -115,6 +115,7 @@ enabled = Off
 process_widgets = On
 xdebug_log_trace = Off
 eta = On
+show_messages_on_top = Off
 
 [recorder]
 record_queries = off
@@ -168,7 +169,7 @@ url = "https://www.litecommerce.com/marketplace/"
 ; Translation drive code - auto / gettext / db
 translation_driver = auto
 ; Use checkout throught SSL connection or not
-ssl_checkout = on
+ssl_checkout = off
 
 ; WARNING: Do not change the line below
 ; */ ?>

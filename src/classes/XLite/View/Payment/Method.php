@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Payment;
@@ -32,7 +32,7 @@ namespace XLite\View\Payment;
  * Payment method
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="admin.center", zone="admin")
  */
@@ -43,12 +43,11 @@ class Method extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
         $result[] = 'payment_method';
 
         return $result;
@@ -59,7 +58,7 @@ class Method extends \XLite\View\Dialog
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isVisible()
     {
@@ -73,7 +72,7 @@ class Method extends \XLite\View\Dialog
      * 
      * @return \XLite\Model\Payment\Metho
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getPaymentMethod()
     {
@@ -86,7 +85,7 @@ class Method extends \XLite\View\Dialog
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isWidgetSettings()
     {
@@ -102,7 +101,7 @@ class Method extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -116,10 +115,10 @@ class Method extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
-        return 'payment/method';
+        return 'payment' . LC_DS . 'method';
     }
 }

@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 require_once __DIR__ . '/ACustomer.php';
@@ -138,10 +138,9 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
     {
         $order = $this->buy();
 
-        $date = strftime(
-            \XLite\Core\Config::getInstance()->General->date_format . ', ' . \XLite\Core\Config::getInstance()->General->time_format,
-            $order->getDate()
-        );
+        $locale = setlocale(LC_ALL, 'C');
+
+        $date = \XLite\Core\Converter::formatTime($order->getDate());
 
         // Title
         $this->assertEquals(

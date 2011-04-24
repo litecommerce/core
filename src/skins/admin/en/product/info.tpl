@@ -8,18 +8,18 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 
 <p>{t(#Mandatory fields are marked with an asterisk#)} (<span class="star">*</span>).<br /><br />
 
 <widget class="XLite\View\Form\Product\Modify\Single" name="modify_form" />
 
-<table cellpadding="0">
+<table class="product-list">
 
 <tr>
-  <td style="width:30%;">&nbsp;</td>
-  <td>&nbsp;</td>
+  <td class="name-attribute">&nbsp;</td>
+  <td class="value-attribute">&nbsp;</td>
 </tr>
 
 {displayViewListContent(#product.modify.list#)}

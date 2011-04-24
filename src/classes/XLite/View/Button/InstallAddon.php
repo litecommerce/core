@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Button;
@@ -32,9 +32,9 @@ namespace XLite\View\Button;
  * Install addon popup button 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
-class InstallAddon extends \XLite\View\Button\APopupButton
+class InstallAddon extends \XLite\View\Button\PopupButton
 {
     /**
      * Button label
@@ -57,7 +57,7 @@ class InstallAddon extends \XLite\View\Button\APopupButton
      */
     public function getButtonContent() 
     {
-        return $this->t(self::INSTALL_ADDON_LABEL);
+        return self::INSTALL_ADDON_LABEL;
     }
 
     /** 
@@ -73,7 +73,7 @@ class InstallAddon extends \XLite\View\Button\APopupButton
             'target'    => \XLite\View\ModulesManager\ModuleLicense::MODULE_LICENSE_TARGET,
             'action'    => 'view',
             'widget'    => self::INSTALL_ADDON_WIDGET,
-            'module_id' => $this->getParam(self::PARAM_MODULEID),
+            'moduleId'  => $this->getParam(self::PARAM_MODULEID),
         );
     }
 
@@ -82,13 +82,13 @@ class InstallAddon extends \XLite\View\Button\APopupButton
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {   
         $list = parent::getCSSFiles();
         // TODO must be taken from LICENSE module widget!!!
-        $list[] = 'modules_manager' . LC_DS . 'license' . LC_DS . 'style.css';
+        $list[] = 'modules_manager/license/style.css';
 
         return $list;
     }   
@@ -99,14 +99,14 @@ class InstallAddon extends \XLite\View\Button\APopupButton
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {   
         $list = parent::getJSFiles();
 
-        // TODO must be taken from LICENSE module widget!!!
-        $list[] = 'modules_manager' . LC_DS . 'license' . LC_DS . 'js' . LC_DS . 'switch-button.js';
+        // TODO must be taken from LICENSE module widget
+        $list[] = 'modules_manager/license/js/switch-button.js';
 
         return $list;
     }   
@@ -117,7 +117,7 @@ class InstallAddon extends \XLite\View\Button\APopupButton
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineWidgetParams()
     {   

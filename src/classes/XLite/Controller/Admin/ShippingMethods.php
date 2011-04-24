@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Admin;
  * Shipping methods management page controller
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ShippingMethods extends \XLite\Controller\Admin\AAdmin
 {
@@ -41,7 +41,7 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getTitle()
     {
@@ -49,27 +49,11 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * handleRequest 
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function handleRequest()
-    {
-        parent::handleRequest();
-
-        if ('Y' != $this->config->Shipping->shipping_enabled) {
-            $this->redirect('admin.php?target=shipping_settings');
-        }
-    }
-
-    /**
      * Do action 'Add'
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function doActionAdd()
     {
@@ -77,7 +61,7 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
 
         $newMethod = new \XLite\Model\Shipping\Method();
 
-        $newMethod->setPosition($postedData['position']);
+        $newMethod->setPosition(intval($postedData['position']));
         $newMethod->setProcessor('offline');
 
         $code = $this->getCurrentLanguage();
@@ -94,7 +78,7 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function doActionUpdate()
     {
@@ -136,7 +120,7 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function doActionDelete()
     {
@@ -162,7 +146,7 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
      *  
      * @return \Doctrine\Common\Collections\ArrayCollection
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getClasses(\XLite\Model\Shipping\Method $method)
     {
@@ -193,7 +177,7 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {

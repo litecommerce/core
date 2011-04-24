@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 // Disable the time limit, otherwise some tests may fail due to PHP breaking the script
@@ -158,7 +158,7 @@ return;
      * 
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function openTestPage();
 
@@ -166,7 +166,7 @@ return;
      * Returns the number of all test products to be listed in a pager on the current test page
      * 
      * @return int
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function countAllTestProducts();
 
@@ -174,7 +174,7 @@ return;
      * Returns all test products to be listed in a pager on the current test page
      * 
      * @return mixed
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getAllTestProducts();
 
@@ -184,7 +184,7 @@ return;
      * 
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getListSelector()
     {
@@ -198,7 +198,7 @@ return;
      *  
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function testBasicStructure()
     {
@@ -278,7 +278,7 @@ return;
      * 
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function testProductsData()
     {
@@ -372,7 +372,7 @@ return;
      * 
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function testPager()
     {
@@ -494,7 +494,7 @@ return;
      * 
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function testDisplayModeSwitch()
     {
@@ -541,7 +541,7 @@ return;
      * 
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function testSorting()
     {
@@ -611,7 +611,7 @@ return;
      *  
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function testSortedProducts($field, $label, $mode, $ascOrder)
     {
@@ -659,7 +659,7 @@ return;
      *  
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function testPagerProducts($allProducts, $perPage, $page)
     {
@@ -701,7 +701,7 @@ return;
      *  
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function testListProductStructure($product)
     {
@@ -748,7 +748,7 @@ return;
      *  
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function testGridProductStructure($product)
     {
@@ -790,7 +790,7 @@ return;
      *  
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function testTableProductStructure($product)
     {
@@ -839,7 +839,7 @@ return;
      *  
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function testPagerStructure($total, $perPage, $selectedPage = 1)
     {
@@ -953,7 +953,7 @@ return;
      *  
      * @return array
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getListedProducts($mode)
     {
@@ -1018,7 +1018,7 @@ return;
      *  
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function configurePager($itemsPerPage, $showSelector = true)
     {
@@ -1052,7 +1052,7 @@ return;
      *  
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setDisplayMode($mode = 'list', $columns = null)
     {
@@ -1072,7 +1072,7 @@ return;
      * 
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDisplayMode()
     {
@@ -1084,7 +1084,7 @@ return;
      * 
      * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function waitForAjaxProgress()
     {
@@ -1110,7 +1110,7 @@ return;
      * @return boolean
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setVisible($part)
     {
@@ -1128,7 +1128,7 @@ return;
      * @return boolean
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setHidden($part)
     {

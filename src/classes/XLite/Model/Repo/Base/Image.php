@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo\Base;
@@ -32,7 +32,7 @@ namespace XLite\Model\Repo\Base;
  * Image abstract repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class Image extends \XLite\Model\Repo\ARepo
 {
@@ -41,7 +41,7 @@ abstract class Image extends \XLite\Model\Repo\ARepo
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract public function getStorageName();
 
@@ -50,7 +50,7 @@ abstract class Image extends \XLite\Model\Repo\ARepo
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFileSystemRoot()
     {
@@ -62,7 +62,7 @@ abstract class Image extends \XLite\Model\Repo\ARepo
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getWebRoot()
     {
@@ -76,7 +76,7 @@ abstract class Image extends \XLite\Model\Repo\ARepo
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFileSystemCacheRoot($sizeName)
     {
@@ -90,7 +90,7 @@ abstract class Image extends \XLite\Model\Repo\ARepo
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getWebCacheRoot($sizeName)
     {
@@ -102,7 +102,7 @@ abstract class Image extends \XLite\Model\Repo\ARepo
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isStoreRemoteImage()
     {
@@ -114,7 +114,7 @@ abstract class Image extends \XLite\Model\Repo\ARepo
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isCheckImage()
     {

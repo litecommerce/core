@@ -13,7 +13,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 class XLite_Tests_Model_Address extends XLite_Tests_TestCase
@@ -25,7 +25,7 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected $addressFields = array(
         'is_billing'   => 2,
@@ -46,7 +46,7 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testCreate()
     {
@@ -66,7 +66,7 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
 
         $address->setProfile($profile);
 
-        $this->assertTrue($address->getProfile() instanceof \XLite\Model\Profile, 'Profile checking');
+        $this->assertInstanceOf('\XLite\Model\Profile', $address->getProfile(), 'Profile checking');
     }
 
     public function testName()
@@ -191,7 +191,6 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
         $address2 = $address->cloneEntity();
 
         foreach ($this->addressFields as $field => $testValue) {
-            $setterMethod = 'set' . \XLite\Core\Converter::getInstance()->convertToCamelCase($field);
             $getterMethod = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($field);
             $value = $address2->$getterMethod();
             $this->assertEquals($testValue, $value, 'Cloning checking ('.$field.')');
@@ -207,7 +206,7 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetState()
     {
@@ -218,11 +217,11 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
         $address->setCountry(\XLite\Core\Database::getRepo('XLite\Model\Country')->find('US'));
         $address->setState(\XLite\Core\Database::getRepo('XLite\Model\State')->findOneByCountryAndCode('US', 'NY'));
 
-        $this->assertTrue($address->getState() instanceof \XLite\Model\State, 'State checking');
+        $this->assertInstanceOf('\XLite\Model\State', $address->getState(), 'State checking');
 
         $address->setState('Test state');
 
-        $this->assertEquals($address->getState() instanceof \XLite\Model\State, 'State checking #2');
+        $this->assertInstanceOf('\XLite\Model\State', $address->getState(), 'State checking #2');
         $this->assertEquals('Test state', $address->getState()->getState(), 'State name checking');
         $this->assertNull($address->getState()->getStateId(), 'State id checking');
 
@@ -230,9 +229,16 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
         $s->setState('Test state 2');
         $address->setState($s);
 
-        $this->assertEquals($address->getState() instanceof \XLite\Model\State, 'State checking #3');
+        $this->assertInstanceOf('\XLite\Model\State', $address->getState(), 'State checking #3');
         $this->assertEquals('Test state 2', $address->getState()->getState(), 'State name checking #3');
         $this->assertNull($address->getState()->getStateId(), 'State id checking #3');
+
+        $address->setCustomState('Test state 3');
+
+        $this->assertInstanceOf('\XLite\Model\State', $address->getState(), 'State checking #4');
+        $this->assertEquals('Test state 3', $address->getState()->getState(), 'State name checking #4');
+        $this->assertNull($address->getState()->getStateId(), 'State id checking #4');
+
     }
 
     /**
@@ -241,7 +247,7 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetCountry()
     {
@@ -251,7 +257,52 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
 
         $address->setCountry(\XLite\Core\Database::getRepo('XLite\Model\Country')->find('US'));
 
-        $this->assertTrue($address->getCountry() instanceof \XLite\Model\Country, 'Country checking');
+        $this->assertInstanceOf('\XLite\Model\Country', $address->getCountry(), 'Country checking');
+    }
+
+    /**
+     * testGetCountryCode 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testGetCountryCode()
+    {
+        $address = new \XLite\Model\Address();
+
+        $address->map($this->addressFields);
+
+        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find('US');
+
+        $address->setCountry($country);
+
+        $this->assertNotNull($address->getCountryCode(), 'Checking that getCountryCode() result is not null');
+        $this->assertEquals('US', $address->getCountryCode(), 'Checking that getCountryCode() result is alpha-2 code');
+        $this->assertEquals($country->getCode(), $address->getCountryCode(), 'Checking getCountryCode() result');
+    }
+
+    /**
+     * testGetStateId 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function testGetStateId()
+    {
+        $address = new \XLite\Model\Address();
+
+        $address->map($this->addressFields);
+        
+        $state = \XLite\Core\Database::getRepo('XLite\Model\State')->findOneByCountryAndCode('US', 'NY');
+
+        $address->setState($state);
+
+        $this->assertNotNull($address->getStateId(), 'Checking that getStateId() result is not null');
+        $this->assertEquals($state->getStateId(), $address->getStateId(), 'Checking getStateId() result');
     }
 
     /**
@@ -260,7 +311,7 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetAddressFields()
     {
@@ -270,4 +321,47 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
         $this->assertTrue(!empty($result), 'check that getAddressFields() returns non empty array');
     }
 
+    public function testCheckAddress()
+    {
+        // Prepare address and save it in database
+        $origAddress = new \XLite\Model\Address();
+
+        $origAddress->map($this->addressFields);
+
+        $origAddress->setState(\XLite\Core\Database::getRepo('XLite\Model\State')->findOneByCountryAndCode('US', 'NY'));
+        $origAddress->setCountry(\XLite\Core\Database::getRepo('XLite\Model\Country')->find('US'));
+        $origAddress->setProfile(\XLite\Core\Database::getRepo('XLite\Model\Profile')->find(1));
+
+        $address = $origAddress->cloneEntity();
+
+        $origAddress->create();
+
+        // Test: new address should not be created as it is identical
+        $this->assertFalse($address->create(), "Check that address is not created (all fields are identical)");
+
+        foreach(\XLite\Model\Address::getAddressFields() as $field) {
+    
+            $address = $origAddress->cloneEntity();
+
+            if ('state_id' == $field) {
+                $address->setState(\XLite\Core\Database::getRepo('XLite\Model\State')->findOneByCountryAndCode('US', 'CA'));
+
+            } elseif ('country_code' == $field) {
+                $address->setCountry(\XLite\Core\Database::getRepo('XLite\Model\Country')->find('GB'));
+
+            } elseif ('custom_state' != $field) {
+
+                $address->map($this->addressFields);
+
+                $methodName = 'set' . \XLite\Core\Converter::getInstance()->convertToCamelCase($field);
+                $this->assertTrue(method_exists($address, $methodName), "Check if method exists ($methodName)");
+
+                $modifiedField = $this->addressFields[$field] . '2';
+                $address->$methodName($modifiedField);
+            }
+
+            // Test: new address must be created as one of fields is modified
+            $this->assertTrue($address->create(), "Check if address is created ($field)");
+        }
+    }
 }

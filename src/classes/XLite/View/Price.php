@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,7 +32,7 @@ namespace XLite\View;
  * Product price
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Price extends \XLite\View\AView
 {
@@ -49,11 +49,11 @@ class Price extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isSalePriceEnabled()
     {
-        return $this->config->General->enable_sale_price
+        return \XLite\Core\Config::getInstance()->General->enable_sale_price
             && $this->getProduct()->getSalePrice() > $this->getProduct()->getListPrice();
     }
 
@@ -62,11 +62,11 @@ class Price extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isSaveEnabled()
     {
-        return ('N' !== $this->config->General->you_save) && (0 < $this->getSaveValuePercent());
+        return ('N' !== \XLite\Core\Config::getInstance()->General->you_save) && (0 < $this->getSaveValuePercent());
     }
 
     /**
@@ -74,7 +74,7 @@ class Price extends \XLite\View\AView
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSaveValueAbsolute()
     {
@@ -88,7 +88,7 @@ class Price extends \XLite\View\AView
      * 
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSaveValuePercent()
     {
@@ -102,7 +102,7 @@ class Price extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isDisplayOnlyPrice()
     {
@@ -115,7 +115,7 @@ class Price extends \XLite\View\AView
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -148,7 +148,7 @@ class Price extends \XLite\View\AView
      * 
      * @return \XLite\Model\Product
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProduct()
     {
@@ -160,7 +160,7 @@ class Price extends \XLite\View\AView
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

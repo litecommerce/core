@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\Validator;
@@ -32,7 +32,7 @@ namespace XLite\Core\Validator;
  * Abstract validator 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AValidator
 {
@@ -43,7 +43,7 @@ abstract class AValidator
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract public function validate($data);
 
@@ -54,7 +54,7 @@ abstract class AValidator
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function sanitize($data)
     {
@@ -70,7 +70,7 @@ abstract class AValidator
      *  
      * @return \XLite\Core\Validator\Exception
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function throwError($message, array $arguments = array(), $pathItem = null)
     {
@@ -91,7 +91,7 @@ abstract class AValidator
      *
      * @return \XLite\Core\ValidateException
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function throwInternalError($message, array $arguments = array())
     {

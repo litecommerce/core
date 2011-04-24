@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Admin;
@@ -33,7 +33,7 @@ namespace XLite\Controller\Admin;
  * FIXME: must be completely refactored
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Login extends \XLite\Controller\Admin\AAdmin
 {
@@ -42,7 +42,7 @@ class Login extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -66,7 +66,7 @@ class Login extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAccessLevel()
     {
@@ -78,14 +78,14 @@ class Login extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function init()
     {
         parent::init();
         
         if (empty(\XLite\Core\Request::getInstance()->login)) {
-            \XLite\Core\Request::getInstance()->login = $this->auth->remindLogin();
+            \XLite\Core\Request::getInstance()->login = \XLite\Core\Auth::getInstance()->remindLogin();
         }
     }
 
@@ -94,26 +94,33 @@ class Login extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionLogin()
     {
-        $profile = $this->auth->loginAdministrator(
+        $profile = \XLite\Core\Auth::getInstance()->loginAdministrator(
             \XLite\Core\Request::getInstance()->login,
             \XLite\Core\Request::getInstance()->password
         );
 
-        if (is_int($profile) && \XLite\Core\Auth::RESULT_ACCESS_DENIED === $profile) {
-
+        if (
+            is_int($profile) 
+            && \XLite\Core\Auth::RESULT_ACCESS_DENIED === $profile
+        ) {
             $this->set('valid', false);
+
             \XLite\Core\TopMessage::addError('Invalid login or password');
+
             $returnUrl = $this->buildUrl('login');
 
-        } elseif (isset($this->session->lastWorkingURL)) {
-            $returnURL = $this->xlite->session->get('lastWorkingURL');
-            $this->xlite->session->set('lastWorkingURL', null);
+        } elseif (isset(\XLite\Core\Session::getInstance()->lastWorkingURL)) {
+
+            $returnURL = \XLite\Core\Session::getInstance()->get('lastWorkingURL');
+
+            \XLite\Core\Session::getInstance()->set('lastWorkingURL', null);
 
         } else {
+
             $returnURL = $this->buildURL();
         }
 
@@ -125,22 +132,10 @@ class Login extends \XLite\Controller\Admin\AAdmin
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionLogoff()
     {
-        $this->auth->logoff();
-    }
-
-    /**
-     * Perform some actions before redirect
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function actionPostprocessLogin()
-    {
-        $this->updateMarketplaceDataCache();
+        \XLite\Core\Auth::getInstance()->logoff();
     }
 }

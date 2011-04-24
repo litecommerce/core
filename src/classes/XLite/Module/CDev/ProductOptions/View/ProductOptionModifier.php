@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace XLite\Module\CDev\ProductOptions\View;
@@ -33,7 +33,7 @@ namespace XLite\Module\CDev\ProductOptions\View;
  *
  * @package XLite
  * @see     ____class_see____
- * @since   3.0
+ * @since   1.0.0
  */
 class ProductOptionModifier extends \XLite\View\AView
 {
@@ -49,7 +49,7 @@ class ProductOptionModifier extends \XLite\View\AView
      *
      * @return string
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -82,7 +82,7 @@ class ProductOptionModifier extends \XLite\View\AView
      * 
      * @return boolean 
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
@@ -96,7 +96,7 @@ class ProductOptionModifier extends \XLite\View\AView
      * @return array
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getModifiers()
     {
@@ -111,7 +111,7 @@ class ProductOptionModifier extends \XLite\View\AView
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getModifierTemplate(\XLite\Module\CDev\ProductOptions\Model\OptionSurcharge $surcharge)
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Pager\Admin\Module;
@@ -32,7 +32,7 @@ namespace XLite\View\Pager\Admin\Module;
  * Pager for the orders search page
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Manage extends \XLite\View\Pager\Admin\Module\AModule
 {
@@ -41,10 +41,38 @@ class Manage extends \XLite\View\Pager\Admin\Module\AModule
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
         return false;
+    }
+
+    /**
+     * getItemsPerPageDefault
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getItemsPerPageDefault()
+    {
+        return 10000;
+    }
+
+    /**
+     * Define so called "request" parameters
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineRequestParams()
+    {
+        parent::defineRequestParams();
+
+        foreach (array_keys($this->requestParams, self::PARAM_ITEMS_PER_PAGE) as $key) {
+            unset($this->requestParams[$key]);
+        }
     }
 }

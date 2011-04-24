@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 class XLite_Tests_Model_Module extends XLite_Tests_Model_ModuleAbstract
@@ -131,17 +131,17 @@ class XLite_Tests_Model_Module extends XLite_Tests_Model_ModuleAbstract
         $this->assertFalse($module->isFree(), 'check if module is free');
     }
 
-    /*public function testGetPageURL()
+    public function testGetPageURL()
     {
         $module = $this->getTestModule();
-        $this->assertEquals(\XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL() . 'module/TestAuthor/TestModule', $module->getPageURL(), 'check module URL');
+        $this->assertEquals(\XLite\Core\Marketplace::getInstance()->getMarketplaceURL() . 'module/TestAuthor/TestModule', $module->getPageURL(), 'check module URL');
     }
 
     public function testGetAuthorPageURL()
     {
         $module = $this->getTestModule();
-        $this->assertEquals(\XLite\RemoteModel\Marketplace::getInstance()->getMarketplaceURL() . 'module/TestAuthor', $module->getAuthorPageURL(), 'check module author URL');
-    }*/
+        $this->assertEquals(\XLite\Core\Marketplace::getInstance()->getMarketplaceURL() . 'module/TestAuthor', $module->getAuthorPageURL(), 'check module author URL');
+    }
 
     public function testSetEnabled()
     {

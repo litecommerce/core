@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Repo;
@@ -32,8 +32,22 @@ namespace XLite\Model\Repo;
  * Module key repository
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class ModuleKey extends \XLite\Model\Repo\ARepo
 {
+    /**
+     * Alias
+     * 
+     * @param string $author Module author
+     * @param string $name   Module name
+     *  
+     * @return \XLite\Model\ModuleKey
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function findKey($author, $name)
+    {
+        return $this->findOneBy(compact('author', 'name'));
+    }
 }

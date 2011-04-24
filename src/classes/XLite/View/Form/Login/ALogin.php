@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Form\Login;
@@ -32,7 +32,7 @@ namespace XLite\View\Form\Login;
  * Abstract log-in form
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ALogin extends \XLite\View\Form\AForm
 {
@@ -41,7 +41,7 @@ abstract class ALogin extends \XLite\View\Form\AForm
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getSecuritySetting();
 
@@ -51,7 +51,7 @@ abstract class ALogin extends \XLite\View\Form\AForm
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormName()
     {
@@ -63,7 +63,7 @@ abstract class ALogin extends \XLite\View\Form\AForm
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTarget()
     {
@@ -75,7 +75,7 @@ abstract class ALogin extends \XLite\View\Form\AForm
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultAction()
     {
@@ -87,7 +87,7 @@ abstract class ALogin extends \XLite\View\Form\AForm
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultParams()
     {
@@ -106,7 +106,7 @@ abstract class ALogin extends \XLite\View\Form\AForm
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormAction()
     {

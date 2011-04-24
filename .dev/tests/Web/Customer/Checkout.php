@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 require_once __DIR__ . '/ACustomer.php';
@@ -163,7 +163,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         );
         $this->waitInlineProgress('#create_profile_email', 'duplicate email');
         $this->assertInputErrorPresent('#create_profile_email', 'check duplicate email error');
-        $this->assertJqueryPresent('p.username-verified:visible');
+        $this->assertJqueryPresent('p.username-verified:visible', 'username-verified note is visible');
 
         // Duplicate username
         $this->typeKeys(
@@ -179,7 +179,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         );
         $this->waitInlineProgress('#create_profile_username', 'duplicate username');
         $this->assertInputErrorPresent('#create_profile_username', 'profile username is duplicate');
-        $this->assertJqueryNotPresent('p.username-verified:visible');
+        $this->assertJqueryNotPresent('p.username-verified:visible', 'username-verified note is visible #2');
     }
 
     public function testShippingStep()
@@ -246,12 +246,12 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
             'check address-not-completed note hide'
         );
 
-        $this->assertJqueryPresent('.current .button-row button.disabled', 'check disabled main button');
+        $this->assertElementPresent('css=.current .button-row button.disabled', 'check disabled main button');
 
         // Select shipping method
         $this->toggleByJquery('ul.shipping-rates li input:eq(0)', true);
 
-        $this->assertJqueryPresent('.current .button-row button.disabled', 'check disabled main button #2');
+        $this->assertElementPresent('css=.current .button-row button.disabled', 'check disabled main button #2');
         $this->assertJqueryPresent('.current p.email-not-defined:visible', 'email-not-defined is visible');
 
         // Fill profile data
@@ -280,7 +280,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->fillShippingAddress();
 
         // Check payment method
-        $this->assertJqueryPresent('.current .button-row button.disabled', 'payment not selected - main button is disabled');
+        $this->assertElementPresent('css=.current .button-row button.disabled', 'payment not selected - main button is disabled');
 
         $this->assertJqueryNotPresent('ul.payments li input:checked', 'payment is not selected');
 
@@ -295,14 +295,14 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         // Fill billing address
 
         $this->toggleByJquery('#same_address', false);
-        $this->assertJqueryPresent('.current .button-row button.disabled', 'same addres disabled and address not loaded - main button is disabled');
+        $this->assertElementPresent('css=.current .button-row button.disabled', 'same address disabled and address not loaded - main button is disabled');
 
         $this->waitForLocalCondition(
             'jQuery("#billing_address_name").length > 0',
             10000,
             'check empty billing address form load'
         );
-        $this->assertJqueryNotPresent('.current .button-row button.disabled', 'same addres disabled amd address form loaded - main button is disabled');
+        $this->assertElementNotPresent('css=.current .button-row button.disabled', 'same address disabled and address form loaded - main button is enabled');
 
         $this->select(
             '//select[@id="billing_address_country"]',
@@ -383,16 +383,16 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         );
 
         // Check place button
-        $this->assertJqueryNotPresent('.current .button-row button.disabled', 'main button is enabled always');
-        $this->assertJqueryNotPresent('.current .non-agree', 'non-agree style is NOT applyed');
+        $this->assertElementNotPresent('css=.current .button-row button.disabled', 'main button is enabled always');
+        $this->assertElementNotPresent('css=.current .non-agree', 'non-agree style is NOT applyed');
 
         $this->click('css=.current .button-row button');
 
-        $this->assertJqueryPresent('.current .non-agree', 'non-agree style is applyed');
+        $this->assertElementPresent('css=.current .non-agree', 'non-agree style is applyed');
 
         $this->click('//input[@id="place_order_agree"]');
 
-        $this->assertJqueryPresent('.current .non-agree', 'non-agree style is applyed always');
+        $this->assertElementPresent('css=.current .non-agree', 'non-agree style is applyed always');
 
         // Checkout with Check payment method
         $this->click('css=.current .button-row button');
@@ -641,7 +641,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->waitInlineProgress('#create_profile_username', 'username');
         $this->assertInputErrorNotPresent('#create_profile_username', 'profile username is unique');
 
-        $this->assertJqueryPresent('p.username-verified:visible');
+        $this->assertJqueryPresent('p.username-verified:visible', 'username-verified note is visible (fill profile)');
     }
 
     protected function fillShippingAddress()

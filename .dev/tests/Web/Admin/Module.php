@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 require_once __DIR__ . '/AAdmin.php';
@@ -99,7 +99,7 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
     {
         $this->logIn();
 
-        $this->open('admin.php?target=addons_list');
+        $this->open('admin.php?target=addons_list_marketplace');
 
         $this->assertElementPresent(
             self::BUTTON_ENTER_LICENSE_KEY,

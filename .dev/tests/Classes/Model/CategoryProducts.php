@@ -13,7 +13,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 class XLite_Tests_Model_CategoryProducts extends XLite_Tests_TestCase
@@ -37,11 +37,11 @@ class XLite_Tests_Model_CategoryProducts extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testCreate()
     {
-        $this->query(file_get_contents(__DIR__ . '/Repo/sql/category/setup.sql'));
+        $this->doRestoreDb(__DIR__ . '/Repo/sql/category/setup.sql', false);
 
         $c = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneBy(array('cleanURL' => 'fruit'));
         $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneBy(array('sku' => '00007'));

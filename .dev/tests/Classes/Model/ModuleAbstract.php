@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 abstract class XLite_Tests_Model_ModuleAbstract extends XLite_Tests_TestCase
@@ -61,7 +61,7 @@ abstract class XLite_Tests_Model_ModuleAbstract extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setUp()
     {
@@ -71,8 +71,7 @@ abstract class XLite_Tests_Model_ModuleAbstract extends XLite_Tests_TestCase
         
         \XLite\Core\Database::getEM()->clear();
 
-        $this->query(file_get_contents(__DIR__ . '/Repo/sql/module/setup.sql'));
-        \XLite\Core\Database::getEM()->flush();
+        $this->doRestoreDb(__DIR__ . '/Repo/sql/module/setup.sql', false);
     }
 
     protected function getTestModule()

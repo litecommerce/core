@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Core\Pack;
@@ -32,7 +32,7 @@ namespace XLite\Core\Pack;
  * Module 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Module extends \XLite\Core\Pack\APack
 {
@@ -52,7 +52,7 @@ class Module extends \XLite\Core\Pack\APack
      * 
      * @var   \XLite\Model\Module
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $module;
 
@@ -65,7 +65,7 @@ class Module extends \XLite\Core\Pack\APack
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(\XLite\Model\Module $module)
     {
@@ -77,7 +77,7 @@ class Module extends \XLite\Core\Pack\APack
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getName()
     {
@@ -91,7 +91,7 @@ class Module extends \XLite\Core\Pack\APack
      *
      * @return \AppendIterator
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDirectoryIterator()
     {
@@ -109,7 +109,7 @@ class Module extends \XLite\Core\Pack\APack
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getMetadata()
     {
@@ -133,7 +133,7 @@ class Module extends \XLite\Core\Pack\APack
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDirs()
     {
@@ -145,7 +145,7 @@ class Module extends \XLite\Core\Pack\APack
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getClassDirs()
     {
@@ -157,7 +157,7 @@ class Module extends \XLite\Core\Pack\APack
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSkinDirs()
     {
@@ -187,7 +187,7 @@ class Module extends \XLite\Core\Pack\APack
      *
      * @return \RecursiveIteratorIterator
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDirectorySPLIterator($dir)
     {

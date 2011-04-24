@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View;
@@ -32,14 +32,13 @@ namespace XLite\View;
  * \XLite\View\Address 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Address extends \XLite\View\Dialog
 {
     /**
      * Widget parameter names
      */
-
     const PARAM_DISPLAY_MODE    = 'displayMode';
     const PARAM_ADDRESS         = 'address';
     const PARAM_DISPLAY_WRAPPER = 'displayWrapper';
@@ -47,7 +46,6 @@ class Address extends \XLite\View\Dialog
     /**
      * Allowed display modes
      */
-
     const DISPLAY_MODE_TEXT = 'text';
     const DISPLAY_MODE_FORM = 'form';
 
@@ -63,7 +61,7 @@ class Address extends \XLite\View\Dialog
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $schema = array(
         'title' => array(
@@ -124,13 +122,12 @@ class Address extends \XLite\View\Dialog
         */
     );
 
-
     /**
      * getSchemaFields 
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getSchemaFields()
     {
@@ -145,7 +142,7 @@ class Address extends \XLite\View\Dialog
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getFieldValue($fieldName, $processValue = false)
     {
@@ -183,7 +180,7 @@ class Address extends \XLite\View\Dialog
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProfileId()
     {
@@ -195,7 +192,7 @@ class Address extends \XLite\View\Dialog
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -214,24 +211,22 @@ class Address extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'address/style.css';
 
         return $list;
     }
-
 
     /**
      * Return title
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -243,7 +238,7 @@ class Address extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -279,7 +274,7 @@ class Address extends \XLite\View\Dialog
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {
@@ -291,7 +286,7 @@ class Address extends \XLite\View\Dialog
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function useBodyTemplate()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Model\Profile;
@@ -32,7 +32,7 @@ namespace XLite\View\Model\Profile;
  * \XLite\View\Model\Profile\Main 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class AdminMain extends \XLite\View\Model\AModel
 {
@@ -49,7 +49,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $summarySchema = array(
         'referer' => array(
@@ -84,7 +84,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $mainSchema = array(
         'login' => array( 
@@ -109,7 +109,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $accessSchema = array(
         'access_level' => array(
@@ -140,7 +140,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getRegisterMode()
     {
@@ -156,7 +156,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $params = array(), array $sections = array())
     {
@@ -170,7 +170,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isRegisterMode()
     {
@@ -184,7 +184,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProfileId($checkMode = true)
     {
@@ -197,7 +197,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * 
      * @return integer|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getRequestProfileId()
     {
@@ -209,7 +209,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isValid()
     {
@@ -221,7 +221,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -238,7 +238,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *  
      * @return mixed
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getDefaultFieldValue($name)
     {
@@ -282,7 +282,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *
      * @return \XLite\Model\Profile
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultModelObject()
     {
@@ -301,7 +301,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormClass()
     {
@@ -313,7 +313,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -325,7 +325,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormFieldsForSectionMain()
     {
@@ -346,7 +346,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormFieldsForSectionAccess()
     {
@@ -362,7 +362,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormFieldsForSectionSummary()
     {
@@ -376,7 +376,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setModelProperties(array $data)
     {
@@ -388,12 +388,39 @@ class AdminMain extends \XLite\View\Model\AModel
     }
 
     /**
+     * Prepare request data for mapping profile object
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareDataForMapping()
+    {
+        $data = parent::prepareDataForMapping();
+
+        if (isset($data['membership_id']) && 0 < intval($data['membership_id'])) {
+
+            $membership = \XLite\Core\Database::getRepo('XLite\Model\Membership')->find($data['membership_id']);
+
+            if (isset($membership)) {
+                $data['membership'] = $membership;
+            }
+        }
+
+        if (!isset($data['membership'])) {
+            $data['membership'] = null;
+        }
+
+        return $data;
+    }
+
+    /**
      * Check password and its confirmation
      * TODO: simplify
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkPassword()
     {
@@ -423,7 +450,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkProfileData()
     {
@@ -453,7 +480,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProfileMainSections()
     {
@@ -471,7 +498,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getErrorActionValidateInputMessage($login)
     {
@@ -484,7 +511,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessErrorActionValidateInput()
     {
@@ -498,7 +525,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessSuccessActionCreate()
     {
@@ -510,7 +537,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessSuccessActionUpdate()
     {
@@ -522,7 +549,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessSuccessActionModify()
     {
@@ -534,7 +561,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function postprocessSuccessActionDelete()
     {
@@ -546,7 +573,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performActionCreate()
     {
@@ -558,7 +585,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performActionUpdate()
     {
@@ -570,7 +597,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performActionDelete()
     {
@@ -582,7 +609,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function performActionValidateInput()
     {
@@ -596,7 +623,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSubmitButtonLabel()
     {
@@ -608,7 +635,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSubmitButtonStyle()
     {
@@ -620,7 +647,7 @@ class AdminMain extends \XLite\View\Model\AModel
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getFormButtons()
     {

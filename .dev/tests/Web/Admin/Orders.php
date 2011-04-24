@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 require_once __DIR__ . '/AAdmin.php';
@@ -57,7 +57,7 @@ class XLite_Web_Admin_Orders extends XLite_Web_Admin_AAdmin
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testLowInventory()
     {
@@ -81,7 +81,7 @@ class XLite_Web_Admin_Orders extends XLite_Web_Admin_AAdmin
         $this->assertJqueryPresent($warnIconSelector, 'check warning icon');
 
         // Check message
-        $this->mouseOver('//a[@id="status_warning_"' . $oid . ']');
+        $this->mouseOver('id=status_warning_' . $oid);
         $this->waitForLocalCondition(
             'jQuery("' . $popupMesgSelector . '").length > 0',
             2000,

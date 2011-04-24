@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Currency
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity
  * @Table (name="currencies")
@@ -44,7 +44,7 @@ class Currency extends \XLite\Model\Base\I18n
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Id
      * @Column (type="uinteger")
@@ -56,7 +56,7 @@ class Currency extends \XLite\Model\Base\I18n
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="fixedstring", length="3", unique=true)
      */
@@ -67,7 +67,7 @@ class Currency extends \XLite\Model\Base\I18n
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="string", length="16")
      */
@@ -78,7 +78,7 @@ class Currency extends \XLite\Model\Base\I18n
      * 
      * @var   integer
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @Column (type="integer")
      */
@@ -89,7 +89,7 @@ class Currency extends \XLite\Model\Base\I18n
      *
      * @var   \Doctrine\Common\Collections\Collection
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Order", mappedBy="currency")
      */
@@ -104,7 +104,7 @@ class Currency extends \XLite\Model\Base\I18n
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setCurrencyId($value)
     {
@@ -118,7 +118,7 @@ class Currency extends \XLite\Model\Base\I18n
      *  
      * @return float
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function roundValue($value)
     {
@@ -132,7 +132,7 @@ class Currency extends \XLite\Model\Base\I18n
      *  
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function roundValueAsInteger($value)
     {
@@ -146,7 +146,7 @@ class Currency extends \XLite\Model\Base\I18n
      *  
      * @return float
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function convertIntegerToFloat($value)
     {
@@ -160,7 +160,7 @@ class Currency extends \XLite\Model\Base\I18n
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function formatValue($value)
     {
@@ -174,7 +174,7 @@ class Currency extends \XLite\Model\Base\I18n
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function __construct(array $data = array())
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList\Product\Customer;
@@ -32,14 +32,13 @@ namespace XLite\View\ItemsList\Product\Customer;
  * ACustomer 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 {
     /**
      * Widget param names
      */
-
     const PARAM_WIDGET_TYPE  = 'widgetType';
     const PARAM_DISPLAY_MODE = 'displayMode';
     const PARAM_GRID_COLUMNS = 'gridColumns';
@@ -58,17 +57,15 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
     const PARAM_SIDEBAR_MAX_ITEMS = 'sidebarMaxItems';
 
-    /*
+    /**
      * Allowed widget types
      */
-
     const WIDGET_TYPE_SIDEBAR = 'sidebar';
     const WIDGET_TYPE_CENTER  = 'center';
 
     /**
      * Allowed display modes
      */
-
     const DISPLAY_MODE_LIST    = 'list';
     const DISPLAY_MODE_GRID    = 'grid';
     const DISPLAY_MODE_TABLE   = 'table';
@@ -77,20 +74,17 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * A special option meaning that a CSS layout is to be used
      */
-
     const DISPLAY_GRID_CSS_LAYOUT = 'css-defined';
 
     /**
      * Columns number range
      */
-
     const GRID_COLUMNS_MIN = 1;
     const GRID_COLUMNS_MAX = 5;
 
     /**
      * Template to use for sidebars
      */
-
     const TEMPLATE_SIDEBAR = 'common/sidebar_box.tpl';
 
 
@@ -99,7 +93,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $widgetTypes = array(
         self::WIDGET_TYPE_SIDEBAR  => 'Sidebar',
@@ -111,7 +105,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $displayModes = array(
         self::DISPLAY_MODE_GRID  => 'Grid',
@@ -125,7 +119,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
@@ -143,7 +137,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function setWidgetParams(array $params)
     {
@@ -161,7 +155,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
@@ -177,7 +171,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getJSFiles()
     {
@@ -193,7 +187,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getProductCellClass($product)
     {   
@@ -208,7 +202,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCommonFiles()
     {
@@ -224,11 +218,11 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
-        return 'Catalog';
+        return $this->t('Catalog');
     }
 
     /**
@@ -236,7 +230,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -302,7 +296,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function defineRequestParams()
     {
@@ -316,7 +310,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isSideBarBox()
     {
@@ -330,7 +324,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function checkSideBarParams(array $params)
     {
@@ -342,7 +336,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageBodyDir()
     {
@@ -354,7 +348,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isPagerVisible()
     {
@@ -368,7 +362,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isDisplayModeSelectorVisible()
     {
@@ -380,7 +374,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isSortBySelectorVisible()
     {
@@ -392,7 +386,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isHeaderVisible()
     {
@@ -405,7 +399,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDisplayMode()
     {
@@ -419,7 +413,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isDisplayModeSelected($displayMode)
     {
@@ -434,7 +428,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDisplayModeLinkClassName($displayMode)
     {
@@ -462,7 +456,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getProductRows()
     {
@@ -483,7 +477,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getGridColumnsRange()
     {
@@ -500,7 +494,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isCSSLayout()
     {
@@ -512,7 +506,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPageBodyFile()
     {
@@ -528,7 +522,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSidebarMaxItems()
     {
@@ -540,7 +534,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getSideBarData()
     {
@@ -555,7 +549,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *  
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAdditionalItemClass($i, $count)
     {
@@ -581,7 +575,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getGridItemWidth()
     {
@@ -593,7 +587,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isShowDescription()
     {
@@ -605,7 +599,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isShowThumbnails()
     {
@@ -618,7 +612,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isShowPrice()
     {
@@ -632,7 +626,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isShowAdd2Cart(\XLite\Model\Product $product)
     {
@@ -644,7 +638,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getIconWidth()
     {
@@ -656,7 +650,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getIconHeight()
     {
@@ -668,7 +662,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return integer 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getTableColumnsCount()
     {
@@ -680,7 +674,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isShowMoreLink()
     {
@@ -692,7 +686,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMoreLinkURL()
     {
@@ -704,7 +698,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getMoreLinkText()
     {
@@ -717,7 +711,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPopupCSS()
     {
@@ -735,7 +729,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getPopupJS()
     {
@@ -754,7 +748,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isProductAdded($product)
     {

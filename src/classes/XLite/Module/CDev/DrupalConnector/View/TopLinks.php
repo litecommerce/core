@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      3.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\View;
@@ -31,22 +31,106 @@ namespace XLite\Module\CDev\DrupalConnector\View;
 /**
  * 'Powered by' widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class TopLinks extends \XLite\View\TopLinks implements \XLite\Base\IDecorator
 {
     /**
-     * Check if storefront menu section visible in the top links
+     * Gathering Drupal return URL from request and save it in session 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function init()
+    {
+        parent::init();
+
+        $paramReturnURL = \XLite\Module\CDev\DrupalConnector\Drupal\Module::PARAM_DRUPAL_RETURN_URL;
+
+        // User come from Drupal - save return URL in session
+        if (\XLite\Core\Request::getInstance()->$paramReturnURL) {
+            \XLite\Core\Session::getInstance()->$paramReturnURL = \XLite\Core\Request::getInstance()->$paramReturnURL;
+        }
+    }
+
+
+    /**
+     * Disable storefront menu in top links
      *
      * @return boolean 
-     * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isStorefrontMenuVisible()
     {
         return false;                                     
+    }
+
+    /**
+     * Return Drupal frontend URL 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDrupalURL()
+    {
+        return \XLite\Core\Config::getInstance()->CDev->DrupalConnector->drupal_root_url;
+    }
+
+    /**
+     * Check if Drupal URL is stored in config variables
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function hasDrupalURL()
+    {
+        return isset(\XLite\Core\Config::getInstance()->CDev->DrupalConnector->drupal_root_url)
+            && !empty(\XLite\Core\Config::getInstance()->CDev->DrupalConnector->drupal_root_url);
+    }
+
+    /**
+     * Returns a Drupal return URL 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDrupalReturnURL()
+    {
+        return \XLite\Core\Session::getInstance()
+            ->{\XLite\Module\CDev\DrupalConnector\Drupal\Module::PARAM_DRUPAL_RETURN_URL};
+    }
+
+    /**
+     * Check if Drupal return URL is saved in session
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function hasDrupalReturnURL()
+    {
+        $paramReturnURL = \XLite\Module\CDev\DrupalConnector\Drupal\Module::PARAM_DRUPAL_RETURN_URL;
+        
+        return isset(\XLite\Core\Session::getInstance()->$paramReturnURL)
+            && !empty(\XLite\Core\Session::getInstance()->$paramReturnURL)
+            && !($this->hasDrupalURL() && \XLite\Core\Session::getInstance()->$paramReturnURL == $this->getDrupalURL());
+    }
+
+    /**
+     * check if Drupal menu is visible in top links 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isDrupalStorefrontLinkVisible()
+    {
+        return $this->hasDrupalURL() || $this->hasDrupalReturnURL();
     }
 }

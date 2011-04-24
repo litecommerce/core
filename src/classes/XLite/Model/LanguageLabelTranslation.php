@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model;
@@ -32,7 +32,7 @@ namespace XLite\Model;
  * Language label translations
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @Entity
  * @Table (name="language_label_translations",
@@ -49,9 +49,9 @@ class LanguageLabelTranslation extends \XLite\Model\Base\Translation
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      *
-     * @Column (type="string", length="65536")
+     * @Column (type="text")
      */
     protected $label;
 }

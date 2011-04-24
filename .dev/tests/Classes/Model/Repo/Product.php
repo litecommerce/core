@@ -13,7 +13,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 include_once dirname(__DIR__) . '/AProduct.php';
@@ -45,7 +45,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
      * @return \XLite\Core\CommonCell
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultCnd()
     {
@@ -71,7 +71,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
 	 * @return void
 	 * @access public
 	 * @see    ____func_see____
-	 * @since  3.0.0
+	 * @since  1.0.0
 	 */
 	public function testSearchAll()
 	{
@@ -91,7 +91,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testSearchBySubstring()
     {
@@ -150,7 +150,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testSearchInSingleCategory()
     {
@@ -175,7 +175,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testSearchItemsCount()
     {
@@ -195,7 +195,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testSearchDisabledItems()
     {
@@ -213,7 +213,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindByCleanUrlExists()
     {
@@ -230,7 +230,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindByCleanUrlNotExists()
     {

@@ -55,12 +55,11 @@ let g:pdv_cfg_CommentTail_Smarty = " *}"
 
 " PHP documentor tags
 let g:pdv_cfg_Category   = "LiteCommerce"
-let g:pdv_cfg_Package    = "XLite"
 let g:pdv_cfg_Author     = "Creative Development LLC <info@cdev.ru>"
 let g:pdv_cfg_Copyright  = "Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved"
 let g:pdv_cfg_License    = "http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)"
 let g:pdv_cfg_Version    = "GIT: $Id$"
-let g:pdv_cfg_Since      = "3.0.0"
+let g:pdv_cfg_Since      = "1.0.0"
 let g:pdv_cfg_Link       = "http://www.litecommerce.com/"
 
 let g:pdv_cfg_FileSee    = "____file_see____"

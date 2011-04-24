@@ -13,7 +13,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
@@ -24,14 +24,13 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function setUp()
     {
         parent::setUp();
 
-        $this->query(file_get_contents(__DIR__ . '/sql/category/setup.sql'));
-        \XLite\Core\Database::getEM()->flush();
+        $this->doRestoreDb(__DIR__ . '/sql/category/setup.sql', false);
     }
 
     /**
@@ -40,15 +39,14 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function tearDown()
     {
         parent::tearDown();
 
         // Not needed right now
-        // $this->query(file_get_contents(__DIR__ . '/sql/category/restore.sql'));
-        // \XLite\Core\Database::getEM()->flush();
+        // $this->doRestoreDb();
     }
 
     public function testDump()
@@ -62,7 +60,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @return \XLite\Model\Repo\Category
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getRepo()
     {
@@ -76,7 +74,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetRootCategoryId()
     {
@@ -93,7 +91,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetEnabledCondition()
     {
@@ -110,7 +108,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testCreateQueryBuilder()
     {
@@ -136,7 +134,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetCategory()
     {
@@ -167,7 +165,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetCategories()
     {
@@ -195,7 +193,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetSiblings()
     {
@@ -221,7 +219,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetSubcategories()
     {
@@ -250,7 +248,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetCategoryPath()
     {
@@ -286,7 +284,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testGetCategoryDepth()
     {
@@ -305,7 +303,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testFindAllByProductId()
     {
@@ -331,7 +329,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testInsert()
     {
@@ -365,7 +363,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testDeleteSubcategories()
     {
@@ -393,7 +391,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @return void
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function testAddSubTreeCondition()
     {

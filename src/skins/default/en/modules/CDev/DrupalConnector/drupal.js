@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 // FIXME - must be improved and synchronized with the "default" skin
@@ -204,10 +204,10 @@ jQuery(document).ready(
 /**
  * Prepare submit params for the forms having "GET" method
  * 
- * @param HTMLFormElement $form curretn form
+ * @param HTMLFormElement $form current form
  *  
  * @return void
- * @since  3.0.0
+ * @since  1.0.0
  */
 function drupalOnSubmitGetForm(form)
 {

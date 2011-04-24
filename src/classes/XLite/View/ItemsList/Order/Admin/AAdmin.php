@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\ItemsList\Order\Admin;
@@ -32,7 +32,7 @@ namespace XLite\View\ItemsList\Order\Admin;
  * AAdmin 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AAdmin extends \XLite\View\ItemsList\Order\AOrder
 {
@@ -41,7 +41,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\Order\AOrder
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getListName()
     {
@@ -53,7 +53,7 @@ abstract class AAdmin extends \XLite\View\ItemsList\Order\AOrder
      *
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {

@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 /*
@@ -169,7 +169,7 @@ foreach ($steps as $stepData) {
 
         // Prepare data for requirement notes displaying
         $label = $reqName . '_description';
-        $labeText = null;
+        $labelText = null;
         $funcname = 'get_' . $label;
 
         if (function_exists($funcname)) {

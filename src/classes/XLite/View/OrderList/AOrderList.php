@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\OrderList;
@@ -32,7 +32,7 @@ namespace XLite\View\OrderList;
  * Abstract order list
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 abstract class AOrderList extends \XLite\View\Dialog
 {
@@ -41,7 +41,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      * 
      * @var   array(\XLite\Model\Order)
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $orders = null;
 
@@ -50,42 +50,38 @@ abstract class AOrderList extends \XLite\View\Dialog
      * 
      * @var   string
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $widgetClass = '';
-
 
     /**
      * Get orders 
      * 
      * @return array(\XLite\Model\Order)
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract public function getOrders();
-
 
     /**
      * Get widget keys 
      * 
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     abstract protected function getWidgetKeys();
-
 
     /**
      * Register CSS files
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'order/list/list.css';
 
         return $list;
@@ -96,7 +92,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getClassIdentifier()
     {
@@ -108,7 +104,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getAJAXRequestParamsAsJSObject()
     {
@@ -131,13 +127,12 @@ abstract class AOrderList extends \XLite\View\Dialog
             . ' }';
     }
 
-
     /**
      * Return title
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getHead()
     {
@@ -149,7 +144,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDir()
     {
@@ -161,12 +156,11 @@ abstract class AOrderList extends \XLite\View\Dialog
      *
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function isVisible()
     {
-        return parent::isVisible()
-            && $this->getOrders();
+        return parent::isVisible() && $this->getOrders();
     }
 
     /**
@@ -174,7 +168,7 @@ abstract class AOrderList extends \XLite\View\Dialog
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getAJAXRequestParams()
     {

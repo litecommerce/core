@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * Orders list 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class OrderList extends \XLite\Controller\Customer\ACustomer
 {
@@ -41,7 +41,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * 
      * @var   array
      * @see   ____var_see____
-     * @since 3.0.0
+     * @since 1.0.0
      */
     protected $params = array('target');
 
@@ -51,7 +51,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function handleRequest()
     {
@@ -59,15 +59,16 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
 
         if (isset(\XLite\Core\Request::getInstance()->pageId)) {
 
-            $ordersSearch = $this->session->get('orders_search');
+            $ordersSearch = \XLite\Core\Session::getInstance()->orders_search;
 
             if (!is_array($ordersSearch)) {
+
                 $ordersSearch = \XLite\Model\Order::getDefaultSearchConditions();
             }
 
             $ordersSearch['pageId'] = intval(\XLite\Core\Request::getInstance()->pageId);
 
-            $this->session->set('orders_search', $ordersSearch);
+            \XLite\Core\Session::getInstance()->orders_search = $ordersSearch;
         }
     }
 
@@ -76,7 +77,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * 
      * @return boolean 
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function checkAccess()
     {
@@ -98,7 +99,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      *  
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function set($name, $value)
     {
@@ -120,7 +121,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * 
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getLocation()
     {
@@ -133,13 +134,14 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionSearch()
     {
-        $ordersSearch = $this->session->get('orders_search');
+        $ordersSearch = \XLite\Core\Session::getInstance()->orders_search;
 
         if (!is_array($ordersSearch)) {
+
             $ordersSearch = \XLite\Model\Order::getDefaultSearchConditions();
         }
 
@@ -148,12 +150,13 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
             $ordersSearch['order_id'] = intval(\XLite\Core\Request::getInstance()->order_id);
 
             if (0 == $ordersSearch['order_id']) {
+
                 $ordersSearch['order_id'] = '';
             }
-
         }
 
         if (isset(\XLite\Core\Request::getInstance()->status)) {
+
             $ordersSearch['status'] = \XLite\Core\Request::getInstance()->status;
         }
 
@@ -188,9 +191,7 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
             } elseif (0 == strlen(\XLite\Core\Request::getInstance()->startDate)) {
 
                 $ordersSearch['startDate'] = '';
-
             }
-
         }
 
         if (
@@ -206,9 +207,13 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
             );
 
         } elseif (isset(\XLite\Core\Request::getInstance()->endDate)) {
+
             $time = strtotime(\XLite\Core\Request::getInstance()->endDate);
 
-            if (false !== $time && -1 !== $time) {
+            if (
+                false !== $time 
+                && -1 !== $time
+            ) {
                 $ordersSearch['endDate'] = mktime(
                     23, 59, 59,
                     date('m', $time),
@@ -217,24 +222,27 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
                 );
                 
             } elseif (0 == strlen(\XLite\Core\Request::getInstance()->endDate)) {
+
                 $ordersSearch['endDate'] = '';
             }
-
         }
 
         if (\XLite\Core\Request::getInstance()->sortCriterion) {
+
             $ordersSearch['sortCriterion'] = \XLite\Core\Request::getInstance()->sortCriterion;
         }
 
         if (\XLite\Core\Request::getInstance()->sortOrder) {
+
             $ordersSearch['sortOrder'] = \XLite\Core\Request::getInstance()->sortOrder;
         }
 
         if (isset(\XLite\Core\Request::getInstance()->pageId)) {
+
             $ordersSearch['pageId'] = intval(\XLite\Core\Request::getInstance()->pageId);
         }
 
-        $this->session->set('orders_search', $ordersSearch);
+        \XLite\Core\Session::getInstance()->orders_search = $ordersSearch;
 
         $this->setReturnURL($this->buildURL('order_list'));
     }
@@ -244,11 +252,11 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionReset()
     {
-        $this->session->set('orders_search', \XLite\Model\Order::getDefaultSearchConditions());
+        \XLite\Core\Session::getInstance()->orders_search = \XLite\Model\Order::getDefaultSearchConditions();
 
         $this->setReturnURL($this->buildURL('order_list'));
     }

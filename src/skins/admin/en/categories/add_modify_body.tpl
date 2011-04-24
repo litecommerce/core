@@ -8,7 +8,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  *}
 
 <div class="right-panel">
@@ -63,7 +63,7 @@
     <tr>
       <td valign="top">Description</td>
       <td>&nbsp;</td>
-      <td><textarea name="description" cols="50" rows="10">{category.description}</textarea></td>
+      <td><widget class="\XLite\View\FormField\Textarea\Advanced" fieldName="description" cols="50" rows="10" value="{category.description}" /></td>
     </tr>
 
     <tr>
@@ -128,7 +128,11 @@
 
     <tr>
       <td colspan="3">
-        <widget class="\XLite\View\Button\Submit" label="{if:getRequestParamValue(#mode#)=#modify#}Update{else:}Create category{end:}" />
+        {if:getRequestParamValue(#mode#)=#modify#}
+          <widget class="\XLite\View\Button\Submit" label="Update" />
+        {else:}
+          <widget class="\XLite\View\Button\Submit" label="Create category" />
+        {end:}
       </td>
     </tr>
 

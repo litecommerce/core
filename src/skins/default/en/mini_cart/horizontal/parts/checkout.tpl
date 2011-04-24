@@ -8,9 +8,9 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
- * @since     3.0.0
+ * @since     1.0.0
  * @ListChild (list="minicart.horizontal.buttons", weight="10")
  *}
-<div class="cart-checkout" IF="!cart.isEmpty()">
+<div class="cart-checkout" IF="cart.checkCart()">
   <widget class="\XLite\View\Button\Link" label="Checkout" location="{buildURL(#checkout#)}" style="action" />
 </div>

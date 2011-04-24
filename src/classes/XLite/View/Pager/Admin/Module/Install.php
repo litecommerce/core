@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Pager\Admin\Module;
@@ -32,34 +32,36 @@ namespace XLite\View\Pager\Admin\Module;
  * Pager for the orders search page
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Install extends \XLite\View\Pager\Admin\Module\AModule
 {
-    /**
-     * Check if pages list is visible or not
+    /** 
+     * Register CSS files to include
      *
-     * @return boolean
+     * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    protected function isPagesListVisible()
-    {
-        return parent::isPagesListVisible()
-            && \XLite\View\ItemsList\Module\Install::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode;
-    }
+    public function getCSSFiles()
+    {   
+        $list = parent::getCSSFiles();
+
+        $list[] = 'items_list/module/install/pager/css/style.css';
+
+        return $list;
+    }   
 
     /**
-     * isItemsPerPageVisible
-     *
-     * @return boolean
+     * Return CSS classes to use in parent widget of pager
+     * 
+     * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    protected function isItemsPerPageVisible()
+    public function getCSSClasses()
     {
-        return parent::isItemsPerPageVisible()
-            && \XLite\View\ItemsList\Module\Install::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode;
+        return parent::getCSSClasses() . ' addons-pager';
     }
 
     /**
@@ -67,11 +69,36 @@ class Install extends \XLite\View\Pager\Admin\Module\AModule
      *
      * @return integer
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    protected function getItemsPerPage()
+    protected function getItemsPerPageDefault()
     {
-        return \XLite\View\ItemsList\Module\Install::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode ? 10 : 5;
+        return 5;
     }
 
+    /**
+     * Return widget default template
+     *
+     * :TODO: check if where is a more convinient way to get ItemsList dir
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'items_list' . LC_DS . 'module' . LC_DS . 'install' . LC_DS . 'pager' . LC_DS . 'body.tpl';
+    }
+
+    /**
+     * Do not show pager on bottom
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisibleBottom()
+    {
+        return false;
+    }
 }

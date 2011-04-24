@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Model\Payment\Processor;
@@ -32,7 +32,7 @@ namespace XLite\Model\Payment\Processor;
  * E-check
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class Check extends \XLite\Model\Payment\Processor\Offline
 {
@@ -41,7 +41,7 @@ class Check extends \XLite\Model\Payment\Processor\Offline
      *
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function getInputTemplate()
     {
@@ -53,11 +53,11 @@ class Check extends \XLite\Model\Payment\Processor\Offline
      * 
      * @return boolean
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public function isDisplayNumber()
     {
-        return $this->config->General->display_check_number;
+        return \XLite\Core\Config::getInstance()->General->display_check_number;
     }
 
 
@@ -66,7 +66,7 @@ class Check extends \XLite\Model\Payment\Processor\Offline
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getInputDataLabels()
     {
@@ -85,7 +85,7 @@ class Check extends \XLite\Model\Payment\Processor\Offline
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getInputDataAccessLevels()
     {

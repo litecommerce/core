@@ -23,7 +23,7 @@
  * @version    GIT: $Id$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
- * @since      3.0.0
+ * @since      1.0.0
  */
 
 namespace Includes\Decorator\Utils;
@@ -33,7 +33,7 @@ namespace Includes\Decorator\Utils;
  * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
+ * @since   1.0.0
  */
 abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
 {
@@ -60,7 +60,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $steps = array(
         self::STEP_FIRST,
@@ -74,7 +74,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @var    array
      * @access protected
      * @see    ____var_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static $cacheDirs = array(
         LC_COMPILE_DIR,
@@ -92,7 +92,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getPlainMessage()
     {
@@ -105,7 +105,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getHTMLMessageContent()
     {
@@ -120,7 +120,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getHTMLMessage()
     {
@@ -136,7 +136,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return null
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function showMessage()
     {
@@ -152,7 +152,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return null
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function cleanupRebuildIndicator()
     {
@@ -165,7 +165,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return null
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function cleanupCacheIndicators()
     {
@@ -184,7 +184,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function checkRebuildIndicatorState()
     {
@@ -205,7 +205,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function clear($step)
     {
@@ -220,7 +220,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getCacheStateIndicatorFileName($step)
     {
@@ -233,7 +233,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getRebuildIndicatorFileName()
     {
@@ -246,7 +246,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getCacheStateIndicatorFileContent()
     {
@@ -259,7 +259,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getRebuildIndicatorFileContent()
     {
@@ -272,7 +272,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return boolean
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function checkIfRebuildStarted()
     {
@@ -287,7 +287,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getCacheStateFiles()
     {
@@ -305,7 +305,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function startStep($step)
     {
@@ -328,7 +328,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function completeStep($step)
     {
@@ -353,7 +353,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function getStepCallback($step)
     {
@@ -368,7 +368,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return null
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function runStep($step)
     {
@@ -396,7 +396,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return null
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function runStepConditionally($step)
     {
@@ -417,7 +417,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return null
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function executeStepHandlerFirst()
     {
@@ -455,7 +455,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return null
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function executeStepHandlerSecond()
     {
@@ -472,7 +472,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return null
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function executeStepHandlerThird()
     {
@@ -489,7 +489,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return null
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function rebuildCache()
     {
@@ -504,7 +504,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getCurrentStep()
     {
@@ -519,7 +519,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return boolean
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function isRebuildNeeded($step = null)
     {
@@ -536,7 +536,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @return null
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected static function cleanupCache()
     {

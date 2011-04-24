@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\View\Console;
@@ -32,7 +32,7 @@ namespace XLite\View\Console;
  * DB-based widget
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  *
  * @ListChild (list="cli.center", zone="console")
  */
@@ -43,12 +43,17 @@ class Db extends \XLite\View\Console\AConsole
      *
      * @return array
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-        $result[] = 'backup_restore';
+        $result[] = 'db_backup';
+        $result[] = 'db_restore';
+        
+        if (LC_DEVELOPER_MODE) {
+            $result[] = 'pack_distr';
+        }
 
         return $result;
     }
@@ -59,7 +64,7 @@ class Db extends \XLite\View\Console\AConsole
      *
      * @return string
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getDefaultTemplate()
     {

@@ -23,7 +23,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @see       ____file_see____
- * @since     3.0.0
+ * @since     1.0.0
  */
 
 namespace XLite\Controller\Customer;
@@ -32,7 +32,7 @@ namespace XLite\Controller\Customer;
  * \XLite\Controller\Customer\AddressBook 
  * 
  * @see   ____class_see____
- * @since 3.0.0
+ * @since 1.0.0
  */
 class AddressBook extends \XLite\Controller\Customer\ACustomer
 {
@@ -41,7 +41,7 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
      * 
      * @return string|void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function getModelFormClass()
     {
@@ -53,7 +53,7 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
      *
      * @return void
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  1.0.0
      */
     protected function doActionUpdate()
     {
