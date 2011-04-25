@@ -43,7 +43,7 @@ abstract class AOrder extends \XLite\View\ItemsList\AItemsList
     const SORT_BY_MODE_ID      = 'o.order_id';
     const SORT_BY_MODE_STATUS  = 'o.status';
     const SORT_BY_MODE_DATE    = 'o.date';
-    const SORT_BY_MODE_PROFILE = 'o.profile_id';
+    const SORT_BY_MODE_PROFILE = 'p.login';
     const SORT_BY_MODE_TOTAL   = 'o.total';
 
 

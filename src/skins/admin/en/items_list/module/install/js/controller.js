@@ -1,7 +1,7 @@
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
- * Print styles
+ * ____file_title____
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,22 +10,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
-/*
- * Printable version
- */
-#location,
-#header,
-#footer
+
+ItemsList.prototype.listeners.popup = function(handler)
 {
-  display: none;
-}
-
-#content {
-  background-image: none;
-  padding: 0px;
-}
-
-/* Invoice-specific */
-.invoice-service {
-  display: none;
+  // TODO: REWORK to load it dynamically with POPUP button widget JS files
+  core.autoload(PopupButton);
 }

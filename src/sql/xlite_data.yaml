@@ -60,7 +60,7 @@ XLite\Model\Config:
   - { name: maximal_order_amount, category: General, type: text, orderby: 290, value: '99999', translations: [{ code: en, option_name: 'Maximum allowed order total', option_comment: '' }] }
   - { name: memberships, category: Memberships, type: serialized, value: 'a:0:{}', translations: [{ code: en, option_name: 'Membership levels', option_comment: '' }] }
   - { name: membershipsCollection, category: Memberships, type: serialized, value: 'a:3:{i:1;a:3:{s:7:"orderby";s:2:"10";s:10:"membership";s:4:"Gold";s:13:"membership_id";i:1;}i:2;a:3:{s:7:"orderby";s:2:"20";s:10:"membership";s:8:"Platinum";s:13:"membership_id";i:2;}i:3;a:3:{s:7:"orderby";s:2:"30";s:10:"membership";s:10:"Wholesaler";s:13:"membership_id";i:3;}}', translations: [{ code: en, option_name: 'Membership levels', option_comment: '' }] }
-  - { name: minimal_order_amount, category: General, type: text, orderby: 280, value: '10', translations: [{ code: en, option_name: 'Minimum allowed order total', option_comment: '' }] }
+  - { name: minimal_order_amount, category: General, type: text, orderby: 280, value: '0', translations: [{ code: en, option_name: 'Minimum allowed order total', option_comment: '' }] }
   - { name: operation_presentation, category: General, type: separator, orderby: 100, translations: [{ code: en, option_name: 'Maintenance and operation', option_comment: '' }] }
   - { name: orders_department, category: Company, type: text, orderby: 480, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Sales department e-mail', option_comment: '' }] }
   - { name: orders_per_page, category: General, type: text, orderby: 430, value: '30', translations: [{ code: en, option_name: 'Orders per page', option_comment: '' }] }
