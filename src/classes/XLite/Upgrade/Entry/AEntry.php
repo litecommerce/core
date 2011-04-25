@@ -15,7 +15,7 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -26,28 +26,14 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Button;
+namespace XLite\Upgrade\Entry;
 
 /**
- * Button to use with popup (with defined AUTOLOADing of JS object)
+ * AEntry 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class PopupButton extends \XLite\View\Button\APopupButton
+abstract class AEntry
 {
-    /** 
-     * Get a list of JavaScript files required to display the widget properly
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getJSFiles()
-    {   
-        $list = parent::getJSFiles();
-        $list[] = 'button' . LC_DS . 'js' . LC_DS . 'popup_button.js';
-
-        return $list;
-    }   
 }

@@ -72,7 +72,7 @@ abstract class AProcessor extends \XLite\Logic\ALogic
     }
 
     /**
-     * Check - process or is ready or not
+     * Check if process is ready or not
      * 
      * @return boolean
      * @see    ____func_see____
@@ -80,7 +80,7 @@ abstract class AProcessor extends \XLite\Logic\ALogic
      */
     protected function isReady()
     {
-        return (bool)$this->order;
+        return (bool) $this->order;
     }
 
     // {{{ Catalog displayed price calculation
@@ -109,9 +109,7 @@ abstract class AProcessor extends \XLite\Logic\ALogic
      */
     public function reverseProductPrice(\XLite\Model\Product $product, $amount = null)
     {
-        $amount = $amount ?: $product->getPrice();
-
-        return $amount;
+        return $amount ?: $product->getPrice();
     }
 
     /**
@@ -145,5 +143,4 @@ abstract class AProcessor extends \XLite\Logic\ALogic
     }
 
     // }}}
-
 }

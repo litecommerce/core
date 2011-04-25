@@ -182,7 +182,8 @@ abstract class PHARManager extends \Includes\Utils\AUtils
         $data = array();
 
         foreach ($iterator as $filePath => $fileInfo) {
-            $data[\Includes\Utils\FileManager::getRelativePath($filePath, LC_ROOT_DIR)] = md5_file($filePath);
+            $data[\Includes\Utils\FileManager::getRelativePath($filePath, LC_ROOT_DIR)] 
+                = \Includes\Utils\FileManager::getHash($filePath);
         }
 
         $phar->addFromString('.hash', json_encode($data));

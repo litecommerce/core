@@ -10,31 +10,23 @@
  *}
 
 <div class="upload-addons-text">
-{t(#If you have a plugin in a .phar format, you may install it by uploading it here.#)}
+{t(#If you have a plugin in a .tar format, you may install it by uploading it here.#)}
 </div>
 
 <div class="upload-addon-form">
 
 <form action="admin.php" method="post" name="uploadAddonsForm" enctype="multipart/form-data" onsubmit="javascript:this.submit();">
-  <input type="hidden" name="target" value="addon_upload" />
-  <input type="hidden" name="action" value="install" />
+  <input type="hidden" name="target" value="upgrade" />
+  <input type="hidden" name="action" value="upload_addon" />
 
   <div class="upload-area">
-    <input type="file" name="upload_addon[]" />
+    <input type="file" name="modulePack" />
   </div>
 
-  <a href="javascript:void(0);" class="add-more-upload-addons-images">{t(#Add one more add-on archive#)}</a>
-
   <div class="buttons">
-  <widget class="\XLite\View\Button\Submit" label="{t(#Install add-ons#)}" />
+  <widget class="\XLite\View\Button\Submit" label="{t(#Install add-on#)}" />
   </div>
 
 </form>
 
 </div>
-
-<script type="text/javascript">
-//<![CDATA[
-core.multiAdd('.upload-area', '.add-more-upload-addons-images', '<button type="button" class="remove">Remove</button>');
-//]]>
-</script>
