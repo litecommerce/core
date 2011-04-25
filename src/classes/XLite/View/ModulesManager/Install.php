@@ -78,6 +78,6 @@ class Install extends \XLite\View\ModulesManager\AModulesManager
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'install';
+        return parent::getDir() . '/install';
     }
 }
