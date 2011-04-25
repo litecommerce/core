@@ -100,7 +100,9 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     public function getCommonFiles()
     {
         $list = parent::getCommonFiles();
+
         $list['js'][] = 'js/ui.selectmenu.js';
+
         $list['css'][] = 'css/ui.selectmenu.css';
 
         return $list;
@@ -116,10 +118,27 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-        $list[] = 'modules_manager' . LC_DS . 'common.css';
-        // :FIXME: [AJAX_LOADED_RESOURCES]
-        $list[] = 'modules_manager' . LC_DS . 'enter_key' . LC_DS . 'css' . LC_DS . 'style.css';
-        $list[] = $this->getDir() . LC_DS . 'style.css';
+        $list[] = 'modules_manager/common.css';
+        // TODO fix with enter-key license widget. It should be taken dynamically from AJAX
+        $list[] = 'modules_manager/enter_key/css/style.css';
+        $list[] = $this->getDir() . '/style.css';
+
+        return $list;
+    }
+
+    /**
+     * Register JS files. TODO REWORK with Popup button widget
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = 'button/js/core.popup-button.js';
+        $list[] = $this->getDir() . '/' . $this->getPageBodyDir() . '/js/controller.js';
 
         return $list;
     }
@@ -133,7 +152,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
      */
     protected function getDefaultTemplate()
     {
-        return $this->getDir() . LC_DS . $this->getPageBodyDir() . LC_DS . 'items_list.tpl';
+        return $this->getDir() . '/' . $this->getPageBodyDir() . '/items_list.tpl';
     }
 
     /**
@@ -302,6 +321,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     protected function getSearchCondition()
     {
         $cnd = parent::getSearchCondition();
+
         $cnd->{\XLite\Model\Repo\Module::P_ORDER_BY}         = array($this->getSortBy(), $this->getSortOrder());
         $cnd->{\XLite\Model\Repo\Module::P_PRICE_FILTER}     = $this->getParam(self::PARAM_PRICE_FILTER);
         $cnd->{\XLite\Model\Repo\Module::P_SUBSTRING}        = $this->getParam(self::PARAM_SUBSTRING);

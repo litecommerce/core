@@ -223,7 +223,9 @@ ItemsList.prototype.loadHandler = function(xhr, s)
   var processed = false;
 
   if (xhr.status == 200 && xhr.responseText) {
+
     var div = document.createElement('div');
+
     jQuery(div).html(jQuery('.items-list.sessioncell-' + this.cell, xhr.responseText));
 
     this.container.replaceWith(div);
