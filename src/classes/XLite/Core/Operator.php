@@ -423,6 +423,4 @@ class Operator extends \XLite\Base\Singleton
     {
         return '# <' . '?php if (!defined(\'LC_DS\')) { die(); } ?' . '>' . PHP_EOL . PHP_EOL;
     }
-
 }
-
