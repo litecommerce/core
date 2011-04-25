@@ -168,8 +168,6 @@ url = "https://www.litecommerce.com/marketplace/"
 [other]
 ; Translation drive code - auto / gettext / db
 translation_driver = db
-; Use checkout throught SSL connection or not
-ssl_checkout = off
 
 ; WARNING: Do not change the line below
 ; */ ?>
