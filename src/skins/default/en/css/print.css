@@ -24,7 +24,10 @@
 #header-bar,
 #header,
 #breadcrumb,
-.order-success-box .buttons-row
+.order-success-box .buttons-row,
+#footer-area,
+#header-area,
+.order-success-panel
 {
   display: none;
 }

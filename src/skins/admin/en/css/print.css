@@ -10,5 +10,22 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  */
+/*
+ * Printable version
+ */
+#location,
+#header,
+#footer
+{
+  display: none;
+}
 
+#content {
+  background-image: none;
+  padding: 0px;
+}
 
+/* Invoice-specific */
+.invoice-service {
+  display: none;
+}
