@@ -12,7 +12,7 @@
  *}
 <widget template="order/invoice/page.tpl" />
 
-<br />
+<div class="invoice-service">
 <a href="admin.php?target=order&mode=invoice&order_id={order.order_id}" target="_blank"><input type="image" src="images/go.gif" width="13" height="13" align="absmiddle" /> Print invoice</a></b>
 <br />
 <br />
@@ -50,3 +50,5 @@
 </tr>
 </table>
 </form>
+
+</div>
