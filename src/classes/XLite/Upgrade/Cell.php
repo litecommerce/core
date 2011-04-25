@@ -26,67 +26,24 @@
  * @since     1.0.0
  */
 
-namespace XLite\Controller\Admin\Base;
+namespace XLite\Upgrade;
 
 /**
- * AddonInstall 
+ * Cell 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class AddonInstall extends \XLite\Controller\Admin\Base\PackManager
+class Cell extends \XLite\Base\Singleton
 {
-    // {{{ Package source
-
     /**
-     * Method to get package source (data)
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    abstract protected function getPackage();
-
-    // }}}
-
-    // {{{ Action handlers
-
-    /**
-     * Save, unpack and install module
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionInstall()
-    {
-        // Extract files to a temporary directory
-        $dir = $this->unpack($this->getPackage());
-
-        if ($dir) {
-
-            // Backup files if exist
-            // ...
-
-            $this->deploy($dir);
-
-        } elseif ($this->getPackingError()) {
-            \XLite\Core\TopMessage::getInstance()->addError($this->getPackingError());
-        }
-
-        $this->setReturnURL($this->buildURL('addons_list_marketplace'));
-    }
-
-    /**
-     * Deploy pack
+     * Protected constructor
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function deploy()
+    protected function __construct()
     {
     }
-
-    // }}}
 }

@@ -34,7 +34,7 @@ namespace XLite\Controller\Admin;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
+class AddonInstall extends \XLite\Controller\Admin\AAdmin
 {
     // {{{ Public methods for viewers
 
@@ -157,7 +157,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getPackage()
+/*    protected function getPackage()
     {
         $result = null;
         $module = $this->getModule();
@@ -189,10 +189,10 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doActionInstall()
+/*    protected function doActionInstall()
     {
         parent::doActionInstall();
-    }
+    }*/
 
     // }}}
 }

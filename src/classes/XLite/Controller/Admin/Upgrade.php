@@ -248,15 +248,44 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
     // {{{ Action handlers
 
     /**
-     * Main controller action: perform update
+     * Install add-on from marketplace
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionInstallAddon()
+    {
+        $moduleId = \XLite\Core\Request::getInstance()->moduleId;
+        $module   = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($moduleId);
+
+        if ($module) {
+            \XLite\Upgrade\Cell::getInstance()->addMarketplaceModule($module);
+        } else {
+            \XLite\Core\TopMessage::getInstance()->addError('Invalid module ID passed - "' . $moduleId . '"');
+        }
+
+        die;
+    }
+
+    /**
+     * Install uploaded add-on
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doActionInstall()
+    protected function doActionUploadAddon()
     {
-        // :TODO: update core and/or modules
+        $path = \Includes\Utils\FileManager::moveUploadedFile(\XLite\Core\Request::getInstance()->modulePack);
+
+        if ($path) {
+            \XLite\Upgrade\Cell::getInstance()->addUploadedModule($path);
+        } else {
+            \XLite\Core\TopMessage::getInstance()->addError('Unable to upload module');
+        }
+
+        die;
     }
 
     // }}}

@@ -34,7 +34,7 @@ namespace XLite\Controller\Admin;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class AddonUpload extends \XLite\Controller\Admin\Base\AddonInstall
+class AddonUpload extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Controller title
@@ -47,36 +47,4 @@ class AddonUpload extends \XLite\Controller\Admin\Base\AddonInstall
     {
         return 'Upload add-on';
     }
-
-    // {{{ Get package source as string
-
-    /**
-     * Method to get package source (data)
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getPackage()
-    {
-        var_dump($_FILES);die;
-    }
-
-    // }}}
-
-    // {{{ Action handlers
-
-    /**
-     * Save, unpack and install module
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionInstall()
-    {
-        parent::doActionInstall();
-    }
-
-    // }}}
 }
