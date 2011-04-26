@@ -55,7 +55,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return $this->t('Edit profile');
+        return \XLite\Core\Request::getInstance()->widget ? $this->t('Address details') : $this->t('Edit profile');
     }
 
     /**
