@@ -46,7 +46,7 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
     protected $coreVersions;
 
 
-    // {{{ Controller common methods
+    // {{{ Cache management
 
     /**
      * Initialize controller
@@ -64,6 +64,22 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
     }
 
     /**
+     * Return so called "short" TTL
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCacheTTL()
+    {
+        return \XLite\Core\Marketplace::TTL_SHORT;
+    }
+
+    // }}}
+
+    // {{{ Methods for viewers
+
+    /**
      * Return the current page title (for the content area)
      *
      * @return string
@@ -72,11 +88,44 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
      */
     public function getTitle()
     {
-        $version = $this->getCoreMajorVersionForUpdate();
+        if ($this->isCoreSelection()) {
+            $result = 'Upgrade core';
 
-        return \XLite::getInstance()->checkVersion($version, '<')
-            ? 'Upgrade to version ' . $version
-            : 'Updates for your version (' . $version . ')';
+        } else {
+            $version = $this->getCoreMajorVersionForUpdate();
+
+            if (\XLite::getInstance()->checkVersion($version, '<')) {
+                $result = 'Upgrade to version ' . $version;
+            } else {
+                $result = 'Updates for your version (' . $version . ')';
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Check if core major version is equal to the current one
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isUpgrade()
+    {
+        return 'install_updates' !== \XLite\Core\Request::getInstance()->mode;
+    }
+
+    /**
+     * Check if current page is the core version selection dialog
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isCoreSelection()
+    {
+        return 'select_core_version' === \XLite\Core\Request::getInstance()->mode;
     }
 
     /**
@@ -93,7 +142,149 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
 
     // }}}
 
+    // {{{ Versions
+
+    /**
+     * Get list of available kernel versions from the marketplace
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getAvailableCoreVersions()
+    {
+        if (!isset($this->coreVersions)) {
+            $this->coreVersions = (array) \XLite\Core\Marketplace::getInstance()->getCoreVersions($this->getCacheTTL());
+        }
+
+        return $this->coreVersions;
+    }
+
+    /**
+     * Check if we can upgrade to the version
+     * 
+     * @param string $version Version to check
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isCoreVersionAvailable($version)
+    {
+        $result = isset($version);
+
+        if ($result) {
+            $list   = $this->getAvailableCoreVersions();
+            $result = isset($list[$version]);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Return major version of core to update/upgrade
+     *
+     * :TODO: remove if not used
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCoreMajorVersionForUpdate()
+    {
+        $version = \XLite\Core\Request::getInstance()->version;
+
+        return $this->isCoreVersionAvailable($version) ? $version : \XLite::getInstance()->getMajorVersion();
+    }
+
+    // }}}
+
+    // {{{ Action handlers
+
+    /**
+     * Install add-on from marketplace
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionInstallAddon()
+    {
+        $moduleId = \XLite\Core\Request::getInstance()->moduleId;
+        $module   = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($moduleId);
+
+        if ($module) {
+
+            if ($module->getMarketplaceID()) {
+                \XLite\Upgrade\Cell::getInstance()->addMarketplaceModule($module);
+            } else {
+                \XLite\Core\TopMessage::getInstance()->addError('Trying to install non-marketplace module');
+            }
+
+        } else {
+            \XLite\Core\TopMessage::getInstance()->addError('Invalid module ID passed - "' . $moduleId . '"');
+        }
+    }
+
+    /**
+     * Install uploaded add-on
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionUploadAddon()
+    {
+        $path = \Includes\Utils\FileManager::moveUploadedFile('modulePack');
+
+        if ($path) {
+            \XLite\Upgrade\Cell::getInstance()->addUploadedModule($path);
+        } else {
+            \XLite\Core\TopMessage::getInstance()->addError('Unable to upload module');
+        }
+    }
+
+    // }}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // {{{ Methods for viewers
+
+    /**
+     * List of cores recieved from marketplace (cache)
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+//    protected $coreVersions;
 
     /**
      * Check if core major version 
@@ -102,7 +293,7 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isUpgrade()
+/*    public function isUpgrade()
     {
         return 'install_updates' !== \XLite\Core\Request::getInstance()->mode;
     }
@@ -114,7 +305,7 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getCoreMajorVersionForUpdate()
+/*    public function getCoreMajorVersionForUpdate()
     {
         $result = \XLite\Core\Request::getInstance()->version;
 
@@ -139,7 +330,7 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getCoreMinorVersionForUpdate()
+/*    public function getCoreMinorVersionForUpdate()
     {
         $result = null;
 
@@ -166,7 +357,7 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getModulesForUpdate()
+/*    public function getModulesForUpdate()
     {
         $result = array();
 
@@ -189,7 +380,7 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getModuleInstalled(\XLite\Model\Module $module)
+/*    public function getModuleInstalled(\XLite\Model\Module $module)
     {
         return $module->getRepository()->getModuleInstalled($module);
     }
@@ -203,7 +394,7 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getModuleForUpdate(\XLite\Model\Module $module)
+/*    public function getModuleForUpdate(\XLite\Model\Module $module)
     {
         $version = $this->getCoreMajorVersionForUpdate();
         $method  = \XLite::getInstance()->checkVersion($version, '<') ? 'getModuleForUpgrade' : 'getModuleForUpdate';
@@ -222,7 +413,7 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getAvailableCoreVersions()
+/*    public function getAvailableCoreVersions()
     {
         if (!isset($this->coreVersions)) {
             $this->coreVersions = (array) \XLite\Core\Marketplace::getInstance()->getCoreVersions($this->getCacheTTL());
@@ -238,7 +429,7 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getCacheTTL()
+/*    protected function getCacheTTL()
     {
         return \XLite\Core\Marketplace::TTL_SHORT;
     }
@@ -254,18 +445,24 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doActionInstallAddon()
+/*    protected function doActionInstallAddon()
     {
         $moduleId = \XLite\Core\Request::getInstance()->moduleId;
         $module   = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($moduleId);
 
         if ($module) {
-            \XLite\Upgrade\Cell::getInstance()->addMarketplaceModule($module);
+
+            if ($module->getMarketplaceID()) {
+                \XLite\Upgrade\Cell::getInstance()->addMarketplaceModule($module);
+            } else {
+                \XLite\Core\TopMessage::getInstance()->addError('Trying to install non-marketplace module');
+            }
+
         } else {
             \XLite\Core\TopMessage::getInstance()->addError('Invalid module ID passed - "' . $moduleId . '"');
         }
 
-        die;
+        var_dump(\XLite\Upgrade\Cell::getInstance());die;
     }
 
     /**
@@ -275,9 +472,9 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doActionUploadAddon()
+/*    protected function doActionUploadAddon()
     {
-        $path = \Includes\Utils\FileManager::moveUploadedFile(\XLite\Core\Request::getInstance()->modulePack);
+        $path = \Includes\Utils\FileManager::moveUploadedFile('modulePack');
 
         if ($path) {
             \XLite\Upgrade\Cell::getInstance()->addUploadedModule($path);
@@ -285,8 +482,8 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
             \XLite\Core\TopMessage::getInstance()->addError('Unable to upload module');
         }
 
-        die;
-    }
+        var_dump(\XLite\Upgrade\Cell::getInstance());die;
+    }*/
 
     // }}}
 }

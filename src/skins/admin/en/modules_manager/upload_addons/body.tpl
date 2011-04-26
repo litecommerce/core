@@ -15,7 +15,7 @@
 
 <div class="upload-addon-form">
 
-<form action="admin.php" method="post" name="uploadAddonsForm" enctype="multipart/form-data" onsubmit="javascript:this.submit();">
+<form action="admin.php" method="post" name="uploadAddonsForm" enctype="multipart/form-data">
   <input type="hidden" name="target" value="upgrade" />
   <input type="hidden" name="action" value="upload_addon" />
 
