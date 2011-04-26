@@ -77,6 +77,7 @@ class SwitchButton extends \XLite\View\Button\AButton
     public function getJSFiles()
     {   
         $list = parent::getJSFiles();
+
         $list[] = self::JS_SCRIPT;
 
         return $list;
@@ -92,6 +93,7 @@ class SwitchButton extends \XLite\View\Button\AButton
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
+
         $list[] = self::SWITCH_CSS_FILE;
 
         return $list;

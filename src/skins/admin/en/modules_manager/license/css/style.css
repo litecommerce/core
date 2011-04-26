@@ -51,11 +51,6 @@
 
 
 /* It has been moved to Button\SwitchButton */
-img.switch-button {
-  background: transparent url(../images/switch-button.png) 0 0 no-repeat;
-  width: 23px;
-  height: 31px;
-}
 
 .license-block table td.switch-button {
   vertical-align: bottom;
