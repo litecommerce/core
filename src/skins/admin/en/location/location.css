@@ -16,7 +16,7 @@ div#location {
 }
 
 li.location-node {
-  display: inline;
+  float: left;
 }
 
 div.location-node {
@@ -35,12 +35,10 @@ div.location-node.expandable {
 
 ul.location-subnodes {
   position: absolute;
-  margin-top: 14px;
-  margin-left: -7px;
+  margin-left: 7px;
   list-style-type: none;
   background-color: #fff;
   z-index: 10000;
-  display: inline;
   visibility: hidden;
   padding: 10px;
   padding-top: 5px;
