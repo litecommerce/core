@@ -243,7 +243,9 @@ abstract class ErrorHandler
      */
     public static function handleError(array $error)
     {
-        !LC_DEVELOPER_MODE ?: \Includes\Decorator\Utils\CacheManager::checkRebuildIndicatorState();
+        if (LC_DEVELOPER_MODE) {
+            \Includes\Decorator\Utils\CacheManager::checkRebuildIndicatorState();
+        }
 
         if (isset($error['type']) && E_ERROR == $error['type']) {
             static::logInfo($error['message'], $error['type']);

@@ -392,10 +392,24 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function sendRequestToMarkeplace($action, array $data = array())
     {
+        $result = null;
+
         // Prepare for request
         $this->clearError();
 
-        return $this->prepareResponse($this->getRequest($action, $data)->sendRequest(), $action);
+        // Run bouncer
+        $response = $this->getRequest($action, $data)->sendRequest();
+
+        if ($response) {
+            $result = $this->prepareResponse($response, $action);
+        } else {
+            $this->setError(-1, 'Bouncer general error, see the log');
+        }
+
+        // For developer mode only
+        $this->showDeveloperTopMessage($action);
+
+        return $result;
     }
 
     /**
@@ -488,9 +502,6 @@ class Marketplace extends \XLite\Base\Singleton
             // We can modify marketplace API instead
             $result = $this->$method($result);
         }
-
-        // For developer mode only
-        $this->showDeveloperTopMessage($action);
 
         return $result;
     }

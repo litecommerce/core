@@ -66,8 +66,8 @@ class Top extends \XLite\View\Menu\AMenu
                 'label'  => $this->t('Home'),
             ),
             array(
-                'target' => 'register',
-                'url'    => $this->buildURL('register'),
+                'target' => 'profile',
+                'url'    => $this->buildURL('profile', '', array('mode' => 'register')),
                 'label'  => $this->t('Register'),
             ),
         );

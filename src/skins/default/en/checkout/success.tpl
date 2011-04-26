@@ -11,14 +11,17 @@
  * @since     1.0.0
  *}
 <div class="order-success-box">
-  <p><widget template="checkout/success_message.tpl" /></p>
-  <div class="buttons-row">
-    <widget class="\XLite\View\Button\Link" label="Continue shopping" location="{getContinueURL()}" />
-    &nbsp;&nbsp;
-    <widget class="\XLite\View\Button\Link" label="Print invoice" location="#" jsCode="window.print(); return false;" />
-  </div>
+  <div class="order-success-panel">
+    <p><widget template="checkout/success_message.tpl" /></p>
+    <div class="buttons-row">
+      <widget class="\XLite\View\Button\Link" label="Continue shopping" location="{getContinueURL()}" />
+      &nbsp;&nbsp;
+      <widget class="\XLite\View\Button\Link" label="Print invoice" location="#" jsCode="window.print(); return false;" />
+    </div>
 
-  <hr class="tiny" />
+    <hr class="tiny" />
+
+  </div>
 
   <widget class="\XLite\View\Invoice" order="{getOrder()}" />
 </div>

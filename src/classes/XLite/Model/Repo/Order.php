@@ -130,7 +130,9 @@ class Order extends \XLite\Model\Repo\ARepo
      */
     public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        $queryBuilder = $this->createQueryBuilder();
+        $queryBuilder = $this->createQueryBuilder()
+            ->innerJoin('o.profile', 'p')
+            ->leftJoin('o.orig_profile', 'op');
         $this->currentSearchCnd = $cnd;
 
         foreach ($this->currentSearchCnd as $key => $value) {
@@ -217,8 +219,8 @@ class Order extends \XLite\Model\Repo\ARepo
     protected function prepareCndProfile(\Doctrine\ORM\QueryBuilder $queryBuilder, \XLite\Model\Profile $value)
     {
         if (!empty($value)) {
-            $queryBuilder->andWhere('o.orig_profile = :orig_profile')
-                ->setParameter('orig_profile', $value);
+            $queryBuilder->andWhere('op.profile_id = :opid')
+                ->setParameter('opid', $value->getProfileId());
         }
     }
 
@@ -254,8 +256,7 @@ class Order extends \XLite\Model\Repo\ARepo
     protected function prepareCndEmail(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if (!empty($value)) {
-            $queryBuilder->innerJoin('o.profile', 'p')
-                ->andWhere('p.login = :email')
+            $queryBuilder->andWhere('p.login = :email')
                 ->setParameter('email', $value);
         }
     }
