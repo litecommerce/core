@@ -47,7 +47,9 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
      */
     public function getTitle()
     {
-        return ($module = $this->getModule()) ? ($module->getModuleName() . ' license agreement') : null;
+        return ($module = $this->getModule()) 
+            ? ($module->getModuleName() . ' license agreement') 
+            : null;
     }
 
     /**
@@ -60,6 +62,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
     public function getLicense()
     {
         $result = null;
+
         $marketplaceID = $this->getModule()->getMarketplaceID();
 
         if (!empty($marketplaceID)) {
@@ -67,9 +70,11 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
             $info = \XLite\Core\Marketplace::getInstance()->getAddonInfo($marketplaceID);
 
             if ($info) {
+
                 $result = $info[\XLite\Core\Marketplace::RESPONSE_FIELD_MODULE_LICENSE];
 
             } else {
+
                 \XLite\Core\Marketplace::getInstance()->setErrorTopMessage();
             }
 
@@ -80,6 +85,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
 
         // Since this action is performed in popup
         if (!isset($result)) {
+
             $this->redirect();
         }
 
@@ -160,9 +166,13 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
     protected function getPackage()
     {
         $result = null;
+
         $module = $this->getModule();
 
-        if ($module && $module->getMarketplaceID()) {
+        if (
+            $module 
+            && $module->getMarketplaceID()
+        ) {
             $entity = $module->getLicenseKey();
 
             $result = \XLite\Core\Marketplace::getInstance()->getAddonPack(
@@ -171,6 +181,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
             );
 
             if (!isset($result)) {
+
                 \XLite\Core\Marketplace::getInstance()->setErrorTopMessage();
             }
         }
@@ -183,7 +194,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
     // {{{ "Install addon" action handler
 
     /**
-     * Save, unpack and nstall module
+     * Save, unpack and install module
      *
      * @return void
      * @see    ____func_see____
@@ -191,7 +202,18 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
      */
     protected function doActionInstall()
     {
-        parent::doActionInstall();
+        if ('Y' === \XLite\Core\Request::getInstance()->agree) {
+
+            parent::doActionInstall();
+
+        } else {
+
+            \XLite\Core\TopMessage::getInstance()->addError(
+                'You must agree with the License agreement to proceed with module installation'
+            );
+
+            $this->setReturnURL($this->buildURL('addons_list_marketplace'));
+        }
     }
 
     // }}}

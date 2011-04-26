@@ -147,6 +147,6 @@ class DeleteCategory extends \XLite\View\Button\APopupButton
      */
     protected function getClass()
     {   
-        return parent::getClass() . ' delete-category';
+        return 'delete-category-button';
     }   
 }

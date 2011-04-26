@@ -14,28 +14,27 @@
 {* :TODO: divide into parts *}
 
 <div class="module-license">
-
   <div class="form">
-
     <form action="admin.php" method="post" name="getAddonForm" >
+
       <input type="hidden" name="target" value="addon_install" />
       <input type="hidden" name="action" value="install" />
       <input type="hidden" name="moduleId" value="{getModuleId()}" />
 
       <div class="license-block">
 
-      <table>
-        <tr>
-          <td class="license-text">
-            <textarea class="license-area" id="license-area" readonly="readonly">
+        <table>
+          <tr>
+            <td class="license-text">
+              <textarea class="license-area" id="license-area" readonly="readonly">
               {getLicense()}
-            </textarea>
-          </td>
-          <td class="switch-button">
-            <img src="images/spacer.gif" class="switch-button" alt="" onclick="javascript:switchHeight('#license-area');" />
-          </td>
-        </tr>
-      </table>
+              </textarea>
+            </td>
+            <td class="switch-button">
+              <widget class="\XLite\View\Button\SwitchButton" first="makeSmallHeight" second="makeLargeHeight" />
+            </td>
+          </tr>
+        </table>
 
       </div>
 
@@ -51,13 +50,11 @@
       <table class="install-addon">
         <tr>
           <td>
-            <widget class="\XLite\View\Button\Submit" label="{t(#Install add-on#)}" />
+            <widget class="\XLite\View\Button\Submit" label="{t(#Install add-on#)}" style="submit-button" disabled=true />
           </td>
         </tr>
       </table>
 
     </form>
-
   </div>
-
 </div>

@@ -19,7 +19,10 @@ function PopupButton()
   jQuery(this.pattern).each(
     function () {
       var button;
+      var callback;
+
       button = this;
+      callback = obj.callback;
 
       jQuery(this).click(
         function () {
@@ -29,7 +32,7 @@ function PopupButton()
             button,
             URLHandler.buildURL(urlParams),
             {'width' : 'auto'},
-            obj.callback
+            callback
           );  
         }   
       );  
