@@ -28,6 +28,11 @@
 
 namespace XLite\Core\TranslationDriver;
 
+// Hack for windows (http://www.gnu.org/software/gettext/manual/gettext.html#fnd-3)
+if (!defined('LC_MESSAGES')) {
+    define('LC_MESSAGES', 1729);
+}
+
 /**
  * gettext-based driver
  * 
