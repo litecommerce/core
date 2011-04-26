@@ -52,7 +52,7 @@ class Country extends \XLite\View\FormField\Select\Regular
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $onlyEnabled = false;
+    protected $onlyEnabled = true;
 
 
     /**
@@ -67,7 +67,7 @@ class Country extends \XLite\View\FormField\Select\Regular
     public function __construct(array $params = array())
     {
         if (!empty($params[self::PARAM_ALL])) {
-            $this->onlyEnabled = true;
+            $this->onlyEnabled = false;
         }
 
         parent::__construct($params);
@@ -146,8 +146,8 @@ class Country extends \XLite\View\FormField\Select\Regular
     protected function getDefaultOptions()
     {
         return $this->onlyEnabled
-            ? \XLite\Core\Database::getRepo('XLite\Model\Country')->findByEnabled(true)
-            : \XLite\Core\Database::getRepo('XLite\Model\Country')->findAll();
+            ? \XLite\Core\Database::getRepo('XLite\Model\Country')->findAllEnabled()
+            : \XLite\Core\Database::getRepo('XLite\Model\Country')->findAllCountries();
     }
 
     /**
