@@ -79,17 +79,12 @@ class XLite_Web_Admin_States extends XLite_Web_Admin_AAdmin
         $this->type(self::ADD_STATE_CODE_INPUT, 'TT1');
         $this->type(self::ADD_STATE_INPUT, 'TEST1');
 
-        $this->click(self::ADD_STATE_BUTTON);
-
-        $this->waitForPageToLoad(10000, 'Add state reload 1');
+        $this->clickAndWait(self::ADD_STATE_BUTTON);
 
         $this->type(self::ADD_STATE_CODE_INPUT, 'TT2');
         $this->type(self::ADD_STATE_INPUT, 'TEST2');
 
-        $this->click(self::ADD_STATE_BUTTON);
-
-
-        $this->waitForPageToLoad(10000, 'Add state reload 2');
+        $this->clickAndWait(self::ADD_STATE_BUTTON);
 
         $this->assertElementPresent(
             "//input[@type='text' and @value='TEST1']",
@@ -123,9 +118,7 @@ class XLite_Web_Admin_States extends XLite_Web_Admin_AAdmin
             self::CHECKBOX_TEST2
         );
 
-        $this->click(self::DELETE_BUTTON);
-
-        $this->waitForPageToLoad(10000, 'Delete state reload');
+        $this->clickAndWait(self::DELETE_BUTTON);
 
         $this->assertElementNotPresent(
             "//input[@type='text' and @value='TEST1']",
@@ -138,7 +131,6 @@ class XLite_Web_Admin_States extends XLite_Web_Admin_AAdmin
         );
 
     }
-
 
 
     protected function getOptionCountrySelected($countryCode, $country)
