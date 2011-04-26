@@ -106,4 +106,16 @@ class Country extends \XLite\Model\AEntity
 
         parent::__construct($data);
     }
+
+    /**
+     * Check if country has states 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function hasStates()
+    {
+        return 0 < count($this->states);
+    }
 }
