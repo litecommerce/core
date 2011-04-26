@@ -11,15 +11,16 @@
  * @since     1.0.0
  *}
 
-<form action="admin.php" method="get">
+<form action="admin.php" method="post">
   <input type="hidden" name="target" value="upgrade" />
+  <input type="hidden" name="action" value="select_core_version" />
 
   <span>
     {t(getSelectBoxLabel())}
   </span>
 
   <select name="version">
-    <option FOREACH="getAvailableCoreVersions(),version,data">{version}</option>
+    <option FOREACH="getCoreVersionsList(),version,data">{version}</option>
   </select>
 
   <widget class="\XLite\View\Button\Submit" label="Upgrade" />

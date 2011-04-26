@@ -64,6 +64,15 @@ abstract class AEntry
     abstract public function getMinorVersion();
 
     /**
+     * Return entry revision date
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract public function getRevisionDate();
+
+    /**
      * Compose version
      * 
      * @return string

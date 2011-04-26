@@ -781,7 +781,10 @@ class Marketplace extends \XLite\Base\Singleton
                 }
 
                 if (!isset($currentVersionMinor) || version_compare($currentVersionMinor, $coreVersionMinor, '<')) {
-                    $result[$coreVersionMajor] = $core;
+                    $result[$coreVersionMajor] = array(
+                        $coreVersionMinor,
+                        $core[self::RESPONSE_FIELD_CORE_REVISION_DATE],
+                    );
                 }
             }
         }

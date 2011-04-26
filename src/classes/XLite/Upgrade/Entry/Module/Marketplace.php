@@ -43,7 +43,16 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $moduleID;
+    protected $moduleIDInstalled;
+
+    /**
+     * Module ID in database
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $moduleIDForUpgrade;
 
     /**
      * Return entry readable name
@@ -54,7 +63,7 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      */
     public function getName()
     {
-        return $this->getModule()->getModuleName();
+        return $this->getModuleForUpgrade()->getModuleName();
     }
 
     /**
@@ -66,7 +75,7 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      */
     public function getMajorVersion()
     {
-        return $this->getModule()->getMajorVersion();
+        return $this->getModuleForUpgrade()->getMajorVersion();
     }
 
     /**
@@ -78,7 +87,19 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      */
     public function getMinorVersion()
     {
-        return $this->getModule()->getMinorVersion();
+        return $this->getModuleForUpgrade()->getMinorVersion();
+    }
+
+    /**
+     * Return entry revision date
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getRevisionDate()
+    {
+        $this->getModuleForUpgrade()->getRevisionDate();
     }
 
     /**
@@ -90,7 +111,7 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      */
     public function getAuthor()
     {
-        return $this->getModule()->getAuthorName();
+        return $this->getModuleForUpgrade()->getAuthorName();
     }
 
     /**
@@ -102,25 +123,34 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      */
     public function isEnabled()
     {
-        return (bool) $this->getModule()->getEnabled();
+        return (bool) $this->getModuleInstalled()->getEnabled();
     }
 
     /**
      * Constructor
      *
-     * @param \XLite\Model\Module $module Module model object
+     * @param \XLite\Model\Module $moduleInstalled  Module model object
+     * @param \XLite\Model\Module $moduleForUpgrade Module model object
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function __construct(\XLite\Model\Module $module)
+    public function __construct(\XLite\Model\Module $moduleInstalled, \XLite\Model\Module $moduleForUpgrade)
     {
-        $this->moduleID = $module->getModuleID();
+        $this->moduleIDInstalled  = $moduleInstalled->getModuleID();
+        $this->moduleIDForUpgrade = $moduleForUpgrade->getModuleID();
 
-        if (is_null($this->getModule()) || !$this->getModule()->getMarketplaceID()) {
+        if (is_null($this->getModuleInstalled())) {
             \Includes\ErrorHandler::fireError(
-                'Module with ID "' . $this->moduleID . '" is not found in DB or has an invaid markeplace identifier'
+                'Module with ID "' . $this->moduleIDInstalled . '" is not found in DB'
+            );
+        }
+
+        if (is_null($this->getModuleForUpgrade()) || !$this->getModuleForUpgrade()->getMarketplaceID()) {
+            \Includes\ErrorHandler::fireError(
+                'Module with ID "' . $this->moduleIDInstalled . '" is not found in DB'
+                . ' or has an invaid markeplace identifier'
             );
         }
     }
@@ -128,12 +158,38 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     /**
      * Search for module in DB
      * 
+     * @param integer $moduleID ID to search by
+     *  
      * @return \XLite\Model\Module
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getModule()
+    protected function getModule($moduleID)
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->moduleID);
+        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($moduleID);
+    }
+
+    /**
+     * Alias
+     * 
+     * @return \XLite\Model\Module
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleInstalled()
+    {
+        return $this->getModule($this->moduleIDInstalled);
+    }
+
+    /**
+     * Alias
+     *
+     * @return \XLite\Model\Module
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleForUpgrade()
+    {
+        return $this->getModule($this->moduleIDForUpgrade);
     }
 }

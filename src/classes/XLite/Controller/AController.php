@@ -1006,17 +1006,15 @@ abstract class AController extends \XLite\Core\Handler
     protected function callAction()
     {
         $action = \XLite\Core\Request::getInstance()->action;
+        $method = 'doAction' . \Includes\Utils\Converter::convertToPascalCase($action);
 
-        $oldMethodName = 'action_' . $action;
-        $newMethodName = 'doAction' . \Includes\Utils\Converter::convertToPascalCase($action);
+        if (method_exists($this, $method)) {
+            $this->$method();
 
-        if (method_exists($this, $oldMethodName)) {
-            // action_{action}()
-            // FIXME - to remove
-            $this->$oldMethodName();
-        } elseif (method_exists($this, $newMethodName)) {
-            // doAction{Action}()
-            $this->$newMethodName();
+        } else {
+            \XLite\Logger::getInstance()->log(
+                'Handler for the action "' . $action . '" is not defined for the "' . get_class($this) . '" class'
+            );
         }
 
         $this->actionPostprocess($action);

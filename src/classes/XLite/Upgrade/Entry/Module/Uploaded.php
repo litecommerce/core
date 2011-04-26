@@ -91,6 +91,18 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
+     * Return entry revision date
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getRevisionDate()
+    {
+        return $this->getMetadata('RevisionDate');
+    }
+
+    /**
      * Return module author readable name
      *
      * @return string

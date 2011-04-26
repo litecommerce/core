@@ -55,6 +55,24 @@ class Cell extends \XLite\Base\Singleton
      */
     protected $entries = array();
 
+    /**
+     * Core version to upgrade to
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $coreVersion;
+
+    /**
+     * List of cores recieved from marketplace (cache)
+     *
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $coreVersions;
+
     // {{{ Public methods
 
     /**
@@ -72,27 +90,65 @@ class Cell extends \XLite\Base\Singleton
     /**
      * Method to clean up cell
      * 
+     * @param boolean $clearCoreVersion Flag OPTIONAL
+     *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function clear()
+    public function clear($clearCoreVersion = true)
     {
         $this->entries = array();
+
+        if ($clearCoreVersion) {
+            $this->coreVersion = null;
+        }
+
+        $this->collectEntries();
+    }
+
+    /**
+     * Define version of core to upgrade to
+     *
+     * @param string $version Version to set
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setCoreVersion($version)
+    {
+        $this->coreVersion = $version;
     }
 
     /**
      * Add module to update/install
      * 
      * @param \XLite\Model\Module $module Module model
+     * @param boolean             $force  Flag to install modules OPTIONAL
      *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function addMarketplaceModule(\XLite\Model\Module $module)
+    public function addMarketplaceModule(\XLite\Model\Module $module, $force = false)
     {
-        $this->entries[md5($module->getActualName())] = new \XLite\Upgrade\Entry\Module\Marketplace($module);
+        if ($force) {
+            $toUpgrade = $module;
+
+        } else {
+            $version = $this->getCoreMajorVersion();
+            $method  = \XLite::getInstance()->checkVersion($version, '<') 
+                ? 'getModuleForUpgrade' 
+                : 'getModuleForUpdate';
+
+            // "ForUpgrade" or "ForUpdate" method call
+            $toUpgrade = \XLite\Core\Database::getRepo('\XLite\Model\Module')->$method($module, $version);
+        }
+
+        if ($toUpgrade) {
+            $this->addEntry(md5($module->getActualName()), 'Module\Marketplace', array($module, $toUpgrade));
+        }
     }
 
     /**
@@ -106,7 +162,7 @@ class Cell extends \XLite\Base\Singleton
      */
     public function addUploadedModule($path)
     {
-        $this->entries[md5($path)] = new \XLite\Upgrade\Entry\Module\Uploaded($path);
+        $this->addEntry(md5($path), 'Module\Uploaded', array($path));
     }
 
     // }}}
@@ -147,6 +203,22 @@ class Cell extends \XLite\Base\Singleton
     public function getCoreVersion()
     {
         return $this->callCoreEntryMethod('getVersion') ?: \XLite::getInstance()->getVersion();
+    }
+
+    /**
+     * Get list of available kernel versions from the marketplace
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCoreVersions()
+    {
+        if (!isset($this->coreVersions)) {
+            $this->coreVersions = (array) \XLite\Core\Marketplace::getInstance()->getCoreVersions($this->getCacheTTL());
+        }
+
+        return $this->coreVersions;
     }
 
     /**
@@ -193,6 +265,9 @@ class Cell extends \XLite\Base\Singleton
     {
         parent::__construct();
 
+        // Upload addons info into the database
+        \XLite\Core\Marketplace::getInstance()->saveAddonsList($this->getCacheTTL());
+
         $cache = \XLite\Core\TmpVars::getInstance()->{self::CELL_NAME};
 
         if (is_array($cache)) {
@@ -200,6 +275,18 @@ class Cell extends \XLite\Base\Singleton
         } else {
             $this->collectEntries();
         }
+    }
+
+    /**
+     * Return so called "short" TTL
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCacheTTL()
+    {
+        return \XLite\Core\Marketplace::TTL_SHORT;
     }
 
     // }}}
@@ -229,6 +316,12 @@ class Cell extends \XLite\Base\Singleton
      */
     protected function checkForCoreUpgrade()
     {
+        $majorVersion = $this->coreVersion ?: \XLite::getInstance()->getMajorVersion();
+        $data = \Includes\Utils\ArrayManager::getIndex($this->getCoreVersions(), $majorVersion, true);
+
+        if (is_array($data)) {
+            $this->addEntry(self::CORE_IDENTIFIER, 'Core', array_merge(array($majorVersion), $data));
+        }
     }
 
     /**
@@ -244,30 +337,60 @@ class Cell extends \XLite\Base\Singleton
         $cnd->{\XLite\Model\Repo\Module::P_INSTALLED} = true;
 
         foreach (\XLite\Core\Database::getRepo('\XLite\Model\Module')->search($cnd) as $module) {
-            $module = $this->getModuleForUpgrade($module);
-
-            if ($module) {
-                $this->addMarketplaceModule($module);
-            }
+            $this->addMarketplaceModule($module);
         }
     }
 
     /**
-     * Method to get module for update/upgrade
-     *
-     * @param \XLite\Model\Module $module Currently installed module version
-     *
-     * @return \XLite\Model\Module
+     * Common method to add entries
+     * 
+     * @param string $index Index in the "entries" array
+     * @param string $class Entry class name
+     * @param array  $args  Constructor arguments OPTIONAL
+     *  
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getModuleForUpgrade(\XLite\Model\Module $module)
+    protected function addEntry($index, $class, array $args = array())
     {
-        $version = $this->getCoreMajorVersion();
-        $method  = \XLite::getInstance()->checkVersion($version, '<') ? 'getModuleForUpgrade' : 'getModuleForUpdate';
+        try {
+            $entry = \Includes\Pattern\Factory::create('\XLite\Upgrade\Entry\\' . $class, $args);
 
-        // "ForUpgrade" or "ForUpdate" method call
-        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->$method($module, $version);
+        } catch (\Exception $exception) {
+            $entry = null;
+            $this->logAddEntryError($exception);
+        }
+
+        if (isset($entry)) {
+            $this->entries[$index] = $entry;
+        }
+    }
+
+    /**
+     * Logging
+     *        
+     * @param \Exception $exception Thrown exception
+     *                                              
+     * @return void                                 
+     * @see    ____func_see____                     
+     * @since  1.0.0                                
+     */                                             
+    protected function logAddEntryError(\Exception $exception)
+    {                                                        
+        \XLite\Logger::getInstance()->log($exception->getMessage(), $this->getLogLevel());
+    }
+
+    /**
+     * Return type of log messages
+     *                            
+     * @return integer            
+     * @see    ____func_see____   
+     * @since  1.0.0              
+     */                           
+    protected function getLogLevel()
+    {                               
+        return PEAR_LOG_WARNING;    
     }
 
     // }}}

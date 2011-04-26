@@ -73,4 +73,19 @@ class SelectCoreVersion extends \XLite\View\Upgrade\AUpgrade
     {
         return 'Your version (' . \XLite::getInstance()->getMajorVersion() . ') can be upgraded to';
     }
+
+    /**
+     * Return list of all core versions available
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCoreVersionsList()
+    {
+        $result = \XLite\Upgrade\Cell::getInstance()->getCoreVersions();
+        unset($result[\XLite::getInstance()->getMajorVersion()]);
+
+        return $result;
+    }
 }
