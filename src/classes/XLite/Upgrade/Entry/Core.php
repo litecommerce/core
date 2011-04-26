@@ -55,6 +55,15 @@ class Core extends \XLite\Upgrade\Entry\AEntry
     protected $minorVersion;
 
     /**
+     * Core revision date
+     * 
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $revisionDate;
+
+    /**
      * Return entry readable name
      *
      * @return string
@@ -91,26 +100,73 @@ class Core extends \XLite\Upgrade\Entry\AEntry
     }
 
     /**
+     * Return entry revision date
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getRevisionDate()
+    {
+        return $this->revisionDate;
+    }
+
+    /**
      * Constructor
      *
-     * @param \XLite\Model\Module $module Module model object
-     *
+     * @param string  $majorVersion Core major version
+     * @param string  $minorVersion Core minor version
+     * @param integer $revisionDate Core revison date
+     *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function __construct($majorVersion, $minorVersion)
+    public function __construct($majorVersion, $minorVersion, $revisionDate)
     {
-        if (
-            \XLite::getInstance()->checkVersion($majorVersion, '>=') 
-            || version_compare(\XLite::getInstance()->getMinorVersion(), $minorVersion, '>=')
-        ) {
+        if (!$this->checkMajorVersion($majorVersion) || !$this->checkMinorVersion($majorVersion, $minorVersion)) {
             \Includes\ErrorHandler::fireError(
-                'Unallowed core versions for upgrade: (' . $majorVersion . ', ' . $minorVersion . ')'
+                'Unallowed core version for upgrade: ' 
+                . \Includes\Utils\Converter::composeVersion($majorVersion, $minorVersion)
             );
+        }
+
+        if ($revisionDate >= time()) {
+            \Includes\ErrorHandler::fireError('Invalid core revision date: "' . date(DATE_RFC822) . '"');
         }
 
         $this->majorVersion = $majorVersion;
         $this->minorVersion = $minorVersion;
+        $this->revisionDate = $revisionDate;
+    }
+
+    /**
+     * Check if version is allowed
+     * 
+     * @param string $majorVersion Version to check
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkMajorVersion($majorVersion)
+    {
+        return \XLite::getInstance()->checkVersion($majorVersion, '<=');
+    }
+
+    /**
+     * Check if version is allowed
+     *
+     * @param string $majorVersion Version to check
+     * @param string $minorVersion Version to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkMinorVersion($majorVersion, $minorVersion)
+    {
+        return \XLite::getInstance()->checkVersion($majorVersion, '<') 
+            || version_compare(\XLite::getInstance()->getMinorVersion(), $minorVersion, '<');
     }
 }

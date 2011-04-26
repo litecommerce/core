@@ -546,13 +546,13 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * action_phpinfo 
+     * doActionPhpinfo 
      * 
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function action_phpinfo()
+    public function doActionPhpinfo()
     {
         die(phpinfo());
     }
@@ -564,7 +564,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function action_safe_mode_key_regen()
+    public function doActionSafeModeKeyRegen()
     {
         \Includes\SafeMode::regenerateAccessKey();
         \XLite\Core\TopMessage::addInfo('Safe mode access key has been re-generated');
@@ -581,13 +581,13 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * action_update 
+     * doActionUpdate 
      * 
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function action_update()
+    public function doActionUpdate()
     {
         $optionsToUpdate = array();
         $options = $this->getOptions();
@@ -659,13 +659,13 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * action_add_new_ip 
+     * doActionAddNewIp 
      * 
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function action_add_new_ip()
+    public function doActionAddNewIp()
     {
         $ip = \XLite\Core\Request::getInstance()->byte_1 . '.' .
               \XLite\Core\Request::getInstance()->byte_2 . '.' .
@@ -703,13 +703,13 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * action_delete_allowed_ip 
+     * doActionDeleteAllowedIp 
      * 
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function action_delete_allowed_ip()
+    public function doActionDeleteAllowedIp()
     {
         $ids = \XLite\Core\Request::getInstance()->allowed_ips;
 
@@ -742,13 +742,13 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * action_update_allowed_ip 
+     * doActionUpdateAllowedIp 
      * 
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function action_update_allowed_ip()
+    public function doActionUpdateAllowedIp()
     {
         $commentsList = \XLite\Core\Request::getInstance()->comment;
 
