@@ -106,7 +106,7 @@ StateSelector.prototype.removeOptions = function()
 StateSelector.prototype.addDefaultOptions = function()
 {
     this.stateSelectBox.get(0).options[0] = new Option('Select one...', '');
-    this.stateSelectBox.get(0).options[1] = new Option('Other', '-1');
+//    this.stateSelectBox.get(0).options[1] = new Option('Other', '-1');
 }
 
 StateSelector.prototype.addStates = function(states)

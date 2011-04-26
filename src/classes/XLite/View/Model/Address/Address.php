@@ -78,11 +78,11 @@ class Address extends \XLite\View\Model\AModel
         'state_id' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\State',
             self::SCHEMA_LABEL    => 'State',
-            self::SCHEMA_REQUIRED => false,
+            self::SCHEMA_REQUIRED => true,
         ),
         'custom_state' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Other state',
+            self::SCHEMA_LABEL    => 'State',
             self::SCHEMA_REQUIRED => false,
         ),
         'zipcode' => array(
@@ -382,5 +382,56 @@ class Address extends \XLite\View\Model\AModel
         }
 
         return $data;
+    }
+
+    /**
+     * Check if fields are valid 
+     * 
+     * @param array $data Current section data
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function validateFields(array $data)
+    {
+        $this->prepareDataToValidate($data);
+        
+        parent::validateFields($data);
+    }
+
+    /**
+     * Prepare section data for validation 
+     * 
+     * @param array $data Current section data
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareDataToValidate($data)
+    {
+        $keys = array_keys($data[self::SECTION_PARAM_FIELDS]);
+        $namePrefix = preg_replace('/^([^_]*_)(.*)$/', '\1', $keys[0]);
+
+        if (
+            isset($data[self::SECTION_PARAM_FIELDS][$namePrefix . 'state_id']) 
+            && isset($data[self::SECTION_PARAM_FIELDS][$namePrefix . 'country_code'])
+        ) {
+       
+            $stateField = $data[self::SECTION_PARAM_FIELDS][$namePrefix . 'state_id'];
+
+            if ('' == $stateField->getValue()) {
+                
+                $countryField = $data[self::SECTION_PARAM_FIELDS][$namePrefix . 'country_code'];
+    
+                $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($countryField->getValue());
+
+                // Disable state field required flag if selected country hasn't states
+                if (!$country->hasStates()) {
+                    $stateField->getWidgetParams(\XLite\View\FormField\AFormField::PARAM_REQUIRED)->setValue(false);
+                }
+            }
+        }
     }
 }
