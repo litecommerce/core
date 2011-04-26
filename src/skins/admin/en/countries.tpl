@@ -44,7 +44,7 @@
 		    </td>
 			    <widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/risk_country/checkbox.tpl">
 			<td align="center">
-				<input id="countries_ids" type="checkbox" name="delete_countries[]" value="{country.code}" />
+				<input id="countries_ids_{country.code}" type="checkbox" name="delete_countries[]" value="{country.code}" />
 			</td>
 		</tr>
 

@@ -63,18 +63,15 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
         $marketplaceID = $this->getModule()->getMarketplaceID();
 
         if (!empty($marketplaceID)) {
-
             $info = \XLite\Core\Marketplace::getInstance()->getAddonInfo($marketplaceID);
 
             if ($info) {
                 $result = $info[\XLite\Core\Marketplace::RESPONSE_FIELD_MODULE_LICENSE];
-
             } else {
                 \XLite\Core\Marketplace::getInstance()->setErrorTopMessage();
             }
 
         } else {
-
             \XLite\Core\TopMessage::getInstance()->addError('Markeplace ID is not set for module');
         }
 
@@ -145,54 +142,6 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
             $this->buildURL('addon_install', 'show_license', array('moduleId' => $this->getModuleId()))
         );
     }
-
-    // }}}
-
-    // {{{ Get package source as string
-
-    /**
-     * Method to get package source (data)
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-/*    protected function getPackage()
-    {
-        $result = null;
-        $module = $this->getModule();
-
-        if ($module && $module->getMarketplaceID()) {
-            $entity = $module->getLicenseKey();
-
-            $result = \XLite\Core\Marketplace::getInstance()->getAddonPack(
-                $module->getMarketplaceID(),
-                $entity ? $entity->getKeyValue() : null
-            );
-
-            if (!isset($result)) {
-                \XLite\Core\Marketplace::getInstance()->setErrorTopMessage();
-            }
-        }
-
-        return $result;
-    }
-
-    // }}}
-
-    // {{{ "Install addon" action handler
-
-    /**
-     * Save, unpack and nstall module
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-/*    protected function doActionInstall()
-    {
-        parent::doActionInstall();
-    }*/
 
     // }}}
 }

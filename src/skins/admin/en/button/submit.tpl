@@ -10,4 +10,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<button type="submit"{if:hasName()} name="{getName()}"{end:}{if:hasValue()} value="{getValue()}"{end:}{if:hasClass()} class="{getClass()}"{end:}><span>{getButtonLabel()}</span></button>
+<button type="submit"
+{if:hasName()} name="{getName()}"{end:}
+{if:hasValue()} value="{getValue()}"{end:}
+{if:hasClass()} class="{getClass()}"{end:}
+{if:isDisabled()} disabled="disabled"{end:}
+><span>{getButtonLabel()}</span></button>

@@ -11,6 +11,16 @@
  * @since     1.0.0
  */
 
+function makeSmallHeight(button)
+{
+  switchHeight('.license-area');
+}
+
+function makeLargeHeight(button)
+{
+  switchHeight('.license-area');
+}
+
 function switchHeight(area)
 {
   var max = "400px";
@@ -26,10 +36,41 @@ function switchHeight(area)
   }
 }
 
-jQuery(document).ready(
-  function () {
-    jQuery(".switch-button").click = function () {
-      switchHeight("#license-area");
+function LicenseAgreement()
+{
+  jQuery(this.pattern).each(
+    function ()
+    {
+      var licenseBlock;
+      licenseBlock = this;
+
+      jQuery('input[name="agree"]', this).bind(
+        'click',
+        function (event)
+        {
+          var button;
+          button = jQuery('button.submit-button', licenseBlock);
+
+          if (jQuery(this).attr('checked')) {
+
+            button
+            .removeClass('disabled')
+            .attr('disabled', '');
+
+          } else {
+
+            button
+            .addClass('disabled')
+            .attr('disabled', 'disabled');
+
+          }
+        }
+      );
+
     }
-  }
-);
+  );
+}
+
+LicenseAgreement.prototype.pattern = 'div.module-license';
+
+core.autoload(LicenseAgreement);
