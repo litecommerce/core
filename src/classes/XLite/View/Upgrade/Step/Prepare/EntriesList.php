@@ -26,29 +26,31 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Upgrade;
+namespace XLite\View\Upgrade\Step\Prepare;
 
 /**
- * AUpgrade 
+ * EntriesList 
  * 
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @ListChild (list="admin.center", weight="100", zone="admin")
  */
-abstract class AUpgrade extends \XLite\View\Dialog
+class EntriesList extends \XLite\View\Upgrade\Step\Prepare\APrepare
 {
     /**
-     * Return list of allowed targets
+     * Register CSS files
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getAllowedTargets()
+    public function getCSSFiles()
     {
-        $result = parent::getAllowedTargets();
-        $result[] = 'upgrade';
+        $list = parent::getCSSFiles();
+        $list[] = $this->getDir() . '/style.css';
 
-        return $result;
+        return $list;
     }
 
     /**
@@ -60,7 +62,7 @@ abstract class AUpgrade extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'upgrade';
+        return parent::getDir() . LC_DS . 'entries_list';
     }
 
     /**
@@ -72,38 +74,33 @@ abstract class AUpgrade extends \XLite\View\Dialog
      */
     protected function getListName()
     {
-        $result = parent::getListName();
-
-        if (!empty($result)) {
-            $result .= '.';
-        }
-
-        return $result . 'upgrade';
+        return parent::getListName() . '.entries_list';
     }
 
     /**
-     * Return list of modules and/or core to upgrade
-     * 
-     * @return array
+     * Return title
+     *
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getUpgradeEntries()
+    protected function getHead()
     {
-        return \XLite\Upgrade\Cell::getInstance()->getEntries();
+        return 'These components will be ' 
+            . (\XLite\Upgrade\Cell::getInstance()->isUpgrade() ? 'upgraded' : 'updated');
     }
 
     /**
-     * Check if passed entry is a module
+     * Helper to get CSS class
      * 
-     * @param \XLite\Upgrade\Entry\AEntry $entry Object to check
+     * @param \XLite\Upgrade\Entry\AEntry $entry Current entry
      *  
-     * @return boolean
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function isModule(\XLite\Upgrade\Entry\AEntry $entry)
+    protected function getEntryRowCSSClass(\XLite\Upgrade\Entry\AEntry $entry)
     {
-        return $entry instanceof \XLite\Upgrade\Entry\Module\AModule;
+        return $this->isModule($entry) ? '' : '';
     }
 }

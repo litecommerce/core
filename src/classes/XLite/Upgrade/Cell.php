@@ -137,13 +137,13 @@ class Cell extends \XLite\Base\Singleton
             $toUpgrade = $module;
 
         } else {
-            $version = $this->getCoreMajorVersion();
-            $method  = \XLite::getInstance()->checkVersion($version, '<') 
-                ? 'getModuleForUpgrade' 
-                : 'getModuleForUpdate';
+            $method = $this->isUpgrade() ? 'getModuleForUpgrade' : 'getModuleForUpdate';
 
             // "ForUpgrade" or "ForUpdate" method call
-            $toUpgrade = \XLite\Core\Database::getRepo('\XLite\Model\Module')->$method($module, $version);
+            $toUpgrade = \XLite\Core\Database::getRepo('\XLite\Model\Module')->$method(
+                $module,
+                $this->getCoreMajorVersion()
+            );
         }
 
         if ($toUpgrade) {
@@ -178,7 +178,7 @@ class Cell extends \XLite\Base\Singleton
      */
     public function getCoreMajorVersion()
     {
-        return $this->callCoreEntryMethod('getMajorVersion') ?: \XLite::getInstance()->getMajorVersion();
+        return $this->callCoreEntryMethod('getMajorVersionNew') ?: \XLite::getInstance()->getMajorVersion();
     }
 
     /**
@@ -190,7 +190,7 @@ class Cell extends \XLite\Base\Singleton
      */
     public function getCoreMinorVersion()
     {
-        return $this->callCoreEntryMethod('getMinorVersion') ?: \XLite::getInstance()->getMinorVersion();
+        return $this->callCoreEntryMethod('getMinorVersionNew') ?: \XLite::getInstance()->getMinorVersion();
     }
 
     /**
@@ -202,7 +202,7 @@ class Cell extends \XLite\Base\Singleton
      */
     public function getCoreVersion()
     {
-        return $this->callCoreEntryMethod('getVersion') ?: \XLite::getInstance()->getVersion();
+        return $this->callCoreEntryMethod('getVersionNew') ?: \XLite::getInstance()->getVersion();
     }
 
     /**
@@ -219,6 +219,18 @@ class Cell extends \XLite\Base\Singleton
         }
 
         return $this->coreVersions;
+    }
+
+    /**
+     * Check if we upgrade core major version
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isUpgrade()
+    {
+        return \XLite::getInstance()->checkVersion($this->getCoreMajorVersion(), '<');
     }
 
     /**

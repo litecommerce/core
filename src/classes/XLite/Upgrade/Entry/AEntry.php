@@ -46,22 +46,40 @@ abstract class AEntry
     abstract public function getName();
 
     /**
-     * Return entry major version
+     * Return entry old major version
      * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    abstract public function getMajorVersion();
+    abstract public function getMajorVersionOld();
 
     /**
-     * Return entry minor version
+     * Return entry old minor version
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    abstract public function getMinorVersion();
+    abstract public function getMinorVersionOld();
+
+    /**
+     * Return entry new major version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract public function getMajorVersionNew();
+
+    /**
+     * Return entry new minor version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract public function getMinorVersionNew();
 
     /**
      * Return entry revision date
@@ -73,14 +91,44 @@ abstract class AEntry
     abstract public function getRevisionDate();
 
     /**
+     * Return module author readable name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract public function getAuthor();
+
+    /**
+     * Check if module is enabled
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract public function isEnabled();
+
+    /**
      * Compose version
      * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getVersion()
+    public function getVersionOld()
     {
-        return \Includes\Utils\Converter::composeVersion($this->getMajorVersion(), $this->getMinorVersion());
+        return \Includes\Utils\Converter::composeVersion($this->getMajorVersionOld(), $this->getMinorVersionOld());
+    }
+
+    /**
+     * Compose version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getVersionNew()
+    {
+        return \Includes\Utils\Converter::composeVersion($this->getMajorVersionNew(), $this->getMinorVersionNew());
     }
 }

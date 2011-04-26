@@ -36,6 +36,23 @@ namespace XLite\Controller\Admin;
  */
 class Upgrade extends \XLite\Controller\Admin\Base\PackManager
 {
+    /**
+     * Initialize controller
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function init()
+    {
+        parent::init();
+
+        // Clear all selection if you visit the "Available updates" page
+        if ($this->isUpdate()) {
+            \XLite\Upgrade\Cell::getInstance()->clear();
+        }
+    }
+
     // {{{ Methods for viewers
 
     /**
@@ -70,9 +87,9 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isUpgrade()
+    public function isUpdate()
     {
-        return 'install_updates' !== \XLite\Core\Request::getInstance()->mode;
+        return 'install_updates' === \XLite\Core\Request::getInstance()->mode;
     }
 
     /**
@@ -96,7 +113,7 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
      */
     protected function getLocation()
     {
-        return $this->isUpgrade() ? 'Upgrade' : 'Updates available';
+        return $this->isUpdate() ? 'Updates available' : 'Upgrade';
     }
 
     // }}}

@@ -26,31 +26,18 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Upgrade;
+namespace XLite\View\Upgrade\Step\Prepare;
 
 /**
- * AUpgrade 
+ * Errors
  * 
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @ListChild (list="admin.center", weight="200", zone="admin")
  */
-abstract class AUpgrade extends \XLite\View\Dialog
+class Errors extends \XLite\View\Upgrade\Step\Prepare\APrepare
 {
-    /**
-     * Return list of allowed targets
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = 'upgrade';
-
-        return $result;
-    }
-
     /**
      * Get directory where template is located (body.tpl)
      *
@@ -60,7 +47,7 @@ abstract class AUpgrade extends \XLite\View\Dialog
      */
     protected function getDir()
     {
-        return 'upgrade';
+        return parent::getDir() . LC_DS . 'errors';
     }
 
     /**
@@ -72,38 +59,6 @@ abstract class AUpgrade extends \XLite\View\Dialog
      */
     protected function getListName()
     {
-        $result = parent::getListName();
-
-        if (!empty($result)) {
-            $result .= '.';
-        }
-
-        return $result . 'upgrade';
-    }
-
-    /**
-     * Return list of modules and/or core to upgrade
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getUpgradeEntries()
-    {
-        return \XLite\Upgrade\Cell::getInstance()->getEntries();
-    }
-
-    /**
-     * Check if passed entry is a module
-     * 
-     * @param \XLite\Upgrade\Entry\AEntry $entry Object to check
-     *  
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isModule(\XLite\Upgrade\Entry\AEntry $entry)
-    {
-        return $entry instanceof \XLite\Upgrade\Entry\Module\AModule;
+        return parent::getListName() . '.errors';
     }
 }
