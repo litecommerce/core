@@ -15,7 +15,7 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
  * PHP version 5.3.0
- *
+ * 
  * @category  LiteCommerce
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -26,40 +26,31 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Button;
+namespace XLite\Upgrade\Entry\Module;
 
 /**
- * SelectVersionForUpgrade 
+ * AModule 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class SelectVersionForUpgrade extends \XLite\View\Button\PopupButton
+abstract class AModule extends \XLite\Upgrade\Entry\AEntry
 {
-    /** 
-     * Return content for popup button
+    /**
+     * Return module author readable name
      * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getButtonContent() 
-    {
-        return 'Upgrade available';
-    }
+    abstract public function getAuthor();
 
-    /** 
-     * Return URL parameters to use in AJAX popup
+    /**
+     * Check if module is enabled
      * 
-     * @return array
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function prepareURLParams()
-    {
-        return array(
-            'target' => 'upgrade',
-            'widget' => '\XLite\View\Upgrade\SelectCoreVersion',
-        );
-    }
+    abstract public function isEnabled();
 }

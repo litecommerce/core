@@ -64,13 +64,51 @@ abstract class AUpgrade extends \XLite\View\Dialog
     }
 
     /**
+     * Return list of modules and/or core to upgrade
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getUpgradeEntries()
+    {
+        return \XLite\Upgrade\Cell::getInstance()->getEntries();
+    }
+
+    /**
+     * Check if passed entry is a module
+     * 
+     * @param \XLite\Upgrade\Entry\AEntry $entry Object to check
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isModule(\XLite\Upgrade\Entry\AEntry $entry)
+    {
+        return $entry instanceof \XLite\Upgrade\Entry\Module\AModule;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
      * Compose core version
      * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getCoreVersionForUpdate()
+/*    protected function getCoreVersionForUpdate()
     {
         return \Includes\Utils\Converter::composeVersion(
             $this->getCoreMajorVersionForUpdate(),
@@ -85,7 +123,7 @@ abstract class AUpgrade extends \XLite\View\Dialog
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getCoreVersionCurrent()
+/*    protected function getCoreVersionCurrent()
     {
         return \XLite::getInstance()->getVersion();
     }
@@ -97,7 +135,7 @@ abstract class AUpgrade extends \XLite\View\Dialog
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function isCoreUpdateNeeded()
+/*    protected function isCoreUpdateNeeded()
     {
         return version_compare($this->getCoreVersionCurrent(), $this->getCoreVersionForUpdate(), '<');
     }
@@ -109,8 +147,8 @@ abstract class AUpgrade extends \XLite\View\Dialog
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function isCoreUpgradeAvailable()
+/*    protected function isCoreUpgradeAvailable()
     {
         return (bool) $this->getAvailableCoreVersions();
-    }
+    }*/
 }

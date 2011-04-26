@@ -65,6 +65,20 @@ class FileManager extends \Includes\Utils\AUtils
     }
 
     /**
+     * Checks whether a file or directory is writeable
+     *
+     * @param string $file File name to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function isWriteable($file)
+    {
+        return is_writable($file);
+    }
+
+    /**
      * Tells whether the filename is a regular file
      *
      * @param string $file File name to check
@@ -93,34 +107,6 @@ class FileManager extends \Includes\Utils\AUtils
     }
 
     /**
-     * Checks if file exists
-     *
-     * @param string $file File name to check
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function isFileExists($file)
-    {
-        return static::isExists($file) && static::isFile($file);
-    }
-
-    /**
-     * Checks if directory exists
-     *
-     * @param string $file Dir name to check
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function isDirExists($file)
-    {
-        return static::isExists($file) && static::isDir($file);
-    }
-
-    /**
      * Check if file is readable 
      * 
      * @param string $file File to check
@@ -146,6 +132,34 @@ class FileManager extends \Includes\Utils\AUtils
     public static function isDirReadable($file)
     {
         return static::isDir($file) && static::isReadable($file);
+    }
+
+    /**
+     * Check if file is writeable
+     *
+     * @param string $file File to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function isFileWriteable($file)
+    {
+        return static::isFile($file) && static::isWriteable($file);
+    }
+
+    /**
+     * Check if dir is writeable
+     *
+     * @param string $file Dir to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function isDirWriteable($file)
+    {
+        return static::isDir($file) && static::isWriteable($file);
     }
 
     /**
@@ -233,7 +247,7 @@ class FileManager extends \Includes\Utils\AUtils
      */
     public static function mkdirRecursive($dir, $mode = 0755)
     {
-        return static::isDirExists($dir) ?: 
+        return static::isDir($dir) ?: 
             (static::mkdirRecursive(static::getDir($dir), $mode) && static::mkdir($dir, $mode));
     }
 
@@ -444,19 +458,23 @@ class FileManager extends \Includes\Utils\AUtils
      * Move uploaded file to a new location
      * 
      * @param string $key   Index in the $_FILES array
-     * @param string $dirTo Destination
+     * @param string $dirTo Destination OPTIONAL
      * @param string $name  Result file name OPTIONAL
      *  
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function moveUploadedFile($key, $dirTo, $name = null)
+    public static function moveUploadedFile($key, $dirTo = LC_TMP_DIR, $name = null)
     {
         $path = null;
 
-        if (isset($_FILES[$key]) && UPLOAD_ERR_OK === $_FILES[$key]['error']) {
-            
+        if (isset($_FILES[$key]) && UPLOAD_ERR_OK === $_FILES[$key]['error'] && static::isDirWriteable($dirTo)) {
+            $path = static::getUniquePath($dirTo, $name ?: $_FILES[$key]['name']);
+
+            if (!move_uploaded_file($_FILES[$key]['tmp_name'], $path)) {
+                $path = null;
+            }
         }
 
         return $path;

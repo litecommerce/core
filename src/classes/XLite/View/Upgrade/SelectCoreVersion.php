@@ -33,6 +33,8 @@ namespace XLite\View\Upgrade;
  * 
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @ListChild (list="admin.center", zone="admin")
  */
 class SelectCoreVersion extends \XLite\View\Upgrade\AUpgrade
 {
@@ -46,5 +48,29 @@ class SelectCoreVersion extends \XLite\View\Upgrade\AUpgrade
     protected function getDir()
     {
         return parent::getDir() . LC_DS . 'select_core_version';
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible() && $this->isCoreSelection();
+    }
+
+    /**
+     * Label for cores list selectbox
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSelectBoxLabel()
+    {
+        return 'Your version (' . \XLite::getInstance()->getMajorVersion() . ') can be upgraded to';
     }
 }

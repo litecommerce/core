@@ -14,18 +14,20 @@
 {* :TODO: integrate design *}
 {* :TODO: of course, devide it into parts (lists) *}
 
-<widget IF="isCoreUpgradeAvailable()" class="\XLite\View\Button\SelectVersionForUpgrade" />
-<br /><br />
+<widget class="\XLite\View\Upgrade\SelectCoreVersion\Button" />
 
-<div IF="isCoreUpdateNeeded()">
-  Core, {getCoreVersionForUpdate()}
+<div FOREACH="getUpgradeEntries(),entry">
+
+  {entry.getName()}
+
+  <span IF="isModule(entry)">
+    <span>{entry.getAuthor()}</span>
+    <span IF="entry.isEnabled()">{t(#Enabled#)}</span>
+    <span IF="!entry.isEnabled()">{t(#Disabled#)}</span>
+  </span>
+
+  {entry.getVersion()}
+
 </div>
 
-<div FOREACH="getModulesForUpdate(),module">
-  {module.getModuleName()}, {t(#by#)} {module.getAuthorName()}, 
-  <span IF="getObjectField(getModuleInstalled(module),#getEnabled#)">{t(#enabled#)}</span>
-  <span IF="!getObjectField(getModuleInstalled(module),#getEnabled#)">{t(#disabled#)}</span>
-  , {module.getVersion()}
-</div>
-
-<widget class="\XLite\View\Button\Regular" label="Install updates" jsCode="location.replace('{buildURL(#upgrade#,##,_ARRAY_(#version#^getCoreMajorVersionForUpdate()))}');" />
+<widget class="\XLite\View\Button\Regular" label="Install updates" />

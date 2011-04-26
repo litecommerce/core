@@ -26,33 +26,24 @@
  * @since     1.0.0
  */
 
-namespace XLite\Upgrade\Entry;
+namespace XLite\Upgrade\Entry\Module;
 
 /**
- * Core 
+ * Marketplace 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Core extends \XLite\Upgrade\Entry\AEntry
+class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
 {
     /**
-     * Core major version 
+     * Module ID in database
      * 
-     * @var   string
+     * @var   integer
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $majorVersion;
-
-    /**
-     * Core minor version
-     *
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $minorVersion;
+    protected $moduleID;
 
     /**
      * Return entry readable name
@@ -63,7 +54,7 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      */
     public function getName()
     {
-        return 'Core';
+        return $this->getModule()->getModuleName();
     }
 
     /**
@@ -75,7 +66,7 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      */
     public function getMajorVersion()
     {
-        return $this->majorVersion;
+        return $this->getModule()->getMajorVersion();
     }
 
     /**
@@ -87,7 +78,31 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      */
     public function getMinorVersion()
     {
-        return $this->minorVersion;
+        return $this->getModule()->getMinorVersion();
+    }
+
+    /**
+     * Return module author readable name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getAuthor()
+    {
+        return $this->getModule()->getAuthorName();
+    }
+
+    /**
+     * Check if module is enabled
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isEnabled()
+    {
+        return (bool) $this->getModule()->getEnabled();
     }
 
     /**
@@ -99,18 +114,26 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function __construct($majorVersion, $minorVersion)
+    public function __construct(\XLite\Model\Module $module)
     {
-        if (
-            \XLite::getInstance()->checkVersion($majorVersion, '>=') 
-            || version_compare(\XLite::getInstance()->getMinorVersion(), $minorVersion, '>=')
-        ) {
+        $this->moduleID = $module->getModuleID();
+
+        if (is_null($this->getModule()) || !$this->getModule()->getMarketplaceID()) {
             \Includes\ErrorHandler::fireError(
-                'Unallowed core versions for upgrade: (' . $majorVersion . ', ' . $minorVersion . ')'
+                'Module with ID "' . $this->moduleID . '" is not found in DB or has an invaid markeplace identifier'
             );
         }
+    }
 
-        $this->majorVersion = $majorVersion;
-        $this->minorVersion = $minorVersion;
+    /**
+     * Search for module in DB
+     * 
+     * @return \XLite\Model\Module
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModule()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($this->moduleID);
     }
 }

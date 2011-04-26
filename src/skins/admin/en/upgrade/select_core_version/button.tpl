@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Core version select popup
+ * Popup button
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,16 +11,6 @@
  * @since     1.0.0
  *}
 
-<form action="admin.php" method="get">
-  <input type="hidden" name="target" value="upgrade" />
-
-  <span>
-    {t(getSelectBoxLabel())}
-  </span>
-
-  <select name="version">
-    <option FOREACH="getAvailableCoreVersions(),version,data">{version}</option>
-  </select>
-
-  <widget class="\XLite\View\Button\Submit" label="Upgrade" />
-</form>
+<div>
+  <a href="{buildURL(#upgrade#,##,_ARRAY_(#mode#^#select_core_version#))}">{t(#Upgrade available#)}</a>
+</div>

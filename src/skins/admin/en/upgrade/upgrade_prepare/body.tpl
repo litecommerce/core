@@ -11,7 +11,7 @@
  * @since     1.0.0
  *}
 
-<div IF="isCoreUpdateNeeded()">
+{*<div IF="isCoreUpdateNeeded()">
   Core, {getCoreVersionCurrent()} --------&gt; {getCoreVersionForUpdate()}
 </div>
 
@@ -20,4 +20,4 @@
   <span IF="getObjectField(getModuleInstalled(module),#getEnabled#)">{t(#enabled#)}</span>
   <span IF="getObjectField(getModuleInstalled(module),#getEnabled#)">{t(#disabled#)}</span>
   , {getObjectField(getModuleInstalled(module),#getVersion#)} --------&gt; {module.getVersion()}
-</div>
+</div>*}

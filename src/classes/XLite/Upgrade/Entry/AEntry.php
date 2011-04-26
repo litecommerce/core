@@ -36,4 +36,42 @@ namespace XLite\Upgrade\Entry;
  */
 abstract class AEntry
 {
+    /**
+     * Return entry readable name
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract public function getName();
+
+    /**
+     * Return entry major version
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract public function getMajorVersion();
+
+    /**
+     * Return entry minor version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract public function getMinorVersion();
+
+    /**
+     * Compose version
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getVersion()
+    {
+        return \Includes\Utils\Converter::composeVersion($this->getMajorVersion(), $this->getMinorVersion());
+    }
 }
