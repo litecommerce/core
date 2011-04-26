@@ -16,18 +16,22 @@
 
 <widget class="\XLite\View\Upgrade\SelectCoreVersion\Button" />
 
-<div FOREACH="getUpgradeEntries(),entry">
+<form action="admin.php" method="post">
+  <input type="hidden" name="target" value="upgrade">
 
-  {entry.getName()}
+  <div FOREACH="getUpgradeEntries(),entry">
 
-  <span IF="isModule(entry)">
-    <span>{entry.getAuthor()}</span>
-    <span IF="entry.isEnabled()">{t(#Enabled#)}</span>
-    <span IF="!entry.isEnabled()">{t(#Disabled#)}</span>
-  </span>
+    {entry.getName()}
 
-  {entry.getVersion()}
+    <span IF="isModule(entry)">
+      <span>{entry.getAuthor()}</span>
+      <span IF="entry.isEnabled()">{t(#Enabled#)}</span>
+      <span IF="!entry.isEnabled()">{t(#Disabled#)}</span>
+    </span>
 
-</div>
+    {entry.getVersionNew()}
 
-<widget class="\XLite\View\Button\Regular" label="Install updates" />
+  </div>
+
+  <widget class="\XLite\View\Button\Submit" label="Install updates" />
+</form>

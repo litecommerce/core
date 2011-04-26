@@ -26,17 +26,15 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Upgrade;
+namespace XLite\View\Upgrade\Step\Prepare;
 
 /**
- * UpgradePrepare
+ * APrepare 
  * 
  * @see   ____class_see____
  * @since 1.0.0
- *
- * @ListChild (list="admin.center", zone="admin")
  */
-class UpgradePrepare extends \XLite\View\Upgrade\AUpgrade
+abstract class APrepare extends \XLite\View\Upgrade\Step\AStep
 {
     /**
      * Get directory where template is located (body.tpl)
@@ -47,18 +45,18 @@ class UpgradePrepare extends \XLite\View\Upgrade\AUpgrade
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'upgrade_prepare';
+        return parent::getDir() . LC_DS . 'prepare';
     }
 
     /**
-     * Check if widget is visible
+     * Return internal list name
      *
-     * @return boolean
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function isVisible()
+    protected function getListName()
     {
-        return parent::isVisible() && $this->isUpgrade();
+        return parent::getListName() . '.prepare';
     }
 }

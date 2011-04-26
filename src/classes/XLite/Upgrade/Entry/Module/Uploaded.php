@@ -67,25 +67,53 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
-     * Return entry major version
+     * Return entry old major version
+     *
+     * :TODO: actualize
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getMajorVersion()
+    public function getMajorVersionOld()
+    {
+        return null;
+    }
+
+    /**
+     * Return entry old minor version
+     *
+     * :TODO: actualize
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getMinorVersionOld()
+    {
+        return null;
+    }
+
+    /**
+     * Return entry new major version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getMajorVersionNew()
     {
         return $this->getMetadata('VersionMajor');
     }
 
     /**
-     * Return entry minor version
+     * Return entry new minor version
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getMinorVersion()
+    public function getMinorVersionNew()
     {
         return $this->getMetadata('VersionMinor');
     }

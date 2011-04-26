@@ -76,25 +76,49 @@ class Core extends \XLite\Upgrade\Entry\AEntry
     }
 
     /**
-     * Return entry major version
+     * Return entry old major version
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getMajorVersion()
+    public function getMajorVersionOld()
+    {
+        return \XLite::getInstance()->getMajorVersion();
+    }
+
+    /**
+     * Return entry old minor version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getMinorVersionOld()
+    {
+        return \XLite::getInstance()->getMinorVersion();
+    }
+
+    /**
+     * Return entry new major version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getMajorVersionNew()
     {
         return $this->majorVersion;
     }
 
     /**
-     * Return entry minor version
+     * Return entry new minor version
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getMinorVersion()
+    public function getMinorVersionNew()
     {
         return $this->minorVersion;
     }
@@ -109,6 +133,30 @@ class Core extends \XLite\Upgrade\Entry\AEntry
     public function getRevisionDate()
     {
         return $this->revisionDate;
+    }
+
+    /**
+     * Return module author readable name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getAuthor()
+    {
+        return 'LC team';
+    }
+
+    /**
+     * Check if module is enabled
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isEnabled()
+    {
+        return true;
     }
 
     /**

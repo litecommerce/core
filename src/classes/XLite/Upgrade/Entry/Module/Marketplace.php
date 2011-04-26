@@ -67,25 +67,49 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
-     * Return entry major version
+     * Return entry old major version
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getMajorVersion()
+    public function getMajorVersionOld()
+    {
+        return $this->getModuleInstalled()->getMajorVersion();
+    }
+
+    /**
+     * Return entry old minor version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getMinorVersionOld()
+    {
+        return $this->getModuleInstalled()->getMinorVersion();
+    }
+
+    /**
+     * Return entry new major version
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getMajorVersionNew()
     {
         return $this->getModuleForUpgrade()->getMajorVersion();
     }
 
     /**
-     * Return entry minor version
+     * Return entry new minor version
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getMinorVersion()
+    public function getMinorVersionNew()
     {
         return $this->getModuleForUpgrade()->getMinorVersion();
     }
