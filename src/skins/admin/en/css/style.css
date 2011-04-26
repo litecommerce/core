@@ -653,6 +653,18 @@ button:hover
   border-color: #b1c9e0;
 }
 
+button.disabled {
+  background-color: #CCCCCC;
+  background-image: none;
+  border-color: #CCCCCC;
+  color: #FFFFFF;
+  cursor: default;
+}
+
+button.disabled span {
+  color: #FFFFFF;
+}
+
 button.main-button,
 input.main-button
 {

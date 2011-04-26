@@ -146,7 +146,8 @@ abstract class AButton extends \XLite\View\AView
      */
     protected function getClass()
     {
-        return $this->getParam(self::PARAM_STYLE);
+        return $this->getParam(self::PARAM_STYLE)
+            . ($this->isDisabled() ? ' disabled' : '');
     }
 
     /**
@@ -219,5 +220,17 @@ abstract class AButton extends \XLite\View\AView
     protected function hasClass()
     {
         return '' !== $this->getParam(self::PARAM_STYLE);
+    }
+
+    /**
+     * isDisabled
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isDisabled()
+    {
+        return $this->getParam(self::PARAM_DISABLED);
     }
 }

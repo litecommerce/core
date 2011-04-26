@@ -71,6 +71,7 @@ abstract class AddonInstall extends \XLite\Controller\Admin\Base\PackManager
             $this->deploy($dir);
 
         } elseif ($this->getPackingError()) {
+
             \XLite\Core\TopMessage::getInstance()->addError($this->getPackingError());
         }
 
