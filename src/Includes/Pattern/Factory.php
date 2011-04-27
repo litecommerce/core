@@ -14,47 +14,60 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage Includes
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ * 
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace Includes\Pattern;
 
 /**
- * Factory
+ * Factory 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 abstract class Factory extends \Includes\Pattern\APattern
 {
     /**
      * Class handlers cache
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected static $classHandlers = array();
 
+    /**
+     * Create object instance and pass arguments to it contructor (if needed)
+     *
+     * @param string $class Class name
+     * @param array  $args  Constructor arguments OPTIONAL
+     *
+     * @return object
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function create($class, array $args = array())
+    {
+        $handler = static::getClassHandler($class);
+
+        return $handler->hasMethod('__construct') ? $handler->newInstanceArgs($args) : $handler->newInstance();
+    }
 
     /**
      * Return the Reflection handler for class
      * 
-     * @param string $class class name
+     * @param string $class Class name
      *  
      * @return \ReflectionClass
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -65,23 +78,5 @@ abstract class Factory extends \Includes\Pattern\APattern
         }
 
         return static::$classHandlers[$class];
-    }
-
-
-    /**
-     * Create object instance and pass arguments to it contructor (if needed)
-     *
-     * @param string $class class name
-     * @param array  $args  constructor arguments
-     *
-     * @return object
-     * @access public
-     * @since  1.0.0
-     */
-    public static function create($class, array $args = array())
-    {
-        $handler = static::getClassHandler($class);
-
-        return $handler->hasMethod('__construct') ? $handler->newInstanceArgs($args) : $handler->newInstance();
     }
 }

@@ -81,7 +81,11 @@ class CoreVersionTopLink extends \XLite\View\AView
      */
     protected function isCoreUpgradeAvailable()
     {
-        return \XLite\Core\Marketplace::getInstance()->checkForUpdates();
+        return (bool) \Includes\Utils\ArrayManager::getIndex(
+            \XLite\Core\Marketplace::getInstance()->checkForUpdates(),
+            'isUpgardeAvailable',
+            true
+        );
     }
 
     /**
@@ -93,6 +97,10 @@ class CoreVersionTopLink extends \XLite\View\AView
      */
     protected function araUpdatesAvailable()
     {
-        return \XLite\Core\Marketplace::getInstance()->checkForUpdates();
+        return (bool) \Includes\Utils\ArrayManager::getIndex(
+            \XLite\Core\Marketplace::getInstance()->checkForUpdates(),
+            'areUpdatesAvailable',
+            true
+        );
     }
 }

@@ -46,7 +46,7 @@ abstract class PopupButton extends \XLite\View\Button\APopupButton
     public function getJSFiles()
     {   
         $list = parent::getJSFiles();
-        $list[] = 'button/js/popup_button.js';
+        $list[] = 'button' . LC_DS . 'js' . LC_DS . 'popup_button.js';
 
         return $list;
     }   

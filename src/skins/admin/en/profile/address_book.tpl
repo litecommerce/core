@@ -11,11 +11,8 @@
  * @since     1.0.0
  *}
 
-{foreach:profile.getAddresses(),address}
-
-<widget class="\XLite\View\Address" displayMode="text" displayWrapper="1" address="{address}" />
-
-{end:}
+<widget FOREACH="profile.getAddresses(),address" class="\XLite\View\Address" displayMode="text" displayWrapper="1" address="{address}" />
 
 <widget class="\XLite\View\Address" displayMode="text" displayWrapper="1" />
 
+<div class="clear"></div>

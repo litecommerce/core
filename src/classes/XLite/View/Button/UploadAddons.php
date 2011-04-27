@@ -39,7 +39,7 @@ class UploadAddons extends \XLite\View\Button\PopupButton
     /**
      *  Several specific constants
      */
-    const UPLOAD_ADDONS_LABEL       = 'Upload add-ons';
+    const UPLOAD_ADDONS_LABEL       = 'Upload add-on';
     const UPLOAD_ADDON_CSS_CLASS    = 'upload-addons';
     const UPLOAD_ADDONS_WIDGET      = 'XLite\View\ModulesManager\UploadAddons';
 

@@ -37,7 +37,7 @@ namespace XLite\Controller\Admin;
 class CacheManagement extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * action_rebuild 
+     * doActionRebuild 
      * 
      * @return void
      * @see    ____func_see____

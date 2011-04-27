@@ -26,39 +26,40 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Upgrade;
+namespace XLite\View\Upgrade\SelectCoreVersion;
 
 /**
- * UpgradePrepare
+ * Button 
  * 
  * @see   ____class_see____
  * @since 1.0.0
- *
- * @ListChild (list="admin.center", zone="admin")
  */
-class UpgradePrepare extends \XLite\View\Upgrade\AUpgrade
+class Button extends \XLite\View\AView
 {
     /**
-     * Get directory where template is located (body.tpl)
+     * Return list of allowed targets
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'upgrade';
+
+        return $result;
+    }
+
+    /**
+     * Return widget default template
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDir()
+    function getDefaultTemplate()
     {
-        return parent::getDir() . LC_DS . 'upgrade_prepare';
-    }
-
-    /**
-     * Check if widget is visible
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible() && $this->isUpgrade();
+        return 'upgrade' . LC_DS . 'select_core_version' . LC_DS . 'button.tpl';
     }
 }

@@ -13,11 +13,12 @@
 
 <span class="current">{t(#v.#)} {getCurrentCoreVersion()}</span>
 
-<span IF="isCoreUpgradeAvailable()" class="upgrade-note">
-  {* :TODO: this link must open the popup to select core version *}
-  <a href="{buildURL(#upgrade#,##,_ARRAY_(#version#^##))}">{t(#Upgrade available#)}</a>
+<span IF="araUpdatesAvailable()" class="updates-note">
+  <a href="{buildURL(#upgrade#,##,_ARRAY_(#mode#^#install_updates#))}" title="{t(#There are updates for installed modules and/or LC core#)}">{t(#Updates available#)}</a>
 </span>
 
-<span IF="araUpdatesAvailable()&!isCoreUpgradeAvailable()" class="updates-note">
-  <a href="{buildURL(#upgrade#,##,_ARRAY_(#mode#^#install_updates#))}">{t(#Updates available#)}</a>
+<span IF="isCoreUpgradeAvailable()&!araUpdatesAvailable()" class="upgrade-note">
+  {* :TODO: this link must open the popup to select core version *}
+  <a href="{buildURL(#upgrade#,##,_ARRAY_(#version#^##))}" title="{t(#Upgrade for LC core is available#)}">{t(#Upgrade available#)}</a>
 </span>
+

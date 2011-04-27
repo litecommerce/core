@@ -34,7 +34,7 @@ namespace XLite\Controller\Admin;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
+class AddonInstall extends \XLite\Controller\Admin\AAdmin
 {
     // {{{ Public methods for viewers
 
@@ -47,9 +47,7 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
      */
     public function getTitle()
     {
-        return ($module = $this->getModule()) 
-            ? ($module->getModuleName() . ' license agreement') 
-            : null;
+        return ($module = $this->getModule()) ? ($module->getModuleName() . ' license agreement') : null;
     }
 
     /**
@@ -62,30 +60,23 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
     public function getLicense()
     {
         $result = null;
-
         $marketplaceID = $this->getModule()->getMarketplaceID();
 
         if (!empty($marketplaceID)) {
-
             $info = \XLite\Core\Marketplace::getInstance()->getAddonInfo($marketplaceID);
 
             if ($info) {
-
                 $result = $info[\XLite\Core\Marketplace::RESPONSE_FIELD_MODULE_LICENSE];
-
             } else {
-
                 \XLite\Core\Marketplace::getInstance()->setErrorTopMessage();
             }
 
         } else {
-
             \XLite\Core\TopMessage::getInstance()->addError('Markeplace ID is not set for module');
         }
 
         // Since this action is performed in popup
         if (!isset($result)) {
-
             $this->redirect();
         }
 
@@ -150,70 +141,6 @@ class AddonInstall extends \XLite\Controller\Admin\Base\AddonInstall
         $this->setReturnURL(
             $this->buildURL('addon_install', 'show_license', array('moduleId' => $this->getModuleId()))
         );
-    }
-
-    // }}}
-
-    // {{{ Get package source as string
-
-    /**
-     * Method to get package source (data)
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getPackage()
-    {
-        $result = null;
-
-        $module = $this->getModule();
-
-        if (
-            $module 
-            && $module->getMarketplaceID()
-        ) {
-            $entity = $module->getLicenseKey();
-
-            $result = \XLite\Core\Marketplace::getInstance()->getAddonPack(
-                $module->getMarketplaceID(),
-                $entity ? $entity->getKeyValue() : null
-            );
-
-            if (!isset($result)) {
-
-                \XLite\Core\Marketplace::getInstance()->setErrorTopMessage();
-            }
-        }
-
-        return $result;
-    }
-
-    // }}}
-
-    // {{{ "Install addon" action handler
-
-    /**
-     * Save, unpack and install module
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionInstall()
-    {
-        if ('Y' === \XLite\Core\Request::getInstance()->agree) {
-
-            parent::doActionInstall();
-
-        } else {
-
-            \XLite\Core\TopMessage::getInstance()->addError(
-                'You must agree with the License agreement to proceed with module installation'
-            );
-
-            $this->setReturnURL($this->buildURL('addons_list_marketplace'));
-        }
     }
 
     // }}}

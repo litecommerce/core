@@ -74,7 +74,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * action_recover_password 
+     * doActionRecoverPassword
      * 
      * @return void
      * @see    ____func_see____
@@ -93,7 +93,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * action_confirm 
+     * doActionConfirm
      * 
      * @return void
      * @see    ____func_see____
