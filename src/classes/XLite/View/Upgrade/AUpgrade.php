@@ -64,53 +64,46 @@ abstract class AUpgrade extends \XLite\View\Dialog
     }
 
     /**
-     * Compose core version
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCoreVersionForUpdate()
-    {
-        return \Includes\Utils\Converter::composeVersion(
-            $this->getCoreMajorVersionForUpdate(),
-            $this->getCoreMinorVersionForUpdate()
-        );
-    }
-
-    /**
-     * Alias
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getCoreVersionCurrent()
-    {
-        return \XLite::getInstance()->getVersion();
-    }
-
-    /**
-     * Check if core requires an update/upgrade
+     * Return internal list name
      *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getListName()
+    {
+        $result = parent::getListName();
+
+        if (!empty($result)) {
+            $result .= '.';
+        }
+
+        return $result . 'upgrade';
+    }
+
+    /**
+     * Return list of modules and/or core to upgrade
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getUpgradeEntries()
+    {
+        return \XLite\Upgrade\Cell::getInstance()->getEntries();
+    }
+
+    /**
+     * Check if passed entry is a module
+     * 
+     * @param \XLite\Upgrade\Entry\AEntry $entry Object to check
+     *  
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function isCoreUpdateNeeded()
+    protected function isModule(\XLite\Upgrade\Entry\AEntry $entry)
     {
-        return version_compare($this->getCoreVersionCurrent(), $this->getCoreVersionForUpdate(), '<');
-    }
-
-    /**
-     * Is core upgrade available
-     *
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isCoreUpgradeAvailable()
-    {
-        return (bool) $this->getAvailableCoreVersions();
+        return $entry instanceof \XLite\Upgrade\Entry\Module\AModule;
     }
 }

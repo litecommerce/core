@@ -69,7 +69,6 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-
         $result[] = 'addons_list_marketplace';
     
         return $result;
@@ -119,12 +118,9 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'modules_manager/common.css';
-
         // TODO fix with enter-key license widget. It should be taken dynamically from AJAX
         $list[] = 'modules_manager/enter_key/css/style.css';
-
         $list[] = $this->getDir() . '/style.css';
 
         return $list;
@@ -141,9 +137,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = 'button/js/core.popup-button.js';
-
         $list[] = $this->getDir() . '/' . $this->getPageBodyDir() . '/js/controller.js';
 
         return $list;

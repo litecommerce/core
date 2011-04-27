@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
- * 
+ *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
@@ -26,68 +26,39 @@
  * @since     1.0.0
  */
 
-namespace XLite\Controller\Admin\Base;
+namespace XLite\View\Upgrade\Step\Prepare;
 
 /**
- * AddonInstall 
+ * Errors
  * 
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @ListChild (list="admin.center", weight="200", zone="admin")
  */
-abstract class AddonInstall extends \XLite\Controller\Admin\Base\PackManager
+class Errors extends \XLite\View\Upgrade\Step\Prepare\APrepare
 {
-    // {{{ Package source
-
     /**
-     * Method to get package source (data)
-     * 
+     * Get directory where template is located (body.tpl)
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    abstract protected function getPackage();
-
-    // }}}
-
-    // {{{ Action handlers
-
-    /**
-     * Save, unpack and install module
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionInstall()
+    protected function getDir()
     {
-        // Extract files to a temporary directory
-        $dir = $this->unpack($this->getPackage());
-
-        if ($dir) {
-
-            // Backup files if exist
-            // ...
-
-            $this->deploy($dir);
-
-        } elseif ($this->getPackingError()) {
-
-            \XLite\Core\TopMessage::getInstance()->addError($this->getPackingError());
-        }
-
-        $this->setReturnURL($this->buildURL('addons_list_marketplace'));
+        return parent::getDir() . LC_DS . 'errors';
     }
 
     /**
-     * Deploy pack
+     * Return internal list name
      *
-     * @return void
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function deploy()
+    protected function getListName()
     {
+        return parent::getListName() . '.errors';
     }
-
-    // }}}
 }

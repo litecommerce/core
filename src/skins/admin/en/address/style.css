@@ -79,14 +79,41 @@
   text-align: center;
 }
 
-li.address-text-title,
-li.address-text-firstname,
-li.address-text-lastname,
-li.address-text-city,
-li.address-text-state_id,
-li.address-text-custom_state
+td.address-text {
+  width: 100%;
+}
+
+ul.address-entry,
+  ul.address-text
 {
-  display: inline;
+  list-style: none;
+}
+
+ul.address-entry li {
+  clear: left;
+}
+
+ul.address-text li {
+  float: left;
+  padding: 0px;
+  margin: 0px;
+  clear: none;
+}
+
+ul.address-entry li span.address-text-value {
+  padding: 0px;
+}
+
+ul li.address-text-title,
+ul li.address-text-firstname,
+ul li.address-text-lastname,
+ul li.address-text-city,
+ul li.address-text-state_id,
+ul li.address-text-custom_state
+{
+  float: left;
+  clear: none;
+  padding-right: 5px;
 }
 
 li.address-text-street,
@@ -119,7 +146,7 @@ li.address-text-phone
   display: none;
 }
 
-ul.address-box
+div.address-box
 {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;

@@ -400,13 +400,13 @@ abstract class Image extends \XLite\Model\AEntity
     {
         list($path, $isTempFile) = $this->getImagePath();
 
-        $hash = md5_file($path);
+        $hash = \Includes\Utils\FileManager::getHash($path);
 
         if ($isTempFile) {
-            unlink($path);
+            \Includes\Utils\FileManager::delete($path);
         }
 
-        return $this->hash == $hash;
+        return $this->hash === $hash;
     }
 
     /**
@@ -418,7 +418,7 @@ abstract class Image extends \XLite\Model\AEntity
      */
     public function isURL()
     {
-        return (bool)preg_match('/^https?:\/\//Ss', $this->path);
+        return (bool) preg_match('/^https?:\/\//Ss', $this->path);
     }
 
     /**
@@ -490,7 +490,7 @@ abstract class Image extends \XLite\Model\AEntity
             $this->width = $data[0];
             $this->height = $data[1];
             $this->mime = $data['mime'];
-            $this->hash = md5_file($path);
+            $this->hash = \Includes\Utils\FileManager::getHash($path);
             $this->size = intval(filesize($path));
             $this->date = time();
 

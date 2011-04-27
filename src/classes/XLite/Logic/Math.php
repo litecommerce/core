@@ -36,7 +36,6 @@ namespace XLite\Logic;
  */
 class Math extends \XLite\Logic\ALogic
 {
-
     // {{{ Round
 
     /**
@@ -270,5 +269,4 @@ class Math extends \XLite\Logic\ALogic
     }
 
     // }}}
-
 }

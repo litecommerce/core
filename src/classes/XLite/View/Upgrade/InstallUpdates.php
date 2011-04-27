@@ -59,6 +59,6 @@ class InstallUpdates extends \XLite\View\Upgrade\AUpgrade
      */
     protected function isVisible()
     {
-        return parent::isVisible() && !$this->isUpgrade();
+        return parent::isVisible() && $this->isUpdate();
     }
 }
