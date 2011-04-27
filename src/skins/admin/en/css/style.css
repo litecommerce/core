@@ -849,6 +849,16 @@ button.invert:hover
   vertical-align: top;
 }
 
+.profile-form .table-label
+{
+  width: 130px;
+}
+
+form.profile-form
+{
+  margin-top: 15px;
+}
+
 table.data-table th.table-id-column,
 table.data-table td.table-id-column
 {
