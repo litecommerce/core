@@ -414,6 +414,7 @@ XLite\Model\LanguageLabel:
   - { name: 'X field is required', translations: [{ code: en, label: "'{{field}}' field is required" }] }
   - { name: 'Image X', translations: [{ code: en, label: 'Image #{{index}}' }] }
   - { name: 'Top X products', translations: [{ code: en, label: 'Top {{count}} products' }] }
+  - { name: 'X module settings', translations: [{ code: en, label: '{{name}} ({{author}}) module settings' }] }
 XLite\Model\Membership:
   directives: { insert: true }
   - { orderby: 10, translations: [{ code: en, name: Gold }] }
