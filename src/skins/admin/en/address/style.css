@@ -79,6 +79,10 @@
   text-align: center;
 }
 
+ul.address-entry {
+  list-style: none;
+}.
+
 li.address-text-title,
 li.address-text-firstname,
 li.address-text-lastname,
@@ -119,7 +123,7 @@ li.address-text-phone
   display: none;
 }
 
-ul.address-box
+div.address-box
 {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;

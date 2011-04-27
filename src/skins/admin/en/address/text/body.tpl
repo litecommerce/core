@@ -10,8 +10,14 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-
+<ul class="address-entry">
 {foreach:getSchemaFields(),fieldName,fieldData}
-<li class="address-text-{fieldName}" IF="{getFieldValue(fieldName)}"><span class="address-text-label-{fieldName}">{fieldData.label}: </span>{getFieldValue(fieldName,1)}<span class="address-text-comma-{fieldName}">,</span> </li>
+<li class="address-text-{fieldName}" IF="{getFieldValue(fieldName)}">
+  <span class="address-text-label-{fieldName}">
+    {fieldData.label}: 
+  </span>
+  {getFieldValue(fieldName,1)}
+  <span class="address-text-comma-{fieldName}">,</span>
+</li>
 {end:}
-
+</ul>
