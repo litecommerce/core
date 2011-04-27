@@ -11,7 +11,7 @@
  * @since     1.0.0
  *}
 
-<ul class="address-box">
+<div class="address-box">
 
   <table width="100%" IF="{address.getAddressId()}">
 
@@ -48,5 +48,5 @@
     <widget class="\XLite\View\Button\Regular" label="Add new address" jsCode="openAddAddress(this, '{profile_id}');" />
   </div>
 
-</ul>
+</div>
 
