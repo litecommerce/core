@@ -16,7 +16,7 @@
 <tr>
   <td class="table-label">{t(#Search in subcategories#)}</td>
   <td style="width:10px;height:10px;"></td>
-  <td style="height:10px;">
+  <td class="table-input table-input-checkbox">
     <input type="checkbox" name="searchInSubcats" checked="{getCondition(#searchInSubcats#)|!mode=#search#}" value="1" />
   </td>
 </tr>
