@@ -81,16 +81,22 @@
 
 ul.address-entry {
   list-style: none;
-}.
+}
 
-li.address-text-title,
-li.address-text-firstname,
-li.address-text-lastname,
-li.address-text-city,
-li.address-text-state_id,
-li.address-text-custom_state
+ul.address-entry li {
+  clear: left;
+}
+
+ul li.address-text-title,
+ul li.address-text-firstname,
+ul li.address-text-lastname,
+ul li.address-text-city,
+ul li.address-text-state_id,
+ul li.address-text-custom_state
 {
-  display: inline;
+  float: left;
+  clear: none;
+  padding-right: 5px;
 }
 
 li.address-text-street,
