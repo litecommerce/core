@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * The "Component" column header
+ * Entry version separator
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="upgrade.step.prepare.entries_list.header", weight="100")
+ * @ListChild (list="upgrade.step.prepare.entries_list.table.columns", weight="400")
  *}
 
-<th colspan="2">{t(#Component#)}</th>
+<td>------&gt;</td>
