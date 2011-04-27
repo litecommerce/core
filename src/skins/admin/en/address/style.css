@@ -79,6 +79,10 @@
   text-align: center;
 }
 
+td.address-text {
+  width: 100%;
+}
+
 ul.address-entry,
   ul.address-text
 {
@@ -87,7 +91,6 @@ ul.address-entry,
 
 ul.address-entry li {
   clear: left;
-  padding: 5px 0px 0px;
 }
 
 ul.address-text li {
