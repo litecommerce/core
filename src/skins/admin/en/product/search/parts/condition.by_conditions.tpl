@@ -16,7 +16,7 @@
 <tr>
   <td class="table-label">&nbsp;</td>
   <td style="width:10px;height:10px;">&nbsp;</td>
-  <td style="height:10px;">
+  <td class="table-input table-input-checkbox">
 
     <ul class="by-conditions">
 
