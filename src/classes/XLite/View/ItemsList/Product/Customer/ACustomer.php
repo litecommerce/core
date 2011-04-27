@@ -510,7 +510,10 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getPageBodyFile()
     {
-        if ($this->getParam(self::PARAM_DISPLAY_MODE) == self::DISPLAY_MODE_GRID) {
+        if (
+            $this->getParam(self::PARAM_WIDGET_TYPE) == self::WIDGET_TYPE_CENTER
+            && $this->getParam(self::PARAM_DISPLAY_MODE) == self::DISPLAY_MODE_GRID
+        ) {
             return $this->isCSSLayout() ? 'body-css-layout.tpl' : 'body-table-layout.tpl';
         } else {
             return parent::getPageBodyFile();

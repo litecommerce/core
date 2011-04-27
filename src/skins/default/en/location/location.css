@@ -17,7 +17,7 @@ div.location-node {
 }
 
 div.location-node:hover ul.location-subnodes {
-  visibility: visible;
+  display: none;
 }
 
 div.location-node.expandable {
