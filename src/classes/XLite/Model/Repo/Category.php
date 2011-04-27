@@ -147,14 +147,15 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Return list of categories on the same level
      *
      * @param \XLite\Model\Category $category Category
+     * @param boolean               $hasSelf  Flag to include itself OPTIONAL
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getSiblings(\XLite\Model\Category $category)
+    public function getSiblings(\XLite\Model\Category $category, $hasSelf = false)
     {
-        return $this->defineSiblingsQuery($category)->getResult();
+        return $this->defineSiblingsQuery($category, $hasSelf)->getResult();
     }
 
     /**
@@ -380,21 +381,24 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Define the Doctrine query
      *
      * @param \XLite\Model\Category $category Category
+     * @param boolean               $hasSelf  Flag to include itself OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function defineSiblingsQuery(\XLite\Model\Category $category)
+    protected function defineSiblingsQuery(\XLite\Model\Category $category, $hasSelf = false)
     {
         $parentId = $category->getParent()
             ? $category->getParent()->getCategoryId()
             : 0;
 
-        return $this->defineSubcategoriesQuery($parentId)
-            ->andWhere('c.category_id <> :category_id')
-            ->setParameter('category_id', $category->getCategoryId());
-            
+        $result = $this->defineSubcategoriesQuery($parentId);
+
+        return $hasSelf
+            ? $result
+            : $result->andWhere('c.category_id <> :category_id')
+                ->setParameter('category_id', $category->getCategoryId());
     }
 
     /**
@@ -525,8 +529,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
             $alias = $alias ?: $this->getDefaultAlias();
 
-            $queryBuilder
-                ->andWhere($alias . '.enabled = :enabled')
+            $queryBuilder->andWhere($alias . '.enabled = :enabled')
                 ->setParameter('enabled', true);
         }
     }
@@ -746,7 +749,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
         if (is_object($entity)) {
 
             if (
-                isset($data['enabled']) 
+                isset($data['enabled'])
                 && (
                     $entity->getEnabled() 
                     xor ((bool) $data['enabled'])
