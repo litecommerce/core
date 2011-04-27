@@ -54,7 +54,9 @@ class Review extends \XLite\View\Checkout\Step\Review implements \XLite\Base\IDe
      */
     public function getTermsURL()
     {
-        return \XLite\Core\Converter::buildDrupalURL('', '', array(), '') . static::TERMS_AND_CONDITIONS;
+        return \XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
+            ? url(static::TERMS_AND_CONDITIONS)
+            : parent::getTermsURL();
     }
 
 }
