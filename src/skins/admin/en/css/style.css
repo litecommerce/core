@@ -901,3 +901,23 @@ table.data-table td.table-id-column
   color: #082032;
 }
 
+
+/* CATEGORY data - TODO - move to separate widget CSS file*/
+
+.category-data {
+  width: 700px;
+  border-spacing: 0px;
+}
+
+.category-data td {
+  padding: 10px 10px 7px 10px;
+}
+
+.category-data td .hidden {
+  display: none;
+}
+
+.category-data td a:hover {
+  text-decoration: underline;
+}
+
