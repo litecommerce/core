@@ -264,15 +264,18 @@ class Category extends \XLite\Model\Base\I18n
     }
 
     /**
-     * Return siblings list
+     * Return siblings list.
+     * You are able to include itself into this list. (Customer area)
      * 
+     * @param boolean $hasSelf Flag to include itself 
+     *  
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getSiblings()
+    public function getSiblings($hasSelf = false)
     {
-        return $this->getRepository()->getSiblings($this);
+        return $this->getRepository()->getSiblings($this, $hasSelf);
     }
 
     /**
