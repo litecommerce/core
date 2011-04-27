@@ -79,12 +79,26 @@
   text-align: center;
 }
 
-ul.address-entry {
+ul.address-entry,
+  ul.address-text
+{
   list-style: none;
 }
 
 ul.address-entry li {
   clear: left;
+  padding: 5px 0px 0px;
+}
+
+ul.address-text li {
+  float: left;
+  padding: 0px;
+  margin: 0px;
+  clear: none;
+}
+
+ul.address-entry li span.address-text-value {
+  padding: 0px;
 }
 
 ul li.address-text-title,

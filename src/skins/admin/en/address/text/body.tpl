@@ -11,13 +11,31 @@
  * @since     1.0.0
  *}
 <ul class="address-entry">
+
 {foreach:getSchemaFields(),fieldName,fieldData}
+
 <li class="address-text-{fieldName}" IF="{getFieldValue(fieldName)}">
-  <span class="address-text-label-{fieldName}">
-    {fieldData.label}: 
-  </span>
-  {getFieldValue(fieldName,1)}
-  <span class="address-text-comma-{fieldName}">,</span>
+
+  <div class="clear"></div>
+
+  <ul class="address-text">
+
+    <li class="address-text-label-{fieldName}">
+      {fieldData.label}: 
+    </li>
+
+    <li class="address-text-value">
+      {getFieldValue(fieldName,1)}
+    </li>
+
+    <li class="address-text-comma-{fieldName}">,</li>
+
+  </ul>
+
+  <div class="clear"></div>
+
 </li>
+
 {end:}
+
 </ul>
