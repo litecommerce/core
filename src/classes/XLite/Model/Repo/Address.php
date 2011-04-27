@@ -121,9 +121,16 @@ class Address extends \XLite\Model\Repo\ARepo
         foreach ($fields as $field) {
 
             if ('state_id' == $field) {
-                $qb->innerJoin('a.state', 's')
-                    ->andWhere('s.state_id = :state_id');
-                $params[$field] = $address->getStateId();
+
+                if ($address->getStateId()) {
+                    $qb->innerJoin('a.state', 's')
+                        ->andWhere('s.state_id = :state_id');
+                    $params[$field] = $address->getStateId();
+                
+                } else {
+                    $qb->leftJoin('a.state', 's')
+                        ->andWhere('s.state_id IS NULL');
+                }
             
             } elseif ('country_code' == $field) {
                 $qb->innerJoin('a.country', 'c')
