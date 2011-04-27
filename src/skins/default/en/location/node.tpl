@@ -18,7 +18,8 @@
 
   <ul class="location-subnodes" IF="getSubnodes()">
     <li FOREACH="getSubnodes(),node">
-      <a href="{node.getLink()}">{node.getName()}</a>
+      <a href="{node.getLink()}" IF="!node.getName()=getName()">{node.getName()}</a>
+      <a href="{node.getLink()}" IF="node.getName()=getName()" class="current">{node.getName()}</a>
     </li>
   </ul>
 
