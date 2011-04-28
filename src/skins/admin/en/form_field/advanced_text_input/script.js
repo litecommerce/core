@@ -92,6 +92,7 @@ AdvancedInputHandler.prototype.enterValue = function (widget)
 {
   widget.label.html(widget.input.val()).show();
   widget.inputBlock.hide();
+
   jQuery('body').unbind('click');
 }
 
