@@ -58,7 +58,7 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return 'Shippings';
+        return 'Shipping';
     }
 
     /**
