@@ -13,4 +13,5 @@
  * @ListChild (list="upgrade.step.prepare.incompatible_entries.table.columns", weight="200")
  *}
 
-X
+<td IF="isModuleToDisable(entry)">X</td>
+<td IF="!isModuleToDisable(entry)">?</td>

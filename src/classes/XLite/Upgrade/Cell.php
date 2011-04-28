@@ -73,6 +73,15 @@ class Cell extends \XLite\Base\Singleton
      */
     protected $coreVersions;
 
+    /**
+     * List of incompatible modules 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $incompatibleModules = array();
+
     // {{{ Public methods
 
     /**
@@ -88,6 +97,23 @@ class Cell extends \XLite\Base\Singleton
     }
 
     /**
+     * Return list of incompatible modules 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getIncompatibleModules()
+    {
+        return array_filter(
+            array_map(
+                array(\XLite\Core\Database::getRepo('\XLite\Model\Module'), 'find'),
+                $this->incompatibleModules
+            )
+        );
+    }
+
+    /**
      * Method to clean up cell
      * 
      * @param boolean $clearCoreVersion Flag OPTIONAL
@@ -99,6 +125,7 @@ class Cell extends \XLite\Base\Singleton
     public function clear($clearCoreVersion = true)
     {
         $this->entries = array();
+        $this->incompatibleModules = array();
 
         if ($clearCoreVersion) {
             $this->coreVersion = null;
@@ -146,8 +173,13 @@ class Cell extends \XLite\Base\Singleton
             );
         }
 
+        $hash = $module->getActualName();
+
         if ($toUpgrade) {
-            $this->addEntry(md5($module->getActualName()), 'Module\Marketplace', array($module, $toUpgrade));
+            $this->addEntry($hash, 'Module\Marketplace', array($module, $toUpgrade));
+
+        } elseif ($module->getEnabled()) {
+            $this->incompatibleModules[$hash] = $module->getModuleID();
         }
     }
 
@@ -263,7 +295,10 @@ class Cell extends \XLite\Base\Singleton
      */
     public function __destruct()
     {
-        \XLite\Core\TmpVars::getInstance()->{self::CELL_NAME} = $this->entries;
+        \XLite\Core\TmpVars::getInstance()->{self::CELL_NAME} = array(
+            $this->entries,
+            $this->incompatibleModules
+        );
     }
 
     /**
@@ -280,10 +315,11 @@ class Cell extends \XLite\Base\Singleton
         // Upload addons info into the database
         \XLite\Core\Marketplace::getInstance()->saveAddonsList($this->getCacheTTL());
 
-        $cache = \XLite\Core\TmpVars::getInstance()->{self::CELL_NAME};
+        list($entries, $incompatibleModules) = \XLite\Core\TmpVars::getInstance()->{self::CELL_NAME};
 
-        if (is_array($cache)) {
-            $this->entries = array_merge($this->entries, $cache);
+        if (is_array($entries)) {
+            $this->entries = array_merge($this->entries, $entries);
+            $this->incompatibleModules = array_merge($this->incompatibleModules, (array) $incompatibleModules);
         } else {
             $this->collectEntries();
         }

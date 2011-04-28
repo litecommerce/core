@@ -13,4 +13,7 @@
  * @ListChild (list="upgrade.step.prepare.incompatible_entries.table.columns", weight="100")
  *}
 
-{module.getModuleName()} <span>({t(#by#)} {module.getModuleAuthor()})</span>
+<td>
+  {entry.getModuleName()} 
+  <span>({t(#by#)} {entry.getAuthorName()})</span>
+</td>
