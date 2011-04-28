@@ -81,7 +81,7 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
      */
     protected function isVisible()
     {
-        return parent::isVisible()/* && $this->getIncompatibleEntries()*/;
+        return parent::isVisible() && $this->getIncompatibleEntries();
     }
 
     /**
@@ -93,20 +93,65 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
      */
     protected function getIncompatibleEntries()
     {
-        return array();
+        $result = array();
+
+        foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules() as $module) {
+            if ($this->isModuleToDisable($module) || $this->isModuleCustom($module)) {
+                $result[] = $module;
+            }
+        }
+
+        return $result;
     }
 
     /**
      * Helper to get CSS class
      *
-     * @param \XLite\Upgrade\Entry\AEntry $entry Current entry
+     * @param \XLite\Model\Module $module Current module
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getEntryRowCSSClass(\XLite\Upgrade\Entry\AEntry $entry)
+    protected function getEntryRowCSSClass(\XLite\Model\Module $module)
     {
         return '';
+    }
+
+    /**
+     * Check if module will be disabled after upgrade
+     * 
+     * @param \XLite\Model\Module $module Module to check
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isModuleToDisable(\XLite\Model\Module $module)
+    {
+        $versionCore   = \XLite\Upgrade\Cell::getInstance()->getCoreMajorVersion();
+        $versionModule = $module->getMajorVersion();
+
+        $classModule = \Includes\Decorator\Utils\ModulesManager::getClassNameByModuleName($module->getActualName());
+        $reflection  = new \ReflectionMethod($classModule, 'getMajorVersion');
+
+        $classModule = \Includes\Utils\Converter::prepareClassName($classModule);
+        $classActual = \Includes\Utils\Converter::prepareClassName($reflection->getDeclaringClass()->getName());
+
+        return version_compare($versionModule, $versionCore, '<') && $classModule === $classActual;
+    }
+
+    /**
+     * Check for custom module
+     *
+     * @param \XLite\Model\Module $module Module to check
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isModuleCustom(\XLite\Model\Module $module)
+    {
+        return $module->isCustom();
     }
 }

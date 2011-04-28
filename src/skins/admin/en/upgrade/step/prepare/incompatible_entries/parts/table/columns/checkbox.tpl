@@ -13,5 +13,8 @@
  * @ListChild (list="upgrade.step.prepare.incompatible_entries.table.columns", weight="300")
  *}
 
-<input type="checkbox" name="toDisable[]" value="1" />
-<label for="toDisable">{t(#Disable#)}</label>
+<td>
+  <input IF="isModuleToDisable(entry)" type="checkbox" name="toDisable[{entry.getModuleID()}]" value="1" disabled="disabled" checked="checked" />
+  <input IF="!isModuleToDisable(entry)" type="checkbox" name="toDisable[{entry.getModuleID()}]" value="1" />
+  <label for="toDisable">{t(#Disable#)}</label>
+</td>

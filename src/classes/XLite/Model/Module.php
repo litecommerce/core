@@ -472,6 +472,18 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
+     * Check for custom module 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isCustom()
+    {
+        return $this->getRepository()->getModuleFromMarketplace($this)->getModuleID() === $this->getModuleID();
+    }
+
+    /**
      * Search for license key
      * 
      * @return \XLite\Model\ModuleKey
