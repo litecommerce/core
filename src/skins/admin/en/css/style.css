@@ -846,7 +846,7 @@ button.invert:hover
 .table-label
 {
   white-space: nowrap;
-  vertical-align: top;
+  vertical-align: middle;
 }
 
 .profile-form .table-label
