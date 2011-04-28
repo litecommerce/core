@@ -132,6 +132,6 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function getConfigFile()
     {
-        return LC_INCLUDES_DIR . 'Decorator' . LC_DS . self::FILE_INI;
+        return LC_DIR_INCLUDES . 'Decorator' . LC_DS . self::FILE_INI;
     }
 }

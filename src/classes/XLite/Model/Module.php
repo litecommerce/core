@@ -504,7 +504,7 @@ class Module extends \XLite\Model\AEntity
      */
     public function getRootDirectory()
     {
-        return LC_MODULES_DIR . $this->getPath() . LC_DS;
+        return LC_DIR_MODULES . $this->getPath() . LC_DS;
     }
 
     /**

@@ -229,7 +229,7 @@ class Mailer extends \XLite\View\AView
         $this->set('body', $this->compile($dir . $this->get('bodyTemplate'), $interface));
 
         // find all images and fetch them; replace with cid:...
-        $fname = tempnam(LC_COMPILE_DIR, 'mail');
+        $fname = tempnam(LC_DIR_COMPILE, 'mail');
 
         file_put_contents($fname, $this->get('body'));
 
@@ -418,7 +418,7 @@ class Mailer extends \XLite\View\AView
         if (!isset($this->mail)) {
 
             // Initialize PHPMailer
-            include_once LC_LIB_DIR . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
+            include_once LC_DIR_LIB . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
 
             $this->mail = new \PHPMailer();
 

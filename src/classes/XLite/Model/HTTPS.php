@@ -330,7 +330,7 @@ class HTTPS extends \XLite\Base
      */
     public function __construct()
     {
-        include_once LC_LIB_DIR . 'Net' . LC_DS . 'URL2.php';
+        include_once LC_DIR_LIB . 'Net' . LC_DS . 'URL2.php';
     }
 
     // {{{ Getters and setters
@@ -1153,7 +1153,7 @@ class HTTPS extends \XLite\Base
             $dir = sys_get_temp_dir();
 
         } else {
-            $dir = LC_VAR_DIR;
+            $dir = LC_DIR_VAR;
         }
 
         return tempnam($dir, $name);

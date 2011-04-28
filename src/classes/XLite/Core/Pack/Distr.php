@@ -124,7 +124,7 @@ class Distr extends \XLite\Core\Pack\APack
      */
     public function getDirectoryIterator()
     {
-        $result = new \Includes\Utils\FileFilter(LC_ROOT_DIR);
+        $result = new \Includes\Utils\FileFilter(LC_DIR_ROOT);
         $result = $result->getIterator();
         $this->preparePatterns();
         $result->registerCallback(array($this, 'filterCoreFiles'));
@@ -188,7 +188,7 @@ class Distr extends \XLite\Core\Pack\APack
     public function filterCoreFiles(\Includes\Utils\FileFilter\FilterIterator $iterator)
     {
         // Relative path in LC root directory
-        $path = \Includes\Utils\FileManager::getRelativePath($iterator->getPathname(), LC_ROOT_DIR);
+        $path = \Includes\Utils\FileManager::getRelativePath($iterator->getPathname(), LC_DIR_ROOT);
 
         return !preg_match($this->excludePattern, $path)
             || preg_match($this->includePattern, $path);

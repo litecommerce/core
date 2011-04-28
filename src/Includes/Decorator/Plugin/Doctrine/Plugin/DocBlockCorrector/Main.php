@@ -75,7 +75,7 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 
             // Write changes to FS
             \Includes\Utils\FileManager::write(
-                $path = LC_CLASSES_CACHE_DIR . $node->getPath(), 
+                $path = LC_DIR_CACHE_CLASSES . $node->getPath(), 
                 \Includes\Decorator\Utils\Tokenizer::getSourceCode($path, null, null, null, self::DOC_BLOCK)
             );
         }

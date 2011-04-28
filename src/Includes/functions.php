@@ -848,8 +848,8 @@ function func_htmlspecialchars($str) {
 function isLiteCommerceInstalled($dbURL = null, &$message)
 {
     // Check by template and config.php file
-    $checkResult = file_exists(LC_SKINS_DIR . 'admin/en/welcome.tpl')
-        && file_exists(LC_CONFIG_DIR . 'config.php');
+    $checkResult = file_exists(LC_DIR_SKINS . 'admin/en/welcome.tpl')
+        && file_exists(LC_DIR_CONFIG . 'config.php');
 
     if ($checkResult) {
 

@@ -239,7 +239,7 @@ class Database extends \XLite\Base\Singleton
         } else {
 
             // Default cache - file system cache
-            $cache = new \XLite\Core\FileCache(LC_DATACACHE_DIR);
+            $cache = new \XLite\Core\FileCache(LC_DIR_DATACACHE);
 
         }
 
@@ -422,12 +422,12 @@ class Database extends \XLite\Base\Singleton
         // Set metadata driver
         $chain = new \Doctrine\ORM\Mapping\Driver\DriverChain();
         $chain->addDriver(
-            $this->configuration->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR),
+            $this->configuration->newDefaultAnnotationDriver(LC_DIR_CACHE_MODEL),
             'XLite\Model'
         );
 
         $iterator = new \RecursiveDirectoryIterator(
-            LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module',
+            LC_DIR_CACHE_CLASSES . 'XLite' . LC_DS . 'Module',
             \FilesystemIterator::SKIP_DOTS
         );
 
@@ -459,7 +459,7 @@ class Database extends \XLite\Base\Singleton
         $this->configuration->setMetadataDriverImpl($chain);
 
         // Set proxy settings
-        $this->configuration->setProxyDir(LC_PROXY_CACHE_DIR);
+        $this->configuration->setProxyDir(LC_DIR_CACHE_PROXY);
         $this->configuration->setProxyNamespace(LC_MODEL_PROXY_NS);
         $this->configuration->setAutoGenerateProxyClasses(false);
 
@@ -516,7 +516,7 @@ class Database extends \XLite\Base\Singleton
     {
         // Suppose that $path is var directory if it's null
         if (!$path) {
-            $path = LC_VAR_DIR;
+            $path = LC_DIR_VAR;
         }
 
         // Prepare file path
@@ -1454,7 +1454,7 @@ OUT;
      */
     protected function getDisabledStructuresPath()
     {
-        return LC_VAR_DIR . '.disabled.structures.php';
+        return LC_DIR_VAR . '.disabled.structures.php';
     }
 
     /**

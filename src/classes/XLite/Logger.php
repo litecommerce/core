@@ -117,7 +117,7 @@ class Logger extends \XLite\Base\Singleton
      */
     public function __construct()
     {
-        include_once LC_LIB_DIR . 'Log.php';
+        include_once LC_DIR_LIB . 'Log.php';
 
         $this->options = array_merge(
             $this->options,
@@ -491,7 +491,7 @@ class Logger extends \XLite\Base\Singleton
      */
     protected function getErrorLogPath()
     {
-        return LC_VAR_DIR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php';
+        return LC_DIR_VAR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php';
     }
 
     /**

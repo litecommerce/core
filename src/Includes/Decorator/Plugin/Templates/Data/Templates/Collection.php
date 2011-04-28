@@ -59,7 +59,7 @@ class Collection
     protected function getFileIterator()
     {
         return new \Includes\Utils\FileFilter(
-            LC_SKINS_DIR,
+            LC_DIR_SKINS,
             \Includes\Decorator\Utils\ModulesManager::getPathPatternForTemplates()
         );
     }

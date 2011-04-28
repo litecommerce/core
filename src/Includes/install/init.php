@@ -55,7 +55,7 @@ umask(0);
 
 require_once realpath(dirname(__FILE__) . '/../..') . '/top.inc.php';
 
-require_once constant('LC_ROOT_DIR') . 'Includes/install/install_settings.php';
+require_once constant('LC_DIR_ROOT') . 'Includes/install/install_settings.php';
 
 // suphp mode
 define('LC_SUPHP_MODE', get_php_execution_mode());

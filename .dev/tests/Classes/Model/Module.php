@@ -161,7 +161,7 @@ class XLite_Tests_Model_Module extends XLite_Tests_Model_ModuleAbstract
 
     public function testProtectedStructures()
     {
-        $path = LC_VAR_DIR . '.disabled.structures.php';
+        $path = LC_DIR_VAR . '.disabled.structures.php';
 
         if (file_exists($path)) {
             unlink($path);

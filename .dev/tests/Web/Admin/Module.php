@@ -47,14 +47,14 @@ class XLite_Web_Admin_Module extends XLite_Web_Admin_AAdmin
 
         \Includes\Utils\FileManager::copyRecursive(
             $testModulesDir,
-            LC_MODULES_DIR . 'Test'
+            LC_DIR_MODULES . 'Test'
         );
     }
 
     protected function tearDown()
     {
         \Includes\Utils\FileManager::unlinkRecursive(
-            LC_MODULES_DIR . 'Test'
+            LC_DIR_MODULES . 'Test'
         );
 
         parent::tearDown();
