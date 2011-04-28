@@ -143,7 +143,7 @@
     <tr>
 
       <td>
-        <widget class="\XLite\View\Button\Regular" id="add" label="Add category" jsCode="onAddChildClick({getCategoryId()})" />
+        <widget class="\XLite\View\Button\Regular" id="add" label="Add subcategory" jsCode="onAddChildClick({getCategoryId()})" />
       </td>		
 
       <td align="right" IF="category&category.getSubCategoriesCount()">
