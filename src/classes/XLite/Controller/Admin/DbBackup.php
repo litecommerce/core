@@ -56,7 +56,7 @@ class DbBackup extends \XLite\Controller\Admin\Base\BackupRestore
             $this->startDump();
 
         } else {
-            $destFile = LC_BACKUP_DIR . sprintf('sqldump.backup.%d.sql', time());
+            $destFile = LC_DIR_BACKUP . sprintf('sqldump.backup.%d.sql', time());
             $this->startDownload('db_backup.sql');
         }
 

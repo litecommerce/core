@@ -145,7 +145,7 @@ abstract class PackManager extends \XLite\Controller\Admin\AAdmin
      */
     protected function getTempDir()
     {
-        return LC_TMP_DIR;
+        return LC_DIR_TMP;
     }
 
     // }}}

@@ -110,22 +110,22 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
         $result = function_exists('dgettext');
 
         if ($result) {
-            if (!file_exists(LC_LOCALE_DIR)) {
-                \Includes\Utils\FileManager::mkdirRecursive(LC_LOCALE_DIR);
+            if (!file_exists(LC_DIR_LOCALE)) {
+                \Includes\Utils\FileManager::mkdirRecursive(LC_DIR_LOCALE);
             }
 
-            if (!file_exists(LC_TMP_DIR)) {
-                \Includes\Utils\FileManager::mkdirRecursive(LC_TMP_DIR);
+            if (!file_exists(LC_DIR_TMP)) {
+                \Includes\Utils\FileManager::mkdirRecursive(LC_DIR_TMP);
             }
 
-            $result = file_exists(LC_LOCALE_DIR)
-                && is_dir(LC_LOCALE_DIR)
-                && is_readable(LC_LOCALE_DIR)
-                && is_writable(LC_LOCALE_DIR)
-                && file_exists(LC_TMP_DIR)
-                && is_dir(LC_TMP_DIR)
-                && is_readable(LC_TMP_DIR)
-                && is_writable(LC_TMP_DIR);
+            $result = file_exists(LC_DIR_LOCALE)
+                && is_dir(LC_DIR_LOCALE)
+                && is_readable(LC_DIR_LOCALE)
+                && is_writable(LC_DIR_LOCALE)
+                && file_exists(LC_DIR_TMP)
+                && is_dir(LC_DIR_TMP)
+                && is_readable(LC_DIR_TMP)
+                && is_writable(LC_DIR_TMP);
         }
 
         return $result;
@@ -140,7 +140,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      */
     public function reset()
     {
-        \Includes\Utils\FileManager::unlinkRecursive(LC_LOCALE_DIR);
+        \Includes\Utils\FileManager::unlinkRecursive(LC_DIR_LOCALE);
 
         $this->domains = array();
         $this->lastLanguage = null;
@@ -205,7 +205,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
     protected function getDomain($code)
     {
         if (!isset($this->domains[$code])) {
-            $pattern = LC_LOCALE_DIR . LC_DS . $this->getLocaleByCode($code) . LC_DS . self::CATEGORY . LC_DS . '*.mo';
+            $pattern = LC_DIR_LOCALE . LC_DS . $this->getLocaleByCode($code) . LC_DS . self::CATEGORY . LC_DS . '*.mo';
             foreach (glob($pattern) as $file) {
                 $this->domains[$code] = substr(basename($file), 0, -3);
                 break;
@@ -215,7 +215,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
                 $this->domains[$code] = self::DOMAIN . '.' . (string)microtime(true);
             }
 
-            bindtextdomain($this->domains[$code], LC_LOCALE_DIR);
+            bindtextdomain($this->domains[$code], LC_DIR_LOCALE);
             bind_textdomain_codeset($this->domains[$code], self::CHARSET);
         }
 
@@ -235,7 +235,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
     {
         $result = true;
 
-        $path = LC_LOCALE_DIR . LC_DS . $this->getLocaleByCode($code) . LC_DS . self::CATEGORY;
+        $path = LC_DIR_LOCALE . LC_DS . $this->getLocaleByCode($code) . LC_DS . self::CATEGORY;
         if (!file_exists($path)) {
             \Includes\Utils\FileManager::mkdirRecursive($path);
         }
@@ -338,10 +338,10 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
 
         $result = false;
 
-        if (!file_exists(LC_TMP_DIR)) {
-            \Includes\Utils\FileManager::mkdirRecursive(LC_TMP_DIR);
+        if (!file_exists(LC_DIR_TMP)) {
+            \Includes\Utils\FileManager::mkdirRecursive(LC_DIR_TMP);
         }
-        $poPath = LC_TMP_DIR . 'translate.' . $code . '.po';
+        $poPath = LC_DIR_TMP . 'translate.' . $code . '.po';
         $fp = @fopen($poPath, 'wb');
         if ($fp) {
 

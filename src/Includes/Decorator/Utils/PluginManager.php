@@ -77,6 +77,10 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
                 static::$plugins[$plugin] = $instance = new $class();
             }
 
+            // Show message
+            static::showMessage('Run the "' . $plugin . '" plugin...');
+
+            // Execute plugin main method
             $instance->{'executeHookHandler' . ucfirst(\Includes\Utils\Converter::convertToCamelCase($hook))}();
         }
     }
@@ -128,6 +132,6 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function getConfigFile()
     {
-        return LC_INCLUDES_DIR . 'Decorator' . LC_DS . self::FILE_INI;
+        return LC_DIR_INCLUDES . 'Decorator' . LC_DS . self::FILE_INI;
     }
 }

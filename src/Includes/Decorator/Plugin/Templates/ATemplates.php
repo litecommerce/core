@@ -108,7 +108,7 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
     protected function getTemplateFileIterator()
     {
         return new \Includes\Utils\FileFilter(
-            LC_SKINS_DIR,
+            LC_DIR_SKINS,
             \Includes\Decorator\Utils\ModulesManager::getPathPatternForTemplates()
         );
     }
@@ -128,7 +128,7 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
     {
         foreach ($data as $tags) {
 
-            $template = \Includes\Utils\FileManager::getRelativePath($path, LC_SKINS_DIR);
+            $template = \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_SKINS);
             $skin = \Includes\Utils\ArrayManager::getIndex(explode(LC_DS, $template), 0, true);
             $zone = array_search($skin, static::$zones) ?: \XLite\Model\ViewList::INTERFACE_CUSTOMER;
             $template = substr($template, strpos($template, LC_DS) + ('common' == $skin ? 1 : 4));

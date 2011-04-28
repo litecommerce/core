@@ -369,7 +369,7 @@ CODE;
     {
         foreach ($this->replacements as $file => $code) {
             \Includes\Utils\FileManager::write(
-                $file = LC_CLASSES_CACHE_DIR . $file,
+                $file = LC_DIR_CACHE_CLASSES . $file,
                 \Includes\Decorator\Utils\Tokenizer::addCodeToClassBody($file, $code)
             );
         }

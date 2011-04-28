@@ -41,6 +41,7 @@
 <widget target="product_list" template="product/product_list_form.tpl">
 
 <widget target="product" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
+<widget target="add_product" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page" />
 
 <widget target="profile" template="common/dialog.tpl" head="Delete profile - Confirmation" body="profile/confirm_delete.tpl" IF="mode=#delete#" />
 

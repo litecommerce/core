@@ -60,7 +60,7 @@ abstract class Autoloader
      * @see    ____var_see____
      * @since  1.0.0
      */
-    protected static $lcAutoloadDir = LC_CLASSES_CACHE_DIR;
+    protected static $lcAutoloadDir = LC_DIR_CACHE_CLASSES;
 
     /**
      * Register the autoload function for the Doctrine library
@@ -72,12 +72,12 @@ abstract class Autoloader
      */
     protected static function registerDoctrineAutoloader()
     {
-        require_once (LC_LIB_DIR . 'Doctrine' . LC_DS . 'Common' . LC_DS . 'ClassLoader.php');
+        require_once (LC_DIR_LIB . 'Doctrine' . LC_DS . 'Common' . LC_DS . 'ClassLoader.php');
 
-        $loader = new \Doctrine\Common\ClassLoader('Doctrine', rtrim(LC_LIB_DIR, LC_DS));
+        $loader = new \Doctrine\Common\ClassLoader('Doctrine', rtrim(LC_DIR_LIB, LC_DS));
         $loader->register();
 
-        $loader = new \Doctrine\Common\ClassLoader('Symfony', rtrim(LC_LIB_DIR, LC_DS));
+        $loader = new \Doctrine\Common\ClassLoader('Symfony', rtrim(LC_DIR_LIB, LC_DS));
         $loader->register();
     }
 
@@ -90,7 +90,7 @@ abstract class Autoloader
      */
     protected static function registerPEARAutolader()
     {
-        require_once (LC_LIB_DIR . 'PEAR2' . LC_DS . 'Autoload.php');
+        require_once (LC_DIR_LIB . 'PEAR2' . LC_DS . 'Autoload.php');
     }
 
     /**
@@ -154,7 +154,7 @@ abstract class Autoloader
      */
     public static function __lc_autoload_includes($class)
     {
-        self::autoloadCommon(LC_NAMESPACE_INCLUDES, $class, LC_ROOT_DIR);
+        self::autoloadCommon(LC_NAMESPACE_INCLUDES, $class, LC_DIR_ROOT);
     }
 
     /**
@@ -222,6 +222,6 @@ abstract class Autoloader
      */
     public static function switchLCAutoloadDir()
     {
-        static::$lcAutoloadDir = LC_CLASSES_DIR;
+        static::$lcAutoloadDir = LC_DIR_CLASSES;
     }
 }

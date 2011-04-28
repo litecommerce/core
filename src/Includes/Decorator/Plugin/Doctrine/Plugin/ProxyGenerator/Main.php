@@ -50,7 +50,7 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
         if (!$this->areProxiesExist()) {
 
             // Create the proxies folder
-            \Includes\Utils\FileManager::mkdirRecursive(LC_PROXY_CACHE_DIR);
+            \Includes\Utils\FileManager::mkdirRecursive(LC_DIR_CACHE_PROXY);
 
             // Create model proxy classes (second step of cache generation)
             \Includes\Decorator\Plugin\Doctrine\Utils\EntityManager::generateProxies();
@@ -67,6 +67,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      */
     protected function areProxiesExist()
     {
-        return \Includes\Utils\FileManager::isDirReadable(LC_PROXY_CACHE_DIR);
+        return \Includes\Utils\FileManager::isDirReadable(LC_DIR_CACHE_PROXY);
     }
 }

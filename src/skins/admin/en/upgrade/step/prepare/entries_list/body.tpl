@@ -11,9 +11,4 @@
  * @since     1.0.0
  *}
 
-<table cellspacing="0" cellpadding="0" border="1">
-  <tr>{displayInheritedViewListContent(#header#)}</tr>
-  <tr FOREACH="getUpgradeEntries(),entry" class="{getEntryRowCSSClass(entry)}">
-    {displayInheritedViewListContent(#columns#,_ARRAY_(#entry#^entry))}
-  </tr>
-</table>
+{displayInheritedViewListContent(#sections#)}

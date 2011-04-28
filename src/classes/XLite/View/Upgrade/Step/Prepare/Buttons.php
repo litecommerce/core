@@ -29,14 +29,14 @@
 namespace XLite\View\Upgrade\Step\Prepare;
 
 /**
- * Errors
+ * Buttons
  * 
  * @see   ____class_see____
  * @since 1.0.0
  *
- * @ListChild (list="admin.center", weight="200", zone="admin")
+ * @ListChild (list="admin.center", weight="300", zone="admin")
  */
-class Errors extends \XLite\View\Upgrade\Step\Prepare\APrepare
+class Buttons extends \XLite\View\Upgrade\Step\Prepare\APrepare
 {
     /**
      * Get directory where template is located (body.tpl)
@@ -47,7 +47,7 @@ class Errors extends \XLite\View\Upgrade\Step\Prepare\APrepare
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'errors';
+        return parent::getDir() . LC_DS . 'buttons';
     }
 
     /**
@@ -59,6 +59,6 @@ class Errors extends \XLite\View\Upgrade\Step\Prepare\APrepare
      */
     protected function getListName()
     {
-        return parent::getListName() . '.errors';
+        return parent::getListName() . '.buttons';
     }
 }

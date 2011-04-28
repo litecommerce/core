@@ -97,7 +97,7 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
             if (function_exists($func)) {
                 $data = $image->getBody();
 
-                $fn = tempnam(LC_TMP_DIR, 'image');
+                $fn = tempnam(LC_DIR_TMP, 'image');
 
                 file_put_contents($fn, $data);
                 unset($data);
@@ -170,7 +170,7 @@ class GD extends \XLite\Core\ImageOperator\AImageOperator
 
             if (\XLite::getInstance()->getOptions(array('images', 'unsharp_mask_filter_on_resize'))) {
                         
-                include_once LC_LIB_DIR . 'phpunsharpmask.php';
+                include_once LC_DIR_LIB . 'phpunsharpmask.php';
 
                 $unsharpImage = UnsharpMask($this->image);
                 if ($unsharpImage) {
