@@ -39,9 +39,9 @@ abstract class ADecorator
     /**
      * Cache building steps
      */
-    const STEP_FIRST  = 'first';
-    const STEP_SECOND = 'second';
-    const STEP_THIRD  = 'third';
+    const STEP_FIRST  = 1;
+    const STEP_SECOND = 2;
+    const STEP_THIRD  = 3;
 
 
     /**
@@ -115,5 +115,19 @@ abstract class ADecorator
     protected static function getClassesDir()
     {
         return (self::STEP_FIRST === static::$step) ? LC_CLASSES_DIR : LC_CLASSES_CACHE_DIR;
+    }
+
+    /**
+     * Display a Decorator message
+     * 
+     * @param string $text Message text
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function showMessage($text)
+    {
+        \Includes\Utils\Operator::flush($text . (LC_IS_CLI_MODE ? "\n" : '<br />'), true);
     }
 }
