@@ -99,10 +99,8 @@ class Module extends \XLite\Model\Repo\ARepo
             $this->callSearchConditionHandler($value, $key, $queryBuilder);
         }
 
-        $result = $queryBuilder
-            ->addGroupBy('m.name')
-            ->addGroupBy('m.author')
-            ->getResult();
+        $this->addGroupByCondition($queryBuilder);
+        $result = $queryBuilder->getResult();
 
         return $countOnly ? count($result) : $result;
     }
@@ -198,6 +196,22 @@ class Module extends \XLite\Model\Repo\ARepo
         }
 
         return array_merge((array) $result, array_map('trim', explode(' ', $value)));
+    }
+
+    /**
+     * Prepare query builder to get modules list
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function addGroupByCondition(\Doctrine\ORM\QueryBuilder $queryBuilder)
+    {
+        $queryBuilder
+            ->addGroupBy('m.name')
+            ->addGroupBy('m.author');
     }
 
     /**

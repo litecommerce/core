@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * List of upgrade cell entries
+ * The "Continue" button
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,6 +9,8 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
+ *
+ * @ListChild (list="upgrade.step.prepare.buttons.sections", weight="200")
  *}
 
-{displayInheritedViewListContent(#sections#)}
+<widget class="\XLite\View\Button\Submit" label="Continue" />
