@@ -81,7 +81,7 @@ class ConfigParser extends AUtils
      */
     protected static function getMainFile()
     {
-        return LC_CONFIG_DIR . 'config.php';
+        return LC_DIR_CONFIG . 'config.php';
     }
 
     /**
@@ -178,7 +178,7 @@ class ConfigParser extends AUtils
      */
     protected static function parseLocalFile($fileName)
     {
-        return static::parseCommon(LC_CONFIG_DIR . LC_DS . $fileName);
+        return static::parseCommon(LC_DIR_CONFIG . LC_DS . $fileName);
     }
 
     /**

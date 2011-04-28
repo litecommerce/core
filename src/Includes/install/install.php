@@ -104,7 +104,7 @@ function getTextByLabel($label)
         }
 
         // Generate name of file that should contain language variables
-        $labelsFile = constant('LC_ROOT_DIR') . 'Includes/install/translations/' . $languageCode . '.php';
+        $labelsFile = constant('LC_DIR_ROOT') . 'Includes/install/translations/' . $languageCode . '.php';
 
         // Check if this file exists and include it (it must be correct php script, that is contained $translation array)
         if (file_exists($labelsFile)) {
@@ -146,7 +146,7 @@ function x_install_log($message = null)
         setcookie('lcdebug', true);
     } 
     
-    $fileName =  LC_VAR_DIR . 'log' . LC_DS . 'install_log.' . date('Y-m-d') . '.php';
+    $fileName =  LC_DIR_VAR . 'log' . LC_DS . 'install_log.' . date('Y-m-d') . '.php';
     $securityHeader = "<?php die(1); ?>\n";
 
     if (!file_exists($fileName) || $securityHeader > filesize($fileName)) {
@@ -446,7 +446,7 @@ function checkDocblocksSupport(&$errorMsg, $value = null)
  */
 function checkInstallScript(&$errorMsg, $value = null)
 {
-    $result = @file_exists(LC_ROOT_DIR . 'install.php');
+    $result = @file_exists(LC_DIR_ROOT . 'install.php');
     
     if (!$result) {
         $errorMsg = xtr('LiteCommerce installation script not found. Restore it  and try again');
@@ -875,12 +875,12 @@ function checkFilePermissions(&$errorMsg, &$value)
 
         $array = array();
 
-        if (!@is_writable(constant('LC_ROOT_DIR'))) {
-            $array[constant('LC_ROOT_DIR')] = '0777';
+        if (!@is_writable(constant('LC_DIR_ROOT'))) {
+            $array[constant('LC_DIR_ROOT')] = '0777';
         }
 
         foreach ($lcSettings['mustBeWritable'] as $object) {
-            $array = array_merge($array, checkPermissionsRecursive(constant('LC_ROOT_DIR') . $object));
+            $array = array_merge($array, checkPermissionsRecursive(constant('LC_DIR_ROOT') . $object));
         }
 
         if (!empty($array)) {
@@ -1164,7 +1164,7 @@ function doPrepareFixtures(&$params, $silentMode = false)
 
             $moduleFile = sprintf('classes/XLite/Module/%s/%s/install.yaml', $author, $moduleName);
 
-            if (file_exists(constant('LC_ROOT_DIR') . $moduleFile)) {
+            if (file_exists(constant('LC_DIR_ROOT') . $moduleFile)) {
                 $moduleYamlFiles[] = $moduleFile;
             }
         }
@@ -1213,7 +1213,7 @@ function doUpdateConfig(&$params, $silentMode = false)
     if ($isConnected) {
 
         // Write parameters into the config file
-        if (@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
+        if (@is_writable(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'))) {
             $configUpdated = change_config($params);
 
         } else {
@@ -1306,7 +1306,7 @@ function doBuildCache()
 {
     $result = true;
 
-    $data = parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'));
+    $data = parse_ini_file(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'));
 
     $url = 'http://' . $data['http_host'] . $data['web_dir'];
 
@@ -1492,12 +1492,12 @@ function doFinishInstallation(&$params, $silentMode = false)
 
         $_perms = array();
 
-        if (@is_writable(LC_ROOT_DIR)) {
-            $_perms[] = 'chmod 755 ' . LC_ROOT_DIR;
+        if (@is_writable(LC_DIR_ROOT)) {
+            $_perms[] = 'chmod 755 ' . LC_DIR_ROOT;
         }
 
-        if (@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
-            $_perms[] = "chmod 644 " . LC_CONFIG_DIR . constant('LC_CONFIG_FILE');
+        if (@is_writable(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'))) {
+            $_perms[] = "chmod 644 " . LC_DIR_CONFIG . constant('LC_CONFIG_FILE');
         }
 
         if (!empty($_perms)) {
@@ -1596,7 +1596,7 @@ function create_dirs($dirs)
 
     $dir_permission = 0777;
 
-    $data = @parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'));
+    $data = @parse_ini_file(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'));
 
     if(constant('LC_SUPHP_MODE') != 0) {
         $dir_permission = isset($data['privileged_permission_dir']) ? base_convert($data['privileged_permission_dir'], 8, 10) : 0711;
@@ -1608,10 +1608,10 @@ function create_dirs($dirs)
     foreach ($dirs as $val) {
         echo xtr('Creating directory: [:dirname] ... ', array(':dirname' => $val));
 
-        if (!@file_exists(constant('LC_ROOT_DIR') . $val)) {
-            $res = @mkdir(constant('LC_ROOT_DIR') . $val, $dir_permission);
+        if (!@file_exists(constant('LC_DIR_ROOT') . $val)) {
+            $res = @mkdir(constant('LC_DIR_ROOT') . $val, $dir_permission);
             $result &= $res;
-            $failedDirs[] = constant('LC_ROOT_DIR') . $val;
+            $failedDirs[] = constant('LC_DIR_ROOT') . $val;
             echo status($res);
 
         } else {
@@ -1641,12 +1641,12 @@ function create_dirs($dirs)
 function chmod_others_directories($dirs)
 {
     if (constant('LC_SUPHP_MODE') != 0) {
-        $data = @parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'));
+        $data = @parse_ini_file(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'));
         $dir_permission = isset($data['privileged_permission_dir']) ? base_convert($data['privileged_permission_dir'], 8, 10) : 0711;
 
         foreach($dirs as $dir) {
             echo $dir . '... ';
-            $result = @chmod(constant('LC_ROOT_DIR') . $dir, $dir_permission);
+            $result = @chmod(constant('LC_DIR_ROOT') . $dir, $dir_permission);
             echo status($result);
         }
     
@@ -1677,7 +1677,7 @@ function create_htaccess_files($files_to_create)
 
             echo xtr('Creating file: [:filename] ... ', array(':filename' => $file));
 
-            if ($fd = @fopen(constant('LC_ROOT_DIR') . $file, 'w')) {
+            if ($fd = @fopen(constant('LC_DIR_ROOT') . $file, 'w')) {
                 @fwrite($fd, $content);
                 @fclose($fd);
                 echo status(true);
@@ -1686,7 +1686,7 @@ function create_htaccess_files($files_to_create)
             } else {
                 echo status(false);
                 $result = false;
-                $failedFiles[] = constant('LC_ROOT_DIR') . $file;
+                $failedFiles[] = constant('LC_DIR_ROOT') . $file;
             }
 
             echo "<BR>\n";
@@ -1775,16 +1775,16 @@ function copy_files($source_dir, $parent_dir, $destination_dir, &$failedList)
     $dir_permission = 0777;
 
     if (constant('LC_SUPHP_MODE') != 0) {
-        $data = @parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'));
+        $data = @parse_ini_file(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'));
         $dir_permission = isset($data['privileged_permission_dir']) ? base_convert($data['privileged_permission_dir'], 8, 10) : 0711;
     }
 
-    if ($handle = @opendir(constant('LC_ROOT_DIR') . $source_dir)) {
+    if ($handle = @opendir(constant('LC_DIR_ROOT') . $source_dir)) {
 
         while (($file = readdir($handle)) !== false) {
 
-            $sourceFile = constant('LC_ROOT_DIR') . $source_dir . '/' . $file;
-            $destinationFile = constant('LC_ROOT_DIR') . $destination_dir . '/' . $parent_dir . '/' . $file;
+            $sourceFile = constant('LC_DIR_ROOT') . $source_dir . '/' . $file;
+            $destinationFile = constant('LC_DIR_ROOT') . $destination_dir . '/' . $parent_dir . '/' . $file;
 
             // .htaccess files must be already presented in the destination directory and they should't have writable permissions for web server user
             if (@is_file($sourceFile) && $file != '.htaccess') {
@@ -1845,7 +1845,7 @@ function copy_files($source_dir, $parent_dir, $destination_dir, &$failedList)
     } else {
         echo status(false) . "<br />\n";
         $result = false;
-        $failedList[] = sprintf('opendir(%s)', constant('LC_ROOT_DIR') . $source_dir);
+        $failedList[] = sprintf('opendir(%s)', constant('LC_DIR_ROOT') . $source_dir);
     }
 
     return $result;
@@ -1868,12 +1868,12 @@ function change_config(&$params)
     // check whether config file is writable
     clearstatcache();
 
-    if (!@is_readable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE')) || !@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
+    if (!@is_readable(LC_DIR_CONFIG . constant('LC_CONFIG_FILE')) || !@is_writable(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'))) {
         return false;
     }
 
     // read file content
-    if (!$config = file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
+    if (!$config = file(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'))) {
         return false;
     }
 
@@ -1948,7 +1948,7 @@ function change_config(&$params)
  */
 function save_config($content)
 {
-    $handle = fopen(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'), 'wb');
+    $handle = fopen(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'), 'wb');
     fwrite($handle, $content);
     fclose($handle);
     return $handle ? true : $handle;
@@ -2421,10 +2421,10 @@ function message($txt) {
 function rename_install_script()
 {
     $install_name = md5(uniqid(rand(), true)) . '.php';
-    @rename(LC_ROOT_DIR . 'install.php', LC_ROOT_DIR . $install_name);
+    @rename(LC_DIR_ROOT . 'install.php', LC_DIR_ROOT . $install_name);
     @clearstatcache();
 
-    $result = (!@file_exists(LC_ROOT_DIR . 'install.php') && @file_exists(LC_ROOT_DIR . $install_name) ? $install_name : false);
+    $result = (!@file_exists(LC_DIR_ROOT . 'install.php') && @file_exists(LC_DIR_ROOT . $install_name) ? $install_name : false);
     
     if ($result) {
         x_install_log(xtr('Installation script renamed to :filename', array(':filename' => $install_name)));
@@ -2574,7 +2574,7 @@ function check_authcode(&$params)
  */
 function get_authcode()
 {
-    if (!$data = @parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
+    if (!$data = @parse_ini_file(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'))) {
         fatal_error(xtr('Config file not found (:filename)', array(':filename' => constant('LC_CONFIG_FILE'))));
     }
 
@@ -2601,7 +2601,7 @@ function save_authcode(&$params) {
     // generate new authcode
     $auth_code = generate_authcode();
 
-    if (!@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE')) || !$config = file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
+    if (!@is_writable(LC_DIR_CONFIG . constant('LC_CONFIG_FILE')) || !$config = file(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'))) {
         message(xtr('Cannot open config file \':filename\' for writing!', array(':filename' => constant('LC_CONFIG_FILE'))));
         exit();
     }
@@ -2753,7 +2753,7 @@ function module_default(&$params)
 {
     global $error;
 
-    include LC_ROOT_DIR . 'Includes/install/templates/step0_copyright.tpl.php';
+    include LC_DIR_ROOT . 'Includes/install/templates/step0_copyright.tpl.php';
 
     return false;
 }
@@ -2844,7 +2844,7 @@ function module_check_cfg()
         )
     );
 
-    require_once LC_ROOT_DIR . 'Includes/install/templates/step1_chkconfig.tpl.php';
+    require_once LC_DIR_ROOT . 'Includes/install/templates/step1_chkconfig.tpl.php';
 
     $error = $tryAgain = $errorsFound || $warningsFound;
 
@@ -3036,7 +3036,7 @@ function module_cfg_install_db(&$params)
                 }
 
                 // Check if config.php file is writeable
-                if (!@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
+                if (!@is_writable(LC_DIR_CONFIG . constant('LC_CONFIG_FILE'))) {
                     fatal_error(xtr('Cannot open file \':filename\' for writing. To install the software, please correct the problem and start the installation again...', array(':filename' => constant('LC_CONFIG_FILE'))));
                     $checkError = true;
 

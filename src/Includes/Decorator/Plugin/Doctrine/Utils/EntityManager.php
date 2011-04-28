@@ -93,7 +93,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      */
     public static function generateModels()
     {
-        static::getEntityGenerator()->generate(static::getAllMetadata(), LC_CLASSES_CACHE_DIR);
+        static::getEntityGenerator()->generate(static::getAllMetadata(), LC_DIR_CACHE_CLASSES);
     }
 
     /**
@@ -106,7 +106,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      */
     public static function generateProxies()
     {
-        static::getProxyFactory()->generateProxyClasses(static::getAllMetadata(), LC_PROXY_CACHE_DIR);
+        static::getProxyFactory()->generateProxyClasses(static::getAllMetadata(), LC_DIR_CACHE_PROXY);
     }
 
     /**
@@ -184,7 +184,7 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
         static::setMetadataDriver($config);
 
         // Set proxy settings
-        $config->setProxyDir(LC_PROXY_CACHE_DIR);
+        $config->setProxyDir(LC_DIR_CACHE_PROXY);
         $config->setProxyNamespace(LC_MODEL_PROXY_NS);
 
         $cache = new \Doctrine\Common\Cache\ArrayCache();

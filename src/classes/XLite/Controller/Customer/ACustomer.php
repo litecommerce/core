@@ -143,7 +143,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      */
     protected function closeStorefront()
     {
-        include LC_SKINS_DIR . '/storefront_closed.html';
+        include LC_DIR_SKINS . '/storefront_closed.html';
         exit (0);
     }
 

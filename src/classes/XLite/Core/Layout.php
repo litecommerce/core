@@ -491,7 +491,7 @@ class Layout extends \XLite\Base\Singleton
                 foreach ($locales as $locale) {
                     $this->skinPaths[$interface][] = array(
                         'name' => $skin,
-                        'fs'   => LC_SKINS_DIR . $skin . ($locale ? LC_DS . $locale : ''),
+                        'fs'   => LC_DIR_SKINS . $skin . ($locale ? LC_DS . $locale : ''),
                         'web'  => static::PATH_SKIN . '/' . $skin . ($locale ? '/' . $locale : ''),
                     );
                 }

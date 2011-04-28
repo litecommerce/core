@@ -356,7 +356,7 @@ abstract class Image extends \XLite\Model\AEntity
         $result = true;
 
         if ($copy2fs) {
-            $fn = tempnam(LC_TMP_DIR, 'load_image');
+            $fn = tempnam(LC_DIR_TMP, 'load_image');
             $image = \XLite\Core\Operator::getURLContent($url);
             $result = ($image && file_put_contents($fn, $image))
                 ? $this->loadFromLocalFile($fn)
@@ -520,7 +520,7 @@ abstract class Image extends \XLite\Model\AEntity
                 $path = $this->path;
 
             } else {
-                $path = tempnam(LC_TMP_DIR, 'analyse_image');
+                $path = tempnam(LC_DIR_TMP, 'analyse_image');
                 file_put_contents($path, $this->getBody());
                 $isTempFile = true;
             }

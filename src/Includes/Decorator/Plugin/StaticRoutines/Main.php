@@ -109,7 +109,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      */
     protected function writeCallToSourceFile(\Includes\Decorator\DataStructure\Graph\Classes $node)
     {
-        $content = \Includes\Utils\FileManager::read($path = LC_CLASSES_CACHE_DIR . $node->getPath());
+        $content = \Includes\Utils\FileManager::read($path = LC_DIR_CACHE_CLASSES . $node->getPath());
 
         $content .= PHP_EOL . '// Call static constructor' . PHP_EOL;
         $content .= '\\' . $node->getClass() . '::' . self::STATIC_CONSTRUCTOR_METHOD . '();';

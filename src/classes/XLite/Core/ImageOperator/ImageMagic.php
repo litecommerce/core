@@ -71,7 +71,7 @@ class ImageMagic extends \XLite\Core\ImageOperator\AImageOperator
     {
         parent::setImage($image);
 
-        $this->image = tempnam(LC_TMP_DIR, 'image');
+        $this->image = tempnam(LC_DIR_TMP, 'image');
 
         file_put_contents($this->image, $image->getBody());
     }
@@ -102,7 +102,7 @@ class ImageMagic extends \XLite\Core\ImageOperator\AImageOperator
     {
         $path = \Includes\Utils\FileManager::findExecutable('convert');
 
-        $new = tempnam(LC_TMP_DIR, 'image.new');
+        $new = tempnam(LC_DIR_TMP, 'image.new');
 
         $output = array();
         $return = 0;

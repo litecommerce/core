@@ -67,10 +67,10 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @since 1.0.0
      */
     protected static $cacheDirs = array(
-        LC_COMPILE_DIR,
-        LC_LOCALE_DIR,
-        LC_DATACACHE_DIR,
-        LC_TMP_DIR,
+        LC_DIR_COMPILE,
+        LC_DIR_LOCALE,
+        LC_DIR_DATACACHE,
+        LC_DIR_TMP,
     );
 
 
@@ -206,7 +206,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function getCacheStateIndicatorFileName($step)
     {
-        return LC_COMPILE_DIR . '.cacheGenerated.' . $step . '.step';
+        return LC_DIR_COMPILE . '.cacheGenerated.' . $step . '.step';
     }
 
     /**
@@ -218,7 +218,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function getRebuildIndicatorFileName()
     {
-        return LC_VAR_DIR . '.rebuildStarted';
+        return LC_DIR_VAR . '.rebuildStarted';
     }
 
     /**

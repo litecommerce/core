@@ -324,7 +324,7 @@ abstract class AConsole extends \XLite\Controller\AController
     {
         $dir = function_exists('sys_get_temp_dir')
             ? sys_get_temp_dir() . LC_DS
-            : LC_VAR_DIR;
+            : LC_DIR_VAR;
 
         $path = tempnam($dir, 'input');
         file_put_contents($path, file_get_contents('php://stdin'));

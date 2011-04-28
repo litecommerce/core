@@ -54,7 +54,7 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
 
                 // :FIXME: is it needed?
                 if (!\Includes\Utils\FileManager::isFile($file)) {
-                    $file = LC_ROOT_DIR . $file;
+                    $file = LC_DIR_ROOT . $file;
                 }
 
                 if (\Includes\Utils\FileManager::isFileReadable($file)) {
@@ -94,7 +94,7 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
     public static function addFixtureToList($path)
     {
         $list = static::getFixtures();
-        $list[] = LC_ROOT_DIR . (preg_match('/^(?:sql|classes)/Ss', $path) ? $path : substr($path, strlen(LC_DIR) + 1));
+        $list[] = LC_DIR_ROOT . (preg_match('/^(?:sql|classes)/Ss', $path) ? $path : substr($path, strlen(LC_DIR) + 1));
 
         static::saveFile($list);
     }
@@ -109,7 +109,7 @@ abstract class FixturesManager extends \Includes\Decorator\Plugin\Doctrine\ADoct
      */
     protected static function getFixturesFilePath()
     {
-        return LC_VAR_DIR . '.decorator.fixtures.ini.php';
+        return LC_DIR_VAR . '.decorator.fixtures.ini.php';
     }
 
     /**

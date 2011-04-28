@@ -465,7 +465,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function moveUploadedFile($key, $dirTo = LC_TMP_DIR, $name = null)
+    public static function moveUploadedFile($key, $dirTo = LC_DIR_TMP, $name = null)
     {
         $path = null;
 

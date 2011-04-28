@@ -114,7 +114,7 @@ abstract class ADecorator
      */
     protected static function getClassesDir()
     {
-        return (self::STEP_FIRST === static::$step) ? LC_CLASSES_DIR : LC_CLASSES_CACHE_DIR;
+        return (self::STEP_FIRST === static::$step) ? LC_DIR_CLASSES : LC_DIR_CACHE_CLASSES;
     }
 
     /**
@@ -128,6 +128,6 @@ abstract class ADecorator
      */
     protected static function showMessage($text)
     {
-        \Includes\Utils\Operator::flush($text . (LC_IS_CLI_MODE ? "\n" : '<br />'), true);
+        \Includes\Utils\Operator::flush($text . LC_EOL, true);
     }
 }
