@@ -14,7 +14,8 @@
  *}
 
 <td>
-  <input IF="isModuleToDisable(entry)" type="checkbox" name="toDisable[{entry.getModuleID()}]" value="1" disabled="disabled" checked="checked" />
+  {* :FIXME: see the FlexyCompiler *}
+  <input IF="isModuleToDisable(entry)" type="checkbox" name="toDisable[{entry.getModuleID()}]" value="1" disabled="disabled" checked="1" />
   <input IF="!isModuleToDisable(entry)" type="checkbox" name="toDisable[{entry.getModuleID()}]" value="1" />
   <label for="toDisable">{t(#Disable#)}</label>
 </td>
