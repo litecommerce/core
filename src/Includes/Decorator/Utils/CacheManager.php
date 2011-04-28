@@ -101,21 +101,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
-     * getHTMLMessageContent 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function getHTMLMessageContent()
-    {
-        return '<table><tr><td><img src="'
-            . \Includes\Utils\URLManager::getShopURL('skins/progress_indicator.gif')
-            . '" alt="" /></td><td>' . static::getMessage() . '</td></tr></table>';
-    }
-
-    /**
-     * Get HTML notice block
+     * getHTMLMessage 
      * 
      * @return string
      * @see    ____func_see____
@@ -123,10 +109,9 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function getHTMLMessage()
     {
-        return '<script type="text/javascript">document.write(\''
-            . static::getHTMLMessageContent() . '\');</script>' . "\n"
-            . '<html>' . "\n" . '<body>' . "\n"
-            . '<noscript>' . static::getHTMLMessageContent() . '</noscript>' . "\n";
+        return '<table><tr><td><img src="'
+            . \Includes\Utils\URLManager::getShopURL('skins/progress_indicator.gif')
+            . '" alt="" /></td><td>' . static::getMessage() . '</td></tr></table>';
     }
 
     // }}}
@@ -192,7 +177,11 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function clear($step)
     {
-        !($file = static::getCacheStateIndicatorFileName($step)) ?: \Includes\Utils\FileManager::delete($file);
+        $file = static::getCacheStateIndicatorFileName($step);
+
+        if ($file) {
+            \Includes\Utils\FileManager::delete($file);
+        }
     }
 
     /**
@@ -294,7 +283,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
             static::getRebuildIndicatorFileContent()
         );
 
-        static::showMessage(LC_IS_CLI_MODE ? static::getPlainMessage() : static::getHTMLMessage());
+        \Includes\Utils\Operator::showMessage(LC_IS_CLI_MODE ? static::getPlainMessage() : static::getHTMLMessage());
     }
 
     /**
@@ -398,7 +387,7 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_CLEANUP);
 
         // Delete cache folders
-        static::showMessage('Cleaning up the cache...');
+        \Includes\Utils\Operator::showMessage('Cleaning up the cache...');
         static::cleanupCache();
 
         // Load classes from "classes" (do not use cache)
@@ -408,14 +397,14 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_DECORATE);
 
         // Main procedure: build decorator chains
-        static::showMessage('Building classes tree...');
+        \Includes\Utils\Operator::showMessage('Building classes tree...');
         static::getClassesTree()->walkThrough(array('\Includes\Decorator\Utils\Operator', 'decorateClass'));
 
         // Invoke plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_BEFORE_WRITE);
 
         // Write class files to FS
-        static::showMessage('Writing class files to the cache...');
+        \Includes\Utils\Operator::showMessage('Writing class files to the cache...');
         static::getClassesTree()->walkThrough(array('\Includes\Decorator\Utils\Operator', 'writeClassFile'));
 
         // Invoke plugins
