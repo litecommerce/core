@@ -592,6 +592,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
                 }
 
                 // Boolean-based attribute process
+                // :FIXME: <... disabled="disabled" checked="checked" ... /> does not work
 
                 $boolAttribute = false;
 
@@ -610,12 +611,15 @@ class FlexyCompiler extends \XLite\Base\Singleton
                     && isset($this->tokens[$pos + 1]['type'])
                     && 'attribute-value' == $this->tokens[$pos + 1]['type']
                 ) {
-                    $expr = $this->flexyCondition($this->getTokenText($pos + 1));
-                    $this->subst(
-                        $this->tokens[$pos]['start'],
-                        $this->tokens[$pos]['end'],
-                        self::PHP_OPEN . ' if (' . $expr . ') { echo \'' . $boolAttribute . '="' . $boolAttribute . '"\'; } ' . self::PHP_CLOSE
-                    );
+                    // :KLUDGE: see the FIXME above
+                    if (!preg_match('/\w+/', $text = $this->getTokenText($pos + 1))) {
+                        $expr = $this->flexyCondition($this->getTokenText($pos + 1));
+                        $this->subst(
+                            $this->tokens[$pos]['start'],
+                            $this->tokens[$pos]['end'],
+                            self::PHP_OPEN . ' if (' . $expr . ') { echo \'' . $boolAttribute . '="' . $boolAttribute . '"\'; } ' . self::PHP_CLOSE
+                        );
+                    }
                 }
 
                 if (!strcasecmp($token['name'], "widget")) {

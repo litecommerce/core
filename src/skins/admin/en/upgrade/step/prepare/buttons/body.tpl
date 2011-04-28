@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * List of upgrade cell entries
+ * Buttons
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,4 +11,11 @@
  * @since     1.0.0
  *}
 
-{displayInheritedViewListContent(#sections#)}
+<form action="admin.php" method="post">
+  <input type="hidden" name="target" value="upgrade" />
+  <input type="hidden" name="action" value="download" />
+
+  <widget class="\XLite\View\Upgrade\Step\Prepare\IncompatibleEntries" />
+
+  {displayInheritedViewListContent(#sections#)}
+</form>
