@@ -63,7 +63,7 @@ class Operator extends AUtils
      */
     protected static function getDummyBufferLength()
     {
-        return 256;
+        return 4096;
     }
 
     /**
