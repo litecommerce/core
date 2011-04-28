@@ -36,4 +36,28 @@ namespace XLite\View\ItemsList\Order\Admin;
  */
 class Recent extends \XLite\View\ItemsList\Order\Admin\Search
 {
+
+    /** 
+     * Return title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getHead()
+    {   
+        return null;
+    }   
+
+    /**
+     * getEmptyListTemplate 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getEmptyListTemplate()
+    {
+        return $this->getDir() . '/empty_recent_orders.tpl';
+    }
 }
