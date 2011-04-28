@@ -218,7 +218,7 @@ if (!defined('SELENIUM_SERVER')) {
 }
 
 if (!defined('TESTS_LOG_DIR')) {
-    define('TESTS_LOG_DIR', LC_VAR_DIR . 'log' . LC_DS);
+    define('TESTS_LOG_DIR', LC_DIR_VAR . 'log' . LC_DS);
 }
 
 if (isset($_SERVER['argv']) && preg_match('/--log-xml\s+(\S+)\s/s', implode(' ', $_SERVER['argv']), $match)) {
@@ -233,7 +233,7 @@ if (!defined('INCLUDE_ONLY_TESTS') || !preg_match('/DEPLOY_/', constant('INCLUDE
     PHP_CodeCoverage_Filter::getInstance()->addDirectoryToBlacklist(PATH_SRC . LC_DS . 'var' . LC_DS . 'run' . LC_DS . 'classes' . LC_DS . 'XLite' . LC_DS . 'Model' . LC_DS . 'Proxy');
 }
 
-foreach (glob(LC_ROOT_DIR . 'var/log/selenium.*.html') as $f) {
+foreach (glob(LC_DIR_ROOT . 'var/log/selenium.*.html') as $f) {
     @unlink($f);
 }
 

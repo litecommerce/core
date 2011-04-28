@@ -44,8 +44,8 @@ class Operator extends \XLite\Base\Singleton
      * @since 1.0.0
      */
     protected $filesRepositories = array(
-        LC_COMPILE_DIR => 'compiled classes repository',
-        LC_ROOT_DIR    => 'lc root',
+        LC_DIR_COMPILE => 'compiled classes repository',
+        LC_DIR_ROOT    => 'lc root',
     );
 
 
@@ -80,7 +80,7 @@ class Operator extends \XLite\Base\Singleton
     public static function isClassExists($name)
     {
         return class_exists($name, false)
-            || file_exists(LC_CLASSES_CACHE_DIR . str_replace('\\', LC_DS, $name) . '.php');
+            || file_exists(LC_DIR_CACHE_CLASSES . str_replace('\\', LC_DS, $name) . '.php');
     }
 
     /**

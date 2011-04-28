@@ -230,7 +230,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
                 if ($this->makeSqlBackupOnFailure) {
 
-                    $path = LC_ROOT_DIR . 'var/log/unit-' . date('Ymd-His') . '-' . $this->getName() . '.sql';
+                    $path = LC_DIR_ROOT . 'var/log/unit-' . date('Ymd-His') . '-' . $this->getName() . '.sql';
 
                     try {
                         ob_start();

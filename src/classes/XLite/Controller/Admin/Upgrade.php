@@ -184,5 +184,17 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
         }
     }
 
+    /**
+     * Go to the upgrade third step
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionDownload()
+    {
+        echo 1; die;
+    }
+
     // }}}
 }

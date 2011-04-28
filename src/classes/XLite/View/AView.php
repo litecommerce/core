@@ -768,12 +768,12 @@ abstract class AView extends \XLite\Core\Handler
 
         if ($profilerEnabled) {
             $timePoint = str_repeat('+', $cntLevel) . '[TPL ' . str_repeat('0', 4 - strlen((string)$cnt)) . $cnt . '] '
-                . get_called_class() . ' :: ' . substr($original, strlen(LC_SKINS_DIR));
+                . get_called_class() . ' :: ' . substr($original, strlen(LC_DIR_SKINS));
             \XLite\Core\Profiler::getInstance()->log($timePoint);
         }
 
         if ($markTemplates) {
-            $original = substr($original, strlen(LC_SKINS_DIR));
+            $original = substr($original, strlen(LC_DIR_SKINS));
             $markTplText = get_called_class() . ' : ' . $original . ' (' . $cnt . ')'
                 . ($this->viewListName ? ' [\'' . $this->viewListName . '\' list child]' : '');
 
@@ -1285,7 +1285,7 @@ abstract class AView extends \XLite\Core\Handler
         // Prepare properties
         $properties['tpl']    = substr(
             static::$layout->getResourceFullPath($properties['tpl']),
-            strlen(LC_SKINS_DIR)
+            strlen(LC_DIR_SKINS)
         );
         $properties['weight'] = $weight;
         $properties['list']   = $node->getList();

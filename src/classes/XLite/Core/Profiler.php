@@ -393,7 +393,7 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
 
             if (self::$useXdebugStackTrace) {
                 xdebug_start_trace(
-                    LC_VAR_DIR . 'log' . LC_DS . $timePoint . '.' . microtime(true),
+                    LC_DIR_VAR . 'log' . LC_DS . $timePoint . '.' . microtime(true),
                     XDEBUG_TRACE_COMPUTERIZED
                 );
             }
@@ -419,7 +419,7 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
 
             if (self::$useXdebugStackTrace) {
                 xdebug_start_trace(
-                    LC_VAR_DIR . 'log' . LC_DS . $timePoint . '.' . microtime(true),
+                    LC_DIR_VAR . 'log' . LC_DS . $timePoint . '.' . microtime(true),
                     XDEBUG_TRACE_COMPUTERIZED
                 );
             }
@@ -733,7 +733,7 @@ HTML;
         foreach (debug_backtrace(false) as $l) {
             if (isset($l['file']) && isset($l['line'])) {
                 $trace[] = str_replace(
-                    array(LC_COMPILE_DIR, LC_ROOT_DIR),
+                    array(LC_DIR_COMPILE, LC_DIR_ROOT),
                     array('', ''),
                     $l['file']
                 ) . ':' . $l['line'];

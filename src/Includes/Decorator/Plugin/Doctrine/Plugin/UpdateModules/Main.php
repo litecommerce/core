@@ -76,7 +76,7 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      */
     protected function getModuleMainFileIterator()
     {
-        return new \Includes\Utils\FileFilter(LC_MODULES_DIR, $this->getModulesPathPattern());
+        return new \Includes\Utils\FileFilter(LC_DIR_MODULES, $this->getModulesPathPattern());
     }
 
     /**
@@ -88,6 +88,6 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
      */
     protected function getModulesPathPattern()
     {
-        return '|^' . preg_quote(LC_MODULES_DIR) . '(\w)+' . LC_DS_QUOTED . '(\w)+' . LC_DS_QUOTED . 'Main.php$|Si';
+        return '|^' . preg_quote(LC_DIR_MODULES) . '(\w)+' . LC_DS_QUOTED . '(\w)+' . LC_DS_QUOTED . 'Main.php$|Si';
     }
 }
