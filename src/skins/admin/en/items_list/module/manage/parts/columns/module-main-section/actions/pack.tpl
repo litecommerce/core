@@ -13,4 +13,4 @@
  * @ListChild (list="itemsList.module.manage.columns.module-main-section.actions", weight="30")
  *}
 
-<a IF="module.getEnabled()" href="{buildURL(#addons_list_installed#,#pack#,_ARRAY_(#moduleId#^module.getModuleId()))}">{t(#Pack it#)}</a>
+<a IF="isPackItVisible(module)" href="{buildURL(#addons_list_installed#,#pack#,_ARRAY_(#moduleId#^module.getModuleId()))}">{t(#Pack it#)}</a>
