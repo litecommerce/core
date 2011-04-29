@@ -14,6 +14,11 @@
  *}
 
 <div IF="!isInstalled(module)" class="price">
-  <div IF="isFree(module)" class="free"><span class="currency">{t(#Free#)}</span></div>
-  <div IF="!isFree(module)" class="paid"><span class="currency">{formatPrice(module.getPrice(),module.getCurrency()):r}</span> <span IF="isPurchased(module)" class="purchased">({t(#Purchased#)})</span></div>
+  <div IF="isFree(module)" class="free">
+    <span class="currency">{t(#Free#)}</span>
+  </div>
+  <div IF="!isFree(module)" class="paid">
+    <span class="currency">{formatPrice(module.getPrice(),module.getCurrency()):r}</span>
+    <span IF="isPurchased(module)" class="purchased">({t(#Purchased#)})</span>
+  </div>
 </div>
