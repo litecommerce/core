@@ -116,18 +116,4 @@ abstract class ADecorator
     {
         return (self::STEP_FIRST === static::$step) ? LC_DIR_CLASSES : LC_DIR_CACHE_CLASSES;
     }
-
-    /**
-     * Display a Decorator message
-     * 
-     * @param string $text Message text
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected static function showMessage($text)
-    {
-        \Includes\Utils\Operator::flush($text . LC_EOL, true);
-    }
 }

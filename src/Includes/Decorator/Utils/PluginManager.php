@@ -78,7 +78,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
             }
 
             // Show message
-            static::showMessage('Run the "' . $plugin . '" plugin...');
+            \Includes\Utils\Operator::showMessage('Run the "' . $plugin . '" plugin...');
 
             // Execute plugin main method
             $instance->{'executeHookHandler' . ucfirst(\Includes\Utils\Converter::convertToCamelCase($hook))}();

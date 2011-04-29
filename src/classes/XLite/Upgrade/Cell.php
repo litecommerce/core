@@ -197,6 +197,20 @@ class Cell extends \XLite\Base\Singleton
         $this->addEntry(md5($path), 'Module\Uploaded', array($path));
     }
 
+    /**
+     * Check if all entry packages were downloaded and unpacked
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isDownloaded()
+    {
+        $list = \Includes\Utils\ArrayManager::getObjectsArrayFieldValues($this->getEntries(), 'getRepositoryPath');
+
+        return !empty($list) && array_filter($list) === $list;
+    }
+
     // }}}
 
     // {{{ Core version routines

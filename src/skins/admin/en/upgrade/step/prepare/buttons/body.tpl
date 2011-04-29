@@ -14,6 +14,7 @@
 <form action="admin.php" method="post">
   <input type="hidden" name="target" value="upgrade" />
   <input type="hidden" name="action" value="download" />
+  <input type="hidden" name="mode"   value="download_updates" />
 
   <widget class="\XLite\View\Upgrade\Step\Prepare\IncompatibleEntries" />
 

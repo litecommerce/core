@@ -151,6 +151,21 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
+     * Method to get entry package
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getSource()
+    {
+        return \XLite\Core\Marketplace::getInstance()->getAddonPack(
+            $this->getModuleForUpgrade()->getMarketplaceID(),
+            $this->getModuleForUpgrade()->getLicenseKey()
+        );
+    }
+
+    /**
      * Constructor
      *
      * @param \XLite\Model\Module $moduleInstalled  Module model object

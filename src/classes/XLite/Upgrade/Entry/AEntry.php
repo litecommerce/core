@@ -37,6 +37,16 @@ namespace XLite\Upgrade\Entry;
 abstract class AEntry
 {
     /**
+     * Path to the unpacked entry archive
+     * 
+     * @var   string
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $repositoryPath;
+
+
+    /**
      * Return entry readable name
      * 
      * @return string
@@ -109,6 +119,15 @@ abstract class AEntry
     abstract public function isEnabled();
 
     /**
+     * Method to get entry package
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract public function getSource();
+
+    /**
      * Compose version
      * 
      * @return string
@@ -130,5 +149,31 @@ abstract class AEntry
     public function getVersionNew()
     {
         return \Includes\Utils\Converter::composeVersion($this->getMajorVersionNew(), $this->getMinorVersionNew());
+    }
+
+    /**
+     * Set repository path 
+     * 
+     * @param string $path Path to set
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setRepositoryPath($path)
+    {
+        $this->repositoryPath = $path;
+    }
+
+    /**
+     * Get repository path
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getRepositoryPath()
+    {
+        return \Includes\Utils\FileManager::isDirReadable($this->repositoryPath) ? $this->repositoryPath : null;
     }
 }
