@@ -53,7 +53,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      *
      * @param string $target    Page identifier OPTIONAL
      * @param string $action    Action to perform OPTIONAL
-     * @param array  $params    Additional params
+     * @param array  $params    Additional params OPTIONAL
      * @param string $interface Interface script OPTIONAL
      *
      * @return string
