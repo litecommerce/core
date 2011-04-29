@@ -396,7 +396,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionAdd()
     {
-        $name = \XLite\Core\Request::getInstance()->name;
+        $name = substr(\XLite\Core\Request::getInstance()->name, 0, 255);
         $label = \XLite\Core\Request::getInstance()->label;
         $codeDefault = \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage()->code;
         $codeInterface = \XLite\Core\Config::getInstance()->General->defaultLanguage->code;

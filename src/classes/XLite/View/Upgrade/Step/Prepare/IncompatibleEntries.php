@@ -105,21 +105,9 @@ class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
     }
 
     /**
-     * Helper to get CSS class
-     *
-     * @param \XLite\Model\Module $module Current module
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getEntryRowCSSClass(\XLite\Model\Module $module)
-    {
-        return '';
-    }
-
-    /**
      * Check if module will be disabled after upgrade
+     *
+     * :TRICKY: check if the "getMajorVersion" is not declared in the main module class
      * 
      * @param \XLite\Model\Module $module Module to check
      *  

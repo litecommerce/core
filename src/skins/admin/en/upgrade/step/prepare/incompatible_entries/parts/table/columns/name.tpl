@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="upgrade.step.prepare.incompatible_entries.table.columns", weight="100")
+ * @ListChild (list="upgrade.step.prepare.incompatible_entries.sections.table.columns", weight="100")
  *}
 
 <td>

@@ -49,16 +49,4 @@ class StatusMessages extends \XLite\View\Upgrade\Step\Prepare\APrepare
     {
         return parent::getDir() . LC_DS . 'status_messages';
     }
-
-    /**
-     * Return internal list name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getListName()
-    {
-        return parent::getListName() . '.status_messages';
-    }
 }

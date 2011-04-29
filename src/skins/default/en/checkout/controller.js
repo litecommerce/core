@@ -31,9 +31,10 @@ function CheckoutView(base)
           var addressId = core.getValueFromClass(this, 'address');
           if (addressId) {
             var form = jQuery(this).parents('form').eq(0);
-            if (form) {
+            if (form.length) {
               form.get(0).elements.namedItem('addressId').value = addressId;
               form.submit();
+              popup.openAsWait();
             }
           }
         }

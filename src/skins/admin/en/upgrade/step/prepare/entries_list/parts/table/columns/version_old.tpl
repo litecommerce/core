@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="upgrade.step.prepare.entries_list.table.columns", weight="300")
+ * @ListChild (list="upgrade.step.prepare.entries_list.sections.table.columns", weight="300")
  *}
 
 <td>{entry.getVersionOld()}</td>

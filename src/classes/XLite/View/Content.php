@@ -90,7 +90,7 @@ class Content extends \XLite\View\AView
      */
     protected function echoChunk(&$chunk)
     {
-        \Includes\Utils\Operator::flush($chunk, false);
+        \Includes\Utils\Operator::flush($chunk, false, null);
     }
 
     /**
