@@ -17,13 +17,11 @@
 
   <div IF="module.getDependencies()" class="note dependencies">
     {t(#The following add-on(s) must be enabled:#)}<br />
-    <ul>
-      <li FOREACH="module.getDependencyModules(),depend">
-        <a href="#{depend.getName()}">{depend.getModuleName()} ({t(#by#)} {depend.getAuthorName()})</a>
-        [
-          <span IF="depend.getEnabled()" class="good">{t(#enabled#)}</span>
-          <span IF="!depend.getEnabled()" class="none">{t(#disabled#)}</span>
-        ]
+    <ul class="dependencies-list">
+      <li class="dependency-element" FOREACH="module.getDependencyModules(),depend">
+        <a href="#{depend.getName()}">{depend.getModuleName()}</a>
+        <span IF="depend.getEnabled()" class="module-condition enabled"><span>[</span>{t(#enabled#)}<span>]</span></span>
+        <span IF="!depend.getEnabled()" class="module-condition disabled"><span>[</span>{t(#disabled#)}<span>]</span></span>
       </li>
     </ul>
   </div>

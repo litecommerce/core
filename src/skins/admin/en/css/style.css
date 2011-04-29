@@ -211,7 +211,13 @@ body
   width: 100%;
 }
 
-#content #main
+#content-header 
+{
+  margin-top: -10px;
+  padding-top: 10px;
+}
+
+#main
 {
   margin: 0 25px 25px;
   min-width: 640px;
@@ -227,7 +233,8 @@ body
  * Header styles
  */
 
-#header, #menu
+#header,
+  #menu
 {
   background: #0C263D url(../images/admin_header_bg.png) repeat-x left top;
   height: 76px;
@@ -299,6 +306,10 @@ body
 {
   background: url(../images/content_top_bg.gif) repeat-x top left;
   padding: 80px 0 60px 0;
+}
+
+#content-header
+{
   border-top: 1px solid #dfe5e8;
 }
 
@@ -634,18 +645,23 @@ button
     border: 1px solid #cadce8;
     color: #2c5fa6;
     cursor: pointer;
-    font-size: 12px;
     margin: 7px 7px 7px 0;
     padding: 3px 12px;
-    font-family: "Trebuchet MS", Helvetica, Arial;
 }
 
-button span
+input[type="submit"],
+  input[type="button"],
+  input[type="reset"],
+  button,
+  button span
 {
-    color: #0e55a6;
-    font-family: "Trebuchet MS",Helvetica,sans-serif;
+    font-family: Helvetica,Arial,sans-serif;
     font-size: 12px;
     vertical-align: middle;
+}
+
+button span {
+  color: #0e55a6;
 }
 
 button:hover
@@ -674,8 +690,8 @@ input.main-button
 button.main-button span,
 input.main-button
 {
-  font-size: 16px;
-  line-height: 16px;
+  font-size: 15px;
+  line-height: 15px;
 }
 
 button.invert
