@@ -129,7 +129,7 @@ abstract class ErrorHandler
         }
 
         file_put_contents(
-            LC_VAR_DIR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php',
+            LC_DIR_VAR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php',
             $message . PHP_EOL,
             FILE_APPEND
         );
@@ -171,7 +171,7 @@ abstract class ErrorHandler
      */
     protected static function getErrorPageFile()
     {
-        return LC_ROOT_DIR . (static::getErrorPageFileFromConfig() ?: static::getErrorPageFileDefault());
+        return LC_DIR_ROOT . (static::getErrorPageFileFromConfig() ?: static::getErrorPageFileDefault());
     }
 
     /**

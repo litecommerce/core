@@ -147,6 +147,20 @@ class DeleteCategory extends \XLite\View\Button\APopupButton
      */
     protected function getClass()
     {   
-        return 'delete-category-button';
+        return 'delete-category-button' 
+            . ($this->getParam(self::PARAM_STYLE) ? ' ' . $this->getParam(self::PARAM_STYLE) : '');
     }   
+
+    /**
+     * Return template path
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'button/delete_category.tpl';
+    }
+
 }

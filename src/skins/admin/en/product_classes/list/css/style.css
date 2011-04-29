@@ -39,3 +39,13 @@ table.product-classes-list td.input-name {
   height: 15px;
   margin-right: 10px;
 }
+
+.new-product-class .advanced-input-text .original-label:hover {
+  background-color: inherit;
+}
+
+.new-product-class .advanced-input-text .original-label {
+  text-decoration: underline;
+  color: #154E9C;
+  cursor: pointer;
+}

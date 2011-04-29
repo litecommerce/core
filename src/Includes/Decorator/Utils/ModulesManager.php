@@ -374,7 +374,7 @@ abstract class ModulesManager extends AUtils
      */
     protected static function getModulesFilePath()
     {
-        return LC_VAR_DIR . self::MODULES_FILE_NAME;
+        return LC_DIR_VAR . self::MODULES_FILE_NAME;
     }
 
     // }}}
@@ -571,7 +571,7 @@ abstract class ModulesManager extends AUtils
      */
     public static function getPathPatternForTemplates()
     {
-        return static::getPathPattern(preg_quote(LC_SKINS_DIR, '/') . '\w+' . LC_DS_QUOTED . '\w+', 'modules', 'tpl');
+        return static::getPathPattern(preg_quote(LC_DIR_SKINS, '/') . '\w+' . LC_DS_QUOTED . '\w+', 'modules', 'tpl');
     }
 
     /**

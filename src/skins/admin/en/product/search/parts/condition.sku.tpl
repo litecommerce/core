@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="product.search.conditions", weight="10")
+ * @ListChild (list="product.search.conditions", weight="30")
  *}
 
 <tr>

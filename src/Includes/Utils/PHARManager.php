@@ -123,7 +123,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
      */
     protected static function download(\XLite\Core\Pack\APack $pack)
     {
-        $path = LC_TMP_DIR . $pack->getName() . '.tar';
+        $path = LC_DIR_TMP . $pack->getName() . '.tar';
         $phar = static::pack($path, $pack->getDirectoryIterator(), $pack->getMetadata());
 
         header('Content-Type: application/force-download');
@@ -155,7 +155,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
         $phar = new \PharData($name);
 
         // Files
-        $phar->buildFromIterator($iterator, LC_ROOT_DIR);
+        $phar->buildFromIterator($iterator, LC_DIR_ROOT);
 
         // Metadata
         $phar->setMetadata($metadata);
@@ -182,7 +182,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
         $data = array();
 
         foreach ($iterator as $filePath => $fileInfo) {
-            $data[\Includes\Utils\FileManager::getRelativePath($filePath, LC_ROOT_DIR)] 
+            $data[\Includes\Utils\FileManager::getRelativePath($filePath, LC_DIR_ROOT)] 
                 = \Includes\Utils\FileManager::getHash($filePath);
         }
 

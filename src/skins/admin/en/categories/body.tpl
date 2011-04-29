@@ -59,13 +59,17 @@
         </tr>
 
         <tr>
-          <td class="table-label">Parent category:</td>
+          <td class="table-label">{t(#Parent category#)}:</td>
           <td>&nbsp;</td>
-          {if:!getRootCategoryId()=category.parent.getCategoryId()}
-          <td><a href="admin.php?target=categories&category_id={category.parent.getCategoryId()}">{category.parent.getName()}</a></td>
-          {else:}
-          <td><a href="admin.php?target=categories">[Root Level]</a></td>
-          {end:}
+
+          <td IF="!getRootCategoryId()=category.parent.getCategoryId()">
+            <a href="admin.php?target=categories&category_id={category.parent.getCategoryId()}">{category.parent.getName()}</a>
+          </td>
+
+          <td IF="getRootCategoryId()=category.parent.getCategoryId()">
+            <a href="admin.php?target=categories">[{t(#Root Level#)}]</a>
+          </td>
+ 
         </tr>
 
         {displayViewListContent(#category.modify.children#)}
@@ -84,56 +88,62 @@
 
 </table>
 
-<p>
-
 <form name="CategoryForm" method="post" action="admin.php">
-
-  <table cellpadding="3" cellspacing="1" width="90%">
-
-    <tr>
-      <th colspan="5" align="left" IF="category">
-        <span IF="category">Subcategories structure</span>
-        <hr />
-      </th>
-    </tr>
-
-    {if:category&category.hasSubcategories()}
-    <tr FOREACH="getSubcategories(getCategoryId()),id,cat" class="{getRowClass(id,##,#highlight#)}">
-
-      <td style="width:100%;">
-        <a href="admin.php?target=categories&category_id={cat.category_id}" title="Click here to access/add subcategories" onclick="this.blur()">{cat.name:h}</a> ({cat.products_count} products){if:!cat.enabled}&nbsp;&nbsp;<span class="star">(disabled)</span>{end:}
-      </td>
-
-      <td class="table-label">
-        <widget class="\XLite\View\Button\Regular" label="Add child" jsCode="onAddChildClick('{cat.category_id}')" />
-      </td>
-
-      <td class="table-label">
-        <widget class="\XLite\View\Button\DeleteCategory" categoryId="{cat.category_id}" />
-        &nbsp;&nbsp;
-        <widget class="\XLite\View\Button\DeleteCategory" categoryId="{cat.category_id}" IF="cat.hasSubcategories()" label="Delete subcategories" removeSubcategories=true />
-      </td>
-
-    </tr>
-    {else:}
-    <tr>
-      <td>{t(#There are no categories#)}</td>
-    </tr>
-    {end:}
-
-  </table>
 
   <input type="hidden" name="target" value="categories" />
   <input type="hidden" name="category_id" value="{category.category_id}" />
   <input type="hidden" name="action" />
   <input type="hidden" name="mode" />
 
-  <table cellpadding="3" cellspacing="1" width="90%">
+  <table class="category-data">
+
+    <tr>
+      <th colspan="2" align="left" IF="category">
+
+        <span IF="category.parent=0">{t(#Root categories#)}</span>
+        <span IF="!category.parent=0">{t(#Subcategories#)}</span>
+
+        <hr />
+
+      </th>
+    </tr>
+
+    <tbody IF="category&category.hasSubcategories()">
+
+    <tr FOREACH="getSubcategories(getCategoryId()),id,cat" class="{getRowClass(id,##,#highlight#)}" onmouseover="javascript:jQuery('.hidden-{cat.category_id}').show()" onmouseout="javascript:jQuery('.hidden-{cat.category_id}').hide()">
+
+      <td class="table-label" colspan="2">
+
+        <a href="admin.php?target=categories&category_id={cat.category_id}" title="Click here to access/add subcategories" onclick="this.blur()">{cat.name:h}</a> ({cat.products_count} products){if:!cat.enabled}&nbsp;&nbsp;<span class="star">(disabled)</span>{end:}
+
+        &nbsp;&nbsp;
+
+        <a class="hidden hidden-{cat.category_id}" href="javascript:void(0);" onclick="onAddChildClick('{cat.category_id}')">{t(#Add child#)}</a>
+
+        &nbsp;&nbsp;
+
+        <widget class="\XLite\View\Button\DeleteCategory" categoryId="{cat.category_id}" style="hidden hidden-{cat.category_id}" />
+
+        &nbsp;&nbsp;
+
+        <widget class="\XLite\View\Button\DeleteCategory" categoryId="{cat.category_id}" style="hidden hidden-{cat.category_id}" IF="cat.hasSubcategories()" label="Delete subcategories" removeSubcategories=true />
+
+      </td>
+
+    </tr>
+
+    </tbody>
+
+    <tr IF="!category&category.hasSubcategories()">
+
+      <td colspan="2">{t(#There are no categories#)}</td>
+
+    </tr>
 
     <tr>
 
       <td>
-        <widget class="\XLite\View\Button\Regular" id="add" label="Add category" jsCode="onAddChildClick({getCategoryId()})" />
+        <widget class="\XLite\View\Button\Regular" id="add" label="Add subcategory" jsCode="onAddChildClick({getCategoryId()})" />
       </td>		
 
       <td align="right" IF="category&category.getSubCategoriesCount()">
@@ -161,4 +171,3 @@ function onModifyClick(category_id)
 }	
 
 </script>
-

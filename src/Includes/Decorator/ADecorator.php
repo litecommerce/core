@@ -39,9 +39,9 @@ abstract class ADecorator
     /**
      * Cache building steps
      */
-    const STEP_FIRST  = 'first';
-    const STEP_SECOND = 'second';
-    const STEP_THIRD  = 'third';
+    const STEP_FIRST  = 1;
+    const STEP_SECOND = 2;
+    const STEP_THIRD  = 3;
 
 
     /**
@@ -114,6 +114,6 @@ abstract class ADecorator
      */
     protected static function getClassesDir()
     {
-        return (self::STEP_FIRST === static::$step) ? LC_CLASSES_DIR : LC_CLASSES_CACHE_DIR;
+        return (self::STEP_FIRST === static::$step) ? LC_DIR_CLASSES : LC_DIR_CACHE_CLASSES;
     }
 }

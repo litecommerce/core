@@ -160,8 +160,8 @@ class FlexyCompiler extends \XLite\Base\Singleton
      */
     protected function preprocess()
     {
-        if (0 === strpos($this->file, LC_SKINS_DIR)) {
-            $tpl = substr($this->file, strlen(LC_SKINS_DIR));
+        if (0 === strpos($this->file, LC_DIR_SKINS)) {
+            $tpl = substr($this->file, strlen(LC_DIR_SKINS));
             list($zone, $lang, $tpl) = explode(LC_DS, $tpl, 3);
 
             foreach ($this->getPatches($this->getZone($zone), $lang, $tpl) as $patch) {
@@ -592,6 +592,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
                 }
 
                 // Boolean-based attribute process
+                // :FIXME: <... disabled="disabled" checked="checked" ... /> does not work
 
                 $boolAttribute = false;
 
@@ -691,10 +692,10 @@ class FlexyCompiler extends \XLite\Base\Singleton
      */
     protected function getTemplateInfo()
     {
-        $skin = preg_replace('/^([a-x0-9_]+)[^a-x0-9_].+$/Ssi', '\1', substr($this->file, strlen(LC_SKINS_DIR)));
+        $skin = preg_replace('/^([a-x0-9_]+)[^a-x0-9_].+$/Ssi', '\1', substr($this->file, strlen(LC_DIR_SKINS)));
         $template = 'common' == $skin
-            ? substr($this->file, strlen(LC_SKINS_DIR) + strlen($skin) + 1)
-            : substr($this->file, strlen(LC_SKINS_DIR) + strlen($skin) + 4);
+            ? substr($this->file, strlen(LC_DIR_SKINS) + strlen($skin) + 1)
+            : substr($this->file, strlen(LC_DIR_SKINS) + strlen($skin) + 4);
 
         return array($skin, $template);
     }
@@ -1289,7 +1290,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
     public function prepare($original, $force = false)
     {
         $compiled = \Includes\Utils\FileManager::normalize(
-            LC_COMPILE_DIR . substr($original, $this->rootDirLength) . '.php'
+            LC_DIR_COMPILE . substr($original, $this->rootDirLength) . '.php'
         );
         $original = \Includes\Utils\FileManager::normalize($original);
 
@@ -1358,7 +1359,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
         $this->layout = \XLite\Core\Layout::getInstance();
 
-        $this->rootDirLength = strlen(LC_ROOT_DIR);
+        $this->rootDirLength = strlen(LC_DIR_ROOT);
     }
 }
 

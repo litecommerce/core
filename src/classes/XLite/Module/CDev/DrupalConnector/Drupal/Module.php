@@ -229,7 +229,7 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      */
     public function invokeHookInit()
     {
-        require_once LC_MODULES_DIR . 'CDev/DrupalConnector/Drupal/Include/Callbacks.php';
+        require_once LC_DIR_MODULES . 'CDev/DrupalConnector/Drupal/Include/Callbacks.php';
     }
 
     /**

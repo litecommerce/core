@@ -34,7 +34,7 @@ namespace XLite\Controller\Admin;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Upgrade extends \XLite\Controller\Admin\Base\PackManager
+class Upgrade extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Initialize controller
@@ -67,6 +67,9 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
         if ($this->isCoreSelection()) {
             $result = 'Upgrade core';
 
+        } elseif ($this->isDownload()) {
+            $result = 'Downloading updates';
+
         } else {
             $version = \XLite\Upgrade\Cell::getInstance()->getCoreMajorVersion();
 
@@ -83,7 +86,7 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
     /**
      * Check if core major version is equal to the current one
      *
-     * @return void
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -95,13 +98,25 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
     /**
      * Check if current page is the core version selection dialog
      * 
-     * @return void
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function isCoreSelection()
     {
         return 'select_core_version' === \XLite\Core\Request::getInstance()->mode;
+    }
+
+    /**
+     * Check if current page is the updates download dialog
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isDownload()
+    {
+        return 'download_updates' === \XLite\Core\Request::getInstance()->mode;
     }
 
     /**
@@ -182,6 +197,140 @@ class Upgrade extends \XLite\Controller\Admin\Base\PackManager
         } else {
             \XLite\Core\TopMessage::getInstance()->addError('Unexpected error: version value is not passed');
         }
+    }
+
+    /**
+     * Go to the upgrade third step
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionDownload()
+    {
+        // :DEVCODE: to remove
+        \Includes\Utils\Operator::showMessage('Downloading updates, please wait...');
+
+        // Disable some modules (if needed)
+        $this->doActionDisableIncompatibleModules();
+
+        foreach (\XLite\Upgrade\Cell::getInstance()->getEntries() as $entry) {
+            $path = $this->unpack($entry);
+
+            if ($path) {
+                $entry->setRepositoryPath($path);
+            } else {
+                break;
+            }
+        }
+
+        if (!\XLite\Upgrade\Cell::getInstance()->isDownloaded()) {
+            \XLite\Core\TopMessage::getInstance()->addError('Not all upgrade entries were downloaded');
+        }
+
+        $this->setReturnURL($this->buildURL('upgrade'));
+    }
+
+    /**
+     * Third step: install downloaded upgrades 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionInstallUpgrades()
+    {
+        echo 'Installing... (not ready yet)'; die;
+    }
+
+    /**
+     * Disable some modules
+     *
+     * :NOTE: this action handler is not called by the dispatcher (only manually)
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionDisableIncompatibleModules()
+    {
+        foreach ((array) \XLite\Core\Request::getInstance()->toDisable as $moduleID => $value) {
+            // :TODO: find a way for modules lazy disabling
+        }
+    }
+
+    // }}}
+
+    // {{{ PHAR (un)packing routines
+
+    /**
+     * Save archive in temporary directory and unpack it
+     *
+     * @param string $source    Archive content
+     * @param string $extension File extension OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function unpack(\XLite\Upgrade\Entry\AEntry $entry, $extension = null)
+    {
+        $path   = null;
+        $source = $entry->getSource();
+
+        if (!empty($source)) {
+
+            // Check and set extension
+            if (!isset($extension)) {
+                $extension = \Includes\Utils\PHARManager::getExtension() ?: 'tar';
+            }
+
+            // Get unique file name
+            $file = tempnam($this->getTempDir(), 'phr');
+
+            // Remove temporary file and add the extension
+            if ($file) {
+                \Includes\Utils\FileManager::delete($file);
+                 $file .= '.' . $extension;
+            }
+
+            // Save data into created file
+            if ($file && \Includes\Utils\FileManager::write($file, $source)) {
+
+                // Extract archive files into a new directory
+                $path = \Includes\Utils\PHARManager::unpack($file, $this->getTempDir());
+
+                if ($path) {
+                    \Includes\Utils\FileManager::delete($file);
+                } else {
+                    $error = 'unable to extract archive files';
+                }
+
+            } else {
+                $error = 'unable to save archive to the temp directory';
+            }
+
+        } else {
+            $error = 'an empty package recieved';
+        }
+
+        if (!empty($error)) {
+            \XLite\Core\TopMessage::getInstance()->addError('[' . $entry->getName() . ']: ' . $error);
+        }
+
+        return $path;
+    }
+
+    /**
+     * Return dir to temporary save and unpack archives
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getTempDir()
+    {
+        return LC_DIR_TMP;
     }
 
     // }}}

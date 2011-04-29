@@ -51,17 +51,17 @@ class XLite_Web_Customer_SubstutionalSkin extends XLite_Web_Customer_ACustomer
 
         \Includes\Utils\FileManager::copyRecursive(
             dirname(__FILE__) . LC_DS . 'SubstutionalSkin' . LC_DS . 'scripts' . LC_DS . 'CDev',
-            LC_MODULES_DIR . 'CDev'
+            LC_DIR_MODULES . 'CDev'
         );
 
         \Includes\Utils\FileManager::copyRecursive(
             dirname(__FILE__) . LC_DS . 'SubstutionalSkin' . LC_DS . 'scripts' . LC_DS . 'CDev',
-            LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module' . LC_DS . 'CDev'
+            LC_DIR_CACHE_CLASSES . 'XLite' . LC_DS . 'Module' . LC_DS . 'CDev'
         );
 
         \Includes\Utils\FileManager::copyRecursive(
             dirname(__FILE__) . LC_DS . 'SubstutionalSkin' . LC_DS . 'skins',
-            LC_SKINS_DIR
+            LC_DIR_SKINS
         );
 
         $skin = \XLite\Core\Database::getRepo('XLite\Model\Module')->findOneBy(
@@ -93,7 +93,7 @@ class XLite_Web_Customer_SubstutionalSkin extends XLite_Web_Customer_ACustomer
 
         \XLite\Core\Database::getCacheDriver()->deleteAll();
         \Includes\Utils\FileManager::unlinkRecursive(
-            LC_COMPILE_DIR . 'skins'
+            LC_DIR_COMPILE . 'skins'
         );
 
     }
@@ -110,13 +110,13 @@ class XLite_Web_Customer_SubstutionalSkin extends XLite_Web_Customer_ACustomer
     protected function tearDown()
     {
         \Includes\Utils\FileManager::unlinkRecursive(
-            LC_MODULES_DIR . 'CDev' . LC_DS . 'TestSkin'
+            LC_DIR_MODULES . 'CDev' . LC_DS . 'TestSkin'
         );
         \Includes\Utils\FileManager::unlinkRecursive(
-            LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module' . LC_DS . 'CDev' . LC_DS . 'TestSkin'
+            LC_DIR_CACHE_CLASSES . 'XLite' . LC_DS . 'Module' . LC_DS . 'CDev' . LC_DS . 'TestSkin'
         );
         \Includes\Utils\FileManager::unlinkRecursive(
-            LC_SKINS_DIR . 'test'
+            LC_DIR_SKINS . 'test'
         );
 
         $skin = \XLite\Core\Database::getRepo('XLite\Model\Module')->findOneBy(
@@ -133,7 +133,7 @@ class XLite_Web_Customer_SubstutionalSkin extends XLite_Web_Customer_ACustomer
 
         \XLite\Core\Database::getCacheDriver()->deleteAll();
         \Includes\Utils\FileManager::unlinkRecursive(
-            LC_COMPILE_DIR . 'skins'
+            LC_DIR_COMPILE . 'skins'
         );
 
         parent::tearDown();
@@ -179,8 +179,8 @@ class XLite_Web_Customer_SubstutionalSkin extends XLite_Web_Customer_ACustomer
     public function testInheritance()
     {
         copy(
-            LC_SKINS_DIR . 'test' . LC_DS . 'en' . LC_DS . 'welcome.i.tpl',
-            LC_SKINS_DIR . 'test' . LC_DS . 'en' . LC_DS . 'welcome.tpl'
+            LC_DIR_SKINS . 'test' . LC_DS . 'en' . LC_DS . 'welcome.i.tpl',
+            LC_DIR_SKINS . 'test' . LC_DS . 'en' . LC_DS . 'welcome.tpl'
         );
         $this->openAndWait('');
 
@@ -198,8 +198,8 @@ class XLite_Web_Customer_SubstutionalSkin extends XLite_Web_Customer_ACustomer
     public function testDirectCall()
     {
         copy(
-            LC_SKINS_DIR . 'test' . LC_DS . 'en' . LC_DS . 'welcome.d.tpl',
-            LC_SKINS_DIR . 'test' . LC_DS . 'en' . LC_DS . 'welcome.tpl'
+            LC_DIR_SKINS . 'test' . LC_DS . 'en' . LC_DS . 'welcome.d.tpl',
+            LC_DIR_SKINS . 'test' . LC_DS . 'en' . LC_DS . 'welcome.tpl'
         );
         $this->openAndWait('');
 

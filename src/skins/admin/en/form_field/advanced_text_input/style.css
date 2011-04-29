@@ -26,13 +26,14 @@
   width: 300px;
   overflow: hidden;
   white-space: nowrap;
-  cursor: pointer;
+  cursor: text;
 }
 
 .advanced-input-text .original-input,
   .advanced-input-text .original-label 
 {
   height: 23px;
+  line-height: 23px;
   font-size: 14px;
   padding: 3px;
   margin: 3px;

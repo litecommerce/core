@@ -191,7 +191,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     {
         $nodes = array();
 
-        foreach ($category->getSiblings() as $category) {
+        foreach ($category->getSiblings(true) as $category) {
             $nodes[] = \XLite\View\Location\Node::create(
                 $category->getName(),
                 $this->getCategoryURL($category)
