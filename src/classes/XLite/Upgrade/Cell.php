@@ -208,7 +208,7 @@ class Cell extends \XLite\Base\Singleton
     {
         $list = \Includes\Utils\ArrayManager::getObjectsArrayFieldValues($this->getEntries(), 'getRepositoryPath');
 
-        return array_filter($list) === $list;
+        return !empty($list) && array_filter($list) === $list;
     }
 
     // }}}

@@ -37,22 +37,9 @@ namespace XLite\View\Upgrade;
 class Download extends \XLite\View\Upgrade\AUpgrade
 {
     /**
-     * Register JS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-        $list[] = $this->getDir() . '/style.css';
-
-        return $list;
-    }
-
-    /**
      * Get directory where template is located (body.tpl)
+     *
+     * :TODO: remove if it's not needed
      *
      * @return string
      * @see    ____func_see____
@@ -64,7 +51,23 @@ class Download extends \XLite\View\Upgrade\AUpgrade
     }
 
     /**
+     * Return internal list name    
+     *
+     * :TODO: remove if it's not needed
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getListName()
+    {
+        return parent::getListName() . '.select_core_version';
+    }
+
+    /**
      * Check if widget is visible
+     *
+     * :TODO: remove if it's not needed
      *
      * @return boolean
      * @see    ____func_see____
