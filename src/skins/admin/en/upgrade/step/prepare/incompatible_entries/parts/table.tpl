@@ -14,7 +14,7 @@
  *}
 
 <table cellspacing="0" cellpadding="0" border="1">
-  <tr FOREACH="getIncompatibleEntries(),entry" class="{getEntryRowCSSClass(entry)}">
-    {displayInheritedViewListContent(#table.columns#,_ARRAY_(#entry#^entry))}
+  <tr FOREACH="getIncompatibleEntries(),entry">
+    {displayInheritedViewListContent(#sections.table.columns#,_ARRAY_(#entry#^entry))}
   </tr>
 </table>

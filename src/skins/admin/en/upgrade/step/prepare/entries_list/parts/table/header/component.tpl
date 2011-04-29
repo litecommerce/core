@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="upgrade.step.prepare.entries_list.table.header", weight="100")
+ * @ListChild (list="upgrade.step.prepare.entries_list.sections.table.header", weight="100")
  *}
 
 <th colspan="2">{t(#Component#)}</th>

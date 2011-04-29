@@ -102,8 +102,8 @@ class Marketplace extends \XLite\Base\Singleton
     /**
      * Protocol data fields - response
      */
-    const RESPONSE_FIELD_MODULE_PACK_DATA   = 'data';
-    const RESPONSE_FIELD_MODULE_PACK_LENGTH = 'length';
+    const RESPONSE_FIELD_PACK_DATA   = 'data';
+    const RESPONSE_FIELD_PACK_LENGTH = 'length';
 
     /**
      * Some regexps 
@@ -654,6 +654,24 @@ class Marketplace extends \XLite\Base\Singleton
 
     /**
      * Return validation schema for certain action
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getResponseSchemaForGetCorePackAction()
+    {
+        return array(
+            self::RESPONSE_FIELD_PACK_DATA   => FILTER_UNSAFE_RAW,
+            self::RESPONSE_FIELD_PACK_LENGTH => array(
+                'filter'  => FILTER_VALIDATE_INT,
+                'options' => array('min_range' => 0),
+            ),
+        );
+    }
+
+    /**
+     * Return validation schema for certain action
      * 
      * @return array
      * @see    ____func_see____
@@ -720,8 +738,8 @@ class Marketplace extends \XLite\Base\Singleton
     protected function getResponseSchemaForGetAddonPackAction()
     {
         return array(
-            self::RESPONSE_FIELD_MODULE_PACK_DATA   => FILTER_UNSAFE_RAW,
-            self::RESPONSE_FIELD_MODULE_PACK_LENGTH => array(
+            self::RESPONSE_FIELD_PACK_DATA   => FILTER_UNSAFE_RAW,
+            self::RESPONSE_FIELD_PACK_LENGTH => array(
                 'filter'  => FILTER_VALIDATE_INT,
                 'options' => array('min_range' => 0),
             ),
@@ -787,6 +805,27 @@ class Marketplace extends \XLite\Base\Singleton
                     );
                 }
             }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Prepare data for certain response
+     *
+     * @param array $data Data recieved from marketplace
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareResponseForGetCorePackAction(array $data)
+    {
+        $result = null;
+
+        // Validate data recieved in responese
+        if ($this->validateAgainstSchema($data, $this->getResponseSchemaForGetCorePackAction())) {
+            $result = base64_decode($data['data']);
         }
 
         return $result;
