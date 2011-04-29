@@ -9,6 +9,8 @@
  * @since     1.0.0
  *}
 
+{* Refactor to ItemsList*}
+
 <div class="product-classes-list-form">
 
 <form method="POST" action="admin.php" id="product-class-form" >

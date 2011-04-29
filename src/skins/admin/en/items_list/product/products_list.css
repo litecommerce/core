@@ -11,9 +11,17 @@
  * @since     1.0.0
  */
 
-.items-list .table th.name
+.items-list table th.checkboxes {
+  width: 1px;
+}
+
+.items-list table th.name
 {
-  width: 100%;
+  width: 60%;
+}
+
+.items-list table th.category {
+  width: 40%; 
 }
 
 ul.by-conditions,

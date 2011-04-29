@@ -59,4 +59,16 @@ abstract class APrepare extends \XLite\View\Upgrade\Step\AStep
     {
         return parent::getListName() . '.prepare';
     }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible() && !\XLite\Upgrade\Cell::getInstance()->isDownloaded();
+    }
 }

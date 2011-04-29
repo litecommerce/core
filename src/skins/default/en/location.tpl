@@ -10,10 +10,9 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-
-<div class="breadcrumb">
+<ul class="breadcrumb">
   {foreach:getNodes(),index,node}
-    {if:!#0#=index}<span class="separator">&raquo;</span>{end:}
+    {if:!#0#=index}<li class="separator">&raquo;</li>{end:}
     {node.display()}
   {end:}
-</div>
+</ul>

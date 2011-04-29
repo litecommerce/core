@@ -30,14 +30,6 @@
       <option FOREACH="getPriceFilterOptions(),name,label" value="{getActionURL(_ARRAY_(#priceFilter#^name))}" selected="{isSelected(getParam(#priceFilter#),name)}">{t(label)}</option>
     </select>
 
-<script type="text/javascript">
-<!--
-jQuery(document).ready(function(){
-  jQuery('select[name=priceFilter]').selectmenu({style:'popup'});
-});
--->
-</script>
-
   </div>
 
   <div class="clear"></div>

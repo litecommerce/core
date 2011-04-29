@@ -64,7 +64,7 @@ class Main extends \XLite\View\Console\AConsole
     public function getAllowedCommands()
     {
         $dsQuoted = preg_quote(LC_DS, '/');
-        $path = LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Controller' . LC_DS . 'Console' . LC_DS . '*.php';
+        $path = LC_DIR_CACHE_CLASSES . 'XLite' . LC_DS . 'Controller' . LC_DS . 'Console' . LC_DS . '*.php';
         $commands = array();
         foreach (glob($path) as $f) {
             if (!preg_match('/Abstract.php$/Ss', $f) && !preg_match('/' . $dsQuoted . 'A[A-Z]/Ss', $f)) {

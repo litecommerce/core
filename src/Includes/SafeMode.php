@@ -240,7 +240,7 @@ abstract class SafeMode
      */
     protected static function getIndicatorFileName()
     {
-        return LC_VAR_DIR . '.safeModeStarted';
+        return LC_DIR_VAR . '.safeModeStarted';
     }
 
     /**
@@ -252,7 +252,7 @@ abstract class SafeMode
      */
     protected static function getAccessKeyFileName()
     {
-        return LC_DATA_DIR . '.safeModeAccessKey';
+        return LC_DIR_DATA . '.safeModeAccessKey';
     }
 
     /**
@@ -411,7 +411,7 @@ abstract class SafeMode
      */
     protected static function getUnsafeModulesFilePath()
     {
-        return LC_VAR_DIR . self::UNSAFE_MODULES_FILE_NAME;
+        return LC_DIR_VAR . self::UNSAFE_MODULES_FILE_NAME;
     }
 
     // }}}

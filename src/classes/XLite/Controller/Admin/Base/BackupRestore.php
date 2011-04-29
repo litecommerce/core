@@ -71,7 +71,7 @@ abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
             set_time_limit(0);
         }
 
-        $this->sqldumpFile = LC_BACKUP_DIR . 'sqldump.sql.php';
+        $this->sqldumpFile = LC_DIR_BACKUP . 'sqldump.sql.php';
 
         parent::handleRequest();
     }
@@ -115,13 +115,13 @@ abstract class BackupRestore extends \XLite\Controller\Admin\AAdmin
      */
     protected function isDirExists()
     {
-        $result = is_dir(LC_BACKUP_DIR);
+        $result = is_dir(LC_DIR_BACKUP);
     
         if (!$result) {
-            \Includes\Utils\FileManager::mkdirRecursive(LC_BACKUP_DIR);
+            \Includes\Utils\FileManager::mkdirRecursive(LC_DIR_BACKUP);
         }
 
-        $result = is_dir(LC_BACKUP_DIR) && is_writable(LC_BACKUP_DIR);
+        $result = is_dir(LC_DIR_BACKUP) && is_writable(LC_DIR_BACKUP);
 
         return $result;
     }

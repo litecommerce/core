@@ -49,7 +49,7 @@ class DbRestore extends \XLite\Controller\Admin\Base\BackupRestore
         // Check uploaded file with SQL data 
         if (isset($_FILES['userfile']) && !empty($_FILES['userfile']['tmp_name']) ) {
 
-            $sqlFile = LC_TMP_DIR . sprintf('sqldump.uploaded.%d.sql', time());
+            $sqlFile = LC_DIR_TMP . sprintf('sqldump.uploaded.%d.sql', time());
 
             $tmpFile = $_FILES['userfile']['tmp_name'];
 
@@ -96,7 +96,7 @@ class DbRestore extends \XLite\Controller\Admin\Base\BackupRestore
         $result = false;
 
         // File to create temporary backup to be able rollback database
-        $backupSQLFile = LC_BACKUP_DIR . sprintf('sqldump.backup.%d.sql', time());
+        $backupSQLFile = LC_DIR_BACKUP . sprintf('sqldump.backup.%d.sql', time());
 
         // Make the process of restoring database verbose
         $verbose = true;

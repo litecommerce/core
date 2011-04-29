@@ -157,6 +157,18 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
+     * Method to get entry package
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getSource()
+    {
+        return \Includes\Utils\FileManager::read($this->path);
+    }
+
+    /**
      * Overloaded constructor
      *
      * @param string $path Path to the module package

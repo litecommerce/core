@@ -29,22 +29,11 @@
 // Temporary directories
 define('LC_VAR_URL', 'var');
 
-define('LC_SKINS_CACHE_DIR', LC_COMPILE_DIR . 'skins' . LC_DS);
-
-define('LC_LOCALE_DIR', LC_VAR_DIR . 'locale');
-
-define('LC_DATACACHE_DIR', LC_VAR_DIR . 'datacache');
-
-define('LC_LOG_DIR', LC_VAR_DIR . 'log' . LC_DS);
-
 // Skins directories
-define('LC_CUSTOMER_AREA_SKIN', LC_SKINS_DIR . 'default' . LC_DS . 'en' . LC_DS);
-define('LC_ADMIN_AREA_SKIN', LC_SKINS_DIR . 'admin' . LC_DS . 'en' . LC_DS);
+define('LC_CUSTOMER_AREA_SKIN', LC_DIR_SKINS . 'default' . LC_DS . 'en' . LC_DS);
+define('LC_ADMIN_AREA_SKIN', LC_DIR_SKINS . 'admin' . LC_DS . 'en' . LC_DS);
 
 // Images subsystem settings
-define('LC_IMAGES_DIR', LC_ROOT_DIR . 'images' . LC_DS);
-define('LC_IMAGES_CACHE_DIR', LC_VAR_DIR . 'images' . LC_DS);
-
 define('LC_IMAGES_URL', 'images');
 define('LC_IMAGES_CACHE_URL', LC_VAR_URL . '/images');
 
@@ -61,15 +50,15 @@ define('LC_EOL', 'cli' == PHP_SAPI ? "\n" : "<br />\n");
 
 set_include_path(
     get_include_path()
-    . PATH_SEPARATOR . LC_LIB_DIR
+    . PATH_SEPARATOR . LC_DIR_LIB
 );
 
 // Some common functions
-require_once (LC_ROOT_DIR . 'Includes' . LC_DS . 'functions.php');
+require_once (LC_DIR_ROOT . 'Includes' . LC_DS . 'functions.php');
 
 // Common error reporting settings
-$path = LC_VAR_DIR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php';
-if (!file_exists(dirname($path)) && is_writable(LC_VAR_DIR)) {
+$path = LC_DIR_VAR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php';
+if (!file_exists(dirname($path)) && is_writable(LC_DIR_VAR)) {
     \Includes\Utils\FileManager::mkdirRecursive(dirname($path));
 }
 

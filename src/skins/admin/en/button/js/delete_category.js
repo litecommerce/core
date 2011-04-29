@@ -21,7 +21,7 @@ function PopupButtonDeleteCategory()
 extend(PopupButtonDeleteCategory, PopupButton);
 
 // New pattern is defined
-PopupButtonDeleteCategory.prototype.pattern = 'button.delete-category-button';
+PopupButtonDeleteCategory.prototype.pattern = '.delete-category-button';
 
 // Decorating of callback of new class for POPUP widget
 decorate(

@@ -71,7 +71,8 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
                 $parent = $index[$class];
 
                 // Decorator restriction (only for original classes repository)
-                if ($parent->isDecorator() && self::STEP_FIRST === static::$step) {
+                // :NOTE: do not use the "===" in the second part
+                if ($parent->isDecorator() && self::STEP_FIRST == static::$step) {
                     $parent->handleError('It\'s not allowed to extend a decorator', $node);
                 }
 
@@ -338,7 +339,7 @@ abstract class Operator extends \Includes\Decorator\Utils\AUtils
         \Includes\Decorator\DataStructure\Graph\Classes $node,
         \Includes\Decorator\DataStructure\Graph\Classes $parent = null
     ) {
-        \Includes\Utils\FileManager::write(LC_CLASSES_CACHE_DIR . $node->getPath(), $node->getSource($parent));
+        \Includes\Utils\FileManager::write(LC_DIR_CACHE_CLASSES . $node->getPath(), $node->getSource($parent));
     }
 
 

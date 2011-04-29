@@ -54,7 +54,7 @@ abstract class Image extends \XLite\Model\Repo\ARepo
      */
     public function getFileSystemRoot()
     {
-        return LC_IMAGES_DIR . $this->getStorageName() . LC_DS;
+        return LC_DIR_IMAGES . $this->getStorageName() . LC_DS;
     }
 
     /**
@@ -80,7 +80,7 @@ abstract class Image extends \XLite\Model\Repo\ARepo
      */
     public function getFileSystemCacheRoot($sizeName)
     {
-        return LC_IMAGES_CACHE_DIR . $this->getStorageName() . LC_DS . $sizeName . LC_DS;
+        return LC_DIR_CACHE_IMAGES . $this->getStorageName() . LC_DS . $sizeName . LC_DS;
     }
 
     /**

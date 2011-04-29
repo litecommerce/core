@@ -408,7 +408,7 @@ show_install_html_header();
 
 show_install_css();
 
-include LC_ROOT_DIR . 'Includes/install/templates/common_js_code.js.php'; 
+include LC_DIR_ROOT . 'Includes/install/templates/common_js_code.js.php'; 
 
 ?>
 

@@ -126,7 +126,7 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
                 $i->setProduct($this->product);
                 $this->product->getImages()->add($i);
 
-                $i->loadFromLocalFile(LC_ROOT_DIR . 'images' . LC_DS . 'product' . LC_DS . $path);
+                $i->loadFromLocalFile(LC_DIR_ROOT . 'images' . LC_DS . 'product' . LC_DS . $path);
                 $i->setAlt($path);
                 $i->setOrderby(1);
                 \XLite\Core\Database::getEM()->persist($i);
