@@ -88,7 +88,6 @@ abstract class APopupButton extends \XLite\View\Button\AButton
     public function getJSFiles()
     {   
         $list = parent::getJSFiles();
-
         $list[] = static::JS_SCRIPT;
 
         return $list;
@@ -104,7 +103,6 @@ abstract class APopupButton extends \XLite\View\Button\AButton
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = static::POPUP_CSS_FILE;
 
         return $list;
@@ -120,7 +118,6 @@ abstract class APopupButton extends \XLite\View\Button\AButton
     public function getCommonFiles()
     {    
         $list = parent::getCommonFiles();
-
         // popup button is using several specific popup JS
         $list['js'][] = 'js/core.popup.js';
 

@@ -68,7 +68,25 @@ class Module extends \XLite\Controller\Admin\AAdmin
      */
     public function getLocation()
     {
-        return $this->getModule()->getName() . ' (' . $this->getModule()->getAuthor() . ')';
+        return \XLite\Core\Translation::lbl(
+            'X module settings',
+            array(
+                'name'   => $this->getModule()->getName(),
+                'author' => $this->getModule()->getAuthor(),
+            )
+        );
+    }
+
+    /**
+     * Return the current page title (for the content area)
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getTitle()
+    {
+        return $this->getLocation();
     }
 
     /** 

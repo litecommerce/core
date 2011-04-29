@@ -11,6 +11,10 @@
  * @since     1.0.0
  * @ListChild (list="minicart.horizontal.buttons", weight="10")
  *}
-<div class="cart-checkout" IF="cart.checkCart()">
-  <widget class="\XLite\View\Button\Link" label="Checkout" location="{buildURL(#checkout#)}" style="action" />
+<div class="cart-checkout">
+  {if:cart.checkCart()}
+    <widget class="\XLite\View\Button\Link" label="Checkout" location="{buildURL(#checkout#)}" style="action" />
+  {else:}
+    <widget class="\XLite\View\Button\Link" label="Checkout" location="{buildURL(#checkout#)}" style="action" disabled="true" />
+  {end:}
 </div>

@@ -263,6 +263,27 @@ class Handler extends \XLite\Core\CMSConnector
     }
 
     /**
+     * Get Drupal-based Clean URL 
+     * 
+     * @param mixed $path    ____param_comment____
+     * @param array $options ____param_comment____
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getDrupalCleanURL($path, array $options)
+    {
+        $url = null;
+        if (0 === strpos($path, \XLite\Core\Converter::DRUPAL_ROOT_NODE . '/')) {
+            $args = explode('/', substr($path, strlen(\XLite\Core\Converter::DRUPAL_ROOT_NODE) + 1));
+            $url = $this->getCleanURL($this->getControllerArgs($args));
+        }
+
+        return $url;
+    }
+
+    /**
      * Set Drupal messages using LC top messages data
      * 
      * @return void
@@ -277,5 +298,21 @@ class Handler extends \XLite\Core\CMSConnector
                 isset($this->messageTypes[$message['type']]) ? $this->messageTypes[$message['type']] : 'status'
             );
         }
+    }
+
+    /**
+     * Build CleanURL
+     *
+     * @param string $target    Page identifier
+     * @param string $action    Action to perform OPTIONAL
+     * @param array  $params    Additional params OPTIONAL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function buildCleanURL($target, $action = '', array $params = array())
+    {
+        return \XLite\Core\Converter::buildDrupalPath($target, $action, $params);
     }
 }

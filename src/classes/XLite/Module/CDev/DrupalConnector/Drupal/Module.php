@@ -339,6 +339,34 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         if (self::LANDING_LINK_PATH === $path) {
             $path = \Includes\Utils\URLManager::getShopURL('admin.php' . $this->getAdminAreaURLArgs());
             $options['external'] = true;
+
+        } else {
+            $url = $this->getHandler()->getDrupalCleanURL($path, $options);
+            if ($url) {
+                $path = $url;
+            }
+        }
+    }
+
+    /**
+     * Alters inbound URLs
+     *
+     * @param string &$path        The inbound path to alter
+     * @param string $originalPath The original path, before being altered by any modules
+     * @param string $pathLanguage Path language
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function translateInboundURL(&$path, $originalPath, $pathLanguage)
+    {
+        if ($path) {
+            $url = $this->getHandler()->getURLByCleanURL($path);
+            if ($url) {
+                $path = $url;
+            }
         }
     }
 

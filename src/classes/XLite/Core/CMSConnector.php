@@ -425,10 +425,10 @@ abstract class CMSConnector extends \XLite\Base\Singleton
             ->findOneByCleanURL(preg_replace('/(?:\.html|\.htm)$/Ss', '', $path));
 
         if (isset($product)) {
-            $cleanURL = \XLite\Core\Converter::buildURL(
+            $cleanURL = $this->buildCleanURL(
                 'product',
                 '',
-                array('product_id' => $product->get('product_id'))
+                array('product_id' => $product->getProductId())
             );
         }
 
@@ -456,7 +456,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
                 }
 
-                $cleanURL = \XLite\Core\Converter::buildURL('category', '', $params);
+                $cleanURL = $this->buildCleanURL('category', '', $params);
 
             }
 
@@ -477,6 +477,21 @@ abstract class CMSConnector extends \XLite\Base\Singleton
         return \XLite\Model\Session::TTL;
     }
 
+    /**
+     * Build CleanURL 
+     * 
+     * @param string $target    Page identifier
+     * @param string $action    Action to perform OPTIONAL
+     * @param array  $params    Additional params OPTIONAL
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function buildCleanURL($target, $action = '', array $params = array())
+    {
+        return \XLite\Core\Converter::buildURL($target, $action, $params);
+    }
 
     /**
      * Get profiled DB condition fields list

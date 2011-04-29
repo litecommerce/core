@@ -363,6 +363,8 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->fillShippingAddress();
         $this->fillPaymentStep();
 
+        $this->assertElementPresent('css=.review-step.current', 'check review step is active');
+
         // Check items box
         $this->assertJqueryNotPresent('.review-step .list:visible', 'items box hide');
 

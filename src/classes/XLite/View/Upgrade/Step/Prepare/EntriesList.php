@@ -39,21 +39,6 @@ namespace XLite\View\Upgrade\Step\Prepare;
 class EntriesList extends \XLite\View\Upgrade\Step\Prepare\APrepare
 {
     /**
-     * Register CSS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = $this->getDir() . '/style.css';
-
-        return $list;
-    }
-
-    /**
      * Get directory where template is located (body.tpl)
      *
      * @return string

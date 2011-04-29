@@ -862,6 +862,21 @@ button.invert:hover
 .table-label
 {
   white-space: nowrap;
+  vertical-align: top;
+  line-height: 24px;
+}
+
+.table-input {
+  line-height: 24px;
+  vertical-align: top;
+}
+
+.table-input-checkbox input {
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
+.table-input-checkbox ul * {
   vertical-align: middle;
 }
 
