@@ -10,12 +10,12 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="upgrade.step.prepare.entries_list.sections", weight="300")
+ * @ListChild (list="upgrade.step.prepare.entries_list.sections", weight="100")
  *}
 
 <table cellspacing="0" cellpadding="0" border="1">
-  <tr>{displayInheritedViewListContent(#table.header#)}</tr>
+  <tr>{displayInheritedViewListContent(#sections.table.header#)}</tr>
   <tr FOREACH="getUpgradeEntries(),entry" class="{getEntryRowCSSClass(entry)}">
-    {displayInheritedViewListContent(#table.columns#,_ARRAY_(#entry#^entry))}
+    {displayInheritedViewListContent(#sections.table.columns#,_ARRAY_(#entry#^entry))}
   </tr>
 </table>

@@ -51,6 +51,18 @@ class SelectCoreVersion extends \XLite\View\Upgrade\AUpgrade
     }
 
     /**
+     * Return internal list name
+     *                          
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getListName()
+    {
+        return parent::getListName() . '.select_core_version';
+    }
+
+    /**
      * Check if widget is visible
      *
      * @return boolean

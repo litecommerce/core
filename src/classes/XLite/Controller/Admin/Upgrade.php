@@ -232,7 +232,21 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Third step: install downloaded upgrades 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionInstallUpgrades()
+    {
+        echo 'Installing... (not ready yet)'; die;
+    }
+
+    /**
      * Disable some modules
+     *
+     * :NOTE: this action handler is not called by the dispatcher (only manually)
      * 
      * @return void
      * @see    ____func_see____

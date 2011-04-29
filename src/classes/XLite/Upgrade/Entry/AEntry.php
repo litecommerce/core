@@ -162,9 +162,7 @@ abstract class AEntry
      */
     public function setRepositoryPath($path)
     {
-        if (!empty($path) && \Includes\Utils\FileManager::isDirReadable($path)) {
-            $this->repositoryPath = $path;
-        }
+        $this->repositoryPath = $path;
     }
 
     /**
@@ -176,6 +174,6 @@ abstract class AEntry
      */
     public function getRepositoryPath()
     {
-        return $this->repositoryPath;
+        return \Includes\Utils\FileManager::isDirReadable($this->repositoryPath) ? $this->repositoryPath : null;
     }
 }
