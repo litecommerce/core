@@ -84,7 +84,7 @@ abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
             foreach ($this->getTemplateFileIterator()->getIterator() as $path => $data) {
 
                 $data = \Includes\Decorator\Utils\Operator::getTags(
-                    \Includes\Utils\FileManager::read($path), 
+                    \Includes\Utils\FileManager::read($path, true), 
                     array(self::TAG_LIST_CHILD)
                 );
 

@@ -120,6 +120,18 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Check upgrade cell status
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isNextStepAvailable()
+    {
+        return \XLite\Upgrade\Cell::getInstance()->isValid();
+    }
+
+    /**
      * Common method to set current location
      *
      * @return string
@@ -208,27 +220,31 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionDownload()
     {
-        // :DEVCODE: to remove
-        \Includes\Utils\Operator::showMessage('Downloading updates, please wait...');
+        if ($this->isNextStepAvailable()) {
 
-        // Disable some modules (if needed)
-        $this->doActionDisableIncompatibleModules();
+            // :DEVCODE: to remove
+            \Includes\Utils\Operator::showMessage('Downloading updates, please wait...');
 
-        foreach (\XLite\Upgrade\Cell::getInstance()->getEntries() as $entry) {
-            $path = $this->unpack($entry);
+            // Disable some modules (if needed)
+            $this->doActionDisableIncompatibleModules();
+    
+            foreach (\XLite\Upgrade\Cell::getInstance()->getEntries() as $entry) {
+                $path = $this->unpack($entry);
 
-            if ($path) {
-                $entry->setRepositoryPath($path);
-            } else {
-                break;
+                if ($path) {
+                    $entry->setRepositoryPath($path);
+                } else {
+                    break;
+                }
             }
-        }
 
-        if (!\XLite\Upgrade\Cell::getInstance()->isDownloaded()) {
-            \XLite\Core\TopMessage::getInstance()->addError('Not all upgrade entries were downloaded');
-        }
+            if (!\XLite\Upgrade\Cell::getInstance()->isDownloaded()) {
+                \XLite\Core\TopMessage::getInstance()->addError('Not all upgrade entries were downloaded');
+            }
 
-        $this->setReturnURL($this->buildURL('upgrade'));
+        } else {
+            \XLite\Core\TopMessage::getInstance()->addError('Not ready to download packs');
+        }
     }
 
     /**
@@ -286,7 +302,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             }
 
             // Get unique file name
-            $file = tempnam($this->getTempDir(), 'phr');
+            $file = tempnam(LC_DIR_TMP, 'phr');
 
             // Remove temporary file and add the extension
             if ($file) {
@@ -298,7 +314,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             if ($file && \Includes\Utils\FileManager::write($file, $source)) {
 
                 // Extract archive files into a new directory
-                $path = \Includes\Utils\PHARManager::unpack($file, $this->getTempDir());
+                $path = \Includes\Utils\PHARManager::unpack($file, LC_DIR_TMP);
 
                 if ($path) {
                     \Includes\Utils\FileManager::delete($file);
@@ -319,18 +335,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         }
 
         return $path;
-    }
-
-    /**
-     * Return dir to temporary save and unpack archives
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getTempDir()
-    {
-        return LC_DIR_TMP;
     }
 
     // }}}

@@ -35,7 +35,7 @@ namespace Includes\Utils;
  * @see        ____class_see____
  * @since      1.0.0
  */
-class ConfigParser extends AUtils
+abstract class ConfigParser extends \Includes\Utils\AUtils
 {
     /**
      * Options cache

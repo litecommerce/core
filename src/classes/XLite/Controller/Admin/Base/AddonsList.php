@@ -36,4 +36,18 @@ namespace XLite\Controller\Admin\Base;
  */
 abstract class AddonsList extends \XLite\Controller\Admin\AAdmin
 {
+    /**
+     * Initialize controller
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function init()
+    {
+        parent::init();
+
+        // Download data from marketplace
+        \XLite\Upgrade\Cell::getInstance();
+    }
 }

@@ -119,6 +119,15 @@ abstract class AEntry
     abstract public function isEnabled();
 
     /**
+     * Return entry pack size
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract public function getPackSize();
+
+    /**
      * Method to get entry package
      * 
      * @return string

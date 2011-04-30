@@ -64,6 +64,15 @@ class Core extends \XLite\Upgrade\Entry\AEntry
     protected $revisionDate;
 
     /**
+     * Pack size (in bytes)
+     * 
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $size;
+
+    /**
      * Return entry readable name
      *
      * @return string
@@ -160,6 +169,18 @@ class Core extends \XLite\Upgrade\Entry\AEntry
     }
 
     /**
+     * Return entry pack size
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPackSize()
+    {
+        return $this->size;
+    }
+
+    /**
      * Method to get entry package
      *
      * @return string
@@ -180,12 +201,13 @@ class Core extends \XLite\Upgrade\Entry\AEntry
      * @param string  $majorVersion Core major version
      * @param string  $minorVersion Core minor version
      * @param integer $revisionDate Core revison date
+     * @param integer $size         Pack size
      *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function __construct($majorVersion, $minorVersion, $revisionDate)
+    public function __construct($majorVersion, $minorVersion, $revisionDate, $size)
     {
         if (!$this->checkMajorVersion($majorVersion) || !$this->checkMinorVersion($majorVersion, $minorVersion)) {
             \Includes\ErrorHandler::fireError(
@@ -201,6 +223,7 @@ class Core extends \XLite\Upgrade\Entry\AEntry
         $this->majorVersion = $majorVersion;
         $this->minorVersion = $minorVersion;
         $this->revisionDate = $revisionDate;
+        $this->size         = $size;
     }
 
     /**
