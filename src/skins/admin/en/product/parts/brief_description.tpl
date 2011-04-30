@@ -9,11 +9,12 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="product.modify.list", weight="120")
+ * @ListChild (list="product.modify.list", weight="1000")
  *}
 <tr>
-  <td valign="top">{t(#Brief Description#)}</td>
-  <td valign="top">
+  <td class="name-attribute">{t(#Brief description#)}</td>
+  <td class="star"></td>
+  <td class="value-attribute">
     <widget class="\XLite\View\FormField\Textarea\Advanced" fieldName="{getNamePostedData(#brief_description#)}" cols="45" rows="6" value="{product.brief_description:h}" />
   </td>
 </tr>

@@ -9,18 +9,13 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="product.modify.list", weight="50")
+ * @ListChild (list="product.modify.list", weight="500")
  *}
+
 <tr>
-  <td>
-  <table cellpadding="0" cellspacing="0" width="100%">
-  <tr>
-      <td class="table-label" width="100%">{t(#Price#)}</td>
-        <td class="star">&nbsp;*&nbsp;</td>
-  </tr>
-  </table>
-  </td>
-  <td valign="middle">
+  <td class="name-attribute">{t(#Price#)}</td>
+  <td class="star">&nbsp;*&nbsp;</td>
+  <td class="value-attribute">
     <input type="text" name="{getNamePostedData(#price#)}" size="18" value="{product.price}" />
   </td>
 </tr>
