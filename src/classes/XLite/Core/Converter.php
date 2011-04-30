@@ -467,4 +467,20 @@ class Converter extends \XLite\Base\Singleton
     {
         return ('target' == $b || ('action' == $b && 'target' != $a)) ? 1 : 0;
     }
+
+    /**
+     * Prepare human-readable output for file size
+     *
+     * @param integer $size Size in bytes
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function formatFileSize($size)
+    {
+        list($size, $suffix) = \Includes\Utils\Converter::formatFileSize($size);
+
+        return $size . ($suffix ? static::t($suffix) : '');
+    }
 }

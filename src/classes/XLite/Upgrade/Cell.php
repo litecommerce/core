@@ -47,6 +47,12 @@ class Cell extends \XLite\Base\Singleton
     const CORE_IDENTIFIER = '____CORE____';
 
     /**
+     * Reserve of free disk space (5Mb)
+     */
+    const FREE_SPACE_RESERVE = 5000000;
+
+
+    /**
      * List of cell entries 
      * 
      * @var   array
@@ -82,7 +88,29 @@ class Cell extends \XLite\Base\Singleton
      */
     protected $incompatibleModules = array();
 
+    /**
+     * List of error messages
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $errorMessages;
+
+
     // {{{ Public methods
+
+    /**
+     * Check if cell is valid
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isValid()
+    {
+        return ! (bool) $this->getErrorMessages();
+    }
 
     /**
      * Getter
@@ -298,7 +326,7 @@ class Cell extends \XLite\Base\Singleton
 
     // }}}
 
-    // {{{ Constructor and destructor
+    // {{{ "Magic" methods
 
     /**
      * Save data in DB
@@ -337,6 +365,18 @@ class Cell extends \XLite\Base\Singleton
         } else {
             $this->collectEntries();
         }
+    }
+
+    /**
+     * Names of variables to serialize
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function __sleep()
+    {
+        return array('entries', 'coreVersion', 'coreVersions', 'incompatibleModules');
     }
 
     /**
@@ -453,6 +493,63 @@ class Cell extends \XLite\Base\Singleton
     protected function getLogLevel()
     {                               
         return PEAR_LOG_WARNING;    
+    }
+
+    // }}}
+
+    // {{{ Errors handling
+
+    /**
+     * Return list of error messages
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getErrorMessages()
+    {
+        if (!isset($this->errorMessages)) {
+            $this->errorMessages = array();
+
+            // Space needed to download upgrade packs
+            if (!$this->isDownloaded()) {
+                $this->errorMessages[] = $this->checkDiskFreeSpace();
+            }
+
+            $this->errorMessages = array_filter($this->errorMessages);
+        }
+
+        return $this->errorMessages;
+    }
+
+    /**
+     * Check if there is enpugh disk free space.
+     * Return message on error
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkDiskFreeSpace()
+    {
+        $message = null;
+
+        $totalSize = \Includes\Utils\ArrayManager::sumObjectsArrayFieldValues($this->getEntries(), 'getPackSize');
+        $freeSpace = max(0, \Includes\Utils\FileManager::getDiskFreeSpace(LC_DIR_TMP) - self::FREE_SPACE_RESERVE);
+
+        if ($totalSize > $freeSpace) {
+            $message = str_replace(
+                array('@REQ@', '@RESERVE@', '@AVAIL@'),
+                array(
+                    \XLite\Core\Converter::formatFileSize($totalSize),
+                    \XLite\Core\Converter::formatFileSize(self::FREE_SPACE_RESERVE),
+                    \XLite\Core\Converter::formatFileSize($freeSpace),
+                ),
+                static::t('Not enogh disk space. Required: @REQ@ (+@RESERVE@ reserve). Available: @AVAIL@')
+            );
+        }
+
+        return $message;
     }
 
     // }}}

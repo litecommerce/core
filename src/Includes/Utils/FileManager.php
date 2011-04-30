@@ -34,7 +34,7 @@ namespace Includes\Utils;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class FileManager extends \Includes\Utils\AUtils
+abstract class FileManager extends \Includes\Utils\AUtils
 {
     /**
      * Checks whether a file or directory exists
@@ -267,14 +267,19 @@ class FileManager extends \Includes\Utils\AUtils
             $filter = new \Includes\Utils\FileFilter($dir, null, \RecursiveIteratorIterator::CHILD_FIRST);
 
             foreach ($filter->getIterator() as $file) {
-                $file->isDir() ? static::deleteDir($file->getRealPath()) : static::delete($file->getRealPath());
+
+                if ($file->isDir()) {
+                    static::deleteDir($file->getRealPath(), true);
+                } else {
+                    static::delete($file->getRealPath(), true);
+                }
             }
 
             // Unset is required to release directory 
             // and avoid 'Permission denied' warning on rmdir() on Windows servers
             unset($filter);
 
-            static::deleteDir($dir);
+            static::deleteDir($dir, true);
         }
     }
 
@@ -301,7 +306,11 @@ class FileManager extends \Includes\Utils\AUtils
                 $pathFrom = $file->getRealPath();
                 $pathTo   = $dirTo . static::getRelativePath($pathFrom, $dirFrom);
 
-                $file->isDir() ? static::mkdirRecursive($pathTo) : static::copy($pathFrom, $pathTo);
+                if ($file->isDir()) {
+                    static::mkdirRecursive($pathTo);
+                } else {
+                    static::copy($pathFrom, $pathTo);
+                }
             }
         }
     }
@@ -309,15 +318,16 @@ class FileManager extends \Includes\Utils\AUtils
     /**
      * Return hash of the file
      *
-     * @param string $path File path
+     * @param string  $path      File path
+     * @param integer $skipCheck Flag OPTIONAL
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getHash($path)
+    public static function getHash($path, $skipCheck = false)
     {
-        return static::isFileReadable($path) ? md5_file($path) : null;
+        return ($skipCheck || static::isFileReadable($path)) ? md5_file($path) : null;
     }
 
     /**
@@ -349,7 +359,7 @@ class FileManager extends \Includes\Utils\AUtils
      * @param string  $path File path 
      * @param integer $mode Permissions
      *  
-     * @return void
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -361,15 +371,16 @@ class FileManager extends \Includes\Utils\AUtils
     /**
      * Read data from a file
      *
-     * @param string $path File path
+     * @param string  $path      File path
+     * @param integer $skipCheck Flag OPTIONAL
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function read($path)
+    public static function read($path, $skipCheck = false)
     {
-        return static::isExists($path) ? file_get_contents($path) : null;
+        return ($skipCheck || static::isFile($path)) ? file_get_contents($path) : null;
     }
 
     /**
@@ -412,29 +423,31 @@ class FileManager extends \Includes\Utils\AUtils
     /**
      * Delete file
      * 
-     * @param string $path File path
+     * @param string  $path      File path
+     * @param integer $skipCheck Flag OPTIONAL
      *  
-     * @return void
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function delete($path)
+    public static function delete($path, $skipCheck = false)
     {
-        return !static::isExists($path) ?: unlink($path);
+        return ($skipCheck || static::isFile($path)) ? unlink($path) : true;
     }
 
     /**
      * Delete dir
      *
-     * @param string $dir Directory to delete
+     * @param string  $dir       Directory to delete
+     * @param integer $skipCheck Flag OPTIONAL
      *
-     * @return void
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function deleteDir($dir)
+    public static function deleteDir($dir, $skipCheck = false)
     {
-        return !(static::isExists($dir) && static::isDir($dir)) ?: rmdir($dir);
+        return ($skipCheck || static::isDir($dir)) ? rmdir($dir) : true;
     }
 
     /**
@@ -450,7 +463,7 @@ class FileManager extends \Includes\Utils\AUtils
      */
     public static function copy($pathFrom, $pathTo, $overwrite = true)
     {
-        return (!$overwrite && static::isExists($path)) 
+        return (!$overwrite && static::isFile($pathTo)) 
             ?: static::mkdirRecursive(static::getDir($pathTo)) && copy($pathFrom, $pathTo);
     }
 
@@ -478,6 +491,35 @@ class FileManager extends \Includes\Utils\AUtils
         }
 
         return $path;
+    }
+
+    /**
+     * Return file size
+     * 
+     * @param string  $path      File path
+     * @param integer $skipCheck Flag OPTIONAL
+     *  
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getFileSize($path, $skipCheck = false)
+    {
+        return ($skipCheck || static::isFile($path)) ? filesize($path) : false;
+    }
+
+    /**
+     * Return available disk space
+     * 
+     * @param string $dir A directory of the filesystem or disk partition OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getDiskFreeSpace($dir = null)
+    {
+        return disk_free_space($dir ?: LC_ROOT_DIR);
     }
 
     // {{{ :TODO: must be refactored

@@ -35,7 +35,7 @@ namespace Includes\Utils;
  * @see        ____class_see____
  * @since      1.0.0
  */
-class FileFilter extends AUtils
+class FileFilter extends \Includes\Utils\AUtils
 {
     /**
      * Directory to iterate over

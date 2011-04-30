@@ -157,6 +157,18 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
+     * Return entry pack size
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPackSize()
+    {
+        return \Includes\Utils\FileManager::getFileSize($this->path);
+    }
+
+    /**
      * Method to get entry package
      *
      * @return string
