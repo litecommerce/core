@@ -9,10 +9,9 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="product.modify.list", weight="100")
+ * @ListChild (list="product.modify.list", weight="850")
  * @ListChild (list="product.modify.list", weight="10000")
  *}
 <tr>
-  <td>&nbsp;</td>
-  <td>&nbsp;</td>
+  <td colspan="3">&nbsp;</td>
 </tr>
