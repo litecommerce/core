@@ -9,6 +9,6 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="top_links.help", weight="10")
+ * @ListChild (list="top_links.help", weight="200")
  *}
-<li><a href="http://www.litecommerce.com/faqs.html">{t(#LiteCommerce FAQs#)}</a></li>
+<li><a href="http://www.facebook.com/litecommerce/">{t(#Find us on Facebook#)}</a></li>
