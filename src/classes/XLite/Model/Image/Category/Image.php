@@ -50,7 +50,7 @@ class Image extends \XLite\Model\Base\Image
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @OneToOne  (targetEntity="XLite\Model\Category", inversedBy="image")
+     * @OneToOne   (targetEntity="XLite\Model\Category", inversedBy="image")
      * @JoinColumn (name="id", referencedColumnName="category_id")
      */
     protected $category;
