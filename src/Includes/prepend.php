@@ -26,6 +26,8 @@
  * @since      1.0.0
  */
 
+// :FIXME: must be removed
+
 // Temporary directories
 define('LC_VAR_URL', 'var');
 

@@ -179,15 +179,15 @@ abstract class FileManager extends \Includes\Utils\AUtils
     /**
      * Return real path
      * 
-     * @param string $dir Path to prepare
+     * @param string $path Path to prepare
      *  
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getRealPath($dir)
+    public static function getRealPath($path)
     {
-        return realpath($dir);
+        return realpath($path) ?: \Includes\ErrorHandler::fireError('Invalid path: "' . $path . '"');
     }
 
     /**
@@ -202,22 +202,25 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function getRelativePath($path, $compareTo)
     {
-        return str_replace(static::getCanonicalDir($compareTo), '', static::getRealPath($path));
+        return preg_replace(
+            '|^' . preg_quote(static::getCanonicalDir($compareTo), '|') . '|USsi',
+            '',
+            static::getRealPath($path)
+        );
     }
 
     /**
      * Prepare file path
      *
-     * @param string  $dir   Dir to prepare
-     * @param boolean $check Call or not "realpath()" OPTIONAL
+     * @param string $dir Dir to prepare
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function getCanonicalDir($dir, $check = true)
+    public static function getCanonicalDir($dir)
     {
-        return \Includes\Utils\Converter::trimTrailingChars($check ? static::getRealPath($dir) : $dir, LC_DS) . LC_DS;
+        return \Includes\Utils\Converter::trimTrailingChars(static::getRealPath($dir), LC_DS) . LC_DS;
     }
 
     /**
