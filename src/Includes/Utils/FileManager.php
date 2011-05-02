@@ -89,7 +89,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function isFile($file)
     {
-        return static::isExists($file) && is_file($file);
+        return static::isExists($file) && (is_file($file) || is_link($file));
     }
 
     /**

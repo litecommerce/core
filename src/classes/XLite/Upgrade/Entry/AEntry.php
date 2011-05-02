@@ -161,6 +161,18 @@ abstract class AEntry
     }
 
     /**
+     * Perform cleanup
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function clear()
+    {
+        $this->setRepositoryPath(null);
+    }
+
+    /**
      * Set repository path 
      * 
      * @param string $path Path to set
@@ -171,6 +183,16 @@ abstract class AEntry
      */
     public function setRepositoryPath($path)
     {
+        if ($path !== $this->repositoryPath) {
+
+            if ($this->isDownloaded()) {
+                \Includes\Utils\FileManager::delete($this->repositoryPath);
+
+            } elseif ($this->isUnpacked()) {
+                \Includes\Utils\FileManager::unlinkRecursive($this->repositoryPath);
+            }
+        }
+
         $this->repositoryPath = $path;
     }
 
@@ -183,6 +205,112 @@ abstract class AEntry
      */
     public function getRepositoryPath()
     {
-        return \Includes\Utils\FileManager::isDirReadable($this->repositoryPath) ? $this->repositoryPath : null;
+        return \Includes\Utils\FileManager::isReadable($this->repositoryPath) ? $this->repositoryPath : null;
     }
+
+    /**
+     * Download package
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function download()
+    {
+        $source = $this->getSource();
+        $this->setRepositoryPath(null);
+
+        if (!empty($source)) {
+
+            // Check and set extension
+            if (!isset($extension)) {
+                $extension = \Includes\Utils\PHARManager::getExtension() ?: 'tar';
+            }
+
+            // Get unique file name
+            $path = \Includes\Utils\FileManager::getUniquePath(LC_DIR_TMP, uniqid() . '.' . $extension);
+
+            // Save data into a file
+            if (\Includes\Utils\FileManager::write($path, $source)) {
+                $this->setRepositoryPath($path);
+            }
+        }
+
+        return $this->isDownloaded();
+    }
+
+    /**
+     * Unpack archive
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function unpack()
+    {
+        if ($this->isDownloaded()) {
+
+            // Extract archive files into a new directory
+            $this->setRepositoryPath(\Includes\Utils\PHARManager::unpack($this->getRepositoryPath(), LC_DIR_TMP));
+        }
+
+        return $this->isUnpacked();
+    }
+
+    /**
+     * Check if pack is already downloaded
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isDownloaded()
+    {
+        $path = $this->getRepositoryPath();
+
+        return !empty($path) && \Includes\Utils\FileManager::isFile($path);
+    }
+
+    /**
+     * Check if archive is already unpacked
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isUnpacked()
+    {
+        $path = $this->getRepositoryPath();
+
+        return !empty($path) && \Includes\Utils\FileManager::isDir($path);
+    }
+
+    /**
+     * Names of variables to serialize
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function __sleep()
+    {
+        return array('repositoryPath');
+    }
+
+    // {{{ Upgrade
+
+    /**
+     * Perform upgrade
+     *
+     * @param boolean $isTestMode Flag OPTIONAL
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function upgrade($isTestMode = true)
+    {
+    }
+
+    // }}}
 }

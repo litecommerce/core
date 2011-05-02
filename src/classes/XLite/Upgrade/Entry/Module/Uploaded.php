@@ -37,15 +37,6 @@ namespace XLite\Upgrade\Entry\Module;
 class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
 {
     /**
-     * Path to the module package
-     * 
-     * @var   mixed
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $path;
-
-    /**
      * Module object (cache)
      * 
      * @var   \PharData
@@ -165,7 +156,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     public function getPackSize()
     {
-        return \Includes\Utils\FileManager::getFileSize($this->path);
+        return \Includes\Utils\FileManager::getFileSize($this->getRepositoryPath());
     }
 
     /**
@@ -177,7 +168,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     public function getSource()
     {
-        return \Includes\Utils\FileManager::read($this->path);
+        return \Includes\Utils\FileManager::read($this->getRepositoryPath());
     }
 
     /**
@@ -195,7 +186,19 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
             \Includes\ErrorHandler::fireError('Unable to read module package: "' . $path . '"');
         }
 
-        $this->path = $path;
+        $this->setRepositoryPath($path);
+    }
+
+    /**
+     * Download package
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function download()
+    {
+        return $this->isDownloaded();
     }
 
     /**
@@ -208,7 +211,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     protected function getModule()
     {
         if (!isset($this->module)) {
-            $this->module = new \PharData($this->path);
+            $this->module = new \PharData($this->getRepositoryPath());
         }
 
         return $this->module;

@@ -220,30 +220,77 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionDownload()
     {
+        $this->setReturnURL($this->buildURL('upgrade'));
+
         if ($this->isNextStepAvailable()) {
+
+            // Disable some modules (if needed)
+            $this->doActionDisableIncompatibleModules();
 
             // :DEVCODE: to remove
             \Includes\Utils\Operator::showMessage('Downloading updates, please wait...');
 
-            // Disable some modules (if needed)
-            $this->doActionDisableIncompatibleModules();
-    
-            foreach (\XLite\Upgrade\Cell::getInstance()->getEntries() as $entry) {
-                $path = $this->unpack($entry);
+            if (\XLite\Upgrade\Cell::getInstance()->downloadUpgradePacks()) {
+                $this->setReturnURL($this->buildURL('upgrade', 'unpack'));
 
-                if ($path) {
-                    $entry->setRepositoryPath($path);
-                } else {
-                    break;
-                }
-            }
-
-            if (!\XLite\Upgrade\Cell::getInstance()->isDownloaded()) {
-                \XLite\Core\TopMessage::getInstance()->addError('Not all upgrade entries were downloaded');
+            } else {
+                \XLite\Core\TopMessage::getInstance()->addError('Not all upgrade packs were downloaded');
             }
 
         } else {
             \XLite\Core\TopMessage::getInstance()->addError('Not ready to download packs');
+        }
+    }
+
+    /**
+     * Go to the upgrade third step
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionUnpack()
+    {
+        $this->setReturnURL($this->buildURL('upgrade'));
+
+        if (\XLite\Upgrade\Cell::getInstance()->isDownloaded()) {
+
+            // :DEVCODE: to remove
+            \Includes\Utils\Operator::showMessage('Unpacking archives, please wait...');
+
+            if (\XLite\Upgrade\Cell::getInstance()->unpackAll()) {
+                $this->setReturnURL($this->buildURL('upgrade', 'check_integrity'));
+
+            } else {
+                \XLite\Core\TopMessage::getInstance()->addError('Not all archives were unpacked');
+            }
+
+        } else {
+            \XLite\Core\TopMessage::getInstance()->addError('Trying to unpack non-downloaded archives');
+        }
+    }
+
+    /**
+     * Go to the upgrade third step
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionCheckIntegrity()
+    {
+        $this->setReturnURL($this->buildURL('upgrade'));
+
+        if (\XLite\Upgrade\Cell::getInstance()->isUnpacked()) {
+
+            // :DEVCODE: to remove
+            \Includes\Utils\Operator::showMessage('Checking integrity, please wait...');
+
+            // Perform upgrade in test mode
+            \XLite\Upgrade\Cell::getInstance()->upgrade(true);
+
+        } else {
+            \XLite\Core\TopMessage::getInstance()->addError('Unable to test files: not all archives were unpacked');
         }
     }
 
@@ -273,68 +320,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         foreach ((array) \XLite\Core\Request::getInstance()->toDisable as $moduleID => $value) {
             // :TODO: find a way for modules lazy disabling
         }
-    }
-
-    // }}}
-
-    // {{{ PHAR (un)packing routines
-
-    /**
-     * Save archive in temporary directory and unpack it
-     *
-     * @param string $source    Archive content
-     * @param string $extension File extension OPTIONAL
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function unpack(\XLite\Upgrade\Entry\AEntry $entry, $extension = null)
-    {
-        $path   = null;
-        $source = $entry->getSource();
-
-        if (!empty($source)) {
-
-            // Check and set extension
-            if (!isset($extension)) {
-                $extension = \Includes\Utils\PHARManager::getExtension() ?: 'tar';
-            }
-
-            // Get unique file name
-            $file = tempnam(LC_DIR_TMP, 'phr');
-
-            // Remove temporary file and add the extension
-            if ($file) {
-                \Includes\Utils\FileManager::delete($file);
-                 $file .= '.' . $extension;
-            }
-
-            // Save data into created file
-            if ($file && \Includes\Utils\FileManager::write($file, $source)) {
-
-                // Extract archive files into a new directory
-                $path = \Includes\Utils\PHARManager::unpack($file, LC_DIR_TMP);
-
-                if ($path) {
-                    \Includes\Utils\FileManager::delete($file);
-                } else {
-                    $error = 'unable to extract archive files';
-                }
-
-            } else {
-                $error = 'unable to save archive to the temp directory';
-            }
-
-        } else {
-            $error = 'an empty package recieved';
-        }
-
-        if (!empty($error)) {
-            \XLite\Core\TopMessage::getInstance()->addError('[' . $entry->getName() . ']: ' . $error);
-        }
-
-        return $path;
     }
 
     // }}}

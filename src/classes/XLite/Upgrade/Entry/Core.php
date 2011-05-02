@@ -227,6 +227,24 @@ class Core extends \XLite\Upgrade\Entry\AEntry
     }
 
     /**
+     * Names of variables to serialize
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function __sleep()
+    {
+        $list = parent::__sleep();
+        $list[] = 'majorVersion';
+        $list[] = 'minorVersion';
+        $list[] = 'revisionDate';
+        $list[] = 'size';
+
+        return $list;
+    }
+
+    /**
      * Check if version is allowed
      * 
      * @param string $majorVersion Version to check
