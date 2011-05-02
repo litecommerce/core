@@ -207,6 +207,22 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
+     * Names of variables to serialize
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function __sleep()
+    {
+        $list = parent::__sleep();
+        $list[] = 'moduleIDInstalled';
+        $list[] = 'moduleIDForUpgrade';
+
+        return $list;
+    }
+
+    /**
      * Search for module in DB
      * 
      * @param integer $moduleID ID to search by
