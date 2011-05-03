@@ -219,7 +219,7 @@ body
 
 #main
 {
-  margin: 0 25px 25px;
+  margin: 15px 25px 25px 25px;
   min-width: 640px;
 }
 
@@ -285,8 +285,19 @@ li.updates-note {
 li.upgrade-note a,
   li.updates-note a
 {
-  color: #fff;
   text-decoration: underline;
+}
+
+li.upgrade-note a {
+  color: #6BA5D4;
+}
+
+li.upgrade-note a:hover {
+  color: #FFFFFF;
+}
+
+li.updates-note a {
+  color: #FFFFFF;
 }
 
 /**
