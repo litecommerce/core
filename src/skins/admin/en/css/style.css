@@ -641,12 +641,13 @@ button
     -moz-border-radius: 19px;
     -webkit-border-radius: 19px;
     border-radius: 19px;
-    background: url(../images/button_bg_light.png) repeat-x center top #eff8fe;
+    background: url(../images/button.png) repeat-x center top #eff8fe;
     border: 1px solid #cadce8;
     color: #2c5fa6;
     cursor: pointer;
     margin: 7px 7px 7px 0;
-    padding: 3px 12px;
+    padding: 3px 10px 4px;
+    height: 26px;
 }
 
 input[type="submit"],
@@ -684,14 +685,16 @@ button.disabled span {
 button.main-button,
 input.main-button
 {
-  padding: 6px 15px;
+  padding: 6px 20px;
+  height: 36px;
 }
 
 button.main-button span,
 input.main-button
 {
   font-size: 15px;
-  line-height: 15px;
+  line-height: 19px;
+  font-family: "Trebuchet MS",Helvetica,Jamrul,sans-serif;
 }
 
 button.invert
