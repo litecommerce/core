@@ -51,6 +51,14 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         if ($this->isUpdate()) {
             \XLite\Upgrade\Cell::getInstance()->clear();
         }
+
+        if (
+            \XLite\Core\Request::getInstance()->isGet()
+            && !isset(\XLite\Core\Request::getInstance()->action) 
+            && \XLite\Upgrade\Cell::getInstance()->isUnpacked()
+        ) {
+            \XLite\Core\Request::getInstance()->action = 'check_integrity';
+        }
     }
 
     // {{{ Methods for viewers
@@ -258,10 +266,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             // :DEVCODE: to remove
             \Includes\Utils\Operator::showMessage('Unpacking archives, please wait...');
 
-            if (\XLite\Upgrade\Cell::getInstance()->unpackAll()) {
-                $this->setReturnURL($this->buildURL('upgrade', 'check_integrity'));
-
-            } else {
+            if (!\XLite\Upgrade\Cell::getInstance()->unpackAll()) {
                 \XLite\Core\TopMessage::getInstance()->addError('Not all archives were unpacked');
             }
 
@@ -279,8 +284,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionCheckIntegrity()
     {
-        $this->setReturnURL($this->buildURL('upgrade'));
-
         if (\XLite\Upgrade\Cell::getInstance()->isUnpacked()) {
 
             // :DEVCODE: to remove
@@ -292,6 +295,9 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         } else {
             \XLite\Core\TopMessage::getInstance()->addError('Unable to test files: not all archives were unpacked');
         }
+
+        // To prevent infinite redirect
+        $this->setReturnURL(null);
     }
 
     /**

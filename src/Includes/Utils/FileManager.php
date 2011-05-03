@@ -89,7 +89,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function isFile($file)
     {
-        return static::isExists($file) && (is_file($file) || is_link($file));
+        return is_file($file) || is_link($file);
     }
 
     /**
@@ -103,7 +103,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function isDir($file)
     {
-        return static::isExists($file) && is_dir($file);
+        return is_dir($file);
     }
 
     /**
@@ -187,7 +187,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function getRealPath($path)
     {
-        return realpath($path) ?: \Includes\ErrorHandler::fireError('Invalid path: "' . $path . '"');
+        return realpath($path);
     }
 
     /**
