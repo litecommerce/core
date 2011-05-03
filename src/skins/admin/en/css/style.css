@@ -255,7 +255,7 @@ body
   top: 12px;
 }
 
-#header .sw-version .current
+.sw-version .current
 {
   color: #7f90A0;
   margin-right: 10px;
@@ -263,13 +263,29 @@ body
   font-size: 12px;
 }
 
-#header .sw-version .upgrade-note
-{
-  color: #fff;
+ul.version-note {
+  list-style: none;
 }
 
-#header .sw-version .upgrade-note a {
-  color: #82c4fa;
+ul.version-note li {
+  float: left;
+}
+
+ul.version-note li.current {
+  color: #8797a7;
+}
+
+li.updates-note {
+  background: url(../images/bulb.png) no-repeat 0 0;
+  display: block;
+  height: 20px;
+  padding: 0 0 0 20px;
+}
+
+li.upgrade-note a,
+  li.updates-note a
+{
+  color: #fff;
   text-decoration: underline;
 }
 
