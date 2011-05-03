@@ -155,6 +155,15 @@ abstract class AEntry
     abstract public function getSource();
 
     /**
+     * Get hashes for current version
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract protected function loadHashesForInstalledFiles();
+
+    /**
      * Compose version
      * 
      * @return string
@@ -235,6 +244,18 @@ abstract class AEntry
     }
 
     /**
+     * Name of the special file with hashes for installed files
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCurrentVersionHashesFilePath()
+    {
+        return LC_DIR_TMP . basename($this->getRepositoryPath()) . '.hash.php';
+    }
+
+    /**
      * Download package
      * 
      * @return boolean
@@ -259,6 +280,7 @@ abstract class AEntry
             // Save data into a file
             if (\Includes\Utils\FileManager::write($path, $source)) {
                 $this->setRepositoryPath($path);
+                $this->saveHashesForInstalledFiles();
             }
         }
 
@@ -294,7 +316,9 @@ abstract class AEntry
     {
         $path = $this->getRepositoryPath();
 
-        return !empty($path) && \Includes\Utils\FileManager::isFile($path);
+        return !empty($path) 
+            && \Includes\Utils\FileManager::isFile($path) 
+            && \Includes\Utils\FileManager::isFile($this->getCurrentVersionHashesFilePath());
     }
 
     /**
@@ -308,7 +332,9 @@ abstract class AEntry
     {
         $path = $this->getRepositoryPath();
 
-        return !empty($path) && \Includes\Utils\FileManager::isDir($path);
+        return !empty($path) 
+            && \Includes\Utils\FileManager::isDir($path)
+            && \Includes\Utils\FileManager::isFile($this->getCurrentVersionHashesFilePath());
     }
 
     /**
@@ -388,7 +414,7 @@ abstract class AEntry
         $hashes = $this->getHashes();
 
         // Walk through the installed and known files list
-        foreach ($this->getHashesForInstalledFiles() as $path => $hash) {
+        foreach ($this->getHashesForInstalledFiles($isTestMode) as $path => $hash) {
 
             // Some useful variables
             $relativePath = \Includes\Utils\FilManager::getRealPath($path);
@@ -532,21 +558,22 @@ abstract class AEntry
     protected function getHashes($isTestMode)
     {
         $path = $this->getRepositoryPath() . '.hash';
+        $errorParams = array('file' => \Inludes\Utils\FileManager::getRelativePath($path, LC_DIR_TMP));
 
         if (!\Includes\Utils\FileManager::isFileReadable($path)) {
-            $this->addErrorMessage('Hash file is not exists or is not readable');
+            $this->addErrorMessage('Hash file "{{file}}" is not exists or is not readable', $errorParams);
 
         } else {
             $data = \Includes\Utils\FileManager::read($path);
 
             if (empty($data)) {
-                $this->addErrorMessage('Unable to read hash file or it\'s empty');
+                $this->addErrorMessage('Unable to read hash file "{{file}}" or it\'s empty', $errorParams);
 
             } else {
                 $data = json_decode($data);
 
                 if (!is_array($data)) {
-                    $this->addErrorMessage('Hash file has a wrong format');
+                    $this->addErrorMessage('Hash file "{{file}}" has a wrong format', $errorParams);
 
                 } else {
                     foreach ($data as $path => $hash) {
@@ -571,7 +598,36 @@ abstract class AEntry
      */
     protected function getHashesForInstalledFiles($isTestMode)
     {
-        return array();
+        $path = $this->getCurrentVersionHashesFilePath();
+        $errorParams = array('file' => \Inludes\Utils\FileManager::getRelativePath($path, LC_DIR_TMP));
+
+        if (!\Includes\Utils\FileManager::isFileReadable($path)) {
+            $this->addErrorMessage('Hash file "{{file}}" is not exists or is not readable', $errorParams);
+
+        } else {
+            require_once ($path);
+        }
+
+        return (empty($data) || !is_array($data)) ? array() : $data;
+    }
+
+    /**
+     * Save hashes for current version
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function saveHashesForInstalledFiles()
+    {
+        $data = $this->loadHashesForInstalledFiles();
+
+        if (is_array($data)) {
+            \Includes\Utils\FilManager::write(
+                $this->getCurrentVersionHashesFilePath(),
+                '<?php' . PHP_EOL . '$data = ' . var_export($data, true) . ';'
+            );
+        }
     }
 
     /**
