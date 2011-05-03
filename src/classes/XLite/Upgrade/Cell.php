@@ -47,6 +47,12 @@ class Cell extends \XLite\Base\Singleton
     const CORE_IDENTIFIER = '____CORE____';
 
     /**
+     * Reserve of free disk space (5Mb)
+     */
+    const FREE_SPACE_RESERVE = 5000000;
+
+
+    /**
      * List of cell entries 
      * 
      * @var   array
@@ -82,7 +88,29 @@ class Cell extends \XLite\Base\Singleton
      */
     protected $incompatibleModules = array();
 
+    /**
+     * List of error messages
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $errorMessages;
+
+
     // {{{ Public methods
+
+    /**
+     * Check if cell is valid
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isValid()
+    {
+        return ! (bool) $this->getErrorMessages();
+    }
 
     /**
      * Getter
@@ -124,11 +152,15 @@ class Cell extends \XLite\Base\Singleton
      */
     public function clear($clearCoreVersion = true)
     {
+        foreach ($this->getEntries() as $entry) {
+            $entry->clear();
+        }
+
         $this->entries = array();
         $this->incompatibleModules = array();
 
         if ($clearCoreVersion) {
-            $this->coreVersion = null;
+            $this->setCoreVersion(null);
         }
 
         $this->collectEntries();
@@ -195,20 +227,6 @@ class Cell extends \XLite\Base\Singleton
     public function addUploadedModule($path)
     {
         $this->addEntry(md5($path), 'Module\Uploaded', array($path));
-    }
-
-    /**
-     * Check if all entry packages were downloaded and unpacked
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function isDownloaded()
-    {
-        $list = \Includes\Utils\ArrayManager::getObjectsArrayFieldValues($this->getEntries(), 'getRepositoryPath');
-
-        return !empty($list) && array_filter($list) === $list;
     }
 
     // }}}
@@ -298,7 +316,7 @@ class Cell extends \XLite\Base\Singleton
 
     // }}}
 
-    // {{{ Constructor and destructor
+    // {{{ "Magic" methods
 
     /**
      * Save data in DB
@@ -313,6 +331,18 @@ class Cell extends \XLite\Base\Singleton
             $this->entries,
             $this->incompatibleModules
         );
+    }
+
+    /**
+     * Names of variables to serialize
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function __sleep()
+    {
+        return array('entries', 'coreVersion', 'coreVersions', 'incompatibleModules');
     }
 
     /**
@@ -453,6 +483,195 @@ class Cell extends \XLite\Base\Singleton
     protected function getLogLevel()
     {                               
         return PEAR_LOG_WARNING;    
+    }
+
+    // }}}
+
+    // {{{ Errors handling
+
+    /**
+     * Return list of error messages
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getErrorMessages()
+    {
+        if (!isset($this->errorMessages)) {
+            $this->errorMessages = array();
+
+            // Space needed to download upgrade packs
+            if (!$this->isUnpacked()) {
+                $this->errorMessages[] = $this->checkDiskFreeSpace();
+            }
+
+            $this->errorMessages = array_filter($this->errorMessages);
+        }
+
+        return $this->errorMessages;
+    }
+
+    /**
+     * Check if there is enpugh disk free space.
+     * Return message on error
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkDiskFreeSpace()
+    {
+        $message = null;
+
+        $totalSize = \Includes\Utils\ArrayManager::sumObjectsArrayFieldValues($this->getEntries(), 'getPackSize');
+        $freeSpace = max(0, \Includes\Utils\FileManager::getDiskFreeSpace(LC_DIR_TMP) - self::FREE_SPACE_RESERVE);
+
+        if ($totalSize > $freeSpace) {
+            $message = \XLite\Core\Translation::getInstance()->translate(
+                'Not enogh disk space. Required: {{REQ}} (+{{RESERVE}} reserve). Available: {{AVAIL}}',
+                array(
+                    'REQ'     => \XLite\Core\Converter::formatFileSize($totalSize),
+                    'RESERVE' => \XLite\Core\Converter::formatFileSize(self::FREE_SPACE_RESERVE),
+                    'AVAIL'   => \XLite\Core\Converter::formatFileSize($freeSpace),
+                )
+            );
+        }
+
+        return $message;
+    }
+
+    // }}}
+
+    // {{{ Check cell status
+
+    /**
+     * Check if all entry packages were downloaded
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isDownloaded()
+    {
+        return $this->checkCellPackages(false);
+    }
+
+    /**
+     * Check if all entry packages were unpacked
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isUnpacked()
+    {
+        return $this->checkCellPackages(true);
+    }
+
+    /**
+     * Common method to check entry packages
+     * 
+     * @param boolean $isUnpacked Check type
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkCellPackages($isUnpacked)
+    {
+        $list  = $this->getEntries();
+        $count = count($list);
+
+        if (0 < $count) {
+            $callback = function (\XLite\Upgrade\Entry\AEntry $entry) use ($isUnpacked) {
+                return $entry->{$isUnpacked ? 'isUnpacked' : 'isDownloaded'}();
+            };
+
+            $result = count(array_filter(array_map($callback, $list))) === $count;
+        }
+
+        return !empty($result);
+    }
+
+    // }}}
+
+    // {{{ Download and unpack archives
+
+    /**
+     * Download all update packs
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function downloadUpgradePacks()
+    {
+        return $this->manageEntryPackages(false);
+    }
+
+    /**
+     * Unpack all archives
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function unpackAll()
+    {
+        if (!$this->isDownloaded()) {
+            \Includes\ErrorHandler::fireError('Trying to unpack non-downloaded archives');
+        }
+
+        return $this->manageEntryPackages(true);
+    }
+
+    /**
+     * Common method to manage entry packages
+     *
+     * @param boolean $isUnpack Operation type
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function manageEntryPackages($isUnpack)
+    {
+        foreach ($this->getEntries() as $entry) {
+            if (!$entry->{$isUnpack ? 'unpack' : 'download'}()) {
+                break;
+            }
+        }
+
+        return $this->{$isUnpack ? 'isUnpacked' : 'isDownloaded'}();
+    }
+
+    // }}}
+
+    // {{{ Upgrade
+
+    /**
+     * Perform upgrade 
+     * 
+     * @param boolean $isTestMode Flag OPTIONAL
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function upgrade($isTestMode = true)
+    {
+        if (!$this->isUnpacked()) {
+            \Includes\ErrorHandler::fireError('Trying to perform upgrade while not all archives were unpacked');
+        }
+
+        $result = true;
+
+        foreach ($this->getEntries() as $entry) {
+            $result = $entry->upgrade($isTestMode) && $result;
+        }
+
+        return $result;
     }
 
     // }}}

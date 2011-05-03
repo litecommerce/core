@@ -90,7 +90,7 @@ abstract class SafeMode
      */
     public static function isSafeModeStarted()
     {
-        return \Includes\Utils\FileManager::isExists(static::getIndicatorFileName());
+        return \Includes\Utils\FileManager::isFile(static::getIndicatorFileName());
     }
 
     /**
@@ -102,7 +102,7 @@ abstract class SafeMode
      */
     public static function getAccessKey()
     {
-        if (!\Includes\Utils\FileManager::isExists(static::getAccessKeyFileName())) {
+        if (!\Includes\Utils\FileManager::isFile(static::getAccessKeyFileName())) {
             static::regenerateAccessKey();
         }
 

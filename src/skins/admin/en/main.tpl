@@ -21,13 +21,17 @@
 
   <div id="content">
 
-    <div id="main">
+    <div id="content-header">
 
-      <widget template="center.tpl" />
+      <div id="main">
+
+        <widget template="center.tpl" />
     
-    </div><!-- [/main] -->
+      </div><!-- [/main] -->
   
-    <div id="sub-section"></div>
+      <div id="sub-section"></div>
+
+    </div>
   
   </div><!-- [/content] -->
 

@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * The "Size" column header
+ * Entry pack size
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,9 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="upgrade.step.ready_to_install.entries_list.sections.table.header", weight="400")
+ * @ListChild (list="upgrade.step.prepare.entries_list.sections.table.columns", weight="600")
  *}
 
-{* :TODO: check if it's really needed *}
-
-<th>{t(#Size#)}</th>
+<td>{formatFileSize(entry.getPackSize())}</td>

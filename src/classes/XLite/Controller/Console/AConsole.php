@@ -322,11 +322,7 @@ abstract class AConsole extends \XLite\Controller\AController
      */
     protected function saveInputStream()
     {
-        $dir = function_exists('sys_get_temp_dir')
-            ? sys_get_temp_dir() . LC_DS
-            : LC_DIR_VAR;
-
-        $path = tempnam($dir, 'input');
+        $path = tempnam(sys_get_temp_dir() . LC_DS, 'input');
         file_put_contents($path, file_get_contents('php://stdin'));
 
         return $path;

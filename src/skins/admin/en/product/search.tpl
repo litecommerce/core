@@ -20,6 +20,3 @@
   </table>
 
 <widget name="search_form" end />
-
-<br />
-

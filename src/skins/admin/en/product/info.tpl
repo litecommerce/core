@@ -13,12 +13,13 @@
 
 <p>{t(#Mandatory fields are marked with an asterisk#)} (<span class="star">*</span>).<br /><br />
 
-<widget class="XLite\View\Form\Product\Modify\Single" name="modify_form" />
+<widget class="XLite\View\Form\Product\Modify\Single" name="modify_form" className="product-modify-form" />
 
 <table class="product-list">
 
 <tr>
   <td class="name-attribute">&nbsp;</td>
+  <td class="star">&nbsp;</td>
   <td class="value-attribute">&nbsp;</td>
 </tr>
 

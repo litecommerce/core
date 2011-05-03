@@ -1,14 +1,16 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * The "Size" column header
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
- * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="top_links.help", weight="10")
+ *
+ * @ListChild (list="upgrade.step.prepare.entries_list.sections.table.header", weight="300")
  *}
-<li><a href="http://www.litecommerce.com/faqs.html">{t(#LiteCommerce FAQs#)}</a></li>
+
+<th>{t(#Size#)}</th>

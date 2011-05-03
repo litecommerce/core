@@ -9,9 +9,11 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="product.modify.list", weight="110")
+ * @ListChild (list="product.modify.list", weight="900")
  *}
+
 <tr>
-  <td>{t(#Product page title#)} </td>
-  <td><input type="text" name="{getNamePostedData(#meta_title#)}" value="{product.meta_title}" size="50" /></td>
+  <td class="name-attribute">{t(#Product page title#)}</td>
+  <td class="star"></td>
+  <td class="value-attribute"><input type="text" name="{getNamePostedData(#meta_title#)}" value="{product.meta_title}" size="50" /></td>
 </tr>

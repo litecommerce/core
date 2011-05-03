@@ -15,6 +15,10 @@ div.login-page {
   margin: 0 auto;
 }
 
+div.login-page #content-header {
+  border: none;
+}
+
 div.login-page #header .logo {
   background-image: url("../images/logo_admin.png");
   height: 70px;
