@@ -82,7 +82,7 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      */
     protected function isAdmin()
     {
-        return \XLite\Core\Auth::getInstance()->getProfile()->isAdmin();
+        return \XLite\Core\Auth::getInstance()->isAdmin();
     }
 
     /**
@@ -94,7 +94,8 @@ abstract class Order extends \XLite\Controller\Customer\ACustomer
      */
     protected function checkOrderProfile()
     {
-        return \XLite\Core\Auth::getInstance()->getProfileId() == $this->getOrder()->getOrigProfile()->getProfileId();
+        return \XLite\Core\Auth::getInstance()->getProfile()->getProfileId() 
+            == $this->getOrder()->getOrigProfile()->getProfileId();
     }
 
     /**
