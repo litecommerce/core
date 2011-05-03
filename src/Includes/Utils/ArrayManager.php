@@ -34,7 +34,7 @@ namespace Includes\Utils;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class ArrayManager extends AUtils
+abstract class ArrayManager extends \Includes\Utils\AUtils
 {
     /**
      * Check if passed has no duplicate elements (except of the "skip" ones)

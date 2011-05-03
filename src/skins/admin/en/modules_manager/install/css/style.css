@@ -63,32 +63,29 @@ div.top-controls div.action-buttons {
   margin-left: 90px;
 }
 
-.modules-list div.price-info {
+.modules-list .price,
+  .modules-list .installed
+{
   margin-bottom: 10px;
 }
 
-.modules-list span.price-value {
+.modules-list .price .currency {
   color: #ee5f00;
-  font-size: 16px;
   text-transform: uppercase;
 }
 
-.modules-list div.installed {
-  font-size: 16px;
-  color: #4a8946;
-  margin-bottom: 10px;
-}
-
-.modules-list span.currency {
-  color: #f49455;
+.modules-list .price .currency {
   font-size: 18px;
-  text-transform: uppercase;
+}
+
+.modules-list .installed {
+  color: #4a8946;
+  font-size: 16px;
 }
 
 .modules-list span.purchased {
+  color: #1d6d18;
   font-size: 16px;
-  color: #4a8946;
-  margin-bottom: 10px;
 }
 
 .modules-list span.enter-license {
@@ -102,11 +99,17 @@ div.top-controls div.action-buttons {
   width: 900px;
 }
 
-.addons-filters,
-  table.items-list.modules-list
-{
-  width: 945px;
+/*
+ These sizes depend on padding + margin 
+*/
+.addons-filters {
+  width: 925px; 
 }
+
+table.items-list.modules-list {
+  width: 965px;
+}
+
 
 .addons-filters .features {
   float: left;
@@ -225,4 +228,27 @@ div.price-filter select {
   -webkit-border-radius: 3px;
   border-radius: 3px;
   padding: 3px 5px;
+}
+
+ul.dependencies-list {
+  list-style: disc;
+  line-height: 18px;
+}
+
+.dependency-element {
+  padding-bottom: 10px;
+}
+
+.dependency-element,
+  .dependency-element .module-condition span
+{
+  color: #C49A91;
+}
+
+.dependency-element .module-condition span {
+  font-size: 14px;
+}
+
+.dependency-element .module-condition {
+  white-space: nowrap;
 }

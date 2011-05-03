@@ -251,7 +251,8 @@ abstract class Image extends \XLite\Model\AEntity
             // File is not exists
             $operator = new \XLite\Core\ImageOperator($this);
             $result = $operator->resizeDown($width, $height);
-            $result[2] = (!$result[2] || !file_put_contents($path . $fn, $operator->getImage()))
+            // :FIXME:
+            $result[2] = (!file_put_contents($path . $fn, $operator->getImage()) || !$result[2])
                 ? $this->getURL()
                 : $this->getRepository()->getWebCacheRoot($sizeName) . '/' . $fn;
 

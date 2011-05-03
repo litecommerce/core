@@ -227,7 +227,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     protected function isCoreUpgradeAvailable($majorVersion)
     {
         return (bool) \Includes\Utils\ArrayManager::getIndex(
-            (array) \XLite\Core\Marketplace::getInstance()->getCoreVersions(),
+            \XLite\Upgrade\Cell::getInstance()->getCoreVersions(),
             $majorVersion,
             true
         );

@@ -9,11 +9,13 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="product.modify.list", weight="70")
+ * @ListChild (list="product.modify.list", weight="600")
  *}
+
 <tr>
-  <td valign=middle class=Text>{t(#Weight#)} ({config.General.weight_symbol:h})</td>
-  <td valign="middle">
+  <td class="name-attribute">{t(#Weight#)} ({config.General.weight_symbol:h})</td>
+  <td class="star"></td>
+  <td class="value-attribute">
     <input type="text" name="{getNamePostedData(#weight#)}" size="18" value="{product.weight}" />
   </td>
 </tr>

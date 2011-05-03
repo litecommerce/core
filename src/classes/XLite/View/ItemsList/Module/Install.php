@@ -119,8 +119,17 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     {
         $list = parent::getCSSFiles();
         $list[] = 'modules_manager/common.css';
+
         // TODO fix with enter-key license widget. It should be taken dynamically from AJAX
         $list[] = 'modules_manager/enter_key/css/style.css';
+
+        // TODO must be taken from LICENSE module widget!!!
+        $list[] = 'modules_manager/license/css/style.css';
+
+        // TODO must be taken from SwitchButton widget
+        $list[] = \XLite\View\Button\SwitchButton::SWITCH_CSS_FILE;
+
+
         $list[] = $this->getDir() . '/style.css';
 
         return $list;
@@ -137,7 +146,18 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-        $list[] = 'button/js/core.popup-button.js';
+
+        // TODO must be taken from Button/InstallAddon widget
+        $list[] = 'button/js/core.popup_button.js';
+        $list[] = 'button/js/install_addon.js';
+
+        // TODO must be taken from SwitchButton widget
+        $list[] = \XLite\View\Button\SwitchButton::JS_SCRIPT;
+
+        // TODO must be taken from LICENSE module widget
+        $list[] = 'modules_manager/license/js/switch-button.js';
+
+
         $list[] = $this->getDir() . '/' . $this->getPageBodyDir() . '/js/controller.js';
 
         return $list;

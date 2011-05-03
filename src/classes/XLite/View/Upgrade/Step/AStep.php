@@ -71,4 +71,16 @@ abstract class AStep extends \XLite\View\Upgrade\AUpgrade
     {
         return parent::isVisible() && !isset(\XLite\Core\Request::getInstance()->mode);
     }
+
+    /**
+     * Return list of error messages
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getErrorMessages()
+    {
+        return \XLite\Upgrade\Core::getInstance()->getErrorMessages();
+    }
 }

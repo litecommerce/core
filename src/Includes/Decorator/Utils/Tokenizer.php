@@ -380,7 +380,7 @@ abstract class Tokenizer extends \Includes\Decorator\Utils\AUtils
         if ($path !== static::$path) {
 
             static::$path   = $path;
-            static::$tokens = token_get_all(\Includes\Utils\FileManager::read($path));
+            static::$tokens = token_get_all(\Includes\Utils\FileManager::read($path, LC_DEVELOPER_MODE));
 
             if ($prepare) {
                 static::$tokens = static::prepareTokens(static::$tokens);

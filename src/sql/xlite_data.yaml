@@ -595,7 +595,6 @@ XLite\Model\Language:
   - { code: uz, code3: uzb, translations: [{ code: en, name: Uzbek }] }
   - { code: ve, code3: ven, translations: [{ code: en, name: Venda }] }
   - { code: vi, code3: vie, translations: [{ code: en, name: Vietnamese }] }
-  - { code: vo, code3: vol, translations: [{ code: en, name: 'Volap ük' }] }
   - { code: cy, code3: wel, translations: [{ code: en, name: Welsh }] }
   - { code: wa, code3: wln, translations: [{ code: en, name: Walloon }] }
   - { code: wo, code3: wol, translations: [{ code: en, name: Wolof }] }
