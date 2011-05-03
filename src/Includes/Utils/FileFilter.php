@@ -35,7 +35,7 @@ namespace Includes\Utils;
  * @see        ____class_see____
  * @since      1.0.0
  */
-class FileFilter extends AUtils
+class FileFilter extends \Includes\Utils\AUtils
 {
     /**
      * Directory to iterate over
@@ -127,10 +127,13 @@ class FileFilter extends AUtils
      */
     public function __construct($dir, $pattern = null, $mode = \RecursiveIteratorIterator::LEAVES_ONLY)
     {
-        if (!($this->dir = \Includes\Utils\FileManager::getCanonicalDir($dir))) {
+        $canonicalDir = \Includes\Utils\FileManager::getCanonicalDir($dir);
+
+        if (empty($canonicalDir)) {
             \Includes\ErrorHandler::fireError('Path "' . $dir . '" is not exists or is not readable.');
         }
 
+        $this->dir     = $canonicalDir;
         $this->pattern = $pattern;
         $this->mode    = $mode;
     }

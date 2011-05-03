@@ -69,6 +69,6 @@ abstract class APrepare extends \XLite\View\Upgrade\Step\AStep
      */
     protected function isVisible()
     {
-        return parent::isVisible() && !\XLite\Upgrade\Cell::getInstance()->isDownloaded();
+        return parent::isVisible() && !\XLite\Upgrade\Cell::getInstance()->isUnpacked();
     }
 }

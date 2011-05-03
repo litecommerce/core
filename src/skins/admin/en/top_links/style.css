@@ -94,6 +94,7 @@
 #top-links ul ul li a:visited
 {
   text-decoration: underline;
+  white-space: nowrap;
 }
 
 #top-links ul ul li a.text
@@ -101,6 +102,7 @@
   color: #fff;
   cursor: default;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 #top-links ul ul li a.frontend-opened

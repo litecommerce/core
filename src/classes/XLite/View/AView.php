@@ -899,6 +899,20 @@ abstract class AView extends \XLite\Core\Handler
 
 
     /**
+     * Prepare human-readable output for file size
+     * 
+     * @param integer $size Size in bytes
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function formatFileSize($size)
+    {
+        return \XLite\Core\Converter::formatFileSize($size);
+    }
+
+    /**
      * concat 
      * 
      * @return string

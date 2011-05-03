@@ -49,4 +49,28 @@ class StatusMessages extends \XLite\View\Upgrade\Step\Prepare\APrepare
     {
         return parent::getDir() . LC_DS . 'status_messages';
     }
+
+    /**
+     * Return list of diagnostic messages
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getMessages()
+    {
+        return \XLite\Upgrade\Cell::getInstance()->getErrorMessages();
+    }
+
+    /**
+     * Check widget visibility
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible() && (bool) $this->getMessages();
+    }
 }

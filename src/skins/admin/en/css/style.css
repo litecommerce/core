@@ -962,3 +962,30 @@ table.data-table td.table-id-column
   text-decoration: underline;
 }
 
+/* Product modify form */
+
+td.name-attribute
+{
+  white-space: nowrap;
+  vertical-align: middle;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+td.value-attribute
+{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.product-modify-form .name-attribute
+{
+  width: 120px;
+}
+
+td.star
+{
+  width: 10px;
+  text-align: center;
+}

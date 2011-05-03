@@ -231,6 +231,17 @@ class Module extends \XLite\Model\AEntity
     protected $revisionDate = 0;
 
     /**
+     * Module pack size (recieved from marketplace)
+     *
+     * @var   integer
+     * @see   ____var_see____
+     * @since 1.0.0
+     *
+     * @Column (type="bigint")
+     */
+    protected $packSize = 0;
+
+    /**
      * Module name
      *
      * @var   string

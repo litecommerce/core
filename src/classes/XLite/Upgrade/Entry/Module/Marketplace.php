@@ -151,6 +151,18 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
+     * Return entry pack size
+     *
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getPackSize()
+    {
+        return $this->getModuleForUpgrade()->getPackSize();
+    }
+
+    /**
      * Method to get entry package
      *
      * @return string
@@ -192,6 +204,22 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
                 . ' or has an invaid markeplace identifier'
             );
         }
+    }
+
+    /**
+     * Names of variables to serialize
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function __sleep()
+    {
+        $list = parent::__sleep();
+        $list[] = 'moduleIDInstalled';
+        $list[] = 'moduleIDForUpgrade';
+
+        return $list;
     }
 
     /**

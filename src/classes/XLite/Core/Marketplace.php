@@ -649,6 +649,10 @@ class Marketplace extends \XLite\Base\Singleton
                 'filter'  => FILTER_VALIDATE_INT,
                 'options' => array('max_range' => time()),
             ),
+            self::RESPONSE_FIELD_PACK_LENGTH        => array(
+                'filter'  => FILTER_VALIDATE_INT,
+                'options' => array('min_range' => 0),
+            ),
         );
     }
 
@@ -722,6 +726,10 @@ class Marketplace extends \XLite\Base\Singleton
                 'options' => array('regexp' => '/[\w\\\\]+/'),
             ),
             self::RESPONSE_FIELD_MODULE_DOWNLOADS_COUNT => array(
+                'filter'  => FILTER_VALIDATE_INT,
+                'options' => array('min_range' => 0),
+            ),
+            self::RESPONSE_FIELD_PACK_LENGTH            => array(
                 'filter'  => FILTER_VALIDATE_INT,
                 'options' => array('min_range' => 0),
             ),
@@ -802,6 +810,7 @@ class Marketplace extends \XLite\Base\Singleton
                     $result[$coreVersionMajor] = array(
                         $coreVersionMinor,
                         $core[self::RESPONSE_FIELD_CORE_REVISION_DATE],
+                        $core[self::RESPONSE_FIELD_PACK_LENGTH]
                     );
                 }
             }
@@ -891,6 +900,7 @@ class Marketplace extends \XLite\Base\Singleton
                         'pageURL'       => $this->getField($module, self::RESPONSE_FIELD_MODULE_PAGE_URL),
                         'authorPageURL' => $this->getField($module, self::RESPONSE_FIELD_MODULE_AUTHOR_PAGE_URL),
                         'dependencies'  => (array) $this->getField($module, self::RESPONSE_FIELD_MODULE_DEPENDENCIES),
+                        'packSize'      => $this->getField($module, self::RESPONSE_FIELD_PACK_LENGTH),
                     );
 
                 } else {
