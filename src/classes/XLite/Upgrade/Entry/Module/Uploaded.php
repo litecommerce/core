@@ -172,6 +172,17 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
+     * Calculate hashes for current version
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function loadHashesForInstalledFiles()
+    {
+    }
+
+    /**
      * Overloaded constructor
      *
      * @param string $path Path to the module package

@@ -178,6 +178,21 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
+     * Download hashes for current version
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function loadHashesForInstalledFiles()
+    {
+        return \XLite\Core\Marketplace::getInstance()->getAddonHash(
+            $this->getModuleInstalled()->getMarketplaceID(),
+            $this->getModuleInstalled()->getLicenseKey()
+        );
+    }
+
+    /**
      * Constructor
      *
      * @param \XLite\Model\Module $moduleInstalled  Module model object
