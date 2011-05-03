@@ -64,6 +64,8 @@ abstract class ErrorHandler
     /**
      * Add info to a log file
      *
+     * :FIXME: must be completely revised
+     *
      * @param string  $message Error message
      * @param integer $code    Error code
      *

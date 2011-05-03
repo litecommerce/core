@@ -9,12 +9,13 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- * @ListChild (list="product.modify.list", weight="10")
+ * @ListChild (list="product.modify.list", weight="100")
  *}
 
 <tr>
-  <td class="table-label">{t(#SKU#)}</td>
-  <td>
+  <td class="name-attribute">{t(#SKU#)}</td>
+  <td class="star"></td>
+  <td class="value-attribute">
     <input type="text" name="{getNamePostedData(#sku#)}" size="20" value="{product.sku:r}" />
   </td>
 </tr>

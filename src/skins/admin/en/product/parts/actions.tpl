@@ -11,10 +11,11 @@
  * @since     1.0.0
  * @ListChild (list="product.modify.list", weight="10010")
  *}
+
 <tr>
-<td>
-  <widget class="\XLite\View\Button\Submit" label="Add" IF="isNew()" />
-  <widget class="\XLite\View\Button\Submit" label="Update" IF="!isNew()" />
+<td colspan="3">
+  <br />
+  <widget class="\XLite\View\Button\Submit" label="Add product" style="main-button" IF="isNew()" />
+  <widget class="\XLite\View\Button\Submit" label="Update product" style="main-button" IF="!isNew()" />
 </td> 
-<td>&nbsp;</td>
 </tr>

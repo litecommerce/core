@@ -35,7 +35,7 @@ namespace Includes\Utils;
  * @see        ____class_see____
  * @since      1.0.0
  */
-class Operator extends AUtils
+abstract class Operator extends \Includes\Utils\AUtils
 {
     /**
      * Return length of the "dummy" buffer for flush

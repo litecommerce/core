@@ -35,8 +35,20 @@ namespace Includes\Utils;
  * @see        ____class_see____
  * @since      1.0.0
  */
-class Converter extends AUtils
+abstract class Converter extends \Includes\Utils\AUtils
 {
+    /**
+     * File size suffixes.
+     * Source: http://en.wikipedia.org/wiki/Template:Quantities_of_bytes
+     * Source: http://physics.nist.gov/cuu/Units/binary.html
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected static $byteMultipliers = array('', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+
+
     /**
      * Generate query string
      * 
@@ -237,5 +249,30 @@ class Converter extends AUtils
     public static function composeVersion($versionMajor, $versionMinor)
     {
         return $versionMajor . '.' . $versionMinor;
+    }
+
+    /**
+     * Prepare human-readable output for file size
+     *
+     * @param integer $size Size in bytes
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function formatFileSize($size)
+    {
+        $multiplier = 0;
+
+        while (1000 < $size) {
+
+            // http://en.wikipedia.org/wiki/Template:Quantities_of_bytes
+            // http://physics.nist.gov/cuu/Units/binary.html
+            $size /= 1000;
+
+            $multiplier++;
+        }
+
+        return array(number_format($size, 2), static::$byteMultipliers[$multiplier]);
     }
 }

@@ -211,6 +211,7 @@ abstract class ModulesManager extends AUtils
             'price'         => 0.00,
             'currency'      => 'USD',
             'revisionDate'  => 0,
+            'packSize'      => 0,
         );
 
         return array_replace_recursive($result, $additionalData);
