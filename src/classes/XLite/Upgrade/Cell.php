@@ -528,14 +528,13 @@ class Cell extends \XLite\Base\Singleton
         $freeSpace = max(0, \Includes\Utils\FileManager::getDiskFreeSpace(LC_DIR_TMP) - self::FREE_SPACE_RESERVE);
 
         if ($totalSize > $freeSpace) {
-            $message = str_replace(
-                array('@REQ@', '@RESERVE@', '@AVAIL@'),
+            $message = \XLite\Core\Translation::getInstance()->translate(
+                'Not enogh disk space. Required: {{REQ}} (+{{RESERVE}} reserve). Available: {{AVAIL}}',
                 array(
-                    \XLite\Core\Converter::formatFileSize($totalSize),
-                    \XLite\Core\Converter::formatFileSize(self::FREE_SPACE_RESERVE),
-                    \XLite\Core\Converter::formatFileSize($freeSpace),
-                ),
-                static::t('Not enogh disk space. Required: @REQ@ (+@RESERVE@ reserve). Available: @AVAIL@')
+                    'REQ'     => \XLite\Core\Converter::formatFileSize($totalSize),
+                    'RESERVE' => \XLite\Core\Converter::formatFileSize(self::FREE_SPACE_RESERVE),
+                    'AVAIL'   => \XLite\Core\Converter::formatFileSize($freeSpace),
+                )
             );
         }
 
