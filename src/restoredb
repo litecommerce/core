@@ -175,6 +175,8 @@ if (!R_INSTALL_STANDALONE) {
     $enabledModules['CDev'][] = 'DrupalConnector';
 }
 
+$additionalModules = array();
+
 foreach (array('CDev', 'Test', 'Test1') as $author) {
 
     foreach ((array) glob('classes/XLite/Module/' . $author . '/*/Main.php') as $f) {
@@ -187,6 +189,11 @@ foreach (array('CDev', 'Test', 'Test1') as $author) {
             $yamlFile = dirname($f) . '/install.yaml';
             if (file_exists($yamlFile)) {
                 _do_yaml_upload($yamlFile);
+            }
+
+            $yamlFile = 'sql/demo/module.' . $author . '.' . $name .'.yaml';
+            if (file_exists($yamlFile)) {
+                $additionalModules[] = $yamlFile;
             }
 
             if (!isset($modules[$author])) {
@@ -215,6 +222,10 @@ if (R_INSTALL_DEMO) {
 
 if (file_exists('sql/local/xlite_local_demo.yaml')) {
     _do_yaml_upload('sql/local/xlite_local_demo.yaml');
+}
+
+foreach ($additionalModules as $file) {
+    _do_yaml_upload($file);
 }
 
 // Create modules list
