@@ -13,5 +13,5 @@
 
 <a class="{getClass()}" href="{buildURL(#upgrade#,##,_ARRAY_(#version#^##))}" title="{t(#Upgrade for LC core is available#)}" >
 {displayCommentedData(getURLParams())}
-{getButtonContent())}
+{getButtonContent()}
 </a>
