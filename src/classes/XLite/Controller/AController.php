@@ -1210,7 +1210,7 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Print AJAX request ouput 
+     * Print AJAX request output 
      * 
      * @param string $output Output
      *  
