@@ -37,6 +37,8 @@ require_once __DIR__ . '/../ACustomer.php';
  */
 class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
 {
+    const ACCOUNT_EXPIRED_MESSAGE = 'Sorry but this account is not currently active';
+    
     public function testPay()
     {
         $pmethod = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findOneBy(array('service_name' => 'QuantumGateway'));
@@ -192,10 +194,18 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
 
         // Wait when payment form will appear
         $this->waitForCondition(
-            'selenium.isElementPresent(\'//form/descendant::input[@name="ccnum"]\')',
+            'selenium.isElementPresent(\'//form/descendant::input[@name="ccnum"]\') || selenium.isTextPresent(\'' . self::ACCOUNT_EXPIRED_MESSAGE . '\')',
             30000,
             'ccnum input field not found'
         );
+
+        // Skip test if account is expired
+        if ($this->isTextPresent(self::ACCOUNT_EXPIRED_MESSAGE)) {
+            $this->markTestSkipped('QuantumGateway account is expired');
+        }
+
+        // Fail test if form element not found 
+        $this->assertElementPresent('//form/descendant::input[@name="ccnum"]');
 
         // Type test credit card data
         $this->type('//input[@name="ccnum"]', '4111111111111111');
@@ -203,7 +213,7 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
         $this->type('//input[@name="CVV2"]', '666');
 
         // Payment gateway processing - Selenium TTL prolongation
-        $this->setTimeout(120000);
+        $this->setTimeout(120);
         $this->clickAndWait('//input[@type="submit"]');
 
         $this->waitForLocalCondition(
