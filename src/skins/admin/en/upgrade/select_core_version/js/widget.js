@@ -14,10 +14,18 @@
 function PopupButtonUpgradeWidget()
 {
   PopupButtonUpgradeWidget.superclass.constructor.apply(this, arguments);
+
+  // Remove redirection to HREF. (top link menu)
+  jQuery('a' + this.pattern).attr('href', 'javascript:void(0);');
 }
 
 extend(PopupButtonUpgradeWidget, PopupButton);
 
 PopupButtonUpgradeWidget.prototype.pattern = '.upgrade-popup-widget';
+
+PopupButtonUpgradeWidget.prototype.options = {
+  'width'       : 'auto',
+  'dialogClass' : 'popup upgrade-popup-block'
+};
 
 core.autoload(PopupButtonUpgradeWidget);

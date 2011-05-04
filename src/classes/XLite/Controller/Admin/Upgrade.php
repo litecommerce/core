@@ -75,7 +75,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
     {
         if ($this->isCoreSelection()) {
 
-            $result = '';
+            $result = 'Upgrade core';
 
         } elseif ($this->isDownload()) {
 
