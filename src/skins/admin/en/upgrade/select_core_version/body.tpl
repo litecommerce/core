@@ -15,13 +15,19 @@
   <input type="hidden" name="target" value="upgrade" />
   <input type="hidden" name="action" value="select_core_version" />
 
-  <span>
-    {t(getSelectBoxLabel())}
-  </span>
+  <div class="upgrade-core-frame">
 
-  <select name="version">
-    <option FOREACH="getCoreVersionsList(),version,data">{version}</option>
-  </select>
+    <span class="label">
+      {t(getSelectBoxLabel())}
+    </span>
 
-  <widget class="\XLite\View\Button\Submit" label="Upgrade" />
+    <select name="version">
+      <option FOREACH="getCoreVersionsList(),version,data">{version}</option>
+    </select>
+
+    <div class="action">
+      <widget class="\XLite\View\Button\Submit" label="Upgrade" />
+    </div>
+
+  </div>
 </form>

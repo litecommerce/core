@@ -49,6 +49,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
 
         // Clear all selection if you visit the "Available updates" page
         if ($this->isUpdate()) {
+
             \XLite\Upgrade\Cell::getInstance()->clear();
         }
 
@@ -73,17 +74,23 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
     public function getTitle()
     {
         if ($this->isCoreSelection()) {
-            $result = 'Upgrade core';
+
+            $result = '';
 
         } elseif ($this->isDownload()) {
+
             $result = 'Downloading updates';
 
         } else {
+
             $version = \XLite\Upgrade\Cell::getInstance()->getCoreMajorVersion();
 
             if (\XLite::getInstance()->checkVersion($version, '<')) {
+
                 $result = 'Upgrade to version ' . $version;
+
             } else {
+
                 $result = 'Updates for your version (' . $version . ')';
             }
         }

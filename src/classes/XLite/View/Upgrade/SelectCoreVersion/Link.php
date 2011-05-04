@@ -26,66 +26,26 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Upgrade;
+namespace XLite\View\Upgrade\SelectCoreVersion;
 
 /**
- * InstallUpdates
+ * Link
  * 
  * @see   ____class_see____
  * @since 1.0.0
- *
- * @ListChild (list="admin.center", zone="admin")
  */
-class InstallUpdates extends \XLite\View\Upgrade\AUpgrade
+class Link extends \XLite\View\Upgrade\SelectCoreVersion\AWidget
 {
-    /**
-     * Register CSS files 
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = $this->getDir() . '/css/style.css';
-
-        return $list;
-    }
 
     /**
-     * Get directory where template is located (body.tpl)
+     * Return widget default template
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDir()
+    function getDefaultTemplate()
     {
-        return parent::getDir() . '/install_updates';
-    }
-
-    /**
-     * Return internal list name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getListName()
-    {
-        return parent::getListName() . '.install_updates';
-    }
-
-    /**
-     * Check if widget is visible
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible() && $this->isUpdate();
+        return 'upgrade/select_core_version/link.tpl';
     }
 }

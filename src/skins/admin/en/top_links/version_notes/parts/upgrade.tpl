@@ -13,10 +13,5 @@
  *}
 {* :TODO: this link must open the popup to select core version *}
 <li IF="isCoreUpgradeAvailable()&!areUpdatesAvailable()" class="upgrade-note">
-  <a 
-  href="{buildURL(#upgrade#,##,_ARRAY_(#version#^##))}" 
-  title="{t(#Upgrade for LC core is available#)}"
-  >
-    {t(#Upgrade available#)}
-  </a>
+  <widget class="\XLite\View\Upgrade\SelectCoreVersion\Link" />
 </li>

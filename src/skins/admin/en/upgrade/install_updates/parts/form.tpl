@@ -14,11 +14,27 @@
  *}
 
 <form action="admin.php" method="post">
+
   <input type="hidden" name="target" value="upgrade">
 
-  <div FOREACH="getUpgradeEntries(),entry">
-    {displayInheritedViewListContent(#sections.form#,_ARRAY_(#entry#^entry))}
+  <div class="update-module-list-frame">
+
+    <div class="upgrade-button">
+      <widget class="\XLite\View\Upgrade\SelectCoreVersion\Button" />
+    </div>
+
+    <ul class="update-module-list">
+
+      <li class="update-module-info" FOREACH="getUpgradeEntries(),entry">
+        {displayInheritedViewListContent(#sections.form#,_ARRAY_(#entry#^entry))}
+      </li>
+
+    </ul>
+
+    <div class="clear"></div>
+
+    <widget class="\XLite\View\Button\Submit" label="Install updates" style="center main-button" />
+
   </div>
 
-  <widget class="\XLite\View\Button\Submit" label="Install updates" />
 </form>
