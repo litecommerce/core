@@ -20,4 +20,9 @@ extend(PopupButtonUpgradeWidget, PopupButton);
 
 PopupButtonUpgradeWidget.prototype.pattern = '.upgrade-popup-widget';
 
+PopupButtonUpgradeWidget.prototype.options = {
+  'width'       : 'auto',
+  'dialogClass' : 'popup upgrade-popup-block'
+};
+
 core.autoload(PopupButtonUpgradeWidget);

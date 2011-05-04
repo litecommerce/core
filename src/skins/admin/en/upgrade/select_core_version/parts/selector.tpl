@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Core version select popup
+ * Core version select popup details
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,14 +9,9 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
+ * @ListChild (list="upgrade.selector-version.details", weight="300")
  *}
 
-<form action="admin.php" method="post">
-  <input type="hidden" name="target" value="upgrade" />
-  <input type="hidden" name="action" value="select_core_version" />
-
-  <div class="upgrade-core-frame">
-    {displayViewListContent(#upgrade.selector-version.details#)}
-  </div>
-
-</form>
+<select name="version">
+<option FOREACH="getCoreVersionsList(),version,data">{version}</option>
+</select>
