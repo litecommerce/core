@@ -1032,7 +1032,7 @@ td.star
 
 .upgrade-core-frame {
   background: url(../images/icon_upgrade_big.png) no-repeat 9px 0;
-  padding: 0 0 0 110px;
+  padding: 0 40px 0 110px;
 }
 
 .upgrade-core-frame .title {
@@ -1044,11 +1044,15 @@ td.star
 
 .upgrade-core-frame .label {
   color: #456583;
-  font-size: 16px;
+  font-size: 17px;
+}
+
+.upgrade-core-frame select {
+  width: 60px;
 }
 
 .upgrade-core-frame .action {
-  padding-left: 33%;
+  padding-left: 35%;
   padding-top: 10px;
 }
 
