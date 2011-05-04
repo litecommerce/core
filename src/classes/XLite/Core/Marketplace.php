@@ -45,6 +45,7 @@ class Marketplace extends \XLite\Base\Singleton
     const ACTION_GET_ADDONS_LIST   = 'get_addons';
     const ACTION_GET_ADDON_PACK    = 'get_addon_pack';
     const ACTION_GET_ADDON_INFO    = 'get_addon_info';
+    const ACTION_GET_ADDON_HASH    = 'get_addon_hash';
     const ACTION_CHECK_ADDON_KEY   = 'check_addon_key';
     const ACTION_CHECK_FOR_UPDATES = 'check_for_updates';
 
@@ -207,7 +208,7 @@ class Marketplace extends \XLite\Base\Singleton
      * @param string $versionMajor Major version of core to get
      * @param string $versionMinor Minor version of core to get
      *
-     * @return string
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -272,6 +273,27 @@ class Marketplace extends \XLite\Base\Singleton
     {
         return $this->sendRequestToMarkeplace(
             self::ACTION_GET_ADDON_INFO,
+            array(
+                self::REQUEST_FIELD_MODULE_ID  => $moduleID,
+                self::REQUEST_FIELD_MODULE_KEY => $key,
+            )
+        );
+    }
+
+    /**
+     * The "get_addon_hash" request handler
+     *
+     * @param string $moduleID External module identifier
+     * @param string $key      Module license key OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getAddonHash($moduleID, $key = null)
+    {
+        return $this->sendRequestToMarkeplace(
+            self::ACTION_GET_ADDON_HASH,
             array(
                 self::REQUEST_FIELD_MODULE_ID  => $moduleID,
                 self::REQUEST_FIELD_MODULE_KEY => $key,
