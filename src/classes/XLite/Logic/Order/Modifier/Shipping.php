@@ -64,7 +64,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
     public function canApply()
     {
         return parent::canApply()
-            && $this->isShipped();
+            && $this->isShippable();
     }
 
     /**
@@ -78,7 +78,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
     {
         $cost = null;
 
-        if ($this->isShipped()) {
+        if ($this->isShippable()) {
 
             $rate = $this->getSelectedRate();
 
@@ -131,12 +131,12 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function isShipped()
+    protected function isShippable()
     {
         $result = false;
 
         foreach ($this->getItems() as $item) {
-            if ($item->isShipped()) {
+            if ($item->isShippable()) {
                 $result = true;
                 break;
             }
@@ -158,7 +158,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
     {
         $rates = array();
 
-        if ($this->isShipped()) {
+        if ($this->isShippable()) {
 
             $rates = \XLite\Model\Shipping::getInstance()->getRates($this);
             
@@ -333,7 +333,7 @@ class Shipping extends \XLite\Logic\Order\Modifier\AShipping
         $result = array();
 
         foreach ($this->order->getItems() as $item) {
-            if ($item->isShipped()) {
+            if ($item->isShippable()) {
                 $result[] = $item;
             }
         }

@@ -344,9 +344,9 @@ class OrderItem extends \XLite\Model\Base\SurchargeOwner
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function isShipped()
+    public function isShippable()
     {
-        return !((bool) $this->getObject()->getFreeShipping());
+        return !$this->getObject()->getFreeShipping();
     }
 
     /**
