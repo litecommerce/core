@@ -15,13 +15,8 @@
   <input type="hidden" name="target" value="upgrade" />
   <input type="hidden" name="action" value="select_core_version" />
 
-  <span>
-    {t(getSelectBoxLabel())}
-  </span>
+  <div class="upgrade-core-frame">
+    {displayViewListContent(#upgrade.selector-version.details#)}
+  </div>
 
-  <select name="version">
-    <option FOREACH="getCoreVersionsList(),version,data">{version}</option>
-  </select>
-
-  <widget class="\XLite\View\Button\Submit" label="Upgrade" />
 </form>

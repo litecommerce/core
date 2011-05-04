@@ -14,5 +14,5 @@
 ItemsList.prototype.listeners.popup = function(handler)
 {
   // TODO: REWORK to load it dynamically with POPUP button widget JS files
-  core.autoload(PopupButton);
+  core.autoload(PopupButtonInstallAddon);
 }

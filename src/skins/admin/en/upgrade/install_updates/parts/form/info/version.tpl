@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * "Upgrade available" block
+ * Upgrade entry version
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="upgrade.install_updates.sections", weight="100")
+ * @ListChild (list="upgrade.install_updates.sections.form.info", weight="300")
  *}
 
-<widget class="\XLite\View\Upgrade\SelectCoreVersion\Button" />
+<li class="version">{entry.getVersionNew()}</li>

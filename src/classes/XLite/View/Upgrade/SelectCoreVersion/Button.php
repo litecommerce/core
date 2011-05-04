@@ -34,7 +34,7 @@ namespace XLite\View\Upgrade\SelectCoreVersion;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Button extends \XLite\View\AView
+class Button extends \XLite\View\Upgrade\SelectCoreVersion\AWidget
 {
     /**
      * Return list of allowed targets
@@ -52,14 +52,29 @@ class Button extends \XLite\View\AView
     }
 
     /**
+     * Register CSS files 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = 'upgrade/select_core_version/css/button.css';
+
+        return $list;
+    }
+
+    /**
      * Return widget default template
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    function getDefaultTemplate()
-    {
-        return 'upgrade' . LC_DS . 'select_core_version' . LC_DS . 'button.tpl';
+    protected function getDefaultTemplate()
+    {   
+        return 'upgrade/select_core_version/button.tpl';
     }
 }

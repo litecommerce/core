@@ -45,7 +45,7 @@ class CoreVersionTopLink extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'top_links' . LC_DS . 'core_version.tpl';
+        return 'top_links/version_notes/body.tpl';
     }
 
     /**
@@ -95,7 +95,7 @@ class CoreVersionTopLink extends \XLite\View\AView
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function araUpdatesAvailable()
+    protected function areUpdatesAvailable()
     {
         return (bool) \Includes\Utils\ArrayManager::getIndex(
             \XLite\Core\Marketplace::getInstance()->checkForUpdates(),

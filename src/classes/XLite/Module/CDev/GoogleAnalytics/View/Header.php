@@ -33,6 +33,7 @@ namespace XLite\Module\CDev\GoogleAnalytics\View;
  * 
  * @see   ____class_see____
  * @since 1.0.0
+ *
  * @ListChild (list="head")
  */
 class Header extends \XLite\View\AView
@@ -81,11 +82,11 @@ class Header extends \XLite\View\AView
 
             $order = $this->getOrder();
             if (!in_array($order->getOrderId(), $orders)) {
-                foreach ($order->getItems() as $items) {
+                foreach ($order->getItems() as $item) {
                     $list[] = '\'_addItem\', '
                         . '\'' . $order->getOrderId() . '\', '
-                        . '\'' . $item->getSku() . '\', '
-                        . '\'' . $item->getName() . '\', '
+                        . '\'' . $this->escapeJavascript($item->getSku()) . '\', '
+                        . '\'' . $this->escapeJavascript($item->getName()) . '\', '
                         . '\'\', '
                         . '\'' . $item->getPrice() . '\', '
                         . '\'' . $item->getAmount() . '\'';
@@ -101,13 +102,13 @@ class Header extends \XLite\View\AView
 
                 $list[] = '\'_addTrans\', '
                     . '\'' . $order->getOrderId() . '\', '
-                    . '\'' . \XLite\Core\Config::getInstance()->Company->company_name . '\', '
-                    . '\'' . $order->gettotle() . '\', '
+                    . '\'' . $this->escapeJavascript(\XLite\Core\Config::getInstance()->Company->company_name) . '\', '
+                    . '\'' . $order->getTotal() . '\', '
                     . '\'' . $tax . '\', '
                     . '\'' . $shipping . '\', '
-                    . '\'' . $city . '\', '
-                    . '\'' . $state . '\', '
-                    . '\'' . $country . '\'';
+                    . '\'' . $this->escapeJavascript($city) . '\', '
+                    . '\'' . $this->escapeJavascript($state) . '\', '
+                    . '\'' . $this->escapeJavascript($country) . '\'';
 
                 $list[] = '\'_trackTrans\'';
 
@@ -115,7 +116,6 @@ class Header extends \XLite\View\AView
                 \XLite\Core\Session::getInstance()->gaProcessedOrders = $orders;
             }
         }
-
 
         return $list;
     }
@@ -130,21 +130,47 @@ class Header extends \XLite\View\AView
     protected function isVisible()
     {
         return parent::isVisible()
-            && $this->checkDrupalModule();
+            && $this->isDisplayStandalone();
     }
 
     /**
-     * Check Drupal module 
+     * Display widget as Standalone-specific
      * 
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function checkDrupalModule()
+    protected function isDisplayStandalone()
     {
-        return !\XLite\Core\Operator::isClassExists('\XLite\Module\CDev\DrupalConnector\Handler')
-            || !\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
-            || !function_exists('googleanalytics_help');
+        return (
+                !\XLite\Core\Operator::isClassExists('\XLite\Module\CDev\DrupalConnector\Handler')
+                || !\XLite\Module\CDev\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
+            )
+            && \XLite\Core\Config::getInstance()->GoogleAnalytics->ga_account;
+    }
+
+    /**
+     * Escape string for Javascript 
+     * 
+     * @param string $string String
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function escapeJavascript($string)
+    {
+         return strtr(
+            $string,
+            array(
+                '\\' => '\\\\',
+                '\'' => "\\'",
+                '"'  => '\\"',
+                "\r" => '\\r',
+                "\n" => '\\n',
+                '</' =>'<\/'
+            )
+        );
     }
 }
 

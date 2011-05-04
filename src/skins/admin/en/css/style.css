@@ -219,7 +219,7 @@ body
 
 #main
 {
-  margin: 0 25px 25px;
+  margin: 15px 25px 25px 25px;
   min-width: 640px;
 }
 
@@ -255,7 +255,7 @@ body
   top: 12px;
 }
 
-#header .sw-version .current
+.sw-version .current
 {
   color: #7f90A0;
   margin-right: 10px;
@@ -263,14 +263,41 @@ body
   font-size: 12px;
 }
 
-#header .sw-version .upgrade-note
-{
-  color: #fff;
+ul.version-note {
+  list-style: none;
 }
 
-#header .sw-version .upgrade-note a {
-  color: #82c4fa;
+ul.version-note li {
+  float: left;
+}
+
+ul.version-note li.current {
+  color: #8797a7;
+}
+
+li.updates-note {
+  background: url(../images/bulb.png) no-repeat 0 0;
+  display: block;
+  height: 20px;
+  padding: 0 0 0 20px;
+}
+
+li.upgrade-note a,
+  li.updates-note a
+{
   text-decoration: underline;
+}
+
+li.upgrade-note a {
+  color: #6BA5D4;
+}
+
+li.upgrade-note a:hover {
+  color: #FFFFFF;
+}
+
+li.updates-note a {
+  color: #FFFFFF;
 }
 
 /**
@@ -641,12 +668,13 @@ button
     -moz-border-radius: 19px;
     -webkit-border-radius: 19px;
     border-radius: 19px;
-    background: url(../images/button_bg_light.png) repeat-x center top #eff8fe;
+    background: url(../images/button.png) repeat-x center top #eff8fe;
     border: 1px solid #cadce8;
     color: #2c5fa6;
     cursor: pointer;
     margin: 7px 7px 7px 0;
-    padding: 3px 12px;
+    padding: 3px 10px 4px;
+    height: 26px;
 }
 
 input[type="submit"],
@@ -684,14 +712,16 @@ button.disabled span {
 button.main-button,
 input.main-button
 {
-  padding: 6px 15px;
+  padding: 6px 20px;
+  height: 36px;
 }
 
 button.main-button span,
 input.main-button
 {
   font-size: 15px;
-  line-height: 15px;
+  line-height: 19px;
+  font-family: "Trebuchet MS",Helvetica,Jamrul,sans-serif;
 }
 
 button.invert
@@ -989,3 +1019,37 @@ td.star
   width: 10px;
   text-align: center;
 }
+
+/* Upgrade core block TODO: move it to separated widget */
+
+.upgrade-popup-block .ui-dialog-title {
+  display: none;
+}
+
+.upgrade-popup-block .ui-dialog-titlebar {
+  padding: 0px;
+}
+
+.upgrade-core-frame {
+  background: url(../images/icon_upgrade_big.png) no-repeat 9px 0;
+  padding: 0 0 0 110px;
+}
+
+.upgrade-core-frame .title {
+  font-size: 30px;
+  line-height: 36px;
+  color: #69A4C9;
+  margin-bottom: 10px;
+}
+
+.upgrade-core-frame .label {
+  color: #456583;
+  font-size: 16px;
+}
+
+.upgrade-core-frame .action {
+  padding-left: 33%;
+  padding-top: 10px;
+}
+
+

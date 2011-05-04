@@ -238,7 +238,7 @@ ALoadable.prototype.extractContent = function(box)
   return box;
 }
 
-// Repalce page title
+// Replace page title
 ALoadable.prototype.replacePageTitle = function(box)
 {
   var title = jQuery(this.titleRequestPattern, box).eq(0).html();

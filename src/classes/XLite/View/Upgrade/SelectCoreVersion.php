@@ -38,6 +38,20 @@ namespace XLite\View\Upgrade;
  */
 class SelectCoreVersion extends \XLite\View\Upgrade\AUpgrade
 {
+
+    /**  
+     * Return list of the modes allowed by default
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultModes()
+    {    
+        return parent::getDefaultModes()
+            + array('select_core_version');
+    }    
+
     /**
      * Get directory where template is located (body.tpl)
      *
@@ -47,7 +61,7 @@ class SelectCoreVersion extends \XLite\View\Upgrade\AUpgrade
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'select_core_version';
+        return parent::getDir() . '/select_core_version';
     }
 
     /**
@@ -96,6 +110,7 @@ class SelectCoreVersion extends \XLite\View\Upgrade\AUpgrade
     protected function getCoreVersionsList()
     {
         $result = \XLite\Upgrade\Cell::getInstance()->getCoreVersions();
+
         unset($result[\XLite::getInstance()->getMajorVersion()]);
 
         return $result;
