@@ -14,6 +14,9 @@
 function PopupButtonUpgradeWidget()
 {
   PopupButtonUpgradeWidget.superclass.constructor.apply(this, arguments);
+
+  // Remove redirection to HREF. (top link menu)
+  jQuery('a' + this.pattern).attr('href', 'javascript:void(0);');
 }
 
 extend(PopupButtonUpgradeWidget, PopupButton);
