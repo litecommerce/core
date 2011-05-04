@@ -1,0 +1,96 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * ____file_title____
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.0
+ */
+  
+.update-module-list-frame {
+  width: 1000px;
+  position: relative;
+  margin-top: 20px;
+}
+
+.update-module-list-frame button.center {
+  margin-left: 38%;
+  margin-top: 10px;
+}
+
+ul.update-module-list {
+  list-style: none;
+}
+
+.update-module-list li.update-module-info {
+  float: left;
+  display: block;
+  margin: 0px 10px 30px 0px;
+  width: 330px;
+  min-width: 310px;
+  max-width: 320px;
+}
+
+li.update-module-info .module-icon {
+  float: left;
+  margin: 0px 10px 0px 0px;
+}
+
+li.update-module-info ul.module-info {
+  float: left;
+  margin: 6px 0px 0px 0px;
+}
+
+ul.module-info {
+  list-style: none;
+  max-width: 220px;
+}
+
+.module-info .name {
+  color: #333333;
+  font-size: 15px;
+}
+
+.module-info .name.core {
+  font-size: 24px;
+}
+
+.module-info .module {
+  padding: 4px 0px 0px 0px;
+}
+
+.module-info .module .details li {
+  margin: 2px 0px 0px 0px;
+}
+
+.module-info .module .enabled {
+  color: #2d8e10;
+}
+
+.module-info .module .disabled {
+  color: #8f8f8f;
+}
+
+.module-info .module .author {
+  color: #8f8f8f;
+}
+
+.module-info .version {
+  color: #333333;
+  font-size: 14px;
+  margin: 7px 0px 0px 0px;
+}
+
+.upgrade-button {
+  border: 1px solid #CADCE8;
+  padding: 1px;
+  background: transparent #ffffff;
+  position:absolute;
+  top: -70px;
+  right: 0px;
+  -moz-border-radius: 3px;
+}

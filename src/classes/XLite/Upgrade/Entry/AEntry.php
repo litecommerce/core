@@ -74,6 +74,15 @@ abstract class AEntry
     abstract public function getName();
 
     /**
+     * Return entry icon URL
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract public function getIconURL();
+
+    /**
      * Return entry old major version
      * 
      * @return string

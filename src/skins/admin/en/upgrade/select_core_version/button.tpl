@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-
-<div>
-  <a href="{buildURL(#upgrade#,##,_ARRAY_(#mode#^#select_core_version#))}">{t(#Upgrade available#)}</a>
+<div class="{getClass()}">
+{displayCommentedData(getURLParams())}
+<span>{getButtonContent()}</span>
 </div>

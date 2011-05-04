@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Module status
+ * Module author
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,8 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="upgrade.install_updates.sections.form.module", weight="100")
+ * @ListChild (list="upgrade.install_updates.sections.form.info.module", weight="100")
  *}
 
-<span IF="entry.isEnabled()">{t(#Enabled#)}</span>
-<span IF="!entry.isEnabled()">{t(#Disabled#)}</span>
+<li class="author">{t(#by#)} {entry.getAuthor()}</li>

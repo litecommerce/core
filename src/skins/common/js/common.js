@@ -210,6 +210,7 @@ function loadDialog(url, dialogOptions, callback)
         var div = jQuery(document.body.appendChild(document.createElement('div')))
           .hide()
           .html(jQuery.trim(data));
+
         if (1 == div.get(0).childNodes.length) {
           div = jQuery(div.get(0).childNodes[0]);
         }
@@ -217,6 +218,7 @@ function loadDialog(url, dialogOptions, callback)
         div.addClass(selector);
 
         openDialog('.' + selector, dialogOptions);
+
         closeWaitBar();
 
         if (callback) {

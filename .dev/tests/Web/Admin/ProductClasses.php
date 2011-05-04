@@ -42,7 +42,7 @@ class XLite_Web_Admin_ProductClasses extends XLite_Web_Admin_AAdmin
 
     const SHIPPING_SELECTOR = '//div[@class="select-classes"]/select[@id="posteddata-class-ids-1-" and @name="postedData[class_ids][1][]" and @multiple="multiple"]';
 
-    const PRODUCT_UPDATE  = '//button[@type="submit"]/span[text()="Update"]';
+    const PRODUCT_UPDATE  = '//button[@type="submit"]/span[text()="Update product"]';
 
     const SHIPPING_UPDATE = '//form[@name="shipping_method_offline"]/table/tbody/tr/td/button[@type="submit"]/span[text()="Update"]';
 
