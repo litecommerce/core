@@ -48,7 +48,7 @@ abstract class AView extends \XLite\Core\Handler
      */
 
     const PARAM_TEMPLATE = 'template';
-    const PARAM_MODE     = 'mode';
+    const PARAM_MODES    = 'modes';
 
 
     /**
@@ -636,7 +636,7 @@ abstract class AView extends \XLite\Core\Handler
 
         $this->widgetParams += array(
             self::PARAM_TEMPLATE => new \XLite\Model\WidgetParam\File('Template', $this->getDefaultTemplate()),
-            self::PARAM_MODE     => new \XLite\Model\WidgetParam\Collection('Modes', $this->getDefaultModes()),
+            self::PARAM_MODES    => new \XLite\Model\WidgetParam\Collection('Modes', $this->getDefaultModes()),
         );
     }
 
@@ -677,6 +677,7 @@ abstract class AView extends \XLite\Core\Handler
     protected function registerResources()
     {
         foreach ($this->getResources() as $type => $list) {
+
             $this->registerResourcesType($type, $list);
         }
     }
@@ -704,7 +705,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function checkMode()
     {
-        $modes = $this->getParam(self::PARAM_MODE);
+        $modes = $this->getParam(self::PARAM_MODES);
 
         return empty($modes) || $this->isDisplayRequiredForMode($modes);
     }

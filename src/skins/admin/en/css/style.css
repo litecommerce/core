@@ -1019,3 +1019,20 @@ td.star
   width: 10px;
   text-align: center;
 }
+
+/* Upgrade core block */
+
+.upgrade-core-frame {
+  background: url(../images/icon_upgrade_big.png) no-repeat 0 0;
+  padding: 50px;
+}
+
+.upgrade-core-frame .label {
+
+}
+
+.upgrade-core-frame .action {
+  padding-left: 30%;
+}
+
+

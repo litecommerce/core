@@ -26,66 +26,78 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Upgrade;
+namespace XLite\View\Upgrade\SelectCoreVersion;
 
 /**
- * InstallUpdates
+ * Widget (parent of button and link)
  * 
  * @see   ____class_see____
  * @since 1.0.0
- *
- * @ListChild (list="admin.center", zone="admin")
  */
-class InstallUpdates extends \XLite\View\Upgrade\AUpgrade
+abstract class AWidget extends \XLite\View\Button\APopupButton
 {
     /**
-     * Register CSS files 
+     *  Widget to show in popup
+     */
+    const SELECT_CORE_VERSION_WIDGET = 'XLite\View\Upgrade\SelectCoreVersion';
+
+
+    /**
+     * Register JS files
      * 
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getCSSFiles()
+    public function getJSFiles()
     {
-        $list = parent::getCSSFiles();
-        $list[] = $this->getDir() . '/css/style.css';
+        $list = parent::getJSFiles();
+        $list[] = 'upgrade/select_core_version/js/widget.js';
 
         return $list;
     }
 
+
     /**
-     * Get directory where template is located (body.tpl)
-     *
+     * Return text for button and link
+     * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDir()
+    public function getButtonContent()
     {
-        return parent::getDir() . '/install_updates';
+        return $this->t('Upgrade available');
     }
 
-    /**
-     * Return internal list name
-     *
+
+    /** 
+     * Return URL parameters to use in AJAX popup
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function prepareURLParams()
+    {   
+        return array(
+            'target'    => 'upgrade',
+            'action'    => 'view',
+            'mode'      => 'select_core_version',
+            'widget'    => self::SELECT_CORE_VERSION_WIDGET,
+        );  
+    }   
+
+    /** 
+     * Return CSS classes
+     * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getListName()
-    {
-        return parent::getListName() . '.install_updates';
+    protected function getClass()
+    {   
+        return 'upgrade-popup-widget';
     }
 
-    /**
-     * Check if widget is visible
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible() && $this->isUpdate();
-    }
 }
