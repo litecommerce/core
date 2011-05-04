@@ -13,7 +13,7 @@
  *}
 
 <tr>
-  <td class="name-attribute">{t(#Free shipping#)}</td>
+  <td class="name-attribute">{t(#Shippable#)}</td>
   <td class="star">*</td>
   <td class="value-attribute">
     <select name="{getNamePostedData(#free_shipping#)}">
