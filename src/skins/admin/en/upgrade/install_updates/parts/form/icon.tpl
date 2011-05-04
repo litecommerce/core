@@ -12,3 +12,6 @@
  *
  * @ListChild (list="upgrade.install_updates.sections.form", weight="100")
  *}
+<div class="module-icon">
+  <img src="{entry.getIconURL()}" alt="{entry.getName()}" />
+</div>

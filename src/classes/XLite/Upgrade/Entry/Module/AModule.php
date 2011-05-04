@@ -36,4 +36,16 @@ namespace XLite\Upgrade\Entry\Module;
  */
 abstract class AModule extends \XLite\Upgrade\Entry\AEntry
 {
+
+    /** 
+     * Return icon URL
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getIconURL()
+    {   
+        return 'skins/admin/en/images/addon_default.png';
+    }   
 }

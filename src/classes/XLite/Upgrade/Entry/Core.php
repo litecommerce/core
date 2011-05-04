@@ -85,6 +85,18 @@ class Core extends \XLite\Upgrade\Entry\AEntry
     }
 
     /**
+     * Return icon URL
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getIconURL()
+    {
+        return 'skins/admin/en/images/core_image.png';
+    }
+
+    /**
      * Return entry old major version
      *
      * @return string
