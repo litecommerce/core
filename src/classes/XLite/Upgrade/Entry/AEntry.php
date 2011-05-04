@@ -417,15 +417,15 @@ abstract class AEntry
         foreach ($this->getHashesForInstalledFiles($isTestMode) as $path => $hash) {
 
             // Some useful variables
-            $relativePath = \Includes\Utils\FilManager::getRealPath($path);
+            $relativePath = \Includes\Utils\FileManager::getRealPath($path);
             $fullPath     = LC_ROOT_DIR . $relativePath;
-            $directory    = \Includes\Utils\FilManager::getDir($fullPath);
+            $directory    = \Includes\Utils\FileManager::getDir($fullPath);
             
             // File is presented in both old and new packages - (optionally) overwrite
             if (isset($hashes[$relativePath])) {
 
                 // File exists on FS
-                if (\Includes\Utils\FilManager::isFile($fullPath)) {
+                if (\Includes\Utils\FileManager::isFile($fullPath)) {
 
                     // Check if file is modified
                     if ($hash !== $hashes[$relativePath]) {
@@ -439,7 +439,7 @@ abstract class AEntry
                                 $this->customFiles[$relativePath] = false;
 
                                 // Check permissions
-                                if (!\Includes\Utils\FilManager::isFileWritable($fullPath)) {
+                                if (!\Includes\Utils\FileManager::isFileWritable($fullPath)) {
                                     $this->addErrorMessage(
                                         'File "{{file}} has no writable permissions"',
                                         array('file' => $relativePath)
@@ -449,7 +449,7 @@ abstract class AEntry
                             } else {
 
                                 // Trying to overwrite
-                                if (!/*\Includes\Utils\FilManager::write($fullPath, $this->getFileSource($relativePath))*/true) {
+                                if (!/*\Includes\Utils\FileManager::write($fullPath, $this->getFileSource($relativePath))*/true) {
                                     $this->addErrorMessage(
                                         'An error occured while overwriting the "{{file}}" file',
                                         array('file' => $relativePath)
@@ -468,17 +468,17 @@ abstract class AEntry
                 } else {
 
                     // Short names
-                    $topDir  = \Includes\Utils\FilManager::getRealPath($directory);
-                    $lsRoot  = \Includes\Utils\FilManager::getRealPath(LC_ROOT_DIR);
-                    $sysRoot = \Includes\Utils\FilManager::getRealPath('/');
+                    $topDir  = \Includes\Utils\FileManager::getRealPath($directory);
+                    $lsRoot  = \Includes\Utils\FileManager::getRealPath(LC_ROOT_DIR);
+                    $sysRoot = \Includes\Utils\FileManager::getRealPath('/');
 
                     // Search for writable directory
                     while (
-                        !($flag = \Includes\Utils\FilManager::isDirWritable($topDir))
+                        !($flag = \Includes\Utils\FileManager::isDirWritable($topDir))
                         && $topDir !== $lsRoot 
                         && $topDir !== $sysRoot
                     ) {
-                        $topDir = \Includes\Utils\FilManager::getRealPath(\Includes\Utils\FilManager::getDir($topDir));
+                        $topDir = \Includes\Utils\FileManager::getRealPath(\Includes\Utils\FileManager::getDir($topDir));
                     }
 
                     // Permissions are correct
@@ -489,8 +489,8 @@ abstract class AEntry
 
                         } else {
 
-                            // The FilManager::write() will create nested directories by itself (if needed)
-                            if (!/*\Includes\Utils\FilManager::write($fullPath, $this->getFileSource($relativePath))*/true) {
+                            // The FileManager::write() will create nested directories by itself (if needed)
+                            if (!/*\Includes\Utils\FileManager::write($fullPath, $this->getFileSource($relativePath))*/true) {
                                 $this->addErrorMessage(
                                     'An error occured while writing the "{{file}}" file to FS',
                                     array('file' => $relativePath)
@@ -519,7 +519,7 @@ abstract class AEntry
                         $this->customFiles[$relativePath] = false;
 
                         // Check permissions for delete
-                        if (!\Includes\Utils\FilManager::isDirWritable($directory)) {
+                        if (!\Includes\Utils\FileManager::isDirWritable($directory)) {
                             $this->addErrorMessage(
                                 'Wrong permissions for the {{file}} file. Unable to delete',
                                 array('file' => $path)
@@ -529,7 +529,7 @@ abstract class AEntry
                     } else {
 
                         // Remove file
-                        if (!/*\Includes\Utils\FilManager::delete($fullPath)*/true) {
+                        if (!/*\Includes\Utils\FileManager::delete($fullPath)*/true) {
                             $this->addErrorMessage(
                                 'Unable to delete file "{{file}}"',
                                 array('file' => $relativePath)
@@ -578,7 +578,7 @@ abstract class AEntry
                 } else {
                     foreach ($data as $path => $hash) {
                         unset($data[$path]);
-                        $data[\Includes\Utils\FilManager::getRealPath($path)] = $hash;
+                        $data[\Includes\Utils\FileManager::getRealPath($path)] = $hash;
                     }
                 }
             }
@@ -623,7 +623,7 @@ abstract class AEntry
         $data = $this->loadHashesForInstalledFiles();
 
         if (is_array($data)) {
-            \Includes\Utils\FilManager::write(
+            \Includes\Utils\FileManager::write(
                 $this->getCurrentVersionHashesFilePath(),
                 '<?php' . PHP_EOL . '$data = ' . var_export($data, true) . ';'
             );
