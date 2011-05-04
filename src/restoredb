@@ -1,4 +1,4 @@
-#!/usr/local/php-532/bin/php -q
+#!/usr/bin/env php
 <?php
 // vim: set ts=4 sw=4 sts=4 et:
 
@@ -157,6 +157,7 @@ $enabledModules['CDev'] = array(
     'ProductOptions',
     'Taxes',
     'TinyMCE',
+    'GoogleAnalytics',
 );
 $enabledModules['Test'] = $enabledModules['Test1'] = array(
     'Module1',
