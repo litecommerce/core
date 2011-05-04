@@ -157,6 +157,7 @@ $enabledModules['CDev'] = array(
     'ProductOptions',
     'Taxes',
     'TinyMCE',
+    'GoogleAnalytics',
 );
 $enabledModules['Test'] = $enabledModules['Test1'] = array(
     'Module1',
