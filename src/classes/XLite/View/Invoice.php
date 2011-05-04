@@ -136,8 +136,8 @@ class Invoice extends \XLite\View\AView
     protected function getShippingModifier()
     {
         if (!isset($this->shippingModifier)) {
-            $this->shippingModifier 
-                = $this->getOrder()->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
+            $this->shippingModifier = $this->getOrder()
+                ->getModifier(\XLite\Model\Base\Surcharge::TYPE_SHIPPING, 'SHIPPING');
         }
 
         return $this->shippingModifier;
