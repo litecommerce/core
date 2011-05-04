@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Upgrade entry name
+ * Upgrade entry icon
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -12,5 +12,7 @@
  *
  * @ListChild (list="upgrade.install_updates.sections.form", weight="200")
  *}
-
-{entry.getName()}
+<ul class="module-info">
+  {displayInheritedViewListContent(#sections.form.info#,_ARRAY_(#entry#^entry))}
+</ul>
+<div class="clear"></div>

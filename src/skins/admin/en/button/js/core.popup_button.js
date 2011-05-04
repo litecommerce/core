@@ -31,7 +31,7 @@ function PopupButton()
           return loadDialogByLink(
             button,
             URLHandler.buildURL(urlParams),
-            {'width' : 'auto'},
+            obj.options,
             callback
           );  
         }   
@@ -41,6 +41,8 @@ function PopupButton()
 }
 
 PopupButton.prototype.pattern = '.popup-button';
+
+PopupButton.prototype.options = {'width' : 'auto'};
 
 PopupButton.prototype.callback = function (selector)
 {
