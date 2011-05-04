@@ -123,7 +123,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see   ____var_see____
      * @since 1.0.0
      *
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="boolean")
      */
     protected $free_shipping = false;
 

@@ -69,7 +69,8 @@ class ShippingEstimateBox extends \XLite\View\AView
     protected function isVisible()
     {
         return parent::isVisible()
-            && $this->getModifier();
+            && $this->getModifier()
+            && $this->getModifier()->canApply();
     }
 
     /**
