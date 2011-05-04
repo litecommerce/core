@@ -49,6 +49,18 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
     }
 
     /**
+     * Get result as array
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getArrayResult()
+    {
+        return $this->getQuery()->getArrayResult();
+    }
+
+    /**
      * Get single result 
      * 
      * @return \XLite\Model\AEntity|void
