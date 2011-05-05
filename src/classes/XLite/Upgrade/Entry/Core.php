@@ -208,6 +208,21 @@ class Core extends \XLite\Upgrade\Entry\AEntry
     }
 
     /**
+     * Download hashes for current version
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function loadHashesForInstalledFiles()
+    {
+        return \XLite\Core\Marketplace::getInstance()->getCoreHash(
+            $this->getMajorVersionOld(),
+            $this->getMinorVersionOld()
+        );
+    }
+
+    /**
      * Constructor
      *
      * @param string  $majorVersion Core major version
@@ -254,6 +269,25 @@ class Core extends \XLite\Upgrade\Entry\AEntry
         $list[] = 'size';
 
         return $list;
+    }
+
+    /**
+     * Download package
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function download()
+    {
+        $this->setRepositoryPath(
+            \XLite\Core\Marketplace::getInstance()->getCorePack(
+                $this->getMajorVersionNew(),
+                $this->getMinorVersionNew()
+            )
+        );
+
+        return parent::download();
     }
 
     /**

@@ -37,6 +37,15 @@ namespace XLite\View\ItemsList\Module;
 abstract class AModule extends \XLite\View\ItemsList\AItemsList
 {
     /**
+     * List of core versions to update
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $coreVersions;
+
+    /**
      * Return name of the base widgets list
      *
      * @return string
@@ -216,6 +225,22 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
     abstract protected function isModuleUpdateAvailable(\XLite\Model\Module $module);
 
     /**
+     * Return list of core versions for update
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCoreVersions()
+    {
+        if (!isset($this->coreVersions)) {
+            $this->coreVersions = (array) \XLite\Core\Marketplace::getInstance()->getCores();
+        }
+
+        return $this->coreVersions;
+    }
+
+    /**
      * Is core upgrade available
      *
      * @param string $majorVersion core version to check
@@ -226,11 +251,7 @@ abstract class AModule extends \XLite\View\ItemsList\AItemsList
      */
     protected function isCoreUpgradeAvailable($majorVersion)
     {
-        return (bool) \Includes\Utils\ArrayManager::getIndex(
-            \XLite\Upgrade\Cell::getInstance()->getCoreVersions(),
-            $majorVersion,
-            true
-        );
+        return (bool) \Includes\Utils\ArrayManager::getIndex($this->getCoreVersions(), $majorVersion, true);
     }
 
     /**
