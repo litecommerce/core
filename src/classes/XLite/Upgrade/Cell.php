@@ -279,7 +279,7 @@ class Cell extends \XLite\Base\Singleton
     public function getCoreVersions()
     {
         if (!isset($this->coreVersions)) {
-            $this->coreVersions = (array) \XLite\Core\Marketplace::getInstance()->getCoreVersions($this->getCacheTTL());
+            $this->coreVersions = (array) \XLite\Core\Marketplace::getInstance()->getCores($this->getCacheTTL());
         }
 
         return $this->coreVersions;

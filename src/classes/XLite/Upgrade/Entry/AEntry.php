@@ -155,15 +155,6 @@ abstract class AEntry
     abstract public function getPackSize();
 
     /**
-     * Method to get entry package
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    abstract public function getSource();
-
-    /**
      * Get hashes for current version
      * 
      * @return array
@@ -261,7 +252,7 @@ abstract class AEntry
      */
     public function getCurrentVersionHashesFilePath()
     {
-        return LC_DIR_TMP . basename($this->getRepositoryPath()) . '.hash.php';
+        return LC_DIR_TMP . pathinfo($this->getRepositoryPath(), PATHINFO_FILENAME) . '.php';
     }
 
     /**
@@ -273,25 +264,7 @@ abstract class AEntry
      */
     public function download()
     {
-        $source = $this->getSource();
-        $this->setRepositoryPath(null);
-
-        if (!empty($source)) {
-
-            // Check and set extension
-            if (!isset($extension)) {
-                $extension = \Includes\Utils\PHARManager::getExtension() ?: 'tar';
-            }
-
-            // Get unique file name
-            $path = \Includes\Utils\FileManager::getUniquePath(LC_DIR_TMP, uniqid() . '.' . $extension);
-
-            // Save data into a file
-            if (\Includes\Utils\FileManager::write($path, $source)) {
-                $this->setRepositoryPath($path);
-                $this->saveHashesForInstalledFiles();
-            }
-        }
+        $this->saveHashesForInstalledFiles();
 
         return $this->isDownloaded();
     }
@@ -483,7 +456,7 @@ abstract class AEntry
 
                     // Search for writable directory
                     while (
-                        !($flag = \Includes\Utils\FileManager::isDirWritable($topDir))
+                        !($flag = \Includes\Utils\FileManager::isDirWriteable($topDir))
                         && $topDir !== $lsRoot 
                         && $topDir !== $sysRoot
                     ) {
@@ -528,7 +501,7 @@ abstract class AEntry
                         $this->customFiles[$relativePath] = false;
 
                         // Check permissions for delete
-                        if (!\Includes\Utils\FileManager::isDirWritable($directory)) {
+                        if (!\Includes\Utils\FileManager::isDirWriteable($directory)) {
                             $this->addErrorMessage(
                                 'Wrong permissions for the {{file}} file. Unable to delete',
                                 array('file' => $path)
@@ -567,7 +540,7 @@ abstract class AEntry
     protected function getHashes($isTestMode)
     {
         $path = $this->getRepositoryPath() . '.hash';
-        $errorParams = array('file' => \Inludes\Utils\FileManager::getRelativePath($path, LC_DIR_TMP));
+        $errorParams = array('file' => \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_TMP));
 
         if (!\Includes\Utils\FileManager::isFileReadable($path)) {
             $this->addErrorMessage('Hash file "{{file}}" is not exists or is not readable', $errorParams);
@@ -608,7 +581,7 @@ abstract class AEntry
     protected function getHashesForInstalledFiles($isTestMode)
     {
         $path = $this->getCurrentVersionHashesFilePath();
-        $errorParams = array('file' => \Inludes\Utils\FileManager::getRelativePath($path, LC_DIR_TMP));
+        $errorParams = array('file' => \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_TMP));
 
         if (!\Includes\Utils\FileManager::isFileReadable($path)) {
             $this->addErrorMessage('Hash file "{{file}}" is not exists or is not readable', $errorParams);
