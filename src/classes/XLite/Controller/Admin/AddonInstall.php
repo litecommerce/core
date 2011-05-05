@@ -66,7 +66,7 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
             $info = \XLite\Core\Marketplace::getInstance()->getAddonInfo($marketplaceID);
 
             if ($info) {
-                $result = $info[\XLite\Core\Marketplace::RESPONSE_FIELD_MODULE_LICENSE];
+                $result = $info[\XLite\Core\Marketplace::FIELD_LICENSE];
             } else {
                 \XLite\Core\Marketplace::getInstance()->setErrorTopMessage();
             }

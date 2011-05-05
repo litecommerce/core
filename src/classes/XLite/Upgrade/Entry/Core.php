@@ -272,6 +272,25 @@ class Core extends \XLite\Upgrade\Entry\AEntry
     }
 
     /**
+     * Download package
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function download()
+    {
+        $this->setRepositoryPath(
+            \XLite\Core\Marketplace::getInstance()->getCorePack(
+                $this->getMajorVersionNew(),
+                $this->getMinorVersionNew()
+            )
+        );
+
+        return parent::download();
+    }
+
+    /**
      * Check if version is allowed
      * 
      * @param string $majorVersion Version to check

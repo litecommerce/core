@@ -58,6 +58,20 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
+     * Return icon URL
+     *
+     * :TODO: actualize
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getIconURL()
+    {
+        return 'skins/admin/en/images/addon_default.png';
+    }
+
+    /**
      * Return entry old major version
      *
      * :TODO: actualize
@@ -160,18 +174,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
-     * Method to get entry package
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getSource()
-    {
-        return \Includes\Utils\FileManager::read($this->getRepositoryPath());
-    }
-
-    /**
      * Calculate hashes for current version
      *
      * @return array
@@ -198,18 +200,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
         }
 
         $this->setRepositoryPath($path);
-    }
-
-    /**
-     * Download package
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function download()
-    {
-        return $this->isDownloaded();
     }
 
     /**

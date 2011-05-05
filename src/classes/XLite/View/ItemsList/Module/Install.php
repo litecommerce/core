@@ -457,6 +457,8 @@ class Install extends \XLite\View\ItemsList\Module\AModule
     /**
      * Get purchase page URL 
      *
+     * :FIXME: is it really needed???
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
