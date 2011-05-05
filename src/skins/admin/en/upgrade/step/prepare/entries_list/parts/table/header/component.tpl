@@ -13,4 +13,4 @@
  * @ListChild (list="upgrade.step.prepare.entries_list.sections.table.header", weight="100")
  *}
 
-<th colspan="2">{t(#Component#)}</th>
+<th colspan="2" class="module-info-header">{t(#Component#)}</th>

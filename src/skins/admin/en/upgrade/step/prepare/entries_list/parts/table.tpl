@@ -13,9 +13,15 @@
  * @ListChild (list="upgrade.step.prepare.entries_list.sections", weight="100")
  *}
 
-<table cellspacing="0" cellpadding="0" border="1">
-  <tr>{displayInheritedViewListContent(#sections.table.header#)}</tr>
-  <tr FOREACH="getUpgradeEntries(),entry" class="{getEntryRowCSSClass(entry)}">
+<table class="entries-list">
+  <tr class="header">{displayInheritedViewListContent(#sections.table.header#)}</tr>
+  <tr class="separator"><td colspan="6"></td></tr>
+  {foreach:getUpgradeEntries(),entry}
+  <tr class="{getEntryRowCSSClass(entry)}">
     {displayInheritedViewListContent(#sections.table.columns#,_ARRAY_(#entry#^entry))}
+    {if:!isModule(entry)}
+      </tr><tr class="separator"><td colspan="6"></td>
+    {end:}
   </tr>
+  {end:}
 </table>

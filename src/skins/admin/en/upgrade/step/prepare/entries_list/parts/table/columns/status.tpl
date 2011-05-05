@@ -13,5 +13,5 @@
  * @ListChild (list="upgrade.step.prepare.entries_list.sections.table.columns", weight="200")
  *}
 
-<td IF="entry.isEnabled()">&nbsp;</td>
-<td IF="!entry.isEnabled()">{t(#Now disabled#)}</td>
+<td IF="entry.isEnabled()" class="status">&nbsp;</td>
+<td IF="!entry.isEnabled()" class="status disabled">{t(#Now disabled#)}</td>

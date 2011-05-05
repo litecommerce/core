@@ -13,4 +13,4 @@
  * @ListChild (list="upgrade.step.prepare.entries_list.sections.table.header", weight="300")
  *}
 
-<th>{t(#Size#)}</th>
+<th class="size-header">{t(#Size#)}</th>

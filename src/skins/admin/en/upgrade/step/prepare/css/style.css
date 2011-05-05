@@ -1,0 +1,99 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * ____file_title____
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     1.0.0
+ */
+ 
+
+table.entries-list {
+  border-collapse: collapse;
+}
+
+table.entries-list tr.header {
+  background: none #f3f3f3;
+  height: 35px;
+}
+
+table.entries-list tr.header th {
+  color: #53769d;
+}
+
+table.entries-list tr.header .module-info-header {
+  text-align: left;
+  padding: 5px 5px 5px 15px;
+  font-size: 14px;
+}
+
+table.entries-list tr.separator,
+  table.entries-list tr.separator td
+{
+  height: 10px;
+}
+
+table.entries-list tr td {
+  color: #333333;
+}
+
+table.entries-list tr.core-entry {
+  background: none #eff8fe;
+  height: 45px;
+}
+
+table.entries-list tr.module-entry {
+  border-top: #e5e5e5 1px solid;
+  border-bottom: #e5e5e5 1px solid;
+}
+
+table.entries-list tr.module-entry td, 
+  table.entries-list tr.core-entry td
+{
+  padding: 10px 15px;
+}
+
+.entries-list td.module-info span.name {
+  color: #333333;
+  font-size: 16px;
+}
+
+.entries-list td.module-info span.author {
+  color: #9e9e9e;
+  font-size: 12px;
+}
+
+table.entries-list tr td.old-version {
+  color: #8f8f8f;  
+  padding-right: 3px;
+}
+
+table.entries-list tr td.version-separator {
+  width: 14px;
+  height: 14px;
+  padding: 0px;
+  background: transparent url(../images/icon_arrow_version.png) left 12px no-repeat;
+}
+
+table.entries-list tr.core-entry td.version-separator {
+  background-position: left 16px;
+}
+
+table.entries-list tr td.new-version {
+  color: #333333;
+  padding-left: 3px;
+}
+
+.entries-list .size {
+  color: #8f8f8f;
+}
+
+
+
+
+
+

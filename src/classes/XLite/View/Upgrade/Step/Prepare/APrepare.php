@@ -37,6 +37,22 @@ namespace XLite\View\Upgrade\Step\Prepare;
 abstract class APrepare extends \XLite\View\Upgrade\Step\AStep
 {
     /**
+     * Register CSS files
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        // Must be called from this class.
+        $list[] = self::getDir() . '/css/style.css';
+
+        return $list;
+    }
+
+    /**
      * Get directory where template is located (body.tpl)
      *
      * @return string
@@ -45,7 +61,7 @@ abstract class APrepare extends \XLite\View\Upgrade\Step\AStep
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'prepare';
+        return parent::getDir() . '/prepare';
     }
 
     /**
