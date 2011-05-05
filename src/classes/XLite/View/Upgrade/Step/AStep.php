@@ -45,7 +45,7 @@ abstract class AStep extends \XLite\View\Upgrade\AUpgrade
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'step';
+        return parent::getDir() . '/step';
     }
 
     /**

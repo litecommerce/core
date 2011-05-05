@@ -13,4 +13,4 @@
  * @ListChild (list="upgrade.step.prepare.entries_list.sections.table.header", weight="200")
  *}
 
-<th colspan="3">{t(#Version change#)}</th>
+<th colspan="3" class="version-header">{t(#Version change#)}</th>

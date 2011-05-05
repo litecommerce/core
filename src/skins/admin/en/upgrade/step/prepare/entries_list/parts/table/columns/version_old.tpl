@@ -13,4 +13,4 @@
  * @ListChild (list="upgrade.step.prepare.entries_list.sections.table.columns", weight="300")
  *}
 
-<td>{entry.getVersionOld()}</td>
+<td class="old-version">{entry.getVersionOld()}</td>

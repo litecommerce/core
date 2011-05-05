@@ -13,4 +13,4 @@
  * @ListChild (list="upgrade.step.prepare.entries_list.sections.table.columns", weight="600")
  *}
 
-<td>{formatFileSize(entry.getPackSize())}</td>
+<td class="size">{formatFileSize(entry.getPackSize())}</td>

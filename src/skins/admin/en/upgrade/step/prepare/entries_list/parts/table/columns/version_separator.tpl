@@ -13,4 +13,4 @@
  * @ListChild (list="upgrade.step.prepare.entries_list.sections.table.columns", weight="400")
  *}
 
-<td>------&gt;</td>
+<td class="version-separator"></td>

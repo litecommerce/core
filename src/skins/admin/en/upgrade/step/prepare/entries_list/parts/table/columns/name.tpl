@@ -13,7 +13,7 @@
  * @ListChild (list="upgrade.step.prepare.entries_list.sections.table.columns", weight="100")
  *}
 
-<td>
-  {entry.getName()}
-  <span>({entry.getAuthor()})</span>
+<td class="module-info">
+  <span class="name">{entry.getName()}</span>
+  <span class="author">({entry.getAuthor()})</span>
 </td>

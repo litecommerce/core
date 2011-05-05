@@ -47,7 +47,7 @@ class EntriesList extends \XLite\View\Upgrade\Step\Prepare\APrepare
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'entries_list';
+        return parent::getDir() . '/entries_list';
     }
 
     /**
@@ -86,6 +86,8 @@ class EntriesList extends \XLite\View\Upgrade\Step\Prepare\APrepare
      */
     protected function getEntryRowCSSClass(\XLite\Upgrade\Entry\AEntry $entry)
     {
-        return $this->isModule($entry) ? '' : '';
+        return $this->isModule($entry)
+            ? 'module-entry'
+            : 'core-entry';
     }
 }
