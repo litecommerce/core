@@ -24,7 +24,8 @@ div.upgrade-popup-widget {
 }
 
 div.upgrade-popup-widget span {
-  font-size: 15px;
+  font-size: 16px;
   color: #0E55A6;
   vertical-align: middle;
+  margin: 0 0 0 5px;
 }
