@@ -30,6 +30,7 @@ namespace XLite\View\OrderList;
 
 /**
  * Orders search widget
+ * TODO: reimplement with items lists usage
  * 
  * @see   ____class_see____
  * @since 1.0.0
@@ -165,34 +166,29 @@ class Search extends \XLite\View\OrderList\AOrderList
         if ($this->getProfile()->isAdmin()) {
 
             if (!empty(\XLite\Core\Request::getInstance()->profile_id)) {
-
                 $cnd->profileId = \XLite\Core\Request::getInstance()->profile_id;
             }   
 
         } else {
-
             $cnd->profileId = $this->getProfile()->getProfileId();
         }
 
+        // Sort orders list in reverse chronological order by default
         if (!isset($this->conditions['sortCriterion']) || !$this->conditions['sortCriterion']) {
-
             $this->conditions['sortCriterion'] = 'order_id';
         }
 
         if (!isset($this->conditions['sortOrder']) || !$this->conditions['sortOrder']) {
-
-            $this->conditions['sortOrder'] = 'ASC';
+            $this->conditions['sortOrder'] = 'DESC';
         }
 
         $cnd->orderBy = array('o.' . $this->conditions['sortCriterion'], $this->conditions['sortOrder']);
 
         if (isset($this->conditions['order_id'])) {
-
             $cnd->orderId = $this->conditions['order_id'];
         }
 
         if (isset($this->conditions['status'])) {
-
             $cnd->status = $this->conditions['status'];
         }
 
@@ -201,7 +197,6 @@ class Search extends \XLite\View\OrderList\AOrderList
         $end   = isset($this->conditions['endDate']) ? $this->conditions['endDate'] : 0;
 
         if ($start < $end) {
-
             $cnd->date = array($start, $end);
         }
 

@@ -11,6 +11,10 @@
  * @since     1.0.0
  * @ListChild (list="orders.search.base", weight="20")
  *}
+
+ {*
+ TODO: reimplement search orders form
+
 <div class="search-orders-box">
   <div class="search-orders-conditions">
     <a IF="getTotalCount()" href="javascript:void(0);" onclick="javascript:core.toggleText(this,'Hide filter options','#advanced_search_order_options');">Show filter options</a>
@@ -26,3 +30,4 @@
   </div>
 </div>
 
+*}
