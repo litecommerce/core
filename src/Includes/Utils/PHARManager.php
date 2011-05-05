@@ -97,8 +97,9 @@ abstract class PHARManager extends \Includes\Utils\AUtils
     public static function unpack($file, $dir)
     {
         try {
-            $phar = new \PharData($file);
-            $result = $phar->extractTo($dir .= 'phr' . uniqid() . LC_DS, null, true);
+            $phar   = new \PharData($file);
+            $dir    = \Includes\Utils\FileManager::getCanonicalDir($dir) . pathinfo($file, PATHINFO_FILENAME);
+            $result = $phar->extractTo($dir, null, true);
 
         } catch (\Exception $exception) {
             $result = false;

@@ -67,6 +67,18 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
+     * Return icon URL
+     *                
+     * @return string 
+     * @see    ____func_see____
+     * @since  1.0.0           
+     */                        
+    public function getIconURL()
+    {
+        return $this->getModuleForUpgrade()->getIconURL();
+    }
+
+    /**
      * Return entry old major version
      *
      * @return string
@@ -163,17 +175,17 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
-     * Method to get entry package
+     * Download hashes for current version
      *
-     * @return string
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getSource()
+    protected function loadHashesForInstalledFiles()
     {
-        return \XLite\Core\Marketplace::getInstance()->getAddonPack(
-            $this->getModuleForUpgrade()->getMarketplaceID(),
-            $this->getModuleForUpgrade()->getLicenseKey()
+        return \XLite\Core\Marketplace::getInstance()->getAddonHash(
+            $this->getModuleInstalled()->getMarketplaceID(),
+            $this->getModuleInstalled()->getLicenseKey()
         );
     }
 
@@ -220,6 +232,25 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
         $list[] = 'moduleIDForUpgrade';
 
         return $list;
+    }
+
+    /**
+     * Download package
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function download()
+    {
+        $this->setRepositoryPath(
+            \XLite\Core\Marketplace::getInstance()->getAddonPack(
+                $this->getModuleForUpgrade()->getMarketplaceID(),
+                $this->getModuleForUpgrade()->getLicenseKey()
+            )
+        );
+
+        return parent::download();
     }
 
     /**
