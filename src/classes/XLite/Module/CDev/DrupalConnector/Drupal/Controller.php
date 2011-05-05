@@ -14,16 +14,16 @@
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage ____sub_package____
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    GIT: $Id$
- * @link       http://www.litecommerce.com/
- * @see        ____file_see____
- * @since      1.0.0
+ * PHP version 5.3.0
+ *
+ * @category  LiteCommerce
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   GIT: $Id$
+ * @link      http://www.litecommerce.com/
+ * @see       ____file_see____
+ * @since     1.0.0
  */
 
 namespace XLite\Module\CDev\DrupalConnector\Drupal;
@@ -31,40 +31,163 @@ namespace XLite\Module\CDev\DrupalConnector\Drupal;
 /**
  * Controller 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   1.0.0
+ * @see   ____class_see____
+ * @since 1.0.0
  */
 class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 {
     /**
      * Instance of the LC viewer 
      * 
-     * @var    \XLite\View\Controller
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   \XLite\View\Controller
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $viewer;
 
     /**
      * Flag to determine if some common actions are already performed
      * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  1.0.0
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.0
      */
     protected $arePreinitialized = false;
 
 
+    // ------------------------------ Menu callbacks -
+
+
+    /**
+     * Return page title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getTitle()
+    {
+        // Perform some common actions
+        $this->performCommonActions();
+
+        return $this->getViewer()->getTitle();
+    }
+
+    /**
+     * Update variables before they pass to the template
+     * 
+     * @param array &$variables Array of variables
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function updateTemplateVars(&$variables)
+    {
+        // Get page title for current target
+        $title = $this->getPageTitle();
+
+        // Assign title variable if it's defined
+        if (isset($title)) {
+            $variables['title'] = $title;
+        }
+    }
+
+    /**
+     * Update meta tags array before this pass to the template
+     * 
+     * @param array &$elements Array of meta tags
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function updateMetaTags(&$elements)
+    {
+        $viewer = $this->getViewer();
+
+        if ($viewer->getMetaDescription()) {
+            $elements['lc_connector_meta_description'] = array(
+                '#type' => 'html_tag',
+                '#tag' => 'meta',
+                '#attributes' => array(
+                    'name' => 'description',
+                    'content' => htmlspecialchars($viewer->getMetaDescription(), ENT_QUOTES, 'UTF-8'),
+                ),
+            );
+        }
+
+        if ($viewer->getKeywords()) {
+            $elements['lc_connector_meta_keywords'] = array(
+                '#type' => 'html_tag',
+                '#tag' => 'meta',
+                '#attributes' => array(
+                    'name' => 'keywords',
+                    'content' => htmlspecialchars($viewer->getKeywords(), ENT_QUOTES, 'UTF-8'),
+                ),
+            );
+        }
+    }
+
+    /**
+     * Return content for central region
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getContent()
+    {
+        // Perform some common actions
+        $this->performCommonActions();
+
+        // Current viewer
+        $viewer = $this->getViewer();
+
+        $content = $viewer->getContent();
+        $this->registerResources($viewer);
+
+        $title = $this->getTitle();
+
+        $trail = array();
+
+        if ($viewer->isTitleVisible() && $title) {
+            $trail[] = array(
+                'title'             => $title,
+                'link_path'         => '',
+                'localized_options' => array('html' => true),
+                'type'              => 0,
+            );
+        }
+
+        menu_set_active_trail($trail);
+
+        // Set value for <title> tag
+        drupal_set_title($viewer->getPageTitle());
+
+        return $this->isAJAX() ? $this->displayAJAXContent($content) : $content;
+    }
+
+    /**
+     * The "access callback"
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function checkAccess()
+    {
+        return true;
+    }
+
+
     // ------------------------------ Ancillary methods - 
+
 
     /**
      * Return LC viewer for current controller
      * 
      * @return \XLite\View\Controller
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -81,7 +204,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Check if current request is an AJAX one
      * 
      * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -96,7 +218,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * @param string $content Content to display
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -107,17 +228,16 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
         \XLite\Core\Event::getInstance()->clear();
 
         // Display content
-        echo '<h2 class="ajax-title-loadable">' . $this->getTitle() . '</h2>';
-        echo '<div class="ajax-container-loadable">' . $content . '</div>';
+        echo ('<h2 class="ajax-title-loadable">' . $this->getTitle() . '</h2>');
+        echo ('<div class="ajax-container-loadable">' . $content . '</div>');
 
-        exit(0);
+        exit (0);
     }
 
     /**
      * Set no-cache headers 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -141,7 +261,6 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
      * Set LC breadcrumbs 
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -184,10 +303,32 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
     }
 
     /**
+     * Get page title
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getPageTitle()
+    {
+        $title = null;
+
+        $viewer = $this->getViewer();
+
+        if (!$viewer->isTitleVisible()) {
+            $title = '';
+
+        } elseif ($viewer->getTitle()) {
+            $title = $viewer->getTitle();
+        }
+
+        return $title;
+    }
+
+    /**
      * Common actions for "getTitle()" and "getContent()"
      * 
      * @return void
-     * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -203,72 +344,5 @@ class Controller extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
 
             $this->arePreinitialized = true;
         }
-    }
-
-
-    // ------------------------------ Menu callbacks -
-
-    /**
-     * Return page title
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getTitle()
-    {
-        // Perform some common actions
-        $this->performCommonActions();
-
-        return $this->getHandler()->getViewer()->getPageTitle();
-    }
-
-    /**
-     * Return content for central region
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getContent()
-    {
-        // Perform some common actions
-        $this->performCommonActions();
-
-        // Current viewer
-        $viewer = $this->getHandler()->getViewer();
-
-        $content = $viewer->getContent();
-        $this->registerResources($viewer);
-
-        $trail = array();
-
-        if ($viewer->isTitleVisible() && ($title = $this->getTitle())) {
-            $trail[] = array(
-                'title'             => $this->getTitle(),
-                'link_path'         => '',
-                'localized_options' => array('html' => true),
-                'type'              => 0,
-            );
-        }
-
-        menu_set_active_trail($trail);
-
-        return $this->isAJAX() ? $this->displayAJAXContent($content) : $content;
-    }
-
-    /**
-     * The "access callback"
-     *
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function checkAccess()
-    {
-        return true;
     }
 }
