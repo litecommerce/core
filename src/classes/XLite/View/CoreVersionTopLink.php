@@ -37,6 +37,16 @@ namespace XLite\View;
 class CoreVersionTopLink extends \XLite\View\AView
 {
     /**
+     * Flags 
+     * 
+     * @var   array
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $updateFlags;
+
+
+    /**
      * Return widget default template
      *
      * @return string
@@ -45,7 +55,7 @@ class CoreVersionTopLink extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'top_links/version_notes/body.tpl';
+        return 'top_links' . LC_DS . 'version_notes' . LC_DS . 'body.tpl';
     }
 
     /**
@@ -82,8 +92,8 @@ class CoreVersionTopLink extends \XLite\View\AView
     protected function isCoreUpgradeAvailable()
     {
         return (bool) \Includes\Utils\ArrayManager::getIndex(
-            \XLite\Core\Marketplace::getInstance()->checkForUpdates(),
-            'isUpgardeAvailable',
+            $this->getUpdateFlags(),
+            \XLite\Core\Marketplace::FIELD_IS_UPGRADE_AVAILABLE,
             true
         );
     }
@@ -98,9 +108,25 @@ class CoreVersionTopLink extends \XLite\View\AView
     protected function areUpdatesAvailable()
     {
         return (bool) \Includes\Utils\ArrayManager::getIndex(
-            \XLite\Core\Marketplace::getInstance()->checkForUpdates(),
-            'areUpdatesAvailable',
+            $this->getUpdateFlags(),
+            \XLite\Core\Marketplace::FIELD_ARE_UPDATES_AVAILABLE,
             true
         );
+    }
+
+    /**
+     * Return upgrade flags
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getUpdateFlags()
+    {
+        if (!isset($this->updateFlags)) {
+            $this->updateFlags = \XLite\Core\Marketplace::getInstance()->checkForUpdates();
+        }
+
+        return $this->updateFlags;
     }
 }
