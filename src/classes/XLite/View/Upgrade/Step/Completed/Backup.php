@@ -26,17 +26,17 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Upgrade\Step\ReadyToInstall;
+namespace XLite\View\Upgrade\Step\Completed;
 
 /**
- * StatusMessages
+ * Backup 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  *
- * @ListChild (list="admin.center", weight="200", zone="admin")
+ * @ListChild (list="admin.center", weight="100", zone="admin")
  */
-class StatusMessages extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToInstall
+class Backup extends \XLite\View\Upgrade\Step\Completed\ACompleted
 {
     /**
      * Get directory where template is located (body.tpl)
@@ -47,7 +47,7 @@ class StatusMessages extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToIns
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'status_messages';
+        return parent::getDir() . LC_DS . 'backup';
     }
 
     /**
@@ -59,30 +59,6 @@ class StatusMessages extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToIns
      */
     protected function getListName()
     {
-        return parent::getListName() . '.status_messages';
-    }
-
-    /**
-     * Check widget visibility 
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible() && (bool) $this->getStatusMessages();
-    }
-
-    /**
-     * Return list of messages
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getStatusMessages()
-    {
-        return \XLite\Upgrade\Cell::getInstance()->getErrorMessages();
+        return parent::getListName() . '.backup';
     }
 }

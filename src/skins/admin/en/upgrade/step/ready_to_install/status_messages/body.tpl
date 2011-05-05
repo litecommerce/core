@@ -11,6 +11,6 @@
  * @since     1.0.0
  *}
 
-<br /><br />
-<div>Some diagnostic message (error)</div>
-<div>Some diagnostic message (info)</div>
+<div FOREACH="getStatusMessages(),entry,messages">
+  <div FOREACH="messages,message">{t(message)}</div>
+</div>

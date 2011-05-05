@@ -11,4 +11,9 @@
  * @since     1.0.0
  *}
 
-<br /><br />Some files are modified
+<div FOREACH="getCustomFiles(),entry,files">
+  <div FOREACH="files,file,status">
+    <input type="checkbox" value="{#1#}" checked="{status}" name="toOverwrite[{file}]" />
+    {file}
+  </div>
+</div>

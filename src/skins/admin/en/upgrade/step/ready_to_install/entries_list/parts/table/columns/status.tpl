@@ -13,4 +13,5 @@
  * @ListChild (list="upgrade.step.ready_to_install.entries_list.sections.table.columns", weight="200")
  *}
 
-<td>V</td>
+<td IF="entry.isValid()">V</td>
+<td IF="!entry.isValid()">X</td>

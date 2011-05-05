@@ -328,7 +328,7 @@ abstract class AEntry
      */
     public function __sleep()
     {
-        return array('repositoryPath', 'errorMessages');
+        return array('repositoryPath', 'errorMessages', 'customFiles');
     }
 
     // {{{ Error handling
@@ -343,6 +343,18 @@ abstract class AEntry
     public function getErrorMessages()
     {
         return array_unique($this->errorMessages);
+    }
+
+    /**
+     * Return list of custom files
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCustomFiles()
+    {
+        return $this->customFiles;
     }
 
     /**
@@ -399,42 +411,41 @@ abstract class AEntry
         foreach ($this->getHashesForInstalledFiles($isTestMode) as $path => $hash) {
 
             // Some useful variables
-            $relativePath = \Includes\Utils\FileManager::getRealPath($path);
-            $fullPath     = LC_ROOT_DIR . $relativePath;
-            $directory    = \Includes\Utils\FileManager::getDir($fullPath);
+            $fullPath  = LC_DIR_ROOT . $path;
+            $directory = \Includes\Utils\FileManager::getDir($fullPath);
             
             // File is presented in both old and new packages - (optionally) overwrite
-            if (isset($hashes[$relativePath])) {
+            if (isset($hashes[$path])) {
 
                 // File exists on FS
                 if (\Includes\Utils\FileManager::isFile($fullPath)) {
 
                     // Check if file is modified
-                    if ($hash !== $hashes[$relativePath]) {
+                    if ($hash !== $hashes[$path]) {
 
                         // Check if file was set to overwrite
-                        if ($isTestMode xor !empty($this->customFiles[$relativePath])) {
+                        if ($isTestMode xor !empty($this->customFiles[$path])) {
 
                             if ($isTestMode) {
 
                                 // Add file to the list of custom ones
-                                $this->customFiles[$relativePath] = false;
+                                $this->customFiles[$path] = false;
 
                                 // Check permissions
-                                if (!\Includes\Utils\FileManager::isFileWritable($fullPath)) {
+                                if (!\Includes\Utils\FileManager::isFileWriteable($fullPath)) {
                                     $this->addErrorMessage(
                                         'File "{{file}} has no writable permissions"',
-                                        array('file' => $relativePath)
+                                        array('file' => $path)
                                     );
                                 }
 
                             } else {
 
                                 // Trying to overwrite
-                                if (!/*\Includes\Utils\FileManager::write($fullPath, $this->getFileSource($relativePath))*/true) {
+                                if (!/*\Includes\Utils\FileManager::write($fullPath, $this->getFileSource($path))*/true) {
                                     $this->addErrorMessage(
                                         'An error occured while overwriting the "{{file}}" file',
-                                        array('file' => $relativePath)
+                                        array('file' => $path)
                                     );
                                 }
                             }
@@ -451,7 +462,7 @@ abstract class AEntry
 
                     // Short names
                     $topDir  = \Includes\Utils\FileManager::getRealPath($directory);
-                    $lsRoot  = \Includes\Utils\FileManager::getRealPath(LC_ROOT_DIR);
+                    $lsRoot  = \Includes\Utils\FileManager::getRealPath(LC_DIR_ROOT);
                     $sysRoot = \Includes\Utils\FileManager::getRealPath('/');
 
                     // Search for writable directory
@@ -472,10 +483,10 @@ abstract class AEntry
                         } else {
 
                             // The FileManager::write() will create nested directories by itself (if needed)
-                            if (!/*\Includes\Utils\FileManager::write($fullPath, $this->getFileSource($relativePath))*/true) {
+                            if (!/*\Includes\Utils\FileManager::write($fullPath, $this->getFileSource($path))*/true) {
                                 $this->addErrorMessage(
                                     'An error occured while writing the "{{file}}" file to FS',
-                                    array('file' => $relativePath)
+                                    array('file' => $path)
                                 );
                             }
                         }
@@ -483,7 +494,7 @@ abstract class AEntry
                     } else {
                         $this->addErrorMessage(
                             'Unable to save file "{{file}}": the directory "{{dir}}" has no writable permissions',
-                            array('file' => $relativePath, 'dir' => $topDir)
+                            array('file' => $path, 'dir' => $topDir)
                         );
                     }
                 }
@@ -493,12 +504,12 @@ abstract class AEntry
                 // File is not presented in the new entry package - delete
                 
                 // Check if file was set to overwrite
-                if ($isTestMode xor !empty($this->customFiles[$relativePath])) {
+                if ($isTestMode xor !empty($this->customFiles[$path])) {
 
                     if ($isTestMode) {
 
                         // Add file to the list of custom ones
-                        $this->customFiles[$relativePath] = false;
+                        $this->customFiles[$path] = false;
 
                         // Check permissions for delete
                         if (!\Includes\Utils\FileManager::isDirWriteable($directory)) {
@@ -514,7 +525,7 @@ abstract class AEntry
                         if (!/*\Includes\Utils\FileManager::delete($fullPath)*/true) {
                             $this->addErrorMessage(
                                 'Unable to delete file "{{file}}"',
-                                array('file' => $relativePath)
+                                array('file' => $path)
                             );
                         }
                     }
@@ -539,7 +550,7 @@ abstract class AEntry
      */
     protected function getHashes($isTestMode)
     {
-        $path = $this->getRepositoryPath() . '.hash';
+        $path = \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath()) . '.hash';
         $errorParams = array('file' => \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_TMP));
 
         if (!\Includes\Utils\FileManager::isFileReadable($path)) {
@@ -552,16 +563,10 @@ abstract class AEntry
                 $this->addErrorMessage('Unable to read hash file "{{file}}" or it\'s empty', $errorParams);
 
             } else {
-                $data = json_decode($data);
+                $data = json_decode($data, true);
 
                 if (!is_array($data)) {
                     $this->addErrorMessage('Hash file "{{file}}" has a wrong format', $errorParams);
-
-                } else {
-                    foreach ($data as $path => $hash) {
-                        unset($data[$path]);
-                        $data[\Includes\Utils\FileManager::getRealPath($path)] = $hash;
-                    }
                 }
             }
         }
