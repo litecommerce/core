@@ -59,4 +59,28 @@ class ModifiedFiles extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToInst
     {
         return parent::getListName() . '.modified_files';
     }
+
+    /**
+     * Check widget visibility
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible() && (bool) $this->getCustomFiles();
+    }
+
+    /**
+     * Return list of files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCustomFiles()
+    {
+        return \XLite\Upgrade\Cell::getInstance()->getCustomFiles();
+    }
 }

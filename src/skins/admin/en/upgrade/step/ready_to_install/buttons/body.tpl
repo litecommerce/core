@@ -16,7 +16,6 @@
   <input type="hidden" name="action" value="install_upgrades" />
 
   <widget class="\XLite\View\Upgrade\Step\ReadyToInstall\ModifiedFiles" />
-  <widget class="\XLite\View\Upgrade\Step\ReadyToInstall\Backup" />
 
   {displayInheritedViewListContent(#sections#)}
 </form>

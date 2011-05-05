@@ -26,15 +26,15 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Upgrade\Step\ReadyToInstall;
+namespace XLite\View\Upgrade\Step\Completed;
 
 /**
- * Backup 
+ * ACompleted 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Backup extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToInstall
+abstract class ACompleted extends \XLite\View\Upgrade\Step\AStep
 {
     /**
      * Get directory where template is located (body.tpl)
@@ -45,7 +45,7 @@ class Backup extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToInstall
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'backup';
+        return parent::getDir() . LC_DS . 'completed';
     }
 
     /**
@@ -57,6 +57,18 @@ class Backup extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToInstall
      */
     protected function getListName()
     {
-        return parent::getListName() . '.backup';
+        return parent::getListName() . '.completed';
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible() && \XLite\Upgrade\Cell::getInstance()->isUpgraded();
     }
 }

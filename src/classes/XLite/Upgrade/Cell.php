@@ -142,6 +142,20 @@ class Cell extends \XLite\Base\Singleton
     }
 
     /**
+     * Return list of custom files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCustomFiles()
+    {
+        return array_merge(
+            \Includes\Utils\ArrayManager::getObjectsArrayFieldValues($this->getEntries(), 'getCustomFiles')
+        );
+    }
+
+    /**
      * Method to clean up cell
      * 
      * @param boolean $clearCoreVersion Flag OPTIONAL
@@ -501,8 +515,14 @@ class Cell extends \XLite\Base\Singleton
         if (!isset($this->errorMessages)) {
             $this->errorMessages = array();
 
-            // Space needed to download upgrade packs
-            if (!$this->isUnpacked()) {
+            if ($this->isUnpacked()) {
+                $this->errorMessages = array_merge(
+                    $this->errorMessages,
+                    \Includes\Utils\ArrayManager::getObjectsArrayFieldValues($this->getEntries(), 'getErrorMessages')
+                );
+
+            } else {
+                // Space needed to download upgrade packs
                 $this->errorMessages[] = $this->checkDiskFreeSpace();
             }
 
@@ -567,6 +587,18 @@ class Cell extends \XLite\Base\Singleton
     public function isUnpacked()
     {
         return $this->checkCellPackages(true);
+    }
+
+    /**
+     * Check if upgrade is already performed
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isUpgraded()
+    {
+        return false;
     }
 
     /**
