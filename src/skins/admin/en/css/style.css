@@ -777,6 +777,10 @@ button.invert:hover
   display: none;
 }
 
+.ui-corner-all {
+  -moz-border-radius: 12px;
+}
+
 /* Advertise block */
 
 .adv-block
@@ -1045,11 +1049,12 @@ td.star
 
 .upgrade-core-frame .label {
   color: #456583;
-  font-size: 17px;
+  font-size: 16px;
 }
 
 .upgrade-core-frame select {
   width: 60px;
+  font-size: 16px;
 }
 
 .upgrade-core-frame .action {
