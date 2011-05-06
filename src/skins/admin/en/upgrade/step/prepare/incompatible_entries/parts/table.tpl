@@ -13,7 +13,7 @@
  * @ListChild (list="upgrade.step.prepare.incompatible_entries.sections", weight="200")
  *}
 
-<table cellspacing="0" cellpadding="0" border="1">
+<table class="incompatible-modules-list">
   <tr FOREACH="getIncompatibleEntries(),entry">
     {displayInheritedViewListContent(#sections.table.columns#,_ARRAY_(#entry#^entry))}
   </tr>

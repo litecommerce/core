@@ -13,9 +13,9 @@
  * @ListChild (list="upgrade.step.prepare.incompatible_entries.sections.table.columns", weight="300")
  *}
 
-<td>
+<td class="disable">
   {* :FIXME: see the FlexyCompiler *}
-  <input IF="isModuleToDisable(entry)" type="checkbox" name="toDisable[{entry.getModuleID()}]" value="1" disabled="disabled" checked="1" />
-  <input IF="!isModuleToDisable(entry)" type="checkbox" name="toDisable[{entry.getModuleID()}]" value="1" />
-  <label for="toDisable">{t(#Disable#)}</label>
+  <input IF="isModuleToDisable(entry)" id="toDisable{entry.getModuleID()}" type="checkbox" name="toDisable[{entry.getModuleID()}]" value="1" disabled="disabled" checked="1" />
+  <input IF="!isModuleToDisable(entry)" id="toDisable{entry.getModuleID()}" type="checkbox" name="toDisable[{entry.getModuleID()}]" value="1" />
+  <label for="toDisable{entry.getModuleID()}">{t(#Disable#)}</label>
 </td>

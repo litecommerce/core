@@ -12,8 +12,13 @@
  */
  
 
+/**
+ * Entries list styles 
+ */
+
 table.entries-list {
   border-collapse: collapse;
+  margin: 0px 0px 25px 0px;
 }
 
 table.entries-list td,
@@ -28,10 +33,6 @@ table.entries-list tr.header {
   height: 35px;
 }
 
-table.entries-list tr.header th {
-  color: #53769d;
-}
-
 table.entries-list tr.header .module-info-header {
   text-align: left;
   padding: 5px 5px 5px 15px;
@@ -40,6 +41,7 @@ table.entries-list tr.header .module-info-header {
 table.entries-list tr.header th {
   font-size: 16px;
   font-weight: normal;
+  color: #53769d;
 }
 
 table.entries-list tr.separator,
@@ -110,6 +112,73 @@ table.entries-list tr td.new-version {
 
 
 
+/**
+ * Incompatible entries list styles
+ */
 
+.incompatible-module-list-description {
+  color: #333333;
+  width: 650px;
+  padding: 0px 5px 25px 5px;
+}
+
+table.incompatible-modules-list {
+  border-collapse: collapse;
+  margin: 0px 0px 30px 0px;
+}
+
+.incompatible-modules-list tr td {
+  padding: 9px 14px;
+  border-top: #e5e5e5 1px solid;
+  border-bottom: #e5e5e5 1px solid;
+}
+
+.incompatible-modules-list tr td,
+  .incompatible-modules-list tr td span 
+{
+  font-size: 16px;
+  color: #333333;
+}
+
+.incompatible-modules-list td.status-unknown,
+  .incompatible-modules-list td.status-incompatible
+{
+  cursor: help;
+}
+
+.incompatible-modules-list td.status-unknown {
+  background: transparent url(../images/icon_unknown.png) left 7px no-repeat;
+}
+
+.incompatible-modules-list td.status-incompatible {
+  background: transparent url(../images/icon_incompatible.png) left 7px no-repeat;
+}
+
+.incompatible-modules-list td.module-info {
+  min-width: 500px;
+}
+
+.incompatible-modules-list td.module-info span.name {
+
+}
+
+.incompatible-modules-list td.module-info span.author {
+  color: #8f8f8f;
+}
+
+.incompatible-modules-list td.disable {
+  font-size: 14px;
+  padding-top: 12px;
+}
+
+.incompatible-modules-list td.disable label {
+  padding: 0px 0px 0px 3px;
+}
+
+.incompatible-modules-list td.disable input
+{
+  vertical-align: bottom;
+  margin-bottom: 2px;
+}
 
 

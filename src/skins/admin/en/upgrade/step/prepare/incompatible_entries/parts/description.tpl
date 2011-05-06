@@ -13,6 +13,6 @@
  * @ListChild (list="upgrade.step.prepare.incompatible_entries.sections", weight="100")
  *}
 
-<div>
-  {t(#These modules may be incompatible with the upcoming upgrade. It can not be guaranteed whether the store will operate correctly if the modules will remain enabled. So, please decide what to do with the modules before proceeding to the next step.#)}
+<div class="incompatible-module-list-description">
+{t(#These modules may be incompatible with the upcoming upgrade. It can not be guaranteed whether the store will operate correctly if the modules will remain enabled. So, please decide what to do with the modules before proceeding to the next step.#)}
 </div>
