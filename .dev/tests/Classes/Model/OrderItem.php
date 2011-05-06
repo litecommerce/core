@@ -283,7 +283,7 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_Model_OrderAbstract
         );
     }
 
-    public function testIsShipped()
+    public function testIsShippable()
     {
         $order = $this->getTestOrder();
 
@@ -291,7 +291,7 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_Model_OrderAbstract
 
         $this->assertEquals(
             !$this->getProduct()->getFreeShipping(),
-            $item->isShipped(),
+            $item->isShippable(),
             'check shipped status'
         );
     }
