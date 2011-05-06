@@ -481,6 +481,6 @@ class Converter extends \XLite\Base\Singleton
     {
         list($size, $suffix) = \Includes\Utils\Converter::formatFileSize($size);
 
-        return $size . ($suffix ? static::t($suffix) : '');
+        return $size . ' ' . ($suffix ? static::t($suffix) : '');
     }
 }

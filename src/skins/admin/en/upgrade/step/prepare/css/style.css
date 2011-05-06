@@ -16,6 +16,13 @@ table.entries-list {
   border-collapse: collapse;
 }
 
+table.entries-list td,
+  table.entries-list th
+{
+  white-space: nowrap;
+  font-size: 14px;
+}
+
 table.entries-list tr.header {
   background: none #f3f3f3;
   height: 35px;
@@ -28,7 +35,11 @@ table.entries-list tr.header th {
 table.entries-list tr.header .module-info-header {
   text-align: left;
   padding: 5px 5px 5px 15px;
-  font-size: 14px;
+}
+
+table.entries-list tr.header th {
+  font-size: 16px;
+  font-weight: normal;
 }
 
 table.entries-list tr.separator,
@@ -67,15 +78,19 @@ table.entries-list tr.module-entry td,
   font-size: 12px;
 }
 
+.entries-list .status.disabled {
+  color: #8f8f8f;
+}
+
 table.entries-list tr td.old-version {
   color: #8f8f8f;  
-  padding-right: 3px;
+  padding-right: 20px;
 }
 
 table.entries-list tr td.version-separator {
-  width: 14px;
+  width: 1px;
   height: 14px;
-  padding: 0px;
+  padding: 10px;
   background: transparent url(../images/icon_arrow_version.png) left 12px no-repeat;
 }
 
@@ -85,11 +100,12 @@ table.entries-list tr.core-entry td.version-separator {
 
 table.entries-list tr td.new-version {
   color: #333333;
-  padding-left: 3px;
+  padding-left: 10px;
 }
 
 .entries-list .size {
   color: #8f8f8f;
+  text-align: right;
 }
 
 
