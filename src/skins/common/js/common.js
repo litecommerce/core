@@ -457,12 +457,18 @@ function visibleBox(id, skipOpenClose)
  * Attach tooltip to some element on hover action
  */
 function attachTooltip(elm, content) {
-  jQuery(elm).hover(
-    function() {
-      jQuery(elm).validationEngine('showPrompt', content, 'load', 'bottomLeft');
-    },
-    function() {
-      jQuery(elm).validationEngine('hide');
+  jQuery(elm).each(
+    function () {
+      var block = this;
+    
+      jQuery(this).hover(
+        function() {
+          jQuery(block).validationEngine('showPrompt', content, 'load', 'bottomLeft');
+        },
+        function() {
+          jQuery(block).validationEngine('hide');
+        }
+      );
     }
   );
 }

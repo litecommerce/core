@@ -37,6 +37,21 @@ namespace XLite\View\Upgrade\Step\Prepare;
 class IncompatibleEntries extends \XLite\View\Upgrade\Step\Prepare\APrepare
 {
     /**
+     * Register JS files
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = $this->getDir() . '/js/widget.js';
+
+        return $list;
+    }
+
+    /**
      * Get directory where template is located (body.tpl)
      *
      * @return string
