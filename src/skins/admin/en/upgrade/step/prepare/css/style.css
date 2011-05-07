@@ -181,4 +181,8 @@ table.incompatible-modules-list {
   margin-bottom: 2px;
 }
 
-
+.incompatible-status-message,
+  .unknown-status-message
+{
+  display: none;
+}

@@ -1,7 +1,7 @@
-{* vim: set ts=2 sw=2 sts=2 et: *}
+/* vim: set ts=2 sw=2 sts=2 et: */
 
-{**
- * Module status icon
+/**
+ * ____file_title____
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,9 +9,12 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
- *
- * @ListChild (list="upgrade.step.prepare.incompatible_entries.sections.table.columns", weight="200")
- *}
+ */
 
-<td IF="isModuleToDisable(entry)" class="status-incompatible"></td>
-<td IF="!isModuleToDisable(entry)" class="status-unknown"></td>
+core.bind(
+  "load",
+  function () {
+    attachTooltip("td.status-unknown", jQuery(".unknown-status-message").html());
+    attachTooltip("td.status-incompatible", jQuery(".incompatible-status-message").html());
+  }
+);

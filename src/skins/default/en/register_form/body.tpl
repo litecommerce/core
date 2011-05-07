@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-<script type="text/javascript" language="JavaScript 1.2" src="skins/default/en/js/billing_shipping.js"></script>
+<script type="text/javascript" src="skins/default/en/js/billing_shipping.js"></script>
 
 <div IF="!target=#checkout#">
 <p align=justify>
@@ -46,7 +46,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
         <input type="text" name="login" value="{login:r}" size="32" maxlength="128">
     </td>
     <td>
-        <widget class="\XLite\Validator\EmailValidator" field="login">
+        <widget class="\XLite\Validator\EmailValidator" field="login" />
     </td>
 </tr>
 <tr valign="middle" IF="allowAnonymous">

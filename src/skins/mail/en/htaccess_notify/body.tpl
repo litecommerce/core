@@ -22,6 +22,6 @@
 <br />
 <p>For more information on security files verification procedure consult the LiteCommerce reference manual.</p>
 
-<p>{signature:h}
+<p>{signature:h}</p>
 </body>
 </html>
