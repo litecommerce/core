@@ -869,7 +869,7 @@ function checkFilePermissions(&$errorMsg, &$value)
         $array = array();
 
         if (!@is_writable(constant('LC_DIR_ROOT'))) {
-            $array[constant('LC_DIR_ROOT')] = '0777';
+            $perms[] = 'chmod 0777 ' . constant('LC_DIR_ROOT');
         }
 
         foreach ($lcSettings['mustBeWritable'] as $object) {
@@ -884,7 +884,14 @@ function checkFilePermissions(&$errorMsg, &$value)
                     $perms[] = $file;
 
                 } else {
-                    $perms[] = 'chmod ' . $perm . ' ' . $file;
+                    
+                    if (is_dir($file)) {
+                        $perms[] = 'find ' . $file . ' -type d -exec chmod 0777 {} \\;';
+                        $perms[] = 'find ' . $file . ' -type f -exec chmod 0666 {} \\;';
+                    
+                    } else {
+                        $perms[] = 'chmod ' . $perm . ' ' . $file;
+                    }
                 }
 
                 if (count($perms) > 25) {
