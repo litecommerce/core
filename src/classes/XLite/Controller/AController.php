@@ -298,20 +298,13 @@ abstract class AController extends \XLite\Core\Handler
     public function handleRequest()
     {
         if (!$this->checkAccess()) {
-
             $this->markAsAccessDenied();
 
         } elseif (!$this->isVisible()) {
-
             $this->display404();
 
-        } elseif (!empty(\XLite\Core\Request::getInstance()->action) && $this->isValid()) {
-
-            $this->callAction();
-
         } else {
-
-            $this->doNoAction();
+            $this->run();
         }
 
         if ($this->isRedirectNeeded()) {
@@ -1018,6 +1011,23 @@ abstract class AController extends \XLite\Core\Handler
         }
 
         $this->actionPostprocess($action);
+    }
+
+    /**
+     * Run controller
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function run()
+    {
+        if (!empty(\XLite\Core\Request::getInstance()->action) && $this->isValid()) {
+            $this->callAction();
+
+        } else {
+            $this->doNoAction();
+        }
     }
 
     /**

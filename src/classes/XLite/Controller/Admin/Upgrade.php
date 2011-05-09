@@ -36,31 +36,45 @@ namespace XLite\Controller\Admin;
  */
 class Upgrade extends \XLite\Controller\Admin\AAdmin
 {
+    // {{{ Common methods
+
     /**
-     * Initialize controller
+     * Run controller
      *
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function init()
+    protected function run()
     {
-        parent::init();
-
         // Clear all selection if you visit the "Available updates" page
         if ($this->isUpdate()) {
-
             \XLite\Upgrade\Cell::getInstance()->clear();
         }
 
-        if (
-            \XLite\Core\Request::getInstance()->isGet()
-            && !isset(\XLite\Core\Request::getInstance()->action) 
-            && \XLite\Upgrade\Cell::getInstance()->isUnpacked()
-        ) {
+        if ($this->isIntegrityCheckNeeded()) {
             \XLite\Core\Request::getInstance()->action = 'check_integrity';
         }
+
+        parent::run();
     }
+
+    /**
+     * Condition for integrity check
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isIntegrityCheckNeeded()
+    {
+        $request = \XLite\Core\Request::getInstance();
+        $cell    = \XLite\Upgrade\Cell::getInstance();
+
+        return $request->isGet() && !isset($request->action) && $cell->isUnpacked();
+    }
+
+    // }}}
 
     // {{{ Methods for viewers
 
@@ -74,23 +88,18 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
     public function getTitle()
     {
         if ($this->isCoreSelection()) {
-
             $result = 'Upgrade core';
 
         } elseif ($this->isDownload()) {
-
             $result = 'Downloading updates';
 
         } else {
-
             $version = \XLite\Upgrade\Cell::getInstance()->getCoreMajorVersion();
 
             if (\XLite::getInstance()->checkVersion($version, '<')) {
-
                 $result = 'Upgrade to version ' . $version;
 
             } else {
-
                 $result = 'Updates for your version (' . $version . ')';
             }
         }

@@ -1204,7 +1204,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function clearUpgradeCell()
     {
-        \XLite\Core\TmpVars::getInstance()->{\XLIte\Upgrade\Cell::CELL_NAME} = null;
+        \XLite\Core\TmpVars::getInstance()->{\XLite\Upgrade\Cell::CELL_NAME} = null;
     }
 
     /**
