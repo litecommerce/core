@@ -139,13 +139,6 @@ function getTextByLabel($label)
 
 function x_install_log($message = null)
 {
-    if (!isset($_GET['lcdebug']) && !isset($_POST['lcdebug']) && !isset($_COOKIE['lcdebug'])) {
-        return null;
-    
-    } elseif (!isset($_COOKIE['lcdebug'])) {
-        setcookie('lcdebug', true);
-    } 
-    
     $fileName =  LC_DIR_VAR . 'log' . LC_DS . 'install_log.' . date('Y-m-d') . '.php';
     $securityHeader = "<?php die(1); ?>\n";
 
