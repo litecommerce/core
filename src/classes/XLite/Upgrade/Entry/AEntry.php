@@ -405,7 +405,7 @@ abstract class AEntry
             $this->customFiles = array();
         }
 
-        $hashes = $this->getHashes();
+        $hashes = $this->getHashes($isTestMode);
 
         // Walk through the installed and known files list
         foreach ($this->getHashesForInstalledFiles($isTestMode) as $path => $hash) {
