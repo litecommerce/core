@@ -410,133 +410,156 @@ abstract class AEntry
         // Walk through the installed and known files list
         foreach ($this->getHashesForInstalledFiles($isTestMode) as $path => $hash) {
 
-            // Some useful variables
-            $fullPath  = LC_DIR_ROOT . $path;
-            $directory = \Includes\Utils\FileManager::getDir($fullPath);
-            
-            // File is presented in both old and new packages - (optionally) overwrite
-            if (isset($hashes[$path])) {
+            // Check file on FS
+            if ($this->manageFile($path, 'isFile')) {
 
-                // File exists on FS
-                if (\Includes\Utils\FileManager::isFile($fullPath)) {
+                // Calculate file md5-hash
+                $fileHash = $this->manageFile($path, 'getHash');
 
-                    // Check if file is modified
-                    if ($hash !== $hashes[$path]) {
+                if (isset($fileHash)) {
 
-                        // Check if file was set to overwrite
-                        if ($isTestMode xor !empty($this->customFiles[$path])) {
-
-                            if ($isTestMode) {
-
-                                // Add file to the list of custom ones
-                                $this->customFiles[$path] = false;
-
-                                // Check permissions
-                                if (!\Includes\Utils\FileManager::isFileWriteable($fullPath)) {
-                                    $this->addErrorMessage(
-                                        'File "{{file}} has no writable permissions"',
-                                        array('file' => $path)
-                                    );
-                                }
-
-                            } else {
-
-                                // Trying to overwrite
-                                if (!/*\Includes\Utils\FileManager::write($fullPath, $this->getFileSource($path))*/true) {
-                                    $this->addErrorMessage(
-                                        'An error occured while overwriting the "{{file}}" file',
-                                        array('file' => $path)
-                                    );
-                                }
-                            }
-
-                        } else {
-                            // :TODO: add information message
-                        }
+                    if (isset($hashes[$path])) {
+                        // File has been modified (by user, or by LC Team, see the third param)
+                        $this->updateFile($path, $isTestMode, $fileHash !== $hash);
 
                     } else {
-                        // File is the same as in previous version, do nothing ...
+                        // File has been removed (by user, or by LC Team, see the third param)
+                        $this->deleteFile($path, $isTestMode, $fileHash !== $hash);
                     }
 
                 } else {
-
-                    // Short names
-                    $topDir  = \Includes\Utils\FileManager::getRealPath($directory);
-                    $lsRoot  = \Includes\Utils\FileManager::getRealPath(LC_DIR_ROOT);
-                    $sysRoot = \Includes\Utils\FileManager::getRealPath('/');
-
-                    // Search for writable directory
-                    while (
-                        !($flag = \Includes\Utils\FileManager::isDirWriteable($topDir))
-                        && $topDir !== $lsRoot 
-                        && $topDir !== $sysRoot
-                    ) {
-                        $topDir = \Includes\Utils\FileManager::getRealPath(\Includes\Utils\FileManager::getDir($topDir));
-                    }
-
-                    // Permissions are correct
-                    if ($flag) {
-
-                        if ($isTestMode) {
-                            // Do nothing ...
-
-                        } else {
-
-                            // The FileManager::write() will create nested directories by itself (if needed)
-                            if (!/*\Includes\Utils\FileManager::write($fullPath, $this->getFileSource($path))*/true) {
-                                $this->addErrorMessage(
-                                    'An error occured while writing the "{{file}}" file to FS',
-                                    array('file' => $path)
-                                );
-                            }
-                        }
-
-                    } else {
-                        $this->addErrorMessage(
-                            'Unable to save file "{{file}}": the directory "{{dir}}" has no writable permissions',
-                            array('file' => $path, 'dir' => $topDir)
-                        );
-                    }
+                    // Do not skip any files during upgrade: all of them must be writable
+                    $this->addErrorMessage('File "{{file}} is not readable', $path);
                 }
 
             } else {
-
-                // File is not presented in the new entry package - delete
-                
-                // Check if file was set to overwrite
-                if ($isTestMode xor !empty($this->customFiles[$path])) {
-
-                    if ($isTestMode) {
-
-                        // Add file to the list of custom ones
-                        $this->customFiles[$path] = false;
-
-                        // Check permissions for delete
-                        if (!\Includes\Utils\FileManager::isDirWriteable($directory)) {
-                            $this->addErrorMessage(
-                                'Wrong permissions for the {{file}} file. Unable to delete',
-                                array('file' => $path)
-                            );
-                        }
-
-                    } else {
-
-                        // Remove file
-                        if (!/*\Includes\Utils\FileManager::delete($fullPath)*/true) {
-                            $this->addErrorMessage(
-                                'Unable to delete file "{{file}}"',
-                                array('file' => $path)
-                            );
-                        }
-                    }
-    
-                } else {
-                    // :TODO: add information message
-                }
+                // File has been removed from installation (by user)
+                $this->addFile($path, $isTestMode, true);
             }
+
+            // Only the new files will remain 
+            unset($hashes[$path]);
         }
 
-        return $this->isValid();
+        // Add new files
+        foreach ($hashes as $path => $hash) {
+            $this->addFile($path, $isTestMode, $this->manageFile($path, 'isFile'));
+        }
+    }
+
+    protected function addFile($path, $isTestMode, $manageCustomFiles)
+    {
+        $this->modifyFile($path, $isTestMode, $manageCustomFiles, 'addFileCallback');
+    }
+
+    protected function updateFile($path, $isTestMode, $manageCustomFiles)
+    {
+        $this->modifyFile($path, $isTestMode, $manageCustomFiles, 'updateFileCallback');
+    }
+
+    protected function deleteFile($path, $isTestMode, $manageCustomFiles)
+    {
+        $this->modifyFile($path, $isTestMode, $manageCustomFiles, 'deleteFileCallback');
+    }
+
+    protected function addFileCallback($path, $isTestMode)
+    {
+        if ($isTestMode) {
+
+            // Short names
+            $topDir  = \Includes\Utils\FileManager::getRealPath($this->manageFile($path, 'getDir'));
+            $lsRoot  = \Includes\Utils\FileManager::getRealPath(LC_DIR_ROOT);
+            $sysRoot = \Includes\Utils\FileManager::getRealPath('/');
+
+            // Search for writable directory
+            while (
+                !($flag = \Includes\Utils\FileManager::isDirWriteable($topDir))
+                && $topDir !== $lsRoot
+                && $topDir !== $sysRoot
+            ) {
+                $topDir = \Includes\Utils\FileManager::getRealPath(\Includes\Utils\FileManager::getDir($topDir));
+            }
+
+            // Permissions are invalid
+            if (!$flag) {
+                $this->addFileErrorMessage('Parent dir of the "{{file}}" file is not writable', $path);
+            }
+
+        } elseif (/*!$this->manageFile($path, 'write', array($this->getFileSource($path)))*/false) {
+            $this->addFileErrorMessage('Unable to write "{{file}}" file', $path);
+        }
+    }
+
+    protected function updateFileCallback($path, $isTestMode)
+    {
+        if ($isTestMode) {
+
+            if (!$this->manageFile($path, 'isFileWriteable')) {
+                $this->addFileErrorMessage('File "{{file}} is not writeable', $path);
+            }
+
+        } elseif (/*!$this->manageFile($path, 'write', array($this->getFileSource($path)))*/false) {
+            $this->addFileErrorMessage('Unable to write "{{file}}" file', $path);
+        }
+    }
+
+    protected function deleteFileCallback($path, $isTestMode)
+    {
+        if ($isTestMode) {
+
+            if (!\Includes\Utils\FileManager::isDirWriteable($this->manageFile($path, 'getDir'))) {
+                $this->addFileErrorMessage('Parent dir of the "{{file}}" file is not writable', $path);
+            }
+
+        } elseif (/*!$this->manageFile($path, 'delete')*/false) {
+            $this->addFileErrorMessage('Unable to delete "{{file}}" file', $path);
+        }
+    }
+
+    protected function modifyFile($path, $isTestMode, $manageCustomFiles, $callback)
+    {
+        if ($isTestMode) {
+
+            if ($manageCustomFiles) {
+                $this->addToCustomFiles($path);
+            }
+
+            // Call a specific class method
+            $this->$callback($path, $isTestMode);
+
+        } elseif (!$manageCustomFiles || $this->checkForCustomFileRewrite($path)) {
+
+            // Call a specific class method
+            $this->$callback($path, $isTestMode);
+        }
+    }
+
+    protected function manageFile($path, $method, array $args = array())
+    {
+        return call_user_func_array(
+            array(\Includes\Utils\FileManager, $method),
+            array_merge(array($this->getFullPath($path)), $args)
+        );
+    }
+
+    protected function getFullPath($path)
+    {
+        return LC_DIR_ROOT . $path;
+    }
+
+    protected function addToCustomFiles($path, $flag = false)
+    {
+        $this->customFiles[$path] = $flag;
+    }
+
+    protected function checkForCustomFileRewrite($path)
+    {
+        return !empty($this->customFiles[$path]);
+    }
+
+    protected function addFileErrorMessage($message, $path)
+    {
+        $this->addErrorMessage($message, array('file' => $path));
     }
 
     /**

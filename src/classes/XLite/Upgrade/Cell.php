@@ -378,6 +378,7 @@ class Cell extends \XLite\Base\Singleton
         if (is_array($entries)) {
             $this->entries = array_merge($this->entries, $entries);
             $this->incompatibleModules = array_merge($this->incompatibleModules, (array) $incompatibleModules);
+
         } else {
             $this->collectEntries();
         }
@@ -549,11 +550,11 @@ class Cell extends \XLite\Base\Singleton
 
         if ($totalSize > $freeSpace) {
             $message = \XLite\Core\Translation::getInstance()->translate(
-                'Not enogh disk space. Required: {{REQ}} (+{{RESERVE}} reserve). Available: {{AVAIL}}',
+                'Not enogh disk space. Required: {{req}} (+{{reserve}} reserve). Available: {{avail}}',
                 array(
-                    'REQ'     => \XLite\Core\Converter::formatFileSize($totalSize),
-                    'RESERVE' => \XLite\Core\Converter::formatFileSize(self::FREE_SPACE_RESERVE),
-                    'AVAIL'   => \XLite\Core\Converter::formatFileSize($freeSpace),
+                    'req'     => \XLite\Core\Converter::formatFileSize($totalSize),
+                    'reserve' => \XLite\Core\Converter::formatFileSize(self::FREE_SPACE_reserve),
+                    'avail'   => \XLite\Core\Converter::formatFileSize($freeSpace),
                 )
             );
         }
