@@ -185,7 +185,13 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function getCores($ttl = self::TTL_LONG)
     {
-        return $this->performActionWithTTL($ttl, self::ACTION_GET_CORES);
+        $result = $this->performActionWithTTL($ttl, self::ACTION_GET_CORES);
+
+        if (self::TTL_NOT_EXPIRED !== $result) {
+            $this->clearUpgradeCell();
+        }
+
+        return $result;
     }
 
     /**
@@ -393,6 +399,7 @@ class Marketplace extends \XLite\Base\Singleton
 
         if (self::TTL_NOT_EXPIRED !== $result) {
             \XLite\Core\Database::getRepo('\XLite\Model\Module')->updateMarketplaceModules((array) $result);
+            $this->clearUpgradeCell();
         }
 
         return (bool) $result;
@@ -1186,6 +1193,18 @@ class Marketplace extends \XLite\Base\Singleton
     protected function canCompress()
     {
         return \Includes\Utils\PHARManager::canCompress();
+    }
+
+    /**
+     * Clear saved data
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function clearUpgradeCell()
+    {
+        \XLite\Core\TmpVars::getInstance()->{\XLIte\Upgrade\Cell::CELL_NAME} = null;
     }
 
     /**
