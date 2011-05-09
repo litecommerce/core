@@ -19,6 +19,7 @@
 table.entries-list {
   border-collapse: collapse;
   margin: 0px 0px 25px 0px;
+  width: 800px;
 }
 
 table.entries-list td,
@@ -125,6 +126,7 @@ table.entries-list tr td.new-version {
 table.incompatible-modules-list {
   border-collapse: collapse;
   margin: 0px 0px 30px 0px;
+  width: 800px;
 }
 
 .incompatible-modules-list tr td {
@@ -185,4 +187,16 @@ table.incompatible-modules-list {
   .unknown-status-message
 {
   display: none;
+}
+
+.incompatible-list-actions {
+  width: 800px;
+}
+
+.incompatible-list-actions button {
+  float: left;
+}
+
+.incompatible-list-actions button.main-button {
+  float: right;
 }
