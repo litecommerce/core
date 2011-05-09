@@ -908,6 +908,10 @@ function isLiteCommerceInstalled($dbURL = null, &$message)
                         if (empty($res)) {
                             $message = 'There are no profiles found in the database';
                             $checkResult = false;
+                        
+                        } elseif (\Includes\Decorator\Utils\CacheManager::isRebuildNeeded(\Includes\Decorator\Utils\CacheManager::STEP_THIRD)) {
+                            $message = 'Cache isn\'t built yet';
+                            $checkResult = false;
                         }
 
                     } else {
