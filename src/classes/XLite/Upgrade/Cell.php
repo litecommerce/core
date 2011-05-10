@@ -127,16 +127,18 @@ class Cell extends \XLite\Base\Singleton
     /**
      * Return list of incompatible modules 
      * 
+     * @param boolean $onlySelected Flag to return only the modules selected by admin
+     *  
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getIncompatibleModules()
+    public function getIncompatibleModules($onlySelected = false)
     {
         return array_filter(
             array_map(
                 array(\XLite\Core\Database::getRepo('\XLite\Model\Module'), 'find'),
-                array_keys($this->incompatibleModules);
+                array_keys($onlySelected ? array_filter($this->incompatibleModules) : $this->incompatibleModules)
             )
         );
     }
@@ -392,7 +394,7 @@ class Cell extends \XLite\Base\Singleton
 
         if (is_array($entries)) {
             $this->entries = array_merge($this->entries, $entries);
-            $this->incompatibleModules = array_merge($this->incompatibleModules, (array) $incompatibleModules);
+            $this->incompatibleModules = $this->incompatibleModules + (array) $incompatibleModules;
 
         } else {
             $this->collectEntries();

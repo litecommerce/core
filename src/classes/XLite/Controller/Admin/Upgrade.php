@@ -248,11 +248,13 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
 
         if ($this->isNextStepAvailable()) {
 
-            // Disable some modules (if needed)
-            $this->doActionDisableIncompatibleModules();
-
             // :DEVCODE: to remove
             \Includes\Utils\Operator::showMessage('Downloading updates, please wait...');
+
+            // Disable some modules (if needed)
+            \XLite\Upgrade\Cell::getInstance()->setIncompatibleModuleStatuses(
+                (array) \XLite\Core\Request::getInstance()->toDisable
+            );
 
             if (\XLite\Upgrade\Cell::getInstance()->downloadUpgradePacks()) {
                 $this->setReturnURL($this->buildURL('upgrade', 'unpack'));
@@ -325,6 +327,8 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionInstallUpgrades()
     {
+        $this->setReturnURL($this->buildURL());
+
         // :DEVCODE: to remove
         \Includes\Utils\Operator::showMessage('Installing updates, please wait...');
 
@@ -332,25 +336,15 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         \XLite\Upgrade\Cell::getInstance()->upgrade(false, (array) \XLite\Core\Request::getInstance()->toOverwrite);
 
         // Disable selected modules
-        foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules() as $module) {
+        foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules(true) as $module) {
             \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
         }
-    }
 
-    /**
-     * Disable some modules
-     *
-     * :NOTE: this action handler is not called by the dispatcher (only manually)
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionDisableIncompatibleModules()
-    {
-        \XLite\Upgrade\Cell::getInstance()->setIncompatibleModuleStatuses(
-            (array) \XLite\Core\Request::getInstance()->toDisable
-        );
+        // Remove old data
+        \XLite\Upgrade\Cell::getInstance()->clear();
+
+        // Rebuild cache
+        \XLite::setCleanUpCacheFlag(true);
     }
 
     // }}}
