@@ -14,14 +14,14 @@
 
 <h2>{t(#Top X products#,_ARRAY_(#count#^getRowsCount()))}</h2>
 
-<table class="data-table">
+<table class="data-table top-sellers">
   <tr class="TableHead">
-    <th align="left">&nbsp;</th>
-    <th FOREACH="getStatsColumns(),c" style="text-align:center;">{getColumnTitle(c)}</th>
+    <th class="title">&nbsp;</th>
+    <th FOREACH="getStatsColumns(),c">{getColumnTitle(c)}</th>
   </tr>
   <tr FOREACH="getStats(),idx,row" class="dialog-box">
-    <td>{inc(idx)}.</td>
-    <td FOREACH="row,idx1,val" align="center">
+    <td class="title">{inc(idx)}.</td>
+    <td FOREACH="row,idx1,val">
       <a IF="val" href="{buildURL(#product#,##,_ARRAY_(#product_id#^val.product.product_id))}">{val.name}</a>
       <span IF="!val">&mdash;</span>
     </td>

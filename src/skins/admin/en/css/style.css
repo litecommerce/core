@@ -1024,6 +1024,40 @@ td.star
   text-align: center;
 }
 
+/**
+ * Order statistics
+ */
+table.order-statistics {
+  width: 80%;
+}
+
+table.order-statistics th {
+  text-align: right;
+}
+
+table.order-statistics td {
+  text-align: right;
+  white-space: normal;
+}
+
+table.order-statistics td.title {
+  text-align: left;
+}
+
+table.top-sellers {
+  width: 80%;
+}
+
+table.top-sellers th {
+  text-align: left;
+}
+
+table.top-sellers td {
+  white-space: normal;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
 /* Upgrade core block TODO: move it to separated widget */
 
 .upgrade-popup-block .ui-dialog-title {

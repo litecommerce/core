@@ -14,14 +14,14 @@
 
 <br /><br />
 
-<table class="data-table" width="80%">
-  <tr class="TableHead" align="center">
-    <th align="left">&nbsp;</th>
-    <th FOREACH="getStatsColumns(),c" style="text-align:center;">{getColumnTitle(c)}</th>
+<table class="data-table order-statistics">
+  <tr class="TableHead">
+    <th class="title">&nbsp;</th>
+    <th FOREACH="getStatsColumns(),c">{getColumnTitle(c)}</th>
   </tr>
   <tr FOREACH="getStats(),idx,row" class="dialog-box{if:isTotalsRow(idx)} totals{end:}">
-    <td>{getRowTitle(idx)}</td>
-    <td FOREACH="row,idx1,val" align="center">
+    <td class="title">{getRowTitle(idx)}</td>
+    <td FOREACH="row,idx1,val">
       {if:isTotalsRow(idx)}{price_format(val)}{else:}{val}{end:}
     </td>
   </tr>
