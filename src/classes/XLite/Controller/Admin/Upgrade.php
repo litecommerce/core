@@ -325,7 +325,16 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionInstallUpgrades()
     {
-        echo 'Installing... (not ready yet)'; die;
+        // :DEVCODE: to remove
+        \Includes\Utils\Operator::showMessage('Installing updates, please wait...');
+
+        // Perform upgrade
+        \XLite\Upgrade\Cell::getInstance()->upgrade(false, (array) \XLite\Core\Request::getInstance()->toOverwrite);
+
+        // Disable selected modules
+        foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules() as $module) {
+            \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
+        }
     }
 
     /**
@@ -339,9 +348,9 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionDisableIncompatibleModules()
     {
-        foreach ((array) \XLite\Core\Request::getInstance()->toDisable as $moduleID => $value) {
-            // :TODO: find a way for modules lazy disabling
-        }
+        \XLite\Upgrade\Cell::getInstance()->setIncompatibleModuleStatuses(
+            (array) \XLite\Core\Request::getInstance()->toDisable
+        );
     }
 
     // }}}

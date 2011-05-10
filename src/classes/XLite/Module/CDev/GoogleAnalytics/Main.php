@@ -101,5 +101,4 @@ abstract class Main extends \XLite\Module\AModule
     {
         return true;
     }
-
 }

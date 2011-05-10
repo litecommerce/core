@@ -328,7 +328,7 @@ abstract class AEntry
      */
     public function __sleep()
     {
-        return array('repositoryPath', 'errorMessages', 'customFiles');
+        return array('repositoryPath', 'errorMessages');
     }
 
     // {{{ Error handling
@@ -391,19 +391,17 @@ abstract class AEntry
     /**
      * Perform upgrade
      *
-     * @param boolean $isTestMode Flag OPTIONAL
+     * @param boolean $isTestMode       Flag OPTIONAL
+     * @param array   $filesToOverwrite List of custom files to overwrite OPTIONAL
      *
-     * @return boolean
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function upgrade($isTestMode = true)
+    public function upgrade($isTestMode = true, array $filesToOverwrite = array())
     {
         $this->errorMessages = array();
-
-        if ($isTestMode) {
-            $this->customFiles = array();
-        }
+        $this->customFiles   = $filesToOverwrite ?: array();
 
         $hashes = $this->getHashes($isTestMode);
 
@@ -447,21 +445,64 @@ abstract class AEntry
         }
     }
 
+    /**
+     * Perform some common operation for upgrade
+     * 
+     * @param string  $path              File short path
+     * @param boolean $isTestMode        If in test mode
+     * @param boolean $manageCustomFiles Flag for custom files
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function addFile($path, $isTestMode, $manageCustomFiles)
     {
         $this->modifyFile($path, $isTestMode, $manageCustomFiles, 'addFileCallback');
     }
 
+    /**
+     * Perform some common operation for upgrade
+     *
+     * @param string  $path              File short path
+     * @param boolean $isTestMode        If in test mode
+     * @param boolean $manageCustomFiles Flag for custom files
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function updateFile($path, $isTestMode, $manageCustomFiles)
     {
         $this->modifyFile($path, $isTestMode, $manageCustomFiles, 'updateFileCallback');
     }
 
+    /**
+     * Perform some common operation for upgrade
+     *
+     * @param string  $path              File short path
+     * @param boolean $isTestMode        If in test mode
+     * @param boolean $manageCustomFiles Flag for custom files
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function deleteFile($path, $isTestMode, $manageCustomFiles)
     {
         $this->modifyFile($path, $isTestMode, $manageCustomFiles, 'deleteFileCallback');
     }
 
+    /**
+     * Callback for a common operation for upgrade
+     *
+     * @param string  $path       File short path
+     * @param boolean $isTestMode If in test mode
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function addFileCallback($path, $isTestMode)
     {
         if ($isTestMode) {
@@ -490,6 +531,16 @@ abstract class AEntry
         }
     }
 
+    /**
+     * Callback for a common operation for upgrade
+     *
+     * @param string  $path       File short path
+     * @param boolean $isTestMode If in test mode
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function updateFileCallback($path, $isTestMode)
     {
         if ($isTestMode) {
@@ -503,6 +554,16 @@ abstract class AEntry
         }
     }
 
+    /**
+     * Callback for a common operation for upgrade
+     *
+     * @param string  $path       File short path
+     * @param boolean $isTestMode If in test mode
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function deleteFileCallback($path, $isTestMode)
     {
         if ($isTestMode) {
@@ -516,6 +577,18 @@ abstract class AEntry
         }
     }
 
+    /**
+     * Common operation for add/update/delete
+     *
+     * @param string  $path              File short path
+     * @param boolean $isTestMode        If in test mode
+     * @param boolean $manageCustomFiles Flag for custom files
+     * @param string  $callback          Callback to execute
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function modifyFile($path, $isTestMode, $manageCustomFiles, $callback)
     {
         if ($isTestMode) {
@@ -534,29 +607,78 @@ abstract class AEntry
         }
     }
 
+    /**
+     * Short name for FileManager call
+     * 
+     * @param string $path   File short path
+     * @param string $method Method to call
+     * @param array  $args   Call arguments OPTIONAL
+     *  
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function manageFile($path, $method, array $args = array())
     {
         return call_user_func_array(
-            array(\Includes\Utils\FileManager, $method),
+            array('\Includes\Utils\FileManager', $method),
             array_merge(array($this->getFullPath($path)), $args)
         );
     }
 
+    /**
+     * Compose file full path
+     * 
+     * @param string $path File short path
+     *  
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getFullPath($path)
     {
         return LC_DIR_ROOT . $path;
     }
 
+    /**
+     * Add file to the custome files list
+     * 
+     * @param string  $path File short path
+     * @param boolean $flag Status OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function addToCustomFiles($path, $flag = false)
     {
         $this->customFiles[$path] = $flag;
     }
 
+    /**
+     * Check status of custom file entry list 
+     * 
+     * @param string $path File short path
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function checkForCustomFileRewrite($path)
     {
         return !empty($this->customFiles[$path]);
     }
 
+    /**
+     * Short name for the "addFileErrorMessage" method
+     * 
+     * @param string $message Message to set
+     * @param string $path    File short path
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function addFileErrorMessage($message, $path)
     {
         $this->addErrorMessage($message, array('file' => $path));
