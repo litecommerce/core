@@ -46,6 +46,9 @@ class Probe extends \XLite\Base\Singleton
     public function measure()
     {
         if ($this->checkAccess()) {
+
+            set_time_limit(0);;
+
             $measure = new \XLite\Model\Measure;
             $measure->setDate(time());
 
