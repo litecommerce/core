@@ -51,6 +51,7 @@ class Order extends \XLite\Model\Repo\ARepo
     const P_EMAIL      = 'email';
     const P_STATUS     = 'status';
     const P_DATE       = 'date';
+    const P_CURRENCY   = 'currency';
     const P_ORDER_BY   = 'orderBy';
     const P_LIMIT      = 'limit';
 
@@ -169,6 +170,7 @@ class Order extends \XLite\Model\Repo\ARepo
             self::P_EMAIL,
             self::P_STATUS,
             self::P_DATE,
+            self::P_CURRENCY,
             self::P_ORDER_BY,
             self::P_LIMIT,
         );
@@ -304,6 +306,24 @@ class Order extends \XLite\Model\Repo\ARepo
                 ->andWhere('o.date <= :end')
                 ->setParameter('start', $start)
                 ->setParameter('end', $end);
+        }
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data OPTIONAL
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareCndCurrency(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value = null)
+    {
+        if ($value) {
+            $queryBuilder->innerJoin('o.currency', 'currency', 'WITH', 'currency.currency_id = :currency_id')
+                ->setParameter('currency_id', $value);
         }
     }
 

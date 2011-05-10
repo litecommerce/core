@@ -94,6 +94,7 @@ class OrderItem extends \XLite\Model\Repo\ARepo
 
         $queryBuilder->addSelect('SUM(o.amount) as cnt')
             ->innerJoin('o.order', 'o1')
+            ->innerJoin('o1.currency', 'currency', 'WITH', 'currency.currency_id = :currency_id')
             ->addSelect('o1.date')
             ->andWhere('o1.date >= :start')
             ->setParameter('start', $start)
@@ -102,6 +103,7 @@ class OrderItem extends \XLite\Model\Repo\ARepo
             ->andWhere('o1.status IN (:statusProcessed, :statusCompleted)')
             ->setParameter('statusProcessed', \XLite\Model\Order::STATUS_PROCESSED)
             ->setParameter('statusCompleted', \XLite\Model\Order::STATUS_COMPLETED)
+            ->setParameter('currency_id', $cnd->currency)
             ->setMaxResults($cnd->limit)
             ->addGroupBy('o.sku')
             ->addOrderBy('cnt', 'desc')

@@ -26,58 +26,50 @@
  * @since     1.0.0
  */
 
-namespace XLite\Model\Repo;
+namespace XLite\View\Form\Order;
 
 /**
- * Currency repository
+ * Currency selector form
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Currency extends \XLite\Model\Repo\ARepo
+class CurrencySelector extends \XLite\View\Form\AForm
 {
     /**
-     * Repository type 
-     * 
-     * @var   string
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $type = self::TYPE_SERVICE;
-
-    /**
-     * Alternative record identifiers
-     * 
-     * @var   array
-     * @see   ____var_see____
-     * @since 1.0.0
-     */
-    protected $alternativeIdentifier = array(
-        array('code'),
-    );
-
-    /**
-     * Find all used into orders currency 
-     * 
-     * @return array
+     * Current form name
+     *
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function findUsed()
+    protected function getFormName()
     {
-        return $this->defineFindUsedQuery()->getResult();
+        return 'currency_selector';
     }
 
     /**
-     * Define query for findUsed() method
+     * getDefaultFormMethod 
      * 
-     * @return \XLite\Model\QueryBuilder\AQueryBuilder
+     * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function defineFindUsedQuery()
+    protected function getDefaultFormMethod()
     {
-        return $this->createQueryBuilder('c')
-            ->innerJoin('c.orders', 'o', 'WITH', 'o.order_id IS NOT NULL');
+        return 'get';
     }
+
+    /**
+     * getDefaultTarget 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultTarget()
+    {
+        return \XLite\Core\Request::getInstance()->target;
+    }
+
 }
