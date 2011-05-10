@@ -12,6 +12,8 @@
  *}
 <p align="justify">{t(#This section displays order placement statistics.#)}</p>
 
+<widget class="XLite\View\Order\Statistics\CurrencySelector" />
+
 <br /><br />
 
 <table class="data-table order-statistics">

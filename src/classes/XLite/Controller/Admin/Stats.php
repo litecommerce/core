@@ -206,6 +206,18 @@ class Stats extends \XLite\Controller\Admin\AAdmin
             LC_START_TIME
         );
 
+        $currency = null;
+
+        if (\XLite\Core\Request::getInstance()->currency) {
+            $currency = \XLite\Core\Database::getRepo('XLite\Model\Currency')->find(\XLite\Core\Request::getInstance()->currency);
+        }
+
+        if (!$currency) {
+            $currency = \XLite::getInstance()->getCurrency();
+        }
+
+        $cnd->currency = $currency->getCurrencyId();
+
         return $cnd;
     }
 

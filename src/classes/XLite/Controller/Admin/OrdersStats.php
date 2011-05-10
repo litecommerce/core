@@ -165,6 +165,17 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
         return $this->stats;
     }
 
+    /**
+     * Get currencies 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCurrencies()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Currency')->findUsed();
+    }
 
     /**
      * Get data

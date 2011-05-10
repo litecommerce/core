@@ -12,6 +12,8 @@
  *}
 <p align="justify">{t(#This section displays 10 top-selling products for today, this week and this month.#)}</p>
 
+<widget class="XLite\View\Order\Statistics\CurrencySelector" />
+
 <h2>{t(#Top X products#,_ARRAY_(#count#^getRowsCount()))}</h2>
 
 <table class="data-table top-sellers">

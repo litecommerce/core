@@ -94,6 +94,17 @@ class TopSellers extends \XLite\Controller\Admin\Stats
         return $this->stats;
     }
 
+    /**
+     * Get currencies 
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCurrencies()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Currency')->findUsed();
+    }
 
     /**
      * Common method to determine current location
@@ -137,6 +148,18 @@ class TopSellers extends \XLite\Controller\Admin\Stats
             $cnd = $this->getSearchCondition($interval);
 
             $cnd->limit = self::TOP_SELLERS_NUMBER;
+
+            $currency = null;
+
+            if (\XLite\Core\Request::getInstance()->currency) {
+                $currency = \XLite\Core\Database::getRepo('XLite\Model\Currency')->find(\XLite\Core\Request::getInstance()->currency);
+            }
+
+            if (!$currency) {
+                $currency = \XLite::getInstance()->getCurrency();
+            }
+
+            $cnd->currency = $currency->getCurrencyId();
 
             $data[$interval] = \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')
                 ->getTopSellers($cnd);
