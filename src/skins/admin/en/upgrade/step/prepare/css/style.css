@@ -200,3 +200,8 @@ table.incompatible-modules-list {
 .incompatible-list-actions button.main-button {
   float: right;
 }
+
+.formError div.formErrorContent {
+  width: 300px;
+  line-height: 18px;
+}
