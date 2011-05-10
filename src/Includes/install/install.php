@@ -158,12 +158,14 @@ function x_install_log($message = null)
 
     $port = $_SERVER['SERVER_PORT'] ? ':' . $_SERVER['SERVER_PORT'] : '';
 
+    $protocol = (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') ? 'https' : 'http';
+
     $output =<<< OUT
 
 
 --------------------------------------------------------------------
 [$currentDate]
-[{$_SERVER['REQUEST_METHOD']}, {$_SERVER['SERVER_PROTOCOL']}] http://{$_SERVER['HTTP_HOST']}{$port}{$_SERVER['REQUEST_URI']}
+[{$_SERVER['REQUEST_METHOD']}, {$_SERVER['SERVER_PROTOCOL']}] {$protocol}://{$_SERVER['HTTP_HOST']}{$port}{$_SERVER['REQUEST_URI']}
 [{$_SERVER['SERVER_SOFTWARE']}]
 $message
 
@@ -2078,35 +2080,32 @@ function getLiteCommerceURL()
  */
 function inst_http_request($url_request)
 {
-    $response = '';
+    $result = null;
+    $adapter = null;
+    $response = null;
+    $error = null;
 
-    $error = '';
+    try {
 
-    $url = parse_url($url_request);
-    $errno = null;
-    if ($fp = @fsockopen($url['host'], (!empty($url['port']) ? $url['port'] : 80), $errno, $error, 3)) {
-        fputs($fp, "GET ".$url_request." HTTP/1.0\r\n");
-        fputs($fp, "Host: ".$url['host']."\r\n");
-        fputs($fp, "User-Agent: Mozilla/4.5 [en]\r\n");
+        $bouncer = new \PEAR2\HTTP\Request($url_request);
 
-        fputs($fp,"\r\n");
+        $result = $bouncer->sendRequest();
+        $adapter = $bouncer->getAdapterName();
 
-        while (!feof($fp)) {
-            $response .= fgets($fp, 4096);
-        }
-    }
-    
-    if (!empty($error)) {
-        $response = $error . "\n" . $response;
+        $response = $result->body;
+
+    } catch (\Exception $exception) {
+        $error = $exception->getMessage();
     }
 
     x_install_log(
         'inst_http_request() result', 
         array(
-            'url_request' => $url_request, 
-            'url' => $url, 
-            'response' => $response, 
-            'error' => $error,
+            'url_request' => $url_request,
+            'adapter'     => $adapter,
+            'result'      => $result,
+            'response'    => $response, 
+            'error'       => $error,
         )
     );
 
