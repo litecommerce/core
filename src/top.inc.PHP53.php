@@ -63,6 +63,8 @@ define('LC_DIR_DATACACHE',     LC_DIR_VAR . 'datacache');
 define('LC_DIR_LOG',           LC_DIR_VAR . 'log' . LC_DS);
 define('LC_DIR_CACHE_IMAGES',  LC_DIR_VAR . 'images' . LC_DS);
 
+define('LC_OS_WINDOWS', 'WIN' === strtoupper(substr(PHP_OS, 0, 3)));
+
 // Disabled xdebug coverage for Selenium-based tests [DEVELOPMENT PURPOSE]
 if (isset($_COOKIE) && !empty($_COOKIE['no_xdebug_coverage']) && function_exists('xdebug_stop_code_coverage')) {
     @xdebug_stop_code_coverage();

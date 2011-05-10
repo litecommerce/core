@@ -522,7 +522,11 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function getDiskFreeSpace($dir = null)
     {
-        return disk_free_space($dir ?: LC_ROOT_DIR);
+        $dir = $dir ?: LC_ROOT_DIR;
+
+        return disk_free_space(
+            LC_OS_WINDOWS ? substr($dir, 0, 2) : $dir
+        );
     }
 
     // {{{ :TODO: must be refactored
