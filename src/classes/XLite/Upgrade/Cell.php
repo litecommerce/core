@@ -567,10 +567,10 @@ class Cell extends \XLite\Base\Singleton
 
         if ($totalSize > $freeSpace) {
             $message = \XLite\Core\Translation::getInstance()->translate(
-                'Not enogh disk space. Required: {{req}} (+{{reserve}} reserve). Available: {{avail}}',
+                'Not enough disk space. Required: {{req}} (+{{reserve}} reserve). Available: {{avail}}',
                 array(
                     'req'     => \XLite\Core\Converter::formatFileSize($totalSize),
-                    'reserve' => \XLite\Core\Converter::formatFileSize(self::FREE_SPACE_reserve),
+                    'reserve' => \XLite\Core\Converter::formatFileSize(self::FREE_SPACE_RESERVE),
                     'avail'   => \XLite\Core\Converter::formatFileSize($freeSpace),
                 )
             );
