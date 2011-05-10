@@ -65,43 +65,6 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         return $product;
     }
 
-    public function testLowInventory()
-    {
-        $product = \XLite\Core\Database::getRepo('XLite\Model\Product')
-            ->createQueryBuilder()
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getSingleResult();
-
-        $this->skipCoverage();
-
-        $this->openAndWait('store/product//product_id-' . $product->getProductId());
-
-        $this->click("//button[@class='bright add2cart']");
-
-        $this->waitForLocalCondition(
-            'jQuery(".product-details .product-buttons-added .buy-more").length > 0',
-            10000,
-            'check content reloading'
-        );
-
-        $inv = $product->getInventory();
-
-        $inv->setEnabled(true);
-        $inv->setAmount(0);
-        \XLite\Core\Database::getEM()->flush();
-
-        $this->openAndWait('store/checkout');
-        $this->waitForLocalCondition(
-            'jQuery(location).attr("pathname").match(/store\/cart/)',
-            3000,
-            'check redirect to cart'
-        );
-        
-        $inv->setAmount(50);
-        \XLite\Core\Database::getEM()->flush();
-    }
-
     public function testStructure()
     {
         $product = $this->addToCart();
@@ -621,6 +584,41 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->assertFalse((bool)$profile->getAddresses()->get($profileCount)->getIsShipping(), 'check is shipping #2');
         $this->assertFalse((bool)$profile->getAddresses()->get($profileCount + 1)->getIsBilling(), 'check is billing #2');
     }
+
+    public function testLowInventory()
+    {
+        $product = \XLite\Core\Database::getRepo('XLite\Model\Product')
+            ->createQueryBuilder()
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult();
+
+        $this->skipCoverage();
+
+        $this->openAndWait('store/product//product_id-' . $product->getProductId());
+
+        $this->click("//button[@class='bright add2cart']");
+
+        $this->waitForLocalCondition(
+            'jQuery(".product-details .product-buttons-added .buy-more").length > 0',
+            10000,
+            'check content reloading'
+        );
+
+        $inv = $product->getInventory();
+
+        $inv->setEnabled(true);
+        $inv->setAmount(0);
+        \XLite\Core\Database::getEM()->flush();
+
+        $this->openAndWait('store/checkout');
+
+        $this->assertLocation('*/store/cart/');
+
+        $inv->setAmount(50);
+        \XLite\Core\Database::getEM()->flush();
+    }
+
 
     protected function fillProfileData()
     {
