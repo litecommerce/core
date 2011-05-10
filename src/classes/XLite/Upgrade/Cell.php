@@ -136,9 +136,24 @@ class Cell extends \XLite\Base\Singleton
         return array_filter(
             array_map(
                 array(\XLite\Core\Database::getRepo('\XLite\Model\Module'), 'find'),
-                $this->incompatibleModules
+                array_keys($this->incompatibleModules);
             )
         );
+    }
+
+    /**
+     * Set statuses (enable/disable) for incompatible modules
+     * 
+     * @param array $statuses List of statuses (<moduleID,status>)
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function setIncompatibleModuleStatuses(array $statuses)
+    {
+        $this->incompatibleModules = array_intersect_key($statuses, $this->incompatibleModules)
+            + $this->incompatibleModules;
     }
 
     /**
@@ -225,7 +240,7 @@ class Cell extends \XLite\Base\Singleton
             $this->addEntry($hash, 'Module\Marketplace', array($module, $toUpgrade));
 
         } elseif ($module->getEnabled()) {
-            $this->incompatibleModules[$hash] = $module->getModuleID();
+            $this->incompatibleModules[$module->getModuleID()] = false;
         }
     }
 
@@ -686,13 +701,14 @@ class Cell extends \XLite\Base\Singleton
     /**
      * Perform upgrade 
      * 
-     * @param boolean $isTestMode Flag OPTIONAL
+     * @param boolean $isTestMode       Flag OPTIONAL
+     * @param array   $filesToOverwrite List of custom files to overwrite OPTIONAL
      *  
-     * @return boolean
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function upgrade($isTestMode = true)
+    public function upgrade($isTestMode = true, array $filesToOverwrite = array())
     {
         if (!$this->isUnpacked()) {
             \Includes\ErrorHandler::fireError('Trying to perform upgrade while not all archives were unpacked');
@@ -701,7 +717,7 @@ class Cell extends \XLite\Base\Singleton
         $result = true;
 
         foreach ($this->getEntries() as $entry) {
-            $result = $entry->upgrade($isTestMode) && $result;
+            $result = $entry->upgrade($isTestMode, $filesToOverwrite) && $result;
         }
 
         return $result;

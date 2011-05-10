@@ -13,4 +13,4 @@
  * @ListChild (list="upgrade.step.ready_to_install.buttons.sections", weight="200")
  *}
 
-<widget class="\XLite\View\Button\Submit" label="Install updates" />
+<widget IF="isNextStepAvailable()" class="\XLite\View\Button\Submit" label="Install updates" />
