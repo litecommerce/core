@@ -327,8 +327,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionInstallUpgrades()
     {
-        $this->setReturnURL($this->buildURL());
-
         // :DEVCODE: to remove
         \Includes\Utils\Operator::showMessage('Installing updates, please wait...');
 
@@ -339,9 +337,6 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules(true) as $module) {
             \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
         }
-
-        // Remove old data
-        \XLite\Upgrade\Cell::getInstance()->clear();
 
         // Rebuild cache
         \XLite::setCleanUpCacheFlag(true);
