@@ -48,6 +48,7 @@ class Marketplace extends \XLite\Base\Singleton
     const ACTION_GET_ADDON_INFO    = 'get_addon_info';
     const ACTION_GET_ADDON_HASH    = 'get_addon_hash';
     const ACTION_CHECK_ADDON_KEY   = 'check_addon_key';
+    const ACTION_GET_HOSTING_SCORE = 'get_hosting_score';
 
     /**
      * Request/response fields
@@ -789,6 +790,50 @@ class Marketplace extends \XLite\Base\Singleton
     }
 
     // }}}
+
+    // {{{ 'Get hosting score' request
+
+    /**
+     * The certain request handler
+     *
+     * @param integer $ttl Data TTL OPTIONAL
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getHostingScore($ttl = self::TTL_LONG)
+    {
+        return $this->sendRequestToMarkeplace(self::ACTION_GET_HOSTING_SCORE);
+    }
+
+    /**
+     * Parse response for certian action
+     *
+     * @param \PEAR2\HTTP\Request\Response $response Response to prepare
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function parseResponseForGetHostingScoreAction(\PEAR2\HTTP\Request\Response $response)
+    {
+        return $this->parseJSON($response);
+    }
+
+    /**
+     * Validate response for certian action
+     *
+     * @param array $data Response data
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function validateResponseForGetHostingScoreAction(array $data)
+    {
+        return isset($data['score']) && is_scalar($data['score']) && ctype_digit($data['score']);
+    }
 
     // {{{ Common methods to send request to marketplace
 
