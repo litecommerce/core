@@ -14,6 +14,7 @@ XLite\Model\Order:
     total: 20.7599
     subtotal: 17.99
     date: 1283939344
+    currency: { code: USD }
     status: P
     taxes: 'a:1:{s:3:"Tax";s:4:"0.00";}'
     payment_transactions: [{ payment_method: { service_name: MoneyOrdering }, method_name: MoneyOrdering, method_local_name: 'Money Ordering', status: S, value: 20.7599, type: sale, note: '' }]
@@ -37,6 +38,7 @@ XLite\Model\Order:
     total: 121.1137
     subtotal: 116.91
     date: 1283867845
+    currency: { code: USD }
     status: C
     taxes: 'a:1:{s:3:"Tax";s:4:"0.00";}'
     payment_transactions: [{ payment_method: { service_name: MoneyOrdering }, method_name: MoneyOrdering, method_local_name: 'Money Ordering', status: S, value: 121.1137, type: sale, note: '' }]
