@@ -105,6 +105,18 @@ abstract class AQueryBuilder extends \Doctrine\ORM\QueryBuilder
     }
 
     /**
+     * Get iterator
+     * 
+     * @return \Iterator
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function iterate()
+    {
+        return $this->getQuery()->iterate();
+    }
+
+    /**
      * Execute query
      * 
      * @return mixed
