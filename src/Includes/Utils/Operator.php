@@ -166,8 +166,7 @@ abstract class Operator extends \Includes\Utils\AUtils
      */
     public static function showMessage($message)
     {
-        static::flush($message, true, 'document.write(\'' . $message . '\');');
-        static::flush(LC_EOL);
+        static::flush($message, true, 'document.write(\'<div class="service-message">' . $message . '</div>\');');
     }
 
     /**

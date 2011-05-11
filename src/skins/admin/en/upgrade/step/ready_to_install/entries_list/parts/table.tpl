@@ -13,9 +13,9 @@
  * @ListChild (list="upgrade.step.ready_to_install.entries_list.sections", weight="100")
  *}
 
-<table cellspacing="0" cellpadding="0" border="1">
-  <tr>{displayInheritedViewListContent(#sections.table.header#)}</tr>
-  <tr FOREACH="getUpgradeEntries(),entry">
+<table class="downloaded-components">
+  <tr class="header">{displayInheritedViewListContent(#sections.table.header#)}</tr>
+  <tr class="module-entry" FOREACH="getUpgradeEntries(),entry">
     {displayInheritedViewListContent(#sections.table.columns#,_ARRAY_(#entry#^entry))}
   </tr>
 </table>
