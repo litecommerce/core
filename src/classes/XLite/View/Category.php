@@ -55,6 +55,7 @@ class Category extends \XLite\View\AView
     {
         $result = parent::getAllowedTargets();
         $result[] = 'category';
+        $result[] = 'main';
     
         return $result;
     }

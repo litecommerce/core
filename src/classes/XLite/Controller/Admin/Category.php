@@ -47,9 +47,7 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
     public function getPages()
     {
         return array(
-            'category_modify' => ($this->getCategory()->getCategoryId())
-                ? 'Modify category'
-                : 'Add new category',
+            'category_modify' => ($this->getCategory()->getCategoryId()) ? 'Modify category' : 'Add new category'
         );
     }
 
@@ -106,6 +104,13 @@ class Category extends \XLite\Controller\Admin\Base\Catalog
      */
     protected function getLocation()
     {
+        if (
+            'modify' == \XLite\Core\Request::getInstance()->mode 
+            && $this->getRootCategoryId() == $this->getCategoryId()
+        ) {
+            $this->addLocationNode($this->t('Root category'));
+        }
+
         return ('add_child' === \XLite\Core\Request::getInstance()->mode) 
             ? $this->t('Add category')
             : $this->t('Details');

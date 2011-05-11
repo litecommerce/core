@@ -66,7 +66,7 @@
       <td><widget class="\XLite\View\FormField\Textarea\Advanced" fieldName="description" cols="50" rows="10" value="{category.description}" /></td>
     </tr>
 
-    <tr>
+    <tr IF="!getRootCategoryId()=category.getCategoryId()">
       <td>{if:category.hasImage()}<img src="{category.image.getURL()}" alt="" />{else:}<img src="images/no_image.png" alt="" />{end:}</td>
       <td>&nbsp;</td>
       <td valign="bottom" rowspan=2>
@@ -74,12 +74,12 @@
       </td>
     </tr>
 
-    <tr>
+    <tr IF="!getRootCategoryId()=category.getCategoryId()">
       <td valign="top">Image</td>
       <td>&nbsp;</td>
     </tr>
 
-    <tr>
+    <tr IF="!getRootCategoryId()=category.getCategoryId()">
       <td>Membership</td>
       <td class="star">*</td>
       <td>
@@ -87,7 +87,7 @@
       </td>  
     </tr>
 
-    <tr>
+    <tr IF="!getRootCategoryId()=category.getCategoryId()">
       <td>Availability</td>
       <td class="star">*</td>
       <td>
@@ -116,7 +116,7 @@
       <td><input type="text" name="meta_desc" value="{category.meta_desc}" size="50" /></td>
     </tr>
 
-    <tr>
+    <tr IF="!getRootCategoryId()=category.getCategoryId()">
       <td>Clean URL </td>
       <td>&nbsp;</td>
       <td><input type="text" name="clean_url" value="{category.clean_url}" size="50" /></td>
@@ -128,7 +128,7 @@
 
     <tr>
       <td colspan="3">
-        {if:getRequestParamValue(#mode#)=#modify#}
+        {if:category.getCategoryId()}
           <widget class="\XLite\View\Button\Submit" label="Update" />
         {else:}
           <widget class="\XLite\View\Button\Submit" label="Create category" />
@@ -140,7 +140,7 @@
 
 </form>
 
-{if:category.category_id}
+{if:category.category_id&!getRootCategoryId()=category.getCategoryId()}
 <br /><br /><br />
 
 <b>Change category location</b>
