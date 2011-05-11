@@ -389,4 +389,17 @@ class Module extends \XLite\Module\CDev\DrupalConnector\Drupal\ADrupal
             )
         );
     }
+
+    /**
+     * Run cron tasks 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function runCronTasks()
+    {
+        $cron = new \XLite\Controller\Console\Cron;
+        $cron->runTasksDirect();
+    }
 }

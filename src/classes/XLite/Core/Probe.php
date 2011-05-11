@@ -47,7 +47,7 @@ class Probe extends \XLite\Base\Singleton
     {
         if ($this->checkAccess()) {
 
-            set_time_limit(0);;
+            set_time_limit(0);
 
             $measure = new \XLite\Model\Measure;
             $measure->setDate(time());
@@ -76,7 +76,7 @@ class Probe extends \XLite\Base\Singleton
 
         $data = '';
         $row = file_get_contents(__FILE__);
-        while ($length > strlen($data)) {
+        while (strlen($data) < $length) {
             $data .= $row;
         }
         $data = substr($data, 0, $length);
@@ -107,7 +107,7 @@ class Probe extends \XLite\Base\Singleton
     protected function measureDatabase()
     {
         $data = '';
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; 10 > $i; $i++) {
             $data .= md5(microtime(true) * 1000000);
         }
 
@@ -130,12 +130,16 @@ class Probe extends \XLite\Base\Singleton
 
         $connection->executeQuery('TRUNCATE `' . $table . '`');
 
-        for ($i = 0; $i < 1000; $i++) {
-            $connection->executeQuery('INSERT INTO `' . $table . '` (`data`, `text`) VALUES (?, ?)', array($miniRow, $row));
+        for ($i = 0; 1000 > $i; $i++) {
+            $connection->executeQuery(
+                'INSERT INTO `' . $table . '` (`data`, `text`) VALUES (?, ?)', array($miniRow, $row)
+            );
         }
 
         $connection->executeQuery('SELECT BENCHMARK(1000, (SELECT AVG(id) FROM `' . $table . '`))' . $table);
-        $connection->executeQuery('SELECT BENCHMARK(1000, (SELECT MAX(id) FROM `' . $table . '` WHERE data LIKE \'%executeQuery%\'))' . $table);
+        $connection->executeQuery(
+            'SELECT BENCHMARK(1000, (SELECT MAX(id) FROM `' . $table . '` WHERE data LIKE \'%executeQuery%\'))' . $table
+        );
 
         return microtime(true) - $time - $emptyTime;
     }
@@ -151,10 +155,10 @@ class Probe extends \XLite\Base\Singleton
     {
         $time = microtime(true);
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; 20 > $i; $i++) {
             $data = array();
             mt_srand(microtime(true) * 1000);
-            for ($n = 0; $n < 10000; $n++) {
+            for ($n = 0; 10000 > $n; $n++) {
                 $data[] = mt_rand(0, 1000);
             }
 
@@ -178,7 +182,7 @@ class Probe extends \XLite\Base\Singleton
      */
     protected function checkAccess()
     {
-        return $this->checkWebAccess() || $this->checkCLIAccess();
+        return $this->checkWebAccess() || $this->checkCLIAccess() || $this->checkCronAccess();
     }
 
     /**
@@ -210,4 +214,17 @@ class Probe extends \XLite\Base\Singleton
             && !empty($_SERVER['argv'][1])
             && $_SERVER['argv'][1] == \XLite\Core\Config::getInstance()->General->probe_key;
     }
+
+    /**
+     * Check CLI access
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function checkCronAccess()
+    {
+        return \XLite::getController() instanceof \XLite\Controller\Console\Cron;
+    }
+
 }

@@ -68,6 +68,9 @@ abstract class AConsole extends \XLite\Controller\AController
             print ($this->getHelp());
 
         } else {
+
+            set_time_limit(0);
+
             $this->actionTime = microtime(true);
             parent::handleRequest();
 

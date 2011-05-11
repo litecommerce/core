@@ -40,7 +40,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'remember', 'remind', 'link', 'concat','split', 'round', 'depack', 'upload', 'hydrate', 'unload',
 		'download', 'deploy', 'construct', 'retrieve', 'print', 'increase', 'decrease', 'sum',
 		'drop', 'list', 'reverse', 'rand', 'extract', 'wake', 'sleep', 'mkdir', 'unlink', 'copy', 'chmod',
-		'complete', 'manage', 'upgrade',
+		'complete', 'manage', 'upgrade', 'measure',
 
 		// FIXME - rename later
 		'processed', 'checked', 'declined', 'queued', 'unchecked', 'checkout', 'display404',

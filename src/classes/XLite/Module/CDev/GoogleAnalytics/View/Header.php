@@ -71,6 +71,7 @@ class Header extends \XLite\View\AView
         }
 
         $list[] = '\'_trackPageview\'';
+        $list[] = '\'_trackPageLoadTime\'';
 
         $controller = \XLite::getController();
 
