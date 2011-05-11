@@ -12,13 +12,11 @@
  *}
 <p align="justify">{t(#This section displays order placement statistics.#)}</p>
 
-<widget class="XLite\View\Order\Statistics\CurrencySelector" />
-
 <br /><br />
 
 <table class="data-table order-statistics">
   <tr class="TableHead">
-    <th class="title">&nbsp;</th>
+    <th class="title"><widget class="XLite\View\Order\Statistics\CurrencySelector" /></th>
     <th FOREACH="getStatsColumns(),c">{getColumnTitle(c)}</th>
   </tr>
   <tr FOREACH="getStats(),idx,row" class="dialog-box{if:isTotalsRow(idx)} totals{end:}">
