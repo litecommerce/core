@@ -88,6 +88,11 @@
 
 </table>
 
+<widget IF="getRootCategoryId()=category.getCategoryId()" class="\XLite\View\Button\Regular" id="modify-root" label="Modify root category" jsCode="self.location='{buildURL(#category#,##,_ARRAY_(#category_id#^getRootCategoryId(),#mode#^#modify#))}'" />
+
+<br />
+<br />
+
 <form name="CategoryForm" method="post" action="admin.php">
 
   <input type="hidden" name="target" value="categories" />
