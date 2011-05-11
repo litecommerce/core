@@ -36,6 +36,22 @@ namespace XLite\View\Upgrade\Step\ReadyToInstall;
  */
 abstract class AReadyToInstall extends \XLite\View\Upgrade\Step\AStep
 {
+    
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = self::getDir() . '/css/style.css';
+        
+        return $list;
+    }
+    
     /**
      * Get directory where template is located (body.tpl)
      *
@@ -45,7 +61,7 @@ abstract class AReadyToInstall extends \XLite\View\Upgrade\Step\AStep
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'ready_to_install';
+        return parent::getDir() . '/ready_to_install';
     }
 
     /**

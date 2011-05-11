@@ -47,7 +47,7 @@ class Buttons extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToInstall
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'buttons';
+        return parent::getDir() . '/buttons';
     }
 
     /**
