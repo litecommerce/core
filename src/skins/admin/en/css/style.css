@@ -1040,6 +1040,8 @@ table.order-statistics td {
   white-space: normal;
 }
 
+
+table.order-statistics th.title,
 table.order-statistics td.title {
   text-align: left;
 }
@@ -1056,6 +1058,10 @@ table.top-sellers td {
   white-space: normal;
   padding-top: 6px;
   padding-bottom: 6px;
+}
+
+table.top-sellers th.title {
+  text-align: left;
 }
 
 /* Upgrade core block TODO: move it to separated widget */
