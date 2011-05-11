@@ -832,7 +832,22 @@ class Marketplace extends \XLite\Base\Singleton
      */
     protected function validateResponseForGetHostingScoreAction(array $data)
     {
-        return isset($data['score']) && is_scalar($data['score']) && ctype_digit($data['score']);
+        $result = true;
+
+        foreach ($data as $row) {
+            if (
+                !is_array($row)
+                || !empty($row['name'])
+                || !isset($row['score'])
+                || !ctype_digit($row['score'])
+                || (isset($row['link']) && !is_string($row['link']))
+            ) {
+                $result = false;
+                break;
+            }
+        }
+
+        return $result;
     }
 
     // {{{ Common methods to send request to marketplace
