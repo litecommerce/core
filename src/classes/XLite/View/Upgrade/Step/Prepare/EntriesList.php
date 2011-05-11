@@ -86,8 +86,6 @@ class EntriesList extends \XLite\View\Upgrade\Step\Prepare\APrepare
      */
     protected function getEntryRowCSSClass(\XLite\Upgrade\Entry\AEntry $entry)
     {
-        return $this->isModule($entry)
-            ? 'module-entry'
-            : 'core-entry';
+        return $this->isModule($entry) ? 'module-entry' : 'core-entry';
     }
 }

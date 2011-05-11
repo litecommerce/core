@@ -46,7 +46,7 @@ abstract class APrepare extends \XLite\View\Upgrade\Step\AStep
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-        // Must be called from this class.
+        // Must be called from this class
         $list[] = self::getDir() . '/css/style.css';
 
         return $list;
@@ -85,6 +85,8 @@ abstract class APrepare extends \XLite\View\Upgrade\Step\AStep
      */
     protected function isVisible()
     {
-        return parent::isVisible() && !\XLite\Upgrade\Cell::getInstance()->isUnpacked();
+        return parent::isVisible() 
+            && !\XLite\Upgrade\Cell::getInstance()->isUnpacked()
+            && !\XLite\Upgrade\Cell::getInstance()->isUpgraded();
     }
 }
