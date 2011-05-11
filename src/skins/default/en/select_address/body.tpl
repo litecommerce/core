@@ -17,6 +17,7 @@
     <ul class="addresses">
       <li FOREACH="getAddresses(),address" class="{getItemClassName(address,addressArrayPointer)}">
         <widget template="checkout/parts/address.plain.tpl" address="{address}" />
+        <a class="remove" href="{buildURL(#checkout#,#removeAddress#,_ARRAY_(#id#^address.getAddressId()))}" title="{t(#Remove#)}"><img src="images/spacer.gif" alt="" /></a>
         <div IF="address.getIsShipping()" class="shipping"></div>
         <div IF="address.getIsBilling()" class="billing"></div>
       </li>
