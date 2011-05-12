@@ -163,6 +163,21 @@ input.input-file {
   font-size: 14px;
 }
 
+/* Hide the dotted outline */
+input[type="submit"]::-moz-focus-inner,   /* FireFox */
+input[type="button"]::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+button::-moz-focus-inner
+{
+  border : 0px;
+}
+input[type="submit"]:focus,               /* IE8 */
+input[type="button"]:focus,
+input[type="reset"]:focus,
+button:focus
+{
+  outline : none;
+}
 
 /**
  * Layout
@@ -741,6 +756,63 @@ button.invert:hover
   background-image: url(../images/button_bg_blue_hover.png);
 }
 
+/* Big button */
+
+button.action,
+button.bright
+{
+  font-size: 14px;
+  padding: 6px 20px 6px;
+  height: 36px;
+  -moz-border-radius: 19px;
+  -webkit-border-radius: 19px;
+  border-radius: 19px;
+}
+
+button.action span {
+  font-size: 15px;
+}
+
+button.bright span {
+  font-size: 19px;
+  color: white;
+}
+
+button.action
+{
+  background-image: url(../images/button.png);
+}
+
+button.bright
+{
+  border-style: none;
+  padding: 5px 17px 5px;
+  height: 36px;
+  background-image: url(../images/button-bright.png);
+}
+
+button.bright:hover
+{
+  background-position: center -36px;
+}
+
+button.bright:active
+{
+  background-position: center -72px;
+}
+
+/* Fade */
+.right-fade {
+  background: transparent url(../images/right_fade.png) repeat-y right top;
+  display: block;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 20px;
+  height: 100%;
+}
+
+
 /**
  * jQueryUI-based wait box 
  */
@@ -1062,6 +1134,114 @@ table.top-sellers td {
 
 table.top-sellers th.title {
   text-align: left;
+}
+
+/**
+ * Benchmark summary
+ */
+.summary-box {
+  border: 1px solid #e9e9e9; 
+  background-color: #f7f7f7;
+  padding: 5px;
+}
+
+.summary-box-content {
+  background-color: #fff;
+  padding: 13px 16px;
+  padding-bottom: 17px;
+}
+
+.benchmark-summary {
+  width: 348px;
+}
+
+.summary-box-content p {
+  font-size: 15px; 
+}
+
+.benchmark-summary .buttons {
+  margin-top: 7px;
+}
+
+.benchmark-summary .help {
+  text-decoration: underline;
+  float: right;
+  margin-top: 19px;
+}
+
+.benchmark-summary .completed,
+.benchmark-summary .compare
+{
+  font-size: 17px;
+}
+
+.benchmark-summary .completed .score {
+  color: #9d2307;
+  font-size: 22px;
+}
+
+.benchmark-summary .date {
+  font-size: 12px;
+  color: #8f8f8f;
+  padding-left: 3px;
+  padding-top: 2px;
+}
+
+.benchmark-summary .buttons-rerun {
+  margin-top: 3px;
+}
+
+.benchmark-summary .buttons-rerun .help {
+  margin-top: 14px;
+}
+
+.benchmark-summary hr {
+  color: #e5e5e5;
+  margin-top: 3px;
+}
+
+.benchmark-summary .compare {
+  padding-top: 6px;
+}
+
+.benchmark-summary .mark {
+  color: #238cd6;
+  vertical-align: top;
+}
+
+.benchmark-summary li {
+  padding: 11px 0px;
+  vertical-align: middle;
+}
+
+.benchmark-summary li * {
+  vertical-align: middle;
+}
+
+.benchmark-summary li,
+.benchmark-summary li span
+{
+  font-size: 15px;
+}
+
+.benchmark-summary li span.name {
+  display: inline-block;
+  position: relative;
+  width: 132px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.benchmark-summary ul a {
+  text-decoration: underline;
+}
+
+.benchmark-summary li span.score {
+  color: #338d0f;
+}
+
+.benchmark-summary .note {
+  color: #456583;
 }
 
 /* Upgrade core block TODO: move it to separated widget */

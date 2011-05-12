@@ -54,3 +54,5 @@
 <widget class="\XLite\View\Form" name="low_inventory" formName="low_inventory" formAction="updateInventoryProducts" formTarget="main" />
   <widget class="\XLite\View\ItemsList\Product\Admin\LowInventory" />
 <widget name="low_inventory" end />
+
+<widget class="\XLite\View\BenchmarkSummary" />
