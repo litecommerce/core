@@ -13,4 +13,4 @@
  * @ListChild (list="upgrade.step.ready_to_install.entries_list.sections.table.columns", weight="300")
  *}
 
-<td>{entry.getVersionNew()}</td>
+<td class="version-new">{entry.getVersionNew()}</td>

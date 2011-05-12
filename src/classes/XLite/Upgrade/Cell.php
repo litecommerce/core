@@ -97,6 +97,15 @@ class Cell extends \XLite\Base\Singleton
      */
     protected $errorMessages;
 
+    /**
+     * Flag to determine if upgrade is already performed 
+     * 
+     * @var   boolean
+     * @see   ____var_see____
+     * @since 1.0.0
+     */
+    protected $isUpgraded = false;
+
 
     // {{{ Public methods
 
@@ -176,12 +185,13 @@ class Cell extends \XLite\Base\Singleton
      * Method to clean up cell
      * 
      * @param boolean $clearCoreVersion Flag OPTIONAL
+     * @param boolean $collectEntries   Flag OPTIONAL
      *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function clear($clearCoreVersion = true)
+    public function clear($clearCoreVersion = true, $collectEntries = true)
     {
         foreach ($this->getEntries() as $entry) {
             $entry->clear();
@@ -189,12 +199,15 @@ class Cell extends \XLite\Base\Singleton
 
         $this->entries = array();
         $this->incompatibleModules = array();
+        $this->isUpgraded = false;
 
         if ($clearCoreVersion) {
             $this->setCoreVersion(null);
         }
 
-        $this->collectEntries();
+        if ($collectEntries) {
+            $this->collectEntries();
+        }
     }
 
     /**
@@ -360,20 +373,9 @@ class Cell extends \XLite\Base\Singleton
     {
         \XLite\Core\TmpVars::getInstance()->{self::CELL_NAME} = array(
             $this->entries,
-            $this->incompatibleModules
+            $this->incompatibleModules,
+            $this->isUpgraded,
         );
-    }
-
-    /**
-     * Names of variables to serialize
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function __sleep()
-    {
-        return array('entries', 'coreVersion', 'coreVersions', 'incompatibleModules');
     }
 
     /**
@@ -390,11 +392,12 @@ class Cell extends \XLite\Base\Singleton
         // Upload addons info into the database
         \XLite\Core\Marketplace::getInstance()->saveAddonsList($this->getCacheTTL());
 
-        list($entries, $incompatibleModules) = \XLite\Core\TmpVars::getInstance()->{self::CELL_NAME};
+        list($entries, $incompatibleModules, $isUpgraded) = \XLite\Core\TmpVars::getInstance()->{self::CELL_NAME};
 
         if (is_array($entries)) {
             $this->entries = array_merge($this->entries, $entries);
             $this->incompatibleModules = $this->incompatibleModules + (array) $incompatibleModules;
+            $this->isUpgraded = !empty($isUpgraded);
 
         } else {
             $this->collectEntries();
@@ -426,9 +429,12 @@ class Cell extends \XLite\Base\Singleton
      */
     protected function collectEntries()
     {
-        // :NOTE: do not change call order!
-        $this->checkForCoreUpgrade();
-        $this->checkForModulesUpgrade();
+        if (!$this->isUpgraded()) {
+
+            // :NOTE: do not change call order!
+            $this->checkForCoreUpgrade();
+            $this->checkForModulesUpgrade();
+        }
     }
 
     /**
@@ -610,13 +616,13 @@ class Cell extends \XLite\Base\Singleton
     /**
      * Check if upgrade is already performed
      * 
-     * @return void
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function isUpgraded()
     {
-        return false;
+        return $this->isUpgraded;
     }
 
     /**
@@ -720,6 +726,11 @@ class Cell extends \XLite\Base\Singleton
 
         foreach ($this->getEntries() as $entry) {
             $result = $entry->upgrade($isTestMode, $filesToOverwrite) && $result;
+        }
+
+        if (!$isTestMode) {
+            $this->clear(true, false);
+            $this->isUpgraded = true;
         }
 
         return $result;

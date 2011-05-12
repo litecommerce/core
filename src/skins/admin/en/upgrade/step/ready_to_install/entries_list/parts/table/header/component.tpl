@@ -13,4 +13,4 @@
  * @ListChild (list="upgrade.step.ready_to_install.entries_list.sections.table.header", weight="100")
  *}
 
-<th>{t(#Component#)}</th>
+<th class="module-info-header">{t(#Component#)}</th>

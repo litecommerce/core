@@ -48,7 +48,7 @@ define('LC_OS_IS_WIN', LC_OS_CODE === 'win');
 define('LC_SESSION_TYPE', 'Sql');
 
 // Common end-of-line
-define('LC_EOL', 'cli' == PHP_SAPI ? "\n" : "<br />\n");
+define('LC_EOL', "\n");
 
 set_include_path(
     get_include_path()

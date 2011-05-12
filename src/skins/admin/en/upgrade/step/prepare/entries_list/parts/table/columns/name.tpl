@@ -15,5 +15,5 @@
 
 <td class="module-info">
   <span class="name">{entry.getName()}</span>
-  <span class="author">({entry.getAuthor()})</span>
+  <span class="author">({t(#by#)} {entry.getAuthor()})</span>
 </td>

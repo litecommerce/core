@@ -47,7 +47,7 @@ class EntriesList extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToInstal
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'entries_list';
+        return parent::getDir() . '/entries_list';
     }
 
     /**
