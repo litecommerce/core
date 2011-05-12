@@ -52,7 +52,9 @@ class Measure extends \XLite\Model\Repo\ARepo
             ->getArrayResult();
         $result = reset($result);
 
-        return $result['fsTime'] + $result['dbTime'] + $result['cpuTime'];
+        return $result
+            ? $result['fsTime'] + $result['dbTime'] + $result['cpuTime']
+            : 0;
     }
 
     /**
@@ -69,7 +71,7 @@ class Measure extends \XLite\Model\Repo\ARepo
             ->getArrayResult();
         $result = reset($result);
 
-        return $result['time'];
+        return $result ? $result['time'] : 0;
     }
 
     /**
@@ -86,7 +88,7 @@ class Measure extends \XLite\Model\Repo\ARepo
             ->getArrayResult();
         $result = reset($result);
 
-        return $result['time'];
+        return $result ? $result['time'] : 0;
     }
 
     /**
@@ -103,8 +105,23 @@ class Measure extends \XLite\Model\Repo\ARepo
             ->getArrayResult();
         $result = reset($result);
 
-        return $result['time'];
+        return $result ? $result['time'] : 0;
     }
 
+    /**
+     * Get last date 
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getLastDate()
+    {
+        $result = $this->createQueryBuilder('m')
+            ->orderBy('m.date', 'desc')
+            ->getSingleResult();
+
+        return $result ? $result->getDate() : null;
+    }
 }
 

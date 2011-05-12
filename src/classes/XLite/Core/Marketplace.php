@@ -804,7 +804,13 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function getHostingScore($ttl = self::TTL_LONG)
     {
-        return $this->sendRequestToMarkeplace(self::ACTION_GET_HOSTING_SCORE);
+        $result = $this->performActionWithTTL($ttl, self::ACTION_GET_HOSTING_SCORE);
+
+        if (self::TTL_NOT_EXPIRED !== $result) {
+            $this->clearUpgradeCell();
+        }
+
+        return $result;
     }
 
     /**
