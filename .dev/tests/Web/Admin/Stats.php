@@ -76,7 +76,7 @@ class XLite_Web_Admin_Stats extends XLite_Web_Admin_AAdmin
         foreach ($headers as $k => $title) {
 
             $this->assertElementPresent(
-                "//table[@class='data-table']" .
+                "//table[@class='data-table order-statistics']" .
                 "/tbody" .
                 "/tr[@class='TableHead']" .
                 "/th[text()='" . $title . "']", 
@@ -91,7 +91,7 @@ class XLite_Web_Admin_Stats extends XLite_Web_Admin_AAdmin
         foreach ($rows as $k => $title) {
             $totalsClass = \XLite\Controller\Admin\OrdersStats::getInstance()->isTotalsRow($k) ? ' totals' : '';
             $this->assertElementPresent(
-                "//table[@class='data-table']" .
+                "//table[@class='data-table order-statistics']" .
                 "/tbody" .
                 "/tr[@class='dialog-box" . $totalsClass. "']" .
                 "/td[text()='" . addslashes($title) . "']", 
@@ -166,7 +166,7 @@ class XLite_Web_Admin_Stats extends XLite_Web_Admin_AAdmin
         foreach ($headers as $k => $title) {
 
             $this->assertElementPresent(
-                "//table[@class='data-table']" .
+                "//table[@class='data-table top-sellers']" .
                 "/tbody" .
                 "/tr[@class='TableHead']" .
                 "/th[text()='" . $title . "']", 
@@ -181,7 +181,7 @@ class XLite_Web_Admin_Stats extends XLite_Web_Admin_AAdmin
         foreach ($rows as $k => $title) {
 
             $this->assertElementPresent(
-                "//table[@class='data-table']" .
+                "//table[@class='data-table top-sellers']" .
                 "/tbody" .
                 "/tr[@class='dialog-box']" .
                 "/td[text()='" . addslashes($k+1 . '.') . "']", 
