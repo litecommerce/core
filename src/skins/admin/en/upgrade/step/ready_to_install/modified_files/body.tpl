@@ -11,9 +11,17 @@
  * @since     1.0.0
  *}
 
-<div FOREACH="getCustomFiles(),entry,files">
-  <div FOREACH="files,file,status">
-    <input type="checkbox" value="{#1#}" checked="{status}" name="toOverwrite[{file}]" />
-    {file}
+<div class="modified-files-section">
+<div class="modified-files-section-frame">
+  
+  <div class="modified-files-group" FOREACH="getCustomFiles(),entry,files">
+    <div class="modified-file" FOREACH="files,file,status">
+      <label>
+      <input type="checkbox" value="{#1#}" checked="{status}" name="toOverwrite[{file}]" />
+      {file}
+      </label>
+    </div>
   </div>
+  
+</div>
 </div>

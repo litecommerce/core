@@ -45,7 +45,7 @@ class ModifiedFiles extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToInst
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'modified_files';
+        return parent::getDir() . '/modified_files';
     }
 
     /**

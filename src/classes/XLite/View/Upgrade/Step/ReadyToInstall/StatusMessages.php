@@ -47,7 +47,7 @@ class StatusMessages extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToIns
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'status_messages';
+        return parent::getDir() . '/status_messages';
     }
 
     /**

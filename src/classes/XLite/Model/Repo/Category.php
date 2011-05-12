@@ -664,23 +664,26 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function updateQuickFlags(\XLite\Model\Category $entity, array $flags)
     {
-        $quickFlags = $entity->getQuickFlags();
+        if ($entity) {
 
-        if (is_object($quickFlags)) {
+            $quickFlags = $entity->getQuickFlags();
 
-            foreach ($flags as $name => $delta) {
+            if (is_object($quickFlags)) {
 
-                $name = \XLite\Core\Converter::convertToCamelCase($name);
+                foreach ($flags as $name => $delta) {
 
-                $value = $quickFlags->{'get' . $name}();
+                    $name = \XLite\Core\Converter::convertToCamelCase($name);
 
-                $quickFlags->{'set' . $name}($value + $delta);
+                    $value = $quickFlags->{'get' . $name}();
+
+                    $quickFlags->{'set' . $name}($value + $delta);
+                }
             }
-        }
 
-        // Do not change to $this->update() or $this->performUpdate():
-        // it will cause the unfinite recursion
-        parent::performUpdate($entity);
+            // Do not change to $this->update() or $this->performUpdate():
+            // it will cause the unfinite recursion
+            parent::performUpdate($entity);
+        }
     }
 
 

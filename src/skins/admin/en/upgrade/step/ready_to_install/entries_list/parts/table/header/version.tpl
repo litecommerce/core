@@ -13,4 +13,4 @@
  * @ListChild (list="upgrade.step.ready_to_install.entries_list.sections.table.header", weight="300")
  *}
 
-<th>{t(#Version#)}</th>
+<th class="version">{t(#Version#)}</th>
