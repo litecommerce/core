@@ -36,6 +36,22 @@ namespace XLite\View\Upgrade\Step\ReadyToInstall;
  */
 class ModifiedFiles extends \XLite\View\Upgrade\Step\ReadyToInstall\AReadyToInstall
 {
+    
+    /**
+     * Register JS script to use
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles() 
+    {
+        $list = parent::getJSFiles();
+        $list[] = $this->getDir() . '/js/script.js';
+        
+        return $list;
+    }
+    
     /**
      * Get directory where template is located (body.tpl)
      *

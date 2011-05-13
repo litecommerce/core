@@ -29,7 +29,7 @@ jQuery(document).ready(function(){
   var activeItem = jQuery('li.active', menuObj);
   var selectedTab;
     
-  var homeTab = jQuery('li.menu-item:first').addClass('current');
+//  var homeTab = jQuery('li.menu-item:first').addClass('current');
 
   if (activeItem.length) {
 
@@ -37,7 +37,7 @@ jQuery(document).ready(function(){
 
     if (selectedTab) {
 
-      homeTab.removeClass('current');
+//      homeTab.removeClass('current');
 
       jQuery(selectedTab).addClass('current');
 
