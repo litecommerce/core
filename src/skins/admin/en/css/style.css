@@ -67,7 +67,8 @@ p,
 input,
 span,
 textarea,
-button
+button,
+.formError .formErrorContent
 {
   color: #333;
   font-size: 12px;
@@ -1164,9 +1165,9 @@ table.top-sellers th.title {
 }
 
 .benchmark-summary .help {
-  text-decoration: underline;
   float: right;
   margin-top: 19px;
+  border-bottom: 1px dotted #154e9c;
 }
 
 .benchmark-summary .completed,
@@ -1181,14 +1182,14 @@ table.top-sellers th.title {
 }
 
 .benchmark-summary .date {
-  font-size: 12px;
+  font-size: 11px;
   color: #8f8f8f;
   padding-left: 3px;
   padding-top: 2px;
 }
 
 .benchmark-summary .buttons-rerun {
-  margin-top: 3px;
+  margin-top: 4px;
 }
 
 .benchmark-summary .buttons-rerun .help {
@@ -1196,12 +1197,14 @@ table.top-sellers th.title {
 }
 
 .benchmark-summary hr {
-  color: #e5e5e5;
+  border: 0px none;
+  color: transparent;
+  border-top: 1px solid #e5e5e5;
   margin-top: 3px;
 }
 
 .benchmark-summary .compare {
-  padding-top: 6px;
+  padding-top: 7px;
 }
 
 .benchmark-summary .mark {
@@ -1242,6 +1245,20 @@ table.top-sellers th.title {
 
 .benchmark-summary .note {
   color: #456583;
+}
+
+.measure-help-textformError {
+  margin-top: -9px !important;
+}
+
+.measure-help-textformError .formErrorContent {
+  width: 450px;
+  white-space: pre;
+  line-height: 18px;
+}
+
+.measure-help-textformError .formErrorContent span {
+  line-height: 30px;
 }
 
 /* Upgrade core block TODO: move it to separated widget */

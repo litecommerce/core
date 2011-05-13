@@ -13,5 +13,6 @@
 <p>{t(#Please run the benchmark test in order to estimate your server performance#)}</p>
 <div class="buttons">
   <widget class="\XLite\View\Button\Link" location="{buildURL(#measure#,#measure#)}" label="{t(#Run benchmark#)}" style="action" />
-  <a href="{buildURL(#measure#,#help#)}" class="help">{t(#What is benchmark?#)}</a>
+  <a id="measure-help-text" href="{buildURL(#measure#,#help#)}" class="help">{t(#What is benchmark?#)}</a>
 </div>
+<span class="help-text" style="display: none;">{t(#The benchmark evaluates server environment#):h}</span>
