@@ -39,7 +39,6 @@ class SwitchButton extends \XLite\View\Button\AButton
     /**
      * Several inner constants 
      */
-    const TEMPLATE  = 'button/switch-button.tpl';
     const JS_SCRIPT = 'button/js/switch-button.js';
     const SWITCH_CSS_FILE = 'button/css/switch-button.css';
 
@@ -48,24 +47,6 @@ class SwitchButton extends \XLite\View\Button\AButton
      */
     const PARAM_FIRST  = 'first';
     const PARAM_SECOND = 'second';
-
-
-    /**
-     * Return JS callbacks to use with onclick event
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCallbacks()
-    {
-        return array(
-            'callbacks' => array (
-                'first'  => $this->getParam(self::PARAM_FIRST),
-                'second' => $this->getParam(self::PARAM_SECOND),
-            ),
-        );
-    }
 
     /** 
      * Get a list of JavaScript files required to display the widget properly
@@ -77,7 +58,6 @@ class SwitchButton extends \XLite\View\Button\AButton
     public function getJSFiles()
     {   
         $list = parent::getJSFiles();
-
         $list[] = self::JS_SCRIPT;
 
         return $list;
@@ -93,7 +73,6 @@ class SwitchButton extends \XLite\View\Button\AButton
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = self::SWITCH_CSS_FILE;
 
         return $list;
@@ -108,7 +87,7 @@ class SwitchButton extends \XLite\View\Button\AButton
      */
     protected function getDefaultTemplate()
     {
-        return static::TEMPLATE;
+        return 'button/switch-button.tpl';
     }
 
     /** 
@@ -125,6 +104,23 @@ class SwitchButton extends \XLite\View\Button\AButton
         $this->widgetParams += array(
             self::PARAM_FIRST  => new \XLite\Model\WidgetParam\String('First callback', ''),
             self::PARAM_SECOND => new \XLite\Model\WidgetParam\String('Second callback', ''),
+        );
+    }
+
+    /**
+     * Return JS callbacks to use with onclick event
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getCallbacks()
+    {
+        return array(
+            'callbacks' => array (
+                'first'  => $this->getParam(self::PARAM_FIRST),
+                'second' => $this->getParam(self::PARAM_SECOND),
+            ),
         );
     }
 }

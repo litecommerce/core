@@ -39,12 +39,7 @@ abstract class APopupButton extends \XLite\View\Button\AButton
     /**
      * Several inner constants 
      */
-    const TEMPLATE  = 'button/popup_button.tpl';
-    const CSS_CLASS = 'popup-button';
     const JS_SCRIPT = 'button/js/core.popup_button.js';
-    const URLParams = 'url_params';
-    const POPUP_CSS_FILE = 'button/css/popup.css';
-
 
     /**
      * Return content for popup button
@@ -53,7 +48,7 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      * @see    ____func_see____
      * @since  1.0.0
      */
-    abstract public function getButtonContent();
+    abstract protected function getButtonContent();
 
     /**
      * Return URL parameters to use in AJAX popup
@@ -62,7 +57,7 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      * @see    ____func_see____
      * @since  1.0.0
      */
-    abstract public function prepareURLParams();
+    abstract protected function prepareURLParams();
 
     /**
      * Return array of URL params for JS 
@@ -74,7 +69,7 @@ abstract class APopupButton extends \XLite\View\Button\AButton
     public function getURLParams()
     {
         return array(
-            static::URLParams => $this->prepareURLParams(),
+            'url_params' => $this->prepareURLParams(),
         );
     }
 
@@ -88,7 +83,7 @@ abstract class APopupButton extends \XLite\View\Button\AButton
     public function getJSFiles()
     {   
         $list = parent::getJSFiles();
-        $list[] = static::JS_SCRIPT;
+        $list[] = self::JS_SCRIPT;
 
         return $list;
     }   
@@ -103,7 +98,7 @@ abstract class APopupButton extends \XLite\View\Button\AButton
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-        $list[] = static::POPUP_CSS_FILE;
+        $list[] = 'button/css/popup.css';
 
         return $list;
     }
@@ -134,7 +129,7 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      */
     protected function getDefaultTemplate()
     {
-        return static::TEMPLATE;
+        return 'button/popup_button.tpl';
     }
 
     /** 
@@ -146,6 +141,6 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      */
     protected function getClass()
     {   
-        return static::CSS_CLASS;
+        return 'popup-button';
     }   
 }

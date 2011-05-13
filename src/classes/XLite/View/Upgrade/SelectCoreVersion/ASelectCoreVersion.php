@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru> 
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
@@ -26,34 +26,42 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Button;
+namespace XLite\View\Upgrade\SelectCoreVersion;
 
 /**
- * Upload addons button 
+ * Widget (parent of button and link)
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class UploadAddons extends \XLite\View\Button\PopupButton
+abstract class ASelectCoreVersion extends \XLite\View\Button\APopupButton
 {
     /**
-     *  Several specific constants
+     * Register JS files
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
      */
-    const UPLOAD_ADDONS_LABEL       = 'Upload add-on';
-    const UPLOAD_ADDON_CSS_CLASS    = 'upload-addons';
-    const UPLOAD_ADDONS_WIDGET      = 'XLite\View\ModulesManager\UploadAddons';
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = 'upgrade/select_core_version/js/widget.js';
+
+        return $list;
+    }
 
 
-    /** 
-     * Return content for popup button
+    /**
+     * Return text for button and link
      * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getButtonContent() 
+    protected function getButtonContent()
     {
-        return self::UPLOAD_ADDONS_LABEL;
+        return 'Upgrade available';
     }
 
     /** 
@@ -63,39 +71,25 @@ class UploadAddons extends \XLite\View\Button\PopupButton
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function prepareURLParams()
-    {
-        return array(
-            'target' => \XLite\View\ModulesManager\UploadAddons::UPLOAD_ADDONS_TARGET,
-            'action' => 'view',
-            'widget' => self::UPLOAD_ADDONS_WIDGET,
-        );
-    }
-
-    /** 
-     * Get a list of JavaScript files required to display the widget properly
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getJSFiles()
+    protected function prepareURLParams()
     {   
-        $list = parent::getJSFiles();
-        $list[] = \XLite\View\ModulesManager\UploadAddons::JS_SCRIPT;
-
-        return $list;
-    }
+        return array(
+            'target' => 'upgrade',
+            'action' => 'view',
+            'mode'   => 'select_core_version',
+            'widget' => '\XLite\View\Upgrade\SelectCoreVersion',
+        );  
+    }   
 
     /** 
-     * getClass 
+     * Return CSS classes
      * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function getClass()
-    {
-        return parent::getClass() . ' ' . self::UPLOAD_ADDON_CSS_CLASS;
+    {   
+        return 'upgrade-popup-widget';
     }
 }

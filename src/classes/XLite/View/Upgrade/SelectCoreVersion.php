@@ -38,7 +38,6 @@ namespace XLite\View\Upgrade;
  */
 class SelectCoreVersion extends \XLite\View\Upgrade\AUpgrade
 {
-
     /**  
      * Return list of the modes allowed by default
      * 
@@ -47,9 +46,11 @@ class SelectCoreVersion extends \XLite\View\Upgrade\AUpgrade
      * @since  1.0.0
      */
     protected function getDefaultModes()
-    {    
-        return parent::getDefaultModes()
-            + array('select_core_version');
+    {
+        $list = parent::getDefaultModes();
+        $list[] = 'select_core_version';
+
+        return $list;
     }    
 
     /**
@@ -110,7 +111,6 @@ class SelectCoreVersion extends \XLite\View\Upgrade\AUpgrade
     protected function getCoreVersionsList()
     {
         $result = \XLite\Upgrade\Cell::getInstance()->getCoreVersions();
-
         unset($result[\XLite::getInstance()->getMajorVersion()]);
 
         return $result;

@@ -26,89 +26,68 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\ModulesManager;
+namespace XLite\View\Button\Addon;
 
 /**
- * Addons search and installation widget
- *
+ * Upload addon button 
+ * 
  * @see   ____class_see____
  * @since 1.0.0
- *
- * @ListChild (list="admin.center", zone="admin")
  */
-class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
+class Upload extends \XLite\View\Button\PopupButton
 {
-    /**
-     * Module license widget target 
-     */
-    const MODULE_LICENSE_TARGET = 'addon_install';
-
-    /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = self::MODULE_LICENSE_TARGET;
-    
-        return $result;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = $this->getDir() . '/css/style.css';
-
-        return $list;
-    }
-
-    /**
-     * Register JS files
+    /** 
+     * Get a list of JavaScript files required to display the widget properly
      * 
-     * @return array
+     * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function getJSFiles()
-    {
+    {   
         $list = parent::getJSFiles();
-        $list[] = $this->getDir() . '/js/switch-button.js';
+        $list[] = \XLite\View\ModulesManager\UploadAddons::JS_SCRIPT;
 
         return $list;
     }
 
     /**
-     * Return title
+     * Return content for popup button
      *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getHead()
+    protected function getButtonContent()
     {
-        return 'Install addon';
+        return 'Upload add-on';
     }
 
     /**
-     * Return templates directory name
+     * Return URL parameters to use in AJAX popup
      *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareURLParams()
+    {
+        return array(
+            'target' => \XLite\View\ModulesManager\UploadAddons::UPLOAD_ADDONS_TARGET,
+            'action' => 'view',
+            'widget' => '\XLite\View\ModulesManager\UploadAddons',
+        );
+    }
+
+    /** 
+     * getClass 
+     * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDir()
+    protected function getClass()
     {
-        return parent::getDir() . '/license';
+        return parent::getClass() . ' upload-addons';
     }
 }

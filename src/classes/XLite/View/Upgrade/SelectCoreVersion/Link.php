@@ -34,9 +34,8 @@ namespace XLite\View\Upgrade\SelectCoreVersion;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Link extends \XLite\View\Upgrade\SelectCoreVersion\AWidget
+class Link extends \XLite\View\Upgrade\SelectCoreVersion\ASelectCoreVersion
 {
-
     /**
      * Return widget default template
      *
@@ -44,7 +43,7 @@ class Link extends \XLite\View\Upgrade\SelectCoreVersion\AWidget
      * @see    ____func_see____
      * @since  1.0.0
      */
-    function getDefaultTemplate()
+    protected function getDefaultTemplate()
     {
         return 'upgrade/select_core_version/link.tpl';
     }
