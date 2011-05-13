@@ -29,8 +29,10 @@ CDev/AuthorizeNet
 CDev/Bestsellers
 CDev/DrupalConnector
 CDev/FeaturedProducts
+CDev/GoogleAnalytics
 CDev/ProductOptions
 CDev/Quantum
+CDev/TinyMCE
 "
 
 # LiteCommerce files that must be removed from all distributives
