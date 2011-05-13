@@ -62,7 +62,7 @@ insert_seo_phrases ()
 	# Prepare sed command
 	search_for="protected \$phrases = array();"
 
-	sed_cmd="sed -i '' '/$search_for/ c\\
+	sed_cmd="sed -i $SED_EXT '/$search_for/ c\\
     $REPLACEMENT
 ' $2/classes/XLite/View/PoweredBy.php"
 
@@ -174,7 +174,7 @@ prepare_directory()
 
 #############################################################################
 
-PHP='/usr/local/bin/php -d date.timezone=Europe/Moscow'
+PHP='/usr/bin/env php -d date.timezone=Europe/Moscow'
 
 get_current_time 'START_TIME';
 
@@ -199,6 +199,14 @@ shift $((OPTIND-1));
 
 T=`dirname $0`
 BASE_DIR=`realpath $T`
+
+
+if [ "`uname`" = "Linux" ]; then
+	SED_EXT='';
+else
+	SED_EXT='""';
+fi
+
 
 # Check and include the config file
 if [ "x${CONFIG}" = "x" ]; then
@@ -291,7 +299,7 @@ echo "*** OUTPUT_DIR: $OUTPUT_DIR"
 echo "";
 
 # Prepare output directory
-if [ -d $OUTPUT_DIR -a ! $SAFE_MODE ]; then
+if [ -d "$OUTPUT_DIR" -a ! "$SAFE_MODE" ]; then
 
 	echo "Cleaning the output dir...";
 
@@ -421,8 +429,8 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	for i in ${MODULE_DIRS}; do
 
 		if [ -d $i ]; then
-			find -E $i -depth 2 -type d ! -regex ".*/($modules_list_regexp)" -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
-			find $i -depth 1 -type d -empty -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+			find $i -mindepth 2 -maxdepth 2 -type d ! -regex ".*/($modules_list_regexp)" -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+			find $i -maxdepth 1 -type d -empty -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
 		fi
 	
 	done
@@ -456,8 +464,8 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 #	fi
 
 	# Modify version of release
-	sed -i "" "s/Version, value: xlite_3_0_x/Version, value: '${XLITE_VERSION}'/" sql/xlite_data.yaml
-	sed -i "" "s/define('LC_VERSION', '[^']*'/define('LC_VERSION', '${XLITE_VERSION}'/" Includes/install/install_settings.php
+	sed -i $SED_EXT "s/Version, value: xlite_3_0_x/Version, value: '${XLITE_VERSION}'/" sql/xlite_data.yaml
+	sed -i $SED_EXT "s/define('LC_VERSION', '[^']*'/define('LC_VERSION', '${XLITE_VERSION}'/" Includes/install/install_settings.php
 
 
 	# Save copy of original file PoweredBy.php
@@ -467,7 +475,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	# Patch file PoweredBy.php
 	insert_seo_phrases "$LC_SEO_PHRASES" "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}"
 
-	sed -i "" "/'DrupalConnector', \/\/ Allows to use Drupal CMS as a storefront/d" ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/Includes/install/install_settings.php
+	sed -i $SED_EXT "/'DrupalConnector', \/\/ Allows to use Drupal CMS as a storefront/d" ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/Includes/install/install_settings.php
 
 	$PHP ${BASE_DIR}/../devcode_postprocess.php silentMode=1
 
@@ -511,7 +519,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		echo "Warning! Logo image file $LOGO_IMAGE not found"
 	fi
 
-	sed -i '' -E 's/lc_dir_default = .*/lc_dir_default = .\/modules\/lc_connector\/litecommerce/' modules/lc_connector/lc_connector.info
+	sed -i $SED_EXT 's/lc_dir_default = .*/lc_dir_default = .\/modules\/lc_connector\/litecommerce/' modules/lc_connector/lc_connector.info
 
 	# Restore original file PoweredBy.php from temporary directory
 	cp ${OUTPUT_DIR}/tmp/PoweredBy.php ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/classes/XLite/View/
