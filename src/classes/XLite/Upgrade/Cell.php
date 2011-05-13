@@ -197,7 +197,6 @@ class Cell extends \XLite\Base\Singleton
             $entry->clear();
         }
 
-        $this->entries = array();
         $this->incompatibleModules = array();
         $this->isUpgraded = false;
 
@@ -206,6 +205,7 @@ class Cell extends \XLite\Base\Singleton
         }
 
         if ($collectEntries) {
+            $this->entries = array();
             $this->collectEntries();
         }
     }

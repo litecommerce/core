@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Entry new version 
+ * Hard reset
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,8 +10,10 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="upgrade.step.ready_to_install.entries_list.sections.table.columns", weight="300")
- * @ListChild (list="upgrade.step.completed.entries_list.sections.table.columns", weight="300")
+ * @ListChild (list="upgrade.step.completed.backup.actions", weight="300")
  *}
 
-<td class="new-version">{entry.getVersionNew()}</td>
+<div>
+  <img src="" alt="{t(#Restore backup#)}"></img>
+  {t(#Restore last backup#)} ({t(#should be performed manually#)})
+</div>
