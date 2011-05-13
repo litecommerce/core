@@ -9,6 +9,7 @@
  * @version   GIT: $Id$
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
+ *
  * @ListChild (list="top_links.drupal_storefront", weight="100")
  *}
 <li IF="hasDrupalURL()"><a href="{getDrupalURL()}">{t(#Drupal frontend#)}</a></li>

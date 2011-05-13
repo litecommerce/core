@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * The "Component" column header
+ * Hard reset
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,8 +10,10 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="upgrade.step.ready_to_install.entries_list.sections.table.header", weight="100")
- * @ListChild (list="upgrade.step.completed.entries_list.sections.table.header", weight="100")
+ * @ListChild (list="upgrade.step.completed.backup.actions", weight="200")
  *}
 
-<th class="module-info-header">{t(#Component#)}</th>
+<div>
+  <img src="" alt="{t(#Hard reset#)}"></img>
+  {t(#Disable all modules in the system#)} (<a href="#">{t(#hard reset#)}</a>)
+</div>

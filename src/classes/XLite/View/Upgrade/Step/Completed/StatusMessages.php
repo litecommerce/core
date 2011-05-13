@@ -29,14 +29,14 @@
 namespace XLite\View\Upgrade\Step\Completed;
 
 /**
- * Backup 
+ * StatusMessages
  * 
  * @see   ____class_see____
  * @since 1.0.0
  *
- * @ListChild (list="admin.center", weight="100", zone="admin")
+ * @ListChild (list="admin.center", weight="300", zone="admin")
  */
-class Backup extends \XLite\View\Upgrade\Step\Completed\ACompleted
+class StatusMessages extends \XLite\View\Upgrade\Step\Completed\ACompleted
 {
     /**
      * Get directory where template is located (body.tpl)
@@ -47,7 +47,7 @@ class Backup extends \XLite\View\Upgrade\Step\Completed\ACompleted
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'backup';
+        return parent::getDir() . '/status_messages';
     }
 
     /**
@@ -59,35 +59,30 @@ class Backup extends \XLite\View\Upgrade\Step\Completed\ACompleted
      */
     protected function getListName()
     {
-        return parent::getListName() . '.backup';
+        return parent::getListName() . '.status_messages';
     }
 
     /**
-     * Return title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHead()
-    {
-        return 'Do not close this page!';
-    }
-
-    /**
-     * Info message
+     * Check widget visibility 
      * 
-     * @return string
+     * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDescription()
+    protected function isVisible()
     {
-        return static::t(
-            'The upgrade is completed. Please, do not close this page until you check '
-            . '<a href="{{url}}">your web site</a> and check that everything works properly. '
-            . 'If there are some critical errors occured you can do the following',
-            array('url' => \Includes\Utils\URLManager::getShopURL())
-        );
+        return parent::isVisible() && (bool) $this->getStatusMessages();
+    }
+
+    /**
+     * Return list of messages
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getStatusMessages()
+    {
+        return \XLite\Upgrade\Cell::getInstance()->getErrorMessages();
     }
 }

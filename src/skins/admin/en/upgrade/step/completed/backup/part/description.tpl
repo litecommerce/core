@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Entry pack size
+ * Backup mesaage
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,7 +10,10 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *
- * @ListChild (list="upgrade.step.ready_to_install.entries_list.sections.table.columns", weight="400")
+ * @ListChild (list="upgrade.step.completed.backup.sections", weight="100")
  *}
 
-<td class="size">{formatFileSize(entry.getPackSize())}</td>
+{* :NOTE: message is already translated *}
+<div>{getDescription()}</div>
+
+{displayInheritedViewListContent(#actions#)}

@@ -11,6 +11,7 @@
  * @since     1.0.0
  *
  * @ListChild (list="upgrade.step.ready_to_install.entries_list.sections.table.columns", weight="200")
+ * @ListChild (list="upgrade.step.completed.entries_list.sections.table.columns", weight="200")
  *}
 
 <td IF="entry.isValid()" class="status enabled"></td>
