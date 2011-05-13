@@ -101,11 +101,12 @@
 }
 
 #topMenu ul ul li.home > a img {
-  background: url("../images/icon_home.png") no-repeat left top;
+  background: url(../images/icon_home.png) no-repeat left top;
   margin-top: 11px;
 }
 
-#topMenu ul ul li.current > a
+#topMenu ul ul li.current > a,
+  #topMenu ul ul li.active > a
 {
   color: #333;
   background-color: #fff;

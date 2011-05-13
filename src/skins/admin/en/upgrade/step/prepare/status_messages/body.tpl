@@ -10,8 +10,11 @@
  * @link      http://www.litecommerce.com/
  * @since     1.0.0
  *}
-
-<br /><br />
-
-{* :NOTE: do not add t(#...#): messages are already translated *}
-<div FOREACH="getMessages(),message">{message}</div>
+ 
+<div class="service-messages-section">
+  <div class="ready-to-install-service-message" FOREACH="getMessages(),message">
+    <div class="message-entry">
+      {message}
+    </div>
+  </div>
+</div>

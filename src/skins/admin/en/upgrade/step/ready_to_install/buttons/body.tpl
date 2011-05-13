@@ -17,5 +17,9 @@
 
   <widget class="\XLite\View\Upgrade\Step\ReadyToInstall\ModifiedFiles" />
 
-  {displayInheritedViewListContent(#sections#)}
+  <div class="ready-to-install-actions">
+    {displayInheritedViewListContent(#sections#)}
+    <div class="clear"></div>
+  </div>
+
 </form>

@@ -273,6 +273,6 @@ abstract class Converter extends \Includes\Utils\AUtils
             $multiplier++;
         }
 
-        return array(number_format($size, 2), static::$byteMultipliers[$multiplier]);
+        return array(number_format($size), static::$byteMultipliers[$multiplier]);
     }
 }

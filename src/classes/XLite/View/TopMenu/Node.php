@@ -57,7 +57,7 @@ class Node extends \XLite\View\TopMenu
      */
     protected function getDefaultTemplate()
     {
-        return parent::getDir() . LC_DS . 'node.tpl';
+        return parent::getDir() . '/node.tpl';
     }
 
     /**
