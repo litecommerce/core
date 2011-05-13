@@ -11,4 +11,4 @@
  * @since     1.0.0
  *}
 
-<br /><br />Create a backup
+{displayInheritedViewListContent(#sections#)}
