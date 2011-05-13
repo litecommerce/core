@@ -59,8 +59,8 @@ sForm.submit(function(e){
   </div> *}
 
   <div class="action-buttons">
-    <widget class="\XLite\View\Button\UploadAddons" />
-    <widget class="\XLite\View\Button\EnterLicenseKey" IF="hasResults()" />
+    <widget class="\XLite\View\Button\Addon\Upload" />
+    <widget class="\XLite\View\Button\Addon\EnterLicenseKey" IF="hasResults()" />
   </div>
 
 </div>
