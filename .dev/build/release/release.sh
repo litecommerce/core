@@ -274,7 +274,15 @@ fi
 
 [ "x${XLITE_BUILD_NUMBER}" = "x" ] && BUILD_SUFFIX='' || BUILD_SUFFIX="-${XLITE_BUILD_NUMBER}"
 
-[ "x${DEMO_VERSION}" != "x" ] && BUILD_SUFFIX="${BUILD_SUFFIX}-demo"
+if [ "x${DEMO_VERSION}" != "x" ]; then
+	
+	if [ "x${DEMO_FILES}" = "x" ]; then
+		echo "Failed: Directory with additional files for demo version is not specified (DEMO_FILES)";
+		exit 2
+	fi
+
+	BUILD_SUFFIX="${BUILD_SUFFIX}-demo"
+fi
 
 [ "x${TEST_MODE}" != "x" ] && BUILD_SUFFIX="${BUILD_SUFFIX}-test"
 
@@ -569,6 +577,8 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		cd ${OUTPUT_DIR}
 		tar -czf demo_tools.tgz demo_tools
 		rm -rf demo_tools
+
+		cp -R $DEMO_FILES/* ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}
 
 		# Patch Drupal code for proxy support (see M:92464 for the details)
 		#cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}

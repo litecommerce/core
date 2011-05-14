@@ -11,6 +11,9 @@ DEMO_VERSION="1"
 # Drupal directory name
 DRUPAL_DIRNAME="drupal_demo"
 
+#Directory with additional files for demo version
+DEMO_FILES=""
+
 # LiteCommerce modules for including to the distributives
 XLITE_MODULES=${XLITE_MODULES}"
 CDev/Demo
