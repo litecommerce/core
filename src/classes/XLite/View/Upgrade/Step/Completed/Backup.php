@@ -47,7 +47,7 @@ class Backup extends \XLite\View\Upgrade\Step\Completed\ACompleted
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'backup';
+        return parent::getDir() . '/backup';
     }
 
     /**

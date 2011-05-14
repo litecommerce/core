@@ -11,6 +11,10 @@
  * @since     1.0.0
  *}
 
-<div FOREACH="getStatusMessages(),entry,messages">
-  <div FOREACH="messages,message">{t(message)}</div>
+<div class="service-messages-section" FOREACH="getStatusMessages(),entry,messages">
+  <div class="ready-to-install-service-message" FOREACH="messages,message">
+    <div class="message-entry">
+      {t(message)}
+    </div>
+  </div>
 </div>
