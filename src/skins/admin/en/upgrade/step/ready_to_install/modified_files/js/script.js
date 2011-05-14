@@ -36,23 +36,46 @@ function switchHeight(area)
   }
 }
 
+function attachClickOnSelectAll() {
+  jQuery('a.select-all').each(function () {
+    jQuery(this).click(function () {
+      jQuery('.modified-file input[type=checkbox]').attr('checked', 'checked');
+    });
+  });
+}
+
+function attachClickOnUnselectAll() {
+  jQuery('a.unselect-all').each(function () {
+    jQuery(this).click(function () {
+      jQuery('.modified-file input[type=checkbox]').attr('checked', '');
+    });
+  });
+}
+
 core.bind(
   'load',
   function () {
-    jQuery('a.select-all').each(
-      function (){
-        jQuery(this).click(function () {
-          jQuery('.modified-file input[type=checkbox]').attr('checked', 'checked');
-        });
-      }
-    );
+    jQuery('#radio-select-all').click(function () {
+      jQuery('.modified-file input[type=checkbox]')
+      .attr('checked', 'checked')
+      .attr('readonly', 'readonly')
+      .addClass('readonly');
+      
+      jQuery('a.unselect-all, a.select-all').unbind('click');
+    });
     
-    jQuery('a.unselect-all').each(
-      function (){
-        jQuery(this).click(function () {
-          jQuery('.modified-file input[type=checkbox]').attr('checked', '');
-        });
-      }
-    );
+    jQuery('#radio-unselect').click(function () {
+      attachClickOnSelectAll();
+      attachClickOnUnselectAll();
+      
+      jQuery('.modified-file input[type=checkbox]')
+      .removeAttr('readonly')
+      .removeClass('readonly');
+    });
+    
+    attachClickOnSelectAll();
+    
+    attachClickOnUnselectAll();
   }
 );
+  

@@ -47,7 +47,7 @@ class Log extends \XLite\View\Upgrade\Step\Completed\ACompleted
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'log';
+        return parent::getDir() . '/log';
     }
 
     /**

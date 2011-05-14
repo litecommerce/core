@@ -25,14 +25,14 @@
   <ul class="selections-list">
     <li>
       <label>
-        <input type="radio" name="" value="" />
+        <input type="radio" name="radio-selector" id="radio-select-all" />
         {t(#Replace all modified files with the unmodified newer versions#)}
       </label>
       <div class="warning">({t(#the custom modifications will be lost#)})</div>
     </li>
     <li>
       <label>
-        <input type="radio" name="" value="" />
+        <input type="radio" name="radio-selector" id="radio-unselect" />
          {t(#Replace only selected files and keep the files which are not selected#)}
       </label>
       <div class="warning">({t(#your web site may crash#)})</div>
