@@ -154,12 +154,6 @@ echo ' [' . $i . ']' . PHP_EOL;
 $modules = array();
 \Includes\Decorator\Plugin\Doctrine\Utils\FixturesManager::removeFixtures();
 
-_do_yaml_upload('sql/xlite_data.yaml');
-
-if (!R_INSTALL_DEMO && !R_INSTALL_SITE) {
-    _do_yaml_upload('sql/xlite_demo.yaml');
-}
-
 // modules
 $enabledModules = array();
 
@@ -206,6 +200,7 @@ if (R_INSTALL_SITE || R_INSTALL_SITEADMIN) {
 
 
 $additionalModules = array();
+$moduleFiles = array();
 
 foreach (array('CDev', 'Test', 'Test1') as $author) {
 
@@ -218,7 +213,7 @@ foreach (array('CDev', 'Test', 'Test1') as $author) {
 
             $yamlFile = dirname($f) . '/install.yaml';
             if (file_exists($yamlFile)) {
-                _do_yaml_upload($yamlFile);
+                $moduleFiles[] = $yamlFile;
             }
 
             $yamlFile = 'sql/demo/module.' . $author . '.' . $name .'.yaml';
@@ -234,36 +229,62 @@ foreach (array('CDev', 'Test', 'Test1') as $author) {
     }
 }
 
-if (R_INSTALL_ADMIN || R_INSTALL_SITEADMIN) {
-    // Install Administrator profile
-    _do_yaml_upload('sql/demo/xlite_demo_user_admin.yaml');
-}
+$files[] = 'sql/xlite_data.yaml';
 
-if (!R_INSTALL_SITE) {
-    // Install users profiles
-    _do_yaml_upload('sql/demo/xlite_demo_user.yaml');
-}
+if (R_INSTALL_SITE) {
 
-if (R_INSTALL_DEMO || R_INSTALL_SITE) {
-    // Install demo data
-    _do_yaml_upload('sql/demo/xlite_demo_data.yaml');
-    _do_yaml_upload('sql/demo/xlite_demo_store.yaml');
-}
+    $files = $files + $moduleFiles;
+    $files[] = 'sql/demo/xlite_demo_data.yaml';
+    $files[] = 'sql/site/xlite_demo_store.yaml';
+    $files[] = 'sql/site/xlite_demo_user_admin.yaml';
+    $files[] = 'sql/demo/xlite_demo_user.yaml';
+    $files[] = 'sql/demo/xlite_demo_orders.yaml';
 
-if (R_INSTALL_DEMO) {
-    _do_yaml_upload('sql/demo/xlite_demo_orders.yaml');
-    //_do_yaml_upload('sql/local/xlite_test_accounts.yaml');
-}
+} elseif (R_INSTALL_SITEADMIN) {
+    
+    $files[] = 'sql/xlite_demo.yaml';
+    $files = $files + $moduleFiles;
+    $files[] = 'sql/demo/xlite_demo_data.yaml';
+    $files[] = 'sql/siteadmin/xlite_demo_user_admin.yaml';
+    $files[] = 'sql/siteadmin/xlite_demo_user.yaml';
+    $files[] = 'sql/siteadmin/xlite_demo_orders.yaml';
 
-#if (R_INSTALL_SITEADMIN) {
-#    _do_yaml_upload('sql/demo/xlite_demo_admin_orders.yaml');
-#}
+} else {
 
-if (file_exists('sql/local/xlite_local_demo.yaml')) {
-    _do_yaml_upload('sql/local/xlite_local_demo.yaml');
+    if (!R_INSTALL_DEMO) {
+        $files[] = 'sql/xlite_demo.yaml';
+    }
+
+    $files = $files + $moduleFiles;
+
+    if (R_INSTALL_ADMIN) {
+        // Install Administrator profile
+        $files[] = 'sql/demo/xlite_demo_user_admin.yaml';
+    }
+
+    if (R_INSTALL_DEMO) {
+        // Install demo data
+        $files[] = 'sql/demo/xlite_demo_data.yaml';
+        $files[] = 'sql/demo/xlite_demo_store.yaml';
+        $files[] = 'sql/demo/xlite_demo_user.yaml';
+        $files[] = 'sql/demo/xlite_demo_orders.yaml';
+        // $files[] = 'sql/local/xlite_test_accounts.yaml';
+    }
+    
+    if (file_exists('sql/local/xlite_local_demo.yaml')) {
+        $files[] = 'sql/local/xlite_local_demo.yaml';
+    }
 }
 
 foreach ($additionalModules as $file) {
+    $files[] = $file;
+}
+
+foreach ($files as $file) {
+    !file_exists($file) && die("Error: File $file not found");
+}
+
+foreach ($files as $file) {
     _do_yaml_upload($file);
 }
 
