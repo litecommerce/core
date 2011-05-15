@@ -13,7 +13,6 @@
  * @ListChild (list="upgrade.step.completed.backup.actions", weight="100")
  *}
 
-<div>
-  <img src="" alt="{t(#Soft reset#)}"></img>
+<div class="upgrade-note soft-reset">
   {t(#Disable suspicious modules#)} (<a href="#">{t(#soft reset#)}</a>)
 </div>

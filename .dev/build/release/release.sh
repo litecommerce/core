@@ -203,8 +203,10 @@ BASE_DIR=`realpath $T`
 
 if [ "`uname`" = "Linux" ]; then
 	SED_EXT='';
+	SED_REGEX_LINUX='-regextype posix-extended';
 else
 	SED_EXT='""';
+	SED_REGEX_FBSD='-E';
 fi
 
 
@@ -272,7 +274,15 @@ fi
 
 [ "x${XLITE_BUILD_NUMBER}" = "x" ] && BUILD_SUFFIX='' || BUILD_SUFFIX="-${XLITE_BUILD_NUMBER}"
 
-[ "x${DEMO_VERSION}" != "x" ] && BUILD_SUFFIX="${BUILD_SUFFIX}-demo"
+if [ "x${DEMO_VERSION}" != "x" ]; then
+	
+	if [ "x${DEMO_FILES}" = "x" ]; then
+		echo "Failed: Directory with additional files for demo version is not specified (DEMO_FILES)";
+		exit 2
+	fi
+
+	BUILD_SUFFIX="${BUILD_SUFFIX}-demo"
+fi
 
 [ "x${TEST_MODE}" != "x" ] && BUILD_SUFFIX="${BUILD_SUFFIX}-test"
 
@@ -429,7 +439,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	for i in ${MODULE_DIRS}; do
 
 		if [ -d $i ]; then
-			find $i -mindepth 2 -maxdepth 2 -type d ! -regex ".*/($modules_list_regexp)" -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+			find $SED_REGEX_FBSD $i $SED_REGEX_LINUX -mindepth 2 -maxdepth 2 -type d ! -regex ".*/($modules_list_regexp)" -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
 			find $i -maxdepth 1 -type d -empty -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
 		fi
 	
@@ -568,10 +578,12 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		tar -czf demo_tools.tgz demo_tools
 		rm -rf demo_tools
 
+		cp -R $DEMO_FILES/* ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}
+
 		# Patch Drupal code for proxy support (see M:92464 for the details)
-		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
-		RES=`patch < ${OUTPUT_DIR}/xlite_dev/build/release/files/proxy.drupal.6.16.patch 2>&1 | grep -E "(patch: **** malformed patch at line)|(Hunk #([0-9]+) .*(malformed patch)|(with fuzz)|(failed))"`
-		[ "x${RES}" != "x" ] && die "[ERROR] Patch applying failed: ${OUTPUT_DIR}/xlite_dev/build/release/files/proxy.drupal.6.16.patch"
+		#cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
+		#RES=`patch < ${OUTPUT_DIR}/xlite_dev/build/release/files/proxy.drupal.6.16.patch 2>&1 | grep -E "(patch: **** malformed patch at line)|(Hunk #([0-9]+) .*(malformed patch)|(with fuzz)|(failed))"`
+		#[ "x${RES}" != "x" ] && die "[ERROR] Patch applying failed: ${OUTPUT_DIR}/xlite_dev/build/release/files/proxy.drupal.6.16.patch"
 		
 
 	fi
