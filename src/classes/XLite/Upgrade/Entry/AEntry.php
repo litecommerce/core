@@ -146,6 +146,15 @@ abstract class AEntry
     abstract public function isEnabled();
 
     /**
+     * Check if module is installed
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract public function isInstalled();
+
+    /**
      * Return entry pack size
      * 
      * @return integer
@@ -162,6 +171,20 @@ abstract class AEntry
      * @since  1.0.0
      */
     abstract protected function loadHashesForInstalledFiles();
+
+    /**
+     * Constructor 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function __construct()
+    {
+        if (0 >= $this->getPackSize()) {
+            $this->addErrorMessage('Pack for "' . $this->getName() . '" is empty');
+        }
+    }
 
     /**
      * Compose version
@@ -252,7 +275,13 @@ abstract class AEntry
      */
     public function getCurrentVersionHashesFilePath()
     {
-        return LC_DIR_TMP . pathinfo($this->getRepositoryPath(), PATHINFO_FILENAME) . '.php';
+        $path = $this->getRepositoryPath();
+
+        if (\Includes\Utils\FileManager::isFile($path)) {
+            $path = LC_DIR_TMP . pathinfo($path, PATHINFO_FILENAME);
+        }
+
+        return $path . '.php';
     }
 
     /**

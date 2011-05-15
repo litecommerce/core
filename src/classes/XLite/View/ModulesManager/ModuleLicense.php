@@ -111,4 +111,16 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
     {
         return parent::getDir() . '/license';
     }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible() && 'view_license' === \XLite\Core\Request::getInstance()->action;
+    }
 }

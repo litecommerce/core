@@ -11,24 +11,3 @@
  * @since     1.0.0
  */
 
-function PopupButtonAcceptLicense()
-{
-  PopupButtonAcceptLicense.superclass.constructor.apply(this, arguments);
-}
-
-extend(PopupButtonAcceptLicense, PopupButton);
-
-// New pattern is defined
-PopupButtonAcceptLicense.prototype.pattern = '.accept-license-button';
-
-decorate(
-  'PopupButtonAcceptLicense',
-  'callback',
-  function (selector)
-  {
-    alert('ddd');
-    jQuery(selector).dialog('close');
-  }
-);
-
-core.autoload(PopupButtonAcceptLicense);

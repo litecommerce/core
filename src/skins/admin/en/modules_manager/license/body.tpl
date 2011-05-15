@@ -16,8 +16,8 @@
 <div class="module-license">
   <div class="form">
     <form action="admin.php" method="post" name="getAddonForm" >
-      <input type="hidden" name="target" value="upgrade" />
-      <input type="hidden" name="action" value="install_addon" />
+      <input type="hidden" name="target" value="addon_install" />
+      <input type="hidden" name="action" value="check_installation_type" />
       <input type="hidden" name="moduleId" value="{getModuleId()}" />
 
       <div class="license-block">
@@ -49,7 +49,7 @@
       <table class="install-addon">
         <tr>
           <td>
-            <widget class="\XLite\View\Button\Addon\AcceptLicense" />
+            <widget class="\XLite\View\Button\Addon\AcceptLicense" style="submit-button" disabled=true />
           </td>
         </tr>
       </table>

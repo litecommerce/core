@@ -185,13 +185,14 @@ class Cell extends \XLite\Base\Singleton
      * Method to clean up cell
      * 
      * @param boolean $clearCoreVersion Flag OPTIONAL
+     * @param boolean $clearEntries     Flag OPTIONAL
      * @param boolean $collectEntries   Flag OPTIONAL
      *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function clear($clearCoreVersion = true, $collectEntries = true)
+    public function clear($clearCoreVersion = true, $clearEntries = true, $collectEntries = true)
     {
         foreach ($this->getEntries() as $entry) {
             $entry->clear();
@@ -204,8 +205,11 @@ class Cell extends \XLite\Base\Singleton
             $this->setCoreVersion(null);
         }
 
-        if ($collectEntries) {
+        if ($clearEntries) {
             $this->entries = array();
+        }
+
+        if ($collectEntries) {
             $this->collectEntries();
         }
     }
@@ -539,16 +543,14 @@ class Cell extends \XLite\Base\Singleton
         if (!isset($this->errorMessages)) {
             $this->errorMessages = array();
 
-            if ($this->isUnpacked()) {
-                $this->errorMessages = array_merge(
-                    $this->errorMessages,
-                    \Includes\Utils\ArrayManager::getObjectsArrayFieldValues($this->getEntries(), 'getErrorMessages')
-                );
-
-            } else {
-                // Space needed to download upgrade packs
-                $this->errorMessages[] = $this->checkDiskFreeSpace();
+            if (!$this->isUnpacked()) {
+                $this->errorMessages[self::CORE_IDENTIFIER] = $this->checkDiskFreeSpace();
             }
+
+            $this->errorMessages = array_merge(
+                $this->errorMessages,
+                \Includes\Utils\ArrayManager::getObjectsArrayFieldValues($this->getEntries(), 'getErrorMessages')
+            );
 
             $this->errorMessages = array_filter($this->errorMessages);
         }
@@ -729,7 +731,7 @@ class Cell extends \XLite\Base\Singleton
         }
 
         if (!$isTestMode) {
-            $this->clear(true, false);
+            $this->clear(true, true, false);
             $this->isUpgraded = true;
         }
 

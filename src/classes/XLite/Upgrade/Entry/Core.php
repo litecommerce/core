@@ -181,6 +181,18 @@ class Core extends \XLite\Upgrade\Entry\AEntry
     }
 
     /**
+     * Check if module is installed
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isInstalled()
+    {
+        return true;
+    }
+
+    /**
      * Return entry pack size
      *
      * @return integer
@@ -251,6 +263,8 @@ class Core extends \XLite\Upgrade\Entry\AEntry
         $this->minorVersion = $minorVersion;
         $this->revisionDate = $revisionDate;
         $this->size         = $size;
+
+        parent::__construct();
     }
 
     /**
