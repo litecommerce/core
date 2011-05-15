@@ -127,19 +127,28 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
 
     // }}}
 
-    // {{{ "Get license" action handler
+    // {{{ "Check installation type" action handler
 
     /**
-     * Action of getting LICENSE text. Redirection to GET request
+     * Action handler
      * 
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function doActionGetLicense()
+    protected function doActionCheckInstallationType()
     {
+        $flag = (bool) array_filter(
+            \Includes\Utils\ArrayManager::getObjectsArrayFieldValues(
+                \XLite\Upgrade\Cell::getInstance()->getEntries(),
+                'isEnabled'
+            )
+        );
+
         $this->setReturnURL(
-            $this->buildURL('addon_install', 'show_license', array('moduleId' => $this->getModuleId()))
+            $flag
+            ? $this->buildURL('addon_install', 'select_installation_type', array('moduleId' => $this->getModuleId()))
+            : $this->buildURL('upgrade', 'install_addon', array('moduleId' => $this->getModuleId()))
         );
     }
 

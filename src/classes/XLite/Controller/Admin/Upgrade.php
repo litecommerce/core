@@ -167,6 +167,32 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         return $this->isUpdate() ? 'Updates available' : 'Upgrade';
     }
 
+    /**
+     * Check the flag in request
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isForce()
+    {
+        return (bool) \XLite\Core\Request::getInstance()->force;
+    }
+
+    /**
+     * Get some common params for actions
+     * 
+     * @param boolean $force Flag OPTIONAL
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getActionParamsCommon($force = null)
+    {
+        return ($force ?: $this->isForce()) ? array('force' => true) : array();
+    }
+
     // }}}
 
     // {{{ Action handlers
@@ -186,8 +212,13 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         if ($module) {
 
             if ($module->getMarketplaceID()) {
-                \XLite\Upgrade\Cell::getInstance()->clear();
+                \XLite\Upgrade\Cell::getInstance()->clear(true, true, !$this->isForce());
                 \XLite\Upgrade\Cell::getInstance()->addMarketplaceModule($module, true);
+
+                if ($this->isForce() && \XLite\Upgrade\Cell::getInstance()->isValid()) {
+                    $this->setReturnURL($this->buildURL('upgrade', 'download', $this->getActionParamsCommon()));
+                }
+
             } else {
                 \XLite\Core\TopMessage::getInstance()->addError('Trying to install non-marketplace module');
             }
@@ -195,6 +226,24 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         } else {
             \XLite\Core\TopMessage::getInstance()->addError('Invalid module ID passed - "' . $moduleId . '"');
         }
+    }
+
+    /**
+     * Install add-on from marketplace
+     *
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionInstallAddonForce()
+    {
+        $this->setReturnURL(
+            $this->buildURL(
+                'upgrade',
+                'install_addon',
+                array('moduleId' => \XLite\Core\Request::getInstance()->moduleId) + $this->getActionParamsCommon(true)
+            )
+        );
     }
 
     /**
@@ -209,8 +258,13 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         $path = \Includes\Utils\FileManager::moveUploadedFile('modulePack');
 
         if ($path) {
-            \XLite\Upgrade\Cell::getInstance()->clear();
+            \XLite\Upgrade\Cell::getInstance()->clear(true, true, false);
             \XLite\Upgrade\Cell::getInstance()->addUploadedModule($path);
+
+            if (\XLite\Upgrade\Cell::getInstance()->isValid()) {
+                $this->setReturnURL($this->buildURL('upgrade', 'download', $this->getActionParamsCommon()));
+            }
+
         } else {
             \XLite\Core\TopMessage::getInstance()->addError('Unable to upload module');
         }
@@ -257,7 +311,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             );
 
             if (\XLite\Upgrade\Cell::getInstance()->downloadUpgradePacks()) {
-                $this->setReturnURL($this->buildURL('upgrade', 'unpack'));
+                $this->setReturnURL($this->buildURL('upgrade', 'unpack', $this->getActionParamsCommon(true)));
 
             } else {
                 \XLite\Core\TopMessage::getInstance()->addError('Not all upgrade packs were downloaded');
@@ -286,6 +340,9 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
 
             if (!\XLite\Upgrade\Cell::getInstance()->unpackAll()) {
                 \XLite\Core\TopMessage::getInstance()->addError('Not all archives were unpacked');
+
+            } elseif ($this->isForce() && \XLite\Upgrade\Cell::getInstance()->isValid()) {
+                $this->setReturnURL($this->buildURL('upgrade', 'check_integrity', $this->getActionParamsCommon()));
             }
 
         } else {
@@ -302,6 +359,9 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionCheckIntegrity()
     {
+        // To prevent infinite redirect
+        $this->setReturnURL(null);
+
         if (\XLite\Upgrade\Cell::getInstance()->isUnpacked()) {
 
             // :DEVCODE: to remove
@@ -310,12 +370,14 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             // Perform upgrade in test mode
             \XLite\Upgrade\Cell::getInstance()->upgrade(true);
 
+            if ($this->isForce() && \XLite\Upgrade\Cell::getInstance()->isValid()) {
+                \XLite\Core\TopMessage::getInstance()->addInfo('Module has been successfully installed');
+                $this->setReturnURL($this->buildURL('upgrade', 'install_upgrades', $this->getActionParamsCommon()));
+            }
+
         } else {
             \XLite\Core\TopMessage::getInstance()->addError('Unable to test files: not all archives were unpacked');
         }
-
-        // To prevent infinite redirect
-        $this->setReturnURL(null);
     }
 
     /**
@@ -336,6 +398,10 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
         // Disable selected modules
         foreach (\XLite\Upgrade\Cell::getInstance()->getIncompatibleModules(true) as $module) {
             \Includes\Decorator\Utils\ModulesManager::disableModule($module->getActualName());
+        }
+
+        if ($this->isForce() && \XLite\Upgrade\Cell::getInstance()->isValid()) {
+            $this->setReturnURL($this->buildURL('addons_list_installed'));
         }
 
         // Rebuild cache

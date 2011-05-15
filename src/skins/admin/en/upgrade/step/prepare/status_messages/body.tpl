@@ -12,9 +12,12 @@
  *}
  
 <div class="service-messages-section">
-  <div class="ready-to-install-service-message" FOREACH="getMessages(),message">
-    <div class="message-entry">
-      {message}
+  <div class="ready-to-install-service-message">
+    <div FOREACH="getMessages(),entryName,messageList">
+      {foreach:messageList,message}
+      {* :NOTE: do not add t(##) here: messages are already translated *}
+      <div class="message-entry">{message}</div>
+      {end:}
     </div>
   </div>
 </div>

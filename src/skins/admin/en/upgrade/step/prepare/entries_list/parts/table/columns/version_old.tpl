@@ -13,4 +13,5 @@
  * @ListChild (list="upgrade.step.prepare.entries_list.sections.table.columns", weight="300")
  *}
 
-<td class="old-version">{entry.getVersionOld()}</td>
+<td IF="entry.isInstalled()" class="old-version">{entry.getVersionOld()}</td>
+<td IF="!entry.isInstalled()" class="old-version">&mdash;</td>

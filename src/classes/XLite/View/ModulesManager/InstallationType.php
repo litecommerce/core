@@ -76,4 +76,28 @@ class InstallationType extends \XLite\View\ModulesManager\AModulesManager
     {
         return parent::getDir() . '/installation_type';
     }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible() && 'select_installation_type' === \XLite\Core\Request::getInstance()->action;
+    }
+
+    /**
+     * Return current module ID
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleID()
+    {
+        return intval(\XLite\Core\Request::getInstance()->moduleId);
+    }
 }

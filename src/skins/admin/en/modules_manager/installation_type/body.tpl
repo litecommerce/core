@@ -11,4 +11,19 @@
  * @since     1.0.0
  *}
 
-Test
+<form action="admin.php" method="post">
+  <input type="hidden" name="target" value="upgrade" />
+  <input type="hidden" name="action" value="install_addon" />
+  <input type="hidden" name="moduleId" value="{getModuleId()}" />
+
+  <div>
+    {t(#The system detects that some updates are available for enabled modules. It is strongly recommended to have all enabled modules updated to latest version for better compatibility before the install new ones from Marketplace.#)}
+  </div>
+
+  <div>
+    <widget class="\XLite\View\Button\Regular" label="Install anyway" action="install_addon_force" />
+    <span>or</span>
+    <widget class="\XLite\View\Button\Submit" label="Update modules" />
+  </div>
+
+</form>

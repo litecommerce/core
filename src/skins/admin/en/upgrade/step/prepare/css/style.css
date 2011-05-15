@@ -85,9 +85,14 @@ table.entries-list tr.module-entry td,
   color: #8f8f8f;
 }
 
+.entries-list .status.not-installed {
+  color: #4a9821;
+}
+
 table.entries-list tr td.old-version {
   color: #8f8f8f;  
   padding-right: 20px;
+  text-align: center;
 }
 
 table.entries-list tr td.version-separator {

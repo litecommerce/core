@@ -105,7 +105,7 @@ class Install extends \XLite\View\Button\APopupButton
     {
         return array(
             'target'   => \XLite\View\ModulesManager\ModuleLicense::MODULE_LICENSE_TARGET,
-            'action'   => 'view',
+            'action'   => 'view_license',
             'widget'   => '\XLite\View\ModulesManager\ModuleLicense',
             'moduleId' => $this->getParam(self::PARAM_MODULEID),
         );

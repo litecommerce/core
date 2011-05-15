@@ -163,6 +163,18 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
+     * Check if module is installed
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isInstalled()
+    {
+        return (bool) $this->getModuleInstalled()->getInstalled();
+    }
+
+    /**
      * Return entry pack size
      *
      * @return integer
@@ -216,6 +228,8 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
                 . ' or has an invaid markeplace identifier'
             );
         }
+
+        parent::__construct();
     }
 
     /**

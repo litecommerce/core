@@ -39,6 +39,7 @@ class Module extends \XLite\Core\Pack\APack
     /**
      * Field names in metadata
      */
+    const METADATA_FIELD_ACTUAL_NAME   = 'ActualName';
     const METADATA_FIELD_VERSION_MINOR = 'VersionMinor';
     const METADATA_FIELD_VERSION_MAJOR = 'VersionMajor';
     const METADATA_FIELD_NAME          = 'Name';
@@ -114,6 +115,7 @@ class Module extends \XLite\Core\Pack\APack
     public function getMetadata()
     {
         return parent::getMetadata() + array(
+            self::METADATA_FIELD_ACTUAL_NAME   => $this->module->callModuleMethod('getActualName'),
             self::METADATA_FIELD_VERSION_MAJOR => $this->module->callModuleMethod('getMajorVersion'),
             self::METADATA_FIELD_VERSION_MINOR => $this->module->callModuleMethod('getMinorVersion'),
             self::METADATA_FIELD_NAME          => $this->module->callModuleMethod('getModuleName'),

@@ -34,7 +34,7 @@ namespace XLite\View\Button\Addon;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class AcceptLicense extends \XLite\View\Button\PopupButton
+class AcceptLicense extends \XLite\View\Button\Submit
 {
     /**
      * Register JS files
@@ -64,7 +64,21 @@ class AcceptLicense extends \XLite\View\Button\PopupButton
     }
 
     /**
+     * getDefaultLabel
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultLabel()
+    {
+        return 'Install add-on';;
+    }
+
+    /**
      * Return content for popup button
+     *
+     * :TODO: remove if this class will not be derived from PopupButton
      *
      * @return string
      * @see    ____func_see____
@@ -78,6 +92,8 @@ class AcceptLicense extends \XLite\View\Button\PopupButton
     /**
      * Return URL parameters to use in AJAX popup
      *
+     * :TODO: remove if this class will not be derived from PopupButton
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -88,17 +104,5 @@ class AcceptLicense extends \XLite\View\Button\PopupButton
             'target' => 'addon_install',
             'widget' => '\XLite\View\ModulesManager\InstallationType',
         );
-    }
-
-    /** 
-     * getClass 
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getClass()
-    {
-        return parent::getClass() . ' accept-license-button';
     }
 }
