@@ -432,10 +432,10 @@ abstract class AEntry
         $this->errorMessages = array();
         $this->customFiles   = $filesToOverwrite ?: array();
 
-        $hashes = $this->getHashes($isTestMode);
+        $hashes = $this->getHashes();
 
         // Walk through the installed and known files list
-        foreach ($this->getHashesForInstalledFiles($isTestMode) as $path => $hash) {
+        foreach ($this->getHashesForInstalledFiles() as $path => $hash) {
 
             // Check file on FS
             if ($this->manageFile($path, 'isFile')) {
@@ -728,13 +728,11 @@ abstract class AEntry
     /**
      * Return file hashes
      *
-     * @param boolean $isTestMode Flag
-     * 
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getHashes($isTestMode)
+    protected function getHashes()
     {
         $path = \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath()) . '.hash';
         $errorParams = array('file' => \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_TMP));
@@ -763,13 +761,11 @@ abstract class AEntry
     /**
      * Return file hashes for the currently installed version
      *
-     * @param boolean $isTestMode Flag
-     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getHashesForInstalledFiles($isTestMode)
+    protected function getHashesForInstalledFiles()
     {
         $path = $this->getCurrentVersionHashesFilePath();
         $errorParams = array('file' => \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_TMP));
