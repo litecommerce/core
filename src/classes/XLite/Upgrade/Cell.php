@@ -724,6 +724,10 @@ class Cell extends \XLite\Base\Singleton
             \Includes\ErrorHandler::fireError('Trying to perform upgrade while not all archives were unpacked');
         }
 
+        if (!$isTestMode) {
+            $this->clearLog();
+        }
+
         $result = true;
 
         foreach ($this->getEntries() as $entry) {
@@ -731,11 +735,52 @@ class Cell extends \XLite\Base\Singleton
         }
 
         if (!$isTestMode) {
-            $this->clear(true, true, false);
+            $this->clear(true, false, false);
             $this->isUpgraded = true;
+            $this->completeLog();
         }
 
         return $result;
+    }
+
+    // }}}
+
+    // {{{ Logging
+
+    /**
+     * Return relative path to the log file
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getLogFilePath()
+    {
+        return LC_DIR_LOG . 'upgrade.log';
+    }
+
+    /**
+     * Clear log file
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function clearLog()
+    {
+        return \Includes\Utils\FileManager::write($this->getLogFilePath(), '<pre>' . PHP_EOL);
+    }
+
+    /**
+     * Complete log file
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function completeLog()
+    {
+        return \Includes\Utils\FileManager::write($this->getLogFilePath(), '</pre>', FILE_APPEND);
     }
 
     // }}}

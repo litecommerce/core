@@ -12,5 +12,5 @@
  *}
 
 <div class="upgrade-log">
-  <a class="upgrade-log-link" target="_blank" href="#">{t(#View update log#)}</a>
+  <a class="upgrade-log-link" target="_blank" href="{getLogFileURL()}">{t(#View update log#)}</a>
 </div>

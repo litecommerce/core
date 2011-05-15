@@ -14,5 +14,5 @@
  *}
 
 <div class="upgrade-note hard-reset">
-  {t(#Disable all modules in the system#)} (<a href="#">{t(#hard reset#)}</a>)
+  {t(#Disable all modules in the system#)} (<a href="{getHardResetURL()}">{t(#hard reset#)}</a>)
 </div>
