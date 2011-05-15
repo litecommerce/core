@@ -311,7 +311,7 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
             );
 
             if (\XLite\Upgrade\Cell::getInstance()->downloadUpgradePacks()) {
-                $this->setReturnURL($this->buildURL('upgrade', 'unpack', $this->getActionParamsCommon(true)));
+                $this->setReturnURL($this->buildURL('upgrade', 'unpack', $this->getActionParamsCommon()));
 
             } else {
                 \XLite\Core\TopMessage::getInstance()->addError('Not all upgrade packs were downloaded');
@@ -406,6 +406,20 @@ class Upgrade extends \XLite\Controller\Admin\AAdmin
 
         // Rebuild cache
         \XLite::setCleanUpCacheFlag(true);
+    }
+
+    /**
+     * Show log file content
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function doActionViewLogFile()
+    {
+        \Includes\Utils\Operator::flush(\Includes\Utils\FileManager::read(\XLite\Upgrade\Cell::getLogFilePath()));
+
+        exit (0);
     }
 
     // }}}

@@ -391,17 +391,17 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * 
      * @param string  $path  File path
      * @param string  $data  Data to write
-     * @param integer $mode  Permisions to set OPTIONAL
      * @param integer $flags Some optional flags OPTIONAL
+     * @param integer $mode  Permisions to set OPTIONAL
      *  
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function write($path, $data, $mode = 0644, $flags = 0)
+    public static function write($path, $data, $flags = 0, $mode = 0644)
     {
         return static::mkdirRecursive(static::getDir($path)) 
-            && (false !== file_put_contents($path, $data, $flags)) 
+            && false !== file_put_contents($path, $data, $flags)
             && static::chmod($path, $mode);
     }
 
@@ -411,14 +411,14 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @param string  $path    File path
      * @param string  $data    Data to write
      * @param string  $pattern Pattern to use for replacement
-     * @param integer $mode    Permisions to set OPTIONAL
      * @param integer $flags   Some optional flags OPTIONAL
+     * @param integer $mode    Permisions to set OPTIONAL
      *
      * @return integer
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function replace($path, $data, $pattern, $mode = 0644, $flags = 0)
+    public static function replace($path, $data, $pattern, $flags = 0, $mode = 0644)
     {
         return static::write($path, preg_replace($pattern, $data, static::read($path)), $mode, $flags);
     }

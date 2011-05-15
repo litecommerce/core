@@ -61,4 +61,16 @@ class Log extends \XLite\View\Upgrade\Step\Completed\ACompleted
     {
         return parent::getListName() . '.log';
     }
+
+    /**
+     * Get the log file link
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getLogFileURL()
+    {
+        return $this->buildURL('upgrade', 'view_log_file');
+    }
 }

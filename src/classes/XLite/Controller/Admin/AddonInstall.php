@@ -138,6 +138,8 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionCheckInstallationType()
     {
+        \XLite\Upgrade\Cell::getInstance()->clear();
+
         $flag = (bool) array_filter(
             \Includes\Utils\ArrayManager::getObjectsArrayFieldValues(
                 \XLite\Upgrade\Cell::getInstance()->getEntries(),

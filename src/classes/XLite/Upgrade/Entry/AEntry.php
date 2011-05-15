@@ -555,8 +555,12 @@ abstract class AEntry
                 $this->addFileErrorMessage('Parent dir of the "{{file}}" file is not writable', $path);
             }
 
-        } elseif (/*!$this->manageFile($path, 'write', array($this->getFileSource($path)))*/false) {
+        } elseif (/*$this->manageFile($path, 'write', array($this->getFileSource($path)))*/true) {
+            $this->log('File "' . $path . '" successfully added');
+
+        } else {
             $this->addFileErrorMessage('Unable to write "{{file}}" file', $path);
+            $this->log('Unable to write "' . $path . '" file');
         }
     }
 
@@ -578,8 +582,12 @@ abstract class AEntry
                 $this->addFileErrorMessage('File "{{file}} is not writeable', $path);
             }
 
-        } elseif (/*!$this->manageFile($path, 'write', array($this->getFileSource($path)))*/false) {
+        } elseif (/*$this->manageFile($path, 'write', array($this->getFileSource($path)))*/true) {
+            $this->log('File "' . $path . '" successfully updated');
+
+        } else {
             $this->addFileErrorMessage('Unable to write "{{file}}" file', $path);
+            $this->log('Unable to write "' . $path . '" file');
         }
     }
 
@@ -601,8 +609,12 @@ abstract class AEntry
                 $this->addFileErrorMessage('Parent dir of the "{{file}}" file is not writable', $path);
             }
 
-        } elseif (/*!$this->manageFile($path, 'delete')*/false) {
+        } elseif (/*$this->manageFile($path, 'delete')*/true) {
+            $this->log('File "' . $path . '" successfully deleted');
+
+        } else {
             $this->addFileErrorMessage('Unable to delete "{{file}}" file', $path);
+            $this->log('Unable to delete "' . $path . '" file');
         }
     }
 
@@ -803,6 +815,44 @@ abstract class AEntry
     protected function getFileSource($relativePath)
     {
         return null;
+    }
+
+    // }}}
+
+    // {{{ Logging
+
+    /**
+     * Log message to the file
+     * 
+     * @param string  $message Message text
+     * @param boolean $isError Message type OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function log($message, $isError = false)
+    {
+        \Includes\Utils\FileManager::write(
+            \XLite\Upgrade\Cell::getLogFilePath(),
+            $this->getLogMessage($message, $isError),
+            FILE_APPEND
+        );
+    }
+
+    /**
+     * Log message to the file
+     *
+     * @param string  $message Message text
+     * @param boolean $isError Message type
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getLogMessage($message, $isError)
+    {
+        return '[' . ($isError ? 'Error' : 'Info') . ']: ' . $message . PHP_EOL;
     }
 
     // }}}

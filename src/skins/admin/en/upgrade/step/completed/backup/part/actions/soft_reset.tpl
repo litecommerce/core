@@ -14,5 +14,5 @@
  *}
 
 <div class="upgrade-note soft-reset">
-  {t(#Disable suspicious modules#)} (<a href="#">{t(#soft reset#)}</a>)
+  {t(#Disable suspicious modules#)} (<a href="{getSoftResetURL()}">{t(#soft reset#)}</a>)
 </div>
