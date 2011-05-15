@@ -46,6 +46,18 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     protected $metadata;
 
     /**
+     * Return module actual name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getActualName()
+    {
+        return $this->getMetadata('ActualName');
+    }
+
+    /**
      * Return entry readable name
      *
      * @return string
@@ -164,7 +176,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     public function isInstalled()
     {
-        return \Includes\Decorator\Utils\ModulesManager::isModuleInstalled($this->getModuleClass());
+        return \Includes\Decorator\Utils\ModulesManager::isModuleInstalled($this->getActualName());
     }
 
     /**
@@ -182,13 +194,15 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     /**
      * Calculate hashes for current version
      *
+     * :TODO: to improve. Check if module is installed and collect file hashes
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function loadHashesForInstalledFiles()
     {
-        return array();
+        return $this->getHashes();
     }
 
     /**
@@ -259,18 +273,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function callModuleMethod($method, array $args = array())
     {
-        return \Includes\Decorator\Utils\ModulesManager::callModuleMethod($this->getModuleClass(), $method, $args);
-    }
-
-    /**
-     * Get module actual name
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getModuleClass()
-    {
-        return $this->getMetadata('ActualName');
+        return \Includes\Decorator\Utils\ModulesManager::callModuleMethod($this->getActualName(), $method, $args);
     }
 }
