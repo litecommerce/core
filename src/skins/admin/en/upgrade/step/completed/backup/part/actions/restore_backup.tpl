@@ -13,7 +13,6 @@
  * @ListChild (list="upgrade.step.completed.backup.actions", weight="300")
  *}
 
-<div>
-  <img src="" alt="{t(#Restore backup#)}"></img>
-  {t(#Restore last backup#)} ({t(#should be performed manually#)})
+<div class="upgrade-note restore-backup">
+  {t(#Restore last backup#)} <span class="small-note">({t(#should be performed manually#)})</span>
 </div>

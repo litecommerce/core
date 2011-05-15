@@ -469,3 +469,22 @@ function isElement(obj, type)
 {
   return obj && typeof(obj.tagName) != 'undefined' && obj.tagName.toLowerCase() == type;
 }
+
+core.bind(
+  'load', 
+  function () {
+    jQuery('input[type=checkbox]').each(
+      function () {
+        var checkbox = this;
+        
+        jQuery(checkbox).bind(
+          'click',
+          function () {
+            return !jQuery(checkbox).attr('readonly');
+          }
+        );
+      }
+    );
+  }
+);
+  

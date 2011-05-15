@@ -137,6 +137,13 @@ input[type=password]
   line-height: 16px;
 }
 
+input[type=checkbox].readonly,
+  input[type=checkbox].readonly:hover
+{
+  opacity: 0.5;
+  background: transparent url(../images/checkbox-readonly.gif) left top no-repeat;
+}
+
 input[type=text]:focus,
 input[type=password]:focus,
 select:focus,
@@ -171,6 +178,7 @@ button::-moz-focus-inner
 {
   border : 0px;
 }
+
 input[type="submit"]:focus,               /* IE8 */
 input[type="button"]:focus,
 input[type="reset"]:focus,
