@@ -75,22 +75,17 @@ class Backup extends \XLite\View\Upgrade\Step\Completed\ACompleted
     }
 
     /**
-     * Info message
+     * Return Shop URL
      * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDescription()
+    protected function getShopURL()
     {
-        return static::t(
-            'The upgrade is completed. Please, do not close this page until you check '
-            . '<a href="{{url}}">your web site</a> and check that everything works properly. '
-            . 'If there are some critical errors occured you can do the following',
-            array('url' => \Includes\Utils\URLManager::getShopURL())
-        );
+        return \Includes\Utils\URLManager::getShopURL();
     }
-
+   
     /**
      * Get an action URL
      * 
