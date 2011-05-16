@@ -97,6 +97,18 @@ abstract class AStep extends \XLite\View\AView
     }
 
     /**
+     * Check - step is disabled or not
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isDisabled()
+    {
+        return false;
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -164,15 +176,4 @@ abstract class AStep extends \XLite\View\AView
         return $path;
     }
 
-    /**
-     * Check - step is disabled or not
-     * 
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isDisabled()
-    {
-        return false;
-    }
 }
