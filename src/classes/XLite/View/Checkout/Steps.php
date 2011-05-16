@@ -257,10 +257,7 @@ class Steps extends \XLite\View\AView
     {
         $steps = array();
 
-        if ($this->getShippingModifier() && $this->getShippingModifier()->canApply()) {
-            $steps[] = '\XLite\View\Checkout\Step\Shipping';
-        }
-
+        $steps[] = '\XLite\View\Checkout\Step\Shipping';
         $steps[] = '\XLite\View\Checkout\Step\Payment';
         $steps[] = '\XLite\View\Checkout\Step\Review';
     

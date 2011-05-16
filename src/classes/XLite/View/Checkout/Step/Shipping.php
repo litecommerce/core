@@ -168,4 +168,17 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
 
         return $this->modifier;
     }
+
+    /**
+     * Check - step is disabled or not
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isDisabled()
+    {
+        return parent::isDisabled()
+            && !$this->isShippingEnabled();
+    }
 }
