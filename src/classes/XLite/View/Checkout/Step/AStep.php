@@ -136,11 +136,43 @@ abstract class AStep extends \XLite\View\AView
     protected function getTemplate()
     {
         return $this->getParam(self::PARAM_TEMPLATE) == $this->getDefaultTemplate()
-            ? 'checkout/steps/'
-                . $this->getStepName()
-                . '/'
-                . ($this->isCurrent() ? 'selected' : 'inactive')
-                . '.tpl'
+            ? $this->getStepTemplate()
             : $this->getParam(self::PARAM_TEMPLATE);
+    }
+
+    /**
+     * Get step template 
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getStepTemplate()
+    {
+        $path = 'checkout/steps/' . $this->getStepName() . '/';
+
+        if ($this->isDisabled()) {
+            $path .= 'disabled.tpl';
+
+        } elseif ($this->isCurrent()) {
+            $path .= 'selected.tpl';
+
+        } else {
+            $path .= 'inactive.tpl';
+        }
+
+        return $path;
+    }
+
+    /**
+     * Check - step is disabled or not
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isDisabled()
+    {
+        return false;
     }
 }
