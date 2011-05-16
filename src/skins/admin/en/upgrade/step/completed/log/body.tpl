@@ -11,4 +11,6 @@
  * @since     1.0.0
  *}
 
-<a href="#">{t(#View update log#)}</a>
+<div class="upgrade-log">
+  <a class="upgrade-log-link" target="_blank" href="{getLogFileURL()}">{t(#View update log#)}</a>
+</div>

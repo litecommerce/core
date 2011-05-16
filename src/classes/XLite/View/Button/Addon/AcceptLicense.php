@@ -26,56 +26,19 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\ModulesManager;
+namespace XLite\View\Button\Addon;
 
 /**
- * Addons search and installation widget
- *
+ * Install addon button 
+ * 
  * @see   ____class_see____
  * @since 1.0.0
- *
- * @ListChild (list="admin.center", zone="admin")
  */
-class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
+class AcceptLicense extends \XLite\View\Button\Submit
 {
     /**
-     * Module license widget target 
-     */
-    const MODULE_LICENSE_TARGET = 'addon_install';
-
-    /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = self::MODULE_LICENSE_TARGET;
-    
-        return $result;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = $this->getDir() . '/css/style.css';
-
-        return $list;
-    }
-
-    /**
      * Register JS files
-     * 
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -83,44 +46,63 @@ class ModuleLicense extends \XLite\View\ModulesManager\AModulesManager
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-        $list[] = $this->getDir() . '/js/switch-button.js';
+        $list[] = 'button/js/accept_license.js';
 
         return $list;
     }
 
     /**
-     * Return title
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getHead()
-    {
-        return 'Install addon';
-    }
-
-    /**
-     * Return templates directory name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDir()
-    {
-        return parent::getDir() . '/license';
-    }
-
-    /**
-     * Check if widget is visible
+     * getDefaultDisableState
      *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function isVisible()
+    protected function getDefaultDisableState()
     {
-        return parent::isVisible() && 'view_license' === \XLite\Core\Request::getInstance()->action;
+        return parent::getDefaultDisableState() || true;
+    }
+
+    /**
+     * getDefaultLabel
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getDefaultLabel()
+    {
+        return 'Install add-on';;
+    }
+
+    /**
+     * Return content for popup button
+     *
+     * :TODO: remove if this class will not be derived from PopupButton
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getButtonContent()
+    {
+        return 'Install add-on';
+    }
+
+    /**
+     * Return URL parameters to use in AJAX popup
+     *
+     * :TODO: remove if this class will not be derived from PopupButton
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareURLParams()
+    {
+        return array(
+            'target' => 'addon_install',
+            'widget' => '\XLite\View\ModulesManager\InstallationType',
+        );
     }
 }

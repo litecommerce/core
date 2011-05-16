@@ -26,7 +26,7 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Button;
+namespace XLite\View\Button\Addon;
 
 /**
  * Install addon popup button 
@@ -34,48 +34,12 @@ namespace XLite\View\Button;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class InstallAddon extends \XLite\View\Button\APopupButton
+class Install extends \XLite\View\Button\APopupButton
 {
     /**
-     * Button label
+     * Widget param names 
      */
-    const INSTALL_ADDON_LABEL = 'Install';
-
-    /**
-     * Widget class to show
-     */
-    const INSTALL_ADDON_WIDGET = 'XLite\View\ModulesManager\ModuleLicense';
-
     const PARAM_MODULEID = 'moduleId';
-
-    /** 
-     * Return content for popup button
-     * 
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getButtonContent() 
-    {
-        return self::INSTALL_ADDON_LABEL;
-    }
-
-    /** 
-     * Return URL parameters to use in AJAX popup
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function prepareURLParams()
-    {
-        return array(
-            'target'    => \XLite\View\ModulesManager\ModuleLicense::MODULE_LICENSE_TARGET,
-            'action'    => 'view',
-            'widget'    => self::INSTALL_ADDON_WIDGET,
-            'moduleId'  => $this->getParam(self::PARAM_MODULEID),
-        );
-    }
 
     /** 
      * Register CSS files
@@ -88,15 +52,14 @@ class InstallAddon extends \XLite\View\Button\APopupButton
     {   
         $list = parent::getCSSFiles();
 
-        // TODO must be taken from LICENSE module widget!!!
+        // :TODO: must be taken from LICENSE module widget
         $list[] = 'modules_manager/license/css/style.css';
 
-        // TODO must be taken from SwitchButton widget
+        // :TODO: must be taken from SwitchButton widget
         $list[] = \XLite\View\Button\SwitchButton::SWITCH_CSS_FILE;
 
         return $list;
     }   
-
 
     /** 
      * Register JS files
@@ -108,18 +71,45 @@ class InstallAddon extends \XLite\View\Button\APopupButton
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = 'button/js/install_addon.js';
 
-        // TODO must be taken from SwitchButton widget
-        $list[] = \XLite\View\Button\SwitchButton::JS_SCRIPT;
-
-        // TODO must be taken from LICENSE module widget
+        // :TODO: must be taken from LICENSE module widget
         $list[] = 'modules_manager/license/js/switch-button.js';
+
+        // :TODO: must be taken from SwitchButton widget
+        $list[] = \XLite\View\Button\SwitchButton::JS_SCRIPT;
 
         return $list;
     }   
 
+    /**
+     * Return content for popup button
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getButtonContent()
+    {
+        return 'Install';
+    }
+
+    /**
+     * Return URL parameters to use in AJAX popup
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function prepareURLParams()
+    {
+        return array(
+            'target'   => \XLite\View\ModulesManager\ModuleLicense::MODULE_LICENSE_TARGET,
+            'action'   => 'view_license',
+            'widget'   => '\XLite\View\ModulesManager\ModuleLicense',
+            'moduleId' => $this->getParam(self::PARAM_MODULEID),
+        );
+    }
 
     /**
      * Define widgets parameters

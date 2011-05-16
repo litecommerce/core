@@ -151,6 +151,20 @@ abstract class ModulesManager extends AUtils
     }
 
     /**
+     * Check if module is installed
+     * 
+     * @param string $module Module actual name
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function isModuleInstalled($module)
+    {
+        return \Includes\Utils\Operator::checkIfClassExists(static::getClassNameByModuleName($module));
+    }
+
+    /**
      * Method to access module main clas methods
      *
      * @param string $module Module actual name
@@ -161,12 +175,11 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected static function callModuleMethod($module, $method, array $args = array())
+    public static function callModuleMethod($module, $method, array $args = array())
     {
         $result = null;
-        $class  = static::getClassNameByModuleName($module);
 
-        if (\Includes\Utils\Operator::checkIfClassExists($class)) {
+        if (static::isModuleInstalled($module)) {
             $result = call_user_func_array(array(static::getClassNameByModuleName($module), $method), $args);
         }
 

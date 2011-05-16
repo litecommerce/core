@@ -26,7 +26,7 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Button;
+namespace XLite\View\Button\Addon;
 
 /**
  * Enter license key popup text 
@@ -36,17 +36,6 @@ namespace XLite\View\Button;
  */
 class EnterLicenseKey extends \XLite\View\Button\PopupButton
 {
-    /**
-     * Button label
-     */
-    const TEXT_LABEL = 'Enter license key';
-
-    /**
-     * Widget class to show
-     */
-    const ENTER_KEY_WIDGET = 'XLite\View\ModulesManager\AddonKey';
-
-
     /** 
      * Return content for popup button
      * 
@@ -54,9 +43,9 @@ class EnterLicenseKey extends \XLite\View\Button\PopupButton
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getButtonContent() 
+    protected function getButtonContent() 
     {
-        return $this->t(static::TEXT_LABEL);
+        return 'Enter license key';
     }
 
     /** 
@@ -66,12 +55,12 @@ class EnterLicenseKey extends \XLite\View\Button\PopupButton
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function prepareURLParams()
+    protected function prepareURLParams()
     {
         return array(
             'target' => 'module_key',
             'action' => 'view',
-            'widget' => static::ENTER_KEY_WIDGET,
+            'widget' => '\XLite\View\ModulesManager\AddonKey',
         );
     }
 }

@@ -37,13 +37,25 @@ namespace XLite\Upgrade\Entry\Module;
 class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
 {
     /**
-     * Module object (cache)
+     * Module metadata
      * 
-     * @var   \PharData
+     * @var   array
      * @see   ____var_see____
      * @since 1.0.0
      */
-    protected $module;
+    protected $metadata;
+
+    /**
+     * Return module actual name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getActualName()
+    {
+        return $this->getMetadata('ActualName');
+    }
 
     /**
      * Return entry readable name
@@ -74,21 +86,17 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     /**
      * Return entry old major version
      *
-     * :TODO: actualize
-     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function getMajorVersionOld()
     {
-        return null;
+        return $this->callModuleMethod('getMajorVersion');
     }
 
     /**
      * Return entry old minor version
-     *
-     * :TODO: actualize
      *
      * @return string
      * @see    ____func_see____
@@ -96,7 +104,7 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     public function getMinorVersionOld()
     {
-        return null;
+        return $this->callModuleMethod('getMinorVersion');
     }
 
     /**
@@ -150,15 +158,25 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     /**
      * Check if module is enabled
      *
-     * :TODO: actualize
-     *
      * @return boolean
      * @see    ____func_see____
      * @since  1.0.0
      */
     public function isEnabled()
     {
-        return false;
+        return $this->isInstalled();
+    }
+
+    /**
+     * Check if module is installed
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isInstalled()
+    {
+        return \Includes\Decorator\Utils\ModulesManager::isModuleInstalled($this->getActualName());
     }
 
     /**
@@ -176,12 +194,15 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
     /**
      * Calculate hashes for current version
      *
+     * :TODO: to improve. Check if module is installed and collect file hashes
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
     protected function loadHashesForInstalledFiles()
     {
+        return $this->getHashes();
     }
 
     /**
@@ -200,35 +221,58 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
         }
 
         $this->setRepositoryPath($path);
+
+        $module = new \PharData($this->getRepositoryPath());
+        $this->metadata = $module->getMetaData();
+
+        if (empty($this->metadata)) {
+            \Includes\ErrorHandler::fireError('Unable to read module metadata: "' . $path . '"');
+        }
+
+        parent::__construct();
     }
 
     /**
-     * Return module description object
-     * 
-     * @return \PharData
+     * Names of variables to serialize
+     *
+     * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getModule()
+    public function __sleep()
     {
-        if (!isset($this->module)) {
-            $this->module = new \PharData($this->getRepositoryPath());
-        }
+        $list = parent::__sleep();
+        $list[] = 'metadata';
 
-        return $this->module;
+        return $list;
     }
 
     /**
      * Get module metadata (or only the certain field from it)
      * 
-     * @param string $name Array index OPTIONAL
+     * @param string $name Array index
      *  
      * @return mixed
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getMetadata($name = null)
+    protected function getMetadata($name)
     {
-        return \Includes\Utils\ArrayManager::getIndex($this->getModule()->getMetaData(), $name, isset($name));
+        return \Includes\Utils\ArrayManager::getIndex($this->metadata, $name, true);
+    }
+
+    /**
+     * Method to access module main clas methods
+     *
+     * @param string $method Method to call
+     * @param array  $args   Call arguments OPTIONAL
+     *
+     * @return mixed
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function callModuleMethod($method, array $args = array())
+    {
+        return \Includes\Decorator\Utils\ModulesManager::callModuleMethod($this->getActualName(), $method, $args);
     }
 }

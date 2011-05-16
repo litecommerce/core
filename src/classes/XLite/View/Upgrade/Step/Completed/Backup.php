@@ -47,7 +47,7 @@ class Backup extends \XLite\View\Upgrade\Step\Completed\ACompleted
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'backup';
+        return parent::getDir() . '/backup';
     }
 
     /**
@@ -89,5 +89,29 @@ class Backup extends \XLite\View\Upgrade\Step\Completed\ACompleted
             . 'If there are some critical errors occured you can do the following',
             array('url' => \Includes\Utils\URLManager::getShopURL())
         );
+    }
+
+    /**
+     * Get an action URL
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSoftResetURL()
+    {
+        return \Includes\SafeMode::getResetURL(true);
+    }
+
+    /**
+     * Get an action URL
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getHardResetURL()
+    {
+        return \Includes\SafeMode::getResetURL(false);
     }
 }
