@@ -212,6 +212,7 @@ foreach (array('CDev', 'Test', 'Test1') as $author) {
         if (preg_match('/.' . $author . '.(?:' . implode('|', $enabledModules[$author]) . ')./Ss', $f)) {
 
             $yamlFile = dirname($f) . '/install.yaml';
+
             if (file_exists($yamlFile)) {
                 $moduleFiles[] = $yamlFile;
             }
@@ -233,7 +234,7 @@ $files[] = 'sql/xlite_data.yaml';
 
 if (R_INSTALL_SITE) {
 
-    $files = $files + $moduleFiles;
+    array_splice($files, count($files), 0, $moduleFiles);
     $files[] = 'sql/demo/xlite_demo_data.yaml';
     $files[] = 'sql/site/xlite_demo_store.yaml';
     $files[] = 'sql/site/xlite_demo_user_admin.yaml';
@@ -243,7 +244,7 @@ if (R_INSTALL_SITE) {
 } elseif (R_INSTALL_SITEADMIN) {
     
     $files[] = 'sql/xlite_demo.yaml';
-    $files = $files + $moduleFiles;
+    array_splice($files, count($files), 0, $moduleFiles);
     $files[] = 'sql/demo/xlite_demo_data.yaml';
     $files[] = 'sql/siteadmin/xlite_demo_user_admin.yaml';
     $files[] = 'sql/siteadmin/xlite_demo_user.yaml';
@@ -255,7 +256,7 @@ if (R_INSTALL_SITE) {
         $files[] = 'sql/xlite_demo.yaml';
     }
 
-    $files = $files + $moduleFiles;
+    array_splice($files, count($files), 0, $moduleFiles);
 
     if (R_INSTALL_ADMIN) {
         // Install Administrator profile
@@ -276,9 +277,7 @@ if (R_INSTALL_SITE) {
     }
 }
 
-foreach ($additionalModules as $file) {
-    $files[] = $file;
-}
+array_splice($files, count($files), 0, $additionalModules);
 
 foreach ($files as $file) {
     !file_exists($file) && die("Error: File $file not found");
