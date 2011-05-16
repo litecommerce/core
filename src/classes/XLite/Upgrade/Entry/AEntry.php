@@ -146,6 +146,15 @@ abstract class AEntry
     abstract public function isEnabled();
 
     /**
+     * Check if module is installed
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract public function isInstalled();
+
+    /**
      * Return entry pack size
      * 
      * @return integer
@@ -162,6 +171,20 @@ abstract class AEntry
      * @since  1.0.0
      */
     abstract protected function loadHashesForInstalledFiles();
+
+    /**
+     * Constructor 
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function __construct()
+    {
+        if (0 >= $this->getPackSize()) {
+            $this->addErrorMessage('Pack for "' . $this->getName() . '" is empty');
+        }
+    }
 
     /**
      * Compose version
@@ -252,7 +275,13 @@ abstract class AEntry
      */
     public function getCurrentVersionHashesFilePath()
     {
-        return LC_DIR_TMP . pathinfo($this->getRepositoryPath(), PATHINFO_FILENAME) . '.php';
+        $path = $this->getRepositoryPath();
+
+        if (\Includes\Utils\FileManager::isFile($path)) {
+            $path = LC_DIR_TMP . pathinfo($path, PATHINFO_FILENAME);
+        }
+
+        return $path . '.php';
     }
 
     /**
@@ -403,10 +432,10 @@ abstract class AEntry
         $this->errorMessages = array();
         $this->customFiles   = $filesToOverwrite ?: array();
 
-        $hashes = $this->getHashes($isTestMode);
+        $hashes = $this->getHashes();
 
         // Walk through the installed and known files list
-        foreach ($this->getHashesForInstalledFiles($isTestMode) as $path => $hash) {
+        foreach ($this->getHashesForInstalledFiles() as $path => $hash) {
 
             // Check file on FS
             if ($this->manageFile($path, 'isFile')) {
@@ -526,8 +555,12 @@ abstract class AEntry
                 $this->addFileErrorMessage('Parent dir of the "{{file}}" file is not writable', $path);
             }
 
-        } elseif (/*!$this->manageFile($path, 'write', array($this->getFileSource($path)))*/false) {
+        } elseif (/*$this->manageFile($path, 'write', array($this->getFileSource($path)))*/true) {
+            $this->log('File "' . $path . '" successfully added');
+
+        } else {
             $this->addFileErrorMessage('Unable to write "{{file}}" file', $path);
+            $this->log('Unable to write "' . $path . '" file');
         }
     }
 
@@ -549,8 +582,12 @@ abstract class AEntry
                 $this->addFileErrorMessage('File "{{file}} is not writeable', $path);
             }
 
-        } elseif (/*!$this->manageFile($path, 'write', array($this->getFileSource($path)))*/false) {
+        } elseif (/*$this->manageFile($path, 'write', array($this->getFileSource($path)))*/true) {
+            $this->log('File "' . $path . '" successfully updated');
+
+        } else {
             $this->addFileErrorMessage('Unable to write "{{file}}" file', $path);
+            $this->log('Unable to write "' . $path . '" file');
         }
     }
 
@@ -572,8 +609,12 @@ abstract class AEntry
                 $this->addFileErrorMessage('Parent dir of the "{{file}}" file is not writable', $path);
             }
 
-        } elseif (/*!$this->manageFile($path, 'delete')*/false) {
+        } elseif (/*$this->manageFile($path, 'delete')*/true) {
+            $this->log('File "' . $path . '" successfully deleted');
+
+        } else {
             $this->addFileErrorMessage('Unable to delete "{{file}}" file', $path);
+            $this->log('Unable to delete "' . $path . '" file');
         }
     }
 
@@ -687,13 +728,11 @@ abstract class AEntry
     /**
      * Return file hashes
      *
-     * @param boolean $isTestMode Flag
-     * 
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getHashes($isTestMode)
+    protected function getHashes()
     {
         $path = \Includes\Utils\FileManager::getCanonicalDir($this->getRepositoryPath()) . '.hash';
         $errorParams = array('file' => \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_TMP));
@@ -722,13 +761,11 @@ abstract class AEntry
     /**
      * Return file hashes for the currently installed version
      *
-     * @param boolean $isTestMode Flag
-     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getHashesForInstalledFiles($isTestMode)
+    protected function getHashesForInstalledFiles()
     {
         $path = $this->getCurrentVersionHashesFilePath();
         $errorParams = array('file' => \Includes\Utils\FileManager::getRelativePath($path, LC_DIR_TMP));
@@ -774,6 +811,44 @@ abstract class AEntry
     protected function getFileSource($relativePath)
     {
         return null;
+    }
+
+    // }}}
+
+    // {{{ Logging
+
+    /**
+     * Log message to the file
+     * 
+     * @param string  $message Message text
+     * @param boolean $isError Message type OPTIONAL
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function log($message, $isError = false)
+    {
+        \Includes\Utils\FileManager::write(
+            \XLite\Upgrade\Cell::getLogFilePath(),
+            $this->getLogMessage($message, $isError),
+            FILE_APPEND
+        );
+    }
+
+    /**
+     * Log message to the file
+     *
+     * @param string  $message Message text
+     * @param boolean $isError Message type
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getLogMessage($message, $isError)
+    {
+        return '[' . ($isError ? 'Error' : 'Info') . ']: ' . $message . PHP_EOL;
     }
 
     // }}}

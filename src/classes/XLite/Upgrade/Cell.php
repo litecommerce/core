@@ -185,13 +185,14 @@ class Cell extends \XLite\Base\Singleton
      * Method to clean up cell
      * 
      * @param boolean $clearCoreVersion Flag OPTIONAL
+     * @param boolean $clearEntries     Flag OPTIONAL
      * @param boolean $collectEntries   Flag OPTIONAL
      *  
      * @return void
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function clear($clearCoreVersion = true, $collectEntries = true)
+    public function clear($clearCoreVersion = true, $clearEntries = true, $collectEntries = true)
     {
         foreach ($this->getEntries() as $entry) {
             $entry->clear();
@@ -204,8 +205,11 @@ class Cell extends \XLite\Base\Singleton
             $this->setCoreVersion(null);
         }
 
-        if ($collectEntries) {
+        if ($clearEntries) {
             $this->entries = array();
+        }
+
+        if ($collectEntries) {
             $this->collectEntries();
         }
     }
@@ -539,16 +543,14 @@ class Cell extends \XLite\Base\Singleton
         if (!isset($this->errorMessages)) {
             $this->errorMessages = array();
 
-            if ($this->isUnpacked()) {
-                $this->errorMessages = array_merge(
-                    $this->errorMessages,
-                    \Includes\Utils\ArrayManager::getObjectsArrayFieldValues($this->getEntries(), 'getErrorMessages')
-                );
-
-            } else {
-                // Space needed to download upgrade packs
-                $this->errorMessages[] = $this->checkDiskFreeSpace();
+            if (!$this->isUnpacked()) {
+                $this->errorMessages[self::CORE_IDENTIFIER] = $this->checkDiskFreeSpace();
             }
+
+            $this->errorMessages = array_merge(
+                $this->errorMessages,
+                \Includes\Utils\ArrayManager::getObjectsArrayFieldValues($this->getEntries(), 'getErrorMessages')
+            );
 
             $this->errorMessages = array_filter($this->errorMessages);
         }
@@ -722,6 +724,10 @@ class Cell extends \XLite\Base\Singleton
             \Includes\ErrorHandler::fireError('Trying to perform upgrade while not all archives were unpacked');
         }
 
+        if (!$isTestMode) {
+            $this->clearLog();
+        }
+
         $result = true;
 
         foreach ($this->getEntries() as $entry) {
@@ -729,11 +735,52 @@ class Cell extends \XLite\Base\Singleton
         }
 
         if (!$isTestMode) {
-            $this->clear(true, false);
+            $this->clear(true, false, false);
             $this->isUpgraded = true;
+            $this->completeLog();
         }
 
         return $result;
+    }
+
+    // }}}
+
+    // {{{ Logging
+
+    /**
+     * Return relative path to the log file
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function getLogFilePath()
+    {
+        return LC_DIR_LOG . 'upgrade.log';
+    }
+
+    /**
+     * Clear log file
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function clearLog()
+    {
+        return \Includes\Utils\FileManager::write($this->getLogFilePath(), '<pre>' . PHP_EOL);
+    }
+
+    /**
+     * Complete log file
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function completeLog()
+    {
+        return \Includes\Utils\FileManager::write($this->getLogFilePath(), '</pre>', FILE_APPEND);
     }
 
     // }}}

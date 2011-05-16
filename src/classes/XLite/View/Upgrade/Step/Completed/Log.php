@@ -47,7 +47,7 @@ class Log extends \XLite\View\Upgrade\Step\Completed\ACompleted
      */
     protected function getDir()
     {
-        return parent::getDir() . LC_DS . 'log';
+        return parent::getDir() . '/log';
     }
 
     /**
@@ -60,5 +60,17 @@ class Log extends \XLite\View\Upgrade\Step\Completed\ACompleted
     protected function getListName()
     {
         return parent::getListName() . '.log';
+    }
+
+    /**
+     * Get the log file link
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getLogFileURL()
+    {
+        return $this->buildURL('upgrade', 'view_log_file');
     }
 }

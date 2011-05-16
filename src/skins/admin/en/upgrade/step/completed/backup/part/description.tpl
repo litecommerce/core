@@ -14,6 +14,6 @@
  *}
 
 {* :NOTE: message is already translated *}
-<div>{getDescription()}</div>
+<div class="upgrade-note upgrade-description">{getDescription():h}</div>
 
 {displayInheritedViewListContent(#actions#)}

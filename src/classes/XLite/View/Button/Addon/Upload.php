@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
@@ -26,64 +26,68 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Upgrade\Step\Completed;
+namespace XLite\View\Button\Addon;
 
 /**
- * ACompleted 
+ * Upload addon button 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-abstract class ACompleted extends \XLite\View\Upgrade\Step\AStep
+class Upload extends \XLite\View\Button\PopupButton
 {
+    /** 
+     * Get a list of JavaScript files required to display the widget properly
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getJSFiles()
+    {   
+        $list = parent::getJSFiles();
+        $list[] = \XLite\View\ModulesManager\UploadAddons::JS_SCRIPT;
+
+        return $list;
+    }
+
     /**
-     * Register CSS files
+     * Return content for popup button
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getButtonContent()
+    {
+        return 'Upload add-on';
+    }
+
+    /**
+     * Return URL parameters to use in AJAX popup
      *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getCSSFiles()
+    protected function prepareURLParams()
     {
-        $list = parent::getCSSFiles();
-        $list[] = self::getDir() . '/css/style.css';
-        
-        return $list;
+        return array(
+            'target' => \XLite\View\ModulesManager\UploadAddons::UPLOAD_ADDONS_TARGET,
+            'action' => 'view',
+            'widget' => '\XLite\View\ModulesManager\UploadAddons',
+        );
     }
-    
-    /**
-     * Get directory where template is located (body.tpl)
-     *
+
+    /** 
+     * getClass 
+     * 
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getDir()
+    protected function getClass()
     {
-        return parent::getDir() . '/completed';
-    }
-
-    /**
-     * Return internal list name
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getListName()
-    {
-        return parent::getListName() . '.completed';
-    }
-
-    /**
-     * Check if widget is visible
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible() && \XLite\Upgrade\Cell::getInstance()->isUpgraded();
+        return parent::getClass() . ' upload-addons';
     }
 }

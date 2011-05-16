@@ -13,7 +13,6 @@
  * @ListChild (list="upgrade.step.completed.backup.actions", weight="200")
  *}
 
-<div>
-  <img src="" alt="{t(#Hard reset#)}"></img>
-  {t(#Disable all modules in the system#)} (<a href="#">{t(#hard reset#)}</a>)
+<div class="upgrade-note hard-reset">
+  {t(#Disable all modules in the system#)} (<a href="{getHardResetURL()}">{t(#hard reset#)}</a>)
 </div>

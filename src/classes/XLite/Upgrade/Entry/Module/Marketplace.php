@@ -55,6 +55,18 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     protected $moduleIDForUpgrade;
 
     /**
+     * Return module actual name
+     *
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getActualName()
+    {
+        return $this->getModuleInstalled()->getActualName();
+    }
+
+    /**
      * Return entry readable name
      *
      * @return string
@@ -163,6 +175,18 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     }
 
     /**
+     * Check if module is installed
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isInstalled()
+    {
+        return (bool) $this->getModuleInstalled()->getInstalled();
+    }
+
+    /**
      * Return entry pack size
      *
      * @return integer
@@ -216,6 +240,8 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
                 . ' or has an invaid markeplace identifier'
             );
         }
+
+        parent::__construct();
     }
 
     /**
@@ -289,5 +315,28 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
     protected function getModuleForUpgrade()
     {
         return $this->getModule($this->moduleIDForUpgrade);
+    }
+
+    /**
+     * Update database records
+     *
+     * @param string $author Module author
+     * @param string $name   Module name
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function updateDBRecords($author, $name)
+    {
+        parent::updateDBRecords($author, $name);
+
+        /* if (!$this->isInstalled()) {
+            $this->getModuleForUpgrade()->setEnabled(true);
+        }
+        $this->getModuleForUpgrade()->setInstalled(true);
+
+        \XLite\Core\Database::getRepo('\XLite\Model\Module')->update($this->getModuleForUpgrade());
+        \XLite\Core\Database::getRepo('\XLite\Model\Module')->delete($this->getModuleInstalled()); */
     }
 }

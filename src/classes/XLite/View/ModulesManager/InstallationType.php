@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- *
+ * 
  * NOTICE OF LICENSE
- *
+ * 
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- *
+ * 
  * PHP version 5.3.0
  *
  * @category  LiteCommerce
- * @author    Creative Development LLC <info@cdev.ru>
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2011 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   GIT: $Id$
@@ -26,78 +26,78 @@
  * @since     1.0.0
  */
 
-namespace XLite\View\Upgrade\SelectCoreVersion;
+namespace XLite\View\ModulesManager;
 
 /**
- * Widget (parent of button and link)
- * 
+ * Install updates or not
+ *
  * @see   ____class_see____
  * @since 1.0.0
+ *
+ * @ListChild (list="admin.center", zone="admin")
  */
-abstract class AWidget extends \XLite\View\Button\APopupButton
+class InstallationType extends \XLite\View\ModulesManager\AModulesManager
 {
     /**
-     *  Widget to show in popup
-     */
-    const SELECT_CORE_VERSION_WIDGET = 'XLite\View\Upgrade\SelectCoreVersion';
-
-
-    /**
-     * Register JS files
-     * 
+     * Return list of targets allowed for this widget
+     *
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getJSFiles()
+    public static function getAllowedTargets()
     {
-        $list = parent::getJSFiles();
-        $list[] = 'upgrade/select_core_version/js/widget.js';
-
-        return $list;
+        $result = parent::getAllowedTargets();
+        $result[] = 'addon_install';
+    
+        return $result;
     }
-
 
     /**
-     * Return text for button and link
-     * 
+     * Return title
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getButtonContent()
+    protected function getHead()
     {
-        return $this->t('Upgrade available');
+        return 'Updates available';
     }
 
-
-    /** 
-     * Return URL parameters to use in AJAX popup
-     * 
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function prepareURLParams()
-    {   
-        return array(
-            'target'    => 'upgrade',
-            'action'    => 'view',
-            'mode'      => 'select_core_version',
-            'widget'    => self::SELECT_CORE_VERSION_WIDGET,
-        );  
-    }   
-
-    /** 
-     * Return CSS classes
-     * 
+    /**
+     * Return templates directory name
+     *
      * @return string
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getClass()
-    {   
-        return 'upgrade-popup-widget';
+    protected function getDir()
+    {
+        return parent::getDir() . '/installation_type';
     }
 
+    /**
+     * Check if widget is visible
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible() && 'select_installation_type' === \XLite\Core\Request::getInstance()->action;
+    }
+
+    /**
+     * Return current module ID
+     * 
+     * @return integer
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getModuleID()
+    {
+        return intval(\XLite\Core\Request::getInstance()->moduleId);
+    }
 }

@@ -65,8 +65,7 @@ abstract class SafeMode
      */
     public static function isSafeModeRequested()
     {
-        return static::checkAccessKey()
-            && \Includes\Utils\ArrayManager::getIndex($_GET, static::PARAM_SAFE_MODE);
+        return static::checkAccessKey() && isset($_GET[self::PARAM_SAFE_MODE]);
     }
 
     /**
@@ -78,7 +77,7 @@ abstract class SafeMode
      */
     public static function isSoftResetRequested()
     {
-        return strpos(\Includes\Utils\FileManager::read(static::getIndicatorFileName()), static::LABEL_SOFT_RESET) > 0;
+        return 0 < strpos(\Includes\Utils\FileManager::read(static::getIndicatorFileName()), self::LABEL_SOFT_RESET);
     }
 
     /**
@@ -119,10 +118,7 @@ abstract class SafeMode
     public static function regenerateAccessKey()
     {
         // Put access key file
-        \Includes\Utils\FileManager::write(
-            static::getAccessKeyFileName(),
-            static::generateAccessKey()
-        );
+        \Includes\Utils\FileManager::write(static::getAccessKeyFileName(), static::generateAccessKey());
 
         // Send email notification
         static::sendNotification();
@@ -157,23 +153,16 @@ abstract class SafeMode
     public static function getResetURL($soft = false)
     {
         $params = array(
-            static::PARAM_SAFE_MODE => 1,
-            static::PARAM_ACCESS_KEY => static::getAccessKey()
+            self::PARAM_SAFE_MODE  => true,
+            self::PARAM_ACCESS_KEY => static::getAccessKey()
         );
 
-        if (true === $soft) {
-            $params += array(
-                static::PARAM_SOFT_RESET => 1
-            );
+        if ($soft) {
+            $params[self::PARAM_SOFT_RESET] = true;
         }
 
         return \Includes\Utils\URLManager::getShopURL(
-            \XLite\Core\Converter::buildURL(
-                'main',
-                '',
-                $params,
-                \XLite::ADMIN_SELF
-            )
+            \XLite\Core\Converter::buildURL('main', '', $params, \XLite::ADMIN_SELF)
         );
     }
 
@@ -198,24 +187,17 @@ abstract class SafeMode
      */
     public static function initialize()
     {
-        if (
-            !\Includes\SafeMode::isSafeModeRequested()
-            || \Includes\SafeMode::isSafeModeStarted()
-        ) {
-            return;
+        if (static::isSafeModeRequested() && !static::isSafeModeStarted()) {
+
+            // Put safe mode indicator
+            \Includes\Utils\FileManager::write(static::getIndicatorFileName(), static::getIndicatorFileContent());
+
+            // Clean cache indicators to force cache generation
+            \Includes\Decorator\Utils\CacheManager::cleanupCacheIndicators();
+
+            // Redirect to avoid loop
+            \Includes\Utils\Operator::redirect('admin.php?target=main');
         }
-
-        // Put safe mode indicator
-        \Includes\Utils\FileManager::write(
-            static::getIndicatorFileName(),
-            static::getIndicatorFileContent()
-        );
-
-        // Clean cache indicators to force cache generation
-        \Includes\Decorator\Utils\CacheManager::cleanupCacheIndicators();
-
-        // Redirect to avoid loop
-        \Includes\Utils\Operator::redirect('admin.php?target=main');
     }
 
 
@@ -228,7 +210,7 @@ abstract class SafeMode
      */
     protected static function checkAccessKey()
     {
-        return static::getAccessKey() === \Includes\Utils\ArrayManager::getIndex($_GET, static::PARAM_ACCESS_KEY);
+        return !empty($_GET[self::PARAM_ACCESS_KEY]) && static::getAccessKey() === $_GET[self::PARAM_ACCESS_KEY];
     }
 
     /**
@@ -276,11 +258,7 @@ abstract class SafeMode
      */
     protected static function getIndicatorFileContent()
     {
-        $softResetMark = \Includes\Utils\ArrayManager::getIndex($_GET, static::PARAM_SOFT_RESET)
-            ? ', ' . static::LABEL_SOFT_RESET
-            : '';
-            
-        return date('r') . $softResetMark;
+        return date('r') . (isset($_GET[self::PARAM_SOFT_RESET]) ? ', ' . self::LABEL_SOFT_RESET : '');
     }
 
 
@@ -324,7 +302,7 @@ abstract class SafeMode
 
         $string .= '; */ ?' . '>';
 
-        return $i ? file_put_contents($path, $string) : false;
+        return $i ? \Includes\Utils\FileManager::write($path, $string) : false;
     }
 
     /**
@@ -358,17 +336,7 @@ abstract class SafeMode
      */
     public static function markModuleAsUnsafe($author, $name)
     {
-        $list = static::getUnsafeModulesList();
-
-        if (!\Includes\Utils\ArrayManager::getIndex($list, $author)) {
-            $list[$author] = array();
-        }
-
-        $list[$author] += array(
-            $name => 1
-        );
-
-        static::saveUnsafeModulesToFile($list);
+        static::markModulesAsUnsafe(array($author => array($name => true)));
     }
 
     /**
@@ -385,17 +353,11 @@ abstract class SafeMode
         $list = static::getUnsafeModulesList();
 
         foreach ($modules as $author => $names) {
-
             foreach ($names as $name => $key) {
 
-                if (!\Includes\Utils\ArrayManager::getIndex($list, $author)) {
+                if (!isset($list[$author])) {
                     $list[$author] = array();
                 }
-
-                $list[$author] += array(
-                    $name => 1
-                );
-
             }
         }
 

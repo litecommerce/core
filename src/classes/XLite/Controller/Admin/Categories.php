@@ -47,11 +47,11 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
     {
         return ($this->getCategory() && $this->getRootCategoryId() !== $this->getCategory()->getCategoryId())
             ? $this->getCategory()->getName()
-            : $this->t('Manage categories');
+            : 'Manage categories';
     }
 
     /**
-     * __call 
+     * :FIXME: must be removed
      * 
      * @param string $method Method to call
      * @param array  $args   Call arguments OPTIONAL
@@ -62,7 +62,7 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
      */
     public function __call($method, array $args = array())
     {
-        $repo = \XLite\Core\Database::getRepo('XLite\Model\Category');
+        $repo = \XLite\Core\Database::getRepo('\XLite\Model\Category');
 
         return method_exists($repo, $method)
             ? call_user_func_array(array($repo, $method), $args)
@@ -93,7 +93,7 @@ class Categories extends \XLite\Controller\Admin\Base\Catalog
     {
         $parent = $this->getCategory()->getParent();
 
-        \XLite\Core\Database::getRepo('XLite\Model\Category')->deleteCategory(
+        \XLite\Core\Database::getRepo('\XLite\Model\Category')->deleteCategory(
             $this->getCategoryId(),
             (bool) \XLite\Core\Request::getInstance()->subcats
         );

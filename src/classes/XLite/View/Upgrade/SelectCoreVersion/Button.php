@@ -34,7 +34,7 @@ namespace XLite\View\Upgrade\SelectCoreVersion;
  * @see   ____class_see____
  * @since 1.0.0
  */
-class Button extends \XLite\View\Upgrade\SelectCoreVersion\AWidget
+class Button extends \XLite\View\Upgrade\SelectCoreVersion\ASelectCoreVersion
 {
     /**
      * Return list of allowed targets

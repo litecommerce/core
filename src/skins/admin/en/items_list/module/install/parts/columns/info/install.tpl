@@ -20,7 +20,7 @@
 
   <div class="install">
     {* :FIXME: widget must be removed; all functionality must be moved here *}
-    <widget class="\XLite\View\Button\InstallAddon" moduleId="{module.getModuleId()}" />
+    <widget class="\XLite\View\Button\Addon\Install" moduleId="{module.getModuleId()}" />
   </div>
 
 </form>

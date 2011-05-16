@@ -80,6 +80,7 @@ class Marketplace extends \XLite\Base\Singleton
     const FIELD_RATING_RATE           = 'rate';
     const FIELD_RATING_VOTES_COUNT    = 'votesCount';
     const FIELD_DOWNLOADS_COUNT       = 'downloadCount';
+    const FIELD_LICENSE               = 'license';
 
     /**
      * Some predefined TTLs
@@ -791,7 +792,7 @@ class Marketplace extends \XLite\Base\Singleton
 
     // }}}
 
-    // {{{ 'Get hosting score' request
+    // {{{ "Get hosting score" request
 
     /**
      * The certain request handler
@@ -804,13 +805,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function getHostingScore($ttl = self::TTL_LONG)
     {
-        $result = $this->performActionWithTTL($ttl, self::ACTION_GET_HOSTING_SCORE);
-
-        if (self::TTL_NOT_EXPIRED !== $result) {
-            $this->clearUpgradeCell();
-        }
-
-        return $result;
+        return $this->performActionWithTTL($ttl, self::ACTION_GET_HOSTING_SCORE);
     }
 
     /**
@@ -829,6 +824,8 @@ class Marketplace extends \XLite\Base\Singleton
 
     /**
      * Validate response for certian action
+     *
+     * :FIXME: use a schema
      *
      * @param array $data Response data
      *

@@ -128,6 +128,6 @@ class Settings extends \XLite\View\AView
      */
     protected function isVisible()
     {
-        return parent::isVisible() && file_exists($this->getTemplateFile());
+        return parent::isVisible() && \Includes\Utils\FileManager::isFile($this->getTemplateFile());
     }
 }
