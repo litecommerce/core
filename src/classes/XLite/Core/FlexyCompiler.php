@@ -1292,17 +1292,20 @@ class FlexyCompiler extends \XLite\Base\Singleton
         $compiled = \Includes\Utils\FileManager::normalize(
             LC_DIR_COMPILE . substr($original, $this->rootDirLength) . '.php'
         );
+        
         $original = \Includes\Utils\FileManager::normalize($original);
 
         if (($this->checkTemplateStatus && !$this->isTemplateValid($original, $compiled)) || $force) {
 
             // Create directory for compiled template (if not exists)
             $dir = dirname($compiled);
+            
             if (!file_exists($dir)) {
                 \Includes\Utils\FileManager::mkdirRecursive($dir, 0755);
             }
 
             file_put_contents($compiled, $this->parse($original));
+            
             touch($compiled, filemtime($original));
         }
 

@@ -42,7 +42,8 @@ class Link extends \XLite\View\Button\AButton
 
     const PARAM_LOCATION = 'location';
     const PARAM_JS_CODE  = 'jsCode';
-
+    const PARAM_BLANK    = 'blank';
+    
 
     /**
      * Return widget default template
@@ -70,6 +71,7 @@ class Link extends \XLite\View\Button\AButton
         $this->widgetParams += array(
             self::PARAM_LOCATION => new \XLite\Model\WidgetParam\String('Redirect to', null, true),
             self::PARAM_JS_CODE  => new \XLite\Model\WidgetParam\String('JS code', null, true),
+            self::PARAM_BLANK    => new \XLite\Model\WidgetParam\Bool('Open in new window', false),
         );
     }
 
@@ -82,7 +84,9 @@ class Link extends \XLite\View\Button\AButton
      */
     protected function getDefaultJSCode($action = null)
     {
-        return 'self.location = \'' . $this->getParam(self::PARAM_LOCATION) . '\';';
+        return $this->getParam(self::PARAM_BLANK)
+                ? 'window.open(\'' . $this->getParam(self::PARAM_LOCATION) . '\');'
+                : 'self.location = \'' . $this->getParam(self::PARAM_LOCATION) . '\';';
     }
 
     /**
