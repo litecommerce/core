@@ -14,7 +14,7 @@
 <p class="date">{formatDate(lastDate)}</p>
 <div class="buttons buttons-rerun">
   <widget class="\XLite\View\Button\Link" location="{buildURL(#measure#,#measure#)}" label="{t(#Rerun benchmark#)}" />
-  <a href="{buildURL(#measure#,#help#)}" class="help">{t(#What is benchmark?#)}</a>
+  <a id="measure-help-text" href="{buildURL(#measure#,#help#)}" class="help">{t(#What is benchmark?#)}</a>
 </div>
 {if:getHostingScore()}
 <hr />
@@ -36,3 +36,5 @@
 
 <span class="note"><span class="mark">*</span> {t(#The values are average#)}</span>
 {end:}
+<span class="help-text" style="display: none;">{t(#The benchmark evaluates server environment#):h}</span>
+

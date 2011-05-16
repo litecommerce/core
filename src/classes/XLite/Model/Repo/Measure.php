@@ -53,7 +53,7 @@ class Measure extends \XLite\Model\Repo\ARepo
         $result = reset($result);
 
         return $result
-            ? $result['fsTime'] + $result['dbTime'] + $result['cpuTime']
+            ? round($result['fsTime'] + $result['dbTime'] + $result['cpuTime'], 0)
             : 0;
     }
 
@@ -71,7 +71,7 @@ class Measure extends \XLite\Model\Repo\ARepo
             ->getArrayResult();
         $result = reset($result);
 
-        return $result ? $result['time'] : 0;
+        return $result ? round($result['time'], 0) : 0;
     }
 
     /**
@@ -88,7 +88,7 @@ class Measure extends \XLite\Model\Repo\ARepo
             ->getArrayResult();
         $result = reset($result);
 
-        return $result ? $result['time'] : 0;
+        return $result ? round($result['time'], 0) : 0;
     }
 
     /**
@@ -105,7 +105,7 @@ class Measure extends \XLite\Model\Repo\ARepo
             ->getArrayResult();
         $result = reset($result);
 
-        return $result ? $result['time'] : 0;
+        return $result ? round($result['time'], 0) : 0;
     }
 
     /**
