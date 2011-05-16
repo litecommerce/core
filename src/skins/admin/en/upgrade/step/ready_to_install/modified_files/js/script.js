@@ -76,6 +76,9 @@ core.bind(
     attachClickOnSelectAll();
     
     attachClickOnUnselectAll();
+    
+    // Must be selected by default
+    jQuery('#radio-select-all').click();
   }
-);
+  );
   
