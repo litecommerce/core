@@ -78,10 +78,13 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
      */
     public function isCompleted()
     {
-        return $this->getCart()->getProfile()
-            && $this->getCart()->getProfile()->getShippingAddress()
-            && $this->getCart()->getProfile()->getShippingAddress()->isCompleted(\XLite\Model\Address::SHIPPING)
-            && (!$this->getModifier() || !$this->getModifier()->canApply() || $this->getModifier()->getMethod());
+        return $this->isDisabled()
+            || (
+                $this->getCart()->getProfile()
+                && $this->getCart()->getProfile()->getShippingAddress()
+                && $this->getCart()->getProfile()->getShippingAddress()->isCompleted(\XLite\Model\Address::SHIPPING)
+                && (!$this->getModifier() || !$this->getModifier()->canApply() || $this->getModifier()->getMethod())
+            );
     }
 
     /**
@@ -154,6 +157,19 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
     }
 
     /**
+     * Check - step is disabled or not
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isDisabled()
+    {
+        return parent::isDisabled()
+            || !$this->isShippingEnabled();
+    }
+
+    /**
      * Get modifier 
      * 
      * @return \XLite\Model\Order\Modifier
@@ -169,16 +185,4 @@ class Shipping extends \XLite\View\Checkout\Step\AStep
         return $this->modifier;
     }
 
-    /**
-     * Check - step is disabled or not
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function isDisabled()
-    {
-        return parent::isDisabled()
-            && !$this->isShippingEnabled();
-    }
 }

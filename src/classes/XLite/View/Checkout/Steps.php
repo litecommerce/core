@@ -138,6 +138,20 @@ class Steps extends \XLite\View\AView
     }
 
     /**
+     * Check - specified step is current or not
+     *
+     * @param \XLite\View\Checkout\Step\AStep $step Step
+     *
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isDisabledStep(\XLite\View\Checkout\Step\AStep $step)
+    {
+        return $step->isDisabled();
+    }
+
+    /**
      * Check -= specified step is previous or not
      * 
      * @param \XLite\View\Checkout\Step\AStep $step Step
