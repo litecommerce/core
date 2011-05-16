@@ -420,7 +420,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
      */
     public static function replace($path, $data, $pattern, $flags = 0, $mode = 0644)
     {
-        return static::write($path, preg_replace($pattern, $data, static::read($path)), $mode, $flags);
+        return static::write($path, preg_replace($pattern, $data, static::read($path)), $flags, $mode);
     }
 
     /**
