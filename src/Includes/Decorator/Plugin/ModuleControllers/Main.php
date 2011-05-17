@@ -26,7 +26,7 @@
  * @since      1.0.0
  */
 
-namespace Includes\Decorator\Plugin\ModuleContollers;
+namespace Includes\Decorator\Plugin\ModuleControllers;
 
 /**
  * Main 

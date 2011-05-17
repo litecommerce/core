@@ -307,7 +307,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function getCorePack($versionMajor, $versionMinor)
     {
-        return $this->sendRequestToMarkeplace(
+        return $this->sendRequestToMarketplace(
             self::ACTION_GET_CORE_PACK,
             array(
                 self::FIELD_VERSION => $this->getVersionField($versionMajor, $versionMinor),
@@ -346,7 +346,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function getCoreHash($versionMajor, $versionMinor)
     {
-        return $this->sendRequestToMarkeplace(
+        return $this->sendRequestToMarketplace(
             self::ACTION_GET_CORE_HASH,
             array(
                 self::FIELD_VERSION => $this->getVersionField($versionMajor, $versionMinor),
@@ -525,7 +525,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function getAddonPack($moduleID, $key = null)
     {
-        return $this->sendRequestToMarkeplace(
+        return $this->sendRequestToMarketplace(
             self::ACTION_GET_ADDON_PACK,
             array(
                 self::FIELD_MODULE_ID => $moduleID,
@@ -566,7 +566,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function getAddonInfo($moduleID, $key = null)
     {
-        return $this->sendRequestToMarkeplace(
+        return $this->sendRequestToMarketplace(
             self::ACTION_GET_ADDON_INFO,
             array(
                 self::FIELD_MODULE_ID => $moduleID,
@@ -681,7 +681,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function getAddonHash($moduleID, $key = null)
     {
-        return $this->sendRequestToMarkeplace(
+        return $this->sendRequestToMarketplace(
             self::ACTION_GET_ADDON_HASH,
             array(
                 self::FIELD_MODULE_ID => $moduleID,
@@ -733,7 +733,7 @@ class Marketplace extends \XLite\Base\Singleton
      */
     public function checkAddonKey($key)
     {
-        return $this->sendRequestToMarkeplace(
+        return $this->sendRequestToMarketplace(
             self::ACTION_CHECK_ADDON_KEY,
             array(
                 self::FIELD_KEY => $key,
@@ -865,7 +865,7 @@ class Marketplace extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function sendRequestToMarkeplace($action, array $data = array())
+    protected function sendRequestToMarketplace($action, array $data = array())
     {
         $result = null;
 
@@ -1081,7 +1081,7 @@ class Marketplace extends \XLite\Base\Singleton
         if (!$this->checkTTL($cellTTL, $ttl)) {
 
             // Call method
-            $result = $this->sendRequestToMarkeplace($action, $data);
+            $result = $this->sendRequestToMarketplace($action, $data);
 
             if ($saveInTmpVars) {
                 // Save in DB (if needed)
