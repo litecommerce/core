@@ -269,7 +269,8 @@ abstract class FileManager extends \Includes\Utils\AUtils
 
             $filter = new \Includes\Utils\FileFilter($dir, null, \RecursiveIteratorIterator::CHILD_FIRST);
 
-            foreach ($filter->getIterator() as $file) {
+            // :KLUDGE: fix for some stupid FSs
+            foreach (iterator_to_array($filter->getIterator(), false) as $file) {
 
                 if ($file->isDir()) {
                     static::deleteDir($file->getRealPath(), true);
