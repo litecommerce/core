@@ -73,6 +73,18 @@ class LowInventory extends \XLite\View\ItemsList\Product\Admin\AAdmin
     }
 
     /**
+     * Do not display 'Products with low inventory' block if low-limit-products list is empty
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible() && 0 < $this->getData($this->getSearchCondition(), true);
+    }
+
+    /**
      * isFooterVisible
      *
      * @return boolean
