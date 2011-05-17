@@ -16,8 +16,8 @@
 <div class="module-license">
   <div class="form">
     <form action="admin.php" method="post" name="getAddonForm" >
-      <input type="hidden" name="target" value="addon_install" />
-      <input type="hidden" name="action" value="check_installation_type" />
+      <input type="hidden" name="target" value="upgrade" />
+      <input type="hidden" name="action" value="install_addon_force" />
       <input type="hidden" name="moduleId" value="{getModuleId()}" />
 
       <div class="license-block">

@@ -91,7 +91,7 @@ class Install extends \XLite\View\Button\APopupButton
      */
     protected function getButtonContent()
     {
-        return 'Install';
+        return $this->getParam(self::PARAM_LABEL) ?: 'Install';
     }
 
     /**
