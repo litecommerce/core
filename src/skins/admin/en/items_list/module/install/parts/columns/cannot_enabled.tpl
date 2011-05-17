@@ -20,8 +20,8 @@
     <ul class="dependencies-list">
       <li class="dependency-element" FOREACH="module.getDependencyModules(),depend">
         <a href="#{depend.getName()}">{depend.getModuleName()}</a>
-        <span IF="depend.getEnabled()" class="module-condition enabled"><span>[</span>{t(#enabled#)}<span>]</span></span>
-        <span IF="!depend.getEnabled()" class="module-condition disabled"><span>[</span>{t(#disabled#)}<span>]</span></span>
+        <span IF="depend.getEnabled()" class="module-condition enabled">({t(#enabled#)})</span>
+        <span IF="!depend.getEnabled()" class="module-condition disabled">({t(#disabled#)})</span>
       </li>
     </ul>
   </div>

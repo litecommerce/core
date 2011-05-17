@@ -29,16 +29,36 @@
 namespace XLite\View\Button\Addon;
 
 /**
- * Install addon button 
+ * Install addon popup button 
  * 
  * @see   ____class_see____
  * @since 1.0.0
  */
-class AcceptLicense extends \XLite\View\Button\Submit
+class SelectInstallationType extends \XLite\View\Button\APopupButton
 {
     /**
-     * Register JS files
+     * Widget param names 
+     */
+    const PARAM_MODULEID = 'moduleId';
+
+    /** 
+     * Register CSS files
      *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {   
+        $list = parent::getCSSFiles();
+        $list[] = 'modules_manager/installation_type/css/style.css';
+        
+        return $list;
+    }   
+
+    /** 
+     * Register JS files
+     * 
      * @return array
      * @see    ____func_see____
      * @since  1.0.0
@@ -46,39 +66,14 @@ class AcceptLicense extends \XLite\View\Button\Submit
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-        $list[] = 'button/js/accept_license.js';
-
+        $list[] = 'button/js/install_addon.js';
+        $list[] = 'button/js/select_installation_type.js';
+        
         return $list;
-    }
-
-    /**
-     * getDefaultDisableState
-     *
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultDisableState()
-    {
-        return parent::getDefaultDisableState() || true;
-    }
-
-    /**
-     * getDefaultLabel
-     *
-     * @return string
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getDefaultLabel()
-    {
-        return 'Install add-on';;
-    }
+    }   
 
     /**
      * Return content for popup button
-     *
-     * :TODO: remove if this class will not be derived from PopupButton
      *
      * @return string
      * @see    ____func_see____
@@ -86,13 +81,11 @@ class AcceptLicense extends \XLite\View\Button\Submit
      */
     protected function getButtonContent()
     {
-        return 'Install add-on';
+        return 'Install';
     }
 
     /**
      * Return URL parameters to use in AJAX popup
-     *
-     * :TODO: remove if this class will not be derived from PopupButton
      *
      * @return array
      * @see    ____func_see____
@@ -101,8 +94,38 @@ class AcceptLicense extends \XLite\View\Button\Submit
     protected function prepareURLParams()
     {
         return array(
-            'target' => 'addon_install',
-            'widget' => '\XLite\View\ModulesManager\InstallationType',
+            'target'   => 'addon_install',
+            'action'   => 'select_installation_type',
+            'widget'   => '\XLite\View\ModulesManager\InstallationType',
+            'moduleId' => $this->getParam(self::PARAM_MODULEID),
         );
     }
+
+    /**
+     * Define widgets parameters
+     * 
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {   
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_MODULEID => new \XLite\Model\WidgetParam\String('ModuleId', '', true),
+        );  
+    }
+
+    /** 
+     * Return CSS classes
+     * 
+     * @return string
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getClass()
+    {   
+        return 'select-installation-type-button';
+    }   
 }

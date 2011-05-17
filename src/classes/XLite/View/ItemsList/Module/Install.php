@@ -150,6 +150,7 @@ class Install extends \XLite\View\ItemsList\Module\AModule
         // TODO must be taken from Button/InstallAddon widget
         $list[] = 'button/js/core.popup_button.js';
         $list[] = 'button/js/install_addon.js';
+        $list[] = 'button/js/select_installation_type.js';
 
         // TODO must be taken from SwitchButton widget
         $list[] = \XLite\View\Button\SwitchButton::JS_SCRIPT;
