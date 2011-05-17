@@ -53,6 +53,21 @@ class InstallationType extends \XLite\View\ModulesManager\AModulesManager
         return $result;
     }
 
+    /** 
+     * Register CSS files
+     * 
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = $this->getDir() . '/css/style.css';
+
+        return $list;
+    }   
+
     /**
      * Return title
      *

@@ -231,7 +231,7 @@ div.price-filter select {
 }
 
 ul.dependencies-list {
-  list-style: disc;
+  list-style: inside disc;
   line-height: 18px;
 }
 
@@ -239,16 +239,9 @@ ul.dependencies-list {
   padding-bottom: 10px;
 }
 
-.dependency-element,
-  .dependency-element .module-condition span
+.dependency-element span.module-condition
 {
   color: #C49A91;
-}
-
-.dependency-element .module-condition span {
-  font-size: 14px;
-}
-
-.dependency-element .module-condition {
   white-space: nowrap;
 }
+

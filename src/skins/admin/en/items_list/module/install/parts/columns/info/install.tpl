@@ -13,14 +13,30 @@
  * @ListChild (list="itemsList.module.install.columns.module-main-section", weight="200")
  *}
 
-<form action="admin.php" method="post" IF="canInstall(module)">
-  <input type="hidden" name="target" value="addon_install" />
-  <input type="hidden" name="action" value="get_license" />
-  <input type="hidden" name="moduleId" value="{module.getModuleId()}" />
+{* TODO refactor into FORM widgets *}
+ 
+<div class="install-section" IF="canInstall(module)">
+  
+  <form IF="!isUpgradeEntryAvailable()" action="admin.php" method="post" >
+    <input type="hidden" name="target" value="addon_install" />
+    <input type="hidden" name="action" value="get_license" />
+    <input type="hidden" name="moduleId" value="{module.getModuleId()}" />
 
-  <div class="install">
-    {* :FIXME: widget must be removed; all functionality must be moved here *}
-    <widget class="\XLite\View\Button\Addon\Install" moduleId="{module.getModuleId()}" />
-  </div>
+    <div class="install">
+      {* :FIXME: widget must be removed; all functionality must be moved here *}
+      <widget class="\XLite\View\Button\Addon\Install" moduleId="{module.getModuleId()}" />
+    </div>
+  </form>
 
-</form>
+  <form IF="isUpgradeEntryAvailable()" action="admin.php" method="post" >
+    <input type="hidden" name="target" value="addon_install" />
+    <input type="hidden" name="action" value="select_installation_type" />
+    <input type="hidden" name="moduleId" value="{module.getModuleId()}" />
+
+    <div class="install">
+      {* :FIXME: widget must be removed; all functionality must be moved here *}
+      <widget class="\XLite\View\Button\Addon\SelectInstallationType" moduleId="{module.getModuleId()}" />
+    </div>
+  </form>
+  
+</div>

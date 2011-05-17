@@ -47,7 +47,9 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
      */
     public function getTitle()
     {
-        return ($module = $this->getModule()) ? ($module->getModuleName() . ' license agreement') : null;
+        return ($module = $this->getModule() && 'get_license' === $this->getAction()) 
+                ? ($module->getModuleName() . ' license agreement') 
+                : 'Updates available';
     }
 
     /**
@@ -127,32 +129,4 @@ class AddonInstall extends \XLite\Controller\Admin\AAdmin
 
     // }}}
 
-    // {{{ "Check installation type" action handler
-
-    /**
-     * Action handler
-     * 
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function doActionCheckInstallationType()
-    {
-        \XLite\Upgrade\Cell::getInstance()->clear();
-
-        $flag = (bool) array_filter(
-            \Includes\Utils\ArrayManager::getObjectsArrayFieldValues(
-                \XLite\Upgrade\Cell::getInstance()->getEntries(),
-                'isEnabled'
-            )
-        );
-
-        $this->setReturnURL(
-            $flag
-            ? $this->buildURL('addon_install', 'select_installation_type', array('moduleId' => $this->getModuleId()))
-            : $this->buildURL('upgrade', 'install_addon', array('moduleId' => $this->getModuleId()))
-        );
-    }
-
-    // }}}
 }
