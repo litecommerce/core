@@ -300,8 +300,6 @@ class Uploaded extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function updateDBRecords($author, $name)
     {
-        parent::updateDBRecords($author, $name);
-
         $module = new \XLite\Model\Module();
         $module->setAuthor($author);
         $module->setName($name);

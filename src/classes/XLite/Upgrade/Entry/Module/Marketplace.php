@@ -329,8 +329,6 @@ class Marketplace extends \XLite\Upgrade\Entry\Module\AModule
      */
     protected function updateDBRecords($author, $name)
     {
-        parent::updateDBRecords($author, $name);
-
         if (!$this->isInstalled()) {
             $this->getModuleForUpgrade()->setEnabled(true);
         }
