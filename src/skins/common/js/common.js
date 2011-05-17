@@ -215,7 +215,12 @@ function loadDialog(url, dialogOptions, callback)
           div = jQuery(div.get(0).childNodes[0]);
         }
 
+        // Specific CSS class to manage this specific popup window
         div.addClass(selector);
+        
+        // Every popup window (even hidden one) has this one defined CSS class. 
+        // You should use this selector to manage any popup window entry.
+        div.addClass('popup-window-entry');
 
         openDialog('.' + selector, dialogOptions);
 
@@ -234,6 +239,9 @@ function loadDialog(url, dialogOptions, callback)
 // Load dialog by link
 function loadDialogByLink(link, url, options, callback)
 {
+  // Close every popup window opened before. Only one popup window is allowed to be displayed at once.
+  jQuery('.popup-window-entry').dialog('close');
+  
   if (!link.linkedDialog) {
     link.linkedDialog = loadDialog(url, options, callback);
 

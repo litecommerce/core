@@ -178,7 +178,26 @@ abstract class AAdmin extends \XLite\Controller\AController
 
         return $this->recentAdmins;
     }
+    
+    /**
+     * Check if upgrade or update is available on Marketplace. 
+     * 
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function isUpgradeEntryAvailable()
+    {
+        \XLite\Upgrade\Cell::getInstance()->clear();
 
+        return (bool) array_filter(
+            \Includes\Utils\ArrayManager::getObjectsArrayFieldValues(
+                \XLite\Upgrade\Cell::getInstance()->getEntries(),
+                'isEnabled'
+            )
+        );
+    }
+ 
     /**
      * Check if form id is valid or not
      * 
@@ -227,7 +246,7 @@ abstract class AAdmin extends \XLite\Controller\AController
     {
         return 'login' == \XLite\Core\Request::getInstance()->target;
     }
-
+   
     /**
      * Start simplified page to display progress of some process
      * 

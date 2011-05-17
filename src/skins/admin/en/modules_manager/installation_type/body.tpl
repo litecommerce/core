@@ -16,14 +16,19 @@
   <input type="hidden" name="action" value="install_addon" />
   <input type="hidden" name="moduleId" value="{getModuleId()}" />
 
-  <div>
+  <div class="install-warning-description">
     {t(#The system detects that some updates are available for enabled modules. It is strongly recommended to have all enabled modules updated to latest version for better compatibility before the install new ones from Marketplace.#)}
   </div>
 
-  <div>
-    <widget class="\XLite\View\Button\Regular" label="Install anyway" action="install_addon_force" />
-    <span>or</span>
-    <widget class="\XLite\View\Button\Submit" label="Update modules" />
-  </div>
-
+  <ul class="actions">
+    <li class="button">
+      <widget class="\XLite\View\Button\Addon\Install" label="Install anyway" moduleId="{getModuleId()}" />
+    </li>
+    <li class="or">or</li>
+    <li class="button">
+      <widget class="\XLite\View\Button\Submit" label="Update modules" />
+    </li>
+  </ul>
+  <div class="clear"></div>
+  
 </form>
