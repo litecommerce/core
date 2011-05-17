@@ -46,6 +46,18 @@ abstract class AModule extends \XLite\Upgrade\Entry\AEntry
     abstract public function getActualName();
 
     /**
+     * Update database records
+     *
+     * @param string $author Module author
+     * @param string $name   Module name
+     *
+     * @return array
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    abstract protected function updateDBRecords($author, $name);
+
+    /**
      * Perform upgrade
      *
      * @param boolean $isTestMode       Flag OPTIONAL
@@ -59,26 +71,14 @@ abstract class AModule extends \XLite\Upgrade\Entry\AEntry
     {
         parent::upgrade($isTestMode, $filesToOverwrite);
 
-        list($author, $name) = explode('\\', $this->getActualName());
+        if (!$isTestMode) {
+            list($author, $name) = explode('\\', $this->getActualName());
 
-        $this->updateDBRecords();
+            $this->updateDBRecords();
 
-        if (!$this->isValid()) {
-            \Includes\SafeMode::markModuleAsUnsafe($author, $name);
+            if (!$this->isValid()) {
+                \Includes\SafeMode::markModuleAsUnsafe($author, $name);
+            }
         }
-    }
-
-    /**
-     * Update database records
-     *
-     * @param string $author Module author
-     * @param string $name   Module name
-     *
-     * @return array
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function updateDBRecords($author, $name)
-    {
     }
 }
