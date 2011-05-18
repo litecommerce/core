@@ -126,3 +126,18 @@ div.pack-warning a {
 .pack-warn-clear {
   clear: both;
 }
+
+.upload-addons-text {
+  font-size: 14px;
+  margin: 10px 0px;
+  width: 450px;
+}
+
+.upload-addon-form .upload-area {
+  padding: 0px 0px 0px 30px;
+  background: url(../images/icon_upload.png) no-repeat left top;
+}
+
+.upload-addon-form .buttons {
+  margin-left: 160px;
+}
