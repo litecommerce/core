@@ -447,7 +447,9 @@ abstract class AEntry
 
                     if (isset($hashes[$path])) {
                         // File has been modified (by user, or by LC Team, see the third param)
-                        $this->updateFile($path, $isTestMode, $fileHash !== $hash);
+                        if ($fileHash !== $hash || $hashes[$path] !== $hash) {
+                            $this->updateFile($path, $isTestMode, $fileHash !== $hash);
+                        }
 
                     } else {
                         // File has been removed (by user, or by LC Team, see the third param)
