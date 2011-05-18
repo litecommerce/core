@@ -132,7 +132,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
         header('Content-Length: ' . filesize($path));
 
         echo (\Includes\Utils\FileManager::read($path));
-        \Includes\Utils\FileManager::delete($path);
+        \Includes\Utils\FileManager::deleteFile($path);
         exit (0);
     }
 
@@ -151,7 +151,7 @@ abstract class PHARManager extends \Includes\Utils\AUtils
     protected static function pack(&$name, \Iterator $iterator, array $metadata = array())
     {
         // To prevent existsing files usage
-        \Includes\Utils\FileManager::delete($name);
+        \Includes\Utils\FileManager::deleteFile($name);
 
         $phar = new \PharData($name);
 
@@ -232,10 +232,10 @@ abstract class PHARManager extends \Includes\Utils\AUtils
     {
         if (static::canCompress()) {
 
-            \Includes\Utils\FileManager::delete($name);
+            \Includes\Utils\FileManager::deleteFile($name);
 
             if ($extension = static::getExtension()) {
-                \Includes\Utils\FileManager::delete($name .= '.' . $extension);
+                \Includes\Utils\FileManager::deleteFile($name .= '.' . $extension);
             }
 
             $phar->compress(self::COMPRESSION_TYPE);

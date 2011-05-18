@@ -24,7 +24,7 @@
   </div>
 
   <div class="buttons">
-  <widget class="\XLite\View\Button\Submit" label="{t(#Install add-on#)}" />
+  <widget class="\XLite\View\Button\Submit" style="main-button" label="{t(#Install add-on#)}" />
   </div>
 
 </form>
