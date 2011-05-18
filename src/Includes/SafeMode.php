@@ -175,7 +175,7 @@ abstract class SafeMode
      */
     public static function cleanupIndicator()
     {
-        \Includes\Utils\FileManager::delete(static::getIndicatorFileName());
+        \Includes\Utils\FileManager::deleteFile(static::getIndicatorFileName());
     }
 
     /**
@@ -273,7 +273,7 @@ abstract class SafeMode
      */
     public static function clearUnsafeModules()
     {
-        \Includes\Utils\FileManager::delete(static::getUnsafeModulesFilePath());
+        \Includes\Utils\FileManager::deleteFile(static::getUnsafeModulesFilePath());
     }
 
     /**

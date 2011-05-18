@@ -404,7 +404,7 @@ abstract class Image extends \XLite\Model\AEntity
         $hash = \Includes\Utils\FileManager::getHash($path);
 
         if ($isTempFile) {
-            \Includes\Utils\FileManager::delete($path);
+            \Includes\Utils\FileManager::deleteFile($path);
         }
 
         return $this->hash === $hash;

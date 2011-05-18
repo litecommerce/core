@@ -133,7 +133,7 @@ abstract class APopupButton extends \XLite\View\Button\AButton
     }
 
     /** 
-     * getClass 
+     * Defines CSS class for widget to use in templates 
      * 
      * @return string
      * @see    ____func_see____
@@ -141,6 +141,6 @@ abstract class APopupButton extends \XLite\View\Button\AButton
      */
     protected function getClass()
     {   
-        return 'popup-button';
+        return parent::getClass() . ' popup-button';
     }   
 }

@@ -275,7 +275,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
                 if ($file->isDir()) {
                     static::deleteDir($file->getRealPath(), true);
                 } else {
-                    static::delete($file->getRealPath(), true);
+                    static::deleteFile($file->getRealPath(), true);
                 }
             }
 
@@ -434,7 +434,7 @@ abstract class FileManager extends \Includes\Utils\AUtils
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public static function delete($path, $skipCheck = false)
+    public static function deleteFile($path, $skipCheck = false)
     {
         return ($skipCheck || static::isFile($path)) ? unlink($path) : true;
     }
